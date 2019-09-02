@@ -1,6 +1,6 @@
 import { readFile } from 'fs'
 import { join } from 'path'
-import { LANGUAGES_SOURCE } from '@resources/bgd/constants'
+import { LANGUAGES_SOURCE } from '@resources/zmb/constants'
 
 interface IMessageIdentifier {
   [key: string]: string
