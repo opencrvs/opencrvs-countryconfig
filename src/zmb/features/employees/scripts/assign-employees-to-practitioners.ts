@@ -1,8 +1,8 @@
 import * as fs from 'fs'
-import { EMPLOYEES_SOURCE } from '@resources/bgd/constants'
+import { EMPLOYEES_SOURCE } from '@resources/zmb/constants'
 import chalk from 'chalk'
 import { internal } from 'boom'
-import { composeAndSavePractitioners } from '@resources/bgd/features/employees/scripts/service'
+import { composeAndSavePractitioners } from '@resources/zmb/features/employees/scripts/service'
 
 const sourceJSON = `${EMPLOYEES_SOURCE}test-employees.json`
 
