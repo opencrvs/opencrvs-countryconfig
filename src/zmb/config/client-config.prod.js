@@ -9,4 +9,12 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-declare module 'good'
+window.config = {
+  AUTH_API_URL: 'https://auth.{{hostname}}/',
+  COUNTRY: 'zmb',
+  LANGUAGES: 'en',
+  PERFORMANCE_APP_URL: 'https://performance.{{hostname}}/',
+  CLIENT_APP_URL: 'https://register.{{hostname}}/',
+  SENTRY: 'https://f892d643aab642108f44e2d1795706bc@sentry.io/1774604',
+  LOGROCKET: 'opencrvs-foundation/opencrvs-zambia'
+}
