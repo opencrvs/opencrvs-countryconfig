@@ -21,7 +21,7 @@ describe('assets handler tests', () => {
   })
 
   it('returns appropriate asset', async () => {
-    const token = jwt.sign({}, readFileSync('../auth/test/cert.key'), {
+    const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:resources-user'
@@ -29,7 +29,7 @@ describe('assets handler tests', () => {
 
     const res = await server.server.inject({
       method: 'GET',
-      url: '/zmb/assets/logo.png',
+      url: '/assets/logo.png',
       headers: {
         Authorization: `Bearer ${token}`
       }

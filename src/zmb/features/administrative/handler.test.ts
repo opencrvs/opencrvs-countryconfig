@@ -40,7 +40,7 @@ describe('administrative handler receives a request', () => {
         .spyOn(locationsService, 'getLocations')
         .mockReturnValue(Promise.resolve(mockReturn))
 
-      const token = jwt.sign({}, readFileSync('../auth/test/cert.key'), {
+      const token = jwt.sign({}, readFileSync('./test/cert.key'), {
         algorithm: 'RS256',
         issuer: 'opencrvs:auth-service',
         audience: 'opencrvs:resources-user'
@@ -48,11 +48,12 @@ describe('administrative handler receives a request', () => {
 
       const res = await server.server.inject({
         method: 'GET',
-        url: '/zmb/locations',
+        url: '/locations',
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
+
       expect(JSON.parse(res.payload).data[0].id).toBe(
         'ba819b89-57ec-4d8b-8b91-e8865579a40f'
       )

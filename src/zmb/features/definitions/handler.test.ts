@@ -21,7 +21,7 @@ describe('definitions handler tests', () => {
   })
 
   it('returns definitions as json', async () => {
-    const token = jwt.sign({}, readFileSync('../auth/test/cert.key'), {
+    const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:resources-user'
@@ -29,7 +29,7 @@ describe('definitions handler tests', () => {
 
     const res = await server.server.inject({
       method: 'GET',
-      url: '/zmb/definitions/register',
+      url: '/definitions/register',
       headers: {
         Authorization: `Bearer ${token}`
       }

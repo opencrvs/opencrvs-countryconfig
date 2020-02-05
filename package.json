@@ -7,17 +7,14 @@
     "test:watch": "jest --watch",
     "open:cov": "yarn test && opener coverage/index.html",
     "precommit": "tslint --project ./tsconfig.json && lint-staged",
-    "test": "jest  --silent --noStackTrace --coverage && yarn test:compilation && yarn test:dhis2-mediator",
-    "test:dhis2-mediator": "cd src/bgd/mediators/bgd-dhis2/ && yarn install && yarn test",
+    "test": "jest  --silent --noStackTrace --coverage && yarn test:compilation",
     "test:compilation": "tsc --noEmit",
     "start": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
-    "start:mediators:bgd": "cd src/bgd/mediators/bgd-dhis2/ && yarn install && yarn start",
     "start:prod": "ts-node --transpile-only -r tsconfig-paths/register src/index.ts",
-    "db:populate:bgd": "bash createReferenceDataBgd.sh",
-    "db:populate:zmb": "bash createReferenceDataZmb.sh",
-    "db:backup:create": "DEV=true ./backup-metadata.sh $1",
-    "db:backup:restore": "DEV=true ./restore-metadata.sh $1",
-    "db:clear:all": "DEV=true ./clear-all-data.sh $1"
+    "db:populate": "bash createReferenceData.sh",
+    "db:backup:create": "DEV=true ./backup-metadata.sh",
+    "db:backup:restore": "DEV=true ./restore-metadata.sh",
+    "db:clear:all": "DEV=true ./clear-all-data.sh"
   },
   "devDependencies": {
     "csv2json": "^1.4.2",
@@ -26,8 +23,6 @@
     "jsonwebtoken": "^8.3.0"
   },
   "dependencies": {
-    "@opencrvs/commons": "^1.0.0-alpha.2.0",
-    "@opencrvs/user-mgnt": "^1.0.0-alpha.2.0",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
     "@types/csv2json": "^1.4.0",
@@ -36,6 +31,8 @@
     "@types/geojson": "^7946.0.4",
     "@types/hapi": "^17.8.2",
     "@types/hapi-auth-jwt2": "8.0.1",
+    "@types/hapi-pino": "^6.3.0",
+    "@types/inert": "^5.1.2",
     "@types/jest": "^24.0.13",
     "@types/joi": "^14.3.3",
     "@types/json2csv": "^4.2.0",
@@ -51,6 +48,7 @@
     "boom": "^7.3.0",
     "chalk": "^2.4.1",
     "country-data": "^0.0.31",
+    "cross-env": "^6.0.3",
     "crypto": "^1.0.1",
     "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.1.0",
@@ -58,6 +56,7 @@
     "hapi-auth-jwt2": "8.1.0",
     "hapi-pino": "^6.3.0",
     "hapi-sentry": "^2.1.0",
+    "inert": "^5.1.3",
     "jest": "24.7.1",
     "jest-fetch-mock": "^2.1.2",
     "joi": "^14.3.1",
@@ -118,8 +117,7 @@
     ],
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/src/bgd/mediators/bgd-dhis2/"
+      "/node_modules/"
     ]
   }
 }

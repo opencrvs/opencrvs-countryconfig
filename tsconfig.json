@@ -27,7 +27,6 @@
     "scripts",
     "acceptance-tests",
     "src/setupTests.ts",
-    "src/**/*.test.ts",
-    "src/bgd/mediators/bgd-dhis2"
+    "src/**/*.test.ts"
   ]
 }

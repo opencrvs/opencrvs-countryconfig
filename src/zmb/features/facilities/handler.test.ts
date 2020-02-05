@@ -39,7 +39,7 @@ describe('facilities handler receives a request', () => {
         .spyOn(facilitiesService, 'getFacilities')
         .mockReturnValue(Promise.resolve(mockReturn))
 
-      const token = jwt.sign({}, readFileSync('../auth/test/cert.key'), {
+      const token = jwt.sign({}, readFileSync('./test/cert.key'), {
         algorithm: 'RS256',
         issuer: 'opencrvs:auth-service',
         audience: 'opencrvs:resources-user'
@@ -47,7 +47,7 @@ describe('facilities handler receives a request', () => {
 
       const res = await server.server.inject({
         method: 'GET',
-        url: '/zmb/facilities',
+        url: '/facilities',
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -12,7 +12,7 @@
 import { readFileSync } from 'fs'
 import * as jwt from 'jsonwebtoken'
 import { createServer } from '@resources/index'
-import * as locationsService from '@resources/bgd/features/administrative/service/service'
+import * as locationsService from '@resources/zmb/features/administrative/service/service'
 
 describe('Route authorization', () => {
   beforeAll(() => {
@@ -34,7 +34,7 @@ describe('Route authorization', () => {
     const server = await createServer()
     const res = await server.server.inject({
       method: 'GET',
-      url: '/bgd/locations'
+      url: '/locations'
     })
     expect(res.statusCode).toBe(401)
   })
@@ -43,7 +43,7 @@ describe('Route authorization', () => {
     const server = await createServer()
     const res = await server.server.inject({
       method: 'GET',
-      url: '/bgd/locations',
+      url: '/locations',
       headers: {
         Authorization: 'Bearer abc'
       }
@@ -53,14 +53,14 @@ describe('Route authorization', () => {
 
   it('accepts requests with a valid token', async () => {
     const server = await createServer()
-    const token = jwt.sign({}, readFileSync('../auth/test/cert.key'), {
+    const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:resources-user'
     })
     const res = await server.server.inject({
       method: 'GET',
-      url: '/bgd/locations',
+      url: '/locations',
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -70,14 +70,14 @@ describe('Route authorization', () => {
 
   it('blocks requests with a token with invalid signature', async () => {
     const server = await createServer()
-    const token = jwt.sign({}, readFileSync('../auth/test/cert-invalid.key'), {
+    const token = jwt.sign({}, readFileSync('./test/cert-invalid.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:resources-user'
     })
     const res = await server.server.inject({
       method: 'GET',
-      url: '/bgd/locations',
+      url: '/locations',
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -87,7 +87,7 @@ describe('Route authorization', () => {
 
   it('blocks requests with expired token', async () => {
     const server = await createServer()
-    const token = jwt.sign({}, readFileSync('../auth/test/cert.key'), {
+    const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:resources-user',
@@ -100,7 +100,7 @@ describe('Route authorization', () => {
 
     const res = await server.server.inject({
       method: 'GET',
-      url: '/bgd/locations',
+      url: '/locations',
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -110,14 +110,14 @@ describe('Route authorization', () => {
 
   it('blocks requests signed with wrong algorithm (HS512)', async () => {
     const server = await createServer()
-    const token = jwt.sign({}, readFileSync('../auth/test/cert.key'), {
+    const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'HS512',
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:resources-user'
     })
     const res = await server.server.inject({
       method: 'GET',
-      url: '/bgd/locations',
+      url: '/locations',
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -128,14 +128,14 @@ describe('Route authorization', () => {
 
   it('blocks requests signed with wrong audience', async () => {
     const server = await createServer()
-    const token = jwt.sign({}, readFileSync('../auth/test/cert.key'), {
+    const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
       audience: 'opencrvs:NOT_VALID'
     })
     const res = await server.server.inject({
       method: 'GET',
-      url: '/bgd/locations',
+      url: '/locations',
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -146,14 +146,14 @@ describe('Route authorization', () => {
 
   it('blocks requests signed with wrong issuer', async () => {
     const server = await createServer()
-    const token = jwt.sign({}, readFileSync('../auth/test/cert.key'), {
+    const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:NOT_VALID',
       audience: 'opencrvs:resources-user'
     })
     const res = await server.server.inject({
       method: 'GET',
-      url: '/bgd/locations',
+      url: '/locations',
       headers: {
         Authorization: `Bearer ${token}`
       }

@@ -11,8 +11,9 @@
  */
 // tslint:disable no-var-requires
 require('app-module-path').addPath(require('path').join(__dirname, '../'))
-// tslint:enable no-var-requires
 
+// tslint:enable no-var-requires
+import fetch from 'node-fetch'
 import * as Hapi from 'hapi'
 import { readFileSync } from 'fs'
 import getPlugins from '@resources/config/plugins'
@@ -24,16 +25,6 @@ import {
   CHECK_INVALID_TOKEN,
   AUTH_URL
 } from '@resources/constants'
-import { validateFunc } from '@opencrvs/commons'
-import {
-  locationsHandler as bgdLocationsHandler,
-  nidVerificationHandler as bgdNidVerificationHandler,
-  nidVerificationReqSchema as bgdNidVerificationReqSchema,
-  nidResponseSchema as bgdNidResponseSchema
-} from '@resources/bgd/features/administrative/handler'
-import { facilitiesHandler as bgdFacilitiesHandler } from '@resources/bgd/features/facilities/handler'
-import { definitionsHandler as bgdDefinitionsHandler } from '@resources/bgd/features/definitions/handler'
-import { assetHandler as bgdAssetHandler } from '@resources/bgd/features/assets/handler'
 import { locationsHandler as zmbLocationsHandler } from '@resources/zmb/features/administrative/handler'
 import { facilitiesHandler as zmbFacilitiesHandler } from '@resources/zmb/features/facilities/handler'
 import { definitionsHandler as zmbDefinitionsHandler } from '@resources/zmb/features/definitions/handler'
@@ -43,19 +34,62 @@ import {
   requestSchema as zmbGeneratorRequestSchema,
   responseSchema as zmbGeneratorResponseSchema
 } from '@resources/zmb/features/generate/handler'
-import { bgdValidateRegistrationHandler } from '@resources/bgd/features/validate/handler'
-import { bgdBDRISQueueTriggerHandler } from '@resources/bgd/features/bdris-queue/handler'
 import { zmbValidateRegistrationHandler } from '@resources/zmb/features/validate/handler'
 
+import { join } from 'path'
+
 const publicCert = readFileSync(CERT_PUBLIC_KEY_PATH)
+
+export const verifyToken = async (token: string, authUrl: string) => {
+  const res = await fetch(`${authUrl}/verifyToken`, {
+    method: 'POST',
+    body: JSON.stringify({ token }),
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+
+  const body = await res.json()
+
+  if (body.valid === true) {
+    return true
+  }
+
+  return false
+}
+
+const validateFunc = async (
+  payload: any,
+  request: Hapi.Request,
+  checkInvalidToken: string,
+  authUrl: string
+) => {
+  let valid
+  if (checkInvalidToken === 'true') {
+    valid = await verifyToken(
+      request.headers.authorization.replace('Bearer ', ''),
+      authUrl
+    )
+  }
+
+  if (valid === true || checkInvalidToken !== 'true') {
+    return {
+      isValid: true,
+      credentials: payload
+    }
+  }
+
+  return {
+    isValid: false
+  }
+}
 
 export async function createServer() {
   const server = new Hapi.Server({
     host: RESOURCES_HOST,
     port: RESOURCES_PORT,
     routes: {
-      cors: { origin: ['*'] },
-      payload: { maxBytes: 52428800 }
+      cors: { origin: ['*'] }
     }
   })
 
@@ -92,95 +126,45 @@ export async function createServer() {
     }
   })
 
-  // Bangladesh
-
   server.route({
     method: 'GET',
-    path: '/bgd/locations',
-    handler: bgdLocationsHandler,
+    path: '/client-config.js',
+    handler: (request, h) => {
+      const file =
+        process.env.NODE_ENV === 'production'
+          ? './zmb/config/client-config.prod.js'
+          : './zmb/config/client-config.js'
+      // @ts-ignore
+      return h.file(join(__dirname, file))
+    },
     options: {
+      auth: false,
       tags: ['api'],
-      description: 'Returns Bangladesh locations.json'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/bgd/facilities',
-    handler: bgdFacilitiesHandler,
-    options: {
-      tags: ['api'],
-      description: 'Returns Bangladesh facilities.json'
+      description: 'Serves client configuration as a static file'
     }
   })
 
   server.route({
     method: 'GET',
-    path: '/bgd/assets/{file}',
-    handler: bgdAssetHandler,
+    path: '/login-config.js',
+    handler: (request, h) => {
+      const file =
+        process.env.NODE_ENV === 'production'
+          ? './zmb/config/login-config.prod.js'
+          : './zmb/config/login-config.js'
+      // @ts-ignore
+      return h.file(join(__dirname, file))
+    },
     options: {
+      auth: false,
       tags: ['api'],
-      description: 'Serves country specific assets, unprotected'
+      description: 'Serves login client configuration as a static file'
     }
   })
 
   server.route({
     method: 'GET',
-    path: '/bgd/definitions/{application}',
-    handler: bgdDefinitionsHandler,
-    options: {
-      tags: ['api'],
-      description:
-        'Serves definitional metadata like form definitions, language files and pdf templates'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/bgd/validate/registration',
-    handler: bgdValidateRegistrationHandler,
-    options: {
-      tags: ['api'],
-      description:
-        'Validates a registration and if successful returns a BRN for that record'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/bgd/bdris-queue/trigger',
-    handler: bgdBDRISQueueTriggerHandler,
-    options: {
-      auth: false, // Unprotected so that it may be called by the OpenHIM without a token
-      // This is safe as only services in the docker swarm can access this endpoint and
-      // even if it was compromised all that could be done was to trigger extra queue checks
-      tags: ['api'],
-      description:
-        'Triggers the queue to try send outstanding registration for BDRIS validation'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/verify/nid/bgd',
-    handler: bgdNidVerificationHandler,
-    options: {
-      tags: ['api'],
-      validate: {
-        payload: bgdNidVerificationReqSchema
-      },
-      response: {
-        schema: bgdNidResponseSchema
-      },
-      description: 'Verify NID for Bangladesh'
-    }
-  })
-
-  // Zambia
-
-  server.route({
-    method: 'GET',
-    path: '/zmb/locations',
+    path: '/locations',
     handler: zmbLocationsHandler,
     options: {
       tags: ['api'],
@@ -190,7 +174,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/zmb/facilities',
+    path: '/facilities',
     handler: zmbFacilitiesHandler,
     options: {
       tags: ['api'],
@@ -200,7 +184,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/zmb/assets/{file}',
+    path: '/assets/{file}',
     handler: zmbAssetHandler,
     options: {
       tags: ['api'],
@@ -210,7 +194,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/zmb/definitions/{application}',
+    path: '/definitions/{application}',
     handler: zmbDefinitionsHandler,
     options: {
       tags: ['api'],
@@ -221,7 +205,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/zmb/validate/registration',
+    path: '/validate/registration',
     handler: zmbValidateRegistrationHandler,
     options: {
       tags: ['api'],
@@ -232,7 +216,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/zmb/generate/{type}',
+    path: '/generate/{type}',
     handler: zmbGeneratorHandler,
     options: {
       tags: ['api'],

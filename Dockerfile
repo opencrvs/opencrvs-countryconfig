@@ -4,24 +4,15 @@ WORKDIR /usr/src/app
 # Override the base log level (info).
 ENV NPM_CONFIG_LOGLEVEL warn
 
-# Install npm dependencies first (so they may be cached if dependencies don't change)
+# # Install npm dependencies first (so they may be cached if dependencies don't change)
 COPY package.json package.json
-COPY package.json package.json
-COPY packages/resources/tsconfig.json packages/resources/tsconfig.json
-COPY packages/resources/package.json packages/resources/package.json
-COPY packages/commons/package.json packages/commons/package.json
-COPY packages/user-mgnt/package.json packages/user-mgnt/package.json
+COPY tsconfig.json tsconfig.json
 COPY yarn.lock yarn.lock
+COPY src src
 RUN yarn install --production
 
-# Copy package source
-COPY --from=opencrvs-build packages/resources/src packages/resources/src
-
-# Copy dependant package(s) source
-COPY --from=opencrvs-build packages/commons packages/commons
-COPY --from=opencrvs-build packages/user-mgnt packages/user-mgnt
-
 EXPOSE 3040
-WORKDIR /usr/src/app/packages/resources
 
-CMD yarn start:prod
+ADD start-prod.sh /usr/src/app
+RUN chmod +x ./start-prod.sh
+CMD ["./start-prod.sh"]
