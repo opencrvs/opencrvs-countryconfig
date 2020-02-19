@@ -25,3 +25,6 @@ data
 
 src/zmb/features/administrative/generated/locations.json
 src/tests/locations.json
+
+cypress/screenshots
+cypress/videos
