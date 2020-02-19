@@ -38,15 +38,15 @@
 Cypress.Commands.add('login', (userType, options = {}) => {
   const users = {
     fieldWorker: {
-      username: 'sakibal.hasan',
+      username: 'kalusha.bwalya',
       password: 'test'
     },
     registrar: {
-      username: 'mohammad.ashraful',
+      username: 'kennedy.mweene',
       password: 'test'
     },
     sysAdmin: {
-      username: 'shahriar.nafis',
+      username: 'emmanuel.mayuka',
       password: 'test'
     }
   }

@@ -1,11 +1,10 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [OpenCRVS Resources Module](#opencrvs-resources-module)
 - [Developer commands](#developer-commands)
-    - [Create new factory reset, metadata database backup zips](#create-new-factory-reset-metadata-database-backup-zips)
-    - [Example sequence of scripts that might run when populating reference data for Bangladesh](#example-sequence-of-scripts-that-might-run-when-populating-reference-data-for-bangladesh)
+  - [Create new factory reset, metadata database backup zips](#create-new-factory-reset-metadata-database-backup-zips)
+  - [Example sequence of scripts that might run when populating reference data](#example-sequence-of-scripts-that-might-run-when-populating-reference-data-for-bangladesh)
 - [Resources package features](#resources-package-features)
   - [Administrative](#administrative)
   - [Assets](#assets)
@@ -17,8 +16,7 @@
     - [Data types](#data-types)
     - [Properties of register.json](#properties-of-registerjson)
     - [registerForm](#registerform)
-    - [birth](#birth)
-          - [](#)
+    - [birth](#birth) - [](#)
     - [death](#death)
   - [Generate](#generate)
   - [Languages](#languages)
@@ -85,7 +83,7 @@ This will have to be done for each country we are supporting:
 9. Commit and push the new db dump archive files that have been created in your country folder. Travis will automatically restore from these when setting the `--clear-data` & `--restore-metadata` props in deployment yarn commands in root.
 10. The script `yarn db:backup:restore <<insert alpha3 country code>>` can be used to restore from existing zips and is used by Travis for this purpose.
 
-### Example sequence of scripts that might run when populating reference data for Bangladesh
+### Example sequence of scripts that might run when populating reference data
 
 Running the populate command runs the following commands sequentially in our example implementations for Zambia and Bangladesh. The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production.**
 
