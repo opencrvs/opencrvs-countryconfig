@@ -16,12 +16,12 @@ context('User Integration Test', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it('create user as SYSTEM ADMIN and to activate account login for the first time as FIELD AGENT', () => {
+  it.skip('create user as SYSTEM ADMIN and to activate account login for the first time as FIELD AGENT', () => {
     // LOG IN AS SYSTEM ADMIN
     cy.login('sysAdmin')
     cy.createPin()
     cy.get('#add-user').click()
-    cy.get('#searchInputText').type('Baniajan')
+    cy.get('#searchInputText').type('Mkushi')
     cy.get('#searchInputIcon').click()
     cy.get('#location-0').click()
     cy.get('#modal_select').click()
@@ -76,7 +76,7 @@ context('User Integration Test', () => {
     cy.get('#setup-login-button').click()
   })
 
-  it('should reset username successfully', () => {
+  it.skip('should reset username successfully', () => {
     cy.get('#login-forgot-password').click()
 
     // Forgotten item form appears
@@ -114,7 +114,7 @@ context('User Integration Test', () => {
     cy.get('#login-step-one-box').should('be.visible')
   })
 
-  it('should reset password successfully', () => {
+  it.skip('should reset password successfully', () => {
     cy.initializeFakeTimers()
     cy.get('#login-forgot-password').click()
 

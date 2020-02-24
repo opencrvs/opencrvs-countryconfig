@@ -19,11 +19,11 @@ context('Certificate Integration Test', () => {
   it('Tests from application to certification using minimum input', () => {
     // REGISTER APPLICATION
     cy.initializeFakeTimers()
-    cy.registerApplicationWithMinimumInput()
+    cy.registerApplicationWithMinimumInput('Sadman', 'Ilham')
 
     // GO TO PRINT TAB
+    cy.tick(40000)
     cy.get('#tab_print').click()
-    cy.tick(20000)
 
     // DOWNLOAD AND GO FOR PRINT
     cy.downloadFirstApplication()
@@ -35,7 +35,7 @@ context('Certificate Integration Test', () => {
     cy.get('#type_MOTHER').click()
     cy.get('#confirm_form').click()
     cy.get('#verifyPositive').click()
-    cy.get('#Continue').click()
+    // cy.get('#Continue').click()
     cy.tick(2000)
 
     // CHECK IF CERTIFICATE APPEARS IN PDF VIEWER

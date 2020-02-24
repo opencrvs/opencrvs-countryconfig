@@ -22,7 +22,28 @@ declare namespace Cypress {
     verifyLandingPageVisible: () => void
     initializeFakeTimers: () => void
     downloadFirstApplication: () => void
-    registerApplicationWithMinimumInput: () => void
-    declareApplicationWithMinimumInput: () => void
+    enterMaximumInput: (firstName: string, lastName: string) => void
+    enterDeathMaximumInput: () => void
+    registerApplicationWithMinimumInput: (
+      firstName: string,
+      lastName: string
+    ) => void
+    registerApplicationWithMaximumInput: (
+      firstName: string,
+      lastName: string
+    ) => void
+    declareApplicationWithMinimumInput: (
+      firstName: string,
+      lastName: string
+    ) => void
+    declareApplicationWithMaximumInput: (
+      firstName: string,
+      lastName: string
+    ) => void
+    declareDeathApplicationWithMinimumInput: () => void
+    registerDeathApplicationWithMinimumInput: () => void
+    declareDeathApplicationWithMaximumInput: () => void
+    registerDeathApplicationWithMaximumInput: () => void
+    someoneElseJourney: () => void
   }
 }
