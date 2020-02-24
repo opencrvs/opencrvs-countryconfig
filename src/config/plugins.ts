@@ -17,6 +17,7 @@ import { logger } from '@resources/logger'
 
 export default function getPlugins() {
   const plugins: any[] = [
+    require('inert'),
     JWT,
     {
       plugin: Pino,

@@ -5697,7 +5697,7 @@
                   }
                 },
                 {
-                  "name": "addressLine1CityOption",
+                  "name": "addressLine2CityOption",
                   "type": "TEXT",
                   "label": {
                     "defaultMessage": "Street / Plot Number",
