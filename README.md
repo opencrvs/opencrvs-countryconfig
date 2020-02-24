@@ -1,52 +1,129 @@
+<p align="center"> <a href="https://imgur.com/mGNCIvh"><img src="https://i.imgur.com/mGNCIvh.png" title="source: imgur.com" / style="max-width:100%;"width="72" height="72"></a>
+</p>
+<h3 align="center">Zambia resources module for OpenCRVS</h3>
+<p align="center">An example configuration
+<br>
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [OpenCRVS Resources Module](#opencrvs-resources-module)
+
+- [What is the resources module?](#what-is-the-resources-module)
+- [How do I run the module alongside the OpenCRVS core?](#how-do-i-run-the-module-alongside-the-opencrvs-core)
+- [What is in the Zambia resources module repository?](#what-is-in-the-zambia-resources-module-repository)
+- [Why do we need this resources module?](#why-do-we-need-this-resources-module)
 - [Developer commands](#developer-commands)
-  - [Create new factory reset, metadata database backup zips](#create-new-factory-reset-metadata-database-backup-zips)
-  - [Example sequence of scripts that might run when populating reference data](#example-sequence-of-scripts-that-might-run-when-populating-reference-data-for-bangladesh)
-- [Resources package features](#resources-package-features)
+  - [How can I clear the database, and repopulate it after I have changed my facilities, administrative locations or test employees?](#how-can-i-clear-the-database-and-repopulate-it-after-i-have-changed-my-facilities-administrative-locations-or-test-employees)
+  - [What are the example sequence of scripts that run when populating the reference data?](#what-are-the-example-sequence-of-scripts-that-run-when-populating-the-reference-data)
+- [Can you explain the resources module features in more detail?](#can-you-explain-the-resources-module-features-in-more-detail)
   - [Administrative](#administrative)
   - [Assets](#assets)
   - [Definitions](#definitions)
   - [Employees](#employees)
   - [Facilities](#facilities)
-  - [Forms](#forms)
-    - [Documentation on how forms work](#documentation-on-how-forms-work)
-    - [Data types](#data-types)
-    - [Properties of register.json](#properties-of-registerjson)
-    - [registerForm](#registerform)
-    - [birth](#birth) - [](#)
-    - [death](#death)
   - [Generate](#generate)
-  - [Languages](#languages)
+  - [Languages - How do I internationalise or update the OpenCRVS client text?](#languages---how-do-i-internationalise-or-update-the-opencrvs-client-text)
   - [Templates](#templates)
   - [Validate](#validate)
+  - [Forms](#forms)
+- [DHow do I configure the birth and death registration form fields?](#dhow-do-i-configure-the-birth-and-death-registration-form-fields)
+  - [Data types](#data-types)
+  - [Properties of register.json](#properties-of-registerjson)
+  - [registerForm](#registerform)
+  - [birth](#birth)
+  - [death](#death)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<br>
 
-# OpenCRVS Resources Module
+**This is the Zambia resources companion module for OpenCRVS. Ensure that you are already running [OpenCRVS](https://github.com/opencrvs/opencrvs-core) before using.**
 
-One of the key dependencies and enablers for OpenCRVS is country configuratoion and a reference data source. This source is bespoke for every implementing nation. The resources package imports country repositories.
+<br>
 
-The default format for a country specific repository are as follows:
+## What is the resources module?
+
+This is an example country configuration package for the OpenCRVS core. OpenCRVS requires a country configuration in order to run. The resources package supplies OpenCRVS with the following:
+
+- Default, factory settings database backup zips containing development users, facilities and administrative locations for the nation saved as FHIR resources.
+
+- Birth and Death registration form configuration as JSON
+
+- Birth and Death certificate PDF templates as JSON
+
+- Internationalised text as JSON
+
+- SMS gateway provider selection between [Clickatell](https://www.clickatell.com/) & [Infobip](https://www.infobip.com/)
+
+- Country specific environment variables in Docker compose files
+
+- Country specific client config variables in .js files
+
+- Logo for the Civil Registrar department that appears on the certificates and on the review page of the UI
+
+- Any 3rd party API integrations you require into your OpenCRVS core
+
+<br>
+
+## How do I run the module alongside the OpenCRVS core?
+
+1. Ensure that you have followed the OpenCRVS core steps 1 to 6 [here](https://github.com/opencrvs/opencrvs-core#how-do-i-set-up-a-development-environment), and that OpenCRVS core is running.
+
+2. Run `CERT_PUBLIC_KEY_PATH=<where your core repo is>/.secrets/public-key.pem yarn start` to run the resources module
+
+3. If this is your first time, populate the OpenCRVS database. Run `yarn db:backup:restore`
+
+4. OpenCRVS should now be ready to view at:
+
+<br>
+
+## What is in the Zambia resources module repository?
+
+One of the key dependencies and enablers for OpenCRVS is country configuration and a reference data source. This source is bespoke for every implementing nation. If you would like to create your own country implementation, we recommend that you duplicate this repository and use it as a template. So what does it contain?
+
+1. On the root level, this repository contains:
+
+- [Cypress](https://www.cypress.io/) end-to-end tests that can be run in continuous integration.
+
+- Docker compose files to set environment variables for your nation and the SMS provider.
 
 - Backups _(Backup zips of default reference data for a nation, for a factory reset, clean installation or for local development purposes.)_
-- Config _(Country specific environment variables, client config variables and country specific docker compose files)_
-- Mediators _(Country specific API integrations e.g. DHIS2)_
 
-The features folder in a country repo can be fully customised but ususally contains:
+2. The [src](https://github.com/opencrvs/opencrvs-zambia/tree/master/src) folder contians the configuration to run the resources server, that provides the logo assets, internationalised text, form configuration and certificate template configuration to the OpenCRVS core client as JSON.
 
-- Administrative _(Administrative division data. A portion of a country delineated for the purpose of administration, allowing registrations to be coupled to locations, including GeoJSON map data that enables an interactive map of the country, in the performance appllication and statistical information about a location such as crude birth rate and estimated populations allowing OpenCRVS the ability to calculate performance reports)_
-- Assets _(Country specific image assets for customisation of OpenCRVS. USually the national civil registration logo)_
-- Definitions _(Endpoints to return customisable form config and copy configuration to the client)_
-- Employees _(The staff required to undertake the functions of civil registration)_
-- Facilities _(The places where civil registration and vital events such as births/deaths occur)_
-- Forms _(A JSON file to configure the civil registration forms)_
-- Generate _(Methods to generate the event registration numbers based on country requirements. Format of the number can be bespoke or default.)_
-- Languages _(A JSON file to configure all the text copy used in OpenCRVS and all languages. Can easily be imported into a Content Management System)_
-- Templates _(A JSON file to configure the design of the birth and death certificate)_
-- Validate _(A place to optionally externally validate registration applications on-the-fly during the registration process. This can be used if a legacy system exiss and OpenCRVS is being gradually piloted alongside an existing system. Can ensure new registrations are saved to a legacy system.)_
+3. Inside the src > (your country folder - named using alpha3 country code), e.g. [zmb](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb) you can find
+
+- Client config js files, loaded into the OpenCRVS client, allowing you to configure development and production things like:
+
+* Default logout timeout length in milliseconds
+* Cost of the certificate generation to the public
+* [Sentry](https://sentry.io/) endpoint
+* [Logrocket](https://logrocket.com/) endpoint
+
+- The features folder, containing the following core functionality for configuration:
+
+* Administrative: _(Administrative division data. A portion of a country delineated for the purpose of administration, allowing registrations to be coupled to locations.)_ The administrative divisions are saved into OpenCRVS as [FHIR Locations](https://www.hl7.org/fhir/location.html). You can attach GeoJSON map data to each location, to potentially generate an interactive map of the country, and historical statistical information such as crude birth rates and estimated population rates disagregated by gender, allowing OpenCRVS the ability to calculate detailed performance reports.)
+
+* Assets: Country specific image assets for customisation of OpenCRVS. USually the national civil registration logo
+
+* Definitions: Endpoints to return the customisable form config, assets and internationalised text to the client
+
+* Employees: The staff required to undertake the functions of civil registration. The employees are saved into OpenCRVS as [FHIR Practitioners](https://www.hl7.org/fhir/practitioner.html)
+
+* Facilities: The places where civil registration and vital events such as births & deaths occur. These are also saved into OpenCRVS as [FHIR Locations](https://www.hl7.org/fhir/location.html)
+
+* Forms: A JSON file to configure the civil registration forms
+
+* Generate: Methods to generate the event registration numbers (Often referred to as a BRN: Birth Registration Number or DRN: Death Registration Number) based on country requirements. Format of the number can be bespoke or default.
+
+* Languages: A JSON file to configure all the text copy used in OpenCRVS and all languages. Can easily be imported into a Content Management System.
+
+* Templates: A JSON file to configure the design of the birth and death certificates
+
+* Validate: A place to optionally externally validate registration applications on-the-fly during the registration process. This can be used if a legacy system exiss and OpenCRVS is being gradually piloted alongside an existing system. Can ensure new registrations are saved to a legacy system.
+
+<br>
+
+## Why do we need this resources module?
 
 The features in this package are designed to import and convert the reference data above into the FHIR standard, then power APIs or populate the OpenCRVS [Hearth](https://github.com/jembi/hearth) NoSQL database, via the OpenCRVS [OpenHIM](http://openhim.org/) interoperability layer.
 
@@ -56,48 +133,68 @@ Given the [variety of administrative divisions between nations](https://en.wikip
 
 Some governments, _(as in the case of the government of Bangladesh),_ may have a central repository for some reference data accessible via APIs.
 
-Other governments may supply the data in a spreadsheet format.
+Other governments may supply reference data in a spreadsheet format that this module can import and convert.
 
-What OpenCRVS does provide, is an example approach and scripts showing how this data can be imported. Zambia is used as an OpenSource example and Bangladesh implementation (including multiple API integrations) can be partially released on request.
+What this module provides, is an example approach, and scripts showing how this data can be imported.
 
-By following the examples in the features of this package and example repositories, OpenCRVS illustrates a scalable approach to digitision and interoperability.
+Zambia is used as an OpenSource example and Bangladesh implementation (including multiple API integrations) can be partially released on request.
 
-**Strategically, OpenCRVS will include in its content management system the capability to manage all of these resources. It is planned that this functionality will be gradually released in future versions of OpenCRVS throughout 2020.**
+By following the examples in the features of this package you can see how you can customise OpenCRVS for your requirements.
 
-# Developer commands
+**Strategically, OpenCRVS will include in its content management system the capability to manage all of these resources in the future. It is planned that this functionality will be gradually released in future versions of OpenCRVS throughout 2020.**
 
-Once all data sources have been readied, then simple command should be able to be run by a continuous integration (Travis) or a developer, in order to populate and update a local or production OpenCRVS environment with the necessary reference data.
+<br>
 
-### Create new factory reset, metadata database backup zips
+## Developer commands
 
-This will have to be done for each country we are supporting:
+Some simple commands should be able to be run by a continuous integration system (E.G. [Travis](https://travis-ci.com/)) or by a developer, in order to populate and update a local or production OpenCRVS environment with the necessary reference data.
 
-1. Start the dev environment
-2. Clear any existing data `yarn db:clear:all` (On a Mac you may need to manually delete the config databases directly in Mongo)
-3. Quit and restart the dev environment
-4. Log into the OpenHIM at [here](http://localhost:8888) - default password is root@openhim.org:openhim-password (login will fail a security check as we are using self signed certs by default, follow the instructions in the error message in Chrome to accept cert, then try again)
-5. Once logged in click Export/Import then drop the file `infrastructure/openhim-base-config.json` into the import box and click 'Import'
-6. Click Channels and check all have loaded successfully.
-7. Populate reference data for your country requirements from the resources package. `yarn db:populate:<<insert alpha3 country code>>` followed by any custom API secrets you may need
-8. `yarn db:backup:create <<insert country code>>` will create factory reset zips for your use
-9. Commit and push the new db dump archive files that have been created in your country folder. Travis will automatically restore from these when setting the `--clear-data` & `--restore-metadata` props in deployment yarn commands in root.
-10. The script `yarn db:backup:restore <<insert alpha3 country code>>` can be used to restore from existing zips and is used by Travis for this purpose.
+### How can I clear the database, and repopulate it after I have changed my facilities, administrative locations or test employees?
 
-### Example sequence of scripts that might run when populating reference data
+1. Clear any existing data by running `yarn db:clear:all` (On a Mac you may need to manually delete the "config" and "openhim-dev" databases directly in Mongo, using a GUI tool like [Robo3T](https://robomongo.org/))
 
-Running the populate command runs the following commands sequentially in our example implementations for Zambia and Bangladesh. The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production.**
+2. Quit and restart the dev environment
+
+3. Log into the OpenHIM at [here](http://localhost:8888) - default login is root@openhim.org:openhim-password (login will fail a security check as we are using self signed certs by default, follow the instructions in the error message in Chrome to accept cert, then try again)
+
+4. Once logged in click Export/Import then drop the file `infrastructure/openhim-base-config.json` into the import box and click 'Import'
+
+5. Click Channels and check all have loaded successfully.
+
+6. Populate reference data for your country requirements from the resources package. `yarn db:populate:<<insert alpha3 country code>>` followed by any custom API secrets you may need if your reference data is populated by APIs.
+
+7. Once you are fully populateed and you are happy with your configuration, run `yarn db:backup:create <<insert country code>>` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Travis will automatically restore from these when setting the `--clear-data` & `--restore-metadata` props in deployment yarn commands in OpenCRVS core. The script `yarn db:backup:restore <<insert alpha3 country code>>` can be used to restore from existing zips and is also used by Travis for this purpose.
+
+<br>
+
+### What are the example sequence of scripts that run when populating the reference data?
+
+Running the `yarn db:populate:<<insert alpha3 country code>>` command runs the following commands sequentially in our example implementations for Zambia. The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production.**
+
+1. assign-admin-structure-to-locations.ts
 
 <!-- prettier-ignore -->
 ```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/assign-admin-structure-to-locations.ts```
 
+Imports administrative divisions from a relevant source _(Either a CSV file or an API)_ converts the data into [FHIR Location](https://www.hl7.org/fhir/location.html) objects, using the [OpenCRVS interpretation](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc), and saves JSON files for applying GeoJSON map data later into the extension array. Some custom fields for the country can be utilised in the description or identifier fields.
+
+2. assign-geodata-to-locations.ts
+
 <!-- prettier-ignore -->
 ```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/assign-geodata-to-locations.ts```
+
+Loads the [FHIR Location](https://www.hl7.org/fhir/location.html) data from the JSON, and compares the names of the individual locations with a source GeoJSON map from [humdata.org](https://data.humdata.org/dataset/administrative-boundaries-of-bangladesh-as-of-2015). If the names match, then the appropriate GeoJSON map is applied to the Location [extension array](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc#L36). Warnings will be listed for any location which the script has been unable to confidently map GeoJSON data.
+
+3. update-location-data.ts
 
 <!-- prettier-ignore -->
 ```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/update-location-data.ts```
 
-<!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/prepare-statistical-data.ts```
+Once the GeoJSON has been assigned to the location objects, then all the updated location objects are loaded into the OpenCRVS database via [Hearth](https://github.com/jembi/hearth).
+
+4. prepare-statistical-data.ts, add-statistical-data.ts & update-statistical-data.ts
+   <!-- prettier-ignore -->
+   ```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/prepare-statistical-data.ts```
 
 <!-- prettier-ignore -->
 ```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/add-statistical-data.ts```
@@ -105,13 +202,9 @@ Running the populate command runs the following commands sequentially in our exa
 <!-- prettier-ignore -->
 ```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/update-statistical-data.ts```
 
-Imports administrative divisions from a relevant source _(For Bangladesh, this is the A2I API,)_ converts the data into [FHIR Location](https://www.hl7.org/fhir/location.html) objects, using the [OpenCRVS interpretation](https://github.com/jembi/opencrvs-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc), and saves JSON files for applying GeoJSON map data later into the extension array. Some custom fields for the country can be utilised in the description or identifier fields.
+Then statistical information is prepared from a source _(Such as population estimates for male and female populations and the statistical crude birth rate (a ratio used in the calcutation of expected numbers of birth for each region and defined by a governments statistical department.) from either a CSV file or an API)_ and added to each [FHIR Location](https://www.hl7.org/fhir/location.html).
 
-Loads the FHIR Location data from the JSON, and compares the names of the individual locations with a source GeoJSON map from [humdata.org](https://data.humdata.org/dataset/administrative-boundaries-of-bangladesh-as-of-2015). If the names match, then the appropriate GeoJSON map is applied to the Location [extension array](https://github.com/jembi/opencrvs-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc#L36). Warnings will be listed for any location which the script has been unable to confidently map GeoJSON data.
-
-Once the GeoJSON has been assigned to the location objects, then all the updated location objects are loaded into Hearth.
-
-Then statistical information is added to each localtion, such as population estimates for male and female populations and the statistical crude birth rate (a ratio used in the calcutation of expected numbers of birth for each region and defined by a governments statistical department.)
+5. prepare-source-facilities.ts & assign-facilities-to-locations.ts
 
 <!-- prettier-ignore -->
 ```ts-node -r tsconfig-paths/register src/bgd/features/facilities/scripts/prepare-source-facilities.ts```
@@ -119,9 +212,11 @@ Then statistical information is added to each localtion, such as population esti
 <!-- prettier-ignore -->
 ```ts-node -r tsconfig-paths/register src/bgd/features/facilities/scripts/assign-facilities-to-locations.ts```
 
-As an example of how to prepare data from a CSV file into FHIR Locations. This script converts a facility CSV file for civil registration and health facilities where births and deaths are registered and events occur respectively. The standard is flexible.
+An example of how to prepare facility information data from a CSV file into [FHIR Locations](https://www.hl7.org/fhir/location.html). This script converts a facility CSV file for civil registration and health facilities where births and deaths are registered and events occur respectively.
 
-Converts the facilities JSON file into [FHIR Location](https://www.hl7.org/fhir/location.html) objects, using the [OpenCRVS interpretation](https://github.com/jembi/opencrvs-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc) for buildings, setting the [type](https://github.com/jembi/opencrvs-fhir-templates/blob/master/offices/offices-resource.jsonc#L18) of building appropriately.
+Converts the facilities JSON file into [FHIR Location](https://www.hl7.org/fhir/location.html) objects, using the [OpenCRVS interpretation](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc) for buildings, setting the [type](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/offices/offices-resource.jsonc#L18) of building appropriately.
+
+6. prepare-source-employees.ts & assign-employees-to-practitioners.ts
 
 <!-- prettier-ignore -->
 ```ts-node -r tsconfig-paths/register src/bgd/features/employees/scripts/prepare-source-employees.ts```
@@ -129,55 +224,87 @@ Converts the facilities JSON file into [FHIR Location](https://www.hl7.org/fhir/
 <!-- prettier-ignore -->
 ```ts-node -r tsconfig-paths/register src/bgd/features/employees/scripts/assign-employees-to-practitioners.ts```
 
-As an example of how to prepare data from a CSV file into FHIR Practitioners and PractitionerRoles. The standard is flexible The list is a test list based on the users and permissions in the [user-mgnt package.](https://github.com/jembi/OpenCRVS/blob/master/packages/user-mgnt/resources/populate.ts)
+An example of how to prepare employee data from a CSV file into [FHIR Practitioners](https://www.hl7.org/fhir/practitioner.html) and [PractitionerRoles](https://www.hl7.org/fhir/practitionerrole.html) that assign the employee to a specific office and sets their speciality. The list supplied is a test list based on the users and permissions in the [user-mgnt package.](https://github.com/opencrvs/opencrvs-core/blob/master/packages/user-mgnt/resources/populate.ts)
 
-Converts the employees JSON file into [FHIR Practitioner](https://www.hl7.org/fhir/practitioner.html) and [FHIR PractitionerRole](https://www.hl7.org/fhir/practitionerrole.html) objects, using the [OpenCRVS interpretation](https://github.com/jembi/opencrvs-fhir-templates/blob/master/employee/employee-resource.jsonc) for employees, setting the [code](https://github.com/jembi/opencrvs-fhir-templates/blob/master/employee/employee-resource.jsonc#L38) of the employee's role appropriately and also critically [listing the working locations](https://github.com/jembi/opencrvs-fhir-templates/blob/master/employee/employee-resource.jsonc#L43) of the employee. These can be buildins or administrative divisions. Ideally they should include both in the array.
+Converts the employees JSON file into [FHIR Practitioner](https://www.hl7.org/fhir/practitioner.html) and [FHIR PractitionerRole](https://www.hl7.org/fhir/practitionerrole.html) objects, using the [OpenCRVS interpretation](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/employee/employee-resource.jsonc) for employees, setting the [code](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/employee/employee-resource.jsonc#L38) of the employee's role appropriately and also critically [listing the working locations](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/employee/employee-resource.jsonc#L43) of the employee. These can be buildins or administrative divisions. Ideally they should include both in the array.
 
-# Resources package features
+<br>
 
-## Administrative
+## Can you explain the resources module features in more detail?
+
+<br>
+
+### Administrative
 
 This feature, imports and converts the administrative divisions for a country into [FHIR Location](https://www.hl7.org/fhir/location.html) objects, applies a GeoJSON map to each location and then saves the data to FHIR. The process can be interrupted to export a CSV file for manual cross-checking.
 
-[This FHIR standard is followed.](https://github.com/jembi/opencrvs-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc)
+[This FHIR standard is followed.](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc)
 
----
+<br>
 
-## Assets
+### Assets
 
 Currently the only configurable asset is the civil registration logo used in the review and certificate process.
 
----
+<br>
 
-## Definitions
+### Definitions
 
 Contains endpoints that must be duplicated **as-is** for each country in order to return configurable form fields and text copy for localisations to the client.
 
----
+<br>
 
-## Employees
+### Employees
 
 This feature, imports and converts a test user and employee list from a csv file into [FHIR Practitioner](https://www.hl7.org/fhir/practitioner.html) and [FHIR PractitionerRole](https://www.hl7.org/fhir/practitionerrole.html) objects to manage permissions and map registrations to staff members, so that their performance can be tracked. The facility id for the users working location must match a facility unique id
 
-[This FHIR standard is followed.](https://github.com/jembi/opencrvs-fhir-templates/blob/master/employee/employee-resource.jsonc)
+[This FHIR standard is followed.](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/employee/employee-resource.jsonc)
 
----
+<br>
 
-## Facilities
+### Facilities
 
 This feature, imports and converts civil registration offices and health facilities into [FHIR Location](https://www.hl7.org/fhir/location.html) objects. Each facility must have a unique id.
 
-[This FHIR standard is followed.](https://github.com/jembi/opencrvs-fhir-templates/blob/master/offices/offices-resource.jsonc)
+[This FHIR standard is followed.](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/offices/offices-resource.jsonc)
 
----
+<br>
 
-## Forms
+### Generate
 
-This is probably the most important capability of OpenCRVS. How should a country configure OpenCRVS vital event application forms for their needs? This section describes the available questions that a country can choose from for each event and therefore how the JSON file should be constructed.
+You can configure your registration number format any way you like in these scripts.
 
-### Documentation on how forms work
+<br>
 
-The application forms are generated by a json file named register.json which contains a large object with properties registerForm and certificateCollectorDefinition. The property registerForm holds the field definitions which are used only for application forms where the latter one holds the data for certificate collector forms. Each of those two properties has definitions for forms separated by properties of corresponding events. That means, registerForm.birth holds the form field definitions only for application forms of the birth event whereas certificateCollectorDefinition.death stands for certificate collector forms of death event.
+### Languages - How do I internationalise or update the OpenCRVS client text?
+
+Internationalisation and languages can be configured in [register.json](https://github.com/opencrvs/opencrvs-zambia/blob/master/src/zmb/features/languages/generated/register.json) following the [FormatJS React Intl package](https://github.com/formatjs/react-intl) approach.
+
+OpenCRVS currently supports the standard Roman and Latin character set and Bengali. In OpenCRVS Alpha, we will need to assist you to configure core to support a new language in the language select in a pull request. We will gladly provide support to you if you want to provide translations and hugely welcome all localisation efforts.
+
+<br>
+
+### Templates
+
+TODO: document cerrificate templates
+
+<br>
+
+### Validate
+
+These scripts allow you to interrupt the registration process before the birth registration number has been assigned, in case you want to integrate with a legacy civil registration system.
+
+<br>
+
+### Forms
+
+This is probably the most important capability of OpenCRVS. How should a country configure OpenCRVS vital event application forms for their needs? Follow the documentation below ...
+
+<br>
+
+## DHow do I configure the birth and death registration form fields?
+
+The application forms are generated by a json file named [register.json](https://github.com/opencrvs/opencrvs-zambia/blob/master/src/zmb/features/forms/register.json) which contains a large object with properties registerForm and certificateCollectorDefinition. The property registerForm holds the field definitions which are used only for application forms where the latter one holds the data for certificate collector forms. Each of those two properties has definitions for forms separated by properties of corresponding events. That means, registerForm.birth holds the form field definitions only for application forms of the birth event whereas certificateCollectorDefinition.death stands for certificate collector forms of death event.
 
 So, the overall hierarchy looks like,
 
@@ -342,8 +469,6 @@ This object holds sections for birth application forms. All sections are contain
     - OTHER -> **`registrationPhone`**
 
       When the primary contact point is another person, below `contactRelationshipOther` field, this `registrationPhone` is shown. As like before, it also maps to `registration.contactPhoneNumber` in graphql.
-
-######
 
 2.  ### `child`
     This section takes input for the information of the child. It has only one view group child-view-group.
@@ -1388,27 +1513,3 @@ This object holds sections for death application forms. All sections are in sect
 
   - #### `uploadDocFromCounsilor`
     This field stands for the ward councilor proof having only one option Letter from ward councillor.
-
----
-
-## Generate
-
-TODO: document BRN / DRN generation
-
----
-
-## Languages
-
-TODO: document localisation
-
----
-
-## Templates
-
-TODO: document cerrificate templates
-
----
-
-## Validate
-
-TODO: document validation process
