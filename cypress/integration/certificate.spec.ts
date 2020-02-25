@@ -22,8 +22,8 @@ context('Certificate Integration Test', () => {
     cy.registerApplicationWithMinimumInput('Sadman', 'Ilham')
 
     // GO TO PRINT TAB
-    cy.tick(40000)
     cy.get('#tab_print').click()
+    cy.wait(30000)
 
     // DOWNLOAD AND GO FOR PRINT
     cy.downloadFirstApplication()
