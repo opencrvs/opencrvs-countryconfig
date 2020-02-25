@@ -20,7 +20,7 @@ context('Search Integration Test', () => {
     cy.initializeFakeTimers()
 
     // DECLARE APPLICATION AS FIELD AGENT
-    cy.declareApplicationWithMinimumInput()
+    cy.declareApplicationWithMinimumInput('Annina', 'Wersun')
 
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
@@ -29,7 +29,7 @@ context('Search Integration Test', () => {
     // SEARCH APPLICATION
     cy.get('#searchType').click()
     cy.get('#name').click()
-    cy.get('#searchText').type('Spivak')
+    cy.get('#searchText').type('Wersun')
     cy.get('#searchText').type('{enter}')
 
     // CLICK DOWNLOAD AND REGISTER APPLICATION

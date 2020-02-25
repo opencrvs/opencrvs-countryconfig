@@ -15,7 +15,7 @@ context('Performance view', () => {
   beforeEach(() => {
     cy.initializeFakeTimers()
     indexedDB.deleteDatabase('OpenCRVS')
-    cy.registerApplicationWithMinimumInput()
+    cy.registerApplicationWithMinimumInput('Yeasin', 'Hossein')
   })
 
   it('allows downloading all metrics data as a CSV', () => {
