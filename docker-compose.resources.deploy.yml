@@ -26,7 +26,6 @@ services:
     image: jembi/ocrvs-zambia:${VERSION:-latest}
     restart: unless-stopped
     secrets:
-      - oisf-secret
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
