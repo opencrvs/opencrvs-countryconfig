@@ -29,7 +29,6 @@ services:
       - oisf-secret
       - jwt-public-key.{{ts}}
     environment:
-      - OISF_SECRET=/run/secrets/oisf-secret
       - NODE_ENV=production
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
@@ -53,6 +52,8 @@ services:
       - LANGUAGES=en
 
 secrets:
+  jwt-public-key.{{ts}}:
+    external: true
   clickatell-user:
     external: true
   clickatell-password:
