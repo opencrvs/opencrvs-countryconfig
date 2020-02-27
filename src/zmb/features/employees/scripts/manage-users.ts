@@ -11,8 +11,8 @@
  */
 import { MONGO_URL } from '@resources/constants'
 import * as mongoose from 'mongoose'
-import Role from '@opencrvs/user-mgnt/src/model/role'
-import User, { IUserModel } from '@opencrvs/user-mgnt/src/model/user'
+import Role from '@resources/zmb/features/employees/model/role'
+import User, { IUserModel } from '@resources/zmb/features/employees/model/user'
 
 function setDemoUser(scopes: string[], environment: string): string[] {
   if (environment === 'development') {
