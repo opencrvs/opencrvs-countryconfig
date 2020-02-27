@@ -9,8 +9,9 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { getTemplates } from '@resources/zmb/features/templates/service'
+import { join } from 'path'
+import * as fetch from 'jest-fetch-mock'
 
-export async function templatesHandler() {
-  return await getTemplates()
-}
+jest.setMock('node-fetch', { default: fetch })
+process.env.CERT_PUBLIC_KEY_PATH = join(__dirname, './cert.key.pub')
+process.env.NODE_ENV = 'development'

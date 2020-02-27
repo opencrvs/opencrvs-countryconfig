@@ -9,8 +9,4 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { getTemplates } from '@resources/zmb/features/templates/service'
-
-export async function templatesHandler() {
-  return await getTemplates()
-}
+declare module 'openhim-mediator-utils'

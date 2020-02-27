@@ -9,8 +9,22 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { getTemplates } from '@resources/zmb/features/templates/service'
+import * as Pino from 'hapi-pino'
+import * as JWT from 'hapi-auth-jwt2'
+import { logger } from '@ocrvs-chatbot-mediator/logger'
 
-export async function templatesHandler() {
-  return await getTemplates()
+export default function getPlugins() {
+  const plugins: any[] = [
+    JWT,
+    {
+      plugin: Pino,
+      options: {
+        prettyPrint: false,
+        logPayload: false,
+        instance: logger
+      }
+    }
+  ]
+
+  return plugins
 }
