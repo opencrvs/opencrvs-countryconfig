@@ -37,6 +37,7 @@ export interface ISearchCriteria {
   trackingId?: string
   contactNumber?: string
   name?: string
+  specificName?: string
   registrationNumber?: string
   sort?: string
   size?: number
@@ -52,6 +53,7 @@ export function createSearchCriteria(params: ISearchParams): ISearchCriteria {
   const searchCriteria: ISearchCriteria = {}
   if (params.child.first_names_en) {
     searchCriteria.name = params.child.first_names_en
+    searchCriteria.specificName = 'CHILD'
   }
   return searchCriteria
 }
