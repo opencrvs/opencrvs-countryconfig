@@ -13,7 +13,8 @@ import * as Hapi from 'hapi'
 import { logger } from '@ocrvs-chatbot-mediator/logger'
 import {
   createSearchCriteria,
-  ISearchParams
+  ISearchParams,
+  searchRegistrations
 } from '@ocrvs-chatbot-mediator/features/search/service'
 
 export async function searchHandler(
@@ -25,5 +26,9 @@ export async function searchHandler(
   logger.info(
     `Search parameters in chatbot mediator: ${JSON.stringify(searchCriteria)}`
   )
-  return h.response({ results: [] }).code(201)
+  const searchResults = await searchRegistrations(
+    { Authorization: request.headers.authorization },
+    searchCriteria
+  )
+  return h.response({ results: searchResults.hits.hits }).code(201)
 }

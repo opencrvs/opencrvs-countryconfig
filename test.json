@@ -1,0 +1,73 @@
+{
+  "took": 8,
+  "timed_out": false,
+  "_shards": { "total": 5, "successful": 5, "skipped": 0, "failed": 0 },
+  "hits": {
+    "total": 1,
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "ocrvs",
+        "_type": "compositions",
+        "_id": "fcb46162-1a5e-4f84-bc7b-05750b2f3806",
+        "_score": null,
+        "_source": {
+          "event": "Birth",
+          "createdAt": "1583161762781",
+          "operationHistories": [
+            {
+              "operatedOn": "2020-03-02T15:09:08.061Z",
+              "operatorFirstNames": "Kalusha",
+              "operatorFamilyNameLocale": "",
+              "operatorFamilyName": "Bwalya",
+              "operatorFirstNamesLocale": "",
+              "operatorOfficeName": "Lusaka DNRPC District Office",
+              "operatorOfficeAlias": ["Lusaka DNRPC District Office"],
+              "operationType": "DECLARED",
+              "operatorRole": "FIELD_AGENT"
+            },
+            {
+              "operatedOn": "2020-03-02T15:09:22.562Z",
+              "operatorFirstNames": "Kennedy",
+              "operatorFamilyNameLocale": "",
+              "operatorFamilyName": "Mweene",
+              "operatorFirstNamesLocale": "",
+              "operatorOfficeName": "Lusaka DNRPC District Office",
+              "operatorOfficeAlias": ["Lusaka DNRPC District Office"],
+              "operationType": "WAITING_VALIDATION",
+              "operatorRole": "LOCAL_REGISTRAR"
+            },
+            {
+              "operatedOn": "2020-03-02T15:09:08.061Z",
+              "operatorFirstNames": "Kalusha",
+              "operatorFamilyNameLocale": "",
+              "operatorFamilyName": "Bwalya",
+              "operatorFirstNamesLocale": "",
+              "operatorOfficeName": "Lusaka DNRPC District Office",
+              "operatorOfficeAlias": ["Lusaka DNRPC District Office"],
+              "operationType": "REGISTERED",
+              "operatorRole": "FIELD_AGENT"
+            }
+          ],
+          "childFirstNames": "Aniq",
+          "childFamilyName": "Hoque",
+          "childDoB": "1994-10-23",
+          "gender": "male",
+          "informantFirstNames": "Habiba",
+          "informantFamilyName": "Aktar",
+          "contactNumber": "+260792107445",
+          "type": "REGISTERED",
+          "dateOfApplication": "2020-03-02T15:09:22.562Z",
+          "trackingId": "BI55E6F",
+          "applicationLocationId": "67e1c701-3087-4905-8fd3-b54096c9ffd1",
+          "compositionType": "birth-application",
+          "createdBy": "e388ce7b-72bb-4d70-885c-895ed08789da",
+          "updatedBy": "e388ce7b-72bb-4d70-885c-895ed08789da",
+          "modifiedAt": "1583161764736",
+          "registrationNumber": "2020BI55E6F"
+        },
+        "sort": [1583161762562]
+      }
+    ]
+  }
+}

@@ -1,7 +1,6 @@
-## Chatbot mediator
+## Telegram Age Verification Chatbot
 
-This package is a demonstrateion of how to develop an example API integration into OpenCRVS.
-The mediator is used by the Telegram application chatbot to search OpenCRVS to find the age of a person.
+This package is a Telegram application chatbot to search OpenCRVS to find the age of a person.
 
 It is a common use case for OpenCRVS that before a marriage takes place, a registrar should check the ages of the couple to make sure that they can legally get married.
 The registrar may not have many details to hand about the couple, apart from names and perhaps place of birth.
@@ -38,4 +37,4 @@ Build container with `yarn docker:build`
 
 Push image to Dockerhub `yarn docker:push`
 
-SSH into manager node and scale service down then pull image before scaling back up `docker pull jembi/ocrvs-chatbot-mediator`
+SSH into manager node and scale service down then pull image before scaling back up `docker pull jembi/ocrvs-chatbot`

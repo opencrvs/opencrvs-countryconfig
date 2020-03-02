@@ -1,7 +1,7 @@
 {
-  "name": "@opencrvs/ocrvs-chatbot-mediator",
+  "name": "@opencrvs/chatbot",
   "version": "1.0.0-alpha.2.0",
-  "description": "Chatbot integration mediator",
+  "description": "A Telegram chatbot to check the age of a child",
   "license": "MPL-2.0",
   "private": true,
   "scripts": {
@@ -15,8 +15,8 @@
     "build": "tsc",
     "postbuild": "ef-tspm",
     "build:clean": "rm -rf build",
-    "docker:build": "docker build -t jembi/ocrvs-chatbot-mediator -f Dockerfile ../../../..",
-    "docker:push": "docker push jembi/ocrvs-chatbot-mediator"
+    "docker:build": "docker build -t jembi/ocrvs-chatbot -f Dockerfile ../../../",
+    "docker:push": "docker push jembi/ocrvs-chatbot"
   },
   "dependencies": {
     "@types/hapi-pino": "^6.3.0",
@@ -32,7 +32,6 @@
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",
     "node-verhoeff": "^0.0.11",
-    "openhim-mediator-utils": "^0.2.3",
     "pino": "^5.14.0",
     "short-uid": "^0.1.0",
     "uuid": "^3.3.3"
@@ -89,7 +88,7 @@
       "<rootDir>"
     ],
     "moduleNameMapper": {
-      "@ocrvs-chatbot-mediator/(.*)": "<rootDir>/src/$1"
+      "@ocrvs-chatbot/(.*)": "<rootDir>/src/$1"
     },
     "coverageReporters": [
       "json",
