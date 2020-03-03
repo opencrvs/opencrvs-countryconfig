@@ -14,71 +14,33 @@ require('app-module-path').addPath(require('path').join(__dirname, '../'))
 require('dotenv').config({
   path: `${process.cwd()}/.env`
 })
-// tslint:enable no-var-requires
-import * as Hapi from 'hapi'
-import { HOST, PORT } from '@ocrvs-chatbot/constants'
+import { TELEGRAM_API_KEY } from '@ocrvs-chatbot/constants'
 import chatbotHandler from '@ocrvs-chatbot/features/agecheck/handler'
-import getPlugins from '@ocrvs-chatbot/config/plugins'
+import * as TelegramBot from 'node-telegram-bot-api'
+import { logger } from '@ocrvs-chatbot/logger'
+import { Database } from '@ocrvs-chatbot/database'
 
-export async function createServer() {
-  const server = new Hapi.Server({
-    host: HOST,
-    port: PORT,
-    routes: {
-      cors: { origin: ['*'] },
-      payload: { maxBytes: 52428800 }
-    }
-  })
+export async function createChatbot() {
+  const bot = new TelegramBot(TELEGRAM_API_KEY, { polling: true })
+  logger.info(`Chatbot started`)
 
-  /* add ping route by default for health check */
-  server.route({
-    method: 'GET',
-    path: '/ping',
-    handler: (request: any, h: any) => {
-      // Perform any health checks and return true or false for success prop
-      return {
-        success: true
-      }
-    },
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Health check endpoint'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/chatbot',
-    handler: chatbotHandler,
-    options: {
-      tags: ['api'],
-      description: 'OpenCRVS Chatbot service'
-    }
-  })
-
-  await server.register(getPlugins())
-  server.ext({
-    type: 'onRequest',
-    method(request: Hapi.Request & { sentryScope: any }, h) {
-      request.sentryScope.setExtra('payload', request.payload)
-      return h.continue
-    }
+  bot.on('message', msg => {
+    chatbotHandler(bot, msg)
   })
 
   async function stop() {
-    await server.stop()
-    server.log('info', 'server stopped')
+    await Database.stop()
+    logger.info(`Database started`)
   }
 
   async function start() {
-    await server.start()
-    server.log('info', `server started on ${HOST}:${PORT}`)
+    await Database.start()
+    logger.info(`Database started`)
   }
 
-  return { server, start, stop }
+  return { bot, start, stop }
 }
 
 if (require.main === module) {
-  createServer().then(server => server.start())
+  createChatbot().then(server => server.start())
 }
