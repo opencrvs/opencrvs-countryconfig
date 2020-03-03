@@ -5,10 +5,11 @@ export const INVALID_LOGIN_DETAILS = 'INVALID_LOGIN_DETAILS'
 export const EXPIRED_AUTHENTICATION_PROCESS = 'EXPIRED_AUTHENTICATION_PROCESS'
 export const WELCOME_MESSAGE = 'WELCOME_MESSAGE'
 export const UNKNOWN_MESSAGE = 'UNKNOWN_MESSAGE'
+export const LOGOUT = 'LOGOUT'
 
 import { IChatStage } from '@ocrvs-chatbot/utils/chat'
 
-export const chat: IChatStage[] = [
+export const ageCheckChat: IChatStage[] = [
   {
     id: LOGIN_PROMPT,
     response:
@@ -44,6 +45,11 @@ export const chat: IChatStage[] = [
   },
   {
     id: UNKNOWN_MESSAGE,
-    response: "I'm sorry. I dont understand.  "
+    response:
+      'I\'m sorry. I dont understand. At any time, you can send "1" to start the service again, or "2" to log out.'
+  },
+  {
+    id: LOGOUT,
+    response: 'Logging you out.  Good bye! :)'
   }
 ]

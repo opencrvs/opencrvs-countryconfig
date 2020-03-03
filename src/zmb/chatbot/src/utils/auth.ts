@@ -65,6 +65,27 @@ export const authenticateUser = async (
   return false
 }
 
+export const invalidateUser = async (
+  msg: TelegramBot.Message,
+  authUrl: string
+): Promise<string | false> => {
+  try {
+    const chatbotUser = await getLoggedInUser(msg)
+    if (chatbotUser && chatbotUser.token) {
+      await fetch(`${authUrl}/invalidateToken`, {
+        method: 'POST',
+        body: JSON.stringify({ token: chatbotUser.token })
+      })
+      await clearAllDetails(msg)
+    } else {
+      throw new Error('Chatbot user could not be found')
+    }
+  } catch (err) {
+    throw new Error('Could not invalidate token on logout')
+  }
+  return false
+}
+
 export interface IChatbotUser {
   token: string
 }
