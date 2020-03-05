@@ -11,33 +11,35 @@
  */
 import fetch from 'node-fetch'
 import { SEARCH_URL } from '@ocrvs-chatbot-mediator/constants'
+import { getEventLocationId } from '@ocrvs-chatbot-mediator/utils/locations'
 
 export interface ISearchParams {
   child: {
-    first_names_en?: string
-    last_name_en: string
-    sex?: 'male' | 'female' | 'unknown'
-  }
-  father: {
-    first_names_en?: string
-    last_name_en: string
-    nid?: string
+    firstName: string
+    lastName: string
+    gender: 'male' | 'female' | 'unknown'
   }
   mother: {
-    first_names_en?: string
-    last_name_en: string
-    nid?: string
+    firstName: string
+    lastName: string
+  }
+  eventLocation: {
+    name: string
   }
 }
 
 export interface ISearchCriteria {
   applicationLocationId?: string
+  eventLocationId: string
+  gender: 'male' | 'female' | 'unknown'
+  ageCheck: 'TRUE'
+  nameCombinations: INameCombination[]
   status?: string[]
-  type?: string[]
+  type: string[]
   trackingId?: string
   contactNumber?: string
   name?: string
-  specificName?: string
+  event: string
   registrationNumber?: string
   sort?: string
   size?: number
@@ -45,15 +47,47 @@ export interface ISearchCriteria {
   createdBy?: string
 }
 
+export interface INameCombination {
+  name: string
+  fields: string
+}
+
 export interface IAuthHeader {
   Authorization: string
 }
 
-export function createSearchCriteria(params: ISearchParams): ISearchCriteria {
-  const searchCriteria: ISearchCriteria = {}
-  if (params.child.first_names_en) {
-    searchCriteria.name = params.child.first_names_en
-    searchCriteria.specificName = 'CHILD'
+export async function createSearchCriteria(
+  authHeader: IAuthHeader,
+  params: ISearchParams
+): Promise<ISearchCriteria> {
+  const eventLocationId = await getEventLocationId(
+    authHeader,
+    params.eventLocation.name
+  )
+  const searchCriteria: ISearchCriteria = {
+    gender: params.child.gender,
+    ageCheck: 'TRUE',
+    nameCombinations: [
+      {
+        name: params.child.firstName,
+        fields: 'CHILD_FIRST'
+      },
+      {
+        name: params.child.lastName,
+        fields: 'CHILD_FAMILY'
+      },
+      {
+        name: params.mother.firstName,
+        fields: 'MOTHER_FIRST'
+      },
+      {
+        name: params.mother.lastName,
+        fields: 'MOTHER_FAMILY'
+      }
+    ],
+    eventLocationId,
+    event: 'Birth',
+    type: ['birth-application']
   }
   return searchCriteria
 }

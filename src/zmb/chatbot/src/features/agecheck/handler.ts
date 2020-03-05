@@ -42,6 +42,7 @@ export default async function chatbotHandler(
       await advanceChatFlow(bot, msg)
     } else {
       // token is invalid, login again
+      await clearAllDetails(msg)
       await storeAccessDetails(msg.chat.id)
       await advanceChatFlow(bot, msg, LOGIN_AGAIN_PROMPT)
     }

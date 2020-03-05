@@ -22,7 +22,10 @@ export async function searchHandler(
   h: Hapi.ResponseToolkit
 ) {
   const searchParams = request.payload as ISearchParams
-  const searchCriteria = createSearchCriteria(searchParams)
+  const searchCriteria = await createSearchCriteria(
+    { Authorization: request.headers.authorization },
+    searchParams
+  )
   logger.info(
     `Search parameters in chatbot mediator: ${JSON.stringify(searchCriteria)}`
   )

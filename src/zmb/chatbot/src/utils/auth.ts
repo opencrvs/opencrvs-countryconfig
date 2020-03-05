@@ -168,6 +168,9 @@ export async function clearAllDetails(msg: TelegramBot.Message) {
     if (await Database.get(`chat_position_${msg.chat.id}`)) {
       await Database.del(`chat_position_${msg.chat.id}`)
     }
+    if (await Database.get(`search_params_${msg.chat.id}`)) {
+      await Database.del(`search_params_${msg.chat.id}`)
+    }
     return true
   } else {
     throw new Error('Telegram msg has no user id')
