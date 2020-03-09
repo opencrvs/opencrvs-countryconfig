@@ -43,22 +43,26 @@ export async function search(
   msg: TelegramBot.Message,
   chatId: number
 ): Promise<any> {
-  try {
-    const chatbotUser = await getLoggedInUser(msg)
-    const searchParams = await getSearchParams(chatId)
-    if (chatbotUser && chatbotUser.token) {
-      await fetch(`${MEDIATOR_URL}/search`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${chatbotUser.token}`
-        },
-        body: JSON.stringify(searchParams)
+  const chatbotUser = await getLoggedInUser(msg)
+  const searchParams = await getSearchParams(chatId)
+  if (!chatbotUser || !chatbotUser.token) {
+    throw new Error('Chatbot user could not be found')
+  } else {
+    return fetch(`${MEDIATOR_URL}search`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${chatbotUser.token}`
+      },
+      body: JSON.stringify(searchParams)
+    })
+      .then(response => {
+        return response.json()
       })
-    } else {
-      throw new Error('Chatbot user could not be found')
-    }
-  } catch (err) {
-    throw new Error('Could not perform search on mediator')
+      .catch(error => {
+        return Promise.reject(
+          new Error(`Search request failed: ${error.message}`)
+        )
+      })
   }
 }

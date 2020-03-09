@@ -13,10 +13,17 @@ export const LAST_NAME = 'LAST_NAME'
 export const GENDER = 'GENDER'
 export const DISTRICT = 'DISTRICT'
 export const MOTHER = 'MOTHER'
-export const GOOD_RESULT = 'GOOD_RESULT'
-export const BAD_RESULT = 'BAD_RESULT'
+export const RESULT = 'RESULT'
+export const GOOD_RESULT_16 =
+  'is old enough to be married with parental consent.  Send "start" to start the service again, or "exit" to log out.'
+export const GOOD_RESULT_21 =
+  'is old enough to be married.  Send "start" to start the service again, or "exit" to log out.'
+export const BAD_RESULT =
+  'is not old enough to be married.  Send "start" to start the service again, or "exit" to log out.'
 export const NO_RESULTS = 'NO_RESULTS'
-export const BORN = 'BORN'
+export const BORN = ', born '
+export const SERVER_PROBLEM = 'SERVER_PROBLEM'
+export const AUTH_PROBLEM = 'AUTH_PROBLEM'
 
 export const ageCheckChat: IChatStage[] = [
   {
@@ -79,21 +86,18 @@ export const ageCheckChat: IChatStage[] = [
     response: "Mother's first name"
   },
   {
-    id: BAD_RESULT,
-    response:
-      '. She is not old enough to be married.  Send "start" to start the service again, or "exit" to log out.'
-  },
-  {
-    id: GOOD_RESULT,
-    response:
-      '. She is old enough to be married.  Send "start" to start the service again, or "exit" to log out.'
-  },
-  {
     id: NO_RESULTS,
     response: 'We could not find a match. Send "start" to try again.'
   },
   {
-    id: BORN,
-    response: ' born '
+    id: AUTH_PROBLEM,
+    response:
+      "I'm sorry, 😞 but I need you to login and start again. Click enter to continue."
+  },
+  {
+    id: SERVER_PROBLEM,
+    response:
+      "I'm very sorry, 😞 but I dont feel very well. " +
+      'I think I need maintenance. Please try again another day.'
   }
 ]
