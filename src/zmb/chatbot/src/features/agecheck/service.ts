@@ -121,7 +121,6 @@ async function getNextStageMessage(
         userInput as string
       )
       const result = await search(msg as TelegramBot.Message, chatId as number)
-      console.log(JSON.stringify(result))
       if (result.statusCode === 401) {
         await invalidateUser(msg as TelegramBot.Message, AUTH_URL)
         return getStage(ageCheckChat, AUTH_PROBLEM)

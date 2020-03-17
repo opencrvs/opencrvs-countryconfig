@@ -22,17 +22,17 @@ describe('Check password generator', () => {
 
 describe('converToMSISDN', () => {
   it('should send the phone number as it is when it has country code as prefix', () => {
-    const phone = '+8801711111111'
+    const phone = '+2601711111111'
     expect(convertToMSISDN(phone, 'zmb')).toEqual(phone)
   })
 
   it('should attach country code by replacing the starting 0, when the phone number does not have the country code as prefix and starts with 0', async () => {
     const phone = '01711111111'
-    expect(convertToMSISDN(phone, 'zmb')).toEqual(`+88${phone}`)
+    expect(convertToMSISDN(phone, 'zmb')).toEqual(`+26${phone}`)
   })
 
   it('should attach country code when the phone number does not have the country code as prefix and does not start with 0', async () => {
     const phone = '1711111111'
-    expect(convertToMSISDN(phone, 'zmb')).toEqual(`+880${phone}`)
+    expect(convertToMSISDN(phone, 'zmb')).toEqual(`+260${phone}`)
   })
 })
