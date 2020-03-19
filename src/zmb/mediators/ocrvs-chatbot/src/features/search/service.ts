@@ -17,7 +17,7 @@ export interface ISearchParams {
   child: {
     firstName: string
     lastName: string
-    gender: 'male' | 'female' | 'unknown'
+    gender: string
   }
   mother: {
     firstName: string
@@ -31,7 +31,7 @@ export interface ISearchParams {
 export interface ISearchCriteria {
   applicationLocationId?: string
   eventLocationId: string
-  gender: 'male' | 'female' | 'unknown'
+  gender: string
   ageCheck: 'TRUE'
   nameCombinations: INameCombination[]
   status?: string[]
@@ -89,6 +89,7 @@ export async function createSearchCriteria(
     event: 'Birth',
     type: ['birth-application']
   }
+  console.log('searchCriteria: ', JSON.stringify(searchCriteria))
   return searchCriteria
 }
 

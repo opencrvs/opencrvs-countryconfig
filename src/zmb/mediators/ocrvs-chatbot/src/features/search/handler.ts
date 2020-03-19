@@ -16,6 +16,45 @@ import {
   ISearchParams,
   searchRegistrations
 } from '@ocrvs-chatbot-mediator/features/search/service'
+import { ApiResponse } from '@elastic/elasticsearch'
+
+interface IShardsResponse {
+  total: number
+  successful: number
+  failed: number
+  skipped: number
+}
+
+interface IExplanation {
+  value: number
+  description: string
+  details: IExplanation[]
+}
+interface ISearchResponse<T> {
+  took: number
+  timed_out: boolean
+  _scroll_id?: string
+  _shards: IShardsResponse
+  hits: {
+    total: number
+    max_score: number
+    hits: Array<{
+      _index: string
+      _type: string
+      _id: string
+      _score: number
+      _source: T
+      _version?: number
+      _explanation?: IExplanation
+      fields?: any
+      highlight?: any
+      inner_hits?: any
+      matched_queries?: string[]
+      sort?: string[]
+    }>
+  }
+  aggregations?: any
+}
 
 export async function searchHandler(
   request: Hapi.Request,
@@ -29,9 +68,12 @@ export async function searchHandler(
   logger.info(
     `Search parameters in chatbot mediator: ${JSON.stringify(searchCriteria)}`
   )
-  const searchResults = await searchRegistrations(
+  const searchResults: ApiResponse<ISearchResponse<
+    any
+  >> = await searchRegistrations(
     { Authorization: request.headers.authorization },
     searchCriteria
   )
-  return h.response({ results: searchResults.hits.hits }).code(201)
+  console.log('search response: ', JSON.stringify(searchResults))
+  return h.response({ results: searchResults.body.hits.hits }).code(201)
 }
