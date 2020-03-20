@@ -180,6 +180,9 @@ Cypress.Commands.add(
     cy.get('#select_birth_event').click()
     cy.get('#continue').click()
 
+    // EVENT INFO
+    cy.get('#continue').click()
+
     // SELECT INFORMANT
     cy.get('#select_informant_BOTH_PARENTS').click()
     cy.get('#continue').click()
@@ -271,6 +274,8 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   // EVENTS
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_birth_event').click()
+  cy.get('#continue').click()
+  // EVENT INFO
   cy.get('#continue').click()
   cy.get('#select_informant_BOTH_PARENTS').click()
   cy.get('#continue').click()
@@ -426,6 +431,8 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_death_event').click()
   cy.get('#continue').click()
+  // EVENT INFO
+  cy.get('#continue').click()
   // SELECT INFORMANT
   cy.get('#select_informant_SPOUSE').click()
   cy.get('#continue').click()
@@ -544,6 +551,8 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_death_event').click()
   cy.get('#continue').click()
+  // EVENT INFO
+  cy.get('#continue').click()
   // SELECT INFORMANT
   cy.get('#select_informant_OTHER').click()
   cy.get('#continue').click()
@@ -630,6 +639,8 @@ Cypress.Commands.add('someoneElseJourney', () => {
   // EVENTS
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_birth_event').click()
+  cy.get('#continue').click()
+  // EVENT INFO
   cy.get('#continue').click()
   // SELECT INFORMANT
   cy.get('#select_informant_OTHER').click()
