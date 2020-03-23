@@ -1148,7 +1148,11 @@
         "form.field.label.relationHouseOwner": "Owner of the house or building where the birth occurred",
         "form.field.label.relationOperator": "Driver or operator of the land or water vehicle or aircraft where the birth occurred",
         "form.field.label.relationOfficeInCharge": "Officer-in-charge of the Thana of a road or public space where the birth occurred",
-        "form.field.label.relationSomeoneElse": "Someone else"
+        "form.field.label.relationSomeoneElse": "Someone else",
+        "constants.estimated45DayRegistrationTitle": "Estimated vs total registered in 45 days",
+        "constants.estimatedNumberOfRegistartion": "Estimated no. of registrations",
+        "constants.totalRegisteredIn45Days": "Total registered in 45 days",
+        "constants.percentageOfEstimation": "Percentage of estimate"
       }
     }
   ]
