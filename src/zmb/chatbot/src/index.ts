@@ -15,7 +15,7 @@ require('dotenv').config({
   path: `${process.cwd()}/.env`
 })
 import { TELEGRAM_API_KEY } from '@ocrvs-chatbot/constants'
-import chatbotHandler from '@ocrvs-chatbot/features/agecheck/handler'
+import { chatbotHandler } from '@ocrvs-chatbot/features/agecheck/handler'
 import * as TelegramBot from 'node-telegram-bot-api'
 import { logger } from '@ocrvs-chatbot/logger'
 import { Database } from '@ocrvs-chatbot/database'

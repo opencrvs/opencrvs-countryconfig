@@ -29,7 +29,7 @@ import {
 } from '@ocrvs-chatbot/features/agecheck/chat'
 import { advanceChatFlow } from '@ocrvs-chatbot/features/agecheck/service'
 
-export default async function chatbotHandler(
+export async function chatbotHandler(
   bot: TelegramBot,
   msg: TelegramBot.Message
 ) {
