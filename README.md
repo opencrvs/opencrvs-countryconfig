@@ -173,43 +173,43 @@ Running the `yarn db:populate:<<insert alpha3 country code>>` command runs the f
 1. assign-admin-structure-to-locations.ts
 
 <!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/assign-admin-structure-to-locations.ts```
+```ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/assign-admin-structure-to-locations.ts```
 
 Imports administrative divisions from a relevant source _(Either a CSV file or an API)_ converts the data into [FHIR Location](https://www.hl7.org/fhir/location.html) objects, using the [OpenCRVS interpretation](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc), and saves JSON files for applying GeoJSON map data later into the extension array. Some custom fields for the country can be utilised in the description or identifier fields.
 
 2. assign-geodata-to-locations.ts
 
 <!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/assign-geodata-to-locations.ts```
+```ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/assign-geodata-to-locations.ts```
 
 Loads the [FHIR Location](https://www.hl7.org/fhir/location.html) data from the JSON, and compares the names of the individual locations with a source GeoJSON map from [humdata.org](https://data.humdata.org/dataset/administrative-boundaries-of-bangladesh-as-of-2015). If the names match, then the appropriate GeoJSON map is applied to the Location [extension array](https://github.com/opencrvs/opencrvs-core-fhir-templates/blob/master/admin-structure/admin-structure-resource.jsonc#L36). Warnings will be listed for any location which the script has been unable to confidently map GeoJSON data.
 
 3. update-location-data.ts
 
 <!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/update-location-data.ts```
+```ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/update-location-data.ts```
 
 Once the GeoJSON has been assigned to the location objects, then all the updated location objects are loaded into the OpenCRVS database via [Hearth](https://github.com/jembi/hearth).
 
 4. prepare-statistical-data.ts, add-statistical-data.ts & update-statistical-data.ts
    <!-- prettier-ignore -->
-   ```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/prepare-statistical-data.ts```
+   ```ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/prepare-statistical-data.ts```
 
 <!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/add-statistical-data.ts```
+```ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/add-statistical-data.ts```
 
 <!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/administrative/scripts/update-statistical-data.ts```
+```ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/update-statistical-data.ts```
 
 Then statistical information is prepared from a source _(Such as population estimates for male and female populations and the statistical crude birth rate (a ratio used in the calcutation of expected numbers of birth for each region and defined by a governments statistical department.) from either a CSV file or an API)_ and added to each [FHIR Location](https://www.hl7.org/fhir/location.html).
 
 5. prepare-source-facilities.ts & assign-facilities-to-locations.ts
 
 <!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/facilities/scripts/prepare-source-facilities.ts```
+```ts-node -r tsconfig-paths/register src/zmb/features/facilities/scripts/prepare-source-facilities.ts```
 
 <!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/facilities/scripts/assign-facilities-to-locations.ts```
+```ts-node -r tsconfig-paths/register src/zmb/features/facilities/scripts/assign-facilities-to-locations.ts```
 
 An example of how to prepare facility information data from a CSV file into [FHIR Locations](https://www.hl7.org/fhir/location.html). This script converts a facility CSV file for civil registration and health facilities where births and deaths are registered and events occur respectively.
 
@@ -218,10 +218,10 @@ Converts the facilities JSON file into [FHIR Location](https://www.hl7.org/fhir/
 6. prepare-source-employees.ts & assign-employees-to-practitioners.ts
 
 <!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/employees/scripts/prepare-source-employees.ts```
+```ts-node -r tsconfig-paths/register src/zmb/features/employees/scripts/prepare-source-employees.ts```
 
 <!-- prettier-ignore -->
-```ts-node -r tsconfig-paths/register src/bgd/features/employees/scripts/assign-employees-to-practitioners.ts```
+```ts-node -r tsconfig-paths/register src/zmb/features/employees/scripts/assign-employees-to-practitioners.ts```
 
 An example of how to prepare employee data from a CSV file into [FHIR Practitioners](https://www.hl7.org/fhir/practitioner.html) and [PractitionerRoles](https://www.hl7.org/fhir/practitionerrole.html) that assign the employee to a specific office and sets their speciality. The list supplied is a test list based on the users and permissions in the [user-mgnt package.](https://github.com/opencrvs/opencrvs-core/blob/master/packages/user-mgnt/resources/populate.ts)
 

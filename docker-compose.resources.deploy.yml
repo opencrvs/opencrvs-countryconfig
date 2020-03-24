@@ -7,7 +7,7 @@
 #
 # Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
 # graphic logo are (registered/a) trademark(s) of Plan International.
-version: "3.3"
+version: '3.3'
 
 services:
   notification:
@@ -38,6 +38,25 @@ services:
       - MONGO_URL=mongodb://mongo1,mongo2,mongo3/user-mgnt?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
 
+  chatbot-mediator:
+    image: jembi/ocrvs-chatbot-mediator
+    secrets:
+      - jwt-public-key.{{ts}}
+      - openhim-user
+      - openhim-password
+    environment:
+      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - AUTH_URL=http://auth:4040
+      - FHIR_URL=http://openhim-core:5001/fhir
+      - OPENHIM_USER_PATH=/run/secrets/openhim-user
+      - OPENHIM_PASSWORD_PATH=/run/secrets/openhim-password
+      - OPENHIM_URL=https://openhim-core:8080
+      - TRUST_SELF_SIGNED=true
+    deploy:
+      replicas: 1
+    networks:
+      - overlay_net
+
   client:
     environment:
       - DECLARED_APPLICATION_SEARCH_QUERY_COUNT = 100
@@ -52,6 +71,10 @@ services:
 
 secrets:
   jwt-public-key.{{ts}}:
+    external: true
+  openhim-user:
+    external: true
+  openhim-password:
     external: true
   clickatell-user:
     external: true
