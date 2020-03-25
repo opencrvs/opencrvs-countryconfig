@@ -32,7 +32,6 @@ export interface ISearchCriteria {
   applicationLocationId?: string
   eventLocationId: string
   gender: string
-  ageCheck: 'TRUE'
   nameCombinations: INameCombination[]
   status?: string[]
   type: string[]
@@ -66,7 +65,6 @@ export async function createSearchCriteria(
   )
   const searchCriteria: ISearchCriteria = {
     gender: params.child.gender,
-    ageCheck: 'TRUE',
     nameCombinations: [
       {
         name: params.child.firstName,
@@ -89,7 +87,6 @@ export async function createSearchCriteria(
     event: 'Birth',
     type: ['birth-application']
   }
-  console.log('searchCriteria: ', JSON.stringify(searchCriteria))
   return searchCriteria
 }
 

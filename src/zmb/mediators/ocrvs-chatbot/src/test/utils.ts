@@ -202,7 +202,6 @@ export const mockResponse = {
 }
 export const mockSearchCriteria = {
   gender: 'male',
-  ageCheck: 'TRUE',
   nameCombinations: [
     { name: 'Euan', fields: 'CHILD_FIRST' },
     { name: 'Millar', fields: 'CHILD_FAMILY' },
