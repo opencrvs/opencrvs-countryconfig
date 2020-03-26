@@ -38,4 +38,4 @@ Build container with `yarn docker:build`
 
 Push image to Dockerhub `yarn docker:push`
 
-SSH into manager node and scale service down then pull image before scaling back up `docker pull jembi/ocrvs-chatbot-mediator`
+SSH into manager node and scale service down then pull image before scaling back up `docker pull opencrvs/ocrvs-chatbot-mediator`

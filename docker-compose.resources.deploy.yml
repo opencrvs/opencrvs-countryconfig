@@ -23,7 +23,7 @@ services:
       - CLICKATELL_API_ID_PATH=/run/secrets/clickatell-api-id
 
   resources:
-    image: jembi/ocrvs-zambia:${VERSION:-latest}
+    image: opencrvs/ocrvs-zambia:${VERSION:-latest}
     restart: unless-stopped
     secrets:
       - jwt-public-key.{{ts}}
@@ -39,7 +39,7 @@ services:
       - HOSTNAME=${HOSTNAME}
 
   chatbot-mediator:
-    image: jembi/ocrvs-chatbot-mediator
+    image: opencrvs/ocrvs-chatbot-mediator
     secrets:
       - jwt-public-key.{{ts}}
       - openhim-user

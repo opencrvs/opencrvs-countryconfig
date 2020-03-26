@@ -15,8 +15,8 @@
     "build": "tsc",
     "postbuild": "ef-tspm",
     "build:clean": "rm -rf build",
-    "docker:build": "docker build -t jembi/ocrvs-chatbot -f Dockerfile ../../../",
-    "docker:push": "docker push jembi/ocrvs-chatbot"
+    "docker:build": "docker build -t opencrvs/ocrvs-chatbot -f Dockerfile ../../../",
+    "docker:push": "docker push opencrvs/ocrvs-chatbot"
   },
   "dependencies": {
     "@types/node-telegram-bot-api": "^0.40.2",
