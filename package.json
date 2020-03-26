@@ -9,7 +9,9 @@
     "test:watch": "jest --watch",
     "open:cov": "yarn test && opener coverage/index.html",
     "precommit": "tslint --project ./tsconfig.json && lint-staged",
-    "test": "jest  --silent --noStackTrace --coverage && yarn test:compilation",
+    "test": "jest  --silent --noStackTrace --coverage && yarn test:compilation && yarn test:ocrvs-chatbot-mediator && yarn test:ocrvs-chatbot",
+    "test:ocrvs-chatbot-mediator": "cd src/zmb/mediators/ocrvs-chatbot/ && yarn install && yarn test",
+    "test:ocrvs-chatbot": "cd src/zmb/chatbot/ && yarn install && yarn test",
     "test:compilation": "tsc --noEmit",
     "start": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
     "start:prod": "ts-node --transpile-only -r tsconfig-paths/register src/index.ts",
@@ -19,6 +21,7 @@
     "db:clear:all": "DEV=true ./clear-all-data.sh"
   },
   "devDependencies": {
+    "bundlesize": "^0.18.0",
     "csv2json": "^1.4.2",
     "dotenv": "^6.1.0",
     "json2csv": "^4.3.0",
@@ -121,7 +124,13 @@
     ],
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "cypress",
+      "/src/zmb/mediators/ocrvs-chatbot/",
+      "/src/zmb/chatbot/"
     ]
+  },
+  "resolutions": {
+    "minimist": "^1.2.2"
   }
 }

@@ -13,7 +13,7 @@ import { ORG_URL } from '@resources/constants'
 import { getFromFhir, sendToFhir } from '@resources/zmb/features/utils'
 import chalk from 'chalk'
 import { logger } from '@resources/logger'
-import User, { IUserModel } from '@opencrvs/user-mgnt/src/model/user'
+import User, { IUserModel } from '@resources/zmb/features/employees/model/user'
 import {
   generateSaltedHash,
   convertToMSISDN,

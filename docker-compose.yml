@@ -7,9 +7,9 @@
 #
 # Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
 # graphic logo are (registered/a) trademark(s) of Plan International.
-version: '3.3'
+version: "3.3"
 
 services:
   resources:
-    image: jembi/ocrvs-zambia:${VERSION:-latest}
+    image: opencrvs/ocrvs-zambia:${VERSION:-latest}
     build: .
