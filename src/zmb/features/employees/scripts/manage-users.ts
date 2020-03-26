@@ -11,8 +11,8 @@
  */
 import { MONGO_URL } from '@resources/constants'
 import * as mongoose from 'mongoose'
-import Role from '@opencrvs/user-mgnt/src/model/role'
-import User, { IUserModel } from '@opencrvs/user-mgnt/src/model/user'
+import Role from '@resources/zmb/features/employees/model/role'
+import User, { IUserModel } from '@resources/zmb/features/employees/model/user'
 
 function setDemoUser(scopes: string[], environment: string): string[] {
   if (environment === 'development') {
@@ -41,8 +41,8 @@ export function getScope(role: string, environment: string): string[] {
       )
     case 'LOCAL_SYSTEM_ADMIN':
       return setDemoUser(['sysadmin'], environment)
-    case 'API_USER':
-      return setDemoUser(['declare', 'api'], environment)
+    case 'CHATBOT_API_USER':
+      return setDemoUser(['declare', 'chatbot-api'], environment)
     default:
       return setDemoUser(['declare'], environment)
   }
