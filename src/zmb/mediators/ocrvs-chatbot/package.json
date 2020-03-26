@@ -15,8 +15,8 @@
     "build": "tsc",
     "postbuild": "ef-tspm",
     "build:clean": "rm -rf build",
-    "docker:build": "docker build -t jembi/ocrvs-ocrvs-chatbot-mediator -f Dockerfile ../../../..",
-    "docker:push": "docker push jembi/ocrvs-ocrvs-chatbot-mediator"
+    "docker:build": "docker build -t opencrvs/ocrvs-ocrvs-chatbot-mediator -f Dockerfile ../../../..",
+    "docker:push": "docker push opencrvs/ocrvs-ocrvs-chatbot-mediator"
   },
   "dependencies": {
     "@types/hapi-pino": "^6.3.0",
