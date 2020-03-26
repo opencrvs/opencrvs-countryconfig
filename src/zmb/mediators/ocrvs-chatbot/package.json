@@ -97,5 +97,8 @@
       "text",
       "html"
     ]
+  },
+  "resolutions": {
+    "minimist": "^1.2.2"
   }
 }
