@@ -29,7 +29,6 @@ export const verifyToken = async (token: string, authUrl: string) => {
   })
 
   const body = await res.json()
-
   if (body.valid === true) {
     return true
   }

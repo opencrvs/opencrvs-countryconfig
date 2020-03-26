@@ -9,4 +9,11 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-declare module 'node-verhoeff'
+// import { readFileSync } from 'fs'
+export const REDIS_HOST = process.env.REDIS_HOST || 'localhost'
+/*export const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY
+  ? readFileSync(process.env.TELEGRAM_API_KEY).toString()
+  : ''*/
+export const TELEGRAM_API_KEY = process.env.TELEGRAM_API_KEY || ''
+export const AUTH_URL = process.env.AUTH_URL || 'http://localhost:4040'
+export const MEDIATOR_URL = process.env.MEDIATOR_URL || 'http://localhost:8050/'

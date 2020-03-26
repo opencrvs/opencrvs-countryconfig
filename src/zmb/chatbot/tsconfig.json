@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@resources/*": ["./*"]
+      "@ocrvs-chatbot/*": ["./*"]
     },
     "target": "es6",
     "module": "commonjs",
@@ -18,18 +18,15 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "types": ["fhir", "jest", "geojson"]
+    "types": ["jest"]
   },
   "include": ["src/**/*.ts", "typings", "tslint-rules"],
   "exclude": [
     "node_modules",
-    "cypress",
     "build",
     "scripts",
     "acceptance-tests",
     "src/setupTests.ts",
-    "src/**/*.test.ts",
-    "src/zmb/mediators/ocrvs-chatbot",
-    "src/zmb/chatbot"
+    "src/**/*.test.ts"
   ]
 }

@@ -14,7 +14,7 @@ RUN yarn install
 COPY src/zmb/mediators/ocrvs-chatbot /usr/src/app/src/zmb/mediators/ocrvs-chatbot
 RUN yarn build
 
-EXPOSE 8040
+EXPOSE 8050
 
 # TODO wait for openhim api
 CMD yarn start:prod

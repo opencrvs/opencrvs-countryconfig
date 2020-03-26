@@ -1,0 +1,43 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
+# graphic logo are (registered/a) trademark(s) of Plan International.
+coverage:
+  status:
+    patch:
+      default:
+        target: 80
+    project:
+      default: false
+      utils:
+        paths:
+          - src/utils
+        threshold: 0.5
+      zmb:
+        paths:
+          - src/zmb
+        threshold: 0.5
+      chatbot-mediator:
+        paths:
+          - src/zmb/features/mediators/ocrvs-chatbot
+        threshold: 0.5
+      chatbot:
+        paths:
+          - src/zmb/chatbot
+        threshold: 0.5
+
+ignore:
+  - "src/zmb/src/config"
+  - "src/zmb/src/features/administrative/generated"
+  - "src/zmb/src/features/administrative/scripts"
+  - "src/zmb/src/features/administrative/source"
+  - "src/zmb/src/features/employees"
+  - "src/zmb/src/features/facilities/generated"
+  - "src/zmb/src/features/facilities/scripts"
+  - "src/zmb/src/features/facilities/source"
+  - "src/zmb/src/features/languages/generated"

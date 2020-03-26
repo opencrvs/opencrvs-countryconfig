@@ -82,3 +82,5 @@ secrets:
     external: true
   clickatell-api-id:
     external: true
+  telegram-api-key:
+    external: true

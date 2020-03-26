@@ -40,3 +40,5 @@ export const TRUST_SELF_SIGNED = process.env.TRUST_SELF_SIGNED || 'true'
 // constants that shouldn't change
 export const MEDIATOR_URN = 'urn:opencrvs:chatbot-mediator'
 export const ORG_URL = 'http://opencrvs.org'
+export const RESOURCES_URL =
+  process.env.RESOURCES_URL || 'http://localhost:3040'

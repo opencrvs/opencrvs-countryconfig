@@ -40,10 +40,10 @@ export const getRoutes = () => {
       config: {
         tags: ['api'],
         auth: {
-          scope: [RouteScope.DECLARE] // TODO we need to add a scope for notification and allow API user to be created with this scope
+          scope: [RouteScope.DECLARE]
         },
         description:
-          'Handles transformation and submission of birth notification'
+          'Handles transformation of search params into request to search service'
       }
     }
   ]

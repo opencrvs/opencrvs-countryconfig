@@ -1,7 +1,7 @@
 {
-  "name": "@opencrvs/ocrvs-chatbot-mediator",
+  "name": "@opencrvs/chatbot",
   "version": "1.0.0-alpha.2.0",
-  "description": "Chatbot integration mediator",
+  "description": "A Telegram chatbot to check the age of a child",
   "license": "MPL-2.0",
   "private": true,
   "scripts": {
@@ -15,41 +15,29 @@
     "build": "tsc",
     "postbuild": "ef-tspm",
     "build:clean": "rm -rf build",
-    "docker:build": "docker build -t opencrvs/ocrvs-ocrvs-chatbot-mediator -f Dockerfile ../../../..",
-    "docker:push": "docker push opencrvs/ocrvs-ocrvs-chatbot-mediator"
+    "docker:build": "docker build -t opencrvs/ocrvs-chatbot -f Dockerfile ../../../",
+    "docker:push": "docker push opencrvs/ocrvs-chatbot"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "6",
-    "@types/hapi-pino": "^6.3.0",
+    "@types/node-telegram-bot-api": "^0.40.2",
     "@types/pino": "^5.14.0",
     "app-module-path": "^2.2.0",
     "boom": "^7.2.0",
-    "hapi": "^17.5.1",
-    "hapi-auth-jwt2": "8.1.0",
-    "hapi-pino": "^6.3.0",
-    "joi": "^13.4.0",
-    "jsonwebtoken": "^8.3.0",
-    "jwt-decode": "^2.2.0",
-    "moment": "^2.24.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "node-fetch": "^2.6.0",
-    "openhim-mediator-utils": "^0.2.3",
+    "node-telegram-bot-api": "^0.40.0",
     "pino": "^5.14.0",
-    "short-uid": "^0.1.0",
-    "uuid": "^3.3.3"
+    "redis": "^3.0.2"
   },
   "devDependencies": {
-    "@ef-carbon/tspm": "^2.2.5",
     "@types/boom": "^7.2.0",
-    "@types/fhir": "^0.0.30",
-    "@types/hapi": "^17.0.12",
-    "@types/hapi-auth-jwt2": "8.0.1",
     "@types/jest": "^24.0.13",
-    "@types/joi": "^14.0.0",
-    "@types/jsonwebtoken": "^8.3.0",
-    "@types/jwt-decode": "^2.2.1",
+    "@types/lodash": "^4.14.117",
     "@types/node-fetch": "^2.3.4",
-    "@types/uuid": "^3.4.4",
+    "@types/redis": "^2.8.16",
     "cross-env": "^5.2.0",
+    "dotenv": "^6.1.0",
     "jest": "24.7.1",
     "jest-fetch-mock": "^2.1.2",
     "lint-staged": "^7.1.0",
@@ -89,7 +77,7 @@
       "<rootDir>"
     ],
     "moduleNameMapper": {
-      "@ocrvs-chatbot-mediator/(.*)": "<rootDir>/src/$1"
+      "@ocrvs-chatbot/(.*)": "<rootDir>/src/$1"
     },
     "coverageReporters": [
       "json",
