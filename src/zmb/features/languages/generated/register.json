@@ -1131,7 +1131,7 @@
         "validations.required": "Required for registration",
         "validations.userform.required": "Required to register a new user",
         "validations.requiredSymbol": "",
-        "validations.validBirthRegistrationNumber": "The Birth Registration Number can only contain block character and number where the length must be within {min} and {max}",
+        "validations.validBirthRegistrationNumber": "The Birth Registration Number can only be numeric and must be {validLength} characters long",
         "validations.validDeathRegistrationNumber": "The Death Registration Number can only be alpha numeric and must be {validLength} characters long",
         "validations.validDrivingLicenseNumber": "The Driving License Number can only be alpha numeric and must be {validLength} characters long",
         "validations.validNationalId": "The National ID can only be numeric and must be {validLength} digits long",
@@ -1158,7 +1158,11 @@
         "form.field.label.relationHouseOwner": "Owner of the house or building where the birth occurred",
         "form.field.label.relationOperator": "Driver or operator of the land or water vehicle or aircraft where the birth occurred",
         "form.field.label.relationOfficeInCharge": "Officer-in-charge of the Thana of a road or public space where the birth occurred",
-        "form.field.label.relationSomeoneElse": "Someone else"
+        "form.field.label.relationSomeoneElse": "Someone else",
+        "constants.estimated45DayRegistrationTitle": "Estimated vs total registered in 45 days",
+        "constants.estimatedNumberOfRegistartion": "Estimated no. of registrations",
+        "constants.totalRegisteredIn45Days": "Total registered in 45 days",
+        "constants.percentageOfEstimation": "Percentage of estimate"
       }
     }
   ]
