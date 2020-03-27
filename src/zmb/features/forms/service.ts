@@ -11,6 +11,7 @@
  */
 import { readFile } from 'fs'
 import { join } from 'path'
+import { userSection } from './user/userSection'
 
 interface IForm {
   sections: Array<any> // no point defining full types here as we don't use them
@@ -50,7 +51,8 @@ export interface IForms {
 export async function getForms(): Promise<IForms> {
   return new Promise((resolve, reject) => {
     readFile(join(__dirname, './register.json'), (err, data) => {
-      err ? reject(err) : resolve(JSON.parse(data.toString()))
+      const forms = { ...JSON.parse(data.toString()), userForm: userSection }
+      err ? reject(err) : resolve(forms)
     })
   })
 }
