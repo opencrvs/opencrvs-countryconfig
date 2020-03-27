@@ -27,8 +27,6 @@ context('User Integration Test', () => {
     cy.get('#modal_select').click()
     cy.get('#confirm_form').click()
     cy.get('#confirm_form').click()
-    cy.get('#firstNames').type('নাইম')
-    cy.get('#familyName').type('আহমেদ')
     cy.get('#firstNamesEng').type('Naeem')
     cy.get('#familyNameEng').type('Ahmed')
     cy.get('#phoneNumber').type('01756987123')
@@ -94,9 +92,9 @@ context('User Integration Test', () => {
     cy.get('#question').then($q => {
       const question = $q.text()
       let answer
-      if (question === 'আপনার প্রিয় খাদ্য কি?') {
+      if (question === 'What is your favorite food?') {
         answer = 'Burger'
-      } else if (question === 'আপনার প্রিয় সিনেমা কি?') {
+      } else if (question === 'What is your favorite movie?') {
         answer = 'Joker'
       } else {
         answer = 'Dhaka'
@@ -138,9 +136,9 @@ context('User Integration Test', () => {
     cy.get('#question').then($q => {
       const question = $q.text()
       let answer
-      if (question === 'আপনার প্রিয় খাদ্য কি?') {
+      if (question === 'What is your favorite food?') {
         answer = 'Burger'
-      } else if (question === 'আপনার প্রিয় সিনেমা কি?') {
+      } else if (question === 'What is your favorite movie?') {
         answer = 'Joker'
       } else {
         answer = 'Dhaka'
