@@ -16,7 +16,7 @@ context('User Integration Test', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it.skip('create user as SYSTEM ADMIN and to activate account login for the first time as FIELD AGENT', () => {
+  it('create user as SYSTEM ADMIN and to activate account login for the first time as REGISTRAR', () => {
     // LOG IN AS SYSTEM ADMIN
     cy.login('sysAdmin')
     cy.createPin()
@@ -29,11 +29,12 @@ context('User Integration Test', () => {
     cy.get('#confirm_form').click()
     cy.get('#firstNamesEng').type('Naeem')
     cy.get('#familyNameEng').type('Ahmed')
-    cy.get('#phoneNumber').type('01756987123')
+    cy.get('#phoneNumber').type('0752658545')
     cy.get('#nid').type('1994756324')
-    cy.selectOption('#role', 'FIELD_AGENT', 'Field Agent')
-    cy.selectOption('#type', 'HOSPITAL', 'Hospital')
+    cy.selectOption('#role', 'LOCAL_REGISTRAR', 'Registrar')
+    cy.selectOption('#type', 'CHAIRMAN', 'Chairman')
     cy.get('#device').type('Xiamoi MI 8')
+    cy.get('#confirm_form').click()
     cy.get('#confirm_form').click()
     // PREVIEW
     cy.get('#submit_user_form').click()
@@ -74,7 +75,7 @@ context('User Integration Test', () => {
     cy.get('#setup-login-button').click()
   })
 
-  it.skip('should reset username successfully', () => {
+  it('should reset username successfully', () => {
     cy.get('#login-forgot-password').click()
 
     // Forgotten item form appears
@@ -84,7 +85,7 @@ context('User Integration Test', () => {
 
     // Phone number verification form appears
     cy.get('#phone-number-verification-form').should('be.visible')
-    cy.get('#phone-number-input').type('01756987123')
+    cy.get('#phone-number-input').type('0752658545')
     cy.get('#continue').click()
 
     // Security question form appears
@@ -112,7 +113,7 @@ context('User Integration Test', () => {
     cy.get('#login-step-one-box').should('be.visible')
   })
 
-  it.skip('should reset password successfully', () => {
+  it('should reset password successfully', () => {
     cy.initializeFakeTimers()
     cy.get('#login-forgot-password').click()
 
@@ -123,7 +124,7 @@ context('User Integration Test', () => {
 
     // Phone number verification form appears
     cy.get('#phone-number-verification-form').should('be.visible')
-    cy.get('#phone-number-input').type('01756987123')
+    cy.get('#phone-number-input').type('0752658545')
     cy.get('#continue').click()
 
     // Recovery code entry form appears
