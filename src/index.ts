@@ -23,7 +23,8 @@ import {
   RESOURCES_PORT,
   CERT_PUBLIC_KEY_PATH,
   CHECK_INVALID_TOKEN,
-  AUTH_URL
+  AUTH_URL,
+  COUNTRY_WIDE_CRUDE_DEATH_RATE
 } from '@resources/constants'
 import { locationsHandler as zmbLocationsHandler } from '@resources/zmb/features/administrative/handler'
 import { facilitiesHandler as zmbFacilitiesHandler } from '@resources/zmb/features/facilities/handler'
@@ -228,6 +229,18 @@ export async function createServer() {
       },
       description:
         'Generates registration numbers based on country specific implementation logic'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/crude-death-rate',
+    handler: () => ({
+      crudeDeathRate: COUNTRY_WIDE_CRUDE_DEATH_RATE
+    }),
+    options: {
+      tags: ['api'],
+      description: 'Serves country wise crude death rate'
     }
   })
 
