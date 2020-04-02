@@ -17,14 +17,14 @@ export const mockStartMessage: TelegramBot.Message = {
   from: {
     id: 1106601995,
     is_bot: false,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     language_code: 'en'
   },
   chat: {
     id: 1106601995,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     type: 'private'
   },
   date: 1584631619,
@@ -35,14 +35,14 @@ export const mockExitMessage: TelegramBot.Message = {
   from: {
     id: 1106601995,
     is_bot: false,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     language_code: 'en'
   },
   chat: {
     id: 1106601995,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     type: 'private'
   },
   date: 1584631619,
@@ -53,14 +53,14 @@ export const mockUsernameMessage: TelegramBot.Message = {
   from: {
     id: 1106601995,
     is_bot: false,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     language_code: 'en'
   },
   chat: {
     id: 1106601995,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     type: 'private'
   },
   date: 1584631619,
@@ -72,14 +72,14 @@ export const mockPasswordMessage: TelegramBot.Message = {
   from: {
     id: 1106601995,
     is_bot: false,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     language_code: 'en'
   },
   chat: {
     id: 1106601995,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     type: 'private'
   },
   date: 1584631619,
@@ -91,18 +91,18 @@ export const mockMothersNameMessage: TelegramBot.Message = {
   from: {
     id: 1106601995,
     is_bot: false,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     language_code: 'en'
   },
   chat: {
     id: 1106601995,
-    first_name: 'Euan',
-    last_name: 'Millar',
+    first_name: 'Evans',
+    last_name: 'Kangwa',
     type: 'private'
   },
   date: 1584631619,
-  text: 'Habiba'
+  text: 'Agnes'
 }
 export const mockValidTokenResponse = {
   isValid: true,
@@ -167,21 +167,21 @@ export const mockSuccessfulSearchResults = JSON.stringify({
             operatorRole: 'LOCAL_REGISTRAR'
           }
         ],
-        childFirstNames: 'Euan',
-        childFamilyName: 'Millar',
+        childFirstNames: 'Evans',
+        childFamilyName: 'Kangwa',
         childDoB: '1994-10-22',
         gender: 'male',
         eventLocationId: '394e6ec9-5db7-4ce7-aa5e-6686f7a74081',
-        motherFirstNames: 'Habiba',
-        motherFamilyName: 'Millar',
+        motherFirstNames: 'Agnes',
+        motherFamilyName: 'Kangwa',
         motherDoB: '1971-10-23',
         motherIdentifier: '123456789',
-        fatherFirstNames: 'Habiba',
+        fatherFirstNames: 'Agnes',
         fatherFamilyName: 'Aktar',
         fatherDoB: '1971-10-23',
         fatherIdentifier: '123456789',
-        informantFirstNames: 'Habiba',
-        informantFamilyName: 'Millar',
+        informantFirstNames: 'Agnes',
+        informantFamilyName: 'Kangwa',
         contactNumber: '+260703168939',
         type: 'REGISTERED',
         dateOfApplication: '2020-03-23T17:16:24.282Z',

@@ -25,12 +25,13 @@ export const GENDER = 'GENDER'
 export const DISTRICT = 'DISTRICT'
 export const MOTHER = 'MOTHER'
 export const RESULT = 'RESULT'
+export const GOOD_RESULT_PREFIX = 'We have found a match. '
 export const GOOD_RESULT_16 =
-  'is old enough to be married with parental consent.  Send "start" to start the service again, or "exit" to log out.'
+  "is old enough to be married with parental consent.\n\nEnter 'start' to verify someone else's age or 'exit' to logout."
 export const GOOD_RESULT_21 =
-  'is old enough to be married.  Send "start" to start the service again, or "exit" to log out.'
+  "is old enough to be married.\n\nEnter 'start' to verify someone else's age or 'exit' to logout."
 export const BAD_RESULT =
-  'is not old enough to be married.  Send "start" to start the service again, or "exit" to log out.'
+  "is not old enough to be married.\n\nEnter 'start' to verify someone else's age or 'exit' to logout."
 export const NO_RESULTS = 'NO_RESULTS'
 export const BORN = ', born '
 export const SERVER_PROBLEM = 'SERVER_PROBLEM'
@@ -40,18 +41,18 @@ export const ageCheckChat: IChatStage[] = [
   {
     id: LOGIN_PROMPT,
     response:
-      'Hello. I am an automated age verification service for Zambia. 🤖 To access this service,' +
-      ' you first need to login. Please tell me your username.'
+      "Welcome to the age verification service. 🤖 \n\nHave you got the individual's first name," +
+      " last name, sex, district of birth and mother's first name? ...if yes, what is your username?"
   },
   {
     id: LOGIN_AGAIN_PROMPT,
     response:
       "Hello! It's nice to see you back. 🤖 It's been a while, and I am really careful with our citizen data," +
-      ' so I need to ask you to login again.  Just to make sure that you, ... are you! ;-).  Please tell me your username.'
+      ' so I need to ask you to login again. Just to make sure that you, ... are you! ;-). What is your username.'
   },
   {
     id: REQUEST_PASSWORD,
-    response: 'Thank you.  Now, please tell me your password.'
+    response: 'Thank you. Now, what is your password?'
   },
   {
     id: INVALID_LOGIN_DETAILS,
@@ -67,9 +68,7 @@ export const ageCheckChat: IChatStage[] = [
   {
     id: WELCOME_MESSAGE,
     response:
-      "Welcome to the Zambian Age Verification service. 😃 You will need the individual's first name, last name, sex and mother's first name." +
-      ' That should be enough, but we might need some more information, such as district of birth.' +
-      ' First, enter their first name.'
+      "Great, you are now logged in.\n\nWhat is the individual's first name?"
   },
   {
     id: UNKNOWN_MESSAGE,
@@ -78,15 +77,16 @@ export const ageCheckChat: IChatStage[] = [
   },
   {
     id: LOGOUT,
-    response: 'Logging you out.  Good bye! 👋'
+    response: 'Logging you out. Good bye! 👋'
   },
   {
     id: LAST_NAME,
-    response: 'Thank you.  Now, enter their last name.'
+    response: "What is the individual's last name?"
   },
   {
     id: GENDER,
-    response: 'Sex? Text 1 for female, 2 for male and 3 for third sex.'
+    response:
+      'What is the sex of the individual? Enter 1 for female, 2 for male and 3 for third sex.'
   },
   {
     id: DISTRICT,
@@ -94,7 +94,7 @@ export const ageCheckChat: IChatStage[] = [
   },
   {
     id: MOTHER,
-    response: "Mother's first name"
+    response: "What is their mother's first name?"
   },
   {
     id: NO_RESULTS,

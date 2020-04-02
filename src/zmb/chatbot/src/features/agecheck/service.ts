@@ -28,7 +28,8 @@ import {
   BORN,
   SERVER_PROBLEM,
   AUTH_PROBLEM,
-  NO_RESULTS
+  NO_RESULTS,
+  GOOD_RESULT_PREFIX
 } from '@ocrvs-chatbot/features/agecheck/chat'
 import {
   getStage,
@@ -58,7 +59,10 @@ export async function advanceChatFlow(
       )
       await storeChatPosition(msg.chat.id, nextStage.id)
       bot.sendMessage(msg.chat.id, nextStage.response)
-    } else if (msg.text?.toString() === 'exit') {
+    } else if (
+      msg.text?.toString() === 'exit' ||
+      msg.text?.toString() === '/start'
+    ) {
       // user wishes to logout
       await invalidateUser(msg, AUTH_URL)
       bot.sendMessage(msg.chat.id, getStage(ageCheckChat, LOGOUT).response)
@@ -216,25 +220,28 @@ function formatResult(record: IBirthRecord, tooMany?: boolean): string {
   let multipleResults = ''
   if (tooMany) {
     multipleResults =
-      'I received multiple results.  I am a prototype and duplication is a possibility.  Here is the first entry I could find:'
+      'I received multiple results.  I am a prototype and duplication is a possibility. Here is the first entry I could find:'
   }
   if (legal === 0) {
-    return `${multipleResults} ${record.childFirstNames} ${
-      record.childFamilyName
-    }${BORN} ${moment(record.childDoB, 'YYYY-MM-DD').format(
-      'MMM D YYYY'
-    )}. ${gender} ${BAD_RESULT}`
+    return `${GOOD_RESULT_PREFIX}\n\n${multipleResults} ${
+      record.childFirstNames
+    }${record.childFamilyName}${BORN} ${moment(
+      record.childDoB,
+      'YYYY-MM-DD'
+    ).format('MMM, D YYYY')}. ${gender} ${BAD_RESULT}`
   } else if (legal === 1) {
-    return `${multipleResults} ${record.childFirstNames} ${
-      record.childFamilyName
-    }${BORN} ${moment(record.childDoB, 'YYYY-MM-DD').format(
-      'MMM D YYYY'
-    )}. ${gender} ${GOOD_RESULT_16}`
+    return `${GOOD_RESULT_PREFIX}\n\n${multipleResults} ${
+      record.childFirstNames
+    }${record.childFamilyName}${BORN} ${moment(
+      record.childDoB,
+      'YYYY-MM-DD'
+    ).format('MMM, D YYYY')}. ${gender} ${GOOD_RESULT_16}`
   } else {
-    return `${multipleResults} ${record.childFirstNames} ${
-      record.childFamilyName
-    }${BORN} ${moment(record.childDoB, 'YYYY-MM-DD').format(
-      'MMM D YYYY'
-    )}. ${gender} ${GOOD_RESULT_21}`
+    return `${GOOD_RESULT_PREFIX}\n\n${multipleResults} ${
+      record.childFirstNames
+    }${record.childFamilyName}${BORN} ${moment(
+      record.childDoB,
+      'YYYY-MM-DD'
+    ).format('MMM, D YYYY')}. ${gender} ${GOOD_RESULT_21}`
   }
 }
