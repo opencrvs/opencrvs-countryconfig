@@ -868,6 +868,7 @@
         "password.mismatch": "Passwords do not match",
         "password.number": "At least one number",
         "password.validation.msg": "Password must have:",
+        "performance.header.sysadmin.home": "Search for an administrative area or office",
         "performance.body.header.monthly.reports": "Monthly reports",
         "performance.topbar.tab.title.monthly": "Monthly",
         "performance.reports.exportAll": "Export all performance data",
