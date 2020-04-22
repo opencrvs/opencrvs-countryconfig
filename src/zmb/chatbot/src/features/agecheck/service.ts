@@ -214,7 +214,8 @@ function formatResult(record: IBirthRecord, tooMany?: boolean): string {
     legal = 2
   }
   let gender = 'He'
-  if (record.gender === 'Female') {
+  console.log('Gender: ', record.gender)
+  if (record.gender === 'female') {
     gender = 'She'
   }
   let multipleResults = ''
@@ -223,25 +224,25 @@ function formatResult(record: IBirthRecord, tooMany?: boolean): string {
       'I received multiple results.  I am a prototype and duplication is a possibility. Here is the first entry I could find:'
   }
   if (legal === 0) {
-    return `${GOOD_RESULT_PREFIX}\n\n${multipleResults} ${
+    return `${GOOD_RESULT_PREFIX}\n\n${multipleResults}${
       record.childFirstNames
-    }${record.childFamilyName}${BORN} ${moment(
+    } ${record.childFamilyName}${BORN} ${moment(
       record.childDoB,
       'YYYY-MM-DD'
-    ).format('MMM, D YYYY')}. ${gender} ${BAD_RESULT}`
+    ).format('MMM, D YYYY')}. ${BAD_RESULT}`
   } else if (legal === 1) {
-    return `${GOOD_RESULT_PREFIX}\n\n${multipleResults} ${
+    return `${GOOD_RESULT_PREFIX}\n\n${multipleResults}${
       record.childFirstNames
-    }${record.childFamilyName}${BORN} ${moment(
+    } ${record.childFamilyName}${BORN} ${moment(
       record.childDoB,
       'YYYY-MM-DD'
-    ).format('MMM, D YYYY')}. ${gender} ${GOOD_RESULT_16}`
+    ).format('MMM, D YYYY')}.\n\n${gender} ${GOOD_RESULT_16}`
   } else {
-    return `${GOOD_RESULT_PREFIX}\n\n${multipleResults} ${
+    return `${GOOD_RESULT_PREFIX}\n\n${multipleResults}${
       record.childFirstNames
-    }${record.childFamilyName}${BORN} ${moment(
+    } ${record.childFamilyName}${BORN} ${moment(
       record.childDoB,
       'YYYY-MM-DD'
-    ).format('MMM, D YYYY')}. ${gender} ${GOOD_RESULT_21}`
+    ).format('MMM, D YYYY')}.\n\n${gender} ${GOOD_RESULT_21}`
   }
 }

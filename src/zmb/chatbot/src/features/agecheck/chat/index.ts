@@ -31,7 +31,7 @@ export const GOOD_RESULT_16 =
 export const GOOD_RESULT_21 =
   "is old enough to be married.\n\nEnter 'start' to verify someone else's age or 'exit' to logout."
 export const BAD_RESULT =
-  "is not old enough to be married.\n\nEnter 'start' to verify someone else's age or 'exit' to logout."
+  "\n\nMarriage of a child is harmful. By delaying this marriage the child can get the education they deserve, the job that they dream of and fully participate in a life they choose.\n\nEnter 'start' to verify someone else's age or 'exit' to logout."
 export const NO_RESULTS = 'NO_RESULTS'
 export const BORN = ', born '
 export const SERVER_PROBLEM = 'SERVER_PROBLEM'
