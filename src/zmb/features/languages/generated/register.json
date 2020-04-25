@@ -1184,7 +1184,8 @@
         "constants.estimated45DayRegistrationTitle": "Estimated vs total registered in 45 days",
         "constants.estimatedNumberOfRegistartion": "Estimated no. of registrations",
         "constants.totalRegisteredIn45Days": "Total registered in 45 days",
-        "constants.percentageOfEstimation": "Percentage of estimate"
+        "constants.percentageOfEstimation": "Percentage of estimate",
+        "performance.regRates.column.location": "Locations"
       }
     }
   ]
