@@ -167,6 +167,7 @@
         "constants.reason": "Reason",
         "constants.registered": "registered",
         "constants.registeredWithin45d": "Registered within 45 days of event",
+        "constants.registeredIn45d": "Registered in 45 days",
         "constants.registrationAgent": "Registration Clerk",
         "constants.rejected": "rejected",
         "constants.rejectedDays": "Rejected {text}",
