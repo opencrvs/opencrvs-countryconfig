@@ -1185,7 +1185,9 @@
         "constants.estimatedNumberOfRegistartion": "Estimated no. of registrations",
         "constants.totalRegisteredIn45Days": "Total registered in 45 days",
         "constants.percentageOfEstimation": "Percentage of estimate",
-        "performance.regRates.column.location": "Locations"
+        "performance.regRates.column.location": "Locations",
+        "constants.viewAll": "View all",
+        "performance.operational.statusWiseCount.description": "Current status of all applications being processed for your selected administrative area."
       }
     }
   ]
