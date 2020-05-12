@@ -1185,7 +1185,8 @@
         "constants.estimatedNumberOfRegistartion": "Estimated no. of registrations",
         "constants.totalRegisteredIn45Days": "Total registered in 45 days",
         "constants.percentageOfEstimation": "Percentage of estimate",
-        "performance.regRates.column.location": "Locations"
+        "performance.regRates.column.location": "Locations",
+        "performance.operational.workflowStatus.header": "Current applications in workflow"
       }
     }
   ]
