@@ -20,7 +20,7 @@ context('Performance view', () => {
 
   it('allows downloading all metrics data as a CSV', () => {
     cy.server()
-    cy.route('GET', '**/metrics/export').as('getExport')
+    cy.route('GET', '**/export/allPerformanceMetrics').as('getExport')
     cy.get('#menu-performance').click()
     cy.get('#export-all-button').click()
     cy.wait('@getExport')
