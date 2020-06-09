@@ -1211,6 +1211,7 @@
         "constants.totalRegisteredIn45Days": "Total registered in 45 days",
         "constants.percentageOfEstimation": "Percentage of estimate",
         "performance.regRates.column.location": "Locations",
+        "performance.operational.workflowStatus.header": "Current applications in workflow",
         "performance.fieldAgents.title": "Field agents",
         "performance.fieldAgents.noResult": "No users found",
         "performance.fieldAgents.columnHeader.name": "Field agents ({totalAgents})",
