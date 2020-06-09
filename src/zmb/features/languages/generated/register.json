@@ -1190,7 +1190,24 @@
         "constants.estimatedNumberOfRegistartion": "Estimated no. of registrations",
         "constants.totalRegisteredIn45Days": "Total registered in 45 days",
         "constants.percentageOfEstimation": "Percentage of estimate",
-        "performance.regRates.column.location": "Locations"
+        "performance.regRates.column.location": "Locations",
+        "performance.fieldAgents.title": "Field agents",
+        "performance.fieldAgents.noResult": "No users found",
+        "performance.fieldAgents.columnHeader.name": "Field agents ({totalAgents})",
+        "performance.fieldAgents.columnHeader.type": "Type",
+        "performance.fieldAgents.columnHeader.office": "Office",
+        "performance.fieldAgents.columnHeader.startMonth": "Start month",
+        "performance.fieldAgents.columnHeader.totalSent": "Applications{linebreak}sent",
+        "performance.fieldAgents.columnHeader.totalInProgress": "Sent{linebreak}incomplete",
+        "performance.fieldAgents.columnHeader.avgCompletionTime": "Avg. time to send{linebreak}complete application",
+        "performance.fieldAgents.columnHeader.totalRejected": "Rejected",
+        "performance.fieldAgents.options.status.active": "Active",
+        "performance.fieldAgents.options.status.pending": "Pending",
+        "performance.fieldAgents.options.status.deactive": "Deactive",
+        "performance.fieldAgents.options.event.both": "Births and deaths",
+        "performance.fieldAgents.options.event.births": "Births",
+        "performance.fieldAgents.options.event.deaths": "Deaths",
+        "performance.fieldAgents.showMore": "Show next {pageSize}"
       }
     }
   ]
