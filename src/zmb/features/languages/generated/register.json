@@ -1211,6 +1211,8 @@
         "constants.totalRegisteredIn45Days": "Total registered in 45 days",
         "constants.percentageOfEstimation": "Percentage of estimate",
         "performance.regRates.column.location": "Locations",
+        "constants.viewAll": "View all",
+        "performance.operational.statusWiseCount.description": "Current status of all applications being processed for your selected administrative area.",
         "performance.operational.workflowStatus.header": "Current applications in workflow",
         "performance.fieldAgents.title": "Field agents",
         "performance.fieldAgents.noResult": "No users found",
