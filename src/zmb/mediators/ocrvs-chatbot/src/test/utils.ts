@@ -1,12 +1,12 @@
 export const body = {
   child: {
-    firstName: 'Euan',
-    lastName: 'Millar',
+    firstName: 'Evans',
+    lastName: 'Kangwa',
     gender: 'male'
   },
   mother: {
-    firstName: 'Habiba',
-    lastName: 'Millar'
+    firstName: 'Agnes',
+    lastName: 'Kangwa'
   },
   eventLocation: {
     name: 'Chembe'
@@ -66,21 +66,21 @@ export const mockSearchResponse = {
                 operatorRole: 'LOCAL_REGISTRAR'
               }
             ],
-            childFirstNames: 'Euan',
-            childFamilyName: 'Millar',
+            childFirstNames: 'Evans',
+            childFamilyName: 'Kangwa',
             childDoB: '1994-10-22',
             gender: 'male',
             eventLocationId: '394e6ec9-5db7-4ce7-aa5e-6686f7a74081',
-            motherFirstNames: 'Habiba',
-            motherFamilyName: 'Millar',
+            motherFirstNames: 'Agnes',
+            motherFamilyName: 'Kangwa',
             motherDoB: '1971-10-23',
             motherIdentifier: '123456789',
-            fatherFirstNames: 'Habiba',
+            fatherFirstNames: 'Agnes',
             fatherFamilyName: 'Aktar',
             fatherDoB: '1971-10-23',
             fatherIdentifier: '123456789',
-            informantFirstNames: 'Habiba',
-            informantFamilyName: 'Millar',
+            informantFirstNames: 'Agnes',
+            informantFamilyName: 'Kangwa',
             contactNumber: '+260728130980',
             type: 'REGISTERED',
             dateOfApplication: '2020-03-19T10:58:54.903Z',
@@ -109,7 +109,7 @@ export const mockSearchResponse = {
         method: 'POST',
         path: '/ocrvs/compositions/_search',
         body:
-          '{"query":{"bool":{"must":[{"multi_match":{"query":"Euan","fields":["childFirstNames","childFirstNamesLocal"],"fuzziness":"AUTO"}},{"multi_match":{"query":"Millar","fields":["childFamilyName","childFamilyNameLocal"],"fuzziness":"AUTO"}},{"multi_match":{"query":"Habiba","fields":["motherFirstNames","motherFirstNamesLocal"],"fuzziness":"AUTO"}},{"multi_match":{"query":"Millar","fields":["motherFamilyName","motherFamilyNameLocal"],"fuzziness":"AUTO"}},{"term":{"gender.keyword":"male"}},{"term":{"eventLocationId.keyword":{"value":"394e6ec9-5db7-4ce7-aa5e-6686f7a74081","boost":2}}},{"term":{"event.keyword":"Birth"}},{"terms":{"compositionType.keyword":["birth-application"]}}],"should":[]}},"sort":[{"dateOfApplication":"asc"}]}',
+          '{"query":{"bool":{"must":[{"multi_match":{"query":"Evans","fields":["childFirstNames","childFirstNamesLocal"],"fuzziness":"AUTO"}},{"multi_match":{"query":"Kangwa","fields":["childFamilyName","childFamilyNameLocal"],"fuzziness":"AUTO"}},{"multi_match":{"query":"Agnes","fields":["motherFirstNames","motherFirstNamesLocal"],"fuzziness":"AUTO"}},{"multi_match":{"query":"Kangwa","fields":["motherFamilyName","motherFamilyNameLocal"],"fuzziness":"AUTO"}},{"term":{"gender.keyword":"male"}},{"term":{"eventLocationId.keyword":{"value":"394e6ec9-5db7-4ce7-aa5e-6686f7a74081","boost":2}}},{"term":{"event.keyword":"Birth"}},{"terms":{"compositionType.keyword":["birth-application"]}}],"should":[]}},"sort":[{"dateOfApplication":"asc"}]}',
         querystring: 'from=0&size=10',
         headers: {
           'User-Agent':
@@ -171,21 +171,21 @@ export const mockResponse = {
             operatorRole: 'LOCAL_REGISTRAR'
           }
         ],
-        childFirstNames: 'Euan',
-        childFamilyName: 'Millar',
+        childFirstNames: 'Evans',
+        childFamilyName: 'Kangwa',
         childDoB: '1994-10-22',
         gender: 'male',
         eventLocationId: '394e6ec9-5db7-4ce7-aa5e-6686f7a74081',
-        motherFirstNames: 'Habiba',
-        motherFamilyName: 'Millar',
+        motherFirstNames: 'Agnes',
+        motherFamilyName: 'Kangwa',
         motherDoB: '1971-10-23',
         motherIdentifier: '123456789',
-        fatherFirstNames: 'Habiba',
+        fatherFirstNames: 'Agnes',
         fatherFamilyName: 'Aktar',
         fatherDoB: '1971-10-23',
         fatherIdentifier: '123456789',
-        informantFirstNames: 'Habiba',
-        informantFamilyName: 'Millar',
+        informantFirstNames: 'Agnes',
+        informantFamilyName: 'Kangwa',
         contactNumber: '+260728130980',
         type: 'REGISTERED',
         dateOfApplication: '2020-03-19T10:58:54.903Z',
@@ -203,10 +203,10 @@ export const mockResponse = {
 export const mockSearchCriteria = {
   gender: 'male',
   nameCombinations: [
-    { name: 'Euan', fields: 'CHILD_FIRST' },
-    { name: 'Millar', fields: 'CHILD_FAMILY' },
-    { name: 'Habiba', fields: 'MOTHER_FIRST' },
-    { name: 'Millar', fields: 'MOTHER_FAMILY' }
+    { name: 'Evans', fields: 'CHILD_FIRST' },
+    { name: 'Kangwa', fields: 'CHILD_FAMILY' },
+    { name: 'Agnes', fields: 'MOTHER_FIRST' },
+    { name: 'Kangwa', fields: 'MOTHER_FAMILY' }
   ],
   eventLocationId: '394e6ec9-5db7-4ce7-aa5e-6686f7a74081',
   event: 'Birth',

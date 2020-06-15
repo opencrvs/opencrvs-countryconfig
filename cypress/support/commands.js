@@ -219,7 +219,7 @@ Cypress.Commands.add(
 
     // MOTHER DETAILS
     cy.get('#iD').type('123456789')
-    cy.get('#firstNamesEng').type('Habiba')
+    cy.get('#firstNamesEng').type('Agnes')
     cy.get('#familyNameEng').type(lastName)
     cy.selectOption('#countryPlaceOfHeritage', 'Zambia', 'Zambia')
     cy.selectOption(
@@ -317,7 +317,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.selectOption('#nationality', 'Zambia', 'Zambia')
   cy.get('#iD').type('123456789')
   cy.get('#socialSecurityNo').type('123456789')
-  cy.get('#firstNamesEng').type('Habiba')
+  cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type(lastName)
   cy.get('#motherBirthDate-dd').type('23')
   cy.get('#motherBirthDate-mm').type('10')
@@ -359,7 +359,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.selectOption('#nationality', 'Zambia', 'Zambia')
   cy.get('#iD').type('123456789')
   cy.get('#socialSecurityNo').type('123456789')
-  cy.get('#firstNamesEng').type('Habiba')
+  cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
   cy.get('#fatherBirthDate-dd').type('23')
   cy.get('#fatherBirthDate-mm').type('10')
@@ -446,7 +446,7 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   // DECEASED DETAILS
   cy.get('#iD').type('123456789')
   cy.get('#socialSecurityNo').type('123456789')
-  cy.get('#firstNamesEng').type('Habiba')
+  cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
   cy.get('#birthDate-dd').type('16')
   cy.get('#birthDate-mm').type('06')
@@ -472,7 +472,7 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.goToNextFormSection()
   // APPLICANT DETAILS
   cy.get('#applicantID').type('123456789')
-  cy.get('#firstNamesEng').type('Habiba')
+  cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
   cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
@@ -572,7 +572,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.get('#iD').type('123456789')
   cy.get('#socialSecurityNo').type('123456789')
   cy.selectOption('#nationality', 'Zambia', 'Zambia')
-  cy.get('#firstNamesEng').type('Habiba')
+  cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
   cy.get('#birthDate-dd').type('16')
   cy.get('#birthDate-mm').type('06')
@@ -613,7 +613,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   // APPLICANT DETAILS
   cy.selectOption('#nationality', 'Zambia', 'Zambia')
   cy.get('#applicantID').type('123456789')
-  cy.get('#firstNamesEng').type('Habiba')
+  cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
   cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
@@ -684,7 +684,7 @@ Cypress.Commands.add('someoneElseJourney', () => {
   // APPLICANT'S DETAILS
   cy.selectOption('#nationality', 'Zambia', 'Zambia')
   cy.get('#applicantID').type('123456789')
-  cy.get('#firstNamesEng').type('Habiba')
+  cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
   cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
