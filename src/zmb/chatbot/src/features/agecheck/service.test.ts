@@ -103,13 +103,13 @@ describe('Chatbot service handler', () => {
     const searchParamsSpy = jest.spyOn(searchService, 'storeSearchParams')
     const response = await getNextStageMessage(
       WELCOME_MESSAGE,
-      'euan',
+      'Evans',
       1106601995
     )
     expect(searchParamsSpy).toHaveBeenCalledWith(
       1106601995,
       'child.firstName',
-      'euan'
+      'Evans'
     )
     expect(response).toEqual({
       id: LAST_NAME,
@@ -119,19 +119,19 @@ describe('Chatbot service handler', () => {
   })
   it('getNextStageMessage should store the childs and mothers last name and request the gender', async () => {
     const searchParamsSpy = jest.spyOn(searchService, 'storeSearchParams')
-    const response = await getNextStageMessage(LAST_NAME, 'millar', 1106601995)
+    const response = await getNextStageMessage(LAST_NAME, 'Kangwa', 1106601995)
     expect(searchParamsSpy).toHaveBeenCalledTimes(2)
     expect(searchParamsSpy).toHaveBeenNthCalledWith(
       1,
       1106601995,
       'child.lastName',
-      'millar'
+      'Kangwa'
     )
     expect(searchParamsSpy).toHaveBeenNthCalledWith(
       2,
       1106601995,
       'mother.lastName',
-      'millar'
+      'Kangwa'
     )
     expect(response).toEqual({
       id: GENDER,
@@ -194,13 +194,13 @@ describe('Chatbot service handler', () => {
       Promise.resolve(
         JSON.stringify({
           child: {
-            firstName: 'euan',
-            lastName: 'millar',
+            firstName: 'Evans',
+            lastName: 'Kangwa',
             gender: 'male'
           },
           mother: {
-            firstName: 'habiba',
-            lastName: 'millar'
+            firstName: 'Agnes',
+            lastName: 'Kangwa'
           },
           eventLocation: {
             name: 'Chembe'
@@ -212,19 +212,19 @@ describe('Chatbot service handler', () => {
 
     const response = await getNextStageMessage(
       MOTHER,
-      'Habiba',
+      'Agnes',
       1106601995,
       mockMothersNameMessage
     )
     expect(searchParamsSpy).toHaveBeenCalledWith(
       1106601995,
       'mother.firstName',
-      'Habiba'
+      'Agnes'
     )
     expect(response).toEqual({
       id: RESULT,
       response:
-        ' Euan Millar, born  Oct 22 1994. He is old enough to be married.  Send "start" to start the service again, or "exit" to log out.'
+        ' Evans Kangwa, born  Oct 22 1994. He is old enough to be married.  Send "start" to start the service again, or "exit" to log out.'
     })
     searchParamsSpy.mockClear()
   })

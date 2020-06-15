@@ -45,7 +45,7 @@ context('Birth Integration Test', () => {
 
   it('Tests from application to rejection using maximum input', () => {
     cy.initializeFakeTimers()
-    cy.declareApplicationWithMaximumInput('Euan', 'Millar')
+    cy.declareApplicationWithMaximumInput('Evans', 'Kangwa')
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
