@@ -25,6 +25,8 @@ window.config = {
   CERTIFICATE_PRINT_LOWEST_CHARGE: 0,
   CERTIFICATE_PRINT_HIGHEST_CHARGE: 0,
   UI_POLLING_INTERVAL: 5000,
+  FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
+  APPLICATION_AUDIT_LOCATIONS: 'DISTRICT',
   EXTERNAL_VALIDATION_WORKQUEUE: false, // this flag will decide whether to show external validation workqueue on registrar home
   SENTRY: 'https://f892d643aab642108f44e2d1795706bc@sentry.io/1774604',
   LOGROCKET: 'opencrvs-foundation/opencrvs-zambia'
