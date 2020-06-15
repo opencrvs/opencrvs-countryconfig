@@ -259,13 +259,14 @@
                   "name": "applicant",
                   "type": "RADIO_GROUP_WITH_NESTED_FIELDS",
                   "label": {
-                    "defaultMessage": "Who is the primary applicant for this application?",
-                    "description": "Form section title for primary applicant",
-                    "id": "register.primaryApplicant.registerNewEventHeading"
+                    "defaultMessage": "Who is the primary applicant?",
+                    "description": "Label for field primary applicant",
+                    "id": "register.selectInformant.primaryApplicant"
                   },
                   "hideHeader": true,
                   "size": "large",
                   "required": true,
+                  "readonly": true,
                   "initialValue": "",
                   "validate": [],
                   "options": [
@@ -1170,7 +1171,7 @@
                 },
                 {
                   "name": "birthLocation",
-                  "type": "SEARCH_FIELD",
+                  "type": "LOCATION_SEARCH_INPUT",
                   "label": {
                     "defaultMessage": "Health institution",
                     "description": "Label for form field: Health Institution",
