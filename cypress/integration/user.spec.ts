@@ -22,7 +22,7 @@ context('User Integration Test', () => {
     cy.createPin()
     cy.get('#menu-team').click()
     cy.get('#locationSearchInput').type('Mkushi')
-    cy.get('#locationOption561cdd28-2b70-48f3-b887-4dc435350e37').click()
+    cy.get('#locationOption8aa3e372-059a-4cf9-b4a8-107c9712f74b').click()
     cy.get('#location-search-btn').click()
     cy.get('#add-user').click()
     cy.get('#searchInputText').type('Mkushi')

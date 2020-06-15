@@ -22,9 +22,10 @@ context('Certificate Integration Test', () => {
     cy.registerApplicationWithMinimumInput('Sadman', 'Ilham')
 
     // GO TO PRINT TAB
+    cy.wait(5000)
     cy.get('#tab_print').click()
-    cy.wait(30000)
-
+    cy.tick(20000)
+    cy.reload()
     // DOWNLOAD AND GO FOR PRINT
     cy.downloadFirstApplication()
     cy.get('#ListItemAction-0-Print').click()

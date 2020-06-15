@@ -214,7 +214,7 @@ function formatResult(record: IBirthRecord, tooMany?: boolean): string {
     legal = 2
   }
   let gender = 'He'
-  console.log('Gender: ', record.gender)
+
   if (record.gender === 'female') {
     gender = 'She'
   }

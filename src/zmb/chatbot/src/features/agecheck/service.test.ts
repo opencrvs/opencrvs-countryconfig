@@ -53,8 +53,8 @@ describe('Chatbot service handler', () => {
     expect(chatPositionSpy).toHaveBeenCalledWith(1106601995, LOGIN_PROMPT)
     expect(bot.sendMessage).toHaveBeenCalledWith(
       1106601995,
-      'Hello. I am an automated age verification service for Zambia. 🤖 To access this service,' +
-        ' you first need to login. Please tell me your username.'
+      "Welcome to the age verification service. 🤖 \n\nHave you got the individual's first name," +
+        " last name, sex, district of birth and mother's first name? ...if yes, what is your username?"
     )
   })
   it('advanceChatFlow should select the next appropriate message', async () => {
@@ -66,9 +66,7 @@ describe('Chatbot service handler', () => {
     expect(chatPositionSpy).toHaveBeenCalledWith(1106601995, WELCOME_MESSAGE)
     expect(bot.sendMessage).toHaveBeenCalledWith(
       1106601995,
-      "Welcome to the Zambian Age Verification service. 😃 You will need the individual's first name, last name, sex and mother's first name." +
-        ' That should be enough, but we might need some more information, such as district of birth.' +
-        ' First, enter their first name.'
+      "Great, you are now logged in.\n\nWhat is the individual's first name?"
     )
   })
   it('advanceChatFlow should return the chat to the beginning when the word start is sent', async () => {
@@ -77,9 +75,7 @@ describe('Chatbot service handler', () => {
     expect(chatPositionSpy).toHaveBeenCalledWith(1106601995, WELCOME_MESSAGE)
     expect(bot.sendMessage).toHaveBeenCalledWith(
       1106601995,
-      "Welcome to the Zambian Age Verification service. 😃 You will need the individual's first name, last name, sex and mother's first name." +
-        ' That should be enough, but we might need some more information, such as district of birth.' +
-        ' First, enter their first name.'
+      "Great, you are now logged in.\n\nWhat is the individual's first name?"
     )
   })
   it('advanceChatFlow should logout the user when the word exit is sent', async () => {
@@ -95,7 +91,7 @@ describe('Chatbot service handler', () => {
     expect(logOutSpy).toHaveBeenCalled()
     expect(bot.sendMessage).toHaveBeenCalledWith(
       1106601995,
-      'Logging you out.  Good bye! 👋'
+      'Logging you out. Good bye! 👋'
     )
     databaseSpy.mockClear()
   })
@@ -113,7 +109,7 @@ describe('Chatbot service handler', () => {
     )
     expect(response).toEqual({
       id: LAST_NAME,
-      response: 'Thank you.  Now, enter their last name.'
+      response: "What is the individual's last name?"
     })
     searchParamsSpy.mockClear()
   })
@@ -135,7 +131,8 @@ describe('Chatbot service handler', () => {
     )
     expect(response).toEqual({
       id: GENDER,
-      response: 'Sex? Text 1 for female, 2 for male and 3 for third sex.'
+      response:
+        'What is the sex of the individual? Enter 1 for female, 2 for male and 3 for third sex.'
     })
     searchParamsSpy.mockClear()
   })
@@ -176,7 +173,7 @@ describe('Chatbot service handler', () => {
     )
     expect(response).toEqual({
       id: MOTHER,
-      response: "Mother's first name"
+      response: "What is their mother's first name?"
     })
     searchParamsSpy.mockClear()
   })
@@ -224,7 +221,7 @@ describe('Chatbot service handler', () => {
     expect(response).toEqual({
       id: RESULT,
       response:
-        ' Evans Kangwa, born  Oct 22 1994. He is old enough to be married.  Send "start" to start the service again, or "exit" to log out.'
+        "We have found a match. \n\nEvans Kangwa, born  Oct, 22 1994.\n\nHe is old enough to be married.\n\nEnter 'start' to verify someone else's age or 'exit' to logout."
     })
     searchParamsSpy.mockClear()
   })
