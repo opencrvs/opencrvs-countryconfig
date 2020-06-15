@@ -63,6 +63,10 @@ export const userSectionFormType: IFormSection = {
             mutation: {
               operation: 'fieldNameTransformer',
               parameters: ['primaryOffice']
+            },
+            query: {
+              operation: 'locationIDToFieldTransformer',
+              parameters: ['primaryOffice']
             }
           }
         }
@@ -90,6 +94,10 @@ export const userSectionFormType: IFormSection = {
             mutation: {
               operation: 'fieldToNameTransformer',
               parameters: ['en', 'firstNames']
+            },
+            query: {
+              operation: 'nameToFieldTransformer',
+              parameters: ['en', 'firstNames']
             }
           }
         },
@@ -104,6 +112,10 @@ export const userSectionFormType: IFormSection = {
             mutation: {
               operation: 'fieldToNameTransformer',
               parameters: ['en', 'familyName']
+            },
+            query: {
+              operation: 'nameToFieldTransformer',
+              parameters: ['en', 'familyName']
             }
           }
         },
@@ -117,6 +129,10 @@ export const userSectionFormType: IFormSection = {
           mapping: {
             mutation: {
               operation: 'msisdnTransformer',
+              parameters: ['user.mobile']
+            },
+            query: {
+              operation: 'localPhoneTransformer',
               parameters: ['user.mobile']
             }
           }
@@ -136,6 +152,10 @@ export const userSectionFormType: IFormSection = {
           mapping: {
             mutation: {
               operation: 'fieldToIdentifierWithTypeTransformer',
+              parameters: [NATIONAL_ID]
+            },
+            query: {
+              operation: 'identifierWithTypeToFieldTransformer',
               parameters: [NATIONAL_ID]
             }
           }
