@@ -407,7 +407,7 @@ interface ISimpleDocumentUploaderFormField extends IFormFieldBase {
 }
 interface ISearchFormField extends IFormFieldBase {
   type: typeof SEARCH_FIELD
-  searchableResource: Extract<keyof IOfflineData, 'facilities'>
+  searchableResource: Extract<keyof IOfflineData, 'offices' | 'facilities'>
   searchableType: string
   dynamicOptions?: IDynamicOptions
   dispatchOptions?: IDispatchOptions
@@ -416,7 +416,10 @@ interface ISearchFormField extends IFormFieldBase {
 
 interface ILocationSearchInputFormField extends IFormFieldBase {
   type: typeof LOCATION_SEARCH_INPUT
-  searchableResource: Extract<keyof IOfflineData, 'facilities' | 'locations'>
+  searchableResource: Extract<
+    keyof IOfflineData,
+    'offices' | 'facilities' | 'locations'
+  >
   locationList: ISearchLocation[]
 }
 interface ISearchLocation {
@@ -561,6 +564,7 @@ interface ILocation {
 interface IOfflineData {
   locations: { [key: string]: ILocation }
   facilities: { [key: string]: ILocation }
+  offices: { [key: string]: ILocation }
   languages: ILanguage[]
   forms: {
     // @todo this is also used in review, so it could be named just form
