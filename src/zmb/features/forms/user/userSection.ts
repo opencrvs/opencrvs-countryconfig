@@ -52,7 +52,7 @@ export const userSectionFormType: IFormSection = {
           label: messages.registrationOffice,
           required: true,
           initialValue: '',
-          searchableResource: 'facilities',
+          searchableResource: 'offices',
           searchableType: 'CRVS_OFFICE',
           dispatchOptions: {
             action: 'USER_FORM/PROCESS_ROLES',
