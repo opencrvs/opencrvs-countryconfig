@@ -17,5 +17,9 @@ export const conditionals: IConditionals = {
     action: 'hide',
     expression:
       'values.role!=="LOCAL_REGISTRAR" && values.role!=="REGISTRATION_AGENT"'
+  },
+  isOfficePreSelected: {
+    action: 'hide',
+    expression: 'values.skippedOfficeSelction && values.registrationOffice'
   }
 }

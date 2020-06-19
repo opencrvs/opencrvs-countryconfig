@@ -772,4 +772,5 @@ export interface IFormSection {
 
 export interface IConditionals {
   isRegistrarOrRegistrationAgentRoleSelected: IConditional
+  isOfficePreSelected: IConditional
 }
