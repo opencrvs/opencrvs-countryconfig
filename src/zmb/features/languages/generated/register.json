@@ -93,7 +93,7 @@
         "constants.applicationSubmittedOn": "Application submitted on",
         "constants.applicationUpdatedOn": "Updated on",
         "constants.applicationValidatedOn": "Application reviewed on",
-        "constants.applicationWaitingForValidationOn": "Application sent for validation on",
+        "constants.applicationSentForExternalValidationOn": "Application sent for external validation on",
         "constants.areYouSure": "Are you sure?",
         "constants.averageRateOfRegistrations": "Avg. {amount}%",
         "constants.bbs": "BBS",
