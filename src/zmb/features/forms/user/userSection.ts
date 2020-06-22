@@ -13,7 +13,7 @@ import {
   FIELD_GROUP_TITLE,
   IFormSection,
   NATIONAL_ID,
-  SEARCH_FIELD,
+  LOCATION_SEARCH_INPUT,
   SELECT_WITH_DYNAMIC_OPTIONS,
   SELECT_WITH_OPTIONS,
   SIMPLE_DOCUMENT_UPLOADER,
@@ -49,7 +49,7 @@ export const userSectionFormType: IFormSection = {
         },
         {
           name: 'registrationOffice',
-          type: SEARCH_FIELD,
+          type: LOCATION_SEARCH_INPUT,
           label: messages.registrationOffice,
           required: true,
           initialValue: '',
@@ -60,6 +60,7 @@ export const userSectionFormType: IFormSection = {
             payloadKey: 'primaryOfficeId'
           },
           validate: [],
+          locationList: [],
           mapping: {
             mutation: {
               operation: 'fieldNameTransformer',
