@@ -18,11 +18,19 @@ context('Performance view', () => {
     cy.registerApplicationWithMinimumInput('Yeasin', 'Hossein')
   })
 
-  it('allows downloading all metrics data as a CSV', () => {
+  it('allows downloading metrics data as a CSV', () => {
     cy.server()
-    cy.route('GET', '**/export/allPerformanceMetrics').as('getExport')
+    cy.route('GET', '**/export/monthlyPerformanceMetrics?**').as('getExport')
     cy.get('#menu-performance').click()
-    cy.get('#export-all-button').click()
+    cy.get('#operational-select').click()
+    cy.get('#react-select-2-option-1').click()
+    cy.get('#row_0 button')
+      .eq(1)
+      .click()
+    cy.wait('@getExport')
+    cy.get('#row_0 button')
+      .eq(3)
+      .click()
     cy.wait('@getExport')
   })
 })
