@@ -36,6 +36,7 @@ export const userSectionFormType: IFormSection = {
     {
       id: 'registration-office',
       title: messages.assignedRegistrationOffice,
+      conditionals: [conditionals.isOfficePreSelected],
       fields: [
         {
           name: 'assignedRegistrationOffice',
