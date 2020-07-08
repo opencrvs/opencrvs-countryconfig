@@ -1241,7 +1241,26 @@
         "performance.fieldAgents.options.event.both": "Births and deaths",
         "performance.fieldAgents.options.event.births": "Births",
         "performance.fieldAgents.options.event.deaths": "Deaths",
-        "performance.fieldAgents.showMore": "Show next {pageSize}"
+        "performance.fieldAgents.showMore": "Show next {pageSize}",
+        "user.profile.assignedOffice": "Assigned office",
+        "user.profile.roleType": "Role/Type",
+        "user.profile.phoneNumber": "Phone number",
+        "user.profile.userName": "Username",
+        "user.profile.startDate": "Start date",
+        "user.profile.sectionTitle.audit": "Audit",
+        "user.profile.audit.column.action": "Action",
+        "user.profile.audit.column.trackingId": "Tracking ID",
+        "user.profile.audit.column.eventType": "Event type",
+        "user.profile.audit.column.date": "Date",
+        "user.profile.audit.list.noDataFound": "No audits to display",
+        "user.profile.audit.description.inProgress": "Sent application for review - incomplete",
+        "user.profile.audit.description.declared": "Sent application for review - complete",
+        "user.profile.audit.description.validated": "Sent application for approval",
+        "user.profile.audit.description.waiting_validation": "Sent application for external system validation",
+        "user.profile.audit.description.registered": "Registered vital event",
+        "user.profile.audit.description.rejected": "Sent application for updates",
+        "user.profile.audit.description.certified": "Printed certificate",
+        "user.profile.auditList.showMore": "Show next {pageSize} of {totalItems}"
       }
     }
   ]
