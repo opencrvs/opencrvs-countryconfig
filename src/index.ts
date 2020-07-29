@@ -244,6 +244,16 @@ export async function createServer() {
     }
   })
 
+  server.route({
+    method: 'GET',
+    path: '/pilotLocations',
+    handler: () => ({}),
+    options: {
+      tags: ['api'],
+      description: 'Serves current pilot location list'
+    }
+  })
+
   server.ext({
     type: 'onRequest',
     method(request: Hapi.Request & { sentryScope: any }, h) {
