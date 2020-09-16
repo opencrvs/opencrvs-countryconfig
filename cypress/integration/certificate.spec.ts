@@ -23,9 +23,9 @@ context('Certificate Integration Test', () => {
 
     // GO TO PRINT TAB
     cy.wait(5000)
+    cy.clock()
     cy.get('#tab_print').click()
-    cy.tick(20000)
-    cy.reload()
+    cy.wait(2000)
     // DOWNLOAD AND GO FOR PRINT
     cy.downloadFirstApplication()
     cy.get('#ListItemAction-0-Print').click()
