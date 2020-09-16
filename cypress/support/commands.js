@@ -75,7 +75,7 @@ Cypress.Commands.add('login', (userType, options = {}) => {
           cy.visit(`${Cypress.env('CLIENT_URL')}?token=${body.token}`)
         })
     })
-
+  cy.clock()
   // Wait for app to load so token can be stored
   cy.get('#createPinBtn')
 })
@@ -150,6 +150,7 @@ Cypress.Commands.add('initializeFakeTimers', () => {
   cy.clock(new Date().getTime())
 })
 Cypress.Commands.add('downloadFirstApplication', () => {
+  cy.tick(10000)
   cy.get('#ListItemAction-0-icon').should('exist')
   cy.get('#ListItemAction-0-icon')
     .first()
