@@ -108,6 +108,7 @@ Cypress.Commands.add('createPin', () => {
       .click()
       .type(`${i % 2}`)
   }
+  cy.wait(2000)
 })
 Cypress.Commands.add('submitApplication', () => {
   // PREVIEW
