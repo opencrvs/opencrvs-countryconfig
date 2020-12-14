@@ -18,7 +18,8 @@
     "db:populate": "bash createReferenceData.sh",
     "db:backup:create": "DEV=true ./backup-metadata.sh",
     "db:backup:restore": "DEV=true ./restore-metadata.sh",
-    "db:clear:all": "DEV=true ./clear-all-data.sh"
+    "db:clear:all": "DEV=true ./clear-all-data.sh",
+    "contentful:prepare:import": "ts-node -r tsconfig-paths/register src/zmb/features/languages/scripts/contentfulImport.ts"
   },
   "devDependencies": {
     "bundlesize": "^0.18.0",

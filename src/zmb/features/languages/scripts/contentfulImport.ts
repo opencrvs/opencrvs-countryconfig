@@ -67,7 +67,7 @@ type LanguagesJSON = {
 type Field = {
   id: string // set to camel case from field id
   name: string // set to dot notated field id
-  type: 'Symbol'
+  type: 'Symbol' | 'Text'
   localized: boolean // set to true
   required: boolean // set to false
   validations: []
@@ -253,7 +253,8 @@ function camelCase(name: string, delim = '.') {
 function generateNewContentType(
   id: string,
   name: string,
-  fieldName: string
+  fieldName: string,
+  longMessages: string[]
 ): ContentType {
   return {
     sys: {
@@ -279,7 +280,7 @@ function generateNewContentType(
       {
         id: camelCase(fieldName),
         name: fieldName,
-        type: 'Symbol',
+        type: longMessages.includes(fieldName) ? 'Text' : 'Symbol',
         localized: true,
         required: false,
         validations: [],
@@ -380,11 +381,15 @@ function generateContentTypeEntry(
   }
 }
 
-function addFieldToContentType(contentType: ContentType, fieldName: string) {
+function addFieldToContentType(
+  contentType: ContentType,
+  fieldName: string,
+  longMessages: string[]
+) {
   contentType.fields.push({
     id: camelCase(fieldName),
     name: fieldName,
-    type: 'Symbol',
+    type: longMessages.includes(fieldName) ? 'Text' : 'Symbol',
     localized: true,
     required: false,
     validations: [],
@@ -455,6 +460,7 @@ export default async function convertLanguagesToContentful() {
   // create content
 
   let sortedKeys: string[] = []
+  let longMessages: string[] = []
 
   let currentContentType: ContentType
   let currentEditorInterface: EditorInterface
@@ -474,6 +480,9 @@ export default async function convertLanguagesToContentful() {
     Object.keys(languages.data[0].messages)
       .sort()
       .forEach((key: string, index: number) => {
+        if (languages.data[0].messages[key].length > 240) {
+          longMessages.push(key)
+        }
         if (key.length > 49) {
           console.log(
             `${chalk.redBright(
@@ -495,7 +504,8 @@ export default async function convertLanguagesToContentful() {
             currentContentType = generateNewContentType(
               contentTypeID,
               contentTypeName,
-              key
+              key,
+              longMessages
             )
             currentEditorInterface = generateEditorInterface(
               contentTypeID,
@@ -513,7 +523,7 @@ export default async function convertLanguagesToContentful() {
             contentfulTemplate.entries.push(currentContentTypeEntry)
           } else {
             // existing content type page
-            addFieldToContentType(currentContentType, key)
+            addFieldToContentType(currentContentType, key, longMessages)
             addControlToEditorInterface(
               currentEditorInterface,
               key,
@@ -544,7 +554,8 @@ export default async function convertLanguagesToContentful() {
           currentContentType = generateNewContentType(
             contentTypeID,
             contentTypeName,
-            key
+            key,
+            longMessages
           )
           currentEditorInterface = generateEditorInterface(
             contentTypeID,
