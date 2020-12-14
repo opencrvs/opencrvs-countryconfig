@@ -105,7 +105,7 @@
                       "label": {
                         "defaultMessage": "Head of the institution where the birth occurred",
                         "description": "Option for form field: Head of the institution where the birth occurred",
-                        "id": "form.field.label.relationInstitutionHeadPlaceOfBirth"
+                        "id": "form.field.label.relInstHeadPlaceOfBirth"
                       }
                     },
                     {
@@ -496,7 +496,7 @@
                       "label": {
                         "defaultMessage": "Applicant",
                         "description": "Label for \"Applicant\" radio option",
-                        "id": "form.field.label.application.whoseContactDetails.applicant"
+                        "id": "form.field.label.app.whoContDet.app"
                       },
                       "conditionals": [
                         {
@@ -510,7 +510,7 @@
                       "label": {
                         "defaultMessage": "Mother",
                         "description": "Label for \"Mother\" radio option",
-                        "id": "form.field.label.application.whoseContactDetails.mother"
+                        "id": "form.field.label.app.whoContDet.mother"
                       },
                       "conditionals": [
                         {
@@ -524,7 +524,7 @@
                       "label": {
                         "defaultMessage": "Father",
                         "description": "Label for \"Father\" radio option",
-                        "id": "form.field.label.application.whoseContactDetails.father"
+                        "id": "form.field.label.app.whoContDet.father"
                       },
                       "conditionals": [
                         {
@@ -993,7 +993,7 @@
                       "label": {
                         "defaultMessage": "Other paramedical personnel",
                         "description": "Label for form field: Attendant at birth",
-                        "id": "form.field.label.attendantAtBirthOtherParamedicalPersonnel"
+                        "id": "form.field.label.attBirthOtherParaPers"
                       }
                     },
                     {
@@ -8540,7 +8540,7 @@
               "title": {
                 "defaultMessage": "What is the applicant's relationship to the deceased?",
                 "description": "Form section title for primary applicant",
-                "id": "register.selectInformant.deathInformantSomeOneElseTitle"
+                "id": "register.selInf.deathInfSomeoneElse"
               },
               "conditionals": [
                 {
@@ -8557,7 +8557,7 @@
                   "label": {
                     "defaultMessage": "What is the applicant's relationship to the deceased?",
                     "description": "Form section title for primary applicant",
-                    "id": "register.selectInformant.deathInformantSomeoneElseTitle"
+                    "id": "register.selInf.deathInfSomeoneElse"
                   },
                   "hideHeader": true,
                   "size": "large",
@@ -8570,7 +8570,7 @@
                       "label": {
                         "defaultMessage": "Head of the institution where the death occurred",
                         "description": "Option for form field: Head of the institute",
-                        "id": "form.field.label.applicantRelation.headOfTheInstitute"
+                        "id": "form.field.label.applicantRelation.headInst"
                       }
                     },
                     {
@@ -8578,7 +8578,7 @@
                       "label": {
                         "defaultMessage": "Owner of the house or building where the death occurred",
                         "description": "Option for form field: Owner of the house",
-                        "id": "form.field.label.applicantRelation.ownerOfTheHouse"
+                        "id": "form.field.label.applicantRelation.owner"
                       }
                     },
                     {
@@ -8586,7 +8586,7 @@
                       "label": {
                         "defaultMessage": "Driver or operator of the land or water vehicle or aircraft where the death occurred",
                         "description": "Option for form field: Driver of the vehicle",
-                        "id": "form.field.label.applicantRelation.driverOfTheVehicle"
+                        "id": "form.field.label.applicantRelation.driver"
                       }
                     },
                     {
@@ -8594,7 +8594,7 @@
                       "label": {
                         "defaultMessage": "Officer-in-charge of the Thana of a road or public space where the death occurred",
                         "description": "Option for form field: Officer-in-charge",
-                        "id": "form.field.label.applicantRelation.officerInCharge"
+                        "id": "form.field.label.applicantRelation.officer"
                       }
                     },
                     {
@@ -8703,7 +8703,7 @@
                       "label": {
                         "defaultMessage": "Applicant",
                         "description": "Label for \"Applicant\" radio option",
-                        "id": "form.field.label.application.whoseContactDetails.applicant"
+                        "id": "form.field.label.app.whoContDet.app"
                       }
                     },
                     {
@@ -13052,7 +13052,7 @@
                       "label": {
                         "defaultMessage": "Hospital discharge certificate",
                         "description": "Label for select option Hospital Discharge Certificate",
-                        "id": "form.field.label.docTypeHospitalDischargeCertificate"
+                        "id": "form.field.label.docHospDischCert"
                       }
                     },
                     {
