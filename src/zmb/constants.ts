@@ -10,6 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import * as path from 'path'
+import { readFileSync } from 'fs'
 
 export const LANGUAGES_SOURCE = path.join(
   process.cwd(),
@@ -29,3 +30,13 @@ export const EMPLOYEES_SOURCE = path.join(
   process.cwd(),
   'src/zmb/features/employees/generated/'
 )
+export const CMS_API_KEY =
+  process.env.CMS_API_KEY ||
+  (process.env.CMS_API_KEY && readFileSync(process.env.CMS_API_KEY)) ||
+  ''
+export const CONTENTFUL_SPACE_ID =
+  process.env.CONTENTFUL_SPACE_ID ||
+  (process.env.CONTENTFUL_SPACE_ID &&
+    readFileSync(process.env.CONTENTFUL_SPACE_ID)) ||
+  ''
+export const CMS = process.env.CMS // || 'contentful'

@@ -243,7 +243,7 @@ export interface IContentfulImport {
   roles?: any
 }
 
-function camelCase(name: string, delim = '.') {
+function camelCase(name: string, delim = '.'): string {
   const list = Array.isArray(name) ? name : name.split(delim)
   return list.reduce(
     (res, cur) => res + cur.charAt(0).toUpperCase() + cur.slice(1)
@@ -461,7 +461,7 @@ export default async function convertLanguagesToContentful() {
 
   let sortedKeys: string[] = []
   let longMessages: string[] = []
-
+  let contentfulIds = {}
   let currentContentType: ContentType
   let currentEditorInterface: EditorInterface
   let currentContentTypeEntry: Entry
@@ -518,11 +518,13 @@ export default async function convertLanguagesToContentful() {
               SUPPORTED_LOCALES,
               languages.data
             )
+            contentfulIds[camelCase(key)] = key
             contentfulTemplate.contentTypes.push(currentContentType)
             contentfulTemplate.editorInterfaces.push(currentEditorInterface)
             contentfulTemplate.entries.push(currentContentTypeEntry)
           } else {
             // existing content type page
+            contentfulIds[camelCase(key)] = key
             addFieldToContentType(currentContentType, key, longMessages)
             addControlToEditorInterface(
               currentEditorInterface,
@@ -569,6 +571,7 @@ export default async function convertLanguagesToContentful() {
             SUPPORTED_LOCALES,
             languages.data
           )
+          contentfulIds[camelCase(key)] = key
           contentfulTemplate.contentTypes.push(currentContentType)
           contentfulTemplate.editorInterfaces.push(currentEditorInterface)
           contentfulTemplate.entries.push(currentContentTypeEntry)
@@ -578,6 +581,13 @@ export default async function convertLanguagesToContentful() {
     fs.writeFile(
       `${LANGUAGES_SOURCE}contentful-import.json`,
       JSON.stringify(contentfulTemplate),
+      err => {
+        if (err) return console.log(err)
+      }
+    )
+    fs.writeFile(
+      `${LANGUAGES_SOURCE}contentful-ids.json`, // used when loading content from API
+      JSON.stringify(contentfulIds),
       err => {
         if (err) return console.log(err)
       }

@@ -281,11 +281,17 @@ Internationalisation and languages can be configured in [register.json](https://
 
 OpenCRVS currently supports the standard Roman and Latin character set and Bengali. In OpenCRVS Alpha, we will need to assist you to configure core to support a new language in the language select in a pull request. We will gladly provide support to you if you want to provide translations and hugely welcome all localisation efforts.
 
-We have provided some handy tools to help you load your languages into a content management system such as [Contentful](https://www.contentful.com/). Contentful is a paid-for service but 1 space and 2 locales are free. At the time of writing we couldnt find a better free option for multi-language content management. If you can suggest one, we would be happy to write an import tool for it.
+We have provided some handy tools to help you load your languages into a content management system such as [Contentful](https://www.contentful.com/).
+
+We currently do not recommend one CMS over another and for now the process of updating your CMS is outside current OpenCRVS scope. So if you plan on using a CMS, you will need to keep an eye on OpenCRVS releases and perform the necessary migrations when new content keys are added for new features.
+
+Contentful is a paid-for service but 1 space and 2 locales are free. At the time of writing we couldnt find a better free option for multi-language content management.
 
 When a new commit is pushed to core, you can pass an environment variable **RESOURCES_PATH** and the commit will automatically generate a descriptions file for your language content keys in [this](https://github.com/opencrvs/opencrvs-zambia/blob/master/src/zmb/features/languages/generated) folder.
 
-To upload to Contentful:
+There is a command `yarn extract:translations` in core that you can run and compare the output to see if new content keys have been added to core since you last checked.
+
+To perform an initial import to Contentful:
 
 1. First create a space in Contentful and add up to 2 locales for the free plan. Copy your **space-id** from Contentful settings.
 2. Download and install the [Contentful cli](https://github.com/contentful/contentful-cli)
@@ -293,6 +299,7 @@ To upload to Contentful:
 4. Open the exported file and copy the required ids to this [file](https://github.com/opencrvs/opencrvs-zambia/blob/master/src/zmb/features/languages/scripts/constants.ts)
 5. You can run the following command to generate a **contentful-import.json** file: `yarn contentful:prepare:import`
 6. Run the Contentful import script: `contentful space import --content-file src/zmb/features/languages/generated/contentful-import.json --space-id=<your-space-id>`
+7. Get your API key from contentful settings and add it to docker secrets, or paste [here](https://github.com/opencrvs/opencrvs-zambia/blob/master/src/zmb/constants.ts) for use in development. DO NOT SUBMIT API KEYS TO A PUBLIC REPO!
 
 <br>
 

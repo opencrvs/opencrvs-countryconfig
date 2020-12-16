@@ -197,8 +197,7 @@ export const localeTemplate: Locale = {
       sys: {
         type: 'Link',
         linkType: 'Environment',
-        id: 'master',
-        uuid: ''
+        id: 'master'
       }
     },
     createdBy: {
