@@ -277,7 +277,7 @@ You can configure your registration number format any way you like in these scri
 
 ### Languages - How do I internationalise or update the OpenCRVS client text?
 
-Internationalisation and languages can be configured in [register.json](https://github.com/opencrvs/opencrvs-zambia/blob/master/src/zmb/features/languages/generated/register.json) following the [FormatJS React Intl package](https://github.com/formatjs/react-intl) approach.
+Internationalisation and languages can be configured in [client.json](https://github.com/opencrvs/opencrvs-zambia/blob/master/src/zmb/features/languages/generated/client.json) following the [FormatJS React Intl package](https://github.com/formatjs/react-intl) approach.
 
 OpenCRVS currently supports the standard Roman and Latin character set and Bengali. In OpenCRVS Alpha, we will need to assist you to configure core to support a new language in the language select in a pull request. We will gladly provide support to you if you want to provide translations and hugely welcome all localisation efforts.
 

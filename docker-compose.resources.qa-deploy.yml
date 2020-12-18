@@ -11,7 +11,7 @@ version: "3.3"
 
 services:
   resources:
-    image: opencrvs/ocrvs-bangladesh:latest
+    image: opencrvs/ocrvs-zambia:latest
     restart: unless-stopped
     secrets:
       - cms-api-key

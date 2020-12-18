@@ -468,7 +468,7 @@ export default async function convertLanguagesToContentful() {
 
   try {
     let languages = (await JSON.parse(
-      fs.readFileSync(`${LANGUAGES_SOURCE}register.json`, 'utf8')
+      fs.readFileSync(`${LANGUAGES_SOURCE}client.json`, 'utf8')
     )) as LanguagesJSON
 
     let descriptions = (await JSON.parse(
