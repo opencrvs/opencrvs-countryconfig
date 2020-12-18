@@ -254,7 +254,8 @@ function generateNewContentType(
   id: string,
   name: string,
   fieldName: string,
-  longMessages: string[]
+  longMessages: string[],
+  notification?: boolean // notifications already had their keys in camelCase
 ): ContentType {
   return {
     sys: {
@@ -273,12 +274,12 @@ function generateNewContentType(
       version: 1,
       publishedBy: user
     },
-    displayField: camelCase(fieldName),
+    displayField: !notification ? camelCase(fieldName) : fieldName,
     name,
     description: '',
     fields: [
       {
-        id: camelCase(fieldName),
+        id: !notification ? camelCase(fieldName) : fieldName,
         name: fieldName,
         type: longMessages.includes(fieldName) ? 'Text' : 'Symbol',
         localized: true,
@@ -294,7 +295,8 @@ function generateNewContentType(
 function generateEditorInterface(
   id: string,
   fieldName: string,
-  fieldDescription: string
+  fieldDescription: string,
+  notification?: boolean
 ): EditorInterface {
   return {
     sys: {
@@ -317,7 +319,7 @@ function generateEditorInterface(
     },
     controls: [
       {
-        fieldId: camelCase(fieldName),
+        fieldId: !notification ? camelCase(fieldName) : fieldName,
         settings: {
           helpText: fieldDescription
         },
@@ -347,10 +349,11 @@ function generateContentTypeEntry(
   id: string,
   fieldName: string,
   locales: SupportedLocaleConfig[],
-  languages: Language[]
+  languages: Language[],
+  notification?: boolean
 ): Entry {
   let fields = {}
-  const fieldKey = camelCase(fieldName)
+  const fieldKey = !notification ? camelCase(fieldName) : fieldName
   fields[fieldKey] = getTranslations(fieldName, locales, languages)
 
   return {
@@ -384,10 +387,11 @@ function generateContentTypeEntry(
 function addFieldToContentType(
   contentType: ContentType,
   fieldName: string,
-  longMessages: string[]
+  longMessages: string[],
+  notification?: boolean
 ) {
   contentType.fields.push({
-    id: camelCase(fieldName),
+    id: !notification ? camelCase(fieldName) : fieldName,
     name: fieldName,
     type: longMessages.includes(fieldName) ? 'Text' : 'Symbol',
     localized: true,
@@ -401,10 +405,11 @@ function addFieldToContentType(
 function addControlToEditorInterface(
   editorInterface: EditorInterface,
   fieldName: string,
-  fieldDescription: string
+  fieldDescription: string,
+  notification?: boolean
 ) {
   editorInterface.controls.push({
-    fieldId: camelCase(fieldName),
+    fieldId: !notification ? camelCase(fieldName) : fieldName,
     settings: {
       helpText: fieldDescription
     },
@@ -417,9 +422,10 @@ function addFieldToContentTypeEntry(
   entry: Entry,
   fieldName: string,
   locales: SupportedLocaleConfig[],
-  languages: Language[]
+  languages: Language[],
+  notification?: boolean
 ) {
-  const fieldKey = camelCase(fieldName)
+  const fieldKey = !notification ? camelCase(fieldName) : fieldName
   entry.fields[fieldKey] = getTranslations(fieldName, locales, languages)
 }
 
@@ -429,6 +435,8 @@ export default async function convertLanguagesToContentful() {
       `/////////////////////////// CONVERTING LANGUAGES TO CONTENTFUL ///////////////////////////`
     )}`
   )
+
+  const application = process.argv[2]
 
   // set locales
 
@@ -468,39 +476,100 @@ export default async function convertLanguagesToContentful() {
 
   try {
     let languages = (await JSON.parse(
-      fs.readFileSync(`${LANGUAGES_SOURCE}client.json`, 'utf8')
+      fs.readFileSync(
+        `${LANGUAGES_SOURCE}${application}/${application}.json`,
+        'utf8'
+      )
     )) as LanguagesJSON
 
     let descriptions = (await JSON.parse(
-      fs.readFileSync(`${LANGUAGES_SOURCE}descriptions.json`, 'utf8')
+      fs.readFileSync(
+        `${LANGUAGES_SOURCE}${application}/descriptions.json`,
+        'utf8'
+      )
     )) as LanguagesJSON
     let tempKey: string
     let page: number = 1
     let pageIndex: number = 0
-    Object.keys(languages.data[0].messages)
-      .sort()
-      .forEach((key: string, index: number) => {
-        if (languages.data[0].messages[key].length > 240) {
-          longMessages.push(key)
-        }
-        if (key.length > 49) {
-          console.log(
-            `${chalk.redBright(
-              `/////////////////////////// KEY TOO LONG FOR CONTENTFUL ///////////////////////////`
-            )}`
-          )
-          console.log(key)
-        }
-        const strippedLabel = key.split('.')[0]
-        if (index === 0) {
-          tempKey = strippedLabel
-        }
-        if (tempKey === strippedLabel) {
-          if (!sortedKeys.includes(`${strippedLabel}Page${page}`)) {
+
+    if (application === 'client') {
+      // client has a thousand keys.  We must dynamically create content types and assign content as best we can using the id
+      Object.keys(languages.data[0].messages)
+        .sort()
+        .forEach((key: string, index: number) => {
+          if (languages.data[0].messages[key].length > 240) {
+            longMessages.push(key)
+          }
+          if (key.length > 49) {
+            console.log(
+              `${chalk.redBright(
+                `/////////////////////////// KEY TOO LONG FOR CONTENTFUL ///////////////////////////`
+              )}`
+            )
+            console.log(key)
+          }
+          const strippedLabel = key.split('.')[0]
+          if (index === 0) {
+            tempKey = strippedLabel
+          }
+          if (tempKey === strippedLabel) {
+            if (!sortedKeys.includes(`${strippedLabel}Page${page}`)) {
+              const contentTypeID = `${strippedLabel}Page${page}`
+              const contentTypeName = `${strippedLabel} Page ${page}`
+              sortedKeys.push(contentTypeID)
+              // new content type page
+              currentContentType = generateNewContentType(
+                contentTypeID,
+                contentTypeName,
+                key,
+                longMessages
+              )
+              currentEditorInterface = generateEditorInterface(
+                contentTypeID,
+                key,
+                descriptions.data[key]
+              )
+              currentContentTypeEntry = generateContentTypeEntry(
+                contentTypeID,
+                key,
+                SUPPORTED_LOCALES,
+                languages.data
+              )
+              contentfulIds[camelCase(key)] = key
+              contentfulTemplate.contentTypes.push(currentContentType)
+              contentfulTemplate.editorInterfaces.push(currentEditorInterface)
+              contentfulTemplate.entries.push(currentContentTypeEntry)
+            } else {
+              // existing content type page
+              contentfulIds[camelCase(key)] = key
+              addFieldToContentType(currentContentType, key, longMessages)
+              addControlToEditorInterface(
+                currentEditorInterface,
+                key,
+                descriptions.data[key]
+              )
+              addFieldToContentTypeEntry(
+                currentContentTypeEntry,
+                key,
+                SUPPORTED_LOCALES,
+                languages.data
+              )
+            }
+            if (pageIndex === 45) {
+              // the free contentful plan describes a limit of 50 fields per content type.  In reality the limit is 45
+              page++
+              pageIndex = 0
+            } else {
+              pageIndex++
+            }
+          } else {
+            // brand new content type
+            tempKey = strippedLabel
+            pageIndex = 0
+            page = 1
             const contentTypeID = `${strippedLabel}Page${page}`
             const contentTypeName = `${strippedLabel} Page ${page}`
             sortedKeys.push(contentTypeID)
-            // new content type page
             currentContentType = generateNewContentType(
               contentTypeID,
               contentTypeName,
@@ -512,6 +581,7 @@ export default async function convertLanguagesToContentful() {
               key,
               descriptions.data[key]
             )
+
             currentContentTypeEntry = generateContentTypeEntry(
               contentTypeID,
               key,
@@ -522,71 +592,79 @@ export default async function convertLanguagesToContentful() {
             contentfulTemplate.contentTypes.push(currentContentType)
             contentfulTemplate.editorInterfaces.push(currentEditorInterface)
             contentfulTemplate.entries.push(currentContentTypeEntry)
+          }
+        })
+    } else {
+      // SMS notifications
+      Object.keys(languages.data[0].messages).forEach(
+        (key: string, index: number) => {
+          if (languages.data[0].messages[key].length > 240) {
+            longMessages.push(key)
+          }
+          if (key.length > 49) {
+            console.log(
+              `${chalk.redBright(
+                `/////////////////////////// KEY TOO LONG FOR CONTENTFUL ///////////////////////////`
+              )}`
+            )
+            console.log(key)
+          }
+          if (index === 0) {
+            currentContentType = generateNewContentType(
+              'notification',
+              'notification',
+              key,
+              longMessages,
+              true
+            )
+            currentEditorInterface = generateEditorInterface(
+              'notification',
+              key,
+              descriptions.data[key],
+              true
+            )
+            currentContentTypeEntry = generateContentTypeEntry(
+              'notification',
+              key,
+              SUPPORTED_LOCALES,
+              languages.data,
+              true
+            )
+            contentfulIds[key] = key
+            contentfulTemplate.contentTypes.push(currentContentType)
+            contentfulTemplate.editorInterfaces.push(currentEditorInterface)
+            contentfulTemplate.entries.push(currentContentTypeEntry)
           } else {
             // existing content type page
-            contentfulIds[camelCase(key)] = key
-            addFieldToContentType(currentContentType, key, longMessages)
+            contentfulIds[key] = key
+            addFieldToContentType(currentContentType, key, longMessages, true)
             addControlToEditorInterface(
               currentEditorInterface,
               key,
-              descriptions.data[key]
+              descriptions.data[key],
+              true
             )
             addFieldToContentTypeEntry(
               currentContentTypeEntry,
               key,
               SUPPORTED_LOCALES,
-              languages.data
+              languages.data,
+              true
             )
           }
-          if (pageIndex === 45) {
-            // the free contentful plan describes a limit of 50 fields per content type.  In reality the limit is 45
-            page++
-            pageIndex = 0
-          } else {
-            pageIndex++
-          }
-        } else {
-          // brand new content type
-          tempKey = strippedLabel
-          pageIndex = 0
-          page = 1
-          const contentTypeID = `${strippedLabel}Page${page}`
-          const contentTypeName = `${strippedLabel} Page ${page}`
-          sortedKeys.push(contentTypeID)
-          currentContentType = generateNewContentType(
-            contentTypeID,
-            contentTypeName,
-            key,
-            longMessages
-          )
-          currentEditorInterface = generateEditorInterface(
-            contentTypeID,
-            key,
-            descriptions.data[key]
-          )
-
-          currentContentTypeEntry = generateContentTypeEntry(
-            contentTypeID,
-            key,
-            SUPPORTED_LOCALES,
-            languages.data
-          )
-          contentfulIds[camelCase(key)] = key
-          contentfulTemplate.contentTypes.push(currentContentType)
-          contentfulTemplate.editorInterfaces.push(currentEditorInterface)
-          contentfulTemplate.entries.push(currentContentTypeEntry)
         }
-      })
+      )
+    }
 
     fs.writeFile(
-      `${LANGUAGES_SOURCE}contentful-import.json`,
+      `${LANGUAGES_SOURCE}${application}/contentful-import.json`,
       JSON.stringify(contentfulTemplate),
       err => {
         if (err) return console.log(err)
       }
     )
     fs.writeFile(
-      `${LANGUAGES_SOURCE}contentful-ids.json`, // used when loading content from API
+      `${LANGUAGES_SOURCE}${application}/contentful-ids.json`, // used when loading content from API
       JSON.stringify(contentfulIds),
       err => {
         if (err) return console.log(err)

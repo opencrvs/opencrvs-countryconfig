@@ -80,7 +80,7 @@ function convertContentfulToSupportedFormat(
 export async function getLanguages(
   application: string
 ): Promise<ILanguageDataResponse> {
-  if (CMS && CMS === 'contentful') {
+  if (CMS && CMS === 'contentful' && application === 'client') {
     const contentfulClient = Contentful.createClient({
       space: `${CONTENTFUL_SPACE_ID}`,
       accessToken: `${CMS_API_KEY}`
@@ -97,37 +97,45 @@ export async function getLanguages(
           return entries
         })
       const contentfulIds = (await JSON.parse(
-        readFileSync(join(LANGUAGES_SOURCE, 'contentful-ids.json'), 'utf8')
-      )) as IMessageIdentifier
-      if (
-        contentfulEntries &&
-        contentfulEntries.items.length < contentfulEntries.total
-      ) {
-        const pages = []
-        pages.push(contentfulEntries.items.length)
-        let nextSkip = contentfulEntries.items.length
-        while (nextSkip < contentfulEntries.total) {
-          nextSkip = nextSkip + 1000
-          if (nextSkip < contentfulEntries.total) {
-            pages.push(nextSkip)
-          } else {
-            pages.push(nextSkip - contentfulEntries.total)
-          }
-        }
-        console.log(
-          `Call contentul API this many times with these skips: ${pages}`
+        readFileSync(
+          join(LANGUAGES_SOURCE, `${application}/contentful-ids.json`),
+          'utf8'
         )
-        for (let index = 0; index < pages.length; index++) {
-          const skip = pages[index]
-          await contentfulClient
-            .getEntries({ limit: 1000, locale: '*', skip })
-            .then(entries => {
-              entries.items.forEach(item => {
-                contentfulEntries.items.push(item)
-              })
-            })
-        }
-      }
+      )) as IMessageIdentifier
+
+      const content: ILanguageDataResponse = convertContentfulToSupportedFormat(
+        contentfulLocales,
+        contentfulEntries,
+        contentfulIds
+      )
+      return content
+    } catch (err) {
+      throw new Error(
+        `Unable to retrieve conentful content: ${JSON.stringify(err)}`
+      )
+    }
+  } else if (CMS && CMS === 'contentful' && application === 'notification') {
+    const contentfulClient = Contentful.createClient({
+      space: `${CONTENTFUL_SPACE_ID}`,
+      accessToken: `${CMS_API_KEY}`
+    })
+    try {
+      let contentfulLocales: Contentful.LocaleCollection = await contentfulClient
+        .getLocales()
+        .then(entries => {
+          return entries
+        })
+      let contentfulEntries: Contentful.EntryCollection<unknown> = await contentfulClient
+        .getEntries({ limit: 1000, locale: '*', content_type: application })
+        .then(entries => {
+          return entries
+        })
+      const contentfulIds = (await JSON.parse(
+        readFileSync(
+          join(LANGUAGES_SOURCE, `${application}/contentful-ids.json`),
+          'utf8'
+        )
+      )) as IMessageIdentifier
 
       const content: ILanguageDataResponse = convertContentfulToSupportedFormat(
         contentfulLocales,
@@ -142,9 +150,12 @@ export async function getLanguages(
     }
   } else {
     return new Promise((resolve, reject) => {
-      readFile(join(LANGUAGES_SOURCE, `${application}.json`), (err, data) => {
-        err ? reject(err) : resolve(JSON.parse(data.toString()))
-      })
+      readFile(
+        join(LANGUAGES_SOURCE, `${application}/${application}.json`),
+        (err, data) => {
+          err ? reject(err) : resolve(JSON.parse(data.toString()))
+        }
+      )
     })
   }
 }
