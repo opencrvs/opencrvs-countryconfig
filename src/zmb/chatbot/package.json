@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/chatbot",
-  "version": "1.0.0-alpha.2.0",
+  "version": "1.0.0-alpha.3.0",
   "description": "A Telegram chatbot to check the age of a child",
   "license": "MPL-2.0",
   "private": true,
