@@ -18,7 +18,8 @@
     "db:populate": "bash createReferenceData.sh",
     "db:backup:create": "DEV=true ./backup-metadata.sh",
     "db:backup:restore": "DEV=true ./restore-metadata.sh",
-    "db:clear:all": "DEV=true ./clear-all-data.sh"
+    "db:clear:all": "DEV=true ./clear-all-data.sh",
+    "contentful:prepare:import": "ts-node -r tsconfig-paths/register src/zmb/features/languages/scripts/contentfulImport.ts"
   },
   "devDependencies": {
     "bundlesize": "^0.18.0",
@@ -53,6 +54,7 @@
     "boom": "^7.3.0",
     "chalk": "^2.4.1",
     "country-data": "^0.0.31",
+    "contentful": "^8.1.1",
     "cross-env": "^6.0.3",
     "crypto": "^1.0.1",
     "cypress": "^4.8.0",
@@ -76,6 +78,7 @@
     "opener": "^1.5.1",
     "pino": "^5.14.0",
     "prettier": "^1.19.1",
+    "short-uuid": "^4.1.0",
     "string-similarity": "^3.0.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^6.1.1",

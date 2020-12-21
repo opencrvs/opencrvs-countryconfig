@@ -1,0 +1,9 @@
+[
+  "buttons.forgotPassword",
+  "buttons.forgottenPIN",
+  "buttons.verify",
+  "error.passwordSubmissionError",
+  "sysAdHome.resendSMS",
+  "sysAdHome.resendSMSSuccess",
+  "sysAdHome.resendSMSError"
+]
