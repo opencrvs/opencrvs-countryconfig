@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "lang": "en-US",
+      "lang": "en",
       "displayName": "English",
       "messages": {
         "birthInProgressNotification": "Birth registration tracking ID is {{trackingId}}. You must visit {{crvsOffice}} to complete the application",
