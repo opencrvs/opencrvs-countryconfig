@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "lang": "en-US",
+      "lang": "en",
       "displayName": "English",
       "messages": {
         "form.section.child.name": "Child",
