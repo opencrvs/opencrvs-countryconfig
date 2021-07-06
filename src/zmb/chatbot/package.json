@@ -28,7 +28,7 @@
     "node-fetch": "^2.6.1",
     "node-telegram-bot-api": "^0.40.0",
     "pino": "^5.14.0",
-    "redis": "^3.0.2"
+    "redis": "^3.1.1"
   },
   "devDependencies": {
     "@types/boom": "^7.2.0",
