@@ -54,9 +54,10 @@ export function generateSaltedHash(password: string): ISaltedHash {
 export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
   const countryCode =
     callingCountries[countryAlpha3.toUpperCase()].countryCallingCodes[0]
-  return phone.startsWith(countryCode)
-    ? phone
-    : phone.startsWith('0')
+  if (phone.startsWith(countryCode) || `+${phone}`.startsWith(countryCode)) {
+    return phone.startsWith('+') ? phone : `+${phone}`
+  }
+  return phone.startsWith('0')
     ? `${countryCode}${phone.substring(1)}`
     : `${countryCode}${phone}`
 }

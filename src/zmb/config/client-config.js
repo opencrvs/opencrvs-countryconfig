@@ -14,6 +14,8 @@ window.config = {
   BACKGROUND_SYNC_BROADCAST_CHANNEL: 'backgroundSynBroadCastChannel',
   COUNTRY: 'zmb',
   COUNTRY_LOGO_FILE: 'logo.png',
+  COUNTRY_LOGO_RENDER_WIDTH: 200, // in px 
+  COUNTRY_LOGO_RENDER_HEIGHT: 231, // in px
   DESKTOP_TIME_OUT_MILLISECONDS: 900000, // 15 mins
   HEALTH_FACILITY_FILTER: 'DISTRICT',
   LANGUAGES: 'en',
@@ -29,5 +31,15 @@ window.config = {
   APPLICATION_AUDIT_LOCATIONS: 'DISTRICT',
   EXTERNAL_VALIDATION_WORKQUEUE: false, // this flag will decide whether to show external validation workqueue on registrar home
   SENTRY: 'https://f892d643aab642108f44e2d1795706bc@sentry.io/1774604',
-  LOGROCKET: 'opencrvs-foundation/opencrvs-zambia'
+  LOGROCKET: 'opencrvs-foundation/opencrvs-zambia',
+  PHONE_NUMBER_PATTERN: {
+    pattern: /^0(7|9)[0-9]{1}[0-9]{7}$/,
+    example: '0970545855',
+    start: '0[7|9]',
+    num: '10',
+    mask: { // ex: +683*****23   
+      startForm: 4,  
+      endBefore: 2
+    }
+  }
 }

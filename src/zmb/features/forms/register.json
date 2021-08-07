@@ -8860,10 +8860,10 @@
           ],
           "mapping": {
             "mutation": {
-              "operation": "setBirthRegistrationSectionTransformer"
+              "operation": "setDeathRegistrationSectionTransformer"
             },
             "query": {
-              "operation": "getBirthRegistrationSectionTransformer"
+              "operation": "getDeathRegistrationSectionTransformer"
             }
           }
         },
