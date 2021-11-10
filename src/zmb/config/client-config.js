@@ -14,8 +14,8 @@ window.config = {
   BACKGROUND_SYNC_BROADCAST_CHANNEL: 'backgroundSynBroadCastChannel',
   COUNTRY: 'zmb',
   COUNTRY_LOGO_FILE: 'logo.png',
-  COUNTRY_LOGO_RENDER_WIDTH: 200, // in px 
-  COUNTRY_LOGO_RENDER_HEIGHT: 231, // in px
+  COUNTRY_LOGO_RENDER_WIDTH: 104, // in px 
+  COUNTRY_LOGO_RENDER_HEIGHT: 104, // in px
   DESKTOP_TIME_OUT_MILLISECONDS: 900000, // 15 mins
   HEALTH_FACILITY_FILTER: 'DISTRICT',
   LANGUAGES: 'en',
@@ -29,7 +29,19 @@ window.config = {
   UI_POLLING_INTERVAL: 5000,
   FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
   APPLICATION_AUDIT_LOCATIONS: 'DISTRICT',
+  INFORMANT_MINIMUM_AGE:16, // Minimum age to be able to register for a birth or death event
+  HIDE_EVENT_REGISTER_INFORMATION: false, // this flag will decide whether to hide info form at the beginning of each event registration or not
   EXTERNAL_VALIDATION_WORKQUEUE: false, // this flag will decide whether to show external validation workqueue on registrar home
+  PHONE_NUMBER_PATTERN: {
+    pattern: /^0(7|9)[0-9]{1}[0-9]{7}$/,
+    example: '0970545855',
+    start: '0[7|9]',
+    num: '10',
+    mask: { // ex: 0970****55   
+      startForm: 4,  
+      endBefore: 2
+    }
+  },
   SENTRY: 'https://f892d643aab642108f44e2d1795706bc@sentry.io/1774604',
   LOGROCKET: 'opencrvs-foundation/opencrvs-zambia',
   PHONE_NUMBER_PATTERN: {

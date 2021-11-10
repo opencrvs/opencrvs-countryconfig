@@ -14,6 +14,16 @@ window.config = {
   COUNTRY: 'zmb',
   LANGUAGES: 'en',
   CLIENT_APP_URL: 'http://localhost:3000/',
+  PHONE_NUMBER_PATTERN: {
+    pattern: /^0(7|9)[0-9]{1}[0-9]{7}$/,
+    example: '0970545855',
+    start: '0[7|9]',
+    num: '10',
+    mask: { // ex: 0970****55   
+      startForm: 4,  
+      endBefore: 2
+    }
+  },
   SENTRY: 'https://f892d643aab642108f44e2d1795706bc@sentry.io/1774604',
   LOGROCKET: 'opencrvs-foundation/opencrvs-zambia',
   PHONE_NUMBER_PATTERN: {

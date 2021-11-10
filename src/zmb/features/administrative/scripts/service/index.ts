@@ -82,7 +82,7 @@ export function generateLocationResource(
     fhirLocation.physicalType &&
     fhirLocation.physicalType.coding &&
     fhirLocation.physicalType.coding[0].display
-  const jurisdictionTypeIdentifier =
+    const jurisdictionTypeIdentifier =
     fhirLocation &&
     fhirLocation.identifier &&
     fhirLocation.identifier.find(

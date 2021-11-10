@@ -211,6 +211,7 @@
           "field": "placeOfBirth",
           "operation": "OfflineAddress",
           "parameters": {
+            "language": "en",
             "conditions": [
               {
                 "condition": {
@@ -472,6 +473,7 @@
           "field": "placeOfDeath",
           "operation": "OfflineAddress",
           "parameters": {
+            "language": "en",
             "conditions": [
               {
                 "condition": {

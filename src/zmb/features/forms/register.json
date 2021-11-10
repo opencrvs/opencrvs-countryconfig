@@ -809,6 +809,7 @@
                     "description": "Label for form field: Given names",
                     "id": "form.field.label.childFirstNamesEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
@@ -842,6 +843,7 @@
                     "description": "Label for form field: Last name in english",
                     "id": "form.field.label.childFamilyNameEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
@@ -2205,6 +2207,7 @@
                     "description": "Label for form field: Given names",
                     "id": "form.field.label.childFirstNamesEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
@@ -2251,6 +2254,7 @@
                     "description": "Label for form field: Last name in english",
                     "id": "form.field.label.childFamilyNameEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
@@ -4142,6 +4146,7 @@
                     "description": "Label for form field: First names in english",
                     "id": "form.field.label.motherFirstNamesEng"
                   },
+                  "maxLength": 32,
                   "required": false,
                   "initialValue": "",
                   "validate": [
@@ -4175,6 +4180,7 @@
                     "description": "Label for form field: Family name in english",
                     "id": "form.field.label.motherFamilyNameEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
@@ -6995,6 +7001,7 @@
                     "description": "Label for form field: First names in english",
                     "id": "form.field.label.fatherFirstNamesEng"
                   },
+                  "maxLength": 32,
                   "required": false,
                   "initialValue": "",
                   "validate": [
@@ -7034,6 +7041,7 @@
                     "description": "Label for form field: Family name in english",
                     "id": "form.field.label.fatherFamilyNameEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
@@ -8990,6 +8998,7 @@
                     "description": "Label for form field: Given names",
                     "id": "form.field.label.deceasedGivenNamesEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
@@ -9023,6 +9032,7 @@
                     "description": "Label for form field: Last name in english",
                     "id": "form.field.label.deceasedFamilyNameEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
@@ -11265,6 +11275,7 @@
                     "description": "Label for form field: Given names",
                     "id": "form.field.label.childFirstNamesEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
@@ -11311,6 +11322,7 @@
                     "description": "Label for form field: Last name in english",
                     "id": "form.field.label.childFamilyNameEng"
                   },
+                  "maxLength": 32,
                   "required": true,
                   "initialValue": "",
                   "validate": [
