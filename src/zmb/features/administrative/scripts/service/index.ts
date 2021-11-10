@@ -16,6 +16,7 @@ import {
   titleCase
 } from '@resources/zmb/features/utils'
 import { ORG_URL } from '@resources/constants'
+export const JURISDICTION_TYPE_IDENTIFIER = `${ORG_URL}/specs/id/jurisdiction-type`
 
 const composeFhirLocation = (
   location: ICSVLocation,
@@ -81,14 +82,14 @@ export function generateLocationResource(
     fhirLocation.physicalType &&
     fhirLocation.physicalType.coding &&
     fhirLocation.physicalType.coding[0].display
-  if (
+    const jurisdictionTypeIdentifier =
     fhirLocation &&
     fhirLocation.identifier &&
-    fhirLocation.identifier[2] &&
-    fhirLocation.identifier[2].value
-  ) {
-    loc.jurisdictionType =
-      fhirLocation.identifier && fhirLocation.identifier[2].value
+    fhirLocation.identifier.find(
+      indentifier => indentifier.system === JURISDICTION_TYPE_IDENTIFIER
+    )
+  if (jurisdictionTypeIdentifier && jurisdictionTypeIdentifier.value) {
+    loc.jurisdictionType = jurisdictionTypeIdentifier.value
   }
   loc.type =
     fhirLocation.type &&
