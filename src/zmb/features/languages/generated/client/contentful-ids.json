@@ -1278,6 +1278,7 @@
   "validationsDomLaterThanDob": "validations.domLaterThanDob",
   "validationsEmailAddressFormat": "validations.emailAddressFormat",
   "validationsEnglishOnlyNameFormat": "validations.englishOnlyNameFormat",
+  "validationsFacilityMustBeSelected": "validations.facilityMustBeSelected",
   "validationsGreaterThanZero": "validations.greaterThanZero",
   "validationsIsDateNotAfterDeath": "validations.isDateNotAfterDeath",
   "validationsIsDateNotBeforeBirth": "validations.isDateNotBeforeBirth",
