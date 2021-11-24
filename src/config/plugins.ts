@@ -11,13 +11,14 @@
  */
 import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
+import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
 import { SENTRY_DSN } from '@resources/constants'
 import { logger } from '@resources/logger'
 
 export default function getPlugins() {
   const plugins: any[] = [
-    require('inert'),
+    inert,
     JWT,
     {
       plugin: Pino,
