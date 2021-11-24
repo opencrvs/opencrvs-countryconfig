@@ -25,6 +25,28 @@ if [ -z "$2" ]
     exit 1
 fi
 
+## Clear existing application data
+
+if [ "$DEV" = "true" ]; then
+  HOST=mongo1
+  NETWORK=opencrvs_default
+  echo "Working in DEV mode"
+else
+  HOST=rs0/mongo1,mongo2,mongo3
+  NETWORK=opencrvs_overlay_net
+fi
+
+docker run --rm --network=$NETWORK mongo:3.6 mongo hearth-dev --host $HOST --eval "db.dropDatabase()"
+
+docker run --rm --network=$NETWORK mongo:3.6 mongo user-mgnt --host $HOST --eval "db.dropDatabase()"
+
+docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE 'http://elasticsearch:9200/*' -v
+
+docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
+
+
+## Populate new application data
+
 ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/prepare-locations.ts
 ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/assign-admin-structure-to-locations.ts
 ts-node -r tsconfig-paths/register src/zmb/features/facilities/scripts/prepare-source-facilities.ts

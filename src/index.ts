@@ -14,7 +14,7 @@ require('app-module-path').addPath(require('path').join(__dirname, '../'))
 
 // tslint:enable no-var-requires
 import fetch from 'node-fetch'
-import * as Hapi from 'hapi'
+import * as Hapi from '@hapi/hapi'
 import { readFileSync } from 'fs'
 import getPlugins from '@resources/config/plugins'
 import * as usrMgntDB from '@resources/database'
@@ -188,6 +188,7 @@ export async function createServer() {
     path: '/assets/{file}',
     handler: zmbAssetHandler,
     options: {
+      auth: false,
       tags: ['api'],
       description: 'Serves country specific assets, unprotected'
     }
