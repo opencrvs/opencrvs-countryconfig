@@ -71,7 +71,21 @@ This is an example country configuration package for the OpenCRVS core. OpenCRVS
 
 3. If this is your first time, populate the OpenCRVS database. Run `yarn db:backup:restore`
 
-4. OpenCRVS should now be ready to view at:
+4. Make sure that OpenCRVS Core is running and you can now login at http://localhost:3000/
+
+## What do I do if I make changes?  How do I update the resources module?
+
+If you have already deployed the resources module to a server and you have made changes, it is important to rebuild the docker images and pull your changes onto your running server.  The following commands allow you to do this:
+
+Build container with `yarn docker:build`
+
+Push image to Dockerhub `yarn docker:push`
+
+SSH into manager node and scale service down the resources module:  `docker service scale opencrvs_resources=0`
+
+Then pull the new image  `docker pull opencrvs/ocrvs-zambia:latest`
+
+Then scale back up: `docker service scale opencrvs_resources=2`
 
 <br>
 
