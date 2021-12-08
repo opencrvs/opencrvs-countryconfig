@@ -222,7 +222,7 @@ export const userSectionFormType: IFormSection = {
           description: messages.userSignatureAttachmentDesc,
           allowedDocType: ['image/png'],
           initialValue: '',
-          required: false,
+          required: true,
           validate: []
         }
       ]
