@@ -44,6 +44,7 @@
     "buttons.upload": "Upload buttton",
     "buttons.yes": "Yes button text",
     "buttons.editRecord": "Edit record button text on review certificate",
+    "changePhone.validation.msg": "Must be a valid {num} digit number that starts with {start}",
     "constants.address": "Label for address",
     "constants.allEvents": "Label for select option All events",
     "constants.allStatuses": "Label for select option All statuses",
@@ -634,6 +635,9 @@
     "print.certificate.collector.father": "The label for select value when father is the collector of certificate",
     "certificate.parent.details.label.firstName": "Parent first names",
     "certificate.parent.details.label.firstNameInEng": "Parent first names",
+    "phone.label.confirmation": "Confirmation phone number message",
+    "phone.label.changeNumber": "Change phone number label",
+    "phone.label.verify": "Verify phone number label",
     "print.cert.coll.id.actions.cancel": "The for the dialog when details of the collector not verified",
     "print.cert.coll.id.actions.send": "The for the dialog when details of the collector not verified",
     "print.cert.coll.id.description": "The description for the dialog when details of the collector not verified",
@@ -725,6 +729,8 @@
     "misc.notif.declarationsSynced": "The message that appears in notification when background sync takes place",
     "misc.notif.draftsSaved": "The message that appears in notification when save drafts button is clicked",
     "misc.notif.outboxText": "Application outbox text",
-    "misc.notif.processingText": "Application processing text"
+    "misc.notif.processingText": "Application processing text",
+    "settings.changePhone": "Change phone number title",
+    "settings.verifyPhone": "Verify phone number title"
   }
 }
