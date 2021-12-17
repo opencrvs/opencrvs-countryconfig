@@ -143,7 +143,7 @@ export const userSectionFormType: IFormSection = {
           name: 'nid',
           type: TEXT,
           label: messages.NID,
-          required: true,
+          required: false,
           initialValue: '',
           validate: [
             {
