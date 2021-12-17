@@ -1071,7 +1071,7 @@
         "sysAdHome.user.audit.deactiv.reasonNotEmp": "No longer an employee",
         "sysAdHome.user.audit.deactivation.subtitle": "This will revoke {name}’s ability to login and access the system. The account can be reactivated at a later date.",
         "sysAdHome.user.audit.deactivation.title": "Deactivate {name}?",
-        "sysAdHome.user.audit.form.error": "A reason is required for deactivating this user",
+        "sysAdHome.user.audit.form.error": "A reason is required for {auditAction} this user",
         "sysAdHome.user.audit.reactivation.title": "Reactivate {name}?",
         "sysAdHome.user.audit.reactivation.subtitle": "This will reactivate {name}’s ability to login and access the system.",
         "sysAdHome.user.audit.reactiv.returned": "Returned to their role",
