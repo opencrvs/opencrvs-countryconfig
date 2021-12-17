@@ -21,7 +21,7 @@ export default async function importEmployees() {
   // tslint:disable-next-line:no-console
   console.log(
     `${chalk.blueBright(
-      '/////////////////////////// MAPPING TEST EMPLOYEES TO PRACTITIONERS, ROLES AND USERS & SAVING TO FHIR ///////////////////////////'
+      '/////////////////////////// MAPPING EMPLOYEES TO PRACTITIONERS, ROLES AND USERS & SAVING TO FHIR ///////////////////////////'
     )}`
   )
   const employees = JSON.parse(fs.readFileSync(sourceJSON).toString())

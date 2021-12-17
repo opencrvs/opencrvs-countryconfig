@@ -183,9 +183,9 @@ If you pass the environment code "DEV", your test password will be the same for 
 
 **Test users must NEVER be installed on production as they all use the same password.**
 
-If you pass the environment code "PRODUCTION", your test password will be ignored.  Instead we create strong passwords for each user using [niceware](https://github.com/diracdeltas/niceware) and save the usernames and passwords along with contact details for the users in a file: "login-details.json" in this [folder](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/employees/generated).  You can then contact the users and tell them their production password which they can change to something else strong and memorable to them when they login.  This approach makes it easy to set up active employees initially in bulk for a production deployment without users having to verify their account.  Alternatively a national system administrator can always use OpenCRVS' UI to create new users in the "Team" configuration at any time follwoing the standard process.
+If you pass the environment code "PRODUCTION", your test password will be ignored.  Instead we create strong passwords for each user using [niceware](https://github.com/diracdeltas/niceware) and save the usernames and passwords along with contact details for the users in a file: "login-details.json" in this [folder](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/employees/generated).  You can then contact the users and tell them their production password which they can change to something else strong and memorable to them when they login - WARNING: The niceware wordlist has not been rigorously checked for offensive words. Use at your own risk.  You may need to login as one of these users and change a password if it is deemed offensive.  This approach makes it easy to set up active employees initially in bulk for a production deployment without users having to verify their account.  Alternatively a national system administrator can always use OpenCRVS' UI to create new users in the "Team" configuration at any time follwoing the standard process.
 
-The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production, only when generating reference data factory reset backups for production.**
+The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production, only when generating reference data factory reset backups locally for production use.**
 
 7. Once you are fully populateed and you are happy with your configuration, run `yarn db:backup:create` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Github actions will automatically restore from these backups when setting the `--clear-data` & `--restore-metadata` props in the server deployment commands in OpenCRVS core. The script `yarn db:backup:restore` can be used to restore from existing zips and is the same script that is used by Github actions.
 
@@ -193,7 +193,7 @@ The populate script is only run once when creating your factory reset backups. *
 
 ### What are the example sequence of scripts that run when populating the reference data?
 
-Running the `yarn db:populate` command runs the following commands sequentially in our example implementation for Zambia. The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production, only when generating reference data factory reset backups for production.**
+Running the `yarn db:populate` command runs the following commands sequentially in our example implementation for Zambia. The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production, only when generating reference data factory reset backups locally for production use.**
 
 1. assign-admin-structure-to-locations.ts
 

@@ -13,7 +13,6 @@ import * as fs from 'fs'
 import { ORG_URL } from '@resources/constants'
 import { getFromFhir, sendToFhir } from '@resources/zmb/features/utils'
 import chalk from 'chalk'
-import { logger } from '@resources/logger'
 import User, { IUserModel } from '@resources/zmb/features/employees/model/user'
 import { EMPLOYEES_SOURCE } from '@resources/zmb/constants'
 import {
@@ -165,8 +164,6 @@ export async function composeAndSavePractitioners(
     const practitionerId = practitionerLocationHeader.split('/')[3]
     const practitionerReference = `Practitioner/${practitionerId}`
 
-    logger.info(`Practitioner saved to fhir: ${practitionerReference}`)
-
     // Create and save PractitionerRole
     const newPractitionerRole: fhir.PractitionerRole = composeFhirPractitionerRole(
       practitioner.role,
@@ -174,11 +171,7 @@ export async function composeAndSavePractitioners(
       locations
     )
 
-    logger.info(
-      `PractitionerRole saved to fhir: ${JSON.stringify(newPractitionerRole)}`
-    )
-
-    const savedPractitionerRoleResponse = await sendToFhir(
+    await sendToFhir(
       newPractitionerRole,
       '/PractitionerRole',
       'POST'
@@ -186,18 +179,6 @@ export async function composeAndSavePractitioners(
       throw Error('Cannot save practitioner role to FHIR')
     })
 
-    const practitionerRoleLocationHeader = savedPractitionerRoleResponse.headers.get(
-      'location'
-    ) as string
-    const practitionerRoleReference = `PractitionerRole/${
-      practitionerRoleLocationHeader.split('/')[3]
-    }`
-
-    logger.info(`PractitionerRole saved to fhir: ${practitionerRoleReference}`)
-
-    // create user account
-
-    // create user account
     let pass: ISaltedHash
     if (environment !== 'PRODUCTION') {
       pass = generateSaltedHash(testUserPassword)
@@ -209,11 +190,11 @@ export async function composeAndSavePractitioners(
         email: practitioner.email,
         mobile: practitioner.mobile
       })
-      logger.info(
-        `${chalk.bgWhite(
-          `USERNAME: ${practitioner.username}}`
-        )}${chalk.bgGreen(
-          `PASSWORD: ${generatedPassword}`
+      console.log(
+        `${chalk.white(
+          `USERNAME: `)}${chalk.green(`${practitioner.username}`)}${chalk.white(` & PASSWORD: `
+        )}${chalk.green(
+          `${generatedPassword}`
         )}`
       )
       pass = generateSaltedHash(generatedPassword)
@@ -245,20 +226,22 @@ export async function composeAndSavePractitioners(
   // Create users
   createUsers(users)
 
-  logger.info(
-    `${chalk.blueBright(
-      '/////////////////////////// FINISHED SAVING TEST USERS ///////////////////////////'
-    )}`
-  )
+  
 
   if (environment === 'PRODUCTION') {
     fs.writeFileSync(
       `${EMPLOYEES_SOURCE}generated/login-details.json`,
       JSON.stringify(loginDetails, null, 2)
     )
-    logger.info(
-      `${chalk.bgWhite(
-        '/////////////////////////// USER LOGIN DETAILS HAVE BEEN EXPORTED TO THE features/employees/generated FOLDER ///////////////////////////'
+    console.log(
+      `${chalk.blueBright(
+        'FINISHED SAVING PRODUCTION USERS.  USER LOGIN DETAILS HAVE BEEN EXPORTED TO THE features/employees/generated FOLDER'
+      )}`
+    )
+  } else {
+    console.log(
+      `${chalk.blueBright(
+        `FINISHED SAVING TEST USERS.`)}  ${chalk.black.bgRed(`WARNING: `)} ${chalk.blueBright(`ALL USERS USE THE SAME PASSWORD: ${testUserPassword}.  YOU MUST ONLY USE THESE USERS FOR TESTING AND DELETE THEM BEFORE GOING TO PRODUCTION`
       )}`
     )
   }

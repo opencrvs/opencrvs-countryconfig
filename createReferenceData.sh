@@ -26,14 +26,8 @@ fi
 
 ## Clear existing application data
 
-if [ "$2" = "DEV" ]; then
-  HOST=mongo1
-  NETWORK=opencrvs_default
-  echo "Working in DEV mode"
-else
-  HOST=rs0/mongo1,mongo2,mongo3
-  NETWORK=opencrvs_overlay_net
-fi
+HOST=mongo1
+NETWORK=opencrvs_default
 
 docker run --rm --network=$NETWORK mongo:3.6 mongo hearth-dev --host $HOST --eval "db.dropDatabase()"
 
