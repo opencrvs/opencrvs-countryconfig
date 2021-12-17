@@ -9,11 +9,13 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
+import * as fs from 'fs'
 import { ORG_URL } from '@resources/constants'
 import { getFromFhir, sendToFhir } from '@resources/zmb/features/utils'
 import chalk from 'chalk'
 import { logger } from '@resources/logger'
 import User, { IUserModel } from '@resources/zmb/features/employees/model/user'
+import { EMPLOYEES_SOURCE } from '@resources/zmb/constants'
 import {
   generateSaltedHash,
   convertToMSISDN,
@@ -23,6 +25,7 @@ import {
   createUsers,
   getScope
 } from '@resources/zmb/features/employees/scripts/manage-users'
+import * as niceware from 'niceware'
 
 interface ITestPractitioner {
   facilityId: string
@@ -36,6 +39,13 @@ interface ITestPractitioner {
   mobile: string
   email: string
   signature?: string
+}
+
+interface ILoginDetails {
+  username: string
+  password: string
+  email: string
+  mobile: string
 }
 
 const composeFhirPractitioner = (practitioner: ITestPractitioner): any => {
@@ -106,9 +116,10 @@ const composeFhirPractitionerRole = (
 export async function composeAndSavePractitioners(
   practitioners: ITestPractitioner[],
   testUserPassword: string,
-  apiUserPassword: string
+  environment: string
 ): Promise<boolean> {
   const users: IUserModel[] = []
+  const loginDetails: ILoginDetails[] = []
   for (const practitioner of practitioners) {
     const locations: fhir.Reference[] = []
     const catchmentAreaIds: string[] = []
@@ -188,10 +199,24 @@ export async function composeAndSavePractitioners(
 
     // create user account
     let pass: ISaltedHash
-    if (practitioner.role !== 'API_USER') {
+    if (environment !== 'PRODUCTION') {
       pass = generateSaltedHash(testUserPassword)
     } else {
-      pass = generateSaltedHash(apiUserPassword)
+      const generatedPassword = niceware.generatePassphrase(8).join('-')
+      loginDetails.push({
+        username: practitioner.username,
+        password: generatedPassword,
+        email: practitioner.email,
+        mobile: practitioner.mobile
+      })
+      logger.info(
+        `${chalk.bgWhite(
+          `USERNAME: ${practitioner.username}}`
+        )}${chalk.bgGreen(
+          `PASSWORD: ${generatedPassword}`
+        )}`
+      )
+      pass = generateSaltedHash(generatedPassword)
     }
     const user = new User({
       name: [
@@ -225,5 +250,17 @@ export async function composeAndSavePractitioners(
       '/////////////////////////// FINISHED SAVING TEST USERS ///////////////////////////'
     )}`
   )
+
+  if (environment === 'PRODUCTION') {
+    fs.writeFileSync(
+      `${EMPLOYEES_SOURCE}generated/login-details.json`,
+      JSON.stringify(loginDetails, null, 2)
+    )
+    logger.info(
+      `${chalk.bgWhite(
+        '/////////////////////////// USER LOGIN DETAILS HAVE BEEN EXPORTED TO THE features/employees/generated FOLDER ///////////////////////////'
+      )}`
+    )
+  }
   return true
 }

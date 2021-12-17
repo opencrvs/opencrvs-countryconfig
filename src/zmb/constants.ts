@@ -28,7 +28,7 @@ export const FACILITIES_SOURCE = path.join(
 
 export const EMPLOYEES_SOURCE = path.join(
   process.cwd(),
-  'src/zmb/features/employees/generated/'
+  'src/zmb/features/employees/'
 )
 export const CMS_API_KEY =
   process.env.CMS_API_KEY ||

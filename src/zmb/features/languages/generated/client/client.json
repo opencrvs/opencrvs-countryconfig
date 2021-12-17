@@ -87,7 +87,7 @@
         "constants.allStatuses": "All statuses",
         "constants.address": "Address",
         "constants.apiUser": "API User",
-        "constants.chatbotApiUser": "Chatbot API User",
+        "constants.ageVerificationApiUser": "Age verification API service",
         "constants.applicantContactNumber": "Applicant contact number",
         "constants.application": "application",
         "constants.applicationCollectedOn": "Certificate collected on",
