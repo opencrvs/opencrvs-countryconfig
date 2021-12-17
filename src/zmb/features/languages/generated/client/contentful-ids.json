@@ -1221,6 +1221,7 @@
   "systemUserQueryError": "system.user.queryError",
   "systemUserSettingsIncorrectPassword": "system.user.settings.incorrectPassword",
   "systemUserSettingsPasswordUpdated": "system.user.settings.passwordUpdated",
+  "systemUserSettingsAvatarUpdating": "system.user.settings.avatarUpdating",
   "systemUserSettingsAvatarUpdated": "system.user.settings.avatarUpdated",
   "teamHeaderSysadminHome": "team.header.sysadmin.home",
   "teamUserButtonsDeactivate": "team.user.buttons.deactivate",
