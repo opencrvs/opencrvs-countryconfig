@@ -15,13 +15,13 @@ import chalk from 'chalk'
 import { internal } from '@hapi/boom'
 import { composeAndSavePractitioners } from '@resources/zmb/features/employees/scripts/service'
 
-const sourceJSON = `${EMPLOYEES_SOURCE}test-employees.json`
+const sourceJSON = `${EMPLOYEES_SOURCE}generated/test-employees.json`
 
 export default async function importEmployees() {
   // tslint:disable-next-line:no-console
   console.log(
     `${chalk.blueBright(
-      '/////////////////////////// MAPPING TEST EMPLOYEES TO PRACTITIONERS, ROLES AND USERS & SAVING TO FHIR ///////////////////////////'
+      '/////////////////////////// MAPPING EMPLOYEES TO PRACTITIONERS, ROLES AND USERS & SAVING TO FHIR ///////////////////////////'
     )}`
   )
   const employees = JSON.parse(fs.readFileSync(sourceJSON).toString())

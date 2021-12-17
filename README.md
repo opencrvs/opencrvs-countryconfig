@@ -69,23 +69,9 @@ This is an example country configuration package for the OpenCRVS core. OpenCRVS
 
 2. Run `CERT_PUBLIC_KEY_PATH=<where your core repo is>/.secrets/public-key.pem yarn start` to run the resources module
 
-3. If this is your first time, populate the OpenCRVS database. Run `yarn db:backup:restore`
+3. If you are testing OpenCRVS, populate the OpenCRVS database with default reference data for Zambia. Run `yarn db:backup:restore`
 
-4. Make sure that OpenCRVS Core is running and you can now login at http://localhost:3000/
-
-## What do I do if I make changes?  How do I update the resources module?
-
-If you have already deployed the resources module to a server and you have made changes, it is important to rebuild the docker images and pull your changes onto your running server.  The following commands allow you to do this:
-
-Build container with `yarn docker:build`
-
-Push image to Dockerhub `yarn docker:push`
-
-SSH into manager node and scale service down the resources module:  `docker service scale opencrvs_resources=0`
-
-Then pull the new image  `docker pull opencrvs/ocrvs-zambia:latest`
-
-Then scale back up: `docker service scale opencrvs_resources=2`
+4. As long as the OpenCRVS Core is running alongside this resources package, OpenCRVS should now be ready to access.
 
 <br>
 
@@ -101,7 +87,10 @@ One of the key dependencies and enablers for OpenCRVS is country configuration a
 
 - Backups _(Backup zips of default reference data for a nation, for a factory reset, clean installation or for local development purposes.)_
 
-2. The [src](https://github.com/opencrvs/opencrvs-zambia/tree/master/src) folder contians the configuration to run the resources server, that provides the logo assets, internationalised text, form configuration and certificate template configuration to the OpenCRVS core client as JSON.
+2. The [src](https://github.com/opencrvs/opencrvs-zambia/tree/master/src) folder contians the configuration to run the resources server, that provides 
+
+a) the logo assets, internationalised text, form configuration, certificate template configuration as JSON files, and 
+b) any other custom module you would like core to access. Usually these are API mediators for your country needs such as adding an external source to validate registrations and create registration numbers if your policy demands that (In our experience when running an MVP in your country, you may wish to run OpenCRVS alongside an existing CR system.), or perhaps a custom application that requires API access such as an age verification app.
 
 3. Inside the src > (your country folder - named using alpha3 country code), e.g. [zmb](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb) you can find
 
@@ -162,27 +151,49 @@ By following the examples in the features of this package you can see how you ca
 
 Some simple commands should be able to be run by a continuous integration system (E.G. [Travis](https://travis-ci.com/)) or by a developer, in order to populate and update a local or production OpenCRVS environment with the necessary reference data.
 
-### How can I clear the database, and repopulate it after I have changed my facilities, administrative locations or test employees?
+### How can I clear the database, and repopulate it with my countries reference data for development and/or set up my OpenCRVS instance with real employees?
 
-1. Clear any existing data by running `yarn db:clear:all` (On a Mac you may need to manually delete the "config" and "openhim-dev" databases directly in Mongo, using a GUI tool like [Robo3T](https://robomongo.org/))
+Essentially, this is the process of creating a factory reset database population and backup of reference data for either your development or production environment.
+
+Before commencing, you must have customised the source reference data for your needs in CSV files or alternatively via custom scripts that you write for 3rd party APIs.
+You should feel free to amend the approach we have taken and the scripts if you need to integrate with APIs, but your output should be CSV files, identical in style to ours in the features folders for [administrative locations](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/administrative/source), [employees](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/employees/generated) and [facilities](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/facilities/source).
+
+1. Clear any existing data by running `yarn db:clear:all` (On a Mac you may need to additionally manually delete the "config" and "openhim-dev" databases directly in Mongo, using a GUI tool like [Robo3T](https://robomongo.org/)).  You can run this command `yarn db:backup:restore` after `yarn db:clear:all` to restore back to Zambia factory reset backups at any time.
 
 2. Quit and restart the dev environment
 
 3. Log into the OpenHIM at [here](http://localhost:8888) - default login is root@openhim.org:openhim-password (login will fail a security check as we are using self signed certs by default, follow the instructions in the error message in Chrome to accept cert, then try again)
 
-4. Once logged in click Export/Import then drop the file `infrastructure/openhim-base-config.json` into the import box and click 'Import'
+4. Once logged in click Export/Import then drop the core file [`infrastructure/openhim-base-config.json`](https://github.com/opencrvs/opencrvs-core/blob/master/infrastructure/openhim-base-config.json) into the import box and click 'Import'
 
 5. Click Channels and check all have loaded successfully.
 
-6. Populate reference data for your country requirements from the resources package. `yarn db:populate:<<insert alpha3 country code>>` followed by any custom API secrets you may need if your reference data is populated by APIs.
+6. To populate reference data for your country requirements from the resources package, by default, you run the `yarn db:populate` command to do this when OpenCRVS Core is running .  This script's intention is to create active users in the system and generate passwords for them, populate the database with FHIR jurisdictions, facilities, practitioners and any other reference data you need.  
 
-7. Once you are fully populateed and you are happy with your configuration, run `yarn db:backup:create <<insert country code>>` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Travis will automatically restore from these when setting the `--clear-data` & `--restore-metadata` props in deployment yarn commands in OpenCRVS core. The script `yarn db:backup:restore <<insert alpha3 country code>>` can be used to restore from existing zips and is also used by Travis for this purpose.
+You must add 2 parameters:
+
+a) The password you wish to set for your test employees in local development only.  
+b) An environment code "DEV" or "PRODUCTION".  
+
+E.G.:
+
+```yarn db:populate test DEV```
+
+If you pass the environment code "DEV", your test password will be the same for all users.  This is to make it easier for you to demo OpenCRVS. 
+
+**Test users must NEVER be installed on production as they all use the same password.**
+
+If you pass the environment code "PRODUCTION", your test password will be ignored.  Instead we create strong passwords for each user using [niceware](https://github.com/diracdeltas/niceware) and save the usernames and passwords along with contact details for the users in a file: "login-details.json" in this [folder](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/employees/generated).  You can then contact the users and tell them their production password which they can change to something else strong and memorable to them when they login - WARNING: The niceware wordlist has not been rigorously checked for offensive words. Use at your own risk.  You may need to login as one of these users and change a password if it is deemed offensive.  This approach makes it easy to set up active employees initially in bulk for a production deployment without users having to verify their account.  Alternatively a national system administrator can always use OpenCRVS' UI to create new users in the "Team" configuration at any time follwoing the standard process.
+
+The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production, only when generating reference data factory reset backups locally for production use.**
+
+7. Once you are fully populateed and you are happy with your configuration, run `yarn db:backup:create` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Github actions will automatically restore from these backups when setting the `--clear-data` & `--restore-metadata` props in the server deployment commands in OpenCRVS core. The script `yarn db:backup:restore` can be used to restore from existing zips and is the same script that is used by Github actions.
 
 <br>
 
 ### What are the example sequence of scripts that run when populating the reference data?
 
-Running the `yarn db:populate:<<insert alpha3 country code>>` command runs the following commands sequentially in our example implementations for Zambia. The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production.**
+Running the `yarn db:populate` command runs the following commands sequentially in our example implementation for Zambia. The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production, only when generating reference data factory reset backups locally for production use.**
 
 1. assign-admin-structure-to-locations.ts
 

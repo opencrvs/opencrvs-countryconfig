@@ -41,8 +41,6 @@ export function getScope(role: string, environment: string): string[] {
       )
     case 'LOCAL_SYSTEM_ADMIN':
       return setDemoUser(['sysadmin'], environment)
-    case 'CHATBOT_API_USER':
-      return setDemoUser(['declare', 'chatbot-api'], environment)
     default:
       return setDemoUser(['declare'], environment)
   }

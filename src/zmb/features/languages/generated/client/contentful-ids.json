@@ -109,7 +109,7 @@
   "constantsCertified": "constants.certified",
   "constantsCha": "constants.cha",
   "constantsChairman": "constants.chairman",
-  "constantsChatbotApiUser": "constants.chatbotApiUser",
+  "constantsAgeVerificationApiUser": "constants.ageVerificationApiUser",
   "constantsCollected": "constants.collected",
   "constantsCollectedBy": "constants.collectedBy",
   "constantsComment": "constants.comment",
