@@ -158,17 +158,19 @@ Essentially, this is the process of creating a factory reset database population
 Before commencing, you must have customised the source reference data for your needs in CSV files or alternatively via custom scripts that you write for 3rd party APIs.
 You should feel free to amend the approach we have taken and the scripts if you need to integrate with APIs, but your output should be CSV files, identical in style to ours in the features folders for [administrative locations](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/administrative/source), [employees](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/employees/generated) and [facilities](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/facilities/source).
 
-1. Clear any existing data by running `yarn db:clear:all` (On a Mac you may need to additionally manually delete the "config" and "openhim-dev" databases directly in Mongo, using a GUI tool like [Robo3T](https://robomongo.org/)).  You can run this command `yarn db:backup:restore` after `yarn db:clear:all` to restore back to Zambia factory reset backups at any time.
+1. Ensure that OpenCRVS core is running.
 
-2. Quit and restart the dev environment
+2. Clear any existing data by running `yarn db:clear:all` (On a Mac you may need to additionally manually delete the "config" and "openhim-dev" databases directly in Mongo, using a GUI tool like [Robo3T](https://robomongo.org/)).  You can run this command `yarn db:backup:restore` after `yarn db:clear:all` to restore back to Zambia factory reset backups at any time.
 
-3. Log into the OpenHIM at [here](http://localhost:8888) - default login is root@openhim.org:openhim-password (login will fail a security check as we are using self signed certs by default, follow the instructions in the error message in Chrome to accept cert, then try again)
+3. Quit and restart OpenCRVS core.
 
-4. Once logged in click Export/Import then drop the core file [`infrastructure/openhim-base-config.json`](https://github.com/opencrvs/opencrvs-core/blob/master/infrastructure/openhim-base-config.json) into the import box and click 'Import'
+4. Log into the OpenHIM at [here](http://localhost:8888) - default login is root@openhim.org:openhim-password (When running locally, login will fail a certificate security check as we are using self signed certs by default, follow the instructions in the error message in Chrome to accept cert, then try again)
 
-5. Click Channels and check all have loaded successfully.
+5. Once logged in click Export/Import then select the core file [`infrastructure/openhim-base-config.json`](https://github.com/opencrvs/opencrvs-core/blob/master/infrastructure/openhim-base-config.json) or drag and drop the file into the import box.  A modal will open displaying the channels that will be imported.  These are the routing configs for OpenCRVS in OpenHIM. Click 'Import changes'.
 
-6. To populate reference data for your country requirements from the resources package, by default, you run the `yarn db:populate` command to do this when OpenCRVS Core is running .  This script's intention is to create active users in the system and generate passwords for them, populate the database with FHIR jurisdictions, facilities, practitioners and any other reference data you need.  
+6. Click Channels and check all have loaded successfully.  All will show a green "Enabled" message with the exception of an orange "Disabled" message for Hearth passthrough.
+
+7. To populate reference data for your country requirements from the resources package, by default, you run the `yarn db:populate` command to do this when OpenCRVS Core is running .  This script's intention is to create active users in the system and generate passwords for them, populate the database with FHIR jurisdictions, facilities, practitioners and any other reference data you need.  
 
 You must add 2 parameters:
 
@@ -181,13 +183,13 @@ E.G.:
 
 If you pass the environment code "DEV", your test password will be the same for all users.  This is to make it easier for you to demo OpenCRVS. 
 
-**Test users must NEVER be installed on production as they all use the same password.**
+**Test users must NEVER be installed on production as they all use the same password.  You will be warned about this.**
 
 If you pass the environment code "PRODUCTION", your test password will be ignored.  Instead we create strong passwords for each user using [niceware](https://github.com/diracdeltas/niceware) and save the usernames and passwords along with contact details for the users in a file: "login-details.json" in this [folder](https://github.com/opencrvs/opencrvs-zambia/tree/master/src/zmb/features/employees/generated).  You can then contact the users and tell them their production password which they can change to something else strong and memorable to them when they login - WARNING: The niceware wordlist has not been rigorously checked for offensive words. Use at your own risk.  You may need to login as one of these users and change a password if it is deemed offensive.  This approach makes it easy to set up active employees initially in bulk for a production deployment without users having to verify their account.  Alternatively a national system administrator can always use OpenCRVS' UI to create new users in the "Team" configuration at any time follwoing the standard process.
 
 The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production, only when generating reference data factory reset backups locally for production use.**
 
-7. Once you are fully populateed and you are happy with your configuration, run `yarn db:backup:create` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Github actions will automatically restore from these backups when setting the `--clear-data` & `--restore-metadata` props in the server deployment commands in OpenCRVS core. The script `yarn db:backup:restore` can be used to restore from existing zips and is the same script that is used by Github actions.
+8. Once you are fully populateed, before you login and create registrations and an audit trail, run `yarn db:backup:create` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Github actions will automatically restore from these backups when setting the `--clear-data` & `--restore-metadata` props in the server deployment commands in OpenCRVS core. The script `yarn db:backup:restore` can be used to restore from existing zips and is the same script that is used by Github actions.
 
 <br>
 
