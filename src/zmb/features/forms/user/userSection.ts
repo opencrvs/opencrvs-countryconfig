@@ -55,10 +55,6 @@ export const userSectionFormType: IFormSection = {
           initialValue: '',
           searchableResource: 'offices',
           searchableType: 'CRVS_OFFICE',
-          dispatchOptions: {
-            action: 'USER_FORM/PROCESS_ROLES',
-            payloadKey: 'primaryOfficeId'
-          },
           validate: [],
           locationList: [],
           mapping: {
