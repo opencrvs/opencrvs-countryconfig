@@ -1298,5 +1298,15 @@
   "validationsValidDrivingLicenseNumber": "validations.validDrivingLicenseNumber",
   "validationsValidNationalIDLengths": "validations.validNationalIDLengths",
   "validationsValidNationalId": "validations.validNationalId",
-  "validationsValidPassportNumber": "validations.validPassportNumber"
+  "validationsValidPassportNumber": "validations.validPassportNumber",
+  "ConfigPreviewTemplate":"config.previewTemplate",
+  "ConfigPrintTemplate":"config.printTemplate",
+  "ConfigDownloadTemplate":"config.downloadTemplate",
+  "ConfigUploadTemplate":"config.uploadTemplate",
+  "ConfigListTitle":"config.listTitle",
+  "ConfigBirthTemplate":"config.birthTemplate",
+  "ConfigDeathTemplate":"config.deathTemplate",
+  "ConfigBirthDefaultTempDesc":"config.birthDefaultTempDesc",
+  "ConfigDeathDefaultTempDesc":"config.deathDefaultTempDesc",
+  "ConfigListDetails":"config.listDetails"
 }
