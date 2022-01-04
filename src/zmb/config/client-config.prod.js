@@ -53,6 +53,11 @@ window.config = {
       startForm: 4,  
       endBefore: 2
     }
+  },
+  NID_NUMBER_PATTERN: {
+    pattern: /^[0-9]{9}$/,
+    example: '4837281940',
+    num: '9'
   }
 }
 

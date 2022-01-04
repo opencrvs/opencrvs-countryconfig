@@ -22,14 +22,6 @@ coverage:
         paths:
           - src/zmb
         threshold: 0.5
-      chatbot-mediator:
-        paths:
-          - src/zmb/features/mediators/ocrvs-chatbot
-        threshold: 0.5
-      chatbot:
-        paths:
-          - src/zmb/chatbot
-        threshold: 0.5
 
 ignore:
   - "src/zmb/src/config"

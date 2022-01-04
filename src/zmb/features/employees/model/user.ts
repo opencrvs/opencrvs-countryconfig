@@ -83,7 +83,7 @@ export interface IUser {
   signature: ISignature
   localRegistrar: ILocalRegistrar
   status: string
-  deviceId?: string
+  device?: string
   securityQuestionAnswers?: ISecurityQuestionAnswer[]
   creationDate: number
   auditHistory?: IAuditHistory[]
@@ -172,7 +172,7 @@ const userSchema = new Schema({
     default: statuses.PENDING
   },
   securityQuestionAnswers: [SecurityQuestionAnswerSchema],
-  deviceId: String,
+  device: String,
   creationDate: { type: Number, default: Date.now },
   auditHistory: [AuditHistory]
 })
