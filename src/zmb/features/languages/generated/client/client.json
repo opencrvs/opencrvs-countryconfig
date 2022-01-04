@@ -887,6 +887,8 @@
         "imageUploadOption.upload.error": "File format not supported. Please attach a png, jpg or pdf (max 5mb)",
         "imageUploadOption.upload.overSized": "File is too large. Please attach file less than 5mb",
         "settings.user.label.assignedOffice": "Assigned office",
+        "location.jurisdictionType.DISTRICT":"District",
+        "location.jurisdictionType.STATE":"Province",
         "misc.session.expired": "Your session has expired. Please login again.",
         "misc.newPass.header": "Choose a new password",
         "misc.newPass.instruction": "We recommend you create a unique password - one that you don’t use for another website or app. Note. You can’t reuse your old password once you change it.",

@@ -906,6 +906,8 @@
   "imageUploadOptionUploadDocumentType": "imageUploadOption.upload.documentType",
   "imageUploadOptionUploadError": "imageUploadOption.upload.error",
   "imageUploadOptionUploadOverSized": "imageUploadOption.upload.overSized",
+  "locationJurisdictionTypeDistrict":"location.jurisdictionType.DISTRICT",
+  "locationJurisdictionTypeState":"location.jurisdictionType.STATE",
   "miscCreateDescription": "misc.createDescription",
   "miscCreateTitle": "misc.createTitle",
   "miscDescriptionComplete": "misc.description.Complete",
