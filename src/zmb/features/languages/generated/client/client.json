@@ -1222,7 +1222,7 @@
         "form.field.label.userSignatureAttachmentTitle": "Attach the signature",
         "form.field.label.userSignatureAttachment": "User’s signature",
         "form.field.label.userSignatureAttachmentDesc": "Ask the user to sign a piece of paper and then scan or take a photo.",
-        "form.field.label.userAttachmentSection": "Attachments",
+        "form.field.label.userAttachmentSection": "Signature",
         "form.field.label.addFile": "Add file",
         "form.field.label.fileUploadError": "{type} supported only",
         "certificate.receipt.service.45day": "{event} registration after 45 days of event",

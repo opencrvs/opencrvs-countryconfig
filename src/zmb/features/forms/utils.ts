@@ -13,10 +13,10 @@
 import { IConditionals } from '.'
 
 export const conditionals: IConditionals = {
-  isRegistrarOrRegistrationAgentRoleSelected: {
+  isRegistrarRoleSelected: {
     action: 'hide',
     expression:
-      'values.role!=="LOCAL_REGISTRAR" && values.role!=="REGISTRATION_AGENT"'
+      'values.role!=="LOCAL_REGISTRAR"'
   },
   isOfficePreSelected: {
     action: 'hide',
