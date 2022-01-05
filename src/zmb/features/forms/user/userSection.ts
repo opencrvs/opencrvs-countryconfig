@@ -55,11 +55,11 @@ export const userSectionFormType: IFormSection = {
           initialValue: '',
           searchableResource: 'offices',
           searchableType: 'CRVS_OFFICE',
-          validate: [
-            {
-              operation: 'officeMustBeSelected'
-            }
-          ],
+          dispatchOptions: {
+            action: 'USER_FORM/PROCESS_ROLES',
+            payloadKey: 'primaryOfficeId'
+          },
+          validate: [],
           locationList: [],
           mapping: {
             mutation: {
