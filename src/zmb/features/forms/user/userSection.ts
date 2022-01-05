@@ -204,7 +204,7 @@ export const userSectionFormType: IFormSection = {
     {
       id: 'signature-attachment',
       title: messages.userSignatureAttachmentTitle,
-      conditionals: [conditionals.isRegistrarOrRegistrationAgentRoleSelected],
+      conditionals: [conditionals.isRegistrarRoleSelected],
       fields: [
         {
           name: 'attachmentTitle',
@@ -222,7 +222,7 @@ export const userSectionFormType: IFormSection = {
           description: messages.userSignatureAttachmentDesc,
           allowedDocType: ['image/png'],
           initialValue: '',
-          required: false,
+          required: true,
           validate: []
         }
       ]
