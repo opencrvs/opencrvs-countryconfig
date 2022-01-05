@@ -735,6 +735,7 @@
     "config.deathTemplate": "Label for death certificate template",
     "config.birthDefaultTempDesc": "Label for default birth certificate template",
     "config.deathDefaultTempDesc": "Label for default death certificate template",
-    "config.listDetails": "Details for certificates templates list"
+    "config.listDetails": "Details for certificates templates list",
+    "config.listDetailsQsn": "Details question for certificates templates list"
   }
 }

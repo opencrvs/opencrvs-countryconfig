@@ -1308,5 +1308,6 @@
   "ConfigDeathTemplate":"config.deathTemplate",
   "ConfigBirthDefaultTempDesc":"config.birthDefaultTempDesc",
   "ConfigDeathDefaultTempDesc":"config.deathDefaultTempDesc",
-  "ConfigListDetails":"config.listDetails"
+  "ConfigListDetails":"config.listDetails",
+  "ConfigListDetailsQsn": "config.listDetailsQsn"
 }
