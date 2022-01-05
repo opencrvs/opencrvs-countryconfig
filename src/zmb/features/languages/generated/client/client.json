@@ -118,6 +118,7 @@
         "constants.loadMore": "Load more",
         "constants.cha": "CHA",
         "constants.chairman": "Chairman",
+        "constants.dnrpc": "DNRPC",
         "constants.collected": "Collected",
         "constants.collectedBy": "Collected by",
         "constants.comment": "Comment",

@@ -544,6 +544,7 @@
     "constants.cabinetDivision": "The description for CABINET_DIVISION type",
     "constants.cha": "The description for CHA type",
     "constants.chairman": "The description for CHAIRMAN type",
+    "constants.dnrpc": "The description for DNRPC type",
     "settings.message.changeLanguage": "Change language message",
     "settings.changeLanguage.success": "Change language success",
     "settings.changeLanguage": "Change language title",

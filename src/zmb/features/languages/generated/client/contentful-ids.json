@@ -109,6 +109,7 @@
   "constantsCertified": "constants.certified",
   "constantsCha": "constants.cha",
   "constantsChairman": "constants.chairman",
+  "constantsDnrpc": "constants.dnrpc",
   "constantsAgeVerificationApiUser": "constants.ageVerificationApiUser",
   "constantsCollected": "constants.collected",
   "constantsCollectedBy": "constants.collectedBy",
