@@ -4,6 +4,7 @@
   "description": "OpenCRVS resources for reference data",
   "license": "MPL-2.0",
   "scripts": {
+    "dev": "bash dev.sh",
     "e2e": "cypress run",
     "open:e2e": "CYPRESS_LOGIN_URL=http://localhost:3020/ CYPRESS_CLIENT_URL=http://localhost:3000/ CYPRESS_AUTH_URL=http://localhost:4040/ cypress open",
     "test:watch": "jest --watch",
