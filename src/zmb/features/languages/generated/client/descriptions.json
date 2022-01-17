@@ -697,8 +697,6 @@
     "register.confirmationScreen.trackingSectionDesc": "The tracking section description that appear on the confirmation screen",
     "register.conf.butt.back.dup": "The button to return to the duplicates",
     "register.conf.butt.newDecl": "The button to start a new application now that they are finished with this one",
-    "review.replace.modal.confirmationTitle": "Title for the confirmation dialog when replacing whole section",
-    "review.replace.modal.confirmationText": "Description for the confirmation dialog when replacing whole section",
     "duplicates.modal.reject": "Description of the reject modal",
     "duplicates.duplicateFoundTitle": "The title of the text box in the duplicates page",
     "duplicates.duplicateFoundDescription": "The description at the top of the duplicates page",
