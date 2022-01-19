@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  push:
+  deploy:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
       - name: Clone core
         uses: actions/checkout@v2
