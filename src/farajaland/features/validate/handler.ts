@@ -17,7 +17,7 @@ import { createWebHookResponseFromBundle } from '@resources/farajaland/features/
 
 const logger = Pino()
 
-export async function zmbValidateRegistrationHandler(
+export async function farajalandValidateRegistrationHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
