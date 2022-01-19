@@ -10,7 +10,7 @@
 
 set -e
 
-sed -i "s/{{hostname}}/$HOSTNAME/g" src/zmb/config/client-config.prod.js
-sed -i "s/{{hostname}}/$HOSTNAME/g" src/zmb/config/login-config.prod.js
+sed -i "s/{{hostname}}/$HOSTNAME/g" src/farajaland/config/client-config.prod.js
+sed -i "s/{{hostname}}/$HOSTNAME/g" src/farajaland/config/login-config.prod.js
 
 yarn start:prod

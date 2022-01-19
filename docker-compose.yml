@@ -11,5 +11,5 @@ version: "3.3"
 
 services:
   resources:
-    image: opencrvs/ocrvs-zambia:${VERSION:-latest}
+    image: opencrvs/ocrvs-farajaland:${VERSION:-latest}
     build: .
