@@ -1,0 +1,22 @@
+name: Deploy Farajaland to QA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Clone core
+        uses: actions/checkout@v2
+        with:
+          repository: 'opencrvs/opencrvs-core'
+          path: './opencrvs-core'
+      - name: Clone Farajaland resource package
+        uses: actions/checkout@v2
+        with:
+          path: './opencrvs-farajaland'
+      - name: Run deployment command in core
+        working-directory: ./opencrvs-core
+        run: yarn deploy:qa farajaland-qa.opencrvs.org latest ../opencrvs-farajaland
