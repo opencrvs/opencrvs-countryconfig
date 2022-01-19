@@ -11,7 +11,7 @@
  */
 window.config = {
   AUTH_API_URL: 'http://localhost:4040/',
-  COUNTRY: 'farajaland',
+  COUNTRY: 'zmb',
   LANGUAGES: 'en',
   CLIENT_APP_URL: 'http://localhost:3000/',
   PHONE_NUMBER_PATTERN: {

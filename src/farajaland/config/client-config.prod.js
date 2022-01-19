@@ -12,7 +12,7 @@
 window.config = {
   API_GATEWAY_URL: 'https://gateway.{{hostname}}/',
   BACKGROUND_SYNC_BROADCAST_CHANNEL: 'backgroundSynBroadCastChannel',
-  COUNTRY: 'farajaland',
+  COUNTRY: 'zmb',
   COUNTRY_LOGO_FILE: 'logo.png',
   COUNTRY_LOGO_RENDER_WIDTH: 104, // in px
   COUNTRY_LOGO_RENDER_HEIGHT: 104, // in px
