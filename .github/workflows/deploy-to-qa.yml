@@ -26,4 +26,4 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Run deployment command in core
         working-directory: ./opencrvs-core
-        run: yarn deploy:qa ${{ secrets.DOCKER_MANAGER_HOST }} {{ github.event.inputs.version }} ../opencrvs-farajaland
+        run: yarn deploy:qa ${{ secrets.DOCKER_MANAGER_HOST }} ${{ github.event.inputs.version }} ../opencrvs-farajaland
