@@ -20,8 +20,7 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Run deployment command in core
         working-directory: ./opencrvs-core
         run: yarn deploy:qa farajaland-qa.opencrvs.org latest ../opencrvs-farajaland
