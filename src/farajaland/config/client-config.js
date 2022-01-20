@@ -22,6 +22,7 @@ window.config = {
   LOGIN_URL: 'http://localhost:3020',
   AUTH_URL: 'http://localhost:4040',
   RESOURCES_URL: 'http://localhost:3040',
+  SHOW_FARAJALAND_IN_COUNTRY_LISTS: true,
   CERTIFICATE_PRINT_CHARGE_FREE_PERIOD: 36500, // 100 years =  (100 * 365) days
   CERTIFICATE_PRINT_CHARGE_UP_LIMIT: 36500, // 100 years =  (100 * 365) days
   CERTIFICATE_PRINT_LOWEST_CHARGE: 0,
