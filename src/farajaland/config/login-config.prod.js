@@ -11,7 +11,7 @@
  */
 window.config = {
   AUTH_API_URL: 'https://auth.{{hostname}}/',
-  COUNTRY: 'zmb',
+  COUNTRY: 'FAR',
   LANGUAGES: 'en',
   CLIENT_APP_URL: 'https://register.{{hostname}}/',
   PHONE_NUMBER_PATTERN: {

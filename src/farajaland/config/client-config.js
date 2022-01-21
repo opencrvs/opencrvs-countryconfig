@@ -12,7 +12,7 @@
 window.config = {
   API_GATEWAY_URL: 'http://localhost:7070/',
   BACKGROUND_SYNC_BROADCAST_CHANNEL: 'backgroundSynBroadCastChannel',
-  COUNTRY: 'zmb',
+  COUNTRY: 'FAR',
   COUNTRY_LOGO_FILE: 'logo.png',
   COUNTRY_LOGO_RENDER_WIDTH: 104, // in px
   COUNTRY_LOGO_RENDER_HEIGHT: 104, // in px
