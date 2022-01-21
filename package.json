@@ -23,7 +23,6 @@
   "devDependencies": {
     "@types/hapi__inert": "^5.2.3",
     "@types/jsonwebtoken": "^8.5.8",
-    "bundlesize": "^0.18.0",
     "csv2json": "^1.4.2",
     "dotenv": "^6.1.0",
     "json2csv": "^4.3.0",
