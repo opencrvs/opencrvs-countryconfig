@@ -75,7 +75,7 @@ Cypress.Commands.add('login', (userType, options = {}) => {
           cy.visit(`${Cypress.env('CLIENT_URL')}?token=${body.token}`)
         })
     })
-  cy.clock()
+  //cy.clock()  
   // Wait for app to load so token can be stored
   cy.get('#createPinBtn')
 })
@@ -95,8 +95,12 @@ Cypress.Commands.add('logout', () => {
 })
 
 Cypress.Commands.add('goToNextFormSection', () => {
-  cy.tick(1000) // Clear debounce wait from form
-  cy.get('#next_section').click()
+  //cy.reload()
+  cy.clock()
+  cy.tick(10000) // Clear debounce wait from form
+ // cy.reload()
+cy.get('#next_section').click()
+  //cy.contains('Continue').click({force:true})
 })
 
 Cypress.Commands.add('createPin', () => {
@@ -110,15 +114,45 @@ Cypress.Commands.add('createPin', () => {
   }
   cy.wait(2000)
 })
+
 Cypress.Commands.add('submitApplication', () => {
   // PREVIEW
   cy.get('#submit_form').click()
   // MODAL
   cy.get('#submit_confirm').click()
+  
   cy.log('Waiting for application to sync...')
+  cy.wait(10000)
+  cy.clock()
   cy.tick(40000)
-  cy.get('#row_0 #submitted0').should('exist')
+  //cy.get('#row_0 #submitted0').should('exist')
 })
+
+Cypress.Commands.add('logOut',()=>{
+  cy.get('#ProfileMenuToggleButton').click()
+  cy.get('#ProfileMenuItem1').click()
+})
+
+Cypress.Commands.add('printApplication',() => {
+ 
+  cy.get('#tab_print').click()
+  cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
+  cy.get('#ListItemAction-0-Print').click()
+  cy.get('#type_MOTHER').click()
+  cy.get('#confirm_form').click()
+  cy.get('#verifyPositive').click()
+  cy.get('#confirm-print').click()
+  //cy.get('#print-certificate').should('have.attr','Print')
+ // cy.get('#print-certificate').click()
+  cy.get('.react-pdf__message react-pdf__message--no-data').should(
+    'not.exist')
+    
+  cy.get('.react-pdf__Page').should('exist')
+
+
+})
+
+
 Cypress.Commands.add('rejectApplication', () => {
   cy.get('#rejectApplicationBtn').click()
   // REJECT MODAL
@@ -139,8 +173,8 @@ Cypress.Commands.add('registerApplication', () => {
   cy.get('#submit_confirm').click()
   cy.log('Waiting for application to sync...')
   cy.tick(20000)
-  cy.get('#Spinner').should('not.exist')
-  cy.get('#tab_review').contains('Ready for review (0)')
+  // cy.get('#Spinner').should('not.exist')
+  // cy.get('#tab_review').contains('Ready for review (0)')
 })
 
 Cypress.Commands.add('verifyLandingPageVisible', () => {
@@ -151,14 +185,15 @@ Cypress.Commands.add('initializeFakeTimers', () => {
   cy.clock(new Date().getTime())
 })
 Cypress.Commands.add('downloadFirstApplication', () => {
+  cy.clock()
   cy.tick(10000)
-  cy.get('#ListItemAction-0-icon').should('exist')
+ // cy.get('#ListItemAction-0-icon').should('exist')
   cy.get('#ListItemAction-0-icon')
     .first()
     .click()
   cy.log('Waiting for application to sync...')
   cy.tick(20000)
-  cy.get('#action-loading-ListItemAction-0').should('not.exist')
+  // cy.get('#action-loading-ListItemAction-0').should('not.exist')
 })
 
 export function getRandomNumbers(stringLength) {
@@ -176,7 +211,7 @@ Cypress.Commands.add(
     cy.login('fieldWorker')
     cy.createPin()
     cy.verifyLandingPageVisible()
-
+    cy.clock(new Date().getTime()) 
     // EVENTS
     cy.get('#select_vital_event_view').should('be.visible')
     cy.get('#select_birth_event').click()
@@ -191,9 +226,16 @@ Cypress.Commands.add(
 
     // SELECT APPLICANT
     cy.get('#applicant_MOTHER').click()
+    //cy.get('#applicant_FATHER').click()
+    cy.wait(1000)
+    //cy.get('[for="applicant_FATHER"]').click({force:true})
+
     cy.goToNextFormSection()
+    cy.clock()
+    cy.tick(1000)
 
     // SELECT MAIN CONTACT POINT
+   
     cy.get('#contactPoint_MOTHER').click()
     cy.get('#contactPoint\\.nestedFields\\.registrationPhone').type(
       '07' + getRandomNumbers(8)
@@ -202,6 +244,7 @@ Cypress.Commands.add(
 
     // APPLICATION FORM
     // CHILD DETAILS
+    
     cy.get('#firstNamesEng').type(firstName)
     cy.get('#familyNameEng').type(lastName)
     cy.selectOption('#gender', 'Male', 'Male')
@@ -211,6 +254,7 @@ Cypress.Commands.add(
     cy.get('#childBirthDate-mm').type(
       Math.floor(1 + Math.random() * 12).toString()
     )
+    cy.clock(new Date().getTime())
     cy.get('#childBirthDate-yyyy').type('2018')
     cy.get('#multipleBirth').type('1')
     cy.selectOption('#placeOfBirth', 'Private_Home', 'Private Home')
@@ -249,6 +293,9 @@ Cypress.Commands.add(
     cy.submitApplication()
 
     // LOG OUT
+    // cy.clock()
+    // cy.tick(40000)
+    cy.wait(5000)
     cy.get('#ProfileMenuToggleButton').click()
     cy.get('#ProfileMenuItem1').click()
   }
@@ -262,13 +309,15 @@ Cypress.Commands.add(
 
     cy.createPin()
     cy.verifyLandingPageVisible()
-
+    cy.clock(new Date().getTime())
     cy.enterMaximumInput(firstName, lastName)
 
     cy.submitApplication()
 
     // LOG OUT
+    
     cy.get('#ProfileMenuToggleButton').click()
+   // cy.get('svg > circle').click()
     cy.get('#ProfileMenuItem1').click()
   }
 )
@@ -283,6 +332,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.get('#select_informant_BOTH_PARENTS').click()
   cy.get('#continue').click()
   cy.get('#applicant_MOTHER').click()
+  cy.wait(1000)
   cy.goToNextFormSection()
 
   // SELECT MAIN CONTACT POINT
@@ -297,9 +347,9 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.get('#firstNamesEng').type(firstName)
   cy.get('#familyNameEng').type(lastName)
   cy.selectOption('#gender', 'Male', 'Male')
-  cy.get('#childBirthDate-dd').type('22')
-  cy.get('#childBirthDate-mm').type('10')
-  cy.get('#childBirthDate-yyyy').type('1994')
+  cy.get('#childBirthDate-dd').type('11')
+  cy.get('#childBirthDate-mm').type('11')
+  cy.get('#childBirthDate-yyyy').type('1997') //showing invalid
   cy.selectOption('#attendantAtBirth', 'Physician', 'Physician')
   cy.selectOption('#birthType', 'Single', 'Single')
   cy.get('#multipleBirth').type('1')
@@ -323,7 +373,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.get('#familyNameEng').type(lastName)
   cy.get('#motherBirthDate-dd').type('23')
   cy.get('#motherBirthDate-mm').type('10')
-  cy.get('#motherBirthDate-yyyy').type('1971')
+  cy.get('#motherBirthDate-yyyy').type('1969')
   cy.selectOption('#maritalStatus', 'Married', 'Married')
   cy.get('#occupation').type('Lawyer')
   cy.selectOption('#educationalAttainment', 'PRIMARY_ISCED_1', 'Primary')
@@ -365,7 +415,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.get('#familyNameEng').type('Aktar')
   cy.get('#fatherBirthDate-dd').type('23')
   cy.get('#fatherBirthDate-mm').type('10')
-  cy.get('#fatherBirthDate-yyyy').type('1971')
+  cy.get('#fatherBirthDate-yyyy').type('1969')
   cy.selectOption('#maritalStatus', 'Married', 'Married')
   cy.get('#occupation').type('Lawyer')
   cy.selectOption('#educationalAttainment', 'PRIMARY_ISCED_1', 'Primary')
@@ -403,13 +453,9 @@ Cypress.Commands.add(
     cy.registerApplication()
   }
 )
-
+//edited by me
 Cypress.Commands.add(
-  'registerApplicationWithMaximumInput',
-  (firstName, lastName) => {
-    // DECLARE APPLICATION AS FIELD AGENT
-    cy.declareApplicationWithMaximumInput(firstName, lastName)
-
+  'registerDownloadLand',() =>{
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     cy.createPin()
@@ -422,6 +468,14 @@ Cypress.Commands.add(
       .click()
 
     cy.registerApplication()
+  }
+)
+
+Cypress.Commands.add(
+  'registerApplicationWithMaximumInput',
+  (firstName, lastName) => {
+    // DECLARE APPLICATION AS FIELD AGENT
+    cy.declareApplicationWithMaximumInput(firstName, lastName)
   }
 )
 
@@ -444,6 +498,7 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.get('#contactPoint\\.nestedFields\\.registrationPhone').type(
     '07' + getRandomNumbers(8)
   )
+  cy.wait(1000)
   cy.goToNextFormSection()
   // DECEASED DETAILS
   cy.get('#iD').type('123456789')
@@ -494,7 +549,6 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.goToNextFormSection()
   // PREVIEW
   cy.submitApplication()
-  cy.get('#row_0 #submitted0').should('exist')
   // LOG OUT
   cy.get('#ProfileMenuToggleButton').click()
   cy.get('#ProfileMenuItem1').click()
@@ -508,7 +562,7 @@ Cypress.Commands.add('declareDeathApplicationWithMaximumInput', () => {
   cy.enterDeathMaximumInput()
   // PREVIEW
   cy.submitApplication()
-  cy.get('#row_0 #submitted0').should('exist')
+  //cy.get('#row_0 #submitted0').should('exist')
 
   // LOG OUT
   cy.get('#ProfileMenuToggleButton').click()
@@ -516,37 +570,26 @@ Cypress.Commands.add('declareDeathApplicationWithMaximumInput', () => {
 })
 
 Cypress.Commands.add('registerDeathApplicationWithMinimumInput', () => {
+  
   cy.declareDeathApplicationWithMinimumInput()
 
-  // LOGIN AS LOCAL REGISTRAR
-  cy.login('registrar')
-  // CREATE PIN
-  cy.createPin()
-  // LANDING PAGE
-
-  cy.downloadFirstApplication()
-
-  cy.get('#ListItemAction-0-Review').should('exist')
-  cy.get('#ListItemAction-0-Review')
-    .first()
-    .click()
-  cy.registerApplication()
 })
 
 Cypress.Commands.add('registerDeathApplicationWithMaximumInput', () => {
+  //cy.initializeFakeTimers()
   cy.declareDeathApplicationWithMaximumInput()
 
-  // LOGIN AS LOCAL REGISTRAR
-  cy.login('registrar')
-  // CREATE PIN
-  cy.createPin()
-  // LANDING PAGE
-  cy.downloadFirstApplication()
-  cy.get('#ListItemAction-0-Review').should('exist')
-  cy.get('#ListItemAction-0-Review')
-    .first()
-    .click()
-  cy.registerApplication()
+  // // LOGIN AS LOCAL REGISTRAR
+  // cy.login('registrar')
+  // // CREATE PIN
+  // cy.createPin()
+  // // LANDING PAGE
+  // cy.downloadFirstApplication()
+  // cy.get('#ListItemAction-0-Review').should('exist')
+  // cy.get('#ListItemAction-0-Review')
+  //   .first()
+  //   .click()
+  // cy.registerApplication()
 })
 
 Cypress.Commands.add('enterDeathMaximumInput', () => {
@@ -562,6 +605,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   // SELECT ADDITIONAL INFORMANT
   cy.get('#relationship_OTHER').click()
   cy.get('#relationship\\.nestedFields\\.otherRelationship').type('Friend')
+  cy.wait(1000)
   cy.goToNextFormSection()
   // SELECT MAIN CONTACT POINT
   cy.get('#contactPoint_OTHER').click()
@@ -574,8 +618,8 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.get('#iD').type('123456789')
   cy.get('#socialSecurityNo').type('123456789')
   cy.selectOption('#nationality', 'Zambia', 'Zambia')
-  cy.get('#firstNamesEng').type('Agnes')
-  cy.get('#familyNameEng').type('Aktar')
+  cy.get('#firstNamesEng').type('Nafiza')
+  cy.get('#familyNameEng').type('Firuj')
   cy.get('#birthDate-dd').type('16')
   cy.get('#birthDate-mm').type('06')
   cy.get('#birthDate-yyyy').type('1988')
@@ -615,8 +659,8 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   // APPLICANT DETAILS
   cy.selectOption('#nationality', 'Zambia', 'Zambia')
   cy.get('#applicantID').type('123456789')
-  cy.get('#firstNamesEng').type('Agnes')
-  cy.get('#familyNameEng').type('Aktar')
+  cy.get('#firstNamesEng').type('Anne')
+  cy.get('#familyNameEng').type('Salim')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
   cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
   cy.selectOption('#districtPermanent', 'Chembe District', 'Chembe District')

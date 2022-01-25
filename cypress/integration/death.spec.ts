@@ -14,63 +14,129 @@
 context('Death Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
-    cy.initializeFakeTimers()
+    //cy.initializeFakeTimers()
   })
 
   it('Tests from application to registration using minimum input', () => {
-    cy.initializeFakeTimers()
+    
     cy.registerDeathApplicationWithMinimumInput()
   })
 
+  it('Login as registrar to register minimum input death application',() => {
+    
+    cy.login('registrar')
+    // CREATE PIN
+    cy.createPin()
+    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
+    cy.get('#ListItemAction-0-Review').click()
+    cy.wait(1000)
+    cy.get('#registerApplicationBtn').click()
+    cy.get('#submit_confirm').click()
+    cy.wait(1000)
+    cy.reload()
+    cy.get('#tab_review > .sc-jSFkmK').click()
+    cy.wait(1000)
+    cy.get('#tab_print > .sc-jSFkmK').click()
+    // LOG OUT
+    cy.logOut()
+  }) 
+
   it('Tests from application to registration using maximum input', () => {
-    cy.initializeFakeTimers()
+    //cy.initializeFakeTimers()
     cy.registerDeathApplicationWithMaximumInput()
   })
 
-  it('Tests from application to rejection using minimum input', () => {
-    cy.initializeFakeTimers()
-    cy.declareDeathApplicationWithMinimumInput()
-    // LOGIN AS LOCAL REGISTRAR
+  it('Login as registrar to register maximum input death application',() => {
+    
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
+    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
+    cy.get('#ListItemAction-0-Review').click()
+    cy.wait(1000)
+    cy.get('#registerApplicationBtn').click()
+    cy.get('#submit_confirm').click()
+    cy.wait(1000)
+    cy.reload()
+    cy.get('#tab_review > .sc-jSFkmK').click()
+    cy.wait(1000)
+    cy.get('#tab_print > .sc-jSFkmK').click()
+    // LOG OUT
+    cy.logOut()
+  }) 
+  
 
-    cy.rejectApplication()
+  it('Tests from application to rejection using minimum input', () => {
+    //cy.initializeFakeTimers()
+    cy.declareDeathApplicationWithMinimumInput()
   })
+  it('Login As Register & Reject Minimum input Death Application',() => {
+    // LOGIN AS LOCAL REGISTRAR
+    cy.login('registrar')
+    // CREATE PIN
+    
+    cy.createPin()
+    // LANDING PAGE Download 1st application & Reject Application
+    cy.get('#ListItemAction-0-icon').click()
+    cy.get('#ListItemAction-0-Review').click()
+    cy.wait(1000)
+
+    //Reject Application
+    cy.get('#rejectApplicationBtn').click()
+    //cy.wait('#rejectionReasonmissing_supporting_doc').click()
+    cy.get(':nth-child(3) > .sc-hYRTcE').click()
+    cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
+    cy.get('#submit_reject_form').click()
+    cy.wait(2000)
+    
+    //logout
+    cy.logOut()
+  })
+  
 
   it('Tests from application to rejection using maximum input', () => {
-    cy.initializeFakeTimers()
+  
     cy.declareDeathApplicationWithMaximumInput()
+    
+  })
+
+  it('Login As Register & Reject Maximum input Death Application',() => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
+    
     cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
+    // LANDING PAGE Download 1st application & Reject Application
+    cy.get('#ListItemAction-0-icon').click()
+    cy.get('#ListItemAction-0-Review').click()
+    cy.wait(1000)
 
-    cy.rejectApplication()
+    //Reject Application
+    cy.get('#rejectApplicationBtn').click()
+    //cy.wait('#rejectionReasonmissing_supporting_doc').click()
+    cy.get(':nth-child(3) > .sc-hYRTcE').click()
+    cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
+    cy.get('#submit_reject_form').click()
+    cy.wait(2000)
+    
+    //logout
+    cy.logOut()
   })
 
   it('Tests registration by registrar using maximum input', () => {
     // Fix time to 2019-11-12
-    cy.clock(1573557567230)
+    //cy.clock(1573557567230)
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
     // APPLICATION FORM
+    cy.initializeFakeTimers()
     cy.enterDeathMaximumInput()
 
     cy.registerApplication()
-  })
+     //logout
+     cy.logOut()
+  }) 
+
 })

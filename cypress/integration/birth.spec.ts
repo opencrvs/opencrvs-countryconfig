@@ -16,87 +16,189 @@ context('Birth Integration Test', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it('Tests from application to registration using minimum input', () => {
-    cy.initializeFakeTimers()
-    cy.registerApplicationWithMinimumInput('Tahmid', 'Rahman')
+  
+  // MINImum
+  it('Tests from application to certification using minimum input', () => {
+    //cy.initializeFakeTimers()
+    cy.declareApplicationWithMinimumInput('Arifuz', 'Antor')
+    cy.wait(1000)
+   
   })
+ 
+  it('Login as registrar to register minimum input Birth application',() => {
+    
+    cy.login('registrar')
+    // CREATE PIN
+    cy.createPin()
+    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
+    cy.get('#ListItemAction-0-Review').click()
+    cy.wait(1000)
+    cy.get('#registerApplicationBtn').click()
+    cy.get('#submit_confirm').click()
+    cy.wait(1000)
+    cy.reload()
+    cy.get('#tab_review > .sc-jSFkmK').click()
+    cy.wait(1000)
+    cy.get('#tab_print > .sc-jSFkmK').click()
+    // LOG OUT
+    cy.logOut()
+  }) 
 
+  //MaxiMum
   it('Tests from application to registration using maximum input', () => {
-    cy.initializeFakeTimers()
-    cy.registerApplicationWithMaximumInput('Maruf', 'Hossein')
+ 
+    cy.registerApplicationWithMaximumInput('Sharifuz', 'Prantor')
+
   })
 
+  it('LogIn as Registrar to Register Maximum input Application',() => {
+    // LOGIN AS LOCAL REGISTRAR
+    cy.login('registrar')
+    cy.createPin()
+
+    //LANDING PAGE download and register application
+    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
+    cy.get('#ListItemAction-0-Review').click()
+    cy.wait(1000)
+    cy.get('#registerApplicationBtn').click()
+    cy.get('#submit_confirm').click()
+    cy.wait(1000)
+    cy.reload()
+
+    // LOG OUT
+    cy.logOut()
+  })
+
+  
+ // Rejection Minimum
   it('Tests from application to rejection using minimum input', () => {
-    cy.initializeFakeTimers()
+   
     cy.declareApplicationWithMinimumInput('Atiq', 'Zaman')
+    
+  })
+
+  it('Login As Register & Reject Minimum input Application',() => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
+    
     cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
+    // LANDING PAGE Download 1st application & Reject Application
+    cy.get('#ListItemAction-0-icon').click()
+    cy.get('#ListItemAction-0-Review').click()
+    cy.wait(1000)
 
-    cy.rejectApplication()
+    //Reject Application
+    cy.get('#rejectApplicationBtn').click()
+    //cy.wait('#rejectionReasonmissing_supporting_doc').click()
+    cy.get(':nth-child(3) > .sc-hYRTcE').click()
+    cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
+    cy.get('#submit_reject_form').click()
+    cy.wait(2000)
+    
+    //logout
+    cy.logOut()
   })
 
+
+  //Rejection Maximum
   it('Tests from application to rejection using maximum input', () => {
-    cy.initializeFakeTimers()
+   
     cy.declareApplicationWithMaximumInput('Evans', 'Kangwa')
+    
+  })
+
+  it('Login as Registrar & Reject Maximum input Application',()=>{
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
+    // LANDING PAGE,Download Application
+    cy.get('#ListItemAction-0-icon').click()
+    cy.get('#ListItemAction-0-Review').click()
+    cy.wait(1000)
 
-    cy.rejectApplication()
+    //Reject Application
+    cy.get('#rejectApplicationBtn').click()
+    //cy.wait('#rejectionReasonmissing_supporting_doc').click()
+    cy.get(':nth-child(3) > .sc-hYRTcE').click()
+    cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
+    cy.get('#submit_reject_form').click()
+    cy.wait(3000)
+    
+    //logout
+    cy.logOut()
   })
+
+
+
+  //Maximum input by Register
 
   it('Tests registration by registrar using maximum input', () => {
-    cy.initializeFakeTimers()
+    //cy.clock(new Date().getTime())
     // LOGIN AS FIELD WORKER
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
     // EVENTS
+    //cy.initializeFakeTimers()
+    cy.clock(new Date().getTime())
     cy.enterMaximumInput('Ryan', 'Crichton')
 
-    cy.registerApplication() // Wait for application to be sync'd
-  })
+    cy.get('.sc-bCwgka').click()
 
+    //register application
+    cy.get('#registerApplicationBtn').click()
+    //MODAL
+    cy.get('#submit_confirm').click()
+    cy.log('Waiting for application to sync...')
+    cy.tick(20000)
+
+    
+  }) 
+
+
+   // SomeOne Else giving input
+   
   it('Test Someone else journey using minimum input', () => {
-    cy.initializeFakeTimers()
+    
     // LOGIN
     cy.login('fieldWorker')
     // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
+    cy.initializeFakeTimers()
     cy.someoneElseJourney()
 
     cy.submitApplication()
     // LOG OUT
     cy.get('#ProfileMenuToggleButton').click()
     cy.get('#ProfileMenuItem1').click()
+   
+  }) 
+
+  it('Login as Registrar & register minimum input application',()=>{
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
+    // LANDING PAGE,Download & register application 
+    cy.wait(1000)
+    //download first application
+    cy.get('#ListItemAction-0-icon').click()
+    //cy.wait(2000)
+    //review 
+    cy.get('#ListItemAction-0-Review').click()
+    //Register button
+    cy.get('#registerApplicationBtn').click()
+    //submit confirm
+    cy.get('#submit_confirm').click()
+    cy.wait(2000)
 
-    cy.registerApplication()
-  })
+    // LOG OUT
+    cy.get('#ProfileMenuToggleButton').click()
+    cy.get('#ProfileMenuItem1').click()
+})
+
 })
