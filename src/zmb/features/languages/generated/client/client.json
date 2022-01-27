@@ -230,6 +230,7 @@
         "constants.within45DaysTo1Year": "45 days - 1 year",
         "constants.within1YearTo5Years": "1 year - 5 years",
         "correction.corrector.anotherAgent": "Another registration agent or field agent",
+        "correction.corrector.birth.note": "Note: In the case that the child is now of legal age (18) then only they should be able to request a change to thier birth record.",
         "correction.corrector.child": "Child",
         "correction.corrector.court": "Court",
         "correction.corrector.error": "Please select who is correcting the certificate",

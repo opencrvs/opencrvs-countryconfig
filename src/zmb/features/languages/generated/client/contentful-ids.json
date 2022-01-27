@@ -234,6 +234,7 @@
   "constantsWithin45Days": "constants.within45Days",
   "constantsWithin45DaysTo1Year": "constants.within45DaysTo1Year",
   "correctionCorrectorAnotherAgent": "correction.corrector.anotherAgent",
+  "correctionCorrectorBirthNote": "correction.corrector.birth.note",
   "correctionCorrectorChild": "correction.corrector.child",
   "correctionCorrectorCourt": "correction.corrector.court",
   "correctionCorrectorError": "correction.corrector.error",

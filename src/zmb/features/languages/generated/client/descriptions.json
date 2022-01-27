@@ -171,6 +171,7 @@
     "constants.male": "The duplicates text for male",
     "constants.female": "The duplicates text for female",
     "correction.corrector.anotherAgent": "Label for another registration or field agent option in certificate correction form",
+    "correction.corrector.birth.note": "Birth correction note",
     "correction.corrector.child": "Label for child option in certificate correction form",
     "correction.corrector.court": "Label for court option in certificate correction form",
     "correction.corrector.error": "Error for corrector form",
