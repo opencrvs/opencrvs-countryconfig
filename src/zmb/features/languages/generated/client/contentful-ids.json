@@ -1318,5 +1318,13 @@
   "ConfigBirthDefaultTempDesc":"config.birthDefaultTempDesc",
   "ConfigDeathDefaultTempDesc":"config.deathDefaultTempDesc",
   "ConfigListDetails":"config.listDetails",
-  "ConfigListDetailsQsn": "config.listDetailsQsn"
+  "ConfigListDetailsQsn": "config.listDetailsQsn",
+  "configDeathUpdatedTempDesc": "config.deathUpdatedTempDesc",
+  "configCertificateCertificateUploading": "config.certificate.certificateUploading",
+  "configCertificateCertificateUpdated": "config.certificate.certificateUpdated",
+  "configCertificateCertificateValidationError": "config.certificate.certificateValidationError",
+  "configCertificateUploadCertificateDialogTitle": "config.certificate.uploadCertificateDialogTitle",
+  "configCertificateUploadCertificateDialogDescription": "config.certificate.uploadCertificateDialogDescription",
+  "configCertificateUploadCertificateDialogConfirm": "config.certificate.uploadCertificateDialogConfirm",
+  "configCertificateUploadCertificateDialogCancel": "config.certificate.uploadCertificateDialogCancel"
 }

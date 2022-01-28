@@ -745,6 +745,14 @@
     "config.birthDefaultTempDesc": "Label for default birth certificate template",
     "config.deathDefaultTempDesc": "Label for default death certificate template",
     "config.listDetails": "Details for certificates templates list",
-    "config.listDetailsQsn": "Details question for certificates templates list"
+    "config.listDetailsQsn": "Details question for certificates templates list",
+    "config.deathUpdatedTempDesc": "Label for updated death certificate template",
+    "config.certificate.certificateUploading": "Certificate template message when uploading SVG",
+    "config.certificate.certificateUpdated": "Certificate template change message on success",
+    "config.certificate.certificateValidationError": "Certificate template error message on failed",
+    "config.certificate.uploadCertificateDialogTitle": "Upload certificate template modal title",
+    "config.certificate.uploadCertificateDialogDescription": "The description for the dialog when upload new certificate template",
+    "config.certificate.uploadCertificateDialogConfirm": "Confirm new certificate template upload button",
+    "config.certificate.uploadCertificateDialogCancel": "Cancel new certificate template upload button"
   }
 }
