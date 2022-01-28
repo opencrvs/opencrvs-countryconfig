@@ -568,6 +568,10 @@ interface IOfflineData {
       birth: ICertificateCollectorDefinition
       death: ICertificateCollectorDefinition
     }
+    certificateCorrectorDefinition: {
+      birth: ICertificateCorrectorDefinition
+      death: ICertificateCorrectorDefinition
+    }
   }
   templates: {
     receipt?: IPDFTemplate
@@ -612,6 +616,9 @@ interface ICertificateCollectorField {
 }
 
 interface ICertificateCollectorDefinition {
+  [collector: string]: ICertificateCollectorField
+}
+interface ICertificateCorrectorDefinition {
   [collector: string]: ICertificateCollectorField
 }
 
