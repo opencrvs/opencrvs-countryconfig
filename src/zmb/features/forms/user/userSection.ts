@@ -55,11 +55,11 @@ export const userSectionFormType: IFormSection = {
           initialValue: '',
           searchableResource: 'offices',
           searchableType: 'CRVS_OFFICE',
-          dispatchOptions: {
-            action: 'USER_FORM/PROCESS_ROLES',
-            payloadKey: 'primaryOfficeId'
-          },
-          validate: [],
+          validate: [
+            {
+              operation: 'officeMustBeSelected'
+            }
+          ],
           locationList: [],
           mapping: {
             mutation: {
@@ -143,7 +143,7 @@ export const userSectionFormType: IFormSection = {
           name: 'nid',
           type: TEXT,
           label: messages.NID,
-          required: true,
+          required: false,
           initialValue: '',
           validate: [
             {
@@ -204,7 +204,7 @@ export const userSectionFormType: IFormSection = {
     {
       id: 'signature-attachment',
       title: messages.userSignatureAttachmentTitle,
-      conditionals: [conditionals.isRegistrarOrRegistrationAgentRoleSelected],
+      conditionals: [conditionals.isRegistrarRoleSelected],
       fields: [
         {
           name: 'attachmentTitle',
@@ -222,7 +222,7 @@ export const userSectionFormType: IFormSection = {
           description: messages.userSignatureAttachmentDesc,
           allowedDocType: ['image/png'],
           initialValue: '',
-          required: false,
+          required: true,
           validate: []
         }
       ]

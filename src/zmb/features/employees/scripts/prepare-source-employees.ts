@@ -12,7 +12,7 @@
 import * as fs from 'fs'
 import { EMPLOYEES_SOURCE } from '@resources/zmb/constants'
 import * as csv2json from 'csv2json'
-const sourceJSON = `${EMPLOYEES_SOURCE}test-employees.json`
+const sourceJSON = `${EMPLOYEES_SOURCE}generated/test-employees.json`
 import chalk from 'chalk'
 
 export default async function prepareSourceJSON() {
@@ -22,7 +22,7 @@ export default async function prepareSourceJSON() {
       '/////////////////////////// CONVERTING EMPLOYEES CSV TO JSON ///////////////////////////'
     )}`
   )
-  fs.createReadStream(`${EMPLOYEES_SOURCE}test-employees.csv`)
+  fs.createReadStream(`${EMPLOYEES_SOURCE}source/test-employees.csv`)
     .pipe(csv2json())
     .pipe(fs.createWriteStream(sourceJSON))
 
