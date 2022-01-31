@@ -609,6 +609,7 @@
     "validations.domLaterThanDob": "The error message appears when the given marriage date is earlier than the given birth date",
     "validations.emailAddressFormat": "The error message appears when the email addresses are not valid",
     "validations.englishOnlyNameFormat": "The error message that appears when a non English character is used in an English name",
+    "validations.officeMustBeSelected": "The error message appears when no valid office is selected",
     "validations.facilityMustBeSelected": "The error message appears when no valid facility is selected",
     "validations.greaterThanZero": "The error message appears when input is less than or equal to 0",
     "validations.isValidBirthDate": "The error message appears when the given birth date is not valid",

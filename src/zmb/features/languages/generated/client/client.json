@@ -1208,6 +1208,7 @@
         "validations.emailAddressFormat": "Must be a valid email address",
         "validations.englishOnlyNameFormat": "Must contain only English characters",
         "validations.facilityMustBeSelected": "No facility selected",
+        "validations.officeMustBeSelected": "No office selected",
         "validations.greaterThanZero": "Must be a greater than zero",
         "validations.isValidBirthDate": "Must be a valid birth date",
         "validations.isValidDateOfDeath": "Must be a valid date of death",
