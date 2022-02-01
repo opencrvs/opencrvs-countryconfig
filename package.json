@@ -19,7 +19,7 @@
     "db:backup:restore": "DEV=true ./restore-metadata.sh",
     "db:clear:all": "DEV=true ./clear-all-data.sh",
     "contentful:prepare:import": "ts-node -r tsconfig-paths/register src/zmb/features/languages/scripts/contentfulImport.ts",
-    "compose:push:version": "export VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset VERSION"
+    "compose:push:version": "export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset VERSION"
     
   },
   "devDependencies": {
