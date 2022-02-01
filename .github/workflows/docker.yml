@@ -16,4 +16,4 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
       - name: Push image
         run: |
-          export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset VERSION
+          export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION
