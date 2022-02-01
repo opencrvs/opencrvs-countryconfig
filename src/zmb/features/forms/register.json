@@ -3699,6 +3699,7 @@
                         "initialValue": "",
                         "validate": [],
                         "required": true,
+                        "maxLength": 32,
                         "mapping": {
                           "mutation": {
                             "operation": "nestedRadioFieldTransformer",
@@ -3844,6 +3845,7 @@
                         },
                         "initialValue": "",
                         "required": true,
+                        "maxLength": 32,
                         "validate": [],
                         "mapping": {
                           "mutation": {
@@ -12680,6 +12682,7 @@
                     "id": "form.field.label.deceasedMothersGivenNamesEng"
                   },
                   "required": false,
+                  "maxLength": 32,
                   "initialValue": "",
                   "validate": [
                     {
@@ -12713,6 +12716,7 @@
                     "id": "form.field.label.deceasedMothersFamilyNameEng"
                   },
                   "required": true,
+                  "maxLength": 32,
                   "initialValue": "",
                   "validate": [
                     {
