@@ -13,8 +13,8 @@ import {
   ILocation,
   getLocationIDByDescription,
   sendToFhir
-} from '@resources/farajaland/features/utils'
-import { ORG_URL } from '@resources/constants'
+} from '@countryconfig/farajaland/features/utils'
+import { ORG_URL } from '@countryconfig/constants'
 
 interface IFacility {
   statisticalID: string

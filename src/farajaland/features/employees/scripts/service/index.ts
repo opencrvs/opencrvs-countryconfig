@@ -10,22 +10,22 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import * as fs from 'fs'
-import { ORG_URL } from '@resources/constants'
-import { getFromFhir, sendToFhir } from '@resources/farajaland/features/utils'
+import { ORG_URL } from '@countryconfig/constants'
+import { getFromFhir, sendToFhir } from '@countryconfig/farajaland/features/utils'
 import chalk from 'chalk'
 import User, {
   IUserModel
-} from '@resources/farajaland/features/employees/model/user'
-import { EMPLOYEES_SOURCE } from '@resources/farajaland/constants'
+} from '@countryconfig/farajaland/features/employees/model/user'
+import { EMPLOYEES_SOURCE } from '@countryconfig/farajaland/constants'
 import {
   generateSaltedHash,
   convertToMSISDN,
   ISaltedHash
-} from '@resources/utils'
+} from '@countryconfig/utils'
 import {
   createUsers,
   getScope
-} from '@resources/farajaland/features/employees/scripts/manage-users'
+} from '@countryconfig/farajaland/features/employees/scripts/manage-users'
 import * as niceware from 'niceware'
 
 interface ITestPractitioner {

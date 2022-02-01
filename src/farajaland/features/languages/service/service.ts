@@ -16,7 +16,7 @@ import {
   CMS,
   CMS_API_KEY,
   CONTENTFUL_SPACE_ID
-} from '@resources/farajaland/constants'
+} from '@countryconfig/farajaland/constants'
 import * as Contentful from 'contentful'
 
 interface IMessageIdentifier {

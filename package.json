@@ -1,7 +1,7 @@
 {
-  "name": "@opencrvs/resources",
+  "name": "@opencrvs/countryconfig",
   "version": "1.0.0-alpha.3.0",
-  "description": "OpenCRVS resources for reference data",
+  "description": "OpenCRVS country configuration for reference data",
   "license": "MPL-2.0",
   "scripts": {
     "dev": "bash dev.sh",
@@ -110,7 +110,7 @@
       "<rootDir>"
     ],
     "moduleNameMapper": {
-      "@resources/(.*)": "<rootDir>/src/$1"
+      "@countryconfig/(.*)": "<rootDir>/src/$1"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "setupFiles": [

@@ -9,10 +9,10 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { FHIR_URL } from '@resources/constants'
+import { FHIR_URL } from '@countryconfig/constants'
 import fetch from 'node-fetch'
-import { generateLocationResource } from '@resources/farajaland/features/administrative/scripts/service'
-import { ILocation } from '@resources/farajaland/features/utils'
+import { generateLocationResource } from '@countryconfig/farajaland/features/administrative/scripts/service'
+import { ILocation } from '@countryconfig/farajaland/features/utils'
 
 export interface ILocationDataResponse {
   data: ILocation[]

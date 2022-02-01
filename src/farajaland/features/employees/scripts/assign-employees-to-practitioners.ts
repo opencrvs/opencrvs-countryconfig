@@ -10,10 +10,10 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import * as fs from 'fs'
-import { EMPLOYEES_SOURCE } from '@resources/farajaland/constants'
+import { EMPLOYEES_SOURCE } from '@countryconfig/farajaland/constants'
 import chalk from 'chalk'
 import { internal } from '@hapi/boom'
-import { composeAndSavePractitioners } from '@resources/farajaland/features/employees/scripts/service'
+import { composeAndSavePractitioners } from '@countryconfig/farajaland/features/employees/scripts/service'
 
 const sourceJSON = `${EMPLOYEES_SOURCE}generated/test-employees.json`
 

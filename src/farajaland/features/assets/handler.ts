@@ -13,7 +13,7 @@ import * as Hapi from '@hapi/hapi'
 import {
   getAssest,
   getAssestMimeType
-} from '@resources/farajaland/features/assets/service'
+} from '@countryconfig/farajaland/features/assets/service'
 
 export async function assetHandler(
   request: Hapi.Request,

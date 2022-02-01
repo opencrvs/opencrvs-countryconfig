@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { getFacilities } from '@resources/farajaland/features/facilities/service/service'
+import { getFacilities } from '@countryconfig/farajaland/features/facilities/service/service'
 import * as fetchAny from 'jest-fetch-mock'
 
 const fetch = fetchAny as any

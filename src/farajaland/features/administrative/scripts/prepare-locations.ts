@@ -11,7 +11,7 @@
  */
 import chalk from 'chalk'
 import * as fs from 'fs'
-import { ADMIN_STRUCTURE_SOURCE } from '@resources/farajaland/constants'
+import { ADMIN_STRUCTURE_SOURCE } from '@countryconfig/farajaland/constants'
 import * as csv2json from 'csv2json'
 
 const provincesJSON = `${ADMIN_STRUCTURE_SOURCE}generated/sourceProvinces.json`

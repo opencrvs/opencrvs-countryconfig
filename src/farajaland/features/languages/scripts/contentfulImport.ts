@@ -12,14 +12,14 @@
 
 import * as fs from 'fs'
 import chalk from 'chalk'
-import { LANGUAGES_SOURCE } from '@resources/farajaland/constants'
+import { LANGUAGES_SOURCE } from '@countryconfig/farajaland/constants'
 import * as Contentful from 'contentful'
 import {
   SUPPORTED_LOCALES,
   SPACE_ID,
   USER_ID
-} from '@resources/farajaland/features/languages/scripts/constants'
-import { contentfulTemplate } from '@resources/farajaland/features/languages/scripts/contentful-template'
+} from '@countryconfig/farajaland/features/languages/scripts/constants'
+import { contentfulTemplate } from '@countryconfig/farajaland/features/languages/scripts/contentful-template'
 import * as ShortUUID from 'short-uuid'
 
 const space: SpaceSysLink = {

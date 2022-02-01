@@ -13,7 +13,7 @@ import * as Hapi from '@hapi/hapi'
 import {
   ILocationDataResponse,
   getLocations
-} from '@resources/farajaland/features/administrative/service/service'
+} from '@countryconfig/farajaland/features/administrative/service/service'
 
 export async function locationsHandler(
   request: Hapi.Request,

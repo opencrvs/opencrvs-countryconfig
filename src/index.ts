@@ -16,26 +16,26 @@ require('app-module-path').addPath(require('path').join(__dirname, '../'))
 import fetch from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
 import { readFileSync } from 'fs'
-import getPlugins from '@resources/config/plugins'
-import * as usrMgntDB from '@resources/database'
+import getPlugins from '@countryconfig/config/plugins'
+import * as usrMgntDB from '@countryconfig/database'
 import {
-  RESOURCES_HOST,
-  RESOURCES_PORT,
+  COUNTRY_CONFIG_HOST,
+  COUNTRY_CONFIG_PORT,
   CERT_PUBLIC_KEY_PATH,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
   COUNTRY_WIDE_CRUDE_DEATH_RATE
-} from '@resources/constants'
-import { locationsHandler as farajalandLocationsHandler } from '@resources/farajaland/features/administrative/handler'
-import { facilitiesHandler as farajalandFacilitiesHandler } from '@resources/farajaland/features/facilities/handler'
-import { definitionsHandler as farajalandDefinitionsHandler } from '@resources/farajaland/features/definitions/handler'
-import { assetHandler as farajalandAssetHandler } from '@resources/farajaland/features/assets/handler'
+} from '@countryconfig/constants'
+import { locationsHandler as farajalandLocationsHandler } from '@countryconfig/farajaland/features/administrative/handler'
+import { facilitiesHandler as farajalandFacilitiesHandler } from '@countryconfig/farajaland/features/facilities/handler'
+import { definitionsHandler as farajalandDefinitionsHandler } from '@countryconfig/farajaland/features/definitions/handler'
+import { assetHandler as farajalandAssetHandler } from '@countryconfig/farajaland/features/assets/handler'
 import {
   generatorHandler as farajalandGeneratorHandler,
   requestSchema as farajalandGeneratorRequestSchema,
   responseSchema as farajalandGeneratorResponseSchema
-} from '@resources/farajaland/features/generate/handler'
-import { farajalandValidateRegistrationHandler } from '@resources/farajaland/features/validate/handler'
+} from '@countryconfig/farajaland/features/generate/handler'
+import { farajalandValidateRegistrationHandler } from '@countryconfig/farajaland/features/validate/handler'
 
 import { join } from 'path'
 
@@ -88,8 +88,8 @@ const validateFunc = async (
 
 export async function createServer() {
   const server = new Hapi.Server({
-    host: RESOURCES_HOST,
-    port: RESOURCES_PORT,
+    host: COUNTRY_CONFIG_HOST,
+    port: COUNTRY_CONFIG_PORT,
     routes: {
       cors: { origin: ['*'] }
     }
@@ -102,7 +102,7 @@ export async function createServer() {
     verifyOptions: {
       algorithms: ['RS256'],
       issuer: 'opencrvs:auth-service',
-      audience: 'opencrvs:resources-user'
+      audience: 'opencrvs:countryconfig-user'
     },
     validate: (payload: any, request: Hapi.Request) =>
       validateFunc(payload, request, CHECK_INVALID_TOKEN, AUTH_URL)
@@ -273,7 +273,7 @@ export async function createServer() {
   async function start() {
     await server.start()
     await usrMgntDB.connect()
-    server.log('info', `server started on ${RESOURCES_HOST}:${RESOURCES_PORT}`)
+    server.log('info', `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`)
   }
 
   return { server, start, stop }

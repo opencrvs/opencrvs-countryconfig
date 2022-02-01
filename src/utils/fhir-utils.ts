@@ -13,7 +13,7 @@
 import fetch from 'node-fetch'
 export const CHILD_CODE = 'child-details'
 export const DECEASED_CODE = 'deceased-details'
-import { FHIR_URL } from '@resources/constants'
+import { FHIR_URL } from '@countryconfig/constants'
 
 export const OPENCRVS_SPECIFICATION_URL = 'http://opencrvs.org/specs/'
 export enum EVENT_TYPE {

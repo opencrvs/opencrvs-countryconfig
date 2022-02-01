@@ -13,11 +13,11 @@ import {
   fetchAndComposeLocations,
   getLocationPartOfIds,
   generateLocationResource
-} from '@resources/farajaland/features/administrative/scripts/service'
+} from '@countryconfig/farajaland/features/administrative/scripts/service'
 import chalk from 'chalk'
 import * as fs from 'fs'
-import { ADMIN_STRUCTURE_SOURCE } from '@resources/farajaland/constants'
-import { ILocation } from '@resources/farajaland/features/utils'
+import { ADMIN_STRUCTURE_SOURCE } from '@countryconfig/farajaland/constants'
+import { ILocation } from '@countryconfig/farajaland/features/utils'
 
 export default async function importAdminStructure() {
   let provinces: fhir.Location[]

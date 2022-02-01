@@ -10,7 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import * as fs from 'fs'
-import { FACILITIES_SOURCE } from '@resources/farajaland/constants'
+import { FACILITIES_SOURCE } from '@countryconfig/farajaland/constants'
 import * as csv2json from 'csv2json'
 const crvsOfficeSourceJSON = `${FACILITIES_SOURCE}generated/crvs-facilities.json`
 const healthFacilitySourceJSON = `${FACILITIES_SOURCE}generated/health-facilities.json`
