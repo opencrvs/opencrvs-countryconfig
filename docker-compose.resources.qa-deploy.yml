@@ -11,18 +11,7 @@ version: "3.3"
 
 services:
   resources:
-    image: opencrvs/ocrvs-zambia:${COUNTRY_CONFIG_VERSION:-latest}
+    image: opencrvs/ocrvs-farajaland:${COUNTRY_CONFIG_VERSION:-latest}
     restart: unless-stopped
-    secrets:
-      - cms-api-key
-      - contentful-space-id
     environment:
-      - CMS=contentful
-      - CMS_API_KEY=/run/secrets/cms-api-key
-      - CONTENTFUL_SPACE_ID=/run/secrets/contentful-space-id
-
-secrets:
-  contentful-space-id:
-    external: true
-  cms-api-key:
-    external: true
+      - CMS=

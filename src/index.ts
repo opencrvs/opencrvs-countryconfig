@@ -26,16 +26,16 @@ import {
   AUTH_URL,
   COUNTRY_WIDE_CRUDE_DEATH_RATE
 } from '@resources/constants'
-import { locationsHandler as zmbLocationsHandler } from '@resources/zmb/features/administrative/handler'
-import { facilitiesHandler as zmbFacilitiesHandler } from '@resources/zmb/features/facilities/handler'
-import { definitionsHandler as zmbDefinitionsHandler } from '@resources/zmb/features/definitions/handler'
-import { assetHandler as zmbAssetHandler } from '@resources/zmb/features/assets/handler'
+import { locationsHandler as farajalandLocationsHandler } from '@resources/farajaland/features/administrative/handler'
+import { facilitiesHandler as farajalandFacilitiesHandler } from '@resources/farajaland/features/facilities/handler'
+import { definitionsHandler as farajalandDefinitionsHandler } from '@resources/farajaland/features/definitions/handler'
+import { assetHandler as farajalandAssetHandler } from '@resources/farajaland/features/assets/handler'
 import {
-  generatorHandler as zmbGeneratorHandler,
-  requestSchema as zmbGeneratorRequestSchema,
-  responseSchema as zmbGeneratorResponseSchema
-} from '@resources/zmb/features/generate/handler'
-import { zmbValidateRegistrationHandler } from '@resources/zmb/features/validate/handler'
+  generatorHandler as farajalandGeneratorHandler,
+  requestSchema as farajalandGeneratorRequestSchema,
+  responseSchema as farajalandGeneratorResponseSchema
+} from '@resources/farajaland/features/generate/handler'
+import { farajalandValidateRegistrationHandler } from '@resources/farajaland/features/validate/handler'
 
 import { join } from 'path'
 
@@ -134,8 +134,8 @@ export async function createServer() {
     handler: (request, h) => {
       const file =
         process.env.NODE_ENV === 'production'
-          ? './zmb/config/client-config.prod.js'
-          : './zmb/config/client-config.js'
+          ? './farajaland/config/client-config.prod.js'
+          : './farajaland/config/client-config.js'
       // @ts-ignore
       return h.file(join(__dirname, file))
     },
@@ -152,8 +152,8 @@ export async function createServer() {
     handler: (request, h) => {
       const file =
         process.env.NODE_ENV === 'production'
-          ? './zmb/config/login-config.prod.js'
-          : './zmb/config/login-config.js'
+          ? './farajaland/config/login-config.prod.js'
+          : './farajaland/config/login-config.js'
       // @ts-ignore
       return h.file(join(__dirname, file))
     },
@@ -167,27 +167,27 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/locations',
-    handler: zmbLocationsHandler,
+    handler: farajalandLocationsHandler,
     options: {
       tags: ['api'],
-      description: 'Returns Zambia locations.json'
+      description: 'Returns Farajaland locations.json'
     }
   })
 
   server.route({
     method: 'GET',
     path: '/facilities',
-    handler: zmbFacilitiesHandler,
+    handler: farajalandFacilitiesHandler,
     options: {
       tags: ['api'],
-      description: 'Returns Zambia facilities.json'
+      description: 'Returns Farajaland facilities.json'
     }
   })
 
   server.route({
     method: 'GET',
     path: '/assets/{file}',
-    handler: zmbAssetHandler,
+    handler: farajalandAssetHandler,
     options: {
       auth: false,
       tags: ['api'],
@@ -198,7 +198,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/definitions/{application}',
-    handler: zmbDefinitionsHandler,
+    handler: farajalandDefinitionsHandler,
     options: {
       tags: ['api'],
       description:
@@ -209,7 +209,7 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/validate/registration',
-    handler: zmbValidateRegistrationHandler,
+    handler: farajalandValidateRegistrationHandler,
     options: {
       tags: ['api'],
       description:
@@ -220,14 +220,14 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/generate/{type}',
-    handler: zmbGeneratorHandler,
+    handler: farajalandGeneratorHandler,
     options: {
       tags: ['api'],
       validate: {
-        payload: zmbGeneratorRequestSchema
+        payload: farajalandGeneratorRequestSchema
       },
       response: {
-        schema: zmbGeneratorResponseSchema
+        schema: farajalandGeneratorResponseSchema
       },
       description:
         'Generates registration numbers based on country specific implementation logic'
