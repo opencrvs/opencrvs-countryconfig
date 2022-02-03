@@ -18,7 +18,8 @@
     "db:backup:create": "DEV=true ./backup-metadata.sh",
     "db:backup:restore": "DEV=true ./restore-metadata.sh",
     "db:clear:all": "DEV=true ./clear-all-data.sh",
-    "contentful:prepare:import": "ts-node -r tsconfig-paths/register src/farajaland/features/languages/scripts/contentfulImport.ts"
+    "contentful:prepare:import": "ts-node -r tsconfig-paths/register src/farajaland/features/languages/scripts/contentfulImport.ts",
+    "compose:push:version": "export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset VERSION"
   },
   "devDependencies": {
     "@types/hapi__inert": "^5.2.3",

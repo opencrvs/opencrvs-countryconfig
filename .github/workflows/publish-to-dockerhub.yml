@@ -19,4 +19,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Push image
         run: |
-          ./build-and-push.sh
+          export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION

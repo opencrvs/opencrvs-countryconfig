@@ -15,7 +15,7 @@ services:
       - LANGUAGES=en
 
   countryconfig:
-    image: opencrvs/ocrvs-farajaland:latest
+    image: opencrvs/ocrvs-farajaland:${COUNTRY_CONFIG_VERSION:-latest}
     restart: unless-stopped
     secrets:
       - jwt-public-key.{{ts}}
