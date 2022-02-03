@@ -10,15 +10,8 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 window.config = {
-  API_GATEWAY_URL: 'http://localhost:7070/',
-  BACKGROUND_SYNC_BROADCAST_CHANNEL: 'backgroundSynBroadCastChannel',
-  COUNTRY: 'zmb',
-  COUNTRY_LOGO_FILE: 'logo.png',
-  COUNTRY_LOGO_RENDER_WIDTH: 104, // in px 
-  COUNTRY_LOGO_RENDER_HEIGHT: 104, // in px
-  DESKTOP_TIME_OUT_MILLISECONDS: 900000, // 15 mins
-  HEALTH_FACILITY_FILTER: 'DISTRICT',
-  LANGUAGES: 'en',
+  API_GATEWAY_URL: 'http://localhost:7070/',  
+  CONFIG_API_URL: 'http://localhost:2021',
   LOGIN_URL: 'http://localhost:3020',
   AUTH_URL: 'http://localhost:4040',
   RESOURCES_URL: 'http://localhost:3040',
@@ -44,19 +37,11 @@ window.config = {
   },
   SENTRY: 'https://f892d643aab642108f44e2d1795706bc@sentry.io/1774604',
   LOGROCKET: 'opencrvs-foundation/opencrvs-zambia',
-  PHONE_NUMBER_PATTERN: {
-    pattern: /^0(7|9)[0-9]{1}[0-9]{7}$/,
-    example: '0970545855',
-    start: '0[7|9]',
-    num: '10',
-    mask: { // ex: +683*****23   
-      startForm: 4,  
-      endBefore: 2
-    }
-  },
   NID_NUMBER_PATTERN: {
     pattern: /^[0-9]{9}$/,
     example: '4837281940',
     num: '9'
-  }
+  },
+  COUNTRY: 'zmb',
+  LANGUAGES: 'en'
 }
