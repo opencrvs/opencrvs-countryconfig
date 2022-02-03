@@ -75,8 +75,8 @@ Cypress.Commands.add('login', (userType, options = {}) => {
           cy.visit(`${Cypress.env('CLIENT_URL')}?token=${body.token}`)
         })
     })
-  //cy.clock()  
-  // Wait for app to load so token can be stored
+  
+    // Wait for app to load so token can be stored
   cy.get('#createPinBtn')
 })
 
@@ -95,12 +95,12 @@ Cypress.Commands.add('logout', () => {
 })
 
 Cypress.Commands.add('goToNextFormSection', () => {
-  //cy.reload()
+  
   cy.clock()
   cy.tick(10000) // Clear debounce wait from form
- // cy.reload()
+ 
 cy.get('#next_section').click()
-  //cy.contains('Continue').click({force:true})
+  
 })
 
 Cypress.Commands.add('createPin', () => {
@@ -116,16 +116,31 @@ Cypress.Commands.add('createPin', () => {
 })
 
 Cypress.Commands.add('submitApplication', () => {
+  var compositionId;
+  cy.intercept('/graphql', (req) => {  
+    req.on('response', (res) => {
+      
+      compositionId = res.body?.data?.createBirthRegistration?.compositionId
+
+      expect(compositionId).to.not.equal('empty')
+    })
+  }).as('exam')
+  
+
   // PREVIEW
   cy.get('#submit_form').click()
   // MODAL
   cy.get('#submit_confirm').click()
   
   cy.log('Waiting for application to sync...')
-  cy.wait(10000)
+  cy.wait('@exam')
   cy.clock()
   cy.tick(40000)
-  //cy.get('#row_0 #submitted0').should('exist')
+  console.log(compositionId)
+  
+  // TODO: This Command should be added in the next sprint though it's not working presently
+ // cy.get('#row_0 #submitted0').should('exist') 
+    
 })
 
 Cypress.Commands.add('logOut',()=>{
@@ -142,8 +157,6 @@ Cypress.Commands.add('printApplication',() => {
   cy.get('#confirm_form').click()
   cy.get('#verifyPositive').click()
   cy.get('#confirm-print').click()
-  //cy.get('#print-certificate').should('have.attr','Print')
- // cy.get('#print-certificate').click()
   cy.get('.react-pdf__message react-pdf__message--no-data').should(
     'not.exist')
     
@@ -163,8 +176,9 @@ Cypress.Commands.add('rejectApplication', () => {
   // PREVIEW
   cy.get('#submit_reject_form').click()
   cy.log('Waiting for application to sync...')
+  cy.clock()
   cy.tick(20000)
-  cy.get('#Spinner').should('not.exist')
+  cy.get('#Spinner').should('exist')
 })
 
 Cypress.Commands.add('registerApplication', () => {
@@ -173,8 +187,8 @@ Cypress.Commands.add('registerApplication', () => {
   cy.get('#submit_confirm').click()
   cy.log('Waiting for application to sync...')
   cy.tick(20000)
-  // cy.get('#Spinner').should('not.exist')
-  // cy.get('#tab_review').contains('Ready for review (0)')
+  cy.get('#Spinner').should('exist')
+  cy.get('#tab_review').contains('Ready for review (3)')
 })
 
 Cypress.Commands.add('verifyLandingPageVisible', () => {
@@ -187,13 +201,13 @@ Cypress.Commands.add('initializeFakeTimers', () => {
 Cypress.Commands.add('downloadFirstApplication', () => {
   cy.clock()
   cy.tick(10000)
- // cy.get('#ListItemAction-0-icon').should('exist')
+  cy.get('#ListItemAction-0-icon').should('exist')
   cy.get('#ListItemAction-0-icon')
     .first()
     .click()
   cy.log('Waiting for application to sync...')
   cy.tick(20000)
-  // cy.get('#action-loading-ListItemAction-0').should('not.exist')
+  cy.get('#action-loading-ListItemAction-0').should('not.exist')
 })
 
 export function getRandomNumbers(stringLength) {
@@ -226,9 +240,9 @@ Cypress.Commands.add(
 
     // SELECT APPLICANT
     cy.get('#applicant_MOTHER').click()
-    //cy.get('#applicant_FATHER').click()
+   
     cy.wait(1000)
-    //cy.get('[for="applicant_FATHER"]').click({force:true})
+   
 
     cy.goToNextFormSection()
     cy.clock()
@@ -293,8 +307,7 @@ Cypress.Commands.add(
     cy.submitApplication()
 
     // LOG OUT
-    // cy.clock()
-    // cy.tick(40000)
+   
     cy.wait(5000)
     cy.get('#ProfileMenuToggleButton').click()
     cy.get('#ProfileMenuItem1').click()
@@ -317,7 +330,7 @@ Cypress.Commands.add(
     // LOG OUT
     
     cy.get('#ProfileMenuToggleButton').click()
-   // cy.get('svg > circle').click()
+   
     cy.get('#ProfileMenuItem1').click()
   }
 )
@@ -349,7 +362,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.selectOption('#gender', 'Male', 'Male')
   cy.get('#childBirthDate-dd').type('11')
   cy.get('#childBirthDate-mm').type('11')
-  cy.get('#childBirthDate-yyyy').type('1997') //showing invalid
+  cy.get('#childBirthDate-yyyy').type('1997') 
   cy.selectOption('#attendantAtBirth', 'Physician', 'Physician')
   cy.selectOption('#birthType', 'Single', 'Single')
   cy.get('#multipleBirth').type('1')
@@ -453,7 +466,7 @@ Cypress.Commands.add(
     cy.registerApplication()
   }
 )
-//edited by me
+
 Cypress.Commands.add(
   'registerDownloadLand',() =>{
     // LOGIN AS LOCAL REGISTRAR
@@ -480,6 +493,7 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
+ 
   // LOGIN
   cy.login('fieldWorker')
   cy.createPin()
@@ -562,7 +576,7 @@ Cypress.Commands.add('declareDeathApplicationWithMaximumInput', () => {
   cy.enterDeathMaximumInput()
   // PREVIEW
   cy.submitApplication()
-  //cy.get('#row_0 #submitted0').should('exist')
+  cy.wait(2000)
 
   // LOG OUT
   cy.get('#ProfileMenuToggleButton').click()
@@ -576,23 +590,11 @@ Cypress.Commands.add('registerDeathApplicationWithMinimumInput', () => {
 })
 
 Cypress.Commands.add('registerDeathApplicationWithMaximumInput', () => {
-  //cy.initializeFakeTimers()
   cy.declareDeathApplicationWithMaximumInput()
-
-  // // LOGIN AS LOCAL REGISTRAR
-  // cy.login('registrar')
-  // // CREATE PIN
-  // cy.createPin()
-  // // LANDING PAGE
-  // cy.downloadFirstApplication()
-  // cy.get('#ListItemAction-0-Review').should('exist')
-  // cy.get('#ListItemAction-0-Review')
-  //   .first()
-  //   .click()
-  // cy.registerApplication()
 })
 
 Cypress.Commands.add('enterDeathMaximumInput', () => {
+  cy.initializeFakeTimers()
   // APPLICATION FORM
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_death_event').click()

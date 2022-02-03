@@ -50,22 +50,7 @@ context('Reports Integration Test', () => {
     cy.wait(100)
     cy.tick(20000)
 
-   //  CHECK GENDER BASIS METRICS TOTAL
-    // cy.get('#listTable-genderBasisMetrics-footer')
-    //   .children()
-    //   .last()
-    //   .contains(6)
+    
 
-    //  CHECK TIMEFRAMES TOTAL
-    // cy.get('#listTable-timeFrames-footer')
-    //   .children()
-    //   .last()
-    //   .contains(6)
-
-    //  CHECK PAYMENTS TOTAL
-    // cy.get('#listTable-payments-footer')
-    //   .children()
-    //   .last()
-    //   .contains(0)
   })
 })

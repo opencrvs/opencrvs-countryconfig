@@ -20,7 +20,7 @@ context('Search Integration Test', () => {
     
 
     // DECLARE APPLICATION AS FIELD AGENT
-   cy.declareApplicationWithMinimumInput('Hello', 'Gates')
+   cy.declareApplicationWithMinimumInput('Bill', 'Gates')
   
   })
 

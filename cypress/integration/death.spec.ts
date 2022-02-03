@@ -14,11 +14,22 @@
 context('Death Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
-    //cy.initializeFakeTimers()
-  })
+  }) 
+
+  it('Tests registration by registrar using maximum input', () => {
+    cy.login('registrar')
+    // CREATE PIN
+    cy.createPin()
+    cy.verifyLandingPageVisible()
+    // APPLICATION FORM
+    cy.initializeFakeTimers()
+    cy.enterDeathMaximumInput()
+
+    cy.registerApplication()
+     
+  }) 
 
   it('Tests from application to registration using minimum input', () => {
-    
     cy.registerDeathApplicationWithMinimumInput()
   })
 
@@ -40,9 +51,8 @@ context('Death Integration Test', () => {
     // LOG OUT
     cy.logOut()
   }) 
-
+  
   it('Tests from application to registration using maximum input', () => {
-    //cy.initializeFakeTimers()
     cy.registerDeathApplicationWithMaximumInput()
   })
 
@@ -67,9 +77,9 @@ context('Death Integration Test', () => {
   
 
   it('Tests from application to rejection using minimum input', () => {
-    //cy.initializeFakeTimers()
     cy.declareDeathApplicationWithMinimumInput()
   })
+
   it('Login As Register & Reject Minimum input Death Application',() => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
@@ -83,22 +93,19 @@ context('Death Integration Test', () => {
 
     //Reject Application
     cy.get('#rejectApplicationBtn').click()
-    //cy.wait('#rejectionReasonmissing_supporting_doc').click()
-    cy.get(':nth-child(3) > .sc-hYRTcE').click()
+     cy.get(':nth-child(3) > .sc-hYRTcE').click()
     cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
     cy.get('#submit_reject_form').click()
     cy.wait(2000)
-    
     //logout
     cy.logOut()
-  })
+  }) 
   
 
   it('Tests from application to rejection using maximum input', () => {
-  
+
     cy.declareDeathApplicationWithMaximumInput()
-    
-  })
+  }) 
 
   it('Login As Register & Reject Maximum input Death Application',() => {
     // LOGIN AS LOCAL REGISTRAR
@@ -113,7 +120,6 @@ context('Death Integration Test', () => {
 
     //Reject Application
     cy.get('#rejectApplicationBtn').click()
-    //cy.wait('#rejectionReasonmissing_supporting_doc').click()
     cy.get(':nth-child(3) > .sc-hYRTcE').click()
     cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
     cy.get('#submit_reject_form').click()
@@ -121,22 +127,8 @@ context('Death Integration Test', () => {
     
     //logout
     cy.logOut()
-  })
-
-  it('Tests registration by registrar using maximum input', () => {
-    // Fix time to 2019-11-12
-    //cy.clock(1573557567230)
-    cy.login('registrar')
-    // CREATE PIN
-    cy.createPin()
-    cy.verifyLandingPageVisible()
-    // APPLICATION FORM
-    cy.initializeFakeTimers()
-    cy.enterDeathMaximumInput()
-
-    cy.registerApplication()
-     //logout
-     cy.logOut()
   }) 
+  
+  
 
 })

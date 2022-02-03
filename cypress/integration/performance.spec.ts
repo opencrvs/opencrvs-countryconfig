@@ -13,18 +13,14 @@
 
 context('Performance view', () => {
   beforeEach(() => {
-    //cy.initializeFakeTimers()
     indexedDB.deleteDatabase('OpenCRVS')
-   //cy.registerApplicationWithMinimumInput('Yeasin', 'Hossein')
   })
   it('Tests from application to certification using minimum input', () => {
-    //cy.initializeFakeTimers()
-    //cy.declareApplicationWithMinimumInput('Arifuz', 'Antor')
+    cy.declareApplicationWithMinimumInput('Arifuz', 'Antor')
     cy.wait(1000)
-   
   })
  
-  it('Login as registrar to register & Observe Performance',() => {
+  it('Login as registrar to register & Downloads CSV data to observe Performance',() => {
     
     cy.login('registrar')
     // CREATE PIN
@@ -39,22 +35,14 @@ context('Performance view', () => {
     cy.get('#tab_review > .sc-jSFkmK').click()
     cy.wait(1000)
     cy.get('#tab_print > .sc-jSFkmK').click()
-
     //menu performance
-
     cy.get('#menu-performance > .sc-gKAblj')
-
     cy.get('#menu-performance').click()
     cy.get('#operational-select').click()
     cy.get('#react-select-2-option-1').click()
     cy.get('#row_0 button')
       .eq(1)
       .click()
-    //cy.wait('@getExport')
-    //cy.get('#row_0 button')
-      // .eq(3)
-      // .click()
-    //cy.wait('@getExport')
     cy.get('#report-lists > :nth-child(1) > .sc-yECHO > .sc-enTpxJ > .sc-iJKXaU > #row_0 > .ryUDf > .sc-eCApGN > .sc-gKAblj').click()
     
   }) 

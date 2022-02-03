@@ -27,7 +27,7 @@ context('Menu', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it('Opens menu and selects Bengali', () => {
+  it('Opens menu and shows the menu page', () => {
     cy.login('fieldWorker')
     cy.createPin()
 

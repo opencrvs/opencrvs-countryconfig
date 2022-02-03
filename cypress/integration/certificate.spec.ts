@@ -19,31 +19,31 @@ context('Certificate Integration Test', () => {
 
   it('Tests from application to certification using minimum input', () => {
     
-   cy.declareApplicationWithMinimumInput('sakib', 'Al-Hasan')
-   cy.wait(1000)
+    cy.declareApplicationWithMinimumInput('Sakib', 'Al-Hasan')
   
   })
 
-  it('Register Minimum input application & Print it out',() => {
+  it('Registers Minimum input application',() => {
    
      cy.login('registrar')
      // CREATE PIN
      cy.createPin()
-     
+     cy.get('#tab_review').click()
      cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
      cy.get('#ListItemAction-0-Review').click()
-     cy.wait(1000)
+
+     //register 
      cy.get('#registerApplicationBtn').click()
      cy.get('#submit_confirm').click()
-     cy.wait(2000)
-     //cy.reload()
- 
-     cy.printApplication() 
+     cy.wait(5000)
+     cy.reload()
+  })
 
-
-     
-   })
-
-
-
+  it('Prints minimum input application',() => {
+   
+    cy.login('registrar')
+    // CREATE PIN
+    cy.createPin()
+    cy.printApplication() 
+  })
 })
