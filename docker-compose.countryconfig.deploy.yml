@@ -14,7 +14,7 @@ services:
     environment:
       - LANGUAGES=en
 
-  resources:
+  countryconfig:
     image: opencrvs/ocrvs-farajaland:${COUNTRY_CONFIG_VERSION:-latest}
     restart: unless-stopped
     secrets:
