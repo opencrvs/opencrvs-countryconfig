@@ -273,8 +273,8 @@ Cypress.Commands.add(
     cy.get('#multipleBirth').type('1')
     cy.selectOption('#placeOfBirth', 'Private_Home', 'Private Home')
     cy.selectOption('#country', 'Zambia', 'Zambia')
-    cy.selectOption('#state', 'Luapula Province', 'Luapula Province')
-    cy.selectOption('#district', 'Chembe District', 'Chembe District')
+    cy.selectOption('#state', 'Luapula', 'Luapula')
+    cy.selectOption('#district', 'Chembe', 'Chembe')
     cy.goToNextFormSection()
 
     // MOTHER DETAILS
@@ -284,17 +284,17 @@ Cypress.Commands.add(
     cy.selectOption('#countryPlaceOfHeritage', 'Zambia', 'Zambia')
     cy.selectOption(
       '#statePlaceOfHeritage',
-      'Luapula Province',
-      'Luapula Province'
+      'Luapula',
+      'Luapula'
     )
     cy.selectOption(
       '#districtPlaceOfHeritage',
-      'Chembe District',
-      'Chembe District'
+      'Chembe',
+      'Chembe'
     )
     cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
-    cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
-    cy.selectOption('#districtPermanent', 'Chembe District', 'Chembe District')
+    cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
+    cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
     cy.goToNextFormSection()
 
     // FATHER DETAILS
@@ -369,8 +369,8 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.get('#weightAtBirth').type('1.5')
   cy.selectOption('#placeOfBirth', 'Private_Home', 'Private Home')
   cy.selectOption('#country', 'Zambia', 'Zambia')
-  cy.selectOption('#state', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#district', 'Chembe District', 'Chembe District')
+  cy.selectOption('#state', 'Luapula', 'Luapula')
+  cy.selectOption('#district', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOption').type('My city')
   cy.get('#addressLine3CityOption').type('My residential area')
   cy.get('#addressLine2CityOption').type('My street')
@@ -393,27 +393,27 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.selectOption('#countryPlaceOfHeritage', 'Zambia', 'Zambia')
   cy.selectOption(
     '#statePlaceOfHeritage',
-    'Luapula Province',
-    'Luapula Province'
+    'Luapula',
+    'Luapula'
   )
   cy.selectOption(
     '#districtPlaceOfHeritage',
-    'Chembe District',
-    'Chembe District'
+    'Chembe',
+    'Chembe'
   )
   cy.get('#addressChiefPlaceOfHeritage').type('My chief')
   cy.get('#addressLine1PlaceOfHeritage').type('My village')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
-  cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#districtPermanent', 'Chembe District', 'Chembe District')
+  cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
+  cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOptionPermanent').type('My city')
   cy.get('#addressLine3CityOptionPermanent').type('My residential area')
   cy.get('#addressLine2CityOptionPermanent').type('My street')
   cy.get('#numberOptionPermanent').type('40')
   cy.get('#currentAddressSameAsPermanent_false').click()
   cy.selectOption('#country', 'Zambia', 'Zambia')
-  cy.selectOption('#state', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#district', 'Chembe District', 'Chembe District')
+  cy.selectOption('#state', 'Luapula', 'Luapula')
+  cy.selectOption('#district', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOption').type('My city')
   cy.get('#addressLine3CityOption').type('My residential area')
   cy.get('#addressLine2CityOption').type('My street')
@@ -434,8 +434,8 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.selectOption('#educationalAttainment', 'PRIMARY_ISCED_1', 'Primary')
   cy.get('#permanentAddressSameAsMother_false').click()
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
-  cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#districtPermanent', 'Chembe District', 'Chembe District')
+  cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
+  cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOptionPermanent').type('My city')
   cy.get('#addressLine3CityOptionPermanent').type('My residential area')
   cy.get('#addressLine2CityOptionPermanent').type('My street')
@@ -524,8 +524,8 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.get('#birthDate-yyyy').type('1988')
   cy.selectOption('#gender', 'Male', 'Male')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
-  cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#districtPermanent', 'Chembe District', 'Chembe District')
+  cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
+  cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.goToNextFormSection()
   // EVENT DETAILS
   cy.get('#deathDate-dd').type('18')
@@ -546,8 +546,8 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
-  cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#districtPermanent', 'Chembe District', 'Chembe District')
+  cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
+  cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
 
   cy.goToNextFormSection()
 
@@ -629,8 +629,8 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.selectOption('#maritalStatus', 'Married', 'Married')
   cy.get('#occupation').type('Lawyer')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
-  cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#districtPermanent', 'Chembe District', 'Chembe District')
+  cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
+  cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOptionPermanent').type('My city')
   cy.get('#addressLine3CityOptionPermanent').type('My residential area')
   cy.get('#addressLine2CityOptionPermanent').type('My street')
@@ -646,8 +646,8 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.get('#deathPlaceAddress_OTHER').click()
   cy.goToNextFormSection()
   cy.selectOption('#country', 'Zambia', 'Zambia')
-  cy.selectOption('#state', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#district', 'Chembe District', 'Chembe District')
+  cy.selectOption('#state', 'Luapula', 'Luapula')
+  cy.selectOption('#district', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOption').type('My city')
   cy.get('#addressLine3CityOption').type('My residential area')
   cy.get('#addressLine2CityOption').type('My street')
@@ -664,8 +664,8 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.get('#firstNamesEng').type('Anne')
   cy.get('#familyNameEng').type('Salim')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
-  cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#districtPermanent', 'Chembe District', 'Chembe District')
+  cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
+  cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.goToNextFormSection()
   // FATHER DETAILS
   cy.get('#fatherFirstNamesEng').type('Mokhtar')
@@ -720,8 +720,8 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#weightAtBirth').type('1.5')
   cy.selectOption('#placeOfBirth', 'Private_Home', 'Private Home')
   cy.selectOption('#country', 'Zambia', 'Zambia')
-  cy.selectOption('#state', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#district', 'Chembe District', 'Chembe District')
+  cy.selectOption('#state', 'Luapula', 'Luapula')
+  cy.selectOption('#district', 'Chembe', 'Chembe')
 
   cy.get('#addressLine4CityOption').type('My city')
   cy.get('#addressLine3CityOption').type('My residential area')
@@ -735,8 +735,8 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
   cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
-  cy.selectOption('#statePermanent', 'Luapula Province', 'Luapula Province')
-  cy.selectOption('#districtPermanent', 'Chembe District', 'Chembe District')
+  cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
+  cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOptionPermanent').type('My city')
   cy.get('#addressLine3CityOptionPermanent').type('My residential area')
   cy.get('#addressLine2CityOptionPermanent').type('My street')
