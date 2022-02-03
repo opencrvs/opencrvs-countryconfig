@@ -10,10 +10,7 @@
 version: "3.3"
 
 services:
-<<<<<<< HEAD
+
   countryconfig:
-=======
-  resources:
->>>>>>> bf75f0786057453d9f2e44760b7ab6e15faa5008
     image: opencrvs/ocrvs-farajaland:${COUNTRY_CONFIG_VERSION:-latest}
     build: .
