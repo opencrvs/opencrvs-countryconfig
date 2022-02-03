@@ -10,15 +10,15 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import * as Hapi from '@hapi/hapi'
-import { getForms, IForms } from '@resources/farajaland/features/forms/service'
+import { getForms, IForms } from '@countryconfig/farajaland/features/forms/service'
 import {
   getLanguages,
   ILanguage
-} from '@resources/farajaland/features/languages/service/service'
+} from '@countryconfig/farajaland/features/languages/service/service'
 import {
   getTemplates,
   ITemplates
-} from '@resources/farajaland/features/templates/service'
+} from '@countryconfig/farajaland/features/templates/service'
 
 interface IDefinitionsResponse {
   forms: IForms

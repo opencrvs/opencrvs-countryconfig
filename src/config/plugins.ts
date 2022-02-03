@@ -13,8 +13,8 @@ import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
 import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
-import { SENTRY_DSN } from '@resources/constants'
-import { logger } from '@resources/logger'
+import { SENTRY_DSN } from '@countryconfig/constants'
+import { logger } from '@countryconfig/logger'
 
 export default function getPlugins() {
   const plugins: any[] = [

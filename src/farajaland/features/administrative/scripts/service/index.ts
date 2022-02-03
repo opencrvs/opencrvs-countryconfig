@@ -14,8 +14,8 @@ import {
   ILocation,
   ICSVLocation,
   titleCase
-} from '@resources/farajaland/features/utils'
-import { ORG_URL } from '@resources/constants'
+} from '@countryconfig/farajaland/features/utils'
+import { ORG_URL } from '@countryconfig/constants'
 export const JURISDICTION_TYPE_IDENTIFIER = `${ORG_URL}/specs/id/jurisdiction-type`
 
 const composeFhirLocation = (

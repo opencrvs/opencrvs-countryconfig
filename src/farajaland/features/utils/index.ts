@@ -10,7 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import fetch from 'node-fetch'
-import { FHIR_URL } from '@resources/constants'
+import { FHIR_URL } from '@countryconfig/constants'
 
 export const GENERATE_TYPE_RN = 'registrationNumber'
 

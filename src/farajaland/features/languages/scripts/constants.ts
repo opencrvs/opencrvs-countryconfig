@@ -10,7 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { SupportedLocaleConfig } from '@resources/farajaland/features/languages/scripts/contentfulImport'
+import { SupportedLocaleConfig } from '@countryconfig/farajaland/features/languages/scripts/contentfulImport'
 
 // Create a spcae on contentful and create the locales you require, tnen export a template using the contentful cli like this:
 

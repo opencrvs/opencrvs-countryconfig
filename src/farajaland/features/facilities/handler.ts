@@ -13,7 +13,7 @@ import * as Hapi from '@hapi/hapi'
 import {
   ILocationDataResponse,
   getFacilities
-} from '@resources/farajaland/features/facilities/service/service'
+} from '@countryconfig/farajaland/features/facilities/service/service'
 
 export async function facilitiesHandler(
   request: Hapi.Request,

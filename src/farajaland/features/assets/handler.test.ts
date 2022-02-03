@@ -11,7 +11,7 @@
  */
 import { readFileSync } from 'fs'
 import * as jwt from 'jsonwebtoken'
-import { createServer } from '@resources/index'
+import { createServer } from '@countryconfig/index'
 
 describe('assets handler tests', () => {
   let server: any
@@ -24,7 +24,7 @@ describe('assets handler tests', () => {
     const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
-      audience: 'opencrvs:resources-user'
+      audience: 'opencrvs:countryconfig-user'
     })
 
     const res = await server.server.inject({

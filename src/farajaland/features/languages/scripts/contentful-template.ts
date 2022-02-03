@@ -16,7 +16,7 @@ import {
   EditorInterface,
   Entry,
   Locale
-} from '@resources/farajaland/features/languages/scripts/contentfulImport'
+} from '@countryconfig/farajaland/features/languages/scripts/contentfulImport'
 
 export const contentTypeTemplate: ContentType = {
   sys: {

@@ -21,7 +21,7 @@ window.config = {
   LANGUAGES: 'en',
   LOGIN_URL: 'https://login.{{hostname}}',
   AUTH_URL: 'https://auth.{{hostname}}',
-  RESOURCES_URL: 'https://resources.{{hostname}}',
+  COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
   SHOW_FARAJALAND_IN_COUNTRY_LISTS: true,
   CERTIFICATE_PRINT_CHARGE_FREE_PERIOD: 36500, // 100 years =  (100 * 365) days
   CERTIFICATE_PRINT_CHARGE_UP_LIMIT: 36500, // 100 years =  (100 * 365) days

@@ -11,8 +11,8 @@
  */
 import { readFileSync } from 'fs'
 import * as jwt from 'jsonwebtoken'
-import { createServer } from '@resources/index'
-import * as facilitiesService from '@resources/farajaland/features/facilities/service/service'
+import { createServer } from '@countryconfig/index'
+import * as facilitiesService from '@countryconfig/farajaland/features/facilities/service/service'
 
 describe('facilities handler receives a request', () => {
   let server: any
@@ -42,7 +42,7 @@ describe('facilities handler receives a request', () => {
       const token = jwt.sign({}, readFileSync('./test/cert.key'), {
         algorithm: 'RS256',
         issuer: 'opencrvs:auth-service',
-        audience: 'opencrvs:resources-user'
+        audience: 'opencrvs:countryconfig-user'
       })
 
       const res = await server.server.inject({

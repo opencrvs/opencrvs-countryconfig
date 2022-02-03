@@ -11,8 +11,8 @@
  */
 import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
-import { generateRegistrationNumber } from '@resources/farajaland/features/generate/service'
-import { GENERATE_TYPE_RN } from '@resources/farajaland/features/utils'
+import { generateRegistrationNumber } from '@countryconfig/farajaland/features/generate/service'
+import { GENERATE_TYPE_RN } from '@countryconfig/farajaland/features/utils'
 
 export interface IGeneratorHandlerPayload {
   trackingId: string

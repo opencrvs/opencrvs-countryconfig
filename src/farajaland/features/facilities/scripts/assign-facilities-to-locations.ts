@@ -13,14 +13,14 @@ import * as fs from 'fs'
 import {
   FACILITIES_SOURCE,
   ADMIN_STRUCTURE_SOURCE
-} from '@resources/farajaland/constants'
+} from '@countryconfig/farajaland/constants'
 import chalk from 'chalk'
 import { internal } from '@hapi/boom'
 import {
   composeAndSaveFacilities,
   generateLocationResource
-} from '@resources/farajaland/features/facilities/scripts/service'
-import { ILocation } from '@resources/farajaland/features/utils'
+} from '@countryconfig/farajaland/features/facilities/scripts/service'
+import { ILocation } from '@countryconfig/farajaland/features/utils'
 
 const crvsOfficeSourceJSON = `${FACILITIES_SOURCE}generated/crvs-facilities.json`
 const healthFacilitySourceJSON = `${FACILITIES_SOURCE}generated/health-facilities.json`

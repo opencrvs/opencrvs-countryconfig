@@ -10,9 +10,9 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import fetch from 'node-fetch'
-import { generateLocationResource } from '@resources/farajaland/features/facilities/scripts/service'
-import { FHIR_URL } from '@resources/constants'
-import { ILocation } from '@resources/farajaland/features/utils'
+import { generateLocationResource } from '@countryconfig/farajaland/features/facilities/scripts/service'
+import { FHIR_URL } from '@countryconfig/constants'
+import { ILocation } from '@countryconfig/farajaland/features/utils'
 
 export interface ILocationDataResponse {
   data: ILocation[]

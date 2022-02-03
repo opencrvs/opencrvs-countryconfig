@@ -9,12 +9,12 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { MONGO_URL } from '@resources/constants'
+import { MONGO_URL } from '@countryconfig/constants'
 import * as mongoose from 'mongoose'
-import Role from '@resources/farajaland/features/employees/model/role'
+import Role from '@countryconfig/farajaland/features/employees/model/role'
 import User, {
   IUserModel
-} from '@resources/farajaland/features/employees/model/user'
+} from '@countryconfig/farajaland/features/employees/model/user'
 
 function setDemoUser(scopes: string[], environment: string): string[] {
   if (environment === 'development') {

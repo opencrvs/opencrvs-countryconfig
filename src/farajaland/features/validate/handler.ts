@@ -12,8 +12,8 @@
 import * as Hapi from '@hapi/hapi'
 import fetch from 'node-fetch'
 import * as Pino from 'pino'
-import { CONFIRM_REGISTRATION_URL } from '@resources/constants'
-import { createWebHookResponseFromBundle } from '@resources/farajaland/features/validate/service'
+import { CONFIRM_REGISTRATION_URL } from '@countryconfig/constants'
+import { createWebHookResponseFromBundle } from '@countryconfig/farajaland/features/validate/service'
 
 const logger = Pino()
 
