@@ -11,8 +11,8 @@
  */
 import { readFileSync } from 'fs'
 import * as jwt from 'jsonwebtoken'
-import { createServer } from '@resources/index'
-import * as locationsService from '@resources/zmb/features/administrative/service/service'
+import { createServer } from '@countryconfig/index'
+import * as locationsService from '@countryconfig/farajaland/features/administrative/service/service'
 
 describe('Route authorization', () => {
   beforeAll(() => {
@@ -56,7 +56,7 @@ describe('Route authorization', () => {
     const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
-      audience: 'opencrvs:resources-user'
+      audience: 'opencrvs:countryconfig-user'
     })
     const res = await server.server.inject({
       method: 'GET',
@@ -73,7 +73,7 @@ describe('Route authorization', () => {
     const token = jwt.sign({}, readFileSync('./test/cert-invalid.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
-      audience: 'opencrvs:resources-user'
+      audience: 'opencrvs:countryconfig-user'
     })
     const res = await server.server.inject({
       method: 'GET',
@@ -90,7 +90,7 @@ describe('Route authorization', () => {
     const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:auth-service',
-      audience: 'opencrvs:resources-user',
+      audience: 'opencrvs:countryconfig-user',
       expiresIn: '1ms'
     })
 
@@ -113,7 +113,7 @@ describe('Route authorization', () => {
     const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'HS512',
       issuer: 'opencrvs:auth-service',
-      audience: 'opencrvs:resources-user'
+      audience: 'opencrvs:countryconfig-user'
     })
     const res = await server.server.inject({
       method: 'GET',
@@ -149,7 +149,7 @@ describe('Route authorization', () => {
     const token = jwt.sign({}, readFileSync('./test/cert.key'), {
       algorithm: 'RS256',
       issuer: 'opencrvs:NOT_VALID',
-      audience: 'opencrvs:resources-user'
+      audience: 'opencrvs:countryconfig-user'
     })
     const res = await server.server.inject({
       method: 'GET',

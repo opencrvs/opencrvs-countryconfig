@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@resources/*": ["./*"]
+      "@countryconfig/*": ["./*"]
     },
     "target": "es6",
     "module": "commonjs",
