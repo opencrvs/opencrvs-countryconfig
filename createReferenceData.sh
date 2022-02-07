@@ -11,30 +11,23 @@
 
 if [ -z "$1" ]
   then
-    echo 'Error: Argument for test user password is required in position 1.'
-    echo 'Usage: db:populate:zmb {Test user password} {OpenCRVS API user password}'
-    echo "Script must receive a parameter of HRIS token"
+    echo 'Error: Argument for the test users password for use in development only is required in position 1.'
+    echo 'Error: Argument for environment code "DEV" or "PRODUCTION" is required in position 2.'
+    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "DEV" or "PRODUCTION"} '
     exit 1
 fi
 
 if [ -z "$2" ]
   then
-    echo 'Error: Argument for OpenCRVS API user password is required in position 2.'
-    echo 'Usage: db:populate:zmb {Test user password} {OpenCRVS API user password}'
-    echo "Script must receive a parameter of HRIS token"
+    echo 'Error: Argument for environment code "DEV" or "PRODUCTION" is required in position 2.'
+    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "DEV" or "PRODUCTION"} '
     exit 1
 fi
 
 ## Clear existing application data
 
-if [ "$DEV" = "true" ]; then
-  HOST=mongo1
-  NETWORK=opencrvs_default
-  echo "Working in DEV mode"
-else
-  HOST=rs0/mongo1,mongo2,mongo3
-  NETWORK=opencrvs_overlay_net
-fi
+HOST=mongo1
+NETWORK=opencrvs_default
 
 docker run --rm --network=$NETWORK mongo:3.6 mongo hearth-dev --host $HOST --eval "db.dropDatabase()"
 
@@ -47,9 +40,9 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 
 ## Populate new application data
 
-ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/prepare-locations.ts
-ts-node -r tsconfig-paths/register src/zmb/features/administrative/scripts/assign-admin-structure-to-locations.ts
-ts-node -r tsconfig-paths/register src/zmb/features/facilities/scripts/prepare-source-facilities.ts
-ts-node -r tsconfig-paths/register src/zmb/features/facilities/scripts/assign-facilities-to-locations.ts
-ts-node -r tsconfig-paths/register src/zmb/features/employees/scripts/prepare-source-employees.ts
-ts-node -r tsconfig-paths/register src/zmb/features/employees/scripts/assign-employees-to-practitioners.ts -- $1 $2
+ts-node -r tsconfig-paths/register src/farajaland/features/administrative/scripts/prepare-locations.ts
+ts-node -r tsconfig-paths/register src/farajaland/features/administrative/scripts/assign-admin-structure-to-locations.ts
+ts-node -r tsconfig-paths/register src/farajaland/features/facilities/scripts/prepare-source-facilities.ts
+ts-node -r tsconfig-paths/register src/farajaland/features/facilities/scripts/assign-facilities-to-locations.ts
+ts-node -r tsconfig-paths/register src/farajaland/features/employees/scripts/prepare-source-employees.ts
+ts-node -r tsconfig-paths/register src/farajaland/features/employees/scripts/assign-employees-to-practitioners.ts -- $1 $2

@@ -18,26 +18,18 @@ coverage:
         paths:
           - src/utils
         threshold: 0.5
-      zmb:
+      farajaland:
         paths:
-          - src/zmb
-        threshold: 0.5
-      chatbot-mediator:
-        paths:
-          - src/zmb/features/mediators/ocrvs-chatbot
-        threshold: 0.5
-      chatbot:
-        paths:
-          - src/zmb/chatbot
+          - src/farajaland
         threshold: 0.5
 
 ignore:
-  - "src/zmb/src/config"
-  - "src/zmb/src/features/administrative/generated"
-  - "src/zmb/src/features/administrative/scripts"
-  - "src/zmb/src/features/administrative/source"
-  - "src/zmb/src/features/employees"
-  - "src/zmb/src/features/facilities/generated"
-  - "src/zmb/src/features/facilities/scripts"
-  - "src/zmb/src/features/facilities/source"
-  - "src/zmb/src/features/languages/generated"
+  - 'src/farajaland/config'
+  - 'src/farajaland/features/administrative/generated'
+  - 'src/farajaland/features/administrative/scripts'
+  - 'src/farajaland/features/administrative/source'
+  - 'src/farajaland/features/employees'
+  - 'src/farajaland/features/facilities/generated'
+  - 'src/farajaland/features/facilities/scripts'
+  - 'src/farajaland/features/facilities/source'
+  - 'src/farajaland/features/languages/generated'

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@resources/*": ["./*"]
+      "@countryconfig/*": ["./*"]
     },
     "target": "es6",
     "module": "commonjs",
@@ -28,8 +28,6 @@
     "scripts",
     "acceptance-tests",
     "src/setupTests.ts",
-    "src/**/*.test.ts",
-    "src/zmb/mediators/ocrvs-chatbot",
-    "src/zmb/chatbot"
+    "src/**/*.test.ts"
   ]
 }

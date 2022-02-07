@@ -1,0 +1,29 @@
+name: Deploy Farajaland to QA
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Tag to deploy'
+        required: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone core
+        uses: actions/checkout@v2
+        with:
+          repository: 'opencrvs/opencrvs-core'
+          path: './opencrvs-core'
+      - name: Clone Farajaland resource package
+        uses: actions/checkout@v2
+        with:
+          path: './opencrvs-farajaland'
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: Run deployment command in core
+        working-directory: ./opencrvs-core
+        run: yarn deploy:qa ${{ secrets.DOCKER_MANAGER_HOST }} ${{ github.event.inputs.version }} ../opencrvs-farajaland

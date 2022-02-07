@@ -16,26 +16,26 @@ require('app-module-path').addPath(require('path').join(__dirname, '../'))
 import fetch from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
 import { readFileSync } from 'fs'
-import getPlugins from '@resources/config/plugins'
-import * as usrMgntDB from '@resources/database'
+import getPlugins from '@countryconfig/config/plugins'
+import * as usrMgntDB from '@countryconfig/database'
 import {
-  RESOURCES_HOST,
-  RESOURCES_PORT,
+  COUNTRY_CONFIG_HOST,
+  COUNTRY_CONFIG_PORT,
   CERT_PUBLIC_KEY_PATH,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
   COUNTRY_WIDE_CRUDE_DEATH_RATE
-} from '@resources/constants'
-import { locationsHandler as zmbLocationsHandler } from '@resources/zmb/features/administrative/handler'
-import { facilitiesHandler as zmbFacilitiesHandler } from '@resources/zmb/features/facilities/handler'
-import { definitionsHandler as zmbDefinitionsHandler } from '@resources/zmb/features/definitions/handler'
-import { assetHandler as zmbAssetHandler } from '@resources/zmb/features/assets/handler'
+} from '@countryconfig/constants'
+import { locationsHandler as farajalandLocationsHandler } from '@countryconfig/farajaland/features/administrative/handler'
+import { facilitiesHandler as farajalandFacilitiesHandler } from '@countryconfig/farajaland/features/facilities/handler'
+import { definitionsHandler as farajalandDefinitionsHandler } from '@countryconfig/farajaland/features/definitions/handler'
+import { assetHandler as farajalandAssetHandler } from '@countryconfig/farajaland/features/assets/handler'
 import {
-  generatorHandler as zmbGeneratorHandler,
-  requestSchema as zmbGeneratorRequestSchema,
-  responseSchema as zmbGeneratorResponseSchema
-} from '@resources/zmb/features/generate/handler'
-import { zmbValidateRegistrationHandler } from '@resources/zmb/features/validate/handler'
+  generatorHandler as farajalandGeneratorHandler,
+  requestSchema as farajalandGeneratorRequestSchema,
+  responseSchema as farajalandGeneratorResponseSchema
+} from '@countryconfig/farajaland/features/generate/handler'
+import { farajalandValidateRegistrationHandler } from '@countryconfig/farajaland/features/validate/handler'
 
 import { join } from 'path'
 
@@ -46,6 +46,7 @@ export const verifyToken = async (token: string, authUrl: string) => {
     method: 'POST',
     body: JSON.stringify({ token }),
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     }
   })
@@ -87,8 +88,8 @@ const validateFunc = async (
 
 export async function createServer() {
   const server = new Hapi.Server({
-    host: RESOURCES_HOST,
-    port: RESOURCES_PORT,
+    host: COUNTRY_CONFIG_HOST,
+    port: COUNTRY_CONFIG_PORT,
     routes: {
       cors: { origin: ['*'] }
     }
@@ -101,7 +102,7 @@ export async function createServer() {
     verifyOptions: {
       algorithms: ['RS256'],
       issuer: 'opencrvs:auth-service',
-      audience: 'opencrvs:resources-user'
+      audience: 'opencrvs:countryconfig-user'
     },
     validate: (payload: any, request: Hapi.Request) =>
       validateFunc(payload, request, CHECK_INVALID_TOKEN, AUTH_URL)
@@ -133,8 +134,8 @@ export async function createServer() {
     handler: (request, h) => {
       const file =
         process.env.NODE_ENV === 'production'
-          ? './zmb/config/client-config.prod.js'
-          : './zmb/config/client-config.js'
+          ? './farajaland/config/client-config.prod.js'
+          : './farajaland/config/client-config.js'
       // @ts-ignore
       return h.file(join(__dirname, file))
     },
@@ -151,8 +152,8 @@ export async function createServer() {
     handler: (request, h) => {
       const file =
         process.env.NODE_ENV === 'production'
-          ? './zmb/config/login-config.prod.js'
-          : './zmb/config/login-config.js'
+          ? './farajaland/config/login-config.prod.js'
+          : './farajaland/config/login-config.js'
       // @ts-ignore
       return h.file(join(__dirname, file))
     },
@@ -166,27 +167,27 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/locations',
-    handler: zmbLocationsHandler,
+    handler: farajalandLocationsHandler,
     options: {
       tags: ['api'],
-      description: 'Returns Zambia locations.json'
+      description: 'Returns Farajaland locations.json'
     }
   })
 
   server.route({
     method: 'GET',
     path: '/facilities',
-    handler: zmbFacilitiesHandler,
+    handler: farajalandFacilitiesHandler,
     options: {
       tags: ['api'],
-      description: 'Returns Zambia facilities.json'
+      description: 'Returns Farajaland facilities.json'
     }
   })
 
   server.route({
     method: 'GET',
     path: '/assets/{file}',
-    handler: zmbAssetHandler,
+    handler: farajalandAssetHandler,
     options: {
       auth: false,
       tags: ['api'],
@@ -197,7 +198,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/definitions/{application}',
-    handler: zmbDefinitionsHandler,
+    handler: farajalandDefinitionsHandler,
     options: {
       tags: ['api'],
       description:
@@ -208,7 +209,7 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/validate/registration',
-    handler: zmbValidateRegistrationHandler,
+    handler: farajalandValidateRegistrationHandler,
     options: {
       tags: ['api'],
       description:
@@ -219,14 +220,14 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/generate/{type}',
-    handler: zmbGeneratorHandler,
+    handler: farajalandGeneratorHandler,
     options: {
       tags: ['api'],
       validate: {
-        payload: zmbGeneratorRequestSchema
+        payload: farajalandGeneratorRequestSchema
       },
       response: {
-        schema: zmbGeneratorResponseSchema
+        schema: farajalandGeneratorResponseSchema
       },
       description:
         'Generates registration numbers based on country specific implementation logic'
@@ -272,7 +273,7 @@ export async function createServer() {
   async function start() {
     await server.start()
     await usrMgntDB.connect()
-    server.log('info', `server started on ${RESOURCES_HOST}:${RESOURCES_PORT}`)
+    server.log('info', `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`)
   }
 
   return { server, start, stop }
