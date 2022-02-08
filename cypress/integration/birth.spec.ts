@@ -14,89 +14,133 @@
 context('Birth Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
+  })  
+  // Minimum input 
+  it('Tests from application to certification using minimum input', () => {
+    cy.declareApplicationWithMinimumInput('Arif', 'Antor')
+    
   })
+ 
+  it('Login as registrar to register minimum input Birth application',() => {
+    cy.login('registrar')
+      // CREATE PIN
+    cy.createPin()
+      //review application
+    cy.reviewForm()
 
-  it('Tests from application to registration using minimum input', () => {
-    cy.initializeFakeTimers()
-    cy.registerApplicationWithMinimumInput('Tahmid', 'Rahman')
-  })
+     //register Application
+    cy.submitForm()
+      // LOG OUT
+    cy.logOut()
+  }) 
 
+  //Maximum input
   it('Tests from application to registration using maximum input', () => {
-    cy.initializeFakeTimers()
-    cy.registerApplicationWithMaximumInput('Maruf', 'Hossein')
+    cy.registerApplicationWithMaximumInput('Sharifuz', 'Prantor')
   })
 
+  it('LogIn as Registrar to Register Maximum input Application',() => {
+    // LOGIN AS LOCAL REGISTRAR
+    cy.login('registrar')
+      // CREATE PIN
+    cy.createPin()
+      //review application
+    cy.reviewForm()
+
+     //register Application
+    cy.submitForm()
+      // LOG OUT
+    cy.logOut()
+  })  
+
+  
+ // Rejection Minimum
   it('Tests from application to rejection using minimum input', () => {
-    cy.initializeFakeTimers()
-    cy.declareApplicationWithMinimumInput('Atiq', 'Zaman')
+   cy.declareApplicationWithMinimumInput('Aariz', 'Sahil')
+  })
+
+  it('Login as Register & Reject Minimum input Application',() => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
+    
     cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
-
+      // LANDING PAGE Download 1st application 
+    cy.reviewForm()
+      //Reject Application
     cy.rejectApplication()
+      //logout
+   cy.logOut()
   })
-
+   
+  //Rejection Maximum
   it('Tests from application to rejection using maximum input', () => {
-    cy.initializeFakeTimers()
-    cy.declareApplicationWithMaximumInput('Evans', 'Kangwa')
-    // LOGIN AS LOCAL REGISTRAR
-    cy.login('registrar')
-    // CREATE PIN
-    cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
-
-    cy.rejectApplication()
+    cy.declareApplicationWithMaximumInput('Larry', 'Page')
   })
 
+  it('Login as Registrar & Reject Maximum input Application',()=>{
+      // LOGIN AS LOCAL REGISTRAR
+    cy.login('registrar')
+      // CREATE PIN
+    cy.createPin()
+      // LANDING PAGE,Download Application
+    cy.reviewForm()
+    cy.rejectApplication()
+      //logout
+    cy.logOut()
+  })
+ 
+    
+  //Maximum input by Register
   it('Tests registration by registrar using maximum input', () => {
-    cy.initializeFakeTimers()
     // LOGIN AS FIELD WORKER
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
     // EVENTS
+    cy.clock(new Date().getTime())
     cy.enterMaximumInput('Ryan', 'Crichton')
+    
+    //register application
+    cy.get('#registerApplicationBtn').click()
+    //MODAL
+    cy.get('#submit_confirm').click()
+    cy.log('Waiting for application to sync...')
+    cy.tick(20000)
+  }) 
 
-    cy.registerApplication() // Wait for application to be sync'd
-  })
-
-  it('Test Someone else journey using minimum input', () => {
-    cy.initializeFakeTimers()
+  
+  //SomeOne Else giving input
+  it('Tests Someone else journey using minimum input', () => {
     // LOGIN
     cy.login('fieldWorker')
-    // CREATE PIN
+      // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
+    cy.initializeFakeTimers()
     cy.someoneElseJourney()
 
     cy.submitApplication()
     // LOG OUT
     cy.get('#ProfileMenuToggleButton').click()
     cy.get('#ProfileMenuItem1').click()
+  }) 
+
+  it('Login as Registrar & register Someone else minimum input application',()=>{
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
-    cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
+  cy.createPin()
+    //review application
+  cy.reviewForm()
 
-    cy.registerApplication()
-  })
+   //register Application
+  cy.submitForm()
+
+    // LOG OUT
+  cy.get('#ProfileMenuToggleButton').click()
+  cy.get('#ProfileMenuItem1').click()
+  })  
+
 })
