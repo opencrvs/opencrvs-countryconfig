@@ -10,7 +10,7 @@
 version: "3.3"
 
 services:
-  resources:
+  countryconfig:
     image: opencrvs/ocrvs-farajaland:${COUNTRY_CONFIG_VERSION:-latest}
     restart: unless-stopped
     environment:
