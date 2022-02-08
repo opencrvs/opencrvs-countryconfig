@@ -23,19 +23,14 @@ context('Birth Integration Test', () => {
  
   it('Login as registrar to register minimum input Birth application',() => {
     cy.login('registrar')
-    // CREATE PIN
+      // CREATE PIN
     cy.createPin()
-    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-    cy.get('#registerApplicationBtn').click()
-    cy.get('#submit_confirm').click()
-    cy.wait(1000)
-    cy.reload()
-    cy.get('#tab_review > .sc-jSFkmK').click()
-    cy.wait(1000)
-    cy.get('#tab_print > .sc-jSFkmK').click()
-    // LOG OUT
+      //review application
+    cy.reviewForm()
+
+     //register Application
+    cy.submitForm()
+      // LOG OUT
     cy.logOut()
   }) 
 
@@ -47,25 +42,21 @@ context('Birth Integration Test', () => {
   it('LogIn as Registrar to Register Maximum input Application',() => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
+      // CREATE PIN
     cy.createPin()
+      //review application
+    cy.reviewForm()
 
-    //LANDING PAGE download and register application
-    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-    cy.get('#registerApplicationBtn').click()
-    cy.get('#submit_confirm').click()
-    cy.wait(1000)
-    cy.reload()
-
-    // LOG OUT
+     //register Application
+    cy.submitForm()
+      // LOG OUT
     cy.logOut()
   })  
 
   
  // Rejection Minimum
   it('Tests from application to rejection using minimum input', () => {
-   cy.declareApplicationWithMinimumInput('Atiq', 'Zaman')
+   cy.declareApplicationWithMinimumInput('Aariz', 'Sahil')
   })
 
   it('Login as Register & Reject Minimum input Application',() => {
@@ -74,43 +65,28 @@ context('Birth Integration Test', () => {
     // CREATE PIN
     
     cy.createPin()
-    // LANDING PAGE Download 1st application & Reject Application
-    cy.get('#ListItemAction-0-icon').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-
-    //Reject Application
-  
+      // LANDING PAGE Download 1st application 
+    cy.reviewForm()
+      //Reject Application
     cy.rejectApplication()
-    
-    //logout
+      //logout
    cy.logOut()
   })
    
   //Rejection Maximum
   it('Tests from application to rejection using maximum input', () => {
-   
-    cy.declareApplicationWithMaximumInput('Evans', 'Kangwa')
-    
+    cy.declareApplicationWithMaximumInput('Larry', 'Page')
   })
 
   it('Login as Registrar & Reject Maximum input Application',()=>{
-    // LOGIN AS LOCAL REGISTRAR
+      // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
-    // CREATE PIN
+      // CREATE PIN
     cy.createPin()
-    // LANDING PAGE,Download Application
-    cy.get('#ListItemAction-0-icon').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-
-    //Reject Application
-    cy.get('#rejectApplicationBtn').click()
-    cy.get(':nth-child(3) > .sc-hYRTcE').click()
-    cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
-    cy.get('#submit_reject_form').click()
-    cy.wait(3000)
-    //logout
+      // LANDING PAGE,Download Application
+    cy.reviewForm()
+    cy.rejectApplication()
+      //logout
     cy.logOut()
   })
  
@@ -125,7 +101,7 @@ context('Birth Integration Test', () => {
     // EVENTS
     cy.clock(new Date().getTime())
     cy.enterMaximumInput('Ryan', 'Crichton')
-    cy.get('.sc-bCwgka').click()
+    
     //register application
     cy.get('#registerApplicationBtn').click()
     //MODAL
@@ -139,7 +115,7 @@ context('Birth Integration Test', () => {
   it('Tests Someone else journey using minimum input', () => {
     // LOGIN
     cy.login('fieldWorker')
-    // CREATE PIN
+      // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
     cy.initializeFakeTimers()
@@ -155,22 +131,16 @@ context('Birth Integration Test', () => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
-    cy.createPin()
-    // LANDING PAGE,Download & register application 
-    cy.wait(1000)
-    //download first application
-    cy.get('#ListItemAction-0-icon').click()
-    //review 
-    cy.get('#ListItemAction-0-Review').click()
-    //Register button
-    cy.get('#registerApplicationBtn').click()
-    //submit confirm
-    cy.get('#submit_confirm').click()
-    cy.wait(2000)
+  cy.createPin()
+    //review application
+  cy.reviewForm()
+
+   //register Application
+  cy.submitForm()
 
     // LOG OUT
-    cy.get('#ProfileMenuToggleButton').click()
-    cy.get('#ProfileMenuItem1').click()
+  cy.get('#ProfileMenuToggleButton').click()
+  cy.get('#ProfileMenuItem1').click()
   })  
 
 })

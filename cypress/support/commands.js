@@ -147,11 +147,24 @@ Cypress.Commands.add('logOut',()=>{
   cy.get('#ProfileMenuToggleButton').click()
   cy.get('#ProfileMenuItem1').click()
 })
+Cypress.Commands.add('reviewForm',() => {
+  cy.get('#navigation_review').click()
+  cy.get('#ListItemAction-0-icon').click()
+  cy.get('#ListItemAction-0-Review').click()
+})
+
+Cypress.Commands.add('submitForm',() => {
+  cy.get('#registerApplicationBtn').click()
+  cy.get('#submit_confirm').click()
+  cy.wait(5000)
+  cy.reload()
+})
+
+
 
 Cypress.Commands.add('printApplication',() => {
- 
-  cy.get('#tab_print').click()
-  cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
+  cy.get('#navigation_print').click()
+  cy.get('#ListItemAction-0-icon').click()
   cy.get('#ListItemAction-0-Print').click()
   cy.get('#type_MOTHER').click()
   cy.get('#confirm_form').click()
@@ -161,8 +174,6 @@ Cypress.Commands.add('printApplication',() => {
     'not.exist')
     
   cy.get('.react-pdf__Page').should('exist')
-
-
 })
 
 
@@ -188,7 +199,7 @@ Cypress.Commands.add('registerApplication', () => {
   cy.log('Waiting for application to sync...')
   cy.tick(20000)
   cy.get('#Spinner').should('exist')
-  cy.get('#tab_review').contains('Ready for review (3)')
+  cy.get('#navigation_review').contains('Ready for review')
 })
 
 Cypress.Commands.add('verifyLandingPageVisible', () => {
@@ -272,16 +283,16 @@ Cypress.Commands.add(
     cy.get('#childBirthDate-yyyy').type('2018')
     cy.get('#multipleBirth').type('1')
     cy.selectOption('#placeOfBirth', 'Private_Home', 'Private Home')
-    cy.selectOption('#country', 'Zambia', 'Zambia')
+    cy.selectOption('#country', 'Farajaland', 'Farajaland')
     cy.selectOption('#state', 'Luapula', 'Luapula')
     cy.selectOption('#district', 'Chembe', 'Chembe')
     cy.goToNextFormSection()
 
     // MOTHER DETAILS
     cy.get('#iD').type('123456789')
-    cy.get('#firstNamesEng').type('Agnes')
+    cy.get('#firstNamesEng').type('Rokeya')
     cy.get('#familyNameEng').type(lastName)
-    cy.selectOption('#countryPlaceOfHeritage', 'Zambia', 'Zambia')
+    cy.selectOption('#countryPlaceOfHeritage', 'Farajaland', 'Farajaland')
     cy.selectOption(
       '#statePlaceOfHeritage',
       'Luapula',
@@ -292,7 +303,7 @@ Cypress.Commands.add(
       'Chembe',
       'Chembe'
     )
-    cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
+    cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
     cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
     cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
     cy.goToNextFormSection()
@@ -368,7 +379,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.get('#multipleBirth').type('1')
   cy.get('#weightAtBirth').type('1.5')
   cy.selectOption('#placeOfBirth', 'Private_Home', 'Private Home')
-  cy.selectOption('#country', 'Zambia', 'Zambia')
+  cy.selectOption('#country', 'Farajaland', 'Farajaland')
   cy.selectOption('#state', 'Luapula', 'Luapula')
   cy.selectOption('#district', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOption').type('My city')
@@ -379,7 +390,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.goToNextFormSection()
 
   // MOTHER DETAILS
-  cy.selectOption('#nationality', 'Zambia', 'Zambia')
+  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.get('#iD').type('123456789')
   cy.get('#socialSecurityNo').type('123456789')
   cy.get('#firstNamesEng').type('Agnes')
@@ -390,7 +401,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.selectOption('#maritalStatus', 'Married', 'Married')
   cy.get('#occupation').type('Lawyer')
   cy.selectOption('#educationalAttainment', 'PRIMARY_ISCED_1', 'Primary')
-  cy.selectOption('#countryPlaceOfHeritage', 'Zambia', 'Zambia')
+  cy.selectOption('#countryPlaceOfHeritage', 'Farajaland', 'Farajaland')
   cy.selectOption(
     '#statePlaceOfHeritage',
     'Luapula',
@@ -403,7 +414,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   )
   cy.get('#addressChiefPlaceOfHeritage').type('My chief')
   cy.get('#addressLine1PlaceOfHeritage').type('My village')
-  cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
+  cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
   cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOptionPermanent').type('My city')
@@ -411,7 +422,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.get('#addressLine2CityOptionPermanent').type('My street')
   cy.get('#numberOptionPermanent').type('40')
   cy.get('#currentAddressSameAsPermanent_false').click()
-  cy.selectOption('#country', 'Zambia', 'Zambia')
+  cy.selectOption('#country', 'Farajaland', 'Farajaland')
   cy.selectOption('#state', 'Luapula', 'Luapula')
   cy.selectOption('#district', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOption').type('My city')
@@ -421,7 +432,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.goToNextFormSection()
 
   // FATHER DETAILS
-  cy.selectOption('#nationality', 'Zambia', 'Zambia')
+  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.get('#iD').type('123456789')
   cy.get('#socialSecurityNo').type('123456789')
   cy.get('#firstNamesEng').type('Agnes')
@@ -433,7 +444,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.get('#occupation').type('Lawyer')
   cy.selectOption('#educationalAttainment', 'PRIMARY_ISCED_1', 'Primary')
   cy.get('#permanentAddressSameAsMother_false').click()
-  cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
+  cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
   cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOptionPermanent').type('My city')
@@ -523,7 +534,7 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.get('#birthDate-mm').type('06')
   cy.get('#birthDate-yyyy').type('1988')
   cy.selectOption('#gender', 'Male', 'Male')
-  cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
+  cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
   cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.goToNextFormSection()
@@ -545,7 +556,7 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.get('#applicantID').type('123456789')
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
-  cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
+  cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
   cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
 
@@ -619,7 +630,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   // DECEASED DETAILS
   cy.get('#iD').type('123456789')
   cy.get('#socialSecurityNo').type('123456789')
-  cy.selectOption('#nationality', 'Zambia', 'Zambia')
+  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.get('#firstNamesEng').type('Nafiza')
   cy.get('#familyNameEng').type('Firuj')
   cy.get('#birthDate-dd').type('16')
@@ -628,7 +639,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.selectOption('#gender', 'Male', 'Male')
   cy.selectOption('#maritalStatus', 'Married', 'Married')
   cy.get('#occupation').type('Lawyer')
-  cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
+  cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
   cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOptionPermanent').type('My city')
@@ -645,7 +656,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.goToNextFormSection()
   cy.get('#deathPlaceAddress_OTHER').click()
   cy.goToNextFormSection()
-  cy.selectOption('#country', 'Zambia', 'Zambia')
+  cy.selectOption('#country', 'Farajaland', 'Farajaland')
   cy.selectOption('#state', 'Luapula', 'Luapula')
   cy.selectOption('#district', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOption').type('My city')
@@ -659,11 +670,11 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.get('#causeOfDeathCode').type('Chronic Obstructive Pulmonary Disease')
   cy.goToNextFormSection()
   // APPLICANT DETAILS
-  cy.selectOption('#nationality', 'Zambia', 'Zambia')
+  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.get('#applicantID').type('123456789')
   cy.get('#firstNamesEng').type('Anne')
   cy.get('#familyNameEng').type('Salim')
-  cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
+  cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
   cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.goToNextFormSection()
@@ -719,7 +730,7 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#multipleBirth').type('1')
   cy.get('#weightAtBirth').type('1.5')
   cy.selectOption('#placeOfBirth', 'Private_Home', 'Private Home')
-  cy.selectOption('#country', 'Zambia', 'Zambia')
+  cy.selectOption('#country', 'Farajaland', 'Farajaland')
   cy.selectOption('#state', 'Luapula', 'Luapula')
   cy.selectOption('#district', 'Chembe', 'Chembe')
 
@@ -730,11 +741,11 @@ Cypress.Commands.add('someoneElseJourney', () => {
 
   cy.goToNextFormSection()
   // APPLICANT'S DETAILS
-  cy.selectOption('#nationality', 'Zambia', 'Zambia')
+  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.get('#applicantID').type('123456789')
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
-  cy.selectOption('#countryPermanent', 'Zambia', 'Zambia')
+  cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePermanent', 'Luapula', 'Luapula')
   cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.get('#addressLine4CityOptionPermanent').type('My city')

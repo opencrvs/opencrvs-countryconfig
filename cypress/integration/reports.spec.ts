@@ -21,10 +21,10 @@ context('Reports Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
 
-    // CLICK PERFORMANCE MENU ITEM
-    cy.get('#menu-performance').click()
+    // CLICK PERFORMANCE Navigation ITEM
+    cy.get('#navigation_performance').click()
     // INPUT SEARCH LOCATION
-    cy.get('#change-location-link > .sc-gKAblj').click()
+    cy.get('#change-location-link').click()
     cy.get('#locationSearchInput').type('Lusaka')
     cy.initializeFakeTimers()
     cy.get('#locationSearchInput')

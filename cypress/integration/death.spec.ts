@@ -34,20 +34,13 @@ context('Death Integration Test', () => {
   })
 
   it('Login as registrar to register minimum input death application',() => {
-    
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
-    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-    cy.get('#registerApplicationBtn').click()
-    cy.get('#submit_confirm').click()
-    cy.wait(1000)
-    cy.reload()
-    cy.get('#tab_review > .sc-jSFkmK').click()
-    cy.wait(1000)
-    cy.get('#tab_print > .sc-jSFkmK').click()
+     //review application
+    cy.reviewForm()
+     //register application
+    cy.submitForm()
     // LOG OUT
     cy.logOut()
   }) 
@@ -57,21 +50,14 @@ context('Death Integration Test', () => {
   })
 
   it('Login as registrar to register maximum input death application',() => {
-    
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
-    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-    cy.get('#registerApplicationBtn').click()
-    cy.get('#submit_confirm').click()
-    cy.wait(1000)
-    cy.reload()
-    cy.get('#tab_review > .sc-jSFkmK').click()
-    cy.wait(1000)
-    cy.get('#tab_print > .sc-jSFkmK').click()
-    // LOG OUT
+     //review application
+    cy.reviewForm()
+     //register application
+    cy.submitForm()
+     // LOG OUT
     cy.logOut()
   }) 
   
@@ -86,19 +72,12 @@ context('Death Integration Test', () => {
     // CREATE PIN
     
     cy.createPin()
-    // LANDING PAGE Download 1st application & Reject Application
-    cy.get('#ListItemAction-0-icon').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-
-    //Reject Application
-    cy.get('#rejectApplicationBtn').click()
-     cy.get(':nth-child(3) > .sc-hYRTcE').click()
-    cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
-    cy.get('#submit_reject_form').click()
-    cy.wait(2000)
-    //logout
-    cy.logOut()
+      // LANDING PAGE Download 1st application 
+    cy.reviewForm()
+      //Reject Application
+    cy.rejectApplication()
+      //logout
+   cy.logOut()
   }) 
   
 
@@ -110,23 +89,14 @@ context('Death Integration Test', () => {
   it('Login As Register & Reject Maximum input Death Application',() => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
-    // CREATE PIN
-    
+      // CREATE PIN
     cy.createPin()
-    // LANDING PAGE Download 1st application & Reject Application
-    cy.get('#ListItemAction-0-icon').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-
-    //Reject Application
-    cy.get('#rejectApplicationBtn').click()
-    cy.get(':nth-child(3) > .sc-hYRTcE').click()
-    cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
-    cy.get('#submit_reject_form').click()
-    cy.wait(2000)
-    
-    //logout
-    cy.logOut()
+      // LANDING PAGE Download 1st application 
+    cy.reviewForm()
+      //Reject Application
+    cy.rejectApplication()
+      //logout
+   cy.logOut()
   }) 
   
   
