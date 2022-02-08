@@ -24,6 +24,7 @@
     "buttons.register": "Label for button on register confirmation modal",
     "buttons.reject": "A label for reject link",
     "buttons.rejectApplication": "Reject application button text",
+    "buttons.replace": "Label for replacing the whole section in review form",
     "buttons.retry": "The title of retry button for failed application",
     "buttons.review": "Review button text",
     "buttons.save": "Save Button Text",

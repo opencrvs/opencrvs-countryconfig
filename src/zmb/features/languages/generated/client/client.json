@@ -38,6 +38,7 @@
         "buttons.register": "Register",
         "buttons.reject": "Reject",
         "buttons.rejectApplication": "Reject Application",
+        "buttons.replace": "Change all",
         "buttons.retry": "Retry",
         "buttons.review": "Review",
         "buttons.save": "Save",
