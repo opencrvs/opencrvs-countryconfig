@@ -16,34 +16,28 @@ context('Performance view', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
   it('Tests from application to certification using minimum input', () => {
-    cy.declareApplicationWithMinimumInput('Arifuz', 'Antor')
+    cy.declareApplicationWithMinimumInput('Euan', 'Millar')
     cy.wait(1000)
   })
  
   it('Login as registrar to register & Downloads CSV data to observe Performance',() => {
     
     cy.login('registrar')
-    // CREATE PIN
+     // CREATE PIN
     cy.createPin()
-    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-    cy.get('#registerApplicationBtn').click()
-    cy.get('#submit_confirm').click()
-    cy.wait(1000)
-    cy.reload()
-    cy.get('#tab_review > .sc-jSFkmK').click()
-    cy.wait(1000)
-    cy.get('#tab_print > .sc-jSFkmK').click()
-    //menu performance
-    cy.get('#menu-performance > .sc-gKAblj')
-    cy.get('#menu-performance').click()
+     //review application
+    cy.reviewForm()
+     //register application
+    cy.submitForm()
+
+    //go to Navigation performance
+    cy.get('#navigation_performance').click()
     cy.get('#operational-select').click()
     cy.get('#react-select-2-option-1').click()
     cy.get('#row_0 button')
       .eq(1)
       .click()
-    cy.get('#report-lists > :nth-child(1) > .sc-yECHO > .sc-enTpxJ > .sc-iJKXaU > #row_0 > .ryUDf > .sc-eCApGN > .sc-gKAblj').click()
+    cy.get('#listTable-undefined').click()
     
   }) 
 
