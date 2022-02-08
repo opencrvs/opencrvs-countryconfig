@@ -44,5 +44,6 @@ ts-node -r tsconfig-paths/register src/farajaland/features/administrative/script
 ts-node -r tsconfig-paths/register src/farajaland/features/administrative/scripts/assign-admin-structure-to-locations.ts
 ts-node -r tsconfig-paths/register src/farajaland/features/facilities/scripts/prepare-source-facilities.ts
 ts-node -r tsconfig-paths/register src/farajaland/features/facilities/scripts/assign-facilities-to-locations.ts
+ts-node -r tsconfig-paths/register src/farajaland/features/administrative/scripts/add-statistical-data.ts
 ts-node -r tsconfig-paths/register src/farajaland/features/employees/scripts/prepare-source-employees.ts
 ts-node -r tsconfig-paths/register src/farajaland/features/employees/scripts/assign-employees-to-practitioners.ts -- $1 $2
