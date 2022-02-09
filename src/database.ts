@@ -11,8 +11,8 @@
  */
 import * as mongoose from 'mongoose'
 
-import { MONGO_URL } from '@resources/constants'
-import { logger } from '@resources/logger'
+import { MONGO_URL } from '@countryconfig/constants'
+import { logger } from '@countryconfig/logger'
 
 const db = mongoose.connection
 
