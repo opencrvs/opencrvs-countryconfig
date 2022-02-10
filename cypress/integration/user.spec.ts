@@ -16,13 +16,13 @@ context('User Integration Test', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it('create user as SYSTEM ADMIN and to activate account login for the first time as REGISTRAR', () => {
+  it('creates user as SYSTEM ADMIN and to activate account login for the first time as REGISTRAR', () => {
     // LOG IN AS SYSTEM ADMIN
     cy.login('sysAdmin')
     cy.createPin()
     cy.get('#menu-team').click()
     cy.get('#locationSearchInput').type('Mkushi')
-    cy.get('#locationOptionc59c440f-beaa-4d8d-93f3-a4fb21a72979').click()
+    cy.contains('Mkushi DNRPC District Office').click()
     cy.get('#location-search-btn').click()
     cy.get('#add-user').click()
     cy.get('#firstNamesEng').type('Naeem')
