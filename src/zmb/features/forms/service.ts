@@ -37,9 +37,6 @@ interface ICollectorField {
 interface ICertificateCollectorDefinition {
   [collector: string]: ICollectorField
 }
-interface ICertificateCorrectorDefinition {
-  [collector: string]: ICollectorField
-}
 export interface IForms {
   registerForm: {
     birth: IForm
@@ -48,10 +45,6 @@ export interface IForms {
   certificateCollectorDefinition: {
     birth: ICertificateCollectorDefinition
     death: ICertificateCollectorDefinition
-  }
-  certificateCorrectorDefinition: {
-    birth: ICertificateCorrectorDefinition
-    death: ICertificateCorrectorDefinition
   }
 }
 
