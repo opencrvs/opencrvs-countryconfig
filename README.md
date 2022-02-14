@@ -176,7 +176,9 @@ You should feel free to amend the approach we have taken and the scripts if you 
 
 6. Click Channels and check all have loaded successfully. All will show a green "Enabled" message with the exception of an orange "Disabled" message for Hearth passthrough.
 
-7. To populate reference data for your country requirements, by default, you run the `yarn db:populate` command to do this when OpenCRVS Core is running . This script's intention is to create active users in the system and generate passwords for them, populate the database with FHIR jurisdictions, facilities, practitioners and any other reference data you need.
+7. To access the default birth and death certificate template data, you run the `yarn db:backup:restore` command to restore default backup data. If you want to create new certificate template backup then you run the `yarn db:backup:create` command to create new factory reset zips along with new birth and death certificate template data.
+
+8. To populate reference data for your country requirements, by default, you run the `yarn db:populate` command to do this when OpenCRVS Core is running . This script's intention is to create active users in the system and generate passwords for them, populate the database with FHIR jurisdictions, facilities, practitioners and any other reference data you need.
 
 You must add 2 parameters:
 
@@ -195,7 +197,7 @@ If you pass the environment code "PRODUCTION", your test password will be ignore
 
 The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production, only when generating reference data factory reset backups locally for production use.**
 
-8. Once you are fully populateed, before you login and create registrations and an audit trail, run `yarn db:backup:create` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Github actions will automatically restore from these backups when setting the `--clear-data` & `--restore-metadata` props in the server deployment commands in OpenCRVS core. The script `yarn db:backup:restore` can be used to restore from existing zips and is the same script that is used by Github actions.
+9. Once you are fully populateed, before you login and create registrations and an audit trail, run `yarn db:backup:create` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Github actions will automatically restore from these backups when setting the `--clear-data` & `--restore-metadata` props in the server deployment commands in OpenCRVS core. The script `yarn db:backup:restore` can be used to restore from existing zips and is the same script that is used by Github actions.
 
 ### What are the example sequence of scripts that run when populating the reference data?
 
