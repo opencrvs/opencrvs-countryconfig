@@ -2164,13 +2164,8 @@
                   "initialValue": "",
                   "validate": [
                     {
-                      "operation": "numeric"
-                    },
-                    {
-                      "operation": "validLength",
-                      "parameters": [
-                        9
-                      ]
+                      "operation": "validIDNumber",
+                      "parameters":["NATIONAL_ID"]
                     }
                   ],
                   "conditionals": [],
@@ -4086,13 +4081,8 @@
                   "initialValue": "",
                   "validate": [
                     {
-                      "operation": "numeric"
-                    },
-                    {
-                      "operation": "validLength",
-                      "parameters": [
-                        9
-                      ]
+                      "operation": "validIDNumber",
+                      "parameters":["NATIONAL_ID"]
                     }
                   ],
                   "conditionals": [],
@@ -6897,13 +6887,8 @@
                   "initialValue": "",
                   "validate": [
                     {
-                      "operation": "numeric"
-                    },
-                    {
-                      "operation": "validLength",
-                      "parameters": [
-                        9
-                      ]
+                      "operation": "validIDNumber",
+                      "parameters":["NATIONAL_ID"]
                     }
                   ],
                   "conditionals": [
@@ -8910,13 +8895,8 @@
                   "initialValue": "",
                   "validate": [
                     {
-                      "operation": "numeric"
-                    },
-                    {
-                      "operation": "validLength",
-                      "parameters": [
-                        9
-                      ]
+                      "operation": "validIDNumber",
+                      "parameters":["NATIONAL_ID"]
                     }
                   ],
                   "conditionals": [],
@@ -11236,13 +11216,8 @@
                   "initialValue": "",
                   "validate": [
                     {
-                      "operation": "numeric"
-                    },
-                    {
-                      "operation": "validLength",
-                      "parameters": [
-                        9
-                      ]
+                      "operation": "validIDNumber",
+                      "parameters":["NATIONAL_ID"]
                     }
                   ],
                   "conditionals": [],
