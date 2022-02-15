@@ -14,63 +14,91 @@
 context('Death Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
-    cy.initializeFakeTimers()
-  })
-
-  it('Tests from application to registration using minimum input', () => {
-    cy.initializeFakeTimers()
-    cy.registerDeathApplicationWithMinimumInput()
-  })
-
-  it('Tests from application to registration using maximum input', () => {
-    cy.initializeFakeTimers()
-    cy.registerDeathApplicationWithMaximumInput()
-  })
-
-  it('Tests from application to rejection using minimum input', () => {
-    cy.initializeFakeTimers()
-    cy.declareDeathApplicationWithMinimumInput()
-    // LOGIN AS LOCAL REGISTRAR
-    cy.login('registrar')
-    // CREATE PIN
-    cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
-
-    cy.rejectApplication()
-  })
-
-  it('Tests from application to rejection using maximum input', () => {
-    cy.initializeFakeTimers()
-    cy.declareDeathApplicationWithMaximumInput()
-    // LOGIN AS LOCAL REGISTRAR
-    cy.login('registrar')
-    // CREATE PIN
-    cy.createPin()
-    // LANDING PAGE
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
-
-    cy.rejectApplication()
-  })
+  }) 
 
   it('Tests registration by registrar using maximum input', () => {
-    // Fix time to 2019-11-12
-    cy.clock(1573557567230)
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
     // APPLICATION FORM
+    cy.initializeFakeTimers()
     cy.enterDeathMaximumInput()
 
     cy.registerApplication()
+     
+  }) 
+
+  it('Tests from application to registration using minimum input', () => {
+    cy.registerDeathApplicationWithMinimumInput()
   })
+
+  it('Login as registrar to register minimum input death application',() => {
+    cy.login('registrar')
+    // CREATE PIN
+    cy.createPin()
+     //review application
+    cy.reviewForm()
+     //register application
+    cy.submitForm()
+    // LOG OUT
+    cy.logOut()
+  }) 
+  
+  it('Tests from application to registration using maximum input', () => {
+    cy.registerDeathApplicationWithMaximumInput()
+  })
+
+  it('Login as registrar to register maximum input death application',() => {
+    cy.login('registrar')
+    // CREATE PIN
+    cy.createPin()
+     //review application
+    cy.reviewForm()
+     //register application
+    cy.submitForm()
+     // LOG OUT
+    cy.logOut()
+  }) 
+  
+
+  it('Tests from application to rejection using minimum input', () => {
+    cy.declareDeathApplicationWithMinimumInput()
+  })
+
+  it('Login As Register & Reject Minimum input Death Application',() => {
+    // LOGIN AS LOCAL REGISTRAR
+    cy.login('registrar')
+    // CREATE PIN
+    
+    cy.createPin()
+      // LANDING PAGE Download 1st application 
+    cy.reviewForm()
+      //Reject Application
+    cy.rejectApplication()
+      //logout
+   cy.logOut()
+  }) 
+  
+
+  it('Tests from application to rejection using maximum input', () => {
+
+    cy.declareDeathApplicationWithMaximumInput()
+  }) 
+
+  it('Login As Register & Reject Maximum input Death Application',() => {
+    // LOGIN AS LOCAL REGISTRAR
+    cy.login('registrar')
+      // CREATE PIN
+    cy.createPin()
+      // LANDING PAGE Download 1st application 
+    cy.reviewForm()
+      //Reject Application
+    cy.rejectApplication()
+      //logout
+   cy.logOut()
+  }) 
+  
+  
+
 })

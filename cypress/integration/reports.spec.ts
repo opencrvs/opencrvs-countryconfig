@@ -16,15 +16,29 @@ context('Reports Integration Test', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it.skip('Tests for performance reports birth using minimum input', () => {
+  it('Tests for performance reports birth using minimum input', () => {
     // LOGIN AS LOCAL REGISTRAR
-    cy.initializeFakeTimers()
     cy.login('registrar')
     cy.createPin()
 
-    // CLICK PERFORMANCE MENU ITEM
-    cy.get('#menu-performance').click()
+    // CLICK PERFORMANCE Navigation ITEM
+    cy.get('#navigation_performance').click()
+    // INPUT SEARCH LOCATION
+    cy.get('#change-location-link').click()
+    cy.get('#locationSearchInput').type('Lusaka')
+    cy.initializeFakeTimers()
+    cy.get('#locationSearchInput')
+      .siblings('ul')
+      .children()
+      .first()
+      .click()
+    cy.clock()
+    cy.tick(20000)
+    cy.get('#location-search-btn').click()
 
+    //select Reports
+    cy.selectOption('#operational-select','Operational','Reports')
+    
     // CLICK MONTHLY REPORTS BIRTH CURRENT MONTH ROW FIRST COLUMN
     cy.get('#row_' + new Date().getMonth())
       .first()
@@ -32,35 +46,11 @@ context('Reports Integration Test', () => {
       .first()
       .children()
       .click()
-
+    cy.clock()
+    cy.wait(100)
     cy.tick(20000)
 
-    // INPUT SEARCH LOCATION
-    cy.get('#locationSearchInput').type('Narsingdi')
-    cy.get('#locationSearchInput')
-      .siblings('ul')
-      .children()
-      .first()
-      .click()
+    
 
-    cy.tick(20000)
-
-    //  CHECK GENDER BASIS METRICS TOTAL
-    cy.get('#listTable-genderBasisMetrics-footer')
-      .children()
-      .last()
-      .contains(6)
-
-    //  CHECK TIMEFRAMES TOTAL
-    cy.get('#listTable-timeFrames-footer')
-      .children()
-      .last()
-      .contains(6)
-
-    //  CHECK PAYMENTS TOTAL
-    cy.get('#listTable-payments-footer')
-      .children()
-      .last()
-      .contains(0)
   })
 })
