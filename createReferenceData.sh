@@ -47,3 +47,4 @@ ts-node -r tsconfig-paths/register src/farajaland/features/facilities/scripts/as
 ts-node -r tsconfig-paths/register src/farajaland/features/administrative/scripts/add-statistical-data.ts
 ts-node -r tsconfig-paths/register src/farajaland/features/employees/scripts/prepare-source-employees.ts
 ts-node -r tsconfig-paths/register src/farajaland/features/employees/scripts/assign-employees-to-practitioners.ts -- $1 $2
+ts-node -r tsconfig-paths/register src/farajaland/features/config/scripts/populate-default-config.ts
