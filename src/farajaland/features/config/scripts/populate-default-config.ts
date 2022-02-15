@@ -47,12 +47,11 @@ export default async function importCertificates() {
   
    const defaultConfig = new Config({
       BACKGROUND_SYNC_BROADCAST_CHANNEL: "backgroundSynBroadCastChannel",
-      COUNTRY: "zmb",
+      COUNTRY: "FAR",
       COUNTRY_LOGO_FILE: "logo.png",
       COUNTRY_LOGO_RENDER_WIDTH: 104,
       COUNTRY_LOGO_RENDER_HEIGHT: 104,
       DESKTOP_TIME_OUT_MILLISECONDS: 900000,
-      HEALTH_FACILITY_FILTER: "DISTRICT",
       LANGUAGES: "en",
       CERTIFICATE_PRINT_CHARGE_FREE_PERIOD: 36500,
       CERTIFICATE_PRINT_CHARGE_UP_LIMIT: 36500,
@@ -65,17 +64,22 @@ export default async function importCertificates() {
       HIDE_EVENT_REGISTER_INFORMATION: false,
       EXTERNAL_VALIDATION_WORKQUEUE: false,
       PHONE_NUMBER_PATTERN: {
-        pattern: "^0(7|9)[0-9]{1}[0-9]{7}$",
-        example: "0970545855",
-        start: "0[7|9]",
-        num: "10",
-        mask: {
-            startForm: 4,
-            endBefore: 2
-        }
+          pattern: "^0(7|9)[0-9]{1}[0-9]{7}$",
+          example: "0970545855",
+          start: "0[7|9]",
+          num: "10",
+          mask: {
+              startForm: 4,
+              endBefore: 2
+          }
       },
-      SENTRY: "https://f892d643aab642108f44e2d1795706bc@sentry.io/1774604",
-      LOGROCKET: "opencrvs-foundation/opencrvs-zambia"
+      SENTRY: "https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604",
+      LOGROCKET: "opencrvs-foundation/opencrvs-farajaland",
+      NID_NUMBER_PATTERN: {
+          pattern: "/^[0-9]{9}$/",
+          example: "4837281940",
+          num: "9"
+      }
    })
   
     const certificates = [
