@@ -14,6 +14,8 @@ export const FHIR_URL = process.env.FHIR_URL || 'http://localhost:3447/fhir'
 export const ORG_URL = 'http://opencrvs.org'
 export const MONGO_URL =
   process.env.MONGO_URL || 'mongodb://localhost/user-mgnt'
+  export const CONFIG_MONGO_URL =
+    process.env.CONFIG_MONGO_URL || 'mongodb://localhost/application-config'
 export const COUNTRY_CONFIG_HOST = process.env.COUNTRY_CONFIG_HOST || '0.0.0.0'
 export const COUNTRY_CONFIG_PORT = process.env.COUNTRY_CONFIG_PORT || 3040
 export const CERT_PUBLIC_KEY_PATH =

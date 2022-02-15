@@ -176,9 +176,7 @@ You should feel free to amend the approach we have taken and the scripts if you 
 
 6. Click Channels and check all have loaded successfully. All will show a green "Enabled" message with the exception of an orange "Disabled" message for Hearth passthrough.
 
-7. To access the default birth and death certificate template data, you run the `yarn db:backup:restore` command to restore default backup data. If you want to create new certificate template backup then you run the `yarn db:backup:create` command to create new factory reset zips along with new birth and death certificate template data.
-
-8. To populate reference data for your country requirements, by default, you run the `yarn db:populate` command to do this when OpenCRVS Core is running . This script's intention is to create active users in the system and generate passwords for them, populate the database with FHIR jurisdictions, facilities, practitioners and any other reference data you need.
+7. To populate reference data for your country requirements, by default, you run the `yarn db:populate` command to do this when OpenCRVS Core is running . This script's intention is to create active users in the system and generate passwords for them, populate the database with FHIR jurisdictions, facilities, practitioners and any other reference data you need.
 
 You must add 2 parameters:
 
