@@ -76,8 +76,8 @@ export default async function importCertificates() {
       SENTRY: "https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604",
       LOGROCKET: "opencrvs-foundation/opencrvs-farajaland",
       NID_NUMBER_PATTERN: {
-          pattern: "/^[0-9]{9}$/",
-          example: "4837281940",
+          pattern: "^[0-9]{9}$",
+          example: "483721940",
           num: "9"
       }
    })
