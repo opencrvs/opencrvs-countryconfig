@@ -195,7 +195,7 @@ If you pass the environment code "PRODUCTION", your test password will be ignore
 
 The populate script is only run once when creating your factory reset backups. **The populate script is never used live in production, only when generating reference data factory reset backups locally for production use.**
 
-8. Once you are fully populateed, before you login and create registrations and an audit trail, run `yarn db:backup:create` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Github actions will automatically restore from these backups when setting the `--clear-data` & `--restore-metadata` props in the server deployment commands in OpenCRVS core. The script `yarn db:backup:restore` can be used to restore from existing zips and is the same script that is used by Github actions.
+9. Once you are fully populateed, before you login and create registrations and an audit trail, run `yarn db:backup:create` to create new factory reset zips for your future use. Commit everything to a new private repo for your country. Github actions will automatically restore from these backups when setting the `--clear-data` & `--restore-metadata` props in the server deployment commands in OpenCRVS core. The script `yarn db:backup:restore` can be used to restore from existing zips and is the same script that is used by Github actions.
 
 ### What are the example sequence of scripts that run when populating the reference data?
 
@@ -1052,15 +1052,15 @@ This object holds sections for birth application forms. All sections are contain
 
   - #### `uploadDocForParentPermanentAddress`
 
-    If the child age is between 46 days to 5 years, the parent permanent address proof is needed. This conditional field appears only when the child age is within the above mentioned limit.
+    If the child age is between (BIRTH_REGISTRATION_TARGET + 1) days to 5 years, the parent permanent address proof is needed. This conditional field appears only when the child age is within the above mentioned limit.
 
   - #### `uploadDocForChildDOB`
 
-    If the child age is not between 46 days to 5 years, this conditional field appears and is used to take the document of the date of birth of the child.
+    If the child age is not between (BIRTH_REGISTRATION_TARGET + 1) days to 5 years, this conditional field appears and is used to take the document of the date of birth of the child.
 
   - #### `uploadDocForChildAge`
 
-    This conditional field appears only when the child age is more than 45 days. It used to take the document for the proof of child age.
+    This conditional field appears only when the child age is more than BIRTH_REGISTRATION_TARGET days. It used to take the document for the proof of child age.
 
   - #### `uploadDocFromCounsilor`
     This document uploader has only one option of the letter from the ward councilor. As the name goes it is used to take ward councillor proof.

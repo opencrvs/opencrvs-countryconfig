@@ -28,6 +28,7 @@ services:
       - CHECK_INVALID_TOKEN=true
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://mongo1,mongo2,mongo3/user-mgnt?replicaSet=rs0
+      - CONFIG_MONGO_URL=mongodb://mongo1,mongo2,mongo3/application-config?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
 
     deploy:
