@@ -1,5 +1,6 @@
 {
   "data": {
+    "buttons.archive": "Archive button text",
     "buttons.approve": "Approve button text",
     "buttons.apply": "Apply button label",
     "buttons.back": "Back button",
@@ -770,6 +771,11 @@
     "config.certificate.uploadCertificateDialogConfirm": "Confirm new certificate template upload button",
     "config.certificate.uploadCertificateDialogCancel": "Cancel new certificate template upload button",
     "settings.changePhone": "Change phone number title",
-    "settings.verifyPhone": "Verify phone number title"
+    "settings.verifyPhone": "Verify phone number title",
+    "recordAudit.archive.confirmation.title": "Confirmation title for archiving a declaration",
+    "recordAudit.archive.confirmation.body": "Confirmation body for archiving a declaration",
+    "regHome.outbox.statusArchiving": "Label for application status Archiving",
+    "regHome.outbox.statusWaitingToBeArchived": "Label for application status waiting to be archived"
+
   }
 }
