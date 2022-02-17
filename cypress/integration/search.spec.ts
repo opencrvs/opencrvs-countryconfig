@@ -17,27 +17,23 @@ context('Search Integration Test', () => {
   })
 
   it('Tests search application by child name using minimum input', () => {
-    cy.initializeFakeTimers()
+    
 
     // DECLARE APPLICATION AS FIELD AGENT
-    cy.declareApplicationWithMinimumInput('Annina', 'Wersun')
+   cy.declareApplicationWithMinimumInput('Bill', 'Gates')
+  
+  })
 
-    // LOGIN AS LOCAL REGISTRAR
-    cy.login('registrar')
-    cy.createPin()
-
-    // SEARCH APPLICATION
-    cy.get('#searchType').click()
-    cy.get('#name').click()
-    cy.get('#searchText').type('Wersun')
-    cy.get('#searchText').type('{enter}')
-
-    // CLICK DOWNLOAD AND REGISTER APPLICATION
-    cy.downloadFirstApplication()
-    cy.get('#ListItemAction-0-Review').should('exist')
-    cy.get('#ListItemAction-0-Review')
-      .first()
-      .click()
-    cy.registerApplication()
+  it('Tests search application by child name',() => {
+     // LOGIN AS LOCAL REGISTRAR
+     cy.login('registrar')
+     cy.createPin()
+     
+     // SEARCH APPLICATION & Review Application
+     cy.get('#searchType').click()
+     cy.get('#name').click()
+     cy.get('#searchText').type('Gates')
+     cy.get('#searchText').type('{enter}')
+ 
   })
 })

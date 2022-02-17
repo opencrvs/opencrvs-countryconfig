@@ -16,23 +16,19 @@ context('User Integration Test', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it('create user as SYSTEM ADMIN and to activate account login for the first time as REGISTRAR', () => {
+  it('creates user as SYSTEM ADMIN and to activate account login for the first time as REGISTRAR', () => {
     // LOG IN AS SYSTEM ADMIN
     cy.login('sysAdmin')
     cy.createPin()
-    cy.get('#menu-team').click()
-    cy.get('#locationSearchInput').type('Mkushi')
-    cy.get('#locationOptionc59c440f-beaa-4d8d-93f3-a4fb21a72979').click()
-    cy.get('#location-search-btn').click()
+    cy.get('#navigation_team').click()
     cy.get('#add-user').click()
     cy.get('#firstNamesEng').type('Naeem')
     cy.get('#familyNameEng').type('Ahmed')
     cy.get('#phoneNumber').type('0752658545')
-    cy.get('#nid').type('1994756324')
-    cy.selectOption('#role', 'LOCAL_REGISTRAR', 'Registrar')
-    cy.selectOption('#type', 'CHAIRMAN', 'Chairman')
+    cy.get('#nid').type('199475632')
+    cy.selectOption('#role', 'Registration Clerk', 'Registration Clerk')
+    cy.selectOption('#type', 'Data entry clerk', 'Data entry clerk')
     cy.get('#device').type('Xiamoi MI 8')
-    cy.get('#confirm_form').click()
     cy.get('#confirm_form').click()
     // PREVIEW
     cy.get('#submit_user_form').click()

@@ -13,24 +13,32 @@
 
 context('Performance view', () => {
   beforeEach(() => {
-    cy.initializeFakeTimers()
     indexedDB.deleteDatabase('OpenCRVS')
-    cy.registerApplicationWithMinimumInput('Yeasin', 'Hossein')
   })
+  it('Tests from application to certification using minimum input', () => {
+    cy.declareApplicationWithMinimumInput('Euan', 'Millar')
+    cy.wait(1000)
+  })
+ 
+  it('Login as registrar to register & Downloads CSV data to observe Performance',() => {
+    
+    cy.login('registrar')
+     // CREATE PIN
+    cy.createPin()
+     //review application
+    cy.reviewForm()
+     //register application
+    cy.submitForm()
 
-  it('allows downloading metrics data as a CSV', () => {
-    cy.server()
-    cy.route('GET', '**/export/monthlyPerformanceMetrics?**').as('getExport')
-    cy.get('#menu-performance').click()
+    //go to Navigation performance
+    cy.get('#navigation_performance').click()
     cy.get('#operational-select').click()
     cy.get('#react-select-2-option-1').click()
     cy.get('#row_0 button')
       .eq(1)
       .click()
-    cy.wait('@getExport')
-    cy.get('#row_0 button')
-      .eq(3)
-      .click()
-    cy.wait('@getExport')
-  })
+    cy.get('#listTable-undefined').click()
+    
+  }) 
+
 })
