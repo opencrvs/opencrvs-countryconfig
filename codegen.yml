@@ -1,0 +1,13 @@
+overwrite: true
+schema:
+  - http://localhost:7070/graphql:
+      headers:
+        Authorization: 'Bearer ${TOKEN}'
+documents: null
+generates:
+  src/data-generator/gateway.ts:
+    plugins:
+      - 'typescript'
+  ./graphql.schema.json:
+    plugins:
+      - 'introspection'
