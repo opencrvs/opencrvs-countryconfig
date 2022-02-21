@@ -41,6 +41,7 @@ export interface ILocation {
   jurisdictionType?: string
   type?: string
   partOf?: string
+  statistics: Array<{ name: string; year: number; value: number }>
 }
 
 export const sendToFhir = (

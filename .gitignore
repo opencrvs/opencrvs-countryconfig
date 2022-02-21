@@ -28,3 +28,4 @@ src/tests/locations.json
 
 cypress/screenshots
 cypress/videos
+graphql.schema.json
