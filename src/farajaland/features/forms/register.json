@@ -1276,13 +1276,13 @@
                   },
                   "inputFieldWidth": "78px"
                 },
-                 {
+                {
                   "name": "placeOfBirthTitle",
                   "type": "SUBSECTION",
                   "label": {
                     "defaultMessage": "Place of delivery",
-                    "description": "Title fo place of birth",
-                    "id": "form.field.label.placeOfDelivery"
+                    "description": "Title for place of birth sub section",
+                    "id": "form.field.label.placeOfBirthPreview"
                   },
                   "previewGroup": "placeOfBirtrh",
                   "initialValue": "",
@@ -1294,7 +1294,7 @@
                   "previewGroup": "placeOfBirth",
                   "ignoreFieldLabelOnErrorMessage": true,
                   "label": {
-                    "defaultMessage": "Place of delivery",
+                    "defaultMessage": "Location",
                     "description": "Label for form field: Place of delivery",
                     "id": "form.field.label.placeOfBirth"
                   },
@@ -1437,7 +1437,8 @@
                   },
                   "dynamicOptions": {
                     "resource": "locations",
-                    "dependency": "country"
+                    "dependency": "country",
+                    "initialValue": "agentDefault"
                   },
                   "conditionals": [
                     {
@@ -1496,7 +1497,8 @@
                   },
                   "dynamicOptions": {
                     "resource": "locations",
-                    "dependency": "state"
+                    "dependency": "state",
+                    "initialValue": "agentDefault"
                   },
                   "conditionals": [
                     {
@@ -2134,8 +2136,8 @@
                   "id": "placeOfBirth",
                   "label": {
                     "defaultMessage": "Place of delivery",
-                    "description": "Label for form field: Place of delivery",
-                    "id": "form.field.label.placeOfBirth"
+                    "description": "Title for place of birth sub section",
+                    "id": "form.field.label.placeOfBirthPreview"
                   },
                   "fieldToRedirect": "placeOfBirth"
                 },
