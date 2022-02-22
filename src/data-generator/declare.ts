@@ -5,7 +5,7 @@ import { sub, differenceInDays, add, max, differenceInYears } from 'date-fns'
 import { log } from './util'
 
 import { Facility, Location } from './location'
-import { COUNTRY_CONFIG_HOST } from './constants'
+import { COUNTRY_CONFIG_HOST, GATEWAY_HOST } from './constants'
 import { createAddressInput } from './address'
 import { AddressType, BirthRegistration, EducationType } from './gateway'
 import { pick } from 'lodash'
@@ -18,12 +18,40 @@ export async function sendBirthNotification(
   { username, token }: User,
   sex: 'male' | 'female',
   birthDate: Date,
+  createdAt: Date,
   location: Facility
 ) {
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
   const requestStart = Date.now()
 
+  const notification = {
+    created_at: createdAt,
+    dhis2_event: '1111',
+    child: {
+      first_names: firstNames,
+      last_name: familyName,
+      weight: randomWeightInGrams().toString(),
+      sex: sex
+    },
+    father: {
+      first_names: 'Dad',
+      last_name: familyName,
+      nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString()
+    },
+    mother: {
+      first_names: 'Mom',
+      last_name: familyName,
+      dob: sub(birthDate, { years: 20 })
+        .toISOString()
+        .split('T')[0],
+      nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString()
+    },
+    phone_number:
+      '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
+    date_birth: birthDate.toISOString().split('T')[0],
+    place_of_birth: location.id
+  }
   const createBirthNotification = await fetch(
     `${COUNTRY_CONFIG_HOST}/dhis2-notification/birth`,
     {
@@ -33,36 +61,7 @@ export async function sendBirthNotification(
         Authorization: `Bearer ${token}`,
         'x-correlation': `birth-notification-${firstNames}-${familyName}`
       },
-      body: JSON.stringify({
-        dhis2_event: '1111',
-        child: {
-          first_names: firstNames,
-          last_name: familyName,
-          weight: randomWeightInGrams().toString(),
-          sex: sex
-        },
-        father: {
-          first_names: 'Dad',
-          last_name: familyName,
-          nid: faker.datatype
-            .number({ min: 100000000, max: 999999999 })
-            .toString()
-        },
-        mother: {
-          first_names: 'Mom',
-          last_name: familyName,
-          dob: sub(birthDate, { years: 20 })
-            .toISOString()
-            .split('T')[0],
-          nid: faker.datatype
-            .number({ min: 100000000, max: 999999999 })
-            .toString()
-        },
-        phone_number:
-          '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }), // Required!
-        date_birth: birthDate.toISOString().split('T')[0],
-        place_of_birth: location.id
-      })
+      body: JSON.stringify(notification)
     }
   )
 
@@ -71,7 +70,6 @@ export async function sendBirthNotification(
       'Failed to create a birth notification',
       await createBirthNotification.text()
     )
-
     throw new Error('Failed to create a birth notification')
   }
 
@@ -176,7 +174,7 @@ export async function createBirthDeclaration(
   }
 
   const requestStart = Date.now()
-  const createDeclarationRes = await fetch('http://localhost:7070/graphql', {
+  const createDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -234,7 +232,7 @@ export async function createDeathDeclaration(
     add(birthDate, { days: 2 }),
     sub(declarationTime, { days: Math.random() * 20 })
   ])
-
+  const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const details = {
     createdAt: declarationTime.toISOString(),
     registration: {
@@ -243,7 +241,14 @@ export async function createDeathDeclaration(
         '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
       contactRelationship: 'Mother',
       draftId: faker.datatype.uuid(),
-      status: [{}]
+      status: [
+        {
+          timestamp: sub(declarationTime, {
+            seconds: timeFilling / 1000
+          }),
+          timeLoggedMS: timeFilling * 1000
+        }
+      ]
     },
     causeOfDeath: 'Natural cause',
     deceased: {
@@ -284,7 +289,7 @@ export async function createDeathDeclaration(
     },
     informant: {
       individual: {
-        birthDate: add(birthDate, { years: 20 })
+        birthDate: sub(declarationTime, { years: 20 })
           .toISOString()
           .split('T')[0],
         occupation: 'consultant',
@@ -324,7 +329,7 @@ export async function createDeathDeclaration(
     }
   }
 
-  const createDeclarationRes = await fetch('http://localhost:7070/graphql', {
+  const createDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -474,21 +479,21 @@ export const BIRTH_REGISTRATION_FIELDS = `
   educationalAttainment
   nationality
   identifier {
-      id
-      type
+    id
+    type
   }
   address {
-      type
-      line
-      district
-      state
-      city
-      postalCode
-      country
+    type
+    line
+    district
+    state
+    city
+    postalCode
+    country
   }
   telecom {
-      system
-      value
+    system
+    value
   }
   }
   registration {
@@ -501,17 +506,17 @@ export const BIRTH_REGISTRATION_FIELDS = `
       type
       contentType
       subject
-  }
-  status {
-      comments {
+    }
+    status {
+        comments {
         comment
+      }
+      type
+      timestamp
     }
     type
-    timestamp
-  }
-  type
-  trackingId
-  registrationNumber
+    trackingId
+    registrationNumber
   }
   attendantAtBirth
   weightAtBirth
@@ -525,7 +530,7 @@ export const BIRTH_REGISTRATION_FIELDS = `
       city
       postalCode
       country
-  }
+    }
   }
   presentAtBirthRegistration
 `
@@ -540,7 +545,7 @@ export async function fetchRegistration(
   user: User,
   compositionId: string
 ): Promise<BirthRegistration> {
-  const fetchDeclarationRes = await fetch('http://localhost:7070/graphql', {
+  const fetchDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -646,14 +651,6 @@ mother {
     familyName
   }
 }
-spouse {
-  id
-  name {
-    use
-    firstNames
-    familyName
-  }
-}
 medicalPractitioner {
   name
   qualification
@@ -706,7 +703,7 @@ export async function fetchDeathRegistration(
   user: User,
   compositionId: string
 ) {
-  const fetchDeclarationRes = await fetch('http://localhost:7070/graphql', {
+  const fetchDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

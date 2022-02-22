@@ -51,7 +51,7 @@ export async function getTokenForSystemClient(
   clientSecret: string
 ): Promise<string> {
   const authenticateResponse = await fetch(
-    'http://localhost:4040/authenticateSystemClient',
+    `${AUTH_API_HOST}/authenticateSystemClient`,
     {
       method: 'POST',
       headers: {

@@ -4,6 +4,7 @@ import { getFacilities, Location } from './location'
 
 import fetch from 'node-fetch'
 import { getToken, getTokenForSystemClient } from './auth'
+import { AUTH_API_HOST, GATEWAY_HOST } from './constants'
 
 export type User = {
   username: string
@@ -64,7 +65,7 @@ export async function createUser(
     ...overrides
   }
 
-  const createUserRes = await fetch('http://localhost:7070/graphql', {
+  const createUserRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -95,7 +96,7 @@ export async function createUser(
   }
   const userToken = await getToken(data.createOrUpdateUser.username, 'test')
 
-  const res = await fetch('http://localhost:7070/graphql', {
+  const res = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -131,7 +132,7 @@ export async function createUser(
 }
 
 export async function getUsers(token: string, locationId: string) {
-  const getUsersRes = await fetch('http://localhost:7070/graphql', {
+  const getUsersRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -161,9 +162,8 @@ export async function getUsers(token: string, locationId: string) {
       `
     })
   })
-  console.log('got reply, loading data')
 
-  const { data } = (await getUsersRes.json()) as {
+  const res = (await getUsersRes.json()) as {
     data: {
       searchUsers: {
         results: Array<{
@@ -174,9 +174,8 @@ export async function getUsers(token: string, locationId: string) {
       }
     }
   }
-  console.log('data loaded')
 
-  return data.searchUsers.results
+  return res.data.searchUsers.results
 }
 
 export async function createSystemClient(
@@ -185,18 +184,15 @@ export async function createSystemClient(
   scope: 'HEALTH' | 'NATIONAL_ID' | 'EXTERNAL_VALIDATION' | 'AGE_CHECK',
   systemAdmin: User
 ): Promise<User> {
-  const createUserRes = await fetch(
-    'http://localhost:3030/registerSystemClient',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${systemAdmin.token}`,
-        'x-correlation': `create-system-scope`
-      },
-      body: JSON.stringify({ scope })
-    }
-  )
+  const createUserRes = await fetch(`${AUTH_API_HOST}/registerSystemClient`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${systemAdmin.token}`,
+      'x-correlation': `create-system-scope`
+    },
+    body: JSON.stringify({ scope })
+  })
 
   const credentials: {
     client_id: string

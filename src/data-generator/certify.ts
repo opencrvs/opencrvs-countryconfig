@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import { User } from './users'
 
-import { log } from './util'
+import { idsToFHIRIds, log } from './util'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import {
@@ -9,13 +9,18 @@ import {
   BirthRegistrationInput,
   DeathRegistration
 } from './gateway'
-import { omit } from 'lodash'
+import { cloneDeep, omit } from 'lodash'
+import { GATEWAY_HOST } from './constants'
 
 export function createBirthCertificationDetails(
   createdAt: Date,
   declaration: BirthRegistration
 ) {
-  const withIdsRemoved = omit(declaration, [])
+  const withIdsRemoved = idsToFHIRIds(
+    omit(declaration, ['id', 'eventLocation.id', 'registration.type']),
+    ['id', 'mother.id', 'father.id', 'child.id', 'registration.id']
+  )
+
   return {
     ...withIdsRemoved,
     registration: {
@@ -53,22 +58,39 @@ export function createDeathCertificationDetails(
   createdAt: Date,
   declaration: DeathRegistration
 ) {
-  const withIdsRemoved = omit(declaration, [
-    'id',
-    'eventLocation.id',
-    'mother.id',
-    'father.id',
-    'informant.individual.id',
-    'informant.id',
-    'deceased.id',
-    'registration.id',
-    'registration.type'
-  ])
+  const withIdsRemoved = idsToFHIRIds(
+    omit(declaration, ['id', 'eventLocation.id', 'registration.type']),
+    [
+      'id',
+      'mother.id',
+      'father.id',
+      'informant.individual.id',
+      'informant.id',
+      'deceased.id',
+      'registration.id'
+    ]
+  )
 
-  return {
+  const data = {
     ...withIdsRemoved,
+    deceased: {
+      ...withIdsRemoved.deceased,
+      identifier: withIdsRemoved.deceased.identifier.filter(
+        ({ type }: { type: string }) => type != 'DEATH_REGISTRATION_NUMBER'
+      )
+    },
     registration: {
       ...withIdsRemoved.registration,
+      draftId: withIdsRemoved._fhirIDMap.composition,
+      certificates: [
+        {
+          hasShowedVerifiedDocument: false,
+          data: 'data:application/pdf;base64,' + '', //readFileSync(join(__dirname, './signature.pdf')).toString('base64'),
+          collector: {
+            relationship: 'INFORMANT'
+          }
+        }
+      ],
       status: [
         {
           timestamp: createdAt.toISOString(),
@@ -77,6 +99,18 @@ export function createDeathCertificationDetails(
       ]
     }
   }
+
+  return data
+}
+
+function withoutCertData(data: BirthRegistrationInput) {
+  const details = cloneDeep(data)
+  details.registration?.certificates?.forEach(cert => {
+    if (cert) {
+      cert.data = 'REDACTED'
+    }
+  })
+  return details
 }
 
 export async function markAsCertified(
@@ -87,13 +121,14 @@ export async function markAsCertified(
   const { token, username } = user
 
   const requestStart = Date.now()
+  console.log(JSON.stringify(withoutCertData(details)))
 
-  const certifyDeclarationRes = await fetch('http://localhost:7070/graphql', {
+  const certifyDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `registration-${id}`
+      'x-correlation': `certification-${id}`
     },
     body: JSON.stringify({
       query: `
@@ -110,12 +145,8 @@ export async function markAsCertified(
   const result = await certifyDeclarationRes.json()
   if (result.errors) {
     console.error(JSON.stringify(result.errors, null, 2))
-    details.registration?.certificates?.forEach(cert => {
-      if (cert) {
-        cert.data = 'REDACTED'
-      }
-    })
-    console.error(JSON.stringify(details))
+
+    console.error(JSON.stringify(withoutCertData(details)))
     throw new Error('Birth declaration could not be certified')
   }
 
@@ -139,12 +170,12 @@ export async function markDeathAsCertified(
 
   const requestStart = Date.now()
 
-  const certifyDeclarationRes = await fetch('http://localhost:7070/graphql', {
+  const certifyDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `registration-${id}`
+      'x-correlation': `death-certification-${id}`
     },
     body: JSON.stringify({
       query: `
@@ -161,7 +192,11 @@ export async function markDeathAsCertified(
   const result = await certifyDeclarationRes.json()
   if (result.errors) {
     console.error(JSON.stringify(result.errors, null, 2))
-
+    details.registration?.certificates?.forEach(cert => {
+      if (cert?.data) {
+        cert.data = 'REDACTED'
+      }
+    })
     console.error(JSON.stringify(details))
     throw new Error('Death declaration could not be certified')
   }

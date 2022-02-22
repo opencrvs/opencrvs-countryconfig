@@ -18,7 +18,7 @@ import {
   markDeathAsCertified
 } from './certify'
 import { BirthRegistrationInput, DeathRegistrationInput } from './gateway'
-
+import { BirthRegistration } from './gateway'
 import fetch from 'node-fetch'
 
 import {
@@ -55,13 +55,13 @@ export const VERIFICATION_CODE = '000000'
 
 // Create 30 users for each location:
 // 15 field agents, ten hospitals, four registration agents and one registrar
-export const FIELD_AGENTS = 5
-export const HOSPITAL_FIELD_AGENTS = 5
+export const FIELD_AGENTS = 15
+export const HOSPITAL_FIELD_AGENTS = 10
 export const REGISTRATION_AGENTS = 4
 export const LOCAL_REGISTRARS = 1
 
 const CONCURRENCY = 5
-const START_YEAR = 2021
+const START_YEAR = 2018
 const END_YEAR = 2022
 
 const completionBrackets = [
@@ -274,12 +274,12 @@ async function main() {
         // the days until today
         const currentDayNumber = getDayOfYear(today)
 
-        // Remove future dates from the arrays
-        days.splice(currentDayNumber - 1)
-
         // Adjust birth rates to the amount of days passed since the start of this year
         birthRates.female = (birthRates.female / days.length) * currentDayNumber
         birthRates.male = (birthRates.male / days.length) * currentDayNumber
+
+        // Remove future dates from the arrays
+        days.splice(currentDayNumber - 1)
       }
 
       const femalesPerDay = days.slice(0)
@@ -465,6 +465,7 @@ async function main() {
                     randomUser,
                     sex,
                     birthDate,
+                    submissionTime,
                     randomFacility
                   )
                   const declaration = await fetchRegistration(
@@ -511,13 +512,15 @@ async function main() {
                   log('Registering', id)
                 }
 
-                const registration = await markAsRegistered(
-                  randomRegistrar,
-                  id,
-                  registrationDetails
-                )
-
-                if (!declaredToday) {
+                let registration: BirthRegistration | null = null
+                if (!declaredToday || Math.random() > 0.5) {
+                  registration = await markAsRegistered(
+                    randomRegistrar,
+                    id,
+                    registrationDetails
+                  )
+                }
+                if (!declaredToday && registration) {
                   log('Certifying', id)
                   await markAsCertified(
                     registration.id,
@@ -526,7 +529,7 @@ async function main() {
                       add(new Date(submissionTime), {
                         days: 1
                       }),
-                      registrationDetails
+                      registration
                     ) as BirthRegistrationInput
                   )
                 } else {

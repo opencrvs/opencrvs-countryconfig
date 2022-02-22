@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import { User } from './users'
 
-import { log, RecursiveRequired } from './util'
+import { idsToFHIRIds, log, RecursiveRequired } from './util'
 import { BIRTH_REGISTRATION_FIELDS, DEATH_REGISTRATION_FIELDS } from './declare'
 import { Location } from './location'
 import { createAddressInput } from './address'
@@ -17,8 +17,9 @@ import {
   EducationType,
   LocationType
 } from './gateway'
-import { get, omit, set } from 'lodash'
+import { omit } from 'lodash'
 import { sub } from 'date-fns'
+import { GATEWAY_HOST } from './constants'
 
 // Hospital notifications have a limited set of data in them
 // This part amends the missing fields if needed
@@ -72,6 +73,9 @@ export async function createBirthRegistrationDetailsForNotification(
       dateOfMarriage: sub(new Date(declaration.child.birthDate), { years: 2 })
         .toISOString()
         .split('T')[0],
+      birthDate: sub(new Date(declaration.child.birthDate), { years: 20 })
+        .toISOString()
+        .split('T')[0],
       maritalStatus: declaration.mother.maritalStatus,
       address: createAddressInput(location, AddressType.PrivateHome),
       _fhirID: declaration.mother.id
@@ -80,33 +84,15 @@ export async function createBirthRegistrationDetailsForNotification(
   }
 }
 
-function IdsToFHIRIds(target: Record<string, any>, keys: string[]) {
-  return keys.reduce((memo, key) => {
-    const value = get(memo, key)
-
-    if (value === undefined) {
-      return memo
-    }
-
-    const fhirKey = key
-      .split('.')
-      .slice(0, -1)
-      .concat('_fhirID')
-      .join('.')
-    return set(set(memo, fhirKey, value), key, undefined)
-  }, target)
-}
-
 // Cleans unnecessary fields from declaration data to make it an input type
 export function createRegistrationDetails(
   createdAt: Date,
   declaration: BirthRegistration | DeathRegistration
 ) {
   const MINUTES_15 = 1000 * 60 * 15
-  // console.log('got', JSON.stringify(declaration))
 
   const withIdsRemoved = omit(
-    IdsToFHIRIds(declaration, [
+    idsToFHIRIds(declaration, [
       'registration.id',
       'child.id',
       'mother.id',
@@ -138,7 +124,6 @@ export function createRegistrationDetails(
       ]
     }
   }
-  // console.log('made', JSON.stringify(data))
 
   return data
 }
@@ -151,7 +136,7 @@ export async function markAsRegistered(
   const { token, username } = user
 
   const requestStart = Date.now()
-  const reviewDeclarationRes = await fetch('http://localhost:7070/graphql', {
+  const reviewDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -178,6 +163,7 @@ export async function markAsRegistered(
     console.error(JSON.stringify(details))
     throw new Error('Birth declaration was not registered')
   }
+
   const data = result.data.markBirthAsRegistered as BirthRegistration
 
   log(
@@ -198,7 +184,7 @@ export async function markDeathAsRegistered(
   const { token, username } = user
 
   const requestStart = Date.now()
-  const reviewDeclarationRes = await fetch('http://localhost:7070/graphql', {
+  const reviewDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
