@@ -42,12 +42,12 @@ export interface IIncomingAddress {
   }
 }
 
-export function createBundle(entries: fhir.BundleEntry[]) {
+export function createBundle(entries: fhir.BundleEntry[], lastModified: Date) {
   return {
     resourceType: 'Bundle',
     type: 'document',
     meta: {
-      lastUpdated: new Date().toISOString()
+      lastUpdated: lastModified.toISOString()
     },
     entry: entries
   }
@@ -57,12 +57,14 @@ export function createBirthComposition(
   childSectionRef: string,
   motherSectionRef: string,
   fatherSectionRef: string,
-  encounterSectionRef: string
+  encounterSectionRef: string,
+  createdAt: Date
 ) {
   const composition = createComposition(
     'BIRTH',
     childSectionRef,
-    encounterSectionRef
+    encounterSectionRef,
+    createdAt
   )
   composition.resource.section = composition.resource.section.concat([
     {
@@ -100,12 +102,14 @@ export function createDeathComposition(
   motherSectionRef: string,
   fatherSectionRef: string,
   informantSectionRef: string,
-  encounterSectionRef: string
+  encounterSectionRef: string,
+  createdAt: Date
 ) {
   const composition = createComposition(
     'DEATH',
     deceasedSectionRef,
-    encounterSectionRef
+    encounterSectionRef,
+    createdAt
   )
   composition.resource.section = composition.resource.section.concat([
     {
@@ -154,7 +158,8 @@ export function createDeathComposition(
 function createComposition(
   eventType: 'BIRTH' | 'DEATH',
   subjectRef: string,
-  encounterSectionRef: string
+  encounterSectionRef: string,
+  createdAt: Date
 ) {
   return {
     fullUrl: `urn:uuid:${uuid()}`,
@@ -191,7 +196,7 @@ function createComposition(
       subject: {
         reference: subjectRef
       },
-      date: new Date().toISOString(),
+      date: createdAt.toISOString(),
       author: [],
       title:
         eventType === 'BIRTH' ? 'Birth Notification' : 'Death Notification',

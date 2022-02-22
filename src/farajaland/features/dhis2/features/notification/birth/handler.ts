@@ -48,6 +48,7 @@ export interface IBirthNotification {
   phone_number: string
   date_birth: string
   place_of_birth: string
+  created_at: string
 }
 
 export async function birthNotificationHandler(
@@ -143,7 +144,8 @@ async function sendBirthNotification(
     child.fullUrl,
     mother.fullUrl,
     father.fullUrl,
-    encounter.fullUrl
+    encounter.fullUrl,
+    new Date(notification.created_at)
   )
   const lastRegLocation = placeOfBirthFacilityLocation
 
@@ -173,7 +175,7 @@ async function sendBirthNotification(
   entries.push(createWeightAtBirthObservation(encounter.fullUrl))
   entries.push(createAttendantAtBirthObservation(encounter.fullUrl))
 
-  const bundle = createBundle(entries)
+  const bundle = createBundle(entries, new Date(notification.created_at))
 
   const response = await postBundle(bundle, token)
 

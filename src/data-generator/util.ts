@@ -1,3 +1,5 @@
+import { get, set } from 'lodash'
+
 export function log(...params: Parameters<typeof console.log>) {
   console.log(new Date().toISOString(), ...params)
 }
@@ -17,6 +19,7 @@ export function getRandomFromBrackets(
       .reduce((m, n) => m + n.weight, 0)
     return total > completion
   })!
+
   const completionDays = getRandomInt(index.range[0], index.range[1])
   return completionDays
 }
@@ -64,3 +67,20 @@ export type RecursiveRequired<T> = Required<
     [P in keyof T]: Exclude<RecursiveRequired<T[P]>, null>
   }
 >
+
+export function idsToFHIRIds(target: Record<string, any>, keys: string[]) {
+  return keys.reduce((memo, key) => {
+    const value = get(memo, key)
+
+    if (value === undefined) {
+      return memo
+    }
+
+    const fhirKey = key
+      .split('.')
+      .slice(0, -1)
+      .concat('_fhirID')
+      .join('.')
+    return set(set(memo, fhirKey, value), key, undefined)
+  }, target)
+}
