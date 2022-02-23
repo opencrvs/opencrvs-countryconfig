@@ -443,7 +443,8 @@ export async function createTaskEntry(
   eventType: 'BIRTH' | 'DEATH',
   contactPerson: string,
   contactNumber: string,
-  dhis2Identifier: string | undefined
+  dhis2Identifier: string | undefined,
+  createdAt: Date
 ) {
   const taskResource: fhir.Task = {
     resourceType: 'Task',
@@ -473,7 +474,7 @@ export async function createTaskEntry(
         valueString: 'N/A' // don't want to populate any list for notifications
       }
     ],
-    lastModified: new Date().toISOString()
+    lastModified: createdAt.toISOString()
   }
 
   if (lastRegLocation.id) {
