@@ -16,7 +16,7 @@ context('Performance view', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
   it('Tests from application to certification using minimum input', () => {
-    cy.declareApplicationWithMinimumInput('Euan', 'Millar')
+    cy.registerApplicationWithMaximumInput('Pricila', 'Mark')
     cy.wait(1000)
   })
  
@@ -28,10 +28,11 @@ context('Performance view', () => {
      //review application
     cy.reviewForm()
      //register application
-    cy.submitForm()
-
-    //go to Navigation performance
+    // cy.submitForm()
+    cy.submitAplication()
     cy.get('#navigation_performance').click()
+    //go to Navigation performance
+    // cy.get('#navigation_performance').click()
     cy.get('#operational-select').click()
     cy.get('#react-select-2-option-1').click()
     cy.get('#row_0 button')

@@ -35,6 +35,7 @@ context('Death Integration Test', () => {
 
   it('Login as registrar to register minimum input death application',() => {
     cy.login('registrar')
+
     // CREATE PIN
     cy.createPin()
      //review application
@@ -42,7 +43,7 @@ context('Death Integration Test', () => {
      //register application
     cy.submitForm()
     // LOG OUT
-    cy.logOut()
+    // cy.logOut()
   }) 
   
   it('Tests from application to registration using maximum input', () => {
@@ -58,7 +59,7 @@ context('Death Integration Test', () => {
      //register application
     cy.submitForm()
      // LOG OUT
-    cy.logOut()
+    // cy.logOut()
   }) 
   
 
@@ -77,7 +78,7 @@ context('Death Integration Test', () => {
       //Reject Application
     cy.rejectApplication()
       //logout
-   cy.logOut()
+  //  cy.logOut()
   }) 
   
 
@@ -96,7 +97,7 @@ context('Death Integration Test', () => {
       //Reject Application
     cy.rejectApplication()
       //logout
-   cy.logOut()
+  //  cy.logOut()l
   }) 
   
   
