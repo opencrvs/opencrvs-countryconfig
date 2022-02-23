@@ -137,10 +137,10 @@ context('Birth Integration Test', () => {
 
    //register Application
   cy.submitForm()
-
+  cy.wait(1000)
     // LOG OUT
-  cy.get('#ProfileMenuToggleButton').click()
-  cy.get('#ProfileMenuItem1').click()
+  // cy.get('#ProfileMenuToggleButton').click()
+  // cy.get('#ProfileMenuItem1').click()
   })  
 
 })
