@@ -10,13 +10,10 @@
 version: '3.3'
 
 services:
-<<<<<<< HEAD
   notification:
     environment:
       - LANGUAGES=en
 
-=======
->>>>>>> develop
   countryconfig:
     image: opencrvs/ocrvs-farajaland:${COUNTRY_CONFIG_VERSION:-latest}
     restart: unless-stopped
