@@ -158,7 +158,8 @@ async function sendBirthNotification(
     'BIRTH',
     'MOTHER',
     contactNumber,
-    notification.dhis2_event
+    notification.dhis2_event,
+    new Date(notification.created_at)
   )
 
   const entries: fhir.BundleEntry[] = []
