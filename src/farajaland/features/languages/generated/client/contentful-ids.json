@@ -1398,6 +1398,7 @@
   "validationsValidDeathRegistrationNumber": "validations.validDeathRegistrationNumber",
   "validationsValidDrivingLicenseNumber": "validations.validDrivingLicenseNumber",
   "validationsValidNationalIDLengths": "validations.validNationalIDLengths",
+  "validationsduplicateNationalID": "validations.duplicateNationalID",
   "validationsValidNationalId": "validations.validNationalId",
   "validationsValidPassportNumber": "validations.validPassportNumber",
   "ConfigPreviewTemplate": "config.previewTemplate",

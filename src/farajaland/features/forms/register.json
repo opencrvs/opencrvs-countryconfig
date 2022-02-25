@@ -2233,6 +2233,10 @@
                     {
                       "operation": "validIDNumber",
                       "parameters":["NATIONAL_ID"]
+                    },
+                    {
+                      "operation": "duplicateIDNumber",
+                      "parameters":["deceased.iD"]
                     }
                   ],
                   "conditionals": [],
@@ -4000,6 +4004,10 @@
                     {
                       "operation": "validIDNumber",
                       "parameters":["NATIONAL_ID"]
+                    },
+                    {
+                      "operation": "duplicateIDNumber",
+                      "parameters":["father.iD"]
                     }
                   ],
                   "conditionals": [],
@@ -6463,6 +6471,10 @@
                     {
                       "operation": "validIDNumber",
                       "parameters":["NATIONAL_ID"]
+                    },
+                    {
+                      "operation": "duplicateIDNumber",
+                      "parameters":["mother.iD"]
                     }
                   ],
                   "conditionals": [
@@ -8695,6 +8707,10 @@
                     {
                       "operation": "validIDNumber",
                       "parameters":["NATIONAL_ID"]
+                    },
+                    {
+                      "operation": "duplicateIDNumber",
+                      "parameters":["informant.applicantID"]
                     }
                   ],
                   "conditionals": [],
@@ -10805,6 +10821,10 @@
                     {
                       "operation": "validIDNumber",
                       "parameters":["NATIONAL_ID"]
+                    },
+                    {
+                      "operation": "duplicateIDNumber",
+                      "parameters":["deceased.iD"]
                     }
                   ],
                   "conditionals": [],
