@@ -516,7 +516,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
 
   // FATHER DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#iD').type('123456789')
+  cy.get('#iD').type('912345678')
   cy.get('#socialSecurityNo').type('123456789')
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
@@ -641,7 +641,7 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.get('#causeOfDeathEstablished_false').click()
   cy.goToNextFormSection()
   // APPLICANT DETAILS
-  cy.get('#applicantID').type('123456789')
+  cy.get('#applicantID').type('912345678')
   cy.get('#firstNamesEng').type('Soumita')
   cy.get('#familyNameEng').type('Aktar')
   cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
@@ -754,7 +754,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.goToNextFormSection()
   // APPLICANT DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#applicantID').type('123456789')
+  cy.get('#applicantID').type('912345678')
   cy.get('#firstNamesEng').type('Anne')
   cy.get('#familyNameEng').type('Salim')
   cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
