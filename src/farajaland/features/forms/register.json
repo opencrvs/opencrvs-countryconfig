@@ -1277,12 +1277,24 @@
                   "inputFieldWidth": "78px"
                 },
                 {
+                  "name": "placeOfBirthTitle",
+                  "type": "SUBSECTION",
+                  "label": {
+                    "defaultMessage": "Place of delivery",
+                    "description": "Title for place of birth sub section",
+                    "id": "form.field.label.placeOfBirthPreview"
+                  },
+                  "previewGroup": "placeOfBirtrh",
+                  "initialValue": "",
+                  "validate": []
+                },
+                {
                   "name": "placeOfBirth",
                   "type": "SELECT_WITH_OPTIONS",
                   "previewGroup": "placeOfBirth",
                   "ignoreFieldLabelOnErrorMessage": true,
                   "label": {
-                    "defaultMessage": "Place of delivery",
+                    "defaultMessage": "Location",
                     "description": "Label for form field: Place of delivery",
                     "id": "form.field.label.placeOfBirth"
                   },
@@ -1425,7 +1437,8 @@
                   },
                   "dynamicOptions": {
                     "resource": "locations",
-                    "dependency": "country"
+                    "dependency": "country",
+                    "initialValue": "agentDefault"
                   },
                   "conditionals": [
                     {
@@ -1484,7 +1497,8 @@
                   },
                   "dynamicOptions": {
                     "resource": "locations",
-                    "dependency": "state"
+                    "dependency": "state",
+                    "initialValue": "agentDefault"
                   },
                   "conditionals": [
                     {
@@ -1539,7 +1553,7 @@
                   "options": [
                     {
                       "label": {
-                        "defaultMessage": "Urban address",
+                        "defaultMessage": "Urban",
                         "id": "form.field.label.urban",
                         "description": "Label for form field checkbox option Urban"
                       },
@@ -1547,7 +1561,7 @@
                     },
                     {
                       "label": {
-                        "defaultMessage": "Rural address",
+                        "defaultMessage": "Rural",
                         "id": "form.field.label.rural",
                         "description": "Label for form field checkbox option Rural"
                       },
@@ -1555,6 +1569,7 @@
                     }
                   ],
                   "initialValue": "URBAN",
+                  "flexDirection": "row",
                   "required": false,
                   "hideValueInPreview": true,
                   "previewGroup": "placeOfBirth",
@@ -2121,8 +2136,8 @@
                   "id": "placeOfBirth",
                   "label": {
                     "defaultMessage": "Place of delivery",
-                    "description": "Label for form field: Place of delivery",
-                    "id": "form.field.label.placeOfBirth"
+                    "description": "Title for place of birth sub section",
+                    "id": "form.field.label.placeOfBirthPreview"
                   },
                   "fieldToRedirect": "placeOfBirth"
                 },
@@ -2499,7 +2514,7 @@
                   "options": [
                     {
                       "label": {
-                        "defaultMessage": "Urban address",
+                        "defaultMessage": "Urban",
                         "id": "form.field.label.urban",
                         "description": "Label for form field checkbox option Urban"
                       },
@@ -2507,7 +2522,7 @@
                     },
                     {
                       "label": {
-                        "defaultMessage": "Rural address",
+                        "defaultMessage": "Rural",
                         "id": "form.field.label.rural",
                         "description": "Label for form field checkbox option Rural"
                       },
@@ -2515,6 +2530,7 @@
                     }
                   ],
                   "initialValue": "URBAN",
+                  "flexDirection": "row",
                   "previewGroup": "permanentAddress",
                   "hideValueInPreview": true,
                   "required": false,
@@ -3920,6 +3936,7 @@
         {
           "id": "mother",
           "viewType": "form",
+          "replaceable": true,
           "name": {
             "defaultMessage": "Mother",
             "description": "Form section name for Mother",
@@ -4896,7 +4913,7 @@
                   "options": [
                     {
                       "label": {
-                        "defaultMessage": "Urban address",
+                        "defaultMessage": "Urban",
                         "id": "form.field.label.urban",
                         "description": "Label for form field checkbox option Urban"
                       },
@@ -4904,7 +4921,7 @@
                     },
                     {
                       "label": {
-                        "defaultMessage": "Rural address",
+                        "defaultMessage": "Rural",
                         "id": "form.field.label.rural",
                         "description": "Label for form field checkbox option Rural"
                       },
@@ -4912,6 +4929,7 @@
                     }
                   ],
                   "initialValue": "URBAN",
+                  "flexDirection": "row",
                   "previewGroup": "permanentAddress",
                   "hideValueInPreview": true,
                   "required": false,
@@ -5679,7 +5697,7 @@
                   "options": [
                     {
                       "label": {
-                        "defaultMessage": "Urban address",
+                        "defaultMessage": "Urban",
                         "id": "form.field.label.urban",
                         "description": "Label for form field checkbox option Urban"
                       },
@@ -5687,7 +5705,7 @@
                     },
                     {
                       "label": {
-                        "defaultMessage": "Rural address",
+                        "defaultMessage": "Rural",
                         "id": "form.field.label.rural",
                         "description": "Label for form field checkbox option Rural"
                       },
@@ -5695,6 +5713,7 @@
                     }
                   ],
                   "initialValue": "URBAN",
+                  "flexDirection": "row",
                   "previewGroup": "currentAddress",
                   "hideValueInPreview": true,
                   "required": false,
@@ -6366,6 +6385,7 @@
         {
           "id": "father",
           "viewType": "form",
+          "replaceable": true,
           "name": {
             "defaultMessage": "Father",
             "description": "Form section name for Father",
@@ -7036,7 +7056,7 @@
                   "options": [
                     {
                       "label": {
-                        "defaultMessage": "Urban address",
+                        "defaultMessage": "Urban",
                         "id": "form.field.label.urban",
                         "description": "Label for form field checkbox option Urban"
                       },
@@ -7044,7 +7064,7 @@
                     },
                     {
                       "label": {
-                        "defaultMessage": "Rural address",
+                        "defaultMessage": "Rural",
                         "id": "form.field.label.rural",
                         "description": "Label for form field checkbox option Rural"
                       },
@@ -7052,6 +7072,7 @@
                     }
                   ],
                   "initialValue": "URBAN",
+                  "flexDirection": "row",
                   "previewGroup": "permanentAddress",
                   "hideValueInPreview": true,
                   "required": false,
@@ -9102,7 +9123,7 @@
                   "options": [
                     {
                       "label": {
-                        "defaultMessage": "Urban address",
+                        "defaultMessage": "Urban",
                         "id": "form.field.label.urban",
                         "description": "Label for form field checkbox option Urban"
                       },
@@ -9110,7 +9131,7 @@
                     },
                     {
                       "label": {
-                        "defaultMessage": "Rural address",
+                        "defaultMessage": "Rural",
                         "id": "form.field.label.rural",
                         "description": "Label for form field checkbox option Rural"
                       },
@@ -9118,6 +9139,7 @@
                     }
                   ],
                   "initialValue": "URBAN",
+                  "flexDirection": "row",
                   "previewGroup": "permanentAddress",
                   "hideValueInPreview": true,
                   "required": false,
@@ -10064,7 +10086,7 @@
                   "options": [
                     {
                       "label": {
-                        "defaultMessage": "Urban address",
+                        "defaultMessage": "Urban",
                         "id": "form.field.label.urban",
                         "description": "Label for form field checkbox option Urban"
                       },
@@ -10072,7 +10094,7 @@
                     },
                     {
                       "label": {
-                        "defaultMessage": "Rural address",
+                        "defaultMessage": "Rural",
                         "id": "form.field.label.rural",
                         "description": "Label for form field checkbox option Rural"
                       },
@@ -10080,6 +10102,7 @@
                     }
                   ],
                   "initialValue": "URBAN",
+                  "flexDirection": "row",
                   "required": false,
                   "hideValueInPreview": true,
                   "validate": [],
@@ -11232,7 +11255,7 @@
                   "options": [
                     {
                       "label": {
-                        "defaultMessage": "Urban address",
+                        "defaultMessage": "Urban",
                         "id": "form.field.label.urban",
                         "description": "Label for form field checkbox option Urban"
                       },
@@ -11240,7 +11263,7 @@
                     },
                     {
                       "label": {
-                        "defaultMessage": "Rural address",
+                        "defaultMessage": "Rural",
                         "id": "form.field.label.rural",
                         "description": "Label for form field checkbox option Rural"
                       },
@@ -11248,6 +11271,7 @@
                     }
                   ],
                   "initialValue": "URBAN",
+                  "flexDirection": "row",
                   "previewGroup": "permanentAddress",
                   "hideValueInPreview": true,
                   "required": false,
@@ -11973,6 +11997,7 @@
                     "description": "Label for form field: Given names in english",
                     "id": "form.field.label.deceasedFathersGivenNamesEng"
                   },
+                  "maxLength": 32,
                   "required": false,
                   "initialValue": "",
                   "validate": [
@@ -12002,6 +12027,7 @@
                   },
                   "required": true,
                   "initialValue": "",
+                  "maxLength": 32,
                   "validate": [
                     {
                       "operation": "englishOnlyNameFormat"
@@ -12189,6 +12215,7 @@
                           "description": "Label for form field: Given names in english",
                           "id": "form.field.label.deceasedSpousesGivenNamesEng"
                         },
+                        "maxLength": 32,
                         "required": false,
                         "initialValue": "",
                         "extraValue": "Yes",
@@ -12227,6 +12254,7 @@
                           "description": "Label for form field: Family name in english",
                           "id": "form.field.label.deceasedSpousesFamilyNameEng"
                         },
+                        "maxLength": 32,
                         "required": true,
                         "initialValue": "",
                         "extraValue": "Yes",

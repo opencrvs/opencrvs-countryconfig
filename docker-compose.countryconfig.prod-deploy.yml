@@ -23,7 +23,7 @@ services:
       - NODE_ENV=production
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
-      - OPENHIM_URL=http://openhim-core:5001
+      - OPENHIM_URL=http://openhim-core:5001/fhir
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -60,6 +60,4 @@ secrets:
   clickatell-password:
     external: true
   clickatell-api-id:
-    external: true
-  telegram-api-key:
     external: true

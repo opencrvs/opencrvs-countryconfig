@@ -21,7 +21,6 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production # NODE_ENV must always be production in countryconfig in order to send correct window.config js files to login and client react apps
-      - QA_ENV=true
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
       - OPENHIM_URL=http://openhim-core:5001/fhir
