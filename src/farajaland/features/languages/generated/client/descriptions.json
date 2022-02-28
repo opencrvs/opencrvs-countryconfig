@@ -711,6 +711,7 @@
     "validations.validDeathRegistrationNumber": "The error message that appears when an invalid value is used as drn",
     "validations.validNationalId": "The error message that appears when an invalid value is used as nid",
     "validations.validNationalIDLengths": "Nid valid lengths",
+    "validations.duplicateNationalID": "The error message that appears when National IDs are not unique",
     "validations.validPassportNumber": "The error message that appears when an invalid value is used as passport number",
     "validations.validDrivingLicenseNumber": "The error message that appeards when an invalid value is used as driving license number",
     "print.certificate.section.title": "The title of print certificate action",
