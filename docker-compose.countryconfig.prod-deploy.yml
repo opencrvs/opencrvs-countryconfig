@@ -48,6 +48,16 @@ services:
     environment:
       - LANGUAGES=en
 
+  auth:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  user-mgnt:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+
 secrets:
   jwt-public-key.{{ts}}:
     external: true
