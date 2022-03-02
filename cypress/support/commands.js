@@ -169,7 +169,6 @@ Cypress.Commands.add('submitAplication', () => {
 
 })
 Cypress.Commands.add('logOut',()=>{
-  // cy.get('.sc-cCKzRf').click()
   // cy.get('#ProfileMenuToggleButton').click()
   // cy.get('#ProfileMenuItem1').click()
 })
@@ -474,7 +473,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
 
   // MOTHER DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#iD').type('123456789')
+  cy.get('#iD').type('193456789')
   cy.get('#socialSecurityNo').type('123456789')
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type(lastName)
@@ -609,14 +608,14 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
     '07' + getRandomNumbers(8)
   )
   cy.wait(1000)
+  cy.clock(new Date().getTime())
   cy.goToNextFormSection()
   // DECEASED DETAILS
- 
+  
   cy.get('#iD').type('123456789')
   cy.get('#socialSecurityNo').type('123456789')
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
-  cy.clock(new Date().getTime())
   cy.get('#birthDate-dd').type('16')
   cy.get('#birthDate-mm').type('06')
   cy.get('#birthDate-yyyy').type('1988')
@@ -626,7 +625,7 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   cy.selectOption('#districtPermanent', 'Chembe', 'Chembe')
   cy.goToNextFormSection()
   // EVENT DETAILS
-  cy.clock(new Date().getTime())
+ 
   cy.get('#deathDate-dd').type('18')
   cy.get('#deathDate-mm').type('01')
   cy.get('#deathDate-yyyy').type('2022')
