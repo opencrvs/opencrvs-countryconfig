@@ -31,7 +31,7 @@ import {
   statisticsHandler as farajalandStatisticsHandler
 } from '@countryconfig/farajaland/features/administrative/handler'
 import { facilitiesHandler as farajalandFacilitiesHandler } from '@countryconfig/farajaland/features/facilities/handler'
-import { definitionsHandler as farajalandDefinitionsHandler } from '@countryconfig/farajaland/features/definitions/handler'
+import { contentHandler as farajalandContentHandler } from '@countryconfig/farajaland/features/content/handler'
 import { assetHandler as farajalandAssetHandler } from '@countryconfig/farajaland/features/assets/handler'
 import {
   generatorHandler as farajalandGeneratorHandler,
@@ -201,12 +201,12 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/definitions/{application}',
-    handler: farajalandDefinitionsHandler,
+    path: '/content/{application}',
+    handler: farajalandContentHandler,
     options: {
       tags: ['api'],
       description:
-        'Serves definitional metadata like form definitions, language files and pdf templates'
+        'Serves language content'
     }
   })
 
