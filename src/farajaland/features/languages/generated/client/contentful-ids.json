@@ -1300,6 +1300,7 @@
   "systemUserSettingsPasswordUpdated": "system.user.settings.passwordUpdated",
   "systemUserSettingsAvatarUpdating": "system.user.settings.avatarUpdating",
   "systemUserSettingsAvatarUpdated": "system.user.settings.avatarUpdated",
+  "recordAuditNoName": "recordAudit.noName",
   "recordAuditStatus": "recordAudit.status",
   "recordAuditNoStatus": "recordAudit.noStatus",
   "recordAuditType": "recordAudit.type",

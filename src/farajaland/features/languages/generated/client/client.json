@@ -1255,6 +1255,7 @@
         "system.user.settings.passwordUpdated": "Password was successfully changed",
         "system.user.settings.avatarUpdating": "Updating profile image",
         "system.user.settings.avatarUpdated": "Profile image successfully updated",
+        "recordAudit.noName": "No name provided",
         "recordAudit.status": "Status",
         "recordAudit.noStatus": "No status",
         "recordAudit.type": "Event",

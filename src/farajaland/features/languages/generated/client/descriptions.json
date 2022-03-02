@@ -665,6 +665,7 @@
     "system.user.settings.passwordUpdated": "Password change message on success",
     "system.user.settings.avatarUpdating": "Profile image message when uploading",
     "system.user.settings.avatarUpdated": "Profile image change message on success",
+    "recordAudit.noName": "Label for name not available",
     "recordAudit.status": "Label for status",
     "recordAudit.noStatus": "Label for status not available",
     "recordAudit.type": "Label for event type",
