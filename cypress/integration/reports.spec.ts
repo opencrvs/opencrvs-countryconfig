@@ -25,7 +25,7 @@ context('Reports Integration Test', () => {
     cy.get('#navigation_performance').click()
     // INPUT SEARCH LOCATION
     cy.get('#change-location-link').click()
-    cy.get('#locationSearchInput').type('Lusaka')
+    cy.get('#locationSearchInput').type('Sulaka')
     cy.initializeFakeTimers()
     cy.get('#locationSearchInput')
       .siblings('ul')
@@ -37,8 +37,8 @@ context('Reports Integration Test', () => {
     cy.get('#location-search-btn').click()
 
     //select Reports
-    cy.selectOption('#operational-select','Operational','Reports')
-    
+    cy.selectOption('#operational-select', 'Operational', 'Reports')
+
     // CLICK MONTHLY REPORTS BIRTH CURRENT MONTH ROW FIRST COLUMN
     cy.get('#row_' + new Date().getMonth())
       .first()
@@ -49,8 +49,5 @@ context('Reports Integration Test', () => {
     cy.clock()
     cy.wait(100)
     cy.tick(20000)
-
-    
-
   })
 })
