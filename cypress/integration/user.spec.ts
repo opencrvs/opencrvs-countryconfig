@@ -25,7 +25,7 @@ context('User Integration Test', () => {
     cy.get('#firstNamesEng').type('Naeem')
     cy.get('#familyNameEng').type('Ahmed')
     cy.get('#phoneNumber').type('0752658545')
-    cy.get('#nid').type('199475632')
+    //cy.get('#nid').type('199475632')
     cy.selectOption('#role', 'Registration Clerk', 'Registration Clerk')
     cy.selectOption('#type', 'Data entry clerk', 'Data entry clerk')
     cy.get('#device').type('Xiamoi MI 8')

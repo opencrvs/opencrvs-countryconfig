@@ -12,7 +12,8 @@
 import * as Hapi from '@hapi/hapi'
 import {
   ILocationDataResponse,
-  getLocations
+  getLocations,
+  getStatistics
 } from '@countryconfig/farajaland/features/administrative/service/service'
 
 export async function locationsHandler(
@@ -22,6 +23,19 @@ export async function locationsHandler(
   let result
   try {
     result = await getLocations()
+  } catch (err) {
+    throw Error(err)
+  }
+  return result
+}
+
+export async function statisticsHandler(
+  request: Hapi.Request,
+  h: Hapi.ResponseToolkit
+) {
+  let result
+  try {
+    result = await getStatistics()
   } catch (err) {
     throw Error(err)
   }

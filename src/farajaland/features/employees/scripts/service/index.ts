@@ -180,7 +180,7 @@ export async function composeAndSavePractitioners(
     )
 
     let pass: ISaltedHash
-    if (environment !== 'PRODUCTION') {
+    if (environment !== 'production') {
       pass = generateSaltedHash(testUserPassword)
     } else {
       const generatedPassword = niceware.generatePassphrase(8).join('-')
@@ -213,7 +213,7 @@ export async function composeAndSavePractitioners(
       role: practitioner.role,
       type: practitioner.type,
       scope: getScope(practitioner.role, practitioner.environment),
-      status: 'active',
+      status: practitioner.environment === "development" ? 'active' : 'pending',
       practitionerId,
       primaryOfficeId,
       catchmentAreaIds,
@@ -224,7 +224,7 @@ export async function composeAndSavePractitioners(
   // Create users
   createUsers(users)
 
-  if (environment === 'PRODUCTION') {
+  if (environment === 'production') {
     fs.writeFileSync(
       `${EMPLOYEES_SOURCE}generated/login-details.json`,
       JSON.stringify(loginDetails, null, 2)

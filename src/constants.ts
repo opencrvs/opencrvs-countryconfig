@@ -11,6 +11,8 @@
  */
 export const TEST_SOURCE = `${process.cwd()}/src/tests/`
 export const FHIR_URL = process.env.FHIR_URL || 'http://localhost:3447/fhir'
+export const OPENHIM_URL =
+  process.env.OPENHIM_URL || 'http://localhost:5001/fhir'
 export const ORG_URL = 'http://opencrvs.org'
 export const MONGO_URL =
   process.env.MONGO_URL || 'mongodb://localhost/user-mgnt'
