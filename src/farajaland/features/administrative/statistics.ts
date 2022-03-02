@@ -1,5 +1,6 @@
 import * as csv2json from 'csv2json'
 import { createReadStream } from 'fs'
+import { sumBy, uniq } from 'lodash'
 import { join } from 'path'
 
 type Year = {
@@ -12,34 +13,73 @@ type Year = {
 }
 
 export type LocationStatistic = {
-  name: string
+  statisticalID: string
   years: Year[]
 }
 
-export async function getStatistics() {
-  const data = await new Promise<
-    Array<Record<string, string> & { reference: string }>
-  >((resolve, reject) => {
-    const chunks: string[] = []
-    createReadStream(
-      join(__dirname, './source/crude_birth_rates_by_division.csv')
+type LocationItem = {
+  statisticalID: string
+  name: string
+  partOf: string
+  code: string
+  physicalType: string
+}
+
+export async function getStatisticsForProvinces() {
+  const districts = await readCSVToJSON<LocationItem[]>(
+    './source/districts.csv'
+  )
+  const provinces = await readCSVToJSON<LocationItem[]>(
+    './source/provinces.csv'
+  )
+  const districtStatistics = await getStatistics()
+
+  const statistics = provinces.map<LocationStatistic>(province => {
+    const districtsInProvince = districts
+      .filter(({ partOf }) => partOf === `Location/${province.statisticalID}`)
+      .map(({ statisticalID }) => statisticalID)
+    const statsForProvince = districtStatistics.filter(({ statisticalID }) =>
+      districtsInProvince.includes(statisticalID)
     )
-      .pipe(
-        csv2json({
-          separator: ','
-        })
-      )
-      .on('data', chunk => chunks.push(chunk))
-      .on('error', reject)
-      .on('end', () => {
-        resolve(JSON.parse(chunks.join('')))
+
+    const allYears = uniq(
+      statsForProvince.flatMap(s => s.years.map(({ year }) => year))
+    ).sort()
+
+    return {
+      statisticalID: province.statisticalID,
+      years: allYears.map(y => {
+        const allStatsForThisYear = statsForProvince.flatMap(s =>
+          s.years.filter(({ year }) => year === y)
+        )
+        return {
+          year: y,
+          male_population: sumBy(allStatsForThisYear, 'male_population'),
+          female_population: sumBy(allStatsForThisYear, 'female_population'),
+          population: sumBy(allStatsForThisYear, 'population'),
+          male_female_ratio:
+            sumBy(allStatsForThisYear, 'male_female_ratio') /
+            allStatsForThisYear.length,
+          crude_birth_rate:
+            sumBy(allStatsForThisYear, 'crude_birth_rate') /
+            allStatsForThisYear.length
+        }
       })
+    }
   })
 
+  return statistics
+}
+
+export async function getStatistics() {
+  const data = await readCSVToJSON<
+    Array<Record<string, string> & { statisticalID: string }>
+  >('./source/crude_birth_rates_by_division.csv')
+
   return data.map<LocationStatistic>(item => {
-    const { reference, ...yearKeys } = item
+    const { statisticalID, ...yearKeys } = item
     return {
-      name: reference,
+      statisticalID: statisticalID,
       years: Object.keys(yearKeys)
         .map(key => key.split('_').pop())
         .map(Number)
@@ -53,5 +93,21 @@ export async function getStatistics() {
           crude_birth_rate: parseFloat(yearKeys[`crude_birth_rate_${year}`])
         }))
     }
+  })
+}
+async function readCSVToJSON<T>(filename: string) {
+  return await new Promise<T>((resolve, reject) => {
+    const chunks: string[] = []
+    createReadStream(join(__dirname, filename))
+      .pipe(
+        csv2json({
+          separator: ','
+        })
+      )
+      .on('data', chunk => chunks.push(chunk))
+      .on('error', reject)
+      .on('end', () => {
+        resolve(JSON.parse(chunks.join('')))
+      })
   })
 }

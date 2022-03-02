@@ -169,6 +169,7 @@ export async function getUsers(token: string, locationId: string) {
         results: Array<{
           username: string
           role: Role
+          type: string
           primaryOffice: { id: string }
         }>
       }
@@ -289,7 +290,8 @@ export async function createUsers(
   for (let i = fieldAgents.length; i < config.fieldAgents; i++) {
     fieldAgents.push(
       await createUser(token, randomOffice.id, {
-        role: 'FIELD_AGENT'
+        role: 'FIELD_AGENT',
+        type: 'FIELD_AGENT'
       })
     )
   }
@@ -299,7 +301,8 @@ export async function createUsers(
     const systemAdmin =
       systemAdmins[i] ||
       (await createUser(token, randomOffice.id, {
-        role: 'LOCAL_SYSTEM_ADMIN'
+        role: 'LOCAL_SYSTEM_ADMIN',
+        type: 'LOCAL_SYSTEM_ADMIN'
       }))
 
     hospitals.push(
@@ -312,7 +315,8 @@ export async function createUsers(
   for (let i = registrationAgents.length; i < config.registrationAgents; i++) {
     registrationAgents.push(
       await createUser(token, randomOffice.id, {
-        role: 'REGISTRATION_AGENT'
+        role: 'REGISTRATION_AGENT',
+        type: 'REGISTRATION_AGENT'
       })
     )
   }
@@ -322,7 +326,8 @@ export async function createUsers(
   for (let i = registrars.length; i < config.localRegistrars; i++) {
     registrars.push(
       await createUser(token, randomOffice.id, {
-        role: 'LOCAL_REGISTRAR'
+        role: 'LOCAL_REGISTRAR',
+        type: 'LOCAL_REGISTRAR'
       })
     )
   }

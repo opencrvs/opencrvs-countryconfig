@@ -218,6 +218,7 @@ export async function createBirthDeclaration(
 
 export async function createDeathDeclaration(
   { username, token }: User,
+  deathTime: Date,
   sex: 'male' | 'female',
   declarationTime: Date,
   location: Location
@@ -227,11 +228,8 @@ export async function createDeathDeclaration(
 
   const requestStart = Date.now()
 
-  const birthDate = sub(declarationTime, { days: Math.random() * 365 * 20 })
-  const deathDay = max([
-    add(birthDate, { days: 2 }),
-    sub(declarationTime, { days: Math.random() * 20 })
-  ])
+  const birthDate = sub(deathTime, { years: Math.random() * 100 })
+  const deathDay = deathTime
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const details = {
     createdAt: declarationTime.toISOString(),
@@ -726,4 +724,59 @@ export async function fetchDeathRegistration(
   }
 
   return res.data.fetchDeathRegistration
+}
+
+export async function fetchAlreadyGeneratedInterval(
+  token: string,
+  locationIds: string[]
+) {
+  const fetchFirst = async (sort: 'desc' | 'asc') => {
+    const res = await fetch(GATEWAY_HOST, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        'x-correlation': `fetch-interval-oldest`
+      },
+      body: JSON.stringify({
+        query: `query data($sort: String, $locationIds: [String]) {
+          searchEvents(sort: $sort, locationIds: $locationIds, sortColumn: "dateOfApplication", count: 1) {
+            results {
+              registration {
+                dateOfApplication
+              }
+            }
+          }
+        }
+        `,
+        variables: {
+          sort,
+          locationIds
+        }
+      })
+    })
+    const body = await res.json()
+
+    if (body.errors) {
+      log(body.errors)
+      throw new Error('Fetching generated intervals failed')
+    }
+
+    const data = body.data as {
+      searchEvents: {
+        results: Array<{
+          registration: {
+            dateOfApplication: string
+          }
+        }>
+      }
+    }
+    return data.searchEvents.results.map(
+      ({ registration }) => new Date(registration.dateOfApplication)
+    )[0]
+  }
+
+  return (await Promise.all([fetchFirst('asc'), fetchFirst('desc')])).filter(
+    Boolean
+  )
 }
