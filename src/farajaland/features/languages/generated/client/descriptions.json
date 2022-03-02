@@ -1,5 +1,6 @@
 {
   "data": {
+    "buttons.archive": "Archive button text",
     "buttons.approve": "Approve button text",
     "buttons.apply": "Apply button label",
     "buttons.back": "Back button",
@@ -52,6 +53,7 @@
     "constants.applicantContactNumber": "The title of contact number label",
     "constants.application": "A label for application",
     "constants.applicationsCount": "A label for applications count",
+    "constants.applicationArchivedOn": "Label for the workflow timestamp when the status is archived",
     "constants.applicationCollectedOn": "Label for the workflow timestamp when the status is collected",
     "constants.applicationFailedOn": "Label for the workflow timestamp when the status is failed",
     "constants.informant": "Informant Label",
@@ -842,6 +844,12 @@
     "config.certificate.uploadCertificateDialogConfirm": "Confirm new certificate template upload button",
     "config.certificate.uploadCertificateDialogCancel": "Cancel new certificate template upload button",
     "settings.changePhone": "Change phone number title",
-    "settings.verifyPhone": "Verify phone number title"
+    "settings.verifyPhone": "Verify phone number title",
+    "recordAudit.archive.status": "Archived status",
+    "recordAudit.archive.confirmation.title": "Confirmation title for archiving a declaration",
+    "recordAudit.archive.confirmation.body": "Confirmation body for archiving a declaration",
+    "regHome.outbox.statusArchiving": "Label for application status Archiving",
+    "regHome.outbox.statusWaitingToBeArchived": "Label for application status waiting to be archived"
+
   }
 }
