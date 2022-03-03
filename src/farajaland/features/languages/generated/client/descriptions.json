@@ -784,6 +784,10 @@
     "certificate.receipt.deathService.after": "Amount due on certificate for death label",
     "certificate.receipt.birthService.between": "Amount due on certificate for birth label",
     "certificate.receipt.deathService.between": "Amount due on certificate for death label",
+    "recordAudit.declaration.reinstateDialogTitle": "Title for the dialog when reinstate declaration",
+    "recordAudit.declaration.reinstateDialog.actions.cancel": "Button label for the dialog when cancel reinstate declaration",
+    "recordAudit.declaration.reinstateDialog.actions.confirm": "Button label for the dialog when confirm reinstate declaration",
+    "recordAudit.declaration.reinstateDialogDescription": "Description for the dialog when reinstate declaration",
     "register.confirmationScreen.buttons.back": "The button to return to the homescreen",
     "register.confirmationScreen.boxHeaderDesc": "The first box header description that appear on the confirmation screen ",
     "register.confirmationScreen.trackingSectionTitle": "The tracking section title that appear on the confirmation screen",
@@ -849,7 +853,9 @@
     "recordAudit.archive.confirmation.title": "Confirmation title for archiving a declaration",
     "recordAudit.archive.confirmation.body": "Confirmation body for archiving a declaration",
     "regHome.outbox.statusArchiving": "Label for application status Archiving",
-    "regHome.outbox.statusWaitingToBeArchived": "Label for application status waiting to be archived"
+    "regHome.outbox.statusWaitingToBeArchived": "Label for application status waiting to be reinstated",
+    "regHome.outbox.statusReinstating": "Label for application status Archiving",
+    "regHome.outbox.statusWaitingToBeReinstated": "Label for application status waiting to be reinstated"
 
   }
 }
