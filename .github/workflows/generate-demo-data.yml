@@ -10,9 +10,9 @@
 name: Generate demo data for production
 
 env:
-  COUNTRY_CONFIG_HOST: https://countryconfig.farajaland.opencrvs.org/
-  AUTH_API_HOST: https://auth.farajaland.opencrvs.org/
-  GATEWAY_HOST: https://gateway.farajaland.opencrvs.org/
+  COUNTRY_CONFIG_HOST: https://countryconfig.farajaland.opencrvs.org
+  AUTH_API_HOST: https://auth.farajaland.opencrvs.org
+  GATEWAY_HOST: https://gateway.farajaland.opencrvs.org
 
 on:
   workflow_dispatch:
