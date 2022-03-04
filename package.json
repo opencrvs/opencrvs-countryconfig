@@ -21,6 +21,7 @@
     "db:clear:all": "REPLICAS=0 ./clear-all-data.sh",
     "contentful:prepare:import": "ts-node -r tsconfig-paths/register src/farajaland/features/languages/scripts/contentfulImport.ts",
     "compose:push:version": "export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset VERSION",
+    "data-generator": "ts-node -r tsconfig-paths/register -T src/data-generator/index.ts",
     "data-generator:generate-types": "graphql-codegen --config codegen.yml"
   },
   "devDependencies": {

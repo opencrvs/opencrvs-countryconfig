@@ -63,7 +63,7 @@ export const REGISTRATION_AGENTS = 4
 export const LOCAL_REGISTRARS = 1
 const DEMO_DISTRICTS = ['Ibombo']
 const CONCURRENCY = 3
-const START_YEAR = 2018
+const START_YEAR = 2020
 const END_YEAR = 2022
 
 const BIRTH_COMPLETION_DISTRIBUTION = [
