@@ -33,14 +33,14 @@ else
   exit 1
 fi
 
-docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:3.6 bash \
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore --host $HOST --drop --gzip --archive=/backups/hearth-dev.gz"
 
-docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:3.6 bash \
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore --host $HOST --drop --gzip --archive=/backups/openhim-dev.gz"
 
-docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:3.6 bash \
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore --host $HOST --drop --gzip --archive=/backups/user-mgnt.gz"
 
-docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:3.6 bash \
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore --host $HOST --drop --gzip --archive=/backups/application-config.gz"
