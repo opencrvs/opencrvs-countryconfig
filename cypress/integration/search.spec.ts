@@ -16,20 +16,20 @@ context('Search Integration Test', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it('Tests search application by child name using minimum input', () => {
+  it('Tests search declaration by child name using minimum input', () => {
     
 
-    // DECLARE APPLICATION AS FIELD AGENT
-   cy.declareApplicationWithMinimumInput('Bill', 'Gates')
+    // DECLARE DECLARATION AS FIELD AGENT
+   cy.declareDeclarationWithMinimumInput('Bill', 'Gates')
   
   })
 
-  it('Tests search application by child name',() => {
+  it('Tests search declaration by child name',() => {
      // LOGIN AS LOCAL REGISTRAR
      cy.login('registrar')
      cy.createPin()
      
-     // SEARCH APPLICATION & Review Application
+     // SEARCH DECLARATION & Review Declaration
      cy.get('#searchType').click()
      cy.get('#name').click()
      cy.get('#searchText').type('Gates')

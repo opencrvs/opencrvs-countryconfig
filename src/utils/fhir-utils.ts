@@ -131,7 +131,7 @@ export function getEventType(bundle: fhir.Bundle) {
     composition.type.coding &&
     composition.type.coding[0].code
 
-  if (eventType === 'death-application' || eventType === 'death-notification') {
+  if (eventType === 'death-declaration' || eventType === 'death-notification') {
     return EVENT_TYPE.DEATH
   } else {
     return EVENT_TYPE.BIRTH

@@ -21,81 +21,81 @@ context('Death Integration Test', () => {
     // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
-    // APPLICATION FORM
+    // DECLARATION FORM
     cy.initializeFakeTimers()
     cy.enterDeathMaximumInput()
 
-    cy.registerApplication()
+    cy.registerDeclaration()
      
   }) 
 
-  it('Tests from application to registration using minimum input', () => {
-    cy.registerDeathApplicationWithMinimumInput()
+  it('Tests from declaration to registration using minimum input', () => {
+    cy.registerDeathDeclarationWithMinimumInput()
   })
 
-  it('Login as registrar to register minimum input death application',() => {
+  it('Login as registrar to register minimum input death declaration',() => {
     cy.login('registrar')
 
     // CREATE PIN
     cy.createPin()
-     //review application
+     //review declaration
     cy.reviewForm()
-     //register application
+     //register declaration
     cy.submitForm()
     // LOG OUT
     //cy.logOut()
   }) 
   
-  it('Tests from application to registration using maximum input', () => {
-    cy.registerDeathApplicationWithMaximumInput()
+  it('Tests from declaration to registration using maximum input', () => {
+    cy.registerDeathDeclarationWithMaximumInput()
   })
 
-  it('Login as registrar to register maximum input death application',() => {
+  it('Login as registrar to register maximum input death declaration',() => {
     cy.login('registrar')
     // CREATE PIN
     cy.createPin()
-     //review application
+     //review declaration
     cy.reviewForm()
-     //register application
+     //register declaration
     cy.submitForm()
      // LOG OUT
     // cy.logOut()
   }) 
   
 
-  it('Tests from application to rejection using minimum input', () => {
-    cy.declareDeathApplicationWithMinimumInput()
+  it('Tests from declaration to rejection using minimum input', () => {
+    cy.declareDeathDeclarationWithMinimumInput()
   })
 
-  it('Login As Register & Reject Minimum input Death Application',() => {
+  it('Login As Register & Reject Minimum input Death Declaration',() => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
     
     cy.createPin()
-      // LANDING PAGE Download 1st application 
+      // LANDING PAGE Download 1st declaration 
     cy.reviewForm()
-      //Reject Application
-    cy.rejectApplication()
+      //Reject Declaration
+    cy.rejectDeclaration()
       //logout
   //  cy.logOut()
   }) 
   
 
-  it('Tests from application to rejection using maximum input', () => {
+  it('Tests from declaration to rejection using maximum input', () => {
 
-    cy.declareDeathApplicationWithMaximumInput()
+    cy.declareDeathDeclarationWithMaximumInput()
   }) 
 
-  it('Login As Register & Reject Maximum input Death Application',() => {
+  it('Login As Register & Reject Maximum input Death Declaration',() => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
       // CREATE PIN
     cy.createPin()
-      // LANDING PAGE Download 1st application 
+      // LANDING PAGE Download 1st declaration 
     cy.reviewForm()
-      //Reject Application
-    cy.rejectApplication()
+      //Reject Declaration
+    cy.rejectDeclaration()
       //logout
   //  cy.logOut()l
   }) 

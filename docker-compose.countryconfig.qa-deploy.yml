@@ -38,7 +38,7 @@ services:
 
   client:
     environment:
-      - DECLARED_APPLICATION_SEARCH_QUERY_COUNT = 100
+      - DECLARED_DECLARATION_SEARCH_QUERY_COUNT = 100
 
   gateway:
     environment:

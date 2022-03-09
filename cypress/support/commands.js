@@ -115,7 +115,7 @@ Cypress.Commands.add('createPin', () => {
   cy.wait(2000)
 })
 
-Cypress.Commands.add('submitApplication', () => {
+Cypress.Commands.add('submitDeclaration', () => {
   var compositionId;
   cy.intercept('/graphql', (req) => {
     req.on('response', (res) => {
@@ -131,8 +131,8 @@ Cypress.Commands.add('submitApplication', () => {
   cy.get('#submit_form').click()
   // MODAL
   cy.get('#submit_confirm').click()
-
-  cy.log('Waiting for application to sync...')
+  
+  cy.log('Waiting for declaration to sync...')
   cy.wait('@exam')
   cy.clock()
   cy.tick(40000)
@@ -156,11 +156,11 @@ Cypress.Commands.add('submitAplication', () => {
 
 
   // PREVIEW
-  cy.get('#registerApplicationBtn').click()
+  cy.get('#registerDeclarationBtn').click()
   // MODAL
   cy.get('#submit_confirm').click()
-
-  cy.log('Waiting for application to sync...')
+  
+  cy.log('Waiting for declaration to sync...')
   cy.wait('@exam')
   cy.clock()
   cy.tick(40000)
@@ -178,8 +178,8 @@ Cypress.Commands.add('reviewForm', () => {
   cy.get('#ListItemAction-0-Review').click()
 })
 
-Cypress.Commands.add('submitForm', () => {
-  cy.get('#registerApplicationBtn').click()
+Cypress.Commands.add('submitForm',() => {
+  cy.get('#registerDeclarationBtn').click()
   cy.get('#submit_confirm').click()
   cy.wait(5000)
   cy.reload()
@@ -187,7 +187,7 @@ Cypress.Commands.add('submitForm', () => {
 
 
 
-Cypress.Commands.add('printApplication', () => {
+Cypress.Commands.add('printDeclaration',() => {
   cy.get('#navigation_print').click()
   cy.get('#ListItemAction-0-icon').click()
   cy.get('#ListItemAction-0-Print').click()
@@ -202,8 +202,8 @@ Cypress.Commands.add('printApplication', () => {
 })
 
 
-Cypress.Commands.add('rejectApplication', () => {
-  cy.get('#rejectApplicationBtn').click()
+Cypress.Commands.add('rejectDeclaration', () => {
+  cy.get('#rejectDeclarationBtn').click()
   // REJECT MODAL
   cy.get('#rejectionReasonother').click()
   cy.get('#rejectionCommentForHealthWorker').type(
@@ -211,17 +211,17 @@ Cypress.Commands.add('rejectApplication', () => {
   )
   // PREVIEW
   cy.get('#submit_reject_form').click()
-  cy.log('Waiting for application to sync...')
+  cy.log('Waiting for declaration to sync...')
   cy.clock()
   cy.tick(20000)
   cy.get('#Spinner').should('exist')
 })
 
-Cypress.Commands.add('registerApplication', () => {
-  cy.get('#registerApplicationBtn').click()
+Cypress.Commands.add('registerDeclaration', () => {
+  cy.get('#registerDeclarationBtn').click()
   // MODAL
   cy.get('#submit_confirm').click()
-  cy.log('Waiting for application to sync...')
+  cy.log('Waiting for declaration to sync...')
   cy.tick(20000)
   cy.get('#Spinner').should('exist')
   cy.get('#navigation_review').contains('Ready for review')
@@ -234,14 +234,14 @@ Cypress.Commands.add('verifyLandingPageVisible', () => {
 Cypress.Commands.add('initializeFakeTimers', () => {
   cy.clock(new Date().getTime())
 })
-Cypress.Commands.add('downloadFirstApplication', () => {
+Cypress.Commands.add('downloadFirstDeclaration', () => {
   cy.clock()
   cy.tick(10000)
   cy.get('#ListItemAction-0-icon').should('exist')
   cy.get('#ListItemAction-0-icon')
     .first()
     .click()
-  cy.log('Waiting for application to sync...')
+  cy.log('Waiting for declaration to sync...')
   cy.tick(20000)
   cy.get('#action-loading-ListItemAction-0').should('not.exist')
 })
@@ -255,7 +255,7 @@ export function getRandomNumbers(stringLength) {
 }
 
 Cypress.Commands.add(
-  'registrarApplicationInprogress',
+  'registrarDeclarationInprogress',
   (firstName, lastName) => {
     // LOGIN
     cy.login('registrar')
@@ -271,7 +271,7 @@ Cypress.Commands.add(
     cy.get('#continue').click()
 
     // SELECT INFORMANT
-    cy.get('#applicant_FATHER').click()
+    cy.get('#informant_FATHER').click()
     cy.get('#continue').click()
     // SELECT MAIN CONTACT POINT
 
@@ -281,7 +281,7 @@ Cypress.Commands.add(
     )
     cy.goToNextFormSection()
 
-    // APPLICATION FORM
+    // DECLARATION FORM
     // CHILD DETAILS
 
     cy.get('#firstNamesEng').type(firstName)
@@ -305,7 +305,7 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add(
-  'fieldApplicationInprogress',
+  'fieldDeclarationInprogress',
   (firstName, lastName) => {
     // LOGIN
     cy.login('fieldWorker')
@@ -319,14 +319,14 @@ Cypress.Commands.add(
 
     // EVENT INFO
     cy.get('#continue').click()
-    cy.get('#applicant_MOTHER').click()
+    cy.get('#informant_MOTHER').click()
     cy.get('#continue').click()
 
   }
 )
 
 Cypress.Commands.add(
-  'declareApplicationWithMinimumInput',
+  'declareDeclarationWithMinimumInput',
   (firstName, lastName) => {
     // LOGIN
     cy.login('fieldWorker')
@@ -342,7 +342,7 @@ Cypress.Commands.add(
     cy.get('#continue').click()
 
     // SELECT INFORMANT
-    cy.get('#applicant_FATHER').click()
+    cy.get('#informant_FATHER').click()
     cy.get('#continue').click()
     // SELECT MAIN CONTACT POINT
 
@@ -352,7 +352,7 @@ Cypress.Commands.add(
     )
     cy.goToNextFormSection()
 
-    // APPLICATION FORM
+    // DECLARATION FORM
     // CHILD DETAILS
 
     cy.get('#firstNamesEng').type(firstName)
@@ -400,7 +400,7 @@ Cypress.Commands.add(
     // DOCUMENTS
     cy.goToNextFormSection()
 
-    cy.submitApplication()
+    cy.submitDeclaration()
 
     // LOG OUT
 
@@ -411,7 +411,7 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add(
-  'declareApplicationWithMaximumInput',
+  'declareDeclarationWithMaximumInput',
   (firstName, lastName) => {
     // LOGIN AS FIELD WORKER
     cy.login('fieldWorker')
@@ -421,7 +421,7 @@ Cypress.Commands.add(
     cy.clock(new Date().getTime())
     cy.enterMaximumInput(firstName, lastName)
 
-    cy.submitApplication()
+    cy.submitDeclaration()
 
     // LOG OUT
 
@@ -438,7 +438,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   cy.get('#continue').click()
   // EVENT INFO
   cy.get('#continue').click()
-  cy.get('#applicant_FATHER').click()
+  cy.get('#informant_FATHER').click()
   cy.get('#continue').click()
 
   // SELECT MAIN CONTACT POINT
@@ -448,7 +448,7 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
   )
   cy.goToNextFormSection()
 
-  // APPLICATION FORM
+  // DECLARATION FORM
   // CHILD DETAILS
   cy.get('#firstNamesEng').type(firstName)
   cy.get('#familyNameEng').type(lastName)
@@ -540,23 +540,23 @@ Cypress.Commands.add('enterMaximumInput', (firstName, lastName) => {
 })
 
 Cypress.Commands.add(
-  'registerApplicationWithMinimumInput',
+  'registerDeclarationWithMinimumInput',
   (firstName, lastName) => {
-    // DECLARE APPLICATION AS FIELD AGENT
-    cy.declareApplicationWithMinimumInput(firstName, lastName)
+    // DECLARE DECLARATION AS FIELD AGENT
+    cy.declareDeclarationWithMinimumInput(firstName, lastName)
 
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     cy.createPin()
 
     // LANDING PAGE
-    cy.downloadFirstApplication()
+    cy.downloadFirstDeclaration()
     cy.get('#ListItemAction-0-Review').should('exist')
     cy.get('#ListItemAction-0-Review')
       .first()
       .click()
 
-    cy.registerApplication()
+    cy.registerDeclaration()
   }
 )
 
@@ -567,31 +567,31 @@ Cypress.Commands.add(
     cy.createPin()
 
     // LANDING PAGE
-    cy.downloadFirstApplication()
+    cy.downloadFirstDeclaration()
     cy.get('#ListItemAction-0-Review').should('exist')
     cy.get('#ListItemAction-0-Review')
       .first()
       .click()
 
-    cy.registerApplication()
+    cy.registerDeclaration()
   }
 )
 
 Cypress.Commands.add(
-  'registerApplicationWithMaximumInput',
+  'registerDeclarationWithMaximumInput',
   (firstName, lastName) => {
-    // DECLARE APPLICATION AS FIELD AGENT
-    cy.declareApplicationWithMaximumInput(firstName, lastName)
+    // DECLARE DECLARATION AS FIELD AGENT
+    cy.declareDeclarationWithMaximumInput(firstName, lastName)
   }
 )
 
-Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
-
+Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', () => {
+ 
   // LOGIN
   cy.login('fieldWorker')
   cy.createPin()
   cy.verifyLandingPageVisible()
-  // APPLICATION FORM
+  // DECLARATION FORM
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_death_event').click()
   cy.get('#continue').click()
@@ -603,7 +603,7 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   // SELECT MAIN CONTACT POINT
 
   cy.get('#contactPoint_SPOUSE').click()
-  // cy.get('#contactPoint_APPLICANT').click()
+  // cy.get('#contactPoint_INFORMANT').click()
   cy.get('#contactPoint\\.nestedFields\\.registrationPhone').type(
     '07' + getRandomNumbers(8)
   )
@@ -639,8 +639,8 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   // CAUSE OF DEATH DETAILS
   cy.get('#causeOfDeathEstablished_false').click()
   cy.goToNextFormSection()
-  // APPLICANT DETAILS
-  cy.get('#applicantID').type('912345678')
+  // INFORMANT DETAILS
+  cy.get('#informantID').type('912345678')
   cy.get('#firstNamesEng').type('Soumita')
   cy.get('#familyNameEng').type('Aktar')
   cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
@@ -660,20 +660,20 @@ Cypress.Commands.add('declareDeathApplicationWithMinimumInput', () => {
   // DOCUMENT DETAILS
   cy.goToNextFormSection()
   // PREVIEW
-  cy.submitApplication()
+  cy.submitDeclaration()
   // LOG OUT
   cy.get('#ProfileMenuToggleButton').click()
   cy.get('#ProfileMenuItem1').click()
 })
 
-Cypress.Commands.add('declareDeathApplicationWithMaximumInput', () => {
+Cypress.Commands.add('declareDeathDeclarationWithMaximumInput', () => {
   // LOGIN
   cy.login('fieldWorker')
   cy.createPin()
   cy.verifyLandingPageVisible()
   cy.enterDeathMaximumInput()
   // PREVIEW
-  cy.submitApplication()
+  cy.submitDeclaration()
   cy.wait(2000)
 
   // LOG OUT
@@ -681,19 +681,19 @@ Cypress.Commands.add('declareDeathApplicationWithMaximumInput', () => {
   cy.get('#ProfileMenuItem1').click()
 })
 
-Cypress.Commands.add('registerDeathApplicationWithMinimumInput', () => {
-
-  cy.declareDeathApplicationWithMinimumInput()
+Cypress.Commands.add('registerDeathDeclarationWithMinimumInput', () => {
+  
+  cy.declareDeathDeclarationWithMinimumInput()
 
 })
 
-Cypress.Commands.add('registerDeathApplicationWithMaximumInput', () => {
-  cy.declareDeathApplicationWithMaximumInput()
+Cypress.Commands.add('registerDeathDeclarationWithMaximumInput', () => {
+  cy.declareDeathDeclarationWithMaximumInput()
 })
 
 Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.initializeFakeTimers()
-  // APPLICATION FORM
+  // DECLARATION FORM
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_death_event').click()
   cy.get('#continue').click()
@@ -751,9 +751,9 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.goToNextFormSection()
   cy.get('#causeOfDeathCode').type('Chronic Obstructive Pulmonary Disease')
   cy.goToNextFormSection()
-  // APPLICANT DETAILS
+  // INFORMANT DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#applicantID').type('912345678')
+  cy.get('#informantID').type('912345678')
   cy.get('#firstNamesEng').type('Anne')
   cy.get('#familyNameEng').type('Salim')
   cy.selectOption('#countryPermanent', 'Farajaland', 'Farajaland')
@@ -786,11 +786,11 @@ Cypress.Commands.add('someoneElseJourney', () => {
   // EVENT INFO
   cy.get('#continue').click()
   // SELECT INFORMANT
-  cy.get('#applicant_FATHER').click()
+  cy.get('#informant_FATHER').click()
   cy.get('#continue').click()
-  // SELECT APPLICANT
+  // SELECT INFORMANT
   cy.get('#contactPoint_OTHER').click()
-  // cy.get('#applicant\\.nestedFields\\.otherRelationShip').type(
+  // cy.get('#informant\\.nestedFields\\.otherRelationShip').type(
   //   'Unnamed relation'
   // )
   // cy.goToNextFormSection()
@@ -800,7 +800,7 @@ Cypress.Commands.add('someoneElseJourney', () => {
     '07' + getRandomNumbers(8)
   )
   cy.goToNextFormSection()
-  // APPLICATION FORM
+  // DECLARATION FORM
   // CHILD DETAILS
   cy.get('#firstNamesEng').type('Aniq')
   cy.get('#familyNameEng').type('Hoque')
@@ -823,7 +823,7 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#numberOption').type('40')
 
   cy.goToNextFormSection()
-  // APPLICANT'S DETAILS
+  // INFORMANT'S DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.get('#iD').type('123456789')
   cy.get('#firstNamesEng').type('Agnes')

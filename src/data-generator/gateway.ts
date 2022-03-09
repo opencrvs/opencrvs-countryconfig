@@ -60,11 +60,11 @@ export enum AddressType {
   UnhcrCamp = 'UNHCR_CAMP'
 }
 
-export type ApplicationsStartedMetrics = {
-  __typename?: 'ApplicationsStartedMetrics';
-  fieldAgentApplications: Scalars['Int'];
-  hospitalApplications: Scalars['Int'];
-  officeApplications: Scalars['Int'];
+export type DeclarationsStartedMetrics = {
+  __typename?: 'DeclarationsStartedMetrics';
+  fieldAgentDeclarations: Scalars['Int'];
+  hospitalDeclarations: Scalars['Int'];
+  officeDeclarations: Scalars['Int'];
 };
 
 export type Attachment = {
@@ -96,8 +96,8 @@ export type AttachmentInput = {
 };
 
 export enum AttachmentSubject {
-  ApplicantAthorityToApplyProof = 'APPLICANT_ATHORITY_TO_APPLY_PROOF',
-  ApplicantIdProof = 'APPLICANT_ID_PROOF',
+  InformantAthorityToApplyProof = 'INFORMANT_ATHORITY_TO_APPLY_PROOF',
+  InformantIdProof = 'INFORMANT_ID_PROOF',
   AssignedResponsibilityProof = 'ASSIGNED_RESPONSIBILITY_PROOF',
   CauseOfDeath = 'CAUSE_OF_DEATH',
   Child = 'CHILD',
@@ -997,7 +997,7 @@ export type Query = {
   fetchRegistrationCountByStatus?: Maybe<RegistrationCountResult>;
   fetchRegistrationMetrics?: Maybe<RegistrationMetrics>;
   fetchTimeLoggedMetricsByPractitioner?: Maybe<TimeLoggedMetricsResultSet>;
-  getApplicationsStartedMetrics?: Maybe<ApplicationsStartedMetrics>;
+  getDeclarationsStartedMetrics?: Maybe<DeclarationsStartedMetrics>;
   getEventEstimationMetrics?: Maybe<EventEstimationMetrics>;
   getEventsWithProgress?: Maybe<EventProgressResultSet>;
   getRoles?: Maybe<Array<Maybe<Role>>>;
@@ -1078,7 +1078,7 @@ export type QueryFetchTimeLoggedMetricsByPractitionerArgs = {
 };
 
 
-export type QueryGetApplicationsStartedMetricsArgs = {
+export type QueryGetDeclarationsStartedMetricsArgs = {
   locationId: Scalars['String'];
   timeEnd: Scalars['String'];
   timeStart: Scalars['String'];
@@ -1304,7 +1304,7 @@ export type Registration45DayEstimatedMetrics = {
 };
 
 export enum RegistrationContactType {
-  Applicant = 'APPLICANT',
+  Informant = 'INFORMANT',
   Both = 'BOTH',
   Father = 'FATHER',
   Mother = 'MOTHER',
@@ -1356,7 +1356,7 @@ export type RegistrationSearchSet = {
   contactNumber?: Maybe<Scalars['String']>;
   contactRelationship?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
-  dateOfApplication?: Maybe<Scalars['Date']>;
+  dateOfDeclaration?: Maybe<Scalars['Date']>;
   duplicates?: Maybe<Array<Maybe<Scalars['ID']>>>;
   eventLocationId?: Maybe<Scalars['String']>;
   modifiedAt?: Maybe<Scalars['String']>;
@@ -1438,15 +1438,15 @@ export type Role = {
 
 export type SearchFieldAgentResponse = {
   __typename?: 'SearchFieldAgentResponse';
-  averageTimeForDeclaredApplications?: Maybe<Scalars['Int']>;
+  averageTimeForDeclaredDeclarations?: Maybe<Scalars['Int']>;
   creationDate?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
   practitionerId?: Maybe<Scalars['String']>;
   primaryOfficeId?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
-  totalNumberOfApplicationStarted?: Maybe<Scalars['Int']>;
+  totalNumberOfDeclarationStarted?: Maybe<Scalars['Int']>;
   totalNumberOfInProgressAppStarted?: Maybe<Scalars['Int']>;
-  totalNumberOfRejectedApplications?: Maybe<Scalars['Int']>;
+  totalNumberOfRejectedDeclarations?: Maybe<Scalars['Int']>;
   type?: Maybe<Scalars['String']>;
 };
 
