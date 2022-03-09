@@ -16,7 +16,11 @@ env:
 
 on:
   workflow_dispatch:
-
+    inputs:
+      branch:
+        description: 'Branch to run from'
+        required: false
+        default: 'develop'
 jobs:
   manual-deploy-staging-e2e:
     runs-on: ubuntu-20.04
@@ -27,6 +31,8 @@ jobs:
     steps:
       - name: Checking out git repo
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branch }}
       - name: Install dependencies
         run: yarn install
       - name: Start generating test data

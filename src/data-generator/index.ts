@@ -67,10 +67,10 @@ const START_YEAR = 2020
 const END_YEAR = 2022
 
 const BIRTH_COMPLETION_DISTRIBUTION = [
-  { range: [0, 45], weight: 0.7 },
-  { range: [46, 365], weight: 0.2 },
-  { range: [366, 365 * 5], weight: 0.05 },
-  { range: [365 * 5 + 1, 365 * 20], weight: 0.05 }
+  { range: [0, 45], weight: 0.8 },
+  { range: [46, 365], weight: 0.15 },
+  { range: [366, 365 * 5], weight: 0.025 },
+  { range: [365 * 5 + 1, 365 * 20], weight: 0.025 }
 ]
 const BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.8
 
@@ -283,7 +283,7 @@ async function main() {
 
     for (let y = END_YEAR; y >= START_YEAR; y--) {
       const isCurrentYear = y === currentYear
-      const totalDeathsThisYear =
+      let totalDeathsThisYear =
         calculateCrudeDeathRateForYear(
           location.id,
           isCurrentYear ? currentYear - 1 : y,
@@ -309,6 +309,9 @@ async function main() {
         birthRates.female = (birthRates.female / days.length) * currentDayNumber
         birthRates.male = (birthRates.male / days.length) * currentDayNumber
 
+        totalDeathsThisYear =
+          (totalDeathsThisYear / days.length) * currentDayNumber
+
         // Remove future dates from the arrays
         days.splice(currentDayNumber - 1)
       }
@@ -320,6 +323,7 @@ async function main() {
 
       const femalesPerDay = days.slice(0)
       const malesPerDay = days.slice(0)
+      const deathsPerDay = days.slice(0)
 
       for (let i = 0; i < birthRates.female; i++) {
         femalesPerDay[Math.floor(Math.random() * days.length)]++
@@ -327,6 +331,10 @@ async function main() {
       for (let i = 0; i < birthRates.male; i++) {
         malesPerDay[Math.floor(Math.random() * days.length)]++
       }
+      for (let i = 0; i < totalDeathsThisYear; i++) {
+        deathsPerDay[Math.floor(Math.random() * days.length)]++
+      }
+
       log('Creating declarations for', location)
 
       /*
@@ -355,7 +363,7 @@ async function main() {
          * -
          */
 
-        const deathsToday = Math.round(totalDeathsThisYear / 365)
+        const deathsToday = deathsPerDay[d]
 
         log(
           'Creating death declarations for',
