@@ -58,7 +58,7 @@ export async function createBirthRegistrationDetailsForNotification(
       _fhirID: declaration.child.id
     },
     birthType: BirthType.Single,
-    weightAtBirth: Math.round(2.5 + 2 * Math.random() * 10) / 10,
+    weightAtBirth: Math.round((2.5 + 2 * Math.random()) * 10) / 10,
     attendantAtBirth: AttendantType.Physician,
     eventLocation: {
       address: createAddressInput(location, AddressType.CrvsOffice),
