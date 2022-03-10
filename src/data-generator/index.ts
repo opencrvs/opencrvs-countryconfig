@@ -62,7 +62,9 @@ export const HOSPITAL_FIELD_AGENTS = 10
 export const REGISTRATION_AGENTS = 4
 export const LOCAL_REGISTRARS = 1
 const DEMO_DISTRICTS = ['Ibombo']
-const CONCURRENCY = 3
+const CONCURRENCY = process.env.CONCURRENCY
+  ? parseInt(process.env.CONCURRENCY, 10)
+  : 3
 const START_YEAR = 2020
 const END_YEAR = 2022
 

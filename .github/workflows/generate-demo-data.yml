@@ -13,6 +13,7 @@ env:
   COUNTRY_CONFIG_HOST: https://countryconfig.farajaland.opencrvs.org
   AUTH_API_HOST: https://auth.farajaland.opencrvs.org
   GATEWAY_HOST: https://gateway.farajaland.opencrvs.org/graphql
+  CONCURRENCY: 7
 
 on:
   workflow_dispatch:
