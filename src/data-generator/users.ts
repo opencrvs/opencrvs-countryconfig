@@ -70,7 +70,7 @@ export async function createUser(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `createuser-${firstName}-${familyName}`
+      'x-correlation-id': `createuser-${firstName}-${familyName}`
     },
     body: JSON.stringify({
       query: `
@@ -101,7 +101,7 @@ export async function createUser(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${userToken}`,
-      'x-correlation': `createuser-${firstName}-${familyName}`
+      'x-correlation-id': `createuser-${firstName}-${familyName}`
     },
     body: JSON.stringify({
       query: `
@@ -137,7 +137,7 @@ export async function getUsers(token: string, locationId: string) {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `getusers`
+      'x-correlation-id': `getusers`
     },
     body: JSON.stringify({
       operationName: null,
@@ -190,7 +190,7 @@ export async function createSystemClient(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${systemAdmin.token}`,
-      'x-correlation': `create-system-scope`
+      'x-correlation-id': `create-system-scope`
     },
     body: JSON.stringify({ scope })
   })

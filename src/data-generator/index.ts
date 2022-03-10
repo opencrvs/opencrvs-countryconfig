@@ -111,6 +111,10 @@ async function keepTokensValid(users: User[]) {
   })
 }
 
+function wait(time: number) {
+  return new Promise(resolve => setTimeout(resolve, time))
+}
+
 function calculateCrudeDeathRateForYear(
   location: string,
   year: number,
@@ -418,7 +422,7 @@ async function main() {
                   ) as DeathRegistrationInput
                 )
                 log('Certifying', registration.id)
-
+                await wait(2000)
                 await markDeathAsCertified(
                   registration.id,
                   randomRegistrar,

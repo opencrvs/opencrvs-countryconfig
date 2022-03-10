@@ -24,7 +24,7 @@ export async function getLocations(token: string) {
   const res = await fetch(`${COUNTRY_CONFIG_HOST}/locations`, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'x-correlation': 'locations-' + Date.now().toString()
+      'x-correlation-id': 'locations-' + Date.now().toString()
     }
   })
   const locations = await res.json()
@@ -38,7 +38,7 @@ export async function getFacilities(token: string) {
   const res = await fetch(`${COUNTRY_CONFIG_HOST}/facilities`, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'x-correlation': 'facilities-' + Date.now().toString()
+      'x-correlation-id': 'facilities-' + Date.now().toString()
     }
   })
   const facilities = await res.json()

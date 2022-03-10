@@ -141,7 +141,7 @@ export async function markAsRegistered(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `registration-${id}`
+      'x-correlation-id': `registration-${id}`
     },
     body: JSON.stringify({
       query: `
@@ -189,7 +189,7 @@ export async function markDeathAsRegistered(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `registration-${id}`
+      'x-correlation-id': `registration-${id}`
     },
     body: JSON.stringify({
       query: `

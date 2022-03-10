@@ -59,7 +59,7 @@ export async function sendBirthNotification(
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        'x-correlation': `birth-notification-${firstNames}-${familyName}`
+        'x-correlation-id': `birth-notification-${firstNames}-${familyName}`
       },
       body: JSON.stringify(notification)
     }
@@ -179,7 +179,7 @@ export async function createBirthDeclaration(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `declare-${firstNames}-${familyName}`
+      'x-correlation-id': `declare-${firstNames}-${familyName}`
     },
     body: JSON.stringify({
       query: `
@@ -332,7 +332,7 @@ export async function createDeathDeclaration(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `declare-death-${firstNames}-${familyName}`
+      'x-correlation-id': `declare-death-${firstNames}-${familyName}`
     },
     body: JSON.stringify({
       operationName: 'submitMutation',
@@ -548,7 +548,7 @@ export async function fetchRegistration(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${user.token}`,
-      'x-correlation': `fetch-declaration-${compositionId}`
+      'x-correlation-id': `fetch-declaration-${compositionId}`
     },
     body: JSON.stringify({
       query: FETCH_REGISTRATION_QUERY,
@@ -706,7 +706,7 @@ export async function fetchDeathRegistration(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${user.token}`,
-      'x-correlation': `fetch-declaration-${compositionId}`
+      'x-correlation-id': `fetch-declaration-${compositionId}`
     },
     body: JSON.stringify({
       query: FETCH_DEATH_REGISTRATION_QUERY,
@@ -736,7 +736,7 @@ export async function fetchAlreadyGeneratedInterval(
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        'x-correlation': `fetch-interval-oldest`
+        'x-correlation-id': `fetch-interval-oldest`
       },
       body: JSON.stringify({
         query: `query data($sort: String, $locationIds: [String]) {
