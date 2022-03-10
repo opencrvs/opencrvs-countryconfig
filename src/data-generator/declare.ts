@@ -11,7 +11,7 @@ import { AddressType, BirthRegistration, EducationType } from './gateway'
 import { pick } from 'lodash'
 
 function randomWeightInGrams() {
-  return Math.round(2.5 + 2 * Math.random() * 1000)
+  return Math.round((2.5 + 2 * Math.random()) * 1000)
 }
 
 export async function sendBirthNotification(
