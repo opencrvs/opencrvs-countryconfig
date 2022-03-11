@@ -18,7 +18,7 @@ export async function getStatistics(token: string): Promise<Statistics> {
   const res = await fetch(`${COUNTRY_CONFIG_HOST}/statistics`, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'x-correlation': 'statistics-' + Date.now().toString()
+      'x-correlation-id': 'statistics-' + Date.now().toString()
     }
   })
   return await res.json()

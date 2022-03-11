@@ -31,6 +31,12 @@ export const EMPLOYEES_SOURCE = path.join(
   process.cwd(),
   'src/farajaland/features/employees/'
 )
+
+export const QUESTIONS_SOURCE = path.join(
+  process.cwd(),
+  'src/zmb/features/forms/'
+)
+
 export const CMS_API_KEY =
   process.env.CMS_API_KEY ||
   (process.env.CMS_API_KEY && readFileSync(process.env.CMS_API_KEY)) ||

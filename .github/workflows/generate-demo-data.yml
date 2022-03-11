@@ -1,0 +1,40 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
+# graphic logo are (registered/a) trademark(s) of Plan International.
+name: Generate demo data for production
+
+env:
+  COUNTRY_CONFIG_HOST: https://countryconfig.farajaland.opencrvs.org
+  AUTH_API_HOST: https://auth.farajaland.opencrvs.org
+  GATEWAY_HOST: https://gateway.farajaland.opencrvs.org/graphql
+  CONCURRENCY: 7
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run from'
+        required: false
+        default: 'develop'
+jobs:
+  manual-deploy-staging-e2e:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 240 # 4 hours
+    strategy:
+      matrix:
+        node-version: [14.17.0]
+    steps:
+      - name: Checking out git repo
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branch }}
+      - name: Install dependencies
+        run: yarn install
+      - name: Start generating test data
+        run: yarn data-generator

@@ -15,19 +15,19 @@ context('Performance view', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
-  it('Tests from application to certification using minimum input', () => {
-    cy.registerApplicationWithMaximumInput('Pricila', 'Mark')
+  it('Tests from declaration to certification using minimum input', () => {
+    cy.registerDeclarationWithMaximumInput('Pricila', 'chan')
     cy.wait(1000)
   })
  
-  it('Login as registrar to register & Downloads CSV data to observe Performance',() => {
+  it.only('Login as registrar to register & Downloads CSV data to observe Performance',() => {
     
     cy.login('registrar')
      // CREATE PIN
     cy.createPin()
-     //review application
+     //review declaration
     cy.reviewForm()
-     //register application
+     //register declaration
     // cy.submitForm()
     cy.submitAplication()
     cy.get('#navigation_performance').click()

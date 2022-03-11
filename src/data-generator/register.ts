@@ -58,7 +58,7 @@ export async function createBirthRegistrationDetailsForNotification(
       _fhirID: declaration.child.id
     },
     birthType: BirthType.Single,
-    weightAtBirth: Math.round(2.5 + 2 * Math.random() * 10) / 10,
+    weightAtBirth: Math.round((2.5 + 2 * Math.random()) * 10) / 10,
     attendantAtBirth: AttendantType.Physician,
     eventLocation: {
       address: createAddressInput(location, AddressType.CrvsOffice),
@@ -141,7 +141,7 @@ export async function markAsRegistered(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `registration-${id}`
+      'x-correlation-id': `registration-${id}`
     },
     body: JSON.stringify({
       query: `
@@ -189,7 +189,7 @@ export async function markDeathAsRegistered(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `registration-${id}`
+      'x-correlation-id': `registration-${id}`
     },
     body: JSON.stringify({
       query: `

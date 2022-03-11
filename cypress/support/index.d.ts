@@ -16,34 +16,34 @@ declare namespace Cypress {
     selectOption: (selector: string, text: string, option: string) => void
     goToNextFormSection: () => void
     createPin: () => void
-    submitApplication: () => void
-    rejectApplication: () => void
-    registerApplication: () => void
+    submitDeclaration: () => void
+    rejectDeclaration: () => void
+    registerDeclaration: () => void
     verifyLandingPageVisible: () => void
     initializeFakeTimers: () => void
-    downloadFirstApplication: () => void
+    downloadFirstDeclaration: () => void
     enterMaximumInput: (firstName: string, lastName: string) => void
     enterDeathMaximumInput: () => void
-    registerApplicationWithMinimumInput: (
+    registerDeclarationWithMinimumInput: (
       firstName: string,
       lastName: string
     ) => void
-    registerApplicationWithMaximumInput: (
+    registerDeclarationWithMaximumInput: (
       firstName: string,
       lastName: string
     ) => void
-    declareApplicationWithMinimumInput: (
+    declareDeclarationWithMinimumInput: (
       firstName: string,
       lastName: string
     ) => void
-    declareApplicationWithMaximumInput: (
+    declareDeclarationWithMaximumInput: (
       firstName: string,
       lastName: string
     ) => void
-    declareDeathApplicationWithMinimumInput: () => void
-    registerDeathApplicationWithMinimumInput: () => void
-    declareDeathApplicationWithMaximumInput: () => void
-    registerDeathApplicationWithMaximumInput: () => void
+    declareDeathDeclarationWithMinimumInput: () => void
+    registerDeathDeclarationWithMinimumInput: () => void
+    declareDeathDeclarationWithMaximumInput: () => void
+    registerDeathDeclarationWithMaximumInput: () => void
     someoneElseJourney: () => void
   }
 }

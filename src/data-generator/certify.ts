@@ -85,7 +85,9 @@ export function createDeathCertificationDetails(
       certificates: [
         {
           hasShowedVerifiedDocument: false,
-          data: 'data:application/pdf;base64,' + '', //readFileSync(join(__dirname, './signature.pdf')).toString('base64'),
+          data:
+            'data:application/pdf;base64,' +
+            readFileSync(join(__dirname, './signature.pdf')).toString('base64'),
           collector: {
             relationship: 'INFORMANT'
           }
@@ -128,7 +130,7 @@ export async function markAsCertified(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `certification-${id}`
+      'x-correlation-id': `certification-${id}`
     },
     body: JSON.stringify({
       query: `
@@ -175,7 +177,7 @@ export async function markDeathAsCertified(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `death-certification-${id}`
+      'x-correlation-id': `death-certification-${id}`
     },
     body: JSON.stringify({
       query: `

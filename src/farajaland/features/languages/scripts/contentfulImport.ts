@@ -193,7 +193,7 @@ export type Entry = {
   {
     "certificateConfirmCorrect": {
       "bn-BD": "অনুগ্রহ করে নিশ্চিত করুন যে নিবন্ধনটি পর্যালোচনা হয়েছে তার তথ্য সঠিক এবং আপনি মুদ্রণ করতে প্রস্তুত",
-      "en-US": "Please confirm that the applicant has reviewed that the information on the certificate is correct and that you are ready to print."
+      "en-US": "Please confirm that the informant has reviewed that the information on the certificate is correct and that you are ready to print."
     },
     "buttonsChangeLanguage": {
       "bn-BD": "ভাষা পরিবর্তন",

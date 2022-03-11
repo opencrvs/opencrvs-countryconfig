@@ -38,7 +38,7 @@ services:
 
   client:
     environment:
-      - DECLARED_APPLICATION_SEARCH_QUERY_COUNT = 100
+      - DECLARED_DECLARATION_SEARCH_QUERY_COUNT = 100
 
   gateway:
     environment:
@@ -47,6 +47,16 @@ services:
   workflow:
     environment:
       - LANGUAGES=en
+
+  auth:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  user-mgnt:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
 
 secrets:
   jwt-public-key.{{ts}}:

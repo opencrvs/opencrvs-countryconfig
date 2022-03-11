@@ -70,7 +70,7 @@ export async function createUser(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `createuser-${firstName}-${familyName}`
+      'x-correlation-id': `createuser-${firstName}-${familyName}`
     },
     body: JSON.stringify({
       query: `
@@ -101,7 +101,7 @@ export async function createUser(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${userToken}`,
-      'x-correlation': `createuser-${firstName}-${familyName}`
+      'x-correlation-id': `createuser-${firstName}-${familyName}`
     },
     body: JSON.stringify({
       query: `
@@ -137,7 +137,7 @@ export async function getUsers(token: string, locationId: string) {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `getusers`
+      'x-correlation-id': `getusers`
     },
     body: JSON.stringify({
       operationName: null,
@@ -169,6 +169,7 @@ export async function getUsers(token: string, locationId: string) {
         results: Array<{
           username: string
           role: Role
+          type: string
           primaryOffice: { id: string }
         }>
       }
@@ -189,7 +190,7 @@ export async function createSystemClient(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${systemAdmin.token}`,
-      'x-correlation': `create-system-scope`
+      'x-correlation-id': `create-system-scope`
     },
     body: JSON.stringify({ scope })
   })
@@ -289,7 +290,8 @@ export async function createUsers(
   for (let i = fieldAgents.length; i < config.fieldAgents; i++) {
     fieldAgents.push(
       await createUser(token, randomOffice.id, {
-        role: 'FIELD_AGENT'
+        role: 'FIELD_AGENT',
+        type: 'FIELD_AGENT'
       })
     )
   }
@@ -299,7 +301,8 @@ export async function createUsers(
     const systemAdmin =
       systemAdmins[i] ||
       (await createUser(token, randomOffice.id, {
-        role: 'LOCAL_SYSTEM_ADMIN'
+        role: 'LOCAL_SYSTEM_ADMIN',
+        type: 'LOCAL_SYSTEM_ADMIN'
       }))
 
     hospitals.push(
@@ -312,7 +315,8 @@ export async function createUsers(
   for (let i = registrationAgents.length; i < config.registrationAgents; i++) {
     registrationAgents.push(
       await createUser(token, randomOffice.id, {
-        role: 'REGISTRATION_AGENT'
+        role: 'REGISTRATION_AGENT',
+        type: 'REGISTRATION_AGENT'
       })
     )
   }
@@ -322,7 +326,8 @@ export async function createUsers(
   for (let i = registrars.length; i < config.localRegistrars; i++) {
     registrars.push(
       await createUser(token, randomOffice.id, {
-        role: 'LOCAL_REGISTRAR'
+        role: 'LOCAL_REGISTRAR',
+        type: 'LOCAL_REGISTRAR'
       })
     )
   }

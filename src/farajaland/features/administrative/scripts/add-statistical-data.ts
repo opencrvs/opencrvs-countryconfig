@@ -11,7 +11,11 @@
  */
 import chalk from 'chalk'
 import { getFromFhir } from '../../utils'
-import { getStatistics, LocationStatistic } from '../statistics'
+import {
+  getStatistics,
+  getStatisticsForProvinces,
+  LocationStatistic
+} from '../statistics'
 import fetch from 'node-fetch'
 import { FHIR_URL } from '../../../constants'
 async function getLocationsByIdentifier(identifier: string) {
@@ -88,7 +92,7 @@ export async function matchAndAssignStatisticalData(
 
   for (const location of fhirLocations) {
     const matchingStatistics = statistics.find(
-      stat => location.name === stat.name
+      stat => location.description === stat.statisticalID
     )
     if (!matchingStatistics) {
       // tslint:disable-next-line:no-console
@@ -144,7 +148,7 @@ async function addStatisticalData() {
   // tslint:disable-next-line:no-console
   console.log(
     `${chalk.blueBright(
-      '/////////////////////////// UPDATING LOCATIONS WITH STATISTICAL DATA IN FHIR ///////////////////////////'
+      '/////////////////////////// UPDATING DISTRICTS WITH STATISTICAL DATA IN FHIR ///////////////////////////'
     )}`
   )
 
@@ -152,8 +156,6 @@ async function addStatisticalData() {
     console.log("Couldn't fetch locations", err)
     throw err
   })
-
-  console.log(locations)
 
   const stats = {
     districts: await matchAndAssignStatisticalData(locations, statistics)
@@ -163,6 +165,27 @@ async function addStatisticalData() {
     // tslint:disable-next-line:no-console
     console.log(`Updating location: ${location.id}`)
     await sendToFhir(location, `/Location/${location.id}`, 'PUT')
+  }
+
+  // tslint:disable-next-line:no-console
+  console.log(
+    `${chalk.blueBright(
+      '/////////////////////////// UPDATING PROVINCES WITH STATISTICAL DATA IN FHIR ///////////////////////////'
+    )}`
+  )
+  const provinceStatistics = await getStatisticsForProvinces()
+  const provinces = await getLocationsByIdentifier('STATE').catch(err => {
+    console.log("Couldn't fetch provinces", err)
+    throw err
+  })
+
+  for (const province of await matchAndAssignStatisticalData(
+    provinces,
+    provinceStatistics
+  )) {
+    // tslint:disable-next-line:no-console
+    console.log(`Updating province: ${province.id}`)
+    await sendToFhir(province, `/Location/${province.id}`, 'PUT')
   }
 }
 

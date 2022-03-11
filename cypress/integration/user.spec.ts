@@ -32,7 +32,7 @@ context('User Integration Test', () => {
     cy.get('#confirm_form').click()
     // PREVIEW
     cy.get('#submit_user_form').click()
-    cy.get('#submissionSuccessToast').should('be.visible') // Wait for application to be sync'd
+    cy.get('#submissionSuccessToast').should('be.visible') // Wait for declaration to be sync'd
     // LOG OUT
     cy.get('#ProfileMenuToggleButton').click()
     cy.get('#ProfileMenuItem1').click()

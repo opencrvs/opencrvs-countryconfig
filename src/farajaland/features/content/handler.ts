@@ -10,24 +10,21 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import * as Hapi from '@hapi/hapi'
-import { getForms, IForms } from '@countryconfig/farajaland/features/forms/service'
 import {
   getLanguages,
   ILanguage
 } from '@countryconfig/farajaland/features/languages/service/service'
 
 interface IDefinitionsResponse {
-  forms: IForms
   languages: ILanguage[]
 }
 
-export async function definitionsHandler(
+export async function contentHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ): Promise<IDefinitionsResponse> {
   const application = request.params.application
   return {
-    forms: await getForms(),
     languages: (await getLanguages(application)).data
   }
 }

@@ -11,7 +11,7 @@ import { AddressType, BirthRegistration, EducationType } from './gateway'
 import { pick } from 'lodash'
 
 function randomWeightInGrams() {
-  return Math.round(2.5 + 2 * Math.random() * 1000)
+  return Math.round((2.5 + 2 * Math.random()) * 1000)
 }
 
 export async function sendBirthNotification(
@@ -59,7 +59,7 @@ export async function sendBirthNotification(
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        'x-correlation': `birth-notification-${firstNames}-${familyName}`
+        'x-correlation-id': `birth-notification-${firstNames}-${familyName}`
       },
       body: JSON.stringify(notification)
     }
@@ -179,7 +179,7 @@ export async function createBirthDeclaration(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `declare-${firstNames}-${familyName}`
+      'x-correlation-id': `declare-${firstNames}-${familyName}`
     },
     body: JSON.stringify({
       query: `
@@ -218,6 +218,7 @@ export async function createBirthDeclaration(
 
 export async function createDeathDeclaration(
   { username, token }: User,
+  deathTime: Date,
   sex: 'male' | 'female',
   declarationTime: Date,
   location: Location
@@ -227,16 +228,13 @@ export async function createDeathDeclaration(
 
   const requestStart = Date.now()
 
-  const birthDate = sub(declarationTime, { days: Math.random() * 365 * 20 })
-  const deathDay = max([
-    add(birthDate, { days: 2 }),
-    sub(declarationTime, { days: Math.random() * 20 })
-  ])
+  const birthDate = sub(deathTime, { years: Math.random() * 100 })
+  const deathDay = deathTime
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const details = {
     createdAt: declarationTime.toISOString(),
     registration: {
-      contact: 'APPLICANT',
+      contact: 'INFORMANT',
       contactPhoneNumber:
         '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
       contactRelationship: 'Mother',
@@ -334,7 +332,7 @@ export async function createDeathDeclaration(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `declare-death-${firstNames}-${familyName}`
+      'x-correlation-id': `declare-death-${firstNames}-${familyName}`
     },
     body: JSON.stringify({
       operationName: 'submitMutation',
@@ -550,7 +548,7 @@ export async function fetchRegistration(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${user.token}`,
-      'x-correlation': `fetch-declaration-${compositionId}`
+      'x-correlation-id': `fetch-declaration-${compositionId}`
     },
     body: JSON.stringify({
       query: FETCH_REGISTRATION_QUERY,
@@ -708,7 +706,7 @@ export async function fetchDeathRegistration(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${user.token}`,
-      'x-correlation': `fetch-declaration-${compositionId}`
+      'x-correlation-id': `fetch-declaration-${compositionId}`
     },
     body: JSON.stringify({
       query: FETCH_DEATH_REGISTRATION_QUERY,
@@ -726,4 +724,59 @@ export async function fetchDeathRegistration(
   }
 
   return res.data.fetchDeathRegistration
+}
+
+export async function fetchAlreadyGeneratedInterval(
+  token: string,
+  locationIds: string[]
+) {
+  const fetchFirst = async (sort: 'desc' | 'asc') => {
+    const res = await fetch(GATEWAY_HOST, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        'x-correlation-id': `fetch-interval-oldest`
+      },
+      body: JSON.stringify({
+        query: `query data($sort: String, $locationIds: [String]) {
+          searchEvents(sort: $sort, locationIds: $locationIds, sortColumn: "dateOfDeclaration", count: 1) {
+            results {
+              registration {
+                dateOfDeclaration
+              }
+            }
+          }
+        }
+        `,
+        variables: {
+          sort,
+          locationIds
+        }
+      })
+    })
+    const body = await res.json()
+
+    if (body.errors) {
+      log(body.errors)
+      throw new Error('Fetching generated intervals failed')
+    }
+
+    const data = body.data as {
+      searchEvents: {
+        results: Array<{
+          registration: {
+            dateOfDeclaration: string
+          }
+        }>
+      }
+    }
+    return data.searchEvents.results.map(
+      ({ registration }) => new Date(registration.dateOfDeclaration)
+    )[0]
+  }
+
+  return (await Promise.all([fetchFirst('asc'), fetchFirst('desc')])).filter(
+    Boolean
+  )
 }

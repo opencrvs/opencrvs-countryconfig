@@ -11,7 +11,10 @@
  */
 import * as fs from 'fs'
 import { ORG_URL } from '@countryconfig/constants'
-import { getFromFhir, sendToFhir } from '@countryconfig/farajaland/features/utils'
+import {
+  getFromFhir,
+  sendToFhir
+} from '@countryconfig/farajaland/features/utils'
 import chalk from 'chalk'
 import User, {
   IUserModel
@@ -213,7 +216,7 @@ export async function composeAndSavePractitioners(
       role: practitioner.role,
       type: practitioner.type,
       scope: getScope(practitioner.role, practitioner.environment),
-      status: practitioner.environment === "development" ? 'active' : 'pending',
+      status: practitioner.environment === 'development' ? 'active' : 'pending',
       practitionerId,
       primaryOfficeId,
       catchmentAreaIds,
