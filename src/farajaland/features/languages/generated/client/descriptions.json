@@ -1,5 +1,6 @@
 {
   "data": {
+    "buttons.archive": "Archive button text",
     "buttons.approve": "Approve button text",
     "buttons.apply": "Apply button label",
     "buttons.back": "Back button",
@@ -52,6 +53,7 @@
     "constants.informantContactNumber": "The title of contact number label",
     "constants.declaration": "A label for declaration",
     "constants.declarationsCount": "A label for declarations count",
+    "constants.declarationArchivedOn": "Label for the workflow timestamp when the status is archived",
     "constants.declarationCollectedOn": "Label for the workflow timestamp when the status is collected",
     "constants.declarationFailedOn": "Label for the workflow timestamp when the status is failed",
     "constants.informant": "Informant Label",
@@ -783,6 +785,10 @@
     "certificate.receipt.deathService.after": "Amount due on certificate for death label",
     "certificate.receipt.birthService.between": "Amount due on certificate for birth label",
     "certificate.receipt.deathService.between": "Amount due on certificate for death label",
+    "recordAudit.declaration.reinstateDialogTitle": "Title for the dialog when reinstate declaration",
+    "recordAudit.declaration.reinstateDialog.actions.cancel": "Button label for the dialog when cancel reinstate declaration",
+    "recordAudit.declaration.reinstateDialog.actions.confirm": "Button label for the dialog when confirm reinstate declaration",
+    "recordAudit.declaration.reinstateDialogDescription": "Description for the dialog when reinstate declaration",
     "register.confirmationScreen.buttons.back": "The button to return to the homescreen",
     "register.confirmationScreen.boxHeaderDesc": "The first box header description that appear on the confirmation screen ",
     "register.confirmationScreen.trackingSectionTitle": "The tracking section title that appear on the confirmation screen",
@@ -843,6 +849,14 @@
     "config.certificate.uploadCertificateDialogConfirm": "Confirm new certificate template upload button",
     "config.certificate.uploadCertificateDialogCancel": "Cancel new certificate template upload button",
     "settings.changePhone": "Change phone number title",
-    "settings.verifyPhone": "Verify phone number title"
+    "settings.verifyPhone": "Verify phone number title",
+    "recordAudit.archive.status": "Archived status",
+    "recordAudit.archive.confirmation.title": "Confirmation title for archiving a declaration",
+    "recordAudit.archive.confirmation.body": "Confirmation body for archiving a declaration",
+    "regHome.outbox.statusArchiving": "Label for application status Archiving",
+    "regHome.outbox.statusWaitingToBeArchived": "Label for application status waiting to be reinstated",
+    "regHome.outbox.statusReinstating": "Label for application status Archiving",
+    "regHome.outbox.statusWaitingToBeReinstated": "Label for application status waiting to be reinstated"
+
   }
 }
