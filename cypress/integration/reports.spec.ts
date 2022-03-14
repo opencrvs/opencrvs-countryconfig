@@ -25,7 +25,7 @@ context('Reports Integration Test', () => {
     cy.get('#navigation_performance').click()
     // INPUT SEARCH LOCATION
     cy.get('#change-location-link').click()
-    cy.get('#locationSearchInput').type('Sulaka')
+    cy.get('#locationSearchInput').type('Ibombo District')
     cy.initializeFakeTimers()
     cy.get('#locationSearchInput')
       .siblings('ul')
