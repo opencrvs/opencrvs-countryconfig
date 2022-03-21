@@ -1208,7 +1208,7 @@
         "review.button.approve": "Send for approval",
         "review.documents.editDocuments": "Add attachment",
         "review.documents.zeroDocumentsText": "No supporting documents for {section, select, child {child} mother {mother} father {father} deceased {deceased} informant {informant} other {Parent}}",
-        "review.documents.documentForWhom": "{section, select, child {Child's} mother {Mother's} father {Father's} deceased {Deceased's} informant {Informant's} informant {Informant's} other {Parents'} other {}}",
+        "review.documents.documentForWhom": "{section, select, child {Child's} mother {Mother's} father {Father's} deceased {Deceased's} informant {Informant's} other {Parents'} other {}}",
         "review.documentViewer.tagline": "Select to Preview",
         "review.documentViewer.title": "Supporting Documents",
         "review.edit.modal.backToPreview": "Back to Preview",
