@@ -16,5 +16,5 @@ window.config = {
   AUTH_URL: 'https://auth.{{hostname}}',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',    
   COUNTRY: 'FAR',  
-  LANGUAGES: 'en'
+  LANGUAGES: 'en,fr'
 }
