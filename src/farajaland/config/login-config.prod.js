@@ -13,6 +13,6 @@ window.config = {
   AUTH_API_URL: 'https://auth.{{hostname}}/',
   CONFIG_API_URL: 'https://config.{{hostname}}',
   COUNTRY: 'FAR',
-  LANGUAGES: 'en',
+  LANGUAGES: 'en,fr',
   CLIENT_APP_URL: 'https://register.{{hostname}}/'
 }
