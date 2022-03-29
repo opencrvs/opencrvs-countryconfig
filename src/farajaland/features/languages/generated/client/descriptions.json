@@ -667,6 +667,9 @@
     "system.user.settings.passwordUpdated": "Password change message on success",
     "system.user.settings.avatarUpdating": "Profile image message when uploading",
     "system.user.settings.avatarUpdated": "Profile image change message on success",
+    "system.user.settings.name": "label for name",
+    "system.user.settings.systemLanguage": "Label for system language",
+    "system.user.settings.profileImage": "Label for profile image",
     "recordAudit.noName": "Label for name not available",
     "recordAudit.status": "Label for status",
     "recordAudit.noStatus": "Label for status not available",
@@ -857,6 +860,5 @@
     "regHome.outbox.statusWaitingToBeArchived": "Label for application status waiting to be reinstated",
     "regHome.outbox.statusReinstating": "Label for application status Archiving",
     "regHome.outbox.statusWaitingToBeReinstated": "Label for application status waiting to be reinstated"
-
   }
 }
