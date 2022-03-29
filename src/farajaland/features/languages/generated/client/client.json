@@ -1094,6 +1094,7 @@
         "register.registerForm.queryError": "The page cannot be loaded at this time due to low connectivity or a network error. Please click refresh to try again, or try again later.",
         "regHome.certified": "Certified",
         "regHome.inProgress": "In progress",
+        "regHome.archived": "Archived",
         "regHome.outbox.statusArchiving": "Archiving...",
         "regHome.outbox.statusReinstating": "Reinstating...",
         "regHome.outbox.statusRegistering": "Registering...",

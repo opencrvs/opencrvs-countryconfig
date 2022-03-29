@@ -1128,6 +1128,7 @@
   "regHomeInProSelectorHospitalDrafts": "regHome.inPro.selector.hospital.drafts",
   "regHomeInProSelectorOwnDrafts": "regHome.inPro.selector.own.drafts",
   "regHomeInProgress": "regHome.inProgress",
+  "regHomeArchived": "regHome.archived",
   "regHomeOutboxStatusArchiving": "regHome.outbox.statusArchiving",
   "regHomeOutboxStatusReinstating": "regHome.outbox.statusReinstating",
   "regHomeOutboxStatusRegistering": "regHome.outbox.statusRegistering",
