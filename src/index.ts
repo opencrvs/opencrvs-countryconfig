@@ -204,7 +204,9 @@ export async function createServer() {
     path: '/content/{application}',
     handler: farajalandContentHandler,
     options: {
-      auth: false, // TODO: Figure out different auth stategy
+      auth: {
+        mode: 'optional'
+      },
       tags: ['api'],
       description: 'Serves language content'
     }
