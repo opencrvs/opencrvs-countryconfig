@@ -1171,7 +1171,7 @@
         "config.application.nameChangeMessage": "Choose a name for your CRVS system",
         "config.application.configChangeError": "Unable to make change. Please try again",
         "config.application.govermentLogoLabel": "Goverment logo",
-        "config.application.currencyLable": "Currency",
+        "config.application.currencyLabel": "Currency",
         "config.application.currencyChangeNotification": "Currency updated",
         "config.application.birthRegTargetChangeNotification": "Birth registration target days updated",
         "config.application.birthLateRegTargetChangeNotification": "Birth late registration target days updated",

@@ -858,7 +858,7 @@
     "config.application.nameChangeMessage": "Message for application name change modal",
     "config.application.configChangeError": "Error message for application config change",
     "config.application.govermentLogoLabel": "Goverment logo config label",
-    "config.application.currencyLable": "Currency config label",
+    "config.application.currencyLabel": "Currency config label",
     "config.application.currencyChangeNotification": "Message for application currency change notification",
     "config.application.birthRegTargetChangeNotification": "Message for application birth registration target change notification",
     "config.application.birthLateRegTargetChangeNotification": "Message for application birth late registration target change notification",

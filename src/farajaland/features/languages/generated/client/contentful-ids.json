@@ -1445,7 +1445,7 @@
   "configApplicationNameChangeMessage": "config.application.nameChangeMessag",
   "configApplicationConfigChangeError": "config.application.configChangeError",
   "configApplicationGovermentLogoLabel": "config.application.govermentLogoLabel",
-  "configApplicationCurrencyLable": "config.application.currencyLable",
+  "configApplicationcurrencyLabel": "config.application.currencyLabel",
   "configApplicationCurrencyChangeNotification": "config.application.currencyChangeNotification",
   "configApplicationBirthRegTargetChangeNotification": "config.application.birthRegTargetChangeNotification",
   "configApplicationBirthLateRegTargetChangeNotification": "config.application.birthLateRegTargetChangeNotification",
