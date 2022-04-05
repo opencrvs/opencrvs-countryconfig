@@ -1,5 +1,7 @@
 {
   "data": {
+    "login.username": "The label that appears on the mobile number input",
+    "login.passwordLabel": "The label that appears on the password input",
     "validations.required": "The error message that appears on required fields",
     "validations.minLength": "The error message that appears on fields with a minimum length",
     "validations.numberRequired": "The error message that appears on fields where the value must be number",
@@ -41,8 +43,6 @@
     "label.error": "Generic error message for invalid form nput",
     "error.errorPhoneNumberNotFound": "Error message for phone number not found",
     "resend.sms": "Text for button that resends SMS verification code",
-    "login.username": "The label that appears on the mobile number input",
-    "login.passwordLabel": "The label that appears on the password input",
     "error.networkError": "The error that appears when there is no internet connection",
     "login.stepOneInstruction": "The instruction that appears in step one of the form",
     "login.submit": "The label that appears on the submit button",

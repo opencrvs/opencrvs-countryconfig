@@ -1,4 +1,6 @@
 [
+  "login.username",
+  "login.passwordLabel",
   "validations.required",
   "validations.minLength",
   "validations.numberRequired",
@@ -40,8 +42,6 @@
   "label.error",
   "error.errorPhoneNumberNotFound",
   "resend.sms",
-  "login.username",
-  "login.passwordLabel",
   "error.networkError",
   "login.stepOneInstruction",
   "login.submit",
