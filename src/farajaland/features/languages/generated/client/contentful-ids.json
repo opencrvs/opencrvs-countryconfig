@@ -252,6 +252,7 @@
   "correctionCorrectorMe": "correction.corrector.me",
   "correctionCorrectorMother": "correction.corrector.mother",
   "correctionCorrectorOthers": "correction.corrector.others",
+  "correctionCorrectorDescription": "correction.corrector.description",
   "correctionReasonTitle": "correction.reason.title",
   "correctionReasonReasonForChange": "correction.reason.reasonForChange",
   "correctionReasonAdditionalComment": "correction.reason.additionalComment",

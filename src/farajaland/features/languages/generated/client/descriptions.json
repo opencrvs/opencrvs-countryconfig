@@ -188,6 +188,7 @@
     "correction.corrector.mother": "Label for mother option in certificate correction form",
     "correction.corrector.others": "Label for someone else option in certificate correction form",
     "correction.corrector.title": "The title for the corrector form",
+    "correction.corrector.description": "The description for the dialog when details of the corrector not verified",
     "correction.reason.title": "The title for the correction reason form",
     "correction.reason.reasonForChange": "Label for other reason for correction reason form",
     "correction.reason.additionalComment": "Label for any additional comment for correction reason form",
