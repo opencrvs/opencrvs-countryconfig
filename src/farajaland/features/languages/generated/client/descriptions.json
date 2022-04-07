@@ -873,7 +873,7 @@
     "config.application.birthLegallySpecifiedDialogTitle": "Legally specified dialog title for brith",
     "config.application.birthDelayedDialogTitle": "Delayed dialog title for brith",
     "config.application.deathLegallySpecifiedDialogTitle": "Legally specified dialog title for death",
-    "config.application.onTimeFeeDialogTitle":"Birth on time fee dialog title",
+    "config.application.onTimeFeeDialogTitle": "Birth on time fee dialog title",
     "config.application.lateFeeDialogTitle": "Birth late fee dialog title",
     "config.application.delayedFeeDialogTitle": "Birth delayed fee dialog title",
     "config.application.legallySpecifiedLabel": "Legally specified config label",
@@ -916,6 +916,19 @@
     "regHome.outbox.statusArchiving": "Label for application status Archiving",
     "regHome.outbox.statusWaitingToBeArchived": "Label for application status waiting to be reinstated",
     "regHome.outbox.statusReinstating": "Label for application status Archiving",
-    "regHome.outbox.statusWaitingToBeReinstated": "Label for application status waiting to be reinstated"
+    "regHome.outbox.statusWaitingToBeReinstated": "Label for application status waiting to be reinstated",
+    "navigation.progress": "Label for In progress in navigation",
+    "navigation.readyForReview": "Label for In Ready for review in navigation",
+    "navigation.sentForReview": "Label for Sent for review in navigation",
+    "navigation.requiresUpdate": "Label for Requires update in navigation",
+    "navigation.sentForUpdates": "Label for Sent for updates in navigation",
+    "navigation.approvals": "Label for Ready for approval in navigation",
+    "navigation.waitingValidation": "Label for External validation in navigation",
+    "navigation.print": "Label for Ready to print in navigation",
+    "navigation.application": "Label for Application in navigation",
+    "navigation.performance": "Label for Performance in navigation",
+    "navigation.team": "Label for Team in navigation",
+    "navigation.config": "Label for Configuration in navigation",
+    "navigation.certificates": "Label for Certificates in navigation"
   }
 }
