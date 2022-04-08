@@ -1460,7 +1460,7 @@
   "configApplicationBirthLegallySpecifiedDialogTitle": "config.application.birthLegallySpecifiedDialogTitle",
   "configApplicationBirthDelayedDialogTitle": "config.application.birthDelayedDialogTitle",
   "configApplicationDeathLegallySpecifiedDialogTitle": "config.application.deathLegallySpecifiedDialogTitle",
-  "configApplicationOnTimeFeeDialogTitle":"config.application.onTimeFeeDialogTitle",
+  "configApplicationOnTimeFeeDialogTitle": "config.application.onTimeFeeDialogTitle",
   "configApplicationLateFeeDialogTitle": "config.application.lateFeeDialogTitle",
   "configApplicationDelayedFeeDialogTitle": "config.application.delayedFeeDialogTitle",
   "configApplicationLegallySpecifiedLabel": "config.application.legallySpecifiedLabel",
@@ -1494,5 +1494,18 @@
   "configApplicationPhoneNumberChangeNotification": "config.application.phoneNumberChangeNotification",
   "configApplicationGovtLogoChangeNotification": "config.application.govtLogoChangeNotification",
   "configApplicationGovtLogoChangeError": "config.application.govtLogoChangeError",
-  "configApplicationGovtLogoFileLimitError": "config.application.govtLogoFileLimitError"
+  "configApplicationGovtLogoFileLimitError": "config.application.govtLogoFileLimitError",
+  "navigationProgress": "navigation.progress",
+  "navigationReadyForReview": "navigation.readyForReview",
+  "navigationSentForReview": "navigation.sentForReview",
+  "navigationRequiresUpdate": "navigation.requiresUpdate",
+  "navigationSentForUpdates": "navigation.sentForUpdates",
+  "navigationApprovals": "navigation.approvals",
+  "navigationWaitingValidation": "navigation.waitingValidation",
+  "navigationPrint": "navigation.print",
+  "navigationApplication": "navigation.application",
+  "navigationPerformance": "navigation.performance",
+  "navigationTeam": "navigation.team",
+  "navigationConfig": "navigation.config",
+  "navigationCertificates": "navigation.certificates"
 }

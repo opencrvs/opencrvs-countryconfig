@@ -1538,7 +1538,20 @@
         "user.profile.audit.description.registered": "Registered vital event",
         "user.profile.audit.description.rejected": "Sent declaration for updates",
         "user.profile.audit.description.certified": "Printed certificate",
-        "user.profile.auditList.showMore": "Show next {pageSize} of {totalItems}"
+        "user.profile.auditList.showMore": "Show next {pageSize} of {totalItems}",
+        "navigation.progress": "In progress",
+        "readyForReview": "Ready for review",
+        "sentForReview": "Sent for review",
+        "requiresUpdate": "Requires update",
+        "sentForUpdates": "Sent for updates",
+        "approvals": "Sent for approval",
+        "waitingValidation": "Waiting for validation",
+        "print": "Ready to print",
+        "application": "Application",
+        "performance": "Performance",
+        "team": "Team",
+        "config": "Config",
+        "certificates": "Certificates"
       }
     },
     {
@@ -3022,7 +3035,20 @@
         "user.profile.audit.description.registered": "Événement vital enregistré",
         "user.profile.audit.description.rejected": "Envoi de la déclaration pour mise à jour",
         "user.profile.audit.description.certified": "Certificat imprimé",
-        "user.profile.auditList.showMore": "Afficher le prochain {pageSize} de {totalItems"
+        "user.profile.auditList.showMore": "Afficher le prochain {pageSize} de {totalItems",
+        "navigation.progress": "En cours",
+        "navigation.readyForReview": "Prêt pour la révision",
+        "navigation.sentForReview": "Envoyé pour révision",
+        "navigation.navigation.requiresUpdate": "Nécessite une mise à jour",
+        "navigation.sentForUpdates": "Envoyé pour les mises à jour",
+        "navigation.approvals": "Envoyé pour approbation",
+        "navigation.waitingValidation": "En attente de validation",
+        "navigation.print": "Prêt à être imprimé",
+        "navigation.application": "Application",
+        "navigation.performance": "Performance",
+        "navigation.team": "Équipe",
+        "navigation.config": "Config",
+        "navigation.certificates": "Certificats"
       }
     }
   ]
