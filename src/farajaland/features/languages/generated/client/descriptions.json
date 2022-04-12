@@ -57,7 +57,7 @@
     "constants.informantContactNumber": "The title of contact number label",
     "constants.declaration": "A label for declaration",
     "constants.declarationsCount": "A label for declarations count",
-    "constants.applicationArchivedOn": "Label for the workflow timestamp when the status is archived",
+    "constants.declrationArchivedOn": "Label for the workflow timestamp when the status is archived",
     "constants.declarationCollectedOn": "Label for the workflow timestamp when the status is collected",
     "constants.declarationFailedOn": "Label for the workflow timestamp when the status is failed",
     "constants.informant": "Informant Label",

@@ -4,6 +4,7 @@
   "buttons.reinstate",
   "buttons.verify",
   "buttons.makeCorrection",
+  "constants.declrationArchivedOn",
   "constants.applicationName",
   "constants.config",
   "constants.downloaded",
