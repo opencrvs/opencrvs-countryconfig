@@ -1505,13 +1505,5 @@
   "navigationPerformance": "navigation.performance",
   "navigationTeam": "navigation.team",
   "navigationConfig": "navigation.config",
-  "navigationCertificates": "navigation.certificates",
-  "officeHomeProgress": "officeHome.progress",
-  "officeHomeReadyForReview": "officeHome.readyForReview",
-  "officeHomeSentForReview": "officeHome.sentForReview",
-  "officeHomeRequiresUpdate": "officeHome.requiresUpdate",
-  "officeHomeSentForUpdates": "officeHome.sentForUpdates",
-  "officeHomeApprovals": "officeHome.approvals",
-  "officeHomeWaitingValidation": "officeHome.waitingValidation",
-  "officeHomePrint": "officeHome.print"
+  "navigationCertificates": "navigation.certificates"
 }
