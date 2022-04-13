@@ -87,13 +87,6 @@ export function createUsers(users: IUserModel[]) {
     active: true
   })
 
-  const performanceOversightRole = new Role({
-    title: 'Performance Oversight',
-    value: 'PERFORMANCE_OVERSIGHT',
-    types: ['DNRPC'],
-    active: true
-  })
-
   const performanceMgntRole = new Role({
     title: 'Performance Management',
     value: 'PERFORMANCE_MANAGEMENT',
@@ -107,7 +100,6 @@ export function createUsers(users: IUserModel[]) {
     regitstrarRole,
     sysAdminLocalRole,
     sysAdminNationalRole,
-    performanceOversightRole,
     performanceMgntRole
   ]
   function onInsert(err: any, values: any) {
