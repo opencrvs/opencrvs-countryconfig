@@ -8,6 +8,7 @@
   "constants.applicationName",
   "constants.config",
   "constants.downloaded",
+  "constants.event",
   "constants.history",
   "constants.updated",
   "constants.sent_incomplete",
