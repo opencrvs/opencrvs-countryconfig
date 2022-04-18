@@ -33,14 +33,22 @@ else
   exit 1
 fi
 
-docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
- -c "mongorestore --host $HOST --drop --gzip --archive=/backups/hearth-dev.gz"
+mongo_credentials() {
+  if [ ! -z ${MONGODB_ADMIN_USER+x} ] || [ ! -z ${MONGODB_ADMIN_PASSWORD+x} ]; then
+    echo "--username $MONGODB_ADMIN_USER --password $MONGODB_ADMIN_PASSWORD --authenticationDatabase admin";
+  else
+    echo "";
+  fi
+}
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
- -c "mongorestore --host $HOST --drop --gzip --archive=/backups/openhim-dev.gz"
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/hearth-dev.gz"
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
- -c "mongorestore --host $HOST --drop --gzip --archive=/backups/user-mgnt.gz"
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/openhim-dev.gz"
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
- -c "mongorestore --host $HOST --drop --gzip --archive=/backups/application-config.gz"
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/user-mgnt.gz"
+
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/application-config.gz"
