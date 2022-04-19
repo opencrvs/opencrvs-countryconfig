@@ -84,6 +84,7 @@
   "changePhoneValidationMsg": "changePhone.validation.msg",
   "constantsDateOfEvent": "constants.dateOfEvent",
   "constantsSentForReview": "constants.sentForReview",
+  "constantsSentForUpdates": "constants.sentForUpdates",
   "constantsEvent": "constants.even",
   "constantsPIN": "constants.PIN",
   "constantsAddress": "constants.address",
