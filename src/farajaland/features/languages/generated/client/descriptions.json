@@ -149,6 +149,7 @@
     "constants.trackingId": "Search menu tracking id type",
     "constants.dateOfEvent": "label for Date of event",
     "constants.sentForReview": "label for sent for review",
+    "constants.sentForUpdates": "label for sent for updates",
     "constants.type": "Label for type of event in work queue list item",
     "constants.event": "Label for Event of event in work queue list item",
     "constants.update": "The title of reject button in list item actions",
