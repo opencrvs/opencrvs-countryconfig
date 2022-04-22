@@ -86,6 +86,8 @@
   "constantsNotificationSent": "constants.notificationSent",
   "constantsSentForReview": "constants.sentForReview",
   "constantsSentForUpdates": "constants.sentForUpdates",
+  "constantsSentForApproval": "constants.sentForApprovals",
+  "constantsSentForValidation": "constants.sentForValidation",
   "constantsEvent": "constants.even",
   "constantsPIN": "constants.PIN",
   "constantsAddress": "constants.address",
