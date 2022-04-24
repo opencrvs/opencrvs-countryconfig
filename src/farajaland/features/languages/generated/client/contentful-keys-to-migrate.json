@@ -48,6 +48,7 @@
   "performance.reports.header.totalRegistrations",
   "performance.reports.header.totalCertificates",
   "performance.reports.subHeader.totalCertificates",
+  "performance.reports.header.totalCorrections",
   "performance.reports.header.totalPayments",
   "performance.values.labels.total",
   "performance.values.labels.delayed",

@@ -602,6 +602,7 @@
     "performance.reports.header.totalRegistrations": "Header for report total registrations",
     "performance.reports.header.totalCertificates": "Header for report total certificates",
     "performance.reports.subHeader.totalCertificates": "Sub header for report total certificates",
+    "performance.reports.header.totalCorrections": "Header for report total corrections",
     "performance.reports.header.totalPayments": "Header for report total payments",
     "performance.values.labels.total": "Label text for displays showing totals",
     "performance.values.labels.delayed": "Label text for display showing delayed registrations",
