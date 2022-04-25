@@ -572,7 +572,7 @@
     "navigation.performance": "Performance label in navigation",
     "navigation.team": "Team label in navigation",
     "navigation.config": "Config label in navigation",
-    "navigation.certificates": "Certificates label in navigation",
+    "navigation.certificate": "Certificates label in navigation",
     "misc.notif.declarationsSynced": "The message that appears in notification when background sync takes place",
     "misc.notif.draftsSaved": "The message that appears in notification when save drafts button is clicked",
     "misc.notif.outboxText": "Declaration outbox text",

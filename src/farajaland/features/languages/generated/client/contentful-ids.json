@@ -1512,7 +1512,7 @@
   "navigationPerformance": "navigation.performance",
   "navigationTeam": "navigation.team",
   "navigationConfig": "navigation.config",
-  "navigationCertificates": "navigation.certificates",
+  "navigationCertificate": "navigation.certificate",
   "officeHomeProgress": "officeHome.progress",
   "officeHomeReadyForReview": "officeHome.readyForReview",
   "officeHomeSentForReview": "officeHome.sentForReview",
