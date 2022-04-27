@@ -245,6 +245,8 @@
   "constantsWithin1YearTo5Years": "constants.within1YearTo5Years",
   "constantsWithin45Days": "constants.within45Days",
   "constantsWithin45DaysTo1Year": "constants.within45DaysTo1Year",
+  "constantsRequireUpdatesLoading": "constants.requireUpdatesLoading",
+  "constantsNoRecords": "constants.noRecords",
   "correctionCorrectorAnotherAgent": "correction.corrector.anotherAgent",
   "correctionCorrectorBirthNote": "correction.corrector.birth.note",
   "correctionCorrectorChild": "correction.corrector.child",
@@ -1512,13 +1514,5 @@
   "navigationPerformance": "navigation.performance",
   "navigationTeam": "navigation.team",
   "navigationConfig": "navigation.config",
-  "navigationCertificate": "navigation.certificate",
-  "officeHomeProgress": "officeHome.progress",
-  "officeHomeReadyForReview": "officeHome.readyForReview",
-  "officeHomeSentForReview": "officeHome.sentForReview",
-  "officeHomeRequiresUpdate": "officeHome.requiresUpdate",
-  "officeHomeSentForUpdates": "officeHome.sentForUpdates",
-  "officeHomeApprovals": "officeHome.approvals",
-  "officeHomeWaitingValidation": "officeHome.waitingValidation",
-  "officeHomePrint": "officeHome.print"
+  "navigationCertificate": "navigation.certificate"
 }
