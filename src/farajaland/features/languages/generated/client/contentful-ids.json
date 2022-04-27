@@ -82,7 +82,6 @@
   "certificateReceiptService5year": "certificate.receipt.service.5year",
   "certificateReceiptSubheader": "certificate.receipt.subheader",
   "changePhoneValidationMsg": "changePhone.validation.msg",
-  "constantsDateOfEvent": "constants.dateOfEvent",
   "constantsNotificationSent": "constants.notificationSent",
   "constantsSentForReview": "constants.sentForReview",
   "constantsSentForUpdates": "constants.sentForUpdates",

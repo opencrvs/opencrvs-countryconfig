@@ -147,7 +147,6 @@
     "constants.to": "Used in sentence",
     "constants.toCapitalized": "Label for To",
     "constants.trackingId": "Search menu tracking id type",
-    "constants.dateOfEvent": "label for Date of event",
     "constants.notificationSent": "label for notification sent",
     "constants.sentForReview": "label for sent for review",
     "constants.sentForValidation": "label for sent for validation",
