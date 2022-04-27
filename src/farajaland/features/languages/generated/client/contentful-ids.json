@@ -1167,6 +1167,7 @@
   "regHomeValRegAgentTooltip": "regHome.val.regAgent.tooltip",
   "regHomeValidatedRegistrarTooltip": "regHome.validated.registrar.tooltip",
   "regHomeWaitingForExternalValidation": "regHome.waitingForExternalValidation",
+  "regHomeWorkqueueDownloadDeclarationFailed": "regHome.workqueue.downloadDeclarationFailed",
   "registerSelContactBirthRelLabel": "register.SelContact.birthRelLabel",
   "registerSelectContactPointError": "register.SelectContactPoint.error",
   "registerSelectContactPointHeading": "register.SelectContactPoint.heading",
