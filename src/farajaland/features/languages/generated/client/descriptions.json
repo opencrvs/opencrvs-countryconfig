@@ -764,6 +764,7 @@
     "form.field.label.informantRelation.granddaughter": "Label for option Granddaughter",
     "register.selectInformant.birthErrorMessage": "Label for birth error message",
     "register.selectInformant.deathErrorMessage": "Label for death error message",
+    "form.field.label.relationOtherFamilyMember": "Label for other family member relation",
     "register.selectVitalEvent.registerNewEventTitle": "The title that appears on the select vital event page",
     "register.primaryInformant.registerNewEventHeading": "The section heading on the page",
     "register.primaryInformant.description": "The section heading on the page",
