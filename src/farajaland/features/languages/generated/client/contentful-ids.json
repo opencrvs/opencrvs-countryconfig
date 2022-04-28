@@ -82,8 +82,11 @@
   "certificateReceiptService5year": "certificate.receipt.service.5year",
   "certificateReceiptSubheader": "certificate.receipt.subheader",
   "changePhoneValidationMsg": "changePhone.validation.msg",
-  "constantsDateOfEvent": "constants.dateOfEvent",
+  "constantsNotificationSent": "constants.notificationSent",
   "constantsSentForReview": "constants.sentForReview",
+  "constantsSentForUpdates": "constants.sentForUpdates",
+  "constantsSentForApproval": "constants.sentForApproval",
+  "constantsSentForValidation": "constants.sentForValidation",
   "constantsEvent": "constants.event",
   "constantsPIN": "constants.PIN",
   "constantsAddress": "constants.address",
@@ -241,6 +244,8 @@
   "constantsWithin1YearTo5Years": "constants.within1YearTo5Years",
   "constantsWithin45Days": "constants.within45Days",
   "constantsWithin45DaysTo1Year": "constants.within45DaysTo1Year",
+  "constantsRequireUpdatesLoading": "constants.requireUpdatesLoading",
+  "constantsNoRecords": "constants.noRecords",
   "correctionCorrectorAnotherAgent": "correction.corrector.anotherAgent",
   "correctionCorrectorBirthNote": "correction.corrector.birth.note",
   "correctionCorrectorChild": "correction.corrector.child",
@@ -1161,6 +1166,7 @@
   "regHomeValRegAgentTooltip": "regHome.val.regAgent.tooltip",
   "regHomeValidatedRegistrarTooltip": "regHome.validated.registrar.tooltip",
   "regHomeWaitingForExternalValidation": "regHome.waitingForExternalValidation",
+  "regHomeWorkqueueDownloadDeclarationFailed": "regHome.workqueue.downloadDeclarationFailed",
   "registerSelContactBirthRelLabel": "register.SelContact.birthRelLabel",
   "registerSelectContactPointError": "register.SelectContactPoint.error",
   "registerSelectContactPointHeading": "register.SelectContactPoint.heading",
@@ -1508,5 +1514,5 @@
   "navigationPerformance": "navigation.performance",
   "navigationTeam": "navigation.team",
   "navigationConfig": "navigation.config",
-  "navigationCertificates": "navigation.certificates"
+  "navigationCertificate": "navigation.certificate"
 }
