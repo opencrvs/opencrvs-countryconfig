@@ -2736,7 +2736,7 @@
         "performance.labels.certificationRate": "Taux de certification",
         "performance.stats.header": "Stats",
         "performance.registrarsToCitizen": "Des greffiers aux citoyens",
-        "performance.registrarsToCitizenValue": "1 de {citizen}",
+        "performance.registrarsToCitizenValue": "1 à {citizen}",
         "performance.registrationByStatus.header": "Inscription par statut",
         "phone.label.changeNumber": "Quel est votre nouveau numéro ?",
         "phone.label.confirmation": "Un SMS de confirmation a été envoyé à {num}.",
