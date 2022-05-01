@@ -1512,5 +1512,5 @@
   "navigationPerformance": "navigation.performance",
   "navigationTeam": "navigation.team",
   "navigationConfig": "navigation.config",
-  "navigationCertificate": "navigation.certificates"
+  "navigationCertificate": "navigation.certificate"
 }
