@@ -124,17 +124,13 @@ export async function createBirthDeclaration(
       .split('T')[0],
     maritalStatus: 'MARRIED',
     address: [
-      createAddressInput(location, AddressType.PlaceOfHeritage),
-      createAddressInput(location, AddressType.Permanent),
-      createAddressInput(location, AddressType.Current)
+      createAddressInput(location, AddressType.PrimaryAddress),
+      createAddressInput(location, AddressType.PrimaryAddress)
     ]
   }
 
   const details = {
     createdAt: declarationTime.toISOString(),
-    primaryCaregiver: {
-      primaryCaregiver: pick(mother, ['name', 'identifier', 'telecom'])
-    },
     registration: {
       contact: 'MOTHER',
       contactPhoneNumber:
@@ -150,7 +146,7 @@ export async function createBirthDeclaration(
       ],
       draftId: faker.datatype.uuid()
     },
-    presentAtBirthRegistration: 'MOTHER',
+
     child: {
       name: [
         {
@@ -271,7 +267,7 @@ export async function createDeathDeclaration(
       birthDate: birthDate.toISOString().split('T')[0],
       gender: sex,
       maritalStatus: 'MARRIED',
-      address: [createAddressInput(location, AddressType.Permanent)],
+      address: [createAddressInput(location, AddressType.PrimaryAddress)],
       age: Math.max(1, differenceInYears(deathDay, birthDate)),
       deceased: {
         deceased: true,
@@ -282,8 +278,8 @@ export async function createDeathDeclaration(
     maleDependentsOfDeceased: Math.round(Math.random() * 5),
     femaleDependentsOfDeceased: Math.round(Math.random() * 5),
     eventLocation: {
-      address: createAddressInput(location, AddressType.Permanent),
-      type: AddressType.Permanent
+      address: createAddressInput(location, AddressType.PrimaryAddress),
+      type: AddressType.PrimaryAddress
     },
     informant: {
       individual: {
@@ -305,7 +301,7 @@ export async function createDeathDeclaration(
             familyName: familyName
           }
         ],
-        address: [createAddressInput(location, AddressType.Permanent)]
+        address: [createAddressInput(location, AddressType.PrimaryAddress)]
       },
       relationship: 'SON'
     },
@@ -418,20 +414,6 @@ export const BIRTH_REGISTRATION_FIELDS = `
     }
   }
   }
-  primaryCaregiver {
-    primaryCaregiver {
-      name {
-        use
-        firstNames
-        familyName
-      }
-      telecom {
-        system
-        value
-        use
-      }
-    }
-  }
   mother {
     id
     name {
@@ -530,7 +512,6 @@ export const BIRTH_REGISTRATION_FIELDS = `
       country
     }
   }
-  presentAtBirthRegistration
 `
 
 export const FETCH_REGISTRATION_QUERY = `
