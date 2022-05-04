@@ -88,6 +88,15 @@ export function createDeathCertificationDetails(
           data:
             'data:application/pdf;base64,' +
             readFileSync(join(__dirname, './signature.pdf')).toString('base64'),
+          payments: [
+            {
+              type: 'MANUAL',
+              total: 10,
+              amount: 10,
+              outcome: 'COMPLETED',
+              date: createdAt
+            }
+          ],
           collector: {
             relationship: 'INFORMANT'
           }

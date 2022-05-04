@@ -10,7 +10,6 @@ import {
   AttendantType,
   BirthRegistration,
   BirthRegistrationInput,
-  BirthRegPresence,
   BirthType,
   DeathRegistration,
   DeathRegistrationInput,
@@ -49,7 +48,6 @@ export async function createBirthRegistrationDetailsForNotification(
       attachments: [],
       draftId: declaration.id
     },
-    presentAtBirthRegistration: BirthRegPresence.BothParents,
     child: {
       name: declaration.child.name,
       gender: declaration.child.gender,
@@ -145,7 +143,7 @@ export async function markAsRegistered(
     },
     body: JSON.stringify({
       query: `
-        mutation submitMutation($id: ID!, $details: BirthRegistrationInput) {
+        mutation submitMutation($id: ID!, $details: BirthRegistrationInput!) {
           markBirthAsRegistered(id: $id, details: $details) {
             ${BIRTH_REGISTRATION_FIELDS}
         }
@@ -193,7 +191,7 @@ export async function markDeathAsRegistered(
     },
     body: JSON.stringify({
       query: `
-      mutation submitMutation($id: ID!, $details: DeathRegistrationInput) {
+      mutation submitMutation($id: ID!, $details: DeathRegistrationInput!) {
         markDeathAsRegistered(id: $id, details: $details) {
           ${DEATH_REGISTRATION_FIELDS}
         }
