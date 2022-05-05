@@ -11,7 +11,15 @@ version: '3.3'
 
 services:
   notification:
+    secrets:
+      - infobip-gateway-endpoint
+      - infobip-api-key
+      - infobip-sender-id
     environment:
+      - SMS_PROVIDER=infobip
+      - INFOBIP_GATEWAY_ENDPOINT_PATH=/run/secrets/infobip-gateway-endpoint
+      - INFOBIP_API_KEY_PATH=/run/secrets/infobip-api-key
+      - INFOBIP_SENDER_ID=/run/secrets/infobip-sender-id
       - LANGUAGES=en,fr
 
   countryconfig:
@@ -50,12 +58,10 @@ services:
 
   auth:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
 
   user-mgnt:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
 
 secrets:
@@ -65,9 +71,9 @@ secrets:
     external: true
   openhim-password:
     external: true
-  clickatell-user:
+  infobip-gateway-endpoint:
     external: true
-  clickatell-password:
+  infobip-api-key:
     external: true
-  clickatell-api-id:
+  infobip-sender-id:
     external: true
