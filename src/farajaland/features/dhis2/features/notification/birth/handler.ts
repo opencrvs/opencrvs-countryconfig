@@ -19,7 +19,8 @@ import {
   getIDFromResponse,
   createBirthWeightObservation,
   createWeightAtBirthObservation,
-  createAttendantAtBirthObservation
+  createAttendantAtBirthObservation,
+  createRelatedPersonEntry
 } from '../../../features/fhir/service'
 
 import * as Hapi from '@hapi/hapi'
@@ -112,6 +113,7 @@ async function sendBirthNotification(
     notification.mother.dob,
     null
   )
+  const informant = await createRelatedPersonEntry('MOTHER', child.fullUrl)
   if (!notification.place_of_birth) {
     throw new Error('Could not find any place of birth')
   }
@@ -144,6 +146,7 @@ async function sendBirthNotification(
     child.fullUrl,
     mother.fullUrl,
     father.fullUrl,
+    informant.fullUrl,
     encounter.fullUrl,
     new Date(notification.created_at)
   )

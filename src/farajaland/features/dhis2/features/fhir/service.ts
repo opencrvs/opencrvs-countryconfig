@@ -57,6 +57,7 @@ export function createBirthComposition(
   childSectionRef: string,
   motherSectionRef: string,
   fatherSectionRef: string,
+  informantRef: string,
   encounterSectionRef: string,
   createdAt: Date
 ) {
@@ -79,6 +80,19 @@ export function createBirthComposition(
         text: "Mother's details"
       },
       entry: [{ reference: motherSectionRef }]
+    },
+    {
+      title: "Informant's details",
+      code: {
+        coding: [
+          {
+            system: 'http://opencrvs.org/specs/sections',
+            code: 'informant-details'
+          }
+        ],
+        text: "Informant's details"
+      },
+      entry: [{ reference: informantRef }]
     },
     {
       title: "Father's details",

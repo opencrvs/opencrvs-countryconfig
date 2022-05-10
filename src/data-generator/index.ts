@@ -18,8 +18,7 @@ import {
   markAsCertified,
   markDeathAsCertified
 } from './certify'
-import { BirthRegistrationInput, DeathRegistrationInput } from './gateway'
-import { BirthRegistration } from './gateway'
+
 import fetch from 'node-fetch'
 
 import {
@@ -421,7 +420,7 @@ async function main() {
                       days: 1
                     }),
                     declaration
-                  ) as DeathRegistrationInput
+                  )
                 )
                 log('Certifying', registration.id)
                 await wait(2000)
@@ -433,7 +432,7 @@ async function main() {
                       days: 2
                     }),
                     registration
-                  ) as DeathRegistrationInput
+                  )
                 )
 
                 log('Death', submissionDate, ix, '/', deathsToday)
@@ -546,7 +545,7 @@ async function main() {
                         days: 1
                       }),
                       location,
-                      declaration as any
+                      declaration
                     )
                   } catch (error) {
                     console.log(error)
@@ -570,7 +569,7 @@ async function main() {
                       add(new Date(submissionTime), {
                         days: 1
                       }),
-                      declaration as any
+                      declaration
                     )
                   } catch (error) {
                     console.log(error)
@@ -580,7 +579,9 @@ async function main() {
                   log('Registering', id)
                 }
 
-                let registration: BirthRegistration | null = null
+                let registration: Awaited<
+                  ReturnType<typeof markAsRegistered>
+                > | null = null
                 if (!declaredToday || Math.random() > 0.5) {
                   registration = await markAsRegistered(
                     randomRegistrar,
@@ -598,7 +599,7 @@ async function main() {
                         days: 1
                       }),
                       registration
-                    ) as BirthRegistrationInput
+                    )
                   )
                 } else {
                   log(
