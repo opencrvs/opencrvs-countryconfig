@@ -68,7 +68,21 @@ export type RecursiveRequired<T> = Required<
   }
 >
 
-export function idsToFHIRIds(target: Record<string, any>, keys: string[]) {
+type IfAny<T, Y, N> = 0 extends 1 & T ? Y : N
+
+type ReplaceIdWithFHIRId<T> = T extends { id: string }
+  ? Omit<T, 'id'> & { _fhirID: string }
+  : T
+
+type ReplaceIdKeysWithFHIRId<
+  T extends Record<string, any>,
+  T2 = { [P in keyof T]: ReplaceIdKeysWithFHIRId<ReplaceIdWithFHIRId<T[P]>> }
+> = IfAny<T, T, T2>
+
+export function idsToFHIRIds<T extends Record<string, any>>(
+  target: T,
+  keys: ReadonlyArray<string>
+): ReplaceIdKeysWithFHIRId<T> {
   return keys.reduce((memo, key) => {
     const value = get(memo, key)
 
@@ -82,5 +96,5 @@ export function idsToFHIRIds(target: Record<string, any>, keys: string[]) {
       .concat('_fhirID')
       .join('.')
     return set(set(memo, fhirKey, value), key, undefined)
-  }, target)
+  }, target) as ReplaceIdKeysWithFHIRId<T>
 }

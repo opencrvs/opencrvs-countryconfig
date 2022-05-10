@@ -1,14 +1,27 @@
-import fetch from 'node-fetch'
-import { User } from './users'
 import { faker } from '@faker-js/faker'
-import { sub, differenceInDays, add, max, differenceInYears } from 'date-fns'
+import { differenceInDays, differenceInYears, sub } from 'date-fns'
+import fetch from 'node-fetch'
+
+import { createAddressInput } from './address'
+import { COUNTRY_CONFIG_HOST, GATEWAY_HOST } from './constants'
+import {
+  AddressType,
+  CreateDeathDeclarationMutation,
+  EducationType,
+  FetchBirthRegistrationQuery,
+  FetchDeathRegistrationQuery,
+  SearchEventsQuery
+} from './gateway'
+import { Facility, Location } from './location'
+import { User } from './users'
 import { log } from './util'
 
-import { Facility, Location } from './location'
-import { COUNTRY_CONFIG_HOST, GATEWAY_HOST } from './constants'
-import { createAddressInput } from './address'
-import { AddressType, BirthRegistration, EducationType } from './gateway'
-import { pick } from 'lodash'
+import {
+  CREATE_DEATH_DECLARATION,
+  FETCH_DEATH_REGISTRATION_QUERY,
+  FETCH_REGISTRATION_QUERY,
+  SEARCH_EVENTS
+} from './queries'
 
 function randomWeightInGrams() {
   return Math.round((2.5 + 2 * Math.random()) * 1000)
@@ -20,7 +33,7 @@ export async function sendBirthNotification(
   birthDate: Date,
   createdAt: Date,
   location: Facility
-) {
+): Promise<string> {
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
   const requestStart = Date.now()
@@ -132,7 +145,9 @@ export async function createBirthDeclaration(
   const details = {
     createdAt: declarationTime.toISOString(),
     registration: {
+      informantType: 'MOTHER',
       contact: 'MOTHER',
+      otherInformantType: '',
       contactPhoneNumber:
         '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
       contactRelationship: 'Mother',
@@ -331,17 +346,10 @@ export async function createDeathDeclaration(
       'x-correlation-id': `declare-death-${firstNames}-${familyName}`
     },
     body: JSON.stringify({
-      operationName: 'submitMutation',
       variables: {
         details
       },
-      query: `mutation submitMutation($details: DeathRegistrationInput!) {
-            createDeathRegistration(details: $details) {
-              trackingId
-              compositionId
-          }
-      }
-      `
+      query: CREATE_DEATH_DECLARATION
     })
   })
   const requestEnd = Date.now()
@@ -361,7 +369,9 @@ export async function createDeathDeclaration(
     username,
     `(took ${requestEnd - requestStart}ms)`
   )
-  const result = await createDeclarationRes.json()
+  const result = (await createDeclarationRes.json()) as {
+    data: CreateDeathDeclarationMutation
+  }
   if (!result?.data?.createDeathRegistration?.compositionId) {
     log(result)
 
@@ -370,160 +380,7 @@ export async function createDeathDeclaration(
   return result.data.createDeathRegistration.compositionId
 }
 
-export const BIRTH_REGISTRATION_FIELDS = `
-  _fhirIDMap
-  id
-  createdAt
-  child {
-    id
-    multipleBirth
-    name {
-      use
-      firstNames
-      familyName
-    }
-    birthDate
-    gender
-  }
-  informant {
-    id
-    relationship
-    otherRelationship
-    individual {
-      id
-      identifier {
-        id
-        type
-    }
-    name {
-        use
-        firstNames
-        familyName
-    }
-    occupation
-    nationality
-    birthDate
-    address {
-        type
-        line
-        district
-        state
-        city
-        postalCode
-        country
-    }
-  }
-  }
-  mother {
-    id
-    name {
-      use
-      firstNames
-      familyName
-  }
-  birthDate
-  maritalStatus
-  occupation
-  dateOfMarriage
-  educationalAttainment
-  nationality
-  identifier {
-      id
-      type
-  }
-  address {
-      type
-      line
-      district
-      state
-      city
-      postalCode
-      country
-  }
-  telecom {
-      system
-      value
-  }
-  }
-  father {
-    id
-    name {
-      use
-      firstNames
-      familyName
-  }
-  birthDate
-  maritalStatus
-  occupation
-  dateOfMarriage
-  educationalAttainment
-  nationality
-  identifier {
-    id
-    type
-  }
-  address {
-    type
-    line
-    district
-    state
-    city
-    postalCode
-    country
-  }
-  telecom {
-    system
-    value
-  }
-  }
-  registration {
-    id
-    contact
-    contactRelationship
-    contactPhoneNumber
-    attachments {
-      data
-      type
-      contentType
-      subject
-    }
-    status {
-        comments {
-        comment
-      }
-      type
-      timestamp
-    }
-    type
-    trackingId
-    registrationNumber
-  }
-  attendantAtBirth
-  weightAtBirth
-  birthType
-  eventLocation {
-    type
-    address {
-      line
-      district
-      state
-      city
-      postalCode
-      country
-    }
-  }
-`
-
-export const FETCH_REGISTRATION_QUERY = `
-  query data($id: ID!) {
-    fetchBirthRegistration(id: $id) {
-      ${BIRTH_REGISTRATION_FIELDS}
-    }
-  }`
-export async function fetchRegistration(
-  user: User,
-  compositionId: string
-): Promise<BirthRegistration> {
+export async function fetchRegistration(user: User, compositionId: string) {
   const fetchDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
@@ -539,7 +396,9 @@ export async function fetchRegistration(
     })
   })
 
-  const res = await fetchDeclarationRes.json()
+  const res = (await fetchDeclarationRes.json()) as {
+    data: FetchBirthRegistrationQuery
+  }
   if (!res.data?.fetchBirthRegistration) {
     throw new Error(
       `Fetching birth declaration data for ${compositionId} failed`
@@ -548,136 +407,7 @@ export async function fetchRegistration(
 
   return res.data.fetchBirthRegistration
 }
-export const DEATH_REGISTRATION_FIELDS = `
-_fhirIDMap
-id
-createdAt
-deceased {
-  id
-  name {
-    use
-    firstNames
-    familyName
-  }
-  birthDate
-  age
-  gender
-  maritalStatus
-  nationality
-  identifier {
-    id
-    type
-  }
-  gender
-  deceased {
-    deathDate
-  }
-  address {
-    type
-    line
-    district
-    state
-    city
-    postalCode
-    country
-  }
-}
-informant {
-  id
-  relationship
-  individual {
-    id
-    identifier {
-      id
-      type
-    }
-    name {
-      use
-      firstNames
-      familyName
-    }
-    nationality
-    occupation
-    birthDate
-    telecom {
-      system
-      value
-    }
-    address {
-      type
-      line
-      district
-      state
-      city
-      postalCode
-      country
-    }
-  }
-}
-father {
-  id
-  name {
-    use
-    firstNames
-    familyName
-  }
-}
-mother {
-  id
-  name {
-    use
-    firstNames
-    familyName
-  }
-}
-medicalPractitioner {
-  name
-  qualification
-  lastVisitDate
-}
-registration {
-  id
-  contact
-  contactRelationship
-  contactPhoneNumber
-  attachments {
-    data
-    type
-    contentType
-    subject
-  }
-  status {
-    type
-    timestamp
-  }
-  type
-  trackingId
-  registrationNumber
-}
-eventLocation {
-  id
-  type
-  address {
-    type
-    line
-    district
-    state
-    city
-    postalCode
-    country
-  }
-}
-mannerOfDeath
-causeOfDeath
-maleDependentsOfDeceased
-femaleDependentsOfDeceased`
 
-const FETCH_DEATH_REGISTRATION_QUERY = `query data($id: ID!) {
-  fetchDeathRegistration(id: $id) {
-    ${DEATH_REGISTRATION_FIELDS}
-  }
-}
-`
 export async function fetchDeathRegistration(
   user: User,
   compositionId: string
@@ -697,7 +427,9 @@ export async function fetchDeathRegistration(
     })
   })
 
-  const res = await fetchDeclarationRes.json()
+  const res = (await fetchDeclarationRes.json()) as {
+    data: FetchDeathRegistrationQuery
+  }
   if (!res.data?.fetchDeathRegistration) {
     throw new Error(
       `Fetching death declaration data for ${compositionId} failed`
@@ -720,44 +452,31 @@ export async function fetchAlreadyGeneratedInterval(
         'x-correlation-id': `fetch-interval-oldest`
       },
       body: JSON.stringify({
-        query: `query data($sort: String, $locationIds: [String]) {
-          searchEvents(sort: $sort, locationIds: $locationIds, sortColumn: "dateOfDeclaration", count: 1) {
-            results {
-              registration {
-                dateOfDeclaration
-              }
-            }
-          }
-        }
-        `,
+        query: SEARCH_EVENTS,
         variables: {
           sort,
           locationIds
         }
       })
     })
-    const body = await res.json()
+    const body = (await res.json()) as {
+      data: SearchEventsQuery
+      errors: any[]
+    }
 
     if (body.errors) {
       log(body.errors)
       throw new Error('Fetching generated intervals failed')
     }
 
-    const data = body.data as {
-      searchEvents: {
-        results: Array<{
-          registration: {
-            dateOfDeclaration: string
-          }
-        }>
-      }
-    }
-    return data.searchEvents.results.map(
-      ({ registration }) => new Date(registration.dateOfDeclaration)
+    const data = body.data
+
+    return data.searchEvents?.results?.map(
+      d => new Date(d!.registration!.dateOfDeclaration)
     )[0]
   }
 
-  return (await Promise.all([fetchFirst('asc'), fetchFirst('desc')])).filter(
-    Boolean
-  )
+  return (
+    await Promise.all([fetchFirst('asc'), fetchFirst('desc')])
+  ).filter((x): x is Date => Boolean(x))
 }
