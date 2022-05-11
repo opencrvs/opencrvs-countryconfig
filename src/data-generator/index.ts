@@ -67,6 +67,9 @@ const CONCURRENCY = process.env.CONCURRENCY
 const START_YEAR = 2020
 const END_YEAR = 2022
 
+const REGISTER = process.env.REGISTER !== 'false'
+const CERTIFY = process.env.CERTIFY !== 'false'
+
 const BIRTH_COMPLETION_DISTRIBUTION = [
   { range: [0, 45], weight: 0.8 },
   { range: [46, 365], weight: 0.15 },
@@ -401,6 +404,12 @@ async function main() {
                   submissionTime,
                   location
                 )
+
+                if (!REGISTER) {
+                  log('Death', submissionDate, ix, '/', deathsToday)
+                  return
+                }
+
                 const randomRegistrar =
                   users.registrars[
                     Math.floor(Math.random() * users.registrars.length)
@@ -424,16 +433,18 @@ async function main() {
                 )
                 log('Certifying', registration.id)
                 await wait(2000)
-                await markDeathAsCertified(
-                  registration.id,
-                  randomRegistrar,
-                  createDeathCertificationDetails(
-                    add(new Date(submissionTime), {
-                      days: 2
-                    }),
-                    registration
+                if (CERTIFY) {
+                  await markDeathAsCertified(
+                    registration.id,
+                    randomRegistrar,
+                    createDeathCertificationDetails(
+                      add(new Date(submissionTime), {
+                        days: 2
+                      }),
+                      registration
+                    )
                   )
-                )
+                }
 
                 log('Death', submissionDate, ix, '/', deathsToday)
               } catch (error) {
@@ -579,6 +590,17 @@ async function main() {
                   log('Registering', id)
                 }
 
+                if (!REGISTER) {
+                  log(
+                    'Birth',
+                    submissionDate,
+                    ix,
+                    '/',
+                    Math.round(totalChildBirths)
+                  )
+                  return
+                }
+
                 let registration: Awaited<
                   ReturnType<typeof markAsRegistered>
                 > | null = null
@@ -589,7 +611,7 @@ async function main() {
                     registrationDetails
                   )
                 }
-                if (!declaredToday && registration) {
+                if (CERTIFY && !declaredToday && registration) {
                   log('Certifying', id)
                   await markAsCertified(
                     registration.id,
