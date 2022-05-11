@@ -120,7 +120,6 @@
     "register.selectInformant.newDeathRegistration": "The title that appears for new death registrations",
     "constants.noNameProvided": "Label for empty title",
     "constants.noResults": "Text to display if the search return no results for the current filters",
-    "constants.noResult": "Text to display if the search return no results",
     "constants.over5Years": "Label for registrations over 5 years",
     "constants.pendingConnection": "Label for declaration status Pending Connection",
     "constants.performance": "Performance title",
