@@ -126,7 +126,7 @@ export function createRegistrationDetails(
   if (withIdsRemoved.__typename === 'BirthRegistration') {
     delete withIdsRemoved.history
   }
-
+  delete withIdsRemoved.__typename
   delete withIdsRemoved.id
 
   const data = {
