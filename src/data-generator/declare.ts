@@ -6,10 +6,23 @@ import { createAddressInput } from './address'
 import { COUNTRY_CONFIG_HOST, GATEWAY_HOST } from './constants'
 import {
   AddressType,
+  AttachmentSubject,
+  AttachmentType,
+  AttendantType,
+  BirthRegistrationInput,
+  BirthType,
+  CauseOfDeathMethodType,
   CreateDeathDeclarationMutation,
+  DeathRegistrationInput,
   EducationType,
   FetchBirthRegistrationQuery,
   FetchDeathRegistrationQuery,
+  IdentityIdType,
+  InformantType,
+  LocationType,
+  MannerOfDeath,
+  MaritalStatusType,
+  PersonInput,
   SearchEventsQuery
 } from './gateway'
 import { Facility, Location } from './location'
@@ -113,39 +126,43 @@ export async function createBirthDeclaration(
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
-  const mother = {
+
+  const mother: PersonInput = {
     nationality: ['FAR'],
     occupation: 'Bookkeeper',
-    educationalAttainment: EducationType.LowerSecondaryIsced_2,
+    educationalAttainment: EducationType.PrimaryIsced_1,
     dateOfMarriage: sub(birthDate, { years: 2 })
       .toISOString()
       .split('T')[0],
     identifier: [
       {
-        id: faker.datatype.number({ min: 100000000, max: 999999999 }),
-        type: 'NATIONAL_ID'
+        id: faker.datatype
+          .number({ min: 100000000, max: 999999999 })
+          .toString(),
+        type: IdentityIdType.NationalId
       }
     ],
     name: [
       {
         use: 'en',
+        firstNames: faker.name.firstName('female'),
         familyName: familyName
       }
     ],
     birthDate: sub(birthDate, { years: 20 })
       .toISOString()
       .split('T')[0],
-    maritalStatus: 'MARRIED',
+    maritalStatus: MaritalStatusType.Married,
     address: [
       createAddressInput(location, AddressType.PrimaryAddress),
       createAddressInput(location, AddressType.PrimaryAddress)
     ]
   }
 
-  const details = {
+  const details: BirthRegistrationInput = {
     createdAt: declarationTime.toISOString(),
     registration: {
-      informantType: 'MOTHER',
+      informantType: InformantType.Mother,
       contact: 'MOTHER',
       otherInformantType: '',
       contactPhoneNumber:
@@ -159,9 +176,21 @@ export async function createBirthDeclaration(
           timeLoggedMS: timeFilling * 1000
         }
       ],
-      draftId: faker.datatype.uuid()
+      draftId: faker.datatype.uuid(),
+      attachments: [
+        {
+          contentType: 'image/png',
+          data:
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+          subject: AttachmentSubject.Child,
+          type: AttachmentType.NotificationOfBirth
+        }
+      ]
     },
-
+    father: {
+      detailsExist: false,
+      reasonNotApplying: 'Father unknown'
+    },
     child: {
       name: [
         {
@@ -174,12 +203,11 @@ export async function createBirthDeclaration(
       birthDate: birthDate.toISOString().split('T')[0],
       multipleBirth: Math.round(Math.random() * 5)
     },
-    attendantAtBirth: 'PHYSICIAN',
-    birthType: 'SINGLE',
+    attendantAtBirth: AttendantType.Physician,
+    birthType: BirthType.Single,
     weightAtBirth: Math.round(2.5 + 2 * Math.random() * 10) / 10,
     eventLocation: {
-      address: createAddressInput(location, AddressType.PrivateHome),
-      type: AddressType.PrivateHome
+      _fhirID: location.id
     },
     mother
   }
@@ -242,7 +270,10 @@ export async function createDeathDeclaration(
   const birthDate = sub(deathTime, { years: Math.random() * 100 })
   const deathDay = deathTime
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
-  const details = {
+  const details: DeathRegistrationInput = {
+    causeOfDeathEstablished: 'true',
+    causeOfDeathMethod: CauseOfDeathMethodType.LayReported,
+    deathDescription: 'Pneumonia',
     createdAt: declarationTime.toISOString(),
     registration: {
       contact: 'INFORMANT',
@@ -263,12 +294,16 @@ export async function createDeathDeclaration(
     deceased: {
       identifier: [
         {
-          id: faker.datatype.number({ min: 100000000, max: 999999999 }),
-          type: 'NATIONAL_ID'
+          id: faker.datatype
+            .number({ min: 100000000, max: 999999999 })
+            .toString(),
+          type: IdentityIdType.NationalId
         },
         {
-          id: faker.datatype.number({ min: 100000000, max: 999999999 }),
-          type: 'SOCIAL_SECURITY_NO'
+          id: faker.datatype
+            .number({ min: 100000000, max: 999999999 })
+            .toString(),
+          type: IdentityIdType.SocialSecurityNo
         }
       ],
       nationality: ['FAR'],
@@ -281,7 +316,7 @@ export async function createDeathDeclaration(
       ],
       birthDate: birthDate.toISOString().split('T')[0],
       gender: sex,
-      maritalStatus: 'MARRIED',
+      maritalStatus: MaritalStatusType.Married,
       address: [createAddressInput(location, AddressType.PrimaryAddress)],
       age: Math.max(1, differenceInYears(deathDay, birthDate)),
       deceased: {
@@ -289,12 +324,12 @@ export async function createDeathDeclaration(
         deathDate: deathDay.toISOString().split('T')[0]
       }
     },
-    mannerOfDeath: 'NATURAL_CAUSES',
+    mannerOfDeath: MannerOfDeath.NaturalCauses,
     maleDependentsOfDeceased: Math.round(Math.random() * 5),
     femaleDependentsOfDeceased: Math.round(Math.random() * 5),
     eventLocation: {
       address: createAddressInput(location, AddressType.PrimaryAddress),
-      type: AddressType.PrimaryAddress
+      type: LocationType.PrimaryAddress
     },
     informant: {
       individual: {
@@ -305,8 +340,10 @@ export async function createDeathDeclaration(
         nationality: ['FAR'],
         identifier: [
           {
-            id: faker.datatype.number({ min: 100000000, max: 999999999 }),
-            type: 'NATIONAL_ID'
+            id: faker.datatype
+              .number({ min: 100000000, max: 999999999 })
+              .toString(),
+            type: IdentityIdType.NationalId
           }
         ],
         name: [
