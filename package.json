@@ -16,6 +16,7 @@
     "start": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
     "start:prod": "ts-node --transpile-only -r tsconfig-paths/register src/index.ts",
     "db:populate": "bash createReferenceData.sh",
+    "populate:config": "ts-node -r tsconfig-paths/register src/farajaland/features/config/scripts/populate-default-config.ts",
     "db:backup:create": "REPLICAS=0 ./backup-metadata.sh",
     "db:backup:restore": "REPLICAS=0 ./restore-metadata.sh",
     "db:clear:all": "REPLICAS=0 ./clear-all-data.sh",
@@ -25,16 +26,18 @@
     "data-generator:generate-types": "graphql-codegen --config codegen.yml"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "^3.1.1",
     "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/typescript": "2.4.5",
+    "@graphql-codegen/typescript-operations": "^2.3.7",
     "@types/hapi__inert": "^5.2.3",
     "@types/jsonwebtoken": "^8.5.8",
     "csv2json": "^1.4.2",
     "dotenv": "^6.1.0",
     "json2csv": "^4.3.0",
     "jsonwebtoken": "^8.3.0",
-    "niceware": "^2.0.2",
-    "@graphql-codegen/typescript": "2.4.5",
-    "@graphql-codegen/introspection": "2.1.1"
+    "niceware": "^2.0.2"
   },
   "dependencies": {
     "@faker-js/faker": "^6.0.0-alpha.5",
@@ -71,6 +74,7 @@
     "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.1.0",
     "graphql": "^16.3.0",
+    "graphql-tag": "^2.12.6",
     "hapi-auth-jwt2": "10.2.0",
     "hapi-pino": "^6.3.0",
     "hapi-sentry": "^3.1.0",

@@ -1,34 +1,51 @@
 import fetch from 'node-fetch'
 import { User } from './users'
 
-import { idsToFHIRIds, log, RecursiveRequired } from './util'
-import { BIRTH_REGISTRATION_FIELDS, DEATH_REGISTRATION_FIELDS } from './declare'
+import { idsToFHIRIds, log } from './util'
+
 import { Location } from './location'
 import { createAddressInput } from './address'
 import {
   AddressType,
   AttendantType,
-  BirthRegistration,
   BirthRegistrationInput,
-  BirthRegPresence,
   BirthType,
-  DeathRegistration,
   DeathRegistrationInput,
   EducationType,
-  LocationType
+  LocationType,
+  RegisterBirthDeclarationMutation,
+  RegisterDeathDeclarationMutation
 } from './gateway'
 import { omit } from 'lodash'
 import { sub } from 'date-fns'
 import { GATEWAY_HOST } from './constants'
+import { MARK_AS_REGISTERED_QUERY, MARK_DEATH_AS_REGISTERED } from './queries'
+import { fetchDeathRegistration, fetchRegistration } from './declare'
 
 // Hospital notifications have a limited set of data in them
 // This part amends the missing fields if needed
 export async function createBirthRegistrationDetailsForNotification(
   createdAt: Date,
   location: Location,
-  declaration: RecursiveRequired<BirthRegistration>
+  declaration: Awaited<ReturnType<typeof fetchRegistration>>
 ) {
   const MINUTES_15 = 1000 * 60 * 15
+
+  if (!declaration.registration) {
+    throw new Error(`declaration.registration did not exist for declaration`)
+  }
+
+  if (!declaration.child) {
+    throw new Error(`declaration.child did not exist for declaration`)
+  }
+
+  if (!declaration.child.birthDate) {
+    throw new Error(`declaration.child.birthDate did not exist for declaration`)
+  }
+
+  if (!declaration.mother) {
+    throw new Error(`declaration.mother did not exist for declaration`)
+  }
 
   return {
     createdAt,
@@ -49,7 +66,6 @@ export async function createBirthRegistrationDetailsForNotification(
       attachments: [],
       draftId: declaration.id
     },
-    presentAtBirthRegistration: BirthRegPresence.BothParents,
     child: {
       name: declaration.child.name,
       gender: declaration.child.gender,
@@ -87,7 +103,9 @@ export async function createBirthRegistrationDetailsForNotification(
 // Cleans unnecessary fields from declaration data to make it an input type
 export function createRegistrationDetails(
   createdAt: Date,
-  declaration: BirthRegistration | DeathRegistration
+  declaration:
+    | Awaited<ReturnType<typeof fetchDeathRegistration>>
+    | Awaited<ReturnType<typeof fetchRegistration>>
 ) {
   const MINUTES_15 = 1000 * 60 * 15
 
@@ -105,12 +123,16 @@ export function createRegistrationDetails(
     ['registration.registrationNumber', 'registration.type']
   )
 
+  if (withIdsRemoved.__typename === 'BirthRegistration') {
+    delete withIdsRemoved.history
+  }
+  delete withIdsRemoved.__typename
   delete withIdsRemoved.id
 
   const data = {
     ...withIdsRemoved,
     eventLocation: {
-      _fhirID: withIdsRemoved.eventLocation._fhirID
+      _fhirID: withIdsRemoved.eventLocation?._fhirID
     },
     registration: {
       ...withIdsRemoved.registration,
@@ -144,12 +166,7 @@ export async function markAsRegistered(
       'x-correlation-id': `registration-${id}`
     },
     body: JSON.stringify({
-      query: `
-        mutation submitMutation($id: ID!, $details: BirthRegistrationInput) {
-          markBirthAsRegistered(id: $id, details: $details) {
-            ${BIRTH_REGISTRATION_FIELDS}
-        }
-      }`,
+      query: MARK_AS_REGISTERED_QUERY,
       variables: {
         id,
         details
@@ -157,14 +174,17 @@ export async function markAsRegistered(
     })
   })
   const requestEnd = Date.now()
-  const result = await reviewDeclarationRes.json()
+  const result = (await reviewDeclarationRes.json()) as {
+    errors: any[]
+    data: RegisterBirthDeclarationMutation
+  }
   if (result.errors) {
     console.error(JSON.stringify(result.errors, null, 2))
     console.error(JSON.stringify(details))
     throw new Error('Birth declaration was not registered')
   }
 
-  const data = result.data.markBirthAsRegistered as BirthRegistration
+  const data = result.data.markBirthAsRegistered
 
   log(
     'Declaration',
@@ -176,6 +196,7 @@ export async function markAsRegistered(
 
   return data
 }
+
 export async function markDeathAsRegistered(
   user: User,
   id: string,
@@ -192,12 +213,7 @@ export async function markDeathAsRegistered(
       'x-correlation-id': `registration-${id}`
     },
     body: JSON.stringify({
-      query: `
-      mutation submitMutation($id: ID!, $details: DeathRegistrationInput) {
-        markDeathAsRegistered(id: $id, details: $details) {
-          ${DEATH_REGISTRATION_FIELDS}
-        }
-      }`,
+      query: MARK_DEATH_AS_REGISTERED,
       variables: {
         id,
         details
@@ -205,14 +221,17 @@ export async function markDeathAsRegistered(
     })
   })
   const requestEnd = Date.now()
-  const result = await reviewDeclarationRes.json()
+  const result = (await reviewDeclarationRes.json()) as {
+    data: RegisterDeathDeclarationMutation
+    errors: any[]
+  }
   if (result.errors) {
     console.error(JSON.stringify(result.errors, null, 2))
     console.error(JSON.stringify(details))
 
     throw new Error('Death declaration was not registered')
   }
-  const data = result.data.markDeathAsRegistered as DeathRegistration
+  const data = result.data.markDeathAsRegistered
   log(
     'Declaration',
     data.id,

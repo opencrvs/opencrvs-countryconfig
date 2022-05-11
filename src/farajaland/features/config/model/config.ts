@@ -9,7 +9,6 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { string } from 'joi'
 import { model, Schema, Document } from 'mongoose'
 
 interface IBirth {
@@ -28,6 +27,11 @@ interface IDeath {
     DELAYED: number
   }
 }
+
+interface ICountryLogo {
+  fileName: string
+  file: string
+}
 interface IPhoneNumberPattern {
   pattern: RegExp
   example: string
@@ -45,15 +49,14 @@ interface ICurrency {
 export interface IApplicationConfigurationModel extends Document {
   APPLICATION_NAME: string
   BACKGROUND_SYNC_BROADCAST_CHANNEL: string
-  BIRTH : IBirth
+  BIRTH: IBirth
   COUNTRY: string
-  COUNTRY_LOGO_FILE: string
+  COUNTRY_LOGO: ICountryLogo
   COUNTRY_LOGO_RENDER_WIDTH: number
   COUNTRY_LOGO_RENDER_HEIGHT: number
   CURRENCY: ICurrency
   DEATH: IDeath
   DESKTOP_TIME_OUT_MILLISECONDS: number
-  LANGUAGES: string
   UI_POLLING_INTERVAL: number
   FIELD_AGENT_AUDIT_LOCATIONS: string
   DECLARATION_AUDIT_LOCATIONS: string
@@ -62,7 +65,7 @@ export interface IApplicationConfigurationModel extends Document {
   EXTERNAL_VALIDATION_WORKQUEUE: boolean
   SENTRY: string
   LOGROCKET: string
-  PHONE_NUMBER_PATTERN: string
+  PHONE_NUMBER_PATTERN: RegExp
   NID_NUMBER_PATTERN: string
 }
 
@@ -90,15 +93,20 @@ const currencySchema = new Schema<IPhoneNumberPattern>({
   languagesAndCountry: [String]
 })
 
+const countryLogoSchema = new Schema<ICountryLogo>({
+  fileName: String,
+  file: String
+})
+
 const systemSchema = new Schema({
-  APPLICATION_NAME: { type: String, require: false, default: 'OpenCRVS' },
+  APPLICATION_NAME: { type: String, required: false, default: 'OpenCRVS' },
   BACKGROUND_SYNC_BROADCAST_CHANNEL: { type: String, required: false },
   BIRTH: { type: birthSchema, required: false },
   COUNTRY: { type: String, required: false },
-  COUNTRY_LOGO_FILE: { type: String, required: false },
+  COUNTRY_LOGO: { type: countryLogoSchema, required: false },
   COUNTRY_LOGO_RENDER_WIDTH: { type: Number, required: false, default: 104 },
   COUNTRY_LOGO_RENDER_HEIGHT: { type: Number, required: false, default: 104 },
-  CURRENCY: { type: currencySchema, require: false },
+  CURRENCY: { type: currencySchema, required: false },
   DEATH: { type: deathSchema, required: false },
   DESKTOP_TIME_OUT_MILLISECONDS: {
     type: Number,
@@ -126,16 +134,6 @@ const systemSchema = new Schema({
     type: Boolean,
     required: false,
     default: false
-  },
-  BIRTH_REGISTRATION_TARGET: {
-    type: Number,
-    required: false,
-    default: 45
-  },
-  DEATH_REGISTRATION_TARGET: {
-    type: Number,
-    required: false,
-    default: 45
   },
   PHONE_NUMBER_PATTERN: { type: String, required: false },
   NID_NUMBER_PATTERN: { type: String, required: false },

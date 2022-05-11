@@ -45,6 +45,8 @@ export function getScope(role: string, environment: string): string[] {
       return setDemoUser(['sysadmin'], environment)
     case 'NATIONAL_SYSTEM_ADMIN':
       return setDemoUser(['sysadmin', 'natlsysadmin'], environment)
+    case 'PERFORMANCE_MANAGEMENT':
+      return setDemoUser(['performance'], environment)
     default:
       return setDemoUser(['declare'], environment)
   }

@@ -18,8 +18,7 @@ import {
   markAsCertified,
   markDeathAsCertified
 } from './certify'
-import { BirthRegistrationInput, DeathRegistrationInput } from './gateway'
-import { BirthRegistration } from './gateway'
+
 import fetch from 'node-fetch'
 
 import {
@@ -67,6 +66,9 @@ const CONCURRENCY = process.env.CONCURRENCY
   : 3
 const START_YEAR = 2020
 const END_YEAR = 2022
+
+const REGISTER = process.env.REGISTER !== 'false'
+const CERTIFY = process.env.CERTIFY !== 'false'
 
 const BIRTH_COMPLETION_DISTRIBUTION = [
   { range: [0, 45], weight: 0.8 },
@@ -402,6 +404,12 @@ async function main() {
                   submissionTime,
                   location
                 )
+
+                if (!REGISTER) {
+                  log('Death', submissionDate, ix, '/', deathsToday)
+                  return
+                }
+
                 const randomRegistrar =
                   users.registrars[
                     Math.floor(Math.random() * users.registrars.length)
@@ -421,20 +429,22 @@ async function main() {
                       days: 1
                     }),
                     declaration
-                  ) as DeathRegistrationInput
+                  )
                 )
                 log('Certifying', registration.id)
                 await wait(2000)
-                await markDeathAsCertified(
-                  registration.id,
-                  randomRegistrar,
-                  createDeathCertificationDetails(
-                    add(new Date(submissionTime), {
-                      days: 2
-                    }),
-                    registration
-                  ) as DeathRegistrationInput
-                )
+                if (CERTIFY) {
+                  await markDeathAsCertified(
+                    registration.id,
+                    randomRegistrar,
+                    createDeathCertificationDetails(
+                      add(new Date(submissionTime), {
+                        days: 2
+                      }),
+                      registration
+                    )
+                  )
+                }
 
                 log('Death', submissionDate, ix, '/', deathsToday)
               } catch (error) {
@@ -546,7 +556,7 @@ async function main() {
                         days: 1
                       }),
                       location,
-                      declaration as any
+                      declaration
                     )
                   } catch (error) {
                     console.log(error)
@@ -570,7 +580,7 @@ async function main() {
                       add(new Date(submissionTime), {
                         days: 1
                       }),
-                      declaration as any
+                      declaration
                     )
                   } catch (error) {
                     console.log(error)
@@ -580,7 +590,20 @@ async function main() {
                   log('Registering', id)
                 }
 
-                let registration: BirthRegistration | null = null
+                if (!REGISTER) {
+                  log(
+                    'Birth',
+                    submissionDate,
+                    ix,
+                    '/',
+                    Math.round(totalChildBirths)
+                  )
+                  return
+                }
+
+                let registration: Awaited<
+                  ReturnType<typeof markAsRegistered>
+                > | null = null
                 if (!declaredToday || Math.random() > 0.5) {
                   registration = await markAsRegistered(
                     randomRegistrar,
@@ -588,7 +611,7 @@ async function main() {
                     registrationDetails
                   )
                 }
-                if (!declaredToday && registration) {
+                if (CERTIFY && !declaredToday && registration) {
                   log('Certifying', id)
                   await markAsCertified(
                     registration.id,
@@ -598,7 +621,7 @@ async function main() {
                         days: 1
                       }),
                       registration
-                    ) as BirthRegistrationInput
+                    )
                   )
                 } else {
                   log(
