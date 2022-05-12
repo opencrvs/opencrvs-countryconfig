@@ -1,105 +1,40 @@
 import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
 
-export const MARK_AS_REGISTERED_QUERY = print(gql`
-  mutation registerBirthDeclaration(
-    $id: ID!
-    $details: BirthRegistrationInput!
-  ) {
-    markBirthAsRegistered(id: $id, details: $details) {
-      _fhirIDMap
+const birthRegistrationFragment = gql`
+  fragment BirthRegistrationFragment on BirthRegistration {
+    __typename
+    _fhirIDMap
+    id
+    createdAt
+    child {
       id
-      createdAt
-      child {
-        id
-        multipleBirth
-        name {
-          use
-          firstNames
-          familyName
-        }
-        birthDate
-        gender
+      multipleBirth
+      name {
+        use
+        firstNames
+        familyName
       }
-      informant {
+      birthDate
+      gender
+    }
+    informant {
+      id
+      relationship
+      individual {
         id
-        relationship
-        individual {
-          id
-          identifier {
-            id
-            type
-          }
-          name {
-            use
-            firstNames
-            familyName
-          }
-          occupation
-          nationality
-          birthDate
-          address {
-            type
-            line
-            district
-            state
-            city
-            postalCode
-            country
-          }
-        }
-      }
-      mother {
-        id
-        name {
-          use
-          firstNames
-          familyName
-        }
-        birthDate
-        maritalStatus
-        occupation
-        detailsExist
-        dateOfMarriage
-        educationalAttainment
-        nationality
         identifier {
           id
           type
         }
-        address {
-          type
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-        telecom {
-          system
-          value
-        }
-      }
-      father {
-        id
         name {
           use
           firstNames
           familyName
         }
-        birthDate
-        maritalStatus
         occupation
-        detailsExist
-        reasonNotApplying
-        dateOfMarriage
-        educationalAttainment
         nationality
-        identifier {
-          id
-          type
-        }
+        birthDate
         address {
           type
           line
@@ -109,123 +44,196 @@ export const MARK_AS_REGISTERED_QUERY = print(gql`
           postalCode
           country
         }
-        telecom {
-          system
-          value
-        }
       }
-      registration {
-        id
-        contact
-        contactRelationship
-        contactPhoneNumber
-        attachments {
-          data
-          type
-          contentType
-          subject
-        }
-        status {
-          comments {
-            comment
-          }
-          type
-          timestamp
-        }
-        type
-        trackingId
-        registrationNumber
+    }
+    mother {
+      id
+      name {
+        use
+        firstNames
+        familyName
       }
-      attendantAtBirth
-      weightAtBirth
-      birthType
-      eventLocation {
+      birthDate
+      maritalStatus
+      occupation
+      detailsExist
+      dateOfMarriage
+      educationalAttainment
+      nationality
+      identifier {
         id
         type
-        address {
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
       }
-      questionnaire {
-        fieldId
+      address {
+        type
+        line
+        district
+        state
+        city
+        postalCode
+        country
+      }
+      telecom {
+        system
         value
       }
-      history {
-        date
-        action
-        reinstated
-        statusReason {
-          text
+    }
+    father {
+      id
+      name {
+        use
+        firstNames
+        familyName
+      }
+      birthDate
+      maritalStatus
+      occupation
+      detailsExist
+      dateOfMarriage
+      educationalAttainment
+      nationality
+      identifier {
+        id
+        type
+      }
+      address {
+        type
+        line
+        district
+        state
+        city
+        postalCode
+        country
+      }
+      telecom {
+        system
+        value
+      }
+      reasonNotApplying
+    }
+    registration {
+      id
+      contact
+      contactRelationship
+      contactPhoneNumber
+      attachments {
+        data
+        type
+        contentType
+        subject
+      }
+      status {
+        comments {
+          comment
         }
-        location {
-          id
-          name
+        type
+        timestamp
+      }
+      type
+      trackingId
+      registrationNumber
+    }
+    attendantAtBirth
+    weightAtBirth
+    birthType
+    eventLocation {
+      id
+      type
+      address {
+        line
+        district
+        state
+        city
+        postalCode
+        country
+      }
+    }
+    questionnaire {
+      fieldId
+      value
+    }
+    history {
+      date
+      action
+      reinstated
+      statusReason {
+        text
+      }
+      location {
+        id
+        name
+      }
+      office {
+        id
+        name
+      }
+      user {
+        id
+        type
+        role
+        name {
+          firstNames
+          familyName
+          use
         }
-        office {
-          id
-          name
+        avatar {
+          data
+          type
         }
+      }
+      comments {
         user {
           id
-          type
-          role
-          name {
-            firstNames
-            familyName
-            use
-          }
+          username
           avatar {
             data
             type
           }
         }
-        comments {
-          user {
-            id
-            username
-            avatar {
-              data
-              type
+        comment
+        createdAt
+      }
+      input {
+        valueCode
+        valueId
+        valueString
+      }
+      output {
+        valueCode
+        valueId
+        valueString
+      }
+      certificates {
+        hasShowedVerifiedDocument
+        collector {
+          relationship
+          otherRelationship
+          individual {
+            name {
+              use
+              firstNames
+              familyName
             }
-          }
-          comment
-          createdAt
-        }
-        input {
-          valueCode
-          valueId
-          valueString
-        }
-        output {
-          valueCode
-          valueId
-          valueString
-        }
-        certificates {
-          hasShowedVerifiedDocument
-          collector {
-            relationship
-            otherRelationship
-            individual {
-              name {
-                use
-                firstNames
-                familyName
-              }
-              telecom {
-                system
-                value
-                use
-              }
+            telecom {
+              system
+              value
+              use
             }
           }
         }
       }
+    }
+  }
+`
+
+export const MARK_AS_REGISTERED_QUERY = print(gql`
+  ${birthRegistrationFragment}
+  mutation registerBirthDeclaration(
+    $id: ID!
+    $details: BirthRegistrationInput!
+  ) {
+    markBirthAsRegistered(id: $id, details: $details) {
+      ...BirthRegistrationFragment
     }
   }
 `)
@@ -398,228 +406,10 @@ export const MARK_DEATH_AS_REGISTERED = print(gql`
 `)
 
 export const FETCH_REGISTRATION_QUERY = print(gql`
+  ${birthRegistrationFragment}
   query fetchBirthRegistration($id: ID!) {
     fetchBirthRegistration(id: $id) {
-      __typename
-      _fhirIDMap
-      id
-      createdAt
-      child {
-        id
-        multipleBirth
-        name {
-          use
-          firstNames
-          familyName
-        }
-        birthDate
-        gender
-      }
-      informant {
-        id
-        relationship
-        individual {
-          id
-          identifier {
-            id
-            type
-          }
-          name {
-            use
-            firstNames
-            familyName
-          }
-          occupation
-          nationality
-          birthDate
-          address {
-            type
-            line
-            district
-            state
-            city
-            postalCode
-            country
-          }
-        }
-      }
-      mother {
-        id
-        name {
-          use
-          firstNames
-          familyName
-        }
-        birthDate
-        maritalStatus
-        occupation
-        detailsExist
-        dateOfMarriage
-        educationalAttainment
-        nationality
-        identifier {
-          id
-          type
-        }
-        address {
-          type
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-        telecom {
-          system
-          value
-        }
-      }
-      father {
-        id
-        name {
-          use
-          firstNames
-          familyName
-        }
-        birthDate
-        maritalStatus
-        occupation
-        detailsExist
-        reasonNotApplying
-        dateOfMarriage
-        educationalAttainment
-        nationality
-        identifier {
-          id
-          type
-        }
-        address {
-          type
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-        telecom {
-          system
-          value
-        }
-      }
-      registration {
-        id
-        contact
-        contactRelationship
-        contactPhoneNumber
-        attachments {
-          data
-          type
-          contentType
-          subject
-        }
-        status {
-          comments {
-            comment
-          }
-          type
-          timestamp
-        }
-        type
-        trackingId
-        registrationNumber
-      }
-      attendantAtBirth
-      weightAtBirth
-      birthType
-      eventLocation {
-        id
-        type
-        address {
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-      }
-      questionnaire {
-        fieldId
-        value
-      }
-      history {
-        date
-        action
-        reinstated
-        statusReason {
-          text
-        }
-        location {
-          id
-          name
-        }
-        office {
-          id
-          name
-        }
-        user {
-          id
-          type
-          role
-          name {
-            firstNames
-            familyName
-            use
-          }
-          avatar {
-            data
-            type
-          }
-        }
-        comments {
-          user {
-            id
-            username
-            avatar {
-              data
-              type
-            }
-          }
-          comment
-          createdAt
-        }
-        input {
-          valueCode
-          valueId
-          valueString
-        }
-        output {
-          valueCode
-          valueId
-          valueString
-        }
-        certificates {
-          hasShowedVerifiedDocument
-          collector {
-            relationship
-            otherRelationship
-            individual {
-              name {
-                use
-                firstNames
-                familyName
-              }
-              telecom {
-                system
-                value
-                use
-              }
-            }
-          }
-        }
-      }
+      ...BirthRegistrationFragment
     }
   }
 `)

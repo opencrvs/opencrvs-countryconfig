@@ -98,3 +98,18 @@ export function idsToFHIRIds<T extends Record<string, any>>(
     return set(set(memo, fhirKey, value), key, undefined)
   }, target) as ReplaceIdKeysWithFHIRId<T>
 }
+
+function isObject(value: any) {
+  return typeof value === 'object' && !Array.isArray(value) && value !== null
+}
+
+export function removeEmptyFields<T extends Record<string, any>>(object: T): T {
+  return Object.fromEntries(
+    Object.entries(object)
+      .filter(([, value]) => value !== null)
+      .map(([key, value]) => [
+        key,
+        isObject(value) ? removeEmptyFields(value) : value
+      ])
+  ) as T
+}

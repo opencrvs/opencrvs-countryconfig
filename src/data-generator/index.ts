@@ -41,6 +41,7 @@ import { COUNTRY_CONFIG_HOST } from './constants'
 import { DistrictStatistic, getStatistics } from './statistics'
 import { User, createUsers } from './users'
 import PQueue from 'p-queue'
+import { BirthRegistrationInput } from './gateway'
 
 /*
  *
@@ -536,7 +537,7 @@ async function main() {
                   differenceInDays(today, submissionTime) === 0
 
                 let id: string
-                let registrationDetails: any
+                let registrationDetails: BirthRegistrationInput
                 if (isHospitalUser) {
                   log('Sending a DHIS2 Hospital notification')
                   id = await sendBirthNotification(
@@ -601,32 +602,29 @@ async function main() {
                   return
                 }
 
-                let registration: Awaited<
-                  ReturnType<typeof markAsRegistered>
-                > | null = null
                 if (!declaredToday || Math.random() > 0.5) {
-                  registration = await markAsRegistered(
+                  const registration = await markAsRegistered(
                     randomRegistrar,
                     id,
                     registrationDetails
                   )
-                }
-                if (CERTIFY && !declaredToday && registration) {
-                  log('Certifying', id)
-                  await markAsCertified(
-                    registration.id,
-                    randomRegistrar,
-                    createBirthCertificationDetails(
-                      add(new Date(submissionTime), {
-                        days: 1
-                      }),
-                      registration
+                  if (CERTIFY && !declaredToday && registration) {
+                    log('Certifying', id)
+                    await markAsCertified(
+                      registration.id,
+                      randomRegistrar,
+                      createBirthCertificationDetails(
+                        add(new Date(submissionTime), {
+                          days: 1
+                        }),
+                        registration
+                      )
                     )
-                  )
-                } else {
-                  log(
-                    'Will not register or certify because the declaration was added today'
-                  )
+                  } else {
+                    log(
+                      'Will not register or certify because the declaration was added today'
+                    )
+                  }
                 }
                 log(
                   'Birth',

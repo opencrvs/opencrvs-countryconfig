@@ -87,9 +87,6 @@ export async function createUser(
 
   const resp = await createUserRes.json()
 
-  if (!resp.data) {
-    console.log(resp)
-  }
   log('User created')
   const { data } = resp as {
     data: { createOrUpdateUser: { username: string; id: string } }

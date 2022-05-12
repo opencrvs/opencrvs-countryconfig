@@ -170,6 +170,7 @@ async function sendBirthNotification(
   entries.push(task)
   entries.push(child)
   entries.push(mother)
+  entries.push(informant)
   entries.push(father)
   entries.push(encounter)
   if (birthWeightObservation) {

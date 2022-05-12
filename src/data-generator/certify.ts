@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import { User } from './users'
 
-import { idsToFHIRIds, log } from './util'
+import { idsToFHIRIds, log, removeEmptyFields } from './util'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import {
@@ -11,7 +11,7 @@ import {
   PaymentOutcomeType,
   PaymentType
 } from './gateway'
-import { cloneDeep, omit } from 'lodash'
+import { omit } from 'lodash'
 import { GATEWAY_HOST } from './constants'
 import { markAsRegistered, markDeathAsRegistered } from './register'
 import { MARK_BIRTH_AS_CERTIFIED, MARK_DEATH_AS_CERTIFIED } from './queries'
@@ -21,7 +21,12 @@ export function createBirthCertificationDetails(
   declaration: Awaited<ReturnType<typeof markAsRegistered>>
 ) {
   const withIdsRemoved = idsToFHIRIds(
-    omit(declaration, ['id', 'eventLocation.id', 'registration.type']),
+    omit(declaration, [
+      '__typename',
+      'id',
+      'eventLocation.id',
+      'registration.type'
+    ]),
     [
       'id',
       'mother.id',
@@ -33,7 +38,7 @@ export function createBirthCertificationDetails(
     ]
   )
   delete withIdsRemoved.history
-  return {
+  const data = {
     ...withIdsRemoved,
     registration: {
       ...withIdsRemoved.registration,
@@ -64,6 +69,7 @@ export function createBirthCertificationDetails(
       ]
     }
   }
+  return removeEmptyFields(data)
 }
 
 export function createDeathCertificationDetails(
@@ -71,7 +77,12 @@ export function createDeathCertificationDetails(
   declaration: Awaited<ReturnType<typeof markDeathAsRegistered>>
 ) {
   const withIdsRemoved = idsToFHIRIds(
-    omit(declaration, ['id', 'eventLocation.id', 'registration.type']),
+    omit(declaration, [
+      '__typename',
+      'id',
+      'eventLocation.id',
+      'registration.type'
+    ]),
     [
       'id',
       'mother.id',
@@ -123,17 +134,7 @@ export function createDeathCertificationDetails(
     }
   }
 
-  return data
-}
-
-function withoutCertData(data: BirthRegistrationInput) {
-  const details = cloneDeep(data)
-  details.registration?.certificates?.forEach(cert => {
-    if (cert) {
-      cert.data = 'REDACTED'
-    }
-  })
-  return details
+  return removeEmptyFields(data)
 }
 
 export async function markAsCertified(
@@ -168,7 +169,6 @@ export async function markAsCertified(
 
   if (result.errors) {
     console.error(JSON.stringify(result.errors, null, 2))
-    console.error(JSON.stringify(withoutCertData(details)))
     throw new Error('Birth declaration could not be certified')
   }
 
