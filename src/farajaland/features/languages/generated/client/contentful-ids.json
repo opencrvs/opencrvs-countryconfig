@@ -246,6 +246,7 @@
   "constantsWithin45DaysTo1Year": "constants.within45DaysTo1Year",
   "constantsRequireUpdatesLoading": "constants.requireUpdatesLoading",
   "constantsNoRecords": "constants.noRecords",
+  "constantsNoConnection": "constants.noConnection",
   "correctionCorrectorAnotherAgent": "correction.corrector.anotherAgent",
   "correctionCorrectorBirthNote": "correction.corrector.birth.note",
   "correctionCorrectorChild": "correction.corrector.child",
