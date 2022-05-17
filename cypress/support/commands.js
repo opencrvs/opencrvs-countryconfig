@@ -215,7 +215,7 @@ Cypress.Commands.add('printDeclaration', () => {
 
 
 Cypress.Commands.add('clickUserListAction', (itemId, actionId) => {
-  cy.get(`#user-item-${itemId}-menuToggleButton`).click()
+  cy.get(`#user-item-${itemId}-menuToggleButton`).scrollIntoView().click()
   cy.get(`#user-item-${itemId}-menuSubMenu`).should('is.visible')
   cy.get(`#user-item-${itemId}-menuItem${actionId}`).should('is.visible')
   cy.get(`#user-item-${itemId}-menuItem${actionId}`).click()
@@ -315,7 +315,7 @@ Cypress.Commands.add(
     )
     cy.clock(new Date().getTime())
     cy.get('#childBirthDate-yyyy').type('2018')
-    cy.get('#birthType').type('1')
+    cy.selectOption('#birthType', 'Single', 'Single')
     cy.selectOption('#placeOfBirth', 'Private_Home', 'Residential address')
     cy.selectOption('#country', 'Farajaland', 'Farajaland')
     cy.selectOption('#state', 'Pualula', 'Pualula')
@@ -389,7 +389,7 @@ Cypress.Commands.add(
     )
     cy.clock(new Date().getTime())
     cy.get('#childBirthDate-yyyy').type('2018')
-    cy.get('#birthType').type('1')
+    cy.selectOption('#birthType', 'Single', 'Single')
     cy.selectOption('#placeOfBirth', 'Private_Home', 'Residential address')
     cy.selectOption('#country', 'Farajaland', 'Farajaland')
     cy.selectOption('#state', 'Pualula', 'Pualula')
@@ -797,7 +797,6 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#childBirthDate-yyyy').type('1994')
   cy.selectOption('#attendantAtBirth', 'Physician', 'Physician')
   cy.selectOption('#birthType', 'Single', 'Single')
-  cy.get('#birthType').type('1')
   cy.get('#weightAtBirth').type('1.5')
   cy.selectOption('#placeOfBirth', 'Private_Home', 'Residential address')
   cy.selectOption('#country', 'Farajaland', 'Farajaland')
