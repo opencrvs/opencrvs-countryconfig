@@ -5,5 +5,9 @@
   "viewportWidth": 1024,
   "viewportHeight": 768,
   "defaultCommandTimeout": 60000,
-  "videoCompression": 0
+  "videoCompression": 0,
+  "retries": {
+    "runMode": 2,
+    "openMode": 2
+  }
 }

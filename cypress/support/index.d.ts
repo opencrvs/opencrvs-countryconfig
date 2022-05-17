@@ -15,7 +15,11 @@ declare namespace Cypress {
     logout: () => void
     selectOption: (selector: string, text: string, option: string) => void
     goToNextFormSection: () => void
+    clickUserListAction: (itemId: number, actionId: number) => void
     createPin: () => void
+    reviewForm: () => void
+    reviewFormOne: () => void
+    submitForm: () => void
     submitDeclaration: () => void
     rejectDeclaration: () => void
     registerDeclaration: () => void
@@ -32,10 +36,7 @@ declare namespace Cypress {
       firstName: string,
       lastName: string
     ) => void
-    declareDeclarationWithMinimumInput: (
-      firstName: string,
-      lastName: string
-    ) => void
+    declareDeclarationWithMinimumInput: () => void
     declareDeclarationWithMaximumInput: (
       firstName: string,
       lastName: string
