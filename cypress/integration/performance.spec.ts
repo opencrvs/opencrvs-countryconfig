@@ -16,22 +16,18 @@ context('Performance view', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
   it('Tests from declaration to certification using minimum input', () => {
-    
     cy.declareDeclarationWithMinimumInput('Mr', 'Performance')
-  
   })
 
- 
-  it('Login as registrar to register & Downloads CSV data to observe Performance',() => {
-    
+  it.skip('Login as registrar to register & Downloads CSV data to observe Performance', () => {
     cy.login('registrar')
-     // CREATE PIN
+    // CREATE PIN
     cy.createPin()
-     //review declaration
+    //review declaration
     cy.reviewForm()
-     //register declaration
-     cy.get('#registerDeclarationBtn').click()
-     cy.get('#submit_confirm').click()
+    //register declaration
+    cy.get('#registerDeclarationBtn').click()
+    cy.get('#submit_confirm').click()
     cy.get('#navigation_performance').click()
     cy.get('#operational-select').click()
     cy.get('#react-select-2-option-1').click()
@@ -39,7 +35,5 @@ context('Performance view', () => {
       .eq(1)
       .click()
     cy.get('#listTable-undefined').click()
-    
-  }) 
-
+  })
 })

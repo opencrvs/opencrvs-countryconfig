@@ -14,85 +14,110 @@
 context('Birth Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
-  })  
+  })
 
   //Maximum input
   it('Tests from declaration to registration using maximum input', () => {
-    cy.registerDeclarationWithMaximumInput('Tammim', 'Mridha')
-  })
+    // LOGIN AS FIELD WORKER
+    cy.login('fieldWorker')
 
-  it('LogIn as Registrar to Register Maximum input Declaration',() => {
-    // LOGIN AS LOCAL REGISTRAR
-    cy.login('registrar')
-      // CREATE PIN
     cy.createPin()
-      //review declaration
-    cy.reviewForm()
+    cy.verifyLandingPageVisible()
+    cy.clock(new Date().getTime())
+    cy.enterMaximumInput()
 
-     //register Declaration
-    cy.submitForm()
-      // LOG OUT
-    cy.logOut()
-  })  
+    cy.submitDeclaration()
 
-  // Minimum input 
-  it('Tests from declaration to certification using minimum input', () => {
-    cy.declareDeclarationWithMinimumInput('Arif', 'Antor')
-  })
- 
-  it('LogIn as Registrar to Register Minimum input Declaration',() => {
-    // LOGIN AS LOCAL REGISTRAR
-    cy.login('registrar')
-      // CREATE PIN
-    cy.createPin()
-      //review declaration
-    cy.reviewForm()
+    // LOG OUT
 
-     //register Declaration
-    cy.submitForm()
-      // LOG OUT
-    cy.logOut()
-  }) 
+    cy.get('#ProfileMenuToggleButton').click()
 
-  
-  
- // Rejection Minimum
-  it('Tests from declaration to rejection using minimum input', () => {
-   cy.declareDeclarationWithMinimumInput('Aariz', 'Sahil')
+    cy.get('#ProfileMenuItem1').click()
   })
 
-  it('Login as Register & Reject Minimum input Declaration',() => {
+  it('LogIn as Registrar to Register Maximum input Declaration', () => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
-    
     cy.createPin()
-      // LANDING PAGE Download 1st declaration 
+    //review declaration
     cy.reviewForm()
-      //Reject Declaration
-    cy.rejectDeclaration()
-      //logout
-   cy.logOut()
-  })
-   
-  //Rejection Maximum
-  it('Tests from declaration to rejection using maximum input', () => {
-    cy.declareDeclarationWithMaximumInput('Larry', 'Page')
+
+    //register Declaration
+    cy.submitForm()
+    // LOG OUT
+    cy.logout()
   })
 
-  it('Login as Registrar & Reject Maximum input Declaration',()=>{
-      // LOGIN AS LOCAL REGISTRAR
+  // Minimum input
+  it('Tests from declaration to certification using minimum input', () => {
+    cy.declareDeclarationWithMinimumInput()
+  })
+
+  it('LogIn as Registrar to Register Minimum input Declaration', () => {
+    // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
-      // CREATE PIN
+    // CREATE PIN
     cy.createPin()
-      // LANDING PAGE,Download Declaration
+    //review declaration
+    cy.reviewForm()
+
+    //register Declaration
+    cy.submitForm()
+    // LOG OUT
+    cy.logout()
+  })
+
+  // Rejection Minimum
+  it('Tests from declaration to rejection using minimum input', () => {
+    cy.declareDeclarationWithMinimumInput()
+  })
+
+  it('Login as Register & Reject Minimum input Declaration', () => {
+    // LOGIN AS LOCAL REGISTRAR
+    cy.login('registrar')
+    // CREATE PIN
+
+    cy.createPin()
+    // LANDING PAGE Download 1st declaration
+    cy.reviewForm()
+    //Reject Declaration
+    cy.rejectDeclaration()
+    //logout
+    cy.logout()
+  })
+
+  //Rejection Maximum
+  it('Tests from declaration to rejection using maximum input', () => {
+    // LOGIN AS FIELD WORKER
+    cy.login('fieldWorker')
+
+    cy.createPin()
+    cy.verifyLandingPageVisible()
+    cy.clock(new Date().getTime())
+    cy.enterMaximumInput()
+
+    cy.submitDeclaration()
+
+    // LOG OUT
+
+    cy.get('#ProfileMenuToggleButton').click()
+
+    cy.get('#ProfileMenuItem1').click()
+  })
+
+  it('Login as Registrar & Reject Maximum input Declaration', () => {
+    // LOGIN AS LOCAL REGISTRAR
+    cy.login('registrar')
+    // CREATE PIN
+    cy.createPin()
+    // LANDING PAGE,Download Declaration
     cy.reviewForm()
     cy.rejectDeclaration()
-      //logout
-    cy.logOut()
+    //logout
+    cy.logout()
   })
- 
-    
+
   //Maximum input by Register
   it('Tests registration by registrar using maximum input', () => {
     // LOGIN AS FIELD WORKER
@@ -102,22 +127,21 @@ context('Birth Integration Test', () => {
     cy.verifyLandingPageVisible()
     // EVENTS
     cy.clock(new Date().getTime())
-    cy.enterMaximumInput('Ryan', 'Crichton')
-    
+    cy.enterMaximumInput()
+
     //register declaration
     cy.get('#registerDeclarationBtn').click()
     //MODAL
     cy.get('#submit_confirm').click()
     cy.log('Waiting for declaration to sync...')
     cy.tick(20000)
-  }) 
+  })
 
-  
   //SomeOne Else giving input
   it('Tests Someone else journey using minimum input', () => {
     // LOGIN
     cy.login('fieldWorker')
-      // CREATE PIN
+    // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
     cy.initializeFakeTimers()
@@ -127,22 +151,18 @@ context('Birth Integration Test', () => {
     // LOG OUT
     cy.get('#ProfileMenuToggleButton').click()
     cy.get('#ProfileMenuItem1').click()
-  }) 
+  })
 
-  it('Login as Registrar & register Someone else minimum input declaration',()=>{
+  it('Login as Registrar & register Someone else minimum input declaration', () => {
     // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
     // CREATE PIN
-  cy.createPin()
+    cy.createPin()
     //review declaration
-  cy.reviewForm()
+    cy.reviewForm()
 
-   //register Declaration
-  cy.submitForm()
-  cy.wait(1000)
-    // LOG OUT
-  // cy.get('#ProfileMenuToggleButton').click()
-  // cy.get('#ProfileMenuItem1').click()
-  })  
-
+    //register Declaration
+    cy.submitForm()
+    cy.wait(1000)
+  })
 })
