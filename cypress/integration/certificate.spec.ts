@@ -18,7 +18,6 @@ context('Certificate Integration Test', () => {
   })
 
   it('Prints minimum input declaration showing the pdf form', () => {
-    cy.clock(new Date().getTime())
     // Create declaration with an API call
     cy.createBirthRegistrationAs('registrar')
 

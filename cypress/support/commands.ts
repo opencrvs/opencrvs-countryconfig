@@ -114,14 +114,14 @@ Cypress.Commands.add('logout', () => {
 Cypress.Commands.add('goToNextFormSection', () => {
   // Clear debounce wait from form
   cy.wait(500)
-  cy.tick(10000)
+
   cy.get('#next_section').click()
 })
 
 Cypress.Commands.add('createPin', () => {
   // CREATE PIN
-  cy.get('#createPinBtn', { timeout: 30000 }).should('be.visible')
-  cy.get('#createPinBtn', { timeout: 30000 }).click()
+  cy.get('#createPinBtn', { timeout: 130000 }).should('be.visible')
+  cy.get('#createPinBtn', { timeout: 130000 }).click()
   for (let i = 1; i <= 8; i++) {
     cy.get('#pin-keypad-container')
       .click()
@@ -154,7 +154,6 @@ Cypress.Commands.add('submitDeclaration', () => {
   cy.wait('@createBirthRegistration', {
     timeout: 60000
   })
-  cy.tick(40000)
 })
 
 Cypress.Commands.add('reviewForm', () => {
@@ -211,8 +210,6 @@ Cypress.Commands.add('rejectDeclaration', () => {
   // PREVIEW
   cy.get('#submit_reject_form').click()
   cy.log('Waiting for declaration to sync...')
-  cy.clock()
-  cy.tick(20000)
   cy.get('#Spinner').should('exist')
 })
 
@@ -221,7 +218,6 @@ Cypress.Commands.add('registerDeclaration', () => {
   // MODAL
   cy.get('#submit_confirm').click()
   cy.log('Waiting for declaration to sync...')
-  cy.tick(20000)
   cy.get('#Spinner').should('exist')
   cy.get('#navigation_readyForReview').contains('Ready for review')
 })
@@ -230,18 +226,14 @@ Cypress.Commands.add('verifyLandingPageVisible', () => {
   cy.get('#header_new_event', { timeout: 30000 }).should('be.visible')
   cy.get('#header_new_event').click()
 })
-Cypress.Commands.add('initializeFakeTimers', () => {
-  cy.clock(new Date().getTime(), [])
-})
+
 Cypress.Commands.add('downloadFirstDeclaration', () => {
-  cy.clock()
-  cy.tick(10000)
   cy.get('#ListItemAction-0-icon').should('exist')
   cy.get('#ListItemAction-0-icon')
     .first()
     .click()
   cy.log('Waiting for declaration to sync...')
-  cy.tick(20000)
+
   cy.get('#action-loading-ListItemAction-0').should('not.exist')
 })
 
@@ -258,7 +250,6 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.login('fieldWorker')
   cy.createPin()
   cy.verifyLandingPageVisible()
-  cy.clock(new Date().getTime())
   // EVENTS
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_birth_event').click()
@@ -292,7 +283,6 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.get('#childBirthDate-mm').type(
     Math.floor(1 + Math.random() * 12).toString()
   )
-  cy.clock(new Date().getTime())
   cy.get('#childBirthDate-yyyy').type('2018')
   cy.selectOption('#birthType', 'Single', 'Single')
   cy.selectOption('#placeOfBirth', 'Private_Home', 'Residential address')
@@ -507,7 +497,6 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', () => {
   // EVENT INFO
   cy.get('#continue').click()
   // SELECT INFORMANT
-  cy.clock(new Date().getTime())
   cy.get('#informantType_SPOUSE').click()
   cy.goToNextFormSection()
   // SELECT MAIN CONTACT POINT
@@ -587,7 +576,6 @@ Cypress.Commands.add('registerDeathDeclarationWithMaximumInput', () => {
 })
 
 Cypress.Commands.add('enterDeathMaximumInput', () => {
-  cy.initializeFakeTimers()
   // DECLARATION FORM
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_death_event').click()
@@ -669,14 +657,14 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.goToNextFormSection()
 
   // SELECT INFORMANT
-  cy.tick(1000)
+
   cy.get('#contactPoint_OTHER').click()
   // cy.get('#informant\\.nestedFields\\.otherRelationShip').type(
   //   'Unnamed relation'
   // )
   // cy.goToNextFormSection()
   // SELECT MAIN CONTACT POINT
-  cy.tick(1000)
+
   cy.get('#contactPoint_MOTHER').click()
   cy.get('#contactPoint\\.nestedFields\\.registrationPhone').type(
     '07' + getRandomNumbers(8)

@@ -19,7 +19,6 @@ context('Birth Integration Test', () => {
     cy.login('fieldWorker')
     cy.createPin()
     cy.verifyLandingPageVisible()
-    cy.clock(new Date().getTime())
     cy.enterMaximumInput()
     cy.submitDeclaration()
     cy.logout()
@@ -46,7 +45,6 @@ context('Birth Integration Test', () => {
   })
 
   it('login as a registrar and reject a maximum input declaration', () => {
-    cy.clock(new Date().getTime())
     // Create declaration with an API call
     cy.createBirthRegistrationAs('fieldWorker')
 
@@ -58,7 +56,6 @@ context('Birth Integration Test', () => {
   })
 
   it('login as a registrar and create declaration with maximum input', () => {
-    cy.clock(new Date().getTime())
     cy.login('registrar')
     cy.createPin()
     cy.verifyLandingPageVisible()
@@ -67,14 +64,13 @@ context('Birth Integration Test', () => {
     cy.get('#registerDeclarationBtn').click()
     cy.get('#submit_confirm').click()
     cy.log('Waiting for declaration to sync...')
-    cy.tick(20000)
   })
 
   it('login as field agent, create birth declaration as "Someone else"', () => {
     cy.login('fieldWorker')
     cy.createPin()
     cy.verifyLandingPageVisible()
-    cy.initializeFakeTimers()
+
     cy.someoneElseJourney()
     cy.submitDeclaration()
     cy.logout()

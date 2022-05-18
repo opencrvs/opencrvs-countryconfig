@@ -20,7 +20,7 @@ context('Death Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.verifyLandingPageVisible()
-    cy.initializeFakeTimers()
+
     cy.enterDeathMaximumInput()
     cy.registerDeclaration()
   })

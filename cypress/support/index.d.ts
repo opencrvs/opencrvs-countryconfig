@@ -32,7 +32,6 @@ declare namespace Cypress {
     rejectDeclaration: () => void
     registerDeclaration: () => void
     verifyLandingPageVisible: () => void
-    initializeFakeTimers: () => void
     downloadFirstDeclaration: () => void
     enterMaximumInput: () => void
     enterDeathMaximumInput: () => void

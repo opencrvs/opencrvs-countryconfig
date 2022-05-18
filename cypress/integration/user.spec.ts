@@ -108,7 +108,6 @@ context('User Integration Test', () => {
   })
 
   it('should reset password successfully', () => {
-    cy.initializeFakeTimers()
     cy.get('#login-forgot-password').click()
 
     // Forgotten item form appears
@@ -125,7 +124,6 @@ context('User Integration Test', () => {
     cy.get('#recovery-code-entry-form').should('be.visible')
     cy.get('#recovery-code-input').type('000000')
     cy.get('#continue').click()
-    cy.tick(20000)
     // Security question form appears
     cy.get('#security-question-form').should('be.visible')
     cy.get('#question').then($q => {
