@@ -11,21 +11,26 @@
  */
 /// <reference types="Cypress" />
 
+import { faker } from '@faker-js/faker'
+
 context('Team Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it.skip('Tests Local admin can create a new user', () => {
+  const testUserFirstname = faker.name.firstName()
+  const testUserLastname = faker.name.lastName()
+  const fullName = `${testUserFirstname} ${testUserLastname}`
+
+  it('Tests Local admin can create a new user', () => {
     // LOG IN AS SYSTEM ADMIN
     cy.login('sysAdmin')
     cy.createPin()
     cy.get('#navigation_team').click()
     cy.get('#add-user').click()
-    cy.get('#firstNamesEng').type('Tamim')
-    cy.get('#familyNameEng').type('Ahmed')
+    cy.get('#firstNamesEng').type(testUserFirstname)
+    cy.get('#familyNameEng').type(testUserLastname)
     cy.get('#phoneNumber').type('0752658545')
-    //cy.get('#nid').type('199475632')
     cy.selectOption('#role', 'Registration Clerk', 'Registration Clerk')
     cy.selectOption('#type', 'Data entry clerk', 'Data entry clerk')
     cy.get('#device').type('Xiamoi MI 8')
@@ -37,7 +42,9 @@ context('Team Integration Test', () => {
     cy.get('#ProfileMenuToggleButton').click()
     cy.get('#ProfileMenuItem1').click()
     // LOG IN AS FIELD AGENT
-    cy.get('#username').type('t.ahmed')
+    cy.get('#username').type(
+      `${testUserFirstname[0].toLowerCase()}.${testUserLastname.toLowerCase()}`
+    )
     cy.get('#password').type('test')
     cy.get('#login-mobile-submit').click()
     cy.get('#user-setup-start-button', { timeout: 30000 }).click()
@@ -74,14 +81,12 @@ context('Team Integration Test', () => {
     cy.login('sysAdmin')
     cy.createPin()
     cy.get('#navigation_team').click()
-    cy.clickUserListAction(6, 0)
+    cy.clickUserListItemByName(fullName, 'Edit details')
     cy.get('#btn_change_firstNamesEng').click()
     cy.get('#firstNamesEng').type(' Sheikh')
-    //cy.get('#nid').type('123456788')
     cy.get('#confirm_form').click()
 
     //submit user
-    cy.get('#confirm_form').click()
     cy.get('#submit-edit-user-form').click()
   })
 
@@ -95,7 +100,10 @@ context('Team Integration Test', () => {
     cy.contains('Ibombo').click()
     cy.get('#location-search-btn').click()
     cy.log('Choose an user')
-    cy.clickUserListAction(6, 2)
+    cy.clickUserListItemByName(
+      `${testUserFirstname} Sheikh ${testUserLastname}`,
+      'Deactivate'
+    )
     cy.get('#reason_OTHER').click()
     cy.get('#comment').type('not a member now')
     cy.get('#deactivate-action').click()
@@ -112,7 +120,10 @@ context('Team Integration Test', () => {
     cy.contains('Ibombo ').click()
     cy.get('#location-search-btn').click()
     cy.log('Choose an user')
-    cy.clickUserListAction(6, 1)
+    cy.clickUserListItemByName(
+      `${testUserFirstname} Sheikh ${testUserLastname}`,
+      'Reactivate'
+    )
     cy.get('#reason_OTHER').click()
     cy.get('#comment').type('a member now')
     cy.get('#reactivate-action').click()
@@ -127,13 +138,14 @@ context('Team Integration Test', () => {
     cy.get('#navigation_team').click()
     cy.get('#navigation_team').click()
     cy.log('Choose an user')
-    cy.clickUserListAction(6, 2)
+    cy.clickUserListItemByName(
+      `${testUserFirstname} Sheikh ${testUserLastname}`,
+      'Deactivate'
+    )
     cy.get('#reason_OTHER').click()
     cy.get('#comment').type('not a member now')
     cy.get('#deactivate-action').click()
     cy.contains('State Registrar').should('be.visible')
-    // cy.get('#ProfileMenuToggleButton').click()
-    // cy.get('#ProfileMenuItem1').click()
   })
 
   it('Tests Local admin can reactivate an user', () => {
@@ -141,7 +153,10 @@ context('Team Integration Test', () => {
     cy.login('sysAdmin')
     cy.createPin()
     cy.get('#navigation_team').click()
-    cy.clickUserListAction(6, 1)
+    cy.clickUserListItemByName(
+      `${testUserFirstname} Sheikh ${testUserLastname}`,
+      'Reactivate'
+    )
     cy.get('#reason_OTHER').click()
     cy.get('#comment').type(' a member now')
     cy.get('#reactivate-action').click()

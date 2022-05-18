@@ -214,11 +214,14 @@ Cypress.Commands.add('printDeclaration', () => {
 })
 
 
-Cypress.Commands.add('clickUserListAction', (itemId, actionId) => {
-  cy.get(`#user-item-${itemId}-menuToggleButton`).scrollIntoView().click()
-  cy.get(`#user-item-${itemId}-menuSubMenu`).should('is.visible')
-  cy.get(`#user-item-${itemId}-menuItem${actionId}`).should('is.visible')
-  cy.get(`#user-item-${itemId}-menuItem${actionId}`).click()
+Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
+  const actionsButton = cy.get(`[id^=name-link-]:contains("${name}")`).parent().parent().next().find('[id^=user-item-]')
+  actionsButton.scrollIntoView().click()
+  const actionsMenu = cy.get('[id$=-menuSubMenu]')
+  actionsMenu.scrollIntoView().should('is.visible')
+  const action = actionsMenu.get('li').contains(actionText)
+  action.should('is.visible')
+  action.click()
 })
 
 Cypress.Commands.add('rejectDeclaration', () => {

@@ -15,9 +15,9 @@ declare namespace Cypress {
     logout: () => void
     selectOption: (selector: string, text: string, option: string) => void
     goToNextFormSection: () => void
-    clickUserListAction: (itemId: number, actionId: number) => void
     createPin: () => void
     reviewForm: () => void
+    clickUserListItemByName: (name: string, actionText: string) => void
     reviewFormOne: () => void
     submitForm: () => void
     submitDeclaration: () => void
