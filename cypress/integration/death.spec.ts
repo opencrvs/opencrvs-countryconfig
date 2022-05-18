@@ -18,13 +18,10 @@ context('Death Integration Test', () => {
 
   it('Tests registration by registrar using maximum input', () => {
     cy.login('registrar')
-    // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
-    // DECLARATION FORM
     cy.initializeFakeTimers()
     cy.enterDeathMaximumInput()
-
     cy.registerDeclaration()
   })
 
@@ -34,15 +31,9 @@ context('Death Integration Test', () => {
 
   it('Login as registrar to register minimum input death declaration', () => {
     cy.login('registrar')
-
-    // CREATE PIN
     cy.createPin()
-    //review declaration
     cy.reviewForm()
-    //register declaration
     cy.submitForm()
-    // LOG OUT
-    //cy.logOut()
   })
 
   it('Tests from declaration to registration using maximum input', () => {
@@ -51,14 +42,9 @@ context('Death Integration Test', () => {
 
   it('Login as registrar to register maximum input death declaration', () => {
     cy.login('registrar')
-    // CREATE PIN
     cy.createPin()
-    //review declaration
     cy.reviewForm()
-    //register declaration
     cy.submitForm()
-    // LOG OUT
-    // cy.logOut()
   })
 
   it('Tests from declaration to rejection using minimum input', () => {
@@ -66,17 +52,10 @@ context('Death Integration Test', () => {
   })
 
   it('Login As Register & Reject Minimum input Death Declaration', () => {
-    // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
-    // CREATE PIN
-
     cy.createPin()
-    // LANDING PAGE Download 1st declaration
     cy.reviewForm()
-    //Reject Declaration
     cy.rejectDeclaration()
-    //logout
-    //  cy.logOut()
   })
 
   it('Tests from declaration to rejection using maximum input', () => {
@@ -84,15 +63,9 @@ context('Death Integration Test', () => {
   })
 
   it('Login As Register & Reject Maximum input Death Declaration', () => {
-    // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
-    // CREATE PIN
     cy.createPin()
-    // LANDING PAGE Download 1st declaration
     cy.reviewForm()
-    //Reject Declaration
     cy.rejectDeclaration()
-    //logout
-    //  cy.logOut()l
   })
 })

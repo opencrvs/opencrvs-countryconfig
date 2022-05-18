@@ -9,160 +9,81 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-/// <reference types="Cypress" />
 
 context('Birth Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  //Maximum input
-  it('Tests from declaration to registration using maximum input', () => {
-    // LOGIN AS FIELD WORKER
+  it('login as a field agent, send a declaration using maximum input', () => {
     cy.login('fieldWorker')
-
     cy.createPin()
     cy.verifyLandingPageVisible()
     cy.clock(new Date().getTime())
     cy.enterMaximumInput()
-
     cy.submitDeclaration()
-
-    // LOG OUT
-
-    cy.get('#ProfileMenuToggleButton').click()
-
-    cy.get('#ProfileMenuItem1').click()
-  })
-
-  it('LogIn as Registrar to Register Maximum input Declaration', () => {
-    // LOGIN AS LOCAL REGISTRAR
-    cy.login('registrar')
-    // CREATE PIN
-    cy.createPin()
-    //review declaration
-    cy.reviewForm()
-
-    //register Declaration
-    cy.submitForm()
-    // LOG OUT
     cy.logout()
   })
 
-  // Minimum input
-  it('Tests from declaration to certification using minimum input', () => {
+  it('login as registrar and register declaration with maximum input', () => {
+    cy.login('registrar')
+    cy.createPin()
+    cy.reviewForm()
+    cy.submitForm()
+    cy.logout()
+  })
+
+  it('login as a field agent, send a declaration using minimum input', () => {
     cy.declareDeclarationWithMinimumInput()
   })
 
-  it('LogIn as Registrar to Register Minimum input Declaration', () => {
-    // LOGIN AS LOCAL REGISTRAR
+  it('login as registrar to register minimum input declaration', () => {
     cy.login('registrar')
-    // CREATE PIN
     cy.createPin()
-    //review declaration
     cy.reviewForm()
-
-    //register Declaration
     cy.submitForm()
-    // LOG OUT
     cy.logout()
   })
 
-  // Rejection Minimum
-  it('Tests from declaration to rejection using minimum input', () => {
-    cy.declareDeclarationWithMinimumInput()
-  })
-
-  it('Login as Register & Reject Minimum input Declaration', () => {
-    // LOGIN AS LOCAL REGISTRAR
-    cy.login('registrar')
-    // CREATE PIN
-
-    cy.createPin()
-    // LANDING PAGE Download 1st declaration
-    cy.reviewForm()
-    //Reject Declaration
-    cy.rejectDeclaration()
-    //logout
-    cy.logout()
-  })
-
-  //Rejection Maximum
-  it('Tests from declaration to rejection using maximum input', () => {
-    // LOGIN AS FIELD WORKER
-    cy.login('fieldWorker')
-
-    cy.createPin()
-    cy.verifyLandingPageVisible()
+  it('login as a registrar and reject a maximum input declaration', () => {
     cy.clock(new Date().getTime())
-    cy.enterMaximumInput()
+    // Create declaration with an API call
+    cy.createBirthRegistrationAs('fieldWorker')
 
-    cy.submitDeclaration()
-
-    // LOG OUT
-
-    cy.get('#ProfileMenuToggleButton').click()
-
-    cy.get('#ProfileMenuItem1').click()
-  })
-
-  it('Login as Registrar & Reject Maximum input Declaration', () => {
-    // LOGIN AS LOCAL REGISTRAR
     cy.login('registrar')
-    // CREATE PIN
     cy.createPin()
-    // LANDING PAGE,Download Declaration
     cy.reviewForm()
     cy.rejectDeclaration()
-    //logout
     cy.logout()
   })
 
-  //Maximum input by Register
-  it('Tests registration by registrar using maximum input', () => {
-    // LOGIN AS FIELD WORKER
+  it('login as a registrar and create declaration with maximum input', () => {
+    cy.clock(new Date().getTime())
     cy.login('registrar')
-    // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
-    // EVENTS
-    cy.clock(new Date().getTime())
     cy.enterMaximumInput()
-
     //register declaration
     cy.get('#registerDeclarationBtn').click()
-    //MODAL
     cy.get('#submit_confirm').click()
     cy.log('Waiting for declaration to sync...')
     cy.tick(20000)
   })
 
-  //SomeOne Else giving input
-  it('Tests Someone else journey using minimum input', () => {
-    // LOGIN
+  it('login as field agent, create birth declaration as "Someone else"', () => {
     cy.login('fieldWorker')
-    // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
     cy.initializeFakeTimers()
     cy.someoneElseJourney()
-
     cy.submitDeclaration()
-    // LOG OUT
-    cy.get('#ProfileMenuToggleButton').click()
-    cy.get('#ProfileMenuItem1').click()
+    cy.logout()
   })
 
-  it('Login as Registrar & register Someone else minimum input declaration', () => {
-    // LOGIN AS LOCAL REGISTRAR
+  it('login as registrar & register "Someone else" declaration', () => {
     cy.login('registrar')
-    // CREATE PIN
     cy.createPin()
-    //review declaration
     cy.reviewForm()
-
-    //register Declaration
     cy.submitForm()
-    cy.wait(1000)
   })
 })

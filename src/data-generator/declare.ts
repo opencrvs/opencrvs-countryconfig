@@ -116,13 +116,12 @@ export async function sendBirthNotification(
   return res.compositionId
 }
 
-export async function createBirthDeclaration(
-  { username, token }: User,
+export function createBirthDeclarationData(
   sex: 'male' | 'female',
   birthDate: Date,
   declarationTime: Date,
   location: Location
-) {
+): BirthRegistrationInput {
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
@@ -159,7 +158,7 @@ export async function createBirthDeclaration(
     ]
   }
 
-  const details: BirthRegistrationInput = {
+  return {
     createdAt: declarationTime.toISOString(),
     registration: {
       informantType: InformantType.Mother,
@@ -211,14 +210,32 @@ export async function createBirthDeclaration(
     },
     mother
   }
+}
 
+export async function createBirthDeclaration(
+  { username, token }: User,
+  sex: 'male' | 'female',
+  birthDate: Date,
+  declarationTime: Date,
+  location: Location
+) {
+  const details = createBirthDeclarationData(
+    sex,
+    birthDate,
+    declarationTime,
+    location
+  )
+
+  const name = details.child?.name
+    ?.map(name => `${name?.firstNames} ${name?.familyName}`)
+    .join(' ')
   const requestStart = Date.now()
   const createDeclarationRes = await fetch(GATEWAY_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation-id': `declare-${firstNames}-${familyName}`
+      'x-correlation-id': `declare-${name}`
     },
     body: JSON.stringify({
       query: `
@@ -235,8 +252,7 @@ export async function createBirthDeclaration(
   const requestEnd = Date.now()
   log(
     'Creating',
-    firstNames,
-    familyName,
+    name,
     'born',
     birthDate.toISOString().split('T')[0],
     'declared',
