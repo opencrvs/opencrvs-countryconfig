@@ -129,25 +129,31 @@ Cypress.Commands.add('createPin', () => {
   }
 })
 
+const hasOperationName = (req, operationName) => {
+  const { body } = req
+  return (
+    body.hasOwnProperty('operationName') && body.operationName === operationName
+  )
+}
+
 Cypress.Commands.add('submitDeclaration', () => {
-  var compositionId
   cy.intercept('/graphql', req => {
-    req.on('response', res => {
-      compositionId = res.body?.data?.createBirthRegistration?.compositionId
-      console.log(res.body)
-
-      expect(compositionId).to.not.equal('empty')
-    })
-  }).as('exam')
-
-  // PREVIEW
+    if (hasOperationName(req, 'createBirthRegistration')) {
+      req.alias = 'createBirthRegistration'
+      req.on('response', res => {
+        const compositionId =
+          res.body?.data?.createBirthRegistration?.compositionId
+        expect(compositionId).to.be.a('string')
+      })
+    }
+  })
   cy.get('#submit_form').click()
-  // MODAL
   cy.get('#submit_confirm').click()
 
   cy.log('Waiting for declaration to sync...')
-  cy.wait('@exam')
-  cy.clock()
+  cy.wait('@createBirthRegistration', {
+    timeout: 60000
+  })
   cy.tick(40000)
 })
 
@@ -155,12 +161,6 @@ Cypress.Commands.add('reviewForm', () => {
   cy.get('#navigation_readyForReview').click()
   cy.get('#ListItemAction-0-icon').click()
   cy.get('#ListItemAction-0-Review').click()
-})
-
-Cypress.Commands.add('reviewFormOne', () => {
-  cy.get('#navigation_readyForReview').click()
-  cy.get('#ListItemAction-1-icon').click()
-  cy.get('#ListItemAction-1-Review').click()
 })
 
 Cypress.Commands.add('submitForm', () => {

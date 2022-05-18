@@ -22,10 +22,12 @@ declare namespace Cypress {
     createPin: () => void
     reviewForm: () => void
     clickUserListItemByName: (name: string, actionText: string) => void
-    reviewFormOne: () => void
     submitForm: () => void
     submitDeclaration: () => void
-    createBirthRegistrationAs: (role: string, options?: BirthDeclarationOptions) => void
+    createBirthRegistrationAs: (
+      role: string,
+      options?: BirthDeclarationOptions
+    ) => void
     printDeclaration: () => void
     rejectDeclaration: () => void
     registerDeclaration: () => void
