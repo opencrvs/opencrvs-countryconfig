@@ -104,7 +104,7 @@ context('Team Integration Test', () => {
       `${testUserFirstname} Sheikh ${testUserLastname}`,
       'Deactivate'
     )
-    cy.get('#reason_OTHER').click()
+    cy.get('#reason_OTHER').check()
     cy.get('#comment').type('not a member now')
     cy.get('#deactivate-action').click()
     cy.contains('Registration Clerk').should('be.visible')
@@ -124,7 +124,7 @@ context('Team Integration Test', () => {
       `${testUserFirstname} Sheikh ${testUserLastname}`,
       'Reactivate'
     )
-    cy.get('#reason_OTHER').click()
+    cy.get('#reason_OTHER').check()
     cy.get('#comment').type('a member now')
     cy.get('#reactivate-action').click()
     cy.get('#ProfileMenuToggleButton').click()
@@ -142,13 +142,13 @@ context('Team Integration Test', () => {
       `${testUserFirstname} Sheikh ${testUserLastname}`,
       'Deactivate'
     )
-    cy.get('#reason_OTHER').click()
+    cy.get('#reason_OTHER').check()
     cy.get('#comment').type('not a member now')
     cy.get('#deactivate-action').click()
     cy.contains('State Registrar').should('be.visible')
   })
 
-  it('Tests Local admin can reactivate an user', () => {
+  it('local admin can reactivate an user', () => {
     // LOG IN AS SYSTEM ADMIN
     cy.login('sysAdmin')
     cy.createPin()
@@ -157,7 +157,9 @@ context('Team Integration Test', () => {
       `${testUserFirstname} Sheikh ${testUserLastname}`,
       'Reactivate'
     )
-    cy.get('#reason_OTHER').click()
+    cy.get('#reason_OTHER')
+      .scrollIntoView()
+      .check()
     cy.get('#comment').type(' a member now')
     cy.get('#reactivate-action').click()
   })
