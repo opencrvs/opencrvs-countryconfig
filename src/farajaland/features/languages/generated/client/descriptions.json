@@ -148,7 +148,7 @@
     "constants.timeReadyForReview": "Label for column Time in ready for review",
     "constants.timeRequireUpdates": "Label for column Time in require updates",
     "constants.timeWatingApproval": "Label for column Time in waiting for approval",
-    "constants.timeWaitingExternalValidation": "Label for column Time in external validation BRIS",
+    "constants.timeWaitingExternalValidation": "Label for column Time in external validation",
     "constants.timeReadyToPrint": "Label for column Time in ready to print",
     "constants.to": "Used in sentence",
     "constants.toCapitalized": "Label for To",

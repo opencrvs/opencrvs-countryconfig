@@ -175,8 +175,6 @@
   "constantsMonth": "constants.month",
   "constantsMother": "constants.mother",
   "constantsName": "constants.name",
-  "constantsNameDefaultLocale": "constants.nameDefaultLocale",
-  "constantsNameRegionalLocale": "constants.nameRegionalLocale",
   "constantsNationalRegistrar": "constants.nationalRegistrar",
   "constantsNationalSystemAdmin": "constants.nationalSystemAdmin",
   "constantsNoNameProvided": "constants.noNameProvided",
