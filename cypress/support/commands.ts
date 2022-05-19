@@ -358,7 +358,17 @@ Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
   }
 
   return getToken(role).then(token => {
-    return cy.request({
+    cy.intercept('/graphql', req => {
+      if (hasOperationName(req, 'createBirthRegistration')) {
+        req.on('response', res => {
+          const compositionId =
+            res.body?.data?.createBirthRegistration?.compositionId
+          expect(compositionId).to.be.a('string')
+        })
+      }
+    })
+
+    cy.request({
       url: Cypress.env('GATEWAY_URL') + 'graphql',
       method: 'POST',
       headers: {
@@ -372,7 +382,8 @@ Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
         query:
           'mutation createBirthRegistration($details: BirthRegistrationInput!) {\n  createBirthRegistration(details: $details) {\n    trackingId\n    compositionId\n    __typename\n  }\n}\n'
       }
-    })
+    }).as('createRegistration')
+    cy.get('@createRegistration')
   })
 })
 
