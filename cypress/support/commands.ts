@@ -136,13 +136,21 @@ const hasOperationName = (req, operationName) => {
   )
 }
 
-Cypress.Commands.add('submitDeclaration', () => {
+Cypress.Commands.add('submitDeclaration', (type: 'birth' | 'death') => {
   cy.intercept('/graphql', req => {
     if (hasOperationName(req, 'createBirthRegistration')) {
-      req.alias = 'createBirthRegistration'
+      req.alias = 'createRegistration'
       req.on('response', res => {
         const compositionId =
           res.body?.data?.createBirthRegistration?.compositionId
+        expect(compositionId).to.be.a('string')
+      })
+    }
+    if (hasOperationName(req, 'createDeathRegistration')) {
+      req.alias = 'createRegistration'
+      req.on('response', res => {
+        const compositionId =
+          res.body?.data?.createDeathRegistration?.compositionId
         expect(compositionId).to.be.a('string')
       })
     }
@@ -151,7 +159,7 @@ Cypress.Commands.add('submitDeclaration', () => {
   cy.get('#submit_confirm').click()
 
   cy.log('Waiting for declaration to sync...')
-  cy.wait('@createBirthRegistration', {
+  cy.wait('@createRegistration', {
     timeout: 60000
   })
 })
