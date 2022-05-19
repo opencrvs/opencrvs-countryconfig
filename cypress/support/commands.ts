@@ -194,13 +194,11 @@ Cypress.Commands.add('printDeclaration', () => {
 })
 
 Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
-  cy.get(`[id^=name-link-]:contains("${name}")`)
-    .parent()
-    .parent()
-    .next()
-    .find('[id^=user-item-]')
-    .scrollIntoView()
-    .click()
+  cy.get(
+    `[data-test-id='list-view-label']:contains("${name}") ~ [data-test-id='list-view-actions'] button`
+  )
+    .first()
+    .click({ force: true })
   const actionsMenu = cy.get('[id$=-menuSubMenu]')
   actionsMenu.scrollIntoView().should('is.visible')
   const action = actionsMenu.get('li').contains(actionText)

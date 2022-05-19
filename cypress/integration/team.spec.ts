@@ -27,7 +27,7 @@ context('Team Integration Test', () => {
     cy.login('sysAdmin')
     cy.createPin()
     cy.get('#navigation_team').click()
-    cy.get('#add-user').click()
+    cy.get('#add-user').click({ force: true })
     cy.get('#firstNamesEng').type(testUserFirstname)
     cy.get('#familyNameEng').type(testUserLastname)
     cy.get('#phoneNumber').type('0752658545')
