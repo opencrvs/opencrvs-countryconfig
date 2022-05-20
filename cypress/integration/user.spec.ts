@@ -70,6 +70,7 @@ context('User Integration Test', () => {
   })
 
   it('should reset username successfully', () => {
+    cy.visit(Cypress.env('CLIENT_URL'))
     cy.get('#login-forgot-password').click()
 
     // Forgotten item form appears
@@ -108,6 +109,7 @@ context('User Integration Test', () => {
   })
 
   it('should reset password successfully', () => {
+    cy.visit(Cypress.env('CLIENT_URL'))
     cy.get('#login-forgot-password').click()
 
     // Forgotten item form appears

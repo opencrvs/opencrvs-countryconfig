@@ -191,6 +191,8 @@ Cypress.Commands.add('printDeclaration', () => {
   cy.get('.react-pdf__message react-pdf__message--no-data').should('not.exist')
 
   cy.get('#print-certificate').click()
+  cy.get('#notification').should('is.visible')
+  cy.get('#notification').should('not.exist')
 })
 
 Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
@@ -199,6 +201,8 @@ Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
   )
     .first()
     .click({ force: true })
+
+  cy.get('[id$=-menuSubMenu]').should('is.visible')
   const actionsMenu = cy.get('[id$=-menuSubMenu]')
   actionsMenu.scrollIntoView().should('is.visible')
   const action = actionsMenu.get('li').contains(actionText)
