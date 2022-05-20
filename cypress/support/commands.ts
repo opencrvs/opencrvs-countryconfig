@@ -385,7 +385,9 @@ Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
           'mutation createBirthRegistration($details: BirthRegistrationInput!) {\n  createBirthRegistration(details: $details) {\n    trackingId\n    compositionId\n    __typename\n  }\n}\n'
       }
     }).as('createRegistration')
-    cy.get('@createRegistration')
+    cy.get('@createRegistration').should(response => {
+      expect((response as any).body).to.have.length(200)
+    })
   })
 })
 
