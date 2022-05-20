@@ -353,8 +353,8 @@ Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
     details.child.name = [
       {
         use: 'en',
-        firstNames: options.firstName,
-        familyName: options.familyName
+        firstNames: options.firstName || faker.name.firstName(),
+        familyName: options.familyName || faker.name.lastName()
       }
     ]
   }
