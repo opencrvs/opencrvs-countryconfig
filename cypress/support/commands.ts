@@ -175,7 +175,6 @@ Cypress.Commands.add('submitForm', () => {
   cy.get('#submit_confirm').click()
   cy.get('#notification').should('is.visible')
   cy.get('#notification').should('not.exist')
-  cy.reload()
 })
 
 Cypress.Commands.add('printDeclaration', () => {
