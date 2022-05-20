@@ -180,8 +180,8 @@ Cypress.Commands.add('submitForm', () => {
 
 Cypress.Commands.add('printDeclaration', () => {
   cy.get('#navigation_print').click()
-  cy.get('#ListItemAction-0-icon').click()
-  cy.get('#ListItemAction-0-Print').click()
+  cy.get('#ListItemAction-0-icon', { timeout: 30000 }).click()
+  cy.get('#ListItemAction-0-Print', { timeout: 30000 }).click()
   cy.get('#type_MOTHER').click()
   cy.get('#confirm_form').click()
   cy.get('#verifyPositive').click()
