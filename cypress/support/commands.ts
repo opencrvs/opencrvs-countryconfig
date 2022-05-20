@@ -386,7 +386,7 @@ Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
       }
     }).as('createRegistration')
     cy.get('@createRegistration').should(response => {
-      expect((response as any).body).to.have.length(200)
+      expect((response as any).status).to.eq(200)
     })
   })
 })
