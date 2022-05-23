@@ -15,7 +15,7 @@ services:
       - LANGUAGES=en,fr
 
   countryconfig:
-    image: opencrvs/ocrvs-farajaland:${COUNTRY_CONFIG_VERSION:-latest}
+    image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
     restart: unless-stopped
     secrets:
       - jwt-public-key.{{ts}}
