@@ -24,7 +24,7 @@ context('User Integration Test', () => {
     cy.get('#add-user').click()
     cy.get('#firstNamesEng').type('Naeem')
     cy.get('#familyNameEng').type('Ahmed')
-    cy.get('#phoneNumber').type('0752658545')
+    cy.get('#phoneNumber').type('0711919045')
     //cy.get('#nid').type('199475632')
     cy.selectOption('#role', 'Registration Clerk', 'Registration Clerk')
     cy.selectOption('#type', 'Data entry clerk', 'Data entry clerk')
@@ -80,7 +80,7 @@ context('User Integration Test', () => {
 
     // Phone number verification form appears
     cy.get('#phone-number-verification-form').should('be.visible')
-    cy.get('#phone-number-input').type('0752658545')
+    cy.get('#phone-number-input').type('0711919045')
     cy.get('#continue').click()
 
     // Security question form appears
@@ -119,7 +119,7 @@ context('User Integration Test', () => {
 
     // Phone number verification form appears
     cy.get('#phone-number-verification-form').should('be.visible')
-    cy.get('#phone-number-input').type('0752658545')
+    cy.get('#phone-number-input').type('0711919045')
     cy.get('#continue').click()
 
     // Recovery code entry form appears
