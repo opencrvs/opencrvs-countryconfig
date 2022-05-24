@@ -196,7 +196,7 @@ Cypress.Commands.add('printDeclaration', () => {
 
 Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
   cy.get(
-    `[data-test-id='list-view-label']:contains("${name}") ~ [data-test-id='list-view-actions'] button`
+    `div:has([data-test-id='list-view-label']:contains("${name}")) ~ [data-test-id='list-view-actions'] button`
   )
     .first()
     .click({ force: true })
