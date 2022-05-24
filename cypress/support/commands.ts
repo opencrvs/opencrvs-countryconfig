@@ -167,6 +167,8 @@ Cypress.Commands.add('submitDeclaration', (type: 'birth' | 'death') => {
 Cypress.Commands.add('reviewForm', () => {
   cy.get('#navigation_readyForReview').click()
   cy.get('#ListItemAction-0-icon').click()
+  cy.get('#assignment').should('exist')
+  cy.get('#assign').click()
   cy.get('#ListItemAction-0-Review').click()
 })
 
@@ -180,6 +182,8 @@ Cypress.Commands.add('submitForm', () => {
 Cypress.Commands.add('printDeclaration', () => {
   cy.get('#navigation_print').click()
   cy.get('#ListItemAction-0-icon', { timeout: 30000 }).click()
+  cy.get('#assignment').should('exist')
+  cy.get('#assign').click()
   cy.get('#ListItemAction-0-Print', { timeout: 30000 }).click()
   cy.get('#type_MOTHER').click()
   cy.get('#confirm_form').click()
@@ -241,6 +245,8 @@ Cypress.Commands.add('downloadFirstDeclaration', () => {
   cy.get('#ListItemAction-0-icon')
     .first()
     .click()
+  cy.get('assignment').should('exist')
+  cy.get('#assign').click()
   cy.log('Waiting for declaration to sync...')
 
   cy.get('#action-loading-ListItemAction-0').should('not.exist')
@@ -717,6 +723,9 @@ Cypress.Commands.add('someoneElseJourney', () => {
   // INFORMANT'S DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.get('#iD').type('123456711')
+  cy.get('#motherBirthDate-dd').type('23')
+  cy.get('#motherBirthDate-mm').type('10')
+  cy.get('#motherBirthDate-yyyy').type('1975')
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
   cy.selectOption('#countryPrimary-form-input', 'Farajaland', 'Farajaland')
@@ -726,6 +735,7 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.goToNextFormSection()
   //  PRIMARY CARE GIVER DETAILS
   cy.get('#iD').type('121256789')
+  cy.get('#firstNamesEng').type('Karim')
   cy.get('#familyNameEng').type('Sheikh')
   cy.get('#fatherBirthDate-dd').type('10')
   cy.get('#fatherBirthDate-mm').type('10')
