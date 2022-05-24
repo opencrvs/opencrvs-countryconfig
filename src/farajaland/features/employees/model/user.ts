@@ -152,7 +152,7 @@ const userSchema = new Schema({
   username: { type: String, required: true },
   identifiers: [IdentifierSchema],
   email: String,
-  mobile: String,
+  mobile: { type: String, unique: true },
   passwordHash: { type: String, required: true },
   salt: { type: String, required: true },
   role: String,

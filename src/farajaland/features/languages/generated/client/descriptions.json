@@ -307,6 +307,7 @@
     "system.user.settings.name": "label for Name",
     "system.user.settings.systemLanguage": "Label for system language",
     "system.user.settings.profileImage": "Label for profile image",
+    "system.user.duplicateMobileError": "This error message shows when the user tries to input already existing mobile number",
     "register.SelectContactPoint.phoneNoError": "Phone no error text",
     "validations.bengaliOnlyNameFormat": "The error message that appears when a non bengali character is used in a Bengali name",
     "validations.blockAlphaNumericDot": "The error message that appears when an invalid value is used",
