@@ -1,0 +1,134 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Environment to deploy to
+        required: true
+        options:
+          - production
+          - qa
+          - staging
+      core-image-tag:
+        description: Core DockerHub image tag
+        required: false
+      countryconfig-image-tag:
+        description: Your Country Config DockerHub image tag
+        required: false
+jobs:
+  deploy:
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-20.04
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        node-version: [14.17.0]
+    steps:
+      - name: Clone core
+        uses: actions/checkout@v2
+        with:
+          repository: 'opencrvs/opencrvs-core'
+          path: './opencrvs-core'
+      - name: Clone country config resource package
+        uses: actions/checkout@v2
+        with:
+          path: './${{ github.event.repository.name }}'
+
+      - name: Get COUNTRY_CONFIG_VERSION
+        if: ${{ !github.event.inputs.countryconfig-image-tag }}
+        run: |
+          cd ${{ github.event.repository.name }}
+          echo "COUNTRY_CONFIG_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          cd ../
+
+      - name: Set COUNTRY_CONFIG_VERSION from inputs
+        if: ${{ github.event.inputs.countryconfig-image-tag }}
+        run: |
+          echo "COUNTRY_CONFIG_VERSION=${{ github.event.inputs.countryconfig-image-tag }}" >> $GITHUB_ENV
+
+      - name: Checkout correct country config branch
+        run: |
+          cd ${{ github.event.repository.name }}
+          git checkout ${{ env.COUNTRY_CONFIG_VERSION }}
+          cd ../
+      - name: Set CORE_VERSION from inputs
+        if: ${{ github.event.inputs.core-image-tag }}
+        run: echo "CORE_VERSION=${{ github.event.inputs.core-image-tag }}" >> $GITHUB_ENV
+
+      - name: Get CORE_VERSION
+        if: ${{ !github.event.inputs.core-image-tag }}
+        run: |
+          cd opencrvs-core
+          echo "CORE_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          cd ../
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
+      - name: Deploy to QA
+        if: ${{ github.event.inputs.environment == 'qa' }}
+        env:
+          QA_DOMAIN: ${{ secrets.QA_DOMAIN }}
+          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
+          REPLICAS: ${{ secrets.REPLICAS }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
+          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
+          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
+          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
+          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
+        run: |
+          cd opencrvs-core
+          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no qa ${{ env.QA_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ env.COUNTRY_CONFIG_REPO_NAME }} ${{ env.REPLICAS }}
+
+      - name: Deploy to production
+        if: ${{ github.event.inputs.environment == 'production' }}
+        env:
+          PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
+          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
+          REPLICAS: ${{ secrets.REPLICAS }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
+          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
+          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
+          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
+          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
+        run: |
+          cd opencrvs-core
+          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no production ${{ env.PRODUCTION_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ env.COUNTRY_CONFIG_REPO_NAME }} ${{ env.REPLICAS }}
+
+      - name: Deploy to staging
+        if: ${{ github.event.inputs.environment == 'staging' }}
+        env:
+          STAGING_DOMAIN: ${{ secrets.STAGING_DOMAIN }}
+          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
+          REPLICAS: ${{ secrets.REPLICAS }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
+          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
+          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
+          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
+          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
+        run: |
+          cd opencrvs-core
+          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no development ${{ env.STAGING_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ env.COUNTRY_CONFIG_REPO_NAME }} ${{ env.REPLICAS }}

@@ -18,5 +18,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Push image
+        env:
+          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
+          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
         run: |
           export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION
