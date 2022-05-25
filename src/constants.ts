@@ -10,6 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 export const TEST_SOURCE = `${process.cwd()}/src/tests/`
+export const HOSTNAME = process.env.HOSTNAME || '*'
 export const FHIR_URL = process.env.FHIR_URL || 'http://localhost:3447/fhir'
 export const OPENHIM_URL =
   process.env.OPENHIM_URL || 'http://localhost:5001/fhir'
@@ -40,3 +41,42 @@ export const CONFIRM_REGISTRATION_URL =
 // This value is configured based on country's data
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE =
   process.env.COUNTRY_WIDE_CRUDE_DEATH_RATE || 6.633
+
+  import * as path from 'path'
+import { readFileSync } from 'fs'
+
+export const LANGUAGES_SOURCE = path.join(
+  process.cwd(),
+  'src/features/languages/generated/'
+)
+export const ADMIN_STRUCTURE_SOURCE = path.join(
+  process.cwd(),
+  'src/features/administrative/'
+)
+
+export const FACILITIES_SOURCE = path.join(
+  process.cwd(),
+  'src/features/facilities/'
+)
+
+export const EMPLOYEES_SOURCE = path.join(
+  process.cwd(),
+  'src/features/employees/'
+)
+
+export const QUESTIONS_SOURCE = path.join(
+  process.cwd(),
+  'src/zmb/features/forms/'
+)
+
+export const CMS_API_KEY =
+  process.env.CMS_API_KEY ||
+  (process.env.CMS_API_KEY && readFileSync(process.env.CMS_API_KEY)) ||
+  ''
+export const CONTENTFUL_SPACE_ID =
+  process.env.CONTENTFUL_SPACE_ID ||
+  (process.env.CONTENTFUL_SPACE_ID &&
+    readFileSync(process.env.CONTENTFUL_SPACE_ID)) ||
+  ''
+export const CMS = process.env.CMS // || 'contentful'
+

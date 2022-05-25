@@ -40,11 +40,11 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 
 ## Populate new application data
 
-ts-node -r tsconfig-paths/register src/farajaland/features/administrative/scripts/prepare-locations.ts
-ts-node -r tsconfig-paths/register src/farajaland/features/administrative/scripts/assign-admin-structure-to-locations.ts
-ts-node -r tsconfig-paths/register src/farajaland/features/facilities/scripts/prepare-source-facilities.ts
-ts-node -r tsconfig-paths/register src/farajaland/features/facilities/scripts/assign-facilities-to-locations.ts
-ts-node -r tsconfig-paths/register src/farajaland/features/administrative/scripts/add-statistical-data.ts
-ts-node -r tsconfig-paths/register src/farajaland/features/employees/scripts/prepare-source-employees.ts
-ts-node -r tsconfig-paths/register src/farajaland/features/employees/scripts/assign-employees-to-practitioners.ts -- $1 $2
-ts-node -r tsconfig-paths/register src/farajaland/features/config/scripts/populate-default-config.ts
+ts-node -r tsconfig-paths/register src/features/administrative/scripts/prepare-locations.ts
+ts-node -r tsconfig-paths/register src/features/administrative/scripts/assign-admin-structure-to-locations.ts
+ts-node -r tsconfig-paths/register src/features/facilities/scripts/prepare-source-facilities.ts
+ts-node -r tsconfig-paths/register src/features/facilities/scripts/assign-facilities-to-locations.ts
+ts-node -r tsconfig-paths/register src/features/administrative/scripts/add-statistical-data.ts
+ts-node -r tsconfig-paths/register src/features/employees/scripts/prepare-source-employees.ts
+ts-node -r tsconfig-paths/register src/features/employees/scripts/assign-employees-to-practitioners.ts -- $1 $2
+ts-node -r tsconfig-paths/register src/features/config/scripts/populate-default-config.ts
