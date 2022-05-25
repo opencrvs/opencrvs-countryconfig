@@ -342,10 +342,9 @@ function getLocationWithName(token, name) {
         Authorization: `Bearer ${token}`
       }
     })
-    .then(response => {
-      return Object.values(response.body.data).find(
-        location => location.name === name
-      )
+    .its('body')
+    .then(body => {
+      return Object.values(body.data).find(location => location.name === name)
     })
 }
 
