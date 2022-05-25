@@ -90,7 +90,7 @@ context('Team Integration Test', () => {
     cy.get('#submit-edit-user-form').click()
   })
 
-  it('Tests National Admin can deactivate an user', () => {
+  it('National Admin can deactivate an user', () => {
     // LOG IN AS national SYSTEM ADMIN
     cy.login('nsysAdmin')
     cy.createPin()
@@ -107,10 +107,10 @@ context('Team Integration Test', () => {
     cy.get('[for="reason_OTHER"]').click()
     cy.get('#comment').type('not a member now')
     cy.get('#deactivate-action').click()
-    cy.contains('Registration Clerk').should('be.visible')
+    cy.get('#userAuditSuccessToast').should('be.visible')
   })
 
-  it('Tests National Admin can Reactivate an user', () => {
+  it('National Admin can Reactivate an user', () => {
     // LOG IN AS national SYSTEM ADMIN
     cy.login('nsysAdmin')
     cy.createPin()
@@ -127,8 +127,7 @@ context('Team Integration Test', () => {
     cy.get('[for="reason_OTHER"]').click()
     cy.get('#comment').type('a member now')
     cy.get('#reactivate-action').click()
-    cy.get('#ProfileMenuToggleButton').click()
-    cy.get('#ProfileMenuItem1').click()
+    cy.get('#userAuditSuccessToast').should('be.visible')
   })
 
   it('Tests Local Admin can deactivate an user', () => {
@@ -146,7 +145,7 @@ context('Team Integration Test', () => {
     cy.get('[for="reason_OTHER"]').click()
     cy.get('#comment').type('not a member now')
     cy.get('#deactivate-action').click()
-    cy.contains('State Registrar').should('be.visible')
+    cy.get('#userAuditSuccessToast').should('be.visible')
   })
 
   it('local admin can reactivate an user', () => {
@@ -162,5 +161,6 @@ context('Team Integration Test', () => {
     cy.get('[for="reason_OTHER"]').click()
     cy.get('#comment').type(' a member now')
     cy.get('#reactivate-action').click()
+    cy.get('#userAuditSuccessToast').should('be.visible')
   })
 })
