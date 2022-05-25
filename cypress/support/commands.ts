@@ -37,6 +37,7 @@
 
 import { faker } from '@faker-js/faker'
 import { createBirthDeclarationData } from '../../src/data-generator/declare'
+import { Location } from '../../src/data-generator/location'
 
 const users = {
   fieldWorker: {
@@ -332,60 +333,69 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.logout()
 })
 
-Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
-  const details = createBirthDeclarationData(
-    'male',
-    new Date('2018-05-18T13:18:26.240Z'),
-    new Date(),
-    {
-      id: 'c9946e38-39d4-4f8c-9891-95d5f1c68f55',
-      name: 'Ibombo',
-      alias: 'Ibombo',
-      physicalType: 'Jurisdiction',
-      jurisdictionType: 'DISTRICT',
-      type: 'ADMIN_STRUCTURE',
-      partOf: 'Location/9e5988f5-3651-4bb4-a8ba-1e461a1d9b19'
-    }
-  )
-
-  if (options.firstName) {
-    details.child.name = [
-      {
-        use: 'en',
-        firstNames: options.firstName || faker.name.firstName(),
-        familyName: options.familyName || faker.name.lastName()
-      }
-    ]
-  }
-
-  return getToken(role).then(token => {
-    cy.intercept('/graphql', req => {
-      if (hasOperationName(req, 'createBirthRegistration')) {
-        req.on('response', res => {
-          const compositionId =
-            res.body?.data?.createBirthRegistration?.compositionId
-          expect(compositionId).to.be.a('string')
-        })
+function getLocationWithName(token, name) {
+  return cy
+    .request<{ data: Record<string, Location> }>({
+      method: 'GET',
+      url: `${Cypress.env('COUNTRYCONFIG_URL')}locations`,
+      headers: {
+        Authorization: `Bearer ${token}`
       }
     })
+    .then(response => {
+      return Object.values(response.body.data).find(
+        location => location.name === name
+      )
+    })
+}
 
-    cy.request({
-      url: Cypress.env('GATEWAY_URL') + 'graphql',
-      method: 'POST',
-      headers: {
-        authorization: `Bearer ${token}`
-      },
-      body: {
-        operationName: 'createBirthRegistration',
-        variables: {
-          details
-        },
-        query:
-          'mutation createBirthRegistration($details: BirthRegistrationInput!) {\n  createBirthRegistration(details: $details) {\n    trackingId\n    compositionId\n    __typename\n  }\n}\n'
+Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
+  return getToken(role).then(token => {
+    return getLocationWithName(token, 'Ibombo').then(location => {
+      const details = createBirthDeclarationData(
+        'male',
+        new Date('2018-05-18T13:18:26.240Z'),
+        new Date(),
+        location
+      )
+
+      if (options.firstName) {
+        details.child.name = [
+          {
+            use: 'en',
+            firstNames: options.firstName || faker.name.firstName(),
+            familyName: options.familyName || faker.name.lastName()
+          }
+        ]
       }
-    }).as('createRegistration')
-    cy.get('@createRegistration').should(response => {
-      expect((response as any).status).to.eq(200)
+      cy.intercept('/graphql', req => {
+        if (hasOperationName(req, 'createBirthRegistration')) {
+          req.on('response', res => {
+            const compositionId =
+              res.body?.data?.createBirthRegistration?.compositionId
+            expect(compositionId).to.be.a('string')
+          })
+        }
+      })
+
+      cy.request({
+        url: Cypress.env('GATEWAY_URL') + 'graphql',
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${token}`
+        },
+        body: {
+          operationName: 'createBirthRegistration',
+          variables: {
+            details
+          },
+          query:
+            'mutation createBirthRegistration($details: BirthRegistrationInput!) {\n  createBirthRegistration(details: $details) {\n    trackingId\n    compositionId\n    __typename\n  }\n}\n'
+        }
+      }).as('createRegistration')
+      cy.get('@createRegistration').should(response => {
+        expect((response as any).status).to.eq(200)
+      })
     })
   })
 })

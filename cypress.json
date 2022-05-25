@@ -7,7 +7,7 @@
   "defaultCommandTimeout": 60000,
   "videoCompression": 0,
   "retries": {
-    "runMode": 2,
+    "runMode": 5,
     "openMode": 2
   }
 }
