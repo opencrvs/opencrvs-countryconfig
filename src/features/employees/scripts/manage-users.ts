@@ -96,13 +96,21 @@ export function createUsers(users: IUserModel[]) {
     active: true
   })
 
+  const nationalRegistrarRole = new Role({
+    title: 'National Registrar',
+    value: 'NATIONAL_REGISTRAR',
+    types: ['NATIONAL_REGISTRAR'],
+    active: true
+  })
+
   const roles = [
     fieldAgentRole,
     regitstrationAgentRole,
     regitstrarRole,
     sysAdminLocalRole,
     sysAdminNationalRole,
-    performanceMgntRole
+    performanceMgntRole,
+    nationalRegistrarRole
   ]
   function onInsert(err: any, values: any) {
     if (!err) {
