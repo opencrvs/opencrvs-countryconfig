@@ -10,9 +10,9 @@
 name: Generate demo data for production
 
 env:
-  COUNTRY_CONFIG_HOST: https://countryconfig.farajaland.opencrvs.org
-  AUTH_API_HOST: https://auth.farajaland.opencrvs.org
-  GATEWAY_HOST: https://gateway.farajaland.opencrvs.org/graphql
+  COUNTRY_CONFIG_HOST: https://countryconfig.farajaland-staging.opencrvs.org
+  AUTH_API_HOST: https://auth.farajaland-staging.opencrvs.org
+  GATEWAY_HOST: https://gateway.farajaland-staging.opencrvs.org/graphql
   CONCURRENCY: 7
 
 on:
