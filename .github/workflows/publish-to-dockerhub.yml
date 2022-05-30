@@ -32,4 +32,6 @@ jobs:
           DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
           DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
         run: |
-          export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION
+          export COUNTRY_CONFIG_VERSION=`git rev-parse --short HEAD`
+          echo "Publishing a Docker image with a tag $COUNTRY_CONFIG_VERSION"
+          bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION
