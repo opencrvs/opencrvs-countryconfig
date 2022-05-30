@@ -40,7 +40,7 @@ jobs:
         if: ${{ !github.event.inputs.countryconfig-image-tag }}
         run: |
           cd ${{ github.event.repository.name }}
-          echo "COUNTRY_CONFIG_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "COUNTRY_CONFIG_VERSION=$(git rev-parse --short=7 HEAD)" >> $GITHUB_ENV
           cd ../
 
       - name: Set COUNTRY_CONFIG_VERSION from inputs
@@ -61,7 +61,7 @@ jobs:
         if: ${{ !github.event.inputs.core-image-tag }}
         run: |
           cd opencrvs-core
-          echo "CORE_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "CORE_VERSION=$(git rev-parse --short=7 HEAD)" >> $GITHUB_ENV
           cd ../
 
       - name: Login to DockerHub
