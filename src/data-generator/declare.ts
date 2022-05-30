@@ -29,6 +29,9 @@ import { Facility, Location } from './location'
 import { User } from './users'
 import { log } from './util'
 
+const HOME_BIRTH_WEIGHT = 0.2
+const HOME_DEATH_WEIGHT = 0.2
+
 import {
   CREATE_DEATH_DECLARATION,
   FETCH_DEATH_REGISTRATION_QUERY,
@@ -205,9 +208,26 @@ export function createBirthDeclarationData(
     attendantAtBirth: AttendantType.Physician,
     birthType: BirthType.Single,
     weightAtBirth: Math.round(2.5 + 2 * Math.random() * 10) / 10,
-    eventLocation: {
-      _fhirID: location.id
-    },
+    eventLocation:
+      Math.random() < HOME_BIRTH_WEIGHT
+        ? {
+            address: {
+              country: 'FAR',
+              state: location.partOf.replace('Location/', ''),
+              district: location.id,
+              city: faker.address.city(),
+              postalCode: faker.address.zipCode(),
+              line: [
+                faker.address.streetAddress(),
+                faker.address.zipCode(),
+                'URBAN'
+              ]
+            },
+            type: LocationType.PrivateHome
+          }
+        : {
+            _fhirID: location.id
+          },
     mother
   }
 }
@@ -343,10 +363,27 @@ export async function createDeathDeclaration(
     mannerOfDeath: MannerOfDeath.NaturalCauses,
     maleDependentsOfDeceased: Math.round(Math.random() * 5),
     femaleDependentsOfDeceased: Math.round(Math.random() * 5),
-    eventLocation: {
-      address: createAddressInput(location, AddressType.PrimaryAddress),
-      type: LocationType.PrimaryAddress
-    },
+    eventLocation:
+      Math.random() < HOME_DEATH_WEIGHT
+        ? {
+            address: {
+              country: 'FAR',
+              state: location.partOf.replace('Location/', ''),
+              district: location.id,
+              city: faker.address.city(),
+              postalCode: faker.address.zipCode(),
+              line: [
+                faker.address.streetAddress(),
+                faker.address.zipCode(),
+                'URBAN'
+              ]
+            },
+            type: LocationType.PrivateHome
+          }
+        : {
+            address: createAddressInput(location, AddressType.PrimaryAddress),
+            type: LocationType.PrimaryAddress
+          },
     informant: {
       individual: {
         birthDate: sub(declarationTime, { years: 20 })
