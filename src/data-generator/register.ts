@@ -7,6 +7,7 @@ import { Location } from './location'
 import { createAddressInput } from './address'
 import {
   AddressType,
+  AttachmentInput,
   AttendantType,
   BirthRegistrationInput,
   BirthType,
@@ -151,6 +152,9 @@ export function createRegistrationDetails(
     },
     registration: {
       ...withIdsRemoved.registration,
+      attachments: withIdsRemoved.registration?.attachments?.filter(
+        (x): x is AttachmentInput => x !== null
+      ),
       status: [
         {
           // This is needed to avoid the following error from Metrics service:

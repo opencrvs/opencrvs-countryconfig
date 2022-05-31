@@ -129,7 +129,7 @@ export type AttachmentInput = {
   _fhirID?: InputMaybe<Scalars['ID']>;
   contentType?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['Date']>;
-  data?: InputMaybe<Scalars['String']>;
+  data: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   originalFileName?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Scalars['String']>;
@@ -362,6 +362,17 @@ export type CommentInput = {
   comment?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['Date']>;
   user?: InputMaybe<UserInput>;
+};
+
+export type ComparisonInput = {
+  eq?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  ne?: InputMaybe<Scalars['String']>;
+  nin?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type ContactPoint = {
@@ -1191,7 +1202,7 @@ export type PersonInput = {
   name?: InputMaybe<Array<InputMaybe<HumanNameInput>>>;
   nationality?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   occupation?: InputMaybe<Scalars['String']>;
-  photo?: InputMaybe<Array<InputMaybe<AttachmentInput>>>;
+  photo?: InputMaybe<Array<AttachmentInput>>;
   reasonNotApplying?: InputMaybe<Scalars['String']>;
   telecom?: InputMaybe<Array<InputMaybe<ContactPointInput>>>;
 };
@@ -1219,6 +1230,7 @@ export type Query = {
   getTotalMetrics?: Maybe<TotalMetricsResult>;
   getTotalPayments?: Maybe<Array<PaymentMetric>>;
   getUser?: Maybe<User>;
+  getUserByMobile?: Maybe<User>;
   hasChildLocation?: Maybe<Location>;
   listBirthRegistrations?: Maybe<BirthRegResultSet>;
   listNotifications?: Maybe<Array<Maybe<Notification>>>;
@@ -1323,7 +1335,7 @@ export type QueryGetRolesArgs = {
   sortOrder?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<Scalars['String']>;
-  value?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<ComparisonInput>;
 };
 
 
@@ -1360,6 +1372,11 @@ export type QueryGetTotalPaymentsArgs = {
 
 export type QueryGetUserArgs = {
   userId?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetUserByMobileArgs = {
+  mobile?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1592,7 +1609,7 @@ export type RegistrationCountResult = {
 
 export type RegistrationInput = {
   _fhirID?: InputMaybe<Scalars['ID']>;
-  attachments?: InputMaybe<Array<InputMaybe<AttachmentInput>>>;
+  attachments?: InputMaybe<Array<AttachmentInput>>;
   book?: InputMaybe<Scalars['String']>;
   certificates?: InputMaybe<Array<InputMaybe<CertificateInput>>>;
   contact?: InputMaybe<Scalars['String']>;
@@ -1652,7 +1669,7 @@ export type RelatedPerson = {
 
 export type RelatedPersonInput = {
   _fhirID?: InputMaybe<Scalars['ID']>;
-  affidavit?: InputMaybe<Array<InputMaybe<AttachmentInput>>>;
+  affidavit?: InputMaybe<Array<AttachmentInput>>;
   id?: InputMaybe<Scalars['ID']>;
   individual?: InputMaybe<PersonInput>;
   otherRelationship?: InputMaybe<Scalars['String']>;
@@ -1707,7 +1724,7 @@ export type Signature = {
 };
 
 export type SignatureInput = {
-  data?: InputMaybe<Scalars['String']>;
+  data: Scalars['String'];
   type?: InputMaybe<Scalars['String']>;
 };
 
@@ -1751,13 +1768,12 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   identifier?: Maybe<Identifier>;
-  localRegistrar: LocalRegistrar;
+  localRegistrar?: Maybe<LocalRegistrar>;
   mobile?: Maybe<Scalars['String']>;
   name?: Maybe<Array<Maybe<HumanName>>>;
   practitionerId?: Maybe<Scalars['String']>;
   primaryOffice?: Maybe<Location>;
   role?: Maybe<Scalars['String']>;
-  signature?: Maybe<Signature>;
   status?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   underInvestigation?: Maybe<Scalars['Boolean']>;

@@ -5,7 +5,9 @@ import { idsToFHIRIds, log, removeEmptyFields } from './util'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import {
+  AttachmentInput,
   BirthRegistrationInput,
+  DeathRegistrationInput,
   MarkBirthAsCertifiedMutation,
   MarkDeathAsCertifiedMutation,
   PaymentOutcomeType,
@@ -42,6 +44,9 @@ export function createBirthCertificationDetails(
     ...withIdsRemoved,
     registration: {
       ...withIdsRemoved.registration,
+      attachments: withIdsRemoved.registration?.attachments?.filter(
+        (x): x is AttachmentInput => x !== null
+      ),
       status: [
         {
           timestamp: createdAt.toISOString()
@@ -75,7 +80,7 @@ export function createBirthCertificationDetails(
 export function createDeathCertificationDetails(
   createdAt: Date,
   declaration: Awaited<ReturnType<typeof markDeathAsRegistered>>
-) {
+): DeathRegistrationInput {
   const withIdsRemoved = idsToFHIRIds(
     omit(declaration, [
       '__typename',
@@ -94,7 +99,7 @@ export function createDeathCertificationDetails(
     ]
   )
 
-  const data = {
+  const data: DeathRegistrationInput = {
     ...withIdsRemoved,
     deceased: {
       ...withIdsRemoved.deceased,
@@ -104,6 +109,9 @@ export function createDeathCertificationDetails(
     },
     registration: {
       ...withIdsRemoved.registration,
+      attachments: withIdsRemoved.registration?.attachments?.filter(
+        (x): x is AttachmentInput => x !== null
+      ),
       draftId: withIdsRemoved._fhirIDMap?.composition,
       certificates: [
         {
@@ -186,7 +194,7 @@ export async function markAsCertified(
 export async function markDeathAsCertified(
   id: string,
   user: User,
-  details: BirthRegistrationInput
+  details: DeathRegistrationInput
 ) {
   const { token, username } = user
 
