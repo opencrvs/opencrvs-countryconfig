@@ -105,7 +105,8 @@ export async function createServer() {
     host: COUNTRY_CONFIG_HOST,
     port: COUNTRY_CONFIG_PORT,
     routes: {
-      cors: { origin: whitelist }
+      cors: { origin: whitelist },
+      payload: {maxBytes: 52428800}
     }
   })
 
