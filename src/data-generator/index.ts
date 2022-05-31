@@ -519,7 +519,7 @@ async function main() {
                 }
 
                 const districtFacilities = healthFacilities.filter(
-                  ({ partOf }) => partOf.split('/')[1] === location.id
+                  ({ partOf }) => partOf?.split('/')[1] === location.id
                 )
 
                 if (districtFacilities.length === 0) {

@@ -25,7 +25,6 @@ on:
 jobs:
   manual-deploy-staging-e2e:
     runs-on: ubuntu-20.04
-    timeout-minutes: 240 # 4 hours
     strategy:
       matrix:
         node-version: [14.17.0]
