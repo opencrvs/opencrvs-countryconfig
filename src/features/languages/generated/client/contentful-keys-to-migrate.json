@@ -17,6 +17,7 @@
   "constants.sent_incomplete",
   "constants.updated_declaration",
   "constants.archived_declaration",
+  "duplicates.warning",
   "error.passwordSubmissionError",
   "location.jurisdictionType.UNION",
   "location.jurisdictionType.DIVISION",
