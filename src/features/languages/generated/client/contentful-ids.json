@@ -1440,7 +1440,6 @@
   "ConfigDeathDefaultTempDesc": "config.deathDefaultTempDesc",
   "ConfigListDetails": "config.listDetails",
   "ConfigListDetailsQsn": "config.listDetailsQsn",
-  "configDeathUpdatedTempDesc": "config.deathUpdatedTempDesc",
   "configCertificateCertificateUploading": "config.certificate.certificateUploading",
   "configCertificateCertificateUpdated": "config.certificate.certificateUpdated",
   "configCertificateCertificateValidationError": "config.certificate.certificateValidationError",

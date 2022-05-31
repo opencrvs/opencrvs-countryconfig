@@ -39,7 +39,7 @@
   "config.application.nameChangeMessage",
   "config.application.govtLogoChangeMessage",
   "config.certificateConfiguration",
-  "config.birthUpdatedTempDesc",
+  "config.eventUpdatedTempDesc",
   "correction.request",
   "correction.corrector.title",
   "correction.certificate.corrector.idCheck",
