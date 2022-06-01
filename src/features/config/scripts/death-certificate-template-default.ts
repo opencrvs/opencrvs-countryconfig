@@ -1,48 +1,50 @@
+import notoSans from '@countryconfig/features/config/scripts/fonts/noto-sans'
+
 export default `<svg width="420" height="595" viewBox="0 0 420 595" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="420" height="595" fill="white" />
 <rect x="16.5" y="16.5" width="387" height="562" stroke="#EEEEEE" />
 <path d="M138.429 511.629H281.571" stroke="#F4F4F4" stroke-width="1.22857" stroke-linecap="square" stroke-linejoin="round" />
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="300" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="300" letter-spacing="0px">
   <tspan x="50%" y="526.552" text-anchor="middle">{{registrarName}}&#x2028;</tspan>
   <tspan x="50%" y="538.552" text-anchor="middle">({{role}}) &#10;</tspan>
 </text>
-<text fill="#35495D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans Bengali" font-size="8" font-weight="300" letter-spacing="0px">
+<text fill="#35495D" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="300" letter-spacing="0px">
   <tspan x="50%" y="549.336" text-anchor="middle">&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="300" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="300" letter-spacing="0px">
   <tspan x="50%" y="445.552" text-anchor="middle">&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
   <tspan x="50%" y="429.552" text-anchor="middle">This event was registered at {{registrationLocation}}&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
   <tspan x="50%" y="308.828" text-anchor="middle">{{eventDate}}&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="300" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="300" letter-spacing="0px">
   <tspan x="50%" y="287.69" text-anchor="middle">Died on&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="300" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="300" letter-spacing="0px">
   <tspan x="50%" y="345.69" text-anchor="middle">Place of death&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans Bengali" font-size="12" font-weight="500" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="500" letter-spacing="0px">
   <tspan x="50%" y="384.004" text-anchor="middle">&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
   <tspan x="50%" y="367.828" text-anchor="middle">{{placeOfDeath}}&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
   <tspan x="50%" y="245.828" text-anchor="middle">{{deceasedFirstName}} {{deceasedFamilyName}}&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="300" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="300" letter-spacing="0px">
   <tspan x="50%" y="224.69" text-anchor="middle">This is to certify that&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="1px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="1px">
   <tspan x="50%" y="145.828" text-anchor="middle">{{registrationNumber}}&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="12" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" letter-spacing="0px">
   <tspan x="50%" y="127.828" text-anchor="middle">Death Registration No&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
   <tspan x="50%" y="170.104" text-anchor="middle">Date of issuance of certificate:  {{certificateDate}}</tspan>
 </text>
 <line x1="43.4985" y1="403.75" x2="376.499" y2="401.75" stroke="#EEEEEE" stroke-width="0.5" />
@@ -71,6 +73,12 @@ export default `<svg width="420" height="595" viewBox="0 0 420 595" fill="none" 
   <tspan x="191.848" y="84.9903">FARAJALAND</tspan>
 </text>
 <defs>
+  <style type="text/css">
+    @font-face {
+      font-family: Noto Sans;
+      src: url(${notoSans});
+    }
+  </style>
   <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
     <use xlink:href="#image0_925_40" transform="scale(0.000818331 0.00224215)" />
   </pattern>
