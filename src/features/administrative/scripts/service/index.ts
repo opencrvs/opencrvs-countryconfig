@@ -128,15 +128,15 @@ export async function fetchAndComposeLocations(
 
 export function getLocationPartOfIds(
   rawLocationData: ICSVLocation[],
-  provinces: fhir.Location[]
+  states: fhir.Location[]
 ): ICSVLocation[] {
   const locations: ICSVLocation[] = []
   for (const csvLocation of rawLocationData) {
     const partOfStatisticalID = csvLocation.partOf.split('/')[1]
-    const parentProvince = provinces.filter(province => {
-      return province.description === partOfStatisticalID
+    const parentState = states.filter(state => {
+      return state.description === partOfStatisticalID
     })[0]
-    csvLocation.partOf = `Location/${parentProvince.id}`
+    csvLocation.partOf = `Location/${parentState.id}`
     locations.push(csvLocation)
   }
   return locations

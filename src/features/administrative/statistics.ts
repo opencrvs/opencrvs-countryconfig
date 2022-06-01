@@ -25,31 +25,31 @@ type LocationItem = {
   physicalType: string
 }
 
-export async function getStatisticsForProvinces() {
+export async function getStatisticsForStates() {
   const districts = await readCSVToJSON<LocationItem[]>(
     './source/districts.csv'
   )
-  const provinces = await readCSVToJSON<LocationItem[]>(
-    './source/provinces.csv'
+  const states = await readCSVToJSON<LocationItem[]>(
+    './source/states.csv'
   )
   const districtStatistics = await getStatistics()
 
-  const statistics = provinces.map<LocationStatistic>(province => {
-    const districtsInProvince = districts
-      .filter(({ partOf }) => partOf === `Location/${province.statisticalID}`)
+  const statistics = states.map<LocationStatistic>(state => {
+    const districtsInState = districts
+      .filter(({ partOf }) => partOf === `Location/${state.statisticalID}`)
       .map(({ statisticalID }) => statisticalID)
-    const statsForProvince = districtStatistics.filter(({ statisticalID }) =>
-      districtsInProvince.includes(statisticalID)
+    const statsForState = districtStatistics.filter(({ statisticalID }) =>
+      districtsInState.includes(statisticalID)
     )
 
     const allYears = uniq(
-      statsForProvince.flatMap(s => s.years.map(({ year }) => year))
+      statsForState.flatMap(s => s.years.map(({ year }) => year))
     ).sort()
 
     return {
-      statisticalID: province.statisticalID,
+      statisticalID: state.statisticalID,
       years: allYears.map(y => {
-        const allStatsForThisYear = statsForProvince.flatMap(s =>
+        const allStatsForThisYear = statsForState.flatMap(s =>
           s.years.filter(({ year }) => year === y)
         )
         return {
@@ -74,7 +74,7 @@ export async function getStatisticsForProvinces() {
 export async function getStatistics() {
   const data = await readCSVToJSON<
     Array<Record<string, string> & { statisticalID: string }>
-  >('./source/crude_birth_rates_by_division.csv')
+  >('./source/statistics.csv')
 
   return data.map<LocationStatistic>(item => {
     const { statisticalID, ...yearKeys } = item

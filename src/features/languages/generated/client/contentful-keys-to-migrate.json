@@ -13,6 +13,7 @@
   "constants.applicationName",
   "constants.downloaded",
   "constants.history",
+  "constants.totalFileSizeExceed",
   "constants.updated",
   "constants.sent_incomplete",
   "constants.updated_declaration",

@@ -20,7 +20,7 @@ import { ADMIN_STRUCTURE_SOURCE } from '@countryconfig/constants'
 import { ILocation } from '@countryconfig/features/utils'
 
 export default async function importAdminStructure() {
-  let provinces: fhir.Location[]
+  let states: fhir.Location[]
   let districts: fhir.Location[]
 
   // tslint:disable-next-line:no-console
@@ -30,9 +30,9 @@ export default async function importAdminStructure() {
     )}`
   )
 
-  const rawProvinces = JSON.parse(
+  const rawStates = JSON.parse(
     fs
-      .readFileSync(`${ADMIN_STRUCTURE_SOURCE}generated/sourceProvinces.json`)
+      .readFileSync(`${ADMIN_STRUCTURE_SOURCE}generated/sourceStates.json`)
       .toString()
   )
 
@@ -45,9 +45,9 @@ export default async function importAdminStructure() {
   try {
     // tslint:disable-next-line:no-console
     console.log(
-      `${chalk.yellow('Fetching from JSON:')} provinces. Please wait ....`
+      `${chalk.yellow('Fetching from JSON:')} states. Please wait ....`
     )
-    provinces = await fetchAndComposeLocations(rawProvinces, 'STATE')
+    states = await fetchAndComposeLocations(rawStates, 'STATE')
   } catch (err) {
     // tslint:disable-next-line:no-console
     console.log(err)
@@ -61,7 +61,7 @@ export default async function importAdminStructure() {
       `${chalk.yellow('Fetching from JSON:')} districts. Please wait ....`
     )
     districts = await fetchAndComposeLocations(
-      getLocationPartOfIds(rawDistricts, provinces),
+      getLocationPartOfIds(rawDistricts, states),
       'DISTRICT'
     )
   } catch (err) {
@@ -72,8 +72,8 @@ export default async function importAdminStructure() {
   }
 
   fs.writeFileSync(
-    `${ADMIN_STRUCTURE_SOURCE}generated/provinces.json`,
-    JSON.stringify({ provinces }, null, 2)
+    `${ADMIN_STRUCTURE_SOURCE}generated/states.json`,
+    JSON.stringify({ states }, null, 2)
   )
 
   fs.writeFileSync(
@@ -82,7 +82,7 @@ export default async function importAdminStructure() {
   )
 
   const fhirLocations: fhir.Location[] = []
-  fhirLocations.push(...provinces)
+  fhirLocations.push(...states)
   fhirLocations.push(...districts)
 
   const data: ILocation[] = []

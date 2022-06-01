@@ -13,7 +13,7 @@ import chalk from 'chalk'
 import { getFromFhir } from '../../utils'
 import {
   getStatistics,
-  getStatisticsForProvinces,
+  getStatisticsForStates,
   LocationStatistic
 } from '../statistics'
 import fetch from 'node-fetch'
@@ -55,7 +55,7 @@ function generateStatisticalExtensions(sourceStatistic: LocationStatistic) {
       [year.year]: year.male_female_ratio
     })
     birthRates.push({
-      [year.year]: year.crude_birth_rate
+      [year.year]: year.crude_birth_rate / 2
     })
   }
 
@@ -170,22 +170,22 @@ async function addStatisticalData() {
   // tslint:disable-next-line:no-console
   console.log(
     `${chalk.blueBright(
-      '/////////////////////////// UPDATING PROVINCES WITH STATISTICAL DATA IN FHIR ///////////////////////////'
+      '/////////////////////////// UPDATING STATES WITH STATISTICAL DATA IN FHIR ///////////////////////////'
     )}`
   )
-  const provinceStatistics = await getStatisticsForProvinces()
-  const provinces = await getLocationsByIdentifier('STATE').catch(err => {
-    console.log("Couldn't fetch provinces", err)
+  const stateStatistics = await getStatisticsForStates()
+  const states = await getLocationsByIdentifier('STATE').catch(err => {
+    console.log("Couldn't fetch states", err)
     throw err
   })
 
-  for (const province of await matchAndAssignStatisticalData(
-    provinces,
-    provinceStatistics
+  for (const state of await matchAndAssignStatisticalData(
+    states,
+    stateStatistics
   )) {
     // tslint:disable-next-line:no-console
-    console.log(`Updating province: ${province.id}`)
-    await sendToFhir(province, `/Location/${province.id}`, 'PUT')
+    console.log(`Updating state: ${state.id}`)
+    await sendToFhir(state, `/Location/${state.id}`, 'PUT')
   }
 }
 

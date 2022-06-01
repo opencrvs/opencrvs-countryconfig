@@ -194,6 +194,7 @@
     "constants.requireUpdatesLoading": "The text when all rejected declarations are loading",
     "constants.noRecords": "No Application in{tab} tab in officeHome",
     "constants.noConnection": "No Connection hover text",
+    "constants.totalFileSizeExceed": "Accumulated File size exceed message",
     "constants.updated": "Application has been updated",
     "constants.sent_incomplete": "Declaration submitted without completing the required fields",
     "constants.updated_declaration": "Declaration has been updated",
