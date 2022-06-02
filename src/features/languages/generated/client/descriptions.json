@@ -260,6 +260,7 @@
     "constants.healthDivision": "The description for HEALTH_DIVISION type",
     "userSetup.securityQuestions.hightSchool": "The description for HIGH_SCHOOL key",
     "userSetup.type.hospital": "The description for HOSPITAL type",
+    "userSetup.type.healthSystem": "The description for health system type",
     "constants.localRegistrar": "The description for LOCAL_REGISTRAR role",
     "home.header.localSystemAdmin": "The description for Sysadmin role",
     "constants.mayor": "The description for MAYOR type",

@@ -28,6 +28,7 @@
   "constants.socialWorker",
   "constants.localLeader",
   "constants.healthcareWorker",
+  "userSetup.type.healthSystem",
   "system.user.settings.incorrectVerifyCode",
   "system.user.settings.phonedNumberUpdated",
   "validations.officeMustBeSelected",
