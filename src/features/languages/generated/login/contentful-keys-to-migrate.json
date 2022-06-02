@@ -11,7 +11,6 @@
   "resetCredentials.forgottenItem.form.title",
   "resetCredentials.forgottenItem.form.body.header",
   "resetCredentials.phoneNumberConfirmation.form.body.header",
-  "resetCredentials.phoneNumberConfirmation.form.body.subheader",
   "resetCredentials.recoveryCodeEntry.form.body.header",
   "resetCredentials.recoveryCodeEntry.form.body.subheader",
   "resetCredentials.recoveryCodeEntry.codeResent.form.body.header",
