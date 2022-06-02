@@ -55,11 +55,9 @@ const USERNAME = 'emmanuel.mayuka'
 const PASSWORD = 'test'
 export const VERIFICATION_CODE = '000000'
 
-// Create 30 users for each location:
-// 15 field agents, ten hospitals, four registration agents and one registrar
-export const FIELD_AGENTS = 15
-export const HOSPITAL_FIELD_AGENTS = 10
-export const REGISTRATION_AGENTS = 4
+export const FIELD_AGENTS = 5
+export const HOSPITAL_FIELD_AGENTS = 7
+export const REGISTRATION_AGENTS = 2
 export const LOCAL_REGISTRARS = 1
 
 const CONCURRENCY = process.env.CONCURRENCY
