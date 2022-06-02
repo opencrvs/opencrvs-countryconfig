@@ -12,7 +12,6 @@
     "resetCredentials.forgottenItem.form.title": "Title used for forgotten item form",
     "resetCredentials.forgottenItem.form.body.header": "Body header for forgotten item form",
     "resetCredentials.phoneNumberConfirmation.form.body.header": "Form body header used in the body of phone number confirmation step",
-    "resetCredentials.phoneNumberConfirmation.form.body.subheader": "Form body subheader used in the body of phone number confirmation step",
     "resetCredentials.recoveryCodeEntry.form.body.header": "Form body header used for recovery code entry step",
     "resetCredentials.recoveryCodeEntry.form.body.subheader": "Form body subheader used for recovery code entry step",
     "resetCredentials.recoveryCodeEntry.codeResent.form.body.header": "The title that appears in step two of the form after resend button click",
