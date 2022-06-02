@@ -11,15 +11,11 @@ version: '3.3'
 
 services:
   notification:
-    secrets:
-      - infobip-gateway-endpoint
-      - infobip-api-key
-      - infobip-sender-id
     environment:
-      - SMS_PROVIDER=infobip
-      - INFOBIP_GATEWAY_ENDPOINT_PATH=/run/secrets/infobip-gateway-endpoint
-      - INFOBIP_API_KEY_PATH=/run/secrets/infobip-api-key
-      - INFOBIP_SENDER_ID=/run/secrets/infobip-sender-id
+      - SMS_PROVIDER=unknown
+      - INFOBIP_GATEWAY_ENDPOINT_PATH=
+      - INFOBIP_API_KEY_PATH=
+      - INFOBIP_SENDER_ID=
       - LANGUAGES=en,fr
 
   countryconfig:
@@ -70,10 +66,4 @@ secrets:
   openhim-user:
     external: true
   openhim-password:
-    external: true
-  infobip-gateway-endpoint:
-    external: true
-  infobip-api-key:
-    external: true
-  infobip-sender-id:
     external: true
