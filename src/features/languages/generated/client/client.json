@@ -1610,7 +1610,7 @@
         "settings.changeLanguage": "Change language",
         "settings.changePassword": "Change password",
         "settings.changePhone": "Change phone number",
-        "settings.message.changeLanguage": "",
+        "settings.message.changeLanguage": "Your prefered language that you want to use on OpenCRVS",
         "settings.profile.tile": "Profile",
         "settings.security.tile": "Security",
         "settings.system.tile": "System",
