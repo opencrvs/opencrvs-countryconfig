@@ -65,8 +65,7 @@ export function createBirthCertificationDetails(
             }
           ],
           data:
-            'data:application/pdf;base64,' +
-            readFileSync(join(__dirname, './signature.pdf')).toString('base64'),
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
           collector: {
             relationship: 'MOTHER'
           }
@@ -117,8 +116,7 @@ export function createDeathCertificationDetails(
         {
           hasShowedVerifiedDocument: false,
           data:
-            'data:application/pdf;base64,' +
-            readFileSync(join(__dirname, './signature.pdf')).toString('base64'),
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
           payments: [
             {
               type: PaymentType.Manual,

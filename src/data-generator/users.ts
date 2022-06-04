@@ -296,7 +296,7 @@ export async function createUsers(
   log('Creating', config.hospitalFieldAgents, 'hospitals')
   for (let i = 0; i < config.hospitalFieldAgents; i++) {
     const systemAdmin =
-      systemAdmins[i] ||
+      systemAdmins[0] ||
       (await createUser(token, randomOffice.id, {
         role: 'LOCAL_SYSTEM_ADMIN',
         type: 'LOCAL_SYSTEM_ADMIN'
