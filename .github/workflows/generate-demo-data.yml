@@ -45,6 +45,7 @@ jobs:
       - name: Start generating test data
         run: yarn data-generator
         env:
+          DISTRICTS: ${{ github.event.inputs.districts }}
           COUNTRY_CONFIG_HOST: ${{ secrets.COUNTRY_CONFIG_HOST }}
           AUTH_API_HOST: ${{ secrets.AUTH_API_HOST }}
           GATEWAY_HOST: ${{ secrets.GATEWAY_HOST }}
