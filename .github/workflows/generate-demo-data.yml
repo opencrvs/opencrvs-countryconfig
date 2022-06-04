@@ -16,6 +16,9 @@ on:
         description: 'Branch to run from'
         required: false
         default: 'develop'
+      districts:
+        description: 'District ids separated by comma'
+        required: false
       environment:
         type: choice
         description: Environment to deploy to

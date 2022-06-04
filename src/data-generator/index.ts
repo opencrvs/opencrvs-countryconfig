@@ -63,6 +63,11 @@ export const LOCAL_REGISTRARS = 1
 const CONCURRENCY = process.env.CONCURRENCY
   ? parseInt(process.env.CONCURRENCY, 10)
   : 3
+
+const DISTRICTS = process.env.DISTRICTS
+  ? process.env.DISTRICTS.split(',')
+  : null
+
 const START_YEAR = 2021
 const END_YEAR = 2022
 
@@ -211,7 +216,11 @@ async function main() {
 
   log('Got token for system administrator')
   log('Fetching locations')
-  const locations = await await getLocations(token)
+  const locations = DISTRICTS
+    ? (await getLocations(token)).filter(location =>
+        DISTRICTS.includes(location.id)
+      )
+    : await getLocations(token)
 
   const facilities = await getFacilities(token)
   const crvsOffices = facilities.filter(({ type }) => type === 'CRVS_OFFICE')
