@@ -375,21 +375,24 @@ async function main() {
        * This is done both to increase on target - registration numbers as random might not always work
        * and to be a fix for old way of calculating registration total numbers
        */
-      const totalWithinTarget = birthMetrics.results
+      const totalBirthsWithinTarget = birthMetrics.results
         .filter(total => total.timeLabel === 'withinTarget')
         .reduce((acc, { total }) => acc + total, 0)
 
-      const withinTargetShouldBe =
+      const withinTargetBirthsShouldBe =
         (birthRates.female + birthRates.male) *
         BIRTH_COMPLETION_DISTRIBUTION[0].weight
 
-      const missingWithinTargetDeclarations = Math.round(
-        withinTargetShouldBe - totalWithinTarget
+      const missingBirthsWithinTargetDeclarations = Math.round(
+        withinTargetBirthsShouldBe - totalBirthsWithinTarget
       )
 
-      log('Missing within target:', missingWithinTargetDeclarations)
+      log(
+        'Births missing within target:',
+        missingBirthsWithinTargetDeclarations
+      )
 
-      for (let ix = 0; ix < missingWithinTargetDeclarations; ix++) {
+      for (let ix = 0; ix < missingBirthsWithinTargetDeclarations; ix++) {
         const submissionDate = min([
           addDays(
             startOfYear(setYear(new Date(), y)),
@@ -398,7 +401,7 @@ async function main() {
           new Date()
         ])
         console.log(
-          'Creating a fill registration',
+          'Creating a filler birth registration',
           submissionDate.toISOString()
         )
 
@@ -410,7 +413,49 @@ async function main() {
           crvsOffices,
           healthFacilities,
           location,
-          missingWithinTargetDeclarations,
+          missingBirthsWithinTargetDeclarations,
+          5 // Override completion days
+        )(ix)
+      }
+      /*
+       * Same for death
+       */
+      const totalDeathsWithinTarget = deathMetrics.results
+        .filter(total => total.timeLabel === 'withinTarget')
+        .reduce((acc, { total }) => acc + total, 0)
+
+      const withinTargetDeathsShouldBe =
+        (birthRates.female + birthRates.male) *
+        BIRTH_COMPLETION_DISTRIBUTION[0].weight
+
+      const missingDeathsWithinTargetDeclarations = Math.round(
+        withinTargetDeathsShouldBe - totalDeathsWithinTarget
+      )
+
+      log(
+        'Deaths missing within target:',
+        missingDeathsWithinTargetDeclarations
+      )
+
+      for (let ix = 0; ix < missingDeathsWithinTargetDeclarations; ix++) {
+        const submissionDate = min([
+          addDays(
+            startOfYear(setYear(new Date(), y)),
+            Math.floor(Math.random() * days.length)
+          ),
+          new Date()
+        ])
+        console.log(
+          'Creating a filler death registration',
+          submissionDate.toISOString()
+        )
+
+        await deathDeclarationWorkflow(
+          deathDeclarers,
+          submissionDate,
+          location,
+          missingDeathsWithinTargetDeclarations,
+          users,
           5 // Override completion days
         )(ix)
       }
@@ -582,15 +627,16 @@ function deathDeclarationWorkflow(
     hospitals: User[]
     registrationAgents: User[]
     registrars: User[]
-  }
+  },
+  overrideCompletionDays?: number
 ) {
   return async (ix: number) => {
     try {
       const randomUser =
         deathDeclarers[Math.floor(Math.random() * deathDeclarers.length)]
-      const completionDays = getRandomFromBrackets(
-        DEATH_COMPLETION_DISTRIBUTION
-      )
+      const completionDays = overrideCompletionDays
+        ? overrideCompletionDays
+        : getRandomFromBrackets(DEATH_COMPLETION_DISTRIBUTION)
       const submissionTime = add(startOfDay(submissionDate), {
         seconds: 24 * 60 * 60 * Math.random()
       })
