@@ -19,8 +19,6 @@ import {
   markDeathAsCertified
 } from './certify'
 
-import fetch from 'node-fetch'
-
 import {
   getDayOfYear,
   getDaysInYear,
@@ -31,14 +29,16 @@ import {
   sub,
   add,
   startOfDay,
-  isWithinInterval
+  isWithinInterval,
+  endOfYear,
+  min
 } from 'date-fns'
 
 import { getToken, readToken, updateToken } from './auth'
 import { getRandomFromBrackets, log } from './util'
-import { getLocations, getFacilities } from './location'
-import { COUNTRY_CONFIG_HOST } from './constants'
-import { DistrictStatistic, getStatistics } from './statistics'
+import { getLocations, getFacilities, Location, Facility } from './location'
+
+import { getLocationMetrics } from './statistics'
 import { User, createUsers } from './users'
 import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
@@ -123,96 +123,10 @@ function wait(time: number) {
   return new Promise(resolve => setTimeout(resolve, time))
 }
 
-function calculateCrudeDeathRateForYear(
-  location: string,
-  year: number,
-  crudeDeathRate: number,
-  statistics: DistrictStatistic[]
-) {
-  const statistic = statistics.find(({ id }) => id === location)
-
-  if (!statistic) {
-    throw new Error(`Cannot find statistics for location ${location}`)
-  }
-
-  const yearlyStats =
-    statistic.statistics[
-      'http://opencrvs.org/specs/id/statistics-total-populations'
-    ][year]
-  if (!yearlyStats) {
-    throw new Error(
-      `Cannot find statistics for location ${location}, year ${year}`
-    )
-  }
-
-  return (yearlyStats / 1000) * crudeDeathRate
-}
-
-function calculateCrudeBirthRatesForYear(
-  location: string,
-  year: number,
-  statistics: DistrictStatistic[]
-) {
-  const statistic = statistics.find(({ id }) => id === location)
-
-  if (!statistic) {
-    throw new Error(
-      `Cannot find statistics for location ${location}, year ${year}`
-    )
-  }
-  const femalePopulation =
-    statistic.statistics[
-      'http://opencrvs.org/specs/id/statistics-female-populations'
-    ][year]
-  const malePopulation =
-    statistic.statistics[
-      'http://opencrvs.org/specs/id/statistics-male-populations'
-    ][year]
-  const crudeBirthRate =
-    statistic.statistics[
-      'http://opencrvs.org/specs/id/statistics-crude-birth-rates'
-    ][year]
-  if (
-    [femalePopulation, malePopulation, crudeBirthRate].some(
-      value => value === undefined
-    )
-  ) {
-    throw new Error(
-      `Cannot find statistics for location ${location}, year ${year}`
-    )
-  }
-
-  return {
-    male: (malePopulation / 1000) * crudeBirthRate,
-    female: (femalePopulation / 1000) * crudeBirthRate
-  }
-}
-
-async function getCrudeDeathRate(token: string): Promise<number> {
-  const res = await fetch(`${COUNTRY_CONFIG_HOST}/crude-death-rate`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-  const data = await res.json()
-
-  return data.crudeDeathRate
-}
-
 async function main() {
   log('Fetching token for system administrator')
   const token = await getToken(USERNAME, PASSWORD)
   console.log('Got token for system administrator')
-  let statistics: Awaited<ReturnType<typeof getStatistics>>
-  try {
-    statistics = await getStatistics(token)
-  } catch (error) {
-    console.error(`
-      /statistics endpoint was not found or returned an error.
-      Make sure the endpoint is implemented in your country config package
-    `)
-    return
-  }
 
   log('Got token for system administrator')
   log('Fetching locations')
@@ -287,8 +201,6 @@ async function main() {
       ...users.registrationAgents
     ]
 
-    const crudeDeathRate = await getCrudeDeathRate(users.fieldAgents[0].token)
-
     /*
      *
      * Loop through years (END_YEAR -> START_YEAR)
@@ -297,20 +209,32 @@ async function main() {
 
     for (let y = END_YEAR; y >= START_YEAR; y--) {
       const isCurrentYear = y === currentYear
-      let totalDeathsThisYear =
-        calculateCrudeDeathRateForYear(
-          location.id,
-          isCurrentYear ? currentYear - 1 : y,
-          crudeDeathRate,
-          statistics
-        ) * DEATH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE
+
+      const randomRegistrar =
+        users.registrars[Math.floor(Math.random() * users.registrars.length)]
+
+      const birthMetrics = await getLocationMetrics(
+        randomRegistrar.token,
+        startOfYear(new Date(y, 1, 1)),
+        endOfYear(new Date(y, 1, 1)),
+        location.id,
+        'BIRTH'
+      )
+      const deathMetrics = await getLocationMetrics(
+        randomRegistrar.token,
+        startOfYear(new Date(y, 1, 1)),
+        endOfYear(new Date(y, 1, 1)),
+        location.id,
+        'DEATH'
+      )
+
+      let totalDeathsThisYear = deathMetrics.estimated.totalEstimation
 
       // Calculate crude birth & death rates for this district for both men and women
-      const birthRates = calculateCrudeBirthRatesForYear(
-        location.id,
-        isCurrentYear ? currentYear - 1 : y,
-        statistics
-      )
+      const birthRates = {
+        male: birthMetrics.estimated.maleEstimation,
+        female: birthMetrics.estimated.femaleEstimation
+      }
 
       const days = Array.from({ length: getDaysInYear(y) }).map(() => 0)
 
@@ -334,6 +258,9 @@ async function main() {
         birthRates.female * BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE
       birthRates.male =
         birthRates.male * BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE
+
+      totalDeathsThisYear =
+        totalDeathsThisYear * DEATH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE
 
       const femalesPerDay = days.slice(0)
       const malesPerDay = days.slice(0)
@@ -389,74 +316,13 @@ async function main() {
         let operations = []
         for (let ix = 0; ix < deathsToday; ix++) {
           operations.push(
-            (async (ix: number) => {
-              try {
-                const randomUser =
-                  deathDeclarers[
-                    Math.floor(Math.random() * deathDeclarers.length)
-                  ]
-                const completionDays = getRandomFromBrackets(
-                  DEATH_COMPLETION_DISTRIBUTION
-                )
-                const submissionTime = add(startOfDay(submissionDate), {
-                  seconds: 24 * 60 * 60 * Math.random()
-                })
-                const deathTime = sub(submissionTime, { days: completionDays })
-                log('Declaring')
-                const compositionId = await createDeathDeclaration(
-                  randomUser,
-                  deathTime,
-                  Math.random() > 0.4 ? 'male' : 'female',
-                  submissionTime,
-                  location
-                )
-
-                if (!REGISTER) {
-                  log('Death', submissionDate, ix, '/', deathsToday)
-                  return
-                }
-
-                const randomRegistrar =
-                  users.registrars[
-                    Math.floor(Math.random() * users.registrars.length)
-                  ]
-                log('Registering', { compositionId })
-
-                const declaration = await fetchDeathRegistration(
-                  randomRegistrar,
-                  compositionId
-                )
-
-                const registration = await markDeathAsRegistered(
-                  randomRegistrar,
-                  compositionId,
-                  createRegistrationDetails(
-                    add(new Date(submissionTime), {
-                      days: 1
-                    }),
-                    declaration
-                  )
-                )
-                log('Certifying', registration.id)
-                await wait(2000)
-                if (CERTIFY) {
-                  await markDeathAsCertified(
-                    registration.id,
-                    randomRegistrar,
-                    createDeathCertificationDetails(
-                      add(new Date(submissionTime), {
-                        days: 2
-                      }),
-                      registration
-                    )
-                  )
-                }
-
-                log('Death', submissionDate, ix, '/', deathsToday)
-              } catch (error) {
-                onError(error)
-              }
-            }).bind(null, ix)
+            deathDeclarationWorkflow(
+              deathDeclarers,
+              submissionDate,
+              location,
+              deathsToday,
+              users
+            ).bind(null, ix)
           )
         }
 
@@ -489,162 +355,64 @@ async function main() {
 
         for (let ix = 0; ix < Math.round(totalChildBirths); ix++) {
           operations.push(
-            (async (ix: number) => {
-              try {
-                const randomUser =
-                  birthDeclararers[
-                    Math.floor(Math.random() * birthDeclararers.length)
-                  ]
-
-                const randomRegistrar =
-                  users.registrars[
-                    Math.floor(Math.random() * users.registrars.length)
-                  ]
-
-                const isHospitalUser = users.hospitals.includes(randomUser)
-
-                const sex =
-                  Math.random() < probabilityForMale ? 'male' : 'female'
-                // This is here so that no creation timestamps would be equal
-                // InfluxDB will otherwise interpret the events as the same exact measurement
-                const submissionTime = add(startOfDay(submissionDate), {
-                  seconds: 24 * 60 * 60 * Math.random()
-                })
-                const completionDays = getRandomFromBrackets(
-                  BIRTH_COMPLETION_DISTRIBUTION
-                )
-                const birthDate = sub(submissionTime, { days: completionDays })
-
-                const crvsOffice = crvsOffices.find(
-                  ({ id }) => id === randomUser.primaryOfficeId
-                )
-
-                if (!crvsOffice) {
-                  throw new Error(
-                    `CRVS office was not found with the id ${randomUser.primaryOfficeId}`
-                  )
-                }
-
-                const districtFacilities = healthFacilities.filter(
-                  ({ partOf }) => partOf?.split('/')[1] === location.id
-                )
-
-                if (districtFacilities.length === 0) {
-                  throw new Error('Could not find any facilities for location')
-                }
-
-                const randomFacility =
-                  districtFacilities[
-                    Math.floor(Math.random() * districtFacilities.length)
-                  ]
-
-                const declaredToday =
-                  differenceInDays(today, submissionTime) === 0
-
-                let id: string
-                let registrationDetails: BirthRegistrationInput
-                if (isHospitalUser) {
-                  log('Sending a DHIS2 Hospital notification')
-                  id = await sendBirthNotification(
-                    randomUser,
-                    sex,
-                    birthDate,
-                    submissionTime,
-                    randomFacility
-                  )
-                  const declaration = await fetchRegistration(
-                    randomRegistrar,
-                    id
-                  )
-                  try {
-                    registrationDetails = await createBirthRegistrationDetailsForNotification(
-                      add(new Date(submissionTime), {
-                        days: 1
-                      }),
-                      location,
-                      declaration
-                    )
-                  } catch (error) {
-                    console.log(error)
-                    console.log(JSON.stringify(declaration))
-                    throw error
-                  }
-                } else {
-                  id = await createBirthDeclaration(
-                    randomUser,
-                    sex,
-                    birthDate,
-                    submissionTime,
-                    location
-                  )
-                  const declaration = await fetchRegistration(
-                    randomRegistrar,
-                    id
-                  )
-                  try {
-                    registrationDetails = await createRegistrationDetails(
-                      add(new Date(submissionTime), {
-                        days: 1
-                      }),
-                      declaration
-                    )
-                  } catch (error) {
-                    console.log(error)
-                    console.log(JSON.stringify(declaration))
-                    throw error
-                  }
-                  log('Registering', id)
-                }
-
-                if (!REGISTER) {
-                  log(
-                    'Birth',
-                    submissionDate,
-                    ix,
-                    '/',
-                    Math.round(totalChildBirths)
-                  )
-                  return
-                }
-
-                if (!declaredToday || Math.random() > 0.5) {
-                  const registration = await markAsRegistered(
-                    randomRegistrar,
-                    id,
-                    registrationDetails
-                  )
-                  if (CERTIFY && !declaredToday && registration) {
-                    log('Certifying', id)
-                    await markAsCertified(
-                      registration.id,
-                      randomRegistrar,
-                      createBirthCertificationDetails(
-                        add(new Date(submissionTime), {
-                          days: 1
-                        }),
-                        registration
-                      )
-                    )
-                  } else {
-                    log(
-                      'Will not register or certify because the declaration was added today'
-                    )
-                  }
-                }
-                log(
-                  'Birth',
-                  submissionDate,
-                  ix,
-                  '/',
-                  Math.round(totalChildBirths)
-                )
-              } catch (error) {
-                onError(error)
-              }
-            }).bind(null, ix)
+            birthDeclarationWorkflow(
+              birthDeclararers,
+              users,
+              probabilityForMale,
+              submissionDate,
+              crvsOffices,
+              healthFacilities,
+              location,
+              totalChildBirths
+            ).bind(null, ix)
           )
         }
         await queue.addAll(operations)
+      }
+
+      /*
+       * Ensure target rate numbers match the configured rate numbers
+       * This is done both to increase on target - registration numbers as random might not always work
+       * and to be a fix for old way of calculating registration total numbers
+       */
+      const totalWithinTarget = birthMetrics.results
+        .filter(total => total.timeLabel === 'withinTarget')
+        .reduce((acc, { total }) => acc + total, 0)
+
+      const withinTargetShouldBe =
+        (birthRates.female + birthRates.male) *
+        BIRTH_COMPLETION_DISTRIBUTION[0].weight
+
+      const missingWithinTargetDeclarations = Math.round(
+        withinTargetShouldBe - totalWithinTarget
+      )
+
+      log('Missing within target:', missingWithinTargetDeclarations)
+
+      for (let ix = 0; ix < missingWithinTargetDeclarations; ix++) {
+        const submissionDate = min([
+          addDays(
+            startOfYear(setYear(new Date(), y)),
+            Math.floor(Math.random() * days.length)
+          ),
+          new Date()
+        ])
+        console.log(
+          'Creating a fill registration',
+          submissionDate.toISOString()
+        )
+
+        await birthDeclarationWorkflow(
+          birthDeclararers,
+          users,
+          birthRates.male / (birthRates.male + birthRates.female),
+          submissionDate,
+          crvsOffices,
+          healthFacilities,
+          location,
+          missingWithinTargetDeclarations,
+          5 // Override completion days
+        )(ix)
       }
     }
 
@@ -652,6 +420,232 @@ async function main() {
       user.stillInUse = false
     })
   }
+
+  process.exit(0)
 }
 
 main()
+function birthDeclarationWorkflow(
+  birthDeclararers: User[],
+  users: {
+    fieldAgents: User[]
+    hospitals: User[]
+    registrationAgents: User[]
+    registrars: User[]
+  },
+  probabilityForMale: number,
+  submissionDate: Date,
+  crvsOffices: Facility[],
+  healthFacilities: Facility[],
+  location: Location,
+  totalChildBirths: number,
+  overrideCompletionDays?: number
+) {
+  return async (ix: number) => {
+    try {
+      const randomUser =
+        birthDeclararers[Math.floor(Math.random() * birthDeclararers.length)]
+
+      const randomRegistrar =
+        users.registrars[Math.floor(Math.random() * users.registrars.length)]
+
+      const isHospitalUser = users.hospitals.includes(randomUser)
+
+      const sex = Math.random() < probabilityForMale ? 'male' : 'female'
+      // This is here so that no creation timestamps would be equal
+      // InfluxDB will otherwise interpret the events as the same exact measurement
+      const submissionTime = add(startOfDay(submissionDate), {
+        seconds: 24 * 60 * 60 * Math.random()
+      })
+      const completionDays = overrideCompletionDays
+        ? overrideCompletionDays
+        : getRandomFromBrackets(BIRTH_COMPLETION_DISTRIBUTION)
+      const birthDate = sub(submissionTime, { days: completionDays })
+
+      const crvsOffice = crvsOffices.find(
+        ({ id }) => id === randomUser.primaryOfficeId
+      )
+
+      if (!crvsOffice) {
+        throw new Error(
+          `CRVS office was not found with the id ${randomUser.primaryOfficeId}`
+        )
+      }
+
+      const districtFacilities = healthFacilities.filter(
+        ({ partOf }) => partOf?.split('/')[1] === location.id
+      )
+
+      if (districtFacilities.length === 0) {
+        throw new Error('Could not find any facilities for location')
+      }
+
+      const randomFacility =
+        districtFacilities[
+          Math.floor(Math.random() * districtFacilities.length)
+        ]
+
+      const declaredToday = differenceInDays(today, submissionTime) === 0
+
+      let id: string
+      let registrationDetails: BirthRegistrationInput
+      if (isHospitalUser) {
+        log('Sending a DHIS2 Hospital notification')
+        id = await sendBirthNotification(
+          randomUser,
+          sex,
+          birthDate,
+          submissionTime,
+          randomFacility
+        )
+        const declaration = await fetchRegistration(randomRegistrar, id)
+        try {
+          registrationDetails = await createBirthRegistrationDetailsForNotification(
+            add(new Date(submissionTime), {
+              days: 1
+            }),
+            location,
+            declaration
+          )
+        } catch (error) {
+          console.log(error)
+          console.log(JSON.stringify(declaration))
+          throw error
+        }
+      } else {
+        id = await createBirthDeclaration(
+          randomUser,
+          sex,
+          birthDate,
+          submissionTime,
+          location
+        )
+        const declaration = await fetchRegistration(randomRegistrar, id)
+        try {
+          registrationDetails = await createRegistrationDetails(
+            add(new Date(submissionTime), {
+              days: 1
+            }),
+            declaration
+          )
+        } catch (error) {
+          console.log(error)
+          console.log(JSON.stringify(declaration))
+          throw error
+        }
+        log('Registering', id)
+      }
+
+      if (!REGISTER) {
+        log('Birth', submissionDate, ix, '/', Math.round(totalChildBirths))
+        return
+      }
+
+      if (!declaredToday || Math.random() > 0.5) {
+        const registration = await markAsRegistered(
+          randomRegistrar,
+          id,
+          registrationDetails
+        )
+        if (CERTIFY && !declaredToday && registration) {
+          log('Certifying', id)
+          await markAsCertified(
+            registration.id,
+            randomRegistrar,
+            createBirthCertificationDetails(
+              add(new Date(submissionTime), {
+                days: 1
+              }),
+              registration
+            )
+          )
+        } else {
+          log(
+            'Will not register or certify because the declaration was added today'
+          )
+        }
+      }
+      log('Birth', submissionDate, ix, '/', Math.round(totalChildBirths))
+    } catch (error) {
+      onError(error)
+    }
+  }
+}
+
+function deathDeclarationWorkflow(
+  deathDeclarers: User[],
+  submissionDate: Date,
+  location: Location,
+  deathsToday: number,
+  users: {
+    fieldAgents: User[]
+    hospitals: User[]
+    registrationAgents: User[]
+    registrars: User[]
+  }
+) {
+  return async (ix: number) => {
+    try {
+      const randomUser =
+        deathDeclarers[Math.floor(Math.random() * deathDeclarers.length)]
+      const completionDays = getRandomFromBrackets(
+        DEATH_COMPLETION_DISTRIBUTION
+      )
+      const submissionTime = add(startOfDay(submissionDate), {
+        seconds: 24 * 60 * 60 * Math.random()
+      })
+      const deathTime = sub(submissionTime, { days: completionDays })
+      log('Declaring')
+      const compositionId = await createDeathDeclaration(
+        randomUser,
+        deathTime,
+        Math.random() > 0.4 ? 'male' : 'female',
+        submissionTime,
+        location
+      )
+
+      if (!REGISTER) {
+        log('Death', submissionDate, ix, '/', deathsToday)
+        return
+      }
+
+      const randomRegistrar =
+        users.registrars[Math.floor(Math.random() * users.registrars.length)]
+      log('Registering', { compositionId })
+
+      const declaration = await fetchDeathRegistration(
+        randomRegistrar,
+        compositionId
+      )
+
+      const registration = await markDeathAsRegistered(
+        randomRegistrar,
+        compositionId,
+        createRegistrationDetails(
+          add(new Date(submissionTime), {
+            days: 1
+          }),
+          declaration
+        )
+      )
+      log('Certifying', registration.id)
+      await wait(2000)
+      if (CERTIFY) {
+        await markDeathAsCertified(
+          registration.id,
+          randomRegistrar,
+          createDeathCertificationDetails(
+            add(new Date(submissionTime), {
+              days: 2
+            }),
+            registration
+          )
+        )
+      }
+
+      log('Death', submissionDate, ix, '/', deathsToday)
+    } catch (error) {
+      onError(error)
+    }
+  }
+}

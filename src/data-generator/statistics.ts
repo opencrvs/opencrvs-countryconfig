@@ -1,5 +1,9 @@
 import fetch from 'node-fetch'
-import { COUNTRY_CONFIG_HOST } from './constants'
+import gql from 'graphql-tag'
+import { print } from 'graphql/language/printer'
+
+import { COUNTRY_CONFIG_HOST, GATEWAY_HOST } from './constants'
+import { GetTotalMetricsQuery } from './gateway'
 
 type StatisticUrls =
   | 'http://opencrvs.org/specs/id/statistics-male-populations'
@@ -22,4 +26,81 @@ export async function getStatistics(token: string): Promise<Statistics> {
     }
   })
   return await res.json()
+}
+
+export const TOTAL_METRICS = print(gql`
+  query getTotalMetrics(
+    $event: String!
+    $timeStart: String!
+    $timeEnd: String!
+    $locationId: String
+  ) {
+    getTotalMetrics(
+      timeStart: $timeStart
+      timeEnd: $timeEnd
+      locationId: $locationId
+      event: $event
+    ) {
+      estimated {
+        totalEstimation
+        maleEstimation
+        femaleEstimation
+        locationId
+        estimationYear
+        locationLevel
+        __typename
+      }
+      results {
+        total
+        gender
+        eventLocationType
+        practitionerRole
+        timeLabel
+        __typename
+      }
+      __typename
+    }
+  }
+`)
+
+export async function getLocationMetrics(
+  token: string,
+  timeStart: Date,
+  timeEnd: Date,
+  locationId: string,
+  type: 'BIRTH' | 'DEATH'
+) {
+  const res = await fetch(GATEWAY_HOST, {
+    headers: {
+      authorization: `Bearer ${token}`,
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      operationName: 'getTotalMetrics',
+      variables: {
+        timeStart: timeStart.toISOString(),
+        timeEnd: timeEnd.toISOString(),
+        event: type,
+        locationId
+      },
+      query: TOTAL_METRICS
+    }),
+    method: 'POST'
+  })
+
+  const body = (await res.json()) as {
+    data: GetTotalMetricsQuery
+    errors: any[]
+  }
+
+  if (
+    (body.errors && body.errors.length > 0) ||
+    body.data?.getTotalMetrics == null
+  ) {
+    console.log(body)
+
+    throw new Error(body.errors[0].message)
+  }
+
+  return body.data.getTotalMetrics
 }
