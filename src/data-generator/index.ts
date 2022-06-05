@@ -417,48 +417,6 @@ async function main() {
           5 // Override completion days
         )(ix)
       }
-      /*
-       * Same for death
-       */
-      const totalDeathsWithinTarget = deathMetrics.results
-        .filter(total => total.timeLabel === 'withinTarget')
-        .reduce((acc, { total }) => acc + total, 0)
-
-      const withinTargetDeathsShouldBe =
-        (birthRates.female + birthRates.male) *
-        BIRTH_COMPLETION_DISTRIBUTION[0].weight
-
-      const missingDeathsWithinTargetDeclarations = Math.round(
-        withinTargetDeathsShouldBe - totalDeathsWithinTarget
-      )
-
-      log(
-        'Deaths missing within target:',
-        missingDeathsWithinTargetDeclarations
-      )
-
-      for (let ix = 0; ix < missingDeathsWithinTargetDeclarations; ix++) {
-        const submissionDate = min([
-          addDays(
-            startOfYear(setYear(new Date(), y)),
-            Math.floor(Math.random() * days.length)
-          ),
-          new Date()
-        ])
-        console.log(
-          'Creating a filler death registration',
-          submissionDate.toISOString()
-        )
-
-        await deathDeclarationWorkflow(
-          deathDeclarers,
-          submissionDate,
-          location,
-          missingDeathsWithinTargetDeclarations,
-          users,
-          5 // Override completion days
-        )(ix)
-      }
     }
 
     allUsers.forEach(user => {
