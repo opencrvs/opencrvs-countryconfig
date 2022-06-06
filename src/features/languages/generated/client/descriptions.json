@@ -192,7 +192,6 @@
     "constants.notAvailable": "Placeholder for empty value",
     "constants.history": "History heading",
     "constants.requireUpdatesLoading": "The text when all rejected declarations are loading",
-    "constants.noRecords": "No Application in{tab} tab in officeHome",
     "constants.noConnection": "No Connection hover text",
     "constants.totalFileSizeExceed": "Accumulated File size exceed message",
     "constants.updated": "Application has been updated",
@@ -931,6 +930,15 @@
     "user.profile.audit.description.registered": "Description for registered declaration",
     "user.profile.audit.description.rejected": "Description for rejected declaration",
     "user.profile.audit.description.certified": "Description for certified declaration",
-    "user.profile.auditList.showMore": "Label for show more link"
+    "user.profile.auditList.showMore": "Label for show more link",
+    "wq.noRecords.draft": "No records messages for empty draft tab",
+    "wq.noRecords.fieldAgents": "No records messages for empty field agents tab",
+    "wq.noRecords.healthSystem": "No records messages for empty health system tab",
+    "wq.noRecords.externalValidation": "No records messages for empty external validation tab",
+    "wq.noRecords.readyForReview": "No records messages for ready for review tab",
+    "wq.noRecords.readyToPrint": "No records messages for ready to print tab",
+    "wq.noRecords.requiresUpdate": "No records messages for require updates tab",
+    "wq.noRecords.sentForApproval": "No records messages for sent for approval tab",
+    "wq.noRecords.sentForReview": "No records messages for sent for review tab"
   }
 }
