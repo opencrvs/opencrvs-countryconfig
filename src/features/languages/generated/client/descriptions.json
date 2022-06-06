@@ -698,6 +698,7 @@
     "performance.appSrc.labels.hospitalApplications": "Label for hospital applications",
     "performance.appSrc.labels.fieldAgents": "Label for field agents in application sources",
     "performance.appSrc.labels.registrars": "Label for registrars in application sources",
+    "performance.appSrc.labels.nationalRegistrars": "Label for national registrars in application sources",
     "performance.appSrc.labels.registrationAgents": "Label for registration agents in application sources",
     "performance.header.sysadmin.home": "Header for system admin performance home page",
     "team.header.sysadmin.home": "Header for system admin team home page",
