@@ -213,14 +213,14 @@ async function main() {
       const randomRegistrar =
         users.registrars[Math.floor(Math.random() * users.registrars.length)]
 
-      const birthMetrics = await getLocationMetrics(
+      let birthMetrics = await getLocationMetrics(
         randomRegistrar.token,
         startOfYear(new Date(y, 1, 1)),
         endOfYear(new Date(y, 1, 1)),
         location.id,
         'BIRTH'
       )
-      const deathMetrics = await getLocationMetrics(
+      let deathMetrics = await getLocationMetrics(
         randomRegistrar.token,
         startOfYear(new Date(y, 1, 1)),
         endOfYear(new Date(y, 1, 1)),
@@ -375,6 +375,23 @@ async function main() {
        * This is done both to increase on target - registration numbers as random might not always work
        * and to be a fix for old way of calculating registration total numbers
        */
+
+      // Recalculate metrics
+      birthMetrics = await getLocationMetrics(
+        randomRegistrar.token,
+        startOfYear(new Date(y, 1, 1)),
+        endOfYear(new Date(y, 1, 1)),
+        location.id,
+        'BIRTH'
+      )
+      deathMetrics = await getLocationMetrics(
+        randomRegistrar.token,
+        startOfYear(new Date(y, 1, 1)),
+        endOfYear(new Date(y, 1, 1)),
+        location.id,
+        'DEATH'
+      )
+
       const totalBirthsWithinTarget = birthMetrics.results
         .filter(total => total.timeLabel === 'withinTarget')
         .reduce((acc, { total }) => acc + total, 0)
