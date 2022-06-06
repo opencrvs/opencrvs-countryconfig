@@ -20,6 +20,8 @@
   "constants.archived_declaration",
   "duplicates.warning",
   "error.passwordSubmissionError",
+  "location.jurisdictionType.UNION",
+  "location.jurisdictionType.DIVISION",
   "location.jurisdictionType.CITY",
   "location.jurisdictionType.LOCATION_LEVEL_3",
   "location.jurisdictionType.LOCATION_LEVEL_4",

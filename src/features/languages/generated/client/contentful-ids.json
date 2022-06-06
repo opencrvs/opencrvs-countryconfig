@@ -295,6 +295,8 @@
   "correctionSummaryAddComments": "correction.summary.addComments",
   "correctionSummarySupportingDocuments": "correction.summary.supportingDocuments",
   "correctionSummaryFeesRequired": "correction.summary.feesRequired",
+  "correctionSummaryFeesRequiredPositive": "correction.summary.feesRequiredPositive",
+  "correctionSummaryFeesRequiredNegative": "correction.summary.feesRequiredNegative",
   "correctionSummaryProofOfPaymentRequired": "correction.summary.proofOfPaymentRequired",
   "correctionSummaryProofOfPayment": "correction.summary.proofOfPayment",
   "constantsWithinTargetDays": "constants.withinTargetDays",
