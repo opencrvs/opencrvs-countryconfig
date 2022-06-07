@@ -75,10 +75,10 @@ const REGISTER = process.env.REGISTER !== 'false'
 const CERTIFY = process.env.CERTIFY !== 'false'
 
 const BIRTH_COMPLETION_DISTRIBUTION = [
-  { range: [0, 45], weight: 0.8 },
-  { range: [46, 365], weight: 0.15 },
-  { range: [366, 365 * 5], weight: 0.025 },
-  { range: [365 * 5 + 1, 365 * 20], weight: 0.025 }
+  { range: [0, 44], weight: 0.8 },
+  { range: [44, 364], weight: 0.15 },
+  { range: [365, 365 * 5 - 1], weight: 0.025 },
+  { range: [365 * 5, 365 * 20], weight: 0.025 }
 ]
 const BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.8
 
