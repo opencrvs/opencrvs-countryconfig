@@ -119,19 +119,19 @@ async function main() {
   const config = await getConfig(token)
 
   const BIRTH_COMPLETION_DISTRIBUTION = [
-    { range: [0, config.config.BIRTH.REGISTRATION_TARGET], weight: 1 },
+    { range: [0, config.config.BIRTH.REGISTRATION_TARGET], weight: 0.8 },
     {
       range: [
         config.config.BIRTH.REGISTRATION_TARGET,
         config.config.BIRTH.LATE_REGISTRATION_TARGET
       ],
-      weight: 0
+      weight: 0.15
     },
     {
       range: [config.config.BIRTH.LATE_REGISTRATION_TARGET, 365 * 5],
-      weight: 0
+      weight: 0.025
     },
-    { range: [365 * 5 + 1, 365 * 20], weight: 0 }
+    { range: [365 * 5 + 1, 365 * 20], weight: 0.025 }
   ]
 
   const DEATH_COMPLETION_DISTRIBUTION = [
