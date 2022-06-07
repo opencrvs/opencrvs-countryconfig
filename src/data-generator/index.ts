@@ -537,6 +537,8 @@ function birthDeclarationWorkflow(
         )
 
         if (CERTIFY && !declaredToday && registration) {
+          // Wait for few seconds so registration gets updated to elasticsearch before certifying
+          await wait(2000)
           log('Certifying', id)
           await markAsCertified(
             registration.id,
