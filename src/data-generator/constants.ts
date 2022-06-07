@@ -6,3 +6,18 @@ export const AUTH_API_HOST =
 
 export const GATEWAY_HOST =
   process.env.GATEWAY_HOST || 'http://localhost:7070/graphql'
+
+export const CONFIG_HOST = process.env.CONFIG_HOST || 'http://localhost:2021/'
+
+// export const COUNTRY_CONFIG_HOST =
+//   process.env.COUNTRY_CONFIG_HOST ||
+//   'https://countryconfig.farajaland.opencrvs.org'
+
+// export const AUTH_API_HOST =
+//   process.env.AUTH_API_HOST || 'https://auth.farajaland.opencrvs.org'
+
+// export const GATEWAY_HOST =
+//   process.env.GATEWAY_HOST || 'https://gateway.farajaland.opencrvs.org/graphql'
+
+// export const CONFIG_HOST =
+//   process.env.CONFIG_HOST || 'https://config.farajaland.opencrvs.org'

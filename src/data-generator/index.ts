@@ -42,6 +42,7 @@ import { getLocationMetrics } from './statistics'
 import { User, createUsers } from './users'
 import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
+import { ConfigResponse, getConfig } from './config'
 
 /*
  *
@@ -74,19 +75,7 @@ const END_YEAR = 2022
 const REGISTER = process.env.REGISTER !== 'false'
 const CERTIFY = process.env.CERTIFY !== 'false'
 
-const BIRTH_COMPLETION_DISTRIBUTION = [
-  { range: [0, 44], weight: 0.8 },
-  { range: [44, 364], weight: 0.15 },
-  { range: [365, 365 * 5 - 1], weight: 0.025 },
-  { range: [365 * 5, 365 * 20], weight: 0.025 }
-]
 const BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.8
-
-const DEATH_COMPLETION_DISTRIBUTION = [
-  { range: [0, 45], weight: 0.75 },
-  { range: [46, 365], weight: 0.125 },
-  { range: [366, 365 * 5], weight: 0.125 }
-]
 const DEATH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.4
 
 const today = new Date()
@@ -127,6 +116,32 @@ async function main() {
   log('Fetching token for system administrator')
   const token = await getToken(USERNAME, PASSWORD)
   console.log('Got token for system administrator')
+  const config = await getConfig(token)
+
+  const BIRTH_COMPLETION_DISTRIBUTION = [
+    { range: [0, config.config.BIRTH.REGISTRATION_TARGET], weight: 1 },
+    {
+      range: [
+        config.config.BIRTH.REGISTRATION_TARGET,
+        config.config.BIRTH.LATE_REGISTRATION_TARGET
+      ],
+      weight: 0
+    },
+    {
+      range: [config.config.BIRTH.LATE_REGISTRATION_TARGET, 365 * 5],
+      weight: 0
+    },
+    { range: [365 * 5 + 1, 365 * 20], weight: 0 }
+  ]
+
+  const DEATH_COMPLETION_DISTRIBUTION = [
+    { range: [0, config.config.DEATH.REGISTRATION_TARGET], weight: 0.75 },
+    {
+      range: [config.config.DEATH.REGISTRATION_TARGET, 365],
+      weight: 0.125
+    },
+    { range: [366, 365 * 5], weight: 0.125 }
+  ]
 
   log('Got token for system administrator')
   log('Fetching locations')
@@ -290,6 +305,7 @@ async function main() {
        * Loop through days in the year (last day of the year -> start of the year)
        *
        */
+
       for (let d = days.length - 1; d >= 0; d--) {
         const submissionDate = addDays(startOfYear(setYear(new Date(), y)), d)
 
@@ -333,7 +349,8 @@ async function main() {
               deathsToday,
               users,
               healthFacilities,
-              completionDays
+              completionDays,
+              config
             ).bind(null, ix)
           )
         }
@@ -376,7 +393,8 @@ async function main() {
               healthFacilities,
               location,
               totalChildBirths,
-              completionDays
+              completionDays,
+              config
             ).bind(null, ix)
           )
         }
@@ -393,6 +411,7 @@ async function main() {
 }
 
 main()
+
 function birthDeclarationWorkflow(
   birthDeclararers: User[],
   users: {
@@ -407,7 +426,8 @@ function birthDeclarationWorkflow(
   healthFacilities: Facility[],
   location: Location,
   totalChildBirths: number,
-  completionDays: number
+  completionDays: number,
+  config: ConfigResponse
 ) {
   return async (ix: number) => {
     try {
@@ -525,7 +545,8 @@ function birthDeclarationWorkflow(
               add(new Date(submissionTime), {
                 days: 1
               }),
-              registration
+              registration,
+              config
             )
           )
         } else {
@@ -554,7 +575,8 @@ function deathDeclarationWorkflow(
     registrars: User[]
   },
   healthFacilities: Facility[],
-  completionDays: number
+  completionDays: number,
+  config: ConfigResponse
 ) {
   return async (ix: number) => {
     try {
@@ -618,7 +640,8 @@ function deathDeclarationWorkflow(
             add(new Date(submissionTime), {
               days: 2
             }),
-            registration
+            registration,
+            config
           )
         )
       }
