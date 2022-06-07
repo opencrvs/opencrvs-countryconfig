@@ -281,8 +281,8 @@ async function main() {
         deathsPerDay[Math.floor(Math.random() * days.length)]++
       }
       log('Creating', {
-        female: femalesPerDay.reduce((a, x) => a + x),
         male: malesPerDay.reduce((a, x) => a + x),
+        female: femalesPerDay.reduce((a, x) => a + x),
         death: deathsPerDay.reduce((a, x) => a + x)
       })
       /*
@@ -358,7 +358,6 @@ async function main() {
           femalesPerDay[d]
         )
 
-        operations = []
         // Create birth declarations
         const totalChildBirths = malesPerDay[d] + femalesPerDay[d]
         const probabilityForMale = malesPerDay[d] / totalChildBirths
