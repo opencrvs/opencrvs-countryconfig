@@ -9,6 +9,7 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
+import faker from '@faker-js/faker'
 import { v4 as uuid } from 'uuid'
 
 export interface IIncomingAddress {
@@ -279,7 +280,8 @@ export async function createPersonEntry(
   gender: 'male' | 'female' | 'unknown',
   phoneNumber: string | null,
   birthDate: string | null,
-  deathDate: string | null
+  deathDate: string | null,
+  location: fhir.Location
 ) {
   return {
     fullUrl: `urn:uuid:${uuid()}`,
@@ -326,46 +328,71 @@ export async function createPersonEntry(
           }
         ],
         text: 'MARRIED'
-      }
+      },
+      address: [
+        {
+          type: 'PRIMARY_ADDRESS',
+          line: [
+            '12',
+            'Usual Street',
+            'Usual Residental Area',
+            '',
+            '',
+            'URBAN'
+          ],
+          city: faker.address.city(),
+          district: location.id,
+          state: location.partOf?.reference?.split('/')[1],
+          postalCode: faker.address.zipCode(),
+          country: 'FAR'
+        }
+      ],
+      extension: [
+        {
+          url: 'http://hl7.org/fhir/StructureDefinition/patient-nationality',
+          extension: [
+            {
+              url: 'code',
+              valueCodeableConcept: {
+                coding: [
+                  {
+                    system: 'urn:iso:std:iso:3166',
+                    code: 'FAR'
+                  }
+                ]
+              }
+            },
+            {
+              url: 'period',
+              valuePeriod: {
+                start: '',
+                end: ''
+              }
+            }
+          ]
+        },
+        {
+          url: 'http://opencrvs.org/specs/extension/educational-attainment',
+          valueString: 'POST_SECONDARY_ISCED_4'
+        }
+      ]
     }
   }
 }
 
-export function createBirthEncounterEntry(
-  locationRef: string,
-  subjectRef: string
-) {
+export function createBirthEncounterEntry(locationRef: string) {
   return {
-    fullUrl: 'urn:uuid:<uuid>', // use this to refer to the resource before it's created
+    fullUrl: `urn:uuid:${uuid()}`,
     resource: {
       resourceType: 'Encounter',
       status: 'finished',
-      class: {
-        system: 'http://hl7.org/fhir/v3/ActCode',
-        code: 'OBS',
-        display: 'Obstetrics'
-      },
-      type: [
-        {
-          coding: [
-            {
-              system: 'http://opencrvs.org/encounter-type',
-              code: 'birth-encounter',
-              display: 'Birth Encounter'
-            }
-          ]
-        }
-      ],
       location: [
         {
           location: {
             reference: locationRef
           }
         }
-      ],
-      subject: {
-        reference: subjectRef
-      }
+      ]
     }
   }
 }

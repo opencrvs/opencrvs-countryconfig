@@ -31,7 +31,7 @@ import {
   startOfDay,
   isWithinInterval,
   endOfYear,
-  min
+  endOfDay
 } from 'date-fns'
 
 import { getToken, readToken, updateToken } from './auth'
@@ -254,6 +254,11 @@ async function main() {
         days.splice(currentDayNumber - 1)
       }
 
+      log('Creating declarations for', location.name, 'estimates', {
+        births: birthRates,
+        death: totalDeathsThisYear
+      })
+
       birthRates.female =
         birthRates.female * BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE
       birthRates.male =
@@ -275,9 +280,11 @@ async function main() {
       for (let i = 0; i < totalDeathsThisYear; i++) {
         deathsPerDay[Math.floor(Math.random() * days.length)]++
       }
-
-      log('Creating declarations for', location)
-
+      log('Creating', {
+        female: femalesPerDay.reduce((a, x) => a + x),
+        male: malesPerDay.reduce((a, x) => a + x),
+        death: deathsPerDay.reduce((a, x) => a + x)
+      })
       /*
        *
        * Loop through days in the year (last day of the year -> start of the year)
@@ -289,8 +296,8 @@ async function main() {
         if (
           generatedInterval.length === 2 &&
           isWithinInterval(submissionDate, {
-            start: generatedInterval[0],
-            end: generatedInterval[1]
+            start: startOfDay(generatedInterval[0]),
+            end: endOfDay(generatedInterval[1])
           })
         ) {
           log('Data for', submissionDate, 'already exists. Skipping.')
@@ -315,18 +322,21 @@ async function main() {
 
         let operations = []
         for (let ix = 0; ix < deathsToday; ix++) {
+          const completionDays = getRandomFromBrackets(
+            DEATH_COMPLETION_DISTRIBUTION
+          )
           operations.push(
             deathDeclarationWorkflow(
               deathDeclarers,
               submissionDate,
               location,
               deathsToday,
-              users
+              users,
+              healthFacilities,
+              completionDays
             ).bind(null, ix)
           )
         }
-
-        await queue.addAll(operations)
 
         /*
          *
@@ -354,6 +364,9 @@ async function main() {
         const probabilityForMale = malesPerDay[d] / totalChildBirths
 
         for (let ix = 0; ix < Math.round(totalChildBirths); ix++) {
+          const completionDays = getRandomFromBrackets(
+            BIRTH_COMPLETION_DISTRIBUTION
+          )
           operations.push(
             birthDeclarationWorkflow(
               birthDeclararers,
@@ -363,76 +376,12 @@ async function main() {
               crvsOffices,
               healthFacilities,
               location,
-              totalChildBirths
+              totalChildBirths,
+              completionDays
             ).bind(null, ix)
           )
         }
         await queue.addAll(operations)
-      }
-
-      /*
-       * Ensure target rate numbers match the configured rate numbers
-       * This is done both to increase on target - registration numbers as random might not always work
-       * and to be a fix for old way of calculating registration total numbers
-       */
-
-      // Recalculate metrics
-      birthMetrics = await getLocationMetrics(
-        randomRegistrar.token,
-        startOfYear(new Date(y, 1, 1)),
-        endOfYear(new Date(y, 1, 1)),
-        location.id,
-        'BIRTH'
-      )
-      deathMetrics = await getLocationMetrics(
-        randomRegistrar.token,
-        startOfYear(new Date(y, 1, 1)),
-        endOfYear(new Date(y, 1, 1)),
-        location.id,
-        'DEATH'
-      )
-
-      const totalBirthsWithinTarget = birthMetrics.results
-        .filter(total => total.timeLabel === 'withinTarget')
-        .reduce((acc, { total }) => acc + total, 0)
-
-      const withinTargetBirthsShouldBe =
-        (birthRates.female + birthRates.male) *
-        BIRTH_COMPLETION_DISTRIBUTION[0].weight
-
-      const missingBirthsWithinTargetDeclarations = Math.round(
-        withinTargetBirthsShouldBe - totalBirthsWithinTarget
-      )
-
-      log(
-        'Births missing within target:',
-        missingBirthsWithinTargetDeclarations
-      )
-
-      for (let ix = 0; ix < missingBirthsWithinTargetDeclarations; ix++) {
-        const submissionDate = min([
-          addDays(
-            startOfYear(setYear(new Date(), y)),
-            Math.floor(Math.random() * days.length)
-          ),
-          new Date()
-        ])
-        console.log(
-          'Creating a filler birth registration',
-          submissionDate.toISOString()
-        )
-
-        await birthDeclarationWorkflow(
-          birthDeclararers,
-          users,
-          birthRates.male / (birthRates.male + birthRates.female),
-          submissionDate,
-          crvsOffices,
-          healthFacilities,
-          location,
-          missingBirthsWithinTargetDeclarations,
-          5 // Override completion days
-        )(ix)
       }
     }
 
@@ -459,7 +408,7 @@ function birthDeclarationWorkflow(
   healthFacilities: Facility[],
   location: Location,
   totalChildBirths: number,
-  overrideCompletionDays?: number
+  completionDays: number
 ) {
   return async (ix: number) => {
     try {
@@ -477,9 +426,7 @@ function birthDeclarationWorkflow(
       const submissionTime = add(startOfDay(submissionDate), {
         seconds: 24 * 60 * 60 * Math.random()
       })
-      const completionDays = overrideCompletionDays
-        ? overrideCompletionDays
-        : getRandomFromBrackets(BIRTH_COMPLETION_DISTRIBUTION)
+
       const birthDate = sub(submissionTime, { days: completionDays })
 
       const crvsOffice = crvsOffices.find(
@@ -511,6 +458,7 @@ function birthDeclarationWorkflow(
       let registrationDetails: BirthRegistrationInput
       if (isHospitalUser) {
         log('Sending a DHIS2 Hospital notification')
+
         id = await sendBirthNotification(
           randomUser,
           sex,
@@ -538,7 +486,8 @@ function birthDeclarationWorkflow(
           sex,
           birthDate,
           submissionTime,
-          location
+          location,
+          randomFacility
         )
         const declaration = await fetchRegistration(randomRegistrar, id)
         try {
@@ -567,6 +516,7 @@ function birthDeclarationWorkflow(
           id,
           registrationDetails
         )
+
         if (CERTIFY && !declaredToday && registration) {
           log('Certifying', id)
           await markAsCertified(
@@ -585,6 +535,7 @@ function birthDeclarationWorkflow(
           )
         }
       }
+
       log('Birth', submissionDate, ix, '/', Math.round(totalChildBirths))
     } catch (error) {
       onError(error)
@@ -603,18 +554,26 @@ function deathDeclarationWorkflow(
     registrationAgents: User[]
     registrars: User[]
   },
-  overrideCompletionDays?: number
+  healthFacilities: Facility[],
+  completionDays: number
 ) {
   return async (ix: number) => {
     try {
       const randomUser =
         deathDeclarers[Math.floor(Math.random() * deathDeclarers.length)]
-      const completionDays = overrideCompletionDays
-        ? overrideCompletionDays
-        : getRandomFromBrackets(DEATH_COMPLETION_DISTRIBUTION)
+
       const submissionTime = add(startOfDay(submissionDate), {
         seconds: 24 * 60 * 60 * Math.random()
       })
+
+      const districtFacilities = healthFacilities.filter(
+        ({ partOf }) => partOf?.split('/')[1] === location.id
+      )
+
+      const randomFacility =
+        districtFacilities[
+          Math.floor(Math.random() * districtFacilities.length)
+        ]
       const deathTime = sub(submissionTime, { days: completionDays })
       log('Declaring')
       const compositionId = await createDeathDeclaration(
@@ -622,7 +581,8 @@ function deathDeclarationWorkflow(
         deathTime,
         Math.random() > 0.4 ? 'male' : 'female',
         submissionTime,
-        location
+        location,
+        randomFacility
       )
 
       if (!REGISTER) {

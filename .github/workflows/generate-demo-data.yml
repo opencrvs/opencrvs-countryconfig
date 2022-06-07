@@ -29,7 +29,7 @@ on:
           - staging
 
 jobs:
-  manual-deploy-staging-e2e:
+  generate-demo-data:
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
     strategy:

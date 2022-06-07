@@ -17,20 +17,17 @@ import { omit } from 'lodash'
 import { GATEWAY_HOST } from './constants'
 import { markAsRegistered, markDeathAsRegistered } from './register'
 import { MARK_BIRTH_AS_CERTIFIED, MARK_DEATH_AS_CERTIFIED } from './queries'
+import { differenceInDays } from 'date-fns'
 
 export function createBirthCertificationDetails(
   createdAt: Date,
   declaration: Awaited<ReturnType<typeof markAsRegistered>>
 ) {
   const withIdsRemoved = idsToFHIRIds(
-    omit(declaration, [
-      '__typename',
-      'id',
-      'eventLocation.id',
-      'registration.type'
-    ]),
+    omit(declaration, ['__typename', 'id', 'registration.type']),
     [
       'id',
+      'eventLocation.id',
       'mother.id',
       'father.id',
       'child.id',
@@ -40,8 +37,20 @@ export function createBirthCertificationDetails(
     ]
   )
   delete withIdsRemoved.history
+
+  const completionDays = differenceInDays(
+    createdAt,
+    new Date(declaration.child?.birthDate!)
+  )
+
+  const paymentAmount =
+    completionDays < 45 ? 0 : completionDays < 356 ? 5.5 : 15
+  log('Collecting certification payment of', paymentAmount)
   const data = {
     ...withIdsRemoved,
+    eventLocation: {
+      _fhirID: withIdsRemoved.eventLocation?._fhirID
+    },
     registration: {
       ...withIdsRemoved.registration,
       attachments: withIdsRemoved.registration?.attachments?.filter(
@@ -58,8 +67,8 @@ export function createBirthCertificationDetails(
           payments: [
             {
               type: PaymentType.Manual,
-              total: 10,
-              amount: 10,
+              total: paymentAmount,
+              amount: paymentAmount,
               outcome: PaymentOutcomeType.Completed,
               date: createdAt
             }
@@ -120,8 +129,8 @@ export function createDeathCertificationDetails(
           payments: [
             {
               type: PaymentType.Manual,
-              total: 10,
-              amount: 10,
+              total: 0,
+              amount: 0,
               outcome: PaymentOutcomeType.Completed,
               date: createdAt
             }
