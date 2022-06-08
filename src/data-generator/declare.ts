@@ -45,7 +45,7 @@ function randomWeightInGrams() {
 }
 
 export async function sendBirthNotification(
-  { username, token }: User,
+  { username, token, primaryOfficeId }: User,
   sex: 'male' | 'female',
   birthDate: Date,
   createdAt: Date,
@@ -56,6 +56,7 @@ export async function sendBirthNotification(
   const requestStart = Date.now()
 
   const notification: IBirthNotification = {
+    practitioner_primary_office: primaryOfficeId,
     created_at: createdAt.toISOString(),
     dhis2_event: '1111',
     child: {

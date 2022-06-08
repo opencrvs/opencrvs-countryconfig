@@ -481,6 +481,7 @@ export function createDeathEncounterEntry(
 export async function createTaskEntry(
   compositionRef: string,
   lastRegLocation: fhir.Location,
+  lastRegOffice: fhir.Location,
   eventType: 'BIRTH' | 'DEATH',
   contactPerson: string,
   contactNumber: string,
@@ -529,7 +530,7 @@ export async function createTaskEntry(
     taskResource.extension?.push({
       url: 'http://opencrvs.org/specs/extension/regLastOffice',
       valueReference: {
-        reference: `Location/${lastRegLocation.id}`
+        reference: `Location/${lastRegOffice.id}`
       }
     })
   }

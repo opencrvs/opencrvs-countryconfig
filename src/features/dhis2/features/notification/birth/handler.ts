@@ -55,6 +55,7 @@ export interface IBirthNotification {
   date_birth: string
   place_of_birth: string
   created_at: string
+  practitioner_primary_office: string
 }
 
 export async function birthNotificationHandler(
@@ -172,7 +173,25 @@ async function sendBirthNotification(
     encounter.fullUrl,
     new Date(notification.created_at)
   )
-  const lastRegLocation = placeOfBirthFacilityLocation
+  const lastRegOffice = await fetchLocationById(
+    notification.practitioner_primary_office,
+    token
+  )
+
+  if (!lastRegOffice || !lastRegOffice.partOf?.reference) {
+    throw new Error(
+      `Could not find primary office for ${notification.practitioner_primary_office}`
+    )
+  }
+
+  const lastRegLocation = await fetchLocationById(
+    lastRegOffice?.partOf?.reference.replace('Location/', ''),
+    token
+  )
+
+  if (!lastRegLocation) {
+    throw new Error(`Could not find location for practitioner primary office`)
+  }
 
   // Contact type is always passing MOTHER
   // as based on the type both mother last name and phone number is required
@@ -180,6 +199,7 @@ async function sendBirthNotification(
   const task = await createTaskEntry(
     composition.fullUrl,
     lastRegLocation,
+    lastRegOffice,
     'BIRTH',
     'MOTHER',
     contactNumber,
