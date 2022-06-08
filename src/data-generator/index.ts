@@ -536,7 +536,11 @@ function birthDeclarationWorkflow(
           registrationDetails
         )
 
-        if (CERTIFY && !declaredRecently && registration) {
+        if (
+          CERTIFY &&
+          (!declaredRecently || Math.random() > 0.5) &&
+          registration
+        ) {
           // Wait for few seconds so registration gets updated to elasticsearch before certifying
           await wait(2000)
           log('Certifying', id)
@@ -588,6 +592,7 @@ function deathDeclarationWorkflow(
       const submissionTime = add(startOfDay(submissionDate), {
         seconds: 24 * 60 * 60 * Math.random()
       })
+      const declaredRecently = differenceInDays(today, submissionTime) < 4
 
       const districtFacilities = healthFacilities.filter(
         ({ partOf }) => partOf?.split('/')[1] === location.id
@@ -621,31 +626,32 @@ function deathDeclarationWorkflow(
         randomRegistrar,
         compositionId
       )
-
-      const registration = await markDeathAsRegistered(
-        randomRegistrar,
-        compositionId,
-        createRegistrationDetails(
-          add(new Date(submissionTime), {
-            days: 1
-          }),
-          declaration
-        )
-      )
-      log('Certifying', registration.id)
-      await wait(2000)
-      if (CERTIFY) {
-        await markDeathAsCertified(
-          registration.id,
+      if (!declaredRecently || Math.random() > 0.5) {
+        const registration = await markDeathAsRegistered(
           randomRegistrar,
-          createDeathCertificationDetails(
+          compositionId,
+          createRegistrationDetails(
             add(new Date(submissionTime), {
-              days: 2
+              days: 1
             }),
-            registration,
-            config
+            declaration
           )
         )
+        log('Certifying', registration.id)
+        await wait(2000)
+        if (CERTIFY && (!declaredRecently || Math.random() > 0.5)) {
+          await markDeathAsCertified(
+            registration.id,
+            randomRegistrar,
+            createDeathCertificationDetails(
+              add(new Date(submissionTime), {
+                days: 2
+              }),
+              registration,
+              config
+            )
+          )
+        }
       }
 
       log('Death', submissionDate, ix, '/', deathsToday)
