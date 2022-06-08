@@ -54,6 +54,7 @@
     "login.stepTwoResendTitle": "The title that appears in step two of the form after resend button click",
     "login.resendMobile": "Text for button that resends SMS verification code",
     "login.stepTwoInstruction": "The instruction that appears in step two of the form",
+    "login.verify": "The label that appears on the verify code button",
     "login.codeSubmissionError": "The error that appears when the user entered sms code is unauthorised",
     "login.resentSMS": "The message that appears when the resend button is clicked.",
     "login.verficationCodeLabel": "Verification code label"
