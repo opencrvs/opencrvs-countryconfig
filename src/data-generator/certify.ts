@@ -100,14 +100,10 @@ export function createDeathCertificationDetails(
   config: ConfigResponse
 ): DeathRegistrationInput {
   const withIdsRemoved = idsToFHIRIds(
-    omit(declaration, [
-      '__typename',
-      'id',
-      'eventLocation.id',
-      'registration.type'
-    ]),
+    omit(declaration, ['__typename', 'id', 'registration.type']),
     [
       'id',
+      'eventLocation.id',
       'mother.id',
       'father.id',
       'informant.individual.id',
@@ -143,6 +139,9 @@ export function createDeathCertificationDetails(
       identifier: withIdsRemoved.deceased?.identifier?.filter(
         id => id?.type != 'DEATH_REGISTRATION_NUMBER'
       )
+    },
+    eventLocation: {
+      _fhirID: withIdsRemoved.eventLocation?._fhirID
     },
     registration: {
       ...withIdsRemoved.registration,
