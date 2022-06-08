@@ -316,11 +316,11 @@ export async function createDeathDeclaration(
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const details: DeathRegistrationInput = {
     causeOfDeathEstablished: 'true',
-    causeOfDeathMethod: CauseOfDeathMethodType.LayReported,
+    causeOfDeathMethod: CauseOfDeathMethodType.Physician,
     deathDescription: 'Pneumonia',
     createdAt: declarationTime.toISOString(),
     registration: {
-      contact: 'INFORMANT',
+      contact: 'SPOUSE',
       contactPhoneNumber:
         '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
       contactRelationship: 'Mother',
@@ -375,18 +375,13 @@ export async function createDeathDeclaration(
       Math.random() < HOME_DEATH_WEIGHT
         ? {
             address: {
+              type: AddressType.PrimaryAddress,
+              line: ['', '', '', '', '', ''],
               country: 'FAR',
               state: location.partOf.replace('Location/', ''),
-              district: location.id,
-              city: faker.address.city(),
-              postalCode: faker.address.zipCode(),
-              line: [
-                faker.address.streetAddress(),
-                faker.address.zipCode(),
-                'URBAN'
-              ]
+              district: location.id
             },
-            type: LocationType.PrivateHome
+            type: LocationType.DeceasedUsualResidence
           }
         : {
             _fhirID: facility.id

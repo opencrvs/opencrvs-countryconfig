@@ -4,16 +4,13 @@ import { User } from './users'
 import { idsToFHIRIds, log, removeEmptyFields } from './util'
 
 import { Location } from './location'
-import { createAddressInput } from './address'
+
 import {
-  AddressType,
   AttachmentInput,
   AttendantType,
   BirthRegistrationInput,
   BirthType,
   DeathRegistrationInput,
-  EducationType,
-  LocationType,
   MaritalStatusType,
   RegisterBirthDeclarationMutation,
   RegisterDeathDeclarationMutation

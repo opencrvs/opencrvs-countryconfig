@@ -6,6 +6,7 @@ import {
   AttachmentInput,
   BirthRegistrationInput,
   DeathRegistrationInput,
+  LocationType,
   MarkBirthAsCertifiedMutation,
   MarkDeathAsCertifiedMutation,
   PaymentOutcomeType,
@@ -140,9 +141,15 @@ export function createDeathCertificationDetails(
         id => id?.type != 'DEATH_REGISTRATION_NUMBER'
       )
     },
-    eventLocation: {
-      _fhirID: withIdsRemoved.eventLocation?._fhirID
-    },
+    eventLocation:
+      withIdsRemoved.eventLocation?.type === LocationType.PrivateHome
+        ? {
+            address: withIdsRemoved.eventLocation.address,
+            type: withIdsRemoved.eventLocation.type
+          }
+        : {
+            _fhirID: withIdsRemoved.eventLocation?._fhirID
+          },
     registration: {
       ...withIdsRemoved.registration,
       attachments: withIdsRemoved.registration?.attachments?.filter(

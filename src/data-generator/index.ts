@@ -471,7 +471,7 @@ function birthDeclarationWorkflow(
           Math.floor(Math.random() * districtFacilities.length)
         ]
 
-      const declaredToday = differenceInDays(today, submissionTime) === 0
+      const declaredRecently = differenceInDays(today, submissionTime) < 4
 
       let id: string
       let registrationDetails: BirthRegistrationInput
@@ -529,14 +529,14 @@ function birthDeclarationWorkflow(
         return
       }
 
-      if (!declaredToday || Math.random() > 0.5) {
+      if (!declaredRecently || Math.random() > 0.5) {
         const registration = await markAsRegistered(
           randomRegistrar,
           id,
           registrationDetails
         )
 
-        if (CERTIFY && !declaredToday && registration) {
+        if (CERTIFY && !declaredRecently && registration) {
           // Wait for few seconds so registration gets updated to elasticsearch before certifying
           await wait(2000)
           log('Certifying', id)
