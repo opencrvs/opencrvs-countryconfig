@@ -122,7 +122,7 @@
         "config.application.generalTabTitle": "General",
         "config.application.govermentLogoLabel": "Goverment logo",
         "config.application.govtLogoChangeError": "Unable to change logo. Please try again.",
-        "config.application.govtLogoChangeMessage": "Upload a logo to be used on the login and decalation review screens",
+        "config.application.govtLogoChangeMessage": "Upload a logo to be used on the login and declaration review screens",
         "config.application.govtLogoChangeNotification": "Government logo updated",
         "config.application.govtLogoFileLimitError": "Logo image file must be less than 2mb",
         "config.application.invalidExample": "Invalid",
