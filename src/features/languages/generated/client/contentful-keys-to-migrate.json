@@ -37,6 +37,7 @@
   "validations.isMoVisitBeforeBirth",
   "validations.isMoVisitAfterDeath",
   "validations.isInformantOfLegalAge",
+  "validations.requiredBasic",
   "validations.nonDecimalPointNumber",
   "record.certificate.collector",
   "config.application.nameChangeMessage",
