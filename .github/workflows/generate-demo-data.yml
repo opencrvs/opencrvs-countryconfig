@@ -29,7 +29,7 @@ on:
           - staging
 
 jobs:
-  manual-deploy-staging-e2e:
+  generate-demo-data:
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
     strategy:
@@ -49,4 +49,5 @@ jobs:
           COUNTRY_CONFIG_HOST: ${{ secrets.COUNTRY_CONFIG_HOST }}
           AUTH_API_HOST: ${{ secrets.AUTH_API_HOST }}
           GATEWAY_HOST: ${{ secrets.GATEWAY_HOST }}
+          CONFIG_HOST: ${{ secrets.CONFIG_HOST }}
           CONCURRENCY: ${{ secrets.CONCURRENCY }}
