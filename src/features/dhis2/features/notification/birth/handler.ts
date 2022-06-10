@@ -25,7 +25,11 @@ import {
 
 import * as Hapi from '@hapi/hapi'
 
-import { postBundle, fetchFacilityById } from '../../fhir/api'
+import {
+  postBundle,
+  fetchFacilityById,
+  fetchLocationById
+} from '../../fhir/api'
 
 export interface IBirthNotification {
   dhis2_event: string
@@ -39,6 +43,7 @@ export interface IBirthNotification {
     first_names?: string
     last_name: string
     nid?: string
+    dob: string
   }
   mother: {
     first_names?: string
@@ -50,6 +55,7 @@ export interface IBirthNotification {
   date_birth: string
   place_of_birth: string
   created_at: string
+  practitioner_primary_office: string
 }
 
 export async function birthNotificationHandler(
@@ -81,6 +87,36 @@ async function sendBirthNotification(
       contactNumber = `+260${contactNumber}`
     }
   }
+  if (!notification.place_of_birth) {
+    throw new Error('Could not find any place of birth')
+  }
+
+  const placeOfBirthFacilityLocation = await fetchFacilityById(
+    notification.place_of_birth,
+    token
+  )
+  if (
+    !placeOfBirthFacilityLocation ||
+    !placeOfBirthFacilityLocation.partOf?.reference
+  ) {
+    throw new Error(
+      `CANNOT FIND LOCATION FOR BIRTH NOTIFICATION: ${JSON.stringify(
+        notification
+      )}`
+    )
+  }
+
+  const location = await fetchLocationById(
+    placeOfBirthFacilityLocation.partOf.reference.split('/')[1],
+    token
+  )
+  if (!location) {
+    throw new Error(
+      `CANNOT FIND LOCATION FOR BIRTH NOTIFICATION: ${JSON.stringify(
+        notification
+      )}`
+    )
+  }
 
   const child = await createPersonEntry(
     null,
@@ -90,7 +126,8 @@ async function sendBirthNotification(
     notification.child.sex || 'unknown',
     null,
     notification.date_birth,
-    null
+    null,
+    location
   )
   const mother = await createPersonEntry(
     notification.mother.nid || null,
@@ -100,7 +137,8 @@ async function sendBirthNotification(
     'female',
     contactNumber,
     notification.mother.dob,
-    null
+    null,
+    location
   )
 
   const father = await createPersonEntry(
@@ -110,29 +148,14 @@ async function sendBirthNotification(
     notification.father.last_name,
     'male',
     contactNumber,
-    notification.mother.dob,
-    null
+    notification.father.dob,
+    null,
+    location
   )
-  const informant = await createRelatedPersonEntry('MOTHER', child.fullUrl)
-  if (!notification.place_of_birth) {
-    throw new Error('Could not find any place of birth')
-  }
-
-  const placeOfBirthFacilityLocation = await fetchFacilityById(
-    notification.place_of_birth,
-    token
-  )
-  if (!placeOfBirthFacilityLocation) {
-    throw new Error(
-      `CANNOT FIND LOCATION FOR BIRTH NOTIFICATION: ${JSON.stringify(
-        notification
-      )}`
-    )
-  }
+  const informant = await createRelatedPersonEntry('MOTHER', mother.fullUrl)
 
   const encounter = createBirthEncounterEntry(
-    `Location/${placeOfBirthFacilityLocation.id}`,
-    child.fullUrl
+    `Location/${placeOfBirthFacilityLocation.id}`
   )
   let birthWeightObservation
   if (notification && notification.child && notification.child.weight) {
@@ -150,7 +173,25 @@ async function sendBirthNotification(
     encounter.fullUrl,
     new Date(notification.created_at)
   )
-  const lastRegLocation = placeOfBirthFacilityLocation
+  const lastRegOffice = await fetchLocationById(
+    notification.practitioner_primary_office,
+    token
+  )
+
+  if (!lastRegOffice || !lastRegOffice.partOf?.reference) {
+    throw new Error(
+      `Could not find primary office for ${notification.practitioner_primary_office}`
+    )
+  }
+
+  const lastRegLocation = await fetchLocationById(
+    lastRegOffice?.partOf?.reference.replace('Location/', ''),
+    token
+  )
+
+  if (!lastRegLocation) {
+    throw new Error(`Could not find location for practitioner primary office`)
+  }
 
   // Contact type is always passing MOTHER
   // as based on the type both mother last name and phone number is required
@@ -158,6 +199,7 @@ async function sendBirthNotification(
   const task = await createTaskEntry(
     composition.fullUrl,
     lastRegLocation,
+    lastRegOffice,
     'BIRTH',
     'MOTHER',
     contactNumber,

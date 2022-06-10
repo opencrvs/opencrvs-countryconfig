@@ -53,6 +53,7 @@
   "login.stepTwoResendTitle",
   "login.resendMobile",
   "login.stepTwoInstruction",
+  "login.verify",
   "login.codeSubmissionError",
   "login.resentSMS",
   "login.verficationCodeLabel"

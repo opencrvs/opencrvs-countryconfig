@@ -6,3 +6,5 @@ export const AUTH_API_HOST =
 
 export const GATEWAY_HOST =
   process.env.GATEWAY_HOST || 'http://localhost:7070/graphql'
+
+export const CONFIG_HOST = process.env.CONFIG_HOST || 'http://localhost:2021/'

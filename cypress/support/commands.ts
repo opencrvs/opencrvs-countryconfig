@@ -37,7 +37,7 @@
 
 import { faker } from '@faker-js/faker'
 import { createBirthDeclarationData } from '../../src/data-generator/declare'
-import { Location } from '../../src/data-generator/location'
+import { Facility, Location } from '../../src/data-generator/location'
 
 const users = {
   fieldWorker: {
@@ -348,52 +348,72 @@ function getLocationWithName(token, name) {
     })
 }
 
+function getRandomFacility(token, location) {
+  return cy
+    .request<{ data: Record<string, Facility> }>({
+      method: 'GET',
+      url: `${Cypress.env('COUNTRYCONFIG_URL')}facilities`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .its('body')
+    .then(body => {
+      return Object.values(body.data).find(
+        facility => facility.partOf === `Location/${location.id}`
+      )
+    })
+}
+
 Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
   return getToken(role).then(token => {
     return getLocationWithName(token, 'Ibombo').then(location => {
-      const details = createBirthDeclarationData(
-        'male',
-        new Date('2018-05-18T13:18:26.240Z'),
-        new Date(),
-        location
-      )
+      return getRandomFacility(token, location).then(facility => {
+        const details = createBirthDeclarationData(
+          'male',
+          new Date('2018-05-18T13:18:26.240Z'),
+          new Date(),
+          location,
+          facility
+        )
 
-      if (options.firstName) {
-        details.child.name = [
-          {
-            use: 'en',
-            firstNames: options.firstName || faker.name.firstName(),
-            familyName: options.familyName || faker.name.lastName()
+        if (options.firstName) {
+          details.child.name = [
+            {
+              use: 'en',
+              firstNames: options.firstName || faker.name.firstName(),
+              familyName: options.familyName || faker.name.lastName()
+            }
+          ]
+        }
+        cy.intercept('/graphql', req => {
+          if (hasOperationName(req, 'createBirthRegistration')) {
+            req.on('response', res => {
+              const compositionId =
+                res.body?.data?.createBirthRegistration?.compositionId
+              expect(compositionId).to.be.a('string')
+            })
           }
-        ]
-      }
-      cy.intercept('/graphql', req => {
-        if (hasOperationName(req, 'createBirthRegistration')) {
-          req.on('response', res => {
-            const compositionId =
-              res.body?.data?.createBirthRegistration?.compositionId
-            expect(compositionId).to.be.a('string')
-          })
-        }
-      })
+        })
 
-      cy.request({
-        url: Cypress.env('GATEWAY_URL') + 'graphql',
-        method: 'POST',
-        headers: {
-          authorization: `Bearer ${token}`
-        },
-        body: {
-          operationName: 'createBirthRegistration',
-          variables: {
-            details
+        cy.request({
+          url: Cypress.env('GATEWAY_URL') + 'graphql',
+          method: 'POST',
+          headers: {
+            authorization: `Bearer ${token}`
           },
-          query:
-            'mutation createBirthRegistration($details: BirthRegistrationInput!) {\n  createBirthRegistration(details: $details) {\n    trackingId\n    compositionId\n    __typename\n  }\n}\n'
-        }
-      }).as('createRegistration')
-      cy.get('@createRegistration').should(response => {
-        expect((response as any).status).to.eq(200)
+          body: {
+            operationName: 'createBirthRegistration',
+            variables: {
+              details
+            },
+            query:
+              'mutation createBirthRegistration($details: BirthRegistrationInput!) {\n  createBirthRegistration(details: $details) {\n    trackingId\n    compositionId\n    __typename\n  }\n}\n'
+          }
+        }).as('createRegistration')
+        cy.get('@createRegistration').should(response => {
+          expect((response as any).status).to.eq(200)
+        })
       })
     })
   })

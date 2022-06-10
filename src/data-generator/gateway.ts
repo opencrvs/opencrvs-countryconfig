@@ -1776,6 +1776,7 @@ export type User = {
   practitionerId?: Maybe<Scalars['String']>;
   primaryOffice?: Maybe<Location>;
   role?: Maybe<Scalars['String']>;
+  signature?: Maybe<Signature>;
   status?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   underInvestigation?: Maybe<Scalars['Boolean']>;

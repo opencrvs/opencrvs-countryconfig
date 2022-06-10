@@ -97,8 +97,6 @@ export async function getLocationMetrics(
     (body.errors && body.errors.length > 0) ||
     body.data?.getTotalMetrics == null
   ) {
-    console.log(body)
-
     throw new Error(body.errors[0].message)
   }
 

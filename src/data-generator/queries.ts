@@ -401,6 +401,8 @@ export const MARK_DEATH_AS_REGISTERED = print(gql`
       causeOfDeath
       maleDependentsOfDeceased
       femaleDependentsOfDeceased
+      causeOfDeathEstablished
+      causeOfDeathMethod
     }
   }
 `)
@@ -540,6 +542,8 @@ export const FETCH_DEATH_REGISTRATION_QUERY = print(gql`
       causeOfDeath
       maleDependentsOfDeceased
       femaleDependentsOfDeceased
+      causeOfDeathEstablished
+      causeOfDeathMethod
     }
   }
 `)

@@ -12,42 +12,25 @@
 import { FHIR_URL, OPENHIM_URL } from '@countryconfig/constants'
 import fetch from 'node-fetch'
 
-interface IIdentifier {
-  system: string
-  value: string
-}
-
-export async function fetchLocationByIdentifiers(
-  identifiers: IIdentifier[],
-  querySuffix: string,
+export async function fetchLocationById(
+  identifier: string,
   token: string
 ): Promise<fhir.Location | undefined> {
-  const identifierQueryStrings = identifiers.map(
-    identifier => `identifier=${identifier.system}|${identifier.value}`
-  )
-
-  const res = await fetch(
-    `${FHIR_URL}/Location?${identifierQueryStrings.join('&')}&${querySuffix}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/fhir+json'
-      }
+  const res = await fetch(`${FHIR_URL}/Location/${identifier}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/fhir+json'
     }
-  )
+  })
 
   if (!res.ok) {
     return undefined
   }
 
-  const bundle: fhir.Bundle = await res.json()
+  const bundle = await res.json()
 
-  if (!bundle.entry || !bundle.entry[0] || !bundle.entry[0].resource) {
-    return undefined
-  }
-
-  return bundle.entry[0].resource as fhir.Location
+  return bundle
 }
 
 export async function fetchFacilityById(

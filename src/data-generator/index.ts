@@ -31,6 +31,7 @@ import {
   startOfDay,
   isWithinInterval,
   endOfYear,
+  endOfDay,
   min
 } from 'date-fns'
 
@@ -42,6 +43,7 @@ import { getLocationMetrics } from './statistics'
 import { User, createUsers } from './users'
 import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
+import { ConfigResponse, getConfig } from './config'
 
 /*
  *
@@ -74,19 +76,7 @@ const END_YEAR = 2022
 const REGISTER = process.env.REGISTER !== 'false'
 const CERTIFY = process.env.CERTIFY !== 'false'
 
-const BIRTH_COMPLETION_DISTRIBUTION = [
-  { range: [0, 45], weight: 0.8 },
-  { range: [46, 365], weight: 0.15 },
-  { range: [366, 365 * 5], weight: 0.025 },
-  { range: [365 * 5 + 1, 365 * 20], weight: 0.025 }
-]
 const BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.8
-
-const DEATH_COMPLETION_DISTRIBUTION = [
-  { range: [0, 45], weight: 0.75 },
-  { range: [46, 365], weight: 0.125 },
-  { range: [366, 365 * 5], weight: 0.125 }
-]
 const DEATH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.4
 
 const today = new Date()
@@ -127,6 +117,32 @@ async function main() {
   log('Fetching token for system administrator')
   const token = await getToken(USERNAME, PASSWORD)
   console.log('Got token for system administrator')
+  const config = await getConfig(token)
+
+  const BIRTH_COMPLETION_DISTRIBUTION = [
+    { range: [0, config.config.BIRTH.REGISTRATION_TARGET], weight: 0.8 },
+    {
+      range: [
+        config.config.BIRTH.REGISTRATION_TARGET,
+        config.config.BIRTH.LATE_REGISTRATION_TARGET
+      ],
+      weight: 0.15
+    },
+    {
+      range: [config.config.BIRTH.LATE_REGISTRATION_TARGET, 365 * 5],
+      weight: 0.025
+    },
+    { range: [365 * 5 + 1, 365 * 20], weight: 0.025 }
+  ]
+
+  const DEATH_COMPLETION_DISTRIBUTION = [
+    { range: [0, config.config.DEATH.REGISTRATION_TARGET], weight: 0.75 },
+    {
+      range: [config.config.DEATH.REGISTRATION_TARGET, 365],
+      weight: 0.125
+    },
+    { range: [366, 365 * 5], weight: 0.125 }
+  ]
 
   log('Got token for system administrator')
   log('Fetching locations')
@@ -228,6 +244,11 @@ async function main() {
         days.splice(currentDayNumber - 1)
       }
 
+      log('Creating declarations for', location.name, 'estimates', {
+        births: birthRates,
+        death: totalDeathsThisYear
+      })
+
       birthRates.female =
         birthRates.female * BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE
       birthRates.male =
@@ -249,22 +270,25 @@ async function main() {
       for (let i = 0; i < totalDeathsThisYear; i++) {
         deathsPerDay[Math.floor(Math.random() * days.length)]++
       }
-
-      log('Creating declarations for', location)
-
+      log('Creating', {
+        male: malesPerDay.reduce((a, x) => a + x),
+        female: femalesPerDay.reduce((a, x) => a + x),
+        death: deathsPerDay.reduce((a, x) => a + x)
+      })
       /*
        *
        * Loop through days in the year (last day of the year -> start of the year)
        *
        */
+
       for (let d = days.length - 1; d >= 0; d--) {
         const submissionDate = addDays(startOfYear(setYear(new Date(), y)), d)
 
         if (
           generatedInterval.length === 2 &&
           isWithinInterval(submissionDate, {
-            start: generatedInterval[0],
-            end: generatedInterval[1]
+            start: startOfDay(generatedInterval[0]),
+            end: endOfDay(generatedInterval[1])
           })
         ) {
           log('Data for', submissionDate, 'already exists. Skipping.')
@@ -289,18 +313,22 @@ async function main() {
 
         let operations = []
         for (let ix = 0; ix < deathsToday; ix++) {
+          const completionDays = getRandomFromBrackets(
+            DEATH_COMPLETION_DISTRIBUTION
+          )
           operations.push(
             deathDeclarationWorkflow(
               deathDeclarers,
               submissionDate,
               location,
               deathsToday,
-              users
+              users,
+              healthFacilities,
+              completionDays,
+              config
             ).bind(null, ix)
           )
         }
-
-        await queue.addAll(operations)
 
         /*
          *
@@ -322,12 +350,14 @@ async function main() {
           femalesPerDay[d]
         )
 
-        operations = []
         // Create birth declarations
         const totalChildBirths = malesPerDay[d] + femalesPerDay[d]
         const probabilityForMale = malesPerDay[d] / totalChildBirths
 
         for (let ix = 0; ix < Math.round(totalChildBirths); ix++) {
+          const completionDays = getRandomFromBrackets(
+            BIRTH_COMPLETION_DISTRIBUTION
+          )
           operations.push(
             birthDeclarationWorkflow(
               birthDeclararers,
@@ -337,7 +367,9 @@ async function main() {
               crvsOffices,
               healthFacilities,
               location,
-              totalChildBirths
+              totalChildBirths,
+              completionDays,
+              config
             ).bind(null, ix)
           )
         }
@@ -528,6 +560,7 @@ async function main() {
 }
 
 main()
+
 function birthDeclarationWorkflow(
   birthDeclararers: User[],
   users: {
@@ -542,7 +575,8 @@ function birthDeclarationWorkflow(
   healthFacilities: Facility[],
   location: Location,
   totalChildBirths: number,
-  overrideCompletionDays?: number
+  completionDays: number,
+  config: ConfigResponse
 ) {
   return async (ix: number) => {
     try {
@@ -560,9 +594,7 @@ function birthDeclarationWorkflow(
       const submissionTime = add(startOfDay(submissionDate), {
         seconds: 24 * 60 * 60 * Math.random()
       })
-      const completionDays = overrideCompletionDays
-        ? overrideCompletionDays
-        : getRandomFromBrackets(BIRTH_COMPLETION_DISTRIBUTION)
+
       const birthDate = sub(submissionTime, { days: completionDays })
 
       const crvsOffice = crvsOffices.find(
@@ -588,12 +620,13 @@ function birthDeclarationWorkflow(
           Math.floor(Math.random() * districtFacilities.length)
         ]
 
-      const declaredToday = differenceInDays(today, submissionTime) === 0
+      const declaredRecently = differenceInDays(today, submissionTime) < 4
 
       let id: string
       let registrationDetails: BirthRegistrationInput
       if (isHospitalUser) {
         log('Sending a DHIS2 Hospital notification')
+
         id = await sendBirthNotification(
           randomUser,
           sex,
@@ -621,7 +654,8 @@ function birthDeclarationWorkflow(
           sex,
           birthDate,
           submissionTime,
-          location
+          location,
+          randomFacility
         )
         const declaration = await fetchRegistration(randomRegistrar, id)
         try {
@@ -644,13 +678,20 @@ function birthDeclarationWorkflow(
         return
       }
 
-      if (!declaredToday || Math.random() > 0.5) {
+      if (!declaredRecently || Math.random() > 0.5) {
         const registration = await markAsRegistered(
           randomRegistrar,
           id,
           registrationDetails
         )
-        if (CERTIFY && !declaredToday && registration) {
+
+        if (
+          CERTIFY &&
+          (!declaredRecently || Math.random() > 0.5) &&
+          registration
+        ) {
+          // Wait for few seconds so registration gets updated to elasticsearch before certifying
+          await wait(2000)
           log('Certifying', id)
           await markAsCertified(
             registration.id,
@@ -659,7 +700,8 @@ function birthDeclarationWorkflow(
               add(new Date(submissionTime), {
                 days: 1
               }),
-              registration
+              registration,
+              config
             )
           )
         } else {
@@ -668,6 +710,7 @@ function birthDeclarationWorkflow(
           )
         }
       }
+
       log('Birth', submissionDate, ix, '/', Math.round(totalChildBirths))
     } catch (error) {
       onError(error)
@@ -686,18 +729,28 @@ function deathDeclarationWorkflow(
     registrationAgents: User[]
     registrars: User[]
   },
-  overrideCompletionDays?: number
+  healthFacilities: Facility[],
+  completionDays: number,
+  config: ConfigResponse
 ) {
   return async (ix: number) => {
     try {
       const randomUser =
         deathDeclarers[Math.floor(Math.random() * deathDeclarers.length)]
-      const completionDays = overrideCompletionDays
-        ? overrideCompletionDays
-        : getRandomFromBrackets(DEATH_COMPLETION_DISTRIBUTION)
+
       const submissionTime = add(startOfDay(submissionDate), {
         seconds: 24 * 60 * 60 * Math.random()
       })
+      const declaredRecently = differenceInDays(today, submissionTime) < 4
+
+      const districtFacilities = healthFacilities.filter(
+        ({ partOf }) => partOf?.split('/')[1] === location.id
+      )
+
+      const randomFacility =
+        districtFacilities[
+          Math.floor(Math.random() * districtFacilities.length)
+        ]
       const deathTime = sub(submissionTime, { days: completionDays })
       log('Declaring')
       const compositionId = await createDeathDeclaration(
@@ -705,7 +758,8 @@ function deathDeclarationWorkflow(
         deathTime,
         Math.random() > 0.4 ? 'male' : 'female',
         submissionTime,
-        location
+        location,
+        randomFacility
       )
 
       if (!REGISTER) {
@@ -721,30 +775,32 @@ function deathDeclarationWorkflow(
         randomRegistrar,
         compositionId
       )
-
-      const registration = await markDeathAsRegistered(
-        randomRegistrar,
-        compositionId,
-        createRegistrationDetails(
-          add(new Date(submissionTime), {
-            days: 1
-          }),
-          declaration
-        )
-      )
-      log('Certifying', registration.id)
-      await wait(2000)
-      if (CERTIFY) {
-        await markDeathAsCertified(
-          registration.id,
+      if (!declaredRecently || Math.random() > 0.5) {
+        const registration = await markDeathAsRegistered(
           randomRegistrar,
-          createDeathCertificationDetails(
+          compositionId,
+          createRegistrationDetails(
             add(new Date(submissionTime), {
-              days: 2
+              days: 1
             }),
-            registration
+            declaration
           )
         )
+        log('Certifying', registration.id)
+        await wait(2000)
+        if (CERTIFY && (!declaredRecently || Math.random() > 0.5)) {
+          await markDeathAsCertified(
+            registration.id,
+            randomRegistrar,
+            createDeathCertificationDetails(
+              add(new Date(submissionTime), {
+                days: 2
+              }),
+              registration,
+              config
+            )
+          )
+        }
       }
 
       log('Death', submissionDate, ix, '/', deathsToday)
