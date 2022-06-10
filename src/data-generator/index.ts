@@ -213,43 +213,17 @@ async function main() {
       const randomRegistrar =
         users.registrars[Math.floor(Math.random() * users.registrars.length)]
 
-      let birthMetrics = await getLocationMetrics(
-        randomRegistrar.token,
-        startOfYear(new Date(y, 1, 1)),
-        endOfYear(new Date(y, 1, 1)),
-        location.id,
-        'BIRTH'
-      )
-      let deathMetrics = await getLocationMetrics(
-        randomRegistrar.token,
-        startOfYear(new Date(y, 1, 1)),
-        endOfYear(new Date(y, 1, 1)),
-        location.id,
-        'DEATH'
-      )
-
-      let totalDeathsThisYear = deathMetrics.estimated.totalEstimation
-
-      // Calculate crude birth & death rates for this district for both men and women
-      const birthRates = {
-        male: birthMetrics.estimated.maleEstimation,
-        female: birthMetrics.estimated.femaleEstimation
-      }
-
       const days = Array.from({ length: getDaysInYear(y) }).map(() => 0)
+      let { birthRates, totalDeathsThisYear } = await getEstimates(
+        randomRegistrar,
+        y,
+        location,
+        isCurrentYear,
+        days
+      )
 
       if (isCurrentYear) {
-        // If we're processing the current year, only take into account
-        // the days until today
         const currentDayNumber = getDayOfYear(today)
-
-        // Adjust birth rates to the amount of days passed since the start of this year
-        birthRates.female = (birthRates.female / days.length) * currentDayNumber
-        birthRates.male = (birthRates.male / days.length) * currentDayNumber
-
-        totalDeathsThisYear =
-          (totalDeathsThisYear / days.length) * currentDayNumber
-
         // Remove future dates from the arrays
         days.splice(currentDayNumber - 1)
       }
@@ -372,44 +346,107 @@ async function main() {
 
       /*
        * Ensure target rate numbers match the configured rate numbers
-       * This is done both to increase on target - registration numbers as random might not always work
-       * and to be a fix for old way of calculating registration total numbers
+       * This is done because sometimes a number of declarations fail during the generator run
+       * which then again causes the target rate numbers to be incorrect
        */
 
-      // Recalculate metrics
-      birthMetrics = await getLocationMetrics(
-        randomRegistrar.token,
-        startOfYear(new Date(y, 1, 1)),
-        endOfYear(new Date(y, 1, 1)),
-        location.id,
-        'BIRTH'
-      )
-      deathMetrics = await getLocationMetrics(
-        randomRegistrar.token,
-        startOfYear(new Date(y, 1, 1)),
-        endOfYear(new Date(y, 1, 1)),
-        location.id,
-        'DEATH'
+      let operations = []
+
+      const newEstimates = await getEstimates(
+        randomRegistrar,
+        y,
+        location,
+        isCurrentYear,
+        Array.from({ length: getDaysInYear(y) }).map(() => 0)
       )
 
-      const totalBirthsWithinTarget = birthMetrics.results
-        .filter(total => total.timeLabel === 'withinTarget')
-        .reduce((acc, { total }) => acc + total, 0)
+      const shouldGenerate =
+        (newEstimates.birthRates.male + newEstimates.birthRates.female) *
+        BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE
 
-      const withinTargetBirthsShouldBe =
-        (birthRates.female + birthRates.male) *
-        BIRTH_COMPLETION_DISTRIBUTION[0].weight
+      const delta =
+        shouldGenerate -
+        newEstimates.birthMetrics.results.reduce(
+          (acc, cur) => acc + cur.total,
+          0
+        )
 
-      const missingBirthsWithinTargetDeclarations = Math.round(
-        withinTargetBirthsShouldBe - totalBirthsWithinTarget
+      log('Filling birth declarations', {
+        shouldGenerate,
+        generated: newEstimates.birthMetrics.results.reduce(
+          (acc, cur) => acc + cur.total,
+          0
+        ),
+        delta,
+        distribution: Array.from({ length: delta })
+          .map(() => getRandomFromBrackets(BIRTH_COMPLETION_DISTRIBUTION))
+          .reduce((acc, cur) => {
+            BIRTH_COMPLETION_DISTRIBUTION.forEach(d => {
+              if (cur >= d.range[0] && cur <= d.range[1]) {
+                acc[d.range[0]] = acc[d.range[0]] ? acc[d.range[0]] + 1 : 1
+              }
+            })
+            return acc
+          }, {})
+      })
+
+      for (let ix = 0; ix < delta; ix++) {
+        const randomSubmissionDate = min([
+          addDays(
+            startOfYear(setYear(new Date(), y)),
+            Math.floor(Math.random() * days.length)
+          ),
+          new Date()
+        ])
+        const completionDays = getRandomFromBrackets(
+          BIRTH_COMPLETION_DISTRIBUTION
+        )
+        operations.push(
+          await birthDeclarationWorkflow(
+            birthDeclararers,
+            users,
+            birthRates.male / (birthRates.male + birthRates.female),
+            randomSubmissionDate,
+            crvsOffices,
+            healthFacilities,
+            location,
+            delta,
+            completionDays,
+            config
+          ).bind(null, ix)
+        )
+      }
+      await queue.addAll(operations)
+
+      /*
+       * Same for death
+       */
+      const shouldGenerateDeaths =
+        newEstimates.totalDeathsThisYear *
+        DEATH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE
+      const totalGeneratedDeaths = newEstimates.deathMetrics.results.reduce(
+        (acc, cur) => acc + cur.total,
+        0
       )
+      const deathDelta = shouldGenerateDeaths - totalGeneratedDeaths
 
-      log(
-        'Births missing within target:',
-        missingBirthsWithinTargetDeclarations
-      )
+      log('Filling death declarations', {
+        shouldGenerateDeaths,
+        totalGeneratedDeaths,
+        deathDelta,
+        distribution: Array.from({ length: deathDelta })
+          .map(() => getRandomFromBrackets(DEATH_COMPLETION_DISTRIBUTION))
+          .reduce((acc, cur) => {
+            DEATH_COMPLETION_DISTRIBUTION.forEach(d => {
+              if (cur >= d.range[0] && cur <= d.range[1]) {
+                acc[d.range[0]] = acc[d.range[0]] ? acc[d.range[0]] + 1 : 1
+              }
+            })
+            return acc
+          }, {})
+      })
 
-      for (let ix = 0; ix < missingBirthsWithinTargetDeclarations; ix++) {
+      for (let ix = 0; ix < deathDelta; ix++) {
         const submissionDate = min([
           addDays(
             startOfYear(setYear(new Date(), y)),
@@ -417,23 +454,23 @@ async function main() {
           ),
           new Date()
         ])
-        console.log(
-          'Creating a filler birth registration',
-          submissionDate.toISOString()
+        const completionDays = getRandomFromBrackets(
+          DEATH_COMPLETION_DISTRIBUTION
         )
-
-        await birthDeclarationWorkflow(
-          birthDeclararers,
-          users,
-          birthRates.male / (birthRates.male + birthRates.female),
-          submissionDate,
-          crvsOffices,
-          healthFacilities,
-          location,
-          missingBirthsWithinTargetDeclarations,
-          5 // Override completion days
-        )(ix)
+        operations.push(
+          deathDeclarationWorkflow(
+            deathDeclarers,
+            submissionDate,
+            location,
+            deathDelta,
+            users,
+            healthFacilities,
+            completionDays,
+            config
+          ).bind(null, ix)
+        )
       }
+      await queue.addAll(operations)
     }
 
     allUsers.forEach(user => {
@@ -442,6 +479,52 @@ async function main() {
   }
 
   process.exit(0)
+
+  async function getEstimates(
+    randomRegistrar: User,
+    y: number,
+    location: Location,
+    isCurrentYear: boolean,
+    days: number[]
+  ) {
+    let birthMetrics = await getLocationMetrics(
+      randomRegistrar.token,
+      startOfYear(new Date(y, 1, 1)),
+      endOfYear(new Date(y, 1, 1)),
+      location.id,
+      'BIRTH'
+    )
+    let deathMetrics = await getLocationMetrics(
+      randomRegistrar.token,
+      startOfYear(new Date(y, 1, 1)),
+      endOfYear(new Date(y, 1, 1)),
+      location.id,
+      'DEATH'
+    )
+
+    let totalDeathsThisYear = deathMetrics.estimated.totalEstimation
+
+    // Calculate crude birth & death rates for this district for both men and women
+    const birthRates = {
+      male: birthMetrics.estimated.maleEstimation,
+      female: birthMetrics.estimated.femaleEstimation
+    }
+
+    if (isCurrentYear) {
+      // If we're processing the current year, only take into account
+      // the days until today
+      const currentDayNumber = getDayOfYear(today)
+
+      // Adjust birth rates to the amount of days passed since the start of this year
+      birthRates.female = (birthRates.female / days.length) * currentDayNumber
+      birthRates.male = (birthRates.male / days.length) * currentDayNumber
+
+      totalDeathsThisYear =
+        (totalDeathsThisYear / days.length) * currentDayNumber
+    }
+
+    return { birthRates, birthMetrics, totalDeathsThisYear, deathMetrics }
+  }
 }
 
 main()
