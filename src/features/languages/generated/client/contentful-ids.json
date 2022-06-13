@@ -303,6 +303,7 @@
   "correctionSummaryFeesRequiredPositive": "correction.summary.feesRequiredPositive",
   "correctionSummaryFeesRequiredNegative": "correction.summary.feesRequiredNegative",
   "correctionSummaryProofOfPaymentRequired": "correction.summary.proofOfPaymentRequired",
+  "correctionSummaryTotalPaymentLabel": "correction.summary.totalPaymentLabel",
   "correctionSummaryProofOfPayment": "correction.summary.proofOfPayment",
   "constantsWithinTargetDays": "constants.withinTargetDays",
   "constantsWithinTargetDaysTo1Year": "constants.withinTargetDaysTo1Year",
