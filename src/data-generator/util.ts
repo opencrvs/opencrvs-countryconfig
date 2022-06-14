@@ -64,11 +64,25 @@ export function nullsToEmptyString(object: object) {
 
 export type RecursiveRequired<T> = Required<
   {
-    [P in keyof T]: Exclude<RecursiveRequired<T[P]>, null>
+    [P in keyof T]: IfAny<T[P], T[P], Exclude<RecursiveRequired<T[P]>, null>>
   }
 >
 
-export function idsToFHIRIds(target: Record<string, any>, keys: string[]) {
+type IfAny<T, Y, N> = 0 extends 1 & T ? Y : N
+
+type ReplaceIdWithFHIRId<T> = T extends { id: string }
+  ? Omit<T, 'id'> & { _fhirID: string }
+  : T
+
+type ReplaceIdKeysWithFHIRId<
+  T extends Record<string, any>,
+  T2 = { [P in keyof T]: ReplaceIdKeysWithFHIRId<ReplaceIdWithFHIRId<T[P]>> }
+> = IfAny<T, T, T2>
+
+export function idsToFHIRIds<T extends Record<string, any>>(
+  target: T,
+  keys: ReadonlyArray<string>
+): ReplaceIdKeysWithFHIRId<T> {
   return keys.reduce((memo, key) => {
     const value = get(memo, key)
 
@@ -82,5 +96,20 @@ export function idsToFHIRIds(target: Record<string, any>, keys: string[]) {
       .concat('_fhirID')
       .join('.')
     return set(set(memo, fhirKey, value), key, undefined)
-  }, target)
+  }, target) as ReplaceIdKeysWithFHIRId<T>
+}
+
+function isObject(value: any) {
+  return typeof value === 'object' && !Array.isArray(value) && value !== null
+}
+
+export function removeEmptyFields<T extends Record<string, any>>(object: T): T {
+  return Object.fromEntries(
+    Object.entries(object)
+      .filter(([, value]) => value !== null)
+      .map(([key, value]) => [
+        key,
+        isObject(value) ? removeEmptyFields(value) : value
+      ])
+  ) as T
 }

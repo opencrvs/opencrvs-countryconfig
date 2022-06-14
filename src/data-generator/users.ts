@@ -70,7 +70,7 @@ export async function createUser(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `createuser-${firstName}-${familyName}`
+      'x-correlation-id': `createuser-${firstName}-${familyName}`
     },
     body: JSON.stringify({
       query: `
@@ -87,9 +87,6 @@ export async function createUser(
 
   const resp = await createUserRes.json()
 
-  if (!resp.data) {
-    console.log(resp)
-  }
   log('User created')
   const { data } = resp as {
     data: { createOrUpdateUser: { username: string; id: string } }
@@ -101,7 +98,7 @@ export async function createUser(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${userToken}`,
-      'x-correlation': `createuser-${firstName}-${familyName}`
+      'x-correlation-id': `createuser-${firstName}-${familyName}`
     },
     body: JSON.stringify({
       query: `
@@ -137,7 +134,7 @@ export async function getUsers(token: string, locationId: string) {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'x-correlation': `getusers`
+      'x-correlation-id': `getusers`
     },
     body: JSON.stringify({
       operationName: null,
@@ -180,7 +177,6 @@ export async function getUsers(token: string, locationId: string) {
 }
 
 export async function createSystemClient(
-  token: string,
   officeId: string,
   scope: 'HEALTH' | 'NATIONAL_ID' | 'EXTERNAL_VALIDATION' | 'AGE_CHECK',
   systemAdmin: User
@@ -190,16 +186,16 @@ export async function createSystemClient(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${systemAdmin.token}`,
-      'x-correlation': `create-system-scope`
+      'x-correlation-id': `create-system-scope`
     },
     body: JSON.stringify({ scope })
   })
-
+  const credentialsRes = await createUserRes.json()
   const credentials: {
     client_id: string
     client_secret: string
     sha_secret: string
-  } = await createUserRes.json()
+  } = credentialsRes
 
   const systemToken = await getTokenForSystemClient(
     credentials.client_id,
@@ -299,15 +295,19 @@ export async function createUsers(
   log('Creating', config.hospitalFieldAgents, 'hospitals')
   for (let i = 0; i < config.hospitalFieldAgents; i++) {
     const systemAdmin =
-      systemAdmins[i] ||
+      systemAdmins[0] ||
       (await createUser(token, randomOffice.id, {
         role: 'LOCAL_SYSTEM_ADMIN',
         type: 'LOCAL_SYSTEM_ADMIN'
       }))
 
-    hospitals.push(
-      await createSystemClient(token, randomOffice.id, 'HEALTH', systemAdmin)
+    const user = await createSystemClient(
+      randomOffice.id,
+      'HEALTH',
+      systemAdmin
     )
+
+    hospitals.push(user)
   }
 
   log('Hospitals created')

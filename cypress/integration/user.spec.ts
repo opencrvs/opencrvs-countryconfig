@@ -20,23 +20,19 @@ context('User Integration Test', () => {
     // LOG IN AS SYSTEM ADMIN
     cy.login('sysAdmin')
     cy.createPin()
-    cy.get('#menu-team').click()
-    cy.get('#locationSearchInput').type('Mkushi')
-    cy.contains('Mkushi DNRPC District Office').click()
-    cy.get('#location-search-btn').click()
+    cy.get('#navigation_team').click()
     cy.get('#add-user').click()
     cy.get('#firstNamesEng').type('Naeem')
     cy.get('#familyNameEng').type('Ahmed')
-    cy.get('#phoneNumber').type('0752658545')
-    cy.get('#nid').type('1994756324')
-    cy.selectOption('#role', 'LOCAL_REGISTRAR', 'Registrar')
-    cy.selectOption('#type', 'CHAIRMAN', 'Chairman')
+    cy.get('#phoneNumber').type('0711919045')
+    //cy.get('#nid').type('199475632')
+    cy.selectOption('#role', 'Field Agent', 'Field Agent')
+    cy.selectOption('#type', 'Healthcare Worker', 'Healthcare Worker')
     cy.get('#device').type('Xiamoi MI 8')
-    cy.get('#confirm_form').click()
     cy.get('#confirm_form').click()
     // PREVIEW
     cy.get('#submit_user_form').click()
-    cy.get('#submissionSuccessToast').should('be.visible') // Wait for application to be sync'd
+    cy.get('#submissionSuccessToast').should('be.visible') // Wait for declaration to be sync'd
     // LOG OUT
     cy.get('#ProfileMenuToggleButton').click()
     cy.get('#ProfileMenuItem1').click()
@@ -74,6 +70,7 @@ context('User Integration Test', () => {
   })
 
   it('should reset username successfully', () => {
+    cy.visit(Cypress.env('CLIENT_URL'))
     cy.get('#login-forgot-password').click()
 
     // Forgotten item form appears
@@ -83,7 +80,7 @@ context('User Integration Test', () => {
 
     // Phone number verification form appears
     cy.get('#phone-number-verification-form').should('be.visible')
-    cy.get('#phone-number-input').type('0752658545')
+    cy.get('#phone-number-input').type('0711919045')
     cy.get('#continue').click()
 
     // Security question form appears
@@ -112,7 +109,7 @@ context('User Integration Test', () => {
   })
 
   it('should reset password successfully', () => {
-    cy.initializeFakeTimers()
+    cy.visit(Cypress.env('CLIENT_URL'))
     cy.get('#login-forgot-password').click()
 
     // Forgotten item form appears
@@ -122,14 +119,13 @@ context('User Integration Test', () => {
 
     // Phone number verification form appears
     cy.get('#phone-number-verification-form').should('be.visible')
-    cy.get('#phone-number-input').type('0752658545')
+    cy.get('#phone-number-input').type('0711919045')
     cy.get('#continue').click()
 
     // Recovery code entry form appears
     cy.get('#recovery-code-entry-form').should('be.visible')
     cy.get('#recovery-code-input').type('000000')
     cy.get('#continue').click()
-    cy.tick(20000)
     // Security question form appears
     cy.get('#security-question-form').should('be.visible')
     cy.get('#question').then($q => {

@@ -11,29 +11,30 @@
  */
 /// <reference types="Cypress" />
 
+import faker from '@faker-js/faker'
+
 context('Search Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it('Tests search application by child name using minimum input', () => {
-    
+  it("declaration can be found with child's name", () => {
+    const firstName = faker.name.firstName()
+    const familyName = faker.name.lastName()
 
-    // DECLARE APPLICATION AS FIELD AGENT
-   cy.declareApplicationWithMinimumInput('Bill', 'Gates')
-  
-  })
+    cy.createBirthRegistrationAs('fieldWorker', {
+      firstName,
+      familyName
+    })
 
-  it('Tests search application by child name',() => {
-     // LOGIN AS LOCAL REGISTRAR
-     cy.login('registrar')
-     cy.createPin()
-     
-     // SEARCH APPLICATION & Review Application
-     cy.get('#searchType').click()
-     cy.get('#name').click()
-     cy.get('#searchText').type('Gates')
-     cy.get('#searchText').type('{enter}')
- 
+    cy.login('registrar')
+    cy.createPin()
+
+    cy.get('#searchType').click()
+    cy.get('#name').click()
+    cy.get('#searchText').type(familyName)
+    cy.get('#searchText').type('{enter}')
+
+    cy.get(`:contains("${firstName} ${familyName}")`).should('be.visible')
   })
 })

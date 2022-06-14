@@ -9,6 +9,10 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
+type BirthDeclarationOptions = {
+  firstName?: string
+  familyName?: string
+}
 declare namespace Cypress {
   interface Chainable {
     login: (userType: string) => void
@@ -16,34 +20,38 @@ declare namespace Cypress {
     selectOption: (selector: string, text: string, option: string) => void
     goToNextFormSection: () => void
     createPin: () => void
-    submitApplication: () => void
-    rejectApplication: () => void
-    registerApplication: () => void
+    reviewForm: () => void
+    clickUserListItemByName: (name: string, actionText: string) => void
+    submitForm: () => void
+    submitDeclaration: () => void
+    createBirthRegistrationAs: (
+      role: string,
+      options?: BirthDeclarationOptions
+    ) => void
+    printDeclaration: () => void
+    rejectDeclaration: () => void
+    registerDeclaration: () => void
     verifyLandingPageVisible: () => void
-    initializeFakeTimers: () => void
-    downloadFirstApplication: () => void
-    enterMaximumInput: (firstName: string, lastName: string) => void
+    downloadFirstDeclaration: () => void
+    enterMaximumInput: () => void
     enterDeathMaximumInput: () => void
-    registerApplicationWithMinimumInput: (
+    registerDeclarationWithMinimumInput: (
       firstName: string,
       lastName: string
     ) => void
-    registerApplicationWithMaximumInput: (
+    registerDeclarationWithMaximumInput: (
       firstName: string,
       lastName: string
     ) => void
-    declareApplicationWithMinimumInput: (
+    declareDeclarationWithMinimumInput: () => void
+    declareDeclarationWithMaximumInput: (
       firstName: string,
       lastName: string
     ) => void
-    declareApplicationWithMaximumInput: (
-      firstName: string,
-      lastName: string
-    ) => void
-    declareDeathApplicationWithMinimumInput: () => void
-    registerDeathApplicationWithMinimumInput: () => void
-    declareDeathApplicationWithMaximumInput: () => void
-    registerDeathApplicationWithMaximumInput: () => void
+    declareDeathDeclarationWithMinimumInput: () => void
+    registerDeathDeclarationWithMinimumInput: () => void
+    declareDeathDeclarationWithMaximumInput: () => void
+    registerDeathDeclarationWithMaximumInput: () => void
     someoneElseJourney: () => void
   }
 }

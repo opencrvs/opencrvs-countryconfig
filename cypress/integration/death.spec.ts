@@ -14,121 +14,58 @@
 context('Death Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
-  }) 
+  })
 
   it('Tests registration by registrar using maximum input', () => {
     cy.login('registrar')
-    // CREATE PIN
     cy.createPin()
     cy.verifyLandingPageVisible()
-    // APPLICATION FORM
-    cy.initializeFakeTimers()
+
     cy.enterDeathMaximumInput()
-
-    cy.registerApplication()
-     
-  }) 
-
-  it('Tests from application to registration using minimum input', () => {
-    cy.registerDeathApplicationWithMinimumInput()
+    cy.registerDeclaration()
   })
 
-  it('Login as registrar to register minimum input death application',() => {
-    
-    cy.login('registrar')
-    // CREATE PIN
-    cy.createPin()
-    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-    cy.get('#registerApplicationBtn').click()
-    cy.get('#submit_confirm').click()
-    cy.wait(1000)
-    cy.reload()
-    cy.get('#tab_review > .sc-jSFkmK').click()
-    cy.wait(1000)
-    cy.get('#tab_print > .sc-jSFkmK').click()
-    // LOG OUT
-    cy.logOut()
-  }) 
-  
-  it('Tests from application to registration using maximum input', () => {
-    cy.registerDeathApplicationWithMaximumInput()
+  it('Tests from declaration to registration using minimum input', () => {
+    cy.registerDeathDeclarationWithMinimumInput()
   })
 
-  it('Login as registrar to register maximum input death application',() => {
-    
+  it('Login as registrar to register minimum input death declaration', () => {
     cy.login('registrar')
-    // CREATE PIN
     cy.createPin()
-    cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
-    cy.get('#registerApplicationBtn').click()
-    cy.get('#submit_confirm').click()
-    cy.wait(1000)
-    cy.reload()
-    cy.get('#tab_review > .sc-jSFkmK').click()
-    cy.wait(1000)
-    cy.get('#tab_print > .sc-jSFkmK').click()
-    // LOG OUT
-    cy.logOut()
-  }) 
-  
-
-  it('Tests from application to rejection using minimum input', () => {
-    cy.declareDeathApplicationWithMinimumInput()
+    cy.reviewForm()
+    cy.submitForm()
   })
 
-  it('Login As Register & Reject Minimum input Death Application',() => {
-    // LOGIN AS LOCAL REGISTRAR
+  it('Tests from declaration to registration using maximum input', () => {
+    cy.registerDeathDeclarationWithMaximumInput()
+  })
+
+  it('Login as registrar to register maximum input death declaration', () => {
     cy.login('registrar')
-    // CREATE PIN
-    
     cy.createPin()
-    // LANDING PAGE Download 1st application & Reject Application
-    cy.get('#ListItemAction-0-icon').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
+    cy.reviewForm()
+    cy.submitForm()
+  })
 
-    //Reject Application
-    cy.get('#rejectApplicationBtn').click()
-     cy.get(':nth-child(3) > .sc-hYRTcE').click()
-    cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
-    cy.get('#submit_reject_form').click()
-    cy.wait(2000)
-    //logout
-    cy.logOut()
-  }) 
-  
+  it('Tests from declaration to rejection using minimum input', () => {
+    cy.declareDeathDeclarationWithMinimumInput()
+  })
 
-  it('Tests from application to rejection using maximum input', () => {
-
-    cy.declareDeathApplicationWithMaximumInput()
-  }) 
-
-  it('Login As Register & Reject Maximum input Death Application',() => {
-    // LOGIN AS LOCAL REGISTRAR
+  it('Login As Register & Reject Minimum input Death Declaration', () => {
     cy.login('registrar')
-    // CREATE PIN
-    
     cy.createPin()
-    // LANDING PAGE Download 1st application & Reject Application
-    cy.get('#ListItemAction-0-icon').click()
-    cy.get('#ListItemAction-0-Review').click()
-    cy.wait(1000)
+    cy.reviewForm()
+    cy.rejectDeclaration()
+  })
 
-    //Reject Application
-    cy.get('#rejectApplicationBtn').click()
-    cy.get(':nth-child(3) > .sc-hYRTcE').click()
-    cy.get('#rejectionCommentForHealthWorker').type('Missing Supporting information ')
-    cy.get('#submit_reject_form').click()
-    cy.wait(2000)
-    
-    //logout
-    cy.logOut()
-  }) 
-  
-  
+  it('Tests from declaration to rejection using maximum input', () => {
+    cy.declareDeathDeclarationWithMaximumInput()
+  })
 
+  it('Login As Register & Reject Maximum input Death Declaration', () => {
+    cy.login('registrar')
+    cy.createPin()
+    cy.reviewForm()
+    cy.rejectDeclaration()
+  })
 })

@@ -1,0 +1,16 @@
+{
+  "data": {
+    "birthInProgressNotification": "The SMS message that is sent to the parent for a birth notification",
+    "birthDeclarationNotification": "The SMS message that is sent to the parent for a birth declaration",
+    "birthRegistrationNotification": "The SMS message that is sent to the parent for a birth registration",
+    "birthRejectionNotification": "The SMS message that is sent to the parent for a birth declaration rejection",
+    "deathInProgressNotification": "The SMS message that is sent to the parent for a death notification",
+    "deathDeclarationNotification": "The SMS message that is sent to the parent for a death declaration",
+    "deathRegistrationNotification": "The SMS message that is sent to the parent for a death registration",
+    "deathRejectionNotification": "The SMS message that is sent to the parent for a death declaration rejection",
+    "authenticationCodeNotification": "The SMS messsage that is sent continaing a 2-factor authentication code",
+    "userCredentialsNotification": "The SMS message that is sent to a new user with a username and passowrd",
+    "retieveUserNameNotification": "The SMS message that is sent to a user containing a username",
+    "updateUserNameNotification": "The SMS message that is sent to a user to confirm an updated username"
+  }
+}

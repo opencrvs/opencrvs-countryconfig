@@ -17,33 +17,13 @@ context('Certificate Integration Test', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  it('Tests from application to certification using minimum input', () => {
-    
-    cy.declareApplicationWithMinimumInput('Sakib', 'Al-Hasan')
-  
-  })
-
-  it('Registers Minimum input application',() => {
-   
-     cy.login('registrar')
-     // CREATE PIN
-     cy.createPin()
-     cy.get('#tab_review').click()
-     cy.get('#ListItemAction-0-icon > .sc-lmgQde > svg').click()
-     cy.get('#ListItemAction-0-Review').click()
-
-     //register 
-     cy.get('#registerApplicationBtn').click()
-     cy.get('#submit_confirm').click()
-     cy.wait(5000)
-     cy.reload()
-  })
-
-  it('Prints minimum input application',() => {
-   
+  it('Prints minimum input declaration showing the pdf form', () => {
+    cy.createBirthRegistrationAs('fieldWorker')
     cy.login('registrar')
-    // CREATE PIN
+
     cy.createPin()
-    cy.printApplication() 
+    cy.reviewForm()
+    cy.submitForm()
+    cy.printDeclaration()
   })
 })

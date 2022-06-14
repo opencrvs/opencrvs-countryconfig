@@ -11,7 +11,7 @@ export async function getToken(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-correlation': username + '-' + Date.now()
+      'x-correlation-id': username + '-' + Date.now()
     },
     body: JSON.stringify({
       username,
@@ -28,7 +28,7 @@ export async function getToken(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-correlation': username + '-' + Date.now()
+      'x-correlation-id': username + '-' + Date.now()
     },
     body: JSON.stringify({
       nonce,
@@ -56,7 +56,7 @@ export async function getTokenForSystemClient(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-correlation': clientId + '-' + Date.now()
+        'x-correlation-id': clientId + '-' + Date.now()
       },
       body: JSON.stringify({
         client_id: clientId,
@@ -73,13 +73,20 @@ export function readToken(token: string) {
   return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
 }
 
-export async function updateToken(user: User) {
+export async function updateToken(user: User): Promise<void> {
   if (!user.stillInUse) {
     return
   }
-  const token = user.isSystemUser
-    ? await getTokenForSystemClient(user.username, user.password)
-    : await getToken(user.username, user.password)
+  let token
+  try {
+    token = user.isSystemUser
+      ? await getTokenForSystemClient(user.username, user.password)
+      : await getToken(user.username, user.password)
+  } catch (error) {
+    console.log('Failed to fetch token for user', user.username)
+    await new Promise(resolve => setTimeout(resolve, 3000))
+    return updateToken(user)
+  }
 
   user.token = token
 

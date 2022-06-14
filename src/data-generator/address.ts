@@ -13,6 +13,13 @@ export function createAddressInput(
     city: faker.address.city(),
     postalCode: faker.address.zipCode(),
     type,
-    line: [faker.address.streetAddress(), faker.address.zipCode(), 'URBAN']
+    line: [
+      faker.address.streetAddress(),
+      faker.address.zipCode(),
+      'URBAN',
+      '',
+      '',
+      'URBAN'
+    ]
   }
 }
