@@ -6,13 +6,22 @@ on:
       - master
       - develop
       - main
-
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: Branch to build from
+        default: develop
+        required: true
 jobs:
   push:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          ref: '${{ github.event.inputs.branch_name }}'
+      - uses: actions/checkout@v2
+        if: github.event_name == 'push'
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -23,4 +32,6 @@ jobs:
           DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
           DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
         run: |
-          export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION
+          export COUNTRY_CONFIG_VERSION=`git rev-parse --short=7 HEAD`
+          echo "Publishing a Docker image with a tag $COUNTRY_CONFIG_VERSION"
+          bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION

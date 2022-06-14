@@ -2,10 +2,11 @@ import fetch from 'node-fetch'
 import { User } from './users'
 
 import { idsToFHIRIds, log, removeEmptyFields } from './util'
-import { readFileSync } from 'fs'
-import { join } from 'path'
 import {
+  AttachmentInput,
   BirthRegistrationInput,
+  DeathRegistrationInput,
+  LocationType,
   MarkBirthAsCertifiedMutation,
   MarkDeathAsCertifiedMutation,
   PaymentOutcomeType,
@@ -15,20 +16,19 @@ import { omit } from 'lodash'
 import { GATEWAY_HOST } from './constants'
 import { markAsRegistered, markDeathAsRegistered } from './register'
 import { MARK_BIRTH_AS_CERTIFIED, MARK_DEATH_AS_CERTIFIED } from './queries'
+import { differenceInDays } from 'date-fns'
+import { ConfigResponse } from './config'
 
 export function createBirthCertificationDetails(
   createdAt: Date,
-  declaration: Awaited<ReturnType<typeof markAsRegistered>>
+  declaration: Awaited<ReturnType<typeof markAsRegistered>>,
+  config: ConfigResponse
 ) {
   const withIdsRemoved = idsToFHIRIds(
-    omit(declaration, [
-      '__typename',
-      'id',
-      'eventLocation.id',
-      'registration.type'
-    ]),
+    omit(declaration, ['__typename', 'id', 'registration.type']),
     [
       'id',
+      'eventLocation.id',
       'mother.id',
       'father.id',
       'child.id',
@@ -38,10 +38,34 @@ export function createBirthCertificationDetails(
     ]
   )
   delete withIdsRemoved.history
+
+  const completionDays = differenceInDays(
+    createdAt,
+    new Date(declaration.child?.birthDate!)
+  )
+
+  const paymentAmount =
+    completionDays < config.config.BIRTH.REGISTRATION_TARGET
+      ? config.config.BIRTH.FEE.ON_TIME
+      : completionDays < config.config.BIRTH.LATE_REGISTRATION_TARGET
+      ? config.config.BIRTH.FEE.LATE
+      : config.config.BIRTH.FEE.DELAYED
+  log(
+    'Collecting certification payment of',
+    paymentAmount,
+    'for completion days',
+    completionDays
+  )
   const data = {
     ...withIdsRemoved,
+    eventLocation: {
+      _fhirID: withIdsRemoved.eventLocation?._fhirID
+    },
     registration: {
       ...withIdsRemoved.registration,
+      attachments: withIdsRemoved.registration?.attachments?.filter(
+        (x): x is AttachmentInput => x !== null
+      ),
       status: [
         {
           timestamp: createdAt.toISOString()
@@ -53,15 +77,14 @@ export function createBirthCertificationDetails(
           payments: [
             {
               type: PaymentType.Manual,
-              total: 10,
-              amount: 10,
+              total: paymentAmount,
+              amount: paymentAmount,
               outcome: PaymentOutcomeType.Completed,
               date: createdAt
             }
           ],
           data:
-            'data:application/pdf;base64,' +
-            readFileSync(join(__dirname, './signature.pdf')).toString('base64'),
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
           collector: {
             relationship: 'MOTHER'
           }
@@ -74,17 +97,14 @@ export function createBirthCertificationDetails(
 
 export function createDeathCertificationDetails(
   createdAt: Date,
-  declaration: Awaited<ReturnType<typeof markDeathAsRegistered>>
-) {
+  declaration: Awaited<ReturnType<typeof markDeathAsRegistered>>,
+  config: ConfigResponse
+): DeathRegistrationInput {
   const withIdsRemoved = idsToFHIRIds(
-    omit(declaration, [
-      '__typename',
-      'id',
-      'eventLocation.id',
-      'registration.type'
-    ]),
+    omit(declaration, ['__typename', 'id', 'registration.type']),
     [
       'id',
+      'eventLocation.id',
       'mother.id',
       'father.id',
       'informant.individual.id',
@@ -94,7 +114,26 @@ export function createDeathCertificationDetails(
     ]
   )
 
-  const data = {
+  const completionDays = differenceInDays(
+    createdAt,
+    declaration.deceased?.deceased?.deathDate
+      ? new Date(declaration.deceased?.deceased?.deathDate)
+      : new Date()
+  )
+
+  const paymentAmount =
+    completionDays < config.config.DEATH.REGISTRATION_TARGET
+      ? config.config.DEATH.FEE.ON_TIME
+      : config.config.DEATH.FEE.DELAYED
+
+  log(
+    'Collecting certification payment of',
+    paymentAmount,
+    'for completion days',
+    completionDays
+  )
+
+  const data: DeathRegistrationInput = {
     ...withIdsRemoved,
     deceased: {
       ...withIdsRemoved.deceased,
@@ -102,20 +141,31 @@ export function createDeathCertificationDetails(
         id => id?.type != 'DEATH_REGISTRATION_NUMBER'
       )
     },
+    eventLocation:
+      withIdsRemoved.eventLocation?.type === LocationType.PrivateHome
+        ? {
+            address: withIdsRemoved.eventLocation.address,
+            type: withIdsRemoved.eventLocation.type
+          }
+        : {
+            _fhirID: withIdsRemoved.eventLocation?._fhirID
+          },
     registration: {
       ...withIdsRemoved.registration,
+      attachments: withIdsRemoved.registration?.attachments?.filter(
+        (x): x is AttachmentInput => x !== null
+      ),
       draftId: withIdsRemoved._fhirIDMap?.composition,
       certificates: [
         {
           hasShowedVerifiedDocument: false,
           data:
-            'data:application/pdf;base64,' +
-            readFileSync(join(__dirname, './signature.pdf')).toString('base64'),
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
           payments: [
             {
               type: PaymentType.Manual,
-              total: 10,
-              amount: 10,
+              total: paymentAmount,
+              amount: paymentAmount,
               outcome: PaymentOutcomeType.Completed,
               date: createdAt
             }
@@ -186,7 +236,7 @@ export async function markAsCertified(
 export async function markDeathAsCertified(
   id: string,
   user: User,
-  details: BirthRegistrationInput
+  details: DeathRegistrationInput
 ) {
   const { token, username } = user
 

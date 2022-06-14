@@ -12,7 +12,7 @@
 import { readFileSync } from 'fs'
 import * as jwt from 'jsonwebtoken'
 import { createServer } from '@countryconfig/index'
-import * as locationsService from '@countryconfig/farajaland/features/administrative/service/service'
+import * as locationsService from '@countryconfig/features/administrative/service/service'
 
 describe('Route authorization', () => {
   beforeAll(() => {

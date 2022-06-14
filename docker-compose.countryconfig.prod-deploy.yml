@@ -11,19 +11,15 @@ version: '3.3'
 
 services:
   notification:
-    secrets:
-      - infobip-gateway-endpoint
-      - infobip-api-key
-      - infobip-sender-id
     environment:
-      - SMS_PROVIDER=infobip
-      - INFOBIP_GATEWAY_ENDPOINT_PATH=/run/secrets/infobip-gateway-endpoint
-      - INFOBIP_API_KEY_PATH=/run/secrets/infobip-api-key
-      - INFOBIP_SENDER_ID=/run/secrets/infobip-sender-id
+      - SMS_PROVIDER=unknown
+      - INFOBIP_GATEWAY_ENDPOINT_PATH=
+      - INFOBIP_API_KEY_PATH=
+      - INFOBIP_SENDER_ID=
       - LANGUAGES=en,fr
 
   countryconfig:
-    image: opencrvs/ocrvs-farajaland:${COUNTRY_CONFIG_VERSION:-latest}
+    image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
     restart: unless-stopped
     secrets:
       - jwt-public-key.{{ts}}
@@ -64,16 +60,20 @@ services:
     environment:
       - NODE_ENV=production
 
+  auth:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  user-mgnt:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+
 secrets:
   jwt-public-key.{{ts}}:
     external: true
   openhim-user:
     external: true
   openhim-password:
-    external: true
-  infobip-gateway-endpoint:
-    external: true
-  infobip-api-key:
-    external: true
-  infobip-sender-id:
     external: true

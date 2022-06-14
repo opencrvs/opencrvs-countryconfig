@@ -129,7 +129,7 @@ export type AttachmentInput = {
   _fhirID?: InputMaybe<Scalars['ID']>;
   contentType?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['Date']>;
-  data?: InputMaybe<Scalars['String']>;
+  data: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   originalFileName?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Scalars['String']>;
@@ -323,14 +323,14 @@ export type CertificateInput = {
 
 export type CertificateSvg = {
   __typename?: 'CertificateSVG';
-  _id?: Maybe<Scalars['ID']>;
-  event?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  svgCode?: Maybe<Scalars['String']>;
-  svgDateCreated?: Maybe<Scalars['String']>;
-  svgDateUpdated?: Maybe<Scalars['String']>;
-  svgFilename?: Maybe<Scalars['String']>;
-  user?: Maybe<Scalars['String']>;
+  event: Scalars['String'];
+  id: Scalars['ID'];
+  status: Scalars['String'];
+  svgCode: Scalars['String'];
+  svgDateCreated: Scalars['String'];
+  svgDateUpdated: Scalars['String'];
+  svgFilename: Scalars['String'];
+  user: Scalars['String'];
 };
 
 export type CertificateSvgInput = {
@@ -362,6 +362,17 @@ export type CommentInput = {
   comment?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['Date']>;
   user?: InputMaybe<UserInput>;
+};
+
+export type ComparisonInput = {
+  eq?: InputMaybe<Scalars['String']>;
+  gt?: InputMaybe<Scalars['String']>;
+  gte?: InputMaybe<Scalars['String']>;
+  in?: InputMaybe<Array<Scalars['String']>>;
+  lt?: InputMaybe<Scalars['String']>;
+  lte?: InputMaybe<Scalars['String']>;
+  ne?: InputMaybe<Scalars['String']>;
+  nin?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type ContactPoint = {
@@ -649,10 +660,12 @@ export type History = {
   certificates?: Maybe<Array<Maybe<Certificate>>>;
   comments?: Maybe<Array<Maybe<Comment>>>;
   date?: Maybe<Scalars['Date']>;
+  dhis2Notification?: Maybe<Scalars['Boolean']>;
   input?: Maybe<Array<Maybe<InputOutput>>>;
   location?: Maybe<Location>;
   office?: Maybe<Location>;
   output?: Maybe<Array<Maybe<InputOutput>>>;
+  reason?: Maybe<Scalars['String']>;
   reinstated?: Maybe<Scalars['Boolean']>;
   statusReason?: Maybe<StatusReason>;
   user?: Maybe<User>;
@@ -1191,7 +1204,7 @@ export type PersonInput = {
   name?: InputMaybe<Array<InputMaybe<HumanNameInput>>>;
   nationality?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   occupation?: InputMaybe<Scalars['String']>;
-  photo?: InputMaybe<Array<InputMaybe<AttachmentInput>>>;
+  photo?: InputMaybe<Array<AttachmentInput>>;
   reasonNotApplying?: InputMaybe<Scalars['String']>;
   telecom?: InputMaybe<Array<InputMaybe<ContactPointInput>>>;
 };
@@ -1219,6 +1232,7 @@ export type Query = {
   getTotalMetrics?: Maybe<TotalMetricsResult>;
   getTotalPayments?: Maybe<Array<PaymentMetric>>;
   getUser?: Maybe<User>;
+  getUserByMobile?: Maybe<User>;
   hasChildLocation?: Maybe<Location>;
   listBirthRegistrations?: Maybe<BirthRegResultSet>;
   listNotifications?: Maybe<Array<Maybe<Notification>>>;
@@ -1323,7 +1337,7 @@ export type QueryGetRolesArgs = {
   sortOrder?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<Scalars['String']>;
-  value?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<ComparisonInput>;
 };
 
 
@@ -1360,6 +1374,11 @@ export type QueryGetTotalPaymentsArgs = {
 
 export type QueryGetUserArgs = {
   userId?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetUserByMobileArgs = {
+  mobile?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1592,7 +1611,7 @@ export type RegistrationCountResult = {
 
 export type RegistrationInput = {
   _fhirID?: InputMaybe<Scalars['ID']>;
-  attachments?: InputMaybe<Array<InputMaybe<AttachmentInput>>>;
+  attachments?: InputMaybe<Array<AttachmentInput>>;
   book?: InputMaybe<Scalars['String']>;
   certificates?: InputMaybe<Array<InputMaybe<CertificateInput>>>;
   contact?: InputMaybe<Scalars['String']>;
@@ -1652,7 +1671,7 @@ export type RelatedPerson = {
 
 export type RelatedPersonInput = {
   _fhirID?: InputMaybe<Scalars['ID']>;
-  affidavit?: InputMaybe<Array<InputMaybe<AttachmentInput>>>;
+  affidavit?: InputMaybe<Array<AttachmentInput>>;
   id?: InputMaybe<Scalars['ID']>;
   individual?: InputMaybe<PersonInput>;
   otherRelationship?: InputMaybe<Scalars['String']>;
@@ -1707,7 +1726,7 @@ export type Signature = {
 };
 
 export type SignatureInput = {
-  data?: InputMaybe<Scalars['String']>;
+  data: Scalars['String'];
   type?: InputMaybe<Scalars['String']>;
 };
 
@@ -1751,7 +1770,7 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   identifier?: Maybe<Identifier>;
-  localRegistrar: LocalRegistrar;
+  localRegistrar?: Maybe<LocalRegistrar>;
   mobile?: Maybe<Scalars['String']>;
   name?: Maybe<Array<Maybe<HumanName>>>;
   practitionerId?: Maybe<Scalars['String']>;
@@ -1857,3 +1876,13 @@ export type FetchDeathRegistrationQueryVariables = Exact<{
 
 
 export type FetchDeathRegistrationQuery = { __typename?: 'Query', fetchDeathRegistration?: { __typename: 'DeathRegistration', _fhirIDMap?: any | null, id: string, createdAt?: any | null, mannerOfDeath?: MannerOfDeath | null, causeOfDeath?: string | null, maleDependentsOfDeceased?: number | null, femaleDependentsOfDeceased?: number | null, deceased?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, age?: number | null, gender?: string | null, maritalStatus?: MaritalStatusType | null, nationality?: Array<string | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, deceased?: { __typename?: 'Deceased', deathDate?: string | null } | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null } | null, informant?: { __typename?: 'RelatedPerson', id?: string | null, relationship?: string | null, individual?: { __typename?: 'Person', id?: string | null, nationality?: Array<string | null> | null, occupation?: string | null, birthDate?: string | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null } | null } | null, father?: { __typename?: 'Person', id?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null } | null, mother?: { __typename?: 'Person', id?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null } | null, medicalPractitioner?: { __typename?: 'MedicalPractitioner', name?: string | null, qualification?: string | null, lastVisitDate?: any | null } | null, registration?: { __typename?: 'Registration', id?: string | null, contact?: string | null, contactRelationship?: string | null, contactPhoneNumber?: string | null, type?: RegistrationType | null, trackingId?: string | null, registrationNumber?: string | null, attachments?: Array<{ __typename?: 'Attachment', data?: string | null, type?: AttachmentType | null, contentType?: string | null, subject?: AttachmentSubject | null } | null> | null, status?: Array<{ __typename?: 'RegWorkflow', type?: RegStatus | null, timestamp?: any | null } | null> | null } | null, eventLocation?: { __typename?: 'Location', id: string, type?: LocationType | null, address?: { __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null } | null } | null };
+
+export type GetTotalMetricsQueryVariables = Exact<{
+  event: Scalars['String'];
+  timeStart: Scalars['String'];
+  timeEnd: Scalars['String'];
+  locationId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetTotalMetricsQuery = { __typename?: 'Query', getTotalMetrics?: { __typename: 'TotalMetricsResult', estimated: { __typename: 'Estimation', totalEstimation: number, maleEstimation: number, femaleEstimation: number, locationId: string, estimationYear: number, locationLevel: string }, results: Array<{ __typename: 'EventMetrics', total: number, gender: string, eventLocationType: string, practitionerRole: string, timeLabel: string }> } | null };

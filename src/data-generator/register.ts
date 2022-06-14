@@ -4,15 +4,13 @@ import { User } from './users'
 import { idsToFHIRIds, log, removeEmptyFields } from './util'
 
 import { Location } from './location'
-import { createAddressInput } from './address'
+
 import {
-  AddressType,
+  AttachmentInput,
   AttendantType,
   BirthRegistrationInput,
   BirthType,
   DeathRegistrationInput,
-  EducationType,
-  LocationType,
   MaritalStatusType,
   RegisterBirthDeclarationMutation,
   RegisterDeathDeclarationMutation
@@ -59,7 +57,7 @@ export function createBirthRegistrationDetailsForNotification(
     ['father.reasonNotApplying']
   )
 
-  return {
+  const res = {
     ...registrationInput,
     createdAt,
     registration: {
@@ -71,8 +69,7 @@ export function createBirthRegistrationDetailsForNotification(
     weightAtBirth: Math.round((2.5 + 2 * Math.random()) * 10) / 10,
     attendantAtBirth: AttendantType.Physician,
     eventLocation: {
-      address: createAddressInput(location, AddressType.CrvsOffice),
-      type: LocationType.CrvsOffice
+      _fhirID: (declaration.eventLocation as any)?._fhirID
     },
     informant: {
       ...registrationInput.informant,
@@ -87,32 +84,23 @@ export function createBirthRegistrationDetailsForNotification(
       dateOfMarriage: sub(new Date(declaration.child.birthDate), { years: 2 })
         .toISOString()
         .split('T')[0],
-      occupation: 'Bookkeeper',
-      nationality: ['FAR'],
-      educationalAttainment: EducationType.LowerSecondaryIsced_2,
-      birthDate: sub(new Date(declaration.child.birthDate), { years: 20 })
-        .toISOString()
-        .split('T')[0],
-      address: [createAddressInput(location, AddressType.PrivateHome)]
+      occupation: 'Bookkeeper'
     },
     mother: {
-      nationality: ['FAR'],
+      ...registrationInput.mother,
       identifier: declaration.mother.identifier,
       name: declaration.mother.name,
       occupation: 'Bookkeeper',
-      educationalAttainment: EducationType.LowerSecondaryIsced_2,
       dateOfMarriage: sub(new Date(declaration.child.birthDate), { years: 2 })
         .toISOString()
         .split('T')[0],
-      birthDate: sub(new Date(declaration.child.birthDate), { years: 20 })
-        .toISOString()
-        .split('T')[0],
-      address: [createAddressInput(location, AddressType.PrivateHome)],
       maritalStatus: MaritalStatusType.Married,
       _fhirID: declaration.mother.id
     },
     _fhirIDMap: declaration._fhirIDMap
   }
+
+  return res
 }
 
 // Cleans unnecessary fields from declaration data to make it an input type
@@ -151,6 +139,9 @@ export function createRegistrationDetails(
     },
     registration: {
       ...withIdsRemoved.registration,
+      attachments: withIdsRemoved.registration?.attachments?.filter(
+        (x): x is AttachmentInput => x !== null
+      ),
       status: [
         {
           // This is needed to avoid the following error from Metrics service:

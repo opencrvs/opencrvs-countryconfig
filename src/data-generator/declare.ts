@@ -29,30 +29,35 @@ import { Facility, Location } from './location'
 import { User } from './users'
 import { log } from './util'
 
+const HOME_BIRTH_WEIGHT = 0.2
+const HOME_DEATH_WEIGHT = 0.2
+
 import {
   CREATE_DEATH_DECLARATION,
   FETCH_DEATH_REGISTRATION_QUERY,
   FETCH_REGISTRATION_QUERY,
   SEARCH_EVENTS
 } from './queries'
+import { IBirthNotification } from '@countryconfig/features/dhis2/features/notification/birth/handler'
 
 function randomWeightInGrams() {
   return Math.round((2.5 + 2 * Math.random()) * 1000)
 }
 
 export async function sendBirthNotification(
-  { username, token }: User,
+  { username, token, primaryOfficeId }: User,
   sex: 'male' | 'female',
   birthDate: Date,
   createdAt: Date,
-  location: Facility
+  facility: Facility
 ): Promise<string> {
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
   const requestStart = Date.now()
 
-  const notification = {
-    created_at: createdAt,
+  const notification: IBirthNotification = {
+    practitioner_primary_office: primaryOfficeId,
+    created_at: createdAt.toISOString(),
     dhis2_event: '1111',
     child: {
       first_names: firstNames,
@@ -63,7 +68,10 @@ export async function sendBirthNotification(
     father: {
       first_names: 'Dad',
       last_name: familyName,
-      nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString()
+      nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString(),
+      dob: sub(birthDate, { years: 20 })
+        .toISOString()
+        .split('T')[0]
     },
     mother: {
       first_names: 'Mom',
@@ -76,7 +84,7 @@ export async function sendBirthNotification(
     phone_number:
       '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
     date_birth: birthDate.toISOString().split('T')[0],
-    place_of_birth: location.id
+    place_of_birth: facility.id
   }
   const createBirthNotification = await fetch(
     `${COUNTRY_CONFIG_HOST}/dhis2-notification/birth`,
@@ -120,7 +128,8 @@ export function createBirthDeclarationData(
   sex: 'male' | 'female',
   birthDate: Date,
   declarationTime: Date,
-  location: Location
+  location: Location,
+  facility: Facility
 ): BirthRegistrationInput {
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const familyName = faker.name.lastName()
@@ -205,9 +214,26 @@ export function createBirthDeclarationData(
     attendantAtBirth: AttendantType.Physician,
     birthType: BirthType.Single,
     weightAtBirth: Math.round(2.5 + 2 * Math.random() * 10) / 10,
-    eventLocation: {
-      _fhirID: location.id
-    },
+    eventLocation:
+      Math.random() < HOME_BIRTH_WEIGHT
+        ? {
+            address: {
+              country: 'FAR',
+              state: location.partOf.replace('Location/', ''),
+              district: location.id,
+              city: faker.address.city(),
+              postalCode: faker.address.zipCode(),
+              line: [
+                faker.address.streetAddress(),
+                faker.address.zipCode(),
+                'URBAN'
+              ]
+            },
+            type: LocationType.PrivateHome
+          }
+        : {
+            _fhirID: facility.id
+          },
     mother
   }
 }
@@ -217,13 +243,15 @@ export async function createBirthDeclaration(
   sex: 'male' | 'female',
   birthDate: Date,
   declarationTime: Date,
-  location: Location
+  location: Location,
+  facility: Facility
 ) {
   const details = createBirthDeclarationData(
     sex,
     birthDate,
     declarationTime,
-    location
+    location,
+    facility
   )
 
   const name = details.child?.name
@@ -276,7 +304,8 @@ export async function createDeathDeclaration(
   deathTime: Date,
   sex: 'male' | 'female',
   declarationTime: Date,
-  location: Location
+  location: Location,
+  facility: Facility
 ) {
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
@@ -288,11 +317,11 @@ export async function createDeathDeclaration(
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const details: DeathRegistrationInput = {
     causeOfDeathEstablished: 'true',
-    causeOfDeathMethod: CauseOfDeathMethodType.LayReported,
+    causeOfDeathMethod: CauseOfDeathMethodType.Physician,
     deathDescription: 'Pneumonia',
     createdAt: declarationTime.toISOString(),
     registration: {
-      contact: 'INFORMANT',
+      contact: 'SPOUSE',
       contactPhoneNumber:
         '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
       contactRelationship: 'Mother',
@@ -343,10 +372,21 @@ export async function createDeathDeclaration(
     mannerOfDeath: MannerOfDeath.NaturalCauses,
     maleDependentsOfDeceased: Math.round(Math.random() * 5),
     femaleDependentsOfDeceased: Math.round(Math.random() * 5),
-    eventLocation: {
-      address: createAddressInput(location, AddressType.PrimaryAddress),
-      type: LocationType.PrimaryAddress
-    },
+    eventLocation:
+      Math.random() < HOME_DEATH_WEIGHT
+        ? {
+            address: {
+              type: AddressType.PrimaryAddress,
+              line: ['', '', '', '', '', ''],
+              country: 'FAR',
+              state: location.partOf.replace('Location/', ''),
+              district: location.id
+            },
+            type: LocationType.DeceasedUsualResidence
+          }
+        : {
+            _fhirID: facility.id
+          },
     informant: {
       individual: {
         birthDate: sub(declarationTime, { years: 20 })
@@ -495,7 +535,7 @@ export async function fetchDeathRegistration(
 export async function fetchAlreadyGeneratedInterval(
   token: string,
   locationIds: string[]
-) {
+): Promise<Date[]> {
   const fetchFirst = async (sort: 'desc' | 'asc') => {
     const res = await fetch(GATEWAY_HOST, {
       method: 'POST',

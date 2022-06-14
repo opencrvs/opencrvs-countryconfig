@@ -177,7 +177,6 @@ export async function getUsers(token: string, locationId: string) {
 }
 
 export async function createSystemClient(
-  token: string,
   officeId: string,
   scope: 'HEALTH' | 'NATIONAL_ID' | 'EXTERNAL_VALIDATION' | 'AGE_CHECK',
   systemAdmin: User
@@ -191,12 +190,12 @@ export async function createSystemClient(
     },
     body: JSON.stringify({ scope })
   })
-
+  const credentialsRes = await createUserRes.json()
   const credentials: {
     client_id: string
     client_secret: string
     sha_secret: string
-  } = await createUserRes.json()
+  } = credentialsRes
 
   const systemToken = await getTokenForSystemClient(
     credentials.client_id,
@@ -296,15 +295,19 @@ export async function createUsers(
   log('Creating', config.hospitalFieldAgents, 'hospitals')
   for (let i = 0; i < config.hospitalFieldAgents; i++) {
     const systemAdmin =
-      systemAdmins[i] ||
+      systemAdmins[0] ||
       (await createUser(token, randomOffice.id, {
         role: 'LOCAL_SYSTEM_ADMIN',
         type: 'LOCAL_SYSTEM_ADMIN'
       }))
 
-    hospitals.push(
-      await createSystemClient(token, randomOffice.id, 'HEALTH', systemAdmin)
+    const user = await createSystemClient(
+      randomOffice.id,
+      'HEALTH',
+      systemAdmin
     )
+
+    hospitals.push(user)
   }
 
   log('Hospitals created')
