@@ -210,7 +210,7 @@
         "config.form.settings.dynamicList": "Dynamic list",
         "config.form.hidden": "Hidden",
         "config.form.mobile.modal.desc": "Please use a laptop or desktop to configure a declaration form",
-        "config.form.mobile.modal.title": "Configuration on mobile unavailble",
+        "config.form.mobile.modal.title": "Configuration on mobile unavailable",
         "config.form.navigation.causeOfDeath": "Cause of death",
         "config.form.navigation.child": "Child details",
         "config.form.navigation.deathEvent": "Event details",
