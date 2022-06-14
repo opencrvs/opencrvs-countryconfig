@@ -920,6 +920,7 @@
     "system.user.pending": "Pill label for pending user",
     "system.user.disabled": "Pill label for disabled user",
     "system.user.deactivated": "Pill label for deactivated user",
+    "system.user.total": "User list table header text",
     "misc.newPass.header": "New Password header",
     "settings.user.label.assignedOffice": "Assigned office",
     "error.required.password": "New password required",

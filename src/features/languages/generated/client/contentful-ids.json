@@ -1345,6 +1345,7 @@
   "systemUserPending": "system.user.pending",
   "systemUserDisabled": "system.user.disabled",
   "systemUserDeactivated": "system.user.deactivated",
+  "systemUserTotal": "system.user.total",
   "recordAuditNoName": "recordAudit.noName",
   "recordAuditStatus": "recordAudit.status",
   "recordAuditNoStatus": "recordAudit.noStatus",
