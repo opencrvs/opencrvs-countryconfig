@@ -239,7 +239,7 @@
         "config.form.publish.published": "Published {updatedAt, date, ::MMMM yyyy}",
         "config.form.publish.success": "{event} draft v{version} has been published successfully",
         "config.form.published.description": "Your pulished declaration forms will appear here. Once your configuration is published you will no longer be able to make changes.",
-        "config.form.published.warning": "Nothing is currently published. Awaiting to be published: {events}",
+        "config.form.published.warning": "Warning! Form configurations are not published for: {events}",
         "config.form.save.error": "Something went wrong. Please try again",
         "config.form.save.inProgress": "Saving your draft...",
         "config.form.save.success": "Draft saved successfully. Redirecting...",
