@@ -14,6 +14,7 @@ window.config = {
   CONFIG_API_URL: 'https://config.{{hostname}}',
   COUNTRY: 'FAR',
   LANGUAGES: 'en,fr',
+  AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',
   CLIENT_APP_URL: 'https://register.{{hostname}}/',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}'
 }
