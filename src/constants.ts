@@ -79,4 +79,5 @@ export const CONTENTFUL_SPACE_ID =
     readFileSync(process.env.CONTENTFUL_SPACE_ID)) ||
   ''
 export const CMS = process.env.CMS // || 'contentful'
+export const DEFAULT_TIMEOUT = 600000
 

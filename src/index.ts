@@ -25,7 +25,8 @@ import {
   CHECK_INVALID_TOKEN,
   AUTH_URL,
   COUNTRY_WIDE_CRUDE_DEATH_RATE,
-  HOSTNAME
+  HOSTNAME,
+  DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
 import {
   locationsHandler,
@@ -106,7 +107,7 @@ export async function createServer() {
     port: COUNTRY_CONFIG_PORT,
     routes: {
       cors: { origin: whitelist },
-      payload: {maxBytes: 52428800}
+      payload: {maxBytes: 52428800, timeout: DEFAULT_TIMEOUT}
     }
   })
 

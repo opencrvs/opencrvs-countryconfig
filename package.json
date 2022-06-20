@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.0.0-alpha.3.1",
+  "version": "1.0.0",
   "description": "OpenCRVS country configuration for reference data",
   "license": "MPL-2.0",
   "scripts": {
@@ -23,6 +23,7 @@
     "db:clear:all": "REPLICAS=0 ./clear-all-data.sh",
     "contentful:prepare:import": "ts-node -r tsconfig-paths/register src/features/languages/scripts/contentfulImport.ts",
     "compose:push:version": "export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset VERSION",
+    "compose:push:release": "export VERSION=`git describe --tags --abbrev=0` && git checkout -b release-`git describe --tags --abbrev=0` && bash build-and-push.sh && unset VERSION",
     "data-generator": "ts-node -r tsconfig-paths/register -T src/data-generator/index.ts",
     "data-generator:generate-types": "graphql-codegen --config codegen.yml"
   },
