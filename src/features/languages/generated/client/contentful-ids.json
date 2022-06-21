@@ -788,6 +788,7 @@
   "formFieldLabelFirstNameBN": "form.field.label.firstNameBN",
   "formFieldLabelFirstNameEN": "form.field.label.firstNameEN",
   "formFieldLabelHealthInstitution": "form.field.label.healthInstitution",
+  "formFieldLabelPlaceOfDeathSameAsPrimary": "form.field.label.placeOfDeathSameAsPrimary",
   "formFieldLabelHospital": "form.field.label.hospital",
   "formFieldLabelID": "form.field.label.iD",
   "formFieldLabelIDType": "form.field.label.iDType",
