@@ -118,7 +118,6 @@ export async function composeAndSaveFacilities(
       parentLocations,
       getPartOfIdForFacility(facility)
     )
-    console.log("parentLocationID: ", parentLocationID)
     const newLocation: fhir.Location = composeFhirLocation(
       facility,
       `Location/${parentLocationID}`
