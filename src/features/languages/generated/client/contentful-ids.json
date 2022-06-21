@@ -1276,6 +1276,7 @@
   "searchNoResults": "search.noResults",
   "searchResults": "search.results",
   "searchSearchResultFor": "search.searchResultFor",
+  "searchNoResultFor": "search.noResultFor",
   "searchSearchingFor": "search.searchingFor",
   "searchTotalResultText": "search.totalResultText",
   "searchWaitingForConnection": "search.waitingForConnection",
