@@ -12,17 +12,19 @@
 import * as fs from 'fs'
 import { EMPLOYEES_SOURCE } from '@countryconfig/constants'
 import * as csv2json from 'csv2json'
-const sourceJSON = `${EMPLOYEES_SOURCE}generated/test-employees.json`
 import chalk from 'chalk'
+
+const sourceJSON = process.argv[2].toLowerCase() === "development" ? `${EMPLOYEES_SOURCE}generated/test-employees.json` : `${EMPLOYEES_SOURCE}generated/prod-employees.json`
+const sourceCSV = process.argv[2].toLowerCase() === "development" ? `${EMPLOYEES_SOURCE}source/test-employees.csv` : `${EMPLOYEES_SOURCE}source/prod-employees.csv`
 
 export default async function prepareSourceJSON() {
   // tslint:disable-next-line:no-console
   console.log(
     `${chalk.blueBright(
-      '/////////////////////////// CONVERTING EMPLOYEES CSV TO JSON ///////////////////////////'
+      `/////////////////////////// CONVERTING: ${process.argv[2].toLowerCase()} EMPLOYEES CSV TO JSON ///////////////////////////`
     )}`
   )
-  fs.createReadStream(`${EMPLOYEES_SOURCE}source/test-employees.csv`)
+  fs.createReadStream(sourceCSV)
     .pipe(csv2json())
     .pipe(fs.createWriteStream(sourceJSON))
 

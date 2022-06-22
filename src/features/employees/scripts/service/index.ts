@@ -120,7 +120,8 @@ const composeFhirPractitionerRole = (
 export async function composeAndSavePractitioners(
   practitioners: ITestPractitioner[],
   testUserPassword: string,
-  environment: string
+  environment: string,
+  countryAlpha3: string
 ): Promise<boolean> {
   const users: IUserModel[] = []
   const loginDetails: ILoginDetails[] = []
@@ -210,7 +211,7 @@ export async function composeAndSavePractitioners(
       ],
       username: practitioner.username,
       email: practitioner.email,
-      mobile: convertToMSISDN(practitioner.mobile, 'zmb'),
+      mobile: convertToMSISDN(practitioner.mobile, countryAlpha3.toUpperCase()),
       passwordHash: pass.hash,
       salt: pass.salt,
       role: practitioner.role,
