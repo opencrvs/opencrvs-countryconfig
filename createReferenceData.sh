@@ -12,15 +12,27 @@
 if [ -z "$1" ]
   then
     echo 'Error: Argument for the test users password for use in development only is required in position 1.'
-    echo 'Error: Argument for environment code "DEV" or "PRODUCTION" is required in position 2.'
-    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "DEV" or "PRODUCTION"} '
+    echo 'Error: Argument for environment code "development" or "production" is required in position 2.'
+    echo 'Error: 3 character argument for alpha3 country code https://www.iban.com/country-codes is required in position 3.'
+    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "development" or "production"} {alpha3 country code e.g. JAM for Jamaica}'
     exit 1
 fi
 
 if [ -z "$2" ]
   then
-    echo 'Error: Argument for environment code "DEV" or "PRODUCTION" is required in position 2.'
-    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "DEV" or "PRODUCTION"} '
+    echo 'Error: Argument for the test users password for use in development only is required in position 1.'
+    echo 'Error: Argument for environment code "development" or "production" is required in position 2.'
+    echo 'Error: 3 character argument for alpha3 country code https://www.iban.com/country-codes is required in position 3.'
+    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "development" or "production"} {alpha3 country code e.g. JAM for Jamaica}'
+    exit 1
+fi
+
+if [ -z "$3" ]
+  then
+    echo 'Error: Argument for the test users password for use in development only is required in position 1.'
+    echo 'Error: Argument for environment code "development" or "production" is required in position 2.'
+    echo 'Error: 3 character argument for alpha3 country code https://www.iban.com/country-codes is required in position 3.'
+    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "development" or "production"} {alpha3 country code e.g. JAM for Jamaica}'
     exit 1
 fi
 
@@ -45,6 +57,6 @@ ts-node -r tsconfig-paths/register src/features/administrative/scripts/assign-ad
 ts-node -r tsconfig-paths/register src/features/facilities/scripts/prepare-source-facilities.ts
 ts-node -r tsconfig-paths/register src/features/facilities/scripts/assign-facilities-to-locations.ts
 ts-node -r tsconfig-paths/register src/features/administrative/scripts/add-statistical-data.ts
-ts-node -r tsconfig-paths/register src/features/employees/scripts/prepare-source-employees.ts
-ts-node -r tsconfig-paths/register src/features/employees/scripts/assign-employees-to-practitioners.ts -- $1 $2
+ts-node -r tsconfig-paths/register src/features/employees/scripts/prepare-source-employees.ts -- $2
+ts-node -r tsconfig-paths/register src/features/employees/scripts/assign-employees-to-practitioners.ts -- $1 $2 $3
 ts-node -r tsconfig-paths/register src/features/config/scripts/populate-default-config.ts

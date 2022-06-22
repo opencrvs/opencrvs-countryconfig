@@ -15,13 +15,13 @@ import chalk from 'chalk'
 import { internal } from '@hapi/boom'
 import { composeAndSavePractitioners } from '@countryconfig/features/employees/scripts/service'
 
-const sourceJSON = `${EMPLOYEES_SOURCE}generated/test-employees.json`
+const sourceJSON = process.argv[3].toLowerCase() === "development" ? `${EMPLOYEES_SOURCE}generated/test-employees.json` : `${EMPLOYEES_SOURCE}generated/prod-employees.json`
 
 export default async function importEmployees() {
   // tslint:disable-next-line:no-console
   console.log(
     `${chalk.blueBright(
-      '/////////////////////////// MAPPING EMPLOYEES TO PRACTITIONERS, ROLES AND USERS & SAVING TO FHIR ///////////////////////////'
+      `/////////////////////////// MAPPING: ${process.argv[3].toLowerCase()} EMPLOYEES TO PRACTITIONERS, ROLES AND USERS & SAVING TO FHIR ///////////////////////////`
     )}`
   )
   const employees = JSON.parse(fs.readFileSync(sourceJSON).toString())
@@ -29,7 +29,8 @@ export default async function importEmployees() {
     await composeAndSavePractitioners(
       employees,
       process.argv[2],
-      process.argv[3].toLowerCase()
+      process.argv[3].toLowerCase(),
+      process.argv[4].toUpperCase(),
     )
   } catch (err) {
     return internal(err)
