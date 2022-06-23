@@ -48,7 +48,7 @@ export default async function importCertificates() {
     })
 
     const defaultConfig = new Config({
-      APPLICATION_NAME: 'OpenCRVS',
+      APPLICATION_NAME: 'Farajaland CRS',
       BACKGROUND_SYNC_BROADCAST_CHANNEL: 'backgroundSynBroadCastChannel',
       BIRTH: {
         REGISTRATION_TARGET: 30,
@@ -64,8 +64,8 @@ export default async function importCertificates() {
       COUNTRY_LOGO_RENDER_WIDTH: 104,
       COUNTRY_LOGO_RENDER_HEIGHT: 104,
       CURRENCY: {
-        isoCode: 'ZMW',
-        languagesAndCountry: ['en-ZM']
+        isoCode: 'USD',
+        languagesAndCountry: ['en-US']
       },
       DEATH: {
         REGISTRATION_TARGET: 45,

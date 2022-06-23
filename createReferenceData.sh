@@ -14,7 +14,7 @@ if [ -z "$1" ]
     echo 'Error: Argument for the test users password for use in development only is required in position 1.'
     echo 'Error: Argument for environment code "development" or "production" is required in position 2.'
     echo 'Error: 3 character argument for alpha3 country code https://www.iban.com/country-codes is required in position 3.'
-    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "development" or "production"} {alpha3 country code e.g. JAM for Jamaica}'
+    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "development" or "production"} {alpha3 country code e.g. JAM for Jamaica, or ZMB for our fake country Farajaland which uses Zambia format.}'
     exit 1
 fi
 
@@ -23,7 +23,7 @@ if [ -z "$2" ]
     echo 'Error: Argument for the test users password for use in development only is required in position 1.'
     echo 'Error: Argument for environment code "development" or "production" is required in position 2.'
     echo 'Error: 3 character argument for alpha3 country code https://www.iban.com/country-codes is required in position 3.'
-    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "development" or "production"} {alpha3 country code e.g. JAM for Jamaica}'
+    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "development" or "production"} {alpha3 country code e.g. JAM for Jamaica, or ZMB for our fake country Farajaland which uses Zambia format.}'
     exit 1
 fi
 
@@ -32,7 +32,7 @@ if [ -z "$3" ]
     echo 'Error: Argument for the test users password for use in development only is required in position 1.'
     echo 'Error: Argument for environment code "development" or "production" is required in position 2.'
     echo 'Error: 3 character argument for alpha3 country code https://www.iban.com/country-codes is required in position 3.'
-    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "development" or "production"} {alpha3 country code e.g. JAM for Jamaica}'
+    echo 'Usage: db:populate {Test users password: e.g. "test"} {environment code "development" or "production"} {alpha3 country code e.g. JAM for Jamaica, or ZMB for our fake country Farajaland which uses Zambia format.}'
     exit 1
 fi
 
