@@ -34,7 +34,6 @@ import {
 } from '@countryconfig/features/administrative/handler'
 import { facilitiesHandler } from '@countryconfig/features/facilities/handler'
 import { contentHandler } from '@countryconfig/features/content/handler'
-import { assetHandler } from '@countryconfig/features/assets/handler'
 import {
   generatorHandler,
   requestSchema as generatorRequestSchema,
@@ -198,17 +197,6 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Returns Farajaland facilities.json'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/assets/{file}',
-    handler: assetHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves country specific assets, unprotected'
     }
   })
 

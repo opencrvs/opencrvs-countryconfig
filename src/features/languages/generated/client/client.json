@@ -1182,7 +1182,7 @@
         "form.field.SearchField.officeLocationId": "Id: {locationId}",
         "form.field.SearchField.placeHolderText": "Search",
         "form.field.select.placeholder": "Select",
-        "form.field.tooltip.tooltipNationalID": "This is a tooltip to guide the user how to enter the National ID",
+        "form.field.tooltip.tooltipNationalID": "The National ID can only be numeric and must be 9 digits long",
         "form.group.reasonNotApplying.parents": "Why are the mother and father not applying?",
         "form.preview.group.label.english.name": "Fullname",
         "form.preview.group.label.father.english.name": "Father's fullname",
