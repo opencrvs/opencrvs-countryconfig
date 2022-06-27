@@ -1449,7 +1449,7 @@ export type QuerySearchDeathRegistrationsArgs = {
 export type QuerySearchEventsArgs = {
   contactNumber?: InputMaybe<Scalars['String']>;
   count?: InputMaybe<Scalars['Int']>;
-  locationIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  locationIds?: InputMaybe<Array<Scalars['String']>>;
   name?: InputMaybe<Scalars['String']>;
   registrationNumber?: InputMaybe<Scalars['String']>;
   skip?: InputMaybe<Scalars['Int']>;
@@ -1561,6 +1561,7 @@ export type RegWorkflowInput = {
 export type Registration = {
   __typename?: 'Registration';
   _fhirID?: Maybe<Scalars['ID']>;
+  assignment?: Maybe<AssignmentData>;
   attachments?: Maybe<Array<Maybe<Attachment>>>;
   book?: Maybe<Scalars['String']>;
   certificates?: Maybe<Array<Maybe<Certificate>>>;
@@ -1828,7 +1829,7 @@ export type MarkDeathAsCertifiedMutation = { __typename?: 'Mutation', markDeathA
 
 export type SearchEventsQueryVariables = Exact<{
   sort?: InputMaybe<Scalars['String']>;
-  locationIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+  locationIds?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
 
