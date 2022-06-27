@@ -257,7 +257,7 @@ export const MARK_DEATH_AS_CERTIFIED = print(gql`
 `)
 
 export const SEARCH_EVENTS = print(gql`
-  query searchEvents($sort: String, $locationIds: [String]) {
+  query searchEvents($sort: String, $locationIds: [String!]) {
     searchEvents(
       sort: $sort
       locationIds: $locationIds
