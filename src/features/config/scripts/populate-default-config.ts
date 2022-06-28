@@ -48,8 +48,7 @@ export default async function importCertificates() {
     })
 
     const defaultConfig = new Config({
-      APPLICATION_NAME: 'OpenCRVS',
-      BACKGROUND_SYNC_BROADCAST_CHANNEL: 'backgroundSynBroadCastChannel',
+      APPLICATION_NAME: 'Farajaland CRS',
       BIRTH: {
         REGISTRATION_TARGET: 30,
         LATE_REGISTRATION_TARGET: 365,
@@ -59,13 +58,10 @@ export default async function importCertificates() {
           DELAYED: 15
         }
       },
-      COUNTRY: 'FAR',
       COUNTRY_LOGO: countryLogo,
-      COUNTRY_LOGO_RENDER_WIDTH: 104,
-      COUNTRY_LOGO_RENDER_HEIGHT: 104,
       CURRENCY: {
-        isoCode: 'ZMW',
-        languagesAndCountry: ['en-ZM']
+        isoCode: 'USD',
+        languagesAndCountry: ['en-US']
       },
       DEATH: {
         REGISTRATION_TARGET: 45,
@@ -74,17 +70,11 @@ export default async function importCertificates() {
           DELAYED: 0
         }
       },
-      DESKTOP_TIME_OUT_MILLISECONDS: 900000,
-      UI_POLLING_INTERVAL: 5000,
-      FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
-      DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
-      INFORMANT_MINIMUM_AGE: 16,
-      HIDE_EVENT_REGISTER_INFORMATION: false,
-      EXTERNAL_VALIDATION_WORKQUEUE: false,
+      FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT', // Because administrative division levels are not editable, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Field agents only audited at DISTRICT level
+      DECLARATION_AUDIT_LOCATIONS: 'DISTRICT', // Because administrative division levels are not editable, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Declarations only audited at DISTRICT level
+      HIDE_EVENT_REGISTER_INFORMATION: false, 
+      EXTERNAL_VALIDATION_WORKQUEUE: false, // API related, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Declarations only audited at DISTRICT level
       PHONE_NUMBER_PATTERN: '^0(7|9)[0-9]{8}$',
-      SENTRY:
-        'https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604',
-      LOGROCKET: 'opencrvs-foundation/opencrvs-farajaland',
       NID_NUMBER_PATTERN: '^[0-9]{9}$'
     })
 

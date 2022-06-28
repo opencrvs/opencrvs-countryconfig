@@ -227,13 +227,12 @@ const birthRegistrationFragment = gql`
 `
 
 export const MARK_AS_REGISTERED_QUERY = print(gql`
-  ${birthRegistrationFragment}
   mutation registerBirthDeclaration(
     $id: ID!
     $details: BirthRegistrationInput!
   ) {
     markBirthAsRegistered(id: $id, details: $details) {
-      ...BirthRegistrationFragment
+      id
     }
   }
 `)
@@ -258,7 +257,7 @@ export const MARK_DEATH_AS_CERTIFIED = print(gql`
 `)
 
 export const SEARCH_EVENTS = print(gql`
-  query searchEvents($sort: String, $locationIds: [String]) {
+  query searchEvents($sort: String, $locationIds: [String!]) {
     searchEvents(
       sort: $sort
       locationIds: $locationIds
@@ -279,130 +278,7 @@ export const MARK_DEATH_AS_REGISTERED = print(gql`
     $details: DeathRegistrationInput!
   ) {
     markDeathAsRegistered(id: $id, details: $details) {
-      _fhirIDMap
       id
-      createdAt
-      deceased {
-        id
-        name {
-          use
-          firstNames
-          familyName
-        }
-        birthDate
-        age
-        gender
-        maritalStatus
-        nationality
-        identifier {
-          id
-          type
-        }
-        gender
-        deceased {
-          deathDate
-        }
-        address {
-          type
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-      }
-      informant {
-        id
-        relationship
-        individual {
-          id
-          identifier {
-            id
-            type
-          }
-          name {
-            use
-            firstNames
-            familyName
-          }
-          nationality
-          occupation
-          birthDate
-          telecom {
-            system
-            value
-          }
-          address {
-            type
-            line
-            district
-            state
-            city
-            postalCode
-            country
-          }
-        }
-      }
-      father {
-        id
-        name {
-          use
-          firstNames
-          familyName
-        }
-      }
-      mother {
-        id
-        name {
-          use
-          firstNames
-          familyName
-        }
-      }
-      medicalPractitioner {
-        name
-        qualification
-        lastVisitDate
-      }
-      registration {
-        id
-        contact
-        contactRelationship
-        contactPhoneNumber
-        attachments {
-          data
-          type
-          contentType
-          subject
-        }
-        status {
-          type
-          timestamp
-        }
-        type
-        trackingId
-        registrationNumber
-      }
-      eventLocation {
-        id
-        type
-        address {
-          type
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-      }
-      mannerOfDeath
-      causeOfDeath
-      maleDependentsOfDeceased
-      femaleDependentsOfDeceased
-      causeOfDeathEstablished
-      causeOfDeathMethod
     }
   }
 `)

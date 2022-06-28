@@ -38,7 +38,6 @@ function generateStatisticalExtensions(sourceStatistic: LocationStatistic) {
   const malePopulations = []
   const femalePopulations = []
   const totalPopulations = []
-  const maleFemaleRatios = []
   const birthRates = []
 
   for (const year of sourceStatistic.years) {
@@ -50,9 +49,6 @@ function generateStatisticalExtensions(sourceStatistic: LocationStatistic) {
     })
     totalPopulations.push({
       [year.year]: year.population
-    })
-    maleFemaleRatios.push({
-      [year.year]: year.male_female_ratio
     })
     birthRates.push({
       [year.year]: year.crude_birth_rate / 2
@@ -71,10 +67,6 @@ function generateStatisticalExtensions(sourceStatistic: LocationStatistic) {
     {
       url: 'http://opencrvs.org/specs/id/statistics-total-populations',
       valueString: JSON.stringify(totalPopulations)
-    },
-    {
-      url: 'http://opencrvs.org/specs/id/statistics-male-female-ratios',
-      valueString: JSON.stringify(maleFemaleRatios)
     },
     {
       url: 'http://opencrvs.org/specs/id/statistics-crude-birth-rates',

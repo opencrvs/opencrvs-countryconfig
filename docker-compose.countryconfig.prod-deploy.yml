@@ -13,9 +13,6 @@ services:
   notification:
     environment:
       - SMS_PROVIDER=unknown
-      - INFOBIP_GATEWAY_ENDPOINT_PATH=
-      - INFOBIP_API_KEY_PATH=
-      - INFOBIP_SENDER_ID=
       - LANGUAGES=en,fr
 
   countryconfig:

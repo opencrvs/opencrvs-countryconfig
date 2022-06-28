@@ -14,14 +14,15 @@ import {
 } from './gateway'
 import { omit } from 'lodash'
 import { GATEWAY_HOST } from './constants'
-import { markAsRegistered, markDeathAsRegistered } from './register'
+import { markDeathAsRegistered } from './register'
 import { MARK_BIRTH_AS_CERTIFIED, MARK_DEATH_AS_CERTIFIED } from './queries'
 import { differenceInDays } from 'date-fns'
 import { ConfigResponse } from './config'
+import { fetchDeathRegistration, fetchRegistration } from './declare'
 
 export function createBirthCertificationDetails(
   createdAt: Date,
-  declaration: Awaited<ReturnType<typeof markAsRegistered>>,
+  declaration: Awaited<ReturnType<typeof fetchRegistration>>,
   config: ConfigResponse
 ) {
   const withIdsRemoved = idsToFHIRIds(
@@ -97,7 +98,7 @@ export function createBirthCertificationDetails(
 
 export function createDeathCertificationDetails(
   createdAt: Date,
-  declaration: Awaited<ReturnType<typeof markDeathAsRegistered>>,
+  declaration: Awaited<ReturnType<typeof fetchDeathRegistration>>,
   config: ConfigResponse
 ): DeathRegistrationInput {
   const withIdsRemoved = idsToFHIRIds(

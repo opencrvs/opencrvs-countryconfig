@@ -8,7 +8,6 @@ type Year = {
   male_population: number
   female_population: number
   population: number
-  male_female_ratio: number
   crude_birth_rate: number
 }
 
@@ -57,9 +56,6 @@ export async function getStatisticsForStates() {
           male_population: sumBy(allStatsForThisYear, 'male_population'),
           female_population: sumBy(allStatsForThisYear, 'female_population'),
           population: sumBy(allStatsForThisYear, 'population'),
-          male_female_ratio:
-            sumBy(allStatsForThisYear, 'male_female_ratio') /
-            allStatsForThisYear.length,
           crude_birth_rate:
             sumBy(allStatsForThisYear, 'crude_birth_rate') /
             allStatsForThisYear.length
@@ -89,7 +85,6 @@ export async function getStatistics() {
           male_population: parseFloat(yearKeys[`male_population_${year}`]),
           female_population: parseFloat(yearKeys[`female_population_${year}`]),
           population: parseFloat(yearKeys[`population_${year}`]),
-          male_female_ratio: parseFloat(yearKeys[`male_female_ratio_${year}`]),
           crude_birth_rate: parseFloat(yearKeys[`crude_birth_rate_${year}`])
         }))
     }
