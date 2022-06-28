@@ -14,7 +14,6 @@ import {
 } from './gateway'
 import { omit } from 'lodash'
 import { GATEWAY_HOST } from './constants'
-import { markDeathAsRegistered } from './register'
 import { MARK_BIRTH_AS_CERTIFIED, MARK_DEATH_AS_CERTIFIED } from './queries'
 import { differenceInDays } from 'date-fns'
 import { ConfigResponse } from './config'

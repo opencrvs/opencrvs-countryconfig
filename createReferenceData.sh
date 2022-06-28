@@ -8,6 +8,7 @@
 #
 # Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
 # graphic logo are (registered/a) trademark(s) of Plan International.
+set -e
 
 if [ -z "$1" ]
   then
@@ -51,7 +52,7 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 
 
 ## Populate new application data
-
+ts-node -r tsconfig-paths/register src/scripts/validate-source-files.ts
 ts-node -r tsconfig-paths/register src/features/administrative/scripts/prepare-locations.ts
 ts-node -r tsconfig-paths/register src/features/administrative/scripts/assign-admin-structure-to-locations.ts
 ts-node -r tsconfig-paths/register src/features/facilities/scripts/prepare-source-facilities.ts
