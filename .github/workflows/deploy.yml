@@ -38,33 +38,20 @@ jobs:
         with:
           path: './${{ github.event.repository.name }}'
 
-      - name: Get COUNTRY_CONFIG_VERSION
-        if: ${{ !github.event.inputs.countryconfig-image-tag }}
-        run: |
-          cd ${{ github.event.repository.name }}
-          echo "COUNTRY_CONFIG_VERSION=$(git rev-parse --short=7 HEAD)" >> $GITHUB_ENV
-          cd ../
-
       - name: Set COUNTRY_CONFIG_VERSION from inputs
         if: ${{ github.event.inputs.countryconfig-image-tag }}
         run: |
-          echo "COUNTRY_CONFIG_VERSION=${{ github.event.inputs.countryconfig-image-tag }}" >> $GITHUB_ENV
-
-      - name: Checkout correct country config branch
-        run: |
           cd ${{ github.event.repository.name }}
+          echo "COUNTRY_CONFIG_VERSION=${{ github.event.inputs.countryconfig-image-tag }}" >> $GITHUB_ENV
           git checkout ${{ env.COUNTRY_CONFIG_VERSION }}
           cd ../
+
       - name: Set CORE_VERSION from inputs
         if: ${{ github.event.inputs.core-image-tag }}
-        run: echo "CORE_VERSION=${{ github.event.inputs.core-image-tag }}" >> $GITHUB_ENV
-
-      - name: Get CORE_VERSION
-        if: ${{ !github.event.inputs.core-image-tag }}
         run: |
           cd opencrvs-core
-          echo "CORE_VERSION=$(git rev-parse --short=7 HEAD)" >> $GITHUB_ENV
-          cd ../
+          echo "CORE_VERSION=${{ github.event.inputs.core-image-tag }}" >> $GITHUB_ENV
+          git checkout ${{ env.CORE_VERSION }}
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -96,9 +83,7 @@ jobs:
           MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
           MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-        run: |
-          cd opencrvs-core
-          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no qa ${{ env.QA_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ env.COUNTRY_CONFIG_REPO_NAME }} ${{ env.REPLICAS }}
+        run: bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no qa ${{ env.QA_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
 
       - name: Deploy to production
         if: ${{ github.event.inputs.environment == 'production' }}
@@ -118,9 +103,7 @@ jobs:
           MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
           MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-        run: |
-          cd opencrvs-core
-          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no production ${{ env.PRODUCTION_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ env.COUNTRY_CONFIG_REPO_NAME }} ${{ env.REPLICAS }}
+        run: bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no production ${{ env.PRODUCTION_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
 
       - name: Deploy to staging
         if: ${{ github.event.inputs.environment == 'staging' }}
@@ -140,6 +123,4 @@ jobs:
           MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
           MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-        run: |
-          cd opencrvs-core
-          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no development ${{ env.STAGING_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ env.COUNTRY_CONFIG_REPO_NAME }} ${{ env.REPLICAS }}
+        run: bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no development ${{ env.STAGING_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
