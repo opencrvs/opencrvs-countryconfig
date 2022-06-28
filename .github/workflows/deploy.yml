@@ -50,7 +50,6 @@ jobs:
         if: ${{ github.event.inputs.core-image-tag }}
         run: |
           cd opencrvs-core
-          echo $(env -i git log -n 5)
           echo "CORE_VERSION=${{ github.event.inputs.core-image-tag }}" >> $GITHUB_ENV
           git checkout ${{ env.CORE_VERSION }}
 
