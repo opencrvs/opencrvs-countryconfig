@@ -14,9 +14,10 @@ on:
       core-image-tag:
         description: Core DockerHub image tag
         required: false
+        default: 'v1.0.1'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
-        required: false
+        required: true
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
