@@ -12,6 +12,8 @@
 import { callingCountries } from 'country-data'
 import { createHash } from 'crypto'
 import * as uuid from 'uuid/v4'
+import * as csv2json from 'csv2json'
+import { createReadStream } from 'fs'
 
 export interface ISaltedHash {
   hash: string
@@ -60,4 +62,22 @@ export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
   return phone.startsWith('0')
     ? `${countryCode}${phone.substring(1)}`
     : `${countryCode}${phone}`
+}
+
+export async function readCSVToJSON<T>(filename: string) {
+  return new Promise<T>((resolve, reject) => {
+    const chunks: string[] = []
+    createReadStream(filename)
+      .on('error', reject)
+      .pipe(
+        csv2json({
+          separator: ','
+        })
+      )
+      .on('data', chunk => chunks.push(chunk))
+      .on('error', reject)
+      .on('end', () => {
+        resolve(JSON.parse(chunks.join('')))
+      })
+  })
 }
