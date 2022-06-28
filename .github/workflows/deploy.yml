@@ -43,8 +43,7 @@ jobs:
         run: |
           cd ${{ github.event.repository.name }}
           echo "COUNTRY_CONFIG_VERSION=${{ github.event.inputs.countryconfig-image-tag }}" >> $GITHUB_ENV
-          git checkout develop
-          git checkout ${{ env.COUNTRY_CONFIG_VERSION }}
+          git checkout ${{ github.event.inputs.countryconfig-image-tag }}
           cd ../
 
       - name: Set CORE_VERSION from inputs
