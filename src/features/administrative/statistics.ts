@@ -1,7 +1,6 @@
-import * as csv2json from 'csv2json'
-import { createReadStream } from 'fs'
 import { sumBy, uniq } from 'lodash'
 import { join } from 'path'
+import { readCSVToJSON } from '../../utils'
 
 type Year = {
   year: number
@@ -26,10 +25,10 @@ type LocationItem = {
 
 export async function getStatisticsForStates() {
   const districts = await readCSVToJSON<LocationItem[]>(
-    './source/districts.csv'
+    join(__dirname, './source/districts.csv')
   )
   const states = await readCSVToJSON<LocationItem[]>(
-    './source/states.csv'
+    join(__dirname, './source/states.csv')
   )
   const districtStatistics = await getStatistics()
 
@@ -70,7 +69,7 @@ export async function getStatisticsForStates() {
 export async function getStatistics() {
   const data = await readCSVToJSON<
     Array<Record<string, string> & { statisticalID: string }>
-  >('./source/statistics.csv')
+  >(join(__dirname, './source/statistics.csv'))
 
   return data.map<LocationStatistic>(item => {
     const { statisticalID, ...yearKeys } = item
@@ -88,21 +87,5 @@ export async function getStatistics() {
           crude_birth_rate: parseFloat(yearKeys[`crude_birth_rate_${year}`])
         }))
     }
-  })
-}
-async function readCSVToJSON<T>(filename: string) {
-  return await new Promise<T>((resolve, reject) => {
-    const chunks: string[] = []
-    createReadStream(join(__dirname, filename))
-      .pipe(
-        csv2json({
-          separator: ','
-        })
-      )
-      .on('data', chunk => chunks.push(chunk))
-      .on('error', reject)
-      .on('end', () => {
-        resolve(JSON.parse(chunks.join('')))
-      })
   })
 }
