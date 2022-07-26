@@ -37,7 +37,7 @@ export const CHECK_INVALID_TOKEN = process.env.CHECK_INVALID_TOKEN || 'false'
 export const VALIDATE_IN_BDRIS2 = process.env.VALIDATE_IN_BDRIS2 || 'false'
 export const CONFIRM_REGISTRATION_URL =
   process.env.CONFIRM_REGISTRATION_URL ||
-  'http://localhost:5050/confirm/registration'
+  'http://openhim-core:5001/confirm/registration'
 // This value is configured based on country's data
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE =
   process.env.COUNTRY_WIDE_CRUDE_DEATH_RATE || 6.633
