@@ -9,13 +9,15 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
+import {COUNTRY} from '../data-generator/constants';
+
 window.config = {
   API_GATEWAY_URL: 'http://localhost:7070/',  
   CONFIG_API_URL: 'http://localhost:2021',
   LOGIN_URL: 'http://localhost:3020',
   AUTH_URL: 'http://localhost:4040',
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
-  COUNTRY: 'FAR',
+  COUNTRY: COUNTRY,
   AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',
   LANGUAGES: 'en,fr',
   SENTRY:

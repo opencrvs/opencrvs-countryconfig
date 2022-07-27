@@ -44,7 +44,7 @@ import { User, createUsers } from './users'
 import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
 import { ConfigResponse, getConfig } from './config'
-
+import { COUNTRY as countryAlpha3 } from './constants'
 /*
  *
  * Configuration
@@ -193,7 +193,7 @@ async function main() {
      */
     log('Creating users for', location.name, '(', location.id, ')')
 
-    const users = await createUsers(token, location, {
+    const users = await createUsers(token, location,countryAlpha3,config.config.PHONE_NUMBER_PATTERN,{
       fieldAgents: FIELD_AGENTS,
       hospitalFieldAgents: HOSPITAL_FIELD_AGENTS,
       registrationAgents: REGISTRATION_AGENTS,
