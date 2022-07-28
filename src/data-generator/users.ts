@@ -5,6 +5,7 @@ import { getFacilities, Location } from './location'
 import fetch from 'node-fetch'
 import { getToken, getTokenForSystemClient } from './auth'
 import { AUTH_API_HOST, GATEWAY_HOST } from './constants'
+import { FIELD_AGENT_TYPES } from '@countryconfig/features/employees/scripts/manage-users'
 
 export type User = {
   username: string
@@ -282,12 +283,13 @@ export async function createUsers(
   }
   const randomOffice =
     crvsOffices[Math.floor(Math.random() * crvsOffices.length)]
+  const randomFieldAgentType = FIELD_AGENT_TYPES[Math.floor(Math.random()*FIELD_AGENT_TYPES.length)]
   log('Creating field agents')
   for (let i = fieldAgents.length; i < config.fieldAgents; i++) {
     fieldAgents.push(
       await createUser(token, randomOffice.id, {
         role: 'FIELD_AGENT',
-        type: 'FIELD_AGENT'
+        type: randomFieldAgentType
       })
     )
   }
@@ -298,7 +300,7 @@ export async function createUsers(
       systemAdmins[0] ||
       (await createUser(token, randomOffice.id, {
         role: 'LOCAL_SYSTEM_ADMIN',
-        type: 'LOCAL_SYSTEM_ADMIN'
+        type: ''
       }))
 
     const user = await createSystemClient(
@@ -316,7 +318,7 @@ export async function createUsers(
     registrationAgents.push(
       await createUser(token, randomOffice.id, {
         role: 'REGISTRATION_AGENT',
-        type: 'REGISTRATION_AGENT'
+        type: ''
       })
     )
   }
@@ -327,7 +329,7 @@ export async function createUsers(
     registrars.push(
       await createUser(token, randomOffice.id, {
         role: 'LOCAL_REGISTRAR',
-        type: 'LOCAL_REGISTRAR'
+        type: ''
       })
     )
   }

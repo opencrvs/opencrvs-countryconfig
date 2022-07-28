@@ -16,6 +16,8 @@ import User, {
   IUserModel
 } from '@countryconfig/features/employees/model/user'
 
+export const FIELD_AGENT_TYPES = ['HEALTHCARE_WORKER', 'POLICE_OFFICER', 'SOCIAL_WORKER', 'LOCAL_LEADER']
+
 function setDemoUser(scopes: string[], environment: string): string[] {
   if (environment === 'development') {
     // This makes sure that for test users in development, the SMS code is always 000000
@@ -57,7 +59,7 @@ export function createUsers(users: IUserModel[]) {
   const fieldAgentRole = new Role({
     title: 'Field Agent',
     value: 'FIELD_AGENT',
-    types: ['HEALTHCARE_WORKER', 'POLICE_OFFICER', 'SOCIAL_WORKER', 'LOCAL_LEADER'],
+    types: FIELD_AGENT_TYPES,
     active: true
   })
 
