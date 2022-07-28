@@ -13,7 +13,7 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 
 // tslint:enable no-var-requires
-import fetch from 'node-fetch'
+import fetch, { FetchError } from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
 import getPlugins from '@countryconfig/config/plugins'
 import * as usrMgntDB from '@countryconfig/database'
@@ -305,5 +305,11 @@ export async function createServer() {
 }
 
 if (require.main === module) {
-  createServer().then(server => server.start())
+  createServer()
+    .then(server => server.start())
+    .catch(error => {
+      if (error instanceof FetchError) {
+        logger.error(error.message)
+      }
+    })
 }
