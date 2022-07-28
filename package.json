@@ -4,7 +4,7 @@
   "description": "OpenCRVS country configuration for reference data",
   "license": "MPL-2.0",
   "scripts": {
-    "dev": "bash dev.sh",
+    "dev": "yarn start",
     "e2e": "cypress run",
     "open:e2e": "CYPRESS_COUNTRYCONFIG_URL=http://localhost:3040/ CYPRESS_GATEWAY_URL=http://localhost:7070/ CYPRESS_LOGIN_URL=http://localhost:3020/ CYPRESS_CLIENT_URL=http://localhost:3000/ CYPRESS_AUTH_URL=http://localhost:4040/ cypress open",
     "openqa:e2e": "CYPRESS_COUNTRYCONFIG_URL=https://countryconfig.farajaland-qa.opencrvs.org/ CYPRESS_GATEWAY_URL=https://gateway.farajaland-qa.opencrvs.org/ CYPRESS_LOGIN_URL=https://login.farajaland-qa.opencrvs.org/ CYPRESS_CLIENT_URL=https://register.farajaland-qa.opencrvs.org/ CYPRESS_AUTH_URL=https://auth.farajaland-qa.opencrvs.org/ cypress open",
