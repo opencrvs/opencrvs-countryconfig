@@ -1,6 +1,7 @@
 import fetch from 'node-fetch'
 import { URL } from 'url'
-import { CONFIG_HOST } from './constants'
+import { CONFIG_HOST,COUNTRY_CONFIG_HOST } from './constants'
+
 
 export async function getConfig(token: string): Promise<ConfigResponse> {
   const res = await fetch(new URL('/config', CONFIG_HOST).href, {
@@ -16,6 +17,15 @@ export async function getConfig(token: string): Promise<ConfigResponse> {
   }
 
   return res.json()
+}
+
+export async function getCountryAlpha3(): Promise<string> {
+  const res = await fetch(new URL('/client-config.js', COUNTRY_CONFIG_HOST).href);
+  if (!res.ok) {
+    throw new Error(`Could not fetch config, ${res.statusText} ${res.status}`)
+  }
+
+  return Function (`let window={}; ${await res.text()} ; return window.config.COUNTRY`)();
 }
 
 export interface ConfigResponse {
