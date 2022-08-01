@@ -20,5 +20,5 @@ window.config = {
   LANGUAGES: 'en,fr',
   SENTRY:
     'https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604',
-  LOGROCKET: 'opencrvs-foundation/opencrvs-farajaland',
+  LOGROCKET: ''
 }
