@@ -13,15 +13,13 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 
 // tslint:enable no-var-requires
-import fetch from 'node-fetch'
+import fetch, { FetchError } from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
-import { readFileSync } from 'fs'
 import getPlugins from '@countryconfig/config/plugins'
 import * as usrMgntDB from '@countryconfig/database'
 import {
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
-  CERT_PUBLIC_KEY_PATH,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
   COUNTRY_WIDE_CRUDE_DEATH_RATE,
@@ -44,8 +42,6 @@ import { validateRegistrationHandler } from '@countryconfig/features/validate/ha
 import { join } from 'path'
 import { birthNotificationHandler } from '@countryconfig/features/dhis2/features/notification/birth/handler'
 import { logger } from '@countryconfig/logger'
-
-const publicCert = readFileSync(CERT_PUBLIC_KEY_PATH)
 
 export const verifyToken = async (token: string, authUrl: string) => {
   const res = await fetch(`${authUrl}/verifyToken`, {
@@ -95,10 +91,7 @@ const validateFunc = async (
 export async function createServer() {
   let whitelist: string[] = [HOSTNAME]
   if (HOSTNAME[0] !== '*') {
-    whitelist = [
-      `https://login.${HOSTNAME}`,
-      `https://register.${HOSTNAME}`
-    ]
+    whitelist = [`https://login.${HOSTNAME}`, `https://register.${HOSTNAME}`]
   }
   logger.info('Whitelist: ', JSON.stringify(whitelist))
   const server = new Hapi.Server({
@@ -106,11 +99,14 @@ export async function createServer() {
     port: COUNTRY_CONFIG_PORT,
     routes: {
       cors: { origin: whitelist },
-      payload: {maxBytes: 52428800, timeout: DEFAULT_TIMEOUT}
+      payload: { maxBytes: 52428800, timeout: DEFAULT_TIMEOUT }
     }
   })
 
   await server.register(getPlugins())
+
+  const publicCertResponse = await fetch(`${AUTH_URL}/.well-known`)
+  const publicCert = await publicCertResponse.text()
 
   server.auth.strategy('jwt', 'jwt', {
     key: publicCert,
@@ -151,7 +147,6 @@ export async function createServer() {
         process.env.NODE_ENV === 'production'
           ? '/client-configs/client-config.prod.js'
           : '/client-configs/client-config.js'
-      console.log("HEY: ",join(__dirname, file))
       // @ts-ignore
       return h.file(join(__dirname, file))
     },
@@ -309,5 +304,11 @@ export async function createServer() {
 }
 
 if (require.main === module) {
-  createServer().then(server => server.start())
+  createServer()
+    .then(server => server.start())
+    .catch(error => {
+      if (error instanceof FetchError) {
+        logger.error(error.message)
+      }
+    })
 }
