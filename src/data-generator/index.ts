@@ -43,7 +43,7 @@ import { getLocationMetrics } from './statistics'
 import { User, createUsers } from './users'
 import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
-import { ConfigResponse, getConfig } from './config'
+import { ConfigResponse, getConfig ,getCountryAlpha3} from './config'
 
 /*
  *
@@ -118,6 +118,7 @@ async function main() {
   const token = await getToken(USERNAME, PASSWORD)
   console.log('Got token for system administrator')
   const config = await getConfig(token)
+  const countryAlpha3 = await getCountryAlpha3();
 
   const BIRTH_COMPLETION_DISTRIBUTION = [
     { range: [0, config.config.BIRTH.REGISTRATION_TARGET], weight: 0.8 },
@@ -193,7 +194,7 @@ async function main() {
      */
     log('Creating users for', location.name, '(', location.id, ')')
 
-    const users = await createUsers(token, location, {
+    const users = await createUsers(token, location,countryAlpha3,config.config.PHONE_NUMBER_PATTERN,{
       fieldAgents: FIELD_AGENTS,
       hospitalFieldAgents: HOSPITAL_FIELD_AGENTS,
       registrationAgents: REGISTRATION_AGENTS,

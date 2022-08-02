@@ -95,6 +95,7 @@
     "p-queue": "^6.6.2",
     "pino": "^5.14.0",
     "prettier": "^1.19.1",
+    "regex-to-strings": "^2.1.0",
     "short-uuid": "^4.1.0",
     "string-similarity": "^3.0.0",
     "ts-jest": "^24.0.2",
