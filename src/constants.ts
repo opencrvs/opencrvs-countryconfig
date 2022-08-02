@@ -21,9 +21,6 @@ export const MONGO_URL =
     process.env.CONFIG_MONGO_URL || 'mongodb://localhost/application-config'
 export const COUNTRY_CONFIG_HOST = process.env.COUNTRY_CONFIG_HOST || '0.0.0.0'
 export const COUNTRY_CONFIG_PORT = process.env.COUNTRY_CONFIG_PORT || 3040
-export const CERT_PUBLIC_KEY_PATH =
-  (process.env.CERT_PUBLIC_KEY_PATH as string) ||
-  '../../.secrets/public-key.pem'
 export const AUTH_URL = process.env.AUTH_URL || 'http://localhost:4040'
 export const SENTRY_DSN =
   process.env.SENTRY_DSN ||
