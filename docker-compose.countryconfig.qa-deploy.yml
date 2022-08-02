@@ -13,6 +13,7 @@ services:
   notification:
     environment:
       - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN}
 
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
@@ -30,6 +31,7 @@ services:
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
+      - SENTRY_DSN=${SENTRY_DSN}
 
     deploy:
       replicas: 1
@@ -43,10 +45,36 @@ services:
   gateway:
     environment:
       - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN}
 
   workflow:
     environment:
       - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  auth:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  config:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  metrics:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  search:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  user-mgnt:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  webhooks:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
 
 secrets:
   jwt-public-key.{{ts}}:

@@ -14,6 +14,7 @@ services:
     environment:
       - SMS_PROVIDER=unknown
       - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN}
 
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
@@ -31,6 +32,7 @@ services:
       - MONGO_URL=mongodb://mongo1,mongo2,mongo3/user-mgnt?replicaSet=rs0
       - CONFIG_MONGO_URL=mongodb://mongo1,mongo2,mongo3/application-config?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
+      - SENTRY_DSN=${SENTRY_DSN}
 
     deploy:
       replicas: 1
@@ -44,28 +46,40 @@ services:
   gateway:
     environment:
       - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN}
 
   workflow:
     environment:
       - LANGUAGES=en,fr
-
-  auth:
-    environment:
-      - NODE_ENV=production
-
-  user-mgnt:
-    environment:
-      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN}
 
   auth:
     environment:
       - QA_ENV=true
       - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN}
 
   user-mgnt:
     environment:
       - QA_ENV=true
       - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  config:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  metrics:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  search:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+
+  webhooks:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
 
 secrets:
   jwt-public-key.{{ts}}:
