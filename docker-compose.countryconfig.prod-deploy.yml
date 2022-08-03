@@ -31,6 +31,13 @@ services:
       - MONGO_URL=mongodb://mongo1,mongo2,mongo3/user-mgnt?replicaSet=rs0
       - CONFIG_MONGO_URL=mongodb://mongo1,mongo2,mongo3/application-config?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
+      - SMS_PROVIDER=${SMS_PROVIDER}
+      - CLICKATELL_USER_PATH=${CLICKATELL_USER_PATH}
+      - CLICKATELL_PASSWORD_PATH=${CLICKATELL_PASSWORD_PATH}
+      - CLICKATELL_API_ID_PATH=${CLICKATELL_API_ID_PATH}
+      - INFOBIP_GATEWAY_ENDPOINT_PATH=${INFOBIP_GATEWAY_ENDPOINT_PATH}
+      - INFOBIP_API_KEY_PATH=${INFOBIP_API_KEY_PATH}
+      - INFOBIP_SENDER_ID_PATH=${INFOBIP_SENDER_ID_PATH}
 
     deploy:
       replicas: 1

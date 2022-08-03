@@ -1701,6 +1701,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/iconv@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/iconv/-/iconv-3.0.1.tgz#88931a83d8a1e9575e493c48f737491326cd5e0f"
+  integrity sha512-VHYt1HZZCAJq/Odxut9eIKfRY8qQpDhNVhWJdk3sJXgvxeAeoUse0uIeZBlcC5O0tT2NBuqlW/4jd7e5wiAfKA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.4.tgz#8467d4b3c087805d63580480890791277ce35c44"
@@ -1787,10 +1794,10 @@
   dependencies:
     mongoose "*"
 
-"@types/node-fetch@^2.3.4":
-  version "2.5.12"
-  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.12.tgz#8a6f779b1d4e60b7a57fb6fd48d84fb545b9cc66"
-  integrity sha512-MKgC4dlq4kKNa/mYrwpKfzQMB5X3ee5U6fSprkKpToBqBmX4nFZL9cW5jl6sWn+xpRJ7ypWh2yyqqr8UUCstSw==
+"@types/node-fetch@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.6.2.tgz#d1a9c5fd049d9415dce61571557104dec3ec81da"
+  integrity sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==
   dependencies:
     "@types/node" "*"
     form-data "^3.0.0"
@@ -4773,6 +4780,11 @@ iconv-lite@0.4.24, iconv-lite@^0.4.24:
   integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
+
+iconv@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/iconv/-/iconv-3.0.1.tgz#31d319d71b59415cf348362c382961b1eb6f0e81"
+  integrity sha512-lJnFLxVc0d82R7GfU7a9RujKVUQ3Eee19tPKWZWBJtAEGRHVEyFzCtbNl3GPKuDnHBBRT4/nDS4Ru9AIDT72qA==
 
 ieee754@^1.1.13:
   version "1.2.1"

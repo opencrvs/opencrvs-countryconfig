@@ -44,6 +44,7 @@ import { validateRegistrationHandler } from '@countryconfig/features/validate/ha
 import { join } from 'path'
 import { birthNotificationHandler } from '@countryconfig/features/dhis2/features/notification/birth/handler'
 import { logger } from '@countryconfig/logger'
+import { notificationHandler, notificationScheme } from './features/notification/handler'
 
 const publicCert = readFileSync(CERT_PUBLIC_KEY_PATH)
 
@@ -279,6 +280,19 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Handles transformation and submission of birth notification'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/notification',
+    handler: notificationHandler,
+    options: {
+      tags: ['api'],
+      validate: {
+        payload: notificationScheme
+      },
+      description: 'Handles sending SMS'
     }
   })
 
