@@ -466,7 +466,7 @@
     "config.application.deathOnTimeFeeChangeNotification": "Message for application death on time fee change notification",
     "config.application.deathDelayedFeeChangeNotification": "Message for application death delayed fee change notification",
     "config.application.currencyChangeMessage": "Message for application currency change modal",
-    "config.application.updatingeMessage": "Message for application config updating",
+    "config.application.updatingeMessage": "Message for application config updated modal",
     "config.application.phoneNumberLabel": "Phone number config label",
     "config.application.nidPatternTitle": "Unique Identification Number (UIN) config title",
     "config.application.nidPatternChangeMessage": "Unique Identification Number (UIN) config message",

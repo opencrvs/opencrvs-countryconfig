@@ -9,6 +9,7 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
+
 window.config = {
   API_GATEWAY_URL: 'http://localhost:7070/',  
   CONFIG_API_URL: 'http://localhost:2021',
@@ -20,5 +21,5 @@ window.config = {
   LANGUAGES: 'en,fr',
   SENTRY:
     'https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604',
-  LOGROCKET: 'opencrvs-foundation/opencrvs-farajaland',
+  LOGROCKET: ''
 }

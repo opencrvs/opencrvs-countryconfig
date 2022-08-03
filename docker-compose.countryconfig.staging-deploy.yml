@@ -26,7 +26,6 @@ services:
       - OPENHIM_URL=http://openhim-core:5001/fhir
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
-      - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
 
@@ -48,8 +47,6 @@ services:
       - LANGUAGES=en,fr
 
 secrets:
-  jwt-public-key.{{ts}}:
-    external: true
   openhim-user:
     external: true
   openhim-password:
