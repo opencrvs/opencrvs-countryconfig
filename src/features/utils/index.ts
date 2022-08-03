@@ -18,6 +18,7 @@ type ISupportedType =
   | fhir.Practitioner
   | fhir.PractitionerRole
   | fhir.Location
+  | fhir.Patient
   | ICSVLocation
 
 export interface ICSVLocation {

@@ -1,0 +1,72 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * OpenCRVS is also distributed under the terms of the Civil Registration
+ * & Healthcare Disclaimer located at http://opencrvs.org/license.
+ *
+ * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
+ * graphic logo are (registered/a) trademark(s) of Plan International.
+ */
+import { getFromFhir, sendToFhir } from '@countryconfig/features/utils'
+import { hasScope } from '@countryconfig/index'
+import { unauthorized } from '@hapi/boom'
+import * as Hapi from '@hapi/hapi'
+
+interface IMosipPayload {
+  BRN: string
+  UIN: string
+  VIN: string
+}
+
+export async function mosipMediatorHandler(
+  request: Hapi.Request,
+  h: Hapi.ResponseToolkit
+) {
+  // Adds MOSIP generated VIN and NID to a child that has been registered
+  const token = request.headers['authorization'].split('Bearer ')[1]
+  if (hasScope(token, 'nationalId')) {
+    const payload = request.payload as IMosipPayload
+    const personBundle: fhir.Bundle = await getFromFhir(
+      `/Patient?identifier=${encodeURIComponent(payload.BRN)}`
+    )
+    if (personBundle.entry?.length && personBundle.entry[0]?.resource) {
+      const person: fhir.Patient = personBundle.entry[0]
+        ?.resource as fhir.Patient
+      if (
+        person.identifier?.length &&
+        person.identifier?.length === 1 &&
+        person.identifier[0].type === 'BIRTH_REGISTRATION_NUMBER' &&
+        person.identifier[0].value === payload.BRN
+      ) {
+        // update details
+        person.identifier.push({
+          type: 'NATIONAL_ID',
+          value: payload.VIN
+        } as fhir.CodeableConcept)
+        person.identifier.push({
+          type: 'MOSIP_UIN',
+          value: payload.UIN
+        } as fhir.CodeableConcept)
+        const personUpdateResponse = await sendToFhir(
+          person,
+          '/Patient',
+          'PUT'
+        ).catch((err: any) => {
+          throw Error(
+            `Cannot update person in FHIR. Error: ${JSON.stringify(err)}`
+          )
+        })
+        console.log('WTF: ', JSON.stringify(personUpdateResponse))
+        return h.response().code(200)
+      } else {
+        throw new Error('Person cannot be found')
+      }
+    } else {
+      throw new Error('Person cannot be found')
+    }
+  } else {
+    throw unauthorized()
+  }
+}
