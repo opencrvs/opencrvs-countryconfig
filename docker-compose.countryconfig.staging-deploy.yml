@@ -13,7 +13,7 @@ services:
   notification:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
@@ -30,7 +30,7 @@ services:
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
     deploy:
       replicas: 1
@@ -44,36 +44,36 @@ services:
   gateway:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   workflow:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   auth:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   config:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   metrics:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   search:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   user-mgnt:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   webhooks:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
 
 secrets:
