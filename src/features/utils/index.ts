@@ -67,6 +67,28 @@ export const sendToFhir = (
     })
 }
 
+export async function updateResourceInHearth(resource: fhir.ResourceBase) {
+  const res = await fetch(
+    `${FHIR_URL}/${resource.resourceType}/${resource.id}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(resource),
+      headers: {
+        'Content-Type': 'application/fhir+json'
+      }
+    }
+  )
+  if (!res.ok) {
+    throw new Error(
+      `FHIR update to ${resource.resourceType} failed with [${
+        res.status
+      }] body: ${await res.text()}`
+    )
+  }
+
+  return res.text()
+}
+
 export const getFromFhir = (suffix: string) => {
   return fetch(`${FHIR_URL}${suffix}`, {
     headers: {

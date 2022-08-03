@@ -9,7 +9,10 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { getFromFhir, sendToFhir } from '@countryconfig/features/utils'
+import {
+  getFromFhir,
+  updateResourceInHearth
+} from '@countryconfig/features/utils'
 import { hasScope } from '@countryconfig/index'
 import { unauthorized } from '@hapi/boom'
 import * as Hapi from '@hapi/hapi'
@@ -28,6 +31,7 @@ export async function mosipMediatorHandler(
   const token = request.headers['authorization'].split('Bearer ')[1]
   if (hasScope(token, 'nationalId')) {
     const payload = request.payload as IMosipPayload
+    // Search Hearth for a Person with a given National ID
     const personBundle: fhir.Bundle = await getFromFhir(
       `/Patient?identifier=${encodeURIComponent(payload.BRN)}`
     )
@@ -49,16 +53,11 @@ export async function mosipMediatorHandler(
           type: 'MOSIP_UIN',
           value: payload.UIN
         } as fhir.CodeableConcept)
-        const personUpdateResponse = await sendToFhir(
-          person,
-          '/Patient',
-          'PUT'
-        ).catch((err: any) => {
-          throw Error(
-            `Cannot update person in FHIR. Error: ${JSON.stringify(err)}`
-          )
-        })
-        console.log('WTF: ', JSON.stringify(personUpdateResponse))
+        try {
+          await updateResourceInHearth(person)
+        } catch (error) {
+          console.log(`Error for processing ${JSON.stringify(error)}`)
+        }
         return h.response().code(200)
       } else {
         throw new Error('Person cannot be found')
