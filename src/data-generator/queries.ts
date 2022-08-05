@@ -236,6 +236,17 @@ export const MARK_AS_REGISTERED_QUERY = print(gql`
     }
   }
 `)
+
+export const MARK_AS_REJECTED_QUERY = print(gql`
+  mutation markEventAsVoided(
+    $id: String!
+    $reason: String!
+    $comment: String!
+  ) {
+    markEventAsVoided(id: $id, reason: $reason, comment: $comment)
+  }
+`)
+
 export const CREATE_DEATH_DECLARATION = print(gql`
   mutation createDeathDeclaration($details: DeathRegistrationInput!) {
     createDeathRegistration(details: $details) {
