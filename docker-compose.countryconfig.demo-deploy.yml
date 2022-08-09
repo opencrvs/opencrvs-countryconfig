@@ -42,6 +42,20 @@ services:
     environment:
       - LANGUAGES=en,fr
 
+  workflow:
+    environment:
+      - LANGUAGES=en,fr
+
+  auth:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  user-mgnt:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+
 secrets:
   openhim-user:
     external: true
