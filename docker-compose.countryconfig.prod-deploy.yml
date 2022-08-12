@@ -14,6 +14,7 @@ services:
     environment:
       - SMS_PROVIDER=unknown
       - LANGUAGES=en,fr
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
@@ -30,6 +31,7 @@ services:
       - MONGO_URL=mongodb://mongo1,mongo2,mongo3/user-mgnt?replicaSet=rs0
       - CONFIG_MONGO_URL=mongodb://mongo1,mongo2,mongo3/application-config?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
     deploy:
       replicas: 1
@@ -43,28 +45,40 @@ services:
   gateway:
     environment:
       - LANGUAGES=en,fr
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   workflow:
     environment:
       - LANGUAGES=en,fr
-
-  auth:
-    environment:
-      - NODE_ENV=production
-
-  user-mgnt:
-    environment:
-      - NODE_ENV=production
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   auth:
     environment:
       - QA_ENV=true
       - NODE_ENV=production
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   user-mgnt:
     environment:
       - QA_ENV=true
       - NODE_ENV=production
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+
+  config:
+    environment:
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+
+  metrics:
+    environment:
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+
+  search:
+    environment:
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+
+  webhooks:
+    environment:
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
 secrets:
   openhim-user:
