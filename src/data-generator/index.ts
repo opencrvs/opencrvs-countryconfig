@@ -44,7 +44,7 @@ import { User, createUsers } from './users'
 import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
 import { ConfigResponse, getConfig ,getCountryAlpha3} from './config'
-
+import {markEventAsRejected} from './reject'
 /*
  *
  * Configuration
@@ -61,6 +61,9 @@ export const FIELD_AGENTS = 5
 export const HOSPITAL_FIELD_AGENTS = 7
 export const REGISTRATION_AGENTS = 2
 export const LOCAL_REGISTRARS = 1
+
+export const PROBABILITY_TO_BE_INCOMPLETE = 0.05;
+export const PROBABILITY_TO_BE_REJECTED = 0.02;
 
 const CONCURRENCY = process.env.CONCURRENCY
   ? parseInt(process.env.CONCURRENCY, 10)
@@ -83,6 +86,9 @@ const today = new Date()
 const currentYear = today.getFullYear()
 
 const queue = new PQueue({ concurrency: CONCURRENCY, timeout: 1000 * 60 })
+
+const rejectionReason = 'Misspelling'
+const rejectionComment = 'Family name misspelled'
 
 let pauseTimeout: NodeJS.Timeout
 function onError(error: Error) {
@@ -326,7 +332,9 @@ async function main() {
               users,
               healthFacilities,
               completionDays,
-              config
+              config,
+              PROBABILITY_TO_BE_INCOMPLETE,
+              PROBABILITY_TO_BE_REJECTED
             ).bind(null, ix)
           )
         }
@@ -370,7 +378,9 @@ async function main() {
               location,
               totalChildBirths,
               completionDays,
-              config
+              config,
+              PROBABILITY_TO_BE_INCOMPLETE,
+              PROBABILITY_TO_BE_REJECTED
             ).bind(null, ix)
           )
         }
@@ -445,7 +455,9 @@ async function main() {
             location,
             delta,
             completionDays,
-            config
+            config,
+            PROBABILITY_TO_BE_INCOMPLETE,
+            PROBABILITY_TO_BE_REJECTED
           ).bind(null, ix)
         )
       }
@@ -499,7 +511,9 @@ async function main() {
             users,
             healthFacilities,
             completionDays,
-            config
+            config,
+            PROBABILITY_TO_BE_INCOMPLETE,
+            PROBABILITY_TO_BE_REJECTED
           ).bind(null, ix)
         )
       }
@@ -577,7 +591,9 @@ function birthDeclarationWorkflow(
   location: Location,
   totalChildBirths: number,
   completionDays: number,
-  config: ConfigResponse
+  config: ConfigResponse,
+  probabilityToBeIncomplete :number,
+  probabilityToBeRejected : number
 ) {
   return async (ix: number) => {
     try {
@@ -650,15 +666,20 @@ function birthDeclarationWorkflow(
           throw error
         }
       } else {
+        const keepDeclarationIncomplete = Math.random() < probabilityToBeIncomplete;
         id = await createBirthDeclaration(
           randomUser,
-          sex,
+          keepDeclarationIncomplete ? undefined : sex,
           birthDate,
           submissionTime,
           location,
           randomFacility
         )
         const declaration = await fetchRegistration(randomRegistrar, id)
+        if(keepDeclarationIncomplete){
+          declaration.child = {...declaration.child,gender:sex}
+        }
+        
         try {
           registrationDetails = await createRegistrationDetails(
             add(new Date(submissionTime), {
@@ -677,6 +698,11 @@ function birthDeclarationWorkflow(
       if (!REGISTER) {
         log('Birth', submissionDate, ix, '/', Math.round(totalChildBirths))
         return
+      }
+
+      if(Math.random() < probabilityToBeRejected){
+        await markEventAsRejected(randomRegistrar,id,rejectionReason,rejectionComment)
+        await fetchRegistration(randomRegistrar,id)
       }
 
       if (!declaredRecently || Math.random() > 0.5) {
@@ -729,7 +755,9 @@ function deathDeclarationWorkflow(
   },
   healthFacilities: Facility[],
   completionDays: number,
-  config: ConfigResponse
+  config: ConfigResponse,
+  probabilityToBeIncomplete :number,
+  probabilityToBeRejected : number
 ) {
   return async (ix: number) => {
     try {
@@ -739,6 +767,9 @@ function deathDeclarationWorkflow(
       const submissionTime = add(startOfDay(submissionDate), {
         seconds: 24 * 60 * 60 * Math.random()
       })
+
+      const sex = Math.random() > 0.4 ? 'male' : 'female';
+      const keepDeclarationIncomplete = Math.random() < probabilityToBeIncomplete
       const declaredRecently = differenceInDays(today, submissionTime) < 4
 
       const districtFacilities = healthFacilities.filter(
@@ -754,7 +785,7 @@ function deathDeclarationWorkflow(
       const compositionId = await createDeathDeclaration(
         randomUser,
         deathTime,
-        Math.random() > 0.4 ? 'male' : 'female',
+        keepDeclarationIncomplete ? undefined : sex,
         submissionTime,
         location,
         randomFacility
@@ -773,6 +804,16 @@ function deathDeclarationWorkflow(
         randomRegistrar,
         compositionId
       )
+
+      if(keepDeclarationIncomplete){
+        declaration.deceased = {...declaration.deceased , gender : sex}
+      }
+
+      if(Math.random() < probabilityToBeRejected){
+        await markEventAsRejected(randomRegistrar,compositionId,rejectionReason,rejectionComment)
+        await fetchRegistration(randomRegistrar,compositionId)
+      }
+
       if (!declaredRecently || Math.random() > 0.5) {
         await markDeathAsRegistered(
           randomRegistrar,
