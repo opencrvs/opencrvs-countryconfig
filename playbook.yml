@@ -57,3 +57,22 @@
 - name: 'Setup systemd to mount encrypted folder'
   shell: systemctl daemon-reload && systemctl enable reboot.service
   when: st.stat.exists and encrypt_data
+
+# MOSIP integration requires wireguard to be installed
+# Ensure that the MOSIP supplied conf file containing your keys already exists on your manager node server in /etc/wireguard/mosip-peer1.conf
+- name: Install wireguard package
+  apt:
+    name: wireguard
+    state: present
+    update_cache: yes
+
+- name: 'Run wireguard'
+  shell: systemctl enable wg-quick@mosip-peer1 && systemctl start wg-quick@mosip-peer1
+
+- name: 'Create mosip secrets directory'
+  file:
+    path: /data/secrets/mosip
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: g+rwx
