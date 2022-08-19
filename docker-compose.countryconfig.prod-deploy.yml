@@ -26,7 +26,7 @@ services:
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
       - OPENHIM_URL=http://openhim-core:5001/fhir
-      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
+      - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - HOSTNAME=${HOSTNAME}
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
