@@ -42,6 +42,7 @@
   "validations.requiredBasic",
   "validations.nonDecimalPointNumber",
   "record.certificate.collector",
+  "record.certificate.collectedInAdvance",
   "config.application.nameChangeMessage",
   "config.application.govtLogoChangeMessage",
   "config.certificateConfiguration",
