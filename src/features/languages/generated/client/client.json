@@ -411,6 +411,7 @@
         "constants.rateOfRegistrationWithinTargetd": "Rate within {registrationTargetDays}{lineBreak}days of event",
         "constants.rateOfRegistrationWithinYears": "Rate within {num} {num, plural, =0 {year} =1 {year} other {years}} of event",
         "constants.reason": "Reason",
+        "constants.requestReason": "Reason for request",
         "constants.registerConfirmModalDesc": "",
         "constants.registered": "Registered",
         "constants.inReview.status": "In review",
