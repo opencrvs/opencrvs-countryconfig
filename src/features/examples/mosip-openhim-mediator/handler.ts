@@ -19,8 +19,8 @@ import * as Hapi from '@hapi/hapi'
 
 interface IMosipPayload {
   BRN: string
-  UIN: string
-  VIN: string
+  UINTOKEN: string
+  RID: string
 }
 
 export async function mosipMediatorHandler(
@@ -46,12 +46,12 @@ export async function mosipMediatorHandler(
       ) {
         // update details
         person.identifier.push({
-          type: 'NATIONAL_ID',
-          value: payload.VIN
+          type: 'MOSIP_RID',
+          value: payload.RID
         } as fhir.CodeableConcept)
         person.identifier.push({
-          type: 'MOSIP_UIN',
-          value: payload.UIN
+          type: 'MOSIP_UINTOKEN',
+          value: payload.UINTOKEN
         } as fhir.CodeableConcept)
         try {
           await updateResourceInHearth(person)

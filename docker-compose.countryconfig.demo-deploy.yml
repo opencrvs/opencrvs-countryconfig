@@ -47,6 +47,7 @@ services:
   workflow:
     environment:
       - LANGUAGES=en,fr
+      - MOSIP_TOKEN_SEEDER_URL=http://mosiptokenseeder:8085
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   auth:
