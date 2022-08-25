@@ -19,53 +19,143 @@ import * as Hapi from '@hapi/hapi'
 
 interface IMosipPayload {
   BRN: string
-  UINTOKEN: string
-  RID: string
+  UINTOKEN?: string
+  MOSIP_AID?: string
 }
 
 export async function mosipMediatorHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  // Adds MOSIP generated VIN and NID to a child that has been registered
   const token = request.headers['authorization'].split('Bearer ')[1]
   if (hasScope(token, 'nationalId')) {
     const payload = request.payload as IMosipPayload
-    // Search Hearth for a Person with a given National ID
-    const personBundle: fhir.Bundle = await getFromFhir(
-      `/Patient?identifier=${encodeURIComponent(payload.BRN)}`
-    )
-    if (personBundle.entry?.length && personBundle.entry[0]?.resource) {
-      const person: fhir.Patient = personBundle.entry[0]
-        ?.resource as fhir.Patient
-      if (
-        person.identifier?.length &&
-        person.identifier?.length === 1 &&
-        person.identifier[0].type === 'BIRTH_REGISTRATION_NUMBER' &&
-        person.identifier[0].value === payload.BRN
-      ) {
-        // update details
-        person.identifier.push({
-          type: 'MOSIP_RID',
-          value: payload.RID
-        } as fhir.CodeableConcept)
-        person.identifier.push({
-          type: 'MOSIP_UINTOKEN',
-          value: payload.UINTOKEN
-        } as fhir.CodeableConcept)
-        try {
-          await updateResourceInHearth(person)
-        } catch (error) {
-          console.log(`Error for processing ${JSON.stringify(error)}`)
-        }
-        return h.response().code(200)
-      } else {
-        throw new Error('Person cannot be found')
+
+    if (payload.UINTOKEN) {
+      await processUIN(payload.UINTOKEN, payload.BRN)
+    }
+    if (payload.MOSIP_AID) {
+      await processAID(payload.MOSIP_AID, payload.BRN)
+    }
+    return h.response().code(200)
+  } else {
+    throw unauthorized()
+  }
+}
+
+async function processUIN(uinToken: string, brn: string): Promise<boolean> {
+  // Search Hearth for the patient with a given BRN
+  const personBundle: fhir.Bundle = await getFromFhir(
+    `/Patient?identifier=${encodeURIComponent(brn)}`
+  )
+  if (
+    personBundle &&
+    personBundle.entry?.length &&
+    personBundle.entry[0]?.resource
+  ) {
+    const person: fhir.Patient = personBundle.entry[0]?.resource as fhir.Patient
+    let personAlreadyUpdated = false
+    if (
+      person.identifier?.length &&
+      confirmIdentifierExists(
+        person.identifier,
+        'type',
+        'MOSIP_UINTOKEN',
+        uinToken
+      )
+    ) {
+      personAlreadyUpdated = true
+      return true
+    }
+    if (
+      person.identifier?.length &&
+      confirmIdentifierExists(
+        person.identifier,
+        'type',
+        'BIRTH_REGISTRATION_NUMBER',
+        brn
+      ) &&
+      !personAlreadyUpdated
+    ) {
+      person.identifier.push({
+        type: 'MOSIP_UINTOKEN',
+        value: uinToken
+      } as fhir.CodeableConcept)
+      try {
+        await updateResourceInHearth(person)
+        return true
+      } catch (error) {
+        throw new Error(`Error for processing ${JSON.stringify(error)}`)
       }
     } else {
       throw new Error('Person cannot be found')
     }
   } else {
-    throw unauthorized()
+    throw new Error('Person cannot be found')
   }
+}
+
+async function processAID(aid: string, brn: string): Promise<boolean> {
+  // Search Hearth for the registration task with a given BRN
+  const taskBundle: fhir.Bundle = await getFromFhir(
+    `/Task?identifier=${encodeURIComponent(brn)}`
+  )
+
+  if (taskBundle.entry?.length && taskBundle.entry[0]?.resource) {
+    const task: fhir.Task = taskBundle.entry[0]?.resource as fhir.Task
+    let taskAlreadyUpdated = false
+    if (
+      task.identifier?.length &&
+      confirmIdentifierExists(
+        task.identifier,
+        'system',
+        'http://opencrvs.org/specs/id/mosip-aid',
+        aid
+      )
+    ) {
+      taskAlreadyUpdated = true
+      return true
+    }
+
+    if (
+      task.identifier?.length &&
+      confirmIdentifierExists(
+        task.identifier,
+        'system',
+        'http://opencrvs.org/specs/id/birth-registration-number',
+        brn
+      ) &&
+      !taskAlreadyUpdated
+    ) {
+      // update details
+      task.identifier.push({
+        system: 'http://opencrvs.org/specs/id/mosip-aid',
+        value: aid
+      } as fhir.CodeableConcept)
+      try {
+        await updateResourceInHearth(task)
+        return true
+      } catch (error) {
+        throw new Error(`Error for processing ${JSON.stringify(error)}`)
+      }
+    } else {
+      throw new Error('Task cannot be found')
+    }
+  } else {
+    throw new Error('Task cannot be found')
+  }
+}
+
+function confirmIdentifierExists(
+  identifiers: fhir.Identifier[],
+  label: 'type' | 'system',
+  labelValue: string,
+  value: string
+): boolean {
+  const relevantIdentifier: fhir.Identifier[] = identifiers.filter(
+    (identifier: fhir.Identifier) => {
+      return identifier[label] === labelValue && identifier.value === value
+    }
+  )
+  return relevantIdentifier.length === 1 ? true : false
 }
