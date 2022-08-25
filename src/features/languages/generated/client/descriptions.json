@@ -133,6 +133,7 @@
     "constants.pendingConnection": "Label for declaration status Pending Connection",
     "constants.performance": "Performance title",
     "constants.reason": "Label for Reason the declaration was rejected",
+    "constants.requestReason": "Label for Reason the declaration was corrected",
     "constants.registerConfirmModalDesc": "Description for confirmation modal when registering declaration",
     "constants.registered": "A label for registered",
     "constants.inReview.status": "A label for In Review",

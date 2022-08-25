@@ -194,6 +194,7 @@
   "constantsPhoneNumber": "constants.phoneNumber",
   "constantsRateOfRegistrationWithinTargetd": "constants.rateOfRegistrationWithinTargetd",
   "constantsReason": "constants.reason",
+  "constantsRequestReason": "constants.requestReason",
   "constantsRegisterConfirmModalDesc": "constants.registerConfirmModalDesc",
   "constantsRegistered": "constants.registered",
   "constantsInReviewStatus": "constants.inReview.status",
