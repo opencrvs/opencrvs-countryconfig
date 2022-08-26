@@ -82,6 +82,10 @@ services:
     image: lalithkota/mosip-token-seeder:develop_sync_delivery
     ports:
       - '8085:8080'
+    deploy:
+      replicas: 1
+    networks:
+      - overlay_net
     volumes:
       - /data/secrets/mosip:/seeder/certs
     restart: unless-stopped
