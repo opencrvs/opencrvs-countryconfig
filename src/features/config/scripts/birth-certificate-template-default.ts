@@ -47,8 +47,9 @@ export default `<svg width="420" height="595" viewBox="0 0 420 595" fill="none" 
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
   <tspan x="50%" y="170.104" text-anchor="middle">Date of issuance of certificate:  {{certificateDate}}</tspan>
 </text>
-<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px"><tspan x="50%" y="170.104" text-anchor="middle"> {{mosipAIDLabel}}</tspan></text>
-<text fill="#222222" fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px"><tspan x="50%" y="170.104" text-anchor="middle"> {{mosipAID}}</tspan></text>
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+  <tspan x="50%" y="565.104" text-anchor="middle">{{mosipAIDLabel}} {{mosipAID}}</tspan>
+</text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px"><tspan x="50%" y="170.104" text-anchor="middle">:</tspan></text>
 <line x1="43.4985" y1="403.75" x2="376.499" y2="401.75" stroke="#EEEEEE" stroke-width="0.5" />
 <line x1="43.4985" y1="189.75" x2="376.499" y2="187.75" stroke="#EEEEEE" stroke-width="0.5" />
