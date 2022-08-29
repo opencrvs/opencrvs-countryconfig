@@ -81,7 +81,7 @@ services:
   mosiptokenseeder:
     image: lalithkota/mosip-token-seeder:develop_sync_delivery
     ports:
-      - '0.0.0.0:8080'
+      - '8085:8080'
     deploy:
       replicas: 1
     networks:
