@@ -157,7 +157,7 @@ fi
 # Copy the backups to an offsite server in production
 #----------------------------------------------------
 if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)" ]]; then
-  script -q -c "scp -v -r -P $SSH_PORT /data/backups/elasticsearch/ $SSH_USER@$SSH_HOST:$REMOTE_DIR/elasticsearch" && echo "Copied elasticsearch backup files to remote server."
+  script -q -c "scp -v -r -P $SSH_PORT /data/backups/elasticsearch/ $SSH_USER@$SSH_HOST:$REMOTE_DIR" && echo "Copied elasticsearch backup files to remote server."
   script -q -c "scp -v -r -P $SSH_PORT /data/backups/influxdb/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/influxdb" && echo "Copied influx backup files to remote server."
   script -q -c "scp -v -r -P $SSH_PORT /data/backups/mongo/hearth-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied hearth backup files to remote server."
   script -q -c "scp -v -r -P $SSH_PORT /data/backups/mongo/user-mgnt-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied user backup files to remote server."
