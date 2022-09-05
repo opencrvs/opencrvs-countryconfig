@@ -28,7 +28,8 @@ import {
 } from '@countryconfig/constants'
 import {
   locationsHandler,
-  statisticsHandler
+  statisticsHandler,
+  locationsFhirHandler
 } from '@countryconfig/features/administrative/handler'
 import { facilitiesHandler } from '@countryconfig/features/facilities/handler'
 import { contentHandler } from '@countryconfig/features/content/handler'
@@ -207,6 +208,28 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Returns Farajaland locations.json'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/fhir-locations',
+    handler: locationsFhirHandler,
+    options: {
+      tags: ['api'],
+      auth: false,
+      description: 'Returns Farajaland locations as FHIR'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/fhir-locations/{id}',
+    handler: locationsFhirHandler,
+    options: {
+      tags: ['api'],
+      auth: false,
+      description: 'Returns Farajaland location as FHIR'
     }
   })
 
