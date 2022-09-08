@@ -23,7 +23,7 @@ import { EMPLOYEES_SOURCE } from '@countryconfig/constants'
 import {
   generateSaltedHash,
   convertToMSISDN,
-  ISaltedHash
+  ISaltedHash, generateHash
 } from '@countryconfig/utils'
 import {
   createUsers,
@@ -221,8 +221,11 @@ export async function composeAndSavePractitioners(
       practitionerId,
       primaryOfficeId,
       catchmentAreaIds,
-      securityQuestionAnswers: []
-    })
+      securityQuestionAnswers: [
+        { questionKey: "BIRTH_TOWN" , answerHash:generateHash('lagos', pass.salt) },
+        { questionKey: "HIGH_SCHOOL" , answerHash:generateHash('high school', pass.salt) },
+        { questionKey: "FAVORITE_MOVIE" , answerHash:generateHash('got', pass.salt) }
+      ]    })
     users.push(user)
   }
   // Create users
