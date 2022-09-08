@@ -11,19 +11,15 @@
  */
 import * as fs from 'fs'
 import { ORG_URL } from '@countryconfig/constants'
-import {
-  getFromFhir,
-  sendToFhir
-} from '@countryconfig/features/utils'
+import { getFromFhir, sendToFhir } from '@countryconfig/features/utils'
 import chalk from 'chalk'
-import User, {
-  IUserModel
-} from '@countryconfig/features/employees/model/user'
+import User, { IUserModel } from '@countryconfig/features/employees/model/user'
 import { EMPLOYEES_SOURCE } from '@countryconfig/constants'
 import {
   generateSaltedHash,
   convertToMSISDN,
-  ISaltedHash, generateHash
+  ISaltedHash,
+  generateHash
 } from '@countryconfig/utils'
 import {
   createUsers,
@@ -222,10 +218,20 @@ export async function composeAndSavePractitioners(
       primaryOfficeId,
       catchmentAreaIds,
       securityQuestionAnswers: [
-        { questionKey: "BIRTH_TOWN" , answerHash:generateHash('lagos', pass.salt) },
-        { questionKey: "HIGH_SCHOOL" , answerHash:generateHash('high school', pass.salt) },
-        { questionKey: "FAVORITE_MOVIE" , answerHash:generateHash('got', pass.salt) }
-      ]    })
+        {
+          questionKey: 'BIRTH_TOWN',
+          answerHash: generateHash('lagos', pass.salt)
+        },
+        {
+          questionKey: 'HIGH_SCHOOL',
+          answerHash: generateHash('high school', pass.salt)
+        },
+        {
+          questionKey: 'FAVORITE_MOVIE',
+          answerHash: generateHash('got', pass.salt)
+        }
+      ]
+    })
     users.push(user)
   }
   // Create users
