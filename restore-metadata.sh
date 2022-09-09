@@ -41,42 +41,15 @@ mongo_credentials() {
   fi
 }
 
-docker run --rm -v $DIR/data/backups/prod-backups/mongo:/backups --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/hearth-dev-$1.gz"
 
-docker run --rm -v $DIR/data/backups/prod-backups/mongo:/backups --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/openhim-dev-$1.gz"
 
-docker run --rm -v $DIR/data/backups/prod-backups/mongo:/backups --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/user-mgnt-$1.gz"
 
-docker run --rm -v $DIR/data/backups/prod-backups/mongo:/backups --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/application-config-$1.gz"
 
-# Register backup folder as an Elasticsearch repository for restoring the search data
-#-------------------------------------------------------------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -XPUT -H "Content-Type: application/json;charset=UTF-8" "http://elasticsearch:9200/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/Users/euanmillar/Clients/Plan/Development/opencrvs-farajaland/data/backups/prod-backups/elasticsearch", "compress": true }}'
-
-# Restore all data from a backup into search
-#-------------------------------------------
-
-docker run --rm --network=$NETWORK appropriate/curl curl -X POST "http://elasticsearch:9200/_snapshot/ocrvs/snapshot_$1/_restore?pretty" -H 'Content-Type: application/json' -d '{ "indices": "ocrvs" }'
-
-# Get the container ID and host details of any running InfluxDB container, as the only way to restore is by using the Influxd CLI inside a running opencrvs_metrics container
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-INFLUXDB_CONTAINER_ID=`echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}'`
-INFLUXDB_CONTAINER_NAME=`echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}'`
-INFLUXDB_HOSTNAME=`echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}'`
-INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
-INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
-
-# If required, SSH into the node running the opencrvs_metrics container and restore the metrics data from an influxdb subfolder
-#------------------------------------------------------------------------------------------------------------------------------
-OWN_IP=`echo $(hostname -I | cut -d' ' -f1)`
-if [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
-  docker cp /Users/euanmillar/Clients/Plan/Development/opencrvs-farajaland/data/backups/prod-backups/influxdb/$1 $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/data/backups/influxdb/$1
-  docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /data/backups/influxdb/$1
-else
-  scp -r /data/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
-  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker cp /data/backups/influxdb/$1 $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/data/backups/influxdb/$1 && docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /data/backups/influxdb/$1"
-fi
