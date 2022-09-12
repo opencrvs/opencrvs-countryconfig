@@ -42,14 +42,14 @@ mongo_credentials() {
 }
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
- -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/hearth-dev-$1.gz"
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/hearth-dev.gz"
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
- -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/openhim-dev-$1.gz"
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/openhim-dev.gz"
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
- -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/user-mgnt-$1.gz"
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/user-mgnt.gz"
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
- -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/application-config-$1.gz"
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/application-config.gz"
 
