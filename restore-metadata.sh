@@ -52,3 +52,6 @@ docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/application-config.gz"
+
+# run migration by restarting migration service
+docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration
