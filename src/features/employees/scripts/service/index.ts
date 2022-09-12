@@ -220,15 +220,15 @@ export async function composeAndSavePractitioners(
       securityQuestionAnswers: [
         {
           questionKey: 'BIRTH_TOWN',
-          answerHash: generateHash('lagos', pass.salt)
+          answerHash: generateHash('Lusaka', pass.salt)
         },
         {
           questionKey: 'HIGH_SCHOOL',
-          answerHash: generateHash('high school', pass.salt)
+          answerHash: generateHash('Lusaka High School', pass.salt)
         },
         {
           questionKey: 'FAVORITE_MOVIE',
-          answerHash: generateHash('got', pass.salt)
+          answerHash: generateHash('Star wars', pass.salt)
         }
       ]
     })
