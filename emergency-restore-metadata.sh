@@ -14,12 +14,12 @@
 #------------------------------------------------------------------------------------------------------------------
 
 print_usage_and_exit () {
-    echo 'Usage: ./emergency-restore-metadata.sh date e.g. 2019-01-01 3'
-    echo "This script CLEARS ALL DATA and RESTORES'S A SPECIFIC DAY'S DATA.  This process is irreversable, so USE WITH CAUTION."
-    echo "Script must receive a date parameter to restore data from that specific day in format +%Y-%m-%d"
-    echo "The Hearth, OpenHIM User and Application-config db backup zips you would like to restore from: hearth-dev-{date}.gz, openhim-dev-{date}.gz, user-mgnt-{date}.gz and  application-config-{date}.gz must exist in /data/backups/mongo/{date} folder"
+    echo 'Usage: ./emergency-restore-metadata.sh label 3'
+    echo "This script CLEARS ALL DATA and RESTORES'S A SPECIFIC DAY'S or VERSION'S DATA.  This process is irreversable, so USE WITH CAUTION."
+    echo "Script must receive a label parameter to restore data from that specific day in format +%Y-%m-%d i.e. 2019-01-01 or that version"
+    echo "The Hearth, OpenHIM User and Application-config db backup zips you would like to restore from: hearth-dev-{label}.gz, openhim-dev-{label}.gz, user-mgnt-{label}.gz and  application-config-{label}.gz must exist in /data/backups/mongo/ folder"
     echo "The Elasticsearch backup folder /data/backups/elasticsearch must exist with all previous snapshots and indices. All files are required"
-    echo "The InfluxDB backup files must exist in the /data/backups/influxdb/{date} folder"
+    echo "The InfluxDB backup files must exist in the /data/backups/influxdb/{label} folder"
     echo ""
     echo "If your MongoDB is password protected, an admin user's credentials can be given as environment variables:"
     echo "MONGODB_ADMIN_USER=your_user MONGODB_ADMIN_PASSWORD=your_pass"
@@ -55,8 +55,10 @@ function ask_yes_or_no() {
         *)     echo "no" ;;
     esac
 }
-if [[ "no" == $(ask_yes_or_no "This script will clear all data from OpenCRVS and restore from a backup. Are you sure you are logged in as a root user?  ") || \
-      "no" == $(ask_yes_or_no "Are you *really* sure?  Have you tested these backup files in a restore process on a development environment first?") ]]
+
+# We don't need confirmation when running from github action
+if [[ "$CI" != "true" && ("no" == $(ask_yes_or_no "This script will clear all data from OpenCRVS and restore from a backup. Are you sure you are logged in as a root user?  ") || \
+  "no" == $(ask_yes_or_no "Are you *really* sure?  Have you tested these backup files in a restore process on a development environment first?")) ]]
 then
     echo "Skipped."
     exit 0
