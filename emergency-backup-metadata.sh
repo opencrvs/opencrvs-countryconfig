@@ -127,6 +127,7 @@ docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mo
 #-------------------------------------------------------------------------------------
 docker run --rm --network=$NETWORK appropriate/curl curl -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}'
 
+sleep 10
 # Backup Elasticsearch as a set of snapshot files into an elasticsearch sub folder
 #---------------------------------------------------------------------------------
 docker run --rm --network=$NETWORK appropriate/curl curl -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${VERSION:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }'
@@ -148,21 +149,21 @@ if [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
   docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /data/backups/influxdb/${VERSION:-$BACKUP_DATE}
 else
   echo "Backing up Influx on other node $INFLUXDB_HOST"
-  scp -r /data/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
+  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" /data/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
   ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /data/backups/influxdb/${VERSION:-$BACKUP_DATE}"
   echo "Replacing backup for influxdb on manager node with new backup"
-  scp -r $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb /data/backups/influxdb
+  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb /data/backups/influxdb
 fi
 
 # Copy the backups to an offsite server in production
 #----------------------------------------------------
 if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)" ]]; then
-  script -q -c "scp -v -r -P $SSH_PORT /data/backups/elasticsearch/ $SSH_USER@$SSH_HOST:$REMOTE_DIR" && echo "Copied elasticsearch backup files to remote server."
-  script -q -c "scp -v -r -P $SSH_PORT /data/backups/influxdb/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/influxdb" && echo "Copied influx backup files to remote server."
-  script -q -c "scp -v -r -P $SSH_PORT /data/backups/mongo/hearth-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied hearth backup files to remote server."
-  script -q -c "scp -v -r -P $SSH_PORT /data/backups/mongo/user-mgnt-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied user backup files to remote server."
-  script -q -c "scp -v -r -P $SSH_PORT /data/backups/mongo/openhim-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied openhim backup files to remote server."
-  script -q -c "scp -v -r -P $SSH_PORT /data/backups/mongo/application-config-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied application-config backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/elasticsearch/ $SSH_USER@$SSH_HOST:$REMOTE_DIR" && echo "Copied elasticsearch backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/influxdb/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/influxdb" && echo "Copied influx backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/hearth-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied hearth backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/user-mgnt-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied user backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/openhim-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied openhim backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/application-config-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied application-config backup files to remote server."
 fi
 
 # Cleanup any old backups from influx or mongo. Keep previous 7 days of data and all elastic data
