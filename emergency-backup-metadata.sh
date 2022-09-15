@@ -67,7 +67,7 @@ VERSION=$7
 
 # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
 # We recommend that the secrets are served via a secure API from a Hardware Security Module
-#source /data/secrets/opencrvs.secrets
+source /data/secrets/opencrvs.secrets
 
 # Select docker network and replica set in production
 #----------------------------------------------------
@@ -142,15 +142,17 @@ INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
 
 # If required, SSH into the node running the opencrvs_metrics container and backup the metrics data into an influxdb subfolder
 #-----------------------------------------------------------------------------------------------------------------------------
-mkdir -p /data/backups/influxdb/${VERSION:-$BACKUP_DATE}
+
 OWN_IP=$(hostname -I | cut -d' ' -f1)
 if [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
   echo "Backing up Influx on own node"
-  docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /data/backups/influxdb/${VERSION:-$BACKUP_DATE}
+  docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${VERSION:-$BACKUP_DATE}
+  docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${VERSION:-$BACKUP_DATE} /data/backups/influxdb/${VERSION:-$BACKUP_DATE}
 else
   echo "Backing up Influx on other node $INFLUXDB_HOST"
   rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" /data/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
-  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /data/backups/influxdb/${VERSION:-$BACKUP_DATE}"
+  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${VERSION:-$BACKUP_DATE}"
+  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${VERSION:-$BACKUP_DATE} /data/backups/influxdb/${VERSION:-$BACKUP_DATE}"
   echo "Replacing backup for influxdb on manager node with new backup"
   rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb /data/backups/influxdb
 fi
