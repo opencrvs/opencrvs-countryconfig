@@ -1401,6 +1401,7 @@
   "userProfileSectionTitleAudit": "user.profile.sectionTitle.audit",
   "userProfileStartDate": "user.profile.startDate",
   "userProfileUserName": "user.profile.userName",
+  "userProfileNid": "user.profile.nid",
   "userSetupCompleteInstruction": "userSetup.complete.instruction",
   "userSetupCompleteTitle": "userSetup.complete.title",
   "userSetupInstruction": "userSetup.instruction",
