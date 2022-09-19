@@ -154,7 +154,7 @@ INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
 #------------------------------------------------------------------------------------------------------------------------------
 OWN_IP=`echo $(hostname -I | cut -d' ' -f1)`
 if [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
-  docker cp /data/backups/influxdb/$1/ $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user 
+  docker cp /data/backups/influxdb/$1/ $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/$1
   docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /home/user/$1
 else
   scp -r /data/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
