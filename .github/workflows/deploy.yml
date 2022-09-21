@@ -29,13 +29,15 @@ jobs:
         node-version: [14.17.0]
     steps:
       - name: Clone core
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: 'opencrvs/opencrvs-core'
           path: './opencrvs-core'
+          ref: ${{ github.event.inputs.core-image-tag }}
       - name: Clone country config resource package
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           path: './${{ github.event.repository.name }}'
 
       - name: Set COUNTRY_CONFIG_VERSION from inputs

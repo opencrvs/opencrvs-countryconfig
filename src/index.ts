@@ -13,7 +13,7 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 
 // tslint:enable no-var-requires
-import fetch, { FetchError } from 'node-fetch'
+import fetch from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
 import getPlugins from '@countryconfig/config/plugins'
 import * as usrMgntDB from '@countryconfig/database'
@@ -88,6 +88,22 @@ const validateFunc = async (
   }
 }
 
+async function getPublicKey(): Promise<string> {
+try {
+    const response = await fetch(`${AUTH_URL}/.well-known`)
+    return response.text()
+  } catch (error) {
+    console.log(
+      `Failed to fetch public key from Core. Make sure Core is running, and you are able to connect to ${AUTH_URL}/.well-known.`
+    )
+    if (process.env.NODE_ENV === 'production') {
+      throw error
+    }
+    await new Promise(resolve => setTimeout(resolve, 3000))
+    return getPublicKey()
+  }
+}
+
 export async function createServer() {
   let whitelist: string[] = [HOSTNAME]
   if (HOSTNAME[0] !== '*') {
@@ -105,11 +121,10 @@ export async function createServer() {
 
   await server.register(getPlugins())
 
-  const publicCertResponse = await fetch(`${AUTH_URL}/.well-known`)
-  const publicCert = await publicCertResponse.text()
+  const publicKey = await getPublicKey()
 
   server.auth.strategy('jwt', 'jwt', {
-    key: publicCert,
+    key: publicKey,
     verifyOptions: {
       algorithms: ['RS256'],
       issuer: 'opencrvs:auth-service',
@@ -306,9 +321,4 @@ export async function createServer() {
 if (require.main === module) {
   createServer()
     .then(server => server.start())
-    .catch(error => {
-      if (error instanceof FetchError) {
-        logger.error(error.message)
-      }
-    })
 }
