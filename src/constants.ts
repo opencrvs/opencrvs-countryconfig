@@ -21,13 +21,8 @@ export const MONGO_URL =
     process.env.CONFIG_MONGO_URL || 'mongodb://localhost/application-config'
 export const COUNTRY_CONFIG_HOST = process.env.COUNTRY_CONFIG_HOST || '0.0.0.0'
 export const COUNTRY_CONFIG_PORT = process.env.COUNTRY_CONFIG_PORT || 3040
-export const CERT_PUBLIC_KEY_PATH =
-  (process.env.CERT_PUBLIC_KEY_PATH as string) ||
-  '../../.secrets/public-key.pem'
 export const AUTH_URL = process.env.AUTH_URL || 'http://localhost:4040'
-export const SENTRY_DSN =
-  process.env.SENTRY_DSN ||
-  'https://2ed906a0ba1c4de2ae3f3f898ec9df0b@sentry.io/1774551'
+export const SENTRY_DSN = process.env.SENTRY_DSN
 
 // Check if the token has been invalided in the auth service before it has expired
 // This needs to be a string to make it easy to pass as an ENV var.
@@ -37,7 +32,7 @@ export const CHECK_INVALID_TOKEN = process.env.CHECK_INVALID_TOKEN || 'false'
 export const VALIDATE_IN_BDRIS2 = process.env.VALIDATE_IN_BDRIS2 || 'false'
 export const CONFIRM_REGISTRATION_URL =
   process.env.CONFIRM_REGISTRATION_URL ||
-  'http://localhost:5050/confirm/registration'
+  'http://localhost:5001/confirm/registration'
 // This value is configured based on country's data
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE =
   process.env.COUNTRY_WIDE_CRUDE_DEATH_RATE || 6.633

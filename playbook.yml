@@ -1,0 +1,59 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
+# graphic logo are (registered/a) trademark(s) of Plan International.
+
+- name: 'Create secrets directory'
+  file:
+    path: /data/secrets
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+
+- name: Save secrets into encrypted folder for access by scripts
+  ansible.builtin.copy:
+    dest: /data/secrets/opencrvs.secrets
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+    content: |
+      MONGODB_ADMIN_PASSWORD={{ mongodb_admin_password }}
+      MONGODB_ADMIN_USER={{ mongodb_admin_username }}
+      ELASTICSEARCH_ADMIN_PASSWORD={{elasticsearch_superuser_password}}
+      ELASTICSEARCH_ADMIN_USER=elastic
+
+- name: Save disk encryption key into a file as an example (in production use a hardware security module)
+  ansible.builtin.copy:
+    dest: /root/disk-encryption-key.txt
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+    content: |
+      DISK_ENCRYPTION_KEY={{ disk_encryption_key }}
+
+- name: Copy reboot.service systemd file. Must decrypt disk on reboot
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/reboot.service
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+    content: |
+      [Unit]
+      Description=Mount encrypted dir
+
+      [Service]
+      ExecStart=bash /opt/opencrvs/infrastructure/cryptfs/decrypt.sh -key /root/disk-encryption-key.txt >> /var/log/cryptfs-reboot.log 2>&1
+
+      [Install]
+      WantedBy=multi-user.target
+  when: st.stat.exists and encrypt_data
+
+- name: 'Setup systemd to mount encrypted folder'
+  shell: systemctl daemon-reload && systemctl enable reboot.service
+  when: st.stat.exists and encrypt_data

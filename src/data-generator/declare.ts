@@ -125,7 +125,7 @@ export async function sendBirthNotification(
 }
 
 export function createBirthDeclarationData(
-  sex: 'male' | 'female',
+  sex: 'male' | 'female' | undefined,
   birthDate: Date,
   declarationTime: Date,
   location: Location,
@@ -193,7 +193,8 @@ export function createBirthDeclarationData(
           subject: AttachmentSubject.Child,
           type: AttachmentType.NotificationOfBirth
         }
-      ]
+      ],
+      inCompleteFields: !sex ? 'child/child-view-group/gender' : undefined
     },
     father: {
       detailsExist: false,
@@ -240,7 +241,7 @@ export function createBirthDeclarationData(
 
 export async function createBirthDeclaration(
   { username, token }: User,
-  sex: 'male' | 'female',
+  sex: 'male' | 'female' | undefined,
   birthDate: Date,
   declarationTime: Date,
   location: Location,
@@ -302,7 +303,7 @@ export async function createBirthDeclaration(
 export async function createDeathDeclaration(
   { username, token }: User,
   deathTime: Date,
-  sex: 'male' | 'female',
+  sex: 'male' | 'female' | undefined,
   declarationTime: Date,
   location: Location,
   facility: Facility
@@ -333,7 +334,8 @@ export async function createDeathDeclaration(
           }),
           timeLoggedMS: timeFilling * 1000
         }
-      ]
+      ],
+      inCompleteFields: !sex ? 'child/child-view-group/gender' : undefined,
     },
     causeOfDeath: 'Natural cause',
     deceased: {
