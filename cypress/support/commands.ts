@@ -200,11 +200,7 @@ Cypress.Commands.add('printDeclaration', () => {
 })
 
 Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
-  cy.get(
-    `div:has([data-test-id='list-view-label']:contains("${name}")) ~ [data-test-id='list-view-actions'] button`
-  )
-    .first()
-    .click({ force: true })
+  cy.xpath(`//span[contains(text(), "${name}")]/ancestor::div[@data-test-id="list-view-label"]/../following-sibling::div[@data-test-id="list-view-actions"][1]/descendant::button`).click({ force: true })
 
   cy.get('[id$=-menuSubMenu]').should('is.visible')
   const actionsMenu = cy.get('[id$=-menuSubMenu]')
