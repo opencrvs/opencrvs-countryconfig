@@ -188,7 +188,7 @@ export async function getUsers(token: string, locationId: string) {
 
 export async function createSystemClient(
   officeId: string,
-  scope: 'HEALTH' | 'NATIONAL_ID' | 'EXTERNAL_VALIDATION' | 'AGE_CHECK',
+  scope: 'HEALTH' | 'NATIONAL_ID' | 'EXTERNAL_VALIDATION' | 'AGE_CHECK' | 'RECORD_SEARCH',
   systemAdmin: User
 ): Promise<User> {
   const createUserRes = await fetch(`${AUTH_API_HOST}/registerSystemClient`, {
