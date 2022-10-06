@@ -176,6 +176,8 @@
   "performance.registrarsToCitizenValue",
   "performance.registrationByStatus.header",
   "performance.completenessTable.completenessRate",
+  "register.form.modal.title.deleteDeclarationConfirm",
+  "register.form.modal.desc.deleteDeclarationConfirm",
   "search.locationNotFound",
   "informant.name",
   "informant.title",
