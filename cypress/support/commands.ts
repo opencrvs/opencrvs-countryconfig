@@ -200,11 +200,7 @@ Cypress.Commands.add('printDeclaration', () => {
 })
 
 Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
-  cy.get(
-    `div:has([data-test-id='list-view-label']:contains("${name}")) ~ [data-test-id='list-view-actions'] button`
-  )
-    .first()
-    .click({ force: true })
+  cy.xpath(`//span[contains(text(), "${name}")]/ancestor::div[@data-test-id="list-view-label"]/../following-sibling::div[@data-test-id="list-view-actions"][1]/descendant::button`).click({ force: true })
 
   cy.get('[id$=-menuSubMenu]').should('is.visible')
   const actionsMenu = cy.get('[id$=-menuSubMenu]')
@@ -592,6 +588,9 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', () => {
   cy.goToNextFormSection()
   // Informant details
   cy.get('#informantID').type('912345678')
+  cy.get('#informantBirthDate-dd').type('16')
+  cy.get('#informantBirthDate-mm').type('06')
+  cy.get('#informantBirthDate-yyyy').type('1988')
   cy.get('#firstNamesEng').type('Soumita')
   cy.get('#familyNameEng').type('Aktar')
 
@@ -691,6 +690,9 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   // INFORMANT DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.get('#informantID').type('912345678')
+  cy.get('#informantBirthDate-dd').type('16')
+  cy.get('#informantBirthDate-mm').type('06')
+  cy.get('#informantBirthDate-yyyy').type('1988')
   cy.get('#firstNamesEng').type('Anne')
   cy.get('#familyNameEng').type('Salim')
   cy.get('#primaryAddressSameAsOtherPrimary_false').click()
