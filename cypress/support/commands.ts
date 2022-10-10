@@ -176,8 +176,8 @@ Cypress.Commands.add('reviewForm', () => {
 Cypress.Commands.add('submitForm', () => {
   cy.get('#registerDeclarationBtn').click()
   cy.get('#submit_confirm').click()
-  cy.get('#notification').should('is.visible')
-  cy.get('#notification').should('not.exist')
+  cy.get('#navigation_outbox').should('contain.text', '1')
+  cy.get('#navigation_outbox').should('not.contain.text', '1')
 })
 
 Cypress.Commands.add('printDeclaration', () => {
@@ -195,12 +195,14 @@ Cypress.Commands.add('printDeclaration', () => {
   cy.get('.react-pdf__message react-pdf__message--no-data').should('not.exist')
 
   cy.get('#print-certificate').click()
-  cy.get('#notification').should('is.visible')
-  cy.get('#notification').should('not.exist')
+  cy.get('#navigation_outbox').should('contain.text', '1')
+  cy.get('#navigation_outbox').should('not.contain.text', '1')
 })
 
 Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
-  cy.xpath(`//span[contains(text(), "${name}")]/ancestor::div[@data-test-id="list-view-label"]/../following-sibling::div[@data-test-id="list-view-actions"][1]/descendant::button`).click({ force: true })
+  cy.xpath(
+    `//span[contains(text(), "${name}")]/ancestor::div[@data-test-id="list-view-label"]/../following-sibling::div[@data-test-id="list-view-actions"][1]/descendant::button`
+  ).click({ force: true })
 
   cy.get('[id$=-menuSubMenu]').should('is.visible')
   const actionsMenu = cy.get('[id$=-menuSubMenu]')
