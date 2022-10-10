@@ -174,3 +174,5 @@ fi
 #------------------------------------------------------------------------------------------------
 find /data/backups/influxdb -mtime +7 -exec rm {} \;
 find /data/backups/mongo -mtime +7 -exec rm {} \;
+
+tar -C /data/minio -czvf /data/backups/minio/ocrvs-$BACKUP_DATE.tar.gz ocrvs

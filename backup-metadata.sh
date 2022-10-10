@@ -52,3 +52,8 @@ docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongodump $(mongo_credentials) --host $HOST -d application-config --gzip --archive=/backups/application-config.gz"
+
+# Backup minio data
+docker cp opencrvs-minio-1:/data/minio/ocrvs $DIR/backups/minio-dev
+tar -czvf $DIR/backups/minio-dev.tar.gz -C $DIR/backups  minio-dev
+rm -rf $DIR/backups/minio-dev

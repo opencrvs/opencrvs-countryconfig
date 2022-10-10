@@ -45,3 +45,6 @@ docker run --rm --network=$NETWORK mongo:4.4 mongo application-config $(mongo_cr
 docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE 'http://elasticsearch:9200/*' -v
 docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
 
+# Clear Minio Data
+docker exec opencrvs-minio-1 rm -rf /data/minio/ocrvs && echo "**** Removed minio data ****"
+docker exec opencrvs-minio-1 mkdir /data/minio/ocrvs

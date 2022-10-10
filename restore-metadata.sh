@@ -53,3 +53,7 @@ docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/application-config.gz"
 
+# Restore Minio Data
+tar -xzvf $DIR/backups/minio-dev.tar.gz -C $DIR/backups
+docker cp $DIR/backups/minio-dev/. opencrvs-minio-1:/data/minio/ocrvs
+rm -rf $DIR/backups/minio-dev
