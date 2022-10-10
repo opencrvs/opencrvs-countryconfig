@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import { User } from './users'
-import {log} from './util'
+import { log } from './util'
 
 import { GATEWAY_HOST } from './constants'
 import { MARK_AS_REJECTED_QUERY } from './queries'

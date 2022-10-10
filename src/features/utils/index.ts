@@ -56,10 +56,10 @@ export const sendToFhir = (
       'Content-Type': 'application/json+fhir'
     }
   })
-    .then(response => {
+    .then((response) => {
       return response
     })
-    .catch(error => {
+    .catch((error) => {
       return Promise.reject(
         new Error(`FHIR ${method} failed: ${error.message}`)
       )
@@ -72,10 +72,10 @@ export const getFromFhir = (suffix: string) => {
       'Content-Type': 'application/json+fhir'
     }
   })
-    .then(response => {
+    .then((response) => {
       return response.json()
     })
-    .catch(error => {
+    .catch((error) => {
       return Promise.reject(new Error(`FHIR request failed: ${error.message}`))
     })
 }
@@ -84,7 +84,7 @@ export function getLocationIDByDescription(
   locations: fhir.Location[],
   description: string
 ) {
-  const location = locations.find(obj => {
+  const location = locations.find((obj) => {
     return obj.description === description
   }) as fhir.Location
   return location.id as string

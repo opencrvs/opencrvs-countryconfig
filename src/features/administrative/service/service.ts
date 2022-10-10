@@ -81,11 +81,12 @@ export async function getStatistics() {
         ?.filter((ext): ext is StatisticsExtension =>
           STATISTIC_EXTENSION_URLS.includes(ext.url)
         )
-        .forEach(item => {
-          const values: Array<{ [year: string]: number }> = JSON.parse(
-            item.valueString
-          )
+        .forEach((item) => {
+          const values: Array<{
+            [year: string]: number
+          }> = JSON.parse(item.valueString)
 
+          // eslint-disable-next-line prefer-spread
           statistics[item.url] = merge.apply(null, values)
         })
 

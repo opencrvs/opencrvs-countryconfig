@@ -89,7 +89,7 @@ const validateFunc = async (
 }
 
 async function getPublicKey(): Promise<string> {
-try {
+  try {
     const response = await fetch(`${AUTH_URL}/.well-known`)
     return response.text()
   } catch (error) {
@@ -99,7 +99,7 @@ try {
     if (process.env.NODE_ENV === 'production') {
       throw error
     }
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    await new Promise((resolve) => setTimeout(resolve, 3000))
     return getPublicKey()
   }
 }
@@ -319,6 +319,5 @@ export async function createServer() {
 }
 
 if (require.main === module) {
-  createServer()
-    .then(server => server.start())
+  createServer().then((server) => server.start())
 }

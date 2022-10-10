@@ -94,7 +94,7 @@ describe('Route authorization', () => {
       expiresIn: '1ms'
     })
 
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       setTimeout(resolve, 5)
     })
 

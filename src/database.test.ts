@@ -24,7 +24,8 @@ import * as mongoose from 'mongoose'
 import { connect, disconnect } from '@countryconfig/database'
 import { logger } from '@countryconfig/logger'
 
-const wait = (time: number) => new Promise(resolve => setTimeout(resolve, time))
+const wait = (time: number) =>
+  new Promise((resolve) => setTimeout(resolve, time))
 
 describe('Database connector', () => {
   it('keeps on retrying a connection on startup', async () => {
@@ -37,8 +38,8 @@ describe('Database connector', () => {
   })
   it('attaches loggers to database events', async () => {
     const spy = jest.spyOn(logger, 'info')
-    const [[, disconnectFn], [, connectedFn]] = (mongoose.connection
-      .on as any).mock.calls
+    const [[, disconnectFn], [, connectedFn]] = (mongoose.connection.on as any)
+      .mock.calls
     disconnectFn()
     connectedFn()
     expect(spy).toHaveBeenCalledTimes(2)

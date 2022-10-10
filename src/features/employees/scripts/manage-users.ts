@@ -12,11 +12,14 @@
 import { MONGO_URL } from '@countryconfig/constants'
 import * as mongoose from 'mongoose'
 import Role from '@countryconfig/features/employees/model/role'
-import User, {
-  IUserModel
-} from '@countryconfig/features/employees/model/user'
+import User, { IUserModel } from '@countryconfig/features/employees/model/user'
 
-export const FIELD_AGENT_TYPES = ['HEALTHCARE_WORKER', 'POLICE_OFFICER', 'SOCIAL_WORKER', 'LOCAL_LEADER']
+export const FIELD_AGENT_TYPES = [
+  'HEALTHCARE_WORKER',
+  'POLICE_OFFICER',
+  'SOCIAL_WORKER',
+  'LOCAL_LEADER'
+]
 
 function setDemoUser(scopes: string[], environment: string): string[] {
   if (environment === 'development') {

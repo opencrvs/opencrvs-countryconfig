@@ -32,7 +32,7 @@ export async function getStatisticsForStates() {
   )
   const districtStatistics = await getStatistics()
 
-  const statistics = states.map<LocationStatistic>(state => {
+  const statistics = states.map<LocationStatistic>((state) => {
     const districtsInState = districts
       .filter(({ partOf }) => partOf === `Location/${state.statisticalID}`)
       .map(({ statisticalID }) => statisticalID)
@@ -41,13 +41,13 @@ export async function getStatisticsForStates() {
     )
 
     const allYears = uniq(
-      statsForState.flatMap(s => s.years.map(({ year }) => year))
+      statsForState.flatMap((s) => s.years.map(({ year }) => year))
     ).sort()
 
     return {
       statisticalID: state.statisticalID,
-      years: allYears.map(y => {
-        const allStatsForThisYear = statsForState.flatMap(s =>
+      years: allYears.map((y) => {
+        const allStatsForThisYear = statsForState.flatMap((s) =>
           s.years.filter(({ year }) => year === y)
         )
         return {
@@ -71,15 +71,15 @@ export async function getStatistics() {
     Array<Record<string, string> & { statisticalID: string }>
   >(join(__dirname, './source/statistics.csv'))
 
-  return data.map<LocationStatistic>(item => {
+  return data.map<LocationStatistic>((item) => {
     const { statisticalID, ...yearKeys } = item
     return {
       statisticalID: statisticalID,
       years: Object.keys(yearKeys)
-        .map(key => key.split('_').pop())
+        .map((key) => key.split('_').pop())
         .map(Number)
         .filter((value, index, list) => list.indexOf(value) == index)
-        .map(year => ({
+        .map((year) => ({
           year,
           male_population: parseFloat(yearKeys[`male_population_${year}`]),
           female_population: parseFloat(yearKeys[`female_population_${year}`]),

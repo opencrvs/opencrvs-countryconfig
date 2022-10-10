@@ -78,7 +78,6 @@ const deathSchema = new Schema<IDeath>({
   }
 })
 
-
 const currencySchema = new Schema<IPhoneNumberPattern>({
   isoCode: { type: String },
   languagesAndCountry: [String]
