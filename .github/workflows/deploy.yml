@@ -87,7 +87,7 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
         run: |
           cd opencrvs-core
-          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no qa ${{ env.QA_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
+          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} qa ${{ env.QA_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
 
       - name: Deploy to production
         if: ${{ github.event.inputs.environment == 'production' }}
@@ -109,7 +109,7 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
         run: |
           cd opencrvs-core
-          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no production ${{ env.PRODUCTION_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
+          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} production ${{ env.PRODUCTION_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
 
       - name: Deploy to staging
         if: ${{ github.event.inputs.environment == 'staging' }}
@@ -131,4 +131,4 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
         run: |
           cd opencrvs-core
-          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} --update-metadata=no development ${{ env.STAGING_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
+          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} development ${{ env.STAGING_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
