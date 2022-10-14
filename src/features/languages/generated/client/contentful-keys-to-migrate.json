@@ -94,6 +94,7 @@
   "config.form.published.description",
   "config.form.published.warning",
   "config.form.tools.contentKey",
+  "config.form.tools.feildId",
   "config.form.tools.certificateHandlebars",
   "config.form.tools.hideField",
   "config.form.tools.requiredForRegistration",
