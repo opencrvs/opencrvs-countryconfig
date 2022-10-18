@@ -18,6 +18,7 @@ type ISupportedType =
   | fhir.Practitioner
   | fhir.PractitionerRole
   | fhir.Location
+  | fhir.Patient
   | ICSVLocation
 
 export interface ICSVLocation {
@@ -64,6 +65,28 @@ export const sendToFhir = (
         new Error(`FHIR ${method} failed: ${error.message}`)
       )
     })
+}
+
+export async function updateResourceInHearth(resource: fhir.ResourceBase) {
+  const res = await fetch(
+    `${FHIR_URL}/${resource.resourceType}/${resource.id}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(resource),
+      headers: {
+        'Content-Type': 'application/fhir+json'
+      }
+    }
+  )
+  if (!res.ok) {
+    throw new Error(
+      `FHIR update to ${resource.resourceType} failed with [${
+        res.status
+      }] body: ${await res.text()}`
+    )
+  }
+
+  return res.text()
 }
 
 export const getFromFhir = (suffix: string) => {
