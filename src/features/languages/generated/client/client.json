@@ -481,6 +481,8 @@
         "correction.certificate.corrector.idCheck": "Check proof of ID",
         "constants.noConnection": "No connection",
         "constants.totalFileSizeExceed": "Total size of documents exceeds {fileSize}. Please reduce file size of your uploads",
+        "constants.assignRecord": "Assign record",
+        "constants.skipToMainContent": "Skip to main content",
         "correction.certificate.corrector.idCheckVerify": "ID verified",
         "correction.certificate.corrector.idCheckWithoutVerify": "No ID match",
         "correction.certificate.corrector.otherIdCheck": "Check proof of ID",
