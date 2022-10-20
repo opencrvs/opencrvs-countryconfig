@@ -1543,5 +1543,8 @@
   "navigationPerformance": "navigation.performance",
   "navigationTeam": "navigation.team",
   "navigationConfig": "navigation.config",
-  "navigationCertificate": "navigation.certificate"
+  "navigationCertificate": "navigation.certificate",
+  "navigationReports": "navigation.reports",
+  "birthTabTitleExport": "config.application.birthTabTitleExport",
+  "deathTabTitleExport": "config.application.deathTabTitleExport"
 }
