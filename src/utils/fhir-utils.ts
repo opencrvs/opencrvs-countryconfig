@@ -80,7 +80,7 @@ export function getTrackingIdFromTaskResource(taskResource: fhir.Task) {
   const trackingIdentifier =
     taskResource &&
     taskResource.identifier &&
-    taskResource.identifier.find(identifier => {
+    taskResource.identifier.find((identifier) => {
       return (
         identifier.system ===
           `${OPENCRVS_SPECIFICATION_URL}id/birth-tracking-id` ||
@@ -151,7 +151,7 @@ export function findPersonEntryFromBundle(
   )
   const personEntry =
     bundle.entry &&
-    bundle.entry.find(entry => entry.fullUrl === personSectionEntry.reference)
+    bundle.entry.find((entry) => entry.fullUrl === personSectionEntry.reference)
 
   if (!personEntry) {
     throw new Error(
@@ -172,7 +172,7 @@ export function getSectionEntryBySectionCode(
       if (!section.code || !section.code.coding) {
         return false
       }
-      return section.code.coding.some(coding => coding.code === sectionCode)
+      return section.code.coding.some((coding) => coding.code === sectionCode)
     })
 
   if (!personSection || !personSection.entry) {
@@ -189,10 +189,10 @@ export const getFromFhir = (suffix: string) => {
       'Content-Type': 'application/json+fhir'
     }
   })
-    .then(response => {
+    .then((response) => {
       return response.json()
     })
-    .catch(error => {
+    .catch((error) => {
       return Promise.reject(new Error(`FHIR request failed: ${error.message}`))
     })
 }

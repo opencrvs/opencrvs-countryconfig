@@ -15,7 +15,10 @@ import chalk from 'chalk'
 import { internal } from '@hapi/boom'
 import { composeAndSavePractitioners } from '@countryconfig/features/employees/scripts/service'
 
-const sourceJSON = process.argv[3].toLowerCase() === "development" ? `${EMPLOYEES_SOURCE}generated/test-employees.json` : `${EMPLOYEES_SOURCE}generated/prod-employees.json`
+const sourceJSON =
+  process.argv[3].toLowerCase() === 'development'
+    ? `${EMPLOYEES_SOURCE}generated/test-employees.json`
+    : `${EMPLOYEES_SOURCE}generated/prod-employees.json`
 
 export default async function importEmployees() {
   // tslint:disable-next-line:no-console
@@ -30,7 +33,7 @@ export default async function importEmployees() {
       employees,
       process.argv[2],
       process.argv[3].toLowerCase(),
-      process.argv[4].toUpperCase(),
+      process.argv[4].toUpperCase()
     )
   } catch (err) {
     return internal(err)

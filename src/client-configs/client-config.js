@@ -11,7 +11,7 @@
  */
 
 window.config = {
-  API_GATEWAY_URL: 'http://localhost:7070/',  
+  API_GATEWAY_URL: 'http://localhost:7070/',
   CONFIG_API_URL: 'http://localhost:2021',
   LOGIN_URL: 'http://localhost:3020',
   AUTH_URL: 'http://localhost:4040',

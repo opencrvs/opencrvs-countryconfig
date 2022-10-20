@@ -23,17 +23,17 @@
       "displayName": "Français",
       "messages": {
         "birthInProgressNotification": "L'ID de suivi de l'enregistrement de la naissance est {{trackingId}}. Vous devez vous rendre au {{crvsOffice}} pour effectuer la déclaration.",
-          "birthDeclarationNotification": "Le numéro de suivi de l'enregistrement de la naissance de {{name}} est {{trackingId}}. Vous recevrez un SMS dans les 2 jours avec l'état d'avancement et les prochaines étapes.",
-          "birthRegistrationNotification": "Félicitations, la naissance de {{name}} a été enregistrée. Rendez-vous au bureau d'enregistrement local dans 5 jours avec votre pièce d'identité pour retirer le certificat. Votre identifiant de suivi est {{trackingId}}.",
-          "birthRejectionNotification": "Déclaration de naissance de {{name}} ( Tracking ID : {{trackingId}} ) a été rejetée. Veuillez consulter votre bureau d'enregistrement local pour plus d'informations.",
-          "deathInProgressNotification": "L'ID de suivi de l'enregistrement du décès est {{trackingId}}. Vous devez vous rendre au {{crvsOffice}} pour compléter la déclaration.",
-          "deathDeclarationNotification": "Le numéro de suivi de l'enregistrement du décès de {{name}} est {{trackingId}}. Vous recevrez un SMS dans les 2 jours avec l'état d'avancement et les prochaines étapes.",
-          "deathRegistrationNotification": "Le décès de {{name}} a été enregistré. Rendez-vous au bureau d'enregistrement local dans 5 jours avec votre pièce d'identité pour retirer le certificat. Votre identifiant de suivi est {{trackingId}}.",
-          "deathRejectionNotification": "Déclaration de décès de {{name}} ( Tracking ID : {{trackingId}} ) a été rejetée. Veuillez consulter votre bureau d'enregistrement local pour plus d'informations.",
-          "authenticationCodeNotification": "Votre code d'authentification OpenCRVS est : {{authCode}}",
-          "userCredentialsNotification": "Vous pouvez vous connecter à OpenCRVS avec ce nom d'utilisateur temporaire : {{username}} et ce mot de passe : {{mot de passe}}.",
-          "retieveUserNameNotification": "Votre nom d'utilisateur pour OpenCRVS est : {{username}}",
-          "updateUserNameNotification": "Votre nom d'utilisateur pour OpenCRVS a été mis à jour en : {{username}}. Votre mot de passe n'a pas changé."
+        "birthDeclarationNotification": "Le numéro de suivi de l'enregistrement de la naissance de {{name}} est {{trackingId}}. Vous recevrez un SMS dans les 2 jours avec l'état d'avancement et les prochaines étapes.",
+        "birthRegistrationNotification": "Félicitations, la naissance de {{name}} a été enregistrée. Rendez-vous au bureau d'enregistrement local dans 5 jours avec votre pièce d'identité pour retirer le certificat. Votre identifiant de suivi est {{trackingId}}.",
+        "birthRejectionNotification": "Déclaration de naissance de {{name}} ( Tracking ID : {{trackingId}} ) a été rejetée. Veuillez consulter votre bureau d'enregistrement local pour plus d'informations.",
+        "deathInProgressNotification": "L'ID de suivi de l'enregistrement du décès est {{trackingId}}. Vous devez vous rendre au {{crvsOffice}} pour compléter la déclaration.",
+        "deathDeclarationNotification": "Le numéro de suivi de l'enregistrement du décès de {{name}} est {{trackingId}}. Vous recevrez un SMS dans les 2 jours avec l'état d'avancement et les prochaines étapes.",
+        "deathRegistrationNotification": "Le décès de {{name}} a été enregistré. Rendez-vous au bureau d'enregistrement local dans 5 jours avec votre pièce d'identité pour retirer le certificat. Votre identifiant de suivi est {{trackingId}}.",
+        "deathRejectionNotification": "Déclaration de décès de {{name}} ( Tracking ID : {{trackingId}} ) a été rejetée. Veuillez consulter votre bureau d'enregistrement local pour plus d'informations.",
+        "authenticationCodeNotification": "Votre code d'authentification OpenCRVS est : {{authCode}}",
+        "userCredentialsNotification": "Vous pouvez vous connecter à OpenCRVS avec ce nom d'utilisateur temporaire : {{username}} et ce mot de passe : {{mot de passe}}.",
+        "retieveUserNameNotification": "Votre nom d'utilisateur pour OpenCRVS est : {{username}}",
+        "updateUserNameNotification": "Votre nom d'utilisateur pour OpenCRVS a été mis à jour en : {{username}}. Votre mot de passe n'a pas changé."
       }
     }
   ]

@@ -112,7 +112,7 @@ const Statistic = z.object({
   statisticalID: z.string(),
   name: z.string(),
   ...Object.fromEntries(
-    range(2007, 2021).flatMap(year => [
+    range(2007, 2021).flatMap((year) => [
       [`male_population_${year}`, parsedNumber],
       [`female_population_${year}`, parsedNumber],
       [`population_${year}`, parsedNumber],
@@ -137,7 +137,7 @@ function log(...params: any[]) {
 }
 
 function error(...params: any[]) {
-  console.error(...params.map(p => chalk.red(p)))
+  console.error(...params.map((p) => chalk.red(p)))
 }
 
 const DISTRICTS = `${ADMIN_STRUCTURE_SOURCE}source/districts.csv`
@@ -161,7 +161,7 @@ async function main() {
 
   for (const district of districts) {
     const state = states.find(
-      state => district.partOf === `Location/${state.statisticalID}`
+      (state) => district.partOf === `Location/${state.statisticalID}`
     )
     if (!state) {
       error(
@@ -182,7 +182,7 @@ async function main() {
 
   for (const district of districts) {
     const state = states.find(
-      state => district.partOf === `Location/${state.statisticalID}`
+      (state) => district.partOf === `Location/${state.statisticalID}`
     )
     if (!state) {
       error(
@@ -198,7 +198,7 @@ async function main() {
 
   for (const statistic of statistics) {
     const district = districts.find(
-      district => district.statisticalID === statistic.statisticalID
+      (district) => district.statisticalID === statistic.statisticalID
     )
     if (!district) {
       error(
@@ -220,7 +220,7 @@ async function main() {
 
   for (const facility of facilities) {
     const district = districts.find(
-      district => facility.partOf === `Location/${district.statisticalID}`
+      (district) => facility.partOf === `Location/${district.statisticalID}`
     )
     if (!district) {
       error(
@@ -244,7 +244,7 @@ async function main() {
     const partOf = districts
       .concat(states)
       .find(
-        district => facility.partOf === `Location/${district.statisticalID}`
+        (district) => facility.partOf === `Location/${district.statisticalID}`
       )
     if (!partOf) {
       error(
@@ -265,7 +265,7 @@ async function main() {
 
   for (const employee of employees) {
     const facility = crvsFacilities.find(
-      facility =>
+      (facility) =>
         employee.facilityId === `CRVS_OFFICE_${facility.statisticalID}`
     )
     if (!facility) {
@@ -282,7 +282,7 @@ async function main() {
   log(chalk.green('File is valid'), '✅', '\n')
 }
 
-main().catch(err => {
+main().catch((err) => {
   if (err instanceof z.ZodError) {
     err.issues.forEach(printIssue)
     process.exit(1)

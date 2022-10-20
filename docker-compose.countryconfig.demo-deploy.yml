@@ -28,6 +28,7 @@ services:
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - HOSTNAME=${HOSTNAME}
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
     deploy:
       replicas: 1
@@ -41,20 +42,62 @@ services:
   gateway:
     environment:
       - LANGUAGES=en,fr
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   workflow:
     environment:
       - LANGUAGES=en,fr
+      - MOSIP_TOKEN_SEEDER_URL=http://mosiptokenseeder:8080
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   auth:
     environment:
       - QA_ENV=true
       - NODE_ENV=production
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   user-mgnt:
     environment:
       - QA_ENV=true
       - NODE_ENV=production
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+  
+  config:
+    environment:
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+
+  metrics:
+    environment:
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+
+  search:
+    environment:
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+
+  webhooks:
+    environment:
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+  
+  mosiptokenseeder:
+    image: lalithkota/mosip-token-seeder:develop_sync_delivery
+    ports:
+      - '8085:8080'
+    deploy:
+      replicas: 1
+    networks:
+      - overlay_net
+    volumes:
+      - /data/secrets/mosip:/seeder/certs
+    restart: unless-stopped
+    environment:
+      - TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY=${TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY}
+      - TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK=${TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK}
+      - TOKENSEEDER_MOSIP_AUTH__PARTNER_ID=opencrvs-auth-partner
+      - TOKENSEEDER_MOSIP_AUTH_SERVER__IDA_AUTH_DOMAIN_URI=https://api-internal.mec2.mosip.net
+      - TOKENSEEDER_MOSIP_AUTH_SERVER__IDA_AUTH_URL=https://api-internal.mec2.mosip.net/idauthentication/v1/auth
+      - TOKENSEEDER_CRYPTO_ENCRYPT__ENCRYPT_CERT_PATH=/seeder/certs/ida.partner.crt
+      - TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PATH=/seeder/certs/opencrvs-auth.signed.p12
+      - TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD=${TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD}
 
 secrets:
   openhim-user:

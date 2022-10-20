@@ -21,7 +21,7 @@ export interface ISaltedHash {
 }
 
 export function generateRandomPassword(demoUser?: boolean) {
-  if (!!demoUser) {
+  if (demoUser) {
     return 'test'
   }
 
@@ -74,7 +74,7 @@ export async function readCSVToJSON<T>(filename: string) {
           separator: ','
         })
       )
-      .on('data', chunk => chunks.push(chunk))
+      .on('data', (chunk) => chunks.push(chunk))
       .on('error', reject)
       .on('end', () => {
         resolve(JSON.parse(chunks.join('')))

@@ -39,17 +39,17 @@ enum Role {
 export async function createUser(
   token: string,
   primaryOfficeId: string,
-  countryAlpha3:string,
-  phoneNumberRegex:string,
+  countryAlpha3: string,
+  phoneNumberRegex: string,
   overrides: Record<string, string>
 ) {
   const firstName = faker.name.firstName()
   const familyName = faker.name.lastName()
   log('Creating user', firstName, familyName, overrides)
 
-  const phoneNumberExpander = expand(phoneNumberRegex);
-  const generatedPhoneNumber = phoneNumberExpander.getIterator().next().value;
-  countryAlpha3 = countryAlpha3.toUpperCase()==='FAR'? 'ZMB' : countryAlpha3;
+  const phoneNumberExpander = expand(phoneNumberRegex)
+  const generatedPhoneNumber = phoneNumberExpander.getIterator().next().value
+  countryAlpha3 = countryAlpha3.toUpperCase() === 'FAR' ? 'ZMB' : countryAlpha3
 
   const user = {
     name: [
@@ -69,7 +69,7 @@ export async function createUser(
     ],
     username:
       firstName.toLocaleLowerCase() + '.' + familyName.toLocaleLowerCase(),
-    mobile: convertToMSISDN(generatedPhoneNumber,countryAlpha3),
+    mobile: convertToMSISDN(generatedPhoneNumber, countryAlpha3),
     email: faker.internet.email(),
     primaryOffice: primaryOfficeId,
     ...overrides
@@ -188,7 +188,12 @@ export async function getUsers(token: string, locationId: string) {
 
 export async function createSystemClient(
   officeId: string,
-  scope: 'HEALTH' | 'NATIONAL_ID' | 'EXTERNAL_VALIDATION' | 'AGE_CHECK' | 'RECORD_SEARCH',
+  scope:
+    | 'HEALTH'
+    | 'NATIONAL_ID'
+    | 'EXTERNAL_VALIDATION'
+    | 'AGE_CHECK'
+    | 'RECORD_SEARCH',
   systemAdmin: User
 ): Promise<User> {
   const createUserRes = await fetch(`${AUTH_API_HOST}/registerSystemClient`, {
@@ -225,7 +230,7 @@ export async function createSystemClient(
 export async function createUsers(
   token: string,
   location: Location,
-  countryCode:string,
+  countryCode: string,
   phoneNumberRegex: string,
   config: Config
 ) {
@@ -236,7 +241,7 @@ export async function createUsers(
   const fieldAgents: User[] = await Promise.all(
     existingUsers
       .filter(({ role }) => role === 'FIELD_AGENT')
-      .map(async user => ({
+      .map(async (user) => ({
         username: user.username,
         password: 'test',
         token: await getToken(user.username, 'test'),
@@ -248,7 +253,7 @@ export async function createUsers(
   const registrationAgents: User[] = await Promise.all(
     existingUsers
       .filter(({ role }) => role === 'REGISTRATION_AGENT')
-      .map(async user => ({
+      .map(async (user) => ({
         username: user.username,
         password: 'test',
         token: await getToken(user.username, 'test'),
@@ -260,7 +265,7 @@ export async function createUsers(
   const registrars: User[] = await Promise.all(
     existingUsers
       .filter(({ role }) => role === 'LOCAL_REGISTRAR')
-      .map(async user => ({
+      .map(async (user) => ({
         username: user.username,
         password: 'test',
         token: await getToken(user.username, 'test'),
@@ -273,7 +278,7 @@ export async function createUsers(
   const systemAdmins: User[] = await Promise.all(
     existingUsers
       .filter(({ role }) => role === 'LOCAL_SYSTEM_ADMIN')
-      .map(async user => ({
+      .map(async (user) => ({
         username: user.username,
         password: 'test',
         token: await getToken(user.username, 'test'),
@@ -294,7 +299,8 @@ export async function createUsers(
   }
   const randomOffice =
     crvsOffices[Math.floor(Math.random() * crvsOffices.length)]
-  const randomFieldAgentType = FIELD_AGENT_TYPES[Math.floor(Math.random()*FIELD_AGENT_TYPES.length)]
+  const randomFieldAgentType =
+    FIELD_AGENT_TYPES[Math.floor(Math.random() * FIELD_AGENT_TYPES.length)]
   log('Creating field agents')
   for (let i = fieldAgents.length; i < config.fieldAgents; i++) {
     fieldAgents.push(
@@ -309,7 +315,7 @@ export async function createUsers(
   for (let i = 0; i < config.hospitalFieldAgents; i++) {
     const systemAdmin =
       systemAdmins[0] ||
-      (await createUser(token, randomOffice.id, countryCode, phoneNumberRegex,{
+      (await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
         role: 'LOCAL_SYSTEM_ADMIN',
         type: ''
       }))
@@ -327,7 +333,7 @@ export async function createUsers(
   log('Creating registration agents')
   for (let i = registrationAgents.length; i < config.registrationAgents; i++) {
     registrationAgents.push(
-      await createUser(token, randomOffice.id, countryCode, phoneNumberRegex,{
+      await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
         role: 'REGISTRATION_AGENT',
         type: ''
       })

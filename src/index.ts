@@ -28,7 +28,8 @@ import {
 } from '@countryconfig/constants'
 import {
   locationsHandler,
-  statisticsHandler
+  statisticsHandler,
+  locationsFhirHandler
 } from '@countryconfig/features/administrative/handler'
 import { facilitiesHandler } from '@countryconfig/features/facilities/handler'
 import { contentHandler } from '@countryconfig/features/content/handler'
@@ -38,10 +39,35 @@ import {
   responseSchema as generatorResponseSchema
 } from '@countryconfig/features/generate/handler'
 import { validateRegistrationHandler } from '@countryconfig/features/validate/handler'
-
+import * as decode from 'jwt-decode'
 import { join } from 'path'
 import { birthNotificationHandler } from '@countryconfig/features/dhis2/features/notification/birth/handler'
 import { logger } from '@countryconfig/logger'
+import { mosipMediatorHandler } from './features/examples/mosip-openhim-mediator/handler'
+
+export interface ITokenPayload {
+  sub: string
+  exp: string
+  algorithm: string
+  scope: string[]
+}
+
+const getTokenPayload = (token: string): ITokenPayload => {
+  let decoded: ITokenPayload
+  try {
+    decoded = decode(token)
+  } catch (err) {
+    throw new Error(
+      `getTokenPayload: Error occurred during token decode : ${err}`
+    )
+  }
+  return decoded
+}
+
+export function hasScope(token: string, scope: string) {
+  const tokenPayload = getTokenPayload(token)
+  return (tokenPayload.scope && tokenPayload.scope.indexOf(scope) > -1) || false
+}
 
 export const verifyToken = async (token: string, authUrl: string) => {
   const res = await fetch(`${authUrl}/verifyToken`, {
@@ -89,7 +115,7 @@ const validateFunc = async (
 }
 
 async function getPublicKey(): Promise<string> {
-try {
+  try {
     const response = await fetch(`${AUTH_URL}/.well-known`)
     return response.text()
   } catch (error) {
@@ -99,7 +125,7 @@ try {
     if (process.env.NODE_ENV === 'production') {
       throw error
     }
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    await new Promise((resolve) => setTimeout(resolve, 3000))
     return getPublicKey()
   }
 }
@@ -202,6 +228,28 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
+    path: '/fhir-locations',
+    handler: locationsFhirHandler,
+    options: {
+      tags: ['api'],
+      auth: false,
+      description: 'Returns Farajaland locations as FHIR'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/fhir-locations/{id}',
+    handler: locationsFhirHandler,
+    options: {
+      tags: ['api'],
+      auth: false,
+      description: 'Returns Farajaland location as FHIR'
+    }
+  })
+
+  server.route({
+    method: 'GET',
     path: '/facilities',
     handler: facilitiesHandler,
     options: {
@@ -292,6 +340,18 @@ export async function createServer() {
     }
   })
 
+  server.route({
+    method: 'POST',
+    path: '/mosip-openhim-mediator',
+    handler: mosipMediatorHandler,
+    options: {
+      tags: ['api'],
+      description: 'Handles submission of mosip generaed NID'
+    }
+  })
+
+  
+
   server.ext({
     type: 'onRequest',
     method(request: Hapi.Request & { sentryScope?: any }, h) {
@@ -319,6 +379,5 @@ export async function createServer() {
 }
 
 if (require.main === module) {
-  createServer()
-    .then(server => server.start())
+  createServer().then((server) => server.start())
 }

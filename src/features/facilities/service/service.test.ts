@@ -29,8 +29,7 @@ const crvsOfficeBundle = JSON.stringify({
     },
     {
       relation: 'next',
-      url:
-        'http://localhost:3447/fhir/Location?type=CRVS_OFFICE&_count=2&_getpagesoffset=2'
+      url: 'http://localhost:3447/fhir/Location?type=CRVS_OFFICE&_count=2&_getpagesoffset=2'
     }
   ],
   entry: [
@@ -162,8 +161,7 @@ const healthFacilityBundle = JSON.stringify({
     },
     {
       relation: 'next',
-      url:
-        'http://localhost:3447/fhir/Location?type=HEALTH_FACILITY&_count=2&_getpagesoffset=2'
+      url: 'http://localhost:3447/fhir/Location?type=HEALTH_FACILITY&_count=2&_getpagesoffset=2'
     }
   ],
   entry: [
