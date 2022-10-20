@@ -351,6 +351,7 @@
     "validations.requiredBasic": "The error message that appears on required fields",
     "validations.required": "The error message that appears on required fields",
     "validations.userform.required": "The error message that appears on required fields on new user form",
+    "validations.correction.reason.required" : "The error message that appears on reason field on correction form",
     "validations.requiredSymbol": "A blank error message. Used for highlighting a required field without showing an error",
     "validations.validBirthRegistrationNumber": "The error message that appears when an invalid value is used as brn",
     "validations.validDeathRegistrationNumber": "The error message that appears when an invalid value is used as drn",
