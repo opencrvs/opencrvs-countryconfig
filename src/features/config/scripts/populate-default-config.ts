@@ -75,7 +75,7 @@ export default async function importCertificates() {
       HIDE_EVENT_REGISTER_INFORMATION: false,
       EXTERNAL_VALIDATION_WORKQUEUE: false, // API related, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Declarations only audited at DISTRICT level
       PHONE_NUMBER_PATTERN: '^0(7|9)[0-9]{8}$',
-      NID_NUMBER_PATTERN: '^[0-9]{9}$'
+      NID_NUMBER_PATTERN: '^[0-9]{9|10}$'
     })
 
     const certificates = [birthCertificate, deathCertificate]

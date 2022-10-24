@@ -20,6 +20,13 @@ interface IBirth {
     DELAYED: number
   }
 }
+
+export const statuses = {
+  PENDING: 'pending',
+  ACTIVE: 'active',
+  DISABLED: 'disabled',
+  DEACTIVATED: 'deactivated'
+}
 interface IDeath {
   REGISTRATION_TARGET: number
   FEE: {
@@ -58,6 +65,7 @@ export interface IApplicationConfigurationModel extends Document {
   EXTERNAL_VALIDATION_WORKQUEUE: boolean
   PHONE_NUMBER_PATTERN: RegExp
   NID_NUMBER_PATTERN: string
+  INTEGRATIONS: [IIntegration]
 }
 
 const birthSchema = new Schema<IBirth>({
@@ -88,6 +96,25 @@ const countryLogoSchema = new Schema<ICountryLogo>({
   file: String
 })
 
+interface IIntegration {
+  name: string
+  enabled: string
+}
+
+const integrationsSchema = new Schema<IIntegration>({
+  name: String,
+  status: {
+    type: String,
+    enum: [
+      statuses.PENDING,
+      statuses.ACTIVE,
+      statuses.DISABLED,
+      statuses.DEACTIVATED
+    ],
+    default: statuses.PENDING
+  },
+})
+
 const systemSchema = new Schema({
   APPLICATION_NAME: { type: String, required: false, default: 'OpenCRVS' },
   BIRTH: { type: birthSchema, required: false },
@@ -115,7 +142,8 @@ const systemSchema = new Schema({
     default: false
   },
   PHONE_NUMBER_PATTERN: { type: String, required: false },
-  NID_NUMBER_PATTERN: { type: String, required: false }
+  NID_NUMBER_PATTERN: { type: String, required: false },
+  INTEGRATIONS: [integrationsSchema]
 })
 
 export default model<IApplicationConfigurationModel>('Config', systemSchema)
