@@ -433,6 +433,7 @@
     "certificate.receipt.deathService.after": "Amount due on certificate for death label",
     "certificate.receipt.birthService.between": "Amount due on certificate for birth label",
     "config.application.settings": "Link Text for Config Application Settings",
+    "config.advanced.search": "This is used for the advanced search",
     "config.application.nameChangeMessage": "Message for application name change modal",
     "config.application.applicationNameChangeNotification": "Message for application name change notification",
     "config.application.configChangeError": "Error message for application config change",
