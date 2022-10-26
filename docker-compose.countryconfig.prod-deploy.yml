@@ -12,7 +12,6 @@ version: '3.3'
 services:
   notification:
     environment:
-      - SMS_PROVIDER=unknown
       - LANGUAGES=en,fr
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
@@ -29,6 +28,13 @@ services:
       - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - HOSTNAME=${HOSTNAME}
+      #- SMS_PROVIDER=
+      #- CLICKATELL_USER_PATH=
+      #- CLICKATELL_PASSWORD_PATH=
+      #- CLICKATELL_API_ID_PATH=
+      #- INFOBIP_GATEWAY_ENDPOINT_PATH=
+      #- INFOBIP_API_KEY_PATH=
+      #- INFOBIP_SENDER_ID_PATH=
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
     deploy:
