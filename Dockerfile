@@ -1,4 +1,4 @@
-FROM node:erbium-alpine
+FROM node:fermium-alpine
 
 # this package has dependencies (iconv) that require build tools
 # --no-cache: download package index on-the-fly, no need to cleanup afterwards
