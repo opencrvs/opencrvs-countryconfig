@@ -33,7 +33,7 @@ export async function sendSMSClickatell(
       unicode: 1
     }
   }
-  logger.info('Sending an sms', params)
+  logger.info(`Sending an sms: ${JSON.stringify(params)}`)
 
   const url = `https://api.clickatell.com/http/sendmsg?${stringify(params)}`
 
