@@ -796,6 +796,8 @@
     "misc.reEnterTitle": "The title displayed while creating a PIN",
     "misc.reEnterDescription": "",
     "recordAudit.archive.status": "Archived status",
+    "recordAudit.regStatus.declared.sentNotification": "Field agent sent notification",
+    "recordAudit.history.started": "Declaration Started",
     "recordAudit.archive.confirmation.body": "Confirmation body for archiving a declaration",
     "recordAudit.archive.confirmation.title": "Confirmation title for archiving a declaration",
     "recordAudit.status": "Label for status",

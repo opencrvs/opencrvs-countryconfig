@@ -187,6 +187,8 @@
   "performance.registrarsToCitizenValue",
   "performance.registrationByStatus.header",
   "performance.completenessTable.completenessRate",
+  "recordAudit.regStatus.declared.sentNotification",
+  "recordAudit.history.started",
   "register.form.modal.title.deleteDeclarationConfirm",
   "register.form.modal.desc.deleteDeclarationConfirm",
   "search.locationNotFound",
