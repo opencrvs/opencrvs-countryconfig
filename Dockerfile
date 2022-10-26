@@ -16,6 +16,7 @@ COPY tsconfig.json tsconfig.json
 COPY yarn.lock yarn.lock
 COPY src src
 RUN yarn install --production
+RUN apk del build-dependencies
 
 EXPOSE 3040
 
