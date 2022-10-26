@@ -18,6 +18,7 @@ type ISupportedType =
   | fhir.Practitioner
   | fhir.PractitionerRole
   | fhir.Location
+  | fhir.Patient
   | ICSVLocation
 
 export interface ICSVLocation {
@@ -56,14 +57,36 @@ export const sendToFhir = (
       'Content-Type': 'application/json+fhir'
     }
   })
-    .then(response => {
+    .then((response) => {
       return response
     })
-    .catch(error => {
+    .catch((error) => {
       return Promise.reject(
         new Error(`FHIR ${method} failed: ${error.message}`)
       )
     })
+}
+
+export async function updateResourceInHearth(resource: fhir.ResourceBase) {
+  const res = await fetch(
+    `${FHIR_URL}/${resource.resourceType}/${resource.id}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(resource),
+      headers: {
+        'Content-Type': 'application/fhir+json'
+      }
+    }
+  )
+  if (!res.ok) {
+    throw new Error(
+      `FHIR update to ${resource.resourceType} failed with [${
+        res.status
+      }] body: ${await res.text()}`
+    )
+  }
+
+  return res.text()
 }
 
 export const getFromFhir = (suffix: string) => {
@@ -72,10 +95,10 @@ export const getFromFhir = (suffix: string) => {
       'Content-Type': 'application/json+fhir'
     }
   })
-    .then(response => {
+    .then((response) => {
       return response.json()
     })
-    .catch(error => {
+    .catch((error) => {
       return Promise.reject(new Error(`FHIR request failed: ${error.message}`))
     })
 }
@@ -84,7 +107,7 @@ export function getLocationIDByDescription(
   locations: fhir.Location[],
   description: string
 ) {
-  const location = locations.find(obj => {
+  const location = locations.find((obj) => {
     return obj.description === description
   }) as fhir.Location
   return location.id as string

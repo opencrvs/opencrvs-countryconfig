@@ -84,7 +84,7 @@ export async function matchAndAssignStatisticalData(
 
   for (const location of fhirLocations) {
     const matchingStatistics = statistics.find(
-      stat => location.description === stat.statisticalID
+      (stat) => location.description === stat.statisticalID
     )
     if (!matchingStatistics) {
       // tslint:disable-next-line:no-console
@@ -94,12 +94,11 @@ export async function matchAndAssignStatisticalData(
         }`
       )
     } else {
-      const statisticalExtensions = generateStatisticalExtensions(
-        matchingStatistics
-      )
+      const statisticalExtensions =
+        generateStatisticalExtensions(matchingStatistics)
 
       const statisticsKeys = statisticalExtensions.map(
-        extension => extension.url
+        (extension) => extension.url
       )
 
       if (!location.extension) {
@@ -125,10 +124,10 @@ const sendToFhir = (doc: fhir.Location, suffix: string, method: string) => {
       'Content-Type': 'application/json+fhir'
     }
   })
-    .then(response => {
+    .then((response) => {
       return response
     })
-    .catch(error => {
+    .catch((error) => {
       return Promise.reject(
         new Error(`FHIR ${method} failed: ${error.message}`)
       )
@@ -144,7 +143,7 @@ async function addStatisticalData() {
     )}`
   )
 
-  const locations = await getLocationsByIdentifier('DISTRICT').catch(err => {
+  const locations = await getLocationsByIdentifier('DISTRICT').catch((err) => {
     console.log("Couldn't fetch locations", err)
     throw err
   })
@@ -166,7 +165,7 @@ async function addStatisticalData() {
     )}`
   )
   const stateStatistics = await getStatisticsForStates()
-  const states = await getLocationsByIdentifier('STATE').catch(err => {
+  const states = await getLocationsByIdentifier('STATE').catch((err) => {
     console.log("Couldn't fetch states", err)
     throw err
   })

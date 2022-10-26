@@ -69,16 +69,12 @@ export async function sendBirthNotification(
       first_names: 'Dad',
       last_name: familyName,
       nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString(),
-      dob: sub(birthDate, { years: 20 })
-        .toISOString()
-        .split('T')[0]
+      dob: sub(birthDate, { years: 20 }).toISOString().split('T')[0]
     },
     mother: {
       first_names: 'Mom',
       last_name: familyName,
-      dob: sub(birthDate, { years: 20 })
-        .toISOString()
-        .split('T')[0],
+      dob: sub(birthDate, { years: 20 }).toISOString().split('T')[0],
       nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString()
     },
     phone_number:
@@ -139,9 +135,7 @@ export function createBirthDeclarationData(
     nationality: ['FAR'],
     occupation: 'Bookkeeper',
     educationalAttainment: EducationType.PrimaryIsced_1,
-    dateOfMarriage: sub(birthDate, { years: 2 })
-      .toISOString()
-      .split('T')[0],
+    dateOfMarriage: sub(birthDate, { years: 2 }).toISOString().split('T')[0],
     identifier: [
       {
         id: faker.datatype
@@ -157,9 +151,7 @@ export function createBirthDeclarationData(
         familyName: familyName
       }
     ],
-    birthDate: sub(birthDate, { years: 20 })
-      .toISOString()
-      .split('T')[0],
+    birthDate: sub(birthDate, { years: 20 }).toISOString().split('T')[0],
     maritalStatus: MaritalStatusType.Married,
     address: [
       createAddressInput(location, AddressType.PrimaryAddress),
@@ -188,8 +180,7 @@ export function createBirthDeclarationData(
       attachments: [
         {
           contentType: 'image/png',
-          data:
-            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+          data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
           subject: AttachmentSubject.Child,
           type: AttachmentType.NotificationOfBirth
         }
@@ -256,7 +247,7 @@ export async function createBirthDeclaration(
   )
 
   const name = details.child?.name
-    ?.map(name => `${name?.firstNames} ${name?.familyName}`)
+    ?.map((name) => `${name?.firstNames} ${name?.familyName}`)
     .join(' ')
   const requestStart = Date.now()
   const createDeclarationRes = await fetch(GATEWAY_HOST, {
@@ -335,7 +326,7 @@ export async function createDeathDeclaration(
           timeLoggedMS: timeFilling * 1000
         }
       ],
-      inCompleteFields: !sex ? 'child/child-view-group/gender' : undefined,
+      inCompleteFields: !sex ? 'child/child-view-group/gender' : undefined
     },
     causeOfDeath: 'Natural cause',
     deceased: {
@@ -567,11 +558,11 @@ export async function fetchAlreadyGeneratedInterval(
     const data = body.data
 
     return data.searchEvents?.results?.map(
-      d => new Date(d!.registration!.dateOfDeclaration)
+      (d) => new Date(d!.registration!.dateOfDeclaration)
     )[0]
   }
 
-  return (
-    await Promise.all([fetchFirst('asc'), fetchFirst('desc')])
-  ).filter((x): x is Date => Boolean(x))
+  return (await Promise.all([fetchFirst('asc'), fetchFirst('desc')])).filter(
+    (x): x is Date => Boolean(x)
+  )
 }
