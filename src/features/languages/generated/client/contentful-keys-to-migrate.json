@@ -205,6 +205,11 @@
   "sysAdHome.resendSMS",
   "sysAdHome.resendSMSSuccess",
   "sysAdHome.resendSMSError",
+  "sysAdHome.sendUsernameReminderSMS",
+  "sysAdHome.sendUsernameReminderSMSSuccess",
+  "sysAdHome.sendUsernameReminderSMSError",
+  "sysAdHome.sendUsernameReminderSMSModalTitle",
+  "sysAdHome.sendUsernameReminderSMSModalMessage",
   "sysAdHome.resentPasswordSMSSuccess",
   "sysAdHome.resentPasswordSMSError"
 ]
