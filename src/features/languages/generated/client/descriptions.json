@@ -884,6 +884,7 @@
     "register.form.modal.title.validateConfirmation": "Title for validate confirmation modal",
     "review.button.approve": "Label for Send For Approval button",
     "review.documents.zeroDocumentsText": "Zero documents text",
+    "review.documents.zeroDocumentsTextForAnySection": "Zero documents text",
     "review.header.title.govtName": "Header title that shows bgd govt name",
     "search.results": "Results label at the top of the data table component",
     "search.noResults": "Text to display if the search return no results for the current filters",

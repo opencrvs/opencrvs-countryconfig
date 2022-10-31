@@ -1247,6 +1247,7 @@
   "reviewDocumentViewerTitle": "review.documentViewer.title",
   "reviewDocumentsEditDocuments": "review.documents.editDocuments",
   "reviewDocumentsZeroDocumentsText": "review.documents.zeroDocumentsText",
+  "reviewDocumentsZeroDocumentsTextorAnySection":"review.documents.zeroDocumentsTextForAnySection",
   "reviewEditModalBackToPreview": "review.edit.modal.backToPreview",
   "reviewEditModalConfirmationText": "review.edit.modal.confirmationText",
   "reviewEditModalConfirmationTitle": "review.edit.modal.confirmationTitle",
