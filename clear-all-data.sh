@@ -46,5 +46,12 @@ docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE 'http://elasti
 docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
 
 # Clear Minio Data
-docker exec opencrvs-minio-1 rm -rf /data/minio/ocrvs && echo "**** Removed minio data ****"
-docker exec opencrvs-minio-1 mkdir /data/minio/ocrvs
+if [ "$REPLICAS" = "0" ]; then
+ # Locally, as this script is called from the country config repo, the path to core is unknown
+ # So we delete the data from the running shared volume location
+  docker exec opencrvs_minio_1 rm -rf /data/minio/ocrvs && echo "**** Removed minio data ****"
+  docker exec opencrvs_minio_1 mkdir /data/minio/ocrvs
+else
+  rm -rf /data/minio/ocrvs && echo "**** Removed minio data ****"
+  mkdir /data/minio/ocrvs
+fi
