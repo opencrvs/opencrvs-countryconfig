@@ -52,14 +52,3 @@ docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongodump $(mongo_credentials) --host $HOST -d application-config --gzip --archive=/backups/application-config.gz"
-
-# Backup minio data
-if [ "$REPLICAS" = "0" ]; then
- # Locally, as this script is called from the country config repo, the path to core is unknown
- # So we backup from the data inside the container
- docker cp opencrvs_minio_1:/data/minio/ocrvs $DIR/backups/minio-dev
- tar -czvf $DIR/backups/minio-dev.tar.gz $DIR/backups/minio-dev
- rm -rf $DIR/backups/minio-dev
-else
- tar -czvf $DIR/backups/minio-dev.tar.gz /data/minio/ocrvs
-fi

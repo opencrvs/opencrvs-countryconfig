@@ -52,12 +52,3 @@ docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
 
 docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/backups/application-config.gz"
-
-# Restore Minio Data
-tar -xzvf $DIR/backups/minio-dev.tar.gz -C $DIR/backups
-if [ "$REPLICAS" = "0" ]; then
- # Locally, as this script is called from the country config repo, the path to core is unknown
- # So we copy the backup data into the running shared volume location
- docker cp $DIR/backups/minio-dev/. opencrvs_minio_1:/data/minio/ocrvs
-fi
-rm -rf $DIR/backups/minio-dev
