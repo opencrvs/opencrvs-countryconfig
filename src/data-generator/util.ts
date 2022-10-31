@@ -26,13 +26,13 @@ export function getRandomFromBrackets(
 
 // Utility function for adding concurrency for async for loops
 export function createConcurrentBuffer(concurrency: number) {
-  let currentPromises: Array<Promise<void>> = []
+  const currentPromises: Array<Promise<void>> = []
 
   return <T>(
     handler: (...props: T[]) => Promise<void>,
     ...variablesToBind: T[]
   ) => {
-    const prom = handler(...variablesToBind).catch(err => log(err))
+    const prom = handler(...variablesToBind).catch((err) => log(err))
     currentPromises.push(prom)
 
     prom.finally(() => currentPromises.splice(currentPromises.indexOf(prom), 1))
@@ -62,11 +62,9 @@ export function nullsToEmptyString(object: object) {
   }
 }
 
-export type RecursiveRequired<T> = Required<
-  {
-    [P in keyof T]: IfAny<T[P], T[P], Exclude<RecursiveRequired<T[P]>, null>>
-  }
->
+export type RecursiveRequired<T> = Required<{
+  [P in keyof T]: IfAny<T[P], T[P], Exclude<RecursiveRequired<T[P]>, null>>
+}>
 
 type IfAny<T, Y, N> = 0 extends 1 & T ? Y : N
 
@@ -90,11 +88,7 @@ export function idsToFHIRIds<T extends Record<string, any>>(
       return memo
     }
 
-    const fhirKey = key
-      .split('.')
-      .slice(0, -1)
-      .concat('_fhirID')
-      .join('.')
+    const fhirKey = key.split('.').slice(0, -1).concat('_fhirID').join('.')
     return set(set(memo, fhirKey, value), key, undefined)
   }, target) as ReplaceIdKeysWithFHIRId<T>
 }

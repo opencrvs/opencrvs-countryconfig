@@ -47,6 +47,10 @@ export default `<svg width="420" height="595" viewBox="0 0 420 595" fill="none" 
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
   <tspan x="50%" y="170.104" text-anchor="middle">Date of issuance of certificate:  {{certificateDate}}</tspan>
 </text>
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+  <tspan x="50%" y="565.104" text-anchor="middle">{{mosipAIDLabel}} {{mosipAID}}</tspan>
+</text>
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px"><tspan x="50%" y="170.104" text-anchor="middle">:</tspan></text>
 <line x1="43.4985" y1="403.75" x2="376.499" y2="401.75" stroke="#EEEEEE" stroke-width="0.5" />
 <line x1="43.4985" y1="189.75" x2="376.499" y2="187.75" stroke="#EEEEEE" stroke-width="0.5" />
 <path d="M236.262 59.14C236.265 68.416 236.253 77.695 236.268 86.971C236.274 87.379 236.148 87.766 235.938 88.093C235.743 88.393 235.473 88.639 235.151 88.804L211.04 102.718C210.707 102.907 210.352 103 210.007 103C209.653 103 209.296 102.901 208.978 102.718L184.878 88.816C184.548 88.651 184.269 88.402 184.071 88.099C183.858 87.766 183.732 87.379 183.732 86.968L183.741 86.782L183.735 59.032C183.729 58.66 183.831 58.309 184.005 58.006L184.011 58C184.191 57.688 184.452 57.43 184.764 57.247L208.963 43.282C209.296 43.093 209.653 43 209.995 43C210.349 43 210.71 43.099 211.025 43.282L235.232 57.25C235.572 57.445 235.833 57.727 236.01 58.048L236.016 58.054C236.193 58.384 236.28 58.762 236.262 59.14Z" fill="#EFCFA4" />

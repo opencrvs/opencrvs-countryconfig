@@ -77,7 +77,7 @@ function generateLocationAddress(
 
   if (fhirAddress) {
     address = Object.values(fhirAddress)
-      .filter(x => typeof x === 'string' && x.length > 0)
+      .filter((x) => typeof x === 'string' && x.length > 0)
       .join(', ')
   }
 
@@ -130,7 +130,7 @@ export async function composeAndSaveFacilities(
       newLocation,
       '/Location',
       'POST'
-    ).catch(err => {
+    ).catch((err) => {
       throw Error('Cannot save location to FHIR')
     })
     const locationHeader = savedLocationResponse.headers.get(

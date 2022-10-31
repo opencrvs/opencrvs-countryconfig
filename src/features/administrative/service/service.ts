@@ -10,7 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import { FHIR_URL } from '@countryconfig/constants'
-import fetch from 'node-fetch'
+import fetch, { Response } from 'node-fetch'
 import { generateLocationResource } from '@countryconfig/features/administrative/scripts/service'
 import { ILocation } from '@countryconfig/features/utils'
 import { merge } from 'lodash'
@@ -41,6 +41,22 @@ export async function getLocations(): Promise<ILocationDataResponse> {
 
   return locations
 }
+
+export async function getLocationsInFhir(id?:string): Promise<fhir.Bundle | fhir.Location> {
+  let res: Response
+  let locationBundle: fhir.Bundle | fhir.Location
+  if(id){
+    res = await fetch(`${FHIR_URL}/Location/${id}`)
+    locationBundle = await res.json()
+    return locationBundle
+  }else{
+    res = await fetch(`${FHIR_URL}/Location?type=ADMIN_STRUCTURE&_count=0`)
+    locationBundle = await res.json()
+    return locationBundle
+  }
+}
+
+
 
 const STATISTIC_EXTENSION_URLS = [
   'http://opencrvs.org/specs/id/statistics-male-populations',
@@ -81,11 +97,12 @@ export async function getStatistics() {
         ?.filter((ext): ext is StatisticsExtension =>
           STATISTIC_EXTENSION_URLS.includes(ext.url)
         )
-        .forEach(item => {
-          const values: Array<{ [year: string]: number }> = JSON.parse(
-            item.valueString
-          )
+        .forEach((item) => {
+          const values: Array<{
+            [year: string]: number
+          }> = JSON.parse(item.valueString)
 
+          // eslint-disable-next-line prefer-spread
           statistics[item.url] = merge.apply(null, values)
         })
 

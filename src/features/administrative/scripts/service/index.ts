@@ -60,8 +60,7 @@ const composeFhirLocation = (
     },
     extension: [
       {
-        url:
-          'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
+        url: 'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
         valueAttachment: {
           contentType: 'application/geo+json',
           data: '<base64>' // base64 encoded geoJSON feature object
@@ -86,7 +85,7 @@ export function generateLocationResource(
     fhirLocation &&
     fhirLocation.identifier &&
     fhirLocation.identifier.find(
-      indentifier => indentifier.system === JURISDICTION_TYPE_IDENTIFIER
+      (indentifier) => indentifier.system === JURISDICTION_TYPE_IDENTIFIER
     )
   if (jurisdictionTypeIdentifier && jurisdictionTypeIdentifier.value) {
     loc.jurisdictionType = jurisdictionTypeIdentifier.value
@@ -114,7 +113,7 @@ export async function fetchAndComposeLocations(
       newLocation,
       '/Location',
       'POST'
-    ).catch(err => {
+    ).catch((err) => {
       throw Error('Cannot save location to FHIR')
     })
     const locationHeader = savedLocationResponse.headers.get(
@@ -133,7 +132,7 @@ export function getLocationPartOfIds(
   const locations: ICSVLocation[] = []
   for (const csvLocation of rawLocationData) {
     const partOfStatisticalID = csvLocation.partOf.split('/')[1]
-    const parentState = states.filter(state => {
+    const parentState = states.filter((state) => {
       return state.description === partOfStatisticalID
     })[0]
     csvLocation.partOf = `Location/${parentState.id}`

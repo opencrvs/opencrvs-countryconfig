@@ -1305,6 +1305,7 @@
   "settingsVerifyPhone": "settings.verifyPhone",
   "configFormTooltipRequiredForRegistration": "config.form.tooltip.requiredForRegistration",
   "configFormTooltipConditionalForRegistration": "config.form.tooltip.conditionalForRegistration",
+  "configFormTooltipFieldId": "config.form.tooltip.fieldId",
   "configFormTooltipContentKey": "config.form.tooltip.contentKey",
   "configFormTooltipCertHandelbars": "config.form.tooltip.certHandelbars",
   "wqNoRecordsDraft": "wq.noRecords.draft",

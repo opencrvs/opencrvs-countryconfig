@@ -11,14 +11,9 @@
  */
 import * as fs from 'fs'
 import { ORG_URL } from '@countryconfig/constants'
-import {
-  getFromFhir,
-  sendToFhir
-} from '@countryconfig/features/utils'
+import { getFromFhir, sendToFhir } from '@countryconfig/features/utils'
 import chalk from 'chalk'
-import User, {
-  IUserModel
-} from '@countryconfig/features/employees/model/user'
+import User, { IUserModel } from '@countryconfig/features/employees/model/user'
 import { EMPLOYEES_SOURCE } from '@countryconfig/constants'
 import {
   generateSaltedHash,
@@ -128,7 +123,6 @@ export async function composeAndSavePractitioners(
   for (const practitioner of practitioners) {
     const locations: fhir.Reference[] = []
     const catchmentAreaIds: string[] = []
-    let facilityResource: any
     // get location FHIR references for catchment area and PractitionerRole locations prop
     if (!practitioner.facilityId) {
       throw Error(
@@ -138,7 +132,7 @@ export async function composeAndSavePractitioners(
     const facility = await getFromFhir(
       `/Location?identifier=${encodeURIComponent(practitioner.facilityId)}`
     )
-    facilityResource = facility.entry[0].resource
+    const facilityResource = facility.entry[0].resource
     const primaryOfficeId = facilityResource.id
     locations.push({ reference: `Location/${primaryOfficeId}` })
     let partOf: fhir.Reference = facilityResource.partOf
@@ -153,14 +147,13 @@ export async function composeAndSavePractitioners(
     }
 
     // Create and save Practitioner
-    const newPractitioner: fhir.Practitioner = composeFhirPractitioner(
-      practitioner
-    )
+    const newPractitioner: fhir.Practitioner =
+      composeFhirPractitioner(practitioner)
     const savedPractitionerResponse = await sendToFhir(
       newPractitioner,
       '/Practitioner',
       'POST'
-    ).catch(err => {
+    ).catch((err) => {
       throw Error('Cannot save practitioner to FHIR')
     })
 
@@ -171,14 +164,15 @@ export async function composeAndSavePractitioners(
     const practitionerReference = `Practitioner/${practitionerId}`
 
     // Create and save PractitionerRole
-    const newPractitionerRole: fhir.PractitionerRole = composeFhirPractitionerRole(
-      practitioner.role,
-      practitionerReference,
-      locations
-    )
+    const newPractitionerRole: fhir.PractitionerRole =
+      composeFhirPractitionerRole(
+        practitioner.role,
+        practitionerReference,
+        locations
+      )
 
     await sendToFhir(newPractitionerRole, '/PractitionerRole', 'POST').catch(
-      err => {
+      (err) => {
         throw Error('Cannot save practitioner role to FHIR')
       }
     )

@@ -57,3 +57,60 @@
 - name: 'Setup systemd to mount encrypted folder'
   shell: systemctl daemon-reload && systemctl enable reboot.service
   when: st.stat.exists and encrypt_data
+
+# MOSIP integration requires wireguard and some secrets to be installed
+# Here is an example configuration that we use on our 3 node demo production environment
+# Ensure that the MOSIP supplied peer conf file containing your keys already exists on your servers in /etc/wireguard/
+# - name: Install wireguard package
+# apt:
+#   name: wireguard
+#   state: present
+#   update_cache: yes
+
+# - name: Copy mosip wireguard peer 1 file
+# ansible.builtin.copy:
+#   src: '{{ mosip_wireguard_peer_1_path }}'
+#   dest: /etc/wireguard/mosip-peer1.conf
+# when: ansible_hostname == data1_hostname
+
+# - name: 'Run wireguard peer 1'
+# shell: systemctl enable wg-quick@mosip-peer1 && systemctl start wg-quick@mosip-peer1
+# when: ansible_hostname == data1_hostname
+
+# - name: Copy mosip wireguard peer 2 file
+# ansible.builtin.copy:
+#   src: '{{ mosip_wireguard_peer_2_path }}'
+#   dest: /etc/wireguard/mosip-peer2.conf
+# when: ansible_hostname == data2_hostname
+
+# - name: 'Run wireguard peer 2'
+# shell: systemctl enable wg-quick@mosip-peer2 && systemctl start wg-quick@mosip-peer2
+# when: ansible_hostname == data2_hostname
+
+# - name: Copy mosip wireguard peer 3 file
+# ansible.builtin.copy:
+#   src: '{{ mosip_wireguard_peer_3_path }}'
+#   dest: /etc/wireguard/mosip-peer3.conf
+# when: ansible_hostname == data3_hostname
+
+# - name: 'Run wireguard peer 3'
+# shell: systemctl enable wg-quick@mosip-peer3 && systemctl start wg-quick@mosip-peer3
+# when: ansible_hostname == data3_hostname
+
+# - name: 'Create mosip secrets directory'
+# file:
+#   path: /data/secrets/mosip
+#   state: directory
+#   group: 1000
+#   owner: 1000
+#   mode: g+rwx
+
+# - name: Copy mosip encrypt cert file
+# ansible.builtin.copy:
+#   src: '{{ mosip_seeder_encrypt_cert_path }}'
+#   dest: /data/secrets/mosip/{{ mosip_seeder_encrypt_cert_filename }}
+
+# - name: Copy mosip encrypt sig file
+# ansible.builtin.copy:
+#   src: '{{ mosip_seeder_encrypt_sig_path }}'
+#   dest: /data/secrets/mosip/{{ mosip_seeder_encrypt_sig_filename }}

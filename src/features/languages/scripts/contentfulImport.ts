@@ -335,9 +335,9 @@ function getTranslations(
   locales: SupportedLocaleConfig[],
   languages: Language[]
 ): { [key: string]: string } {
-  let obj = {}
+  const obj = {}
   locales.forEach((supportedLocale: SupportedLocaleConfig, index: number) => {
-    const languageBlock = languages.filter(language => {
+    const languageBlock = languages.filter((language) => {
       return language.lang === supportedLocale.code
     })[0]
     obj[supportedLocale.code] = languageBlock.messages[fieldName]
@@ -352,7 +352,7 @@ function generateContentTypeEntry(
   languages: Language[],
   notification?: boolean
 ): Entry {
-  let fields = {}
+  const fields = {}
   const fieldKey = !notification ? camelCase(fieldName) : fieldName
   fields[fieldKey] = getTranslations(fieldName, locales, languages)
 
@@ -467,22 +467,22 @@ export default async function convertLanguagesToContentful() {
 
   // create content
 
-  let sortedKeys: string[] = []
-  let longMessages: string[] = []
-  let contentfulIds = {}
+  const sortedKeys: string[] = []
+  const longMessages: string[] = []
+  const contentfulIds = {}
   let currentContentType: ContentType
   let currentEditorInterface: EditorInterface
   let currentContentTypeEntry: Entry
 
   try {
-    let languages = (await JSON.parse(
+    const languages = (await JSON.parse(
       fs.readFileSync(
         `${LANGUAGES_SOURCE}${application}/${application}.json`,
         'utf8'
       )
     )) as LanguagesJSON
 
-    let descriptions = (await JSON.parse(
+    const descriptions = (await JSON.parse(
       fs.readFileSync(
         `${LANGUAGES_SOURCE}${application}/descriptions.json`,
         'utf8'
@@ -659,14 +659,14 @@ export default async function convertLanguagesToContentful() {
     fs.writeFile(
       `${LANGUAGES_SOURCE}${application}/contentful-import.json`,
       JSON.stringify(contentfulTemplate),
-      err => {
+      (err) => {
         if (err) return console.log(err)
       }
     )
     fs.writeFile(
       `${LANGUAGES_SOURCE}${application}/contentful-ids.json`, // used when loading content from API
       JSON.stringify(contentfulIds),
-      err => {
+      (err) => {
         if (err) return console.log(err)
       }
     )
