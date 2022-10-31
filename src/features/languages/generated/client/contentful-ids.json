@@ -673,7 +673,6 @@
   "formFieldLabelCaregiverParents": "form.field.label.caregiver.parents",
   "formFieldLabelCauseOfDeathCode": "form.field.label.causeOfDeathProof",
   "formFieldLabelCauseOfDeathEstablished": "form.field.label.causeOfDeathEstablished",
-  "formFieldLabelCauseOfDeathEstablishedFieldLabel": "form.field.label.causeOfDeathEstablishedFieldLabel",
   "formFieldLabelCertificatePrintInAdvance": "form.field.label.certificatePrintInAdvance",
   "formFieldLabelChildDateOfBirth": "form.field.label.childDateOfBirth",
   "formFieldLabelChildFamilyName": "form.field.label.childFamilyName",
