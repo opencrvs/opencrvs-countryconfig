@@ -6,6 +6,7 @@ module.exports = {
   ],
   extends: [
     'eslint:recommended',
+    'plugin:prettier/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'prettier'
   ],
@@ -13,5 +14,11 @@ module.exports = {
     'no-console': 'warn',
     'no-unused-vars': 'warn',
     'no-undef': 'warn'
+  },
+  globals: {
+    'NodeJS': true
+  },
+  env: {
+    'node': true
   }
 };

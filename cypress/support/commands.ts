@@ -201,7 +201,7 @@ Cypress.Commands.add('printDeclaration', () => {
 
 Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
   cy.xpath(
-    `//span[contains(text(), "${name}")]/ancestor::div[@data-test-id="list-view-label"]/../following-sibling::div[@data-test-id="list-view-actions"][1]/descendant::button`
+    `//div[contains(text(), "${name}")]/ancestor::div[@data-test-id="list-view-label"]/../following-sibling::div[@data-test-id="list-view-actions"][1]/descendant::button`
   ).click({ force: true })
 
   cy.get('[id$=-menuSubMenu]').should('is.visible')
@@ -319,7 +319,6 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.goToNextFormSection()
 
   // FATHER DETAILS
-  cy.get('#detailsExist_true').click()
   cy.get('#iD').type('331345378')
 
   cy.get('#firstNamesEng').type('Joe')
@@ -584,6 +583,7 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', () => {
 
   // MANNER OF DEATH
   cy.selectOption('#manner', '', 'Natural causes')
+  cy.get('#causeOfDeathEstablished').click()
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', "Deceased's usual place of residence")
 
@@ -676,7 +676,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
 
   // CAUSE OF DEATH DETAILS
   cy.selectOption('#manner', '', 'Homicide')
-  cy.get('#causeOfDeathEstablished_true').click()
+  cy.get('#causeOfDeathEstablished').click()
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', 'Other')
 

@@ -649,6 +649,8 @@ function birthDeclarationWorkflow(
 
       let id: string
       let registrationDetails: BirthRegistrationInput
+      const keepDeclarationIncomplete =
+        Math.random() < probabilityToBeIncomplete
       if (isHospitalUser) {
         log('Sending a DHIS2 Hospital notification')
 
@@ -659,24 +661,7 @@ function birthDeclarationWorkflow(
           submissionTime,
           randomFacility
         )
-        const declaration = await fetchRegistration(randomRegistrar, id)
-        try {
-          registrationDetails =
-            await createBirthRegistrationDetailsForNotification(
-              add(new Date(submissionTime), {
-                days: 1
-              }),
-              location,
-              declaration
-            )
-        } catch (error) {
-          console.log(error)
-          console.log(JSON.stringify(declaration))
-          throw error
-        }
       } else {
-        const keepDeclarationIncomplete =
-          Math.random() < probabilityToBeIncomplete
         id = await createBirthDeclaration(
           randomUser,
           keepDeclarationIncomplete ? undefined : sex,
@@ -685,24 +670,6 @@ function birthDeclarationWorkflow(
           location,
           randomFacility
         )
-        const declaration = await fetchRegistration(randomRegistrar, id)
-        if (keepDeclarationIncomplete) {
-          declaration.child = { ...declaration.child, gender: sex }
-        }
-
-        try {
-          registrationDetails = await createRegistrationDetails(
-            add(new Date(submissionTime), {
-              days: 1
-            }),
-            declaration
-          )
-        } catch (error) {
-          console.log(error)
-          console.log(JSON.stringify(declaration))
-          throw error
-        }
-        log('Registering', id)
       }
 
       if (!REGISTER) {
@@ -710,25 +677,53 @@ function birthDeclarationWorkflow(
         return
       }
 
+      log('Registering', id)
+
       if (Math.random() < probabilityToBeRejected) {
+        await fetchRegistration(randomRegistrar, id)
         await markEventAsRejected(
           randomRegistrar,
           id,
           rejectionReason,
           rejectionComment
         )
-        await fetchRegistration(randomRegistrar, id)
       }
 
       if (!declaredRecently || Math.random() > 0.5) {
-        await markAsRegistered(randomRegistrar, id, registrationDetails)
-        const registration = await fetchRegistration(randomRegistrar, id)
+        const declaration = await fetchRegistration(randomRegistrar, id)
+        try {
+          if (isHospitalUser) {
+            registrationDetails = createBirthRegistrationDetailsForNotification(
+              add(new Date(submissionTime), {
+                days: 1
+              }),
+              location,
+              declaration
+            )
+          } else {
+            /* When the declaration is kept incomplete, we don't provide the gender when sending
+             * the declaration. So before registering we add the gender to make it complete
+             */
+            if (keepDeclarationIncomplete) {
+              declaration.child = { ...declaration.child, gender: sex }
+            }
+            registrationDetails = createRegistrationDetails(
+              add(new Date(submissionTime), {
+                days: 1
+              }),
+              declaration
+            )
+          }
+        } catch (error) {
+          console.log(error)
+          console.log(JSON.stringify(declaration))
+          throw error
+        }
 
-        if (
-          CERTIFY &&
-          (!declaredRecently || Math.random() > 0.5) &&
-          registration
-        ) {
+        await markAsRegistered(randomRegistrar, id, registrationDetails)
+
+        if (CERTIFY && (!declaredRecently || Math.random() > 0.5)) {
+          const registration = await fetchRegistration(randomRegistrar, id)
           // Wait for few seconds so registration gets updated to elasticsearch before certifying
           await wait(2000)
           log('Certifying', id)
@@ -816,26 +811,29 @@ function deathDeclarationWorkflow(
         users.registrars[Math.floor(Math.random() * users.registrars.length)]
       log('Registering', { compositionId })
 
-      const declaration = await fetchDeathRegistration(
-        randomRegistrar,
-        compositionId
-      )
-
-      if (keepDeclarationIncomplete) {
-        declaration.deceased = { ...declaration.deceased, gender: sex }
-      }
-
       if (Math.random() < probabilityToBeRejected) {
+        await fetchRegistration(randomRegistrar, compositionId)
         await markEventAsRejected(
           randomRegistrar,
           compositionId,
           rejectionReason,
           rejectionComment
         )
-        await fetchRegistration(randomRegistrar, compositionId)
       }
 
       if (!declaredRecently || Math.random() > 0.5) {
+        const declaration = await fetchDeathRegistration(
+          randomRegistrar,
+          compositionId
+        )
+
+        /* When the declaration is kept incomplete, we don't provide the gender when sending
+         * the declaration. So before registering we add the gender to make it complete
+         */
+        if (keepDeclarationIncomplete) {
+          declaration.deceased = { ...declaration.deceased, gender: sex }
+        }
+
         await markDeathAsRegistered(
           randomRegistrar,
           compositionId,
@@ -846,13 +844,13 @@ function deathDeclarationWorkflow(
             declaration
           )
         )
-        const registration = await fetchDeathRegistration(
-          randomRegistrar,
-          compositionId
-        )
-        log('Certifying', registration.id)
-        await wait(2000)
         if (CERTIFY && (!declaredRecently || Math.random() > 0.5)) {
+          const registration = await fetchDeathRegistration(
+            randomRegistrar,
+            compositionId
+          )
+          log('Certifying', registration.id)
+          await wait(2000)
           await markDeathAsCertified(
             registration.id,
             randomRegistrar,

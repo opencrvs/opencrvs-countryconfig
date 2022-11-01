@@ -1,4 +1,10 @@
-FROM node:erbium-alpine
+FROM node:fermium-alpine
+
+# this package has dependencies (iconv) that require build tools
+# --no-cache: download package index on-the-fly, no need to cleanup afterwards
+# --virtual: bundle packages, remove whole bundle at once, when done
+RUN apk --no-cache --virtual build-dependencies add python3 make g++
+
 WORKDIR /usr/src/app
 
 # Override the base log level (info).
@@ -10,6 +16,7 @@ COPY tsconfig.json tsconfig.json
 COPY yarn.lock yarn.lock
 COPY src src
 RUN yarn install --production
+RUN apk del build-dependencies
 
 EXPOSE 3040
 
