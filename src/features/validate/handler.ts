@@ -30,19 +30,13 @@ export async function validateRegistrationHandler(
     fetch(CONFIRM_REGISTRATION_URL, {
       method: 'POST',
       body: JSON.stringify(webHookResponse),
-      headers: {
-        Authorization: request.headers.authorization,
-        'Content-Type': 'application/json'
-      }
+      headers: request.headers
     })
   } catch (err) {
     fetch(CONFIRM_REGISTRATION_URL, {
       method: 'POST',
       body: JSON.stringify({ error: err.message }),
-      headers: {
-        Authorization: request.headers.authorization,
-        'Content-Type': 'application/json'
-      }
+      headers: request.headers
     })
 
     logger.error(err)
