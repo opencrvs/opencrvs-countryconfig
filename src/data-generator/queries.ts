@@ -155,7 +155,7 @@ const birthRegistrationFragment = gql`
     history {
       date
       action
-      reinstated
+      regStatus
       statusReason {
         text
       }
