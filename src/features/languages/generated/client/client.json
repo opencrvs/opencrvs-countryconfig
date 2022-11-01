@@ -3198,7 +3198,7 @@
         "misc.title.declarationStatus": "Envoyer pour {draftStatus, select, true {approval} other {approval or reject}}?",
         "navigation.application": "Application",
         "navigation.approvals": "Envoyé pour approbation",
-        "navigation.integrations": "navigation.integrations",
+        "navigation.integrations": "Intégrations",
         "navigation.certificate": "Certificats",
         "navigation.completenessRates": "Taux de complétude",
         "navigation.config": "Config",

@@ -723,7 +723,7 @@
     "navigation.certificate": "Certificates label in navigation",
     "navigation.completenessRates": "Completeness rates in navigation",
     "navigation.declarationForms": "Declaration forms label in navigation",
-    "navigation.integrations": "Integrations",
+    "navigation.integrations": " Integrations",
     "navigation.outbox": "Label for navigation item outbox",
     "misc.notif.declarationsSynced": "The message that appears in notification when background sync takes place",
     "misc.notif.draftsSaved": "The message that appears in notification when save drafts button is clicked",
