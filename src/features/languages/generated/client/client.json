@@ -1316,6 +1316,7 @@
         "integrations.active": "Active",
         "integrations.inactive": "Inactive",
         "navigation.integrations": "Integrations",
+        "integrations.pageTitle": "Integrations",
 
         "location.jurisdictionType.CITY": "City",
         "location.jurisdictionType.DISTRICT": "District",
@@ -3181,6 +3182,7 @@
         "integrations.shaSecret": "SHA Secret",
         "integrations.active": "Actif",
         "integrations.inactive": "Inactif",
+        "integrations.pageTitle": "Intégrations",
         "informant.title": "Sélectionner l'informateur",
         "location.jurisdictionType.CITY": "Ville",
         "location.jurisdictionType.DISTRICT": "District",
