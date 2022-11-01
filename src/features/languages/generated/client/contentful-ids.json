@@ -1247,6 +1247,7 @@
   "reviewDocumentViewerTitle": "review.documentViewer.title",
   "reviewDocumentsEditDocuments": "review.documents.editDocuments",
   "reviewDocumentsZeroDocumentsText": "review.documents.zeroDocumentsText",
+  "reviewDocumentsZeroDocumentsTextorAnySection":"review.documents.zeroDocumentsTextForAnySection",
   "reviewEditModalBackToPreview": "review.edit.modal.backToPreview",
   "reviewEditModalConfirmationText": "review.edit.modal.confirmationText",
   "reviewEditModalConfirmationTitle": "review.edit.modal.confirmationTitle",
@@ -1542,5 +1543,8 @@
   "navigationPerformance": "navigation.performance",
   "navigationTeam": "navigation.team",
   "navigationConfig": "navigation.config",
-  "navigationCertificate": "navigation.certificate"
+  "navigationCertificate": "navigation.certificate",
+  "navigationReports": "navigation.reports",
+  "birthTabTitleExport": "config.application.birthTabTitleExport",
+  "deathTabTitleExport": "config.application.deathTabTitleExport"
 }

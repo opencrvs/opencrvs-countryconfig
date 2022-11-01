@@ -12,7 +12,6 @@ version: '3.3'
 services:
   notification:
     environment:
-      - SMS_PROVIDER=unknown
       - LANGUAGES=en,fr
 
   countryconfig:
