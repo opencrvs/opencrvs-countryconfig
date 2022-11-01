@@ -1308,7 +1308,7 @@
         "integrations.clientId": "Client ID",
         "integrations.clientSecret": "Client Secret",
         "integrations.shaSecret": "SHA Secret",
-        "navigation.integrations": "Integration forms label in navigation",
+        "navigation.integrations": "Integrations",
 
         "location.jurisdictionType.CITY": "City",
         "location.jurisdictionType.DISTRICT": "District",
@@ -3198,7 +3198,7 @@
         "misc.title.declarationStatus": "Envoyer pour {draftStatus, select, true {approval} other {approval or reject}}?",
         "navigation.application": "Application",
         "navigation.approvals": "Envoyé pour approbation",
-        "navigation.integrations": "Intégration de l'étiquette des formulaires dans la navigation",
+        "navigation.integrations": "navigation.integrations",
         "navigation.certificate": "Certificats",
         "navigation.completenessRates": "Taux de complétude",
         "navigation.config": "Config",
