@@ -15,7 +15,8 @@
         "authenticationCodeNotification": "Your OpenCRVS authentication code is: {{authCode}}",
         "userCredentialsNotification": "You can login to OpenCRVS with this temporary username: {{username}} and password: {{password}}",
         "retieveUserNameNotification": "Your username for OpenCRVS is: {{username}}",
-        "updateUserNameNotification": "Your OpenCRVS username has been updated to: {{username}}. Your password has not changed."
+        "updateUserNameNotification": "Your OpenCRVS username has been updated to: {{username}}. Your password has not changed.",
+        "resetUserPasswordNotification": "Your password has been reset. Please login to {{applicationName}} with the temporary password: {{password}}."
       }
     },
     {
@@ -33,7 +34,8 @@
         "authenticationCodeNotification": "Votre code d'authentification OpenCRVS est : {{authCode}}",
         "userCredentialsNotification": "Vous pouvez vous connecter à OpenCRVS avec ce nom d'utilisateur temporaire : {{username}} et ce mot de passe : {{mot de passe}}.",
         "retieveUserNameNotification": "Votre nom d'utilisateur pour OpenCRVS est : {{username}}",
-        "updateUserNameNotification": "Votre nom d'utilisateur pour OpenCRVS a été mis à jour en : {{username}}. Votre mot de passe n'a pas changé."
+        "updateUserNameNotification": "Votre nom d'utilisateur pour OpenCRVS a été mis à jour en : {{username}}. Votre mot de passe n'a pas changé.",
+        "resetUserPasswordNotification": "Votre mot de passe a été réinitialisé. Veuillez vous connecter à {{applicationName}} avec le mot de passe temporaire : {{password}}."
       }
     }
   ]
