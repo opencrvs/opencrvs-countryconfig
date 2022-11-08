@@ -49,6 +49,7 @@
   "record.certificate.collector",
   "record.certificate.collectedInAdvance",
   "config.advanced.search",
+  "config.advanced.search.instruction",
   "config.application.nameChangeMessage",
   "config.application.govtLogoChangeMessage",
   "config.certificateConfiguration",
