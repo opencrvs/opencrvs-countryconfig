@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "OpenCRVS country configuration for reference data",
   "license": "MPL-2.0",
   "scripts": {
