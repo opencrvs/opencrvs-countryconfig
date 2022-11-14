@@ -51,6 +51,7 @@
   "config.application.vsexport",
   "config.application.vitalStatistics",
   "config.application.export",
+  "config.application.emptystate",
   "config.application.nameChangeMessage",
   "config.application.govtLogoChangeMessage",
   "config.certificateConfiguration",
