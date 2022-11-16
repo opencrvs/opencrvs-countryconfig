@@ -87,6 +87,8 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
           MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
+          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
         run: |
           cd opencrvs-core
           bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} qa ${{ env.QA_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
@@ -111,6 +113,8 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
           MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
+          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
         run: |
           cd opencrvs-core
           bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} production ${{ env.PRODUCTION_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
@@ -135,6 +139,8 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ACCESS_KEY: ${{ secrets.MINIO_ACCESS_KEY }}
           MINIO_SECRET_KEY: ${{ secrets.MINIO_SECRET_KEY }}
+          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
+          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
         run: |
           cd opencrvs-core
           bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} development ${{ env.STAGING_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
