@@ -158,7 +158,7 @@ else
 fi
 
 # Backup Minio 
-tar -czvf /data/backups/minio/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz /data/minio
+cd /data/minio && tar -zcvf /data/backups/minio/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz * && cd /
 
 # Copy the backups to an offsite server in production
 #----------------------------------------------------
@@ -178,3 +178,4 @@ fi
 #------------------------------------------------------------------------------------------------
 find /data/backups/influxdb -mtime +7 -exec rm {} \;
 find /data/backups/mongo -mtime +7 -exec rm {} \;
+find /data/backups/minio -mtime +7 -exec rm {} \;
