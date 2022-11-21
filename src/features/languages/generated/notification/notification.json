@@ -13,7 +13,7 @@
         "deathRegistrationNotification": "The death of {{name}} has been registered. Visit your local registration office in 5 days with your ID to collect the certificate. Your tracking ID is {{trackingId}}.",
         "deathRejectionNotification": "Death registration declaration for {{name}} ( Tracking ID: {{trackingId}} ) has been rejected. Please visit your local registration office for more information.",
         "authenticationCodeNotification": "Your OpenCRVS authentication code is: {{authCode}}",
-        "userCredentialsNotification": "You can login to OpenCRVS with this temporary username: {{username}} and password: {{password}}",
+        "userCredentialsNotification": "Your OpenCRVS account has been created. Please login with your username: {{username}} and temporary password: {{password}}",
         "retieveUserNameNotification": "Your username for OpenCRVS is: {{username}}",
         "updateUserNameNotification": "Your OpenCRVS username has been updated to: {{username}}. Your password has not changed.",
         "resetUserPasswordNotification": "Your password has been reset. Please login to {{applicationName}} with the temporary password: {{password}}."
@@ -32,7 +32,7 @@
         "deathRegistrationNotification": "Le décès de {{name}} a été enregistré. Rendez-vous au bureau d'enregistrement local dans 5 jours avec votre pièce d'identité pour retirer le certificat. Votre identifiant de suivi est {{trackingId}}.",
         "deathRejectionNotification": "Déclaration de décès de {{name}} ( Tracking ID : {{trackingId}} ) a été rejetée. Veuillez consulter votre bureau d'enregistrement local pour plus d'informations.",
         "authenticationCodeNotification": "Votre code d'authentification OpenCRVS est : {{authCode}}",
-        "userCredentialsNotification": "Vous pouvez vous connecter à OpenCRVS avec ce nom d'utilisateur temporaire : {{username}} et ce mot de passe : {{mot de passe}}.",
+        "userCredentialsNotification": "Votre compte OpenCRVS a été créé. Veuillez vous connecter avec votre nom d'utilisateur : {{username}} et votre mot de passe temporaire : {{password}}.",
         "retieveUserNameNotification": "Votre nom d'utilisateur pour OpenCRVS est : {{username}}",
         "updateUserNameNotification": "Votre nom d'utilisateur pour OpenCRVS a été mis à jour en : {{username}}. Votre mot de passe n'a pas changé.",
         "resetUserPasswordNotification": "Votre mot de passe a été réinitialisé. Veuillez vous connecter à {{applicationName}} avec le mot de passe temporaire : {{password}}."
