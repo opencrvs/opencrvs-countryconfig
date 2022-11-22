@@ -157,6 +157,7 @@
   "regHome.outbox.statusWaitingToCertify",
   "regHome.outbox.statusWaitingToValidate",
   "misc.notif.unassign",
+  "misc.notif.onlineUserStatus",
   "performance.reports.header.completenessRates",
   "performance.reports.subHeader.completenessRates",
   "performance.reports.header.totalRegistrations",

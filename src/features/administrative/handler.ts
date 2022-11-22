@@ -10,30 +10,11 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import * as Hapi from '@hapi/hapi'
-import {
-  getLocations,
-  getLocationsInFhir,
-  getStatistics
-} from '@countryconfig/features/administrative/service/service'
-
-export async function locationsHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
-  return getLocations()
-}
+import { getStatistics } from '@countryconfig/features/administrative/service/service'
 
 export async function statisticsHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
   return getStatistics()
-}
-
-export async function locationsFhirHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-): Promise<fhir.Bundle | fhir.Location> {
-  const id = request.params.id
-  return getLocationsInFhir(id)
 }

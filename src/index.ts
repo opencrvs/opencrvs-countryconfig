@@ -26,12 +26,7 @@ import {
   HOSTNAME,
   DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
-import {
-  locationsHandler,
-  statisticsHandler,
-  locationsFhirHandler
-} from '@countryconfig/features/administrative/handler'
-import { facilitiesHandler } from '@countryconfig/features/facilities/handler'
+import { statisticsHandler } from '@countryconfig/features/administrative/handler'
 import { contentHandler } from '@countryconfig/features/content/handler'
 import {
   generatorHandler,
@@ -43,7 +38,10 @@ import * as decode from 'jwt-decode'
 import { join } from 'path'
 import { birthNotificationHandler } from '@countryconfig/features/dhis2/features/notification/birth/handler'
 import { logger } from '@countryconfig/logger'
-import { notificationHandler, notificationScheme } from './features/notification/handler'
+import {
+  notificationHandler,
+  notificationScheme
+} from './features/notification/handler'
 import { mosipMediatorHandler } from './features/examples/mosip-openhim-mediator/handler'
 
 export interface ITokenPayload {
@@ -219,48 +217,6 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/locations',
-    handler: locationsHandler,
-    options: {
-      tags: ['api'],
-      description: 'Returns Farajaland locations.json'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/fhir-locations',
-    handler: locationsFhirHandler,
-    options: {
-      tags: ['api'],
-      auth: false,
-      description: 'Returns Farajaland locations as FHIR'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/fhir-locations/{id}',
-    handler: locationsFhirHandler,
-    options: {
-      tags: ['api'],
-      auth: false,
-      description: 'Returns Farajaland location as FHIR'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/facilities',
-    handler: facilitiesHandler,
-    options: {
-      tags: ['api'],
-      description: 'Returns Farajaland facilities.json'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/content/{application}',
     handler: contentHandler,
     options: {
@@ -312,16 +268,6 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/pilotLocations',
-    handler: () => ({}),
-    options: {
-      tags: ['api'],
-      description: 'Serves current pilot location list'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/statistics',
     handler: statisticsHandler,
     options: {
@@ -363,8 +309,6 @@ export async function createServer() {
       description: 'Handles submission of mosip generaed NID'
     }
   })
-
-  
 
   server.ext({
     type: 'onRequest',
