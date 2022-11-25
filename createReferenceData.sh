@@ -60,4 +60,3 @@ ts-node -r tsconfig-paths/register src/features/facilities/scripts/assign-facili
 ts-node -r tsconfig-paths/register src/features/administrative/scripts/add-statistical-data.ts
 ts-node -r tsconfig-paths/register src/features/employees/scripts/prepare-source-employees.ts -- $2
 ts-node -r tsconfig-paths/register src/features/employees/scripts/assign-employees-to-practitioners.ts -- $1 $2 $3
-ts-node -r tsconfig-paths/register src/features/config/scripts/populate-default-config.ts

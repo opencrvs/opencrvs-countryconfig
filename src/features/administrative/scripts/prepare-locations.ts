@@ -14,16 +14,12 @@ import * as fs from 'fs'
 import { ADMIN_STRUCTURE_SOURCE } from '@countryconfig/constants'
 import * as csv2json from 'csv2json'
 
-const statesJSON = `${ADMIN_STRUCTURE_SOURCE}generated/sourceStates.json`
-const districtsJSON = `${ADMIN_STRUCTURE_SOURCE}generated/sourceDistricts.json`
+const locationsJSON = `${ADMIN_STRUCTURE_SOURCE}generated/sourceLocations.json`
 
 export default async function prepSource() {
-  fs.createReadStream(`${ADMIN_STRUCTURE_SOURCE}source/states.csv`)
+  fs.createReadStream(`${ADMIN_STRUCTURE_SOURCE}source/farajaland.csv`)
     .pipe(csv2json())
-    .pipe(fs.createWriteStream(statesJSON))
-  fs.createReadStream(`${ADMIN_STRUCTURE_SOURCE}source/districts.csv`)
-    .pipe(csv2json())
-    .pipe(fs.createWriteStream(districtsJSON))
+    .pipe(fs.createWriteStream(locationsJSON))
   // tslint:disable-next-line:no-console
   console.log(
     `${chalk.blueBright(

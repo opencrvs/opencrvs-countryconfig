@@ -35,7 +35,7 @@ const composeFhirLocation = (
       }
     ],
     name: titleCase(location.name), // English name
-    alias: [titleCase(location.name)], // Additional language name in element 0
+    alias: [titleCase(location.alias)], // Additional language name in element 0
     description: location.statisticalID,
     status: 'active',
     mode: 'instance',

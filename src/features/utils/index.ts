@@ -24,6 +24,7 @@ type ISupportedType =
 export interface ICSVLocation {
   statisticalID: string
   name: string
+  alias: string
   partOf: string
   code: string
   physicalType: string

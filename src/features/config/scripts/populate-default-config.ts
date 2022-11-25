@@ -18,7 +18,7 @@ import { countryLogo } from '@countryconfig/features/config/scripts/country-logo
 import birthCertificateTemplateDefault from '@countryconfig/features/config/scripts/birth-certificate-template-default'
 import deathCertificateTemplateDefault from '@countryconfig/features/config/scripts/death-certificate-template-default'
 
-export default async function importCertificates() {
+export default async function populateDefaultConfig(ADMIN_LEVELS: number) {
   try {
     // tslint:disable-next-line:no-console
     console.log(
@@ -49,6 +49,7 @@ export default async function importCertificates() {
 
     const defaultConfig = new Config({
       APPLICATION_NAME: 'Farajaland CRS',
+      ADMIN_LEVELS: ADMIN_LEVELS,
       BIRTH: {
         REGISTRATION_TARGET: 30,
         LATE_REGISTRATION_TARGET: 365,
@@ -100,5 +101,3 @@ export default async function importCertificates() {
 
   return true
 }
-
-importCertificates()
