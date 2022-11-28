@@ -1848,7 +1848,12 @@
         "validations.validDrivingLicenseNumber": "The Driving License Number can only be alpha numeric and must be {validLength} characters long",
         "validations.validNationalId": "The National ID can only be numeric and must be 9 or 10 digits long",
         "validations.validNationalIDLengths": "9",
-        "validations.validPassportNumber": "The Passport Number can only be alpha numeric and must be {validLength} characters long"
+        "validations.validPassportNumber": "The Passport Number can only be alpha numeric and must be {validLength} characters long",
+        "performance.regRates.select.item.byRegistrar": "By Registrars",
+        "performance.registrationsListTable.monthColumn": "Month",
+        "performance.registrationsListTable.locationColumn": "Location",
+        "performance.registrationsListTable.registrarColumn": "Registrar",
+        "performance.registrationsListTable.totalRegistrationsColumn": "Total Registrations"
       }
     },
     {
@@ -3707,7 +3712,12 @@
         "validations.validDrivingLicenseNumber": "Le numéro de permis de conduire ne peut être qu'alphanumérique et doit comporter {longueur valide} caractères.",
         "validations.validNationalId": "Le numéro d'identification national ne peut être que numérique et doit avoir une longueur de 9 chiffres.",
         "validations.validNationalIDLengths": "9",
-        "validations.validPassportNumber": "Le numéro de passeport ne peut être qu'alphanumérique et doit comporter {validLength} caractères."
+        "validations.validPassportNumber": "Le numéro de passeport ne peut être qu'alphanumérique et doit comporter {validLength} caractères.",        
+        "performance.regRates.select.item.byRegistrar": "Par les greffiers",
+        "performance.registrationsListTable.monthColumn": "Mois",
+        "performance.registrationsListTable.locationColumn": "Localisation",
+        "performance.registrationsListTable.registrarColumn": "Registrar",
+        "performance.registrationsListTable.totalRegistrationsColumn": "Total des inscriptions"
       }
     }
   ]
