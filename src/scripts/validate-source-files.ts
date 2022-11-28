@@ -140,73 +140,43 @@ function error(...params: any[]) {
   console.error(...params.map((p) => chalk.red(p)))
 }
 
-const DISTRICTS = `${ADMIN_STRUCTURE_SOURCE}source/districts.csv`
+const LOCATIONS = `${ADMIN_STRUCTURE_SOURCE}source/farajaland.csv`
 const STATISTICS = `${ADMIN_STRUCTURE_SOURCE}source/statistics.csv`
-const STATES = `${ADMIN_STRUCTURE_SOURCE}source/states.csv`
 const EMPLOYEES = `${EMPLOYEES_SOURCE}source/test-employees.csv`
 const CRVS_FACILITIES = `${FACILITIES_SOURCE}source/crvs-facilities.csv`
 const HEALTH_FACILITIES = `${FACILITIES_SOURCE}source/health-facilities.csv`
 
 async function main() {
-  log(chalk.yellow('Validating file:'), chalk.bold(STATES))
-  const rawStates = await readCSVToJSON(STATES)
-  const states = Location.array().parse(rawStates)
-  log(chalk.green('File is valid'), '✅', '\n')
+  log(chalk.yellow('Parsing ADMIN_LEVEL from:'), chalk.bold(LOCATIONS))
+  const rawLocations: [] = await readCSVToJSON(LOCATIONS)
+  const csvLocationHeaders = [...new Set(rawLocations.flatMap(Object.keys))]
+  let ADMIN_LEVELS = 0
 
-  log(chalk.yellow('Validating file:'), chalk.bold(DISTRICTS))
-
-  const rawDistricts = await readCSVToJSON(DISTRICTS)
-
-  const districts = Location.array().parse(rawDistricts)
-
-  for (const district of districts) {
-    const state = states.find(
-      (state) => district.partOf === `Location/${state.statisticalID}`
-    )
-    if (!state) {
-      error(
-        DISTRICTS,
-        `Line ${districts.indexOf(district) + 2}`,
-        'District',
-        district.name,
-        'is not part of any known state'
-      )
-      process.exit(1)
+  csvLocationHeaders.find((header: string) => {
+    const currentLevel = /^admin(\d+)pcode/i.exec(header)
+    if (currentLevel) {
+      ADMIN_LEVELS < Number(currentLevel[1])
+        ? (ADMIN_LEVELS = Number(currentLevel[1]))
+        : ADMIN_LEVELS
     }
-  }
-  log(chalk.green('File is valid'), '✅', '\n')
+  })
+  log(chalk.green('ADMIN_LEVELS parsed'), '✅', '\n')
+  
   log(chalk.yellow('Validating file:'), chalk.bold(STATISTICS))
   const rawStatistics = await readCSVToJSON(STATISTICS)
-
   const statistics = Statistic.array().parse(rawStatistics)
 
-  for (const district of districts) {
-    const state = states.find(
-      (state) => district.partOf === `Location/${state.statisticalID}`
-    )
-    if (!state) {
-      error(
-        DISTRICTS,
-        chalk.yellow(`Line ${districts.indexOf(district) + 2}`),
-        'District',
-        district.name,
-        'is not part of any known state'
-      )
-      process.exit(1)
-    }
-  }
-
   for (const statistic of statistics) {
-    const district = districts.find(
-      (district) => district.statisticalID === statistic.statisticalID
+    const locations = rawLocations.find(
+      (location) => location[`admin${ADMIN_LEVELS}Pcode`] === statistic.statisticalID
     )
-    if (!district) {
+    if (!locations) {
       error(
         chalk.blue(basename(STATISTICS)),
         chalk.yellow(`Line ${statistics.indexOf(statistic) + 2}`),
         'District',
         statistic.name,
-        'is not part of any known district'
+        'is not part of any known location'
       )
       process.exit(1)
     }
@@ -215,20 +185,19 @@ async function main() {
 
   log(chalk.yellow('Validating file:'), chalk.bold(HEALTH_FACILITIES))
   const rawFacilities = await readCSVToJSON(HEALTH_FACILITIES)
-
   const facilities = Facility.array().parse(rawFacilities)
 
   for (const facility of facilities) {
-    const district = districts.find(
-      (district) => facility.partOf === `Location/${district.statisticalID}`
+    const locations = rawLocations.find(
+      (location) => facility.partOf === `Location/${location[`admin${ADMIN_LEVELS}Pcode`]}`
     )
-    if (!district) {
+    if (!locations) {
       error(
         chalk.blue(basename(HEALTH_FACILITIES)),
         chalk.yellow(`Line ${facilities.indexOf(facility) + 2}`),
         'Facility',
         facility.name,
-        'is not part of any known district'
+        'is not part of any known location'
       )
       process.exit(1)
     }
@@ -237,14 +206,12 @@ async function main() {
 
   log(chalk.yellow('Validating file:'), chalk.bold(CRVS_FACILITIES))
   const rawCRVSFacilities = await readCSVToJSON(CRVS_FACILITIES)
-
   const crvsFacilities = CRVSFacility.array().parse(rawCRVSFacilities)
 
   for (const facility of crvsFacilities) {
-    const partOf = districts
-      .concat(states)
+    const partOf = rawLocations
       .find(
-        (district) => facility.partOf === `Location/${district.statisticalID}`
+        (location) => facility.partOf === `Location/${location[`admin${ADMIN_LEVELS}Pcode`]}`
       )
     if (!partOf) {
       error(
@@ -252,7 +219,7 @@ async function main() {
         chalk.yellow(`Line ${crvsFacilities.indexOf(facility) + 2}`),
         'CRVS Facility',
         facility.name,
-        'is not part of any known state or district'
+        'is not part of any known state or location'
       )
       process.exit(1)
     }
