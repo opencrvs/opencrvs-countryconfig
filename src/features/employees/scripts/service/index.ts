@@ -13,12 +13,16 @@ import * as fs from 'fs'
 import { ORG_URL } from '@countryconfig/constants'
 import { getFromFhir, sendToFhir } from '@countryconfig/features/utils'
 import chalk from 'chalk'
-import User, { IUserModel } from '@countryconfig/features/employees/model/user'
+import User, {
+  IUserModel,
+  ISecurityQuestionAnswer
+} from '@countryconfig/features/employees/model/user'
 import { EMPLOYEES_SOURCE } from '@countryconfig/constants'
 import {
   generateSaltedHash,
   convertToMSISDN,
-  ISaltedHash
+  ISaltedHash,
+  generateHash
 } from '@countryconfig/utils'
 import {
   createUsers,
@@ -123,6 +127,11 @@ export async function composeAndSavePractitioners(
   for (const practitioner of practitioners) {
     const locations: fhir.Reference[] = []
     const catchmentAreaIds: string[] = []
+
+    if (countryAlpha3 === 'FAR') {
+      // For Farajaland, use Zambia country code
+      countryAlpha3 = 'ZMB'
+    }
     // get location FHIR references for catchment area and PractitionerRole locations prop
     if (!practitioner.facilityId) {
       throw Error(
@@ -195,6 +204,24 @@ export async function composeAndSavePractitioners(
       )
       pass = generateSaltedHash(generatedPassword)
     }
+    const secAnswer: string = generateHash(testUserPassword, pass.salt)
+    const secQAndA: ISecurityQuestionAnswer[] =
+      environment !== 'production'
+        ? [
+            {
+              questionKey: 'BIRTH_TOWN',
+              answerHash: secAnswer
+            },
+            {
+              questionKey: 'HIGH_SCHOOL',
+              answerHash: secAnswer
+            },
+            {
+              questionKey: 'FAVORITE_MOVIE',
+              answerHash: secAnswer
+            }
+          ]
+        : []
     const user = new User({
       name: [
         {
@@ -215,8 +242,8 @@ export async function composeAndSavePractitioners(
       practitionerId,
       primaryOfficeId,
       catchmentAreaIds,
-      securityQuestionAnswers: []
-    })
+      securityQuestionAnswers: secQAndA
+    } as IUserModel)
     users.push(user)
   }
   // Create users

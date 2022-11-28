@@ -16,7 +16,7 @@
     "test:compilation": "tsc --noEmit",
     "start": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
     "start:prod": "ts-node --transpile-only -r tsconfig-paths/register src/index.ts",
-    "db:populate": "bash createReferenceData.sh",
+    "db:populate": "bash db-populate.sh",
     "populate:config": "ts-node -r tsconfig-paths/register src/features/config/scripts/populate-default-config.ts",
     "db:backup:create": "REPLICAS=0 ./backup-metadata.sh",
     "db:backup:restore": "REPLICAS=0 ./restore-metadata.sh",
