@@ -167,10 +167,10 @@ async function main() {
   const statistics = Statistic.array().parse(rawStatistics)
 
   for (const statistic of statistics) {
-    const locations = rawLocations.find(
-      (location) => location[`admin${ADMIN_LEVELS}Pcode`] === statistic.statisticalID
+    const location = rawLocations.find(
+      (locationData) => locationData[`admin${ADMIN_LEVELS}Pcode`] === statistic.statisticalID
     )
-    if (!locations) {
+    if (!location) {
       error(
         chalk.blue(basename(STATISTICS)),
         chalk.yellow(`Line ${statistics.indexOf(statistic) + 2}`),
@@ -188,10 +188,10 @@ async function main() {
   const facilities = Facility.array().parse(rawFacilities)
 
   for (const facility of facilities) {
-    const locations = rawLocations.find(
-      (location) => facility.partOf === `Location/${location[`admin${ADMIN_LEVELS}Pcode`]}`
+    const location = rawLocations.find(
+      (locationData) => facility.partOf === `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
     )
-    if (!locations) {
+    if (!location) {
       error(
         chalk.blue(basename(HEALTH_FACILITIES)),
         chalk.yellow(`Line ${facilities.indexOf(facility) + 2}`),
@@ -211,7 +211,7 @@ async function main() {
   for (const facility of crvsFacilities) {
     const partOf = rawLocations
       .find(
-        (location) => facility.partOf === `Location/${location[`admin${ADMIN_LEVELS}Pcode`]}`
+        (locationData) => facility.partOf === `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
       )
     if (!partOf) {
       error(
