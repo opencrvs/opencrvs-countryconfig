@@ -163,6 +163,12 @@ export default async function importAdminStructure() {
     process.exit(1)
   }
 
+  fs.writeFileSync(
+    `${ADMIN_STRUCTURE_SOURCE}generated/fhirLocations.json`,
+    JSON.stringify({ previousLevelLocations }, null, 2)
+  )
+
+
   const data: ILocation[] = []
   for (const location of fhirLocations) {
     data.push(generateLocationResource(location))

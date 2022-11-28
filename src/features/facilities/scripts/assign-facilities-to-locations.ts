@@ -25,9 +25,9 @@ import { ILocation } from '@countryconfig/features/utils'
 const crvsOfficeSourceJSON = `${FACILITIES_SOURCE}generated/crvs-facilities.json`
 const healthFacilitySourceJSON = `${FACILITIES_SOURCE}generated/health-facilities.json`
 
-const districts = JSON.parse(
+const locations = JSON.parse(
   fs
-    .readFileSync(`${ADMIN_STRUCTURE_SOURCE}generated/districts.json`)
+    .readFileSync(`${ADMIN_STRUCTURE_SOURCE}generated/fhirLocations.json`)
     .toString()
 )
 
@@ -49,11 +49,11 @@ export default async function importFacilities() {
     )
     crvsOfficeLocations = await composeAndSaveFacilities(
       crvsOffices,
-      districts.districts
+      locations.previousLevelLocations
     )
     healthFacilityLocations = await composeAndSaveFacilities(
       healthFacilities,
-      districts.districts
+      locations.previousLevelLocations
     )
 
     const fhirLocations: fhir.Location[] = []

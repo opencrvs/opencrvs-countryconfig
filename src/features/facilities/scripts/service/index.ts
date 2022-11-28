@@ -21,9 +21,6 @@ interface IFacility {
   name: string
   partOf: string
   code: string
-  physicalType: string
-  district: string
-  state: string
 }
 
 const composeFhirLocation = (
@@ -60,29 +57,23 @@ const composeFhirLocation = (
           display: 'Building'
         }
       ]
-    },
-    telecom: [],
-    address: {
-      line: [],
-      district: location.district,
-      state: location.state
     }
   }
 }
 
-function generateLocationAddress(
-  fhirAddress: fhir.Address | undefined
-): string {
-  let address = ''
+// function generateLocationAddress(
+//   fhirAddress: fhir.Address | undefined
+// ): string {
+//   let address = ''
 
-  if (fhirAddress) {
-    address = Object.values(fhirAddress)
-      .filter((x) => typeof x === 'string' && x.length > 0)
-      .join(', ')
-  }
+//   if (fhirAddress) {
+//     address = Object.values(fhirAddress)
+//       .filter((x) => typeof x === 'string' && x.length > 0)
+//       .join(', ')
+//   }
 
-  return address
-}
+//   return address
+// }
 
 export function generateLocationResource(
   fhirLocation: fhir.Location
@@ -91,7 +82,6 @@ export function generateLocationResource(
   loc.id = fhirLocation.id
   loc.name = fhirLocation.name
   loc.alias = fhirLocation.alias && fhirLocation.alias[0]
-  loc.address = generateLocationAddress(fhirLocation.address)
   loc.physicalType =
     fhirLocation.physicalType &&
     fhirLocation.physicalType.coding &&
