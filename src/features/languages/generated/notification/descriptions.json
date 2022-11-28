@@ -11,6 +11,7 @@
     "authenticationCodeNotification": "The SMS messsage that is sent continaing a 2-factor authentication code",
     "userCredentialsNotification": "The SMS message that is sent to a new user with a username and passowrd",
     "retieveUserNameNotification": "The SMS message that is sent to a user containing a username",
-    "updateUserNameNotification": "The SMS message that is sent to a user to confirm an updated username"
+    "updateUserNameNotification": "The SMS message that is sent to a user to confirm an updated username",
+    "resetUserPasswordNotification": "The SMS message that is sent to a user when reset password"
   }
 }

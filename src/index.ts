@@ -13,7 +13,7 @@
 require('app-module-path').addPath(require('path').join(__dirname))
 
 // tslint:enable no-var-requires
-import fetch, { FetchError } from 'node-fetch'
+import fetch from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
 import getPlugins from '@countryconfig/config/plugins'
 import * as usrMgntDB from '@countryconfig/database'
@@ -28,7 +28,8 @@ import {
 } from '@countryconfig/constants'
 import {
   locationsHandler,
-  statisticsHandler
+  statisticsHandler,
+  locationsFhirHandler
 } from '@countryconfig/features/administrative/handler'
 import { facilitiesHandler } from '@countryconfig/features/facilities/handler'
 import { contentHandler } from '@countryconfig/features/content/handler'
@@ -38,10 +39,36 @@ import {
   responseSchema as generatorResponseSchema
 } from '@countryconfig/features/generate/handler'
 import { validateRegistrationHandler } from '@countryconfig/features/validate/handler'
-
+import * as decode from 'jwt-decode'
 import { join } from 'path'
 import { birthNotificationHandler } from '@countryconfig/features/dhis2/features/notification/birth/handler'
 import { logger } from '@countryconfig/logger'
+import { notificationHandler, notificationScheme } from './features/notification/handler'
+import { mosipMediatorHandler } from './features/examples/mosip-openhim-mediator/handler'
+
+export interface ITokenPayload {
+  sub: string
+  exp: string
+  algorithm: string
+  scope: string[]
+}
+
+const getTokenPayload = (token: string): ITokenPayload => {
+  let decoded: ITokenPayload
+  try {
+    decoded = decode(token)
+  } catch (err) {
+    throw new Error(
+      `getTokenPayload: Error occurred during token decode : ${err}`
+    )
+  }
+  return decoded
+}
+
+export function hasScope(token: string, scope: string) {
+  const tokenPayload = getTokenPayload(token)
+  return (tokenPayload.scope && tokenPayload.scope.indexOf(scope) > -1) || false
+}
 
 export const verifyToken = async (token: string, authUrl: string) => {
   const res = await fetch(`${authUrl}/verifyToken`, {
@@ -88,6 +115,22 @@ const validateFunc = async (
   }
 }
 
+async function getPublicKey(): Promise<string> {
+  try {
+    const response = await fetch(`${AUTH_URL}/.well-known`)
+    return response.text()
+  } catch (error) {
+    console.log(
+      `Failed to fetch public key from Core. Make sure Core is running, and you are able to connect to ${AUTH_URL}/.well-known.`
+    )
+    if (process.env.NODE_ENV === 'production') {
+      throw error
+    }
+    await new Promise((resolve) => setTimeout(resolve, 3000))
+    return getPublicKey()
+  }
+}
+
 export async function createServer() {
   let whitelist: string[] = [HOSTNAME]
   if (HOSTNAME[0] !== '*') {
@@ -105,11 +148,10 @@ export async function createServer() {
 
   await server.register(getPlugins())
 
-  const publicCertResponse = await fetch(`${AUTH_URL}/.well-known`)
-  const publicCert = await publicCertResponse.text()
+  const publicKey = await getPublicKey()
 
   server.auth.strategy('jwt', 'jwt', {
-    key: publicCert,
+    key: publicKey,
     verifyOptions: {
       algorithms: ['RS256'],
       issuer: 'opencrvs:auth-service',
@@ -182,6 +224,28 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Returns Farajaland locations.json'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/fhir-locations',
+    handler: locationsFhirHandler,
+    options: {
+      tags: ['api'],
+      auth: false,
+      description: 'Returns Farajaland locations as FHIR'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/fhir-locations/{id}',
+    handler: locationsFhirHandler,
+    options: {
+      tags: ['api'],
+      auth: false,
+      description: 'Returns Farajaland location as FHIR'
     }
   })
 
@@ -277,6 +341,31 @@ export async function createServer() {
     }
   })
 
+  server.route({
+    method: 'POST',
+    path: '/notification',
+    handler: notificationHandler,
+    options: {
+      tags: ['api'],
+      validate: {
+        payload: notificationScheme
+      },
+      description: 'Handles sending SMS'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/mosip-openhim-mediator',
+    handler: mosipMediatorHandler,
+    options: {
+      tags: ['api'],
+      description: 'Handles submission of mosip generaed NID'
+    }
+  })
+
+  
+
   server.ext({
     type: 'onRequest',
     method(request: Hapi.Request & { sentryScope?: any }, h) {
@@ -304,11 +393,5 @@ export async function createServer() {
 }
 
 if (require.main === module) {
-  createServer()
-    .then(server => server.start())
-    .catch(error => {
-      if (error instanceof FetchError) {
-        logger.error(error.message)
-      }
-    })
+  createServer().then((server) => server.start())
 }

@@ -12,41 +12,41 @@
 import { model, Schema, Document } from 'mongoose'
 
 export enum Event {
-    BIRTH = 'birth',
-    DEATH = 'death'
-  }
-  export enum Status {
-    ACTIVE = 'ACTIVE',
-    INACTIVE = 'INACTIVE'
-  }
+  BIRTH = 'birth',
+  DEATH = 'death'
+}
+export enum Status {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE'
+}
 
 interface ICertificate {
-    svgCode: string
-    svgFilename: string
-    svgDateUpdated: number
-    svgDateCreated: number
-    user: string
-    event: Event
-    status: Status
+  svgCode: string
+  svgFilename: string
+  svgDateUpdated: number
+  svgDateCreated: number
+  user: string
+  event: Event
+  status: Status
 }
 export interface ICertificateModel extends ICertificate, Document {}
 
 const certificateSchema = new Schema({
-    svgCode: { type: String, required: false },
-    svgFilename: { type: String, required: false },
-    svgDateUpdated: { type: Number, default: Date.now },
-    svgDateCreated: { type: Number, default: Date.now },
-    user: { type: String, required: false },
-    event: {
-      type: String,
-      enum: [Event.BIRTH, Event.DEATH],
-      required: false
-    },
-    status: {
-      type: String,
-      enum: [Status.ACTIVE, Status.INACTIVE],
-      required: false
-    }
+  svgCode: { type: String, required: false },
+  svgFilename: { type: String, required: false },
+  svgDateUpdated: { type: Number, default: Date.now },
+  svgDateCreated: { type: Number, default: Date.now },
+  user: { type: String, required: false },
+  event: {
+    type: String,
+    enum: [Event.BIRTH, Event.DEATH],
+    required: false
+  },
+  status: {
+    type: String,
+    enum: [Status.ACTIVE, Status.INACTIVE],
+    required: false
+  }
 })
 
 export default model<ICertificateModel>('Certificate', certificateSchema)

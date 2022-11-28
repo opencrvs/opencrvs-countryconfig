@@ -96,15 +96,16 @@ context('Team Integration Test', () => {
     cy.createPin()
     cy.get('#navigation_team').click()
     cy.get('#navigation_team').click()
+    cy.get('#location-range-picker-action').click()
     cy.get('#locationSearchInput').type('Ibombo')
     cy.contains('Ibombo').click()
-    cy.get('#location-search-btn').click()
     cy.log('Choose an user')
     cy.clickUserListItemByName(
       `${testUserFirstname} Sheikh ${testUserLastname}`,
       'Deactivate'
     )
     cy.get('[for="reason_OTHER"]').click()
+
     cy.get('#comment').type('not a member now')
     cy.get('#deactivate-action').click()
     cy.get('#userAuditSuccessToast').should('be.visible')
@@ -116,9 +117,9 @@ context('Team Integration Test', () => {
     cy.createPin()
     cy.get('#navigation_team').click()
     cy.get('#navigation_team').click()
+    cy.get('#location-range-picker-action').click()
     cy.get('#locationSearchInput').type('Ibombo')
     cy.contains('Ibombo ').click()
-    cy.get('#location-search-btn').click()
     cy.log('Choose an user')
     cy.clickUserListItemByName(
       `${testUserFirstname} Sheikh ${testUserLastname}`,

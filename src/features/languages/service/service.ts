@@ -42,10 +42,10 @@ function formatMessages(
   locale: string,
   contentfulIds: IMessageIdentifier
 ): IMessageIdentifier {
-  let messages = {}
-  contentfulEntries.items.forEach(item => {
+  const messages = {}
+  contentfulEntries.items.forEach((item) => {
     const contentfulFields = item.fields as IContentfulFields
-    Object.keys(contentfulFields).forEach(key => {
+    Object.keys(contentfulFields).forEach((key) => {
       messages[contentfulIds[key]] = contentfulFields[key][locale]
     })
   })
@@ -61,7 +61,7 @@ function convertContentfulToSupportedFormat(
     data: []
   }
 
-  contentfulLocales.items.forEach(locale => {
+  contentfulLocales.items.forEach((locale) => {
     const language: ILanguage = {
       lang:
         locale.code === 'en-US'
@@ -86,16 +86,16 @@ export async function getLanguages(
       accessToken: `${CMS_API_KEY}`
     })
     try {
-      let contentfulLocales: Contentful.LocaleCollection = await contentfulClient
-        .getLocales()
-        .then(entries => {
+      const contentfulLocales: Contentful.LocaleCollection =
+        await contentfulClient.getLocales().then((entries) => {
           return entries
         })
-      let contentfulEntries: Contentful.EntryCollection<unknown> = await contentfulClient
-        .getEntries({ limit: 1000, locale: '*' })
-        .then(entries => {
-          return entries
-        })
+      const contentfulEntries: Contentful.EntryCollection<unknown> =
+        await contentfulClient
+          .getEntries({ limit: 1000, locale: '*' })
+          .then((entries) => {
+            return entries
+          })
       const contentfulIds = (await JSON.parse(
         readFileSync(
           join(LANGUAGES_SOURCE, `${application}/contentful-ids.json`),
@@ -120,16 +120,16 @@ export async function getLanguages(
       accessToken: `${CMS_API_KEY}`
     })
     try {
-      let contentfulLocales: Contentful.LocaleCollection = await contentfulClient
-        .getLocales()
-        .then(entries => {
+      const contentfulLocales: Contentful.LocaleCollection =
+        await contentfulClient.getLocales().then((entries) => {
           return entries
         })
-      let contentfulEntries: Contentful.EntryCollection<unknown> = await contentfulClient
-        .getEntries({ limit: 1000, locale: '*', content_type: application })
-        .then(entries => {
-          return entries
-        })
+      const contentfulEntries: Contentful.EntryCollection<unknown> =
+        await contentfulClient
+          .getEntries({ limit: 1000, locale: '*', content_type: application })
+          .then((entries) => {
+            return entries
+          })
       const contentfulIds = (await JSON.parse(
         readFileSync(
           join(LANGUAGES_SOURCE, `${application}/contentful-ids.json`),

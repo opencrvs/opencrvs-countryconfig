@@ -84,7 +84,7 @@ export async function updateToken(user: User): Promise<void> {
       : await getToken(user.username, user.password)
   } catch (error) {
     console.log('Failed to fetch token for user', user.username)
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    await new Promise((resolve) => setTimeout(resolve, 3000))
     return updateToken(user)
   }
 

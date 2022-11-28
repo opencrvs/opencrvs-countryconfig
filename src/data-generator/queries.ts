@@ -9,7 +9,6 @@ const birthRegistrationFragment = gql`
     createdAt
     child {
       id
-      multipleBirth
       name {
         use
         firstNames
@@ -54,6 +53,7 @@ const birthRegistrationFragment = gql`
         familyName
       }
       birthDate
+      multipleBirth
       maritalStatus
       occupation
       detailsExist
@@ -155,7 +155,7 @@ const birthRegistrationFragment = gql`
     history {
       date
       action
-      reinstated
+      regStatus
       statusReason {
         text
       }

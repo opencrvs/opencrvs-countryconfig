@@ -10,30 +10,31 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import * as Hapi from '@hapi/hapi'
-import {
-  getLocations,
-  getLocationsInFhir,
-  getStatistics
-} from '@countryconfig/features/administrative/service/service'
+import * as Joi from 'joi'
+import { sendSMS } from './service'
 
-export async function locationsHandler(
+interface INotificationPayload {
+  msisdn: string
+  message: string
+  convertUnicode?: boolean
+}
+
+export const notificationScheme = Joi.object({
+    msisdn: Joi.string(),
+    message: Joi.string(),
+    convertUnicode: Joi.boolean()
+})
+
+export async function notificationHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  return getLocations()
+  const {
+    msisdn,
+    message,
+    convertUnicode
+  } = request.payload as INotificationPayload
+  return sendSMS(msisdn, message, convertUnicode)
 }
 
-export async function statisticsHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
-  return getStatistics()
-}
 
-export async function locationsFhirHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-): Promise<fhir.Bundle | fhir.Location> {
-  const id = request.params.id
-  return getLocationsInFhir(id)
-}

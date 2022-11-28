@@ -29,8 +29,7 @@ const locationBundle = JSON.stringify({
     },
     {
       relation: 'next',
-      url:
-        'http://localhost:3447/fhir/Location?type=ADMIN_STRUCTURE&_getpagesoffset=10&_count=10'
+      url: 'http://localhost:3447/fhir/Location?type=ADMIN_STRUCTURE&_getpagesoffset=10&_count=10'
     }
   ],
   entry: [
@@ -79,8 +78,7 @@ const locationBundle = JSON.stringify({
         },
         extension: [
           {
-            url:
-              'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
+            url: 'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
             valueAttachment: {
               contentType: 'application/geo+json',
               data: ''
@@ -143,8 +141,7 @@ const locationBundle = JSON.stringify({
         },
         extension: [
           {
-            url:
-              'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
+            url: 'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
             valueAttachment: {
               contentType: 'application/geo+json',
               data: ''
@@ -207,8 +204,7 @@ const locationBundle = JSON.stringify({
         },
         extension: [
           {
-            url:
-              'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
+            url: 'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
             valueAttachment: {
               contentType: 'application/geo+json',
               data: ''
@@ -271,8 +267,7 @@ const locationBundle = JSON.stringify({
         },
         extension: [
           {
-            url:
-              'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
+            url: 'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
             valueAttachment: {
               contentType: 'application/geo+json',
               data: ''
@@ -335,8 +330,7 @@ const locationBundle = JSON.stringify({
         },
         extension: [
           {
-            url:
-              'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
+            url: 'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson',
             valueAttachment: {
               contentType: 'application/geo+json',
               data: ''
