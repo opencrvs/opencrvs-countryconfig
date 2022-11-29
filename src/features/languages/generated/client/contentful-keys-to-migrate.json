@@ -48,6 +48,10 @@
   "validations.nonDecimalPointNumber",
   "record.certificate.collector",
   "record.certificate.collectedInAdvance",
+  "config.application.vsexport",
+  "config.application.vitalStatistics",
+  "config.application.export",
+  "config.application.emptystate",
   "config.application.nameChangeMessage",
   "config.application.govtLogoChangeMessage",
   "config.certificateConfiguration",
@@ -229,7 +233,5 @@
   "user.profile.auditList.userCreated",
   "user.profile.auditList.userEdited",
   "user.profile.auditList.passwordReset",
-  "user.profile.auditList.sentPassword",
-  "user.profile.auditList.usernameRequested",
-  "user.profile.auditList.sentUsernameReminder"
+  "user.profile.auditList.usernameRequested"
 ]
