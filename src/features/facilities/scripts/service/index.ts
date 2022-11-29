@@ -61,20 +61,6 @@ const composeFhirLocation = (
   }
 }
 
-// function generateLocationAddress(
-//   fhirAddress: fhir.Address | undefined
-// ): string {
-//   let address = ''
-
-//   if (fhirAddress) {
-//     address = Object.values(fhirAddress)
-//       .filter((x) => typeof x === 'string' && x.length > 0)
-//       .join(', ')
-//   }
-
-//   return address
-// }
-
 export function generateLocationResource(
   fhirLocation: fhir.Location
 ): ILocation {

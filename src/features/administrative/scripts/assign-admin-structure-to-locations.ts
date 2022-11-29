@@ -96,7 +96,8 @@ export default async function importAdminStructure() {
         const nameKey = `ADMIN${currentLevel[1]}NAME`
         const aliasKey = `ADMIN${currentLevel[1]}ALIAS`
         let parentPcode = location[`ADMIN${Number(currentLevel[1]) - 1}PCODE`]
-        if (!parentPcode) {
+        if (!parentPcode) continue
+        if (Number(currentLevel[1]) === 1) {
           parentPcode = 0
         }
 
@@ -138,13 +139,13 @@ export default async function importAdminStructure() {
     }
 
     previousLevelLocations = await fetchAndComposeLocations(
-      filterLocationLevel(csvLocations, 0),
-      'COUNTRY'
+      filterLocationLevel(csvLocations, 1),
+      'STATE'
     )
     fhirLocations.push(...previousLevelLocations)
 
     for (
-      let locationLevel = 1;
+      let locationLevel = 2;
       locationLevel <= ADMIN_LEVELS;
       locationLevel++
     ) {
