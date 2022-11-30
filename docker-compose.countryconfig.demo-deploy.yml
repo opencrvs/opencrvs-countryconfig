@@ -13,6 +13,7 @@ services:
   notification:
     environment:
       - LANGUAGES=en,fr
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
@@ -24,7 +25,7 @@ services:
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
       - OPENHIM_URL=http://openhim-core:5001/fhir
-      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
+      - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - HOSTNAME=${HOSTNAME}
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
@@ -78,7 +79,7 @@ services:
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
   
   mosiptokenseeder:
-    image: lalithkota/mosip-token-seeder:develop_sync_delivery
+    image: mosipdev/mosip-token-seeder:develop
     ports:
       - '8085:8080'
     deploy:
@@ -92,11 +93,13 @@ services:
       - TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY=${TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY}
       - TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK=${TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK}
       - TOKENSEEDER_MOSIP_AUTH__PARTNER_ID=opencrvs-auth-partner
-      - TOKENSEEDER_MOSIP_AUTH_SERVER__IDA_AUTH_DOMAIN_URI=https://api-internal.mec2.mosip.net
-      - TOKENSEEDER_MOSIP_AUTH_SERVER__IDA_AUTH_URL=https://api-internal.mec2.mosip.net/idauthentication/v1/auth
-      - TOKENSEEDER_CRYPTO_ENCRYPT__ENCRYPT_CERT_PATH=/seeder/certs/ida.partner.crt
-      - TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PATH=/seeder/certs/opencrvs-auth.signed.p12
+      - TOKENSEEDER_MOSIP_AUTH_SERVER__IDA_AUTH_DOMAIN_URI=https://api-internal.mec.mosip.net
+      - TOKENSEEDER_MOSIP_AUTH_SERVER__IDA_AUTH_URL=https://api.mec.mosip.net/idauthentication/v1/auth
       - TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD=${TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD}
+      - TOKENSEEDER_AUTHTOKEN__MANDATORY_VALIDATION_AUTH_FIELDS="name,gender,dob"
+      - TOKENSEEDER_CRYPTO_ENCRYPT__ENCRYPT_CERT_PATH=/seeder/certs/ida.partner.crt
+      - TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PATH=/seeder/certs/keystore.p12
+      - TOKENSEEDER_ROOT__SYNC_OPERATION_MODE=true
 
 secrets:
   openhim-user:
