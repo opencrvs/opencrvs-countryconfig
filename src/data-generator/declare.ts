@@ -1,9 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { differenceInDays, differenceInYears, sub } from 'date-fns'
 import fetch from 'node-fetch'
-
 import { createAddressInput } from './address'
-import { COUNTRY_CONFIG_HOST, GATEWAY_HOST } from './constants'
+import { GATEWAY_GQL_HOST, GATEWAY_API_HOST } from './constants'
 import {
   AddressType,
   AttachmentSubject,
@@ -28,68 +27,81 @@ import {
 import { Facility, Location } from './location'
 import { User } from './users'
 import { log } from './util'
-
-const HOME_BIRTH_WEIGHT = 0.2
-const HOME_DEATH_WEIGHT = 0.2
-
+import { birthNotification } from './birthNotification'
 import {
   CREATE_DEATH_DECLARATION,
   FETCH_DEATH_REGISTRATION_QUERY,
   FETCH_REGISTRATION_QUERY,
   SEARCH_EVENTS
 } from './queries'
-import { IBirthNotification } from '@countryconfig/features/dhis2/features/notification/birth/handler'
+import { getIDFromResponse } from '@countryconfig/features/dhis2/features/fhir/service'
 
-function randomWeightInGrams() {
-  return Math.round((2.5 + 2 * Math.random()) * 1000)
+const HOME_BIRTH_WEIGHT = 0.2
+const HOME_DEATH_WEIGHT = 0.2
+
+function randomWeightInKg() {
+  return Math.round(2.5 + 2 * Math.random())
 }
 
 export async function sendBirthNotification(
-  { username, token, primaryOfficeId }: User,
+  { username, token }: User,
   sex: 'male' | 'female',
   birthDate: Date,
   createdAt: Date,
-  facility: Facility
+  facility: Facility,
+  district: Location,
+  office: Facility
 ): Promise<string> {
-  const familyName = faker.name.lastName()
-  const firstNames = faker.name.firstName()
+  const lastName = faker.name.lastName()
+  const firstName = faker.name.firstName()
   const requestStart = Date.now()
 
-  const notification: IBirthNotification = {
-    practitioner_primary_office: primaryOfficeId,
-    created_at: createdAt.toISOString(),
-    dhis2_event: '1111',
+  const notification = birthNotification({
     child: {
-      first_names: firstNames,
-      last_name: familyName,
-      weight: randomWeightInGrams().toString(),
-      sex: sex
+      firstName,
+      lastName,
+      weight: randomWeightInKg().toString(),
+      gender: sex
     },
     father: {
-      first_names: 'Dad',
-      last_name: familyName,
+      firstName: 'Dad',
+      lastName,
       nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString(),
-      dob: sub(birthDate, { years: 20 }).toISOString().split('T')[0]
+      dateOfBirth: sub(birthDate, { years: 20 }).toISOString().split('T')[0]
     },
     mother: {
-      first_names: 'Mom',
-      last_name: familyName,
-      dob: sub(birthDate, { years: 20 }).toISOString().split('T')[0],
+      firstName: 'Mum',
+      lastName,
+      dateOfBirth: sub(birthDate, { years: 20 }).toISOString().split('T')[0],
       nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString()
     },
-    phone_number:
+    createdAt: createdAt.toISOString(),
+    address: [
+      {
+        type: 'PRIMARY_ADDRESS',
+        line: ['12', 'Usual Street', 'Usual Residental Area', '', '', 'URBAN'],
+        city: 'Meghnan',
+        district: district.id,
+        state: district.partOf.split('/')[1],
+        postalCode: '64330',
+        country: 'FAR'
+      }
+    ],
+    phoneNumber:
       '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
-    date_birth: birthDate.toISOString().split('T')[0],
-    place_of_birth: facility.id
-  }
+    dateOfBirth: birthDate.toISOString().split('T')[0],
+    placeOfBirth: `Location/${facility.id}`,
+    officeLocation: office.partOf
+  })
+
   const createBirthNotification = await fetch(
-    `${COUNTRY_CONFIG_HOST}/dhis2-notification/birth`,
+    `${GATEWAY_API_HOST}/notification`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        'x-correlation-id': `birth-notification-${firstNames}-${familyName}`
+        'x-correlation-id': `birth-notification-${firstName}-${lastName}`
       },
       body: JSON.stringify(notification)
     }
@@ -103,13 +115,13 @@ export async function sendBirthNotification(
     throw new Error('Failed to create a birth notification')
   }
 
-  const res = await createBirthNotification.json()
+  const response = await createBirthNotification.json()
 
   const requestEnd = Date.now()
   log(
     'Creating birth notification',
-    firstNames,
-    familyName,
+    firstName,
+    lastName,
     'born',
     birthDate.toISOString().split('T')[0],
     'created by',
@@ -117,7 +129,7 @@ export async function sendBirthNotification(
     `(took ${requestEnd - requestStart}ms)`
   )
 
-  return res.compositionId
+  return getIDFromResponse(response)
 }
 
 export function createBirthDeclarationData(
@@ -250,7 +262,7 @@ export async function createBirthDeclaration(
     ?.map((name) => `${name?.firstNames} ${name?.familyName}`)
     .join(' ')
   const requestStart = Date.now()
-  const createDeclarationRes = await fetch(GATEWAY_HOST, {
+  const createDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -424,7 +436,7 @@ export async function createDeathDeclaration(
     }
   }
 
-  const createDeclarationRes = await fetch(GATEWAY_HOST, {
+  const createDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -467,7 +479,7 @@ export async function createDeathDeclaration(
 }
 
 export async function fetchRegistration(user: User, compositionId: string) {
-  const fetchDeclarationRes = await fetch(GATEWAY_HOST, {
+  const fetchDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -498,7 +510,7 @@ export async function fetchDeathRegistration(
   user: User,
   compositionId: string
 ) {
-  const fetchDeclarationRes = await fetch(GATEWAY_HOST, {
+  const fetchDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -530,7 +542,7 @@ export async function fetchAlreadyGeneratedInterval(
   locationIds: string[]
 ): Promise<Date[]> {
   const fetchFirst = async (sort: 'desc' | 'asc') => {
-    const res = await fetch(GATEWAY_HOST, {
+    const res = await fetch(GATEWAY_GQL_HOST, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

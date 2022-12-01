@@ -659,7 +659,9 @@ function birthDeclarationWorkflow(
           sex,
           birthDate,
           submissionTime,
-          randomFacility
+          randomFacility,
+          location,
+          crvsOffice
         )
       } else {
         id = await createBirthDeclaration(
