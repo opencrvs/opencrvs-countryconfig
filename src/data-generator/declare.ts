@@ -34,13 +34,26 @@ import {
   FETCH_REGISTRATION_QUERY,
   SEARCH_EVENTS
 } from './queries'
-import { getIDFromResponse } from '@countryconfig/features/dhis2/features/fhir/service'
 
 const HOME_BIRTH_WEIGHT = 0.2
 const HOME_DEATH_WEIGHT = 0.2
 
 function randomWeightInKg() {
   return Math.round(2.5 + 2 * Math.random())
+}
+
+function getIDFromResponse(resBody: fhir.Bundle): string {
+  if (
+    !resBody ||
+    !resBody.entry ||
+    !resBody.entry[0] ||
+    !resBody.entry[0].response ||
+    !resBody.entry[0].response.location
+  ) {
+    throw new Error(`FHIR did not send a valid response`)
+  }
+  // return the Composition's id
+  return resBody.entry[0].response.location.split('/')[3]
 }
 
 export async function sendBirthNotification(
@@ -80,10 +93,10 @@ export async function sendBirthNotification(
       {
         type: 'PRIMARY_ADDRESS',
         line: ['12', 'Usual Street', 'Usual Residental Area', '', '', 'URBAN'],
-        city: 'Meghnan',
+        city: faker.address.city(),
         district: district.id,
         state: district.partOf.split('/')[1],
-        postalCode: '64330',
+        postalCode: faker.address.zipCode(),
         country: 'FAR'
       }
     ],
