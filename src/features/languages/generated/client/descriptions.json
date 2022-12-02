@@ -700,7 +700,6 @@
     "config.form.settings.fieldWithDynamicDef": "Success notification label for number of addresses settings",
     "config.form.settings.radioGroup": "Success notification label for number of addresses settings",
     "config.form.settings.radioGroupWithNestedField": "Success notification label for number of addresses settings",
-    "config.form.settings.accordionWithNestedField": "Success notification label for number of addresses settings",
     "config.form.settings.informativeRadio": "Success notification label for number of addresses settings",
     "config.form.settings.checkboxGroup": "Checkbox group Label",
     "config.form.settings.checkbox": "Checkbox Label",
