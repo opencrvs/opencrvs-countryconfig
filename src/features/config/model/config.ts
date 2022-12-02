@@ -98,7 +98,7 @@ const countryLogoSchema = new Schema<ICountryLogo>({
 
 interface IIntegration {
   name: string
-  enabled: string
+  status: string
 }
 
 const integrationsSchema = new Schema<IIntegration>({
@@ -112,7 +112,7 @@ const integrationsSchema = new Schema<IIntegration>({
       statuses.DEACTIVATED
     ],
     default: statuses.PENDING
-  },
+  }
 })
 
 const systemSchema = new Schema({
