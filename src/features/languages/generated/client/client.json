@@ -5,6 +5,8 @@
       "displayName": "English",
       "messages": {
         "buttons.add": "Add",
+        "buttons.copy": "Copy",
+        "buttons.copied": "Copied",
         "buttons.apply": "Apply",
         "buttons.approve": "Approve",
         "buttons.archive": "Archive",
@@ -1915,6 +1917,8 @@
       "displayName": "Français",
       "messages": {
         "buttons.add": "Ajouter",
+        "buttons.copy": "Copie",
+        "buttons.copied": "Copié",
         "buttons.apply": "Appliquer",
         "buttons.approve": "Approuver",
         "buttons.archive": "Archiver",
