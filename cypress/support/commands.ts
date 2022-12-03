@@ -184,6 +184,7 @@ Cypress.Commands.add('printDeclaration', () => {
   cy.get('#assignment').should('exist')
   cy.get('#assign').click()
   cy.get('#ListItemAction-0-Print', { timeout: 30000 }).click()
+  cy.wait(500)
   cy.get('#type_MOTHER').click()
   cy.get('#confirm_form').click()
   cy.get('#verifyPositive').click()
@@ -576,14 +577,14 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', () => {
   cy.get('#deathDate-yyyy').type('2022')
 
   // MANNER OF DEATH
-  cy.selectOption('#manner', '', 'Natural causes')
+  cy.selectOption('#mannerOfDeath', '', 'Natural causes')
   cy.get('#causeOfDeathEstablished').click()
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', "Deceased's usual place of residence")
 
   cy.goToNextFormSection()
   // Informant details
-  cy.get('#informantID').type('912345678')
+  cy.get('#informantID').type('9123456781')
   cy.get('#informantBirthDate-dd').type('16')
   cy.get('#informantBirthDate-mm').type('06')
   cy.get('#informantBirthDate-yyyy').type('1988')
@@ -669,7 +670,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.get('#deathDate-yyyy').type('2019')
 
   // CAUSE OF DEATH DETAILS
-  cy.selectOption('#manner', '', 'Homicide')
+  cy.selectOption('#mannerOfDeath', '', 'Homicide')
   cy.get('#causeOfDeathEstablished').click()
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', 'Other')
@@ -685,7 +686,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.goToNextFormSection()
   // INFORMANT DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#informantID').type('912345678')
+  cy.get('#informantID').type('9123453781')
   cy.get('#informantBirthDate-dd').type('16')
   cy.get('#informantBirthDate-mm').type('06')
   cy.get('#informantBirthDate-yyyy').type('1988')

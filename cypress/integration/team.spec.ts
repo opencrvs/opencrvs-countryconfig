@@ -101,7 +101,7 @@ context('Team Integration Test', () => {
     cy.contains('Ibombo').click()
     cy.log('Choose an user')
     cy.clickUserListItemByName(
-      `${testUserFirstname} Sheikh ${testUserLastname}`,
+      `${testUserFirstname} ${testUserLastname}`,
       'Deactivate'
     )
     cy.get('[for="reason_OTHER"]').click()
@@ -122,7 +122,7 @@ context('Team Integration Test', () => {
     cy.contains('Ibombo ').click()
     cy.log('Choose an user')
     cy.clickUserListItemByName(
-      `${testUserFirstname} Sheikh ${testUserLastname}`,
+      `${testUserFirstname} ${testUserLastname}`,
       'Reactivate'
     )
     cy.get('[for="reason_OTHER"]').click()
@@ -139,7 +139,7 @@ context('Team Integration Test', () => {
     cy.get('#navigation_team').click()
     cy.log('Choose an user')
     cy.clickUserListItemByName(
-      `${testUserFirstname} Sheikh ${testUserLastname}`,
+      `${testUserFirstname} ${testUserLastname}`,
       'Deactivate'
     )
     cy.get('[for="reason_OTHER"]').should('be.visible')
@@ -155,7 +155,7 @@ context('Team Integration Test', () => {
     cy.createPin()
     cy.get('#navigation_team').click()
     cy.clickUserListItemByName(
-      `${testUserFirstname} Sheikh ${testUserLastname}`,
+      `${testUserFirstname} ${testUserLastname}`,
       'Reactivate'
     )
     cy.get('[for="reason_OTHER"]').should('be.visible')
