@@ -16,6 +16,9 @@ import {
   titleCase
 } from '@countryconfig/features/utils'
 import { ORG_URL } from '@countryconfig/constants'
+import { join } from 'path'
+import { readCSVToJSON } from '../../../utils'
+
 export const JURISDICTION_TYPE_IDENTIFIER = `${ORG_URL}/specs/id/jurisdiction-type`
 
 const composeFhirLocation = (
@@ -139,4 +142,46 @@ export function getLocationPartOfIds(
     locations.push(csvLocation)
   }
   return locations
+}
+
+type Year = {
+  year: number
+  male_population: number
+  female_population: number
+  population: number
+  crude_birth_rate: number
+}
+
+export type LocationStatistic = {
+  statisticalID: string
+  name: string
+  years: Year[]
+}
+
+export async function getStatistics(path?: string) {
+  if (!path) {
+    path = join(__dirname, './source/farajaland-statistics.csv')
+  }
+  const data = await readCSVToJSON<
+    Array<Record<string, string> & { adminPcode: string }>
+  >(path)
+
+  return data.map<LocationStatistic>((item) => {
+    const { adminPcode, name, ...yearKeys } = item
+    return {
+      statisticalID: adminPcode,
+      name,
+      years: Object.keys(yearKeys)
+        .map((key) => key.split('_').pop())
+        .map(Number)
+        .filter((value, index, list) => list.indexOf(value) == index)
+        .map((year) => ({
+          year,
+          male_population: parseFloat(yearKeys[`male_population_${year}`]),
+          female_population: parseFloat(yearKeys[`female_population_${year}`]),
+          population: parseFloat(yearKeys[`population_${year}`]),
+          crude_birth_rate: parseFloat(yearKeys[`crude_birth_rate_${year}`])
+        }))
+    }
+  })
 }

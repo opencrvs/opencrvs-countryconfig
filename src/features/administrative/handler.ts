@@ -16,5 +16,7 @@ export async function statisticsHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
+  // This handler is only used by the dummy data-generator script for demo purposes
+  // TODO: it is technical debt and data-generator should instead call the Core FHIR APIs
   return getStatistics()
 }

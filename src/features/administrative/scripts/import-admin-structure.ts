@@ -13,11 +13,11 @@ import {
   fetchAndComposeLocations,
   getLocationPartOfIds,
   generateLocationResource
-} from '@countryconfig/features/administrative/scripts/service'
+} from '@countryconfig/features/administrative/scripts/utils'
 import chalk from 'chalk'
 import * as fs from 'fs'
 import { ADMIN_STRUCTURE_SOURCE } from '@countryconfig/constants'
-import { ICSVLocation } from '@countryconfig/features/utils'
+import { ICSVLocation, readCSVToJSON } from '@countryconfig/features/utils'
 import populateDefaultConfig from '@countryconfig/features/config/scripts/populate-default-config'
 import { ILocation } from '@countryconfig/features/utils'
 
@@ -33,9 +33,8 @@ export default async function importAdminStructure() {
     'LOCATION_LEVEL_4',
     'LOCATION_LEVEL_5'
   ]
-  const nameExpression = /^admin(\d+)name$/i
-  const alternateNameExpression = /^admin(\d+)name_en$/i
-  const aliasExpression = /^admin(\d+)name_[a-z][a-z]$/i
+  const nameExpression = /^admin(\d+)name_en$/i
+  const aliasExpression = /^admin(\d+)name_alias$/i
 
   // tslint:disable-next-line:no-console
   console.log(
@@ -44,22 +43,16 @@ export default async function importAdminStructure() {
     )}`
   )
 
-  let rawLocations = JSON.parse(
-    fs
-      .readFileSync(`${ADMIN_STRUCTURE_SOURCE}generated/sourceLocations.json`)
-      .toString()
-  )
+  let rawLocations: any = await readCSVToJSON(process.argv[2])
 
   rawLocations = rawLocations.map((location: {}) => {
-    for (let key in location) {
-      if (nameExpression.exec(key) || alternateNameExpression.exec(key)) {
+    for (const key in location) {
+      if (nameExpression.exec(key)) {
         location[key.split('_')[0].toUpperCase()] = location[key]
         delete location[key]
-      } else if (
-        aliasExpression.exec(key) &&
-        !alternateNameExpression.exec(key)
-      ) {
-        location[key.substring(0, 6).concat('alias').toUpperCase()] = location[key]
+      } else if (aliasExpression.exec(key)) {
+        location[key.substring(0, 6).concat('alias').toUpperCase()] =
+          location[key]
         delete location[key]
       } else {
         location[key.toUpperCase()] = location[key]
@@ -165,17 +158,16 @@ export default async function importAdminStructure() {
   }
 
   fs.writeFileSync(
-    `${ADMIN_STRUCTURE_SOURCE}generated/fhirLocations.json`,
+    `${ADMIN_STRUCTURE_SOURCE}tmp/fhirLocations.json`,
     JSON.stringify({ previousLevelLocations }, null, 2)
   )
-
 
   const data: ILocation[] = []
   for (const location of fhirLocations) {
     data.push(generateLocationResource(location))
   }
   fs.writeFileSync(
-    `${ADMIN_STRUCTURE_SOURCE}generated/locations.json`,
+    `${ADMIN_STRUCTURE_SOURCE}tmp/locations.json`,
     JSON.stringify({ data }, null, 2)
   )
 

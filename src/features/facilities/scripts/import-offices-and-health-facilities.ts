@@ -19,27 +19,20 @@ import { internal } from '@hapi/boom'
 import {
   composeAndSaveFacilities,
   generateLocationResource
-} from '@countryconfig/features/facilities/scripts/service'
-import { ILocation } from '@countryconfig/features/utils'
-
-const crvsOfficeSourceJSON = `${FACILITIES_SOURCE}generated/crvs-facilities.json`
-const healthFacilitySourceJSON = `${FACILITIES_SOURCE}generated/health-facilities.json`
+} from '@countryconfig/features/facilities/scripts/utils'
+import { ILocation, readCSVToJSON } from '@countryconfig/features/utils'
 
 const locations = JSON.parse(
-  fs
-    .readFileSync(`${ADMIN_STRUCTURE_SOURCE}generated/fhirLocations.json`)
-    .toString()
+  fs.readFileSync(`${ADMIN_STRUCTURE_SOURCE}tmp/fhirLocations.json`).toString()
 )
 
 export default async function importFacilities() {
   let crvsOfficeLocations: fhir.Location[]
   let healthFacilityLocations: fhir.Location[]
-  const crvsOffices = JSON.parse(
-    fs.readFileSync(crvsOfficeSourceJSON).toString()
-  )
-  const healthFacilities = JSON.parse(
-    fs.readFileSync(healthFacilitySourceJSON).toString()
-  )
+
+  const crvsOffices: any = await readCSVToJSON(process.argv[2])
+  const healthFacilities: any = await readCSVToJSON(process.argv[3])
+
   try {
     // tslint:disable-next-line:no-console
     console.log(
@@ -64,7 +57,7 @@ export default async function importFacilities() {
       data.push(generateLocationResource(location))
     }
     fs.writeFileSync(
-      `${FACILITIES_SOURCE}generated/locations.json`,
+      `${FACILITIES_SOURCE}tmp/locations.json`,
       JSON.stringify({ data }, null, 2)
     )
   } catch (err) {

@@ -1,4 +1,4 @@
-statisticalID,name,partOf,code,physicalType,district,state
+adminPcode,name,partOf,code,physicalType,district,state
 2OKicPQMNI,HQ Office,Location/BxrIbNW7f3K,CRVS_OFFICE,Building,Itambo District,Central Province
 JEhYJ82xRI,Isamba District Office,Location/HPGiE9Jjh2r,CRVS_OFFICE,Building,Isamba District,Central Province
 JWMRGwDBXK,Ibombo District Office,Location/oEBf29y8JP8,CRVS_OFFICE,Building,Ibombo District,Central Province

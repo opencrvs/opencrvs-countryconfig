@@ -1,34 +1,21 @@
-import {
-  ADMIN_STRUCTURE_SOURCE,
-  EMPLOYEES_SOURCE,
-  FACILITIES_SOURCE
-} from '@countryconfig/constants'
 import { range } from 'lodash'
 import { z } from 'zod'
 import chalk from 'chalk'
 import { basename } from 'path'
-import { readCSVToJSON } from '@countryconfig/utils'
+import { readCSVToJSON } from '@countryconfig/features/utils'
 
-const Location = z.object({
-  statisticalID: z.string(),
+const Facility = z.object({
+  adminPcode: z.string(),
   name: z.string(),
   partOf: z
     .string()
     .regex(
       /^Location\//,
       'Invalid format: partOf needs to be in Location/<id> format e.g. Location/KozcEjeTyuD'
-    ),
-  code: z.enum(['ADMIN_STRUCTURE'], {
-    required_error:
-      'Field "code" missing, make sure all rows define all required fields'
-  }),
-  physicalType: z.enum(['Jurisdiction'], {
-    required_error:
-      'Field "physicalType" missing, make sure all rows define all required fields'
-  })
+    )
 })
 
-const Facility = Location.extend({
+const HealthFacility = Facility.extend({
   physicalType: z.undefined(),
   code: z.enum(['HEALTH_FACILITY'], {
     required_error:
@@ -36,7 +23,7 @@ const Facility = Location.extend({
   })
 })
 
-const CRVSFacility = Facility.extend({
+const CRVSFacility = HealthFacility.extend({
   code: z.enum(['CRVS_OFFICE'], {
     required_error:
       'Field "code" missing, make sure all rows define all required fields'
@@ -109,7 +96,7 @@ const parsedNumber = z
   .refine((val: number) => !Number.isNaN(val), 'Failed to parse number')
 
 const Statistic = z.object({
-  statisticalID: z.string(),
+  adminPcode: z.string(),
   name: z.string(),
   ...Object.fromEntries(
     range(2007, 2021).flatMap((year) => [
@@ -140,16 +127,35 @@ function error(...params: any[]) {
   console.error(...params.map((p) => chalk.red(p)))
 }
 
-const LOCATIONS = `${ADMIN_STRUCTURE_SOURCE}source/farajaland.csv`
-const STATISTICS = `${ADMIN_STRUCTURE_SOURCE}source/statistics.csv`
-const EMPLOYEES = `${EMPLOYEES_SOURCE}source/test-employees.csv`
-const CRVS_FACILITIES = `${FACILITIES_SOURCE}source/crvs-facilities.csv`
-const HEALTH_FACILITIES = `${FACILITIES_SOURCE}source/health-facilities.csv`
-
 async function main() {
-  log(chalk.yellow('Parsing ADMIN_LEVEL from:'), chalk.bold(LOCATIONS))
-  const rawLocations: [] = await readCSVToJSON(LOCATIONS)
+  log(chalk.yellow('Validating locations file.'))
+  const rawLocations: [] = await readCSVToJSON(process.argv[2])
+  const countryExpression = /^admin0name$/i
+  const nameExpression = /^admin(\d+)name_en$/i
+  const aliasExpression = /^admin(\d+)name_alias$/i
+  const pcodeExpression = /^admin(\d+)Pcode$/i
   const csvLocationHeaders = [...new Set(rawLocations.flatMap(Object.keys))]
+  csvLocationHeaders.map((header: string) => {
+    let headersOK: RegExpExecArray | null
+    headersOK = countryExpression.exec(header)
+    if (!headersOK) {
+      headersOK = nameExpression.exec(header)
+      if (!headersOK) {
+        headersOK = aliasExpression.exec(header)
+        if (!headersOK) {
+          headersOK = pcodeExpression.exec(header)
+          if (!headersOK) {
+            error(
+              chalk.blue(`LOCATIONS ERROR!:`),
+              chalk.yellow(`Header ${header}`),
+              'is not a supported header'
+            )
+            process.exit(1)
+          }
+        }
+      }
+    }
+  })
   let ADMIN_LEVELS = 0
 
   csvLocationHeaders.find((header: string) => {
@@ -161,20 +167,25 @@ async function main() {
     }
   })
   log(chalk.green('ADMIN_LEVELS parsed'), '✅', '\n')
-  
-  log(chalk.yellow('Validating file:'), chalk.bold(STATISTICS))
-  const rawStatistics = await readCSVToJSON(STATISTICS)
+
+  log(chalk.yellow('Validating statistics file.'))
+  const rawStatistics = await readCSVToJSON(process.argv[6])
   const statistics = Statistic.array().parse(rawStatistics)
 
   for (const statistic of statistics) {
-    const location = rawLocations.find(
-      (locationData) => locationData[`admin${ADMIN_LEVELS}Pcode`] === statistic.statisticalID
-    )
+    let location
+    for (let i = ADMIN_LEVELS; i > 0; i--) {
+      if (!location) {
+        location = rawLocations.find(
+          (locationData) =>
+            locationData[`admin${i}Pcode`] === statistic.adminPcode
+        )
+      }
+    }
     if (!location) {
       error(
-        chalk.blue(basename(STATISTICS)),
+        chalk.blue(`LOCATIONS ERROR!: Parsed ADMIN_LEVELS: ${ADMIN_LEVELS}`),
         chalk.yellow(`Line ${statistics.indexOf(statistic) + 2}`),
-        'District',
         statistic.name,
         'is not part of any known location'
       )
@@ -183,17 +194,19 @@ async function main() {
   }
   log(chalk.green('File is valid'), '✅', '\n')
 
-  log(chalk.yellow('Validating file:'), chalk.bold(HEALTH_FACILITIES))
-  const rawFacilities = await readCSVToJSON(HEALTH_FACILITIES)
-  const facilities = Facility.array().parse(rawFacilities)
+  log(chalk.yellow('Validating health facilities file.'))
+  const rawFacilities = await readCSVToJSON(process.argv[4])
+  const facilities = HealthFacility.array().parse(rawFacilities)
 
   for (const facility of facilities) {
     const location = rawLocations.find(
-      (locationData) => facility.partOf === `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
+      (locationData) =>
+        facility.partOf ===
+        `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
     )
     if (!location) {
       error(
-        chalk.blue(basename(HEALTH_FACILITIES)),
+        chalk.blue('FACILITIES ERROR! '),
         chalk.yellow(`Line ${facilities.indexOf(facility) + 2}`),
         'Facility',
         facility.name,
@@ -204,18 +217,19 @@ async function main() {
   }
   log(chalk.green('File is valid'), '✅', '\n')
 
-  log(chalk.yellow('Validating file:'), chalk.bold(CRVS_FACILITIES))
-  const rawCRVSFacilities = await readCSVToJSON(CRVS_FACILITIES)
+  log(chalk.yellow('Validating crvs offices file.'))
+  const rawCRVSFacilities = await readCSVToJSON(process.argv[3])
   const crvsFacilities = CRVSFacility.array().parse(rawCRVSFacilities)
 
   for (const facility of crvsFacilities) {
-    const partOf = rawLocations
-      .find(
-        (locationData) => facility.partOf === `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
-      )
+    const partOf = rawLocations.find(
+      (locationData) =>
+        facility.partOf ===
+        `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
+    )
     if (!partOf) {
       error(
-        chalk.yellow(chalk.bold(basename(CRVS_FACILITIES))),
+        chalk.blue('CRVS OFFICES ERROR! '),
         chalk.yellow(`Line ${crvsFacilities.indexOf(facility) + 2}`),
         'CRVS Facility',
         facility.name,
@@ -225,19 +239,18 @@ async function main() {
     }
   }
   log(chalk.green('File is valid'), '✅', '\n')
-  log(chalk.yellow('Validating file:'), chalk.bold(EMPLOYEES))
-  const rawEmployees = await readCSVToJSON(EMPLOYEES)
+  log(chalk.yellow('Validating employees file.'))
+  const rawEmployees = await readCSVToJSON(process.argv[5])
 
   const employees = Employee.array().parse(rawEmployees)
 
   for (const employee of employees) {
     const facility = crvsFacilities.find(
-      (facility) =>
-        employee.facilityId === `CRVS_OFFICE_${facility.statisticalID}`
+      (facility) => employee.facilityId === `CRVS_OFFICE_${facility.adminPcode}`
     )
     if (!facility) {
       error(
-        chalk.blue(EMPLOYEES),
+        chalk.blue('EMPLOYEES ERROR! '),
         chalk.yellow(`Line ${employees.indexOf(employee) + 2}`),
         'Employee',
         employee.username,

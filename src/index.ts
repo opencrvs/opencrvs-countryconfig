@@ -32,7 +32,7 @@ import {
   generatorHandler,
   requestSchema as generatorRequestSchema,
   responseSchema as generatorResponseSchema
-} from '@countryconfig/features/generate/handler'
+} from '@countryconfig/features/generateRegistrationNumber/handler'
 import { validateRegistrationHandler } from '@countryconfig/features/validate/handler'
 import * as decode from 'jwt-decode'
 import { join } from 'path'
@@ -42,7 +42,7 @@ import {
   notificationHandler,
   notificationScheme
 } from './features/notification/handler'
-import { mosipMediatorHandler } from './features/examples/mosip-openhim-mediator/handler'
+import { mosipMediatorHandler } from './features/mediators/mosip-openhim-mediator/handler'
 
 export interface ITokenPayload {
   sub: string

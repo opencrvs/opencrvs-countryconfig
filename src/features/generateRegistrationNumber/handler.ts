@@ -11,7 +11,7 @@
  */
 import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
-import { generateRegistrationNumber } from '@countryconfig/features/generate/service'
+import { generateRegistrationNumber } from '@countryconfig/features/generateRegistrationNumber/service'
 import { GENERATE_TYPE_RN } from '@countryconfig/features/utils'
 
 export interface IGeneratorHandlerPayload {

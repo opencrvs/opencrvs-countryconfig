@@ -23,7 +23,7 @@ import {
   convertToMSISDN,
   ISaltedHash,
   generateHash
-} from '@countryconfig/utils'
+} from '@countryconfig/features/utils'
 import {
   createUsers,
   getScope
@@ -251,12 +251,12 @@ export async function composeAndSavePractitioners(
 
   if (environment === 'production') {
     fs.writeFileSync(
-      `${EMPLOYEES_SOURCE}generated/login-details.json`,
+      `${EMPLOYEES_SOURCE}tmp/login-details.json`,
       JSON.stringify(loginDetails, null, 2)
     )
     console.log(
       `${chalk.blueBright(
-        'FINISHED SAVING PRODUCTION USERS.  USER LOGIN DETAILS HAVE BEEN EXPORTED TO THE features/employees/generated FOLDER'
+        'FINISHED SAVING PRODUCTION USERS.  USER LOGIN DETAILS HAVE BEEN EXPORTED TO THE features/employees/tmp FOLDER'
       )}`
     )
   } else {

@@ -9,16 +9,10 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import * as fs from 'fs'
-import { EMPLOYEES_SOURCE } from '@countryconfig/constants'
 import chalk from 'chalk'
 import { internal } from '@hapi/boom'
-import { composeAndSavePractitioners } from '@countryconfig/features/employees/scripts/service'
-
-const sourceJSON =
-  process.argv[3].toLowerCase() === 'development'
-    ? `${EMPLOYEES_SOURCE}generated/test-employees.json`
-    : `${EMPLOYEES_SOURCE}generated/prod-employees.json`
+import { composeAndSavePractitioners } from '@countryconfig/features/employees/scripts/utils'
+import { readCSVToJSON } from '@countryconfig/features/utils'
 
 export default async function importEmployees() {
   // tslint:disable-next-line:no-console
@@ -27,13 +21,13 @@ export default async function importEmployees() {
       `/////////////////////////// MAPPING: ${process.argv[3].toLowerCase()} EMPLOYEES TO PRACTITIONERS, ROLES AND USERS & SAVING TO FHIR ///////////////////////////`
     )}`
   )
-  const employees = JSON.parse(fs.readFileSync(sourceJSON).toString())
+  const employees: any = await readCSVToJSON(process.argv[2])
   try {
     await composeAndSavePractitioners(
       employees,
-      process.argv[2],
-      process.argv[3].toLowerCase(),
-      process.argv[4].toUpperCase()
+      process.argv[3],
+      process.argv[4].toLowerCase(),
+      process.argv[5].toUpperCase()
     )
   } catch (err) {
     return internal(err)

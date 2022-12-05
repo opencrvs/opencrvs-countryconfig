@@ -17,7 +17,7 @@ import {
 import { ORG_URL } from '@countryconfig/constants'
 
 interface IFacility {
-  statisticalID: string
+  adminPcode: string
   name: string
   partOf: string
   code: string
@@ -32,7 +32,7 @@ const composeFhirLocation = (
     identifier: [
       {
         system: `${ORG_URL}/specs/id/internal-id`,
-        value: `${location.code}_${String(location.statisticalID)}`
+        value: `${location.code}_${String(location.adminPcode)}`
       }
     ],
     name: location.name, // English name

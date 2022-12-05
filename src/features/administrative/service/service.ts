@@ -28,6 +28,8 @@ type BundleEntryWithLocation = Omit<fhir.BundleEntry, 'resource'> & {
 }
 
 export async function getStatistics() {
+  // This function is only used by the data generator script
+  // TODO: it is technical debt and data-generator should instead call the Core FHIR API
   const res = await fetch(`${FHIR_URL}/Location?type=ADMIN_STRUCTURE&_count=0`)
   const locationBundle: fhir.Bundle = await res.json()
   if (!locationBundle.entry) {
