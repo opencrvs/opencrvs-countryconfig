@@ -99,7 +99,7 @@ const countryLogoSchema = new Schema<ICountryLogo>({
 
 interface IIntegration {
   name: string
-  enabled: string
+  status: string
 }
 
 const integrationsSchema = new Schema<IIntegration>({
