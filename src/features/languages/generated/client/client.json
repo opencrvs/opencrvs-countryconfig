@@ -1919,7 +1919,21 @@
         "performance.registrationsListTable.monthColumn": "Month",
         "performance.registrationsListTable.locationColumn": "Location",
         "performance.registrationsListTable.registrarColumn": "Registrar",
-        "performance.registrationsListTable.totalRegistrationsColumn": "Total Registrations"
+        "performance.registrationsListTable.totalRegistrationsColumn": "Total Registrations",
+        "custom.field.select.heading": "Custom Select",
+        "config.form.tools.input.customSelect": "Custom Select",
+        "custom.select.copy.heading": "Copy",
+        "custom.select.copy.description": "Complete the copy requirements for all available languages",
+        "custom.select.dataSource.heading": "Data source",  
+        "custom.select.dataSource.description": "Use an existing data source or upload a csv file containing the select options for each language.",  
+        "custom.select.text.validatingCSVFile": "Validating CSV file",  
+        "custom.select.text.csvValidatingDescription": "We are checking your .csv file for... this should take a few minutes... link to documentation",  
+        "custom.select.text.statusValidating": "Validating .csv",  
+        "custom.select.text.statusValidated": "Validated .csv",  
+        "custom.select.text.statusFailed": "Failed to validate. Please try again",  
+        "custom.select.text.statusAppliedToCustomSelect": "Applied to custom select",  
+        "custom.select.text.statusNoDataFound": "No option was found",  
+        "custom.select.text.statusTranslationMissing": "Translation is missing"
       }
     },
     {
@@ -3864,7 +3878,21 @@
         "performance.registrationsListTable.monthColumn": "Mois",
         "performance.registrationsListTable.locationColumn": "Localisation",
         "performance.registrationsListTable.registrarColumn": "Registrar",
-        "performance.registrationsListTable.totalRegistrationsColumn": "Total des inscriptions"
+        "performance.registrationsListTable.totalRegistrationsColumn": "Total des inscriptions",
+        "custom.field.select.heading": "Sélection personnalisée",
+        "config.form.tools.input.customSelect": "Sélection personnalisée",
+        "custom.select.copy.heading": "Copie",
+        "custom.select.copy.description": "Remplissez les conditions de copie pour toutes les langues disponibles",
+        "custom.select.dataSource.heading": "Source des données",  
+        "custom.select.dataSource.description": "Utilisez une source de données existante ou téléchargez un fichier csv contenant les options de sélection pour chaque langue.",  
+        "custom.select.text.validatingCSVFile": "Validation du fichier CSV",  
+        "custom.select.text.csvValidatingDescription": "Nous vérifions votre fichier .csv pour... cela devrait prendre quelques minutes... lien vers la documentation",  
+        "custom.select.text.statusValidating": "Validation du fichier .csv",  
+        "custom.select.text.statusValidated": "Validé .csv",  
+        "custom.select.text.statusFailed": "Échec de la validation. Veuillez réessayer",  
+        "custom.select.text.statusAppliedToCustomSelect": "Appliqué à la sélection personnalisée",  
+        "custom.select.text.statusNoDataFound": "Aucune option n'a été trouvée",  
+        "custom.select.text.statusTranslationMissing": "La traduction est manquante"
       }
     }
   ]
