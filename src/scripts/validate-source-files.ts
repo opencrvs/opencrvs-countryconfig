@@ -135,7 +135,7 @@ async function main() {
   const aliasExpression = /^admin(\d+)name_alias$/i
   const pcodeExpression = /^admin(\d+)Pcode$/i
   const csvLocationHeaders = [...new Set(rawLocations.flatMap(Object.keys))]
-  csvLocationHeaders.map((header: string) => {
+  for (const header of csvLocationHeaders) {
     let headersOK: RegExpExecArray | null
     headersOK = countryExpression.exec(header)
     if (!headersOK) {
@@ -155,6 +155,7 @@ async function main() {
         }
       }
     }
+  }
 
   let MAX_ADMIN_LEVEL = 0
 
