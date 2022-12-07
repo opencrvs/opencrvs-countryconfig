@@ -2330,6 +2330,7 @@
         "constants.applicationArchivedOn": "Application archivée le",
         "constants.applicationName": "OpenCRVS",
         "constants.archived_declaration": "Archivé",
+        "constants.integrations": "Intégrations",
         "constants.assignRecord": "Affecter un enregistrement",
         "constants.averageRateOfRegistrations": "Moyenne. {amount}% de la valeur",
         "constants.birth": "Naissance",
