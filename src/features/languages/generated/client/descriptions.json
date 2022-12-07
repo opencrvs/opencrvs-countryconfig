@@ -83,6 +83,7 @@
     "constants.declarationState": "A label to describe when the declaration was actioned on",
     "constants.declarationSubmittedOn": "Label for the workflow timestamp when the status is declaration",
     "constants.declarations": "Declaration title",
+    "constants.integrations": "Integration title",
     "constants.declarationUpdatedOn": "Label for the workflow timestamp when the status is draft updated",
     "constants.declarationValidatedOn": "Label for the workflow timestamp when the status is validated",
     "constants.declarationSentForExternalValidationOn": "Label for the workflow timestamp when the status is waiting_validation",

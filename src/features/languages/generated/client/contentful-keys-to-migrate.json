@@ -17,6 +17,7 @@
   "constants.countryName",
   "constants.declrationArchivedOn",
   "constants.applicationName",
+  "constants.integrations",
   "constants.downloaded",
   "constants.noResultsOutbox",
   "constants.record",
