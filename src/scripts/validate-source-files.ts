@@ -155,18 +155,19 @@ async function main() {
         }
       }
     }
-  })
-  let ADMIN_LEVELS = 0
 
-  csvLocationHeaders.find((header: string) => {
+  let MAX_ADMIN_LEVEL = 0
+
+  for (const header of csvLocationHeaders) {
     const currentLevel = /^admin(\d+)pcode/i.exec(header)
     if (currentLevel) {
-      ADMIN_LEVELS < Number(currentLevel[1])
-        ? (ADMIN_LEVELS = Number(currentLevel[1]))
-        : ADMIN_LEVELS
+      MAX_ADMIN_LEVEL < Number(currentLevel[1])
+        ? (MAX_ADMIN_LEVEL = Number(currentLevel[1]))
+        : MAX_ADMIN_LEVEL
     }
-  })
-  log(chalk.green('ADMIN_LEVELS parsed'), '✅', '\n')
+  }
+
+  log(chalk.green('Admin levels parsed'), '✅', '\n')
 
   log(chalk.yellow('Validating statistics file.'))
   const rawStatistics = await readCSVToJSON(process.argv[6])
@@ -174,7 +175,7 @@ async function main() {
 
   for (const statistic of statistics) {
     let location
-    for (let i = ADMIN_LEVELS; i > 0; i--) {
+    for (let i = MAX_ADMIN_LEVEL; i > 0; i--) {
       if (!location) {
         location = rawLocations.find(
           (locationData) =>
@@ -202,7 +203,7 @@ async function main() {
     const location = rawLocations.find(
       (locationData) =>
         facility.partOf ===
-        `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
+        `Location/${locationData[`admin${MAX_ADMIN_LEVEL}Pcode`]}`
     )
     if (!location) {
       error(
@@ -225,7 +226,7 @@ async function main() {
     const partOf = rawLocations.find(
       (locationData) =>
         facility.partOf ===
-        `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
+        `Location/${locationData[`admin${MAX_ADMIN_LEVEL}Pcode`]}`
     )
     if (!partOf) {
       error(
