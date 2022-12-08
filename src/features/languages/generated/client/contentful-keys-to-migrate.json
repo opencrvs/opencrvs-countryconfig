@@ -282,6 +282,7 @@
   "sysAdHome.sendUsernameReminderSMSModalMessage",
   "sysAdHome.resentPasswordSMSSuccess",
   "sysAdHome.resentPasswordSMSError",
+  "user.profile.audit.description.updated",
   "user.profile.auditList.loggedIn",
   "user.profile.auditList.loggedOut",
   "user.profile.auditList.phoneNumberChanged",
@@ -291,5 +292,13 @@
   "user.profile.auditList.userCreated",
   "user.profile.auditList.userEdited",
   "user.profile.auditList.passwordReset",
-  "user.profile.auditList.usernameRequested"
+  "user.profile.auditList.usernameRequested",
+  "user.profile.auditList.passwordResetByAdmin",
+  "user.profile.auditList.usernameReminderByAdmin",
+  "user.profile.auditList.retrieved",
+  "user.profile.auditList.viewed",
+  "user.profile.auditList.reInstatedToInProgress",
+  "user.profile.auditList.reInstatedToInReview",
+  "user.profile.auditList.reInstatedToUpdate",
+  "user.profile.auditList.sentForApproval"
 ]
