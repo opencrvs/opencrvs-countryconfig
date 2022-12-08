@@ -22,7 +22,7 @@ export const zodValidateDuplicates =
 
 /** Validates location data by Map<Location, ParentLocation>. If there are locations that have different parent location than previously added ones, an error will be thrown */
 export const validateSensicalityOfLocationTree =
-  (options: { maxAdminLevel: number }) =>
+  (maxAdminLevel: number) =>
   (data: Array<Record<string, any>>, ctx: z.RefinementCtx) => {
     type Location = string
     type ParentLocation = string
@@ -32,11 +32,7 @@ export const validateSensicalityOfLocationTree =
     for (let i = 0; i < data.length; i++) {
       const row = data[i]
 
-      for (
-        let adminLevel = options.maxAdminLevel;
-        adminLevel >= 0;
-        adminLevel--
-      ) {
+      for (let adminLevel = maxAdminLevel; adminLevel >= 0; adminLevel--) {
         const column = `admin${adminLevel}Pcode`
         const locationId = row[column]
         const parentColumn = `admin${adminLevel - 1}Pcode`
