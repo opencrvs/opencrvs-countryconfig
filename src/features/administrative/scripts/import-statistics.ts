@@ -71,7 +71,7 @@ function generateStatisticalExtensions(sourceStatistic: LocationStatistic) {
 
 async function addStatisticalData() {
   const statistics = await getStatistics(process.argv[2])
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.log(
     `${chalk.blueBright(
       '/////////////////////////// UPDATING LOCATIONS WITH STATISTICAL DATA IN FHIR ///////////////////////////'
@@ -82,11 +82,12 @@ async function addStatisticalData() {
     const location = await getLocationByIdentifier(
       `ADMIN_STRUCTURE_${String(statistic.statisticalID)}`
     ).catch((err) => {
+      // eslint-disable-next-line no-console
       console.log("Couldn't fetch locations", err)
       throw err
     })
     if (!location) {
-      // tslint:disable-next-line:no-console
+      // eslint-disable-next-line no-console
       console.log(
         `${chalk.red('Warning:')} No location can be found that matches: ${
           statistic.name
@@ -108,7 +109,7 @@ async function addStatisticalData() {
         ),
         ...statisticalExtensions
       ]
-      // tslint:disable-next-line:no-console
+      // eslint-disable-next-line no-console
       console.log(`Updating location: ${location.id}`)
       await sendToFhir(location, `/Location/${location.id}`, 'PUT')
     }

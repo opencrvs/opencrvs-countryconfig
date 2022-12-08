@@ -14,7 +14,8 @@ module.exports = {
     'no-undef': 'warn'
   },
   globals: {
-    NodeJS: true
+    NodeJS: true,
+    fhir: true
   },
   env: {
     node: true,
