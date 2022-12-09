@@ -1,4 +1,4 @@
-import { range } from 'lodash'
+import { range, difference } from 'lodash'
 import { z } from 'zod'
 import chalk from 'chalk'
 import { basename } from 'path'
@@ -9,25 +9,25 @@ import {
 } from './humdata-validation'
 
 const Location = z.object({
-  admin0Pcode: z.string().optional(),
-  admin0Alias_en: z.string().optional(),
-  admin0Name_en: z.string().optional(),
+  admin0Pcode: z.string(),
+  admin0Name_en: z.string(),
+  admin0Name_alias: z.string(),
 
-  admin1Pcode: z.string().optional(),
-  admin1Alias_en: z.string().optional(),
-  admin1Name_en: z.string().optional(),
+  admin1Pcode: z.string(),
+  admin1Name_en: z.string(),
+  admin1Name_alias: z.string(),
 
   admin2Pcode: z.string().optional(),
-  admin2Alias_en: z.string().optional(),
   admin2Name_en: z.string().optional(),
+  admin2Name_alias: z.string().optional(),
 
   admin3Pcode: z.string().optional(),
-  admin3Alias_en: z.string().optional(),
   admin3Name_en: z.string().optional(),
+  admin3Name_alias: z.string().optional(),
 
   admin4Pcode: z.string().optional(),
-  admin4Alias_en: z.string().optional(),
-  admin4Name_en: z.string().optional()
+  admin4Name_en: z.string().optional(),
+  admin4Name_alias: z.string().optional()
 })
 
 const Locations = (maxAdminLevel: number) =>
@@ -210,13 +210,13 @@ async function main() {
   }
 
   /** The most granular admin level, bigger number = lower level of administration */
-  let MAX_ADMIN_LEVEL = 0
+  let MAX_ADMIN_LEVEL: 0 | 1 | 2 | 3 | 4 = 0
 
   for (const header of csvLocationHeaders) {
     const currentLevel = pcodeExpression.exec(header)
     if (currentLevel) {
       MAX_ADMIN_LEVEL < Number(currentLevel[1])
-        ? (MAX_ADMIN_LEVEL = Number(currentLevel[1]))
+        ? (MAX_ADMIN_LEVEL = Number(currentLevel[1]) as any)
         : MAX_ADMIN_LEVEL
     }
   }
@@ -250,6 +250,25 @@ async function main() {
       )
       process.exit(1)
     }
+  }
+
+  const MAX_ADMIN_LEVEL_LOCATIONS = locations.map(
+    (location) => location[`admin${MAX_ADMIN_LEVEL}Pcode`]!
+  )
+  const hasStatisticAllMaxAdminLevelLocations =
+    difference(
+      MAX_ADMIN_LEVEL_LOCATIONS,
+      statistics.map((s) => s.adminPcode)
+    ).length === 0
+
+  if (!hasStatisticAllMaxAdminLevelLocations) {
+    error(
+      chalk.blue('LOCATIONS ERROR! '),
+      chalk.yellow(
+        `Statistic locations do not include all admin${MAX_ADMIN_LEVEL}Pcode rows in locations file`
+      )
+    )
+    process.exit(1)
   }
   log(chalk.green('File is valid'), '✅', '\n')
 
