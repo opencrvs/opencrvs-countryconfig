@@ -36,7 +36,7 @@ export default async function importAdminStructure() {
   const nameExpression = /^admin(\d+)name_en$/i
   const aliasExpression = /^admin(\d+)name_alias$/i
 
-  // tslint:disable-next-line:no-console
+  // eslint-disable-next-line no-console
   console.log(
     `${chalk.blueBright(
       '/////////////////////////// IMPORTING LOCATIONS FROM JSON AND SAVING TO FHIR ///////////////////////////'
@@ -105,7 +105,7 @@ export default async function importAdminStructure() {
   }
 
   try {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.log(
       `${chalk.yellow('Fetching from LocationMap:')}. Please wait ....`
     )
@@ -126,9 +126,12 @@ export default async function importAdminStructure() {
       csvLocations: (ICSVLocation & { locationLevel: number })[],
       locationLevel: number
     ) => {
-      return csvLocations
-        .filter((csvLocation) => csvLocation.locationLevel === locationLevel)
-        .map(({ locationLevel, ...rest }) => rest)
+      return (
+        csvLocations
+          .filter((csvLocation) => csvLocation.locationLevel === locationLevel)
+          // eslint-disable-next-line no-unused-vars
+          .map(({ locationLevel, ...rest }) => rest)
+      )
     }
 
     previousLevelLocations = await fetchAndComposeLocations(
@@ -152,7 +155,7 @@ export default async function importAdminStructure() {
       fhirLocations.push(...previousLevelLocations)
     }
   } catch (err) {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.log(err)
     process.exit(1)
   }
