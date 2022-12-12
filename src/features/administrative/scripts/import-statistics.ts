@@ -30,7 +30,7 @@ async function addStatisticalData() {
     z.infer<typeof Location>
   >
   const maxAdminLevel = extractMaxAdminLevel(rawLocations as any)
-  const locationMap = extractLocationTree(rawLocations as any, maxAdminLevel)
+  const locationMap = extractLocationTree(rawLocations as any, maxAdminLevel)!
   const statisticMap = extractStatisticsMap(stats)
 
   // eslint-disable-next-line no-console

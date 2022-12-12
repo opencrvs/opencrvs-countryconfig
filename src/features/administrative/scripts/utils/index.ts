@@ -192,13 +192,14 @@ export async function getStatistics(path?: string) {
 
 // eslint-disable-next-line no-unused-vars
 type ErrorCallback = (_: { id: number; row: number; column: string }) => void
+type LocationMap = Map<string, string>
 
-export const extractLocationTree = (
+export function extractLocationTree(
   locations: Array<z.infer<typeof Location>>,
   maxAdminLevel: number,
   errorCallback?: ErrorCallback
-) => {
-  const locationMap: Map<string, string> = new Map()
+) {
+  const locationMap: LocationMap = new Map()
 
   for (let i = 0; i < locations.length; i++) {
     const row = locations[i]
@@ -213,7 +214,7 @@ export const extractLocationTree = (
       } else {
         if (row[parentColumn] !== locationMap.get(id) && errorCallback) {
           errorCallback({ id, row: i, column })
-          false
+          return undefined
         }
       }
     }
