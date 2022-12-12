@@ -213,6 +213,7 @@
   "integrations.enable",
   "integrations.delete",
   "integrations.name",
+  "integrations.nationalIDName",
   "integrations.client.type",
   "integrations.label",
   "integrations.webhookPermissionsDescription",

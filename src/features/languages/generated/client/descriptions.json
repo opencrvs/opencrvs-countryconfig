@@ -749,6 +749,7 @@
     "integrations.enable": "Label for enable option",
     "integrations.delete": "Label for delete option",
     "integrations.name": "Label for name input",
+    "integrations.nationalIDName": "Label for name input for National ID",
     "integrations.client.type": "Label for type of client",
     "integrations.label": "Label",
     "integrations.webhookPermissionsDescription": "Webhook description above permissions",
