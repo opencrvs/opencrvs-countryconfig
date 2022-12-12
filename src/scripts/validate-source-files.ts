@@ -3,6 +3,16 @@ import { z } from 'zod'
 import chalk from 'chalk'
 import { basename } from 'path'
 import { readCSVToJSON } from '@countryconfig/features/utils'
+import {
+  validateSensicalityOfLocationTree,
+  zodValidateDuplicates
+} from './humdata-validation'
+
+const Locations = (options: { maxAdminLevel: number }) =>
+  z
+    .array(z.unknown())
+    .superRefine(zodValidateDuplicates(`admin${options.maxAdminLevel}Pcode`))
+    .superRefine(validateSensicalityOfLocationTree(options))
 
 const Facility = z.object({
   adminPcode: z.string(),
@@ -23,6 +33,10 @@ const HealthFacility = Facility.extend({
   })
 })
 
+const HealthFacilities = HealthFacility.array().superRefine(
+  zodValidateDuplicates('adminPcode')
+)
+
 const CRVSFacility = HealthFacility.extend({
   code: z.enum(['CRVS_OFFICE'], {
     required_error:
@@ -41,6 +55,10 @@ const CRVSFacility = HealthFacility.extend({
       'Field "physicalType" missing, make sure all rows define all required fields'
   })
 })
+
+const CRVSFacilities = CRVSFacility.array().superRefine(
+  zodValidateDuplicates('adminPcode')
+)
 
 const Employee = z.object({
   facilityId: z
@@ -86,6 +104,10 @@ const Employee = z.object({
     .optional()
 })
 
+const Employees = Employee.array().superRefine(
+  zodValidateDuplicates('username')
+)
+
 const parsedNumber = z
   .string()
   .regex(
@@ -108,7 +130,12 @@ const Statistic = z.object({
   )
 })
 
+const Statistics = Statistic.array().superRefine(
+  zodValidateDuplicates('adminPcode')
+)
+
 function printIssue(issue: z.ZodIssue) {
+  // eslint-disable-next-line no-console
   console.log(
     chalk.red(
       chalk.bold(
@@ -120,10 +147,12 @@ function printIssue(issue: z.ZodIssue) {
 }
 
 function log(...params: any[]) {
+  // eslint-disable-next-line no-console
   console.log(...params)
 }
 
 function error(...params: any[]) {
+  // eslint-disable-next-line no-console
   console.error(...params.map((p) => chalk.red(p)))
 }
 
@@ -135,7 +164,7 @@ async function main() {
   const aliasExpression = /^admin(\d+)name_alias$/i
   const pcodeExpression = /^admin(\d+)Pcode$/i
   const csvLocationHeaders = [...new Set(rawLocations.flatMap(Object.keys))]
-  csvLocationHeaders.map((header: string) => {
+  for (const header of csvLocationHeaders) {
     let headersOK: RegExpExecArray | null
     headersOK = countryExpression.exec(header)
     if (!headersOK) {
@@ -155,26 +184,31 @@ async function main() {
         }
       }
     }
-  })
-  let ADMIN_LEVELS = 0
+  }
 
-  csvLocationHeaders.find((header: string) => {
-    const currentLevel = /^admin(\d+)pcode/i.exec(header)
+  /** The most granular admin level, bigger number = lower level of administration */
+  let MAX_ADMIN_LEVEL = 0
+
+  for (const header of csvLocationHeaders) {
+    const currentLevel = pcodeExpression.exec(header)
     if (currentLevel) {
-      ADMIN_LEVELS < Number(currentLevel[1])
-        ? (ADMIN_LEVELS = Number(currentLevel[1]))
-        : ADMIN_LEVELS
+      MAX_ADMIN_LEVEL < Number(currentLevel[1])
+        ? (MAX_ADMIN_LEVEL = Number(currentLevel[1]))
+        : MAX_ADMIN_LEVEL
     }
-  })
-  log(chalk.green('ADMIN_LEVELS parsed'), '✅', '\n')
+  }
+
+  Locations({ maxAdminLevel: MAX_ADMIN_LEVEL }).parse(rawLocations)
+
+  log(chalk.green('Admin levels parsed'), '✅', '\n')
 
   log(chalk.yellow('Validating statistics file.'))
   const rawStatistics = await readCSVToJSON(process.argv[6])
-  const statistics = Statistic.array().parse(rawStatistics)
+  const statistics = Statistics.parse(rawStatistics)
 
   for (const statistic of statistics) {
     let location
-    for (let i = ADMIN_LEVELS; i > 0; i--) {
+    for (let i = MAX_ADMIN_LEVEL; i > 0; i--) {
       if (!location) {
         location = rawLocations.find(
           (locationData) =>
@@ -184,7 +218,9 @@ async function main() {
     }
     if (!location) {
       error(
-        chalk.blue(`LOCATIONS ERROR!: Parsed ADMIN_LEVELS: ${ADMIN_LEVELS}`),
+        chalk.blue(
+          `LOCATIONS ERROR!: Parsed MAX_ADMIN_LEVEL: ${MAX_ADMIN_LEVEL}`
+        ),
         chalk.yellow(`Line ${statistics.indexOf(statistic) + 2}`),
         statistic.name,
         'is not part of any known location'
@@ -196,13 +232,13 @@ async function main() {
 
   log(chalk.yellow('Validating health facilities file.'))
   const rawFacilities = await readCSVToJSON(process.argv[4])
-  const facilities = HealthFacility.array().parse(rawFacilities)
+  const facilities = HealthFacilities.parse(rawFacilities)
 
   for (const facility of facilities) {
     const location = rawLocations.find(
       (locationData) =>
         facility.partOf ===
-        `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
+        `Location/${locationData[`admin${MAX_ADMIN_LEVEL}Pcode`]}`
     )
     if (!location) {
       error(
@@ -219,13 +255,13 @@ async function main() {
 
   log(chalk.yellow('Validating crvs offices file.'))
   const rawCRVSFacilities = await readCSVToJSON(process.argv[3])
-  const crvsFacilities = CRVSFacility.array().parse(rawCRVSFacilities)
+  const crvsFacilities = CRVSFacilities.parse(rawCRVSFacilities)
 
   for (const facility of crvsFacilities) {
     const partOf = rawLocations.find(
       (locationData) =>
         facility.partOf ===
-        `Location/${locationData[`admin${ADMIN_LEVELS}Pcode`]}`
+        `Location/${locationData[`admin${MAX_ADMIN_LEVEL}Pcode`]}`
     )
     if (!partOf) {
       error(
@@ -242,7 +278,7 @@ async function main() {
   log(chalk.yellow('Validating employees file.'))
   const rawEmployees = await readCSVToJSON(process.argv[5])
 
-  const employees = Employee.array().parse(rawEmployees)
+  const employees = Employees.parse(rawEmployees)
 
   for (const employee of employees) {
     const facility = crvsFacilities.find(
