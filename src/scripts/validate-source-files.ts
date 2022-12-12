@@ -8,7 +8,7 @@ import {
   zodValidateDuplicates
 } from './humdata-validation'
 
-const Location = z.object({
+export const Location = z.object({
   admin0Pcode: z.string(),
   admin0Name_en: z.string(),
   admin0Name_alias: z.string(),
@@ -152,7 +152,7 @@ const Statistic = z.object({
   )
 })
 
-const Statistics = Statistic.array().superRefine(
+export const Statistics = Statistic.array().superRefine(
   zodValidateDuplicates('adminPcode')
 )
 

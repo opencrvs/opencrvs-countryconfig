@@ -13,11 +13,15 @@ import {
   sendToFhir,
   ILocation,
   ICSVLocation,
-  titleCase
+  titleCase,
+  getFromFhir
 } from '@countryconfig/features/utils'
 import { ORG_URL } from '@countryconfig/constants'
 import { join } from 'path'
 import { readCSVToJSON } from '../../../utils'
+import { Location } from '@countryconfig/scripts/validate-source-files'
+import { z } from 'zod'
+import { round, sumBy, meanBy } from 'lodash'
 
 export const JURISDICTION_TYPE_IDENTIFIER = `${ORG_URL}/specs/id/jurisdiction-type`
 
@@ -116,7 +120,7 @@ export async function fetchAndComposeLocations(
       newLocation,
       '/Location',
       'POST'
-    ).catch((err) => {
+    ).catch(() => {
       throw Error('Cannot save location to FHIR')
     })
     const locationHeader = savedLocationResponse.headers.get(
@@ -153,7 +157,7 @@ type Year = {
 }
 
 export type LocationStatistic = {
-  statisticalID: string
+  id: string
   name: string
   years: Year[]
 }
@@ -169,7 +173,7 @@ export async function getStatistics(path?: string) {
   return data.map<LocationStatistic>((item) => {
     const { adminPcode, name, ...yearKeys } = item
     return {
-      statisticalID: adminPcode,
+      id: adminPcode,
       name,
       years: Object.keys(yearKeys)
         .map((key) => key.split('_').pop())
@@ -184,4 +188,156 @@ export async function getStatistics(path?: string) {
         }))
     }
   })
+}
+
+// eslint-disable-next-line no-unused-vars
+type ErrorCallback = (_: { id: number; row: number; column: string }) => void
+
+export const extractLocationTree = (
+  locations: Array<z.infer<typeof Location>>,
+  maxAdminLevel: number,
+  errorCallback?: ErrorCallback
+) => {
+  const locationMap: Map<string, string> = new Map()
+
+  for (let i = 0; i < locations.length; i++) {
+    const row = locations[i]
+
+    for (let adminLevel = maxAdminLevel; adminLevel >= 0; adminLevel--) {
+      const column = `admin${adminLevel}Pcode`
+      const id = row[column]
+      const parentColumn = `admin${adminLevel - 1}Pcode`
+
+      if (!locationMap.get(id)) {
+        locationMap.set(id, row[parentColumn])
+      } else {
+        if (row[parentColumn] !== locationMap.get(id) && errorCallback) {
+          errorCallback({ id, row: i, column })
+          false
+        }
+      }
+    }
+  }
+
+  return locationMap
+}
+
+export const extractMaxAdminLevel = (rawLocations: []) => {
+  const csvLocationHeaders = [...new Set(rawLocations.flatMap(Object.keys))]
+  let MAX_ADMIN_LEVEL: 0 | 1 | 2 | 3 | 4 = 0
+
+  for (const header of csvLocationHeaders) {
+    const currentLevel = /^admin(\d+)Pcode$/i.exec(header)
+    if (currentLevel) {
+      MAX_ADMIN_LEVEL < Number(currentLevel[1])
+        ? (MAX_ADMIN_LEVEL = Number(currentLevel[1]) as any)
+        : MAX_ADMIN_LEVEL
+    }
+  }
+
+  return MAX_ADMIN_LEVEL
+}
+
+export const extractStatisticsMap = (statistics: LocationStatistic[]) => {
+  const statisticsMap: Map<string, LocationStatistic> = new Map()
+  for (const stat of statistics) {
+    statisticsMap.set(stat.id, stat)
+  }
+  return statisticsMap
+}
+
+export function getChildLocations(
+  parent: string,
+  locationMap: Map<string, string>
+) {
+  const children: string[] = []
+  for (const [location, parentLocation] of locationMap) {
+    if (parent === parentLocation) {
+      children.push(location)
+    }
+  }
+  return children
+}
+
+export function generateStatisticalExtensions(
+  sourceStatistic: LocationStatistic
+) {
+  const malePopulations = []
+  const femalePopulations = []
+  const totalPopulations = []
+  const birthRates = []
+
+  for (const year of sourceStatistic.years) {
+    femalePopulations.push({
+      [year.year]: year.female_population
+    })
+    malePopulations.push({
+      [year.year]: year.male_population
+    })
+    totalPopulations.push({
+      [year.year]: year.population
+    })
+    birthRates.push({
+      [year.year]: year.crude_birth_rate / 2
+    })
+  }
+
+  const extensions: fhir.Extension[] = [
+    {
+      url: 'http://opencrvs.org/specs/id/statistics-male-populations',
+      valueString: JSON.stringify(malePopulations)
+    },
+    {
+      url: 'http://opencrvs.org/specs/id/statistics-female-populations',
+      valueString: JSON.stringify(femalePopulations)
+    },
+    {
+      url: 'http://opencrvs.org/specs/id/statistics-total-populations',
+      valueString: JSON.stringify(totalPopulations)
+    },
+    {
+      url: 'http://opencrvs.org/specs/id/statistics-crude-birth-rates',
+      valueString: JSON.stringify(birthRates)
+    }
+  ]
+  return extensions
+}
+
+export function mergeLocationStatistics(
+  id: string,
+  name: string,
+  statistics: LocationStatistic[]
+): LocationStatistic {
+  const allUniqueYears = [
+    ...new Set(
+      statistics.flatMap((statistic) => statistic.years.map(({ year }) => year))
+    )
+  ]
+
+  return {
+    id,
+    name,
+    years: allUniqueYears.map((year) => {
+      const currentYears = statistics
+        .flatMap((statistic) => statistic.years)
+        .filter((statisticYear) => statisticYear.year === year)
+
+      return {
+        year,
+        population: round(sumBy(currentYears, 'population'), 3),
+        male_population: round(sumBy(currentYears, 'male_population'), 3),
+        female_population: round(sumBy(currentYears, 'female_population'), 3),
+        crude_birth_rate: round(meanBy(currentYears, 'crude_birth_rate'), 3)
+      }
+    })
+  }
+}
+
+export async function getLocationByIdentifier(
+  identifier: string
+): Promise<fhir.Location> {
+  const locationSearchResult = await getFromFhir(
+    `/Location/?identifier=${identifier}`
+  )
+  return locationSearchResult?.entry?.[0].resource
 }

@@ -142,5 +142,5 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 ts-node -r tsconfig-paths/register src/scripts/validate-source-files.ts -- $path_to_admin_structure_csv $path_to_crvs_offices_csv $path_to_health_facilities_csv $path_to_employees_csv $path_to_statistics_csv
 ts-node -r tsconfig-paths/register src/features/administrative/scripts/import-admin-structure.ts -- $path_to_admin_structure_csv
 ts-node -r tsconfig-paths/register src/features/facilities/scripts/import-offices-and-health-facilities.ts -- $path_to_crvs_offices_csv $path_to_health_facilities_csv
-ts-node -r tsconfig-paths/register src/features/administrative/scripts/import-statistics.ts -- $path_to_statistics_csv
+ts-node -r tsconfig-paths/register src/features/administrative/scripts/import-statistics.ts -- $path_to_statistics_csv $path_to_admin_structure_csv
 ts-node -r tsconfig-paths/register src/features/employees/scripts/import-employees.ts -- $path_to_employees_csv $password_for_users $environment $alpha3_country_code
