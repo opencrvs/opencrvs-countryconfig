@@ -101,6 +101,35 @@
 			"response": []
 		},
 		{
+			"name": "Get location(s) by name",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{gateway}}/location?name=Ibombo",
+					"host": [
+						"{{gateway}}"
+					],
+					"path": [
+						"location"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Ibombo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get a single CR office by statisticalID",
 			"request": {
 				"method": "GET",
