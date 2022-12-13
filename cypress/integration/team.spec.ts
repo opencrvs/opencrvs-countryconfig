@@ -18,9 +18,9 @@ context('Team Integration Test', () => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
-  const testUserFirstname = faker.name.firstName()
-  const testUserLastname = faker.name.lastName()
-  const fullName = `${testUserFirstname} ${testUserLastname}`
+  let testUserFirstname = faker.name.firstName()
+  let testUserLastname = faker.name.lastName()
+  let fullName = `${testUserFirstname} ${testUserLastname}`
 
   it('Tests Local admin can create a new user', () => {
     // LOG IN AS SYSTEM ADMIN
@@ -30,7 +30,7 @@ context('Team Integration Test', () => {
     cy.get('#add-user').click({ force: true })
     cy.get('#firstNamesEng').type(testUserFirstname)
     cy.get('#familyNameEng').type(testUserLastname)
-    cy.get('#phoneNumber').type('0752658545')
+    cy.get('#phoneNumber').type('0755658545')
     cy.selectOption('#role', 'Field Agent', 'Field Agent')
     cy.selectOption('#type', 'Healthcare Worker', 'Healthcare Worker')
     cy.get('#device').type('Xiamoi MI 8')
@@ -83,7 +83,8 @@ context('Team Integration Test', () => {
     cy.get('#navigation_team').click()
     cy.clickUserListItemByName(fullName, 'Edit details')
     cy.get('#btn_change_firstNamesEng').click()
-    cy.get('#firstNamesEng').type(' Sheikh')
+    cy.get('#firstNamesEng').clear().type('Sheikh')
+    testUserFirstname = 'Sheikh'
     cy.get('#confirm_form').click()
 
     //submit user
@@ -163,5 +164,25 @@ context('Team Integration Test', () => {
     cy.get('#comment').type(' a member now')
     cy.get('#reactivate-action').click()
     cy.get('#userAuditSuccessToast').should('be.visible')
+  })
+
+  it('Tests Local admin can send reset password request to a user', () => {
+    // LOG IN AS SYSTEM ADMIN
+    cy.login('sysAdmin')
+    cy.createPin()
+    cy.get('#navigation_team').click()
+    cy.clickUserListItemByName(`${testUserFirstname} ${testUserLastname}`, 'Reset Password')
+    cy.get('#reset-password-send').click()
+    cy.get('#reset_password_success').should('be.visible')
+  })
+
+  it('Tests Local admin can send username reminder to a user', () => {
+    // LOG IN AS SYSTEM ADMIN
+    cy.login('sysAdmin')
+    cy.createPin()
+    cy.get('#navigation_team').click()
+    cy.clickUserListItemByName(`${testUserFirstname} ${testUserLastname}`, 'Send username reminder')
+    cy.get('#username-reminder-send').click()
+    cy.get('#username_reminder_success').should('be.visible')
   })
 })
