@@ -1,0 +1,184 @@
+{
+  "data": [
+    {
+      "id": "b34ca543-2742-4433-952f-62a95ad9922e",
+      "name": "Central",
+      "alias": "بابل",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "STATE",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/0"
+    },
+    {
+      "id": "a0232739-ad61-454f-806d-1e9f4d122ea6",
+      "name": "Sulaka",
+      "alias": "صلاح الدين",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "STATE",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/0"
+    },
+    {
+      "id": "426f5511-a71e-4eb5-b4e9-f27b39d889c0",
+      "name": "Pualula",
+      "alias": "بغداد",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "STATE",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/0"
+    },
+    {
+      "id": "7ed7bdfe-b599-4904-992b-1f4804db43d9",
+      "name": "Chuminga",
+      "alias": "السليمانية",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "STATE",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/0"
+    },
+    {
+      "id": "13e3043f-2c85-4fe9-8354-003a3a1b4d6d",
+      "name": "Ibombo",
+      "alias": "الحلة",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/b34ca543-2742-4433-952f-62a95ad9922e"
+    },
+    {
+      "id": "de66b0f6-34d4-4f3a-8683-abedc6937ab5",
+      "name": "Ilanga",
+      "alias": "الدور",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/a0232739-ad61-454f-806d-1e9f4d122ea6"
+    },
+    {
+      "id": "10908bab-f5e0-4635-98b2-9a39dfd42565",
+      "name": "Embe",
+      "alias": "الكاظمية",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/426f5511-a71e-4eb5-b4e9-f27b39d889c0"
+    },
+    {
+      "id": "fd1936d6-1cb4-4e0a-baff-bb944164ce74",
+      "name": "Ama",
+      "alias": "جمجمال",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/7ed7bdfe-b599-4904-992b-1f4804db43d9"
+    },
+    {
+      "id": "c6b77cbb-5d0c-4055-89bf-8d234c54ed6d",
+      "name": "Isamba",
+      "alias": "سوق الشيوخ",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/b34ca543-2742-4433-952f-62a95ad9922e"
+    },
+    {
+      "id": "daf8c4c1-43a6-45cd-ab3c-f8f900827e43",
+      "name": "Irundu",
+      "alias": "الحويجة",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/a0232739-ad61-454f-806d-1e9f4d122ea6"
+    },
+    {
+      "id": "d7b95885-4b7f-4ccb-b291-44b53f3e055c",
+      "name": "Ienge",
+      "alias": "المجر الكبير",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/426f5511-a71e-4eb5-b4e9-f27b39d889c0"
+    },
+    {
+      "id": "1363c79e-858f-4b63-a597-3d1035a29923",
+      "name": "Nsali",
+      "alias": "النعمانية",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/7ed7bdfe-b599-4904-992b-1f4804db43d9"
+    },
+    {
+      "id": "b33898dc-b177-484b-8fe4-839a2f838c72",
+      "name": "Itambo",
+      "alias": "تكريت",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/b34ca543-2742-4433-952f-62a95ad9922e"
+    },
+    {
+      "id": "3f9f145a-c54d-4a73-8d9d-52b29fb071ea",
+      "name": "Zobwe",
+      "alias": "الفلوجة",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/a0232739-ad61-454f-806d-1e9f4d122ea6"
+    },
+    {
+      "id": "2b82fd82-8c56-4bea-8e34-30bbc726102a",
+      "name": "Funabuli",
+      "alias": "الخالص",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/426f5511-a71e-4eb5-b4e9-f27b39d889c0"
+    },
+    {
+      "id": "36229894-2c1d-4168-839d-de5ee69c8bb4",
+      "name": "Soka",
+      "alias": "تلعفر",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/7ed7bdfe-b599-4904-992b-1f4804db43d9"
+    },
+    {
+      "id": "30fbe03a-da7a-46f5-abcf-a4328f7ee97b",
+      "name": "Ezhi",
+      "alias": "المجر الكبير",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/b34ca543-2742-4433-952f-62a95ad9922e"
+    },
+    {
+      "id": "89fd25b8-8291-4dd4-a7b1-3f534ce89643",
+      "name": "Afue",
+      "alias": "الصويرة",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/a0232739-ad61-454f-806d-1e9f4d122ea6"
+    },
+    {
+      "id": "aaddb69e-b520-4edd-bb94-886895726cf3",
+      "name": "Pili",
+      "alias": "هيت",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/426f5511-a71e-4eb5-b4e9-f27b39d889c0"
+    },
+    {
+      "id": "a3e6edbd-6dc1-479c-bffe-54982e810c3a",
+      "name": "Chibiya",
+      "alias": "الفاو",
+      "physicalType": "Jurisdiction",
+      "jurisdictionType": "DISTRICT",
+      "type": "ADMIN_STRUCTURE",
+      "partOf": "Location/7ed7bdfe-b599-4904-992b-1f4804db43d9"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import { getFacilities, Location } from './location'
 
 import fetch from 'node-fetch'
 import { getToken, getTokenForSystemClient } from './auth'
-import { AUTH_API_HOST, GATEWAY_HOST } from './constants'
+import { AUTH_API_HOST, GATEWAY_GQL_HOST } from './constants'
 import { expand } from 'regex-to-strings'
 import { convertToMSISDN } from '@countryconfig/utils'
 import { FIELD_AGENT_TYPES } from '@countryconfig/features/employees/scripts/manage-users'
@@ -75,7 +75,7 @@ export async function createUser(
     ...overrides
   }
 
-  const createUserRes = await fetch(GATEWAY_HOST, {
+  const createUserRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export async function createUser(
   }
   const userToken = await getToken(data.createOrUpdateUser.username, 'test')
 
-  const res = await fetch(GATEWAY_HOST, {
+  const res = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ export async function createUser(
 }
 
 export async function getUsers(token: string, locationId: string) {
-  const getUsersRes = await fetch(GATEWAY_HOST, {
+  const getUsersRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
