@@ -143,6 +143,9 @@ export async function composeAndSavePractitioners(
     )
     const facilityResource = facility.entry[0].resource
     const primaryOfficeId = facilityResource.id
+
+    catchmentAreaIds.push(primaryOfficeId)
+
     locations.push({ reference: `Location/${primaryOfficeId}` })
     let partOf: fhir.Reference = facilityResource.partOf
     let parentLocation: fhir.Location = {}
