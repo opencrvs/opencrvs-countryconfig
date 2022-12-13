@@ -164,7 +164,7 @@ export function createBirthDeclarationData(
     identifier: [
       {
         id: faker.datatype
-          .number({ min: 100000000, max: 999999999 })
+          .number({ min: 1000000000, max: 9999999999 })
           .toString(),
         type: IdentityIdType.NationalId
       }
@@ -358,7 +358,7 @@ export async function createDeathDeclaration(
       identifier: [
         {
           id: faker.datatype
-            .number({ min: 100000000, max: 999999999 })
+            .number({ min: 1000000000, max: 9999999999 })
             .toString(),
           type: IdentityIdType.NationalId
         },
@@ -415,7 +415,7 @@ export async function createDeathDeclaration(
         identifier: [
           {
             id: faker.datatype
-              .number({ min: 100000000, max: 999999999 })
+              .number({ min: 1000000000, max: 9999999999 })
               .toString(),
             type: IdentityIdType.NationalId
           }

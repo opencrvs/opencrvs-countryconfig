@@ -69,7 +69,7 @@ function getToken(role: string) {
       }
     })
     .its('body')
-    .then(body => {
+    .then((body) => {
       cy.request({
         url: `${Cypress.env('AUTH_URL')}verifyCode`,
         method: 'POST',
@@ -79,14 +79,14 @@ function getToken(role: string) {
         }
       })
         .its('body')
-        .then(body => {
+        .then((body) => {
           return body.token
         })
     })
 }
 
 Cypress.Commands.add('login', (userType, options = {}) => {
-  getToken(userType).then(token => {
+  getToken(userType).then((token) => {
     cy.visit(`${Cypress.env('CLIENT_URL')}?token=${token}`)
   })
 
@@ -102,9 +102,7 @@ Cypress.Commands.add('selectOption', (selector, text, option) => {
     .contains(option)
     .click()
 
-  cy.get(`${selector} input`)
-    .focus()
-    .blur()
+  cy.get(`${selector} input`).focus().blur()
 })
 
 Cypress.Commands.add('logout', () => {
@@ -138,10 +136,10 @@ const hasOperationName = (req, operationName) => {
 }
 
 Cypress.Commands.add('submitDeclaration', (type: 'birth' | 'death') => {
-  cy.intercept('/graphql', req => {
+  cy.intercept('/graphql', (req) => {
     if (hasOperationName(req, 'createBirthRegistration')) {
       req.alias = 'createRegistration'
-      req.on('response', res => {
+      req.on('response', (res) => {
         const compositionId =
           res.body?.data?.createBirthRegistration?.compositionId
         expect(compositionId).to.be.a('string')
@@ -149,7 +147,7 @@ Cypress.Commands.add('submitDeclaration', (type: 'birth' | 'death') => {
     }
     if (hasOperationName(req, 'createDeathRegistration')) {
       req.alias = 'createRegistration'
-      req.on('response', res => {
+      req.on('response', (res) => {
         const compositionId =
           res.body?.data?.createDeathRegistration?.compositionId
         expect(compositionId).to.be.a('string')
@@ -186,6 +184,7 @@ Cypress.Commands.add('printDeclaration', () => {
   cy.get('#assignment').should('exist')
   cy.get('#assign').click()
   cy.get('#ListItemAction-0-Print', { timeout: 30000 }).click()
+  cy.wait(500)
   cy.get('#type_MOTHER').click()
   cy.get('#confirm_form').click()
   cy.get('#verifyPositive').click()
@@ -241,9 +240,7 @@ Cypress.Commands.add('verifyLandingPageVisible', () => {
 
 Cypress.Commands.add('downloadFirstDeclaration', () => {
   cy.get('#ListItemAction-0-icon').should('exist')
-  cy.get('#ListItemAction-0-icon')
-    .first()
-    .click()
+  cy.get('#ListItemAction-0-icon').first().click()
   cy.get('assignment').should('exist')
   cy.get('#assign').click()
   cy.log('Waiting for declaration to sync...')
@@ -306,7 +303,7 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.goToNextFormSection()
 
   // MOTHER DETAILS
-  cy.get('#iD').type('321456789')
+  cy.get('#iD').type('3214567891')
   cy.get('#firstNamesEng').type('Rokeya')
   cy.get('#familyNameEng').type(faker.name.lastName())
   cy.get('#motherBirthDate-dd').type('23')
@@ -319,7 +316,7 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.goToNextFormSection()
 
   // FATHER DETAILS
-  cy.get('#iD').type('331345378')
+  cy.get('#iD').type('3313453781')
 
   cy.get('#firstNamesEng').type('Joe')
   cy.get('#familyNameEng').type('Bieden')
@@ -346,8 +343,8 @@ function getLocationWithName(token, name) {
       }
     })
     .its('body')
-    .then(body => {
-      return Object.values(body.data).find(location => location.name === name)
+    .then((body) => {
+      return Object.values(body.data).find((location) => location.name === name)
     })
 }
 
@@ -361,17 +358,17 @@ function getRandomFacility(token, location) {
       }
     })
     .its('body')
-    .then(body => {
+    .then((body) => {
       return Object.values(body.data).find(
-        facility => facility.partOf === `Location/${location.id}`
+        (facility) => facility.partOf === `Location/${location.id}`
       )
     })
 }
 
 Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
-  return getToken(role).then(token => {
-    return getLocationWithName(token, 'Ibombo').then(location => {
-      return getRandomFacility(token, location).then(facility => {
+  return getToken(role).then((token) => {
+    return getLocationWithName(token, 'Ibombo').then((location) => {
+      return getRandomFacility(token, location).then((facility) => {
         const details = createBirthDeclarationData(
           'male',
           new Date('2018-05-18T13:18:26.240Z'),
@@ -389,9 +386,9 @@ Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
             }
           ]
         }
-        cy.intercept('/graphql', req => {
+        cy.intercept('/graphql', (req) => {
           if (hasOperationName(req, 'createBirthRegistration')) {
-            req.on('response', res => {
+            req.on('response', (res) => {
               const compositionId =
                 res.body?.data?.createBirthRegistration?.compositionId
               expect(compositionId).to.be.a('string')
@@ -414,7 +411,7 @@ Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
               'mutation createBirthRegistration($details: BirthRegistrationInput!) {\n  createBirthRegistration(details: $details) {\n    trackingId\n    compositionId\n    __typename\n  }\n}\n'
           }
         }).as('createRegistration')
-        cy.get('@createRegistration').should(response => {
+        cy.get('@createRegistration').should((response) => {
           expect((response as any).status).to.eq(200)
         })
       })
@@ -465,7 +462,7 @@ Cypress.Commands.add('enterMaximumInput', () => {
 
   // MOTHER DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#iD').type('193456777')
+  cy.get('#iD').type('1934567771')
 
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type(faker.name.lastName())
@@ -487,7 +484,7 @@ Cypress.Commands.add('enterMaximumInput', () => {
 
   // FATHER DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#iD').type('912345378')
+  cy.get('#iD').type('9123453781')
 
   cy.get('#firstNamesEng').type('Jack')
   cy.get('#familyNameEng').type('Maa')
@@ -524,9 +521,7 @@ Cypress.Commands.add('registerDeclarationWithMinimumInput', () => {
   // LANDING PAGE
   cy.downloadFirstDeclaration()
   cy.get('#ListItemAction-0-Review').should('exist')
-  cy.get('#ListItemAction-0-Review')
-    .first()
-    .click()
+  cy.get('#ListItemAction-0-Review').first().click()
 
   cy.registerDeclaration()
 })
@@ -563,7 +558,7 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', () => {
   cy.goToNextFormSection()
   // DECEASED DETAILS
 
-  cy.get('#iD').type('123456789')
+  cy.get('#iD').type('1234567891')
 
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
@@ -582,14 +577,14 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', () => {
   cy.get('#deathDate-yyyy').type('2022')
 
   // MANNER OF DEATH
-  cy.selectOption('#manner', '', 'Natural causes')
+  cy.selectOption('#mannerOfDeath', '', 'Natural causes')
   cy.get('#causeOfDeathEstablished').click()
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', "Deceased's usual place of residence")
 
   cy.goToNextFormSection()
   // Informant details
-  cy.get('#informantID').type('912345678')
+  cy.get('#informantID').type('9123456781')
   cy.get('#informantBirthDate-dd').type('16')
   cy.get('#informantBirthDate-mm').type('06')
   cy.get('#informantBirthDate-yyyy').type('1988')
@@ -651,7 +646,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   )
   cy.goToNextFormSection()
   // DECEASED DETAILS
-  cy.get('#iD').type('123456789')
+  cy.get('#iD').type('1234567891')
 
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.get('#firstNamesEng').type('Nafiz')
@@ -675,7 +670,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.get('#deathDate-yyyy').type('2019')
 
   // CAUSE OF DEATH DETAILS
-  cy.selectOption('#manner', '', 'Homicide')
+  cy.selectOption('#mannerOfDeath', '', 'Homicide')
   cy.get('#causeOfDeathEstablished').click()
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', 'Other')
@@ -691,7 +686,7 @@ Cypress.Commands.add('enterDeathMaximumInput', () => {
   cy.goToNextFormSection()
   // INFORMANT DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#informantID').type('912345678')
+  cy.get('#informantID').type('9123453781')
   cy.get('#informantBirthDate-dd').type('16')
   cy.get('#informantBirthDate-mm').type('06')
   cy.get('#informantBirthDate-yyyy').type('1988')
@@ -755,7 +750,7 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.goToNextFormSection()
   // INFORMANT'S DETAILS
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#iD').type('123456711')
+  cy.get('#iD').type('1234567111')
   cy.get('#motherBirthDate-dd').type('23')
   cy.get('#motherBirthDate-mm').type('10')
   cy.get('#motherBirthDate-yyyy').type('1975')
@@ -767,7 +762,7 @@ Cypress.Commands.add('someoneElseJourney', () => {
 
   cy.goToNextFormSection()
   //  PRIMARY CARE GIVER DETAILS
-  cy.get('#iD').type('121256789')
+  cy.get('#iD').type('1212567891')
   cy.get('#firstNamesEng').type('Karim')
   cy.get('#familyNameEng').type('Sheikh')
   cy.get('#fatherBirthDate-dd').type('10')
