@@ -13,6 +13,50 @@ type BirthDeclarationOptions = {
   firstName?: string
   familyName?: string
 }
+
+interface DeclarationOptions {
+  registrationStatuses?: string
+  dateOfEvent?: string
+  dateOfEventStart?: string
+  dateOfEventEnd?: string
+  dateOfRegistration?: string
+  dateOfRegistrationStart?: string
+  dateOfRegistrationEnd?: string
+  declarationLocationId?: string
+  declarationJurisdictionId?: string
+  eventCountry?: string
+  eventLocationId?: string
+  eventLocationLevel1?: string
+  eventLocationLevel2?: string
+  childFirstNames?: string
+  childLastName?: string
+  childDoB?: string
+  childDoBStart?: string
+  childDoBEnd?: string
+  childGender?: string
+  deceasedFirstNames?: string
+  deceasedFamilyName?: string
+  deceasedGender?: string
+  deceasedDoB?: string
+  deceasedDoBStart?: string
+  deceasedDoBEnd?: string
+  motherFirstNames?: string
+  motherFamilyName?: string
+  motherDoB?: string
+  motherDoBStart?: string
+  motherDoBEnd?: string
+  fatherFirstNames?: string
+  fatherFamilyName?: string
+  fatherDoB?: string
+  fatherDoBStart?: string
+  fatherDoBEnd?: string
+  informantFirstNames?: string
+  informantFamilyName?: string
+  informantDoB?: string
+  informantDoBStart?: string
+  informantDoBEnd?: string
+}
+
 declare namespace Cypress {
   interface Chainable {
     login: (userType: string) => void
@@ -33,8 +77,8 @@ declare namespace Cypress {
     registerDeclaration: () => void
     verifyLandingPageVisible: () => void
     downloadFirstDeclaration: () => void
-    enterMaximumInput: () => void
-    enterDeathMaximumInput: () => void
+    enterMaximumInput: (options?: DeclarationOptions) => void
+    enterDeathMaximumInput: (options?: DeclarationOptions) => void
     registerDeclarationWithMinimumInput: (
       firstName: string,
       lastName: string
@@ -48,9 +92,13 @@ declare namespace Cypress {
       firstName: string,
       lastName: string
     ) => void
-    declareDeathDeclarationWithMinimumInput: () => void
+    declareDeathDeclarationWithMinimumInput: (
+      options?: DeclarationOptions
+    ) => void
     registerDeathDeclarationWithMinimumInput: () => void
-    declareDeathDeclarationWithMaximumInput: () => void
+    declareDeathDeclarationWithMaximumInput: (
+      options?: DeclarationOptions
+    ) => void
     registerDeathDeclarationWithMaximumInput: () => void
     someoneElseJourney: () => void
   }
