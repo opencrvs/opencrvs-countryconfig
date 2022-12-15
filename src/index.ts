@@ -36,13 +36,16 @@ import {
 import { validateRegistrationHandler } from '@countryconfig/features/validate/handler'
 import * as decode from 'jwt-decode'
 import { join } from 'path'
-import { birthNotificationHandler } from '@countryconfig/features/dhis2/features/notification/birth/handler'
 import { logger } from '@countryconfig/logger'
 import {
   notificationHandler,
   notificationScheme
 } from './features/notification/handler'
+<<<<<<< HEAD
 import { mosipMediatorHandler } from './features/mediators/mosip-openhim-mediator/handler'
+=======
+import { mosipMediatorHandler } from './features/examples/mosip-openhim-mediator/handler'
+>>>>>>> develop
 
 export interface ITokenPayload {
   sub: string
@@ -274,16 +277,6 @@ export async function createServer() {
       tags: ['api'],
       description:
         'Returns population and crude birth rate statistics for each location'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/dhis2-notification/birth',
-    handler: birthNotificationHandler,
-    options: {
-      tags: ['api'],
-      description: 'Handles transformation and submission of birth notification'
     }
   })
 

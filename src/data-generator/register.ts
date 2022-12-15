@@ -17,7 +17,7 @@ import {
 } from './gateway'
 import { omit } from 'lodash'
 import { sub } from 'date-fns'
-import { GATEWAY_HOST } from './constants'
+import { GATEWAY_GQL_HOST } from './constants'
 import { MARK_AS_REGISTERED_QUERY, MARK_DEATH_AS_REGISTERED } from './queries'
 import { fetchDeathRegistration, fetchRegistration } from './declare'
 
@@ -164,7 +164,7 @@ export async function markAsRegistered(
   const { token, username } = user
 
   const requestStart = Date.now()
-  const reviewDeclarationRes = await fetch(GATEWAY_HOST, {
+  const reviewDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -211,7 +211,7 @@ export async function markDeathAsRegistered(
   const { token, username } = user
 
   const requestStart = Date.now()
-  const reviewDeclarationRes = await fetch(GATEWAY_HOST, {
+  const reviewDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

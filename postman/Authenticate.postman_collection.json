@@ -1,0 +1,36 @@
+{
+	"info": {
+		"_postman_id": "8953cfd0-8302-4bed-93cf-8695e00a5554",
+		"name": "Authenticate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request an access token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"client_id\": \"{{client_id}}\",\n    \"client_secret\": \"{{client_secret}}\"\n}"
+				},
+				"url": {
+					"raw": "{{auth}}/authenticateSystemClient",
+					"host": [
+						"{{auth}}"
+					],
+					"path": [
+						"authenticateSystemClient"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
