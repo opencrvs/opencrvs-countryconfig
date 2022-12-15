@@ -48,7 +48,7 @@ async function addStatisticalData() {
     for (let i = 0; i < rawLocations.length; i++) {
       const column = `admin${adminLevel}Pcode`
       const location = rawLocations[i][column]!
-      const name = rawLocations[i][`admin${adminLevel}Name_alias`]!
+      const name = rawLocations[i][`admin${adminLevel}Name_en`]!
 
       if (alreadyUpdatedLocations.includes(location)) {
         continue

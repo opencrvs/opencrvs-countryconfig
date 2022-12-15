@@ -11,7 +11,7 @@
  */
 import chalk from 'chalk'
 import { internal } from '@hapi/boom'
-import { composeAndSavePractitioners } from '@countryconfig/features/employees/scripts/utils'
+import { createOpenCRVSEmployees } from '@countryconfig/features/employees/scripts/utils'
 import { readCSVToJSON } from '@countryconfig/features/utils'
 
 export default async function importEmployees() {
@@ -23,7 +23,7 @@ export default async function importEmployees() {
   )
   const employees: any = await readCSVToJSON(process.argv[2])
   try {
-    await composeAndSavePractitioners(
+    await createOpenCRVSEmployees(
       employees,
       process.argv[3],
       process.argv[4].toLowerCase(),

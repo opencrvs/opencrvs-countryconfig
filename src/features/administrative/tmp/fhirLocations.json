@@ -5,22 +5,20 @@
       "identifier": [
         {
           "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_oEBf29y8JP8"
+          "value": "ADMIN_STRUCTURE_BD40"
         },
         {
           "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
+          "value": "STATE"
         }
       ],
-      "name": "Ibombo",
-      "alias": [
-        "الحلة"
-      ],
-      "description": "oEBf29y8JP8",
+      "name": "Khulna",
+      "alias": [],
+      "description": "BD40",
       "status": "active",
       "mode": "instance",
       "partOf": {
-        "reference": "Location/b34ca543-2742-4433-952f-62a95ad9922e"
+        "reference": "Location/0"
       },
       "type": {
         "coding": [
@@ -47,29 +45,27 @@
           }
         }
       ],
-      "id": "13e3043f-2c85-4fe9-8354-003a3a1b4d6d"
+      "id": "13c824f2-f80b-479f-be11-25a75078368c"
     },
     {
       "resourceType": "Location",
       "identifier": [
         {
           "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_ntoX1PkiWri"
+          "value": "ADMIN_STRUCTURE_BD30"
         },
         {
           "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
+          "value": "STATE"
         }
       ],
-      "name": "Ilanga",
-      "alias": [
-        "الدور"
-      ],
-      "description": "ntoX1PkiWri",
+      "name": "Dhaka",
+      "alias": [],
+      "description": "BD30",
       "status": "active",
       "mode": "instance",
       "partOf": {
-        "reference": "Location/a0232739-ad61-454f-806d-1e9f4d122ea6"
+        "reference": "Location/0"
       },
       "type": {
         "coding": [
@@ -96,29 +92,27 @@
           }
         }
       ],
-      "id": "de66b0f6-34d4-4f3a-8683-abedc6937ab5"
+      "id": "881f6fab-6a9b-40e9-b471-ba458891c9c3"
     },
     {
       "resourceType": "Location",
       "identifier": [
         {
           "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_QTtxiWj8ONP"
+          "value": "ADMIN_STRUCTURE_BD10"
         },
         {
           "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
+          "value": "STATE"
         }
       ],
-      "name": "Embe",
-      "alias": [
-        "الكاظمية"
-      ],
-      "description": "QTtxiWj8ONP",
+      "name": "Barisal",
+      "alias": [],
+      "description": "BD10",
       "status": "active",
       "mode": "instance",
       "partOf": {
-        "reference": "Location/426f5511-a71e-4eb5-b4e9-f27b39d889c0"
+        "reference": "Location/0"
       },
       "type": {
         "coding": [
@@ -145,29 +139,27 @@
           }
         }
       ],
-      "id": "10908bab-f5e0-4635-98b2-9a39dfd42565"
+      "id": "25832f63-b1a1-4384-a912-6773335127b2"
     },
     {
       "resourceType": "Location",
       "identifier": [
         {
           "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_ydyJb1RAy4U"
+          "value": "ADMIN_STRUCTURE_BD20"
         },
         {
           "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
+          "value": "STATE"
         }
       ],
-      "name": "Ama",
-      "alias": [
-        "جمجمال"
-      ],
-      "description": "ydyJb1RAy4U",
+      "name": "Chittagong",
+      "alias": [],
+      "description": "BD20",
       "status": "active",
       "mode": "instance",
       "partOf": {
-        "reference": "Location/7ed7bdfe-b599-4904-992b-1f4804db43d9"
+        "reference": "Location/0"
       },
       "type": {
         "coding": [
@@ -194,29 +186,27 @@
           }
         }
       ],
-      "id": "fd1936d6-1cb4-4e0a-baff-bb944164ce74"
+      "id": "d0cfc25a-9170-4726-b8cd-9399b7048396"
     },
     {
       "resourceType": "Location",
       "identifier": [
         {
           "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_HPGiE9Jjh2r"
+          "value": "ADMIN_STRUCTURE_BD55"
         },
         {
           "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
+          "value": "STATE"
         }
       ],
-      "name": "Isamba",
-      "alias": [
-        "سوق الشيوخ"
-      ],
-      "description": "HPGiE9Jjh2r",
+      "name": "Rangpur",
+      "alias": [],
+      "description": "BD55",
       "status": "active",
       "mode": "instance",
       "partOf": {
-        "reference": "Location/b34ca543-2742-4433-952f-62a95ad9922e"
+        "reference": "Location/0"
       },
       "type": {
         "coding": [
@@ -243,29 +233,27 @@
           }
         }
       ],
-      "id": "c6b77cbb-5d0c-4055-89bf-8d234c54ed6d"
+      "id": "bf6d7b09-1510-400c-91d6-4857facb8aba"
     },
     {
       "resourceType": "Location",
       "identifier": [
         {
           "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_SvFNQpplnch"
+          "value": "ADMIN_STRUCTURE_BD45"
         },
         {
           "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
+          "value": "STATE"
         }
       ],
-      "name": "Irundu",
-      "alias": [
-        "الحويجة"
-      ],
-      "description": "SvFNQpplnch",
+      "name": "Mymensingh",
+      "alias": [],
+      "description": "BD45",
       "status": "active",
       "mode": "instance",
       "partOf": {
-        "reference": "Location/a0232739-ad61-454f-806d-1e9f4d122ea6"
+        "reference": "Location/0"
       },
       "type": {
         "coding": [
@@ -292,29 +280,27 @@
           }
         }
       ],
-      "id": "daf8c4c1-43a6-45cd-ab3c-f8f900827e43"
+      "id": "ff1c3c06-ddd3-44d2-b631-753949a2026f"
     },
     {
       "resourceType": "Location",
       "identifier": [
         {
           "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_Oapn6R4rt3D"
+          "value": "ADMIN_STRUCTURE_BD60"
         },
         {
           "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
+          "value": "STATE"
         }
       ],
-      "name": "Ienge",
-      "alias": [
-        "المجر الكبير"
-      ],
-      "description": "Oapn6R4rt3D",
+      "name": "Sylhet",
+      "alias": [],
+      "description": "BD60",
       "status": "active",
       "mode": "instance",
       "partOf": {
-        "reference": "Location/426f5511-a71e-4eb5-b4e9-f27b39d889c0"
+        "reference": "Location/0"
       },
       "type": {
         "coding": [
@@ -341,29 +327,27 @@
           }
         }
       ],
-      "id": "d7b95885-4b7f-4ccb-b291-44b53f3e055c"
+      "id": "a9decf0d-f50d-4ca1-90e6-cc76d30a74f4"
     },
     {
       "resourceType": "Location",
       "identifier": [
         {
           "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_nO68NTtcdw2"
+          "value": "ADMIN_STRUCTURE_BD50"
         },
         {
           "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
+          "value": "STATE"
         }
       ],
-      "name": "Nsali",
-      "alias": [
-        "النعمانية"
-      ],
-      "description": "nO68NTtcdw2",
+      "name": "Rajshahi",
+      "alias": [],
+      "description": "BD50",
       "status": "active",
       "mode": "instance",
       "partOf": {
-        "reference": "Location/7ed7bdfe-b599-4904-992b-1f4804db43d9"
+        "reference": "Location/0"
       },
       "type": {
         "coding": [
@@ -390,399 +374,7 @@
           }
         }
       ],
-      "id": "1363c79e-858f-4b63-a597-3d1035a29923"
-    },
-    {
-      "resourceType": "Location",
-      "identifier": [
-        {
-          "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_BxrIbNW7f3K"
-        },
-        {
-          "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
-        }
-      ],
-      "name": "Itambo",
-      "alias": [
-        "تكريت"
-      ],
-      "description": "BxrIbNW7f3K",
-      "status": "active",
-      "mode": "instance",
-      "partOf": {
-        "reference": "Location/b34ca543-2742-4433-952f-62a95ad9922e"
-      },
-      "type": {
-        "coding": [
-          {
-            "system": "http://opencrvs.org/specs/location-type",
-            "code": "ADMIN_STRUCTURE"
-          }
-        ]
-      },
-      "physicalType": {
-        "coding": [
-          {
-            "code": "jdn",
-            "display": "Jurisdiction"
-          }
-        ]
-      },
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/location-boundary-geojson",
-          "valueAttachment": {
-            "contentType": "application/geo+json",
-            "data": "<base64>"
-          }
-        }
-      ],
-      "id": "b33898dc-b177-484b-8fe4-839a2f838c72"
-    },
-    {
-      "resourceType": "Location",
-      "identifier": [
-        {
-          "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_NLjvK1QsrN3"
-        },
-        {
-          "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
-        }
-      ],
-      "name": "Zobwe",
-      "alias": [
-        "الفلوجة"
-      ],
-      "description": "NLjvK1QsrN3",
-      "status": "active",
-      "mode": "instance",
-      "partOf": {
-        "reference": "Location/a0232739-ad61-454f-806d-1e9f4d122ea6"
-      },
-      "type": {
-        "coding": [
-          {
-            "system": "http://opencrvs.org/specs/location-type",
-            "code": "ADMIN_STRUCTURE"
-          }
-        ]
-      },
-      "physicalType": {
-        "coding": [
-          {
-            "code": "jdn",
-            "display": "Jurisdiction"
-          }
-        ]
-      },
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/location-boundary-geojson",
-          "valueAttachment": {
-            "contentType": "application/geo+json",
-            "data": "<base64>"
-          }
-        }
-      ],
-      "id": "3f9f145a-c54d-4a73-8d9d-52b29fb071ea"
-    },
-    {
-      "resourceType": "Location",
-      "identifier": [
-        {
-          "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_idR0pJWLqcR"
-        },
-        {
-          "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
-        }
-      ],
-      "name": "Funabuli",
-      "alias": [
-        "الخالص"
-      ],
-      "description": "idR0pJWLqcR",
-      "status": "active",
-      "mode": "instance",
-      "partOf": {
-        "reference": "Location/426f5511-a71e-4eb5-b4e9-f27b39d889c0"
-      },
-      "type": {
-        "coding": [
-          {
-            "system": "http://opencrvs.org/specs/location-type",
-            "code": "ADMIN_STRUCTURE"
-          }
-        ]
-      },
-      "physicalType": {
-        "coding": [
-          {
-            "code": "jdn",
-            "display": "Jurisdiction"
-          }
-        ]
-      },
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/location-boundary-geojson",
-          "valueAttachment": {
-            "contentType": "application/geo+json",
-            "data": "<base64>"
-          }
-        }
-      ],
-      "id": "2b82fd82-8c56-4bea-8e34-30bbc726102a"
-    },
-    {
-      "resourceType": "Location",
-      "identifier": [
-        {
-          "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_FuvOOwvBw0p"
-        },
-        {
-          "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
-        }
-      ],
-      "name": "Soka",
-      "alias": [
-        "تلعفر"
-      ],
-      "description": "FuvOOwvBw0p",
-      "status": "active",
-      "mode": "instance",
-      "partOf": {
-        "reference": "Location/7ed7bdfe-b599-4904-992b-1f4804db43d9"
-      },
-      "type": {
-        "coding": [
-          {
-            "system": "http://opencrvs.org/specs/location-type",
-            "code": "ADMIN_STRUCTURE"
-          }
-        ]
-      },
-      "physicalType": {
-        "coding": [
-          {
-            "code": "jdn",
-            "display": "Jurisdiction"
-          }
-        ]
-      },
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/location-boundary-geojson",
-          "valueAttachment": {
-            "contentType": "application/geo+json",
-            "data": "<base64>"
-          }
-        }
-      ],
-      "id": "36229894-2c1d-4168-839d-de5ee69c8bb4"
-    },
-    {
-      "resourceType": "Location",
-      "identifier": [
-        {
-          "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_SQT8xjbvWwf"
-        },
-        {
-          "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
-        }
-      ],
-      "name": "Ezhi",
-      "alias": [
-        "المجر الكبير"
-      ],
-      "description": "SQT8xjbvWwf",
-      "status": "active",
-      "mode": "instance",
-      "partOf": {
-        "reference": "Location/b34ca543-2742-4433-952f-62a95ad9922e"
-      },
-      "type": {
-        "coding": [
-          {
-            "system": "http://opencrvs.org/specs/location-type",
-            "code": "ADMIN_STRUCTURE"
-          }
-        ]
-      },
-      "physicalType": {
-        "coding": [
-          {
-            "code": "jdn",
-            "display": "Jurisdiction"
-          }
-        ]
-      },
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/location-boundary-geojson",
-          "valueAttachment": {
-            "contentType": "application/geo+json",
-            "data": "<base64>"
-          }
-        }
-      ],
-      "id": "30fbe03a-da7a-46f5-abcf-a4328f7ee97b"
-    },
-    {
-      "resourceType": "Location",
-      "identifier": [
-        {
-          "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_hywxVKv48Xp"
-        },
-        {
-          "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
-        }
-      ],
-      "name": "Afue",
-      "alias": [
-        "الصويرة"
-      ],
-      "description": "hywxVKv48Xp",
-      "status": "active",
-      "mode": "instance",
-      "partOf": {
-        "reference": "Location/a0232739-ad61-454f-806d-1e9f4d122ea6"
-      },
-      "type": {
-        "coding": [
-          {
-            "system": "http://opencrvs.org/specs/location-type",
-            "code": "ADMIN_STRUCTURE"
-          }
-        ]
-      },
-      "physicalType": {
-        "coding": [
-          {
-            "code": "jdn",
-            "display": "Jurisdiction"
-          }
-        ]
-      },
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/location-boundary-geojson",
-          "valueAttachment": {
-            "contentType": "application/geo+json",
-            "data": "<base64>"
-          }
-        }
-      ],
-      "id": "89fd25b8-8291-4dd4-a7b1-3f534ce89643"
-    },
-    {
-      "resourceType": "Location",
-      "identifier": [
-        {
-          "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_jCJxK8sFH40"
-        },
-        {
-          "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
-        }
-      ],
-      "name": "Pili",
-      "alias": [
-        "هيت"
-      ],
-      "description": "jCJxK8sFH40",
-      "status": "active",
-      "mode": "instance",
-      "partOf": {
-        "reference": "Location/426f5511-a71e-4eb5-b4e9-f27b39d889c0"
-      },
-      "type": {
-        "coding": [
-          {
-            "system": "http://opencrvs.org/specs/location-type",
-            "code": "ADMIN_STRUCTURE"
-          }
-        ]
-      },
-      "physicalType": {
-        "coding": [
-          {
-            "code": "jdn",
-            "display": "Jurisdiction"
-          }
-        ]
-      },
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/location-boundary-geojson",
-          "valueAttachment": {
-            "contentType": "application/geo+json",
-            "data": "<base64>"
-          }
-        }
-      ],
-      "id": "aaddb69e-b520-4edd-bb94-886895726cf3"
-    },
-    {
-      "resourceType": "Location",
-      "identifier": [
-        {
-          "system": "http://opencrvs.org/specs/id/statistical-code",
-          "value": "ADMIN_STRUCTURE_R22tRIhdm5Y"
-        },
-        {
-          "system": "http://opencrvs.org/specs/id/jurisdiction-type",
-          "value": "DISTRICT"
-        }
-      ],
-      "name": "Chibiya",
-      "alias": [
-        "الفاو"
-      ],
-      "description": "R22tRIhdm5Y",
-      "status": "active",
-      "mode": "instance",
-      "partOf": {
-        "reference": "Location/7ed7bdfe-b599-4904-992b-1f4804db43d9"
-      },
-      "type": {
-        "coding": [
-          {
-            "system": "http://opencrvs.org/specs/location-type",
-            "code": "ADMIN_STRUCTURE"
-          }
-        ]
-      },
-      "physicalType": {
-        "coding": [
-          {
-            "code": "jdn",
-            "display": "Jurisdiction"
-          }
-        ]
-      },
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/location-boundary-geojson",
-          "valueAttachment": {
-            "contentType": "application/geo+json",
-            "data": "<base64>"
-          }
-        }
-      ],
-      "id": "a3e6edbd-6dc1-479c-bffe-54982e810c3a"
+      "id": "c997bfca-e7d8-491e-859c-ccc884855cb4"
     }
   ]
 }

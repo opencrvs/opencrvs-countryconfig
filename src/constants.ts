@@ -44,15 +44,6 @@ export const LANGUAGES_SOURCE = path.join(
   process.cwd(),
   'src/features/languages/content/'
 )
-export const ADMIN_STRUCTURE_SOURCE = path.join(
-  process.cwd(),
-  'src/features/administrative/'
-)
-
-export const FACILITIES_SOURCE = path.join(
-  process.cwd(),
-  'src/features/facilities/'
-)
 
 export const EMPLOYEES_SOURCE = path.join(
   process.cwd(),

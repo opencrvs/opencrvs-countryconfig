@@ -9,27 +9,12 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import * as fs from 'fs'
-import {
-  FACILITIES_SOURCE,
-  ADMIN_STRUCTURE_SOURCE
-} from '@countryconfig/constants'
 import chalk from 'chalk'
 import { internal } from '@hapi/boom'
-import {
-  composeAndSaveFacilities,
-  generateLocationResource
-} from '@countryconfig/features/facilities/scripts/utils'
-import { ILocation, readCSVToJSON } from '@countryconfig/features/utils'
-
-const locations = JSON.parse(
-  fs.readFileSync(`${ADMIN_STRUCTURE_SOURCE}tmp/fhirLocations.json`).toString()
-)
+import { composeAndSaveFacilities } from '@countryconfig/features/facilities/scripts/utils'
+import { readCSVToJSON } from '@countryconfig/features/utils'
 
 export default async function importFacilities() {
-  let crvsOfficeLocations: fhir.Location[]
-  let healthFacilityLocations: fhir.Location[]
-
   const crvsOffices: any = await readCSVToJSON(process.argv[2])
   const healthFacilities: any = await readCSVToJSON(process.argv[3])
 
@@ -40,26 +25,8 @@ export default async function importFacilities() {
         '/////////////////////////// MAPPING CR OFFICES TO LOCATIONS AND SAVING TO FHIR ///////////////////////////'
       )}`
     )
-    crvsOfficeLocations = await composeAndSaveFacilities(
-      crvsOffices,
-      locations.previousLevelLocations
-    )
-    healthFacilityLocations = await composeAndSaveFacilities(
-      healthFacilities,
-      locations.previousLevelLocations
-    )
-
-    const fhirLocations: fhir.Location[] = []
-    fhirLocations.push(...crvsOfficeLocations)
-    fhirLocations.push(...healthFacilityLocations)
-    const data: ILocation[] = []
-    for (const location of fhirLocations) {
-      data.push(generateLocationResource(location))
-    }
-    fs.writeFileSync(
-      `${FACILITIES_SOURCE}tmp/locations.json`,
-      JSON.stringify({ data }, null, 2)
-    )
+    await composeAndSaveFacilities(crvsOffices)
+    await composeAndSaveFacilities(healthFacilities)
   } catch (err) {
     return internal(err)
   }

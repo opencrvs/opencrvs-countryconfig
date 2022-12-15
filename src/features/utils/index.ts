@@ -285,13 +285,22 @@ export async function updateResourceInHearth(resource: fhir.ResourceBase) {
   return res.text()
 }
 
-export function getLocationIDByDescription(
-  locations: fhir.Location[],
-  description: string
-) {
-  const location = locations.find((obj) => {
-    return obj.description === description
-  }) as fhir.Location
+export async function getLocationIDByDescription(description: string) {
+  const res = await fetch(
+    `${FHIR_URL}/Location?identifier=ADMIN_STRUCTURE_${description}`
+  )
+  const locationBundle: fhir.Bundle = await res.json()
+
+  if (
+    !locationBundle ||
+    !locationBundle.entry ||
+    !locationBundle.entry[0] ||
+    !locationBundle.entry[0].resource
+  ) {
+    throw new Error('Received invalid FHIR location bundle')
+  }
+
+  const location = locationBundle.entry[0].resource as fhir.Location
   return location.id as string
 }
 

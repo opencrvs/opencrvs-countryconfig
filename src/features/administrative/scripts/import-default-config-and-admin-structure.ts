@@ -10,20 +10,16 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import {
-  fetchAndComposeLocations,
-  getLocationPartOfIds,
-  generateLocationResource
+  composeAndSaveFhirLocation,
+  getLocationPartOfIds
 } from '@countryconfig/features/administrative/scripts/utils'
 import chalk from 'chalk'
-import * as fs from 'fs'
-import { ADMIN_STRUCTURE_SOURCE } from '@countryconfig/constants'
 import { ICSVLocation, readCSVToJSON } from '@countryconfig/features/utils'
 import populateDefaultConfig from '@countryconfig/features/config/scripts/populate-default-config'
-import { ILocation } from '@countryconfig/features/utils'
+import { cloneDeep } from 'lodash'
 
 export default async function importAdminStructure() {
   let ADMIN_LEVELS: number = 0
-  let previousLevelLocations: fhir.Location[]
   const fhirLocations: fhir.Location[] = []
   const locationLevelName = [
     'COUNTRY',
@@ -134,45 +130,30 @@ export default async function importAdminStructure() {
       )
     }
 
-    previousLevelLocations = await fetchAndComposeLocations(
+    let comparingLocations: fhir.Location[] = await composeAndSaveFhirLocation(
       filterLocationLevel(csvLocations, 1),
       'STATE'
     )
-    fhirLocations.push(...previousLevelLocations)
-
     for (
       let locationLevel = 2;
       locationLevel <= ADMIN_LEVELS;
       locationLevel++
     ) {
-      previousLevelLocations = await fetchAndComposeLocations(
+      const nextLevelLocations = await composeAndSaveFhirLocation(
         getLocationPartOfIds(
           filterLocationLevel(csvLocations, locationLevel),
-          previousLevelLocations
+          comparingLocations
         ),
         locationLevelName[locationLevel]
       )
-      fhirLocations.push(...previousLevelLocations)
+      fhirLocations.push(...nextLevelLocations)
+      comparingLocations = cloneDeep(nextLevelLocations)
     }
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log(err)
     process.exit(1)
   }
-
-  fs.writeFileSync(
-    `${ADMIN_STRUCTURE_SOURCE}tmp/fhirLocations.json`,
-    JSON.stringify({ previousLevelLocations }, null, 2)
-  )
-
-  const data: ILocation[] = []
-  for (const location of fhirLocations) {
-    data.push(generateLocationResource(location))
-  }
-  fs.writeFileSync(
-    `${ADMIN_STRUCTURE_SOURCE}tmp/locations.json`,
-    JSON.stringify({ data }, null, 2)
-  )
 
   populateDefaultConfig(ADMIN_LEVELS)
 

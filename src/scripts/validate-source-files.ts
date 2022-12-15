@@ -1,21 +1,44 @@
-import { range, difference } from 'lodash'
+import { range /*, difference */ } from 'lodash'
 import { z } from 'zod'
 import chalk from 'chalk'
 import { basename } from 'path'
 import { readCSVToJSON } from '@countryconfig/features/utils'
 import {
   validateSensicalityOfLocationTree,
-  zodValidateDuplicates
+  zodValidateDuplicates,
+  checkFacilityExistsInAnyLocation
 } from './humdata-validation'
+
+export interface IHumdataLocation {
+  admin0Pcode: string
+  admin0Name_en: string
+  admin0Name_alias?: string
+
+  admin1Pcode?: string
+  admin1Name_en?: string
+  admin1Name_alias?: string
+
+  admin2Pcode?: string
+  admin2Name_en?: string
+  admin2Name_alias?: string
+
+  admin3Pcode?: string
+  admin3Name_en?: string
+  admin3Name_alias?: string
+
+  admin4Pcode?: string
+  admin4Name_en?: string
+  admin4Name_alias?: string
+}
 
 export const Location = z.object({
   admin0Pcode: z.string(),
   admin0Name_en: z.string(),
-  admin0Name_alias: z.string(),
+  admin0Name_alias: z.string().optional(),
 
   admin1Pcode: z.string(),
   admin1Name_en: z.string(),
-  admin1Name_alias: z.string(),
+  admin1Name_alias: z.string().optional(),
 
   admin2Pcode: z.string().optional(),
   admin2Name_en: z.string().optional(),
@@ -37,7 +60,7 @@ const Locations = (maxAdminLevel: number) =>
     .superRefine(validateSensicalityOfLocationTree(maxAdminLevel))
 
 const Facility = z.object({
-  adminPcode: z.string(),
+  id: z.string(),
   name: z.string(),
   partOf: z
     .string()
@@ -48,7 +71,6 @@ const Facility = z.object({
 })
 
 const HealthFacility = Facility.extend({
-  physicalType: z.undefined(),
   code: z.enum(['HEALTH_FACILITY'], {
     required_error:
       'Field "code" missing, make sure all rows define all required fields'
@@ -56,30 +78,18 @@ const HealthFacility = Facility.extend({
 })
 
 const HealthFacilities = HealthFacility.array().superRefine(
-  zodValidateDuplicates('adminPcode')
+  zodValidateDuplicates('id')
 )
 
 const CRVSFacility = HealthFacility.extend({
   code: z.enum(['CRVS_OFFICE'], {
     required_error:
       'Field "code" missing, make sure all rows define all required fields'
-  }),
-  district: z.string({
-    required_error:
-      "CRVS Facility's district name is missing. This will be shown in the facility's address details"
-  }),
-  state: z.string({
-    required_error:
-      "CRVS Facility's state name is missing. This will be shown in the facility's address details"
-  }),
-  physicalType: z.enum(['Building'], {
-    required_error:
-      'Field "physicalType" missing, make sure all rows define all required fields'
   })
 })
 
 const CRVSFacilities = CRVSFacility.array().superRefine(
-  zodValidateDuplicates('adminPcode')
+  zodValidateDuplicates('id')
 )
 
 const Employee = z.object({
@@ -252,7 +262,7 @@ async function main() {
     }
   }
 
-  const MAX_ADMIN_LEVEL_LOCATIONS = locations.map(
+  /*const MAX_ADMIN_LEVEL_LOCATIONS = locations.map(
     (location) => location[`admin${MAX_ADMIN_LEVEL}Pcode`]!
   )
   const hasStatisticAllMaxAdminLevelLocations =
@@ -269,7 +279,7 @@ async function main() {
       )
     )
     process.exit(1)
-  }
+  }*/
   log(chalk.green('File is valid'), '✅', '\n')
 
   log(chalk.yellow('Validating health facilities file.'))
@@ -277,10 +287,10 @@ async function main() {
   const facilities = HealthFacilities.parse(rawFacilities)
 
   for (const facility of facilities) {
-    const location = locations.find(
-      (locationData) =>
-        facility.partOf ===
-        `Location/${locationData[`admin${MAX_ADMIN_LEVEL}Pcode`]}`
+    const location = checkFacilityExistsInAnyLocation(
+      MAX_ADMIN_LEVEL,
+      locations,
+      facility
     )
     if (!location) {
       error(
@@ -300,12 +310,12 @@ async function main() {
   const crvsFacilities = CRVSFacilities.parse(rawCRVSFacilities)
 
   for (const facility of crvsFacilities) {
-    const partOf = locations.find(
-      (locationData) =>
-        facility.partOf ===
-        `Location/${locationData[`admin${MAX_ADMIN_LEVEL}Pcode`]}`
+    const location = checkFacilityExistsInAnyLocation(
+      MAX_ADMIN_LEVEL,
+      locations,
+      facility
     )
-    if (!partOf) {
+    if (!location) {
       error(
         chalk.blue('CRVS OFFICES ERROR! '),
         chalk.yellow(`Line ${crvsFacilities.indexOf(facility) + 2}`),
@@ -324,7 +334,7 @@ async function main() {
 
   for (const employee of employees) {
     const facility = crvsFacilities.find(
-      (facility) => employee.facilityId === `CRVS_OFFICE_${facility.adminPcode}`
+      (facility) => employee.facilityId === `CRVS_OFFICE_${facility.id}`
     )
     if (!facility) {
       error(

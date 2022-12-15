@@ -16,8 +16,8 @@ import {
 } from '@countryconfig/features/utils'
 import { ORG_URL } from '@countryconfig/constants'
 
-interface IFacility {
-  adminPcode: string
+export interface IFacility {
+  id: string
   name: string
   partOf: string
   code: string
@@ -32,7 +32,7 @@ const composeFhirLocation = (
     identifier: [
       {
         system: `${ORG_URL}/specs/id/internal-id`,
-        value: `${location.code}_${String(location.adminPcode)}`
+        value: `${location.code}_${String(location.id)}`
       }
     ],
     name: location.name, // English name
@@ -85,15 +85,15 @@ function getPartOfIdForFacility(facility: IFacility): string {
 }
 
 export async function composeAndSaveFacilities(
-  facilities: IFacility[],
-  parentLocations: fhir.Location[]
+  facilities: IFacility[]
 ): Promise<fhir.Location[]> {
   const locations: fhir.Location[] = []
   for (const facility of facilities) {
-    const parentLocationID = getLocationIDByDescription(
-      parentLocations,
+    console.log('facility: ', JSON.stringify(facility))
+    const parentLocationID = await getLocationIDByDescription(
       getPartOfIdForFacility(facility)
     )
+    console.log('parentLocationID: ', parentLocationID)
     const newLocation: fhir.Location = composeFhirLocation(
       facility,
       `Location/${parentLocationID}`

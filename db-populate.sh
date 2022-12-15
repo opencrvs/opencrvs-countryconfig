@@ -8,6 +8,7 @@
 #
 # Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
 # graphic logo are (registered/a) trademark(s) of Plan International.
+set -e
 
 print_usage_and_exit () {
     echo 'Usage: ./db-populate.sh --password_for_users=XXX --environment=development|production --alpha3_country_code=XXX --path_to_admin_structure_csv=XXX --path_to_crvs_offices_csv=XXX --path_to_health_facilities_csv=XXX --path_to_statistics_csv=XXX --path_to_employees_csv=XXX'
@@ -123,24 +124,24 @@ fi
 
 echo "\$environment: '$environment' \$password_for_users: '$password_for_users' \$alpha3_country_code: '$alpha3_country_code'"
 
-
 # Clear existing application data
 
 HOST=mongo1
 NETWORK=opencrvs_default
 
 docker run --rm --network=$NETWORK mongo:4.4 mongo hearth-dev --host $HOST --eval "db.dropDatabase()"
-
 docker run --rm --network=$NETWORK mongo:4.4 mongo user-mgnt --host $HOST --eval "db.dropDatabase()"
-
+docker run --rm --network=$NETWORK mongo:4.4 mongo application-config --host $HOST --eval "db.dropDatabase()"
+docker run --rm --network=$NETWORK mongo:4.4 mongo metrics --host $HOST --eval "db.dropDatabase()"
+docker run --rm --network=$NETWORK mongo:4.4 mongo reports --host $HOST --eval "db.dropDatabase()"
+docker run --rm --network=$NETWORK mongo:4.4 mongo config --host $HOST --eval "db.dropDatabase()"
+docker run --rm --network=$NETWORK mongo:4.4 mongo webhooks --host $HOST --eval "db.dropDatabase()"
 docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE 'http://elasticsearch:9200/*' -v
-
 docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
-
 
 # Populate new application data
 ts-node -r tsconfig-paths/register src/scripts/validate-source-files.ts -- $path_to_admin_structure_csv $path_to_crvs_offices_csv $path_to_health_facilities_csv $path_to_employees_csv $path_to_statistics_csv
-ts-node -r tsconfig-paths/register src/features/administrative/scripts/import-admin-structure.ts -- $path_to_admin_structure_csv
+ts-node -r tsconfig-paths/register src/features/administrative/scripts/import-default-config-and-admin-structure.ts -- $path_to_admin_structure_csv
 ts-node -r tsconfig-paths/register src/features/facilities/scripts/import-offices-and-health-facilities.ts -- $path_to_crvs_offices_csv $path_to_health_facilities_csv
 ts-node -r tsconfig-paths/register src/features/administrative/scripts/import-statistics.ts -- $path_to_statistics_csv $path_to_admin_structure_csv
 ts-node -r tsconfig-paths/register src/features/employees/scripts/import-employees.ts -- $path_to_employees_csv $password_for_users $environment $alpha3_country_code

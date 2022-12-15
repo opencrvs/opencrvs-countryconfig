@@ -1,6 +1,7 @@
 import { extractLocationTree } from '@countryconfig/features/administrative/scripts/utils'
+import { IFacility } from '@countryconfig/features/facilities/scripts/utils'
 import { z } from 'zod'
-import { Location } from './validate-source-files'
+import { IHumdataLocation, Location } from './validate-source-files'
 
 export const zodValidateDuplicates =
   (column: string) =>
@@ -33,3 +34,22 @@ export const validateSensicalityOfLocationTree =
         path: [row, column]
       })
     })
+
+export function checkFacilityExistsInAnyLocation(
+  maxAdminLevel: number,
+  locations: IHumdataLocation[],
+  facility: IFacility
+) {
+  let location: IHumdataLocation | undefined
+  for (let adminLevel = maxAdminLevel; adminLevel >= 0; adminLevel--) {
+    location = locations.find(
+      (locationData) =>
+        facility.partOf ===
+        `Location/${locationData[`admin${adminLevel}Pcode`]}`
+    )
+    if (location) {
+      break
+    }
+  }
+  return location
+}

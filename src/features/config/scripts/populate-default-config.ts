@@ -71,10 +71,7 @@ export default async function populateDefaultConfig(ADMIN_LEVELS: number) {
           DELAYED: 0
         }
       },
-      FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT', // Because administrative division levels are not editable, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Field agents only audited at DISTRICT level
-      DECLARATION_AUDIT_LOCATIONS: 'DISTRICT', // Because administrative division levels are not editable, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Declarations only audited at DISTRICT level
-      HIDE_EVENT_REGISTER_INFORMATION: false,
-      EXTERNAL_VALIDATION_WORKQUEUE: false, // API related, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Declarations only audited at DISTRICT level
+      EXTERNAL_VALIDATION_WORKQUEUE: false, // For piloting OpenCRVS alongside an existing CR system.  Contact team@opencrvs.org if you wish to use this.  If set to true, OpenCRVS will interrupt all registrations with an API call to an external system, then send this registration to a dedicated queue awaiting asynchronous validation
       PHONE_NUMBER_PATTERN: '^0(7|9)[0-9]{8}$',
       NID_NUMBER_PATTERN: '^[0-9]{10}$'
     })

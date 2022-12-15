@@ -11,7 +11,6 @@
  */
 import {
   sendToFhir,
-  ILocation,
   ICSVLocation,
   titleCase,
   getFromFhir
@@ -42,7 +41,7 @@ const composeFhirLocation = (
       }
     ],
     name: titleCase(location.name), // English name
-    alias: [titleCase(location.alias)], // Additional language name in element 0
+    alias: location.alias ? [titleCase(location.alias)] : [], // Additional language name in element 0
     description: location.statisticalID,
     status: 'active',
     mode: 'instance',
@@ -77,35 +76,7 @@ const composeFhirLocation = (
   }
 }
 
-export function generateLocationResource(
-  fhirLocation: fhir.Location
-): ILocation {
-  const loc = {} as ILocation
-  loc.id = fhirLocation.id
-  loc.name = fhirLocation.name
-  loc.alias = fhirLocation.alias && fhirLocation.alias[0]
-  loc.physicalType =
-    fhirLocation.physicalType &&
-    fhirLocation.physicalType.coding &&
-    fhirLocation.physicalType.coding[0].display
-  const jurisdictionTypeIdentifier =
-    fhirLocation &&
-    fhirLocation.identifier &&
-    fhirLocation.identifier.find(
-      (indentifier) => indentifier.system === JURISDICTION_TYPE_IDENTIFIER
-    )
-  if (jurisdictionTypeIdentifier && jurisdictionTypeIdentifier.value) {
-    loc.jurisdictionType = jurisdictionTypeIdentifier.value
-  }
-  loc.type =
-    fhirLocation.type &&
-    fhirLocation.type.coding &&
-    fhirLocation.type.coding[0].code
-  loc.partOf = fhirLocation.partOf && fhirLocation.partOf.reference
-  return loc
-}
-
-export async function fetchAndComposeLocations(
+export async function composeAndSaveFhirLocation(
   rawLocationData: ICSVLocation[],
   jurisdictionType: string
 ): Promise<fhir.Location[]> {

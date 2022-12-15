@@ -41,11 +41,7 @@ import {
   notificationHandler,
   notificationScheme
 } from './features/notification/handler'
-<<<<<<< HEAD
 import { mosipMediatorHandler } from './features/mediators/mosip-openhim-mediator/handler'
-=======
-import { mosipMediatorHandler } from './features/examples/mosip-openhim-mediator/handler'
->>>>>>> develop
 
 export interface ITokenPayload {
   sub: string
