@@ -1,4 +1,4 @@
-import { range } from 'lodash'
+import { range, difference } from 'lodash'
 import { z } from 'zod'
 import chalk from 'chalk'
 import { basename } from 'path'
@@ -8,11 +8,33 @@ import {
   zodValidateDuplicates
 } from './humdata-validation'
 
-const Locations = (options: { maxAdminLevel: number }) =>
+export const Location = z.object({
+  admin0Pcode: z.string(),
+  admin0Name_en: z.string(),
+  admin0Name_alias: z.string(),
+
+  admin1Pcode: z.string(),
+  admin1Name_en: z.string(),
+  admin1Name_alias: z.string(),
+
+  admin2Pcode: z.string().optional(),
+  admin2Name_en: z.string().optional(),
+  admin2Name_alias: z.string().optional(),
+
+  admin3Pcode: z.string().optional(),
+  admin3Name_en: z.string().optional(),
+  admin3Name_alias: z.string().optional(),
+
+  admin4Pcode: z.string().optional(),
+  admin4Name_en: z.string().optional(),
+  admin4Name_alias: z.string().optional()
+})
+
+const Locations = (maxAdminLevel: number) =>
   z
-    .array(z.unknown())
-    .superRefine(zodValidateDuplicates(`admin${options.maxAdminLevel}Pcode`))
-    .superRefine(validateSensicalityOfLocationTree(options))
+    .array(Location)
+    .superRefine(zodValidateDuplicates(`admin${maxAdminLevel}Pcode`))
+    .superRefine(validateSensicalityOfLocationTree(maxAdminLevel))
 
 const Facility = z.object({
   adminPcode: z.string(),
@@ -130,7 +152,7 @@ const Statistic = z.object({
   )
 })
 
-const Statistics = Statistic.array().superRefine(
+export const Statistics = Statistic.array().superRefine(
   zodValidateDuplicates('adminPcode')
 )
 
@@ -176,8 +198,9 @@ async function main() {
           if (!headersOK) {
             error(
               chalk.blue(`LOCATIONS ERROR!:`),
-              chalk.yellow(`Header ${header}`),
-              'is not a supported header'
+              'Header',
+              chalk.yellow(header),
+              'is not supported'
             )
             process.exit(1)
           }
@@ -187,18 +210,18 @@ async function main() {
   }
 
   /** The most granular admin level, bigger number = lower level of administration */
-  let MAX_ADMIN_LEVEL = 0
+  let MAX_ADMIN_LEVEL: 0 | 1 | 2 | 3 | 4 = 0
 
   for (const header of csvLocationHeaders) {
     const currentLevel = pcodeExpression.exec(header)
     if (currentLevel) {
       MAX_ADMIN_LEVEL < Number(currentLevel[1])
-        ? (MAX_ADMIN_LEVEL = Number(currentLevel[1]))
+        ? (MAX_ADMIN_LEVEL = Number(currentLevel[1]) as any)
         : MAX_ADMIN_LEVEL
     }
   }
 
-  Locations({ maxAdminLevel: MAX_ADMIN_LEVEL }).parse(rawLocations)
+  const locations = Locations(MAX_ADMIN_LEVEL).parse(rawLocations)
 
   log(chalk.green('Admin levels parsed'), '✅', '\n')
 
@@ -210,7 +233,7 @@ async function main() {
     let location
     for (let i = MAX_ADMIN_LEVEL; i > 0; i--) {
       if (!location) {
-        location = rawLocations.find(
+        location = locations.find(
           (locationData) =>
             locationData[`admin${i}Pcode`] === statistic.adminPcode
         )
@@ -228,6 +251,25 @@ async function main() {
       process.exit(1)
     }
   }
+
+  const MAX_ADMIN_LEVEL_LOCATIONS = locations.map(
+    (location) => location[`admin${MAX_ADMIN_LEVEL}Pcode`]!
+  )
+  const hasStatisticAllMaxAdminLevelLocations =
+    difference(
+      MAX_ADMIN_LEVEL_LOCATIONS,
+      statistics.map((s) => s.adminPcode)
+    ).length === 0
+
+  if (!hasStatisticAllMaxAdminLevelLocations) {
+    error(
+      chalk.blue('LOCATIONS ERROR! '),
+      chalk.yellow(
+        `Statistic locations do not include all admin${MAX_ADMIN_LEVEL}Pcode rows in locations file`
+      )
+    )
+    process.exit(1)
+  }
   log(chalk.green('File is valid'), '✅', '\n')
 
   log(chalk.yellow('Validating health facilities file.'))
@@ -235,7 +277,7 @@ async function main() {
   const facilities = HealthFacilities.parse(rawFacilities)
 
   for (const facility of facilities) {
-    const location = rawLocations.find(
+    const location = locations.find(
       (locationData) =>
         facility.partOf ===
         `Location/${locationData[`admin${MAX_ADMIN_LEVEL}Pcode`]}`
@@ -258,7 +300,7 @@ async function main() {
   const crvsFacilities = CRVSFacilities.parse(rawCRVSFacilities)
 
   for (const facility of crvsFacilities) {
-    const partOf = rawLocations.find(
+    const partOf = locations.find(
       (locationData) =>
         facility.partOf ===
         `Location/${locationData[`admin${MAX_ADMIN_LEVEL}Pcode`]}`
