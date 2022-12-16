@@ -28,6 +28,20 @@ else
   exit 1
 fi
 
+
+print_usage_and_exit () {
+    echo 'Usage: ./clear-all-data.sh path_to_core'
+    exit 1
+}
+
+
+if [ -z "$1" ]
+then
+   echo "Path to core is required"
+   print_usage_and_exit
+fi
+
+
 mongo_credentials() {
   if [ ! -z ${MONGODB_ADMIN_USER+x} ] || [ ! -z ${MONGODB_ADMIN_PASSWORD+x} ]; then
     echo "--username $MONGODB_ADMIN_USER --password $MONGODB_ADMIN_PASSWORD --authenticationDatabase admin";
@@ -53,9 +67,10 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 if [ "$REPLICAS" = "0" ]; then
  # Locally, as this script is called from the country config repo, the path to core is unknown
  # So we delete the data from the running shared volume location
-  docker exec opencrvs_minio_1 rm -rf /data/minio/ocrvs && echo "**** Removed minio data ****"
-  docker exec opencrvs_minio_1 mkdir /data/minio/ocrvs
+  docker exec opencrvs_minio_1 rm -rf $1/data/minio/ocrvs && echo "**** Removed minio data ****"
+  docker exec opencrvs_minio_1 mkdir -p $1/data/minio/ocrvs
 else
   rm -rf /data/minio/ocrvs && echo "**** Removed minio data ****"
   mkdir /data/minio/ocrvs
 fi
+
