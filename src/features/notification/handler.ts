@@ -20,21 +20,16 @@ interface INotificationPayload {
 }
 
 export const notificationScheme = Joi.object({
-    msisdn: Joi.string(),
-    message: Joi.string(),
-    convertUnicode: Joi.boolean()
+  msisdn: Joi.string(),
+  message: Joi.string(),
+  convertUnicode: Joi.boolean()
 })
 
 export async function notificationHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  const {
-    msisdn,
-    message,
-    convertUnicode
-  } = request.payload as INotificationPayload
+  const { msisdn, message, convertUnicode } =
+    request.payload as INotificationPayload
   return sendSMS(msisdn, message, convertUnicode)
 }
-
-

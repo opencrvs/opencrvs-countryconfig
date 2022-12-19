@@ -10,53 +10,8 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import { FHIR_URL } from '@countryconfig/constants'
-import fetch, { Response } from 'node-fetch'
-import { generateLocationResource } from '@countryconfig/features/administrative/scripts/service'
-import { ILocation } from '@countryconfig/features/utils'
+import fetch from 'node-fetch'
 import { merge } from 'lodash'
-
-export interface ILocationDataResponse {
-  data: ILocation[]
-}
-
-export async function getLocations(): Promise<ILocationDataResponse> {
-  const res = await fetch(`${FHIR_URL}/Location?type=ADMIN_STRUCTURE&_count=0`)
-  const locationBundle = await res.json()
-  const locations = {
-    data: locationBundle.entry.reduce(
-      (accumulator: { [key: string]: ILocation }, entry: fhir.BundleEntry) => {
-        if (!entry.resource || !entry.resource.id) {
-          throw new Error('Resource in entry not valid')
-        }
-
-        accumulator[entry.resource.id] = generateLocationResource(
-          entry.resource as fhir.Location
-        )
-
-        return accumulator
-      },
-      {}
-    )
-  }
-
-  return locations
-}
-
-export async function getLocationsInFhir(id?:string): Promise<fhir.Bundle | fhir.Location> {
-  let res: Response
-  let locationBundle: fhir.Bundle | fhir.Location
-  if(id){
-    res = await fetch(`${FHIR_URL}/Location/${id}`)
-    locationBundle = await res.json()
-    return locationBundle
-  }else{
-    res = await fetch(`${FHIR_URL}/Location?type=ADMIN_STRUCTURE&_count=0`)
-    locationBundle = await res.json()
-    return locationBundle
-  }
-}
-
-
 
 const STATISTIC_EXTENSION_URLS = [
   'http://opencrvs.org/specs/id/statistics-male-populations',
@@ -73,6 +28,8 @@ type BundleEntryWithLocation = Omit<fhir.BundleEntry, 'resource'> & {
 }
 
 export async function getStatistics() {
+  // This function is only used by the data generator script
+  // TODO: it is technical debt and data-generator should instead call the Core FHIR API
   const res = await fetch(`${FHIR_URL}/Location?type=ADMIN_STRUCTURE&_count=0`)
   const locationBundle: fhir.Bundle = await res.json()
   if (!locationBundle.entry) {

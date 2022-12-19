@@ -1,17 +1,17 @@
-statisticalID,name,partOf,code,physicalType,district,state
-2OKicPQMNI,HQ Office,Location/BxrIbNW7f3K,CRVS_OFFICE,Building,Itambo District,Central Province
-JEhYJ82xRI,Isamba District Office,Location/HPGiE9Jjh2r,CRVS_OFFICE,Building,Isamba District,Central Province
-JWMRGwDBXK,Ibombo District Office,Location/oEBf29y8JP8,CRVS_OFFICE,Building,Ibombo District,Central Province
-eaBXhNiLMp,Ezhi District Office,Location/SQT8xjbvWwf,CRVS_OFFICE,Building,Ezhi District,Central Province
-okQp4uKCz0,Ilanga District Office,Location/ntoX1PkiWri,CRVS_OFFICE,Building,Ilanga District,Sulaka Province
-R5n2eHaSpB,Irundu District Office,Location/SvFNQpplnch,CRVS_OFFICE,Building,Irundu District,Sulaka Province
-GzanivmNaP,Zobwe District Office,Location/NLjvK1QsrN3,CRVS_OFFICE,Building,Zobwe District,Sulaka Province
-2stAtvOCwl,Afue District Office,Location/hywxVKv48Xp,CRVS_OFFICE,Building,Afue District,Sulaka Province
-p9TC08l373,Embe District Office,Location/QTtxiWj8ONP,CRVS_OFFICE,Building,Embe District,Pualula Province
-Hal1YwlBw7,Ienge District Office,Location/Oapn6R4rt3D,CRVS_OFFICE,Building,Ienge District,Pualula Province
-OgMqVlKHoN,Funabuli District Office,Location/idR0pJWLqcR,CRVS_OFFICE,Building,Funabuli District,Pualula Province
-FHTLilSEgD,Pili District Office,Location/jCJxK8sFH40,CRVS_OFFICE,Building,Pili District,Pualula Province
-jMEPmtRKQ9,Ama District Office,Location/ydyJb1RAy4U,CRVS_OFFICE,Building,Ama District,Chuminga Province
-hfFdA2JI3T,Nsali District Office,Location/nO68NTtcdw2,CRVS_OFFICE,Building,Nsali District,Chuminga Province
-mNCAv7oKj8,Soka District Office,Location/FuvOOwvBw0p,CRVS_OFFICE,Building,Soka District,Chuminga Province
-H0EaOnzz0a,Chibiya District Office,Location/R22tRIhdm5Y,CRVS_OFFICE,Building,Chibiya District,Chuminga Province
+id,name,partOf,code
+2OKicPQMNI,HQ Office,Location/BxrIbNW7f3K,CRVS_OFFICE
+JEhYJ82xRI,Isamba District Office,Location/HPGiE9Jjh2r,CRVS_OFFICE
+JWMRGwDBXK,Ibombo District Office,Location/oEBf29y8JP8,CRVS_OFFICE
+eaBXhNiLMp,Ezhi District Office,Location/SQT8xjbvWwf,CRVS_OFFICE
+okQp4uKCz0,Ilanga District Office,Location/ntoX1PkiWri,CRVS_OFFICE
+R5n2eHaSpB,Irundu District Office,Location/SvFNQpplnch,CRVS_OFFICE
+GzanivmNaP,Zobwe District Office,Location/NLjvK1QsrN3,CRVS_OFFICE
+2stAtvOCwl,Afue District Office,Location/hywxVKv48Xp,CRVS_OFFICE
+p9TC08l373,Embe District Office,Location/QTtxiWj8ONP,CRVS_OFFICE
+Hal1YwlBw7,Ienge District Office,Location/Oapn6R4rt3D,CRVS_OFFICE
+OgMqVlKHoN,Funabuli District Office,Location/idR0pJWLqcR,CRVS_OFFICE
+FHTLilSEgD,Pili District Office,Location/jCJxK8sFH40,CRVS_OFFICE
+jMEPmtRKQ9,Ama District Office,Location/ydyJb1RAy4U,CRVS_OFFICE
+hfFdA2JI3T,Nsali District Office,Location/nO68NTtcdw2,CRVS_OFFICE
+mNCAv7oKj8,Soka District Office,Location/FuvOOwvBw0p,CRVS_OFFICE
+H0EaOnzz0a,Chibiya District Office,Location/R22tRIhdm5Y,CRVS_OFFICE

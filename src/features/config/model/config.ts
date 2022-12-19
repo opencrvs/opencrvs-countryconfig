@@ -55,6 +55,7 @@ interface ICurrency {
 }
 export interface IApplicationConfigurationModel extends Document {
   APPLICATION_NAME: string
+  ADMIN_LEVELS: number
   BIRTH: IBirth
   COUNTRY_LOGO: ICountryLogo
   CURRENCY: ICurrency
@@ -130,6 +131,12 @@ const systemSchema = new Schema({
     type: String,
     required: false,
     default: 'DISTRICT'
+  },
+  ADMIN_LEVELS: {
+    type: Number,
+    required: true,
+    enum: [1, 2, 3, 4, 5],
+    default: 2
   },
   HIDE_EVENT_REGISTER_INFORMATION: {
     type: Boolean,
