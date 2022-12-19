@@ -26,18 +26,13 @@ import {
   HOSTNAME,
   DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
-import {
-  locationsHandler,
-  statisticsHandler,
-  locationsFhirHandler
-} from '@countryconfig/features/administrative/handler'
-import { facilitiesHandler } from '@countryconfig/features/facilities/handler'
+import { statisticsHandler } from '@countryconfig/features/administrative/handler'
 import { contentHandler } from '@countryconfig/features/content/handler'
 import {
   generatorHandler,
   requestSchema as generatorRequestSchema,
   responseSchema as generatorResponseSchema
-} from '@countryconfig/features/generate/handler'
+} from '@countryconfig/features/generateRegistrationNumber/handler'
 import { validateRegistrationHandler } from '@countryconfig/features/validate/handler'
 import * as decode from 'jwt-decode'
 import { join } from 'path'
@@ -46,7 +41,7 @@ import {
   notificationHandler,
   notificationScheme
 } from './features/notification/handler'
-import { mosipMediatorHandler } from './features/examples/mosip-openhim-mediator/handler'
+import { mosipMediatorHandler } from './features/mediators/mosip-openhim-mediator/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -221,48 +216,6 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/locations',
-    handler: locationsHandler,
-    options: {
-      tags: ['api'],
-      description: 'Returns Farajaland locations.json'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/fhir-locations',
-    handler: locationsFhirHandler,
-    options: {
-      tags: ['api'],
-      auth: false,
-      description: 'Returns Farajaland locations as FHIR'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/fhir-locations/{id}',
-    handler: locationsFhirHandler,
-    options: {
-      tags: ['api'],
-      auth: false,
-      description: 'Returns Farajaland location as FHIR'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/facilities',
-    handler: facilitiesHandler,
-    options: {
-      tags: ['api'],
-      description: 'Returns Farajaland facilities.json'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/content/{application}',
     handler: contentHandler,
     options: {
@@ -309,16 +262,6 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Serves country wise crude death rate'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/pilotLocations',
-    handler: () => ({}),
-    options: {
-      tags: ['api'],
-      description: 'Serves current pilot location list'
     }
   })
 

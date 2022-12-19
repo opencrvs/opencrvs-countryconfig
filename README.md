@@ -86,11 +86,8 @@ Required endpoints that CANNOT be changed:
 
 `GET /definitions/{declaration}`
 
-- An endpoint that can be used to pilot OpenCRVS alongside an exsting Civil Registration system.  This is an optional configuration for OpenCRVS.  OpenCRVS validates its own registration data and creates its own independent and official registration identifiers "Birth/Death Registration Numbers (BRN, DRN)".  But you may wish to pilot OpenCRVS and add an additional layer of 3rd party validation.  If you use this feature, then the following endpoint should perform the validation tasks you need and return your own BRN/DRN
-
 `POST /validate/registration`
 
-- Another endpoint that can be used to pilot OpenCRVS alongside an exsting Civil Registration system to generate numbers without the validation step.  This is an optional configuration for OpenCRVS.  OpenCRVS creates its own independent and official registration identifiers "Birth/Death Registration Numbers (BRN, DRN)".  But you may wish to pilot OpenCRVS and generate the official registrations somewhere else.  If you use this feature, then the following endpoint should perform whatever tasks you need and return your own BRN/DRN
 
 `POST /generate/{type e.g. <brn|drn>}`
 

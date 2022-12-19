@@ -50,15 +50,6 @@ export interface ISecurityQuestionAnswer {
   questionKey: string
   answerHash: string
 }
-interface ISignature {
-  type: string
-  data: string
-}
-interface ILocalRegistrar {
-  name: IUserName[]
-  role?: string
-  signature: ISignature
-}
 interface IAuditHistory {
   auditedBy: string
   auditedOn: number
@@ -80,12 +71,9 @@ export interface IUser {
   primaryOfficeId: string
   catchmentAreaIds: string[]
   scope: string[]
-  signature: ISignature
-  localRegistrar: ILocalRegistrar
   status: string
   device?: string
   securityQuestionAnswers?: ISecurityQuestionAnswer[]
-  creationDate: number
   auditHistory?: IAuditHistory[]
 }
 
@@ -147,34 +135,37 @@ const AuditHistory = new Schema(
   }
 )
 
-const userSchema = new Schema({
-  name: { type: [UserNameSchema], required: true },
-  username: { type: String, required: true },
-  identifiers: [IdentifierSchema],
-  email: String,
-  mobile: { type: String, unique: true },
-  passwordHash: { type: String, required: true },
-  salt: { type: String, required: true },
-  role: String,
-  type: String,
-  practitionerId: { type: String, required: true },
-  primaryOfficeId: { type: String, required: true },
-  catchmentAreaIds: { type: [String], required: true },
-  scope: { type: [String], required: true },
-  status: {
+const userSchema = new Schema(
+  {
+    name: { type: [UserNameSchema], required: true },
+    username: { type: String, required: true },
+    identifiers: [IdentifierSchema],
+    email: String,
+    mobile: { type: String, unique: true },
+    passwordHash: { type: String, required: true },
+    salt: { type: String, required: true },
+    role: String,
     type: String,
-    enum: [
-      statuses.PENDING,
-      statuses.ACTIVE,
-      statuses.DISABLED,
-      statuses.DEACTIVATED
-    ],
-    default: statuses.PENDING
+    practitionerId: { type: String, required: true },
+    primaryOfficeId: { type: String, required: true },
+    catchmentAreaIds: { type: [String], required: true },
+    scope: { type: [String], required: true },
+    status: {
+      type: String,
+      enum: [
+        statuses.PENDING,
+        statuses.ACTIVE,
+        statuses.DISABLED,
+        statuses.DEACTIVATED
+      ],
+      default: statuses.PENDING
+    },
+    securityQuestionAnswers: [SecurityQuestionAnswerSchema],
+    device: String,
+    creationDate: { type: Number, default: Date.now },
+    auditHistory: [AuditHistory]
   },
-  securityQuestionAnswers: [SecurityQuestionAnswerSchema],
-  device: String,
-  creationDate: { type: Number, default: Date.now },
-  auditHistory: [AuditHistory]
-})
+  { strict: false }
+)
 
 export default model<IUserModel>('User', userSchema)
