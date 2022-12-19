@@ -688,6 +688,7 @@
     "config.form.informantSignatureSettings": "Label for informant signature settings",
     "config.form.settings.enable": "Label for enable intorduction page settings",
     "config.form.settings.disable": "Label for disable intorduction page settings",
+    "config.form.settings.enableAndRequired": "Label for enabled and registration required in informant signature page settings",
     "config.form.settings.introductionPage.dialogTitle": "Title for intorduction page settings dialog",
     "config.form.settings.introductionPage.dialogDesc": "Description for intorduction page settings dialog",
     "config.form.settings.addresses.dialogTitle": "Title for addresses settings dialog",

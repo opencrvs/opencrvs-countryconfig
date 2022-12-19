@@ -178,6 +178,7 @@
   "config.form.informantSignatureSettings",
   "config.form.settings.enable",
   "config.form.settings.disable",
+  "config.form.settings.enableAndRequired",
   "config.form.settings.introductionPage.dialogTitle",
   "config.form.settings.introductionPage.dialogDesc",
   "config.form.settings.addresses.dialogTitle",
