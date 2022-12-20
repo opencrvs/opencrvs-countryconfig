@@ -59,7 +59,7 @@ echo "Working dir: $DIR"
 
 echo "Reverting migrations before creating backups"
 echo
-source $path_to_core/packages/migration/revertMigrations.sh $path_to_core/packages/migration/
+source $path_to_core/packages/migration/revertMigrations.sh $path_to_core/packages/migration
 
 
 #echo "Creating backups"

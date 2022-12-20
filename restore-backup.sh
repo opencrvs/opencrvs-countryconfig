@@ -71,4 +71,4 @@ docker run --rm -v $DIR/backups:/backups --network=opencrvs_default mongo:4.4 ba
 
 echo "Running migrations after restoring from backups"
 echo
-source $path_to_core/packages/migration/runMigrations.sh $path_to_core/packages/migration/
+source $path_to_core/packages/migration/runMigrations.sh $path_to_core/packages/migration
