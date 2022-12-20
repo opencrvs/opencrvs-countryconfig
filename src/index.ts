@@ -41,9 +41,11 @@ import {
 import { validateRegistrationHandler } from '@countryconfig/features/validate/handler'
 import * as decode from 'jwt-decode'
 import { join } from 'path'
-import { birthNotificationHandler } from '@countryconfig/features/dhis2/features/notification/birth/handler'
 import { logger } from '@countryconfig/logger'
-import { notificationHandler, notificationScheme } from './features/notification/handler'
+import {
+  notificationHandler,
+  notificationScheme
+} from './features/notification/handler'
 import { mosipMediatorHandler } from './features/examples/mosip-openhim-mediator/handler'
 
 export interface ITokenPayload {
@@ -333,16 +335,6 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/dhis2-notification/birth',
-    handler: birthNotificationHandler,
-    options: {
-      tags: ['api'],
-      description: 'Handles transformation and submission of birth notification'
-    }
-  })
-
-  server.route({
-    method: 'POST',
     path: '/notification',
     handler: notificationHandler,
     options: {
@@ -363,8 +355,6 @@ export async function createServer() {
       description: 'Handles submission of mosip generaed NID'
     }
   })
-
-  
 
   server.ext({
     type: 'onRequest',

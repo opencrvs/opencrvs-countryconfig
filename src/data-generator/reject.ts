@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 import { User } from './users'
 import { log } from './util'
 
-import { GATEWAY_HOST } from './constants'
+import { GATEWAY_GQL_HOST } from './constants'
 import { MARK_AS_REJECTED_QUERY } from './queries'
 
 export async function markEventAsRejected(
@@ -14,7 +14,7 @@ export async function markEventAsRejected(
   const { token, username } = user
 
   const requestStart = Date.now()
-  const rejectDeclarationRes = await fetch(GATEWAY_HOST, {
+  const rejectDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

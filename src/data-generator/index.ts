@@ -53,8 +53,11 @@ import { markEventAsRejected } from './reject'
 
 // The script is required to log in with a demo system admin
 // This prevents the script from being used in production, as there are no users with a "demo" scope there
-const USERNAME = 'emmanuel.mayuka'
-const PASSWORD = 'test'
+const LOCAL_SYS_ADMIN_USERNAME = 'emmanuel.mayuka'
+const LOCAL_SYS_ADMIN_PASSWORD = 'test'
+const REGISTRAR_USERNAME = 'kennedy.mweene'
+const REGISTRAR_PASSWORD = 'test'
+
 export const VERIFICATION_CODE = '000000'
 
 export const FIELD_AGENTS = 5
@@ -121,9 +124,13 @@ function wait(time: number) {
 
 async function main() {
   log('Fetching token for system administrator')
-  const token = await getToken(USERNAME, PASSWORD)
+  const localSYSAdminToken = await getToken(
+    LOCAL_SYS_ADMIN_USERNAME,
+    LOCAL_SYS_ADMIN_PASSWORD
+  )
+  const registrarToken = await getToken(REGISTRAR_USERNAME, REGISTRAR_PASSWORD)
   console.log('Got token for system administrator')
-  const config = await getConfig(token)
+  const config = await getConfig(localSYSAdminToken)
   const countryAlpha3 = await getCountryAlpha3()
 
   const BIRTH_COMPLETION_DISTRIBUTION = [
@@ -154,12 +161,12 @@ async function main() {
   log('Got token for system administrator')
   log('Fetching locations')
   const locations = DISTRICTS
-    ? (await getLocations(token)).filter((location) =>
+    ? (await getLocations(localSYSAdminToken)).filter((location) =>
         DISTRICTS.includes(location.id)
       )
-    : await getLocations(token)
+    : await getLocations(localSYSAdminToken)
 
-  const facilities = await getFacilities(token)
+  const facilities = await getFacilities(localSYSAdminToken)
   const crvsOffices = facilities.filter(({ type }) => type === 'CRVS_OFFICE')
   const healthFacilities = facilities.filter(
     ({ type }) => type === 'HEALTH_FACILITY'
@@ -176,10 +183,8 @@ async function main() {
   for (const location of locations) {
     log('Fetching already generated interval')
     const generatedInterval = await fetchAlreadyGeneratedInterval(
-      token,
-      crvsOffices
-        .filter(({ partOf }) => partOf === `Location/${location.id}`)
-        .map(({ id }) => id)
+      registrarToken,
+      location.id
     )
 
     if (generatedInterval.length === 0) {
@@ -201,7 +206,7 @@ async function main() {
     log('Creating users for', location.name, '(', location.id, ')')
 
     const users = await createUsers(
-      token,
+      localSYSAdminToken,
       location,
       countryAlpha3,
       config.config.PHONE_NUMBER_PATTERN,
@@ -659,7 +664,9 @@ function birthDeclarationWorkflow(
           sex,
           birthDate,
           submissionTime,
-          randomFacility
+          randomFacility,
+          location,
+          crvsOffice
         )
       } else {
         id = await createBirthDeclaration(
