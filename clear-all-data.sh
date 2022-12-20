@@ -30,26 +30,10 @@ for i in "$@"; do
   esac
 done
 
-# Retrieve 2-step verification to continue
-#-----------------------------------------
-ask_yes_or_no() {
-    read -p "$1 ([y]es or [N]o): "
-    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
-        y|yes) echo "yes" ;;
-        *)     echo "no" ;;
-    esac
-}
-
 if [ -z $path_to_core ]; then
     echo "MISSING OR INCORRECT PARAMETER: --path_to_core"
     echo
     print_usage_and_exit
-fi
-
-if [[ "no" == $(ask_yes_or_no "This script clears OpenCRVS of local data.  Type: yes to continue, or no to exit.") ]]
-then
-    echo "Exiting OpenCRVS setup."
-    exit 0
 fi
 
 
