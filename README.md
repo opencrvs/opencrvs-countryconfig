@@ -33,7 +33,7 @@ This module also provides a logical location where you may wish to store the cod
 
 **If you successfully ran the `bash setup.sh` script in OpenCRVS Core you already have this module checked out, the dependencies are installed, the Farajaland database is populated and you can just run the following command.** 
 
-2. `yarn dev <!-- PATH_TO_OPEN_CRVS_CORE_DIRECTORY -->` You can find out "PATH_TO_OPEN_CRVS_CORE_DIRECTORY" by running `pwd` in your opencrvs-core directory.
+2. `yarn dev`
 
 Thats it! 🎉
 
@@ -47,7 +47,7 @@ In a separate Terminal window, checkout this repository and checkout the master 
 3. Run `cd opencrvs-farajaland`
 4. Run `git checkout master`
 5. Run `yarn install`
-6. Run `yarn dev <!-- PATH_TO_OPEN_CRVS_CORE_DIRECTORY -->` You can find out "PATH_TO_OPEN_CRVS_CORE_DIRECTORY" by running `pwd` in your opencrvs-core directory.
+6. Run `yarn dev`
 
 ## What is in the Farajaland configuration module repository?
 
