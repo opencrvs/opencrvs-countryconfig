@@ -17,8 +17,8 @@ export const OPENHIM_URL =
 export const ORG_URL = 'http://opencrvs.org'
 export const MONGO_URL =
   process.env.MONGO_URL || 'mongodb://localhost/user-mgnt'
-  export const CONFIG_MONGO_URL =
-    process.env.CONFIG_MONGO_URL || 'mongodb://localhost/application-config'
+export const CONFIG_MONGO_URL =
+  process.env.CONFIG_MONGO_URL || 'mongodb://localhost/application-config'
 export const COUNTRY_CONFIG_HOST = process.env.COUNTRY_CONFIG_HOST || '0.0.0.0'
 export const COUNTRY_CONFIG_PORT = process.env.COUNTRY_CONFIG_PORT || 3040
 export const AUTH_URL = process.env.AUTH_URL || 'http://localhost:4040'
@@ -37,21 +37,12 @@ export const CONFIRM_REGISTRATION_URL =
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE =
   process.env.COUNTRY_WIDE_CRUDE_DEATH_RATE || 6.633
 
-  import * as path from 'path'
+import * as path from 'path'
 import { readFileSync } from 'fs'
 
 export const LANGUAGES_SOURCE = path.join(
   process.cwd(),
-  'src/features/languages/generated/'
-)
-export const ADMIN_STRUCTURE_SOURCE = path.join(
-  process.cwd(),
-  'src/features/administrative/'
-)
-
-export const FACILITIES_SOURCE = path.join(
-  process.cwd(),
-  'src/features/facilities/'
+  'src/features/languages/content/'
 )
 
 export const EMPLOYEES_SOURCE = path.join(
@@ -75,4 +66,3 @@ export const CONTENTFUL_SPACE_ID =
   ''
 export const CMS = process.env.CMS // || 'contentful'
 export const DEFAULT_TIMEOUT = 600000
-

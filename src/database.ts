@@ -25,7 +25,8 @@ db.on('connected', () => {
 })
 
 // tslint:disable-next-line
-const wait = (time: number) => new Promise(resolve => setTimeout(resolve, time))
+const wait = (time: number) =>
+  new Promise((resolve) => setTimeout(resolve, time))
 
 export const connect = async (): Promise<void> => {
   try {

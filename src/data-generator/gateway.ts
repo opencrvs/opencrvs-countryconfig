@@ -15,6 +15,12 @@ export type Scalars = {
   Map: any;
 };
 
+export type AdditionalIdWithCompositionId = {
+  __typename?: 'AdditionalIdWithCompositionId';
+  compositionId: Scalars['String'];
+  trackingId: Scalars['String'];
+};
+
 export type Address = {
   __typename?: 'Address';
   city?: Maybe<Scalars['String']>;
@@ -61,6 +67,121 @@ export enum AddressType {
   UnhcrCamp = 'UNHCR_CAMP'
 }
 
+export type AdvancedSeachParameters = {
+  __typename?: 'AdvancedSeachParameters';
+  childDoB?: Maybe<Scalars['String']>;
+  childDoBEnd?: Maybe<Scalars['String']>;
+  childDoBStart?: Maybe<Scalars['String']>;
+  childFirstNames?: Maybe<Scalars['String']>;
+  childGender?: Maybe<Scalars['String']>;
+  childLastName?: Maybe<Scalars['String']>;
+  compositionType?: Maybe<Array<Maybe<Scalars['String']>>>;
+  contactNumber?: Maybe<Scalars['String']>;
+  dateOfEvent?: Maybe<Scalars['String']>;
+  dateOfEventEnd?: Maybe<Scalars['String']>;
+  dateOfEventStart?: Maybe<Scalars['String']>;
+  dateOfRegistration?: Maybe<Scalars['String']>;
+  dateOfRegistrationEnd?: Maybe<Scalars['String']>;
+  dateOfRegistrationStart?: Maybe<Scalars['String']>;
+  deceasedDoB?: Maybe<Scalars['String']>;
+  deceasedDoBEnd?: Maybe<Scalars['String']>;
+  deceasedDoBStart?: Maybe<Scalars['String']>;
+  deceasedFamilyName?: Maybe<Scalars['String']>;
+  deceasedFirstNames?: Maybe<Scalars['String']>;
+  deceasedGender?: Maybe<Scalars['String']>;
+  deceasedIdentifier?: Maybe<Scalars['String']>;
+  declarationJurisdictionId?: Maybe<Scalars['String']>;
+  declarationLocationId?: Maybe<Scalars['String']>;
+  event?: Maybe<Event>;
+  eventCountry?: Maybe<Scalars['String']>;
+  eventLocationId?: Maybe<Scalars['String']>;
+  eventLocationLevel1?: Maybe<Scalars['String']>;
+  eventLocationLevel2?: Maybe<Scalars['String']>;
+  eventLocationLevel3?: Maybe<Scalars['String']>;
+  eventLocationLevel4?: Maybe<Scalars['String']>;
+  eventLocationLevel5?: Maybe<Scalars['String']>;
+  fatherDoB?: Maybe<Scalars['String']>;
+  fatherDoBEnd?: Maybe<Scalars['String']>;
+  fatherDoBStart?: Maybe<Scalars['String']>;
+  fatherFamilyName?: Maybe<Scalars['String']>;
+  fatherFirstNames?: Maybe<Scalars['String']>;
+  fatherIdentifier?: Maybe<Scalars['String']>;
+  informantDoB?: Maybe<Scalars['String']>;
+  informantDoBEnd?: Maybe<Scalars['String']>;
+  informantDoBStart?: Maybe<Scalars['String']>;
+  informantFamilyName?: Maybe<Scalars['String']>;
+  informantFirstNames?: Maybe<Scalars['String']>;
+  informantIdentifier?: Maybe<Scalars['String']>;
+  motherDoB?: Maybe<Scalars['String']>;
+  motherDoBEnd?: Maybe<Scalars['String']>;
+  motherDoBStart?: Maybe<Scalars['String']>;
+  motherFamilyName?: Maybe<Scalars['String']>;
+  motherFirstNames?: Maybe<Scalars['String']>;
+  motherIdentifier?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  nationalId?: Maybe<Scalars['String']>;
+  registrationNumber?: Maybe<Scalars['String']>;
+  registrationStatuses?: Maybe<Array<Maybe<Scalars['String']>>>;
+  trackingId?: Maybe<Scalars['String']>;
+};
+
+export type AdvancedSearchParametersInput = {
+  childDoB?: InputMaybe<Scalars['String']>;
+  childDoBEnd?: InputMaybe<Scalars['String']>;
+  childDoBStart?: InputMaybe<Scalars['String']>;
+  childFirstNames?: InputMaybe<Scalars['String']>;
+  childGender?: InputMaybe<Scalars['String']>;
+  childLastName?: InputMaybe<Scalars['String']>;
+  compositionType?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  contactNumber?: InputMaybe<Scalars['String']>;
+  dateOfEvent?: InputMaybe<Scalars['String']>;
+  dateOfEventEnd?: InputMaybe<Scalars['String']>;
+  dateOfEventStart?: InputMaybe<Scalars['String']>;
+  dateOfRegistration?: InputMaybe<Scalars['String']>;
+  dateOfRegistrationEnd?: InputMaybe<Scalars['String']>;
+  dateOfRegistrationStart?: InputMaybe<Scalars['String']>;
+  deceasedDoB?: InputMaybe<Scalars['String']>;
+  deceasedDoBEnd?: InputMaybe<Scalars['String']>;
+  deceasedDoBStart?: InputMaybe<Scalars['String']>;
+  deceasedFamilyName?: InputMaybe<Scalars['String']>;
+  deceasedFirstNames?: InputMaybe<Scalars['String']>;
+  deceasedGender?: InputMaybe<Scalars['String']>;
+  deceasedIdentifier?: InputMaybe<Scalars['String']>;
+  declarationJurisdictionId?: InputMaybe<Scalars['String']>;
+  declarationLocationId?: InputMaybe<Scalars['String']>;
+  event?: InputMaybe<Event>;
+  eventCountry?: InputMaybe<Scalars['String']>;
+  eventLocationId?: InputMaybe<Scalars['String']>;
+  eventLocationLevel1?: InputMaybe<Scalars['String']>;
+  eventLocationLevel2?: InputMaybe<Scalars['String']>;
+  eventLocationLevel3?: InputMaybe<Scalars['String']>;
+  eventLocationLevel4?: InputMaybe<Scalars['String']>;
+  eventLocationLevel5?: InputMaybe<Scalars['String']>;
+  fatherDoB?: InputMaybe<Scalars['String']>;
+  fatherDoBEnd?: InputMaybe<Scalars['String']>;
+  fatherDoBStart?: InputMaybe<Scalars['String']>;
+  fatherFamilyName?: InputMaybe<Scalars['String']>;
+  fatherFirstNames?: InputMaybe<Scalars['String']>;
+  fatherIdentifier?: InputMaybe<Scalars['String']>;
+  informantDoB?: InputMaybe<Scalars['String']>;
+  informantDoBEnd?: InputMaybe<Scalars['String']>;
+  informantDoBStart?: InputMaybe<Scalars['String']>;
+  informantFamilyName?: InputMaybe<Scalars['String']>;
+  informantFirstNames?: InputMaybe<Scalars['String']>;
+  informantIdentifier?: InputMaybe<Scalars['String']>;
+  motherDoB?: InputMaybe<Scalars['String']>;
+  motherDoBEnd?: InputMaybe<Scalars['String']>;
+  motherDoBStart?: InputMaybe<Scalars['String']>;
+  motherFamilyName?: InputMaybe<Scalars['String']>;
+  motherFirstNames?: InputMaybe<Scalars['String']>;
+  motherIdentifier?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  nationalId?: InputMaybe<Scalars['String']>;
+  registrationNumber?: InputMaybe<Scalars['String']>;
+  registrationStatuses?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  trackingId?: InputMaybe<Scalars['String']>;
+};
+
 export type ApplicationConfiguration = {
   __typename?: 'ApplicationConfiguration';
   ADDRESSES?: Maybe<Scalars['Int']>;
@@ -72,6 +193,7 @@ export type ApplicationConfiguration = {
   EXTERNAL_VALIDATION_WORKQUEUE?: Maybe<Scalars['Boolean']>;
   FIELD_AGENT_AUDIT_LOCATIONS?: Maybe<Scalars['String']>;
   HIDE_EVENT_REGISTER_INFORMATION?: Maybe<Scalars['Boolean']>;
+  INTEGRATIONS?: Maybe<Array<Maybe<Integration>>>;
   NID_NUMBER_PATTERN?: Maybe<Scalars['String']>;
   PHONE_NUMBER_PATTERN?: Maybe<Scalars['String']>;
 };
@@ -86,6 +208,7 @@ export type ApplicationConfigurationInput = {
   EXTERNAL_VALIDATION_WORKQUEUE?: InputMaybe<Scalars['Boolean']>;
   FIELD_AGENT_AUDIT_LOCATIONS?: InputMaybe<Scalars['String']>;
   HIDE_EVENT_REGISTER_INFORMATION?: InputMaybe<Scalars['Boolean']>;
+  INTEGRATIONS?: InputMaybe<Array<InputMaybe<IntegrationInput>>>;
   NID_NUMBER_PATTERN?: InputMaybe<Scalars['String']>;
   PHONE_NUMBER_PATTERN?: InputMaybe<Scalars['String']>;
 };
@@ -165,8 +288,17 @@ export enum AttendantType {
   NurseMidwife = 'NURSE_MIDWIFE',
   Other = 'OTHER',
   OtherParamedicalPersonnel = 'OTHER_PARAMEDICAL_PERSONNEL',
-  Physician = 'PHYSICIAN'
+  Physician = 'PHYSICIAN',
+  TraditionalBirthAttendant = 'TRADITIONAL_BIRTH_ATTENDANT'
 }
+
+export type AuditLogItemBase = {
+  action: Scalars['String'];
+  ipAddress: Scalars['String'];
+  practitionerId: Scalars['String'];
+  time: Scalars['String'];
+  userAgent: Scalars['String'];
+};
 
 export type Avatar = {
   __typename?: 'Avatar';
@@ -191,6 +323,7 @@ export type BirthEventSearchSet = EventSearchSet & {
   childName?: Maybe<Array<Maybe<HumanName>>>;
   dateOfBirth?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
+  operationHistories?: Maybe<Array<Maybe<OperationHistorySearchSet>>>;
   registration?: Maybe<RegistrationSearchSet>;
   type?: Maybe<Scalars['String']>;
 };
@@ -281,6 +414,24 @@ export enum BirthType {
   Twin = 'TWIN'
 }
 
+export type BookMarkedSearches = {
+  __typename?: 'BookMarkedSearches';
+  searchList?: Maybe<Array<BookmarkedSeachItem>>;
+};
+
+export type BookmarkSearchInput = {
+  name: Scalars['String'];
+  parameters: AdvancedSearchParametersInput;
+  userId: Scalars['String'];
+};
+
+export type BookmarkedSeachItem = {
+  __typename?: 'BookmarkedSeachItem';
+  name: Scalars['String'];
+  parameters: AdvancedSeachParameters;
+  searchId: Scalars['String'];
+};
+
 export enum CauseOfDeathMethodType {
   LayReported = 'LAY_REPORTED',
   MedicallyCertified = 'MEDICALLY_CERTIFIED',
@@ -357,6 +508,11 @@ export type ComparisonInput = {
   nin?: InputMaybe<Array<Scalars['String']>>;
 };
 
+export type ConditionalInput = {
+  fieldId: Scalars['String'];
+  regexp: Scalars['String'];
+};
+
 export type ContactPoint = {
   __typename?: 'ContactPoint';
   system?: Maybe<Scalars['String']>;
@@ -377,6 +533,7 @@ export type CorrectionInput = {
   location?: InputMaybe<LocationInput>;
   noSupportingDocumentationRequired?: InputMaybe<Scalars['Boolean']>;
   note?: InputMaybe<Scalars['String']>;
+  otherReason?: InputMaybe<Scalars['String']>;
   payments?: InputMaybe<Array<InputMaybe<PaymentInput>>>;
   reason?: InputMaybe<Scalars['String']>;
   requester?: InputMaybe<Scalars['ID']>;
@@ -445,6 +602,7 @@ export type DeathEventSearchSet = EventSearchSet & {
   dateOfDeath?: Maybe<Scalars['Date']>;
   deceasedName?: Maybe<Array<Maybe<HumanName>>>;
   id: Scalars['ID'];
+  operationHistories?: Maybe<Array<Maybe<OperationHistorySearchSet>>>;
   registration?: Maybe<RegistrationSearchSet>;
   type?: Maybe<Scalars['String']>;
 };
@@ -589,6 +747,35 @@ export type EventMetrics = {
   total: Scalars['Int'];
 };
 
+export type EventMetricsByLocation = {
+  __typename?: 'EventMetricsByLocation';
+  delayed: Scalars['Int'];
+  healthFacility: Scalars['Int'];
+  home: Scalars['Int'];
+  late: Scalars['Int'];
+  location: Location;
+  total: Scalars['Int'];
+};
+
+export type EventMetricsByRegistrar = {
+  __typename?: 'EventMetricsByRegistrar';
+  delayed: Scalars['Int'];
+  late: Scalars['Int'];
+  registrarPractitioner?: Maybe<User>;
+  total: Scalars['Int'];
+};
+
+export type EventMetricsByTime = {
+  __typename?: 'EventMetricsByTime';
+  delayed: Scalars['Int'];
+  healthFacility: Scalars['Int'];
+  home: Scalars['Int'];
+  late: Scalars['Int'];
+  month: Scalars['String'];
+  time: Scalars['String'];
+  total: Scalars['Int'];
+};
+
 export type EventProgressData = {
   __typename?: 'EventProgressData';
   timeInProgress?: Maybe<Scalars['Int']>;
@@ -633,6 +820,7 @@ export type EventSearchResultSet = {
 
 export type EventSearchSet = {
   id: Scalars['ID'];
+  operationHistories?: Maybe<Array<Maybe<OperationHistorySearchSet>>>;
   registration?: Maybe<RegistrationSearchSet>;
   type?: Maybe<Scalars['String']>;
 };
@@ -662,17 +850,20 @@ export type FormDraftStatusModifyInput = {
 
 export type History = {
   __typename?: 'History';
-  action?: Maybe<RegStatus>;
+  action?: Maybe<RegAction>;
   certificates?: Maybe<Array<Maybe<Certificate>>>;
   comments?: Maybe<Array<Maybe<Comment>>>;
   date?: Maybe<Scalars['Date']>;
   dhis2Notification?: Maybe<Scalars['Boolean']>;
+  hasShowedVerifiedDocument?: Maybe<Scalars['Boolean']>;
   input?: Maybe<Array<Maybe<InputOutput>>>;
   location?: Maybe<Location>;
   office?: Maybe<Location>;
+  otherReason?: Maybe<Scalars['String']>;
   output?: Maybe<Array<Maybe<InputOutput>>>;
   reason?: Maybe<Scalars['String']>;
-  reinstated?: Maybe<Scalars['Boolean']>;
+  regStatus?: Maybe<RegStatus>;
+  requester?: Maybe<Scalars['String']>;
   signature?: Maybe<Signature>;
   statusReason?: Maybe<StatusReason>;
   user?: Maybe<User>;
@@ -699,9 +890,12 @@ export type Identifier = {
 
 export enum IdentityIdType {
   AlienNumber = 'ALIEN_NUMBER',
+  BirthPatientEntry = 'BIRTH_PATIENT_ENTRY',
   BirthRegistrationNumber = 'BIRTH_REGISTRATION_NUMBER',
   DeathRegistrationNumber = 'DEATH_REGISTRATION_NUMBER',
+  DeceasedPatientEntry = 'DECEASED_PATIENT_ENTRY',
   DrivingLicense = 'DRIVING_LICENSE',
+  MosipUintoken = 'MOSIP_UINTOKEN',
   NationalId = 'NATIONAL_ID',
   NoId = 'NO_ID',
   Other = 'OTHER',
@@ -748,6 +942,17 @@ export type InputOutput = {
   valueCode?: Maybe<Scalars['String']>;
   valueId?: Maybe<Scalars['String']>;
   valueString?: Maybe<Scalars['String']>;
+};
+
+export type Integration = {
+  __typename?: 'Integration';
+  name?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+};
+
+export type IntegrationInput = {
+  name?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']>;
 };
 
 export type LocalRegistrar = {
@@ -868,6 +1073,8 @@ export type MesssageInput = {
   lang: Scalars['String'];
 };
 
+export type MixedTotalMetricsResult = TotalMetricsByLocation | TotalMetricsByRegistrar | TotalMetricsByTime;
+
 export type MonthWiseEstimationMetric = {
   __typename?: 'MonthWiseEstimationMetric';
   estimated: Scalars['Int'];
@@ -883,6 +1090,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   activateUser?: Maybe<Scalars['String']>;
   auditUser?: Maybe<Scalars['String']>;
+  bookmarkAdvancedSearch?: Maybe<BookMarkedSearches>;
   changeAvatar?: Maybe<Avatar>;
   changePassword?: Maybe<Scalars['String']>;
   changePhone?: Maybe<Scalars['String']>;
@@ -907,12 +1115,15 @@ export type Mutation = {
   markEventAsVoided: Scalars['ID'];
   modifyDraftStatus?: Maybe<FormDraft>;
   notADuplicate: Scalars['ID'];
+  removeBookmarkedAdvancedSearch?: Maybe<BookMarkedSearches>;
   requestBirthRegistrationCorrection: Scalars['ID'];
   requestDeathRegistrationCorrection: Scalars['ID'];
   resendSMSInvite?: Maybe<Scalars['String']>;
+  resetPasswordSMS?: Maybe<Scalars['String']>;
   updateApplicationConfig?: Maybe<ApplicationConfiguration>;
   updateBirthRegistration: Scalars['ID'];
   updateDeathRegistration: Scalars['ID'];
+  usernameSMSReminder?: Maybe<Scalars['String']>;
   voidNotification?: Maybe<Notification>;
 };
 
@@ -929,6 +1140,11 @@ export type MutationAuditUserArgs = {
   comment?: InputMaybe<Scalars['String']>;
   reason: Scalars['String'];
   userId: Scalars['String'];
+};
+
+
+export type MutationBookmarkAdvancedSearchArgs = {
+  bookmarkSearchInput: BookmarkSearchInput;
 };
 
 
@@ -1069,6 +1285,11 @@ export type MutationNotADuplicateArgs = {
 };
 
 
+export type MutationRemoveBookmarkedAdvancedSearchArgs = {
+  removeBookmarkedSearchInput: RemoveBookmarkedSeachInput;
+};
+
+
 export type MutationRequestBirthRegistrationCorrectionArgs = {
   details: BirthRegistrationInput;
   id: Scalars['ID'];
@@ -1082,6 +1303,12 @@ export type MutationRequestDeathRegistrationCorrectionArgs = {
 
 
 export type MutationResendSmsInviteArgs = {
+  userId: Scalars['String'];
+};
+
+
+export type MutationResetPasswordSmsArgs = {
+  applicationName: Scalars['String'];
   userId: Scalars['String'];
 };
 
@@ -1100,6 +1327,11 @@ export type MutationUpdateBirthRegistrationArgs = {
 export type MutationUpdateDeathRegistrationArgs = {
   details: DeathRegistrationInput;
   id: Scalars['ID'];
+};
+
+
+export type MutationUsernameSmsReminderArgs = {
+  userId: Scalars['String'];
 };
 
 
@@ -1127,6 +1359,20 @@ export type NotificationInput = {
   location?: InputMaybe<LocationInput>;
   mother?: InputMaybe<PersonInput>;
   updatedAt?: InputMaybe<Scalars['Date']>;
+};
+
+export type OperationHistorySearchSet = {
+  __typename?: 'OperationHistorySearchSet';
+  notificationFacilityAlias?: Maybe<Array<Maybe<Scalars['String']>>>;
+  notificationFacilityName?: Maybe<Scalars['String']>;
+  operatedOn?: Maybe<Scalars['Date']>;
+  operationType?: Maybe<Scalars['String']>;
+  operatorName?: Maybe<Array<Maybe<HumanName>>>;
+  operatorOfficeAlias?: Maybe<Array<Maybe<Scalars['String']>>>;
+  operatorOfficeName?: Maybe<Scalars['String']>;
+  operatorRole?: Maybe<Scalars['String']>;
+  rejectComment?: Maybe<Scalars['String']>;
+  rejectReason?: Maybe<Scalars['String']>;
 };
 
 export type Payment = {
@@ -1218,20 +1464,23 @@ export type Query = {
   fetchMonthWiseEventMetrics?: Maybe<Array<MonthWiseEstimationMetric>>;
   fetchRegistration?: Maybe<EventRegistration>;
   fetchRegistrationCountByStatus?: Maybe<RegistrationCountResult>;
-  fetchTimeLoggedMetricsByPractitioner?: Maybe<TimeLoggedMetricsResultSet>;
+  fetchRegistrationForViewing?: Maybe<EventRegistration>;
   getActiveCertificatesSVG?: Maybe<Array<Maybe<CertificateSvg>>>;
   getCertificateSVG?: Maybe<CertificateSvg>;
   getDeclarationsStartedMetrics?: Maybe<DeclarationsStartedMetrics>;
   getEventsWithProgress?: Maybe<EventProgressResultSet>;
   getFormDraft?: Maybe<Array<FormDraft>>;
   getLocationStatistics?: Maybe<LocationStatisticsResponse>;
+  getRegistrationsListByFilter?: Maybe<MixedTotalMetricsResult>;
   getRoles?: Maybe<Array<Maybe<Role>>>;
   getTotalCertifications?: Maybe<Array<CertificationMetric>>;
   getTotalCorrections?: Maybe<Array<CorrectionMetric>>;
   getTotalMetrics?: Maybe<TotalMetricsResult>;
   getTotalPayments?: Maybe<Array<PaymentMetric>>;
   getUser?: Maybe<User>;
+  getUserAuditLog?: Maybe<UserAuditLogResultSet>;
   getUserByMobile?: Maybe<User>;
+  getVSExports?: Maybe<TotalVsExport>;
   hasChildLocation?: Maybe<Location>;
   listBirthRegistrations?: Maybe<BirthRegResultSet>;
   listNotifications?: Maybe<Array<Maybe<Notification>>>;
@@ -1292,12 +1541,8 @@ export type QueryFetchRegistrationCountByStatusArgs = {
 };
 
 
-export type QueryFetchTimeLoggedMetricsByPractitionerArgs = {
-  count: Scalars['Int'];
-  locationId: Scalars['String'];
-  practitionerId: Scalars['String'];
-  timeEnd: Scalars['String'];
-  timeStart: Scalars['String'];
+export type QueryFetchRegistrationForViewingArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -1315,18 +1560,29 @@ export type QueryGetDeclarationsStartedMetricsArgs = {
 
 
 export type QueryGetEventsWithProgressArgs = {
+  compositionType?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   count?: InputMaybe<Scalars['Int']>;
-  locationId?: InputMaybe<Scalars['String']>;
+  declarationJurisdictionId?: InputMaybe<Scalars['String']>;
+  registrationStatuses?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   skip?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Scalars['String']>;
-  status?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  type?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
 export type QueryGetLocationStatisticsArgs = {
   locationId?: InputMaybe<Scalars['String']>;
   populationYear: Scalars['Int'];
+};
+
+
+export type QueryGetRegistrationsListByFilterArgs = {
+  event: Scalars['String'];
+  filterBy: Scalars['String'];
+  locationId?: InputMaybe<Scalars['String']>;
+  size: Scalars['Int'];
+  skip: Scalars['Int'];
+  timeEnd: Scalars['String'];
+  timeStart: Scalars['String'];
 };
 
 
@@ -1373,6 +1629,15 @@ export type QueryGetTotalPaymentsArgs = {
 
 export type QueryGetUserArgs = {
   userId?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetUserAuditLogArgs = {
+  count: Scalars['Int'];
+  practitionerId: Scalars['String'];
+  skip?: InputMaybe<Scalars['Int']>;
+  timeEnd?: InputMaybe<Scalars['String']>;
+  timeStart?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1447,17 +1712,11 @@ export type QuerySearchDeathRegistrationsArgs = {
 
 
 export type QuerySearchEventsArgs = {
-  contactNumber?: InputMaybe<Scalars['String']>;
+  advancedSearchParameters: AdvancedSearchParametersInput;
   count?: InputMaybe<Scalars['Int']>;
-  locationIds?: InputMaybe<Array<Scalars['String']>>;
-  name?: InputMaybe<Scalars['String']>;
-  registrationNumber?: InputMaybe<Scalars['String']>;
   skip?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Scalars['String']>;
   sortColumn?: InputMaybe<Scalars['String']>;
-  status?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  trackingId?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   userId?: InputMaybe<Scalars['String']>;
 };
 
@@ -1495,6 +1754,7 @@ export type QueryVerifyPasswordByIdArgs = {
 };
 
 export type QuestionInput = {
+  conditionals?: InputMaybe<Array<ConditionalInput>>;
   custom?: InputMaybe<Scalars['Boolean']>;
   description?: InputMaybe<Array<MesssageInput>>;
   enabled?: InputMaybe<Scalars['String']>;
@@ -1521,16 +1781,23 @@ export type QuestionnaireQuestionInput = {
   value?: InputMaybe<Scalars['String']>;
 };
 
+export enum RegAction {
+  Assigned = 'ASSIGNED',
+  Downloaded = 'DOWNLOADED',
+  Reinstated = 'REINSTATED',
+  RequestedCorrection = 'REQUESTED_CORRECTION',
+  Unassigned = 'UNASSIGNED',
+  Viewed = 'VIEWED'
+}
+
 export enum RegStatus {
   Archived = 'ARCHIVED',
   Certified = 'CERTIFIED',
   DeclarationUpdated = 'DECLARATION_UPDATED',
   Declared = 'DECLARED',
-  Downloaded = 'DOWNLOADED',
   InProgress = 'IN_PROGRESS',
   Registered = 'REGISTERED',
   Rejected = 'REJECTED',
-  RequestedCorrection = 'REQUESTED_CORRECTION',
   Validated = 'VALIDATED',
   WaitingValidation = 'WAITING_VALIDATION'
 }
@@ -1573,6 +1840,7 @@ export type Registration = {
   id?: Maybe<Scalars['ID']>;
   inCompleteFields?: Maybe<Scalars['String']>;
   informantType?: Maybe<InformantType>;
+  mosipAid?: Maybe<Scalars['String']>;
   otherInformantType?: Maybe<Scalars['String']>;
   page?: Maybe<Scalars['String']>;
   paperFormID?: Maybe<Scalars['String']>;
@@ -1601,6 +1869,7 @@ export type RegistrationInput = {
   inCompleteFields?: InputMaybe<Scalars['String']>;
   informantType?: InputMaybe<InformantType>;
   location?: InputMaybe<LocationInput>;
+  mosipAid?: InputMaybe<Scalars['String']>;
   otherInformantType?: InputMaybe<Scalars['String']>;
   page?: InputMaybe<Scalars['String']>;
   paperFormID?: InputMaybe<Scalars['String']>;
@@ -1656,6 +1925,11 @@ export type RelatedPersonInput = {
   individual?: InputMaybe<PersonInput>;
   otherRelationship?: InputMaybe<Scalars['String']>;
   relationship?: InputMaybe<Scalars['String']>;
+};
+
+export type RemoveBookmarkedSeachInput = {
+  searchId: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 export type Role = {
@@ -1721,24 +1995,33 @@ export type StatusWiseRegistrationCount = {
   status: Scalars['String'];
 };
 
-export type TimeLoggedMetrics = {
-  __typename?: 'TimeLoggedMetrics';
-  eventType: Scalars['String'];
-  status: Scalars['String'];
-  time: Scalars['String'];
-  trackingId?: Maybe<Scalars['String']>;
+export type TotalMetricsByLocation = {
+  __typename?: 'TotalMetricsByLocation';
+  results: Array<EventMetricsByLocation>;
+  total?: Maybe<Scalars['Int']>;
 };
 
-export type TimeLoggedMetricsResultSet = {
-  __typename?: 'TimeLoggedMetricsResultSet';
-  results?: Maybe<Array<Maybe<TimeLoggedMetrics>>>;
-  totalItems?: Maybe<Scalars['Int']>;
+export type TotalMetricsByRegistrar = {
+  __typename?: 'TotalMetricsByRegistrar';
+  results: Array<EventMetricsByRegistrar>;
+  total?: Maybe<Scalars['Int']>;
+};
+
+export type TotalMetricsByTime = {
+  __typename?: 'TotalMetricsByTime';
+  results: Array<EventMetricsByTime>;
+  total?: Maybe<Scalars['Int']>;
 };
 
 export type TotalMetricsResult = {
   __typename?: 'TotalMetricsResult';
   estimated: Estimation;
   results: Array<EventMetrics>;
+};
+
+export type TotalVsExport = {
+  __typename?: 'TotalVSExport';
+  results?: Maybe<Array<VsExport>>;
 };
 
 export type User = {
@@ -1756,12 +2039,40 @@ export type User = {
   practitionerId?: Maybe<Scalars['String']>;
   primaryOffice?: Maybe<Location>;
   role?: Maybe<Scalars['String']>;
+  searches?: Maybe<Array<Maybe<BookmarkedSeachItem>>>;
   signature?: Maybe<Signature>;
   status?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
   underInvestigation?: Maybe<Scalars['Boolean']>;
   userMgntUserID?: Maybe<Scalars['ID']>;
   username?: Maybe<Scalars['String']>;
+};
+
+export type UserAuditLogItem = AuditLogItemBase & {
+  __typename?: 'UserAuditLogItem';
+  action: Scalars['String'];
+  ipAddress: Scalars['String'];
+  practitionerId: Scalars['String'];
+  time: Scalars['String'];
+  userAgent: Scalars['String'];
+};
+
+export type UserAuditLogItemWithComposition = AuditLogItemBase & {
+  __typename?: 'UserAuditLogItemWithComposition';
+  action: Scalars['String'];
+  data: AdditionalIdWithCompositionId;
+  ipAddress: Scalars['String'];
+  practitionerId: Scalars['String'];
+  time: Scalars['String'];
+  userAgent: Scalars['String'];
+};
+
+export type UserAuditLogResultItem = UserAuditLogItem | UserAuditLogItemWithComposition;
+
+export type UserAuditLogResultSet = {
+  __typename?: 'UserAuditLogResultSet';
+  results: Array<UserAuditLogResultItem>;
+  total: Scalars['Int'];
 };
 
 export type UserIdentifierInput = {
@@ -1785,6 +2096,15 @@ export type UserInput = {
   username?: InputMaybe<Scalars['String']>;
 };
 
+export type VsExport = {
+  __typename?: 'VSExport';
+  createdOn: Scalars['String'];
+  event: Scalars['String'];
+  fileSize: Scalars['String'];
+  url: Scalars['String'];
+  year: Scalars['Int'];
+};
+
 export type VerifyPasswordResult = {
   __typename?: 'VerifyPasswordResult';
   id?: Maybe<Scalars['String']>;
@@ -1794,7 +2114,7 @@ export type VerifyPasswordResult = {
   username?: Maybe<Scalars['String']>;
 };
 
-export type BirthRegistrationFragmentFragment = { __typename: 'BirthRegistration', _fhirIDMap?: any | null, id: string, createdAt?: any | null, attendantAtBirth?: AttendantType | null, weightAtBirth?: number | null, birthType?: BirthType | null, child?: { __typename?: 'Person', id?: string | null, multipleBirth?: number | null, birthDate?: string | null, gender?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null } | null, informant?: { __typename?: 'RelatedPerson', id?: string | null, relationship?: string | null, individual?: { __typename?: 'Person', id?: string | null, occupation?: string | null, nationality?: Array<string | null> | null, birthDate?: string | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null } | null } | null, mother?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, maritalStatus?: MaritalStatusType | null, occupation?: string | null, detailsExist?: boolean | null, dateOfMarriage?: any | null, educationalAttainment?: EducationType | null, nationality?: Array<string | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null } | null> | null } | null, father?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, maritalStatus?: MaritalStatusType | null, occupation?: string | null, detailsExist?: boolean | null, dateOfMarriage?: any | null, educationalAttainment?: EducationType | null, nationality?: Array<string | null> | null, reasonNotApplying?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null } | null> | null } | null, registration?: { __typename?: 'Registration', id?: string | null, contact?: string | null, contactRelationship?: string | null, contactPhoneNumber?: string | null, type?: RegistrationType | null, trackingId?: string | null, registrationNumber?: string | null, attachments?: Array<{ __typename?: 'Attachment', data?: string | null, type?: AttachmentType | null, contentType?: string | null, subject?: AttachmentSubject | null } | null> | null, status?: Array<{ __typename?: 'RegWorkflow', type?: RegStatus | null, timestamp?: any | null, comments?: Array<{ __typename?: 'Comment', comment?: string | null } | null> | null } | null> | null } | null, eventLocation?: { __typename?: 'Location', id: string, type?: LocationType | null, address?: { __typename?: 'Address', line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null } | null, questionnaire?: Array<{ __typename?: 'QuestionnaireQuestion', fieldId?: string | null, value?: string | null } | null> | null, history?: Array<{ __typename?: 'History', date?: any | null, action?: RegStatus | null, reinstated?: boolean | null, statusReason?: { __typename?: 'StatusReason', text?: string | null } | null, location?: { __typename?: 'Location', id: string, name?: string | null } | null, office?: { __typename?: 'Location', id: string, name?: string | null } | null, user?: { __typename?: 'User', id?: string | null, type?: string | null, role?: string | null, name?: Array<{ __typename?: 'HumanName', firstNames?: string | null, familyName?: string | null, use?: string | null } | null> | null, avatar?: { __typename?: 'Avatar', data: string, type: string } | null } | null, comments?: Array<{ __typename?: 'Comment', comment?: string | null, createdAt?: any | null, user?: { __typename?: 'User', id?: string | null, username?: string | null, avatar?: { __typename?: 'Avatar', data: string, type: string } | null } | null } | null> | null, input?: Array<{ __typename?: 'InputOutput', valueCode?: string | null, valueId?: string | null, valueString?: string | null } | null> | null, output?: Array<{ __typename?: 'InputOutput', valueCode?: string | null, valueId?: string | null, valueString?: string | null } | null> | null, certificates?: Array<{ __typename?: 'Certificate', hasShowedVerifiedDocument?: boolean | null, collector?: { __typename?: 'RelatedPerson', relationship?: string | null, otherRelationship?: string | null, individual?: { __typename?: 'Person', name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null, use?: string | null } | null> | null } | null } | null } | null> | null } | null> | null };
+export type BirthRegistrationFragmentFragment = { __typename: 'BirthRegistration', _fhirIDMap?: any | null, id: string, createdAt?: any | null, attendantAtBirth?: AttendantType | null, weightAtBirth?: number | null, birthType?: BirthType | null, child?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, gender?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null } | null, informant?: { __typename?: 'RelatedPerson', id?: string | null, relationship?: string | null, individual?: { __typename?: 'Person', id?: string | null, occupation?: string | null, nationality?: Array<string | null> | null, birthDate?: string | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null } | null } | null, mother?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, multipleBirth?: number | null, maritalStatus?: MaritalStatusType | null, occupation?: string | null, detailsExist?: boolean | null, dateOfMarriage?: any | null, educationalAttainment?: EducationType | null, nationality?: Array<string | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null } | null> | null } | null, father?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, maritalStatus?: MaritalStatusType | null, occupation?: string | null, detailsExist?: boolean | null, dateOfMarriage?: any | null, educationalAttainment?: EducationType | null, nationality?: Array<string | null> | null, reasonNotApplying?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null } | null> | null } | null, registration?: { __typename?: 'Registration', id?: string | null, contact?: string | null, contactRelationship?: string | null, contactPhoneNumber?: string | null, type?: RegistrationType | null, trackingId?: string | null, registrationNumber?: string | null, attachments?: Array<{ __typename?: 'Attachment', data?: string | null, type?: AttachmentType | null, contentType?: string | null, subject?: AttachmentSubject | null } | null> | null, status?: Array<{ __typename?: 'RegWorkflow', type?: RegStatus | null, timestamp?: any | null, comments?: Array<{ __typename?: 'Comment', comment?: string | null } | null> | null } | null> | null } | null, eventLocation?: { __typename?: 'Location', id: string, type?: LocationType | null, address?: { __typename?: 'Address', line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null } | null, questionnaire?: Array<{ __typename?: 'QuestionnaireQuestion', fieldId?: string | null, value?: string | null } | null> | null, history?: Array<{ __typename?: 'History', date?: any | null, action?: RegAction | null, regStatus?: RegStatus | null, statusReason?: { __typename?: 'StatusReason', text?: string | null } | null, location?: { __typename?: 'Location', id: string, name?: string | null } | null, office?: { __typename?: 'Location', id: string, name?: string | null } | null, user?: { __typename?: 'User', id?: string | null, type?: string | null, role?: string | null, name?: Array<{ __typename?: 'HumanName', firstNames?: string | null, familyName?: string | null, use?: string | null } | null> | null, avatar?: { __typename?: 'Avatar', data: string, type: string } | null } | null, comments?: Array<{ __typename?: 'Comment', comment?: string | null, createdAt?: any | null, user?: { __typename?: 'User', id?: string | null, username?: string | null, avatar?: { __typename?: 'Avatar', data: string, type: string } | null } | null } | null> | null, input?: Array<{ __typename?: 'InputOutput', valueCode?: string | null, valueId?: string | null, valueString?: string | null } | null> | null, output?: Array<{ __typename?: 'InputOutput', valueCode?: string | null, valueId?: string | null, valueString?: string | null } | null> | null, certificates?: Array<{ __typename?: 'Certificate', hasShowedVerifiedDocument?: boolean | null, collector?: { __typename?: 'RelatedPerson', relationship?: string | null, otherRelationship?: string | null, individual?: { __typename?: 'Person', name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null, use?: string | null } | null> | null } | null } | null } | null> | null } | null> | null };
 
 export type RegisterBirthDeclarationMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1803,6 +2123,15 @@ export type RegisterBirthDeclarationMutationVariables = Exact<{
 
 
 export type RegisterBirthDeclarationMutation = { __typename?: 'Mutation', markBirthAsRegistered: { __typename?: 'BirthRegistration', id: string } };
+
+export type MarkEventAsVoidedMutationVariables = Exact<{
+  id: Scalars['String'];
+  reason: Scalars['String'];
+  comment: Scalars['String'];
+}>;
+
+
+export type MarkEventAsVoidedMutation = { __typename?: 'Mutation', markEventAsVoided: string };
 
 export type CreateDeathDeclarationMutationVariables = Exact<{
   details: DeathRegistrationInput;
@@ -1829,7 +2158,7 @@ export type MarkDeathAsCertifiedMutation = { __typename?: 'Mutation', markDeathA
 
 export type SearchEventsQueryVariables = Exact<{
   sort?: InputMaybe<Scalars['String']>;
-  locationIds?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  advancedSearchParameters: AdvancedSearchParametersInput;
 }>;
 
 
@@ -1848,7 +2177,7 @@ export type FetchBirthRegistrationQueryVariables = Exact<{
 }>;
 
 
-export type FetchBirthRegistrationQuery = { __typename?: 'Query', fetchBirthRegistration?: { __typename: 'BirthRegistration', _fhirIDMap?: any | null, id: string, createdAt?: any | null, attendantAtBirth?: AttendantType | null, weightAtBirth?: number | null, birthType?: BirthType | null, child?: { __typename?: 'Person', id?: string | null, multipleBirth?: number | null, birthDate?: string | null, gender?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null } | null, informant?: { __typename?: 'RelatedPerson', id?: string | null, relationship?: string | null, individual?: { __typename?: 'Person', id?: string | null, occupation?: string | null, nationality?: Array<string | null> | null, birthDate?: string | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null } | null } | null, mother?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, maritalStatus?: MaritalStatusType | null, occupation?: string | null, detailsExist?: boolean | null, dateOfMarriage?: any | null, educationalAttainment?: EducationType | null, nationality?: Array<string | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null } | null> | null } | null, father?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, maritalStatus?: MaritalStatusType | null, occupation?: string | null, detailsExist?: boolean | null, dateOfMarriage?: any | null, educationalAttainment?: EducationType | null, nationality?: Array<string | null> | null, reasonNotApplying?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null } | null> | null } | null, registration?: { __typename?: 'Registration', id?: string | null, contact?: string | null, contactRelationship?: string | null, contactPhoneNumber?: string | null, type?: RegistrationType | null, trackingId?: string | null, registrationNumber?: string | null, attachments?: Array<{ __typename?: 'Attachment', data?: string | null, type?: AttachmentType | null, contentType?: string | null, subject?: AttachmentSubject | null } | null> | null, status?: Array<{ __typename?: 'RegWorkflow', type?: RegStatus | null, timestamp?: any | null, comments?: Array<{ __typename?: 'Comment', comment?: string | null } | null> | null } | null> | null } | null, eventLocation?: { __typename?: 'Location', id: string, type?: LocationType | null, address?: { __typename?: 'Address', line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null } | null, questionnaire?: Array<{ __typename?: 'QuestionnaireQuestion', fieldId?: string | null, value?: string | null } | null> | null, history?: Array<{ __typename?: 'History', date?: any | null, action?: RegStatus | null, reinstated?: boolean | null, statusReason?: { __typename?: 'StatusReason', text?: string | null } | null, location?: { __typename?: 'Location', id: string, name?: string | null } | null, office?: { __typename?: 'Location', id: string, name?: string | null } | null, user?: { __typename?: 'User', id?: string | null, type?: string | null, role?: string | null, name?: Array<{ __typename?: 'HumanName', firstNames?: string | null, familyName?: string | null, use?: string | null } | null> | null, avatar?: { __typename?: 'Avatar', data: string, type: string } | null } | null, comments?: Array<{ __typename?: 'Comment', comment?: string | null, createdAt?: any | null, user?: { __typename?: 'User', id?: string | null, username?: string | null, avatar?: { __typename?: 'Avatar', data: string, type: string } | null } | null } | null> | null, input?: Array<{ __typename?: 'InputOutput', valueCode?: string | null, valueId?: string | null, valueString?: string | null } | null> | null, output?: Array<{ __typename?: 'InputOutput', valueCode?: string | null, valueId?: string | null, valueString?: string | null } | null> | null, certificates?: Array<{ __typename?: 'Certificate', hasShowedVerifiedDocument?: boolean | null, collector?: { __typename?: 'RelatedPerson', relationship?: string | null, otherRelationship?: string | null, individual?: { __typename?: 'Person', name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null, use?: string | null } | null> | null } | null } | null } | null> | null } | null> | null } | null };
+export type FetchBirthRegistrationQuery = { __typename?: 'Query', fetchBirthRegistration?: { __typename: 'BirthRegistration', _fhirIDMap?: any | null, id: string, createdAt?: any | null, attendantAtBirth?: AttendantType | null, weightAtBirth?: number | null, birthType?: BirthType | null, child?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, gender?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null } | null, informant?: { __typename?: 'RelatedPerson', id?: string | null, relationship?: string | null, individual?: { __typename?: 'Person', id?: string | null, occupation?: string | null, nationality?: Array<string | null> | null, birthDate?: string | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null } | null } | null, mother?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, multipleBirth?: number | null, maritalStatus?: MaritalStatusType | null, occupation?: string | null, detailsExist?: boolean | null, dateOfMarriage?: any | null, educationalAttainment?: EducationType | null, nationality?: Array<string | null> | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null } | null> | null } | null, father?: { __typename?: 'Person', id?: string | null, birthDate?: string | null, maritalStatus?: MaritalStatusType | null, occupation?: string | null, detailsExist?: boolean | null, dateOfMarriage?: any | null, educationalAttainment?: EducationType | null, nationality?: Array<string | null> | null, reasonNotApplying?: string | null, name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, identifier?: Array<{ __typename?: 'IdentityType', id?: string | null, type?: IdentityIdType | null } | null> | null, address?: Array<{ __typename?: 'Address', type?: AddressType | null, line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null } | null> | null } | null, registration?: { __typename?: 'Registration', id?: string | null, contact?: string | null, contactRelationship?: string | null, contactPhoneNumber?: string | null, type?: RegistrationType | null, trackingId?: string | null, registrationNumber?: string | null, attachments?: Array<{ __typename?: 'Attachment', data?: string | null, type?: AttachmentType | null, contentType?: string | null, subject?: AttachmentSubject | null } | null> | null, status?: Array<{ __typename?: 'RegWorkflow', type?: RegStatus | null, timestamp?: any | null, comments?: Array<{ __typename?: 'Comment', comment?: string | null } | null> | null } | null> | null } | null, eventLocation?: { __typename?: 'Location', id: string, type?: LocationType | null, address?: { __typename?: 'Address', line?: Array<string | null> | null, district?: string | null, state?: string | null, city?: string | null, postalCode?: string | null, country?: string | null } | null } | null, questionnaire?: Array<{ __typename?: 'QuestionnaireQuestion', fieldId?: string | null, value?: string | null } | null> | null, history?: Array<{ __typename?: 'History', date?: any | null, action?: RegAction | null, regStatus?: RegStatus | null, statusReason?: { __typename?: 'StatusReason', text?: string | null } | null, location?: { __typename?: 'Location', id: string, name?: string | null } | null, office?: { __typename?: 'Location', id: string, name?: string | null } | null, user?: { __typename?: 'User', id?: string | null, type?: string | null, role?: string | null, name?: Array<{ __typename?: 'HumanName', firstNames?: string | null, familyName?: string | null, use?: string | null } | null> | null, avatar?: { __typename?: 'Avatar', data: string, type: string } | null } | null, comments?: Array<{ __typename?: 'Comment', comment?: string | null, createdAt?: any | null, user?: { __typename?: 'User', id?: string | null, username?: string | null, avatar?: { __typename?: 'Avatar', data: string, type: string } | null } | null } | null> | null, input?: Array<{ __typename?: 'InputOutput', valueCode?: string | null, valueId?: string | null, valueString?: string | null } | null> | null, output?: Array<{ __typename?: 'InputOutput', valueCode?: string | null, valueId?: string | null, valueString?: string | null } | null> | null, certificates?: Array<{ __typename?: 'Certificate', hasShowedVerifiedDocument?: boolean | null, collector?: { __typename?: 'RelatedPerson', relationship?: string | null, otherRelationship?: string | null, individual?: { __typename?: 'Person', name?: Array<{ __typename?: 'HumanName', use?: string | null, firstNames?: string | null, familyName?: string | null } | null> | null, telecom?: Array<{ __typename?: 'ContactPoint', system?: string | null, value?: string | null, use?: string | null } | null> | null } | null } | null } | null> | null } | null> | null } | null };
 
 export type FetchDeathRegistrationQueryVariables = Exact<{
   id: Scalars['ID'];

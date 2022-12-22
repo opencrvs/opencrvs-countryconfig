@@ -43,8 +43,8 @@ import { getLocationMetrics } from './statistics'
 import { User, createUsers } from './users'
 import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
-import { ConfigResponse, getConfig ,getCountryAlpha3} from './config'
-import {markEventAsRejected} from './reject'
+import { ConfigResponse, getConfig, getCountryAlpha3 } from './config'
+import { markEventAsRejected } from './reject'
 /*
  *
  * Configuration
@@ -53,8 +53,11 @@ import {markEventAsRejected} from './reject'
 
 // The script is required to log in with a demo system admin
 // This prevents the script from being used in production, as there are no users with a "demo" scope there
-const USERNAME = 'emmanuel.mayuka'
-const PASSWORD = 'test'
+const LOCAL_SYS_ADMIN_USERNAME = 'emmanuel.mayuka'
+const LOCAL_SYS_ADMIN_PASSWORD = 'test'
+const REGISTRAR_USERNAME = 'kennedy.mweene'
+const REGISTRAR_PASSWORD = 'test'
+
 export const VERIFICATION_CODE = '000000'
 
 export const FIELD_AGENTS = 5
@@ -62,8 +65,8 @@ export const HOSPITAL_FIELD_AGENTS = 7
 export const REGISTRATION_AGENTS = 2
 export const LOCAL_REGISTRARS = 1
 
-export const PROBABILITY_TO_BE_INCOMPLETE = 0.05;
-export const PROBABILITY_TO_BE_REJECTED = 0.02;
+export const PROBABILITY_TO_BE_INCOMPLETE = 0.05
+export const PROBABILITY_TO_BE_REJECTED = 0.02
 
 const CONCURRENCY = process.env.CONCURRENCY
   ? parseInt(process.env.CONCURRENCY, 10)
@@ -109,22 +112,26 @@ function onError(error: Error) {
 }
 
 async function keepTokensValid(users: User[]) {
-  users.forEach(user => {
+  users.forEach((user) => {
     const data = readToken(user.token)
     setTimeout(() => updateToken(user), data.exp * 1000 - Date.now() - 60000)
   })
 }
 
 function wait(time: number) {
-  return new Promise(resolve => setTimeout(resolve, time))
+  return new Promise((resolve) => setTimeout(resolve, time))
 }
 
 async function main() {
   log('Fetching token for system administrator')
-  const token = await getToken(USERNAME, PASSWORD)
+  const localSYSAdminToken = await getToken(
+    LOCAL_SYS_ADMIN_USERNAME,
+    LOCAL_SYS_ADMIN_PASSWORD
+  )
+  const registrarToken = await getToken(REGISTRAR_USERNAME, REGISTRAR_PASSWORD)
   console.log('Got token for system administrator')
-  const config = await getConfig(token)
-  const countryAlpha3 = await getCountryAlpha3();
+  const config = await getConfig(localSYSAdminToken)
+  const countryAlpha3 = await getCountryAlpha3()
 
   const BIRTH_COMPLETION_DISTRIBUTION = [
     { range: [0, config.config.BIRTH.REGISTRATION_TARGET], weight: 0.8 },
@@ -154,12 +161,12 @@ async function main() {
   log('Got token for system administrator')
   log('Fetching locations')
   const locations = DISTRICTS
-    ? (await getLocations(token)).filter(location =>
+    ? (await getLocations(localSYSAdminToken)).filter((location) =>
         DISTRICTS.includes(location.id)
       )
-    : await getLocations(token)
+    : await getLocations(localSYSAdminToken)
 
-  const facilities = await getFacilities(token)
+  const facilities = await getFacilities(localSYSAdminToken)
   const crvsOffices = facilities.filter(({ type }) => type === 'CRVS_OFFICE')
   const healthFacilities = facilities.filter(
     ({ type }) => type === 'HEALTH_FACILITY'
@@ -176,10 +183,8 @@ async function main() {
   for (const location of locations) {
     log('Fetching already generated interval')
     const generatedInterval = await fetchAlreadyGeneratedInterval(
-      token,
-      crvsOffices
-        .filter(({ partOf }) => partOf === `Location/${location.id}`)
-        .map(({ id }) => id)
+      registrarToken,
+      location.id
     )
 
     if (generatedInterval.length === 0) {
@@ -200,12 +205,18 @@ async function main() {
      */
     log('Creating users for', location.name, '(', location.id, ')')
 
-    const users = await createUsers(token, location,countryAlpha3,config.config.PHONE_NUMBER_PATTERN,{
-      fieldAgents: FIELD_AGENTS,
-      hospitalFieldAgents: HOSPITAL_FIELD_AGENTS,
-      registrationAgents: REGISTRATION_AGENTS,
-      localRegistrars: LOCAL_REGISTRARS
-    })
+    const users = await createUsers(
+      localSYSAdminToken,
+      location,
+      countryAlpha3,
+      config.config.PHONE_NUMBER_PATTERN,
+      {
+        fieldAgents: FIELD_AGENTS,
+        hospitalFieldAgents: HOSPITAL_FIELD_AGENTS,
+        registrationAgents: REGISTRATION_AGENTS,
+        localRegistrars: LOCAL_REGISTRARS
+      }
+    )
     const allUsers = [
       ...users.fieldAgents,
       ...users.hospitals,
@@ -237,13 +248,15 @@ async function main() {
         users.registrars[Math.floor(Math.random() * users.registrars.length)]
 
       const days = Array.from({ length: getDaysInYear(y) }).map(() => 0)
-      let { birthRates, totalDeathsThisYear } = await getEstimates(
+      const estimations = await getEstimates(
         randomRegistrar,
         y,
         location,
         isCurrentYear,
         days
       )
+      let { totalDeathsThisYear } = estimations
+      const { birthRates } = estimations
 
       if (isCurrentYear) {
         const currentDayNumber = getDayOfYear(today)
@@ -318,7 +331,7 @@ async function main() {
           deathsToday
         )
 
-        let operations = []
+        const operations = []
         for (let ix = 0; ix < deathsToday; ix++) {
           const completionDays = getRandomFromBrackets(
             DEATH_COMPLETION_DISTRIBUTION
@@ -393,7 +406,7 @@ async function main() {
        * which then again causes the target rate numbers to be incorrect
        */
 
-      let operations = []
+      const operations = []
 
       const newEstimates = await getEstimates(
         randomRegistrar,
@@ -424,7 +437,7 @@ async function main() {
         distribution: Array.from({ length: delta })
           .map(() => getRandomFromBrackets(BIRTH_COMPLETION_DISTRIBUTION))
           .reduce((acc, cur) => {
-            BIRTH_COMPLETION_DISTRIBUTION.forEach(d => {
+            BIRTH_COMPLETION_DISTRIBUTION.forEach((d) => {
               if (cur >= d.range[0] && cur <= d.range[1]) {
                 acc[d.range[0]] = acc[d.range[0]] ? acc[d.range[0]] + 1 : 1
               }
@@ -482,7 +495,7 @@ async function main() {
         distribution: Array.from({ length: deathDelta })
           .map(() => getRandomFromBrackets(DEATH_COMPLETION_DISTRIBUTION))
           .reduce((acc, cur) => {
-            DEATH_COMPLETION_DISTRIBUTION.forEach(d => {
+            DEATH_COMPLETION_DISTRIBUTION.forEach((d) => {
               if (cur >= d.range[0] && cur <= d.range[1]) {
                 acc[d.range[0]] = acc[d.range[0]] ? acc[d.range[0]] + 1 : 1
               }
@@ -520,7 +533,7 @@ async function main() {
       await queue.addAll(operations)
     }
 
-    allUsers.forEach(user => {
+    allUsers.forEach((user) => {
       user.stillInUse = false
     })
   }
@@ -534,14 +547,14 @@ async function main() {
     isCurrentYear: boolean,
     days: number[]
   ) {
-    let birthMetrics = await getLocationMetrics(
+    const birthMetrics = await getLocationMetrics(
       randomRegistrar.token,
       startOfYear(new Date(y, 1, 1)),
       endOfYear(new Date(y, 1, 1)),
       location.id,
       'BIRTH'
     )
-    let deathMetrics = await getLocationMetrics(
+    const deathMetrics = await getLocationMetrics(
       randomRegistrar.token,
       startOfYear(new Date(y, 1, 1)),
       endOfYear(new Date(y, 1, 1)),
@@ -592,8 +605,8 @@ function birthDeclarationWorkflow(
   totalChildBirths: number,
   completionDays: number,
   config: ConfigResponse,
-  probabilityToBeIncomplete :number,
-  probabilityToBeRejected : number
+  probabilityToBeIncomplete: number,
+  probabilityToBeRejected: number
 ) {
   return async (ix: number) => {
     try {
@@ -641,6 +654,8 @@ function birthDeclarationWorkflow(
 
       let id: string
       let registrationDetails: BirthRegistrationInput
+      const keepDeclarationIncomplete =
+        Math.random() < probabilityToBeIncomplete
       if (isHospitalUser) {
         log('Sending a DHIS2 Hospital notification')
 
@@ -649,24 +664,11 @@ function birthDeclarationWorkflow(
           sex,
           birthDate,
           submissionTime,
-          randomFacility
+          randomFacility,
+          location,
+          crvsOffice
         )
-        const declaration = await fetchRegistration(randomRegistrar, id)
-        try {
-          registrationDetails = await createBirthRegistrationDetailsForNotification(
-            add(new Date(submissionTime), {
-              days: 1
-            }),
-            location,
-            declaration
-          )
-        } catch (error) {
-          console.log(error)
-          console.log(JSON.stringify(declaration))
-          throw error
-        }
       } else {
-        const keepDeclarationIncomplete = Math.random() < probabilityToBeIncomplete;
         id = await createBirthDeclaration(
           randomUser,
           keepDeclarationIncomplete ? undefined : sex,
@@ -675,24 +677,6 @@ function birthDeclarationWorkflow(
           location,
           randomFacility
         )
-        const declaration = await fetchRegistration(randomRegistrar, id)
-        if(keepDeclarationIncomplete){
-          declaration.child = {...declaration.child,gender:sex}
-        }
-        
-        try {
-          registrationDetails = await createRegistrationDetails(
-            add(new Date(submissionTime), {
-              days: 1
-            }),
-            declaration
-          )
-        } catch (error) {
-          console.log(error)
-          console.log(JSON.stringify(declaration))
-          throw error
-        }
-        log('Registering', id)
       }
 
       if (!REGISTER) {
@@ -700,20 +684,53 @@ function birthDeclarationWorkflow(
         return
       }
 
-      if(Math.random() < probabilityToBeRejected){
-        await markEventAsRejected(randomRegistrar,id,rejectionReason,rejectionComment)
-        await fetchRegistration(randomRegistrar,id)
+      log('Registering', id)
+
+      if (Math.random() < probabilityToBeRejected) {
+        await fetchRegistration(randomRegistrar, id)
+        await markEventAsRejected(
+          randomRegistrar,
+          id,
+          rejectionReason,
+          rejectionComment
+        )
       }
 
       if (!declaredRecently || Math.random() > 0.5) {
-        await markAsRegistered(randomRegistrar, id, registrationDetails)
-        const registration = await fetchRegistration(randomRegistrar, id)
+        const declaration = await fetchRegistration(randomRegistrar, id)
+        try {
+          if (isHospitalUser) {
+            registrationDetails = createBirthRegistrationDetailsForNotification(
+              add(new Date(submissionTime), {
+                days: 1
+              }),
+              location,
+              declaration
+            )
+          } else {
+            /* When the declaration is kept incomplete, we don't provide the gender when sending
+             * the declaration. So before registering we add the gender to make it complete
+             */
+            if (keepDeclarationIncomplete) {
+              declaration.child = { ...declaration.child, gender: sex }
+            }
+            registrationDetails = createRegistrationDetails(
+              add(new Date(submissionTime), {
+                days: 1
+              }),
+              declaration
+            )
+          }
+        } catch (error) {
+          console.log(error)
+          console.log(JSON.stringify(declaration))
+          throw error
+        }
 
-        if (
-          CERTIFY &&
-          (!declaredRecently || Math.random() > 0.5) &&
-          registration
-        ) {
+        await markAsRegistered(randomRegistrar, id, registrationDetails)
+
+        if (CERTIFY && (!declaredRecently || Math.random() > 0.5)) {
+          const registration = await fetchRegistration(randomRegistrar, id)
           // Wait for few seconds so registration gets updated to elasticsearch before certifying
           await wait(2000)
           log('Certifying', id)
@@ -756,8 +773,8 @@ function deathDeclarationWorkflow(
   healthFacilities: Facility[],
   completionDays: number,
   config: ConfigResponse,
-  probabilityToBeIncomplete :number,
-  probabilityToBeRejected : number
+  probabilityToBeIncomplete: number,
+  probabilityToBeRejected: number
 ) {
   return async (ix: number) => {
     try {
@@ -768,8 +785,9 @@ function deathDeclarationWorkflow(
         seconds: 24 * 60 * 60 * Math.random()
       })
 
-      const sex = Math.random() > 0.4 ? 'male' : 'female';
-      const keepDeclarationIncomplete = Math.random() < probabilityToBeIncomplete
+      const sex = Math.random() > 0.4 ? 'male' : 'female'
+      const keepDeclarationIncomplete =
+        Math.random() < probabilityToBeIncomplete
       const declaredRecently = differenceInDays(today, submissionTime) < 4
 
       const districtFacilities = healthFacilities.filter(
@@ -800,21 +818,29 @@ function deathDeclarationWorkflow(
         users.registrars[Math.floor(Math.random() * users.registrars.length)]
       log('Registering', { compositionId })
 
-      const declaration = await fetchDeathRegistration(
-        randomRegistrar,
-        compositionId
-      )
-
-      if(keepDeclarationIncomplete){
-        declaration.deceased = {...declaration.deceased , gender : sex}
-      }
-
-      if(Math.random() < probabilityToBeRejected){
-        await markEventAsRejected(randomRegistrar,compositionId,rejectionReason,rejectionComment)
-        await fetchRegistration(randomRegistrar,compositionId)
+      if (Math.random() < probabilityToBeRejected) {
+        await fetchRegistration(randomRegistrar, compositionId)
+        await markEventAsRejected(
+          randomRegistrar,
+          compositionId,
+          rejectionReason,
+          rejectionComment
+        )
       }
 
       if (!declaredRecently || Math.random() > 0.5) {
+        const declaration = await fetchDeathRegistration(
+          randomRegistrar,
+          compositionId
+        )
+
+        /* When the declaration is kept incomplete, we don't provide the gender when sending
+         * the declaration. So before registering we add the gender to make it complete
+         */
+        if (keepDeclarationIncomplete) {
+          declaration.deceased = { ...declaration.deceased, gender: sex }
+        }
+
         await markDeathAsRegistered(
           randomRegistrar,
           compositionId,
@@ -825,13 +851,13 @@ function deathDeclarationWorkflow(
             declaration
           )
         )
-        const registration = await fetchDeathRegistration(
-          randomRegistrar,
-          compositionId
-        )
-        log('Certifying', registration.id)
-        await wait(2000)
         if (CERTIFY && (!declaredRecently || Math.random() > 0.5)) {
+          const registration = await fetchDeathRegistration(
+            randomRegistrar,
+            compositionId
+          )
+          log('Certifying', registration.id)
+          await wait(2000)
           await markDeathAsCertified(
             registration.id,
             randomRegistrar,

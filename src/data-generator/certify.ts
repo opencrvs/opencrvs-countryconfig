@@ -13,7 +13,7 @@ import {
   PaymentType
 } from './gateway'
 import { omit } from 'lodash'
-import { GATEWAY_HOST } from './constants'
+import { GATEWAY_GQL_HOST } from './constants'
 import { MARK_BIRTH_AS_CERTIFIED, MARK_DEATH_AS_CERTIFIED } from './queries'
 import { differenceInDays } from 'date-fns'
 import { ConfigResponse } from './config'
@@ -83,8 +83,7 @@ export function createBirthCertificationDetails(
               date: createdAt
             }
           ],
-          data:
-            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+          data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
           collector: {
             relationship: 'MOTHER'
           }
@@ -138,7 +137,7 @@ export function createDeathCertificationDetails(
     deceased: {
       ...withIdsRemoved.deceased,
       identifier: withIdsRemoved.deceased?.identifier?.filter(
-        id => id?.type != 'DEATH_REGISTRATION_NUMBER'
+        (id) => id?.type != 'DEATH_REGISTRATION_NUMBER'
       )
     },
     eventLocation:
@@ -159,8 +158,7 @@ export function createDeathCertificationDetails(
       certificates: [
         {
           hasShowedVerifiedDocument: false,
-          data:
-            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+          data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
           payments: [
             {
               type: PaymentType.Manual,
@@ -196,7 +194,7 @@ export async function markAsCertified(
 
   const requestStart = Date.now()
 
-  const certifyDeclarationRes = await fetch(GATEWAY_HOST, {
+  const certifyDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -242,7 +240,7 @@ export async function markDeathAsCertified(
 
   const requestStart = Date.now()
 
-  const certifyDeclarationRes = await fetch(GATEWAY_HOST, {
+  const certifyDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -264,7 +262,7 @@ export async function markDeathAsCertified(
   }
   if (result.errors) {
     console.error(JSON.stringify(result.errors, null, 2))
-    details.registration?.certificates?.forEach(cert => {
+    details.registration?.certificates?.forEach((cert) => {
       if (cert?.data) {
         cert.data = 'REDACTED'
       }

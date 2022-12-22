@@ -26,22 +26,46 @@ import {
   HOSTNAME,
   DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
-import {
-  locationsHandler,
-  statisticsHandler
-} from '@countryconfig/features/administrative/handler'
-import { facilitiesHandler } from '@countryconfig/features/facilities/handler'
+import { statisticsHandler } from '@countryconfig/features/administrative/handler'
 import { contentHandler } from '@countryconfig/features/content/handler'
 import {
   generatorHandler,
   requestSchema as generatorRequestSchema,
   responseSchema as generatorResponseSchema
-} from '@countryconfig/features/generate/handler'
+} from '@countryconfig/features/generateRegistrationNumber/handler'
 import { validateRegistrationHandler } from '@countryconfig/features/validate/handler'
-
+import * as decode from 'jwt-decode'
 import { join } from 'path'
-import { birthNotificationHandler } from '@countryconfig/features/dhis2/features/notification/birth/handler'
 import { logger } from '@countryconfig/logger'
+import {
+  notificationHandler,
+  notificationScheme
+} from './features/notification/handler'
+import { mosipMediatorHandler } from './features/mediators/mosip-openhim-mediator/handler'
+
+export interface ITokenPayload {
+  sub: string
+  exp: string
+  algorithm: string
+  scope: string[]
+}
+
+const getTokenPayload = (token: string): ITokenPayload => {
+  let decoded: ITokenPayload
+  try {
+    decoded = decode(token)
+  } catch (err) {
+    throw new Error(
+      `getTokenPayload: Error occurred during token decode : ${err}`
+    )
+  }
+  return decoded
+}
+
+export function hasScope(token: string, scope: string) {
+  const tokenPayload = getTokenPayload(token)
+  return (tokenPayload.scope && tokenPayload.scope.indexOf(scope) > -1) || false
+}
 
 export const verifyToken = async (token: string, authUrl: string) => {
   const res = await fetch(`${authUrl}/verifyToken`, {
@@ -89,7 +113,7 @@ const validateFunc = async (
 }
 
 async function getPublicKey(): Promise<string> {
-try {
+  try {
     const response = await fetch(`${AUTH_URL}/.well-known`)
     return response.text()
   } catch (error) {
@@ -99,7 +123,7 @@ try {
     if (process.env.NODE_ENV === 'production') {
       throw error
     }
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    await new Promise((resolve) => setTimeout(resolve, 3000))
     return getPublicKey()
   }
 }
@@ -192,26 +216,6 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/locations',
-    handler: locationsHandler,
-    options: {
-      tags: ['api'],
-      description: 'Returns Farajaland locations.json'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/facilities',
-    handler: facilitiesHandler,
-    options: {
-      tags: ['api'],
-      description: 'Returns Farajaland facilities.json'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/content/{application}',
     handler: contentHandler,
     options: {
@@ -263,16 +267,6 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/pilotLocations',
-    handler: () => ({}),
-    options: {
-      tags: ['api'],
-      description: 'Serves current pilot location list'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/statistics',
     handler: statisticsHandler,
     options: {
@@ -284,11 +278,24 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/dhis2-notification/birth',
-    handler: birthNotificationHandler,
+    path: '/notification',
+    handler: notificationHandler,
     options: {
       tags: ['api'],
-      description: 'Handles transformation and submission of birth notification'
+      validate: {
+        payload: notificationScheme
+      },
+      description: 'Handles sending SMS'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/mosip-openhim-mediator',
+    handler: mosipMediatorHandler,
+    options: {
+      tags: ['api'],
+      description: 'Handles submission of mosip generaed NID'
     }
   })
 
@@ -319,6 +326,5 @@ export async function createServer() {
 }
 
 if (require.main === module) {
-  createServer()
-    .then(server => server.start())
+  createServer().then((server) => server.start())
 }

@@ -23,7 +23,7 @@ data
 .vscode/launch.json
 .history
 
-src/features/administrative/generated/locations.json
+src/features/employees/tmp/login-details.json
 src/tests/locations.json
 
 cypress/screenshots
