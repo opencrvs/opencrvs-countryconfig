@@ -15,7 +15,7 @@ on:
       core-image-tag:
         description: Core DockerHub image tag
         required: false
-        default: 'v1.2.0'
+        default: 'v1.2.0-beta'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
@@ -31,6 +31,7 @@ jobs:
       - name: Clone core
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           repository: 'opencrvs/opencrvs-core'
           path: './opencrvs-core'
           ref: ${{ github.event.inputs.core-image-tag }}
