@@ -6,8 +6,8 @@ import fetch from 'node-fetch'
 import { getToken, getTokenForSystemClient } from './auth'
 import { AUTH_API_HOST, GATEWAY_GQL_HOST } from './constants'
 import { expand } from 'regex-to-strings'
-import { convertToMSISDN } from '@countryconfig/utils'
-import { FIELD_AGENT_TYPES } from '@countryconfig/features/employees/scripts/manage-users'
+import { convertToMSISDN } from '@countryconfig/features/utils'
+import { FIELD_AGENT_TYPES } from '@countryconfig/features/employees/scripts/utils'
 
 export type User = {
   username: string
@@ -23,6 +23,7 @@ type Config = {
   hospitalFieldAgents: number
   registrationAgents: number
   localRegistrars: number
+  natlSysAdmin: number
 }
 
 enum Role {
@@ -34,6 +35,11 @@ enum Role {
   NationalRegistrar = 'NATIONAL_REGISTRAR',
   StateRegistrar = 'STATE_REGISTRAR',
   DistrictRegistrar = 'DISTRICT_REGISTRAR'
+}
+
+interface ICreateUser {
+  clientId: string
+  shaSecret: string
 }
 
 export async function createUser(
@@ -194,33 +200,32 @@ export async function createSystemClient(
     | 'EXTERNAL_VALIDATION'
     | 'AGE_CHECK'
     | 'RECORD_SEARCH',
-  systemAdmin: User
+    natlSystemAdmin: User
 ): Promise<User> {
   const createUserRes = await fetch(`${AUTH_API_HOST}/registerSystemClient`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${systemAdmin.token}`,
+      Authorization: `Bearer ${natlSystemAdmin.token}`,
       'x-correlation-id': `create-system-scope`
     },
-    body: JSON.stringify({ scope })
+    body: JSON.stringify({ type: scope, name:  faker.word.noun(5)})
   })
   const credentialsRes = await createUserRes.json()
   const credentials: {
-    client_id: string
-    client_secret: string
-    sha_secret: string
+    system : ICreateUser
+    clientSecret: string
   } = credentialsRes
-
+  
   const systemToken = await getTokenForSystemClient(
-    credentials.client_id,
-    credentials.client_secret
+    credentials.system.clientId,
+    credentials.clientSecret
   )
 
   return {
     token: systemToken,
-    username: credentials.client_id,
-    password: credentials.client_secret,
+    username: credentials.system.clientId,
+    password: credentials.clientSecret,
     stillInUse: true,
     primaryOfficeId: officeId,
     isSystemUser: true
@@ -275,25 +280,26 @@ export async function createUsers(
       }))
   )
 
-  const systemAdmins: User[] = await Promise.all(
+  const natlSystemAdminUser: User[] = await Promise.all(
     existingUsers
-      .filter(({ role }) => role === 'LOCAL_SYSTEM_ADMIN')
+      .filter(({ role }) => role === 'NATIONAL_SYSTEM_ADMIN')
       .map(async (user) => ({
         username: user.username,
         password: 'test',
         token: await getToken(user.username, 'test'),
         stillInUse: true,
         primaryOfficeId: user.primaryOffice.id,
-        isSystemUser: false
+        isSystemUser: true
       }))
   )
 
   // These cannot be fetched through gateway, so we'll always have to regenerate them
   const hospitals: User[] = []
-
+  
   const crvsOffices = (await getFacilities(token))
-    .filter(({ type }) => type === 'CRVS_OFFICE')
-    .filter(({ partOf }) => partOf === 'Location/' + location.id)
+    .filter(({ type }: any) => type === 'CRVS_OFFICE')
+    .filter(({ partOf }: any) => partOf === 'Location/' + location.id)
+
   if (crvsOffices.length === 0) {
     throw new Error(`Cannot find any CRVS offices for ${location.name}`)
   }
@@ -311,19 +317,31 @@ export async function createUsers(
     )
   }
   log('Field agents created')
-  log('Creating', config.hospitalFieldAgents, 'hospitals')
-  for (let i = 0; i < config.hospitalFieldAgents; i++) {
-    const systemAdmin =
-      systemAdmins[0] ||
-      (await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
-        role: 'LOCAL_SYSTEM_ADMIN',
+
+  log('Creating natlSysAdmin user')
+  for (let i = natlSystemAdminUser.length; i < config.natlSysAdmin; i++) {
+    natlSystemAdminUser.push(
+      await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
+        role: 'NATIONAL_SYSTEM_ADMIN',
         type: ''
-      }))
+      })
+    )
+  }
+  log('NatlSystemAdmin user created')
+
+  log('Creating', config.natlSysAdmin, 'hospitals')
+  for (let i = 0; i < config.natlSysAdmin; i++) {
+    const natlSystemAdmin =
+    natlSystemAdminUser[0] ||
+    (await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
+      role: 'NATIONAL_SYSTEM_ADMIN',
+      type: ''
+    }))
 
     const user = await createSystemClient(
       randomOffice.id,
       'HEALTH',
-      systemAdmin
+      natlSystemAdmin
     )
 
     hospitals.push(user)
