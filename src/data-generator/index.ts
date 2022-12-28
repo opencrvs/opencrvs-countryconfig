@@ -64,7 +64,6 @@ export const FIELD_AGENTS = 5
 export const HOSPITAL_FIELD_AGENTS = 7
 export const REGISTRATION_AGENTS = 2
 export const LOCAL_REGISTRARS = 1
-export const NATIONAL_SYSTEM_ADMIN = 1
 
 export const PROBABILITY_TO_BE_INCOMPLETE = 0.05
 export const PROBABILITY_TO_BE_REJECTED = 0.02
@@ -159,10 +158,10 @@ async function main() {
   log('Fetching locations')
   const locations =  await getLocations(localSYSAdminToken)
   const facilities = await getFacilities(localSYSAdminToken)
-  const crvsOffices = facilities.filter(({ type }: any) => type === 'CRVS_OFFICE')
+  const crvsOffices = facilities.filter(({ type }: Location) => type === 'CRVS_OFFICE')
   
   const healthFacilities = facilities.filter(
-    ({ type }: any) => type === 'HEALTH_FACILITY'
+    ({ type }: Facility) => type === 'HEALTH_FACILITY'
   )
   
   log('Found', locations.length, 'locations')
@@ -207,8 +206,7 @@ async function main() {
         fieldAgents: FIELD_AGENTS,
         hospitalFieldAgents: HOSPITAL_FIELD_AGENTS,
         registrationAgents: REGISTRATION_AGENTS,
-        localRegistrars: LOCAL_REGISTRARS,
-        natlSysAdmin: NATIONAL_SYSTEM_ADMIN
+        localRegistrars: LOCAL_REGISTRARS
       }
     )
     const allUsers = [
