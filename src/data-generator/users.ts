@@ -241,7 +241,7 @@ export async function getUserByRole(token: string, role: string) {
   return res.data.searchUsers.results
 }
 
-const createRegisterSystemUser = async(name: string, type:string, token: string) => {
+const registerSystemClient = async(name: string, type:string, token: string) => {
   const createUserRes =  await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
@@ -286,7 +286,7 @@ export async function createSystemClient(
     | 'RECORD_SEARCH',
     natlSystemAdmin: User
 ): Promise<User> {
-  const credentialsRes = await createRegisterSystemUser(faker.word.noun(5), scope, natlSystemAdmin.token)
+  const credentialsRes = await registerSystemClient(faker.word.noun(5), scope, natlSystemAdmin.token)
   const credentials: {
     system : ISystemInfo
     clientSecret: string
