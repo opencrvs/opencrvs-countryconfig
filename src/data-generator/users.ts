@@ -41,6 +41,8 @@ interface ISystemInfo {
   shaSecret: string
 }
 
+const nationalSystemAdmin: User[]  = []
+
 export async function createUser(
   token: string,
   primaryOfficeId: string,
@@ -191,6 +193,54 @@ export async function getUsers(token: string, locationId: string) {
   return res.data.searchUsers.results
 }
 
+export async function getUserByRole(token: string, role: string) {
+  const getUsersRes = await fetch(GATEWAY_GQL_HOST, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'x-correlation-id': `getusers`
+    },
+    body: JSON.stringify({
+      operationName: null,
+      variables: {
+        role: role,
+        count: 100
+      },
+      query: `
+        query ($count: Int, $skip: Int, $role: String) {
+          searchUsers(count: $count, skip: $skip, role: $role) {
+            totalItems
+            results {
+              id
+              primaryOffice {
+                id
+              }
+              username
+              role
+            }
+          }
+        }
+      `
+    })
+  })
+
+  const res = (await getUsersRes.json()) as {
+    data: {
+      searchUsers: {
+        results: Array<{
+          username: string
+          role: Role
+          type: string
+          primaryOffice: { id: string }
+        }>
+      }
+    }
+  }
+
+  return res.data.searchUsers.results
+}
+
 const createRegisterSystemUser = async(name: string, type:string, token: string) => {
   const createUserRes =  await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
@@ -305,18 +355,21 @@ export async function createUsers(
       }))
   )
 
-  const natlSystemAdmins: User[] = await Promise.all(
-    existingUsers
-      .filter(({ role }) => role === 'NATIONAL_SYSTEM_ADMIN')
-      .map(async (user) => ({
+  if(!nationalSystemAdmin.length){
+    const natlUserRes = await getUserByRole(token, 'NATIONAL_SYSTEM_ADMIN')
+    const mappedNatlUserRes =  await Promise.all(natlUserRes.map(async (user) => {
+      return {
         username: user.username,
         password: 'test',
         token: await getToken(user.username, 'test'),
         stillInUse: true,
         primaryOfficeId: user.primaryOffice.id,
         isSystemUser: false
-      }))
-  )
+      }
+    }))
+    nationalSystemAdmin.push(mappedNatlUserRes[0])
+  }
+
 
   // These cannot be fetched through gateway, so we'll always have to regenerate them
   const hospitals: User[] = []
@@ -344,21 +397,14 @@ export async function createUsers(
   log('Field agents created')
 
   log('Creating', config.hospitalFieldAgents, 'hospitals')
-  const natlSystemAdminUser =
-  natlSystemAdmins[0] ||
-    (await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
-      role: 'NATIONAL_SYSTEM_ADMIN',
-      type: ''
-    }))
-    natlSystemAdmins.push(natlSystemAdminUser)
+  const natlSystemAdminUser = nationalSystemAdmin[0] 
+
   for (let i = 0; i < config.hospitalFieldAgents; i++) {
-      
     const user = await createSystemClient(
       randomOffice.id,
       'HEALTH',
       natlSystemAdminUser
     )
-
     hospitals.push(user)
   }
 
