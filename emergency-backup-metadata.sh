@@ -160,6 +160,9 @@ fi
 # Backup Minio 
 cd /data/minio && tar -zcvf /data/backups/minio/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz * && cd /
 
+# Backup VSExport 
+cd /data/vsexport && tar -zcvf /data/backups/vsexport/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz * && cd /
+
 # Copy the backups to an offsite server in production
 #----------------------------------------------------
 if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)" ]]; then
