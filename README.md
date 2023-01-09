@@ -61,7 +61,7 @@ One of the key dependencies and enablers for OpenCRVS is country configuration a
 
 - Backups _(Backup zips of default reference data for a nation, for a factory reset, clean installation or for local development purposes.)_
 
-2. The [src](https://github.com/opencrvs/opencrvs-farajaland/master/src) folder contians the code required to run the configuration server and endpoints for receiving configuration values.  It also contains a handler to receive health notifications from an optional DHIS2 instance. It contains a "validate" webhook handler where you can integrate with an external system when OpenHIM recieves a registration. A K6 data-generator example is included that populates a demo environment with example registrations so you can see what performance analytics look like at scale.
+2. The [src](https://github.com/opencrvs/opencrvs-farajaland/master/src) folder contians the code required to run the configuration server and endpoints for receiving configuration values.  It also contains a mediator that MOSIP use to send MOSIP application IDs back to OpenCRVS after National ID creation. A K6 data-generator example is included that populates a demo environment with example registrations so you can see what performance analytics look like at scale.  Finally the notification handler can be used to configure integration into any SMS gateway you like.
 
 Required endpoints that CANNOT be changed:
 
@@ -74,20 +74,11 @@ Required endpoints that CANNOT be changed:
 
 `GET /content/{application}`
 
-- An endpoint for loading country administrative location data for offline use in the OpenCRVS web client.  This is reference data for states, districts and any other kind of administrative boundary.  This data has been previously populated into Hearth and linked to facilities and employees following the steps later in this README.
-
-`GET /locations`
-
-- An endpoint for loading country civil registation and health facility data for offline use in the OpenCRVS web client.  This is reference data for the buildings where civil registration occurs and where births and deaths happen in the health context.  This data has been previously populated into Hearth and linked to administrative locations and  employees following the steps later in this README.
-
-`GET /facilities`
-
-- An endpoint for loading country specific public assets e.g. logos
-
-`GET /definitions/{declaration}`
+- An endpoint that can be used to pre-validate a registration with an external system if the clent-config.js property EXTERNAL_VALIDATION_WORKQUEUE is set to true 
 
 `POST /validate/registration`
 
+- An endpoint that can be used to customise the format of the registration number, perhaps by integrating with another system
 
 `POST /generate/{type e.g. <brn|drn>}`
 
