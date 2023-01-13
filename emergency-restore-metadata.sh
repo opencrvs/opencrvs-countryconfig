@@ -128,6 +128,11 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 rm -rf /data/minio/ocrvs
 mkdir -p /data/minio/ocrvs
 
+# Delete all data from vsExport
+#-----------------------------
+rm -rf /data/vsexport
+mkdir -p /data/vsexport
+
 # Restore all data from a backup into Hearth, OpenHIM, User, Application-config and any other service related Mongo databases
 #--------------------------------------------------------------------------------------------------
 docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
@@ -177,5 +182,9 @@ fi
 # Restore all data from Minio
 #----------------------------
 tar -xzvf /data/backups/minio/ocrvs-$1.tar.gz -C /data/minio
+
+# Restore VSExport 
+tar -xzvf /data/backups/vsexport/ocrvs-$1.tar.gz -C /data/vsexport
+
 # Run migrations by restarting migration service
 docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration
