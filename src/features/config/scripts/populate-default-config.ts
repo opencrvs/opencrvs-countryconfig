@@ -18,7 +18,7 @@ import { countryLogo } from '@countryconfig/features/config/scripts/country-logo
 import birthCertificateTemplateDefault from '@countryconfig/features/config/scripts/birth-certificate-template-default'
 import deathCertificateTemplateDefault from '@countryconfig/features/config/scripts/death-certificate-template-default'
 
-export default async function importCertificates() {
+export default async function populateDefaultConfig(ADMIN_LEVELS: number) {
   try {
     // tslint:disable-next-line:no-console
     console.log(
@@ -49,6 +49,7 @@ export default async function importCertificates() {
 
     const defaultConfig = new Config({
       APPLICATION_NAME: 'Farajaland CRS',
+      ADMIN_LEVELS: ADMIN_LEVELS,
       BIRTH: {
         REGISTRATION_TARGET: 30,
         LATE_REGISTRATION_TARGET: 365,
@@ -70,10 +71,7 @@ export default async function importCertificates() {
           DELAYED: 0
         }
       },
-      FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT', // Because administrative division levels are not editable, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Field agents only audited at DISTRICT level
-      DECLARATION_AUDIT_LOCATIONS: 'DISTRICT', // Because administrative division levels are not editable, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Declarations only audited at DISTRICT level
-      HIDE_EVENT_REGISTER_INFORMATION: false,
-      EXTERNAL_VALIDATION_WORKQUEUE: false, // API related, you cant edit this in the UI yet as of OpenCRVS v1.0.1.  Declarations only audited at DISTRICT level
+      EXTERNAL_VALIDATION_WORKQUEUE: false, // For piloting OpenCRVS alongside an existing CR system.  Contact team@opencrvs.org if you wish to use this.  If set to true, OpenCRVS will interrupt all registrations with an API call to an external system, then send this registration to a dedicated queue awaiting asynchronous validation
       PHONE_NUMBER_PATTERN: '^0(7|9)[0-9]{8}$',
       NID_NUMBER_PATTERN: '^[0-9]{10}$'
     })
@@ -100,5 +98,3 @@ export default async function importCertificates() {
 
   return true
 }
-
-importCertificates()

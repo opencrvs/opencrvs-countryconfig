@@ -1,12 +1,13 @@
+import { ILocation } from '@countryconfig/features/utils'
 import fetch from 'node-fetch'
-import { COUNTRY_CONFIG_HOST } from './constants'
+import { GATEWAY_API_HOST } from './constants'
 
 export type Location = {
   id: string
   name: string
   alias: string
   physicalType: string
-  jurisdictionType: string
+  jurisdictionType?: string
   type: string
   partOf: string
 }
@@ -21,27 +22,99 @@ export type Facility = {
 }
 
 export async function getLocations(token: string) {
-  const res = await fetch(`${COUNTRY_CONFIG_HOST}/locations`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'x-correlation-id': 'locations-' + Date.now().toString()
-    }
-  })
-  const locations = await res.json()
+  const url = `${GATEWAY_API_HOST}/location?type=ADMIN_STRUCTURE&_count=0`
 
-  return Object.values<Location>(locations.data).filter(
-    ({ jurisdictionType }) => jurisdictionType === 'DISTRICT'
-  )
+  const res = await fetch(url, {
+    method: 'GET'
+  })
+
+  if (res && res.status !== 200) {
+    throw Error(res.statusText)
+  }
+
+  const response = await res.json()
+  const locations = {
+    data: response.entry.reduce(
+      (accumulator: { [key: string]: ILocation }, entry: fhir.BundleEntry) => {
+        if (!entry.resource || !entry.resource.id) {
+          throw new Error('Resource in entry not valid')
+        }
+
+        accumulator[entry.resource.id] = generateLocationResource(
+          entry.resource as fhir.Location
+        )
+
+        return accumulator
+      },
+      {}
+    )
+  }
+  return Object.values<Location>(locations.data).filter(({ partOf }: any) => partOf !== 'Location/0')
 }
 
 export async function getFacilities(token: string) {
-  const res = await fetch(`${COUNTRY_CONFIG_HOST}/facilities`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'x-correlation-id': 'facilities-' + Date.now().toString()
-    }
-  })
-  const facilities = await res.json()
+  const resCRVSOffices = await fetch(
+    `${GATEWAY_API_HOST}/location?type=CRVS_OFFICE&_count=0`
+  )
+  const resHealthFacilities = await fetch(
+    `${GATEWAY_API_HOST}/location?type=HEALTH_FACILITY&_count=0`
+  )
 
-  return Object.values<Facility>(facilities.data)
+  const locationBundleCRVSOffices = await resCRVSOffices.json()
+  const locationBundleHealthFacilities = await resHealthFacilities.json()
+
+  const facilities = locationBundleCRVSOffices.entry.reduce(
+    (accumulator: { [key: string]: ILocation }, entry: fhir.BundleEntry) => {
+      if (!entry.resource || !entry.resource.id) {
+        throw new Error('Resource in entry not valid')
+      }
+
+      accumulator[entry.resource.id] = generateLocationResource(
+        entry.resource as fhir.Location
+      )
+      return accumulator
+    },
+    {}
+  )
+
+  locationBundleHealthFacilities.entry.reduce(
+    (accumulator: { [key: string]: ILocation }, entry: fhir.BundleEntry) => {
+      if (!entry.resource || !entry.resource.id) {
+        throw new Error('Resource in entry not valid')
+      }
+
+      accumulator[entry.resource.id] = generateLocationResource(
+        entry.resource as fhir.Location
+      )
+      return accumulator
+    },
+    facilities
+  )
+  return Object.values<Facility>(facilities)
+}
+
+function generateLocationResource(fhirLocation: fhir.Location): ILocation {
+  const loc = {} as ILocation
+  loc.id = fhirLocation.id as string
+  loc.name = fhirLocation.name as string
+  loc.alias =
+    fhirLocation.alias && fhirLocation.alias[0] ? fhirLocation.alias[0] : ''
+  loc.status = fhirLocation.status as string
+  loc.physicalType =
+    fhirLocation.physicalType &&
+    fhirLocation.physicalType.coding &&
+    fhirLocation.physicalType.coding[0].display
+      ? fhirLocation.physicalType.coding[0].display
+      : ''
+  loc.type =
+    fhirLocation.type &&
+    fhirLocation.type.coding &&
+    fhirLocation.type.coding[0].code
+      ? fhirLocation.type.coding[0].code
+      : ''
+  loc.partOf =
+    fhirLocation.partOf && fhirLocation.partOf.reference
+      ? fhirLocation.partOf.reference
+      : ''
+  return loc
 }

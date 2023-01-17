@@ -1,9 +1,7 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: [
-    '@typescript-eslint'
-  ],
+  plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:prettier/recommended',
@@ -16,9 +14,11 @@ module.exports = {
     'no-undef': 'warn'
   },
   globals: {
-    'NodeJS': true
+    NodeJS: true,
+    fhir: true
   },
   env: {
-    'node': true
+    node: true,
+    jest: true
   }
-};
+}

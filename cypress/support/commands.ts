@@ -41,19 +41,19 @@ import { Facility, Location } from '../../src/data-generator/location'
 
 const users = {
   fieldWorker: {
-    username: 'kalusha.bwalya',
+    username: 'k.bwalya',
     password: 'test'
   },
   registrar: {
-    username: 'kennedy.mweene',
+    username: 'k.mweene',
     password: 'test'
   },
   sysAdmin: {
-    username: 'emmanuel.mayuka',
+    username: 'e.mayuka',
     password: 'test'
   },
   nsysAdmin: {
-    username: 'jonathan.campbell',
+    username: 'j.campbell',
     password: 'test'
   }
 }

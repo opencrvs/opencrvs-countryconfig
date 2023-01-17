@@ -42,16 +42,7 @@ import { readFileSync } from 'fs'
 
 export const LANGUAGES_SOURCE = path.join(
   process.cwd(),
-  'src/features/languages/generated/'
-)
-export const ADMIN_STRUCTURE_SOURCE = path.join(
-  process.cwd(),
-  'src/features/administrative/'
-)
-
-export const FACILITIES_SOURCE = path.join(
-  process.cwd(),
-  'src/features/facilities/'
+  'src/features/languages/content/'
 )
 
 export const EMPLOYEES_SOURCE = path.join(

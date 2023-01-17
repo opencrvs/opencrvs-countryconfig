@@ -9,11 +9,11 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { generateRegistrationNumber } from '@countryconfig/features/generate/service'
+import { generateRegistrationNumber } from '@countryconfig/features/generateRegistrationNumber/service'
 import {
   getTaskResource,
   getTrackingIdFromTaskResource
-} from '@countryconfig/utils/fhir-utils'
+} from '@countryconfig/features/utils'
 
 export async function createWebHookResponseFromBundle(bundle: fhir.Bundle) {
   const taskResource = getTaskResource(bundle)
