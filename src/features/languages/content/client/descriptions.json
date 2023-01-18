@@ -206,7 +206,6 @@
     "constants.registeredInTargetd": "A label for Registered in {registrationTargetDays} days",
     "constants.timePeriod": "A label for Time period",
     "constants.viewAll": "Label for view all link",
-    "constants.notAvailable": "Placeholder for empty value",
     "constants.history": "History heading",
     "constants.requireUpdatesLoading": "The text when all rejected declarations are loading",
     "constants.noConnection": "No Connection hover text",
