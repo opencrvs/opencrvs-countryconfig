@@ -44,6 +44,7 @@
     "resend.sms": "Text for button that resends SMS verification code",
     "error.networkError": "The error that appears when there is no internet connection",
     "login.stepOneInstruction": "The instruction that appears in step one of the form",
+    "login.stepOneText": "The instruction that appears in step one of the login form",
     "login.submit": "The label that appears on the submit button",
     "login.forgotPassword": "The label that appears on the Forgot password button",
     "login.submissionError": "The error that appears when the user entered details are unauthorised",
