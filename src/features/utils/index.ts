@@ -36,6 +36,7 @@ export enum EVENT_TYPE {
 export interface ILocation {
   id?: string
   name?: string
+  status?: string
   alias?: string
   physicalType?: string
   jurisdictionType?: string

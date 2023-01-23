@@ -109,6 +109,8 @@ docker run --rm --network=$NETWORK mongo:4.4 mongo hearth-dev $(mongo_credential
 docker run --rm --network=$NETWORK mongo:4.4 mongo openhim-dev $(mongo_credentials) --host $HOST --eval "db.dropDatabase()"
 docker run --rm --network=$NETWORK mongo:4.4 mongo user-mgnt $(mongo_credentials) --host $HOST --eval "db.dropDatabase()"
 docker run --rm --network=$NETWORK mongo:4.4 mongo application-config $(mongo_credentials) --host $HOST --eval "db.dropDatabase()"
+docker run --rm --network=$NETWORK mongo:4.4 mongo metrics $(mongo_credentials) --host $HOST --eval "db.dropDatabase()"
+docker run --rm --network=$NETWORK mongo:4.4 mongo webhooks $(mongo_credentials) --host $HOST --eval "db.dropDatabase()"
 
 # Delete all data from search
 #----------------------------
@@ -121,6 +123,16 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(ela
 docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
 docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP DATABASE \"ocrvs\"" -v
 
+# Delete all data from minio
+#-----------------------------
+rm -rf /data/minio/ocrvs
+mkdir -p /data/minio/ocrvs
+
+# Delete all data from vsExport
+#-----------------------------
+rm -rf /data/vsexport
+mkdir -p /data/vsexport
+
 # Restore all data from a backup into Hearth, OpenHIM, User, Application-config and any other service related Mongo databases
 #--------------------------------------------------------------------------------------------------
 docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
@@ -131,6 +143,10 @@ docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mo
  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/user-mgnt-$1.gz"
 docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/application-config-$1.gz"
+docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/metrics-$1.gz"
+docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+ -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/webhooks-$1.gz"
 
 # Register backup folder as an Elasticsearch repository for restoring the search data
 #-------------------------------------------------------------------------------------
@@ -163,7 +179,12 @@ else
   ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker cp /data/backups/influxdb/$1/ $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user"
   ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /home/user/$1"
 fi
-
-# run migration by restarting migration service
-docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration
+# Restore all data from Minio
+#----------------------------
 tar -xzvf /data/backups/minio/ocrvs-$1.tar.gz -C /data/minio
+
+# Restore VSExport 
+tar -xzvf /data/backups/vsexport/ocrvs-$1.tar.gz -C /data/vsexport
+
+# Run migrations by restarting migration service
+docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration

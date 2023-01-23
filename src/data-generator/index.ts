@@ -53,9 +53,9 @@ import { markEventAsRejected } from './reject'
 
 // The script is required to log in with a demo system admin
 // This prevents the script from being used in production, as there are no users with a "demo" scope there
-const LOCAL_SYS_ADMIN_USERNAME = 'emmanuel.mayuka'
+const LOCAL_SYS_ADMIN_USERNAME = 'e.mayuka'
 const LOCAL_SYS_ADMIN_PASSWORD = 'test'
-const REGISTRAR_USERNAME = 'kennedy.mweene'
+const REGISTRAR_USERNAME = 'k.mweene'
 const REGISTRAR_PASSWORD = 'test'
 
 export const VERIFICATION_CODE = '000000'
@@ -71,10 +71,6 @@ export const PROBABILITY_TO_BE_REJECTED = 0.02
 const CONCURRENCY = process.env.CONCURRENCY
   ? parseInt(process.env.CONCURRENCY, 10)
   : 3
-
-const DISTRICTS = process.env.DISTRICTS
-  ? process.env.DISTRICTS.split(',')
-  : null
 
 const START_YEAR = 2021
 const END_YEAR = 2022
@@ -160,18 +156,14 @@ async function main() {
 
   log('Got token for system administrator')
   log('Fetching locations')
-  const locations = DISTRICTS
-    ? (await getLocations(localSYSAdminToken)).filter((location) =>
-        DISTRICTS.includes(location.id)
-      )
-    : await getLocations(localSYSAdminToken)
-
+  const locations =  await getLocations(localSYSAdminToken)
   const facilities = await getFacilities(localSYSAdminToken)
-  const crvsOffices = facilities.filter(({ type }) => type === 'CRVS_OFFICE')
+  const crvsOffices = facilities.filter(({ type }: Location) => type === 'CRVS_OFFICE')
+  
   const healthFacilities = facilities.filter(
-    ({ type }) => type === 'HEALTH_FACILITY'
+    ({ type }: Facility) => type === 'HEALTH_FACILITY'
   )
-
+  
   log('Found', locations.length, 'locations')
 
   /*
