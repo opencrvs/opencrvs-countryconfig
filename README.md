@@ -47,7 +47,7 @@ In a separate Terminal window, checkout this repository and checkout the master 
 3. Run `cd opencrvs-farajaland`
 4. Run `git checkout master`
 5. Run `yarn install`
-6. Run `yarn dev <!-- PATH_TO_OPEN_CRVS_CORE_DIRECTORY -->` You can find out "PATH_TO_OPEN_CRVS_CORE_DIRECTORY" by running `pwd` in your opencrvs-core directory.
+6. Run `yarn dev`
 
 ## What is in the Farajaland configuration module repository?
 
@@ -85,3 +85,4 @@ One of the key dependencies and enablers for OpenCRVS is country configuration a
 `POST /generate/{type e.g. <brn|drn>}`
 
 **<a href="https://documentation.opencrvs.org">Read our documentation</a> in order to learn how to make your own country configuration!**
+
