@@ -33,7 +33,7 @@ This module also provides a logical location where you may wish to store the cod
 
 **If you successfully ran the `bash setup.sh` script in OpenCRVS Core you already have this module checked out, the dependencies are installed, the Farajaland database is populated and you can just run the following command.** 
 
-2. `yarn dev <!-- PATH_TO_OPEN_CRVS_CORE_DIRECTORY -->` You can find out "PATH_TO_OPEN_CRVS_CORE_DIRECTORY" by running `pwd` in your opencrvs-core directory.
+2. `yarn dev`
 
 Thats it! 🎉
 
@@ -47,7 +47,7 @@ In a separate Terminal window, checkout this repository and checkout the master 
 3. Run `cd opencrvs-farajaland`
 4. Run `git checkout master`
 5. Run `yarn install`
-6. Run `yarn dev <!-- PATH_TO_OPEN_CRVS_CORE_DIRECTORY -->` You can find out "PATH_TO_OPEN_CRVS_CORE_DIRECTORY" by running `pwd` in your opencrvs-core directory.
+6. Run `yarn dev`
 
 ## What is in the Farajaland configuration module repository?
 
@@ -57,13 +57,15 @@ One of the key dependencies and enablers for OpenCRVS is country configuration a
 
 - [Cypress](https://www.cypress.io/) end-to-end tests that can be run in continuous integration.
 
-- Docker Compose environment variables. Secrets required for your external API integrations unique to your country.  Examples include: SMS gateway provider selection between [Clickatell](https://www.clickatell.com/) & [Infobip](https://www.infobip.com/)
+- Docker Compose scripts that allow you to customise individual OpenCRVS Core microservices and the countryconfig microservice
 
 - Backups _(Backup zips of default reference data for a nation, for a factory reset, clean installation or for local development purposes.)_
 
-2. The [src](https://github.com/opencrvs/opencrvs-farajaland/master/src) folder contians the code required to run the configuration server and endpoints for receiving configuration values.  It also contains a mediator that MOSIP use to send MOSIP application IDs back to OpenCRVS after National ID creation. A K6 data-generator example is included that populates a demo environment with example registrations so you can see what performance analytics look like at scale.  Finally the notification handler can be used to configure integration into any SMS gateway you like.
+- The [src](https://github.com/opencrvs/opencrvs-farajaland/master/src) folder contians the code required to run the countryconfig microservice and configure your country implementation.  For more information please [read this section of the documentation.](https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration)
 
-Required endpoints that CANNOT be changed:
+- A data-generator example is included that populates a demo environment with example registrations so you can see what performance analytics look like at scale. 
+
+- Postman collections demonstrate how to interoperate with OpenCRVS.  You can build any custom integration into OpenCRVS in this repository if you need to.
 
 - JS configuration settings files that the clients require in order to initialise, set up languages, track any errors and find essential services.
 
@@ -82,6 +84,5 @@ Required endpoints that CANNOT be changed:
 
 `POST /generate/{type e.g. <brn|drn>}`
 
-The features folder, contains the scripts needed to populate OpenCRVS databases with reference data when creating a new country config installataion and backup
-
 **<a href="https://documentation.opencrvs.org">Read our documentation</a> in order to learn how to make your own country configuration!**
+
