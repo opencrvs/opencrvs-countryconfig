@@ -586,6 +586,7 @@
     "config.userRoles.subtitle": "Subtile for informant sms notification",
     "config.userRoles.systemRoles": "ListViewSimplified header for system roles",
     "config.userRoles.role": "ListViewSimplified header for role",
+    "config.userRoles.roleUpdateInstruction": "Instruction for adding/updating role in role management modal",
     "register.confirmationScreen.buttons.back": "The button to return to the homescreen",
     "register.confirmationScreen.boxHeaderDesc": "The first box header description that appear on the confirmation screen ",
     "register.confirmationScreen.trackingSectionTitle": "The tracking section title that appear on the confirmation screen",
