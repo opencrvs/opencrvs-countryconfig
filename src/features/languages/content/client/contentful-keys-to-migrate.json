@@ -20,6 +20,7 @@
   "constants.applicationName",
   "constants.integrations",
   "constants.downloaded",
+  "constants.systemrole",
   "constants.noResultsOutbox",
   "constants.record",
   "constants.assignRecord",

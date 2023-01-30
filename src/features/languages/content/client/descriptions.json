@@ -126,6 +126,7 @@
     "constants.phoneNumber": "Phone label",
     "constants.PIN": "PIN label",
     "constants.role": "Role label",
+    "constants.systemrole": "System Role label",
     "constants.last30Days": "Label for  preset date range Last 30 days",
     "constants.last12Months": "Label for preset date range Last 12 months",
     "constants.lastEdited": "Label for rejection date in work queue list item",
