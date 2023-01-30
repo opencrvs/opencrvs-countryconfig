@@ -130,6 +130,7 @@
   "config.userRoles.subtitle",
   "config.userRoles.systemRoles",
   "config.userRoles.role",
+  "config.userRoles.roleUpdateInstruction",
   "conflicts.modal.assign.description",
   "conflicts.modal.assigned.description",
   "conflicts.modal.assigned.title",
