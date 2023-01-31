@@ -1027,6 +1027,7 @@
     "review.rejection.form": "Rejection form name",
     "review.rejection.form.reasons": "Rejection reasons checkbox label",
     "review.rejection.form.reasons.duplicate": "Label for rejection option duplicate",
+    "review.rejection.form.reasons.markDuplicate": "Label for rejection option duplicate",
     "review.rejection.form.reasons.misspelling": "Label for rejection option misspelling",
     "review.rej.form.reasons.missSupDoc": "Label for rejection option missing supporting doc",
     "review.rejection.form.reasons.other": "Label for rejection option other",
