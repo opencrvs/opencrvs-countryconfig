@@ -329,6 +329,7 @@
   "performance.reports.header.totalCorrections",
   "performance.reports.header.totalPayments",
   "performance.reports.header.applicationSources",
+  "performance.reports.subHeader.applicationSources",
   "performance.values.labels.total",
   "performance.values.labels.delayed",
   "performance.values.labels.late",

@@ -8,6 +8,12 @@ import {
   zodValidateDuplicates,
   checkFacilityExistsInAnyLocation
 } from './humdata-validation'
+import {
+  extractLocationTree,
+  extractStatisticsMap,
+  getChildLocations,
+  getStatistics
+} from '@countryconfig/features/administrative/scripts/utils'
 
 export interface IHumdataLocation {
   admin0Pcode: string
@@ -261,6 +267,107 @@ async function main() {
       process.exit(1)
     }
   }
+
+  // verify if male_estimation + female_estimation <= total , for each adminlevel statistics
+  const stats = await getStatistics(process.argv[6])
+  const statisticsMap = extractStatisticsMap(stats)
+
+  let isValidStatistics = true
+  const statisticsErrorMessage = []
+  for (const locationStat of statisticsMap.values()) {
+    for (const year of locationStat.years) {
+      if (year.population < year.male_population + year.female_population) {
+        isValidStatistics = false
+        statisticsErrorMessage.push(
+          chalk.blue('STATISTICS ERROR! ') +
+            chalk.yellow(
+              `Line ${
+                Array.from(statisticsMap.keys()).indexOf(locationStat.id) + 2
+              } `
+            ) +
+            `Location: ${locationStat.name}, year: ${year.year}, ` +
+            `Sum of male estimation and female estimation is higher than the total population`
+        )
+      }
+    }
+  }
+
+  // verify if sum(childrenLocationsEstimations) <= parentLocationEstimation , for each locations having child locations
+  const locationMap = extractLocationTree(rawLocations as any, MAX_ADMIN_LEVEL)!
+  const locationHierarchyMap: Record<string, string[]> = {}
+  // adminLevel 0 doesn't need to be added as it's the country level
+  // If it needs to be added in the future, amend the condition to be `adminLevel >= 0`
+  for (let adminLevel = MAX_ADMIN_LEVEL; adminLevel > 0; adminLevel--) {
+    for (let i = 0; i < rawLocations.length; i++) {
+      const column = `admin${adminLevel}Pcode`
+      const location = rawLocations[i][column]!
+      const children = getChildLocations(location, locationMap)
+      locationHierarchyMap[location] = children
+    }
+  }
+
+  for (const location of Object.keys(locationHierarchyMap)) {
+    if (locationHierarchyMap[location].length == 0) {
+      continue
+    } else {
+      const childrenLocations = locationHierarchyMap[location]
+      const ownStat = statisticsMap.get(location)
+      if (!ownStat) {
+        return
+      }
+      for (const year of ownStat?.years) {
+        const yearWiseChildrenStats = childrenLocations
+          .map((e) => statisticsMap.get(e))
+          .map((e, i) => {
+            return {
+              yearStat: e?.years.find((m) => m.year === year.year),
+              index: i
+            }
+          })
+
+        const sumStat = yearWiseChildrenStats.reduce((ac, ca) => {
+          if (!ca.yearStat) {
+            isValidStatistics = false
+            statisticsErrorMessage.push(
+              chalk.blue('STATISTICS ERROR! ') +
+                chalk.yellow(
+                  `Line ${
+                    Array.from(statisticsMap.keys()).indexOf(
+                      childrenLocations[ca.index]
+                    ) + 2
+                  } `
+                ) +
+                `Couldn't find child location data: ${
+                  childrenLocations[ca.index]
+                }, year: ${
+                  year.year
+                }, but that year's data exists for parent: ${ownStat.name}`
+            )
+            return ac + 0
+          }
+
+          return ac + ca.yearStat.population
+        }, 0)
+
+        if (year.population < sumStat) {
+          isValidStatistics = false
+          statisticsErrorMessage.push(
+            chalk.blue('STATISTICS ERROR! ') +
+              chalk.yellow(
+                `Line ${
+                  Array.from(statisticsMap.keys()).indexOf(ownStat.id) + 2
+                } `
+              ) +
+              `Location: ${ownStat.name}, year: ${year.year}, ` +
+              `Sum of child locations' estimations is higher than the total population , The total population should be >= ${sumStat}`
+          )
+        }
+      }
+    }
+  }
+
+  !isValidStatistics && statisticsErrorMessage.forEach((msg) => error(msg))
+  !isValidStatistics && process.exit(1)
 
   /*const MAX_ADMIN_LEVEL_LOCATIONS = locations.map(
     (location) => location[`admin${MAX_ADMIN_LEVEL}Pcode`]!
