@@ -286,7 +286,14 @@ export async function createSystemClient(
     | 'RECORD_SEARCH',
     natlSystemAdmin: User
 ): Promise<User> {
-  const credentialsRes = await registerSystemClient(faker.word.noun(5), scope, natlSystemAdmin.token)
+  const facilities = await getFacilities(natlSystemAdmin.token)
+  const healthFacilities = facilities.filter(
+    ({ type }: Facility) => type === 'HEALTH_FACILITY'
+  )
+  const randomIndex = Math.floor(Math.random() * healthFacilities.length);
+  const randomHealthFacilityName = healthFacilities[randomIndex].name  
+
+  const credentialsRes = await registerSystemClient(randomHealthFacilityName, scope, natlSystemAdmin.token)
   const credentials: {
     system : ISystemInfo
     clientSecret: string
