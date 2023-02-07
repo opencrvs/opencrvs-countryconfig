@@ -839,6 +839,7 @@
     "navigation.config": "Config label in navigation",
     "navigation.certificate": "Certificates label in navigation",
     "navigation.reports": "Reports label in navigation",
+    "navigation.organisation": "Organisations label in navigation",
     "navigation.completenessRates": "Completeness rates in navigation",
     "navigation.declarationForms": "Declaration forms label in navigation",
     "navigation.integration": "Integration forms label in navigation",
