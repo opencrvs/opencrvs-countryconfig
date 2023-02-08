@@ -316,6 +316,7 @@
   "integrations.updatePermissionsMsg",
   "integrations.deleteSystemText",
   "integrations.deleteSystemMsg",
+  "navigation.organisation",
   "navigation.completenessRates",
   "navigation.declarationForms",
   "navigation.integration",
