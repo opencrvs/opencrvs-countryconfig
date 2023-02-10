@@ -169,8 +169,8 @@ const birthRegistrationFragment = gql`
       }
       user {
         id
-        type
         role
+        systemRole
         name {
           firstNames
           familyName
