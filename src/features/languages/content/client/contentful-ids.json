@@ -1123,7 +1123,7 @@
   "printCertificateQueryError": "print.certificate.queryError",
   "printCertificateReviewDescription": "print.certificate.review.description",
   "printCertificateReviewModalBody": "print.certificate.review.modal.body",
-  "printCertificateReviewModalTitle": "print.certificate.review.modal.title",
+  "printCertificateReviewPrintModalTitle": "print.certificate.review.printModalTitle",
   "printCertificateReviewTitle": "print.certificate.review.title",
   "printCertificateSectionTitle": "print.certificate.section.title",
   "printCertificateSelectSignature": "print.certificate.selectSignature",
