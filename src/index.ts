@@ -150,7 +150,7 @@ export async function createServer() {
   let publicKeyUpdatedAt = Date.now()
 
   server.auth.strategy('jwt', 'jwt', {
-    key: () => publicKey,
+    key: () => ({ key: publicKey }),
     errorFunc: (errorContext: ErrorContext) => {
       /*
        * If an incoming request fails with a 401 Unauthorized, we need to check if the
