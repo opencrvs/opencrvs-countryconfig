@@ -52,7 +52,7 @@ for i in "$@"; do
 done
 
 print_usage_and_exit() {
-  echo 'Usage: ./emergency-backup-metadata.sh SSH_USER SSH_HOST SSH_PORT PRODUCTION_IP REMOTE_DIR REPLICAS VERSION'
+  echo 'Usage: ./emergency-backup-metadata.sh --ssh_user=XXX --ssh_host=XXX --ssh_port=XXX --production_ip=XXX --remote_dir=XXX --replicas=XXX --version=XXX'
   echo "Script must receive SSH details and a target directory of a remote server to copy backup files to."
   echo "Optionally a VERSION i.e. 'v1.0.1' can be provided to be appended to the backup file labels"
   echo "7 days of backup data will be retained in the manager node"
@@ -66,27 +66,27 @@ print_usage_and_exit() {
 }
 
 if [ -z "$SSH_USER" ]; then
-  echo "Error: Argument for the SSH_USER is required."
+  echo "Error: Argument for the --ssh_user is required."
   print_usage_and_exit
 fi
 if [ -z "$SSH_HOST" ]; then
-  echo "Error: Argument for the SSH_HOST is required."
+  echo "Error: Argument for the --ssh_host is required."
   print_usage_and_exit
 fi
 if [ -z "$SSH_PORT" ]; then
-  echo "Error: Argument for the SSH_PORT is required."
+  echo "Error: Argument for the --ssh_port is required."
   print_usage_and_exit
 fi
 if [ -z "$PRODUCTION_IP" ]; then
-  echo "Error: Argument for the PRODUCTION_IP is required."
+  echo "Error: Argument for the --production_ip is required."
   print_usage_and_exit
 fi
 if [ -z "$REMOTE_DIR" ]; then
-  echo "Error: Argument for the REMOTE_DIR is required."
+  echo "Error: Argument for the --remote_dir is required."
   print_usage_and_exit
 fi
 if [ -z "$REPLICAS" ]; then
-  echo "Error: Argument for the REPLICAS is required."
+  echo "Error: Argument for the --replicas is required."
   print_usage_and_exit
 fi
 
