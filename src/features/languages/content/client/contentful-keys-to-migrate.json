@@ -376,6 +376,7 @@
   "performance.appSrc.labels.registrationAgents",
   "performance.labels.certificationRate",
   "performance.reports.corrections.other.label",
+  "performance.fieldAgents.columnHeader.role",
   "performance.stats.header",
   "performance.registrarsToCitizen",
   "performance.registrarsToCitizenValue",

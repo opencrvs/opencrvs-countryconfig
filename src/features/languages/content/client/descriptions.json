@@ -953,6 +953,7 @@
     "performance.fieldAgents.noResult": "Text for no field agent found",
     "performance.fieldAgents.columnHeader.name": "Column header for field agent",
     "performance.fieldAgents.columnHeader.type": "Column header for type in field agent list",
+    "performance.fieldAgents.columnHeader.role": "Column header for role in field agent list",
     "performance.fieldAgents.columnHeader.office": "Column header for office in field agent list",
     "performance.fieldAgents.columnHeader.startMonth": "Column header for start of month in field agent list",
     "performance.fieldAgents.columnHeader.totalSent": "Column header for total declaration sent in field agent list",
