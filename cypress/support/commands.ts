@@ -37,7 +37,11 @@
 
 import { faker } from '@faker-js/faker'
 import { createBirthDeclarationData } from '../../src/data-generator/declare'
-import { Facility, Location } from '../../src/data-generator/location'
+import {
+  Facility,
+  generateLocationResource,
+  Location
+} from '../../src/data-generator/location'
 
 const users = {
   fieldWorker: {
@@ -107,7 +111,7 @@ Cypress.Commands.add('login', (userType, options = {}) => {
   })
 
   // Wait for app to load so token can be stored
-  cy.get('#createPinBtn')
+  cy.get('#pin-input')
 })
 
 Cypress.Commands.add('selectOption', (selector, text, option) => {
@@ -139,12 +143,10 @@ Cypress.Commands.add('goToNextFormSection', () => {
 
 Cypress.Commands.add('createPin', () => {
   // CREATE PIN
-  cy.get('#createPinBtn', { timeout: 130000 }).should('be.visible')
-  cy.get('#createPinBtn', { timeout: 130000 }).click()
+  cy.get('#pin-input', { timeout: 130000 }).should('exist')
+  cy.get('#pin-input', { timeout: 130000 }).click()
   for (let i = 1; i <= 8; i++) {
-    cy.get('#pin-keypad-container')
-      .click()
-      .type(`${i % 2}`)
+    cy.get('#pin-input').type(`${i % 2}`)
   }
 })
 
@@ -355,33 +357,41 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
 
 function getLocationWithName(token, name) {
   return cy
-    .request<{ data: Record<string, Location> }>({
+    .request<{ entry: Array<{ resource: Location }> }>({
       method: 'GET',
-      url: `${Cypress.env('COUNTRYCONFIG_URL')}locations`,
+      url: `${Cypress.env(
+        'GATEWAY_URL'
+      )}location?type=ADMIN_STRUCTURE&_count=0`,
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     .its('body')
     .then((body) => {
-      return Object.values(body.data).find((location) => location.name === name)
+      return body.entry
+        .map((fhirEntry) => generateLocationResource(fhirEntry.resource))
+        .find((location) => location.name === name)
     })
 }
 
 function getRandomFacility(token, location) {
   return cy
-    .request<{ data: Record<string, Facility> }>({
+    .request<{ entry: Array<{ resource: any }> }>({
       method: 'GET',
-      url: `${Cypress.env('COUNTRYCONFIG_URL')}facilities`,
+      url: `${Cypress.env(
+        'GATEWAY_URL'
+      )}location?type=HEALTH_FACILITY&_count=0`,
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     .its('body')
     .then((body) => {
-      return Object.values(body.data).find(
-        (facility) => facility.partOf === `Location/${location.id}`
-      )
+      return body.entry
+        .map((fhirEntry) => generateLocationResource(fhirEntry.resource))
+        .find(
+          (facility: Facility) => facility.partOf === `Location/${location.id}`
+        )
     })
 }
 

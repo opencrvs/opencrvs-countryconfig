@@ -28,6 +28,10 @@ import * as niceware from 'niceware'
 import { MONGO_URL } from '@countryconfig/constants'
 import * as mongoose from 'mongoose'
 import Role from '@countryconfig/features/employees/model/role'
+import fetch from 'node-fetch'
+import { GATEWAY_GQL_HOST } from '@countryconfig/data-generator/constants'
+import { getSystemRolesQuery } from '@countryconfig/data-generator/queries'
+import { SystemRole } from '@countryconfig/data-generator/gateway'
 
 export const FIELD_AGENT_TYPES = [
   'HEALTHCARE_WORKER',
@@ -35,6 +39,29 @@ export const FIELD_AGENT_TYPES = [
   'SOCIAL_WORKER',
   'LOCAL_LEADER'
 ]
+
+export async function getAgentRoles(token: string): Promise<SystemRole[]> {
+    const res = await fetch(GATEWAY_GQL_HOST, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        query: getSystemRolesQuery,
+        variables: {
+          active: true
+        }
+      })
+    })
+
+    if (!res.ok) {
+      throw new Error(`Could not fetch agent roles, ${res.statusText} ${res.status}`)
+    }
+    const roles = await res.json()
+    return roles.data.getSystemRoles
+
+}
 
 function setDemoUser(scopes: string[], environment: string): string[] {
   if (environment === 'development') {
