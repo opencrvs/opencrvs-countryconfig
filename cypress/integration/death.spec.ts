@@ -10,6 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 /// <reference types="Cypress" />
+import faker from '@faker-js/faker'
 
 context('Death Integration Test', () => {
   beforeEach(() => {
@@ -48,7 +49,13 @@ context('Death Integration Test', () => {
   })
 
   it('Tests from declaration to rejection using minimum input', () => {
-    cy.declareDeathDeclarationWithMinimumInput()
+    const deceasedFirstNames = faker.name.firstName()
+    const deceasedFamilyName = faker.name.lastName()
+
+    cy.declareDeathDeclarationWithMinimumInput({
+      deceasedFirstNames,
+      deceasedFamilyName
+    })
   })
 
   it('Login As Register & Reject Minimum input Death Declaration', () => {
@@ -59,7 +66,12 @@ context('Death Integration Test', () => {
   })
 
   it('Tests from declaration to rejection using maximum input', () => {
-    cy.declareDeathDeclarationWithMaximumInput()
+    const deceasedFirstNames = faker.name.firstName()
+    const deceasedFamilyName = faker.name.lastName()
+    cy.declareDeathDeclarationWithMaximumInput({
+      deceasedFirstNames,
+      deceasedFamilyName
+    })
   })
 
   it('Login As Register & Reject Maximum input Death Declaration', () => {
