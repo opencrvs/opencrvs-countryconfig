@@ -169,7 +169,13 @@ const birthRegistrationFragment = gql`
       }
       user {
         id
-        role
+        role {
+          _id
+          labels {
+            lang
+            label
+          }
+        }
         systemRole
         name {
           firstNames
@@ -437,3 +443,18 @@ export const FETCH_DEATH_REGISTRATION_QUERY = print(gql`
     }
   }
 `)
+
+export const getSystemRolesQuery = print(gql`
+  query getSystemRoles {
+    getSystemRoles(active: true) {
+      value
+      roles {
+        _id
+        labels {
+          label
+        }
+      }
+    }
+  }
+`
+)
