@@ -49,7 +49,9 @@ export async function getLocations(token: string) {
       {}
     )
   }
-  return Object.values<Location>(locations.data).filter(({ partOf }: any) => partOf !== 'Location/0')
+  return Object.values<Location>(locations.data).filter(
+    ({ partOf }: any) => partOf !== 'Location/0'
+  )
 }
 
 export async function getFacilities(token: string) {
@@ -93,7 +95,9 @@ export async function getFacilities(token: string) {
   return Object.values<Facility>(facilities)
 }
 
-function generateLocationResource(fhirLocation: fhir.Location): ILocation {
+export function generateLocationResource(
+  fhirLocation: fhir.Location
+): ILocation {
   const loc = {} as ILocation
   loc.id = fhirLocation.id as string
   loc.name = fhirLocation.name as string
