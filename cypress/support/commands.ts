@@ -236,7 +236,7 @@ Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
 Cypress.Commands.add('rejectDeclaration', () => {
   cy.get('#rejectDeclarationBtn').click()
   // REJECT MODAL
-  cy.get('#rejectionReasonother').click()
+  cy.get('#rejectionCommentForHealthWorker').click()
   cy.get('#rejectionCommentForHealthWorker').type(
     'Lack of information, please notify informant about it.'
   )
