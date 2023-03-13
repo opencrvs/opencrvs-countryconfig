@@ -13,7 +13,7 @@
 
 import faker from '@faker-js/faker'
 
-context('Search Integration Test', () => {
+context('Correct Record Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
@@ -51,9 +51,11 @@ context('Search Integration Test', () => {
         cy.get('#continue_button').click()
         cy.get('#supportDocumentRequiredForCorrection_false').click()
         cy.get('#confirm_form').click()
+        // we need to figure out a way to remove these waits
         cy.wait(5000)
         cy.get('#type_CLERICAL_ERROR').click()
         cy.get('#confirm_form').click()
+        cy.wait(5000)
         cy.get('#correctionFees_NOT_REQUIRED').click()
         cy.get('#make_correction').click()
         cy.wait(10000)

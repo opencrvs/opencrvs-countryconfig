@@ -104,7 +104,8 @@ export async function sendBirthNotification(
       '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
     dateOfBirth: birthDate.toISOString().split('T')[0],
     placeOfBirth: `Location/${facility.id}`,
-    officeLocation: office.partOf
+    officeLocation: office.partOf,
+    office: `Location/${office.id}`
   })
 
   const createBirthNotification = await fetch(

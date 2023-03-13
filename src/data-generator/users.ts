@@ -277,6 +277,7 @@ const registerSystemClient = async(name: string, type:string, token: string) => 
 
 export async function createSystemClient(
   officeId: string,
+  systemClientName: string,
   scope:
     | 'HEALTH'
     | 'NATIONAL_ID'
@@ -285,7 +286,11 @@ export async function createSystemClient(
     | 'RECORD_SEARCH',
     natlSystemAdmin: User
 ): Promise<User> {
-  const credentialsRes = await registerSystemClient(faker.word.noun(5), scope, natlSystemAdmin.token)
+  const credentialsRes = await registerSystemClient(
+    systemClientName,
+    scope,
+    natlSystemAdmin.token
+  )
   const credentials: {
     system : ISystemInfo
     clientSecret: string
@@ -371,8 +376,15 @@ export async function createUsers(
 
   // These cannot be fetched through gateway, so we'll always have to regenerate them
   const hospitals: User[] = []
-  const crvsOffices = (await getFacilities(token))
+  
+  const facilities = await getFacilities(token)
+
+  const crvsOffices = facilities
     .filter(({ type }: Facility) => type === 'CRVS_OFFICE')
+    .filter(({ partOf }: Facility) => partOf === 'Location/' + location.id)
+
+  const healthFacilities = facilities
+    .filter(({ type }: Facility) => type === 'HEALTH_FACILITY')
     .filter(({ partOf }: Facility) => partOf === 'Location/' + location.id)
 
   if (crvsOffices.length === 0) {
@@ -407,6 +419,7 @@ export async function createUsers(
   for (let i = 0; i < config.hospitalFieldAgents; i++) {
     const user = await createSystemClient(
       randomOffice.id,
+      faker.helpers.arrayElement(healthFacilities).name,
       'HEALTH',
       natlSystemAdminUser
     )
