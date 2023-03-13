@@ -12,7 +12,7 @@
 
 import fetch from 'node-fetch'
 import { FHIR_URL } from '@countryconfig/constants'
-import { callingCountries } from 'country-data'
+import { allCountries } from './countryUtils'
 import { createHash } from 'crypto'
 import * as uuid from 'uuid/v4'
 import * as csv2json from 'csv2json'
@@ -363,14 +363,21 @@ export function generateSaltedHash(password: string): ISaltedHash {
 }
 
 export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
-  const countryCode =
-    callingCountries[countryAlpha3.toUpperCase()].countryCallingCodes[0]
-  if (phone.startsWith(countryCode) || `+${phone}`.startsWith(countryCode)) {
+  const data = allCountries.find(
+    (countryData) => countryData.iso2 === countryAlpha3.slice(0, 2)
+  )
+  if (!data) {
+    throw new Error('APplicable country code cannot be found')
+  }
+  if (
+    phone.startsWith(data.dialCode) ||
+    `+${phone}`.startsWith(data.dialCode)
+  ) {
     return phone.startsWith('+') ? phone : `+${phone}`
   }
   return phone.startsWith('0')
-    ? `${countryCode}${phone.substring(1)}`
-    : `${countryCode}${phone}`
+    ? `${data.dialCode}${phone.substring(1)}`
+    : `${data.dialCode}${phone}`
 }
 
 export async function readCSVToJSON<T>(filename: string) {
