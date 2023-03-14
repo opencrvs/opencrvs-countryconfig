@@ -130,7 +130,9 @@ export function getTrackingIdFromTaskResource(taskResource: fhir.Task) {
         identifier.system ===
           `${OPENCRVS_SPECIFICATION_URL}id/birth-tracking-id` ||
         identifier.system ===
-          `${OPENCRVS_SPECIFICATION_URL}id/death-tracking-id`
+          `${OPENCRVS_SPECIFICATION_URL}id/death-tracking-id` ||
+        identifier.system ===
+          `${OPENCRVS_SPECIFICATION_URL}id/marriage-tracking-id`
       )
     })
   if (!trackingIdentifier || !trackingIdentifier.value) {
