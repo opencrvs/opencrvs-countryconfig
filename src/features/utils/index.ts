@@ -17,6 +17,7 @@ import { createHash } from 'crypto'
 import * as uuid from 'uuid/v4'
 import * as csv2json from 'csv2json'
 import { createReadStream } from 'fs'
+import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
 
 export const GENERATE_TYPE_RN = 'registrationNumber'
 export const CHILD_CODE = 'child-details'
@@ -366,18 +367,14 @@ export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
   const data = allCountries.find(
     (countryData) => countryData.iso2 === countryAlpha3.slice(0, 2)
   )
+
+  const phoneUtil = PhoneNumberUtil.getInstance()
+  const number = phoneUtil.parse(phone, countryAlpha3.slice(0, 2))
+
   if (!data) {
     throw new Error('APplicable country code cannot be found')
   }
-  if (
-    phone.startsWith(data.dialCode) ||
-    `+${phone}`.startsWith(data.dialCode)
-  ) {
-    return phone.startsWith('+') ? phone : `+${phone}`
-  }
-  return phone.startsWith('0')
-    ? `${data.dialCode}${phone.substring(1)}`
-    : `${data.dialCode}${phone}`
+  return phoneUtil.format(number, PhoneNumberFormat.INTERNATIONAL)
 }
 
 export async function readCSVToJSON<T>(filename: string) {
