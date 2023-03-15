@@ -14,6 +14,7 @@ import fetch from 'node-fetch'
 import { FHIR_URL } from '@countryconfig/constants'
 import { allCountries } from './countryUtils'
 import { createHash } from 'crypto'
+import { callingCountries } from 'country-data'
 import * as uuid from 'uuid/v4'
 import * as csv2json from 'csv2json'
 import { createReadStream } from 'fs'
@@ -364,16 +365,11 @@ export function generateSaltedHash(password: string): ISaltedHash {
 }
 
 export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
-  const data = allCountries.find(
-    (countryData) => countryData.iso2 === countryAlpha3.slice(0, 2)
-  )
+  const countryCode = callingCountries[countryAlpha3.toUpperCase()].alpha2
 
   const phoneUtil = PhoneNumberUtil.getInstance()
-  const number = phoneUtil.parse(phone, countryAlpha3.slice(0, 2))
+  const number = phoneUtil.parse(phone, countryCode)
 
-  if (!data) {
-    throw new Error('APplicable country code cannot be found')
-  }
   return phoneUtil.format(number, PhoneNumberFormat.INTERNATIONAL)
 }
 
