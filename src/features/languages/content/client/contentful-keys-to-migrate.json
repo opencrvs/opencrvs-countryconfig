@@ -427,6 +427,7 @@
   "recordAudit.declaration.markAsDuplicate",
   "register.form.modal.title.deleteDeclarationConfirm",
   "register.form.modal.desc.deleteDeclarationConfirm",
+  "regHome.issued",
   "review.rejection.form.reasons.markDuplicate",
   "review.inputs.informantsSignature",
   "review.inputs.brideSignature",

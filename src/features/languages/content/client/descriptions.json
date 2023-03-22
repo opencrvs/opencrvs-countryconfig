@@ -1058,6 +1058,7 @@
     "register.form.modal.desc.saveDeclarationConfirm": "Description for save declaration confirmation modal",
     "register.form.modal.title.deleteDeclarationConfirm": "Title for delete declaration confirmation modal",
     "register.form.modal.desc.deleteDeclarationConfirm": "Description for delete declaration confirmation modal",
+    "regHome.issued": "Label for registration status issued",
     "regHome.certified": "Label for registration status certified",
     "regHome.archived": "Label for registration status archived",
     "regHome.table.label": "Results label at the top of the data table component",
