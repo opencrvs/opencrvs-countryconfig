@@ -4097,7 +4097,11 @@
         "custom.select.text.statusFailed": "Échec de la validation. Veuillez réessayer",
         "custom.select.text.statusAppliedToCustomSelect": "Appliqué à la sélection personnalisée",
         "custom.select.text.statusNoDataFound": "Aucune option n'a été trouvée",
-        "custom.select.text.statusTranslationMissing": "La traduction est manquante"
+        "custom.select.text.statusTranslationMissing": "La traduction est manquante",
+        "dashboard.noContent": "Aucun contenu à afficher. Assurez-vous que les variables suivantes sont configurées dans le <strong>client-config.js</strong> fourni par le package de configuration de votre pays:<br /><ul><li><strong>LEADERBOARDS_DASHBOARD_URL</strong></li><li><strong>REGISTRATIONS_DASHBOARD_URL</strong></li><li><strong>STATISTICS_DASHBOARD_URL</strong></li></ul>",
+        "dashboard.dashboardTitle": "Tableau de bord",
+        "dashboard.leaderboardTitle": "Classements",
+        "dashboard.statisticTitle": "Statistiques"
       }
     }
   ]
