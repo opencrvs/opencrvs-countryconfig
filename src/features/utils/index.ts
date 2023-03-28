@@ -12,7 +12,6 @@
 
 import fetch from 'node-fetch'
 import { FHIR_URL } from '@countryconfig/constants'
-import { allCountries } from './countryUtils'
 import { createHash } from 'crypto'
 import { callingCountries } from 'country-data'
 import * as uuid from 'uuid/v4'
