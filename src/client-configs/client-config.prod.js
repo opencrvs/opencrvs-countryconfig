@@ -21,5 +21,11 @@ window.config = {
   LANGUAGES: 'en,fr',
   SENTRY:
     'https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604',
-  LOGROCKET: ''
+  LOGROCKET: '',
+  LEADERBOARDS_DASHBOARD_URL:
+    'https://metabase.{{hostname}}/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300',
+  REGISTRATIONS_DASHBOARD_URL:
+    'https://metabase.{{hostname}}/public/dashboard/fec78656-e4f9-4b51-b540-0fed81dbd821#bordered=false&titled=false&refresh=300',
+  STATISTICS_DASHBOARD_URL:
+    'https://metabase.{{hostname}}/public/dashboard/a17e9bc0-15a2-4bd1-92fa-ab0f346227ca#bordered=false&titled=false&refresh=300'
 }
