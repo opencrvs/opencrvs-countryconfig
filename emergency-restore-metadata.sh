@@ -128,6 +128,10 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 rm -rf /data/minio/ocrvs
 mkdir -p /data/minio/ocrvs
 
+# Delete all data from metabase
+#-----------------------------
+rm -rf /data/metabase/*
+
 # Delete all data from vsExport
 #-----------------------------
 rm -rf /data/vsexport
@@ -183,7 +187,11 @@ fi
 #----------------------------
 tar -xzvf /data/backups/minio/ocrvs-$1.tar.gz -C /data/minio
 
-# Restore VSExport 
+# Restore all data from Metabase
+#----------------------------
+tar -xzvf /data/backups/metabase/ocrvs-$1.tar.gz -C /data/metabase
+
+# Restore VSExport
 tar -xzvf /data/backups/vsexport/ocrvs-$1.tar.gz -C /data/vsexport
 
 # Run migrations by restarting migration service

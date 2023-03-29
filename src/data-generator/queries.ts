@@ -267,9 +267,24 @@ export const MARK_BIRTH_AS_CERTIFIED = print(gql`
     markBirthAsCertified(id: $id, details: $details)
   }
 `)
+
 export const MARK_DEATH_AS_CERTIFIED = print(gql`
   mutation markDeathAsCertified($id: ID!, $details: DeathRegistrationInput!) {
     markDeathAsCertified(id: $id, details: $details)
+  }
+`)
+
+export const MARK_BIRTH_AS_ISSUED = print(
+  gql`
+    mutation markBirthAsIssued($id: ID!, $details: BirthRegistrationInput!) {
+      markBirthAsIssued(id: $id, details: $details)
+    }
+  `
+)
+
+export const MARK_DEATH_AS_ISSUED = print(gql`
+  mutation markDeathAsIssued($id: ID!, $details: DeathRegistrationInput!) {
+    markDeathAsIssued(id: $id, details: $details)
   }
 `)
 
@@ -456,5 +471,4 @@ export const getSystemRolesQuery = print(gql`
       }
     }
   }
-`
-)
+`)
