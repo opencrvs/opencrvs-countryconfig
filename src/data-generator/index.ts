@@ -15,7 +15,7 @@ import {
 import {
   createBirthCertificationDetails,
   createDeathCertificationDetails,
-  markAsCertified,
+  markBirthAsCertified,
   markDeathAsCertified
 } from './certify'
 
@@ -45,6 +45,12 @@ import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
 import { ConfigResponse, getConfig, getCountryAlpha3 } from './config'
 import { markEventAsRejected } from './reject'
+import {
+  createBirthIssuingDetails,
+  createDeathIssuingDetails,
+  markBirthAsIssued,
+  markDeathAsIssued
+} from './issue'
 /*
  *
  * Configuration
@@ -156,14 +162,16 @@ async function main() {
 
   log('Got token for system administrator')
   log('Fetching locations')
-  const locations =  await getLocations(localSYSAdminToken)
+  const locations = await getLocations(localSYSAdminToken)
   const facilities = await getFacilities(localSYSAdminToken)
-  const crvsOffices = facilities.filter(({ type }: Location) => type === 'CRVS_OFFICE')
-  
+  const crvsOffices = facilities.filter(
+    ({ type }: Location) => type === 'CRVS_OFFICE'
+  )
+
   const healthFacilities = facilities.filter(
     ({ type }: Facility) => type === 'HEALTH_FACILITY'
   )
-  
+
   log('Found', locations.length, 'locations')
 
   /*
@@ -726,10 +734,25 @@ function birthDeclarationWorkflow(
           // Wait for few seconds so registration gets updated to elasticsearch before certifying
           await wait(2000)
           log('Certifying', id)
-          await markAsCertified(
+          await markBirthAsCertified(
             registration.id,
             randomRegistrar,
             createBirthCertificationDetails(
+              add(new Date(submissionTime), {
+                days: 1
+              }),
+              registration,
+              config
+            )
+          )
+
+          // Wait for few seconds so registration gets updated to elasticsearch before issuing
+          await wait(2000)
+          log('Issuing', id)
+          await markBirthAsIssued(
+            registration.id,
+            randomRegistrar,
+            createBirthIssuingDetails(
               add(new Date(submissionTime), {
                 days: 1
               }),
@@ -854,6 +877,20 @@ function deathDeclarationWorkflow(
             registration.id,
             randomRegistrar,
             createDeathCertificationDetails(
+              add(new Date(submissionTime), {
+                days: 2
+              }),
+              registration,
+              config
+            )
+          )
+
+          log('Issuing', registration.id)
+          await wait(2000)
+          await markDeathAsIssued(
+            registration.id,
+            randomRegistrar,
+            createDeathIssuingDetails(
               add(new Date(submissionTime), {
                 days: 2
               }),
