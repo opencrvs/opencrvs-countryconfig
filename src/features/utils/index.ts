@@ -12,11 +12,12 @@
 
 import fetch from 'node-fetch'
 import { FHIR_URL } from '@countryconfig/constants'
-import { callingCountries } from 'country-data'
 import { createHash } from 'crypto'
+import { callingCountries } from 'country-data'
 import * as uuid from 'uuid/v4'
 import * as csv2json from 'csv2json'
 import { createReadStream } from 'fs'
+import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
 
 export const GENERATE_TYPE_RN = 'registrationNumber'
 export const CHILD_CODE = 'child-details'
@@ -365,14 +366,12 @@ export function generateSaltedHash(password: string): ISaltedHash {
 }
 
 export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
-  const countryCode =
-    callingCountries[countryAlpha3.toUpperCase()].countryCallingCodes[0]
-  if (phone.startsWith(countryCode) || `+${phone}`.startsWith(countryCode)) {
-    return phone.startsWith('+') ? phone : `+${phone}`
-  }
-  return phone.startsWith('0')
-    ? `${countryCode}${phone.substring(1)}`
-    : `${countryCode}${phone}`
+  const countryCode = callingCountries[countryAlpha3.toUpperCase()].alpha2
+
+  const phoneUtil = PhoneNumberUtil.getInstance()
+  const number = phoneUtil.parse(phone, countryCode)
+
+  return phoneUtil.format(number, PhoneNumberFormat.INTERNATIONAL)
 }
 
 export async function readCSVToJSON<T>(filename: string) {
