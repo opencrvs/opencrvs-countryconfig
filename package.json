@@ -76,6 +76,7 @@
     "app-module-path": "^2.2.0",
     "chalk": "^2.4.1",
     "contentful": "^8.1.1",
+    "country-data": "^0.0.31",
     "cross-env": "^6.0.3",
     "crypto": "^1.0.1",
     "csv2json": "^1.4.2",
