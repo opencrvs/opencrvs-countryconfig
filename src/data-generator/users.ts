@@ -40,7 +40,7 @@ interface ISystemInfo {
   shaSecret: string
 }
 
-const nationalSystemAdmin: User[]  = []
+const nationalSystemAdmin: User[] = []
 
 export async function createUser(
   token: string,
@@ -107,7 +107,7 @@ export async function createUser(
   const { data } = resp as {
     data: { createOrUpdateUser: { username: string; id: string } }
   }
-  
+
   const userToken = await getToken(data.createOrUpdateUser.username, 'test')
 
   const res = await fetch(GATEWAY_GQL_HOST, {
@@ -237,16 +237,20 @@ export async function getUserByRole(token: string, systemRole: string) {
       }
     }
   }
-  
+
   return res.data.searchUsers.results
 }
 
-const registerSystemClient = async(name: string, type:string, token: string) => {
-  const createUserRes =  await fetch(GATEWAY_GQL_HOST, {
+const registerSystemClient = async (
+  name: string,
+  type: string,
+  token: string
+) => {
+  const createUserRes = await fetch(GATEWAY_GQL_HOST, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
       query: `
@@ -268,10 +272,10 @@ const registerSystemClient = async(name: string, type:string, token: string) => 
         }
       }
     `,
-      variables: {system :{ name, type } }
+      variables: { system: { name, type } }
     })
   })
-  
+
   return await createUserRes.json()
 }
 
@@ -284,7 +288,7 @@ export async function createSystemClient(
     | 'EXTERNAL_VALIDATION'
     | 'AGE_CHECK'
     | 'RECORD_SEARCH',
-    natlSystemAdmin: User
+  natlSystemAdmin: User
 ): Promise<User> {
   const credentialsRes = await registerSystemClient(
     systemClientName,
@@ -292,10 +296,10 @@ export async function createSystemClient(
     natlSystemAdmin.token
   )
   const credentials: {
-    system : ISystemInfo
+    system: ISystemInfo
     clientSecret: string
   } = credentialsRes.data.registerSystem
-  
+
   const systemToken = await getTokenForSystemClient(
     credentials.system.clientId,
     credentials.clientSecret
@@ -359,24 +363,26 @@ export async function createUsers(
       }))
   )
 
-  if(!nationalSystemAdmin.length){
+  if (!nationalSystemAdmin.length) {
     const natlUserRes = await getUserByRole(token, 'NATIONAL_SYSTEM_ADMIN')
-    const mappedNatlUserRes =  await Promise.all(natlUserRes.map(async (user) => {
-      return {
-        username: user.username,
-        password: 'test',
-        token: await getToken(user.username, 'test'),
-        stillInUse: true,
-        primaryOfficeId: user.primaryOffice.id,
-        isSystemUser: false
-      }
-    }))
+    const mappedNatlUserRes = await Promise.all(
+      natlUserRes.map(async (user) => {
+        return {
+          username: user.username,
+          password: 'test',
+          token: await getToken(user.username, 'test'),
+          stillInUse: true,
+          primaryOfficeId: user.primaryOffice.id,
+          isSystemUser: false
+        }
+      })
+    )
     nationalSystemAdmin.push(mappedNatlUserRes[0])
   }
 
   // These cannot be fetched through gateway, so we'll always have to regenerate them
   const hospitals: User[] = []
-  
+
   const facilities = await getFacilities(token)
 
   const crvsOffices = facilities
@@ -391,16 +397,19 @@ export async function createUsers(
     throw new Error(`Cannot find any CRVS offices for ${location.name}`)
   }
 
-  const userRoles = (await getAgentRoles(token))?.reduce((rolesObj, userRole) => {
-    return {
-      ...rolesObj,
-      [userRole.value]: userRole.roles.map((role) => role._id)
-    }
-  },{}) as Record<string, string[]> 
+  const userRoles = (await getAgentRoles(token))?.reduce(
+    (rolesObj, userRole) => {
+      return {
+        ...rolesObj,
+        [userRole.value]: userRole.roles.map((role) => role._id)
+      }
+    },
+    {}
+  ) as Record<string, string[]>
 
   const FIELD_AGENT_ROLES = userRoles.FIELD_AGENT
   const randomOffice =
-    crvsOffices[Math.floor(Math.random() * crvsOffices.length)]  
+    crvsOffices[Math.floor(Math.random() * crvsOffices.length)]
   log('Creating field agents')
   for (let i = fieldAgents.length; i < config.fieldAgents; i++) {
     const randomFieldAgentRole =
@@ -415,7 +424,7 @@ export async function createUsers(
 
   log('Field agents created')
   log('Creating', config.hospitalFieldAgents, 'hospitals')
-  const natlSystemAdminUser = nationalSystemAdmin[0] 
+  const natlSystemAdminUser = nationalSystemAdmin[0]
   for (let i = 0; i < config.hospitalFieldAgents; i++) {
     const user = await createSystemClient(
       randomOffice.id,
@@ -431,8 +440,10 @@ export async function createUsers(
   const REGISTRATION_AGENT_ROLES = userRoles.REGISTRATION_AGENT
   log('Creating registration agents')
   for (let i = registrationAgents.length; i < config.registrationAgents; i++) {
-    const randomRegistrationAgentRole = 
-      REGISTRATION_AGENT_ROLES[Math.floor(Math.random() * REGISTRATION_AGENT_ROLES.length)]
+    const randomRegistrationAgentRole =
+      REGISTRATION_AGENT_ROLES[
+        Math.floor(Math.random() * REGISTRATION_AGENT_ROLES.length)
+      ]
     registrationAgents.push(
       await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
         systemRole: 'REGISTRATION_AGENT',
@@ -440,13 +451,15 @@ export async function createUsers(
       })
     )
   }
-  log('Registration agents created')  
+  log('Registration agents created')
 
   const LOCAL_REGISTRAR_ROLES = userRoles.LOCAL_REGISTRAR
   log('Creating local registrars')
   for (let i = registrars.length; i < config.localRegistrars; i++) {
-    const randomLocalRegRole = 
-      LOCAL_REGISTRAR_ROLES[Math.floor(Math.random() * LOCAL_REGISTRAR_ROLES.length)]
+    const randomLocalRegRole =
+      LOCAL_REGISTRAR_ROLES[
+        Math.floor(Math.random() * LOCAL_REGISTRAR_ROLES.length)
+      ]
     registrars.push(
       await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
         systemRole: 'LOCAL_REGISTRAR',
