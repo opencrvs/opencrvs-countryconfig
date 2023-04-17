@@ -97,6 +97,18 @@ export async function sendSMS(
   message: string,
   convertUnicode?: boolean
 ) {
+  if (process.env.NODE_ENV !== 'production') {
+    logger.info(
+      `Tried to send SMS notification. Ignoring due to NODE_ENV not being 'production'. Params:`,
+      {
+        msisdn,
+        message,
+        convertUnicode
+      }
+    )
+    return
+  }
+
   switch (SMS_PROVIDER) {
     case 'clickatell':
       return sendSMSClickatell(msisdn, message, convertUnicode)
