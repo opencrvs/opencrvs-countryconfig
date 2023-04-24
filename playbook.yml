@@ -52,11 +52,11 @@
 
       [Install]
       WantedBy=multi-user.target
-  when: st.stat.exists and encrypt_data
+  when: encryptedFileSystemPostCheck.stat.exists
 
 - name: 'Setup systemd to mount encrypted folder'
   shell: systemctl daemon-reload && systemctl enable reboot.service
-  when: st.stat.exists and encrypt_data
+  when: encryptedFileSystemPostCheck.stat.exists
 
 # MOSIP integration requires wireguard and some secrets to be installed
 # Here is an example configuration that we use on our 3 node demo production environment

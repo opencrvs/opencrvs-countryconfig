@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "OpenCRVS country configuration for reference data",
   "license": "MPL-2.0",
   "scripts": {
@@ -36,6 +36,7 @@
     "@types/hapi__inert": "^5.2.3",
     "@types/iconv": "^3.0.1",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/google-libphonenumber": "^7.4.23",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^5.39.0",
     "cypress-xpath": "^2.0.1",
@@ -72,6 +73,7 @@
     "@types/pino": "^5.14.0",
     "@types/string-similarity": "^3.0.0",
     "@types/uuid": "^3.4.4",
+    "google-libphonenumber": "^3.2.32",
     "app-module-path": "^2.2.0",
     "chalk": "^2.4.1",
     "contentful": "^8.1.1",
