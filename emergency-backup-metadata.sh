@@ -161,10 +161,13 @@ else
   rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb /data/backups/influxdb
 fi
 
-# Backup Minio 
+# Backup Minio
 cd /data/minio && tar -zcvf /data/backups/minio/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz * && cd /
 
-# Backup VSExport 
+# Backup Metabase
+cd /data/metabase && tar -zcvf /data/backups/metabase/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz * && cd /
+
+# Backup VSExport
 cd /data/vsexport && tar -zcvf /data/backups/vsexport/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz * && cd /
 
 # Copy the backups to an offsite server in production
@@ -172,6 +175,7 @@ cd /data/vsexport && tar -zcvf /data/backups/vsexport/ocrvs-${VERSION:-$BACKUP_D
 if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)" ]]; then
   script -q -c "rsync -a -r --progress --rsh='ssh -p$SSH_PORT' /data/backups/elasticsearch/ $SSH_USER@$SSH_HOST:$REMOTE_DIR/elasticsearch" && echo "Copied elasticsearch backup files to remote server."
   script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/minio/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/minio" && echo "Copied minio backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/metabase/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/metabase" && echo "Copied Metabase backup files to remote server."
   script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/influxdb/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/influxdb" && echo "Copied influx backup files to remote server."
   script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/hearth-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied hearth backup files to remote server."
   script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/user-mgnt-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied user backup files to remote server."
@@ -188,4 +192,5 @@ fi
 find /data/backups/influxdb -mtime +7 -exec rm {} \;
 find /data/backups/mongo -mtime +7 -exec rm {} \;
 find /data/backups/minio -mtime +7 -exec rm {} \;
+find /data/backups/metabase -mtime +7 -exec rm {} \;
 find /data/backups/vsexport -mtime +7 -exec rm {} \;

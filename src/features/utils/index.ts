@@ -12,8 +12,8 @@
 
 import fetch from 'node-fetch'
 import { FHIR_URL } from '@countryconfig/constants'
-import { callingCountries } from 'country-data'
 import { createHash } from 'crypto'
+import { callingCountries } from 'country-data'
 import * as uuid from 'uuid/v4'
 import * as csv2json from 'csv2json'
 import { createReadStream } from 'fs'
@@ -131,7 +131,9 @@ export function getTrackingIdFromTaskResource(taskResource: fhir.Task) {
         identifier.system ===
           `${OPENCRVS_SPECIFICATION_URL}id/birth-tracking-id` ||
         identifier.system ===
-          `${OPENCRVS_SPECIFICATION_URL}id/death-tracking-id`
+          `${OPENCRVS_SPECIFICATION_URL}id/death-tracking-id` ||
+        identifier.system ===
+          `${OPENCRVS_SPECIFICATION_URL}id/marriage-tracking-id`
       )
     })
   if (!trackingIdentifier || !trackingIdentifier.value) {

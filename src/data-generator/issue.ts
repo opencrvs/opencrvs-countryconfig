@@ -7,19 +7,19 @@ import {
   BirthRegistrationInput,
   DeathRegistrationInput,
   LocationType,
-  MarkBirthAsCertifiedMutation,
-  MarkDeathAsCertifiedMutation,
+  MarkBirthAsIssuedMutation,
+  MarkDeathAsIssuedMutation,
   PaymentOutcomeType,
   PaymentType
 } from './gateway'
 import { omit } from 'lodash'
 import { GATEWAY_GQL_HOST } from './constants'
-import { MARK_BIRTH_AS_CERTIFIED, MARK_DEATH_AS_CERTIFIED } from './queries'
+import { MARK_BIRTH_AS_ISSUED, MARK_DEATH_AS_ISSUED } from './queries'
 import { differenceInDays } from 'date-fns'
 import { ConfigResponse } from './config'
 import { fetchDeathRegistration, fetchRegistration } from './declare'
 
-export function createBirthCertificationDetails(
+export function createBirthIssuingDetails(
   createdAt: Date,
   declaration: Awaited<ReturnType<typeof fetchRegistration>>,
   config: ConfigResponse
@@ -39,6 +39,23 @@ export function createBirthCertificationDetails(
   )
   delete withIdsRemoved.history
 
+  const completionDays = differenceInDays(
+    createdAt,
+    new Date(declaration.child?.birthDate!)
+  )
+
+  const paymentAmount =
+    completionDays < config.config.BIRTH.REGISTRATION_TARGET
+      ? config.config.BIRTH.FEE.ON_TIME
+      : completionDays < config.config.BIRTH.LATE_REGISTRATION_TARGET
+      ? config.config.BIRTH.FEE.LATE
+      : config.config.BIRTH.FEE.DELAYED
+  log(
+    'Collecting certification payment of',
+    paymentAmount,
+    'for completion days',
+    completionDays
+  )
   const data = {
     ...withIdsRemoved,
     eventLocation: {
@@ -57,7 +74,15 @@ export function createBirthCertificationDetails(
       certificates: [
         {
           hasShowedVerifiedDocument: false,
-          data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+          payments: [
+            {
+              type: PaymentType.Manual,
+              total: paymentAmount,
+              amount: paymentAmount,
+              outcome: PaymentOutcomeType.Completed,
+              date: createdAt
+            }
+          ],
           collector: {
             relationship: 'MOTHER'
           }
@@ -68,7 +93,7 @@ export function createBirthCertificationDetails(
   return removeEmptyFields(data)
 }
 
-export function createDeathCertificationDetails(
+export function createDeathIssuingDetails(
   createdAt: Date,
   declaration: Awaited<ReturnType<typeof fetchDeathRegistration>>,
   config: ConfigResponse
@@ -132,7 +157,6 @@ export function createDeathCertificationDetails(
       certificates: [
         {
           hasShowedVerifiedDocument: false,
-          data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
           payments: [
             {
               type: PaymentType.Manual,
@@ -159,7 +183,7 @@ export function createDeathCertificationDetails(
   return removeEmptyFields(data)
 }
 
-export async function markBirthAsCertified(
+export async function markBirthAsIssued(
   id: string,
   user: User,
   details: BirthRegistrationInput
@@ -176,7 +200,7 @@ export async function markBirthAsCertified(
       'x-correlation-id': `certification-${id}`
     },
     body: JSON.stringify({
-      query: MARK_BIRTH_AS_CERTIFIED,
+      query: MARK_BIRTH_AS_ISSUED,
       variables: {
         id: id,
         details
@@ -186,26 +210,26 @@ export async function markBirthAsCertified(
   const requestEnd = Date.now()
   const result = (await certifyDeclarationRes.json()) as {
     errors: any[]
-    data: MarkBirthAsCertifiedMutation
+    data: MarkBirthAsIssuedMutation
   }
 
   if (result.errors) {
     console.error(JSON.stringify(result.errors, null, 2))
-    throw new Error('Birth declaration could not be certified')
+    throw new Error('Birth declaration could not be issued')
   }
 
   log(
     'Birth declaration',
-    result.data.markBirthAsCertified,
-    'is now certified by',
+    result.data.markBirthAsIssued,
+    'is now issued by',
     username,
     `(took ${requestEnd - requestStart}ms)`
   )
 
-  return result.data.markBirthAsCertified
+  return result.data.markBirthAsIssued
 }
 
-export async function markDeathAsCertified(
+export async function markDeathAsIssued(
   id: string,
   user: User,
   details: DeathRegistrationInput
@@ -222,7 +246,7 @@ export async function markDeathAsCertified(
       'x-correlation-id': `death-certification-${id}`
     },
     body: JSON.stringify({
-      query: MARK_DEATH_AS_CERTIFIED,
+      query: MARK_DEATH_AS_ISSUED,
       variables: {
         id,
         details
@@ -232,7 +256,7 @@ export async function markDeathAsCertified(
   const requestEnd = Date.now()
   const result = (await certifyDeclarationRes.json()) as {
     errors: any[]
-    data: MarkDeathAsCertifiedMutation
+    data: MarkDeathAsIssuedMutation
   }
   if (result.errors) {
     console.error(JSON.stringify(result.errors, null, 2))
@@ -242,16 +266,16 @@ export async function markDeathAsCertified(
       }
     })
     console.error(JSON.stringify(details))
-    throw new Error('Death declaration could not be certified')
+    throw new Error('Death declaration could not be issued')
   }
 
   log(
     'Death declaration',
-    result.data.markDeathAsCertified,
-    'is now certified by',
+    result.data.markDeathAsIssued,
+    'is now issued by',
     username,
     `(took ${requestEnd - requestStart}ms)`
   )
 
-  return result.data.markDeathAsCertified
+  return result.data.markDeathAsIssued
 }

@@ -15,7 +15,7 @@ import {
 import {
   createBirthCertificationDetails,
   createDeathCertificationDetails,
-  markAsCertified,
+  markBirthAsCertified,
   markDeathAsCertified
 } from './certify'
 
@@ -45,6 +45,13 @@ import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
 import { ConfigResponse, getConfig, getCountryAlpha3 } from './config'
 import { markEventAsRejected } from './reject'
+import {
+  createBirthIssuingDetails,
+  createDeathIssuingDetails,
+  markBirthAsIssued,
+  markDeathAsIssued
+} from './issue'
+import { callVSExportAPIToGenerateDeclarationData } from './vsExport'
 /*
  *
  * Configuration
@@ -156,84 +163,86 @@ async function main() {
 
   log('Got token for system administrator')
   log('Fetching locations')
-  const locations =  await getLocations(localSYSAdminToken)
+  const locations = await getLocations(localSYSAdminToken)
   const facilities = await getFacilities(localSYSAdminToken)
-  const crvsOffices = facilities.filter(({ type }: Location) => type === 'CRVS_OFFICE')
-  
+  const crvsOffices = facilities.filter(
+    ({ type }: Location) => type === 'CRVS_OFFICE'
+  )
+
   const healthFacilities = facilities.filter(
     ({ type }: Facility) => type === 'HEALTH_FACILITY'
   )
-  
+
   log('Found', locations.length, 'locations')
 
   /*
    *
-   * Loop through all locations
+   * Loop through years (END_YEAR -> START_YEAR)
    *
    */
 
-  for (const location of locations) {
-    log('Fetching already generated interval')
-    const generatedInterval = await fetchAlreadyGeneratedInterval(
-      registrarToken,
-      location.id
-    )
+  for (let y = END_YEAR; y >= START_YEAR; y--) {
+    /*
+     *
+     * Loop through all locations
+     *
+     */
 
-    if (generatedInterval.length === 0) {
-      log('No events have been generated for this location')
-    } else {
-      log(
-        'Events already exist for this location between',
-        generatedInterval[0],
-        '-',
-        generatedInterval[1]
+    for (const location of locations) {
+      log('Fetching already generated interval')
+      const generatedInterval = await fetchAlreadyGeneratedInterval(
+        registrarToken,
+        location.id
       )
-    }
 
-    /*
-     *
-     * Create required users & authorization tokens
-     *
-     */
-    log('Creating users for', location.name, '(', location.id, ')')
-
-    const users = await createUsers(
-      localSYSAdminToken,
-      location,
-      countryAlpha3,
-      config.config.PHONE_NUMBER_PATTERN,
-      {
-        fieldAgents: FIELD_AGENTS,
-        hospitalFieldAgents: HOSPITAL_FIELD_AGENTS,
-        registrationAgents: REGISTRATION_AGENTS,
-        localRegistrars: LOCAL_REGISTRARS
+      if (generatedInterval.length === 0) {
+        log('No events have been generated for this location')
+      } else {
+        log(
+          'Events already exist for this location between',
+          generatedInterval[0],
+          '-',
+          generatedInterval[1]
+        )
       }
-    )
-    const allUsers = [
-      ...users.fieldAgents,
-      ...users.hospitals,
-      ...users.registrationAgents,
-      ...users.registrars
-    ]
 
-    // User tokens expire after 20 minutes, so we need to
-    // keep on refreshing them as long as the user is in use
-    keepTokensValid(allUsers)
+      /*
+       *
+       * Create required users & authorization tokens
+       *
+       */
+      log('Creating users for', location.name, '(', location.id, ')')
 
-    const deathDeclarers = [...users.fieldAgents, ...users.registrationAgents]
-    const birthDeclararers = [
-      ...users.fieldAgents,
-      ...users.hospitals,
-      ...users.registrationAgents
-    ]
+      const users = await createUsers(
+        localSYSAdminToken,
+        location,
+        countryAlpha3,
+        config.config.PHONE_NUMBER_PATTERN,
+        {
+          fieldAgents: FIELD_AGENTS,
+          hospitalFieldAgents: HOSPITAL_FIELD_AGENTS,
+          registrationAgents: REGISTRATION_AGENTS,
+          localRegistrars: LOCAL_REGISTRARS
+        }
+      )
+      const allUsers = [
+        ...users.fieldAgents,
+        ...users.hospitals,
+        ...users.registrationAgents,
+        ...users.registrars
+      ]
 
-    /*
-     *
-     * Loop through years (END_YEAR -> START_YEAR)
-     *
-     */
+      // User tokens expire after 20 minutes, so we need to
+      // keep on refreshing them as long as the user is in use
+      keepTokensValid(allUsers)
 
-    for (let y = END_YEAR; y >= START_YEAR; y--) {
+      const deathDeclarers = [...users.fieldAgents, ...users.registrationAgents]
+      const birthDeclararers = [
+        ...users.fieldAgents,
+        ...users.hospitals,
+        ...users.registrationAgents
+      ]
+
       const isCurrentYear = y === currentYear
 
       const randomRegistrar =
@@ -323,6 +332,7 @@ async function main() {
           deathsToday
         )
 
+        // Create death declarations
         const operations = []
         for (let ix = 0; ix < deathsToday; ix++) {
           const completionDays = getRandomFromBrackets(
@@ -390,6 +400,7 @@ async function main() {
           )
         }
         await queue.addAll(operations)
+        await callVSExportAPIToGenerateDeclarationData(submissionDate)
       }
 
       /*
@@ -523,11 +534,11 @@ async function main() {
         )
       }
       await queue.addAll(operations)
-    }
 
-    allUsers.forEach((user) => {
-      user.stillInUse = false
-    })
+      allUsers.forEach((user) => {
+        user.stillInUse = false
+      })
+    }
   }
 
   process.exit(0)
@@ -726,10 +737,25 @@ function birthDeclarationWorkflow(
           // Wait for few seconds so registration gets updated to elasticsearch before certifying
           await wait(2000)
           log('Certifying', id)
-          await markAsCertified(
+          await markBirthAsCertified(
             registration.id,
             randomRegistrar,
             createBirthCertificationDetails(
+              add(new Date(submissionTime), {
+                days: 1
+              }),
+              registration,
+              config
+            )
+          )
+
+          // Wait for few seconds so registration gets updated to elasticsearch before issuing
+          await wait(2000)
+          log('Issuing', id)
+          await markBirthAsIssued(
+            registration.id,
+            randomRegistrar,
+            createBirthIssuingDetails(
               add(new Date(submissionTime), {
                 days: 1
               }),
@@ -854,6 +880,20 @@ function deathDeclarationWorkflow(
             registration.id,
             randomRegistrar,
             createDeathCertificationDetails(
+              add(new Date(submissionTime), {
+                days: 2
+              }),
+              registration,
+              config
+            )
+          )
+
+          log('Issuing', registration.id)
+          await wait(2000)
+          await markDeathAsIssued(
+            registration.id,
+            randomRegistrar,
+            createDeathIssuingDetails(
               add(new Date(submissionTime), {
                 days: 2
               }),

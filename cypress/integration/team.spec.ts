@@ -31,8 +31,7 @@ context('Team Integration Test', () => {
     cy.get('#firstNamesEng').type(testUserFirstname)
     cy.get('#familyNameEng').type(testUserLastname)
     cy.get('#phoneNumber').type('0755658545')
-    cy.selectOption('#role', 'Field Agent', 'Field Agent')
-    cy.selectOption('#type', 'Healthcare Worker', 'Healthcare Worker')
+    cy.selectOption('#role', 'Health Worker', 'Health Worker')
     cy.get('#device').type('Xiamoi MI 8')
     cy.get('#confirm_form').click()
     // PREVIEW
@@ -95,7 +94,7 @@ context('Team Integration Test', () => {
     // LOG IN AS national SYSTEM ADMIN
     cy.login('nsysAdmin')
     cy.createPin()
-    cy.get('#navigation_team').click()
+    cy.get('button').click()
     cy.get('#navigation_team').click()
     cy.get('#location-range-picker-action').click()
     cy.get('#locationSearchInput').type('Ibombo')
@@ -116,7 +115,7 @@ context('Team Integration Test', () => {
     // LOG IN AS national SYSTEM ADMIN
     cy.login('nsysAdmin')
     cy.createPin()
-    cy.get('#navigation_team').click()
+    cy.get('button').click()
     cy.get('#navigation_team').click()
     cy.get('#location-range-picker-action').click()
     cy.get('#locationSearchInput').type('Ibombo')

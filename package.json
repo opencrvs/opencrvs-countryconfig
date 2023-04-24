@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.2.1",
+  "version": "1.3.0-beta",
   "description": "OpenCRVS country configuration for reference data",
   "license": "MPL-2.0",
   "scripts": {
@@ -33,10 +33,10 @@
     "@graphql-codegen/introspection": "2.1.1",
     "@graphql-codegen/typescript": "2.4.5",
     "@graphql-codegen/typescript-operations": "^2.3.7",
+    "@types/google-libphonenumber": "^7.4.23",
     "@types/hapi__inert": "^5.2.3",
     "@types/iconv": "^3.0.1",
     "@types/jsonwebtoken": "^8.5.8",
-    "@types/google-libphonenumber": "^7.4.23",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^5.39.0",
     "cypress-xpath": "^2.0.1",
@@ -44,7 +44,6 @@
     "eslint-plugin-prettier": "^4.0.0",
     "json2csv": "^4.3.0",
     "jsonwebtoken": "^8.3.0",
-    "migrate-mongo": "^9.0.0",
     "niceware": "^2.0.2",
     "zod": "^3.17.3"
   },
