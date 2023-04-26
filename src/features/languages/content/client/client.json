@@ -1493,7 +1493,7 @@
         "form.field.label.marriedLastName": "Last name at birth (if different from above)",
         "form.field.label.docTypeMarriageNotice": "Notice of marriage",
         "form.field.label.proofOfGroomsID": "Proof of Groom's identity",
-        "form.field.label.proofOfBridesID": "Proof of Brides's identity",
+        "form.field.label.proofOfBridesID": "Proof of Bride's identity",
         "misc.createDescription": "Choose a PIN that doesn't have 4 repeating digits or sequential numbers",
         "misc.createTitle": "Create a PIN",
         "misc.description.Complete": "The informant will receive an SMS with a registration number that they can use to collect their certificate.",
