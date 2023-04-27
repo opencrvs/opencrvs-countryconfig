@@ -14,6 +14,7 @@ import fetch from 'node-fetch'
 import * as Pino from 'pino'
 import { CONFIRM_REGISTRATION_URL } from '@countryconfig/constants'
 import { createWebHookResponseFromBundle } from '@countryconfig/features/validate/service'
+import { badImplementation } from '@hapi/boom'
 
 const logger = Pino()
 
@@ -33,13 +34,23 @@ export async function validateRegistrationHandler(
       headers: request.headers
     })
   } catch (err) {
+    /*
+
+    I think that there might be a reason why we still call this endpoint even on an error
+    But I think it is strange so I commented this out.
+
+    I dont know what effect it is having yet
+
     fetch(CONFIRM_REGISTRATION_URL, {
       method: 'POST',
       body: JSON.stringify({ error: err.message }),
       headers: request.headers
-    })
+    })*/
 
     logger.error(err)
+    throw badImplementation(
+      `Could not generate registration number in country configuration due to error: ${err}`
+    )
   }
 
   return h.response().code(202)
