@@ -324,7 +324,6 @@ export function checkDuplicate(
 
 export const titleCase = (str: string) => {
   const stringArray = str.toLowerCase().split(' ')
-  // tslint:disable-next-line
   for (let i = 0; i < stringArray.length; i++) {
     stringArray[i] =
       stringArray[i].charAt(0).toUpperCase() + stringArray[i].slice(1)
@@ -343,7 +342,6 @@ export function generateRandomPassword(demoUser?: boolean) {
 
   let randomPassword = ''
   for (let i = 0; i < length; i += 1) {
-    // tslint:disable-next-line
     randomPassword += charset.charAt(Math.floor(Math.random() * charset.length))
   }
 

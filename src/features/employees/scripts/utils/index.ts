@@ -41,26 +41,27 @@ export const FIELD_AGENT_TYPES = [
 ]
 
 export async function getAgentRoles(token: string): Promise<SystemRole[]> {
-    const res = await fetch(GATEWAY_GQL_HOST, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        query: getSystemRolesQuery,
-        variables: {
-          active: true
-        }
-      })
+  const res = await fetch(GATEWAY_GQL_HOST, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      query: getSystemRolesQuery,
+      variables: {
+        active: true
+      }
     })
+  })
 
-    if (!res.ok) {
-      throw new Error(`Could not fetch agent roles, ${res.statusText} ${res.status}`)
-    }
-    const roles = await res.json()
-    return roles.data.getSystemRoles
-
+  if (!res.ok) {
+    throw new Error(
+      `Could not fetch agent roles, ${res.statusText} ${res.status}`
+    )
+  }
+  const roles = await res.json()
+  return roles.data.getSystemRoles
 }
 
 function setDemoUser(scopes: string[], environment: string): string[] {

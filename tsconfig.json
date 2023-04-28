@@ -21,7 +21,7 @@
     "noUnusedLocals": true,
     "types": ["fhir", "jest", "geojson"]
   },
-  "include": ["src/**/*.ts", "typings", "tslint-rules"],
+  "include": ["src/**/*.ts", "typings"],
   "exclude": [
     "node_modules",
     "cypress",

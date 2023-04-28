@@ -9,10 +9,8 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-// tslint:disable no-var-requires
 require('app-module-path').addPath(require('path').join(__dirname))
 
-// tslint:enable no-var-requires
 import fetch from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
 import getPlugins from '@countryconfig/config/plugins'

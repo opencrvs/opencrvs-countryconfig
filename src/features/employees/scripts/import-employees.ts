@@ -15,7 +15,6 @@ import { createOpenCRVSEmployees } from '@countryconfig/features/employees/scrip
 import { readCSVToJSON } from '@countryconfig/features/utils'
 
 export default async function importEmployees() {
-  // tslint:disable-next-line:no-console
   console.log(
     `${chalk.blueBright(
       `/////////////////////////// MAPPING: ${process.argv[3].toLowerCase()} EMPLOYEES TO PRACTITIONERS, ROLES AND USERS & SAVING TO FHIR ///////////////////////////`
