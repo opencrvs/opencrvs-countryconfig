@@ -369,7 +369,13 @@ export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
   const phoneUtil = PhoneNumberUtil.getInstance()
   const number = phoneUtil.parse(phone, countryCode)
 
-  return phoneUtil.format(number, PhoneNumberFormat.INTERNATIONAL)
+  return (
+    phoneUtil
+      .format(number, PhoneNumberFormat.INTERNATIONAL)
+      // libphonenumber adds spaces and dashes to phone numbers,
+      // which we do not want to keep for now
+      .replace(/[\s-]/g, '')
+  )
 }
 
 export async function readCSVToJSON<T>(filename: string) {
