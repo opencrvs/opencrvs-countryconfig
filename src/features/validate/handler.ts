@@ -14,6 +14,7 @@ import fetch from 'node-fetch'
 import * as Pino from 'pino'
 import { CONFIRM_REGISTRATION_URL } from '@countryconfig/constants'
 import { createWebHookResponseFromBundle } from '@countryconfig/features/validate/service'
+import { badImplementation } from '@hapi/boom'
 
 const logger = Pino()
 
@@ -26,20 +27,17 @@ export async function validateRegistrationHandler(
 
     const webHookResponse = await createWebHookResponseFromBundle(bundle)
 
-    // This fetch can be moved to a custom task when validating externally
     fetch(CONFIRM_REGISTRATION_URL, {
       method: 'POST',
       body: JSON.stringify(webHookResponse),
       headers: request.headers
     })
   } catch (err) {
-    fetch(CONFIRM_REGISTRATION_URL, {
-      method: 'POST',
-      body: JSON.stringify({ error: err.message }),
-      headers: request.headers
-    })
-
     logger.error(err)
+
+    const boomError = badImplementation()
+    boomError.output.payload.boomCustromMessage = `Could not generate registration number in country configuration due to error: ${err}`
+    throw boomError
   }
 
   return h.response().code(202)
