@@ -45,6 +45,7 @@ docker run --rm --network=opencrvs_default mongo:4.4 mongo application-config --
 docker run --rm --network=opencrvs_default mongo:4.4 mongo metrics --host mongo1 --eval "db.dropDatabase()"
 docker run --rm --network=opencrvs_default mongo:4.4 mongo reports --host mongo1 --eval "db.dropDatabase()"
 docker run --rm --network=opencrvs_default mongo:4.4 mongo webhooks --host mongo1 --eval "db.dropDatabase()"
+docker run --rm --network=opencrvs_default mongo:4.4 mongo performance --host mongo1 --eval "db.dropDatabase()"
 
 docker run --rm --network=opencrvs_default appropriate/curl curl -XDELETE 'http://elasticsearch:9200/*' -v
 docker run --rm --network=opencrvs_default appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
