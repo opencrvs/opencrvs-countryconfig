@@ -48,9 +48,11 @@ export async function validateRegistrationHandler(
     })*/
 
     logger.error(err)
-    throw badImplementation(
-      `Could not generate registration number in country configuration due to error: ${err}`
-    )
+    // returning a boom error with a 'boomCustromMessage' property
+    // as Boom.badImplementation always overrides message with the default 'Internal error occured' message
+    const boomError = badImplementation()
+    boomError.output.payload.boomCustromMessage = `Could not generate registration number in country configuration due to error: ${err}`
+    throw boomError
   }
 
   return h.response().code(202)
