@@ -245,6 +245,24 @@ async function main() {
   const rawStatistics = await readCSVToJSON(process.argv[6])
   const statistics = Statistics.parse(rawStatistics)
 
+  // Require all MAX_ADMIN_LEVEL locations being included in the statistics file
+  const onlyAdminPCodesOfStatistics = statistics.map(
+    ({ adminPcode }) => adminPcode
+  )
+  const isEveryMaxAdminLevelLocationInStatistics = locations.every((location) =>
+    onlyAdminPCodesOfStatistics.includes(
+      location[`admin${MAX_ADMIN_LEVEL}Pcode`]!
+    )
+  )
+  if (!isEveryMaxAdminLevelLocationInStatistics) {
+    error(
+      chalk.blue(`STATISTIC ERROR!`),
+      `For every ${`admin${MAX_ADMIN_LEVEL}Pcode`} in location CSV there is not a corresponding entry in statistics CSV`
+    )
+    process.exit(1)
+  }
+
+  // Validate if every statistic location actually exists in locations CSV
   for (const statistic of statistics) {
     let location
     for (let i = MAX_ADMIN_LEVEL; i > 0; i--) {
@@ -313,7 +331,7 @@ async function main() {
       const childrenLocations = locationHierarchyMap[location]
       const ownStat = statisticsMap.get(location)
       if (!ownStat) {
-        return
+        continue
       }
       for (const year of ownStat?.years) {
         const yearWiseChildrenStats = childrenLocations
