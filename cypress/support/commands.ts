@@ -122,7 +122,7 @@ Cypress.Commands.add('selectOption', (selector, text, option) => {
     .contains(option)
     .click()
 
-  cy.get(`${selector} input`).focus().blur()
+  cy.get(`${selector} input`).first().focus().blur()
 })
 
 Cypress.Commands.add('selectLocation', (selector: string, text: string) => {
