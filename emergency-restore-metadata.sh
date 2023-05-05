@@ -111,6 +111,7 @@ docker run --rm --network=$NETWORK mongo:4.4 mongo user-mgnt $(mongo_credentials
 docker run --rm --network=$NETWORK mongo:4.4 mongo application-config $(mongo_credentials) --host $HOST --eval "db.dropDatabase()"
 docker run --rm --network=$NETWORK mongo:4.4 mongo metrics $(mongo_credentials) --host $HOST --eval "db.dropDatabase()"
 docker run --rm --network=$NETWORK mongo:4.4 mongo webhooks $(mongo_credentials) --host $HOST --eval "db.dropDatabase()"
+docker run --rm --network=$NETWORK mongo:4.4 mongo performance $(mongo_credentials) --host $HOST --eval "db.dropDatabase()"
 
 # Delete all data from search
 #----------------------------

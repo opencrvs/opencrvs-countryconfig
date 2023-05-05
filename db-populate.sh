@@ -136,6 +136,7 @@ docker run --rm --network=$NETWORK mongo:4.4 mongo metrics --host $HOST --eval "
 docker run --rm --network=$NETWORK mongo:4.4 mongo reports --host $HOST --eval "db.dropDatabase()"
 docker run --rm --network=$NETWORK mongo:4.4 mongo config --host $HOST --eval "db.dropDatabase()"
 docker run --rm --network=$NETWORK mongo:4.4 mongo webhooks --host $HOST --eval "db.dropDatabase()"
+docker run --rm --network=$NETWORK mongo:4.4 mongo performance --host $HOST --eval "db.dropDatabase()"
 docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE 'http://elasticsearch:9200/*' -v
 docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
 

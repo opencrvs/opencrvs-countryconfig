@@ -35,7 +35,7 @@ export const CONFIRM_REGISTRATION_URL =
   'http://localhost:5001/confirm/registration'
 // This value is configured based on country's data
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE =
-  process.env.COUNTRY_WIDE_CRUDE_DEATH_RATE || 6.633
+  process.env.COUNTRY_WIDE_CRUDE_DEATH_RATE || 10
 
 import * as path from 'path'
 import { readFileSync } from 'fs'
