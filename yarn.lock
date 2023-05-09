@@ -2773,6 +2773,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/bcryptjs@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@types/bcryptjs/-/bcryptjs-2.4.2.tgz#e3530eac9dd136bfdfb0e43df2c4c5ce1f77dfae"
+  integrity sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ==
+
 "@types/bson@*":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@types/bson/-/bson-4.2.0.tgz#a2f71e933ff54b2c3bf267b67fa221e295a33337"
@@ -3734,6 +3739,11 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bcryptjs@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/bcryptjs/-/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
+  integrity sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==
+
 binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
@@ -4458,11 +4468,6 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
-
-crypto@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/crypto/-/crypto-1.0.1.tgz#2af1b7cad8175d24c8a1b0778255794a21803037"
-  integrity sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==
 
 cssom@^0.4.4:
   version "0.4.4"
