@@ -12,13 +12,11 @@
 
 import fetch from 'node-fetch'
 import { FHIR_URL } from '@countryconfig/constants'
-import { createHash } from 'crypto'
 import { callingCountries } from 'country-data'
-import * as uuid from 'uuid/v4'
 import * as csv2json from 'csv2json'
 import { createReadStream } from 'fs'
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
-
+import * as bcrypt from 'bcryptjs'
 export const GENERATE_TYPE_RN = 'registrationNumber'
 export const CHILD_CODE = 'child-details'
 export const DECEASED_CODE = 'deceased-details'
@@ -349,14 +347,11 @@ export function generateRandomPassword(demoUser?: boolean) {
 }
 
 export function generateHash(content: string, salt: string): string {
-  const hash = createHash('sha512')
-  hash.update(salt)
-  hash.update(content)
-  return hash.digest('hex')
+  return bcrypt.hashSync(content, salt)
 }
 
 export function generateSaltedHash(password: string): ISaltedHash {
-  const salt = uuid()
+  const salt = bcrypt.genSaltSync(10)
   return {
     hash: generateHash(password, salt),
     salt
