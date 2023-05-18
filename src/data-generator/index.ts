@@ -51,7 +51,7 @@ import {
   markBirthAsIssued,
   markDeathAsIssued
 } from './issue'
-import { callVSExportAPIToGenerateDeclarationData } from './vsExport'
+// import { callVSExportAPIToGenerateDeclarationData } from './vsExport'
 /*
  *
  * Configuration
@@ -80,7 +80,7 @@ const CONCURRENCY = process.env.CONCURRENCY
   : 3
 
 const START_YEAR = 2021
-const END_YEAR = 2022
+const END_YEAR = 2023
 
 const REGISTER = process.env.REGISTER !== 'false'
 const CERTIFY = process.env.CERTIFY !== 'false'
@@ -400,7 +400,8 @@ async function main() {
           )
         }
         await queue.addAll(operations)
-        await callVSExportAPIToGenerateDeclarationData(submissionDate)
+        // Doesnt work because the API isnt exposed in deployed environments: https://github.com/opencrvs/opencrvs-core/issues/4761
+        // await callVSExportAPIToGenerateDeclarationData(submissionDate)
       }
 
       /*
