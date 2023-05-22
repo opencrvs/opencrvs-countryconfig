@@ -190,7 +190,7 @@
   "correction.certificate.corrector.otherIdCheck",
   "correction.certificate.corrector.idCheckVerify",
   "correction.certificate.corrector.idCheckWithoutVerify",
-  "correction.summary.proofOfPaymentError",
+  "correction.summary.required",
   "custom.field.form.heading",
   "custom.field.text.heading",
   "custom.field.textarea.heading",
