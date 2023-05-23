@@ -45,6 +45,7 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - USER_NOTIFICATION_DELIVERY_METHOD=sms
 
   workflow:
     environment:

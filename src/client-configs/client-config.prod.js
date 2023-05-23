@@ -16,6 +16,7 @@ window.config = {
   AUTH_URL: 'https://auth.{{hostname}}',
   MINIO_URL: 'https://minio.{{hostname}}',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
+  USER_NOTIFICATION_DELIVERY_METHOD: 'sms', // 'email'
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
   AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',

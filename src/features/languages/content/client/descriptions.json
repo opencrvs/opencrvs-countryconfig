@@ -353,6 +353,7 @@
     "system.user.settings.systemLanguage": "Label for system language",
     "system.user.settings.profileImage": "Label for profile image",
     "system.user.duplicateMobileError": "This error messege shows when user try to input already exsisted mobile number",
+    "system.user.duplicateEmailError": "This error message shows when user tries to input an already existing email",
     "system.user.unlock.pinLabel": "Label for entering unlock user profile",
     "register.SelectContactPoint.phoneNoError": "Phone no error text",
     "validations.bengaliOnlyNameFormat": "The error message that appears when a non bengali character is used in a Bengali name",

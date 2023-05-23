@@ -67,6 +67,7 @@
   "userSetup.type.system",
   "system.user.settings.incorrectVerifyCode",
   "system.user.settings.phonedNumberUpdated",
+  "system.user.duplicateEmailError",
   "system.user.unlock.pinLabel",
   "validations.officeMustBeSelected",
   "validations.isMoVisitBeforeBirth",
