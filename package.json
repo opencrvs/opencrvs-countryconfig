@@ -30,7 +30,8 @@
     "compose:push:version": "export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION",
     "compose:push:release": "export COUNTRY_CONFIG_VERSION=`git describe --tags --abbrev=0` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION",
     "data-generator": "ts-node -r tsconfig-paths/register -T src/data-generator/index.ts",
-    "data-generator:generate-types": "graphql-codegen --config codegen.yml && yarn prettier --write src/data-generator/gateway.ts"
+    "data-generator:generate-types": "graphql-codegen --config codegen.yml && yarn prettier --write src/data-generator/gateway.ts",
+    "deploy": "bash infrastructure/deploy.sh"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
