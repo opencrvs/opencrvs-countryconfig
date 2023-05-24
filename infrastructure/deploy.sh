@@ -66,7 +66,7 @@ function trapint {
 }
 
 print_usage_and_exit () {
-    echo 'Usage: ./deploy.sh --clear_data=yes|no --restore_metadata=yes|no --host --environment --version --country_config_version --country_config_path --replicas'
+    echo 'Usage: ./deploy.sh --clear_data=yes|no --restore_metadata=yes|no --host --environment --version --country_config_version --replicas'
     echo "  --clear_data must have a value of 'yes' or 'no' set e.g. --clear_data=yes"
     echo "  --restore_metadata must have a value of 'yes' or 'no' set e.g. --restore_metadata=yes"
     echo "  --environment can be 'production' or 'development' or 'qa' or 'demo'"
@@ -105,11 +105,6 @@ fi
 
 if [ -z "$COUNTRY_CONFIG_VERSION" ] ; then
     echo 'Error: Argument --country_config_version is required.'
-    print_usage_and_exit
-fi
-
-if [ -z "$COUNTRY_CONFIG_PATH" ] ; then
-    echo 'Error: Argument --country_config_path is required.'
     print_usage_and_exit
 fi
 
