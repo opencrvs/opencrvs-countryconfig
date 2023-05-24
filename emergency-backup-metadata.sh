@@ -16,54 +16,79 @@
 #------------------------------------------------------------------------------------------------------------------
 set -e
 
-print_usage_and_exit () {
-    echo 'Usage: ./emergency-backup-metadata.sh SSH_USER SSH_HOST SSH_PORT PRODUCTION_IP REMOTE_DIR REPLICAS VERSION'
-    echo "Script must receive SSH details and a target directory of a remote server to copy backup files to."
-    echo "Optionally a VERSION i.e. 'v1.0.1' can be provided to be appended to the backup file labels"
-    echo "7 days of backup data will be retained in the manager node"
-    echo ""
-    echo "If your MongoDB is password protected, an admin user's credentials can be given as environment variables:"
-    echo "MONGODB_ADMIN_USER=your_user MONGODB_ADMIN_PASSWORD=your_pass"
-    echo ""
-    echo "If your Elasticsearch is password protected, an admin user's credentials can be given as environment variables:"
-    echo "ELASTICSEARCH_ADMIN_USER=your_user ELASTICSEARCH_ADMIN_PASSWORD=your_pass"
-    exit 1
+# Reading Named parameters
+for i in "$@"; do
+  case $i in
+  --ssh_user=*)
+    SSH_USER="${i#*=}"
+    shift
+    ;;
+  --ssh_host=*)
+    SSH_HOST="${i#*=}"
+    shift
+    ;;
+  --ssh_port=*)
+    SSH_PORT="${i#*=}"
+    shift
+    ;;
+  --production_ip=*)
+    PRODUCTION_IP="${i#*=}"
+    shift
+    ;;
+  --remote_dir=*)
+    REMOTE_DIR="${i#*=}"
+    shift
+    ;;
+  --replicas=*)
+    REPLICAS="${i#*=}"
+    shift
+    ;;
+  --version=*)
+    VERSION="${i#*=}"
+    shift
+    ;;
+  *) ;;
+  esac
+done
+
+print_usage_and_exit() {
+  echo 'Usage: ./emergency-backup-metadata.sh --ssh_user=XXX --ssh_host=XXX --ssh_port=XXX --production_ip=XXX --remote_dir=XXX --replicas=XXX --version=XXX'
+  echo "Script must receive SSH details and a target directory of a remote server to copy backup files to."
+  echo "Optionally a VERSION i.e. 'v1.0.1' can be provided to be appended to the backup file labels"
+  echo "7 days of backup data will be retained in the manager node"
+  echo ""
+  echo "If your MongoDB is password protected, an admin user's credentials can be given as environment variables:"
+  echo "MONGODB_ADMIN_USER=your_user MONGODB_ADMIN_PASSWORD=your_pass"
+  echo ""
+  echo "If your Elasticsearch is password protected, an admin user's credentials can be given as environment variables:"
+  echo "ELASTICSEARCH_ADMIN_USER=your_user ELASTICSEARCH_ADMIN_PASSWORD=your_pass"
+  exit 1
 }
 
-if [ -z "$1" ] ; then
-    echo "Error: Argument for the SSH_USER is required in position 1."
-    print_usage_and_exit
+if [ -z "$SSH_USER" ]; then
+  echo "Error: Argument for the --ssh_user is required."
+  print_usage_and_exit
 fi
-if [ -z "$2" ] ; then
-    echo "Error: Argument for the SSH_HOST is required in position 2."
-    print_usage_and_exit
+if [ -z "$SSH_HOST" ]; then
+  echo "Error: Argument for the --ssh_host is required."
+  print_usage_and_exit
 fi
-if [ -z "$3" ] ; then
-    echo "Error: Argument for the SSH_PORT is required in position 3."
-    print_usage_and_exit
+if [ -z "$SSH_PORT" ]; then
+  echo "Error: Argument for the --ssh_port is required."
+  print_usage_and_exit
 fi
-if [ -z "$4" ] ; then
-    echo "Error: Argument for the PRODUCTION_IP is required in position 4."
-    print_usage_and_exit
+if [ -z "$PRODUCTION_IP" ]; then
+  echo "Error: Argument for the --production_ip is required."
+  print_usage_and_exit
 fi
-if [ -z "$5" ] ; then
-    echo "Error: Argument for the REMOTE_DIR is required in position 5."
-    print_usage_and_exit
+if [ -z "$REMOTE_DIR" ]; then
+  echo "Error: Argument for the --remote_dir is required."
+  print_usage_and_exit
 fi
-if [ -z "$6" ] ; then
-    echo "Error: Argument for the REPLICAS is required in position 6."
-    print_usage_and_exit
+if [ -z "$REPLICAS" ]; then
+  echo "Error: Argument for the --replicas is required."
+  print_usage_and_exit
 fi
-
-# Host and directory where backups will be remotely saved
-#--------------------------------------------------------
-SSH_USER=$1
-SSH_HOST=$2
-SSH_PORT=$3
-PRODUCTION_IP=$4
-REMOTE_DIR=$5
-REPLICAS=$6
-VERSION=$7
 
 # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
 # We recommend that the secrets are served via a secure API from a Hardware Security Module
@@ -94,17 +119,17 @@ fi
 
 mongo_credentials() {
   if [ ! -z ${MONGODB_ADMIN_USER+x} ] || [ ! -z ${MONGODB_ADMIN_PASSWORD+x} ]; then
-    echo "--username $MONGODB_ADMIN_USER --password $MONGODB_ADMIN_PASSWORD --authenticationDatabase admin";
+    echo "--username $MONGODB_ADMIN_USER --password $MONGODB_ADMIN_PASSWORD --authenticationDatabase admin"
   else
-    echo "";
+    echo ""
   fi
 }
 
 elasticsearch_host() {
   if [ ! -z ${ELASTICSEARCH_ADMIN_USER+x} ] || [ ! -z ${ELASTICSEARCH_ADMIN_PASSWORD+x} ]; then
-    echo "$ELASTICSEARCH_ADMIN_USER:$ELASTICSEARCH_ADMIN_PASSWORD@elasticsearch:9200";
+    echo "$ELASTICSEARCH_ADMIN_USER:$ELASTICSEARCH_ADMIN_PASSWORD@elasticsearch:9200"
   else
-    echo "elasticsearch:9200";
+    echo "elasticsearch:9200"
   fi
 }
 
@@ -115,17 +140,17 @@ BACKUP_DATE=$(date +%Y-%m-%d)
 # Backup Hearth, OpenHIM, User, Application-config and any other service related Mongo databases into a mongo sub folder
 #---------------------------------------------------------------------------------------------
 docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
- -c "mongodump $(mongo_credentials) --host $HOST -d hearth-dev --gzip --archive=/data/backups/mongo/hearth-dev-${VERSION:-$BACKUP_DATE}.gz"
+  -c "mongodump $(mongo_credentials) --host $HOST -d hearth-dev --gzip --archive=/data/backups/mongo/hearth-dev-${VERSION:-$BACKUP_DATE}.gz"
 docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
- -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev --gzip --archive=/data/backups/mongo/openhim-dev-${VERSION:-$BACKUP_DATE}.gz"
+  -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev --gzip --archive=/data/backups/mongo/openhim-dev-${VERSION:-$BACKUP_DATE}.gz"
 docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
- -c "mongodump $(mongo_credentials) --host $HOST -d user-mgnt --gzip --archive=/data/backups/mongo/user-mgnt-${VERSION:-$BACKUP_DATE}.gz"
+  -c "mongodump $(mongo_credentials) --host $HOST -d user-mgnt --gzip --archive=/data/backups/mongo/user-mgnt-${VERSION:-$BACKUP_DATE}.gz"
 docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
- -c "mongodump $(mongo_credentials) --host $HOST -d application-config --gzip --archive=/data/backups/mongo/application-config-${VERSION:-$BACKUP_DATE}.gz"
+  -c "mongodump $(mongo_credentials) --host $HOST -d application-config --gzip --archive=/data/backups/mongo/application-config-${VERSION:-$BACKUP_DATE}.gz"
 docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
- -c "mongodump $(mongo_credentials) --host $HOST -d metrics --gzip --archive=/data/backups/mongo/metrics-${VERSION:-$BACKUP_DATE}.gz"
+  -c "mongodump $(mongo_credentials) --host $HOST -d metrics --gzip --archive=/data/backups/mongo/metrics-${VERSION:-$BACKUP_DATE}.gz"
 docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
- -c "mongodump $(mongo_credentials) --host $HOST -d webhooks --gzip --archive=/data/backups/mongo/webhooks-${VERSION:-$BACKUP_DATE}.gz"
+  -c "mongodump $(mongo_credentials) --host $HOST -d webhooks --gzip --archive=/data/backups/mongo/webhooks-${VERSION:-$BACKUP_DATE}.gz"
 
 # Register backup folder as an Elasticsearch repository for backing up the search data
 #-------------------------------------------------------------------------------------
@@ -138,9 +163,9 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X PUT -H "Content-Type
 
 # Get the container ID and host details of any running InfluxDB container, as the only way to backup is by using the Influxd CLI inside a running opencrvs_metrics container
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-INFLUXDB_CONTAINER_ID=`echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}'`
-INFLUXDB_CONTAINER_NAME=`echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}'`
-INFLUXDB_HOSTNAME=`echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}'`
+INFLUXDB_CONTAINER_ID=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}')
+INFLUXDB_CONTAINER_NAME=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}')
+INFLUXDB_HOSTNAME=$(echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}')
 INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
 INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
 
