@@ -90,6 +90,7 @@ jobs:
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
         run: |
+          cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=qa --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
 
       - name: Deploy to production
@@ -113,6 +114,7 @@ jobs:
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
         run: |
+          cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=production --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
 
       - name: Deploy to staging
@@ -136,6 +138,7 @@ jobs:
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
         run: |
+          cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=development --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
 
       - name: Deploy to config
@@ -156,6 +159,7 @@ jobs:
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
         run: |
+          cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=yes --restore-metadata=yes --environment=development --host=farajaland-config.opencrvs.org --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=1
 
       - name: Deploy to demo
@@ -176,4 +180,5 @@ jobs:
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
         run: |
+          cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=no --restore-metadata=no --environment=demo --host=farajaland-demo.opencrvs.org --version=v1.2.0 --country_config_version=v1.2.0 --country_config_path=../${{ github.event.repository.name }} --replicas=1
