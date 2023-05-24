@@ -10,4 +10,7 @@ export const GATEWAY_GQL_HOST =
 export const GATEWAY_API_HOST =
   process.env.GATEWAY_API_HOST || 'http://localhost:7070'
 
+export const METRICS_API_HOST =
+  process.env.METRICS_API_HOST || 'http://localhost:1050'
+
 export const CONFIG_HOST = process.env.CONFIG_HOST || 'http://localhost:2021/'

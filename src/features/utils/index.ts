@@ -13,11 +13,10 @@
 import fetch from 'node-fetch'
 import { FHIR_URL } from '@countryconfig/constants'
 import { callingCountries } from 'country-data'
-import { createHash } from 'crypto'
-import * as uuid from 'uuid/v4'
 import * as csv2json from 'csv2json'
 import { createReadStream } from 'fs'
-
+import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
+import * as bcrypt from 'bcryptjs'
 export const GENERATE_TYPE_RN = 'registrationNumber'
 export const CHILD_CODE = 'child-details'
 export const DECEASED_CODE = 'deceased-details'
@@ -130,7 +129,9 @@ export function getTrackingIdFromTaskResource(taskResource: fhir.Task) {
         identifier.system ===
           `${OPENCRVS_SPECIFICATION_URL}id/birth-tracking-id` ||
         identifier.system ===
-          `${OPENCRVS_SPECIFICATION_URL}id/death-tracking-id`
+          `${OPENCRVS_SPECIFICATION_URL}id/death-tracking-id` ||
+        identifier.system ===
+          `${OPENCRVS_SPECIFICATION_URL}id/marriage-tracking-id`
       )
     })
   if (!trackingIdentifier || !trackingIdentifier.value) {
@@ -321,7 +322,6 @@ export function checkDuplicate(
 
 export const titleCase = (str: string) => {
   const stringArray = str.toLowerCase().split(' ')
-  // tslint:disable-next-line
   for (let i = 0; i < stringArray.length; i++) {
     stringArray[i] =
       stringArray[i].charAt(0).toUpperCase() + stringArray[i].slice(1)
@@ -340,7 +340,6 @@ export function generateRandomPassword(demoUser?: boolean) {
 
   let randomPassword = ''
   for (let i = 0; i < length; i += 1) {
-    // tslint:disable-next-line
     randomPassword += charset.charAt(Math.floor(Math.random() * charset.length))
   }
 
@@ -348,14 +347,11 @@ export function generateRandomPassword(demoUser?: boolean) {
 }
 
 export function generateHash(content: string, salt: string): string {
-  const hash = createHash('sha512')
-  hash.update(salt)
-  hash.update(content)
-  return hash.digest('hex')
+  return bcrypt.hashSync(content, salt)
 }
 
 export function generateSaltedHash(password: string): ISaltedHash {
-  const salt = uuid()
+  const salt = bcrypt.genSaltSync(10)
   return {
     hash: generateHash(password, salt),
     salt
@@ -363,14 +359,18 @@ export function generateSaltedHash(password: string): ISaltedHash {
 }
 
 export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
-  const countryCode =
-    callingCountries[countryAlpha3.toUpperCase()].countryCallingCodes[0]
-  if (phone.startsWith(countryCode) || `+${phone}`.startsWith(countryCode)) {
-    return phone.startsWith('+') ? phone : `+${phone}`
-  }
-  return phone.startsWith('0')
-    ? `${countryCode}${phone.substring(1)}`
-    : `${countryCode}${phone}`
+  const countryCode = callingCountries[countryAlpha3.toUpperCase()].alpha2
+
+  const phoneUtil = PhoneNumberUtil.getInstance()
+  const number = phoneUtil.parse(phone, countryCode)
+
+  return (
+    phoneUtil
+      .format(number, PhoneNumberFormat.INTERNATIONAL)
+      // libphonenumber adds spaces and dashes to phone numbers,
+      // which we do not want to keep for now
+      .replace(/[\s-]/g, '')
+  )
 }
 
 export async function readCSVToJSON<T>(filename: string) {

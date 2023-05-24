@@ -9,10 +9,8 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-// tslint:disable no-var-requires
 require('app-module-path').addPath(require('path').join(__dirname))
 
-// tslint:enable no-var-requires
 import fetch from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
 import getPlugins from '@countryconfig/config/plugins'
@@ -41,8 +39,9 @@ import {
   notificationHandler,
   notificationScheme
 } from './features/notification/handler'
-import { mosipMediatorHandler } from './features/mediators/mosip-openhim-mediator/handler'
+import { mosipMediatorHandler } from '@countryconfig/features/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
+import { mapGeojsonHandler } from '@countryconfig/features/map/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -252,6 +251,17 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Serves language content'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/content/farajaland-map.geojson',
+    handler: mapGeojsonHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves map geojson'
     }
   })
 

@@ -98,7 +98,6 @@ export async function composeAndSaveFacilities(
       facility,
       `Location/${parentLocationID}`
     )
-    // tslint:disable-next-line:no-console
     console.log(
       `Saving facility ... type: ${facility.code}, name: ${facility.name}`
     )

@@ -9,14 +9,15 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import fetchMock, { enableFetchMocks } from 'jest-fetch-mock'
-import { readFileSync } from 'fs'
+import * as Hapi from '@hapi/hapi'
+import * as fs from 'fs'
+import { join } from 'path'
 
-enableFetchMocks()
-
-fetchMock.mockIf(
-  (req) => req.url.endsWith('.well-known'),
-  readFileSync('./test/cert.key.pub').toString()
-)
-
-process.env.NODE_ENV = 'development'
+export async function mapGeojsonHandler(
+  request: Hapi.Request,
+  h: Hapi.ResponseToolkit
+) {
+  const filePath = join(__dirname, './file/farajaland-map.geojson')
+  const fileContents = fs.readFileSync(filePath, 'utf8')
+  return h.response(fileContents).type('text/plain')
+}
