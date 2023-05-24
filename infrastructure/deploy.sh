@@ -9,6 +9,8 @@
 # graphic logo are (registered/a) trademark(s) of Plan International.
 set -e
 
+BASEDIR=$(dirname $0)
+
 # Reading Names parameters
 for i in "$@"; do
     case $i in
@@ -55,8 +57,13 @@ done
 # .env.production
 if [ -f .env.$environment ]
 then
-    export $(cat .env.$environment | sed 's/#.*//g' | xargs)
+    export $(cat $BASEDIR/../.env.$environment | sed 's/#.*//g' | xargs)
 fi
+
+trap trapint SIGINT SIGTERM
+function trapint {
+    exit 0
+}
 
 print_usage_and_exit () {
     echo 'Usage: ./deploy.sh --clear_data=yes|no --restore_metadata=yes|no --host --environment --version --country_config_version --country_config_path --replicas'
@@ -66,7 +73,6 @@ print_usage_and_exit () {
     echo '  --host    is the server to deploy to'
     echo "  --version can be any OpenCRVS Core docker image tag or 'latest'"
     echo "  --country_config_version can be any OpenCRVS Country Configuration docker image tag or 'latest'"
-    echo "  --country_config_path path to where your resources package is located"
     echo "  --replicas number of supported mongo databases in your replica set.  Can be 1, 3 or 5"
     exit 1
 }
@@ -201,7 +207,11 @@ SSH_USER=${SSH_USER:-root}
 SSH_HOST=${SSH_HOST:-$HOST}
 LOG_LOCATION=${LOG_LOCATION:-/var/log}
 
-SHARED_COMPOSE_FILES="docker-compose.deps.yml docker-compose.yml docker-compose.deploy.yml"
+(cd /tmp/ && curl -O https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/docker-compose.yml)
+(cd /tmp/ && curl -O https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/docker-compose.deps.yml)
+
+COMPOSE_FILED_FROM_CORE="docker-compose.deps.yml docker-compose.yml"
+COMMON_COMPOSE_FILES="$COMPOSE_FILED_FROM_CORE docker-compose.deploy.yml"
 
 # Rotate MongoDB credentials
 # https://unix.stackexchange.com/a/230676
@@ -210,7 +220,10 @@ generate_password() {
   echo $password
 }
 
-# Create new passwords for all MongoDB users used in
+# Create new passwords for all MongoDB users created in
+# infrastructure/mongodb/docker-entrypoint-initdb.d/create-mongo-users.sh
+#
+# If you're adding a new MongoDB user, you'll need to also create a new update statement in
 # infrastructure/mongodb/on-deploy.sh
 
 USER_MGNT_MONGODB_PASSWORD=`generate_password`
@@ -247,25 +260,28 @@ mkdir -p /tmp/opencrvs/infrastructure/default_backups
 mkdir -p /tmp/opencrvs/infrastructure/cryptfs
 
 # Copy selected country default backups to infrastructure default_backups folder
-cp $COUNTRY_CONFIG_PATH/backups/hearth-dev.gz /tmp/opencrvs/infrastructure/default_backups/hearth-dev.gz
-cp $COUNTRY_CONFIG_PATH/backups/openhim-dev.gz /tmp/opencrvs/infrastructure/default_backups/openhim-dev.gz
-cp $COUNTRY_CONFIG_PATH/backups/user-mgnt.gz /tmp/opencrvs/infrastructure/default_backups/user-mgnt.gz
-cp $COUNTRY_CONFIG_PATH/backups/application-config.gz /tmp/opencrvs/infrastructure/default_backups/application-config.gz
+cp $BASEDIR/../backups/hearth-dev.gz /tmp/opencrvs/infrastructure/default_backups/hearth-dev.gz
+cp $BASEDIR/../backups/openhim-dev.gz /tmp/opencrvs/infrastructure/default_backups/openhim-dev.gz
+cp $BASEDIR/../backups/user-mgnt.gz /tmp/opencrvs/infrastructure/default_backups/user-mgnt.gz
+cp $BASEDIR/../backups/application-config.gz /tmp/opencrvs/infrastructure/default_backups/application-config.gz
 
 # Copy decrypt script
-cp $COUNTRY_CONFIG_PATH/decrypt.sh /tmp/opencrvs/infrastructure/cryptfs/decrypt.sh
+cp $BASEDIR/decrypt.sh /tmp/opencrvs/infrastructure/cryptfs/decrypt.sh
 
 # Copy emergency backup script
-cp $COUNTRY_CONFIG_PATH/emergency-backup-metadata.sh /tmp/opencrvs/infrastructure/emergency-backup-metadata.sh
+cp $BASEDIR/emergency-backup-metadata.sh /tmp/opencrvs/infrastructure/emergency-backup-metadata.sh
 
 # Copy emergency restore script
-cp $COUNTRY_CONFIG_PATH/emergency-restore-metadata.sh /tmp/opencrvs/infrastructure/emergency-restore-metadata.sh
+cp $BASEDIR/emergency-restore-metadata.sh /tmp/opencrvs/infrastructure/emergency-restore-metadata.sh
 
-# Copy all infrastructure files to the server
-rsync -rP docker-compose* infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/
+# Download base docker compose files to the server
+
+rsync -rP /tmp/docker-compose* infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/
+
+rsync -rP $BASEDIR/docker-compose* infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/
 
 # Copy all country compose files to the server
-rsync -rP $COUNTRY_CONFIG_PATH/docker-compose.countryconfig* infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/
+rsync -rP $BASEDIR/docker-compose.countryconfig* infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/
 
 # Override configuration files with country specific files
 rsync -rP /tmp/opencrvs/infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs
@@ -341,9 +357,11 @@ docker_stack_deploy() {
   echo "DEPLOYING THIS ENVIRONMENT: $environment_compose"
   echo "DEPLOYING THESE REPLICAS: $replicas_compose"
 
+  ENVIRONMENT_COMPOSE_WITH_LOCAL_PATHS=$(echo "$environment_compose" | sed "s|docker-compose|$BASEDIR/docker-compose|g")
+  REPLICAS_COMPOSE_WITH_LOCAL_PATHS=$(echo "$replicas_compose" | sed "s|docker-compose|$BASEDIR/docker-compose|g")
 
-  ENVIRONMENT_COMPOSE_WITH_LOCAL_PATHS=$(echo "$environment_compose" | sed "s|docker-compose.countryconfig|$COUNTRY_CONFIG_PATH/docker-compose.countryconfig|")
-  REPLICAS_COMPOSE_WITH_LOCAL_PATHS=$(echo "$replicas_compose" | sed "s|docker-compose.countryconfig|$COUNTRY_CONFIG_PATH/docker-compose.countryconfig|")
+  CORE_COMPOSE_FILES_WITH_LOCAL_PATHS=$(echo "$COMPOSE_FILED_FROM_CORE" | sed "s|docker-compose|/tmp/docker-compose|g")
+  COMMON_COMPOSE_FILES_WITH_LOCAL_PATHS="$BASEDIR/docker-compose.deploy.yml $CORE_COMPOSE_FILES_WITH_LOCAL_PATHS"
 
   ENV_VARIABLES="HOSTNAME=$HOST
   VERSION=$VERSION
@@ -375,7 +393,7 @@ docker_stack_deploy() {
   echo "Pulling all docker images. This might take a while"
 
   EXISTING_IMAGES=$(ssh $SSH_USER@$SSH_HOST "docker images --format '{{.Repository}}:{{.Tag}}'")
-  IMAGE_TAGS_TO_DOWNLOAD=$(get_docker_tags_from_compose_files "$SHARED_COMPOSE_FILES $ENVIRONMENT_COMPOSE_WITH_LOCAL_PATHS $REPLICAS_COMPOSE_WITH_LOCAL_PATHS")
+  IMAGE_TAGS_TO_DOWNLOAD=$(get_docker_tags_from_compose_files "$COMMON_COMPOSE_FILES_WITH_LOCAL_PATHS $ENVIRONMENT_COMPOSE_WITH_LOCAL_PATHS $REPLICAS_COMPOSE_WITH_LOCAL_PATHS")
 
   for tag in ${IMAGE_TAGS_TO_DOWNLOAD[@]}; do
     if [[ $EXISTING_IMAGES == *"$tag"* ]]; then
@@ -394,7 +412,7 @@ docker_stack_deploy() {
 
   echo "Updating docker swarm stack with new compose files"
   ssh $SSH_USER@$SSH_HOST 'cd /opt/opencrvs && \
-    '$ENV_VARIABLES' docker stack deploy --prune -c '$(split_and_join " " " -c " "$SHARED_COMPOSE_FILES $environment_compose $replicas_compose")' --with-registry-auth opencrvs'
+    '$ENV_VARIABLES' docker stack deploy --prune -c '$(split_and_join " " " -c " "$COMMON_COMPOSE_FILES $environment_compose $replicas_compose")' --with-registry-auth opencrvs'
 }
 
 FILES_TO_ROTATE="/opt/opencrvs/docker-compose.deploy.yml"
