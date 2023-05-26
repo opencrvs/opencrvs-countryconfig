@@ -376,7 +376,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=false'
-      replicas: 2
+      replicas: 1
   apm-server:
     image: docker.elastic.co/apm/apm-server:7.15.2
     depends_on:
@@ -392,7 +392,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=false'
-      replicas: 2
+      replicas: 1
     command:
       [
         'apm-server',
@@ -466,7 +466,7 @@ services:
         - 'traefik.http.middlewares.client.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.client.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.client.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -491,7 +491,7 @@ services:
         - 'traefik.http.middlewares.components.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.components.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.components.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -516,7 +516,7 @@ services:
         - 'traefik.http.middlewares.countryconfig.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.countryconfig.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.countryconfig.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     environment:
       - APN_SERVICE_URL=http://apm-server:8200
     networks:
@@ -545,7 +545,7 @@ services:
         - 'traefik.http.middlewares.login.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.login.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.login.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -578,7 +578,7 @@ services:
         - 'traefik.http.middlewares.auth.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.auth.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.auth.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -597,7 +597,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=false'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -612,7 +612,7 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         - 'traefik.enable=false'
     networks:
@@ -644,7 +644,7 @@ services:
         - 'traefik.http.middlewares.gateway.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.gateway.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.gateway.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -661,7 +661,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=false'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -679,7 +679,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=false'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -768,7 +768,7 @@ services:
         - 'traefik.http.middlewares.config.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.config.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.config.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -812,7 +812,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=false'
-      replicas: 2
+      replicas: 1
     secrets:
       - jwt-public-key.{{ts}}
     configs:
@@ -864,7 +864,7 @@ services:
         - 'traefik.http.middlewares.openhimcore.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.openhimcore.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.openhimcore.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
@@ -885,7 +885,7 @@ services:
         - 'traefik.http.middlewares.openhim.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.openhim.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.openhim.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     configs:
       - source: openhim-console-conf.{{ts}}
         target: /usr/share/nginx/html/config/default.json
@@ -919,7 +919,7 @@ services:
         - 'traefik.http.middlewares.webhooks.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.webhooks.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.webhooks.headers.stspreload=true'
-      replicas: 2
+      replicas: 1
     networks:
       - overlay_net
     logging:
