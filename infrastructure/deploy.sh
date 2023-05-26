@@ -38,10 +38,6 @@ for i in "$@"; do
         COUNTRY_CONFIG_VERSION="${i#*=}"
         shift
         ;;
-    --country_config_path=*)
-        COUNTRY_CONFIG_PATH="${i#*=}"
-        shift
-        ;;
     --replicas=*)
         REPLICAS="${i#*=}"
         shift
@@ -101,7 +97,6 @@ if [ -z "$VERSION" ] ; then
     echo 'Error: Argument --version is required.'
     print_usage_and_exit
 fi
-
 
 if [ -z "$COUNTRY_CONFIG_VERSION" ] ; then
     echo 'Error: Argument --country_config_version is required.'
@@ -268,6 +263,11 @@ cp $BASEDIR/emergency-backup-metadata.sh /tmp/opencrvs/infrastructure/emergency-
 
 # Copy emergency restore script
 cp $BASEDIR/emergency-restore-metadata.sh /tmp/opencrvs/infrastructure/emergency-restore-metadata.sh
+
+# Copy hearth plugins
+mkdir -p /tmp/opencrvs/infrastructure/hearth-plugins
+(cd /tmp/opencrvs/infrastructure/hearth-plugins && curl -O https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/hearth-plugins/checkDuplicateTask.js)
+cd /tmp/
 
 # Download base docker compose files to the server
 
