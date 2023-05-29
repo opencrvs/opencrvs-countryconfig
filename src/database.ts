@@ -27,9 +27,11 @@ db.on('connected', () => {
 const wait = (time: number) =>
   new Promise((resolve) => setTimeout(resolve, time))
 
-export const connect = async (): Promise<void> => {
+export const connect = async (
+  connectionUrl: string = MONGO_URL
+): Promise<void> => {
   try {
-    await mongoose.connect(MONGO_URL, { autoReconnect: true })
+    await mongoose.connect(connectionUrl, { autoReconnect: true })
   } catch (err) {
     logger.error(err)
     await wait(1000)

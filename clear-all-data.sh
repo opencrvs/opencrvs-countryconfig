@@ -38,14 +38,15 @@ fi
 
 
 # It's fine if these fail as it might be that the databases do not exist at this point
-docker run --rm --network=opencrvs_default mongo:4.4 mongo hearth-dev --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo openhim-dev --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo user-mgnt --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo application-config --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo metrics --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo reports --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo webhooks --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo performance --host mongo1 --eval "db.dropDatabase()"
+docker run --rm --network=opencrvs_default mongo:4.4 mongo --host mongo1 --eval "\
+db.getSiblingDB('hearth-dev').dropDatabase();\
+db.getSiblingDB('openhim-dev').dropDatabase();\
+db.getSiblingDB('user-mgnt').dropDatabase();\
+db.getSiblingDB('application-config').dropDatabase();\
+db.getSiblingDB('metrics').dropDatabase();\
+db.getSiblingDB('config').dropDatabase();\
+db.getSiblingDB('performance').dropDatabase();\
+db.getSiblingDB('webhooks').dropDatabase();"
 
 docker run --rm --network=opencrvs_default appropriate/curl curl -XDELETE 'http://elasticsearch:9200/*' -v
 docker run --rm --network=opencrvs_default appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
