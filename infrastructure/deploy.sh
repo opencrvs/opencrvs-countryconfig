@@ -269,6 +269,18 @@ mkdir -p /tmp/opencrvs/infrastructure/hearth-plugins
 (cd /tmp/opencrvs/infrastructure/hearth-plugins && curl -O https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/hearth-plugins/checkDuplicateTask.js)
 cd /tmp/
 
+# Copy authorized keys
+cp $BASEDIR/.ssh/authorized_keys /tmp/opencrvs/infrastructure/authorized_keys
+
+rotate_authorized_keys() {
+  # file exists and has a size of more than 0 bytes
+  if [ -s "/tmp/opencrvs/infrastructure/authorized_keys" ]; then
+    ssh $SSH_USER@$SSH_HOST 'cat /tmp/opencrvs/infrastructure/authorized_keys > ~/.ssh/authorized_keys'
+  else
+    echo "File /tmp/opencrvs/infrastructure/authorized_keys is empty. Did not rotate authorized keys!"
+  fi
+}
+
 # Download base docker compose files to the server
 
 rsync -rP /tmp/docker-compose* infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/
@@ -345,6 +357,7 @@ split_and_join() {
    SPLIT=$(echo $text | sed -e "s/$separator_for_splitting/$separator_for_joining/g")
    echo $SPLIT
 }
+
 
 docker_stack_deploy() {
   environment_compose=$1
@@ -444,6 +457,7 @@ else
 fi
 
 rotate_secrets "$FILES_TO_ROTATE"
+rotate_authorized_keys
 docker_stack_deploy "$ENVIRONMENT_COMPOSE" "$REPLICAS_COMPOSE"
 
 echo
