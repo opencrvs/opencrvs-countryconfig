@@ -520,6 +520,7 @@
     "config.application.vitalStatistics": "Vital Statistics Export",
     "config.application.export": "Download Export CSV",
     "config.application.emptystate": "Vital Statistics Export Empty State Text",
+    "config.application.vsExportDownloadFailed": "Vital Statistics Export Empty State Text",
     "config.application.nameChangeMessage": "Message for application name change modal",
     "config.application.applicationNameChangeNotification": "Message for application name change notification",
     "config.application.configChangeError": "Error message for application config change",

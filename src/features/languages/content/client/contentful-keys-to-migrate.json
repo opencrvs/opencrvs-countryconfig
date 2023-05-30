@@ -137,6 +137,7 @@
   "config.application.vitalStatistics",
   "config.application.export",
   "config.application.emptystate",
+  "config.application.vsExportDownloadFailed",
   "config.application.nameChangeMessage",
   "config.application.govtLogoChangeMessage",
   "config.application.backgroundImageError",
