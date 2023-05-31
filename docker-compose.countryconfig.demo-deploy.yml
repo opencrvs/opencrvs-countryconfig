@@ -43,6 +43,7 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - NATIONAL_ID_OIDP_BASE_URL=https://idp-mock.collab.mosip.net/
 
   workflow:
     environment:
@@ -61,6 +62,9 @@ services:
       - QA_ENV=true
       - NODE_ENV=production
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - NATIONAL_ID_OIDP_BASE_URL=https://idp-mock.collab.mosip.net/
+      - NATIONAL_ID_OIDP_CLIENT_ID=3yz7-j3xRzU3SODdoNgSGvO_cD8UijH3AIWRDAg1x-M
+      - NATIONAL_ID_OIDP_ESSENTIAL_CLAIMS=name,address,phone_number,email,gender,birthdate
   
   config:
     environment:
