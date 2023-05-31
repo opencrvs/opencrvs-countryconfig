@@ -19,7 +19,7 @@ import * as Hapi from '@hapi/hapi'
 
 interface IMosipPayload {
   BRN: string
-  UINTOKEN?: string
+  MOSIP_PSUT_TOKEN_ID?: string
   MOSIP_AID?: string
 }
 
@@ -31,9 +31,10 @@ export async function mosipMediatorHandler(
   if (hasScope(token, 'nationalId')) {
     const payload = request.payload as IMosipPayload
 
-    if (payload.UINTOKEN) {
-      await processUIN(payload.UINTOKEN, payload.BRN)
+    if (payload.MOSIP_PSUT_TOKEN_ID) {
+      await processPSUT(payload.MOSIP_PSUT_TOKEN_ID, payload.BRN)
     }
+
     if (payload.MOSIP_AID) {
       await processAID(payload.MOSIP_AID, payload.BRN)
     }
@@ -43,7 +44,7 @@ export async function mosipMediatorHandler(
   }
 }
 
-async function processUIN(uinToken: string, brn: string): Promise<boolean> {
+async function processPSUT(uinToken: string, brn: string): Promise<boolean> {
   // Search Hearth for the patient with a given BRN
   const personBundle: fhir.Bundle = await getFromFhir(
     `/Patient?identifier=${encodeURIComponent(brn)}`
@@ -60,7 +61,7 @@ async function processUIN(uinToken: string, brn: string): Promise<boolean> {
       confirmIdentifierExists(
         person.identifier,
         'type',
-        'MOSIP_UINTOKEN',
+        'MOSIP_PSUT_TOKEN_ID',
         uinToken
       )
     ) {
@@ -78,7 +79,7 @@ async function processUIN(uinToken: string, brn: string): Promise<boolean> {
       !personAlreadyUpdated
     ) {
       person.identifier.push({
-        type: 'MOSIP_UINTOKEN',
+        type: 'MOSIP_PSUT_TOKEN_ID',
         value: uinToken
       } as fhir.CodeableConcept)
       try {
