@@ -267,7 +267,6 @@ cp $BASEDIR/emergency-restore-metadata.sh /tmp/opencrvs/infrastructure/emergency
 # Copy hearth plugins
 mkdir -p /tmp/opencrvs/infrastructure/hearth-plugins
 (cd /tmp/opencrvs/infrastructure/hearth-plugins && curl -O https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/hearth-plugins/checkDuplicateTask.js)
-cd /tmp/
 
 # Download base docker compose files to the server
 
