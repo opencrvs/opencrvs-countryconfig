@@ -364,6 +364,11 @@
         rule: allow
         name: OpenSSH
 
+    - name: 'Install Fail2Ban'
+      apt:
+        name: fail2ban
+        state: present
+
     - name: 'Copy logrotate script'
       copy:
         src: ../logrotate.conf
