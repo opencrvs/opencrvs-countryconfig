@@ -27,9 +27,7 @@
           - mongodb_admin_username is defined
           - mongodb_admin_password is defined
           - elasticsearch_superuser_password is defined
-          - country_config_path is defined
           - disk_encryption_key is defined
-          - country_config_path is defined
           - encrypted_disk_size is defined
 
     - name: Setting global variables accessed by country configuration playbook
@@ -361,6 +359,16 @@
         name: fail2ban
         state: present
 
+    - name: 'Copy fail2ban jail.local'
+      copy:
+        src: ../jail.local
+        dest: /etc/fail2ban/
+
+    - name: 'Start fail2ban and reload jail.local'
+      service:
+        name: fail2ban
+        state: restarted
+
     - name: 'Copy logrotate script'
       copy:
         src: ../logrotate.conf
@@ -398,7 +406,7 @@
         default: deny
         direction: incoming
 
-    - include_tasks: '{{ country_config_path }}/playbook.yml'
+    - include_tasks: '../../playbook.yml'
 
 - hosts: docker-manager-first
   become: yes
