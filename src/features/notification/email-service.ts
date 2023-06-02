@@ -40,6 +40,11 @@ type ChangePhoneNumberVariables = {
   authCode: string
   applicationName: string
 }
+type ChangeEmailAddressVariables = {
+  firstNames: string
+  authCode: string
+  applicationName: string
+}
 type ResetPasswordBySysAdminVariables = {
   firstNames: string
   password: string
@@ -79,6 +84,11 @@ const templates = {
     type: 'change-phone-number',
     title: 'Phone number change request',
     template: readTemplate<ChangePhoneNumberVariables>('change-phone-number')
+  },
+  'change-email-address': {
+    type: 'change-email-address',
+    title: 'Email address change request',
+    template: readTemplate<ChangeEmailAddressVariables>('change-email-address')
   },
   'password-reset-by-system-admin': {
     type: 'password-reset-by-system-admin',
@@ -134,6 +144,11 @@ export const sendEmail = (
     emailtitle = templates[type].title
     emailBody = templates[type].template(
       variables as ChangePhoneNumberVariables
+    )
+  } else if (type === 'change-email-address') {
+    emailtitle = templates[type].title
+    emailBody = templates[type].template(
+      variables as ChangeEmailAddressVariables
     )
   } else if (type === 'password-reset-by-system-admin') {
     emailtitle = templates[type].title
