@@ -66,7 +66,7 @@ jobs:
       - name: Read known hosts
         run: |
           cd ${{ github.event.repository.name }}
-          echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
+          echo "KNOWN_HOSTS_TEST<<EOF" >> $GITHUB_ENV
           cat ./infrastructure/.known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
@@ -74,7 +74,7 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
-          known_hosts: ${{ env.KNOWN_HOSTS }}
+          known_hosts: ${{ env.KNOWN_HOSTS_TEST }}
 
       - name: Deploy to QA
         if: ${{ github.event.inputs.environment == 'qa' }}
