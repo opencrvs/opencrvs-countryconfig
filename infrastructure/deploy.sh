@@ -270,7 +270,7 @@ cp $BASEDIR/emergency-backup-metadata.sh /tmp/opencrvs/infrastructure/emergency-
 cp $BASEDIR/emergency-restore-metadata.sh /tmp/opencrvs/infrastructure/emergency-restore-metadata.sh
 
 # Copy authorized keys
-cp $BASEDIR/.ssh/authorized_keys /tmp/opencrvs/infrastructure/authorized_keys
+cp $BASEDIR/authorized_keys /tmp/opencrvs/infrastructure/authorized_keys
 
 rotate_authorized_keys() {
   # file exists and has a size of more than 0 bytes
