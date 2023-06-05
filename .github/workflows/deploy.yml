@@ -67,7 +67,7 @@ jobs:
         run: |
           cd ${{ github.event.repository.name }}
           echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
-          cat ./infrastructure/.ssh/known_hosts >> $GITHUB_ENV
+          cat ./infrastructure/.known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Install SSH Key
