@@ -76,6 +76,7 @@ jobs:
               break
             fi
             sleep 10
+          done
           while true; do
             if docker manifest inspect ${{ github.event.organization }}/${{ github.event.repository }}:${{ github.event.inputs.countryconfig-image-tag }}; then
               break
