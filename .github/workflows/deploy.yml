@@ -78,7 +78,7 @@ jobs:
             sleep 10
           done
           while true; do
-            if docker manifest inspect ${{ github.event.organization }}/${{ github.event.repository }}:${{ github.event.inputs.countryconfig-image-tag }}; then
+            if docker manifest inspect ${{ github.action_repository }}:${{ github.event.inputs.countryconfig-image-tag }}; then
               break
             fi
             sleep 10
