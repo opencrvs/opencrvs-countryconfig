@@ -199,7 +199,6 @@ fi
 #----------------------------
 tar -xzvf /data/backups/minio/ocrvs-$LABEL.tar.gz -C /data/minio
 
-
 # Restore all data from Metabase
 #----------------------------
 tar -xzvf /data/backups/metabase/ocrvs-$LABEL.tar.gz -C /data/metabase
