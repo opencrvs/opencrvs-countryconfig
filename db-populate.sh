@@ -129,14 +129,16 @@ echo "\$environment: '$environment' \$password_for_users: '$password_for_users' 
 HOST=mongo1
 NETWORK=opencrvs_default
 
-docker run --rm --network=$NETWORK mongo:4.4 mongo hearth-dev --host $HOST --eval "db.dropDatabase()"
-docker run --rm --network=$NETWORK mongo:4.4 mongo user-mgnt --host $HOST --eval "db.dropDatabase()"
-docker run --rm --network=$NETWORK mongo:4.4 mongo application-config --host $HOST --eval "db.dropDatabase()"
-docker run --rm --network=$NETWORK mongo:4.4 mongo metrics --host $HOST --eval "db.dropDatabase()"
-docker run --rm --network=$NETWORK mongo:4.4 mongo reports --host $HOST --eval "db.dropDatabase()"
-docker run --rm --network=$NETWORK mongo:4.4 mongo config --host $HOST --eval "db.dropDatabase()"
-docker run --rm --network=$NETWORK mongo:4.4 mongo webhooks --host $HOST --eval "db.dropDatabase()"
-docker run --rm --network=$NETWORK mongo:4.4 mongo performance --host $HOST --eval "db.dropDatabase()"
+docker run --rm --network=$NETWORK mongo:4.4 mongo --host $HOST --eval "\
+db.getSiblingDB('hearth-dev').dropDatabase();\
+db.getSiblingDB('openhim-dev').dropDatabase();\
+db.getSiblingDB('user-mgnt').dropDatabase();\
+db.getSiblingDB('application-config').dropDatabase();\
+db.getSiblingDB('metrics').dropDatabase();\
+db.getSiblingDB('config').dropDatabase();\
+db.getSiblingDB('performance').dropDatabase();\
+db.getSiblingDB('webhooks').dropDatabase();"
+
 docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE 'http://elasticsearch:9200/*' -v
 docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
 

@@ -14,7 +14,7 @@ window.config = {
   CONFIG_API_URL: 'https://config.{{hostname}}',
   LOGIN_URL: 'https://login.{{hostname}}',
   AUTH_URL: 'https://auth.{{hostname}}',
-  MINIO_URL: 'https://minio.{{hostname}}',
+  MINIO_BUCKET: 'ocrvs',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
   USER_NOTIFICATION_DELIVERY_METHOD: 'sms', // 'email'
   // Country code in uppercase ALPHA-3 format
