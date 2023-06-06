@@ -21,16 +21,21 @@ import {
   TemplateVariables,
   sendEmail
 } from './email-service'
-import { SMS_PROVIDER } from './constant'
+import { SMS_PROVIDER, USER_NOTIFICATION_DELIVERY_METHOD } from './constant'
 import { APPLICATION_CONFIG_URL } from '@countryconfig/constants'
 import fetch from 'node-fetch'
 import { URL } from 'url'
 import { logger } from '@countryconfig/logger'
 
 type NotificationPayload = {
-  type: 'email' | 'sms'
-  templateName: EmailTemplateType | SMSTemplateType
-  recipient: string
+  templateName: {
+    sms: SMSTemplateType
+    email?: EmailTemplateType
+  }
+  recipient: {
+    sms?: string
+    email?: string
+  }
   locale: string
   variables: TemplateVariables
   convertUnicode?: boolean
@@ -58,37 +63,45 @@ interface IApplicationConfigResponse {
 }
 
 export const notificationScheme = Joi.object({
-  type: Joi.string().valid('sms', 'email')
+  templateName: Joi.object({
+    email: Joi.string().allow('').optional(),
+    sms: Joi.string().required()
+  }),
+  recipient: Joi.object({
+    email: Joi.string().allow('').optional(),
+    sms: Joi.string()
+  })
 }).unknown(true)
 
 export async function notificationHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
+  const notificationMethod = USER_NOTIFICATION_DELIVERY_METHOD
   const payload = request.payload as NotificationPayload
   const applicationName = await getApplicationName()
   payload.variables = { ...payload.variables, applicationName }
-  switch (payload.type) {
+  switch (notificationMethod) {
     case 'email':
       sendEmail(
-        payload.templateName as EmailTemplateType,
+        payload.templateName.email as EmailTemplateType,
         payload.variables,
-        payload.recipient
+        payload.recipient.email as string
       )
       break
     case 'sms':
       if (SMS_PROVIDER === 'infobip') {
         await sendSMSInfobip(
-          payload.templateName as SMSTemplateType,
+          payload.templateName.sms as SMSTemplateType,
           payload.variables,
-          payload.recipient,
+          payload.recipient.sms as string,
           payload.locale
         )
       } else if (SMS_PROVIDER === 'clickatell') {
         await sendSMSClickatell(
-          payload.templateName as SMSTemplateType,
+          payload.templateName.sms as SMSTemplateType,
           payload.variables,
-          payload.recipient,
+          payload.recipient.sms as string,
           payload.locale,
           payload.convertUnicode
         )
