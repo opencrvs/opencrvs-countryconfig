@@ -80,9 +80,10 @@ jobs:
             sleep 10
           done
           while true; do
-            echo ${{ github.action_repository }}:${{ github.event.inputs.countryconfig-image-tag }}
+            echo ${{ github.event.repository }}:${{ github.event.inputs.countryconfig-image-tag }}
+            echo ${{ github.event.repository.organization }}/${{ github.event.repository.name }}:${{ github.event.inputs.countryconfig-image-tag }}
 
-            if docker manifest inspect ${{ github.action_repository }}:${{ github.event.inputs.countryconfig-image-tag }}; then
+            if docker manifest inspect ${{ github.event.repository.organization }}/${{ github.event.repository.name }}:${{ github.event.inputs.countryconfig-image-tag }}; then
               break
             fi
             sleep 10
