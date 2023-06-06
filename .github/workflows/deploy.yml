@@ -72,12 +72,16 @@ jobs:
       - name: Wait for images to be available
         run: |
           while true; do
+            echo opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}
+            
             if docker manifest inspect opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}; then
               break
             fi
             sleep 10
           done
           while true; do
+            echo ${{ github.action_repository }}:${{ github.event.inputs.countryconfig-image-tag }}
+
             if docker manifest inspect ${{ github.action_repository }}:${{ github.event.inputs.countryconfig-image-tag }}; then
               break
             fi
