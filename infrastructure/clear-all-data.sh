@@ -81,13 +81,15 @@ drop_database () {
 #---------------------------
 drop_database hearth-dev;
 
-drop_database openhim-dev
+drop_database openhim-dev;
 
 drop_database user-mgnt;
 
-drop_database application-config
+drop_database application-config;
 
-drop_database metrics
+drop_database metrics;
+
+drop_database performance;
 
 # Delete all data from elasticsearch
 #-----------------------------------
