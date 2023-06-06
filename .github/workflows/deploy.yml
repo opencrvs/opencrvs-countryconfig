@@ -72,18 +72,13 @@ jobs:
       - name: Wait for images to be available
         run: |
           while true; do
-            echo opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}
-            
             if docker manifest inspect opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}; then
               break
             fi
             sleep 10
           done
           while true; do
-            echo ${{ github.event.repository }}:${{ github.event.inputs.countryconfig-image-tag }}
-            echo ${{ github.event.organization }}/${{ github.event.repository.name }}:${{ github.event.inputs.countryconfig-image-tag }}
-
-            if docker manifest inspect ${{ github.event.organization }}/${{ github.event.repository.name }}:${{ github.event.inputs.countryconfig-image-tag }}; then
+            if docker manifest inspect opencrvs/opencrvs-farajaland:${{ github.event.inputs.countryconfig-image-tag }}; then
               break
             fi
             sleep 10
