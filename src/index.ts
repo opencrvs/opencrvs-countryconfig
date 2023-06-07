@@ -42,6 +42,8 @@ import {
 import { mosipMediatorHandler } from '@countryconfig/features/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/features/map/handler'
+import { formHandler } from '@countryconfig/features/config/form'
+import { readFileSync } from 'fs'
 
 export interface ITokenPayload {
   sub: string
@@ -210,13 +212,16 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/client-config.js',
-    handler: (request, h) => {
+    handler: async (request, h) => {
       const file =
         process.env.NODE_ENV === 'production'
           ? '/client-configs/client-config.prod.js'
           : '/client-configs/client-config.js'
-      // @ts-ignore
-      return h.file(join(__dirname, file))
+
+      const forms = JSON.stringify(await formHandler())
+      const contents = readFileSync(join(__dirname, file)).toString()
+
+      return contents.replace("'%replace_with_forms%'", forms)
     },
     options: {
       auth: false,
@@ -251,6 +256,16 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Serves language content'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/forms',
+    handler: formHandler,
+    options: {
+      tags: ['api'],
+      description: 'Serves form configuration'
     }
   })
 
