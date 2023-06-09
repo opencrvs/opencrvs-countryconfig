@@ -10,10 +10,4 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { birthRegisterForms as birth } from './birth'
-
-export async function formHandler() {
-  return {
-    birth
-  }
-}
+// TODO: Add in all possible certificate handlebar constants including custom ones
