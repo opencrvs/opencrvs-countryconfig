@@ -10,57 +10,17 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-// TODO: A quick fix to not need to think I18N yet. Creates a proxy object which always returns the key as value
-const informantMessageDescriptors = new Proxy<{ [key: string]: string }>(
-  {},
-  {
-    get: (target, name) => ({ id: name, defaultMessage: name })
-  }
-)
+import { BirthSection, ISerializedForm, RadioSize } from './types'
+import {
+  birthDocumentForWhomFhirMapping,
+  birthDocumentTypeFhirMapping
+} from './options'
+import {
+  formMessageDescriptors,
+  informantMessageDescriptors
+} from './formatjs-messages'
 
-const formMessageDescriptors = new Proxy<{ [key: string]: string }>(
-  {},
-  {
-    get: (target, name) => ({ id: name, defaultMessage: name })
-  }
-)
-
-enum RadioSize {
-  LARGE = 'large',
-  NORMAL = 'normal'
-}
-
-enum BirthSection {
-  Registration = 'registration',
-  Child = 'child',
-  Mother = 'mother',
-  Father = 'father',
-  Informant = 'informant',
-  Documents = 'documents',
-  Preview = 'preview'
-}
-
-const birthDocumentForWhomFhirMapping = {
-  CHILD: 'CHILD',
-  FATHER: 'FATHER',
-  MOTHER: 'MOTHER',
-  PARENT: 'PARENT',
-  OTHER: 'OTHER',
-  INFORMANT_ID_PROOF: 'INFORMANT_ID_PROOF',
-  LEGAL_GUARDIAN_PROOF: 'LEGAL_GUARDIAN_PROOF'
-}
-
-const birthDocumentTypeFhirMapping = {
-  BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
-  NATIONAL_ID: 'NATIONAL_ID',
-  PASSPORT: 'PASSPORT',
-  OTHER: 'OTHER',
-  NOTIFICATION_OF_BIRTH: 'NOTIFICATION_OF_BIRTH',
-  PROOF_OF_LEGAL_GUARDIANSHIP: 'PROOF_OF_LEGAL_GUARDIANSHIP',
-  PROOF_OF_ASSIGNED_RESPONSIBILITY: 'PROOF_OF_ASSIGNED_RESPONSIBILITY'
-}
-
-export const birthRegisterForms = {
+export const birthRegisterForms: ISerializedForm = {
   sections: [
     {
       id: BirthSection.Registration,
