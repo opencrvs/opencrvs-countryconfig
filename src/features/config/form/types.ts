@@ -915,3 +915,9 @@ export type ISerializedFormSection = Omit<
 export interface ISerializedForm {
   sections: ISerializedFormSection[]
 }
+export interface IForms {
+  version: string
+  birth: ISerializedForm
+  death: ISerializedForm
+  marriage: ISerializedForm
+}
