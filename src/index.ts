@@ -218,10 +218,8 @@ export async function createServer() {
           ? '/client-configs/client-config.prod.js'
           : '/client-configs/client-config.js'
 
-      const forms = JSON.stringify(await formHandler())
-      const contents = readFileSync(join(__dirname, file)).toString()
-
-      return contents.replace("'%replace_with_forms%'", forms)
+      // @ts-ignore
+      return h.file(join(__dirname, file))
     },
     options: {
       auth: false,
