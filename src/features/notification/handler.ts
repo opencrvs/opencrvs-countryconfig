@@ -62,6 +62,18 @@ export async function notificationHandler(
   const { templateName, variables, recipient, locale, convertUnicode } =
     request.payload as NotificationPayload
 
+  if (process.env.NODE_ENV !== 'production') {
+    logger.info(
+      `Ignoring notification due to NODE_ENV not being 'production'. Params:`,
+      {
+        templateName,
+        recipient,
+        convertUnicode
+      }
+    )
+    return h.response().code(200)
+  }
+
   const isInformantNotification =
     !templateName?.email && templateName.sms in informantTemplates
   const notificationMethod = isInformantNotification
