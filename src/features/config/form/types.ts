@@ -97,6 +97,7 @@ export const DYNAMIC_LIST = 'DYNAMIC_LIST'
 export const FETCH_BUTTON = 'FETCH_BUTTON'
 export const LOCATION_SEARCH_INPUT = 'LOCATION_SEARCH_INPUT'
 export const TIME = 'TIME'
+export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export enum RadioSize {
   LARGE = 'large',
   NORMAL = 'normal'
@@ -105,6 +106,12 @@ export enum RadioSize {
 export enum REVIEW_OVERRIDE_POSITION {
   BEFORE = 'before',
   AFTER = 'after'
+}
+
+export enum IntegratingSystemType {
+  Mosip = 'MOSIP',
+  Osia = 'OSIA',
+  Other = 'OTHER'
 }
 
 export enum BirthSection {
@@ -488,6 +495,13 @@ export interface ITimeFormFIeld extends IFormFieldBase {
   ignorePlaceHolder?: boolean
 }
 
+export interface INidVerificationButton extends IFormFieldBase {
+  type: typeof NID_VERIFICATION_BUTTON
+  labelForVerified: MessageDescriptor
+  labelForUnverified: MessageDescriptor
+  labelForOffline: MessageDescriptor
+}
+
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -518,6 +532,7 @@ export type IFormField =
   | ILocationSearchInputFormField
   | IDateRangePickerFormField
   | ITimeFormFIeld
+  | INidVerificationButton
 
 export interface SelectComponentOption {
   value: string
