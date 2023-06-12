@@ -18,7 +18,38 @@ import {
   deathDocumentForWhomFhirMapping,
   deathDocumentTypeFhirMapping
 } from './options'
-import { DeathSection, ISerializedForm, RadioSize, TEXTAREA } from './types'
+import {
+  DeathSection,
+  ISerializedForm,
+  IntegratingSystemType,
+  RadioSize,
+  TEXTAREA
+} from './types'
+
+const nidIntegrationConditionals = {
+  hideIfNidIntegrationEnabled: {
+    action: 'hide',
+    expression: `const nationalIdSystem =
+    offlineCountryConfig &&
+    offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
+        nationalIdSystem &&
+        nationalIdSystem.settings.openIdProviderBaseUrl &&
+        nationalIdSystem.settings.openIdProviderClientId &&
+        nationalIdSystem.settings.openIdProviderClaims;
+    `
+  },
+  hideIfNidIntegrationDisabled: {
+    action: 'hide',
+    expression: `const nationalIdSystem =
+    offlineCountryConfig &&
+    offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
+      !nationalIdSystem ||
+      !nationalIdSystem.settings.openIdProviderBaseUrl ||
+      !nationalIdSystem.settings.openIdProviderClientId ||
+      !nationalIdSystem.settings.openIdProviderClaims;
+    `
+  }
+}
 
 export const deathRegisterForms: ISerializedForm = {
   sections: [
@@ -48,43 +79,43 @@ export const deathRegisterForms: ISerializedForm = {
               options: [
                 {
                   value: 'SPOUSE',
-                  label: informantMessageDescriptors.spouse
+                  label: informantMessageDescriptors.SPOUSE
                 },
                 {
                   value: 'SON',
-                  label: informantMessageDescriptors.son
+                  label: informantMessageDescriptors.SON
                 },
                 {
                   value: 'DAUGHTER',
-                  label: informantMessageDescriptors.daughter
+                  label: informantMessageDescriptors.DAUGHTER
                 },
                 {
                   value: 'SON_IN_LAW',
-                  label: informantMessageDescriptors.sonInLaw
+                  label: informantMessageDescriptors.SON_IN_LAW
                 },
                 {
                   value: 'DAUGHTER_IN_LAW',
-                  label: informantMessageDescriptors.daughterInLaw
+                  label: informantMessageDescriptors.DAUGHTER_IN_LAW
                 },
                 {
                   value: 'MOTHER',
-                  label: informantMessageDescriptors.mother
+                  label: informantMessageDescriptors.MOTHER
                 },
                 {
                   value: 'FATHER',
-                  label: informantMessageDescriptors.father
+                  label: informantMessageDescriptors.FATHER
                 },
                 {
                   value: 'GRANDSON',
-                  label: informantMessageDescriptors.grandson
+                  label: informantMessageDescriptors.GRANDSON
                 },
                 {
                   value: 'GRANDDAUGHTER',
-                  label: informantMessageDescriptors.granddaughter
+                  label: informantMessageDescriptors.GRANDDAUGHTER
                 },
                 {
                   value: 'OTHER',
-                  label: formMessageDescriptors.someoneElse
+                  label: informantMessageDescriptors.OTHER
                 }
               ],
               placeholder: formMessageDescriptors.formSelectPlaceholder,
@@ -169,43 +200,43 @@ export const deathRegisterForms: ISerializedForm = {
               options: [
                 {
                   value: 'SPOUSE',
-                  label: informantMessageDescriptors.spouse
+                  label: informantMessageDescriptors.SPOUSE
                 },
                 {
                   value: 'SON',
-                  label: informantMessageDescriptors.son
+                  label: informantMessageDescriptors.SON
                 },
                 {
                   value: 'DAUGHTER',
-                  label: informantMessageDescriptors.daughter
+                  label: informantMessageDescriptors.DAUGHTER
                 },
                 {
                   value: 'SON_IN_LAW',
-                  label: informantMessageDescriptors.sonInLaw
+                  label: informantMessageDescriptors.SON_IN_LAW
                 },
                 {
                   value: 'DAUGHTER_IN_LAW',
-                  label: informantMessageDescriptors.daughterInLaw
+                  label: informantMessageDescriptors.DAUGHTER_IN_LAW
                 },
                 {
                   value: 'MOTHER',
-                  label: informantMessageDescriptors.mother
+                  label: informantMessageDescriptors.MOTHER
                 },
                 {
                   value: 'FATHER',
-                  label: informantMessageDescriptors.father
+                  label: informantMessageDescriptors.FATHER
                 },
                 {
                   value: 'GRANDSON',
-                  label: informantMessageDescriptors.grandson
+                  label: informantMessageDescriptors.GRANDSON
                 },
                 {
                   value: 'GRANDDAUGHTER',
-                  label: informantMessageDescriptors.granddaughter
+                  label: informantMessageDescriptors.GRANDDAUGHTER
                 },
                 {
                   value: 'OTHER',
-                  label: formMessageDescriptors.someoneElse
+                  label: informantMessageDescriptors.OTHER
                 }
               ],
               nestedFields: {
@@ -591,6 +622,10 @@ export const deathRegisterForms: ISerializedForm = {
             operation: 'registrationNumberTransformer'
           },
           {
+            fieldName: 'informantType',
+            operation: 'informantTypeTransformer'
+          },
+          {
             fieldName: 'qrCode',
             operation: 'QRCodeTransformerTransformer'
           },
@@ -691,7 +726,6 @@ export const deathRegisterForms: ISerializedForm = {
                   parameters: ['informant.informantID']
                 }
               ],
-              conditionals: [],
               mapping: {
                 template: {
                   fieldName: 'deceasedNID',
@@ -718,6 +752,10 @@ export const deathRegisterForms: ISerializedForm = {
                 {
                   action: 'disable',
                   expression: 'values.exactDateOfBirthUnknown'
+                },
+                {
+                  action: 'disable',
+                  expression: `draftData?.deceased?.fieldsModifiedByNidUserInfo?.includes('birthDate')`
                 }
               ],
               validator: [
@@ -817,7 +855,13 @@ export const deathRegisterForms: ISerializedForm = {
                   operation: 'nameToFieldTransformer',
                   parameters: ['en', 'firstNames']
                 }
-              }
+              },
+              conditionals: [
+                {
+                  action: 'disable',
+                  expression: `draftData?.deceased?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+                }
+              ]
             },
             {
               name: 'familyNameEng',
@@ -846,7 +890,13 @@ export const deathRegisterForms: ISerializedForm = {
                   operation: 'nameToFieldTransformer',
                   parameters: ['en', 'familyName']
                 }
-              }
+              },
+              conditionals: [
+                {
+                  action: 'disable',
+                  expression: `draftData?.deceased?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
+                }
+              ]
             },
             {
               name: 'gender',
@@ -1313,7 +1363,9 @@ export const deathRegisterForms: ISerializedForm = {
                   parameters: ['deceased.iD']
                 }
               ],
-              conditionals: [],
+              conditionals: [
+                nidIntegrationConditionals.hideIfNidIntegrationEnabled
+              ],
               mapping: {
                 mutation: {
                   operation: 'fieldValueNestingTransformer',
@@ -1343,6 +1395,40 @@ export const deathRegisterForms: ISerializedForm = {
               }
             },
             {
+              name: 'informantNidVerification',
+              type: 'NID_VERIFICATION_BUTTON',
+              label: formMessageDescriptors.iDTypeNationalID,
+              required: true,
+              customisable: true,
+              initialValue: '',
+              validator: [],
+              conditionals: [
+                nidIntegrationConditionals.hideIfNidIntegrationDisabled,
+                {
+                  action: 'disable',
+                  expression: `values.informantNidVerification`
+                }
+              ],
+              mapping: {
+                mutation: {
+                  operation: 'fieldValueNestingTransformer',
+                  parameters: [
+                    'individual',
+                    {
+                      operation: 'nidVerificationFieldToIdentityTransformer'
+                    }
+                  ]
+                },
+                query: {
+                  operation: 'nestedIdentityValueToFieldTransformer',
+                  parameters: ['individual']
+                }
+              },
+              labelForVerified: formMessageDescriptors.nidVerified,
+              labelForUnverified: formMessageDescriptors.nidNotVerified,
+              labelForOffline: formMessageDescriptors.nidOffline
+            },
+            {
               name: 'informantBirthDate',
               type: 'DATE',
               label: formMessageDescriptors.dateOfBirth,
@@ -1353,6 +1439,10 @@ export const deathRegisterForms: ISerializedForm = {
                 {
                   action: 'disable',
                   expression: 'values.exactDateOfBirthUnknown'
+                },
+                {
+                  action: 'disable',
+                  expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('informantBirthDate')`
                 }
               ],
               validator: [
@@ -1476,6 +1566,12 @@ export const deathRegisterForms: ISerializedForm = {
                   operation: 'englishOnlyNameFormat'
                 }
               ],
+              conditionals: [
+                {
+                  action: 'disable',
+                  expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+                }
+              ],
               mapping: {
                 mutation: {
                   operation: 'fieldValueNestingTransformer',
@@ -1518,6 +1614,12 @@ export const deathRegisterForms: ISerializedForm = {
                   operation: 'englishOnlyNameFormat'
                 }
               ],
+              conditionals: [
+                {
+                  action: 'disable',
+                  expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
+                }
+              ],
               mapping: {
                 mutation: {
                   operation: 'fieldValueNestingTransformer',
@@ -1557,7 +1659,7 @@ export const deathRegisterForms: ISerializedForm = {
             {
               id: 'informantNameInEnglish',
               label: {
-                defaultMessage: "Informant's English name",
+                defaultMessage: 'Full name',
                 description: "Label for informant's name in english",
                 id: 'form.preview.group.label.informant.english.name'
               },
