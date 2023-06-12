@@ -21,25 +21,36 @@ import {
 // TODO: only list out supported mappings in core include custom form field mappings
 // replace string with the names of all the functions.
 
-interface IHandlebarTemplates {
+type IIgnoreFields = {
+  fieldsToIgnoreForLocalAddress: string[]
+  fieldsToIgnoreForInternationalAddress: string[]
+}
+
+type IHandlebarTemplates = {
   fieldName: string
   operation: string
-  parameters?: (string | string[])[]
+  parameters?: (string | (string | number) | number | string[])[]
 }
 
-interface ISubMapper {
+type ISubMapper = {
   operation: string
-  parameters?: string[]
+  parameters?: (string | number)[]
 }
 
-interface IQueryMapper {
+type IQueryMapper = {
   operation: string
-  parameters?: (string | ISubMapper | string[])[]
+  parameters?: (
+    | string
+    | number
+    | (string | number | IIgnoreFields)
+    | ISubMapper
+    | string[]
+  )[]
 }
 
-interface IMutationMapper {
+type IMutationMapper = {
   operation: string
-  parameters?: (string | ISubMapper | string[])[]
+  parameters?: (string | number | (string | number) | ISubMapper | string[])[]
 }
 
 export type ISectionMapping = {
