@@ -258,16 +258,8 @@ const registerSystemClient = async (
         registerSystem(system: $system) {
           clientSecret
           system {
-            _id
             clientId
-            name
             shaSecret
-            status
-            type
-            settings {
-              event
-              permissions
-            }
           }
         }
       }
