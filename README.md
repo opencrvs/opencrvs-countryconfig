@@ -80,7 +80,7 @@ One of the key dependencies and enablers for OpenCRVS is country configuration a
 
 `POST /validate/registration`
 
-- An endpoint that can be used to customise the format of the registration number, perhaps by integrating with another system
+- An endpoint that can be used to customise the format of the registration number along with other optional birth identifiers, perhaps by integrating with another system
 
 `POST /generate/{type e.g. <brn|drn>}`
 

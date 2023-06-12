@@ -1333,15 +1333,15 @@ export type Mutation = {
   requestBirthRegistrationCorrection: Scalars['ID']
   requestDeathRegistrationCorrection: Scalars['ID']
   requestMarriageRegistrationCorrection: Scalars['ID']
-  resendSMSInvite?: Maybe<Scalars['String']>
-  resetPasswordSMS?: Maybe<Scalars['String']>
+  resendInvite?: Maybe<Scalars['String']>
+  resetPasswordInvite?: Maybe<Scalars['String']>
   toggleInformantSMSNotification?: Maybe<Array<SmsNotification>>
   updateApplicationConfig?: Maybe<ApplicationConfiguration>
   updateBirthRegistration: Scalars['ID']
   updateDeathRegistration: Scalars['ID']
   updatePermissions?: Maybe<System>
   updateRole: Response
-  usernameSMSReminder?: Maybe<Scalars['String']>
+  usernameReminder?: Maybe<Scalars['String']>
   voidNotification?: Maybe<Notification>
 }
 
@@ -1561,12 +1561,11 @@ export type MutationRequestMarriageRegistrationCorrectionArgs = {
   id: Scalars['ID']
 }
 
-export type MutationResendSmsInviteArgs = {
+export type MutationResendInviteArgs = {
   userId: Scalars['String']
 }
 
-export type MutationResetPasswordSmsArgs = {
-  applicationName: Scalars['String']
+export type MutationResetPasswordInviteArgs = {
   userId: Scalars['String']
 }
 
@@ -1596,7 +1595,7 @@ export type MutationUpdateRoleArgs = {
   systemRole?: InputMaybe<SystemRoleInput>
 }
 
-export type MutationUsernameSmsReminderArgs = {
+export type MutationUsernameReminderArgs = {
   userId: Scalars['String']
 }
 
@@ -2416,10 +2415,11 @@ export type User = {
   creationDate: Scalars['String']
   device?: Maybe<Scalars['String']>
   email?: Maybe<Scalars['String']>
+  emailForNotification?: Maybe<Scalars['String']>
   id: Scalars['ID']
   identifier?: Maybe<Identifier>
   localRegistrar?: Maybe<LocalRegistrar>
-  mobile: Scalars['String']
+  mobile?: Maybe<Scalars['String']>
   name: Array<HumanName>
   practitionerId: Scalars['String']
   primaryOffice?: Maybe<Location>
@@ -2472,9 +2472,10 @@ export type UserInput = {
   catchmentArea?: InputMaybe<Array<InputMaybe<Scalars['String']>>>
   device?: InputMaybe<Scalars['String']>
   email?: InputMaybe<Scalars['String']>
+  emailForNotification?: InputMaybe<Scalars['String']>
   id?: InputMaybe<Scalars['ID']>
   identifier?: InputMaybe<Array<InputMaybe<UserIdentifierInput>>>
-  mobile: Scalars['String']
+  mobile?: InputMaybe<Scalars['String']>
   name: Array<HumanNameInput>
   primaryOffice?: InputMaybe<Scalars['String']>
   role?: InputMaybe<Scalars['String']>
