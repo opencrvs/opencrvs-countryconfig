@@ -789,7 +789,6 @@ export enum EducationType {
 
 export type Estimation = {
   __typename?: 'Estimation'
-  estimationYear: Scalars['Int']
   femaleEstimation: Scalars['Int']
   locationId: Scalars['String']
   locationLevel: Scalars['String']
@@ -3347,7 +3346,6 @@ export type GetTotalMetricsQuery = {
       maleEstimation: number
       femaleEstimation: number
       locationId: string
-      estimationYear: number
       locationLevel: string
     }
     results: Array<{

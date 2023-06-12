@@ -46,7 +46,6 @@ export const TOTAL_METRICS = print(gql`
         maleEstimation
         femaleEstimation
         locationId
-        estimationYear
         locationLevel
         __typename
       }
