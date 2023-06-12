@@ -64,12 +64,13 @@ export async function notificationHandler(
 
   if (process.env.NODE_ENV !== 'production') {
     logger.info(
-      `Ignoring notification due to NODE_ENV not being 'production'. Params:`,
-      {
-        templateName,
-        recipient,
-        convertUnicode
-      }
+      `Ignoring notification due to NODE_ENV not being 'production'. Params: ${JSON.stringify(
+        {
+          templateName,
+          recipient,
+          convertUnicode
+        }
+      )}`
     )
     return h.response().code(200)
   }
