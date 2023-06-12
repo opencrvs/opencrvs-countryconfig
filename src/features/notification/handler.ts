@@ -13,6 +13,7 @@ import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
 import {
   SMSTemplateType,
+  informantTemplates,
   sendSMSClickatell,
   sendSMSInfobip
 } from './sms-service'
@@ -21,11 +22,13 @@ import {
   TemplateVariables,
   sendEmail
 } from './email-service'
-import { SMS_PROVIDER, USER_NOTIFICATION_DELIVERY_METHOD } from './constant'
-import { APPLICATION_CONFIG_URL } from '@countryconfig/constants'
-import fetch from 'node-fetch'
-import { URL } from 'url'
+import {
+  SMS_PROVIDER,
+  USER_NOTIFICATION_DELIVERY_METHOD,
+  COUNTRY_LOGO_URL
+} from './constant'
 import { logger } from '@countryconfig/logger'
+import { getApplicationConfig } from '../utils'
 
 type NotificationPayload = {
   templateName: {
@@ -39,27 +42,6 @@ type NotificationPayload = {
   locale: string
   variables: TemplateVariables
   convertUnicode?: boolean
-}
-
-interface ILoginBackground {
-  backgroundColor: string
-  backgroundImage: string
-  imageFit: string
-}
-interface ICountryLogo {
-  fileName: string
-  file: string
-}
-interface IApplicationConfig {
-  APPLICATION_NAME: string
-  COUNTRY: string
-  COUNTRY_LOGO: ICountryLogo
-  SENTRY: string
-  LOGROCKET: string
-  LOGIN_BACKGROUND: ILoginBackground
-}
-interface IApplicationConfigResponse {
-  config: IApplicationConfig
 }
 
 export const notificationScheme = Joi.object({
@@ -77,53 +59,47 @@ export async function notificationHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  const notificationMethod = USER_NOTIFICATION_DELIVERY_METHOD
-  const payload = request.payload as NotificationPayload
-  const applicationName = await getApplicationName()
-  payload.variables = { ...payload.variables, applicationName }
+  const { templateName, variables, recipient, locale, convertUnicode } =
+    request.payload as NotificationPayload
+
+  const isInformantNotification =
+    !templateName?.email && templateName.sms in informantTemplates
+  const notificationMethod = isInformantNotification
+    ? 'sms'
+    : USER_NOTIFICATION_DELIVERY_METHOD
+  logger.info(
+    `Notification method is ${notificationMethod} and recipient ${
+      notificationMethod === 'email' ? recipient.email : recipient.sms
+    }`
+  )
+  const applicationName = (await getApplicationConfig()).APPLICATION_NAME
+  const countryLogo = COUNTRY_LOGO_URL
   switch (notificationMethod) {
     case 'email':
-      sendEmail(
-        payload.templateName.email as EmailTemplateType,
-        payload.variables,
-        payload.recipient.email as string
+      await sendEmail(
+        templateName.email as EmailTemplateType,
+        { ...variables, applicationName, countryLogo },
+        recipient.email as string
       )
       break
     case 'sms':
       if (SMS_PROVIDER === 'infobip') {
         await sendSMSInfobip(
-          payload.templateName.sms as SMSTemplateType,
-          payload.variables,
-          payload.recipient.sms as string,
-          payload.locale
+          templateName.sms as SMSTemplateType,
+          { ...variables, applicationName, countryLogo },
+          recipient.sms as string,
+          locale
         )
       } else if (SMS_PROVIDER === 'clickatell') {
         await sendSMSClickatell(
-          payload.templateName.sms as SMSTemplateType,
-          payload.variables,
-          payload.recipient.sms as string,
-          payload.locale,
-          payload.convertUnicode
+          templateName.sms as SMSTemplateType,
+          { ...variables, applicationName, countryLogo },
+          recipient.sms as string,
+          locale,
+          convertUnicode
         )
       }
       break
   }
   return h.response().code(200)
-}
-
-async function getApplicationName() {
-  try {
-    const configURL = new URL('publicConfig', APPLICATION_CONFIG_URL).toString()
-    const res = await fetch(configURL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    const configData = (await res.json()) as IApplicationConfigResponse
-    return configData.config.APPLICATION_NAME
-  } catch (err) {
-    logger.error(`Unable to get public application config for error : ${err}`)
-    throw err
-  }
 }

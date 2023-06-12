@@ -34,4 +34,10 @@ export const INFOBIP_SENDER_ID = process.env.INFOBIP_SENDER_ID_PATH
   : ''
 
 export const USER_NOTIFICATION_DELIVERY_METHOD =
-  process.env.USER_NOTIFICATION_DELIVERY_METHOD || 'sms'
+  process.env.USER_NOTIFICATION_DELIVERY_METHOD || 'email'
+
+export const EMAIL_API_KEY = process.env.EMAIL_API_KEY
+
+export const COUNTRY_LOGO_URL = process.env.COUNTRY_LOGO_URL as string
+
+export const SENDER_EMAIL_ADDRESS = 'team@opencrvs.org'

@@ -11,12 +11,13 @@
  */
 
 import fetch from 'node-fetch'
-import { FHIR_URL } from '@countryconfig/constants'
+import { APPLICATION_CONFIG_URL, FHIR_URL } from '@countryconfig/constants'
 import { callingCountries } from 'country-data'
 import * as csv2json from 'csv2json'
 import { createReadStream } from 'fs'
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
 import * as bcrypt from 'bcryptjs'
+import { URL } from 'url'
 export const GENERATE_TYPE_RN = 'registrationNumber'
 export const CHILD_CODE = 'child-details'
 export const DECEASED_CODE = 'deceased-details'
@@ -73,6 +74,28 @@ export interface ILocation {
   type?: string
   partOf?: string
   statistics: Array<{ name: string; year: number; value: number }>
+}
+
+interface ILoginBackground {
+  backgroundColor: string
+  backgroundImage: string
+  imageFit: string
+}
+interface ICountryLogo {
+  fileName: string
+  file: string
+}
+
+interface IApplicationConfig {
+  APPLICATION_NAME: string
+  COUNTRY: string
+  COUNTRY_LOGO: ICountryLogo
+  SENTRY: string
+  LOGROCKET: string
+  LOGIN_BACKGROUND: ILoginBackground
+}
+export interface IApplicationConfigResponse {
+  config: IApplicationConfig
 }
 
 export function getTaskResource(
@@ -389,4 +412,16 @@ export async function readCSVToJSON<T>(filename: string) {
         resolve(JSON.parse(chunks.join('')))
       })
   })
+}
+
+export async function getApplicationConfig() {
+  const configURL = new URL('publicConfig', APPLICATION_CONFIG_URL).toString()
+  const res = await fetch(configURL, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  const configData = (await res.json()) as IApplicationConfigResponse
+  return configData.config
 }

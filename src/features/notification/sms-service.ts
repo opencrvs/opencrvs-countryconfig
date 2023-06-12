@@ -26,7 +26,7 @@ import * as Handlebars from 'handlebars'
 import { join } from 'path'
 import { internal } from '@hapi/boom'
 
-const templates = {
+export const informantTemplates = {
   birthInProgressNotification: 'birthInProgressNotification',
   birthDeclarationNotification: 'birthDeclarationNotification',
   birthRegistrationNotification: 'birthRegistrationNotification',
@@ -34,7 +34,10 @@ const templates = {
   deathInProgressNotification: 'deathInProgressNotification',
   deathDeclarationNotification: 'deathDeclarationNotification',
   deathRegistrationNotification: 'deathRegistrationNotification',
-  deathRejectionNotification: 'deathRejectionNotification',
+  deathRejectionNotification: 'deathRejectionNotification'
+}
+
+const otherTemplates = {
   authenticationCodeNotification: 'authenticationCodeNotification',
   userCredentialsNotification: 'userCredentialsNotification',
   retieveUserNameNotification: 'retieveUserNameNotification',
@@ -42,7 +45,9 @@ const templates = {
   resetUserPasswordNotification: 'resetUserPasswordNotification'
 }
 
-export type SMSTemplateType = keyof typeof templates
+export type SMSTemplateType =
+  | keyof typeof otherTemplates
+  | keyof typeof informantTemplates
 
 interface ISMSNotificationTemplate {
   lang: string

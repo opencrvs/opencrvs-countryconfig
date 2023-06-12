@@ -30,6 +30,7 @@ services:
       - CHECK_INVALID_TOKEN=true
       - HOSTNAME=${HOSTNAME}
       - USER_NOTIFICATION_DELIVERY_METHOD=sms
+      - COUNTRY_LOGO_URL=https://countryconfig.{{hostname}}/content/country-logo
       #- SMS_PROVIDER=
       #- CLICKATELL_USER_PATH=
       #- CLICKATELL_PASSWORD_PATH=
