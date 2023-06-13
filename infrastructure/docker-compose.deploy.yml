@@ -519,6 +519,7 @@ services:
       replicas: 1
     environment:
       - APN_SERVICE_URL=http://apm-server:8200
+      - COUNTRY_LOGO_URL=https://countryconfig.{{hostname}}/content/country-logo
     networks:
       - overlay_net
     logging:
