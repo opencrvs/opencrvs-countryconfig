@@ -21,8 +21,6 @@ window.config = {
   COUNTRY: 'FAR',
   AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',
   LANGUAGES: 'en,fr',
-  SENTRY:
-    'https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604',
   LOGROCKET: '',
   // Use the values in comments when Metabase is running locally
   // http://localhost:4444/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300
