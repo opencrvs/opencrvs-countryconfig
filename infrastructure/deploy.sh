@@ -234,6 +234,38 @@ if [ -z "$SENTRY_DSN" ] ; then
     echo 'Info: Missing optional Sentry DSN environment variable SENTRY_DSN'
 fi
 
+if [ -z "$SMS_PROVIDER" ] ; then
+  echo 'Info: Missing optional Sms provider environment variable SMS_PROVIDER'
+fi
+
+if [ -z "$CLICKATELL_USER" ] ; then
+  echo 'Info: Missing optional Clickatell user environment variable CLICKATELL_USER'
+fi
+
+if [ -z "$CLICKATELL_PASSWORD" ] ; then
+  echo 'Info: Missing optional Clickatell password environment variable CLICKATELL_PASSWORD'
+fi
+
+if [ -z "$CLICKATELL_API_ID" ] ; then
+  echo 'Info: Missing optional Clickatell API ID environment variable CLICKATELL_API_ID'
+fi
+
+if [ -z "$INFOBIP_GATEWAY_ENDPOINT" ] ; then
+  echo 'Info: Missing optional Infobip Gateway endpoint environment variable INFOBIP_GATEWAY_ENDPOINT'
+fi
+
+if [ -z "$INFOBIP_API_KEY" ] ; then
+  echo 'Info: Missing optional Infobip API Key environment variable INFOBIP_API_KEY'
+fi
+
+if [ -z "$INFOBIP_SENDER_ID" ] ; then
+  echo 'Info: Missing optional Infobip Sender ID environment variable INFOBIP_SENDER_ID'
+fi
+
+if [ -z "$USER_NOTIFICATION_DELIVERY_METHOD" ] ; then
+  echo 'Info: Missing optional user notification delivery method environment variable USER_NOTIFICATION_DELIVERY_METHOD'
+fi
+
 SSH_USER=${SSH_USER:-root}
 SSH_HOST=${SSH_HOST:-$HOST}
 LOG_LOCATION=${LOG_LOCATION:-/var/log}
@@ -411,6 +443,14 @@ docker_stack_deploy() {
   MINIO_ROOT_PASSWORD=$MINIO_ROOT_PASSWORD
   EMAIL_API_KEY=$EMAIL_API_KEY
   SENTRY_DSN=$SENTRY_DSN
+  SMS_PROVIDER=$SMS_PROVIDER
+  CLICKATELL_USER=$CLICKATELL_USER
+  CLICKATELL_PASSWORD=$CLICKATELL_PASSWORD
+  CLICKATELL_API_ID=$CLICKATELL_API_ID
+  INFOBIP_GATEWAY_ENDPOINT=$INFOBIP_GATEWAY_ENDPOINT
+  INFOBIP_API_KEY=$INFOBIP_API_KEY
+  INFOBIP_SENDER_ID=$INFOBIP_SENDER_ID
+  USER_NOTIFICATION_DELIVERY_METHOD=$USER_NOTIFICATION_DELIVERY_METHOD
   DOCKERHUB_ACCOUNT=$DOCKERHUB_ACCOUNT
   DOCKERHUB_REPO=$DOCKERHUB_REPO
   ELASTICSEARCH_SUPERUSER_PASSWORD=$ELASTICSEARCH_SUPERUSER_PASSWORD

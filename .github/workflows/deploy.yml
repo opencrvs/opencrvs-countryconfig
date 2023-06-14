@@ -91,6 +91,7 @@ jobs:
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
           EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          USER_NOTIFICATION_DELIVERY_METHOD: ${{ secrets.USER_NOTIFICATION_DELIVERY_METHOD }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=qa --host=${{ env.QA_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
@@ -117,6 +118,14 @@ jobs:
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
           EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SMS_PROVIDER: ${{ secrets.SMS_PROVIDER }}
+          CLICKATELL_USER: ${{ secrets.CLICKATELL_USER }}
+          CLICKATELL_PASSWORD: ${{ secrets.CLICKATELL_PASSWORD }}
+          CLICKATELL_API_ID: ${{ secrets.CLICKATELL_API_ID }}
+          INFOBIP_GATEWAY_ENDPOINT: ${{ secrets.INFOBIP_GATEWAY_ENDPOINT }}
+          INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
+          INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
+          USER_NOTIFICATION_DELIVERY_METHOD: ${{ secrets.USER_NOTIFICATION_DELIVERY_METHOD }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=production --host=${{ env.PRODUCTION_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
@@ -143,6 +152,7 @@ jobs:
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
           EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          USER_NOTIFICATION_DELIVERY_METHOD: ${{ secrets.USER_NOTIFICATION_DELIVERY_METHOD }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=development --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}

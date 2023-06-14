@@ -18,6 +18,7 @@ window.config = {
   AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',
   CLIENT_APP_URL: 'http://localhost:3000/',
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
-  USER_NOTIFICATION_DELIVERY_METHOD: 'sms', // 'email'
+  USER_NOTIFICATION_DELIVERY_METHOD: process.env.USER_NOTIFICATION_DELIVERY_METHOD, // 'sms' or 'email'
+  SENTRY: process.env.SENTRY_DSN,
   LOGROCKET: ''
 }

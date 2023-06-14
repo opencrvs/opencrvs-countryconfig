@@ -16,11 +16,12 @@ window.config = {
   AUTH_URL: 'http://localhost:4040',
   MINIO_BUCKET: 'ocrvs',
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
-  USER_NOTIFICATION_DELIVERY_METHOD: 'sms',
+  USER_NOTIFICATION_DELIVERY_METHOD: process.env.USER_NOTIFICATION_DELIVERY_METHOD, // 'sms' or 'email'
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
   AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',
   LANGUAGES: 'en,fr',
+  SENTRY: process.env.SENTRY_DSN,
   LOGROCKET: '',
   // Use the values in comments when Metabase is running locally
   // http://localhost:4444/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300

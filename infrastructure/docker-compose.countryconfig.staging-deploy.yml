@@ -31,7 +31,7 @@ services:
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
       - SENTRY_DSN=${SENTRY_DSN}
-      - USER_NOTIFICATION_DELIVERY_METHOD=sms
+      - USER_NOTIFICATION_DELIVERY_METHOD=${USER_NOTIFICATION_DELIVERY_METHOD}
 
     deploy:
       replicas: 1
@@ -46,7 +46,7 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN}
-      - USER_NOTIFICATION_DELIVERY_METHOD=sms
+      - USER_NOTIFICATION_DELIVERY_METHOD=${USER_NOTIFICATION_DELIVERY_METHOD}
 
   workflow:
     environment:
