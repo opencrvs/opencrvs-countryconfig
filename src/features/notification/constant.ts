@@ -40,4 +40,6 @@ export const EMAIL_API_KEY = process.env.EMAIL_API_KEY
 
 export const COUNTRY_LOGO_URL = process.env.COUNTRY_LOGO_URL as string
 
+export const LOGIN_URL = process.env.LOGIN_URL as string
+
 export const SENDER_EMAIL_ADDRESS = 'team@opencrvs.org'
