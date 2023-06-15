@@ -58,7 +58,7 @@
   "login.fieldMissing",
   "login.stepTwoTitle",
   "login.stepTwoResendTitle",
-  "login.resendMobile",
+  "login.resend",
   "login.stepTwoInstruction.sms",
   "login.stepTwoInstruction.email",
   "login.verify",
