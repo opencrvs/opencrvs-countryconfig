@@ -14,13 +14,7 @@ import { birthRegisterForms as birth } from './birth'
 import { deathRegisterForms as death } from './death'
 import { marriageRegisterForms as marriage } from './marriage'
 import { populateRegisterFormsWithAddresses } from './addresses'
-import { IForms } from './types'
-
-enum Event {
-  Birth = 'birth',
-  Death = 'death',
-  Marriage = 'marriage'
-}
+import { IForms, Event } from './types'
 
 export async function formHandler(): Promise<IForms> {
   // AS OF OPENCRVS v1.3.0 YOU CANNOT MAKE A CHANGE TO A CIVIL REGISTRATION FORM ONCE YOU GO LIVE IN PRODUCTION

@@ -11,13 +11,12 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import { ADMIN_LEVELS } from './addresses'
 import {
   BirthSection,
   DeathSection,
-  IConditional,
   ISerializedForm,
-  SerializedFormField
+  SerializedFormField,
+  Event
 } from './types'
 import {
   getAddressConditionals,

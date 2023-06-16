@@ -68,14 +68,28 @@ export const deathRegisterForms: ISerializedForm = {
           fields: [
             {
               name: 'informantType',
-              type: 'RADIO_GROUP_WITH_NESTED_FIELDS',
-              label: informantMessageDescriptors.deathInformantTitle,
-              hideHeader: true,
+              customisable: false,
+              type: 'SELECT_WITH_OPTIONS',
+              label: informantMessageDescriptors.birthInformantTitle,
               required: true,
               hideInPreview: false,
               initialValue: '',
               validator: [],
-              size: RadioSize.LARGE,
+              placeholder: formMessageDescriptors.formSelectPlaceholder,
+              mapping: {
+                mutation: {
+                  operation: 'sectionFieldToBundleFieldTransformer',
+                  parameters: ['registration.informantType']
+                },
+                query: {
+                  operation: 'bundleFieldToSectionFieldTransformer',
+                  parameters: ['registration.informantType']
+                },
+                template: {
+                  fieldName: 'informantType',
+                  operation: 'selectTransformer'
+                }
+              },
               options: [
                 {
                   value: 'SPOUSE',
@@ -117,53 +131,34 @@ export const deathRegisterForms: ISerializedForm = {
                   value: 'OTHER',
                   label: informantMessageDescriptors.OTHER
                 }
+              ]
+            },
+            {
+              name: 'otherInformantType',
+              type: 'TEXT',
+              label: formMessageDescriptors.informantsRelationWithChild,
+              placeholder: formMessageDescriptors.relationshipPlaceHolder,
+              required: true,
+              initialValue: '',
+              validator: [
+                {
+                  operation: 'englishOnlyNameFormat'
+                }
               ],
-              placeholder: formMessageDescriptors.formSelectPlaceholder,
-              nestedFields: {
-                SPOUSE: [],
-                SON: [],
-                DAUGHTER: [],
-                SON_IN_LAW: [],
-                DAUGHTER_IN_LAW: [],
-                MOTHER: [],
-                FATHER: [],
-                GRANDSON: [],
-                GRANDDAUGHTER: [],
-                OTHER: [
-                  {
-                    name: 'otherInformantType',
-                    type: 'TEXT',
-                    label:
-                      formMessageDescriptors.informantsRelationWithDeceased,
-                    placeholder: formMessageDescriptors.relationshipPlaceHolder,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'englishOnlyNameFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: ['registration.otherInformantType']
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: ['registration.otherInformantType']
-                      }
-                    }
-                  }
-                ]
-              },
+              conditionals: [
+                {
+                  action: 'hide',
+                  expression: 'values.informantType !== "OTHER"'
+                }
+              ],
               mapping: {
                 mutation: {
-                  operation: 'nestedRadioFieldToBundleFieldTransformer',
-                  parameters: ['registration.informantType']
+                  operation: 'sectionFieldToBundleFieldTransformer',
+                  parameters: ['registration.otherInformantType']
                 },
                 query: {
-                  operation: 'bundleFieldToNestedRadioFieldTransformer',
-                  parameters: ['registration.informantType']
+                  operation: 'bundleFieldToSectionFieldTransformer',
+                  parameters: ['registration.otherInformantType']
                 }
               }
             }
@@ -187,16 +182,29 @@ export const deathRegisterForms: ISerializedForm = {
           fields: [
             {
               name: 'contactPoint',
-              type: 'RADIO_GROUP_WITH_NESTED_FIELDS',
+              customisable: false,
+              type: 'SELECT_WITH_OPTIONS',
               label: formMessageDescriptors.selectContactPoint,
-              conditionals: [],
-              previewGroup: 'contactPointGroup',
               required: true,
-              hideHeader: true,
+              previewGroup: 'contactPointGroup',
+              hideInPreview: false,
               initialValue: '',
               validator: [],
-              size: RadioSize.LARGE,
               placeholder: formMessageDescriptors.formSelectPlaceholder,
+              mapping: {
+                mutation: {
+                  operation: 'sectionFieldToBundleFieldTransformer',
+                  parameters: ['registration.contact']
+                },
+                query: {
+                  operation: 'bundleFieldToSectionFieldTransformer',
+                  parameters: ['registration.contact']
+                },
+                template: {
+                  fieldName: 'contactPoint',
+                  operation: 'selectTransformer'
+                }
+              },
               options: [
                 {
                   value: 'SPOUSE',
@@ -238,377 +246,37 @@ export const deathRegisterForms: ISerializedForm = {
                   value: 'OTHER',
                   label: informantMessageDescriptors.OTHER
                 }
+              ]
+            },
+            {
+              name: 'registrationPhone',
+              type: 'TEL',
+              label: formMessageDescriptors.phoneNumber,
+              required: true,
+              initialValue: '',
+              validator: [
+                {
+                  operation: 'phoneNumberFormat'
+                }
               ],
-              nestedFields: {
-                SPOUSE: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                SON: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                DAUGHTER: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                SON_IN_LAW: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                DAUGHTER_IN_LAW: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                MOTHER: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                FATHER: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                GRANDSON: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                GRANDDAUGHTER: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                OTHER: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ]
-              },
+              conditionals: [
+                {
+                  action: 'hide',
+                  expression: 'values.contactPoint !== "OTHER"'
+                }
+              ],
               mapping: {
                 mutation: {
-                  operation: 'nestedRadioFieldToBundleFieldTransformer',
-                  parameters: ['registration.contact']
+                  operation: 'sectionFieldToBundleFieldTransformer',
+                  parameters: ['registration.contactPhoneNumber']
                 },
                 query: {
-                  operation: 'bundleFieldToNestedRadioFieldTransformer',
-                  parameters: ['registration.contact']
+                  operation: 'bundleFieldToSectionFieldTransformer',
+                  parameters: ['registration.contactPhoneNumber']
+                },
+                template: {
+                  fieldName: 'contactPhoneNumber',
+                  operation: 'selectTransformer'
                 }
               }
             }

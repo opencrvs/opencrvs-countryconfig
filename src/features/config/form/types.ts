@@ -21,6 +21,12 @@ import {
 // TODO: only list out supported mappings in core include custom form field mappings
 // replace string with the names of all the functions.
 
+export enum Event {
+  Birth = 'birth',
+  Death = 'death',
+  Marriage = 'marriage'
+}
+
 type IIgnoreFields = {
   fieldsToIgnoreForLocalAddress: string[]
   fieldsToIgnoreForInternationalAddress: string[]
@@ -73,7 +79,6 @@ export const TEL = 'TEL'
 export const NUMBER = 'NUMBER'
 export const BIG_NUMBER = 'BIG_NUMBER'
 export const RADIO_GROUP = 'RADIO_GROUP'
-export const RADIO_GROUP_WITH_NESTED_FIELDS = 'RADIO_GROUP_WITH_NESTED_FIELDS'
 export const INFORMATIVE_RADIO_GROUP = 'INFORMATIVE_RADIO_GROUP'
 export const CHECKBOX_GROUP = 'CHECKBOX_GROUP'
 export const CHECKBOX = 'CHECKBOX'
@@ -348,12 +353,6 @@ export interface IRadioGroupFormField extends IFormFieldBase {
   flexDirection?: FLEX_DIRECTION
 }
 
-export interface IRadioGroupWithNestedFieldsFormField
-  extends Omit<IRadioGroupFormField, 'type'> {
-  type: typeof RADIO_GROUP_WITH_NESTED_FIELDS
-  nestedFields: INestedInputFields
-}
-
 export interface IInformativeRadioGroupFormField extends IFormFieldBase {
   type: typeof INFORMATIVE_RADIO_GROUP
   information: IFormSectionData
@@ -511,7 +510,6 @@ export type IFormField =
   | ISelectFormFieldWithDynamicOptions
   | IFormFieldWithDynamicDefinitions
   | IRadioGroupFormField
-  | IRadioGroupWithNestedFieldsFormField
   | IInformativeRadioGroupFormField
   | ICheckboxGroupFormField
   | ICheckboxFormField
@@ -714,12 +712,6 @@ type SerializedFormFieldWithDynamicDefinitions = UnionOmit<
   dynamicDefinitions: ISerializedDynamicFormFieldDefinitions
 }
 
-export interface IRadioGroupWithNestedFieldsFormField
-  extends Omit<IRadioGroupFormField, 'type'> {
-  type: typeof RADIO_GROUP_WITH_NESTED_FIELDS
-  nestedFields: INestedInputFields
-}
-
 type SerializedSelectFormFieldWithOptions = Omit<
   ISelectFormFieldWithOptions,
   'options'
@@ -749,13 +741,6 @@ type ILoaderButtonWithSerializedQueryMap = Omit<ILoaderButton, 'queryMap'> & {
   queryMap: ISerializedQueryMap
 }
 
-type SerializedRadioGroupWithNestedFields = Omit<
-  IRadioGroupWithNestedFieldsFormField,
-  'nestedFields'
-> & {
-  nestedFields: { [key: string]: SerializedFormField[] }
-}
-
 export interface ISelectFormFieldWithOptions extends IFormFieldBase {
   type: typeof SELECT_WITH_OPTIONS
   options: ISelectOption[]
@@ -769,12 +754,10 @@ export type SerializedFormField = UnionOmit<
       | IFormFieldWithDynamicDefinitions
       | ILoaderButton
       | ISelectFormFieldWithOptions
-      | IRadioGroupWithNestedFieldsFormField
     >
   | SerializedSelectFormFieldWithOptions
   | SerializedFormFieldWithDynamicDefinitions
-  | ILoaderButtonWithSerializedQueryMap
-  | SerializedRadioGroupWithNestedFields,
+  | ILoaderButtonWithSerializedQueryMap,
   'validator' | 'mapping'
 > & {
   validator: any

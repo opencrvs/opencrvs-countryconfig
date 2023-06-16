@@ -38,15 +38,28 @@ export const marriageRegisterForms: ISerializedForm = {
           fields: [
             {
               name: 'informantType',
-              type: 'RADIO_GROUP_WITH_NESTED_FIELDS',
-              label: informantMessageDescriptors.marriageInformantTitle,
-              hideHeader: true,
+              customisable: false,
+              type: 'SELECT_WITH_OPTIONS',
+              label: informantMessageDescriptors.birthInformantTitle,
               required: true,
               hideInPreview: false,
               initialValue: '',
               validator: [],
-              size: RadioSize.LARGE,
               placeholder: formMessageDescriptors.formSelectPlaceholder,
+              mapping: {
+                mutation: {
+                  operation: 'sectionFieldToBundleFieldTransformer',
+                  parameters: ['registration.informantType']
+                },
+                query: {
+                  operation: 'bundleFieldToSectionFieldTransformer',
+                  parameters: ['registration.informantType']
+                },
+                template: {
+                  fieldName: 'informantType',
+                  operation: 'selectTransformer'
+                }
+              },
               options: [
                 {
                   value: 'GROOM',
@@ -60,44 +73,34 @@ export const marriageRegisterForms: ISerializedForm = {
                   value: 'OTHER',
                   label: informantMessageDescriptors.OTHER
                 }
+              ]
+            },
+            {
+              name: 'otherInformantType',
+              type: 'TEXT',
+              label: formMessageDescriptors.informantsRelationWithChild,
+              placeholder: formMessageDescriptors.relationshipPlaceHolder,
+              required: true,
+              initialValue: '',
+              validator: [
+                {
+                  operation: 'englishOnlyNameFormat'
+                }
               ],
-              nestedFields: {
-                GROOM: [],
-                BRIDE: [],
-                OTHER: [
-                  {
-                    name: 'otherInformantType',
-                    type: 'TEXT',
-                    label: formMessageDescriptors.relationshipToSpouses,
-                    placeholder: formMessageDescriptors.relationshipPlaceHolder,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'englishOnlyNameFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: ['registration.otherInformantType']
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: ['registration.otherInformantType']
-                      }
-                    }
-                  }
-                ]
-              },
+              conditionals: [
+                {
+                  action: 'hide',
+                  expression: 'values.informantType !== "OTHER"'
+                }
+              ],
               mapping: {
                 mutation: {
-                  operation: 'nestedRadioFieldToBundleFieldTransformer',
-                  parameters: ['registration.informantType']
+                  operation: 'sectionFieldToBundleFieldTransformer',
+                  parameters: ['registration.otherInformantType']
                 },
                 query: {
-                  operation: 'bundleFieldToNestedRadioFieldTransformer',
-                  parameters: ['registration.informantType']
+                  operation: 'bundleFieldToSectionFieldTransformer',
+                  parameters: ['registration.otherInformantType']
                 }
               }
             }
@@ -121,16 +124,29 @@ export const marriageRegisterForms: ISerializedForm = {
           fields: [
             {
               name: 'contactPoint',
-              type: 'RADIO_GROUP_WITH_NESTED_FIELDS',
+              customisable: false,
+              type: 'SELECT_WITH_OPTIONS',
               label: formMessageDescriptors.selectContactPoint,
-              conditionals: [],
-              previewGroup: 'contactPointGroup',
               required: true,
-              hideHeader: true,
+              previewGroup: 'contactPointGroup',
+              hideInPreview: false,
               initialValue: '',
               validator: [],
-              size: RadioSize.LARGE,
               placeholder: formMessageDescriptors.formSelectPlaceholder,
+              mapping: {
+                mutation: {
+                  operation: 'sectionFieldToBundleFieldTransformer',
+                  parameters: ['registration.contact']
+                },
+                query: {
+                  operation: 'bundleFieldToSectionFieldTransformer',
+                  parameters: ['registration.contact']
+                },
+                template: {
+                  fieldName: 'contactPoint',
+                  operation: 'selectTransformer'
+                }
+              },
               options: [
                 {
                   value: 'GROOM',
@@ -144,125 +160,37 @@ export const marriageRegisterForms: ISerializedForm = {
                   value: 'OTHER',
                   label: informantMessageDescriptors.OTHER
                 }
+              ]
+            },
+            {
+              name: 'registrationPhone',
+              type: 'TEL',
+              label: formMessageDescriptors.phoneNumber,
+              required: true,
+              initialValue: '',
+              validator: [
+                {
+                  operation: 'phoneNumberFormat'
+                }
               ],
-              nestedFields: {
-                GROOM: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                BRIDE: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ],
-                OTHER: [
-                  {
-                    name: 'registrationPhone',
-                    type: 'TEL',
-                    label: formMessageDescriptors.phoneNumber,
-                    required: true,
-                    initialValue: '',
-                    validator: [
-                      {
-                        operation: 'phoneNumberFormat'
-                      }
-                    ],
-                    mapping: {
-                      mutation: {
-                        operation: 'changeHirerchyMutationTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'msisdnTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      },
-                      query: {
-                        operation: 'changeHirerchyQueryTransformer',
-                        parameters: [
-                          'registration.contactPhoneNumber',
-                          {
-                            operation: 'localPhoneTransformer',
-                            parameters: ['registration.contactPhoneNumber']
-                          }
-                        ]
-                      }
-                    }
-                  }
-                ]
-              },
+              conditionals: [
+                {
+                  action: 'hide',
+                  expression: 'values.contactPoint !== "OTHER"'
+                }
+              ],
               mapping: {
                 mutation: {
-                  operation: 'nestedRadioFieldToBundleFieldTransformer',
-                  parameters: ['registration.contact']
+                  operation: 'sectionFieldToBundleFieldTransformer',
+                  parameters: ['registration.contactPhoneNumber']
                 },
                 query: {
-                  operation: 'bundleFieldToNestedRadioFieldTransformer',
-                  parameters: ['registration.contact']
+                  operation: 'bundleFieldToSectionFieldTransformer',
+                  parameters: ['registration.contactPhoneNumber']
+                },
+                template: {
+                  fieldName: 'contactPhoneNumber',
+                  operation: 'selectTransformer'
                 }
               }
             }
