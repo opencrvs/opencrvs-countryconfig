@@ -118,7 +118,6 @@ export function getLocationSelect(
       description: `Title for the ${location} select`,
       id: `form.field.label.${location}`
     },
-    customisable: false,
     previewGroup: `${useCase}Address`,
     required: true,
     initialValue: '',
@@ -201,7 +200,6 @@ export function getPlaceOfEventLocationSelect(
 ): SerializedFormField {
   return {
     name: location,
-    customisable: false,
     type: 'SELECT_WITH_DYNAMIC_OPTIONS',
     label: {
       defaultMessage: sentenceCase(location),

@@ -11,8 +11,6 @@
  */
 
 import {
-  BirthSection,
-  DeathSection,
   FLEX_DIRECTION,
   SerializedFormField,
   IPreviewGroup,
@@ -125,8 +123,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
         label: formMessageDescriptors.primaryAddressSameAsOtherPrimary,
-        xComparisonSection: BirthSection.Father,
-        yComparisonSection: BirthSection.Mother,
+        xComparisonSection: 'father',
+        yComparisonSection: 'mother',
         conditionalCase: `(${fathersDetailsDontExist} || ${mothersDetailsDontExistOnOtherPage})`
       },
       {
@@ -172,8 +170,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
         label: formMessageDescriptors.primaryAddressSameAsDeceasedsPrimary,
-        xComparisonSection: DeathSection.Informant,
-        yComparisonSection: DeathSection.Deceased
+        xComparisonSection: 'informant',
+        yComparisonSection: 'deceased'
       },
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -407,8 +405,8 @@ export const getAddressSubsection = (
 }
 
 export const getXAddressSameAsY = (
-  xComparisonSection: BirthSection | DeathSection,
-  yComparisonSection: BirthSection | DeathSection,
+  xComparisonSection: string,
+  yComparisonSection: string,
   label: MessageDescriptor,
   conditionalCase?: string
 ): SerializedFormField[] => {
@@ -632,7 +630,6 @@ export function getAddressCaseFields(
         description: 'Title for the country select',
         id: 'form.field.label.country'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: true,
       initialValue: 'FAR',
@@ -719,7 +716,6 @@ export function getAddressCaseFields(
       ],
       initialValue: 'URBAN',
       flexDirection: FLEX_DIRECTION.ROW,
-      customisable: false,
       previewGroup: `${useCase}Address`,
       hideValueInPreview: true,
       required: false,
@@ -778,7 +774,6 @@ export function getAddressCaseFields(
         description: 'Title for the address line 4',
         id: 'form.field.label.cityUrbanOption'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -847,7 +842,6 @@ export function getAddressCaseFields(
         description: 'Title for the address line 3 option 2',
         id: 'form.field.label.addressLine3UrbanOption'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -916,7 +910,6 @@ export function getAddressCaseFields(
         description: 'Title for the address line 1',
         id: 'form.field.label.addressLine2UrbanOption'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -985,7 +978,6 @@ export function getAddressCaseFields(
         description: 'Title for the number field',
         id: 'form.field.label.number'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1054,7 +1046,6 @@ export function getAddressCaseFields(
         description: 'Title for the international postcode',
         id: 'form.field.label.internationalPostcode'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1123,7 +1114,6 @@ export function getAddressCaseFields(
         description: 'Title for the address line 1',
         id: 'form.field.label.addressLine5'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1192,7 +1182,6 @@ export function getAddressCaseFields(
         description: 'Title for the international state select',
         id: 'form.field.label.internationalState'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: true,
       initialValue: '',
@@ -1255,7 +1244,6 @@ export function getAddressCaseFields(
         description: 'Title for the international district select',
         id: 'form.field.label.internationalDistrict'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: true,
       initialValue: '',
@@ -1318,7 +1306,6 @@ export function getAddressCaseFields(
         description: 'Title for the international city select',
         id: 'form.field.label.internationalCity'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1381,7 +1368,6 @@ export function getAddressCaseFields(
         description: 'Title for the international address line 1 select',
         id: 'form.field.label.internationalAddressLine1'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1444,7 +1430,6 @@ export function getAddressCaseFields(
         description: 'Title for the international address line 2 select',
         id: 'form.field.label.internationalAddressLine2'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1503,7 +1488,6 @@ export function getAddressCaseFields(
         description: 'Title for the international address line 3 select',
         id: 'form.field.label.internationalAddressLine3'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1562,7 +1546,6 @@ export function getAddressCaseFields(
         description: 'Title for the international postcode',
         id: 'form.field.label.internationalPostcode'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1626,7 +1609,6 @@ export function getPlaceOfEventAddressFields(
   return [
     {
       name: 'country',
-      customisable: false,
       type: 'SELECT_WITH_OPTIONS',
       label: {
         defaultMessage: 'Country',
@@ -1678,7 +1660,6 @@ export function getPlaceOfEventAddressFields(
     ...getPlaceOfEventAdminLevelSelects(configCase),
     {
       name: 'ruralOrUrban',
-      customisable: false,
       type: 'RADIO_GROUP',
       label: {
         defaultMessage: ' ',
@@ -1744,7 +1725,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'cityUrbanOption',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Town',
@@ -1800,7 +1780,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'addressLine3UrbanOption',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Residential Area',
@@ -1856,7 +1835,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'addressLine2UrbanOption',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Street',
@@ -1912,7 +1890,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'numberUrbanOption',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Number',
@@ -1968,7 +1945,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'postalCode',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Postcode / Zip',
@@ -2024,7 +2000,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'addressLine5',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Village',
@@ -2080,7 +2055,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalState',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'State',
@@ -2138,7 +2112,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalDistrict',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'District',
@@ -2196,7 +2169,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalCity',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'City / Town',
@@ -2240,7 +2212,6 @@ export function getPlaceOfEventAddressFields(
     {
       name: 'internationalAddressLine1',
       type: 'TEXT',
-      customisable: false,
       label: {
         defaultMessage: 'Address Line 1',
         description: 'Title for the international address line 1 select',
@@ -2287,7 +2258,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalAddressLine2',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Address Line 2',
@@ -2335,7 +2305,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalAddressLine3',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Address Line 3',
@@ -2383,7 +2352,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalPostcode',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Postcode / Zip',

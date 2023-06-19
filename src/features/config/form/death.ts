@@ -18,13 +18,7 @@ import {
   deathDocumentForWhomFhirMapping,
   deathDocumentTypeFhirMapping
 } from './options'
-import {
-  DeathSection,
-  ISerializedForm,
-  IntegratingSystemType,
-  RadioSize,
-  TEXTAREA
-} from './types'
+import { ISerializedForm, IntegratingSystemType, TEXTAREA } from './types'
 
 const nidIntegrationConditionals = {
   hideIfNidIntegrationEnabled: {
@@ -54,7 +48,7 @@ const nidIntegrationConditionals = {
 export const deathRegisterForms: ISerializedForm = {
   sections: [
     {
-      id: DeathSection.Registration,
+      id: 'registration',
       viewType: 'form',
       name: formMessageDescriptors.registrationName,
       title: formMessageDescriptors.registrationTitle,
@@ -68,7 +62,6 @@ export const deathRegisterForms: ISerializedForm = {
           fields: [
             {
               name: 'informantType',
-              customisable: false,
               type: 'SELECT_WITH_OPTIONS',
               label: informantMessageDescriptors.birthInformantTitle,
               required: true,
@@ -182,7 +175,6 @@ export const deathRegisterForms: ISerializedForm = {
           fields: [
             {
               name: 'contactPoint',
-              customisable: false,
               type: 'SELECT_WITH_OPTIONS',
               label: formMessageDescriptors.selectContactPoint,
               required: true,
@@ -344,7 +336,7 @@ export const deathRegisterForms: ISerializedForm = {
       }
     },
     {
-      id: DeathSection.Deceased,
+      id: 'deceased',
       viewType: 'form',
       name: formMessageDescriptors.deceasedName,
       title: formMessageDescriptors.deceasedTitle,
@@ -382,7 +374,6 @@ export const deathRegisterForms: ISerializedForm = {
               type: 'TEXT',
               label: formMessageDescriptors.iDTypeNationalID,
               required: false,
-              customisable: true,
               initialValue: '',
               validator: [
                 {
@@ -613,7 +604,6 @@ export const deathRegisterForms: ISerializedForm = {
               type: 'SELECT_WITH_OPTIONS',
               label: formMessageDescriptors.maritalStatus,
               required: false,
-              customisable: true,
               initialValue: '',
               validator: [],
               placeholder: formMessageDescriptors.formSelectPlaceholder,
@@ -692,7 +682,7 @@ export const deathRegisterForms: ISerializedForm = {
       ]
     },
     {
-      id: DeathSection.Event,
+      id: 'deathEvent',
       viewType: 'form',
       name: formMessageDescriptors.deathEventName,
       title: formMessageDescriptors.deathEventTitle,
@@ -785,7 +775,6 @@ export const deathRegisterForms: ISerializedForm = {
               required: true,
               checkedValue: 'true',
               uncheckedValue: 'false',
-              customisable: true,
               hideHeader: true,
               initialValue: 'false',
               validator: [],
@@ -809,7 +798,6 @@ export const deathRegisterForms: ISerializedForm = {
               type: 'SELECT_WITH_OPTIONS',
               label: formMessageDescriptors.causeOfDeathMethod,
               required: true,
-              customisable: true,
               initialValue: '',
               validator: [],
               placeholder: formMessageDescriptors.formSelectPlaceholder,
@@ -866,7 +854,6 @@ export const deathRegisterForms: ISerializedForm = {
               initialValue: '',
               validator: [],
               required: true,
-              customisable: true,
               maxLength: 500,
               mapping: {
                 mutation: {
@@ -885,7 +872,6 @@ export const deathRegisterForms: ISerializedForm = {
             },
             {
               name: 'placeOfDeath',
-              customisable: false,
               type: 'SELECT_WITH_OPTIONS',
               previewGroup: 'placeOfDeath',
               ignoreFieldLabelOnErrorMessage: true,
@@ -922,7 +908,6 @@ export const deathRegisterForms: ISerializedForm = {
 
             {
               name: 'deathLocation',
-              customisable: false,
               type: 'LOCATION_SEARCH_INPUT',
               label: {
                 defaultMessage: 'Health institution',
@@ -969,7 +954,7 @@ export const deathRegisterForms: ISerializedForm = {
       ]
     },
     {
-      id: DeathSection.Informant,
+      id: 'informant',
       viewType: 'form',
       name: formMessageDescriptors.informantName,
       title: formMessageDescriptors.deathInformantTitle,
@@ -1019,7 +1004,6 @@ export const deathRegisterForms: ISerializedForm = {
               type: 'TEXT',
               label: formMessageDescriptors.iDTypeNationalID,
               required: false,
-              customisable: true,
               initialValue: '',
               validator: [
                 {
@@ -1067,7 +1051,6 @@ export const deathRegisterForms: ISerializedForm = {
               type: 'NID_VERIFICATION_BUTTON',
               label: formMessageDescriptors.iDTypeNationalID,
               required: true,
-              customisable: true,
               initialValue: '',
               validator: [],
               conditionals: [
@@ -1101,7 +1084,6 @@ export const deathRegisterForms: ISerializedForm = {
               type: 'DATE',
               label: formMessageDescriptors.dateOfBirth,
               required: true,
-              customisable: true,
               initialValue: '',
               conditionals: [
                 {
@@ -1347,7 +1329,7 @@ export const deathRegisterForms: ISerializedForm = {
       }
     },
     {
-      id: DeathSection.DeathDocuments,
+      id: 'documents',
       viewType: 'form',
       name: formMessageDescriptors.documentsName,
       title: formMessageDescriptors.documentsTitle,

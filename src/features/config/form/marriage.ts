@@ -18,12 +18,12 @@ import {
   marriageDocumentForWhomFhirMapping,
   marriageDocumentTypeFhirMapping
 } from './options'
-import { ISerializedForm, MarriageSection, RadioSize } from './types'
+import { ISerializedForm } from './types'
 
 export const marriageRegisterForms: ISerializedForm = {
   sections: [
     {
-      id: MarriageSection.Registration,
+      id: 'registration',
       viewType: 'form',
       hasDocumentSection: true,
       name: formMessageDescriptors.registrationName,
@@ -38,7 +38,6 @@ export const marriageRegisterForms: ISerializedForm = {
           fields: [
             {
               name: 'informantType',
-              customisable: false,
               type: 'SELECT_WITH_OPTIONS',
               label: informantMessageDescriptors.birthInformantTitle,
               required: true,
@@ -124,7 +123,6 @@ export const marriageRegisterForms: ISerializedForm = {
           fields: [
             {
               name: 'contactPoint',
-              customisable: false,
               type: 'SELECT_WITH_OPTIONS',
               label: formMessageDescriptors.selectContactPoint,
               required: true,
@@ -259,7 +257,7 @@ export const marriageRegisterForms: ISerializedForm = {
       }
     },
     {
-      id: MarriageSection.Groom,
+      id: 'groom',
       viewType: 'form',
       name: formMessageDescriptors.groomName,
       title: formMessageDescriptors.groomTitle,
@@ -297,7 +295,6 @@ export const marriageRegisterForms: ISerializedForm = {
               type: 'TEXT',
               label: formMessageDescriptors.iDTypeNationalID,
               required: false,
-              customisable: true,
               initialValue: '',
               validator: [
                 {
@@ -529,7 +526,7 @@ export const marriageRegisterForms: ISerializedForm = {
       ]
     },
     {
-      id: MarriageSection.Bride,
+      id: 'bride',
       viewType: 'form',
       name: formMessageDescriptors.brideName,
       title: formMessageDescriptors.brideTitle,
@@ -567,7 +564,6 @@ export const marriageRegisterForms: ISerializedForm = {
               type: 'TEXT',
               label: formMessageDescriptors.iDTypeNationalID,
               required: false,
-              customisable: true,
               initialValue: '',
               validator: [
                 {
@@ -799,7 +795,7 @@ export const marriageRegisterForms: ISerializedForm = {
       ]
     },
     {
-      id: MarriageSection.Event,
+      id: 'marriageEvent',
       viewType: 'form',
       name: formMessageDescriptors.marriageEventName,
       title: formMessageDescriptors.marriageEventTitle,
@@ -888,7 +884,7 @@ export const marriageRegisterForms: ISerializedForm = {
       ]
     },
     {
-      id: MarriageSection.WitnessOne,
+      id: 'witnessOne',
       viewType: 'form',
       name: formMessageDescriptors.witnessName,
       title: formMessageDescriptors.witnessOneTitle,
@@ -982,7 +978,6 @@ export const marriageRegisterForms: ISerializedForm = {
             },
             {
               name: 'relationship',
-              customisable: false,
               type: 'SELECT_WITH_OPTIONS',
               label: formMessageDescriptors.relationshipToSpouses,
               required: true,
@@ -1038,7 +1033,7 @@ export const marriageRegisterForms: ISerializedForm = {
       ]
     },
     {
-      id: MarriageSection.WitnessTwo,
+      id: 'witnessTwo',
       viewType: 'form',
       name: formMessageDescriptors.witnessName,
       title: formMessageDescriptors.witnessTwoTitle,
@@ -1132,7 +1127,6 @@ export const marriageRegisterForms: ISerializedForm = {
             },
             {
               name: 'relationship',
-              customisable: false,
               type: 'SELECT_WITH_OPTIONS',
               label: formMessageDescriptors.relationshipToSpouses,
               required: true,
@@ -1182,7 +1176,7 @@ export const marriageRegisterForms: ISerializedForm = {
       ]
     },
     {
-      id: MarriageSection.Documents,
+      id: 'documents',
       viewType: 'form',
       name: formMessageDescriptors.documentsName,
       title: {

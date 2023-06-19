@@ -197,7 +197,6 @@
     "constants.femaleOver18": "Label for femaleOver18",
     "constants.total": "Label for total",
     "constants.location": "Label for location",
-    "constants.registrationTitle": "Label for registrationTitle",
     "constants.withinTargetDays": "Label for registrations within {registrationTargetDays} days",
     "constants.withinTargetDaysTo1Year": "Label for registrations within {registrationTargetDays} days to 1 year",
     "constants.within1YearTo5Years": "Label for registrations within 1 year to 5 years",
