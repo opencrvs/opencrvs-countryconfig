@@ -13,7 +13,12 @@
 // TODO: add in all the validations and conditionals logic and generate a js file client can load
 
 import { MessageDescriptor } from 'react-intl'
-import { IFormData, IFormFieldValue, IntegratingSystemType } from './types'
+import {
+  IFormData,
+  IFormFieldValue,
+  IntegratingSystemType,
+  Event
+} from './types'
 import { EventLocationAddressCases, sentenceCase } from './address-utils'
 import { ADMIN_LEVELS } from './addresses'
 
@@ -117,24 +122,51 @@ export const hideIfNidIntegrationDisabled = [
   }
 ]
 
-export const nationalIDValidators = [
+export const motherNationalIDVerfication = [
   {
-    operation: 'validIDNumber',
-    parameters: ['NATIONAL_ID']
+    action: 'hide',
+    expression: '!values.detailsExist'
   },
   {
-    operation: 'duplicateIDNumber',
-    parameters: ['deceased.iD']
-  },
-  {
-    operation: 'duplicateIDNumber',
-    parameters: ['mother.iD']
-  },
-  {
-    operation: 'duplicateIDNumber',
-    parameters: ['father.iD']
+    action: 'disable',
+    expression: `values.motherNidVerification`
   }
 ]
+
+export function getNationalIDValidators(configCase: string) {
+  if (configCase === 'informant') {
+    return [
+      {
+        operation: 'validIDNumber',
+        parameters: ['NATIONAL_ID']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['deceased.iD']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['mother.iD']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['father.iD']
+      }
+    ]
+  } else {
+    // mother
+    return [
+      {
+        operation: 'validIDNumber',
+        parameters: ['NATIONAL_ID']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['father.iD']
+      }
+    ]
+  }
+}
 
 export const hideIfNidIntegrationEnabled = [
   {
@@ -147,6 +179,17 @@ export const hideIfNidIntegrationEnabled = [
           nationalIdSystem.settings.openIdProhideIfNidIntegrationDisabledviderClientId &&
           nationalIdSystem.settings.openIdProviderClaims;
       `
+  }
+]
+
+export const mothersDetailsExistConditionals = [
+  {
+    action: 'hide',
+    expression: 'mothersDetailsExistBasedOnContactAndInformant'
+  },
+  {
+    action: 'hideInPreview',
+    expression: 'values.detailsExist'
   }
 ]
 

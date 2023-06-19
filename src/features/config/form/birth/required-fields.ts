@@ -10,6 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
+import { MessageDescriptor } from 'react-intl'
 import { EventLocationAddressCases } from '../address-utils'
 import { getPlaceOfEventAddressFields } from '../addresses'
 import {
@@ -168,28 +169,22 @@ export const getNationality = (
   options: {
     resource: 'countries'
   },
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!values.detailsExist'
+    }
+  ],
   mapping: {
-    mutation: {
-      operation: 'fieldValueNestingTransformer',
-      parameters: [
-        'individual',
-        {
-          operation: 'fieldToArrayTransformer'
-        }
-      ]
-    },
-    query: {
-      operation: 'nestedValueToFieldTransformer',
-      parameters: [
-        'individual',
-        {
-          operation: 'arrayToFieldTransformer'
-        }
-      ]
-    },
     template: {
       fieldName: certificateHandlebar,
       operation: 'nationalityTransformer'
+    },
+    mutation: {
+      operation: 'fieldToArrayTransformer'
+    },
+    query: {
+      operation: 'arrayToFieldTransformer'
     }
   }
 })
@@ -403,3 +398,47 @@ export const otherInformantType: SerializedFormField = {
     }
   }
 }
+
+export const getDetailsExist = (
+  label: MessageDescriptor,
+  conditionals: IConditional[]
+): SerializedFormField => ({
+  name: 'detailsExist',
+  type: 'CHECKBOX',
+  label,
+  required: true,
+  checkedValue: false,
+  uncheckedValue: true,
+  hideHeader: true,
+  initialValue: true,
+  validator: [],
+  conditionals,
+  mapping: {
+    query: {
+      operation: 'booleanTransformer'
+    }
+  }
+})
+
+export const getReasonNotExisting = (
+  certificateHandlebar: string
+): SerializedFormField => ({
+  name: 'reasonNotApplying',
+  conditionals: [
+    {
+      action: 'hide',
+      expression: 'values.detailsExist'
+    }
+  ],
+  type: 'TEXT',
+  label: formMessageDescriptors.reasonNA,
+  validator: [],
+  initialValue: '',
+  required: true,
+  mapping: {
+    template: {
+      fieldName: certificateHandlebar,
+      operation: 'plainInputTransformer'
+    }
+  }
+})

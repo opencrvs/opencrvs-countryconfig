@@ -19,12 +19,14 @@ import { formMessageDescriptors } from './formatjs-messages'
 import {
   childNameInEnglish,
   getBirthDate,
+  getDetailsExist,
   getFamilyNameField,
   getFirstNameField,
   getGender,
   getNationalID,
   getNationality,
   getPlaceOfBirthFields,
+  getReasonNotExisting,
   informantType,
   otherInformantType
 } from './birth/required-fields'
@@ -45,7 +47,10 @@ import {
   informantBirthDateConditionals,
   hideIfNidIntegrationEnabled,
   nationalIDValidators,
-  hideIfNidIntegrationDisabled
+  hideIfNidIntegrationDisabled,
+  mothersDetailsExistConditionals,
+  getNationalIDValidators,
+  motherNationalIDVerfication
 } from './validations-and-conditionals'
 import { informantNameInEnglish } from './birth/preview-groups'
 import {
@@ -282,18 +287,6 @@ export const birthRegisterForms: ISerializedForm = {
               informantFamilyNameConditionals,
               'informantFamilyName'
             ), // Required field.
-            getNationality('informantNationality'), // Required field.
-            getNationalID(
-              'informantID',
-              hideIfNidIntegrationEnabled,
-              nationalIDValidators,
-              'informantNID'
-            ),
-            getNIDVerificationButton(
-              'informantNidVerification',
-              hideIfNidIntegrationDisabled,
-              []
-            ),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals,
@@ -302,6 +295,18 @@ export const birthRegisterForms: ISerializedForm = {
             ), // Required field.
             exactDateOfBirthUnknown,
             getAgeOfIndividualInYears(formMessageDescriptors.ageOfInformant),
+            getNationality('informantNationality'), // Required field.
+            getNationalID(
+              'informantID',
+              hideIfNidIntegrationEnabled,
+              getNationalIDValidators('informant'),
+              'informantNID'
+            ),
+            getNIDVerificationButton(
+              'informantNidVerification',
+              hideIfNidIntegrationDisabled,
+              []
+            ),
             ...getAddressSubsection(
               AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
               formMessageDescriptors.primaryAddress
@@ -330,155 +335,23 @@ export const birthRegisterForms: ISerializedForm = {
         {
           id: 'mother-view-group',
           fields: [
-            {
-              name: 'detailsExist',
-              type: 'CHECKBOX',
-              label: formMessageDescriptors.mothersDetailsExist,
-              required: true,
-              checkedValue: false,
-              uncheckedValue: true,
-              hideHeader: true,
-              initialValue: true,
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression: 'mothersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'hideInPreview',
-                  expression: 'values.detailsExist'
-                }
-              ],
-              mapping: {
-                query: {
-                  operation: 'booleanTransformer'
-                }
-              }
-            },
-            {
-              name: 'reasonNotApplying',
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    'mothersDetailsExistBasedOnContactAndInformant || values.detailsExist'
-                }
-              ],
-              type: 'TEXT',
-              label: formMessageDescriptors.reasonNA,
-              validator: [],
-              initialValue: '',
-              required: true,
-              mapping: {
-                template: {
-                  fieldName: 'motherReasonNotApplying',
-                  operation: 'plainInputTransformer'
-                }
-              }
-            },
-            {
-              name: 'nationality',
-              type: 'SELECT_WITH_OPTIONS',
-              label: formMessageDescriptors.nationality,
-              required: true,
-              initialValue: 'FAR',
-              validator: [],
-              placeholder: formMessageDescriptors.formSelectPlaceholder,
-              options: {
-                resource: 'countries'
-              },
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'motherNationality',
-                  operation: 'nationalityTransformer'
-                },
-                mutation: {
-                  operation: 'fieldToArrayTransformer'
-                },
-                query: {
-                  operation: 'arrayToFieldTransformer'
-                }
-              }
-            },
-            {
-              name: 'iD',
-              type: 'TEXT',
-              label: formMessageDescriptors.iDTypeNationalID,
-              required: false,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'validIDNumber',
-                  parameters: ['NATIONAL_ID']
-                },
-                {
-                  operation: 'duplicateIDNumber',
-                  parameters: ['father.iD']
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                },
-                nidIntegrationConditionals.hideIfNidIntegrationEnabled
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'motherNID',
-                  operation: 'identityToFieldTransformer',
-                  parameters: ['id', 'NATIONAL_ID']
-                },
-                mutation: {
-                  operation: 'fieldToIdentityTransformer',
-                  parameters: ['id', 'NATIONAL_ID']
-                },
-                query: {
-                  operation: 'identityToFieldTransformer',
-                  parameters: ['id', 'NATIONAL_ID']
-                }
-              }
-            },
-            {
-              name: 'motherNidVerification',
-              type: 'NID_VERIFICATION_BUTTON',
-              label: formMessageDescriptors.iDTypeNationalID,
-              required: true,
-              initialValue: '',
-              validator: [],
-              conditionals: [
-                nidIntegrationConditionals.hideIfNidIntegrationDisabled,
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'disable',
-                  expression: `values.motherNidVerification`
-                }
-              ],
-              mapping: {
-                mutation: {
-                  operation: 'nidVerificationFieldToIdentityTransformer'
-                },
-                query: {
-                  operation: 'identityToNidVerificationFieldTransformer'
-                }
-              },
-              labelForVerified: formMessageDescriptors.nidVerified,
-              labelForUnverified: formMessageDescriptors.nidNotVerified,
-              labelForOffline: formMessageDescriptors.nidOffline
-            },
+            getDetailsExist(
+              formMessageDescriptors.mothersDetailsExist,
+              mothersDetailsExistConditionals
+            ), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getReasonNotExisting('motherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getNationality('motherNationality'),
+            getNationalID(
+              'iD',
+              hideIfNidIntegrationEnabled,
+              getNationalIDValidators('mother'),
+              'motherNID'
+            ),
+            getNIDVerificationButton(
+              'informantNidVerification',
+              hideIfNidIntegrationDisabled.concat(motherNationalIDVerfication),
+              []
+            ),
             {
               name: 'motherBirthDate',
               type: 'DATE',
