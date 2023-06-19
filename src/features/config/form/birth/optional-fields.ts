@@ -10,8 +10,9 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
+import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from '../formatjs-messages'
-import { SerializedFormField } from '../types'
+import { IConditional, SerializedFormField } from '../types'
 
 export const attendantAtBirth: SerializedFormField = {
   name: 'attendantAtBirth',
@@ -146,3 +147,145 @@ export const weightAtBirth: SerializedFormField = {
   },
   inputFieldWidth: '78px'
 }
+
+export const registrationPhone: SerializedFormField = {
+  name: 'registrationPhone',
+  type: 'TEL',
+  label: formMessageDescriptors.phoneNumber,
+  required: false,
+  initialValue: '',
+  validator: [
+    {
+      operation: 'phoneNumberFormat'
+    }
+  ],
+  conditionals: [],
+  mapping: {
+    mutation: {
+      operation: 'sectionFieldToBundleFieldTransformer',
+      parameters: ['registration.contactPhoneNumber']
+    },
+    query: {
+      operation: 'bundleFieldToSectionFieldTransformer',
+      parameters: ['registration.contactPhoneNumber']
+    },
+    template: {
+      fieldName: 'contactPhoneNumber',
+      operation: 'selectTransformer'
+    }
+  }
+}
+
+export const registrationEmail: SerializedFormField = {
+  name: 'registrationEmail',
+  type: 'TEL',
+  label: formMessageDescriptors.email,
+  required: false,
+  initialValue: '',
+  validator: [
+    {
+      operation: 'emailAddressFormat'
+    }
+  ],
+  conditionals: [],
+  mapping: {
+    mutation: {
+      operation: 'sectionFieldToBundleFieldTransformer',
+      parameters: ['registration.email']
+    },
+    query: {
+      operation: 'bundleFieldToSectionFieldTransformer',
+      parameters: ['registration.email']
+    },
+    template: {
+      fieldName: 'email',
+      operation: 'plainInputTransformer'
+    }
+  }
+}
+
+export const getNIDVerificationButton = (
+  fieldName: string,
+  conditionals: IConditional[],
+  validator: any[]
+): SerializedFormField => ({
+  name: fieldName,
+  type: 'NID_VERIFICATION_BUTTON',
+  label: formMessageDescriptors.iDTypeNationalID,
+  required: true,
+  initialValue: '',
+  validator,
+  conditionals,
+  mapping: {
+    mutation: {
+      operation: 'nidVerificationFieldToIdentityTransformer'
+    },
+    query: {
+      operation: 'identityToNidVerificationFieldTransformer'
+    }
+  },
+  labelForVerified: formMessageDescriptors.nidVerified,
+  labelForUnverified: formMessageDescriptors.nidNotVerified,
+  labelForOffline: formMessageDescriptors.nidOffline
+})
+
+export const exactDateOfBirthUnknown: SerializedFormField = {
+  name: 'exactDateOfBirthUnknown',
+  type: 'CHECKBOX',
+  label: {
+    defaultMessage: 'Exact date of birth unknown',
+    description: 'Checkbox for exact date of birth unknown',
+    id: 'form.field.label.exactDateOfBirthUnknown'
+  },
+  hideInPreview: true,
+  required: false,
+  hideHeader: true,
+  initialValue: false,
+  validator: [],
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!window.config.DATE_OF_BIRTH_UNKNOWN'
+    }
+  ],
+  mapping: {
+    query: {
+      operation: 'booleanTransformer'
+    },
+    mutation: {
+      operation: 'ignoreFieldTransformer'
+    }
+  }
+}
+
+export const getAgeOfIndividualInYears = (
+  label: MessageDescriptor
+): SerializedFormField => ({
+  name: 'ageOfIndividualInYears',
+  type: 'NUMBER',
+  label,
+  required: true,
+  initialValue: '',
+  validator: [
+    {
+      operation: 'range',
+      parameters: [12, 120]
+    },
+    {
+      operation: 'maxLength',
+      parameters: [3]
+    },
+    {
+      operation: 'isValidParentsBirthDate',
+      parameters: [10, true]
+    }
+  ],
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!values.exactDateOfBirthUnknown'
+    }
+  ],
+  postfix: 'years',
+  inputFieldWidth: '78px'
+})

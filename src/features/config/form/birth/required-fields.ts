@@ -10,24 +10,32 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { formMessageDescriptors } from '../formatjs-messages'
-import { IPreviewGroup, SerializedFormField } from '../types'
+import { EventLocationAddressCases } from '../address-utils'
+import { getPlaceOfEventAddressFields } from '../addresses'
+import {
+  formMessageDescriptors,
+  informantMessageDescriptors
+} from '../formatjs-messages'
+import { SerializedFormField } from '../types'
+import { IConditional } from '../validations-and-conditionals'
 
-export const childBirthDate: SerializedFormField = {
-  name: 'childBirthDate', // A field with this name MUST exist
+export const getBirthDate = (
+  fieldName: string,
+  conditionals: IConditional[],
+  validator: any[],
+  certificateHandlebar: string
+): SerializedFormField => ({
+  name: fieldName, // A field with this name MUST exist
   type: 'DATE',
   label: formMessageDescriptors.dateOfBirth,
   required: true,
+  conditionals,
   initialValue: '',
-  validator: [
-    {
-      operation: 'isValidChildBirthDate'
-    }
-  ],
+  validator,
   mapping: {
     template: {
       operation: 'dateFormatTransformer',
-      fieldName: 'eventDate',
+      fieldName: certificateHandlebar,
       parameters: ['birthDate', 'en', 'do MMMM yyyy']
     },
     mutation: {
@@ -39,9 +47,11 @@ export const childBirthDate: SerializedFormField = {
       parameters: ['birthDate']
     }
   }
-}
+})
 
-export const gender: SerializedFormField = {
+export const getGender = (
+  certificateHandlebar: string
+): SerializedFormField => ({
   name: 'gender', // A field with this name MUST exist
   type: 'SELECT_WITH_OPTIONS',
   label: formMessageDescriptors.sex,
@@ -51,7 +61,7 @@ export const gender: SerializedFormField = {
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   mapping: {
     template: {
-      fieldName: 'childGender',
+      fieldName: certificateHandlebar,
       operation: 'selectTransformer'
     }
   },
@@ -69,11 +79,16 @@ export const gender: SerializedFormField = {
       label: formMessageDescriptors.sexUnknown
     }
   ]
-}
+})
 
-export const familyNameEng: SerializedFormField = {
+export const getFamilyNameField = (
+  previewGroup: string,
+  conditionals: IConditional[],
+  certificateHandlebar: string
+): SerializedFormField => ({
   name: 'familyNameEng', // A field with this name MUST exist
-  previewGroup: 'childNameInEnglish',
+  previewGroup,
+  conditionals,
   type: 'TEXT',
   label: formMessageDescriptors.familyName,
   maxLength: 32,
@@ -86,7 +101,7 @@ export const familyNameEng: SerializedFormField = {
   ],
   mapping: {
     template: {
-      fieldName: 'childFamilyName',
+      fieldName: certificateHandlebar,
       operation: 'nameToFieldTransformer',
       parameters: ['en', 'familyName']
     },
@@ -99,17 +114,22 @@ export const familyNameEng: SerializedFormField = {
       parameters: ['en', 'familyName']
     }
   }
-}
+})
 
-export const firstNamesEng: SerializedFormField = {
+export const getFirstNameField = (
+  previewGroup: string,
+  conditionals: IConditional[],
+  certificateHandlebar: string
+): SerializedFormField => ({
   name: 'firstNamesEng', // A field with this name MUST exist
-  previewGroup: 'childNameInEnglish',
+  previewGroup,
   type: 'TEXT',
   label: {
     defaultMessage: 'First name(s)',
     description: 'Label for form field: First names',
     id: 'form.field.label.firstNames'
   },
+  conditionals,
   maxLength: 32,
   required: true,
   initialValue: '',
@@ -120,7 +140,7 @@ export const firstNamesEng: SerializedFormField = {
   ],
   mapping: {
     template: {
-      fieldName: 'childFirstName',
+      fieldName: certificateHandlebar,
       operation: 'nameToFieldTransformer',
       parameters: ['en', 'firstNames']
     },
@@ -133,9 +153,78 @@ export const firstNamesEng: SerializedFormField = {
       parameters: ['en', 'firstNames']
     }
   }
-}
+})
 
-export const getPlaceOfBirthFields: SerializedFormField[] = [
+export const getNationality = (
+  certificateHandlebar: string
+): SerializedFormField => ({
+  name: 'nationality',
+  type: 'SELECT_WITH_OPTIONS',
+  label: formMessageDescriptors.nationality,
+  required: true,
+  initialValue: 'FAR',
+  validator: [],
+  placeholder: formMessageDescriptors.formSelectPlaceholder,
+  options: {
+    resource: 'countries'
+  },
+  mapping: {
+    mutation: {
+      operation: 'fieldValueNestingTransformer',
+      parameters: [
+        'individual',
+        {
+          operation: 'fieldToArrayTransformer'
+        }
+      ]
+    },
+    query: {
+      operation: 'nestedValueToFieldTransformer',
+      parameters: [
+        'individual',
+        {
+          operation: 'arrayToFieldTransformer'
+        }
+      ]
+    },
+    template: {
+      fieldName: certificateHandlebar,
+      operation: 'nationalityTransformer'
+    }
+  }
+})
+
+export const getNationalID = (
+  fieldName: string,
+  conditionals: IConditional[],
+  validator: any[],
+  certificateHandlebar: string
+): SerializedFormField => ({
+  name: fieldName,
+  type: 'TEXT',
+  label: formMessageDescriptors.iDTypeNationalID,
+  required: false,
+  initialValue: '',
+  validator,
+  conditionals,
+  mapping: {
+    template: {
+      fieldName: certificateHandlebar,
+      operation: 'identityToFieldTransformer',
+      parameters: ['id', 'NATIONAL_ID']
+    },
+    mutation: {
+      operation: 'fieldToIdentityTransformer',
+      parameters: ['id', 'NATIONAL_ID']
+    },
+    query: {
+      operation: 'identityToFieldTransformer',
+      parameters: ['id', 'NATIONAL_ID']
+    }
+  }
+})
+
+export const getPlaceOfBirthFields = (): SerializedFormField[] => [
   {
     name: 'placeOfBirthTitle',
     type: 'SUBSECTION',
@@ -218,12 +307,99 @@ export const getPlaceOfBirthFields: SerializedFormField[] = [
         parameters: []
       }
     }
-  }
+  },
+  ...getPlaceOfEventAddressFields(EventLocationAddressCases.PLACE_OF_BIRTH)
 ]
 
-export const childNameInEnglish: IPreviewGroup = {
-  id: 'childNameInEnglish',
-  label: formMessageDescriptors.nameInEnglishPreviewGroup,
-  fieldToRedirect: 'familyNameEng',
-  delimiter: ' '
+export const informantType: SerializedFormField = {
+  name: 'informantType',
+  type: 'SELECT_WITH_OPTIONS',
+  label: informantMessageDescriptors.birthInformantTitle,
+  required: true,
+  hideInPreview: false,
+  initialValue: '',
+  validator: [],
+  placeholder: formMessageDescriptors.formSelectPlaceholder,
+  mapping: {
+    mutation: {
+      operation: 'sectionFieldToBundleFieldTransformer',
+      parameters: ['registration.informantType']
+    },
+    query: {
+      operation: 'bundleFieldToSectionFieldTransformer',
+      parameters: ['registration.informantType']
+    },
+    template: {
+      fieldName: 'informantType',
+      operation: 'selectTransformer'
+    }
+  },
+  options: [
+    {
+      value: 'MOTHER',
+      label: informantMessageDescriptors.MOTHER
+    },
+    {
+      value: 'FATHER',
+      label: informantMessageDescriptors.FATHER
+    },
+    {
+      value: 'GRANDFATHER',
+      label: informantMessageDescriptors.GRANDFATHER
+    },
+    {
+      value: 'GRANDMOTHER',
+      label: informantMessageDescriptors.GRANDMOTHER
+    },
+    {
+      value: 'BROTHER',
+      label: informantMessageDescriptors.BROTHER
+    },
+    {
+      value: 'SISTER',
+      label: informantMessageDescriptors.SISTER
+    },
+    {
+      value: 'OTHER_FAMILY_MEMBER',
+      label: informantMessageDescriptors.OTHER_FAMILY_MEMBER
+    },
+    {
+      value: 'LEGAL_GUARDIAN',
+      label: informantMessageDescriptors.LEGAL_GUARDIAN
+    },
+    {
+      value: 'OTHER',
+      label: informantMessageDescriptors.OTHER
+    }
+  ]
+}
+
+export const otherInformantType: SerializedFormField = {
+  name: 'otherInformantType',
+  type: 'TEXT',
+  label: formMessageDescriptors.informantsRelationWithChild,
+  placeholder: formMessageDescriptors.relationshipPlaceHolder,
+  required: true,
+  initialValue: '',
+  validator: [
+    {
+      operation: 'englishOnlyNameFormat'
+    }
+  ],
+  conditionals: [
+    {
+      action: 'hide',
+      expression: 'values.informantType !== "OTHER"'
+    }
+  ],
+  mapping: {
+    mutation: {
+      operation: 'sectionFieldToBundleFieldTransformer',
+      parameters: ['registration.otherInformantType']
+    },
+    query: {
+      operation: 'bundleFieldToSectionFieldTransformer',
+      parameters: ['registration.otherInformantType']
+    }
+  }
 }

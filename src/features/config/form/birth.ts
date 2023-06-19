@@ -10,53 +10,50 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { ISerializedForm, IntegratingSystemType } from './types'
+import { ISerializedForm } from './types'
 import {
   birthDocumentForWhomFhirMapping,
   birthDocumentTypeFhirMapping
 } from './options'
+import { formMessageDescriptors } from './formatjs-messages'
 import {
-  formMessageDescriptors,
-  informantMessageDescriptors
-} from './formatjs-messages'
-import {
-  childBirthDate,
   childNameInEnglish,
-  familyNameEng,
-  firstNamesEng,
-  gender,
-  getPlaceOfBirthFields
+  getBirthDate,
+  getFamilyNameField,
+  getFirstNameField,
+  getGender,
+  getNationalID,
+  getNationality,
+  getPlaceOfBirthFields,
+  informantType,
+  otherInformantType
 } from './birth/required-fields'
 import {
   attendantAtBirth,
   birthType,
+  exactDateOfBirthUnknown,
+  getAgeOfIndividualInYears,
+  getNIDVerificationButton,
+  registrationEmail,
+  registrationPhone,
   weightAtBirth
 } from './birth/optional-fields'
-
-const nidIntegrationConditionals = {
-  hideIfNidIntegrationEnabled: {
-    action: 'hide',
-    expression: `const nationalIdSystem =
-        offlineCountryConfig &&
-        offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
-        nationalIdSystem &&
-        nationalIdSystem.settings.openIdProviderBaseUrl &&
-        nationalIdSystem.settings.openIdProviderClientId &&
-        nationalIdSystem.settings.openIdProviderClaims;
-    `
-  },
-  hideIfNidIntegrationDisabled: {
-    action: 'hide',
-    expression: `const nationalIdSystem =
-      offlineCountryConfig &&
-      offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
-      !nationalIdSystem ||
-      !nationalIdSystem.settings.openIdProviderBaseUrl ||
-      !nationalIdSystem.settings.openIdProviderClientId ||
-      !nationalIdSystem.settings.openIdProviderClaims;
-    `
-  }
-}
+import {
+  isValidChildBirthDate,
+  informantFamilyNameConditionals,
+  informantFirstNameConditionals,
+  informantBirthDateConditionals,
+  hideIfNidIntegrationEnabled,
+  nationalIDValidators,
+  hideIfNidIntegrationDisabled
+} from './validations-and-conditionals'
+import { informantNameInEnglish } from './birth/preview-groups'
+import {
+  AddressCases,
+  AddressSubsections,
+  EventLocationAddressCases
+} from './address-utils'
+import { getAddress, getAddressSubsection } from './addresses'
 
 export const birthRegisterForms: ISerializedForm = {
   sections: [
@@ -219,10 +216,15 @@ export const birthRegisterForms: ISerializedForm = {
         {
           id: 'child-view-group',
           fields: [
-            firstNamesEng, // Required field.  Names in Latin characters must be provided for international passport
-            familyNameEng, // Required field.  Names in Latin characters must be provided for international passport
-            gender, // Required field.
-            childBirthDate, // Required field.
+            getFirstNameField('childNameInEnglish', [], 'childFirstName'), // Required field.  Names in Latin characters must be provided for international passport
+            getFamilyNameField('childNameInEnglish', [], 'childFamilyName'), // Required field.  Names in Latin characters must be provided for international passport
+            getGender('childGender'), // Required field.
+            getBirthDate(
+              'childBirthDate',
+              [],
+              isValidChildBirthDate,
+              'eventDate'
+            ), // Required field.
             {
               name: 'seperator',
               type: 'SUBSECTION',
@@ -236,12 +238,12 @@ export const birthRegisterForms: ISerializedForm = {
               validator: [],
               conditionals: []
             },
-            ...getPlaceOfBirthFields, // Required fields.
+            ...getPlaceOfBirthFields(), // Required fields.
             attendantAtBirth,
             birthType,
             weightAtBirth
           ],
-          previewGroups: [childNameInEnglish] // Preview groups used to structure data nicely in Review Page UI
+          previewGroups: [childNameInEnglish] // Preview groups are used to structure data nicely in Review Page UI
         }
       ]
     },
@@ -266,365 +268,47 @@ export const birthRegisterForms: ISerializedForm = {
             }
           ],
           fields: [
-            {
-              name: 'nationality',
-              type: 'SELECT_WITH_OPTIONS',
-              label: formMessageDescriptors.nationality,
-              required: true,
-              initialValue: 'FAR',
-              validator: [],
-              placeholder: formMessageDescriptors.formSelectPlaceholder,
-              options: {
-                resource: 'countries'
-              },
-              mapping: {
-                mutation: {
-                  operation: 'fieldValueNestingTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'fieldToArrayTransformer'
-                    }
-                  ]
-                },
-                query: {
-                  operation: 'nestedValueToFieldTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'arrayToFieldTransformer'
-                    }
-                  ]
-                },
-                template: {
-                  fieldName: 'informantNationality',
-                  operation: 'nationalityTransformer'
-                }
-              }
-            },
-            {
-              name: 'informantID',
-              type: 'TEXT',
-              label: formMessageDescriptors.iDTypeNationalID,
-              required: false,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'validIDNumber',
-                  parameters: ['NATIONAL_ID']
-                },
-                {
-                  operation: 'duplicateIDNumber',
-                  parameters: ['deceased.iD']
-                },
-                {
-                  operation: 'duplicateIDNumber',
-                  parameters: ['mother.iD']
-                },
-                {
-                  operation: 'duplicateIDNumber',
-                  parameters: ['father.iD']
-                }
-              ],
-              conditionals: [
-                nidIntegrationConditionals.hideIfNidIntegrationEnabled
-              ],
-              mapping: {
-                mutation: {
-                  operation: 'fieldValueNestingTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'fieldToIdentityTransformer',
-                      parameters: ['id', 'NATIONAL_ID']
-                    }
-                  ]
-                },
-                query: {
-                  operation: 'nestedValueToFieldTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'identityToFieldTransformer',
-                      parameters: ['id', 'NATIONAL_ID']
-                    }
-                  ]
-                },
-                template: {
-                  fieldName: 'informantNID',
-                  operation: 'identityToFieldTransformer',
-                  parameters: ['id', 'NATIONAL_ID', 'individual']
-                }
-              }
-            },
-            {
-              name: 'informantNidVerification',
-              type: 'NID_VERIFICATION_BUTTON',
-              label: formMessageDescriptors.iDTypeNationalID,
-              required: true,
-              initialValue: '',
-              validator: [],
-              conditionals: [
-                nidIntegrationConditionals.hideIfNidIntegrationDisabled,
-                {
-                  action: 'disable',
-                  expression: `values.informantNidVerification`
-                }
-              ],
-              mapping: {
-                mutation: {
-                  operation: 'fieldValueNestingTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'nidVerificationFieldToIdentityTransformer'
-                    }
-                  ]
-                },
-                query: {
-                  operation: 'nestedIdentityValueToFieldTransformer',
-                  parameters: ['individual']
-                }
-              },
-              labelForVerified: formMessageDescriptors.nidVerified,
-              labelForUnverified: formMessageDescriptors.nidNotVerified,
-              labelForOffline: formMessageDescriptors.nidOffline
-            },
-            {
-              name: 'informantBirthDate',
-              type: 'DATE',
-              label: formMessageDescriptors.dateOfBirth,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'dateFormatIsCorrect',
-                  parameters: []
-                },
-                {
-                  operation: 'dateInPast',
-                  parameters: []
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'disable',
-                  expression: 'values.exactDateOfBirthUnknown'
-                },
-                {
-                  action: 'disable',
-                  expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('informantBirthDate')`
-                }
-              ],
-              mapping: {
-                mutation: {
-                  operation: 'fieldValueNestingTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'longDateTransformer',
-                      parameters: ['birthDate']
-                    },
-                    'birthDate'
-                  ]
-                },
-                query: {
-                  operation: 'nestedValueToFieldTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'fieldValueTransformer',
-                      parameters: ['birthDate']
-                    }
-                  ]
-                },
-                template: {
-                  operation: 'dateFormatTransformer',
-                  fieldName: 'informantBirthDate',
-                  parameters: ['birthDate', 'en', 'do MMMM yyyy', 'individual']
-                }
-              }
-            },
-            {
-              name: 'exactDateOfBirthUnknown',
-              type: 'CHECKBOX',
-              label: {
-                defaultMessage: 'Exact date of birth unknown',
-                description: 'Checkbox for exact date of birth unknown',
-                id: 'form.field.label.exactDateOfBirthUnknown'
-              },
-              hideInPreview: true,
-              required: false,
-              hideHeader: true,
-              initialValue: false,
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression: '!window.config.DATE_OF_BIRTH_UNKNOWN'
-                }
-              ],
-              mapping: {
-                mutation: {
-                  operation: 'ignoreFieldTransformer'
-                },
-                query: {
-                  operation: 'nestedValueToFieldTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'booleanTransformer'
-                    }
-                  ]
-                }
-              }
-            },
-            {
-              name: 'ageOfIndividualInYears',
-              type: 'NUMBER',
-              label: formMessageDescriptors.ageOfInformant,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'range',
-                  parameters: [12, 120]
-                },
-                {
-                  operation: 'maxLength',
-                  parameters: [3]
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression: '!values.exactDateOfBirthUnknown'
-                }
-              ],
-              postfix: 'years',
-              inputFieldWidth: '78px',
-              mapping: {
-                mutation: {
-                  operation: 'fieldValueNestingTransformer',
-                  parameters: ['individual']
-                },
-                query: {
-                  operation: 'nestedValueToFieldTransformer',
-                  parameters: ['individual']
-                }
-              }
-            },
-            {
-              name: 'firstNamesEng',
-              previewGroup: 'informantNameInEnglish',
-              type: 'TEXT',
-              label: formMessageDescriptors.firstNames,
-              maxLength: 32,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'englishOnlyNameFormat'
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'disable',
-                  expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
-                }
-              ],
-              mapping: {
-                mutation: {
-                  operation: 'fieldValueNestingTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'fieldToNameTransformer',
-                      parameters: ['en', 'firstNames']
-                    },
-                    'name'
-                  ]
-                },
-                query: {
-                  operation: 'nestedValueToFieldTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'nameToFieldTransformer',
-                      parameters: ['en', 'firstNames']
-                    }
-                  ]
-                },
-                template: {
-                  fieldName: 'informantFirstName',
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'firstNames', 'informant', 'individual']
-                }
-              }
-            },
-            {
-              name: 'familyNameEng',
-              previewGroup: 'informantNameInEnglish',
-              type: 'TEXT',
-              label: formMessageDescriptors.familyName,
-              maxLength: 32,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'englishOnlyNameFormat'
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'disable',
-                  expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
-                }
-              ],
-              mapping: {
-                mutation: {
-                  operation: 'fieldValueNestingTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'fieldToNameTransformer',
-                      parameters: ['en', 'familyName']
-                    },
-                    'name'
-                  ]
-                },
-                query: {
-                  operation: 'nestedValueToFieldTransformer',
-                  parameters: [
-                    'individual',
-                    {
-                      operation: 'nameToFieldTransformer',
-                      parameters: ['en', 'familyName']
-                    }
-                  ]
-                },
-                template: {
-                  fieldName: 'informantFamilyName',
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'familyName', 'informant', 'individual']
-                }
-              }
-            }
-            // PRIMARY ADDRESS SUBSECTION
-            // PRIMARY ADDRESS
+            informantType, // Required field.
+            otherInformantType, // Required field.
+            registrationPhone,
+            registrationEmail,
+            getFirstNameField(
+              'informantNameInEnglish',
+              informantFirstNameConditionals,
+              'informantFirstName'
+            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
+            getFamilyNameField(
+              'informantNameInEnglish',
+              informantFamilyNameConditionals,
+              'informantFamilyName'
+            ), // Required field.
+            getNationality('informantNationality'), // Required field.
+            getNationalID(
+              'informantID',
+              hideIfNidIntegrationEnabled,
+              nationalIDValidators,
+              'informantNID'
+            ),
+            getNIDVerificationButton(
+              'informantNidVerification',
+              hideIfNidIntegrationDisabled,
+              []
+            ),
+            getBirthDate(
+              'informantBirthDate',
+              informantBirthDateConditionals,
+              [],
+              'eventDate'
+            ), // Required field.
+            exactDateOfBirthUnknown,
+            getAgeOfIndividualInYears(formMessageDescriptors.ageOfInformant),
+            ...getAddressSubsection(
+              AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
+              formMessageDescriptors.primaryAddress
+            ),
+            ...getAddress(AddressCases.PRIMARY_ADDRESS) // Required field. Its possible to capture 2 addresses: PRIMARY_ADDRESS & SECONDARY_ADDRESS per individual
           ],
-          previewGroups: [
-            {
-              id: 'informantNameInEnglish',
-              label: {
-                defaultMessage: 'Full name',
-                description: "Label for informant's name in english",
-                id: 'form.preview.group.label.informant.english.name'
-              },
-              fieldToRedirect: 'informantFamilyNameEng',
-              delimiter: ' '
-            }
-          ]
+          previewGroups: [informantNameInEnglish]
         }
       ],
       mapping: {

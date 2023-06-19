@@ -13,7 +13,7 @@
 // TODO: add in all the validations and conditionals logic and generate a js file client can load
 
 import { MessageDescriptor } from 'react-intl'
-import { IFormData, IFormFieldValue } from './types'
+import { IFormData, IFormFieldValue, IntegratingSystemType } from './types'
 import { EventLocationAddressCases, sentenceCase } from './address-utils'
 import { ADMIN_LEVELS } from './addresses'
 
@@ -96,6 +96,84 @@ export type Validation = (
 ) => IValidationResult | undefined
 
 export type ValidationInitializer = (...value: any[]) => Validation
+
+export const isValidChildBirthDate = [
+  {
+    operation: 'isValidChildBirthDate'
+  }
+]
+
+export const hideIfNidIntegrationDisabled = [
+  {
+    action: 'hide',
+    expression: `const nationalIdSystem =
+    offlineCountryConfig &&
+    offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
+    !nationalIdSystem ||
+    !nationalIdSystem.settings.openIdProviderBaseUrl ||
+    !nationalIdSystem.settings.openIdProviderClientId ||
+    !nationalIdSystem.settings.openIdProviderClaims;
+  `
+  }
+]
+
+export const nationalIDValidators = [
+  {
+    operation: 'validIDNumber',
+    parameters: ['NATIONAL_ID']
+  },
+  {
+    operation: 'duplicateIDNumber',
+    parameters: ['deceased.iD']
+  },
+  {
+    operation: 'duplicateIDNumber',
+    parameters: ['mother.iD']
+  },
+  {
+    operation: 'duplicateIDNumber',
+    parameters: ['father.iD']
+  }
+]
+
+export const hideIfNidIntegrationEnabled = [
+  {
+    action: 'hide',
+    expression: `const nationalIdSystem =
+          offlineCountryConfig &&
+          offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
+          nationalIdSystem &&
+          nationalIdSystem.settings.openIdProviderBaseUrl &&
+          nationalIdSystem.settings.openIdProhideIfNidIntegrationDisabledviderClientId &&
+          nationalIdSystem.settings.openIdProviderClaims;
+      `
+  }
+]
+
+export const informantBirthDateConditionals = [
+  {
+    action: 'disable',
+    expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('informantBirthDate')`
+  }
+]
+
+export const informantFirstNameConditionals = [
+  {
+    action: 'disable',
+    expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+  }
+]
+
+export const informantFamilyNameConditionals = [
+  {
+    action: 'disable',
+    expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
+  }
+]
 
 // if the informant or contact is mother
 export const mothersDetailsDontExistBasedOnContactAndInformant =

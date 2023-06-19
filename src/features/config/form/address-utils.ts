@@ -11,13 +11,7 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import {
-  BirthSection,
-  DeathSection,
-  ISerializedForm,
-  SerializedFormField,
-  Event
-} from './types'
+import { ISerializedForm, SerializedFormField, Event } from './types'
 import {
   getAddressConditionals,
   getPlaceOfEventConditionals
@@ -56,10 +50,9 @@ export type AllowedAddressConfigurations = {
     | AddressCopyConfigCases
     | EventLocationAddressCases
   label?: MessageDescriptor
-  xComparisonSection?: BirthSection | DeathSection
-  yComparisonSection?: BirthSection | DeathSection
+  xComparisonSection?: string
+  yComparisonSection?: string
   conditionalCase?: string
-  informant?: boolean
 }
 
 export const sentenceCase = (str: string): string =>
@@ -107,8 +100,7 @@ export function getDependency(location: string, useCase: string) {
 export function getLocationSelect(
   location: string,
   useCase: string,
-  locationIndex: number,
-  informant: boolean
+  locationIndex: number
 ): SerializedFormField {
   return {
     name: `${location}${sentenceCase(useCase)}`,
@@ -134,61 +126,26 @@ export function getLocationSelect(
     },
     conditionals: getAddressConditionals(location, useCase),
     mapping: {
-      mutation: informant
-        ? {
-            operation: 'fieldValueNestingTransformer',
-            parameters: [
-              'individual',
-              {
-                operation: 'fieldToAddressTransformer',
-                parameters: [
-                  useCase.toUpperCase() === 'PRIMARY'
-                    ? AddressCases.PRIMARY_ADDRESS
-                    : AddressCases.SECONDARY_ADDRESS,
-                  locationIndex,
-                  location
-                ]
-              },
-              'address'
-            ]
-          }
-        : {
-            operation: 'fieldToAddressTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              locationIndex,
-              location
-            ]
-          },
-      query: informant
-        ? {
-            operation: 'nestedValueToFieldTransformer',
-            parameters: [
-              'individual',
-              {
-                operation: 'addressToFieldTransformer',
-                parameters: [
-                  useCase.toUpperCase() === 'PRIMARY'
-                    ? AddressCases.PRIMARY_ADDRESS
-                    : AddressCases.SECONDARY_ADDRESS,
-                  locationIndex,
-                  location
-                ]
-              }
-            ]
-          }
-        : {
-            operation: 'addressToFieldTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              locationIndex,
-              location
-            ]
-          }
+      mutation: {
+        operation: 'fieldToAddressTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          locationIndex,
+          location
+        ]
+      },
+      query: {
+        operation: 'addressToFieldTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          locationIndex,
+          location
+        ]
+      }
     }
   }
 }
