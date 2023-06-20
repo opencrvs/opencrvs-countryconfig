@@ -14,22 +14,30 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
-
+  
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
     restart: unless-stopped
     secrets:
       - jwt-public-key.{{ts}}
     environment:
-      - NODE_ENV=production # NODE_ENV must always be production in countryconfig in order to send correct window.config js files to login and client react apps
-      - QA_ENV=true
+      - NODE_ENV=production
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
+      - APPLICATION_CONFIG_URL=http://config:2021
       - OPENHIM_URL=http://openhim-core:5001/fhir
       - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
       - CHECK_INVALID_TOKEN=true
-      - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
+      - USER_NOTIFICATION_DELIVERY_METHOD=sms
+      - EMAIL_API_KEY=${EMAIL_API_KEY}
+      #- SMS_PROVIDER=
+      #- CLICKATELL_USER_PATH=
+      #- CLICKATELL_PASSWORD_PATH=
+      #- CLICKATELL_API_ID_PATH=
+      #- INFOBIP_GATEWAY_ENDPOINT_PATH=
+      #- INFOBIP_API_KEY_PATH=
+      #- INFOBIP_SENDER_ID_PATH=
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
     deploy:
@@ -46,13 +54,18 @@ services:
       - LANGUAGES=en,fr
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
       - COUNTRY=FAR
-      
+      - USER_NOTIFICATION_DELIVERY_METHOD=sms
+
   workflow:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
   auth:
+    environment:
+      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+
+  user-mgnt:
     environment:
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
@@ -68,10 +81,6 @@ services:
     environment:
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
 
-  user-mgnt:
-    environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
-
   webhooks:
     environment:
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
@@ -80,10 +89,4 @@ secrets:
   openhim-user:
     external: true
   openhim-password:
-    external: true
-  clickatell-user:
-    external: true
-  clickatell-password:
-    external: true
-  clickatell-api-id:
     external: true

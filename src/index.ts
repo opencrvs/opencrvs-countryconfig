@@ -42,6 +42,7 @@ import {
 import { mosipMediatorHandler } from '@countryconfig/features/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/features/map/handler'
+import { countryLogoHandler } from '@countryconfig/features/countryLogo/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -262,6 +263,17 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Serves map geojson'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/content/country-logo',
+    handler: countryLogoHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves country logo'
     }
   })
 
