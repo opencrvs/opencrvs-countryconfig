@@ -832,7 +832,6 @@ export interface IFormSection {
   optional?: boolean
   notice?: MessageDescriptor
   mapping?: ISectionMapping
-  hasDocumentSection?: boolean
 }
 
 export type ISerializedFormSection = Omit<

@@ -25,7 +25,6 @@ export const marriageRegisterForms: ISerializedForm = {
     {
       id: 'registration',
       viewType: 'form',
-      hasDocumentSection: true,
       name: formMessageDescriptors.registrationName,
       title: formMessageDescriptors.registrationTitle,
       groups: [
@@ -202,10 +201,6 @@ export const marriageRegisterForms: ISerializedForm = {
             operation: 'registrationNumberTransformer'
           },
           {
-            fieldName: 'informantType',
-            operation: 'informantTypeTransformer'
-          },
-          {
             fieldName: 'certificateDate',
             operation: 'certificateDateTransformer',
             parameters: ['en', 'dd MMMM yyyy']
@@ -261,7 +256,6 @@ export const marriageRegisterForms: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.groomName,
       title: formMessageDescriptors.groomTitle,
-      hasDocumentSection: true,
       groups: [
         {
           id: 'groom-view-group',
@@ -530,7 +524,6 @@ export const marriageRegisterForms: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.brideName,
       title: formMessageDescriptors.brideTitle,
-      hasDocumentSection: true,
       groups: [
         {
           id: 'bride-view-group',
@@ -1213,10 +1206,10 @@ export const marriageRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'marriageFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'marriageAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             },
@@ -1249,10 +1242,10 @@ export const marriageRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'marriageFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'marriageAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             },
@@ -1285,10 +1278,10 @@ export const marriageRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'marriageFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'marriageAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             }

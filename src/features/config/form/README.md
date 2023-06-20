@@ -29,7 +29,7 @@ We are using some data types and they maintain a hierarchical relation between t
 * 6.  **`groups:`** Consists of an array of groups. A group is used as a view group for fields and displays a part of a section. It only has presentational significance and no impact on section data. Groups have a type of `IFormSectionGroup`.
 * 7.  **`mapping?:`** Stands for section-wise mapping and has a type of `IFormSectionMapping`. More will be discussed in the mapping section.
 * 8.  **`disabled?:`** Indicates whether the section is disabled or not.
-* 9.  **`hasDocumentSection?:`** It tells whether the section has a corresponding document section or not.
+* 9.  DEPRECATED: **`hasDocumentSection?:`** It tells whether the section has a corresponding document section or not.
 * 10. **`notice?:`** Used to display a warning text under the label.
 
 3.  **`IFormSectionGroup:`** As earlier mentioned, a group is used as a view group of fields and shows a part of a section. A group is visually equivalent to a partial section. It holds field definitions of that part of the section. So, a section does not have fields as its direct children rather it has to have groups that contain several fields as direct children. It also has some features like `previewGroup`, conditionals. An `IFormSectionGroup` has id as its unique identifier. It has a property named fields in which an array of IFormField is provided. Actually, IFormField is a union of all fields. That means any field is an IFormField; it can be TEXT, TEL, RADIO_GROUP, etc. IFormField inherits IFormFieldBase type.
@@ -460,7 +460,7 @@ This object holds sections for birth declaration forms. All sections are contain
 
     Document uploader field for the informant if someone else.
 
-  - #### `uploadDocForProofOfLegarGuardian`
+  - #### `uploadDocForProofOfLegalGuardian`
 
     If the informant is a legal guardian, we need the proof of the legal guardianship. This field takes documents for legal guardianship.
 

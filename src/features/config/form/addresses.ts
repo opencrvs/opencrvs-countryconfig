@@ -19,11 +19,7 @@ import {
 import { formMessageDescriptors } from './formatjs-messages'
 import { MessageDescriptor } from 'react-intl'
 import {
-  AddressCases,
-  AddressCopyConfigCases,
-  AddressSubsections,
   AllowedAddressConfigurations,
-  EventLocationAddressCases,
   IAddressConfiguration,
   getFieldIdentifiers,
   getLocationSelect,
@@ -54,6 +50,26 @@ export const ADMIN_LEVELS: Number = 2
 // Its possible to show and hide address fields for individuals using conditionals.
 // Its also possible to add 2 addresses per individual: PRIMARY_ADDRESS & SECONDARY_ADDRESS depending if the global config setting: secondaryAddressesDisabled is true/false
 
+export enum EventLocationAddressCases {
+  PLACE_OF_BIRTH = 'placeOfBirth',
+  PLACE_OF_DEATH = 'placeOfDeath',
+  PLACE_OF_MARRIAGE = 'placeOfMarriage'
+}
+
+export enum AddressCases {
+  // the below are UPPER_CASE because they map to GQLAddress type enums
+  PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
+  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
+}
+
+export enum AddressCopyConfigCases {
+  PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY = 'primaryAddressSameAsOtherPrimary'
+}
+
+export enum AddressSubsections {
+  PRIMARY_ADDRESS_SUBSECTION = 'primaryAddress',
+  SECONDARY_ADDRESS_SUBSECTION = 'secondaryAddress'
+}
 export const defaultAddressConfiguration: IAddressConfiguration[] = [
   {
     precedingFieldId: 'birth.child.child-view-group.birthLocation',

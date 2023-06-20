@@ -69,14 +69,18 @@ import {
   informantNameInEnglish,
   motherNameInEnglish
 } from './birth/preview-groups'
-import { AddressCases, AddressSubsections } from './address-utils'
-import { getAddress, getAddressSubsection } from './addresses'
+import {
+  AddressCases,
+  AddressSubsections,
+  getAddress,
+  getAddressSubsection
+} from './addresses'
 
 export const birthRegisterForms: ISerializedForm = {
   sections: [
     {
       id: 'registration', // A hidden 'registration' section must be included to store identifiers in a form draft that are used in certificates
-      viewType: 'form',
+      viewType: 'hidden',
       name: {
         defaultMessage: 'Registration',
         description: 'Form section name for Registration',
@@ -228,7 +232,6 @@ export const birthRegisterForms: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.childTab,
       title: formMessageDescriptors.childTitle,
-      hasDocumentSection: true,
       groups: [
         {
           id: 'child-view-group',
@@ -242,6 +245,7 @@ export const birthRegisterForms: ISerializedForm = {
               isValidChildBirthDate,
               'eventDate'
             ), // Required field.
+            ...getPlaceOfBirthFields(), // Required fields.
             {
               name: 'seperator',
               type: 'SUBSECTION',
@@ -255,7 +259,6 @@ export const birthRegisterForms: ISerializedForm = {
               validator: [],
               conditionals: []
             },
-            ...getPlaceOfBirthFields(), // Required fields.
             attendantAtBirth,
             birthType,
             weightAtBirth
@@ -273,7 +276,6 @@ export const birthRegisterForms: ISerializedForm = {
         id: 'form.section.informant.name'
       },
       title: formMessageDescriptors.birthInformantTitle,
-      hasDocumentSection: true,
       groups: [
         {
           id: 'informant-view-group',
@@ -342,7 +344,6 @@ export const birthRegisterForms: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.motherName,
       title: formMessageDescriptors.motherTitle,
-      hasDocumentSection: true,
       groups: [
         {
           id: 'mother-view-group',
@@ -432,7 +433,6 @@ export const birthRegisterForms: ISerializedForm = {
         description: 'Form section title for Father',
         id: 'form.section.father.title'
       },
-      hasDocumentSection: true,
       groups: [
         {
           id: 'father-view-group',
@@ -545,10 +545,10 @@ export const birthRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'birthFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'birthAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             },
@@ -588,10 +588,10 @@ export const birthRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'birthFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'birthAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             },
@@ -631,10 +631,10 @@ export const birthRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'birthFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'birthAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             },
@@ -673,15 +673,15 @@ export const birthRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'birthFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'birthAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             },
             {
-              name: 'uploadDocForProofOfLegarGuardian',
+              name: 'uploadDocForProofOfLegalGuardian',
               type: 'DOCUMENT_UPLOADER_WITH_OPTION',
               label: formMessageDescriptors.otherBirthSupportingDocuments,
               initialValue: '',
@@ -709,10 +709,10 @@ export const birthRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'birthFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'birthAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             }

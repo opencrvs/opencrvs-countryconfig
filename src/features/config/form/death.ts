@@ -282,10 +282,6 @@ export const deathRegisterForms: ISerializedForm = {
             operation: 'registrationNumberTransformer'
           },
           {
-            fieldName: 'informantType',
-            operation: 'informantTypeTransformer'
-          },
-          {
             fieldName: 'qrCode',
             operation: 'QRCodeTransformerTransformer'
           },
@@ -340,7 +336,6 @@ export const deathRegisterForms: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.deceasedName,
       title: formMessageDescriptors.deceasedTitle,
-      hasDocumentSection: true,
       groups: [
         {
           id: 'deceased-view-group',
@@ -958,7 +953,6 @@ export const deathRegisterForms: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.informantName,
       title: formMessageDescriptors.deathInformantTitle,
-      hasDocumentSection: true,
       groups: [
         {
           id: 'informant-view-group',
@@ -1372,10 +1366,10 @@ export const deathRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'deathFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'deathAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             },
@@ -1407,10 +1401,10 @@ export const deathRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'deathFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'deathAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             },
@@ -1452,10 +1446,10 @@ export const deathRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'deathFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'deathAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             },
@@ -1492,10 +1486,10 @@ export const deathRegisterForms: ISerializedForm = {
               ],
               mapping: {
                 mutation: {
-                  operation: 'deathFieldToAttachmentTransformer'
+                  operation: 'eventFieldToAttachmentTransformer'
                 },
                 query: {
-                  operation: 'deathAttachmentToFieldTransformer'
+                  operation: 'eventAttachmentToFieldTransformer'
                 }
               }
             }

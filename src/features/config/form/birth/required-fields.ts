@@ -11,8 +11,10 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import { EventLocationAddressCases } from '../address-utils'
-import { getPlaceOfEventAddressFields } from '../addresses'
+import {
+  getPlaceOfEventAddressFields,
+  EventLocationAddressCases
+} from '../addresses'
 import {
   formMessageDescriptors,
   informantMessageDescriptors

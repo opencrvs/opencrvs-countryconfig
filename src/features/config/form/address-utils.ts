@@ -16,27 +16,12 @@ import {
   getAddressConditionals,
   getPlaceOfEventConditionals
 } from './validations-and-conditionals'
-
-export enum AddressCases {
-  // the below are UPPER_CASE because they map to GQLAddress type enums
-  PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
-  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
-}
-
-export enum EventLocationAddressCases {
-  PLACE_OF_BIRTH = 'placeOfBirth',
-  PLACE_OF_DEATH = 'placeOfDeath',
-  PLACE_OF_MARRIAGE = 'placeOfMarriage'
-}
-
-export enum AddressCopyConfigCases {
-  PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY = 'primaryAddressSameAsOtherPrimary'
-}
-
-export enum AddressSubsections {
-  PRIMARY_ADDRESS_SUBSECTION = 'primaryAddress',
-  SECONDARY_ADDRESS_SUBSECTION = 'secondaryAddress'
-}
+import {
+  AddressCases,
+  AddressCopyConfigCases,
+  AddressSubsections,
+  EventLocationAddressCases
+} from './addresses'
 
 export interface IAddressConfiguration {
   precedingFieldId: string

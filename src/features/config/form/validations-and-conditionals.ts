@@ -13,14 +13,9 @@
 // TODO: add in all the validations and conditionals logic and generate a js file client can load
 
 import { MessageDescriptor } from 'react-intl'
-import {
-  IFormData,
-  IFormFieldValue,
-  IntegratingSystemType,
-  Event
-} from './types'
-import { EventLocationAddressCases, sentenceCase } from './address-utils'
-import { ADMIN_LEVELS } from './addresses'
+import { IFormData, IFormFieldValue, IntegratingSystemType } from './types'
+import { sentenceCase } from './address-utils'
+import { ADMIN_LEVELS, EventLocationAddressCases } from './addresses'
 
 export interface IConditional {
   description?: string

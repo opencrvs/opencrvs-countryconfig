@@ -10,11 +10,8 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import {
-  AddressCases,
-  AllowedAddressConfigurations,
-  EventLocationAddressCases
-} from '../address-utils'
+import { AllowedAddressConfigurations } from '../address-utils'
+import { AddressCases, EventLocationAddressCases } from '../addresses'
 import { formMessageDescriptors } from '../formatjs-messages'
 import { IPreviewGroup } from '../types'
 
