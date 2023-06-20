@@ -11,8 +11,6 @@
  */
 
 import {
-  BirthSection,
-  DeathSection,
   FLEX_DIRECTION,
   SerializedFormField,
   IPreviewGroup,
@@ -21,11 +19,7 @@ import {
 import { formMessageDescriptors } from './formatjs-messages'
 import { MessageDescriptor } from 'react-intl'
 import {
-  AddressCases,
-  AddressCopyConfigCases,
-  AddressSubsections,
   AllowedAddressConfigurations,
-  EventLocationAddressCases,
   IAddressConfiguration,
   getFieldIdentifiers,
   getLocationSelect,
@@ -38,10 +32,12 @@ import {
   MOTHER_DETAILS_DONT_EXIST,
   fathersDetailsDontExist,
   getRuralOrUrbanConditionals,
+  informantNotMotherOrFather,
   mothersDetailsDontExistOnOtherPage,
   primaryAddressSameAsOtherPrimaryAddress,
   secondaryAddressesDisabled
 } from './validations-and-conditionals'
+import { getPreviewGroups } from './birth/preview-groups'
 
 // ADMIN_LEVELS must equate to the number of levels of administrative structure provided by your Humdata CSV import
 // For example, in Farajaland, we have 2 main administrative levels: State and District.
@@ -55,6 +51,28 @@ export const ADMIN_LEVELS: Number = 2
 // Its possible to show and hide address fields for individuals using conditionals.
 // Its also possible to add 2 addresses per individual: PRIMARY_ADDRESS & SECONDARY_ADDRESS depending if the global config setting: secondaryAddressesDisabled is true/false
 
+export enum EventLocationAddressCases {
+  PLACE_OF_BIRTH = 'placeOfBirth',
+  PLACE_OF_DEATH = 'placeOfDeath',
+  PLACE_OF_MARRIAGE = 'placeOfMarriage'
+}
+
+export enum AddressCases {
+  // the below are UPPER_CASE because they map to GQLAddress type enums
+  PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
+  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
+}
+
+export enum AddressCopyConfigCases {
+  PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY = 'primaryAddressSameAsOtherPrimary'
+}
+
+export enum AddressSubsections {
+  PRIMARY_ADDRESS_SUBSECTION = 'primaryAddress',
+  SECONDARY_ADDRESS_SUBSECTION = 'secondaryAddress'
+}
+
+// TODO: will deprecate this once all are set up
 export const defaultAddressConfiguration: IAddressConfiguration[] = [
   {
     precedingFieldId: 'birth.child.child-view-group.birthLocation',
@@ -74,18 +92,21 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
-        label: formMessageDescriptors.primaryAddress
+        label: formMessageDescriptors.primaryAddress,
+        conditionalCase: informantNotMotherOrFather
       },
-      { config: AddressCases.PRIMARY_ADDRESS, informant: true },
+      {
+        config: AddressCases.PRIMARY_ADDRESS,
+        conditionalCase: informantNotMotherOrFather
+      },
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.informantSecondaryAddress,
-        conditionalCase: secondaryAddressesDisabled
+        conditionalCase: `((${secondaryAddressesDisabled}) && ${informantNotMotherOrFather})`
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        conditionalCase: secondaryAddressesDisabled,
-        informant: true
+        conditionalCase: `((${secondaryAddressesDisabled}) && ${informantNotMotherOrFather})`
       }
     ]
   },
@@ -99,7 +120,6 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        informant: false,
         conditionalCase: `${MOTHER_DETAILS_DONT_EXIST}`
       },
       {
@@ -109,7 +129,6 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        informant: false,
         conditionalCase: `${MOTHER_DETAILS_DONT_EXIST} || (${secondaryAddressesDisabled})`
       }
     ]
@@ -125,13 +144,12 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
         label: formMessageDescriptors.primaryAddressSameAsOtherPrimary,
-        xComparisonSection: BirthSection.Father,
-        yComparisonSection: BirthSection.Mother,
+        xComparisonSection: 'father',
+        yComparisonSection: 'mother',
         conditionalCase: `(${fathersDetailsDontExist} || ${mothersDetailsDontExistOnOtherPage})`
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        informant: false,
         conditionalCase: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${fathersDetailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
       },
       {
@@ -141,7 +159,6 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        informant: false,
         conditionalCase: `${FATHER_DETAILS_DONT_EXIST} || ${secondaryAddressesDisabled}`
       }
     ]
@@ -153,7 +170,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.deceasedPrimaryAddress
       },
-      { config: AddressCases.PRIMARY_ADDRESS, informant: false },
+      { config: AddressCases.PRIMARY_ADDRESS },
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.deceasedSecondaryAddress,
@@ -161,7 +178,6 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        informant: false,
         conditionalCase: secondaryAddressesDisabled
       }
     ]
@@ -172,8 +188,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
         label: formMessageDescriptors.primaryAddressSameAsDeceasedsPrimary,
-        xComparisonSection: DeathSection.Informant,
-        yComparisonSection: DeathSection.Deceased
+        xComparisonSection: 'informant',
+        yComparisonSection: 'deceased'
       },
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -182,7 +198,6 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        informant: true,
         conditionalCase: `${primaryAddressSameAsOtherPrimaryAddress}`
       },
       {
@@ -192,7 +207,6 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        informant: true,
         conditionalCase: secondaryAddressesDisabled
       }
     ]
@@ -205,8 +219,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
         label: formMessageDescriptors.primaryAddress
       },
       {
-        config: AddressCases.PRIMARY_ADDRESS,
-        informant: false
+        config: AddressCases.PRIMARY_ADDRESS
       },
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
@@ -215,7 +228,6 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        informant: false,
         conditionalCase: `${secondaryAddressesDisabled}`
       }
     ]
@@ -228,8 +240,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
         label: formMessageDescriptors.primaryAddress
       },
       {
-        config: AddressCases.PRIMARY_ADDRESS,
-        informant: false
+        config: AddressCases.PRIMARY_ADDRESS
       },
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
@@ -238,7 +249,6 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        informant: false,
         conditionalCase: `${secondaryAddressesDisabled}`
       }
     ]
@@ -254,25 +264,13 @@ export function getAddressFields(
     case EventLocationAddressCases.PLACE_OF_MARRIAGE:
       return getPlaceOfEventAddressFields(configuration.config)
     case AddressCases.PRIMARY_ADDRESS:
-      if (configuration.informant === undefined) {
-        throw new Error(
-          `Invalid address configuration, missing informant value for: ${configuration.config}`
-        )
-      }
       return getAddress(
         AddressCases.PRIMARY_ADDRESS,
-        configuration.informant,
         configuration.conditionalCase
       )
     case AddressCases.SECONDARY_ADDRESS:
-      if (configuration.informant === undefined) {
-        throw new Error(
-          `Invalid address configuration, missing informant value for: ${configuration.config}`
-        )
-      }
       return getAddress(
         AddressCases.SECONDARY_ADDRESS,
-        configuration.informant,
         configuration.conditionalCase
       )
     case AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY:
@@ -308,77 +306,6 @@ export function getAddressFields(
   }
 }
 
-export function getPreviewGroups(
-  configuration: AllowedAddressConfigurations
-): IPreviewGroup[] {
-  switch (configuration.config) {
-    case EventLocationAddressCases.PLACE_OF_BIRTH:
-      return [
-        {
-          id: 'placeOfBirth',
-          label: {
-            defaultMessage: 'Place of delivery',
-            description: 'Title for place of birth sub section',
-            id: 'form.field.label.placeOfBirthPreview'
-          },
-          fieldToRedirect: 'placeOfBirth'
-        }
-      ]
-    case EventLocationAddressCases.PLACE_OF_DEATH:
-      return [
-        {
-          id: 'placeOfDeath',
-          label: {
-            defaultMessage: 'Where did the death occur?',
-            description: 'Title for place of death sub section',
-            id: 'form.field.label.placeOfDeath'
-          },
-          fieldToRedirect: 'placeOfDeath'
-        }
-      ]
-    case EventLocationAddressCases.PLACE_OF_MARRIAGE:
-      return [
-        {
-          id: 'placeOfMarriage',
-          label: {
-            defaultMessage: 'Place of marriage',
-            description:
-              'Label for form field: Place of occurrence of marriage',
-            id: 'form.field.label.placeOfMarriage'
-          },
-          fieldToRedirect: 'placeOfMarriage'
-        }
-      ]
-    case AddressCases.PRIMARY_ADDRESS:
-      return [
-        {
-          id: 'primaryAddress',
-          label: {
-            defaultMessage: 'Residential address',
-            description:
-              'Preview groups label for form field: residential address',
-            id: 'form.field.previewGroups.primaryAddress'
-          },
-          fieldToRedirect: 'countryPrimary'
-        }
-      ]
-    case AddressCases.SECONDARY_ADDRESS:
-      return [
-        {
-          id: 'secondaryAddress',
-          label: {
-            defaultMessage: 'Secondary address',
-            description: 'Preview group label for secodary address',
-            id: 'form.field.previewGroups.secondaryAddress'
-          },
-          fieldToRedirect: 'countrySecondary'
-        }
-      ]
-    default:
-      return []
-  }
-}
-
 export const getAddressSubsection = (
   previewGroup: AddressSubsections,
   label: MessageDescriptor,
@@ -407,8 +334,8 @@ export const getAddressSubsection = (
 }
 
 export const getXAddressSameAsY = (
-  xComparisonSection: BirthSection | DeathSection,
-  yComparisonSection: BirthSection | DeathSection,
+  xComparisonSection: string,
+  yComparisonSection: string,
   label: MessageDescriptor,
   conditionalCase?: string
 ): SerializedFormField[] => {
@@ -510,13 +437,9 @@ export function populateRegisterFormsWithAddresses(
 
 export function getAddress(
   addressCase: AddressCases,
-  informant: boolean,
   conditionalCase?: string
 ): SerializedFormField[] {
-  const defaultFields: SerializedFormField[] = getAddressCaseFields(
-    addressCase,
-    informant
-  )
+  const defaultFields: SerializedFormField[] = getAddressCaseFields(addressCase)
   if (conditionalCase) {
     defaultFields.forEach((field) => {
       let conditional
@@ -542,41 +465,38 @@ export function getAddress(
   return defaultFields
 }
 
-function getAdminLevelSelects(
-  useCase: string,
-  informant: boolean
-): SerializedFormField[] {
+function getAdminLevelSelects(useCase: string): SerializedFormField[] {
   switch (ADMIN_LEVELS) {
     case 1:
-      return [getLocationSelect('state', useCase, 0, informant)]
+      return [getLocationSelect('state', useCase, 0)]
     case 2:
       return [
-        getLocationSelect('state', useCase, 0, informant),
-        getLocationSelect('district', useCase, 0, informant)
+        getLocationSelect('state', useCase, 0),
+        getLocationSelect('district', useCase, 0)
       ]
     case 3:
       return [
-        getLocationSelect('state', useCase, 0, informant),
-        getLocationSelect('district', useCase, 0, informant),
-        getLocationSelect('locationLevel3', useCase, 10, informant)
+        getLocationSelect('state', useCase, 0),
+        getLocationSelect('district', useCase, 0),
+        getLocationSelect('locationLevel3', useCase, 10)
       ]
     case 4:
       return [
-        getLocationSelect('state', useCase, 0, informant),
-        getLocationSelect('district', useCase, 0, informant),
-        getLocationSelect('locationLevel3', useCase, 10, informant),
-        getLocationSelect('locationLevel4', useCase, 11, informant)
+        getLocationSelect('state', useCase, 0),
+        getLocationSelect('district', useCase, 0),
+        getLocationSelect('locationLevel3', useCase, 10),
+        getLocationSelect('locationLevel4', useCase, 11)
       ]
     case 5:
       return [
-        getLocationSelect('state', useCase, 0, informant),
-        getLocationSelect('district', useCase, 0, informant),
-        getLocationSelect('locationLevel3', useCase, 10, informant),
-        getLocationSelect('locationLevel4', useCase, 11, informant),
-        getLocationSelect('locationLevel5', useCase, 12, informant)
+        getLocationSelect('state', useCase, 0),
+        getLocationSelect('district', useCase, 0),
+        getLocationSelect('locationLevel3', useCase, 10),
+        getLocationSelect('locationLevel4', useCase, 11),
+        getLocationSelect('locationLevel5', useCase, 12)
       ]
     default:
-      return [getLocationSelect('state', useCase, 0, informant)]
+      return [getLocationSelect('state', useCase, 0)]
   }
 }
 
@@ -618,8 +538,7 @@ function getPlaceOfEventAdminLevelSelects(
 }
 
 export function getAddressCaseFields(
-  addressCase: AddressCases,
-  informant: boolean
+  addressCase: AddressCases
 ): SerializedFormField[] {
   const useCase =
     addressCase === AddressCases.PRIMARY_ADDRESS ? 'primary' : 'secondary'
@@ -632,7 +551,6 @@ export function getAddressCaseFields(
         description: 'Title for the country select',
         id: 'form.field.label.country'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: true,
       initialValue: 'FAR',
@@ -657,40 +575,17 @@ export function getAddressCaseFields(
           operation: 'individualAddressTransformer',
           parameters: [addressCase, 'country']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 0, 'country']
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 0, 'country']
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 0, 'country']
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 0, 'country']
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 0, 'country']
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 0, 'country']
+        }
       }
     },
-    ...getAdminLevelSelects(useCase, informant),
+    ...getAdminLevelSelects(useCase),
     {
       name: `ruralOrUrban${sentenceCase(useCase)}`,
       type: 'RADIO_GROUP',
@@ -719,7 +614,6 @@ export function getAddressCaseFields(
       ],
       initialValue: 'URBAN',
       flexDirection: FLEX_DIRECTION.ROW,
-      customisable: false,
       previewGroup: `${useCase}Address`,
       hideValueInPreview: true,
       required: false,
@@ -737,37 +631,14 @@ export function getAddressCaseFields(
         }
       ]),
       mapping: {
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 6]
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 6]
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 6]
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 6]
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 6]
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 6]
+        }
       }
     },
     {
@@ -778,7 +649,6 @@ export function getAddressCaseFields(
         description: 'Title for the address line 4',
         id: 'form.field.label.cityUrbanOption'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -806,37 +676,14 @@ export function getAddressCaseFields(
           operation: 'individualAddressTransformer',
           parameters: [addressCase, 'city']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 0, 'city']
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 0, 'city']
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 0, 'city']
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 0, 'city']
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 0, 'city']
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 0, 'city']
+        }
       }
     },
     {
@@ -847,7 +694,6 @@ export function getAddressCaseFields(
         description: 'Title for the address line 3 option 2',
         id: 'form.field.label.addressLine3UrbanOption'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -875,37 +721,14 @@ export function getAddressCaseFields(
           operation: 'addressLineTemplateTransformer',
           parameters: [addressCase, 3, 'addressLine3']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 3]
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 3]
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 3]
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 3]
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 3]
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 3]
+        }
       }
     },
     {
@@ -916,7 +739,6 @@ export function getAddressCaseFields(
         description: 'Title for the address line 1',
         id: 'form.field.label.addressLine2UrbanOption'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -944,37 +766,14 @@ export function getAddressCaseFields(
           operation: 'addressLineTemplateTransformer',
           parameters: [addressCase, 2, 'addressLine2']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 2]
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 2]
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 2]
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 2]
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 2]
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 2]
+        }
       }
     },
     {
@@ -985,7 +784,6 @@ export function getAddressCaseFields(
         description: 'Title for the number field',
         id: 'form.field.label.number'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1013,37 +811,14 @@ export function getAddressCaseFields(
           operation: 'addressLineTemplateTransformer',
           parameters: [addressCase, 1, 'number']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 1]
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 1]
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 1]
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 1]
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 1]
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 1]
+        }
       }
     },
     {
@@ -1054,7 +829,6 @@ export function getAddressCaseFields(
         description: 'Title for the international postcode',
         id: 'form.field.label.internationalPostcode'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1082,37 +856,14 @@ export function getAddressCaseFields(
           operation: 'individualAddressTransformer',
           parameters: [addressCase, 'postalCode']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 0, 'postalCode']
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 0, 'postalCode']
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 0, 'postalCode']
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 0, 'postalCode']
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 0, 'postalCode']
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 0, 'postalCode']
+        }
       }
     },
     {
@@ -1123,7 +874,6 @@ export function getAddressCaseFields(
         description: 'Title for the address line 1',
         id: 'form.field.label.addressLine5'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1151,37 +901,14 @@ export function getAddressCaseFields(
           operation: 'addressLineTemplateTransformer',
           parameters: [addressCase, 5, 'addressLine5']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 5]
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 5]
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 5]
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 5]
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 5]
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 5]
+        }
       }
     },
     {
@@ -1192,7 +919,6 @@ export function getAddressCaseFields(
         description: 'Title for the international state select',
         id: 'form.field.label.internationalState'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: true,
       initialValue: '',
@@ -1214,37 +940,14 @@ export function getAddressCaseFields(
           operation: 'individualAddressTransformer',
           parameters: [addressCase, 'state']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 0, 'state']
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 0, 'state']
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 0, 'state']
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 0, 'state']
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 0, 'state']
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 0, 'state']
+        }
       }
     },
     {
@@ -1255,7 +958,6 @@ export function getAddressCaseFields(
         description: 'Title for the international district select',
         id: 'form.field.label.internationalDistrict'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: true,
       initialValue: '',
@@ -1277,37 +979,14 @@ export function getAddressCaseFields(
           operation: 'individualAddressTransformer',
           parameters: [addressCase, 'district']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 0, 'district']
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 0, 'district']
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 0, 'district']
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 0, 'district']
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 0, 'district']
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 0, 'district']
+        }
       }
     },
     {
@@ -1318,7 +997,6 @@ export function getAddressCaseFields(
         description: 'Title for the international city select',
         id: 'form.field.label.internationalCity'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1340,37 +1018,14 @@ export function getAddressCaseFields(
           operation: 'individualAddressTransformer',
           parameters: [addressCase, 'city']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 0, 'city']
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 0, 'city']
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 0, 'city']
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 0, 'city']
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 0, 'city']
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 0, 'city']
+        }
       }
     },
     {
@@ -1381,7 +1036,6 @@ export function getAddressCaseFields(
         description: 'Title for the international address line 1 select',
         id: 'form.field.label.internationalAddressLine1'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1403,37 +1057,14 @@ export function getAddressCaseFields(
           operation: 'addressLineTemplateTransformer',
           parameters: [addressCase, 7, 'addressLine1']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 7]
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 7]
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 7]
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 7]
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 7]
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 7]
+        }
       }
     },
     {
@@ -1444,7 +1075,6 @@ export function getAddressCaseFields(
         description: 'Title for the international address line 2 select',
         id: 'form.field.label.internationalAddressLine2'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1462,37 +1092,14 @@ export function getAddressCaseFields(
           operation: 'addressLineTemplateTransformer',
           parameters: [addressCase, 8, 'addressLine2']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 8]
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 8]
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 8]
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 8]
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 8]
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 8]
+        }
       }
     },
     {
@@ -1503,7 +1110,6 @@ export function getAddressCaseFields(
         description: 'Title for the international address line 3 select',
         id: 'form.field.label.internationalAddressLine3'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1521,37 +1127,14 @@ export function getAddressCaseFields(
           operation: 'addressLineTemplateTransformer',
           parameters: [addressCase, 9, 'addressLine3']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 9]
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 9]
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 9]
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 9]
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 9]
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 9]
+        }
       }
     },
     {
@@ -1562,7 +1145,6 @@ export function getAddressCaseFields(
         description: 'Title for the international postcode',
         id: 'form.field.label.internationalPostcode'
       },
-      customisable: false,
       previewGroup: `${useCase}Address`,
       required: false,
       initialValue: '',
@@ -1584,37 +1166,14 @@ export function getAddressCaseFields(
           operation: 'individualAddressTransformer',
           parameters: [addressCase, 'postalCode']
         },
-        mutation: informant
-          ? {
-              operation: 'fieldValueNestingTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'fieldToAddressTransformer',
-                  parameters: [addressCase, 0, 'postalCode']
-                },
-                'address'
-              ]
-            }
-          : {
-              operation: 'fieldToAddressTransformer',
-              parameters: [addressCase, 0, 'postalCode']
-            },
-        query: informant
-          ? {
-              operation: 'nestedValueToFieldTransformer',
-              parameters: [
-                'individual',
-                {
-                  operation: 'addressToFieldTransformer',
-                  parameters: [addressCase, 0, 'postalCode']
-                }
-              ]
-            }
-          : {
-              operation: 'addressToFieldTransformer',
-              parameters: [addressCase, 0, 'postalCode']
-            }
+        mutation: {
+          operation: 'fieldToAddressTransformer',
+          parameters: [addressCase, 0, 'postalCode']
+        },
+        query: {
+          operation: 'addressToFieldTransformer',
+          parameters: [addressCase, 0, 'postalCode']
+        }
       }
     }
   ]
@@ -1626,7 +1185,6 @@ export function getPlaceOfEventAddressFields(
   return [
     {
       name: 'country',
-      customisable: false,
       type: 'SELECT_WITH_OPTIONS',
       label: {
         defaultMessage: 'Country',
@@ -1678,7 +1236,6 @@ export function getPlaceOfEventAddressFields(
     ...getPlaceOfEventAdminLevelSelects(configCase),
     {
       name: 'ruralOrUrban',
-      customisable: false,
       type: 'RADIO_GROUP',
       label: {
         defaultMessage: ' ',
@@ -1744,7 +1301,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'cityUrbanOption',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Town',
@@ -1800,7 +1356,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'addressLine3UrbanOption',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Residential Area',
@@ -1856,7 +1411,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'addressLine2UrbanOption',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Street',
@@ -1912,7 +1466,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'numberUrbanOption',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Number',
@@ -1968,7 +1521,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'postalCode',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Postcode / Zip',
@@ -2024,7 +1576,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'addressLine5',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Village',
@@ -2080,7 +1631,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalState',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'State',
@@ -2138,7 +1688,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalDistrict',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'District',
@@ -2196,7 +1745,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalCity',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'City / Town',
@@ -2240,7 +1788,6 @@ export function getPlaceOfEventAddressFields(
     {
       name: 'internationalAddressLine1',
       type: 'TEXT',
-      customisable: false,
       label: {
         defaultMessage: 'Address Line 1',
         description: 'Title for the international address line 1 select',
@@ -2287,7 +1834,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalAddressLine2',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Address Line 2',
@@ -2335,7 +1881,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalAddressLine3',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Address Line 3',
@@ -2383,7 +1928,6 @@ export function getPlaceOfEventAddressFields(
     },
     {
       name: 'internationalPostcode',
-      customisable: false,
       type: 'TEXT',
       label: {
         defaultMessage: 'Postcode / Zip',

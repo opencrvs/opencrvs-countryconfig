@@ -11,39 +11,17 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import { ADMIN_LEVELS } from './addresses'
-import {
-  BirthSection,
-  DeathSection,
-  IConditional,
-  ISerializedForm,
-  SerializedFormField
-} from './types'
+import { ISerializedForm, SerializedFormField, Event } from './types'
 import {
   getAddressConditionals,
   getPlaceOfEventConditionals
 } from './validations-and-conditionals'
-
-export enum AddressCases {
-  // the below are UPPER_CASE because they map to GQLAddress type enums
-  PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
-  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
-}
-
-export enum EventLocationAddressCases {
-  PLACE_OF_BIRTH = 'placeOfBirth',
-  PLACE_OF_DEATH = 'placeOfDeath',
-  PLACE_OF_MARRIAGE = 'placeOfMarriage'
-}
-
-export enum AddressCopyConfigCases {
-  PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY = 'primaryAddressSameAsOtherPrimary'
-}
-
-export enum AddressSubsections {
-  PRIMARY_ADDRESS_SUBSECTION = 'primaryAddress',
-  SECONDARY_ADDRESS_SUBSECTION = 'secondaryAddress'
-}
+import {
+  AddressCases,
+  AddressCopyConfigCases,
+  AddressSubsections,
+  EventLocationAddressCases
+} from './addresses'
 
 export interface IAddressConfiguration {
   precedingFieldId: string
@@ -57,10 +35,9 @@ export type AllowedAddressConfigurations = {
     | AddressCopyConfigCases
     | EventLocationAddressCases
   label?: MessageDescriptor
-  xComparisonSection?: BirthSection | DeathSection
-  yComparisonSection?: BirthSection | DeathSection
+  xComparisonSection?: string
+  yComparisonSection?: string
   conditionalCase?: string
-  informant?: boolean
 }
 
 export const sentenceCase = (str: string): string =>
@@ -108,8 +85,7 @@ export function getDependency(location: string, useCase: string) {
 export function getLocationSelect(
   location: string,
   useCase: string,
-  locationIndex: number,
-  informant: boolean
+  locationIndex: number
 ): SerializedFormField {
   return {
     name: `${location}${sentenceCase(useCase)}`,
@@ -119,7 +95,6 @@ export function getLocationSelect(
       description: `Title for the ${location} select`,
       id: `form.field.label.${location}`
     },
-    customisable: false,
     previewGroup: `${useCase}Address`,
     required: true,
     initialValue: '',
@@ -136,61 +111,26 @@ export function getLocationSelect(
     },
     conditionals: getAddressConditionals(location, useCase),
     mapping: {
-      mutation: informant
-        ? {
-            operation: 'fieldValueNestingTransformer',
-            parameters: [
-              'individual',
-              {
-                operation: 'fieldToAddressTransformer',
-                parameters: [
-                  useCase.toUpperCase() === 'PRIMARY'
-                    ? AddressCases.PRIMARY_ADDRESS
-                    : AddressCases.SECONDARY_ADDRESS,
-                  locationIndex,
-                  location
-                ]
-              },
-              'address'
-            ]
-          }
-        : {
-            operation: 'fieldToAddressTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              locationIndex,
-              location
-            ]
-          },
-      query: informant
-        ? {
-            operation: 'nestedValueToFieldTransformer',
-            parameters: [
-              'individual',
-              {
-                operation: 'addressToFieldTransformer',
-                parameters: [
-                  useCase.toUpperCase() === 'PRIMARY'
-                    ? AddressCases.PRIMARY_ADDRESS
-                    : AddressCases.SECONDARY_ADDRESS,
-                  locationIndex,
-                  location
-                ]
-              }
-            ]
-          }
-        : {
-            operation: 'addressToFieldTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              locationIndex,
-              location
-            ]
-          }
+      mutation: {
+        operation: 'fieldToAddressTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          locationIndex,
+          location
+        ]
+      },
+      query: {
+        operation: 'addressToFieldTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          locationIndex,
+          location
+        ]
+      }
     }
   }
 }
@@ -202,7 +142,6 @@ export function getPlaceOfEventLocationSelect(
 ): SerializedFormField {
   return {
     name: location,
-    customisable: false,
     type: 'SELECT_WITH_DYNAMIC_OPTIONS',
     label: {
       defaultMessage: sentenceCase(location),

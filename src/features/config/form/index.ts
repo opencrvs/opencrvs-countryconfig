@@ -14,13 +14,7 @@ import { birthRegisterForms as birth } from './birth'
 import { deathRegisterForms as death } from './death'
 import { marriageRegisterForms as marriage } from './marriage'
 import { populateRegisterFormsWithAddresses } from './addresses'
-import { IForms } from './types'
-
-enum Event {
-  Birth = 'birth',
-  Death = 'death',
-  Marriage = 'marriage'
-}
+import { IForms, Event } from './types'
 
 export async function formHandler(): Promise<IForms> {
   // AS OF OPENCRVS v1.3.0 YOU CANNOT MAKE A CHANGE TO A CIVIL REGISTRATION FORM ONCE YOU GO LIVE IN PRODUCTION
@@ -45,7 +39,7 @@ export async function formHandler(): Promise<IForms> {
   return {
     // THE VERSION NUMBER FOR YOUR FORM IS NOT RELATED TO ANY OPENCRVS VERSION.
     // YOU CAN NAME THIS VERSION ANYTHING YOU LIKE AS LONG AS IT IS UNIQUE EACH TIME.
-    // WE RECOMMEND USING SEMANTIC VERSION NUMBERING
+
     version: 'v1.0.0',
     birth: populateRegisterFormsWithAddresses(birth, Event.Birth),
     death: populateRegisterFormsWithAddresses(death, Event.Death),

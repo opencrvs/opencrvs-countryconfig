@@ -13,9 +13,9 @@
 // TODO: add in all the validations and conditionals logic and generate a js file client can load
 
 import { MessageDescriptor } from 'react-intl'
-import { IFormData, IFormFieldValue } from './types'
-import { EventLocationAddressCases, sentenceCase } from './address-utils'
-import { ADMIN_LEVELS } from './addresses'
+import { IFormData, IFormFieldValue, IntegratingSystemType } from './types'
+import { sentenceCase } from './address-utils'
+import { ADMIN_LEVELS, EventLocationAddressCases } from './addresses'
 
 export interface IConditional {
   description?: string
@@ -97,12 +97,260 @@ export type Validation = (
 
 export type ValidationInitializer = (...value: any[]) => Validation
 
-// if the informant or contact is mother
-export const mothersDetailsDontExistBasedOnContactAndInformant =
-  '!mothersDetailsExistBasedOnContactAndInformant'
-// if the informant or contact is father
-export const fathersDetailsDontExistBasedOnContactAndInformant =
-  '!fathersDetailsExistBasedOnContactAndInformant'
+export const isValidChildBirthDate = [
+  {
+    operation: 'isValidChildBirthDate'
+  }
+]
+
+export const hideIfNidIntegrationDisabled = [
+  {
+    action: 'hide',
+    expression: `const nationalIdSystem =
+    offlineCountryConfig &&
+    offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
+    !nationalIdSystem ||
+    !nationalIdSystem.settings.openIdProviderBaseUrl ||
+    !nationalIdSystem.settings.openIdProviderClientId ||
+    !nationalIdSystem.settings.openIdProviderClaims;
+  `
+  }
+]
+
+export const motherNationalIDVerfication = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `values.motherNidVerification`
+  }
+]
+
+export const fatherNationalIDVerfication = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `values.fatherNidVerification`
+  }
+]
+
+export const mothersBirthDateConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('motherBirthDate')`
+  }
+]
+
+export const parentsBirthDateValidators = [
+  {
+    operation: 'dateFormatIsCorrect',
+    parameters: []
+  },
+  {
+    operation: 'dateInPast',
+    parameters: []
+  },
+  {
+    operation: 'isValidParentsBirthDate',
+    parameters: [5]
+  }
+]
+
+export function getNationalIDValidators(configCase: string) {
+  if (configCase === 'informant') {
+    return [
+      {
+        operation: 'validIDNumber',
+        parameters: ['NATIONAL_ID']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['deceased.iD']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['mother.iD']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['father.iD']
+      }
+    ]
+  } else {
+    // mother
+    return [
+      {
+        operation: 'validIDNumber',
+        parameters: ['NATIONAL_ID']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['father.iD']
+      }
+    ]
+  }
+}
+
+export const hideIfNidIntegrationEnabled = [
+  {
+    action: 'hide',
+    expression: `const nationalIdSystem =
+          offlineCountryConfig &&
+          offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
+          nationalIdSystem &&
+          nationalIdSystem.settings.openIdProviderBaseUrl &&
+          nationalIdSystem.settings.openIdProhideIfNidIntegrationDisabledviderClientId &&
+          nationalIdSystem.settings.openIdProviderClaims;
+      `
+  }
+]
+
+export const detailsExist = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  }
+]
+
+export const hideIfInformantMotherOrFather = [
+  {
+    action: 'hide',
+    expression:
+      '((values.informantType==="MOTHER") || (values.informantType==="FATHER"))'
+  }
+]
+
+export const exactDateOfBirthUnknownConditional = [
+  {
+    action: 'hide',
+    expression: '!values.exactDateOfBirthUnknown'
+  }
+]
+
+export const mothersDetailsExistConditionals = [
+  {
+    action: 'hide',
+    expression: 'draftData?.informant?.informantType==="MOTHER"'
+  },
+  {
+    action: 'hideInPreview',
+    expression: 'values.detailsExist'
+  }
+]
+
+export const FATHER_DETAILS_DONT_EXIST =
+  '!draftData?.father.detailsExist || !values.detailsExist'
+export const MOTHER_DETAILS_DONT_EXIST =
+  '!draftData?.mother.detailsExist || !values.detailsExist'
+
+export const fathersDetailsExistConditionals = [
+  {
+    action: 'hide',
+    expression: 'draftData?.informant?.informantType==="FATHER"'
+  },
+  {
+    action: 'hideInPreview',
+    expression: 'values.detailsExist'
+  }
+]
+
+export const informantBirthDateConditionals = [
+  {
+    action: 'disable',
+    expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('informantBirthDate')`
+  }
+]
+
+export const informantFirstNameConditionals = [
+  {
+    action: 'disable',
+    expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+  },
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  }
+]
+
+export const informantFamilyNameConditionals = [
+  {
+    action: 'disable',
+    expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
+  }
+]
+export const fathersBirthDateConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('fatherBirthDate')`
+  }
+]
+export const motherFirstNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+  }
+]
+
+export const motherFamilyNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
+  }
+]
+export const fatherFirstNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+  }
+]
+
+export const fatherFamilyNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
+  }
+]
 
 // if mothers details do not exist on other page
 export const mothersDetailsDontExistOnOtherPage =
@@ -114,16 +362,16 @@ export const mothersDetailsDontExist = '!values.detailsExist'
 // if fathers details do not exist
 export const fathersDetailsDontExist = '!values.detailsExist'
 
+// if informant is not mother or father
+export const informantNotMotherOrFather =
+  '((values.informantType==="MOTHER") || (values.informantType==="FATHER"))'
+
 // primary address same as other primary
 export const primaryAddressSameAsOtherPrimaryAddress =
   'values.primaryAddressSameAsOtherPrimary'
 
 // secondary addresses are not enabled
 export const secondaryAddressesDisabled = 'window.config.ADDRESSES!=2'
-
-export const MOTHER_DETAILS_DONT_EXIST = `(${mothersDetailsDontExist} && ${mothersDetailsDontExistBasedOnContactAndInformant})`
-
-export const FATHER_DETAILS_DONT_EXIST = `(${fathersDetailsDontExist} && ${fathersDetailsDontExistBasedOnContactAndInformant})`
 
 export function getPlaceOfEventConditionals(
   location: string,

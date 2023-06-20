@@ -21,6 +21,12 @@ import {
 // TODO: only list out supported mappings in core include custom form field mappings
 // replace string with the names of all the functions.
 
+export enum Event {
+  Birth = 'birth',
+  Death = 'death',
+  Marriage = 'marriage'
+}
+
 type IIgnoreFields = {
   fieldsToIgnoreForLocalAddress: string[]
   fieldsToIgnoreForInternationalAddress: string[]
@@ -73,7 +79,6 @@ export const TEL = 'TEL'
 export const NUMBER = 'NUMBER'
 export const BIG_NUMBER = 'BIG_NUMBER'
 export const RADIO_GROUP = 'RADIO_GROUP'
-export const RADIO_GROUP_WITH_NESTED_FIELDS = 'RADIO_GROUP_WITH_NESTED_FIELDS'
 export const INFORMATIVE_RADIO_GROUP = 'INFORMATIVE_RADIO_GROUP'
 export const CHECKBOX_GROUP = 'CHECKBOX_GROUP'
 export const CHECKBOX = 'CHECKBOX'
@@ -112,72 +117,6 @@ export enum IntegratingSystemType {
   Mosip = 'MOSIP',
   Osia = 'OSIA',
   Other = 'OTHER'
-}
-
-export enum BirthSection {
-  Registration = 'registration',
-  Child = 'child',
-  Mother = 'mother',
-  Father = 'father',
-  Informant = 'informant',
-  Documents = 'documents',
-  Preview = 'preview'
-}
-
-export enum DeathSection {
-  Registration = 'registration',
-  Deceased = 'deceased',
-  Event = 'deathEvent',
-  Informant = 'informant',
-  DeathDocuments = 'documents',
-  Preview = 'preview'
-}
-
-export enum MarriageSection {
-  Registration = 'registration',
-  Groom = 'groom',
-  Bride = 'bride',
-  Event = 'marriageEvent',
-  WitnessOne = 'witnessOne',
-  WitnessTwo = 'witnessTwo',
-  Documents = 'documents',
-  Preview = 'preview'
-}
-
-export enum UserSection {
-  User = 'user',
-  Preview = 'preview'
-}
-
-export enum AdvancedSearchSection {
-  Birth = 'birth',
-  Death = 'death'
-}
-
-export enum CertificateSection {
-  Collector = 'collector',
-  CollectCertificate = 'collectCertificate',
-  CollectDeathCertificate = 'collectDeathCertificate'
-}
-
-export enum CorrectionSection {
-  Corrector = 'corrector',
-  Reason = 'reason',
-  SupportingDocuments = 'supportingDocuments',
-  CorrectionFeesPayment = 'currectionFeesPayment',
-  Summary = 'summary'
-}
-
-export enum PaymentSection {
-  Payment = 'payment'
-}
-
-export enum ReviewSection {
-  Review = 'review'
-}
-
-export enum InformantSection {
-  Registration = 'registration'
 }
 
 export declare enum THEME_MODE {
@@ -348,12 +287,6 @@ export interface IRadioGroupFormField extends IFormFieldBase {
   flexDirection?: FLEX_DIRECTION
 }
 
-export interface IRadioGroupWithNestedFieldsFormField
-  extends Omit<IRadioGroupFormField, 'type'> {
-  type: typeof RADIO_GROUP_WITH_NESTED_FIELDS
-  nestedFields: INestedInputFields
-}
-
 export interface IInformativeRadioGroupFormField extends IFormFieldBase {
   type: typeof INFORMATIVE_RADIO_GROUP
   information: IFormSectionData
@@ -511,7 +444,6 @@ export type IFormField =
   | ISelectFormFieldWithDynamicOptions
   | IFormFieldWithDynamicDefinitions
   | IRadioGroupFormField
-  | IRadioGroupWithNestedFieldsFormField
   | IInformativeRadioGroupFormField
   | ICheckboxGroupFormField
   | ICheckboxFormField
@@ -605,7 +537,6 @@ export interface IFormFieldBase {
   }
   ignoreFieldLabelOnErrorMessage?: boolean
   ignoreBottomMargin?: boolean
-  customisable?: boolean
   customQuesstionMappingId?: string
   ignoreMediaQuery?: boolean
 }
@@ -628,17 +559,6 @@ export interface IFormSectionGroup {
   preventContinueIfError?: boolean
   showExitButtonOnly?: boolean
 }
-
-export type Section =
-  | ReviewSection
-  | PaymentSection
-  | BirthSection
-  | DeathSection
-  | UserSection
-  | CertificateSection
-  | CorrectionSection
-  | InformantSection
-  | MarriageSection
 
 export type IFormFieldMutationMapFunction = (
   transFormedData: TransformedData,
@@ -714,12 +634,6 @@ type SerializedFormFieldWithDynamicDefinitions = UnionOmit<
   dynamicDefinitions: ISerializedDynamicFormFieldDefinitions
 }
 
-export interface IRadioGroupWithNestedFieldsFormField
-  extends Omit<IRadioGroupFormField, 'type'> {
-  type: typeof RADIO_GROUP_WITH_NESTED_FIELDS
-  nestedFields: INestedInputFields
-}
-
 type SerializedSelectFormFieldWithOptions = Omit<
   ISelectFormFieldWithOptions,
   'options'
@@ -749,13 +663,6 @@ type ILoaderButtonWithSerializedQueryMap = Omit<ILoaderButton, 'queryMap'> & {
   queryMap: ISerializedQueryMap
 }
 
-type SerializedRadioGroupWithNestedFields = Omit<
-  IRadioGroupWithNestedFieldsFormField,
-  'nestedFields'
-> & {
-  nestedFields: { [key: string]: SerializedFormField[] }
-}
-
 export interface ISelectFormFieldWithOptions extends IFormFieldBase {
   type: typeof SELECT_WITH_OPTIONS
   options: ISelectOption[]
@@ -769,12 +676,10 @@ export type SerializedFormField = UnionOmit<
       | IFormFieldWithDynamicDefinitions
       | ILoaderButton
       | ISelectFormFieldWithOptions
-      | IRadioGroupWithNestedFieldsFormField
     >
   | SerializedSelectFormFieldWithOptions
   | SerializedFormFieldWithDynamicDefinitions
-  | ILoaderButtonWithSerializedQueryMap
-  | SerializedRadioGroupWithNestedFields,
+  | ILoaderButtonWithSerializedQueryMap,
   'validator' | 'mapping'
 > & {
   validator: any
@@ -918,16 +823,15 @@ export type ISerializedFormSectionGroup = Omit<IFormSectionGroup, 'fields'> & {
 }
 
 export interface IFormSection {
-  id: Section
+  id: string
   viewType: ViewType
   name: MessageDescriptor
-  title: MessageDescriptor
+  title?: MessageDescriptor
   groups: IFormSectionGroup[]
   disabled?: boolean
   optional?: boolean
   notice?: MessageDescriptor
   mapping?: ISectionMapping
-  hasDocumentSection?: boolean
 }
 
 export type ISerializedFormSection = Omit<
