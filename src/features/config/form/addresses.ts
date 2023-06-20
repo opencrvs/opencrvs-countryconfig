@@ -32,6 +32,7 @@ import {
   MOTHER_DETAILS_DONT_EXIST,
   fathersDetailsDontExist,
   getRuralOrUrbanConditionals,
+  informantNotMotherOrFather,
   mothersDetailsDontExistOnOtherPage,
   primaryAddressSameAsOtherPrimaryAddress,
   secondaryAddressesDisabled
@@ -70,6 +71,8 @@ export enum AddressSubsections {
   PRIMARY_ADDRESS_SUBSECTION = 'primaryAddress',
   SECONDARY_ADDRESS_SUBSECTION = 'secondaryAddress'
 }
+
+// TODO: will deprecate this once all are set up
 export const defaultAddressConfiguration: IAddressConfiguration[] = [
   {
     precedingFieldId: 'birth.child.child-view-group.birthLocation',
@@ -89,17 +92,21 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
-        label: formMessageDescriptors.primaryAddress
+        label: formMessageDescriptors.primaryAddress,
+        conditionalCase: informantNotMotherOrFather
       },
-      { config: AddressCases.PRIMARY_ADDRESS },
+      {
+        config: AddressCases.PRIMARY_ADDRESS,
+        conditionalCase: informantNotMotherOrFather
+      },
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.informantSecondaryAddress,
-        conditionalCase: secondaryAddressesDisabled
+        conditionalCase: `((${secondaryAddressesDisabled}) && ${informantNotMotherOrFather})`
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        conditionalCase: secondaryAddressesDisabled
+        conditionalCase: `((${secondaryAddressesDisabled}) && ${informantNotMotherOrFather})`
       }
     ]
   },

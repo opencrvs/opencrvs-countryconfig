@@ -13,6 +13,7 @@
 import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from '../formatjs-messages'
 import { IConditional, SerializedFormField } from '../types'
+import { hideIfInformantMotherOrFather } from '../validations-and-conditionals'
 
 export const attendantAtBirth: SerializedFormField = {
   name: 'attendantAtBirth',
@@ -260,7 +261,7 @@ export const exactDateOfBirthUnknown: SerializedFormField = {
       action: 'hide',
       expression: '!window.config.DATE_OF_BIRTH_UNKNOWN || !values.detailsExist'
     }
-  ],
+  ].concat(hideIfInformantMotherOrFather),
   mapping: {
     query: {
       operation: 'booleanTransformer'
@@ -272,7 +273,8 @@ export const exactDateOfBirthUnknown: SerializedFormField = {
 }
 
 export const getAgeOfIndividualInYears = (
-  label: MessageDescriptor
+  label: MessageDescriptor,
+  conditionals: IConditional[]
 ): SerializedFormField => ({
   name: 'ageOfIndividualInYears',
   type: 'NUMBER',
@@ -293,12 +295,7 @@ export const getAgeOfIndividualInYears = (
       parameters: [10, true]
     }
   ],
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!values.exactDateOfBirthUnknown'
-    }
-  ],
+  conditionals,
   postfix: 'years',
   inputFieldWidth: '78px'
 })
@@ -326,8 +323,7 @@ export const getMaritalStatus = (
   conditionals: [
     {
       action: 'hide',
-      expression:
-        '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
+      expression: '!values.detailsExist'
     }
   ],
   options: [

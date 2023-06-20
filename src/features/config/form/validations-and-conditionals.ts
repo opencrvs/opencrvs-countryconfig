@@ -131,8 +131,7 @@ export const motherNationalIDVerfication = [
 export const fatherNationalIDVerfication = [
   {
     action: 'hide',
-    expression:
-      '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
+    expression: '!values.detailsExist'
   },
   {
     action: 'disable',
@@ -219,10 +218,32 @@ export const hideIfNidIntegrationEnabled = [
   }
 ]
 
+export const detailsExist = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  }
+]
+
+export const hideIfInformantMotherOrFather = [
+  {
+    action: 'hide',
+    expression:
+      '((values.informantType==="MOTHER") || (values.informantType==="FATHER"))'
+  }
+]
+
+export const exactDateOfBirthUnknownConditional = [
+  {
+    action: 'hide',
+    expression: '!values.exactDateOfBirthUnknown'
+  }
+]
+
 export const mothersDetailsExistConditionals = [
   {
     action: 'hide',
-    expression: 'mothersDetailsExistBasedOnContactAndInformant'
+    expression: 'draftData?.informant?.informantType==="MOTHER"'
   },
   {
     action: 'hideInPreview',
@@ -230,10 +251,15 @@ export const mothersDetailsExistConditionals = [
   }
 ]
 
+export const FATHER_DETAILS_DONT_EXIST =
+  '!draftData?.father.detailsExist || !values.detailsExist'
+export const MOTHER_DETAILS_DONT_EXIST =
+  '!draftData?.mother.detailsExist || !values.detailsExist'
+
 export const fathersDetailsExistConditionals = [
   {
     action: 'hide',
-    expression: 'fathersDetailsExistBasedOnContactAndInformant'
+    expression: 'draftData?.informant?.informantType==="FATHER"'
   },
   {
     action: 'hideInPreview',
@@ -256,6 +282,10 @@ export const informantFirstNameConditionals = [
   {
     action: 'disable',
     expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+  },
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
   }
 ]
 
@@ -321,12 +351,6 @@ export const fatherFamilyNameConditionals = [
     expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
   }
 ]
-// if the informant or contact is mother
-export const mothersDetailsDontExistBasedOnContactAndInformant =
-  '!mothersDetailsExistBasedOnContactAndInformant'
-// if the informant or contact is father
-export const fathersDetailsDontExistBasedOnContactAndInformant =
-  '!fathersDetailsExistBasedOnContactAndInformant'
 
 // if mothers details do not exist on other page
 export const mothersDetailsDontExistOnOtherPage =
@@ -338,16 +362,16 @@ export const mothersDetailsDontExist = '!values.detailsExist'
 // if fathers details do not exist
 export const fathersDetailsDontExist = '!values.detailsExist'
 
+// if informant is not mother or father
+export const informantNotMotherOrFather =
+  '((values.informantType==="MOTHER") || (values.informantType==="FATHER"))'
+
 // primary address same as other primary
 export const primaryAddressSameAsOtherPrimaryAddress =
   'values.primaryAddressSameAsOtherPrimary'
 
 // secondary addresses are not enabled
 export const secondaryAddressesDisabled = 'window.config.ADDRESSES!=2'
-
-export const MOTHER_DETAILS_DONT_EXIST = `(${mothersDetailsDontExist} && ${mothersDetailsDontExistBasedOnContactAndInformant})`
-
-export const FATHER_DETAILS_DONT_EXIST = `(${fathersDetailsDontExist} && ${fathersDetailsDontExistBasedOnContactAndInformant})`
 
 export function getPlaceOfEventConditionals(
   location: string,

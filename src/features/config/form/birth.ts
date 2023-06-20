@@ -24,7 +24,6 @@ import {
   getGender,
   getNationalID,
   getNationality,
-  getPlaceOfBirthFields,
   getReasonNotExisting,
   informantType,
   otherInformantType
@@ -61,7 +60,10 @@ import {
   fatherFamilyNameConditionals,
   fatherFirstNameConditionals,
   fathersBirthDateConditionals,
-  fathersDetailsExistConditionals
+  fathersDetailsExistConditionals,
+  detailsExist,
+  hideIfInformantMotherOrFather,
+  exactDateOfBirthUnknownConditional
 } from './validations-and-conditionals'
 import {
   childNameInEnglish,
@@ -69,12 +71,6 @@ import {
   informantNameInEnglish,
   motherNameInEnglish
 } from './birth/preview-groups'
-import {
-  AddressCases,
-  AddressSubsections,
-  getAddress,
-  getAddressSubsection
-} from './addresses'
 
 export const birthRegisterForms: ISerializedForm = {
   sections: [
@@ -245,7 +241,6 @@ export const birthRegisterForms: ISerializedForm = {
               isValidChildBirthDate,
               'eventDate'
             ), // Required field.
-            ...getPlaceOfBirthFields(), // Required fields.
             {
               name: 'seperator',
               type: 'SUBSECTION',
@@ -293,39 +288,50 @@ export const birthRegisterForms: ISerializedForm = {
             registrationEmail,
             getFirstNameField(
               'informantNameInEnglish',
-              informantFirstNameConditionals,
+              informantFirstNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
               'informantFirstName'
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
-              informantFamilyNameConditionals,
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
               'informantFamilyName'
             ), // Required field.
             getBirthDate(
               'informantBirthDate',
-              informantBirthDateConditionals,
+              informantBirthDateConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
               [],
               'eventDate'
             ), // Required field.
             exactDateOfBirthUnknown,
-            getAgeOfIndividualInYears(formMessageDescriptors.ageOfInformant),
-            getNationality('informantNationality'),
+            getAgeOfIndividualInYears(
+              formMessageDescriptors.ageOfInformant,
+              exactDateOfBirthUnknownConditional.concat(
+                hideIfInformantMotherOrFather
+              )
+            ),
+            getNationality(
+              'informantNationality',
+              hideIfInformantMotherOrFather
+            ),
             getNationalID(
               'informantID',
-              hideIfNidIntegrationEnabled,
+              hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
               getNationalIDValidators('informant'),
               'informantNID'
             ),
             getNIDVerificationButton(
               'informantNidVerification',
-              hideIfNidIntegrationDisabled,
+              hideIfNidIntegrationDisabled.concat(
+                hideIfInformantMotherOrFather
+              ),
               []
-            ),
-            ...getAddressSubsection(
-              AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
-              formMessageDescriptors.primaryAddress
-            ),
-            ...getAddress(AddressCases.PRIMARY_ADDRESS) // Required field. Its possible to capture 2 addresses: PRIMARY_ADDRESS & SECONDARY_ADDRESS per individual
+            )
           ],
           previewGroups: [informantNameInEnglish]
         }
@@ -360,7 +366,10 @@ export const birthRegisterForms: ISerializedForm = {
               'motherBirthDate'
             ), // Required field.
             exactDateOfBirthUnknown,
-            getAgeOfIndividualInYears(formMessageDescriptors.ageOfMother),
+            getAgeOfIndividualInYears(
+              formMessageDescriptors.ageOfMother,
+              detailsExist
+            ),
             getFirstNameField(
               'motherNameInEnglish',
               motherFirstNameConditionals,
@@ -371,10 +380,10 @@ export const birthRegisterForms: ISerializedForm = {
               motherFamilyNameConditionals,
               'motherFamilyName'
             ), // Required field.
-            getNationality('motherNationality'), // Required field.
+            getNationality('motherNationality', detailsExist), // Required field.
             getNationalID(
               'iD',
-              hideIfNidIntegrationEnabled,
+              hideIfNidIntegrationEnabled.concat(detailsExist),
               getNationalIDValidators('mother'),
               'motherNID'
             ),
@@ -383,11 +392,6 @@ export const birthRegisterForms: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(motherNationalIDVerfication),
               []
             ),
-            ...getAddressSubsection(
-              AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
-              formMessageDescriptors.primaryAddress
-            ),
-            ...getAddress(AddressCases.PRIMARY_ADDRESS), // Required field.
             {
               name: 'seperator',
               type: 'SUBSECTION',
@@ -449,7 +453,10 @@ export const birthRegisterForms: ISerializedForm = {
               'fatherBirthDate'
             ), // Required field.
             exactDateOfBirthUnknown,
-            getAgeOfIndividualInYears(formMessageDescriptors.ageOfFather),
+            getAgeOfIndividualInYears(
+              formMessageDescriptors.ageOfFather,
+              detailsExist
+            ),
             getFirstNameField(
               'fatherNameInEnglish',
               fatherFirstNameConditionals,
@@ -460,10 +467,10 @@ export const birthRegisterForms: ISerializedForm = {
               fatherFamilyNameConditionals,
               'fatherFamilyName'
             ), // Required field.
-            getNationality('fatherNationality'), // Required field.
+            getNationality('fatherNationality', detailsExist), // Required field.
             getNationalID(
               'iD',
-              hideIfNidIntegrationEnabled,
+              hideIfNidIntegrationEnabled.concat(detailsExist),
               getNationalIDValidators('father'),
               'fatherNID'
             ),
@@ -472,11 +479,6 @@ export const birthRegisterForms: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(fatherNationalIDVerfication),
               []
             ),
-            ...getAddressSubsection(
-              AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
-              formMessageDescriptors.primaryAddress
-            ),
-            ...getAddress(AddressCases.PRIMARY_ADDRESS), // Required field.
             {
               name: 'seperator',
               type: 'SUBSECTION',
@@ -583,7 +585,7 @@ export const birthRegisterForms: ISerializedForm = {
                   description: 'Hidden for Parent Details none or Mother only',
                   action: 'hide',
                   expression:
-                    'draftData && draftData.mother && !draftData.mother.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
+                    'draftData && draftData.mother && !draftData.mother.detailsExist'
                 }
               ],
               mapping: {
@@ -626,7 +628,7 @@ export const birthRegisterForms: ISerializedForm = {
                   description: 'Hidden for Parent Details none or Father only',
                   action: 'hide',
                   expression:
-                    'draftData && draftData.father && !draftData.father.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
+                    'draftData && draftData.father && !draftData.father.detailsExist'
                 }
               ],
               mapping: {

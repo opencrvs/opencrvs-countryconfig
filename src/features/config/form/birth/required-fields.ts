@@ -159,7 +159,8 @@ export const getFirstNameField = (
 })
 
 export const getNationality = (
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  conditionals: IConditional[]
 ): SerializedFormField => ({
   name: 'nationality',
   type: 'SELECT_WITH_OPTIONS',
@@ -176,7 +177,7 @@ export const getNationality = (
       action: 'hide',
       expression: '!values.detailsExist'
     }
-  ],
+  ].concat(conditionals),
   mapping: {
     template: {
       fieldName: certificateHandlebar,
