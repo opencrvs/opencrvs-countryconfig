@@ -133,6 +133,48 @@ export const motherNationalIDVerfication = [
   }
 ]
 
+export const fatherNationalIDVerfication = [
+  {
+    action: 'hide',
+    expression:
+      '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
+  },
+  {
+    action: 'disable',
+    expression: `values.fatherNidVerification`
+  }
+]
+
+export const mothersBirthDateConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('motherBirthDate')`
+  }
+]
+
+export const parentsBirthDateValidators = [
+  {
+    operation: 'dateFormatIsCorrect',
+    parameters: []
+  },
+  {
+    operation: 'dateInPast',
+    parameters: []
+  },
+  {
+    operation: 'isValidParentsBirthDate',
+    parameters: [5]
+  }
+]
+
 export function getNationalIDValidators(configCase: string) {
   if (configCase === 'informant') {
     return [
@@ -193,6 +235,17 @@ export const mothersDetailsExistConditionals = [
   }
 ]
 
+export const fathersDetailsExistConditionals = [
+  {
+    action: 'hide',
+    expression: 'fathersDetailsExistBasedOnContactAndInformant'
+  },
+  {
+    action: 'hideInPreview',
+    expression: 'values.detailsExist'
+  }
+]
+
 export const informantBirthDateConditionals = [
   {
     action: 'disable',
@@ -217,7 +270,62 @@ export const informantFamilyNameConditionals = [
     expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
   }
 ]
+export const fathersBirthDateConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('fatherBirthDate')`
+  }
+]
+export const motherFirstNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+  }
+]
 
+export const motherFamilyNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
+  }
+]
+export const fatherFirstNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+  }
+]
+
+export const fatherFamilyNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
+  }
+]
 // if the informant or contact is mother
 export const mothersDetailsDontExistBasedOnContactAndInformant =
   '!mothersDetailsExistBasedOnContactAndInformant'

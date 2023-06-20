@@ -241,11 +241,24 @@ export const exactDateOfBirthUnknown: SerializedFormField = {
   required: false,
   hideHeader: true,
   initialValue: false,
-  validator: [],
+  validator: [
+    {
+      operation: 'range',
+      parameters: [12, 120]
+    },
+    {
+      operation: 'maxLength',
+      parameters: [3]
+    },
+    {
+      operation: 'isValidParentsBirthDate',
+      parameters: [5, true]
+    }
+  ],
   conditionals: [
     {
       action: 'hide',
-      expression: '!window.config.DATE_OF_BIRTH_UNKNOWN'
+      expression: '!window.config.DATE_OF_BIRTH_UNKNOWN || !values.detailsExist'
     }
   ],
   mapping: {
@@ -288,4 +301,200 @@ export const getAgeOfIndividualInYears = (
   ],
   postfix: 'years',
   inputFieldWidth: '78px'
+})
+
+export const getMaritalStatus = (
+  certificateHandlebar: string
+): SerializedFormField => ({
+  name: 'maritalStatus',
+  type: 'SELECT_WITH_OPTIONS',
+  label: {
+    defaultMessage: 'Marital status',
+    description: 'Label for form field: Marital status',
+    id: 'form.field.label.maritalStatus'
+  },
+  required: false,
+  initialValue: '',
+  validator: [],
+  placeholder: formMessageDescriptors.formSelectPlaceholder,
+  mapping: {
+    template: {
+      fieldName: certificateHandlebar,
+      operation: 'selectTransformer'
+    }
+  },
+  conditionals: [
+    {
+      action: 'hide',
+      expression:
+        '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
+    }
+  ],
+  options: [
+    {
+      value: 'SINGLE',
+      label: {
+        defaultMessage: 'Single',
+        description: 'Option for form field: Marital status',
+        id: 'form.field.label.maritalStatusSingle'
+      }
+    },
+    {
+      value: 'MARRIED',
+      label: {
+        defaultMessage: 'Married',
+        description: 'Option for form field: Marital status',
+        id: 'form.field.label.maritalStatusMarried'
+      }
+    },
+    {
+      value: 'WIDOWED',
+      label: {
+        defaultMessage: 'Widowed',
+        description: 'Option for form field: Marital status',
+        id: 'form.field.label.maritalStatusWidowed'
+      }
+    },
+    {
+      value: 'DIVORCED',
+      label: {
+        defaultMessage: 'Divorced',
+        description: 'Option for form field: Marital status',
+        id: 'form.field.label.maritalStatusDivorced'
+      }
+    },
+    {
+      value: 'SEPARATED',
+      label: {
+        id: 'form.field.label.maritalStatusSeparated',
+        defaultMessage: 'Separated',
+        description: 'Option for form field: Marital status'
+      }
+    },
+    {
+      value: 'NOT_STATED',
+      label: {
+        defaultMessage: 'Not stated',
+        description: 'Option for form field: Marital status',
+        id: 'form.field.label.maritalStatusNotStated'
+      }
+    }
+  ]
+})
+export const multipleBirth: SerializedFormField = {
+  name: 'multipleBirth',
+  type: 'NUMBER',
+  label: {
+    defaultMessage: 'No. of previous births',
+    description: 'Label for form field: multipleBirth',
+    id: 'form.field.label.multipleBirth'
+  },
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!values.detailsExist'
+    }
+  ],
+  required: false,
+  initialValue: '',
+  validator: [
+    {
+      operation: 'greaterThanZero'
+    },
+    {
+      operation: 'maxLength',
+      parameters: [2]
+    }
+  ],
+  mapping: {
+    template: {
+      fieldName: 'multipleBirth',
+      operation: 'plainInputTransformer'
+    }
+  }
+}
+
+export const getOccupation = (
+  certificateHandlebar: string
+): SerializedFormField => ({
+  name: 'occupation',
+  type: 'TEXT',
+  label: {
+    defaultMessage: 'Occupation',
+    description: 'text for occupation form field',
+    id: 'form.field.label.occupation'
+  },
+  required: false,
+  initialValue: '',
+  validator: [],
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!values.detailsExist'
+    }
+  ],
+  mapping: {
+    template: {
+      fieldName: certificateHandlebar,
+      operation: 'plainInputTransformer'
+    }
+  }
+})
+
+export const getEducation = (
+  certificateHandlebar: string
+): SerializedFormField => ({
+  name: 'educationalAttainment',
+  type: 'SELECT_WITH_OPTIONS',
+  label: formMessageDescriptors.educationAttainment,
+  required: false,
+  initialValue: '',
+  validator: [],
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!values.detailsExist'
+    }
+  ],
+  placeholder: formMessageDescriptors.formSelectPlaceholder,
+  options: [
+    {
+      value: 'NO_SCHOOLING',
+      label: {
+        defaultMessage: 'No schooling',
+        description: 'Option for form field: no education',
+        id: 'form.field.label.educationAttainmentNone'
+      }
+    },
+    {
+      value: 'PRIMARY_ISCED_1',
+      label: {
+        defaultMessage: 'Primary',
+        description: 'Option for form field: ISCED1 education',
+        id: 'form.field.label.educationAttainmentISCED1'
+      }
+    },
+    {
+      value: 'POST_SECONDARY_ISCED_4',
+      label: {
+        defaultMessage: 'Secondary',
+        description: 'Option for form field: ISCED4 education',
+        id: 'form.field.label.educationAttainmentISCED4'
+      }
+    },
+    {
+      value: 'FIRST_STAGE_TERTIARY_ISCED_5',
+      label: {
+        defaultMessage: 'Tertiary',
+        description: 'Option for form field: ISCED5 education',
+        id: 'form.field.label.educationAttainmentISCED5'
+      }
+    }
+  ],
+  mapping: {
+    template: {
+      fieldName: certificateHandlebar,
+      operation: 'selectTransformer'
+    }
+  }
 })

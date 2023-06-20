@@ -17,7 +17,6 @@ import {
 } from './options'
 import { formMessageDescriptors } from './formatjs-messages'
 import {
-  childNameInEnglish,
   getBirthDate,
   getDetailsExist,
   getFamilyNameField,
@@ -35,7 +34,11 @@ import {
   birthType,
   exactDateOfBirthUnknown,
   getAgeOfIndividualInYears,
+  getEducation,
+  getMaritalStatus,
   getNIDVerificationButton,
+  getOccupation,
+  multipleBirth,
   registrationEmail,
   registrationPhone,
   weightAtBirth
@@ -46,18 +49,27 @@ import {
   informantFirstNameConditionals,
   informantBirthDateConditionals,
   hideIfNidIntegrationEnabled,
-  nationalIDValidators,
   hideIfNidIntegrationDisabled,
   mothersDetailsExistConditionals,
   getNationalIDValidators,
-  motherNationalIDVerfication
+  motherNationalIDVerfication,
+  mothersBirthDateConditionals,
+  parentsBirthDateValidators,
+  motherFirstNameConditionals,
+  motherFamilyNameConditionals,
+  fatherNationalIDVerfication,
+  fatherFamilyNameConditionals,
+  fatherFirstNameConditionals,
+  fathersBirthDateConditionals,
+  fathersDetailsExistConditionals
 } from './validations-and-conditionals'
-import { informantNameInEnglish } from './birth/preview-groups'
 import {
-  AddressCases,
-  AddressSubsections,
-  EventLocationAddressCases
-} from './address-utils'
+  childNameInEnglish,
+  fatherNameInEnglish,
+  informantNameInEnglish,
+  motherNameInEnglish
+} from './birth/preview-groups'
+import { AddressCases, AddressSubsections } from './address-utils'
 import { getAddress, getAddressSubsection } from './addresses'
 
 export const birthRegisterForms: ISerializedForm = {
@@ -295,7 +307,7 @@ export const birthRegisterForms: ISerializedForm = {
             ), // Required field.
             exactDateOfBirthUnknown,
             getAgeOfIndividualInYears(formMessageDescriptors.ageOfInformant),
-            getNationality('informantNationality'), // Required field.
+            getNationality('informantNationality'),
             getNationalID(
               'informantID',
               hideIfNidIntegrationEnabled,
@@ -340,7 +352,25 @@ export const birthRegisterForms: ISerializedForm = {
               mothersDetailsExistConditionals
             ), // Strongly recommend is required if you want to register abandoned / orphaned children!
             getReasonNotExisting('motherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getNationality('motherNationality'),
+            getBirthDate(
+              'motherBirthDate',
+              mothersBirthDateConditionals,
+              parentsBirthDateValidators,
+              'motherBirthDate'
+            ), // Required field.
+            exactDateOfBirthUnknown,
+            getAgeOfIndividualInYears(formMessageDescriptors.ageOfMother),
+            getFirstNameField(
+              'motherNameInEnglish',
+              motherFirstNameConditionals,
+              'motherFirstName'
+            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
+            getFamilyNameField(
+              'motherNameInEnglish',
+              motherFamilyNameConditionals,
+              'motherFamilyName'
+            ), // Required field.
+            getNationality('motherNationality'), // Required field.
             getNationalID(
               'iD',
               hideIfNidIntegrationEnabled,
@@ -348,200 +378,15 @@ export const birthRegisterForms: ISerializedForm = {
               'motherNID'
             ),
             getNIDVerificationButton(
-              'informantNidVerification',
+              'motherNidVerification',
               hideIfNidIntegrationDisabled.concat(motherNationalIDVerfication),
               []
             ),
-            {
-              name: 'motherBirthDate',
-              type: 'DATE',
-              label: formMessageDescriptors.dateOfBirth,
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'disable',
-                  expression: 'values.exactDateOfBirthUnknown'
-                },
-                {
-                  action: 'disable',
-                  expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('motherBirthDate')`
-                }
-              ],
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'dateFormatIsCorrect',
-                  parameters: []
-                },
-                {
-                  operation: 'dateInPast',
-                  parameters: []
-                },
-                {
-                  operation: 'isValidParentsBirthDate',
-                  parameters: [5]
-                }
-              ],
-              mapping: {
-                template: {
-                  operation: 'dateFormatTransformer',
-                  fieldName: 'motherBirthDate',
-                  parameters: ['birthDate', 'en', 'do MMMM yyyy']
-                },
-                mutation: {
-                  operation: 'longDateTransformer',
-                  parameters: ['birthDate']
-                },
-                query: {
-                  operation: 'fieldValueTransformer',
-                  parameters: ['birthDate']
-                }
-              }
-            },
-            {
-              name: 'exactDateOfBirthUnknown',
-              type: 'CHECKBOX',
-              label: {
-                defaultMessage: 'Exact date of birth unknown',
-                description: 'Checkbox for exact date of birth unknown',
-                id: 'form.field.label.exactDateOfBirthUnknown'
-              },
-              required: false,
-              hideInPreview: true,
-              hideHeader: true,
-              initialValue: false,
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!window.config.DATE_OF_BIRTH_UNKNOWN || (!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant)'
-                }
-              ],
-              mapping: {
-                query: {
-                  operation: 'booleanTransformer'
-                },
-                mutation: {
-                  operation: 'ignoreFieldTransformer'
-                }
-              }
-            },
-            {
-              name: 'ageOfIndividualInYears',
-              type: 'NUMBER',
-              label: formMessageDescriptors.ageOfMother,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'range',
-                  parameters: [12, 120]
-                },
-                {
-                  operation: 'maxLength',
-                  parameters: [3]
-                },
-                {
-                  operation: 'isValidParentsBirthDate',
-                  parameters: [5, true]
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.exactDateOfBirthUnknown || (!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant)'
-                }
-              ],
-              postfix: 'years',
-              inputFieldWidth: '78px'
-            },
-            {
-              name: 'firstNamesEng',
-              previewGroup: 'motherNameInEnglish',
-              type: 'TEXT',
-              label: formMessageDescriptors.firstName,
-              maxLength: 32,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'englishOnlyNameFormat'
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'disable',
-                  expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'motherFirstName',
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'firstNames']
-                },
-                mutation: {
-                  operation: 'fieldToNameTransformer',
-                  parameters: ['en', 'firstNames']
-                },
-                query: {
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'firstNames']
-                }
-              }
-            },
-            {
-              name: 'familyNameEng',
-              previewGroup: 'motherNameInEnglish',
-              type: 'TEXT',
-              label: formMessageDescriptors.familyName,
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'disable',
-                  expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
-                }
-              ],
-              maxLength: 32,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'englishOnlyNameFormat'
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'motherFamilyName',
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'familyName']
-                },
-                mutation: {
-                  operation: 'fieldToNameTransformer',
-                  parameters: ['en', 'familyName']
-                },
-                query: {
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'familyName']
-                }
-              }
-            },
+            ...getAddressSubsection(
+              AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
+              formMessageDescriptors.primaryAddress
+            ),
+            ...getAddress(AddressCases.PRIMARY_ADDRESS), // Required field.
             {
               name: 'seperator',
               type: 'SUBSECTION',
@@ -556,219 +401,16 @@ export const birthRegisterForms: ISerializedForm = {
               conditionals: [
                 {
                   action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
+                  expression: '!values.detailsExist'
                 }
               ]
             },
-            {
-              name: 'maritalStatus',
-              type: 'SELECT_WITH_OPTIONS',
-              label: {
-                defaultMessage: 'Marital status',
-                description: 'Label for form field: Marital status',
-                id: 'form.field.label.maritalStatus'
-              },
-              required: false,
-              initialValue: '',
-              validator: [],
-              placeholder: formMessageDescriptors.formSelectPlaceholder,
-              mapping: {
-                template: {
-                  fieldName: 'motherMaritalStatus',
-                  operation: 'selectTransformer'
-                }
-              },
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                }
-              ],
-              options: [
-                {
-                  value: 'SINGLE',
-                  label: {
-                    defaultMessage: 'Single',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusSingle'
-                  }
-                },
-                {
-                  value: 'MARRIED',
-                  label: {
-                    defaultMessage: 'Married',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusMarried'
-                  }
-                },
-                {
-                  value: 'WIDOWED',
-                  label: {
-                    defaultMessage: 'Widowed',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusWidowed'
-                  }
-                },
-                {
-                  value: 'DIVORCED',
-                  label: {
-                    defaultMessage: 'Divorced',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusDivorced'
-                  }
-                },
-                {
-                  value: 'SEPARATED',
-                  label: {
-                    id: 'form.field.label.maritalStatusSeparated',
-                    defaultMessage: 'Separated',
-                    description: 'Option for form field: Marital status'
-                  }
-                },
-                {
-                  value: 'NOT_STATED',
-                  label: {
-                    defaultMessage: 'Not stated',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusNotStated'
-                  }
-                }
-              ]
-            },
-            {
-              name: 'multipleBirth',
-              type: 'NUMBER',
-              label: {
-                defaultMessage: 'No. of previous births',
-                description: 'Label for form field: multipleBirth',
-                id: 'form.field.label.multipleBirth'
-              },
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                }
-              ],
-              required: false,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'greaterThanZero'
-                },
-                {
-                  operation: 'maxLength',
-                  parameters: [2]
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'multipleBirth',
-                  operation: 'plainInputTransformer'
-                }
-              }
-            },
-            {
-              name: 'occupation',
-              type: 'TEXT',
-              label: {
-                defaultMessage: 'Occupation',
-                description: 'text for occupation form field',
-                id: 'form.field.label.occupation'
-              },
-              required: false,
-              initialValue: '',
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'motherOccupation',
-                  operation: 'plainInputTransformer'
-                }
-              }
-            },
-            {
-              name: 'educationalAttainment',
-              type: 'SELECT_WITH_OPTIONS',
-              label: formMessageDescriptors.educationAttainment,
-              required: false,
-              initialValue: '',
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !mothersDetailsExistBasedOnContactAndInformant'
-                }
-              ],
-              placeholder: formMessageDescriptors.formSelectPlaceholder,
-              options: [
-                {
-                  value: 'NO_SCHOOLING',
-                  label: {
-                    defaultMessage: 'No schooling',
-                    description: 'Option for form field: no education',
-                    id: 'form.field.label.educationAttainmentNone'
-                  }
-                },
-                {
-                  value: 'PRIMARY_ISCED_1',
-                  label: {
-                    defaultMessage: 'Primary',
-                    description: 'Option for form field: ISCED1 education',
-                    id: 'form.field.label.educationAttainmentISCED1'
-                  }
-                },
-                {
-                  value: 'POST_SECONDARY_ISCED_4',
-                  label: {
-                    defaultMessage: 'Secondary',
-                    description: 'Option for form field: ISCED4 education',
-                    id: 'form.field.label.educationAttainmentISCED4'
-                  }
-                },
-                {
-                  value: 'FIRST_STAGE_TERTIARY_ISCED_5',
-                  label: {
-                    defaultMessage: 'Tertiary',
-                    description: 'Option for form field: ISCED5 education',
-                    id: 'form.field.label.educationAttainmentISCED5'
-                  }
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'motherEducationalAttainment',
-                  operation: 'selectTransformer'
-                }
-              }
-            }
-            // PRIMARY ADDRESS SUBSECTION
-            // PRIMARY ADDRESS
-            // SECONDARY ADDRESS SAME AS PRIMARY
-            // SECONDARY ADDRESS SUBSECTION
-            // SECONDARY ADDRESS
+            getMaritalStatus('motherMaritalStatus'),
+            multipleBirth,
+            getOccupation('motherOccupation'),
+            getEducation('motherEducationalAttainment')
           ],
-          previewGroups: [
-            {
-              id: 'motherNameInEnglish',
-              label: {
-                defaultMessage: 'Full name',
-                description: "Group label for mother's name in english",
-                id: 'form.preview.group.label.mother.english.name'
-              },
-              fieldToRedirect: 'familyNameEng',
-              delimiter: ' '
-            }
-          ]
+          previewGroups: [motherNameInEnglish]
         }
       ],
       mapping: {
@@ -795,345 +437,46 @@ export const birthRegisterForms: ISerializedForm = {
         {
           id: 'father-view-group',
           fields: [
-            {
-              name: 'detailsExist',
-              type: 'CHECKBOX',
-              label: formMessageDescriptors.fathersDetailsExist,
-              required: true,
-              checkedValue: false,
-              uncheckedValue: true,
-              hideHeader: true,
-              initialValue: true,
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression: 'fathersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'hideInPreview',
-                  expression: 'values.detailsExist'
-                }
-              ],
-              mapping: {
-                query: {
-                  operation: 'booleanTransformer'
-                }
-              }
-            },
-            {
-              name: 'reasonNotApplying',
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    'fathersDetailsExistBasedOnContactAndInformant || values.detailsExist'
-                }
-              ],
-              type: 'TEXT',
-              label: formMessageDescriptors.reasonNA,
-              validator: [],
-              initialValue: '',
-              required: true,
-              mapping: {
-                template: {
-                  fieldName: 'fatherReasonNotApplying',
-                  operation: 'plainInputTransformer'
-                }
-              }
-            },
-            {
-              name: 'nationality',
-              type: 'SELECT_WITH_OPTIONS',
-              label: formMessageDescriptors.nationality,
-              required: true,
-              initialValue: 'FAR',
-              validator: [],
-              placeholder: formMessageDescriptors.formSelectPlaceholder,
-              options: {
-                resource: 'countries'
-              },
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'fatherNationality',
-                  operation: 'nationalityTransformer'
-                },
-                mutation: {
-                  operation: 'fieldToArrayTransformer'
-                },
-                query: {
-                  operation: 'arrayToFieldTransformer'
-                }
-              }
-            },
-            {
-              name: 'iD',
-              type: 'TEXT',
-              label: formMessageDescriptors.iDTypeNationalID,
-              required: false,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'validIDNumber',
-                  parameters: ['NATIONAL_ID']
-                },
-                {
-                  operation: 'duplicateIDNumber',
-                  parameters: ['mother.iD']
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
-                },
-                nidIntegrationConditionals.hideIfNidIntegrationEnabled
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'fatherNID',
-                  operation: 'identityToFieldTransformer',
-                  parameters: ['id', 'NATIONAL_ID']
-                },
-                mutation: {
-                  operation: 'fieldToIdentityTransformer',
-                  parameters: ['id', 'NATIONAL_ID']
-                },
-                query: {
-                  operation: 'identityToFieldTransformer',
-                  parameters: ['id', 'NATIONAL_ID']
-                }
-              }
-            },
-            {
-              name: 'fatherNidVerification',
-              type: 'NID_VERIFICATION_BUTTON',
-              label: formMessageDescriptors.iDTypeNationalID,
-              required: true,
-              initialValue: '',
-              validator: [],
-              conditionals: [
-                nidIntegrationConditionals.hideIfNidIntegrationDisabled,
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'disable',
-                  expression: `values.fatherNidVerification`
-                }
-              ],
-              mapping: {
-                mutation: {
-                  operation: 'nidVerificationFieldToIdentityTransformer'
-                },
-                query: {
-                  operation: 'identityToNidVerificationFieldTransformer'
-                }
-              },
-              labelForVerified: formMessageDescriptors.nidVerified,
-              labelForUnverified: formMessageDescriptors.nidNotVerified,
-              labelForOffline: formMessageDescriptors.nidOffline
-            },
-            {
-              name: 'fatherBirthDate',
-              type: 'DATE',
-              label: formMessageDescriptors.dateOfBirth,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'dateFormatIsCorrect',
-                  parameters: []
-                },
-                {
-                  operation: 'dateInPast',
-                  parameters: []
-                },
-                {
-                  operation: 'isValidParentsBirthDate',
-                  parameters: [10]
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'disable',
-                  expression: 'values.exactDateOfBirthUnknown'
-                },
-                {
-                  action: 'disable',
-                  expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('fatherBirthDate')`
-                }
-              ],
-              mapping: {
-                template: {
-                  operation: 'dateFormatTransformer',
-                  fieldName: 'fatherBirthDate',
-                  parameters: ['birthDate', 'en', 'do MMMM yyyy']
-                },
-                mutation: {
-                  operation: 'longDateTransformer',
-                  parameters: ['birthDate']
-                },
-                query: {
-                  operation: 'fieldValueTransformer',
-                  parameters: ['birthDate']
-                }
-              }
-            },
-            {
-              name: 'exactDateOfBirthUnknown',
-              type: 'CHECKBOX',
-              label: {
-                defaultMessage: 'Exact date of birth unknown',
-                description: 'Checkbox for exact date of birth unknown',
-                id: 'form.field.label.exactDateOfBirthUnknown'
-              },
-              required: false,
-              hideInPreview: true,
-              hideHeader: true,
-              initialValue: false,
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!window.config.DATE_OF_BIRTH_UNKNOWN || (!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant)'
-                }
-              ],
-              mapping: {
-                query: {
-                  operation: 'booleanTransformer'
-                },
-                mutation: {
-                  operation: 'ignoreFieldTransformer'
-                }
-              }
-            },
-            {
-              name: 'ageOfIndividualInYears',
-              type: 'NUMBER',
-              label: formMessageDescriptors.ageOfFather,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'range',
-                  parameters: [12, 120]
-                },
-                {
-                  operation: 'maxLength',
-                  parameters: [3]
-                },
-                {
-                  operation: 'isValidParentsBirthDate',
-                  parameters: [10, true]
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.exactDateOfBirthUnknown || (!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant)'
-                }
-              ],
-              postfix: 'years',
-              inputFieldWidth: '78px'
-            },
-            {
-              name: 'firstNamesEng',
-              previewGroup: 'fatherNameInEnglish',
-              type: 'TEXT',
-              label: formMessageDescriptors.firstName,
-              maxLength: 32,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'englishOnlyNameFormat'
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'disable',
-                  expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'fatherFirstName',
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'firstNames']
-                },
-                mutation: {
-                  operation: 'fieldToNameTransformer',
-                  parameters: ['en', 'firstNames']
-                },
-                query: {
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'firstNames']
-                }
-              }
-            },
-            {
-              name: 'familyNameEng',
-              previewGroup: 'fatherNameInEnglish',
-              type: 'TEXT',
-              label: formMessageDescriptors.familyName,
-              maxLength: 32,
-              required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'englishOnlyNameFormat'
-                }
-              ],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
-                },
-                {
-                  action: 'disable',
-                  expression: `draftData?.father?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'fatherFamilyName',
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'familyName']
-                },
-                mutation: {
-                  operation: 'fieldToNameTransformer',
-                  parameters: ['en', 'familyName']
-                },
-                query: {
-                  operation: 'nameToFieldTransformer',
-                  parameters: ['en', 'familyName']
-                }
-              }
-            },
+            getDetailsExist(
+              formMessageDescriptors.fathersDetailsExist,
+              fathersDetailsExistConditionals
+            ), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getBirthDate(
+              'fatherBirthDate',
+              fathersBirthDateConditionals,
+              parentsBirthDateValidators,
+              'fatherBirthDate'
+            ), // Required field.
+            exactDateOfBirthUnknown,
+            getAgeOfIndividualInYears(formMessageDescriptors.ageOfFather),
+            getFirstNameField(
+              'fatherNameInEnglish',
+              fatherFirstNameConditionals,
+              'fatherFirstName'
+            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
+            getFamilyNameField(
+              'fatherNameInEnglish',
+              fatherFamilyNameConditionals,
+              'fatherFamilyName'
+            ), // Required field.
+            getNationality('fatherNationality'), // Required field.
+            getNationalID(
+              'iD',
+              hideIfNidIntegrationEnabled,
+              getNationalIDValidators('father'),
+              'fatherNID'
+            ),
+            getNIDVerificationButton(
+              'fatherNidVerification',
+              hideIfNidIntegrationDisabled.concat(fatherNationalIDVerfication),
+              []
+            ),
+            ...getAddressSubsection(
+              AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
+              formMessageDescriptors.primaryAddress
+            ),
+            ...getAddress(AddressCases.PRIMARY_ADDRESS), // Required field.
             {
               name: 'seperator',
               type: 'SUBSECTION',
@@ -1148,187 +491,16 @@ export const birthRegisterForms: ISerializedForm = {
               conditionals: [
                 {
                   action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
+                  expression: '!values.detailsExist'
                 }
               ]
             },
-            {
-              name: 'maritalStatus',
-              type: 'SELECT_WITH_OPTIONS',
-              label: {
-                defaultMessage: 'Marital status',
-                description: 'Label for form field: Marital status',
-                id: 'form.field.label.maritalStatus'
-              },
-              required: false,
-              initialValue: '',
-              validator: [],
-              placeholder: formMessageDescriptors.formSelectPlaceholder,
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'fatherMaritalStatus',
-                  operation: 'selectTransformer'
-                }
-              },
-              options: [
-                {
-                  value: 'SINGLE',
-                  label: {
-                    defaultMessage: 'Unmarried',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusSingle'
-                  }
-                },
-                {
-                  value: 'MARRIED',
-                  label: {
-                    defaultMessage: 'Married',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusMarried'
-                  }
-                },
-                {
-                  value: 'WIDOWED',
-                  label: {
-                    defaultMessage: 'Widowed',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusWidowed'
-                  }
-                },
-                {
-                  value: 'DIVORCED',
-                  label: {
-                    defaultMessage: 'Divorced',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusDivorced'
-                  }
-                },
-                {
-                  value: 'SEPARATED',
-                  label: {
-                    id: 'form.field.label.maritalStatusSeparated',
-                    defaultMessage: 'Separated',
-                    description: 'Option for form field: Marital status'
-                  }
-                },
-                {
-                  value: 'NOT_STATED',
-                  label: {
-                    defaultMessage: 'Not stated',
-                    description: 'Option for form field: Marital status',
-                    id: 'form.field.label.maritalStatusNotStated'
-                  }
-                }
-              ]
-            },
-            {
-              name: 'occupation',
-              type: 'TEXT',
-              label: {
-                defaultMessage: 'Occupation',
-                description: 'text for occupation form field',
-                id: 'form.field.label.occupation'
-              },
-              required: false,
-              initialValue: '',
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'fatheroccupation',
-                  operation: 'plainInputTransformer'
-                }
-              }
-            },
-            {
-              name: 'educationalAttainment',
-              type: 'SELECT_WITH_OPTIONS',
-              label: formMessageDescriptors.educationAttainment,
-              required: false,
-              initialValue: '',
-              validator: [],
-              placeholder: formMessageDescriptors.formSelectPlaceholder,
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression:
-                    '!values.detailsExist && !fathersDetailsExistBasedOnContactAndInformant'
-                }
-              ],
-              options: [
-                {
-                  value: 'NO_SCHOOLING',
-                  label: {
-                    defaultMessage: 'No schooling',
-                    description: 'Option for form field: no education',
-                    id: 'form.field.label.educationAttainmentNone'
-                  }
-                },
-                {
-                  value: 'PRIMARY_ISCED_1',
-                  label: {
-                    defaultMessage: 'Primary',
-                    description: 'Option for form field: ISCED1 education',
-                    id: 'form.field.label.educationAttainmentISCED1'
-                  }
-                },
-                {
-                  value: 'POST_SECONDARY_ISCED_4',
-                  label: {
-                    defaultMessage: 'Secondary',
-                    description: 'Option for form field: ISCED4 education',
-                    id: 'form.field.label.educationAttainmentISCED4'
-                  }
-                },
-                {
-                  value: 'FIRST_STAGE_TERTIARY_ISCED_5',
-                  label: {
-                    defaultMessage: 'Tertiary',
-                    description: 'Option for form field: ISCED5 education',
-                    id: 'form.field.label.educationAttainmentISCED5'
-                  }
-                }
-              ],
-              mapping: {
-                template: {
-                  fieldName: 'fatherEducationalAttainment',
-                  operation: 'selectTransformer'
-                }
-              }
-            }
-            // PRIMARY ADDRESS SAME AS MOTHER
-            // PRIMARY ADDRESS SUBSECTION
-            // PRIMARY ADDRESS
-            // SECONDARY ADDRESS SAME AS MOTHER
-            // SECONDARY ADDRESS SUBSECTION
-            // SECONDARY ADDRESS
+            getMaritalStatus('fatherMaritalStatus'),
+            multipleBirth,
+            getOccupation('fatherOccupation'),
+            getEducation('fatherEducationalAttainment')
           ],
-          previewGroups: [
-            {
-              id: 'fatherNameInEnglish',
-              label: {
-                defaultMessage: 'Full name',
-                description: "Group label for father's name in english",
-                id: 'form.preview.group.label.father.english.name'
-              },
-              fieldToRedirect: 'familyNameEng',
-              delimiter: ' '
-            }
-          ]
+          previewGroups: [fatherNameInEnglish]
         }
       ],
       mapping: {
