@@ -225,11 +225,14 @@ export const detailsExist = [
   }
 ]
 
+// if informant is not mother or father
+export const informantNotMotherOrFather =
+  '((values.informantType==="MOTHER") || (values.informantType==="FATHER") || (!values.informantType))'
+
 export const hideIfInformantMotherOrFather = [
   {
     action: 'hide',
-    expression:
-      '((values.informantType==="MOTHER") || (values.informantType==="FATHER"))'
+    expression: informantNotMotherOrFather
   }
 ]
 
@@ -252,9 +255,9 @@ export const mothersDetailsExistConditionals = [
 ]
 
 export const FATHER_DETAILS_DONT_EXIST =
-  '!draftData?.father.detailsExist || !values.detailsExist'
+  '(draftData?.father && !draftData?.father.detailsExist) || !values.detailsExist'
 export const MOTHER_DETAILS_DONT_EXIST =
-  '!draftData?.mother.detailsExist || !values.detailsExist'
+  '(draftData?.mother && !draftData?.mother.detailsExist) || !values.detailsExist'
 
 export const fathersDetailsExistConditionals = [
   {
@@ -361,10 +364,6 @@ export const mothersDetailsDontExist = '!values.detailsExist'
 
 // if fathers details do not exist
 export const fathersDetailsDontExist = '!values.detailsExist'
-
-// if informant is not mother or father
-export const informantNotMotherOrFather =
-  '((values.informantType==="MOTHER") || (values.informantType==="FATHER"))'
 
 // primary address same as other primary
 export const primaryAddressSameAsOtherPrimaryAddress =

@@ -102,11 +102,11 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.informantSecondaryAddress,
-        conditionalCase: `((${secondaryAddressesDisabled}) && ${informantNotMotherOrFather})`
+        conditionalCase: `((${secondaryAddressesDisabled}) || (${informantNotMotherOrFather}))`
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        conditionalCase: `((${secondaryAddressesDisabled}) && ${informantNotMotherOrFather})`
+        conditionalCase: `((${secondaryAddressesDisabled}) || (${informantNotMotherOrFather}))`
       }
     ]
   },
@@ -125,11 +125,11 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.secondaryAddress,
-        conditionalCase: `${MOTHER_DETAILS_DONT_EXIST} || (${secondaryAddressesDisabled})`
+        conditionalCase: `${MOTHER_DETAILS_DONT_EXIST} || ${secondaryAddressesDisabled}`
       },
       {
         config: AddressCases.SECONDARY_ADDRESS,
-        conditionalCase: `${MOTHER_DETAILS_DONT_EXIST} || (${secondaryAddressesDisabled})`
+        conditionalCase: `${MOTHER_DETAILS_DONT_EXIST} || ${secondaryAddressesDisabled}`
       }
     ]
   },
