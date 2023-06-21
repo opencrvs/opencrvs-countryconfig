@@ -218,7 +218,6 @@ export async function createServer() {
           ? '/client-configs/client-config.prod.js'
           : '/client-configs/client-config.js'
 
-      // @ts-ignore
       return h.file(join(__dirname, file))
     },
     options: {
@@ -236,13 +235,40 @@ export async function createServer() {
         process.env.NODE_ENV === 'production'
           ? '/client-configs/login-config.prod.js'
           : '/client-configs/login-config.js'
-      // @ts-ignore
       return h.file(join(__dirname, file))
     },
     options: {
       auth: false,
       tags: ['api'],
       description: 'Serves login client configuration as a static file'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/validators.js',
+    handler: (_, h) => {
+      const file = '/features/config/form/validators.js'
+      return h.file(join(__dirname, file))
+    },
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves validation functions as JS'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/conditionals.js',
+    handler: (_, h) => {
+      const file = '/features/config/form/conditionals.js'
+      return h.file(join(__dirname, file))
+    },
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves conditionals as JS'
     }
   })
 
