@@ -354,6 +354,21 @@
         rule: allow
         name: OpenSSH
 
+    - name: 'Install Fail2Ban'
+      apt:
+        name: fail2ban
+        state: present
+
+    - name: 'Copy fail2ban jail.local'
+      copy:
+        src: ../jail.local
+        dest: /etc/fail2ban/
+
+    - name: 'Start fail2ban and reload jail.local'
+      service:
+        name: fail2ban
+        state: restarted
+
     - name: 'Copy logrotate script'
       copy:
         src: ../logrotate.conf
