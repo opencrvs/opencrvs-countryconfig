@@ -22,7 +22,8 @@ import {
   AllowedAddressConfigurations,
   IAddressConfiguration,
   getFieldIdentifiers,
-  getLocationSelect,
+  getAddrressFhirPropertyLocationSelect,
+  getAddressLineLocationSelect,
   getPlaceOfEventLocationSelect,
   sentenceCase
 } from './address-utils'
@@ -468,35 +469,35 @@ export function getAddress(
 function getAdminLevelSelects(useCase: string): SerializedFormField[] {
   switch (ADMIN_LEVELS) {
     case 1:
-      return [getLocationSelect('state', useCase, 0)]
+      return [getAddrressFhirPropertyLocationSelect('state', useCase)]
     case 2:
       return [
-        getLocationSelect('state', useCase, 0),
-        getLocationSelect('district', useCase, 0)
+        getAddrressFhirPropertyLocationSelect('state', useCase),
+        getAddrressFhirPropertyLocationSelect('district', useCase)
       ]
     case 3:
       return [
-        getLocationSelect('state', useCase, 0),
-        getLocationSelect('district', useCase, 0),
-        getLocationSelect('locationLevel3', useCase, 10)
+        getAddrressFhirPropertyLocationSelect('state', useCase),
+        getAddrressFhirPropertyLocationSelect('district', useCase),
+        getAddressLineLocationSelect('locationLevel3', useCase, 10)
       ]
     case 4:
       return [
-        getLocationSelect('state', useCase, 0),
-        getLocationSelect('district', useCase, 0),
-        getLocationSelect('locationLevel3', useCase, 10),
-        getLocationSelect('locationLevel4', useCase, 11)
+        getAddrressFhirPropertyLocationSelect('state', useCase),
+        getAddrressFhirPropertyLocationSelect('district', useCase),
+        getAddressLineLocationSelect('locationLevel3', useCase, 10),
+        getAddressLineLocationSelect('locationLevel4', useCase, 11)
       ]
     case 5:
       return [
-        getLocationSelect('state', useCase, 0),
-        getLocationSelect('district', useCase, 0),
-        getLocationSelect('locationLevel3', useCase, 10),
-        getLocationSelect('locationLevel4', useCase, 11),
-        getLocationSelect('locationLevel5', useCase, 12)
+        getAddrressFhirPropertyLocationSelect('state', useCase),
+        getAddrressFhirPropertyLocationSelect('district', useCase),
+        getAddressLineLocationSelect('locationLevel3', useCase, 10),
+        getAddressLineLocationSelect('locationLevel4', useCase, 11),
+        getAddressLineLocationSelect('locationLevel5', useCase, 12)
       ]
     default:
-      return [getLocationSelect('state', useCase, 0)]
+      return [getAddrressFhirPropertyLocationSelect('state', useCase)]
   }
 }
 
@@ -505,35 +506,35 @@ function getPlaceOfEventAdminLevelSelects(
 ): SerializedFormField[] {
   switch (ADMIN_LEVELS) {
     case 1:
-      return [getPlaceOfEventLocationSelect('state', configCase, 0)]
+      return [getPlaceOfEventLocationSelect('state', configCase)]
     case 2:
       return [
-        getPlaceOfEventLocationSelect('state', configCase, 0),
-        getPlaceOfEventLocationSelect('district', configCase, 0)
+        getPlaceOfEventLocationSelect('state', configCase),
+        getPlaceOfEventLocationSelect('district', configCase)
       ]
     case 3:
       return [
-        getPlaceOfEventLocationSelect('state', configCase, 0),
-        getPlaceOfEventLocationSelect('district', configCase, 0),
+        getPlaceOfEventLocationSelect('state', configCase),
+        getPlaceOfEventLocationSelect('district', configCase),
         getPlaceOfEventLocationSelect('locationLevel3', configCase, 10)
       ]
     case 4:
       return [
-        getPlaceOfEventLocationSelect('state', configCase, 0),
-        getPlaceOfEventLocationSelect('district', configCase, 0),
+        getPlaceOfEventLocationSelect('state', configCase),
+        getPlaceOfEventLocationSelect('district', configCase),
         getPlaceOfEventLocationSelect('locationLevel3', configCase, 10),
         getPlaceOfEventLocationSelect('locationLevel4', configCase, 11)
       ]
     case 5:
       return [
-        getPlaceOfEventLocationSelect('state', configCase, 0),
-        getPlaceOfEventLocationSelect('district', configCase, 0),
+        getPlaceOfEventLocationSelect('state', configCase),
+        getPlaceOfEventLocationSelect('district', configCase),
         getPlaceOfEventLocationSelect('locationLevel3', configCase, 10),
         getPlaceOfEventLocationSelect('locationLevel4', configCase, 11),
         getPlaceOfEventLocationSelect('locationLevel5', configCase, 12)
       ]
     default:
-      return [getPlaceOfEventLocationSelect('state', configCase, 0)]
+      return [getPlaceOfEventLocationSelect('state', configCase)]
   }
 }
 
@@ -576,12 +577,12 @@ export function getAddressCaseFields(
           parameters: [addressCase, 'country']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 0, 'country']
+          operation: 'fieldToAddressFhirPropertyTransformer',
+          parameters: [addressCase, 'country']
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 0, 'country']
+          operation: 'addressFhirPropertyToFieldTransformer',
+          parameters: [addressCase, 'country']
         }
       }
     },
@@ -632,12 +633,12 @@ export function getAddressCaseFields(
       ]),
       mapping: {
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 6]
+          operation: 'fieldToAddressLineTransformer',
+          parameters: [addressCase, 5]
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 6]
+          operation: 'addressLineToFieldTransformer',
+          parameters: [addressCase, 5]
         }
       }
     },
@@ -677,12 +678,12 @@ export function getAddressCaseFields(
           parameters: [addressCase, 'city']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 0, 'city']
+          operation: 'fieldToAddressFhirPropertyTransformer',
+          parameters: [addressCase, 'city']
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 0, 'city']
+          operation: 'addressFhirPropertyToFieldTransformer',
+          parameters: [addressCase, 'city']
         }
       }
     },
@@ -719,15 +720,15 @@ export function getAddressCaseFields(
         template: {
           fieldName: `addressLine3UrbanOption${sentenceCase(useCase)}`,
           operation: 'addressLineTemplateTransformer',
-          parameters: [addressCase, 3, 'addressLine3']
+          parameters: [addressCase, 2, 'addressLine3']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 3]
+          operation: 'fieldToAddressLineTransformer',
+          parameters: [addressCase, 2]
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 3]
+          operation: 'addressLineToFieldTransformer',
+          parameters: [addressCase, 2]
         }
       }
     },
@@ -764,15 +765,15 @@ export function getAddressCaseFields(
         template: {
           fieldName: `addressLine2UrbanOption${sentenceCase(useCase)}`,
           operation: 'addressLineTemplateTransformer',
-          parameters: [addressCase, 2, 'addressLine2']
+          parameters: [addressCase, 1, 'addressLine2']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 2]
+          operation: 'fieldToAddressLineTransformer',
+          parameters: [addressCase, 1]
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 2]
+          operation: 'addressLineToFieldTransformer',
+          parameters: [addressCase, 1]
         }
       }
     },
@@ -809,15 +810,15 @@ export function getAddressCaseFields(
         template: {
           fieldName: `numberUrbanOption${sentenceCase(useCase)}`,
           operation: 'addressLineTemplateTransformer',
-          parameters: [addressCase, 1, 'number']
+          parameters: [addressCase, 0, 'number']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 1]
+          operation: 'fieldToAddressLineTransformer',
+          parameters: [addressCase, 0]
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 1]
+          operation: 'addressLineToFieldTransformer',
+          parameters: [addressCase, 0]
         }
       }
     },
@@ -857,12 +858,12 @@ export function getAddressCaseFields(
           parameters: [addressCase, 'postalCode']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 0, 'postalCode']
+          operation: 'fieldToAddressFhirPropertyTransformer',
+          parameters: [addressCase, 'postalCode']
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 0, 'postalCode']
+          operation: 'addressFhirPropertyToFieldTransformer',
+          parameters: [addressCase, 'postalCode']
         }
       }
     },
@@ -899,15 +900,15 @@ export function getAddressCaseFields(
         template: {
           fieldName: `addressLine5${sentenceCase(useCase)}`,
           operation: 'addressLineTemplateTransformer',
-          parameters: [addressCase, 5, 'addressLine5']
+          parameters: [addressCase, 4, 'addressLine5']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 5]
+          operation: 'fieldToAddressLineTransformer',
+          parameters: [addressCase, 4]
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 5]
+          operation: 'addressLineToFieldTransformer',
+          parameters: [addressCase, 4]
         }
       }
     },
@@ -941,12 +942,12 @@ export function getAddressCaseFields(
           parameters: [addressCase, 'state']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 0, 'state']
+          operation: 'fieldToAddressFhirPropertyTransformer',
+          parameters: [addressCase, 'state']
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 0, 'state']
+          operation: 'addressFhirPropertyToFieldTransformer',
+          parameters: [addressCase, 'state']
         }
       }
     },
@@ -980,12 +981,12 @@ export function getAddressCaseFields(
           parameters: [addressCase, 'district']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 0, 'district']
+          operation: 'fieldToAddressFhirPropertyTransformer',
+          parameters: [addressCase, 'district']
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 0, 'district']
+          operation: 'addressFhirPropertyToFieldTransformer',
+          parameters: [addressCase, 'district']
         }
       }
     },
@@ -1019,12 +1020,12 @@ export function getAddressCaseFields(
           parameters: [addressCase, 'city']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 0, 'city']
+          operation: 'fieldToAddressFhirPropertyTransformer',
+          parameters: [addressCase, 'city']
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 0, 'city']
+          operation: 'addressFhirPropertyToFieldTransformer',
+          parameters: [addressCase, 'city']
         }
       }
     },
@@ -1055,15 +1056,15 @@ export function getAddressCaseFields(
         template: {
           fieldName: `internationalAddressLine1${sentenceCase(useCase)}`,
           operation: 'addressLineTemplateTransformer',
-          parameters: [addressCase, 7, 'addressLine1']
+          parameters: [addressCase, 6, 'addressLine1']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 7]
+          operation: 'fieldToAddressLineTransformer',
+          parameters: [addressCase, 6]
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 7]
+          operation: 'addressLineToFieldTransformer',
+          parameters: [addressCase, 6]
         }
       }
     },
@@ -1090,15 +1091,15 @@ export function getAddressCaseFields(
         template: {
           fieldName: `internationalAddressLine2${sentenceCase(useCase)}`,
           operation: 'addressLineTemplateTransformer',
-          parameters: [addressCase, 8, 'addressLine2']
+          parameters: [addressCase, 7, 'addressLine2']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 8]
+          operation: 'fieldToAddressLineTransformer',
+          parameters: [addressCase, 7]
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 8]
+          operation: 'addressLineToFieldTransformer',
+          parameters: [addressCase, 7]
         }
       }
     },
@@ -1125,15 +1126,15 @@ export function getAddressCaseFields(
         template: {
           fieldName: `internationalAddressLine3${sentenceCase(useCase)}`,
           operation: 'addressLineTemplateTransformer',
-          parameters: [addressCase, 9, 'addressLine3']
+          parameters: [addressCase, 8, 'addressLine3']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 9]
+          operation: 'fieldToAddressLineTransformer',
+          parameters: [addressCase, 8]
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 9]
+          operation: 'addressLineToFieldTransformer',
+          parameters: [addressCase, 8]
         }
       }
     },
@@ -1167,12 +1168,12 @@ export function getAddressCaseFields(
           parameters: [addressCase, 'postalCode']
         },
         mutation: {
-          operation: 'fieldToAddressTransformer',
-          parameters: [addressCase, 0, 'postalCode']
+          operation: 'fieldToAddressFhirPropertyTransformer',
+          parameters: [addressCase, 'postalCode']
         },
         query: {
-          operation: 'addressToFieldTransformer',
-          parameters: [addressCase, 0, 'postalCode']
+          operation: 'addressFhirPropertyToFieldTransformer',
+          parameters: [addressCase, 'postalCode']
         }
       }
     }
@@ -1225,11 +1226,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: []
+          parameters: [{ transformedFieldName: 'country' }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: []
+          parameters: [{ transformedFieldName: 'country' }]
         }
       }
     },
@@ -1291,11 +1292,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [6]
+          parameters: [{ lineNumber: 5 }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [6]
+          parameters: [{ lineNumber: 5 }]
         }
       }
     },
@@ -1346,11 +1347,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [0, 'city']
+          parameters: [{ transformedFieldName: 'city' }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [0, 'city']
+          parameters: [{ transformedFieldName: 'city' }]
         }
       }
     },
@@ -1392,7 +1393,7 @@ export function getPlaceOfEventAddressFields(
         template: {
           fieldName: configCase,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [3, `${configCase}AddressLine3`]
+          parameters: [2, `${configCase}AddressLine3`]
         },
         mutation: {
           operation:
@@ -1401,11 +1402,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [3]
+          parameters: [{ lineNumber: 2 }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [3]
+          parameters: [{ lineNumber: 2 }]
         }
       }
     },
@@ -1447,7 +1448,7 @@ export function getPlaceOfEventAddressFields(
         template: {
           fieldName: configCase,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [2, `${configCase}AddressLine2`]
+          parameters: [1, `${configCase}AddressLine2`]
         },
         mutation: {
           operation:
@@ -1456,11 +1457,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [2]
+          parameters: [{ lineNumber: 1 }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [2]
+          parameters: [{ lineNumber: 1 }]
         }
       }
     },
@@ -1502,7 +1503,7 @@ export function getPlaceOfEventAddressFields(
         template: {
           fieldName: configCase,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [1, `${configCase}Number`]
+          parameters: [0, `${configCase}Number`]
         },
         mutation: {
           operation:
@@ -1511,11 +1512,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [1]
+          parameters: [{ lineNumber: 0 }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [1]
+          parameters: [{ lineNumber: 0 }]
         }
       }
     },
@@ -1566,11 +1567,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [0, 'postalCode']
+          parameters: [{ transformedFieldName: 'postalCode' }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [0, 'postalCode']
+          parameters: [{ transformedFieldName: 'postalCode' }]
         }
       }
     },
@@ -1612,7 +1613,7 @@ export function getPlaceOfEventAddressFields(
         template: {
           fieldName: configCase,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [5, `${configCase}AddressLine5`]
+          parameters: [4, `${configCase}AddressLine5`]
         },
         mutation: {
           operation:
@@ -1621,11 +1622,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [5]
+          parameters: [{ lineNumber: 4 }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [5]
+          parameters: [{ lineNumber: 4 }]
         }
       }
     },
@@ -1668,13 +1669,12 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [0, 'state']
+          parameters: [{ transformedFieldName: 'state' }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
           parameters: [
-            0,
-            'state',
+            { transformedFieldName: 'state' },
             {
               fieldsToIgnoreForLocalAddress: [
                 'internationalDistrict',
@@ -1725,13 +1725,12 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [0, 'district']
+          parameters: [{ transformedFieldName: 'district' }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
           parameters: [
-            0,
-            'district',
+            { transformedFieldName: 'district' },
             {
               fieldsToIgnoreForLocalAddress: [
                 'internationalDistrict',
@@ -1777,11 +1776,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [0, 'city']
+          parameters: [{ transformedFieldName: 'city' }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [0, 'city']
+          parameters: [{ transformedFieldName: 'city' }]
         }
       }
     },
@@ -1815,7 +1814,7 @@ export function getPlaceOfEventAddressFields(
         template: {
           fieldName: configCase,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [7, `${configCase}AddressLine1`]
+          parameters: [6, `${configCase}AddressLine1`]
         },
         mutation: {
           operation:
@@ -1824,11 +1823,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [7]
+          parameters: [{ lineNumber: 6 }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [7]
+          parameters: [{ lineNumber: 6 }]
         }
       }
     },
@@ -1862,7 +1861,7 @@ export function getPlaceOfEventAddressFields(
         template: {
           fieldName: configCase,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [8, `${configCase}AddressLine2`]
+          parameters: [7, `${configCase}AddressLine2`]
         },
         mutation: {
           operation:
@@ -1871,11 +1870,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [8]
+          parameters: [{ lineNumber: 7 }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [8]
+          parameters: [{ lineNumber: 7 }]
         }
       }
     },
@@ -1909,7 +1908,7 @@ export function getPlaceOfEventAddressFields(
         template: {
           fieldName: configCase,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [9, `${configCase}AddressLine3`]
+          parameters: [8, `${configCase}AddressLine3`]
         },
         mutation: {
           operation:
@@ -1918,11 +1917,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [9]
+          parameters: [{ lineNumber: 8 }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [9]
+          parameters: [{ lineNumber: 8 }]
         }
       }
     },
@@ -1960,11 +1959,11 @@ export function getPlaceOfEventAddressFields(
               : configCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
-          parameters: [0, 'postalCode']
+          parameters: [{ transformedFieldName: 'postalCode' }]
         },
         query: {
           operation: 'eventLocationQueryTransformer',
-          parameters: [0, 'postalCode']
+          parameters: [{ transformedFieldName: 'postalCode' }]
         }
       }
     }

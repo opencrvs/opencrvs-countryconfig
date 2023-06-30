@@ -259,7 +259,7 @@ export const getPlaceOfBirthFields = (): SerializedFormField[] => [
     mapping: {
       mutation: {
         operation: 'birthEventLocationMutationTransformer',
-        parameters: []
+        parameters: [{}]
       },
       query: {
         operation: 'eventLocationTypeQueryTransformer',
@@ -298,7 +298,7 @@ export const getPlaceOfBirthFields = (): SerializedFormField[] => [
       },
       mutation: {
         operation: 'birthEventLocationMutationTransformer',
-        parameters: []
+        parameters: [{}]
       },
       query: {
         operation: 'eventLocationIDQueryTransformer',
