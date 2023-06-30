@@ -257,8 +257,6 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true
-    ports:
-      - 9200:9200
     networks:
       - overlay_net
     logging:
@@ -357,9 +355,6 @@ services:
     command: logstash -f /etc/logstash/logstash.conf --verbose
     depends_on:
       - elasticsearch
-    ports:
-      - '12201:12201'
-      - '12201:12201/udp'
     configs:
       - source: logstash-pipeline.{{ts}}
         target: /etc/logstash/logstash.conf
@@ -385,8 +380,6 @@ services:
     cap_add: ['CHOWN', 'DAC_OVERRIDE', 'SETGID', 'SETUID']
     cap_drop: ['ALL']
     restart: always
-    ports:
-      - 8200:8200
     networks:
       - overlay_net
     deploy:
@@ -519,6 +512,8 @@ services:
       replicas: 1
     environment:
       - APN_SERVICE_URL=http://apm-server:8200
+      - COUNTRY_LOGO_URL=https://countryconfig.{{hostname}}/content/country-logo
+      - LOGIN_URL=https://login.{{hostname}}
     networks:
       - overlay_net
     logging:

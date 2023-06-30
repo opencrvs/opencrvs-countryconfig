@@ -25,7 +25,8 @@ import {
 import {
   SMS_PROVIDER,
   USER_NOTIFICATION_DELIVERY_METHOD,
-  COUNTRY_LOGO_URL
+  COUNTRY_LOGO_URL,
+  LOGIN_URL
 } from './constant'
 import { logger } from '@countryconfig/logger'
 import { getApplicationConfig } from '../utils'
@@ -87,11 +88,12 @@ export async function notificationHandler(
   )
   const applicationName = (await getApplicationConfig()).APPLICATION_NAME
   const countryLogo = COUNTRY_LOGO_URL
+  const loginURL = LOGIN_URL
   switch (notificationMethod) {
     case 'email':
       await sendEmail(
         templateName.email as EmailTemplateType,
-        { ...variables, applicationName, countryLogo },
+        { ...variables, applicationName, countryLogo, loginURL },
         recipient.email as string
       )
       break

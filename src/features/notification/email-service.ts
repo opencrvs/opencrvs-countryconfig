@@ -37,6 +37,7 @@ type OnboardingInviteVariables = {
   applicationName: string
   completeSetupUrl: string
   countryLogo: string
+  loginURL: string
 }
 type TwoFactorAuthenticationVariables = {
   firstNames: string

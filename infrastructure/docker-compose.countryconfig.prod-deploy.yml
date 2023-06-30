@@ -30,7 +30,7 @@ services:
       - CHECK_INVALID_TOKEN=true
       - HOSTNAME=${HOSTNAME}
       - USER_NOTIFICATION_DELIVERY_METHOD=sms
-      - COUNTRY_LOGO_URL=https://countryconfig.{{hostname}}/content/country-logo
+      - EMAIL_API_KEY=${EMAIL_API_KEY}
       #- SMS_PROVIDER=
       #- CLICKATELL_USER_PATH=
       #- CLICKATELL_PASSWORD_PATH=
@@ -53,6 +53,7 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - COUNTRY=FAR
       - USER_NOTIFICATION_DELIVERY_METHOD=sms
 
   workflow:

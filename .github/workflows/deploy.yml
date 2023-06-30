@@ -57,17 +57,33 @@ jobs:
           git checkout ${{ github.event.inputs.core-image-tag }}
           echo "CORE_VERSION=${{ github.event.inputs.core-image-tag }}" >> $GITHUB_ENV
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+  
+      - name: Wait for images to be available
+        run: |
+          while true; do
+            if docker manifest inspect opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}; then
+              break
+            fi
+            sleep 10
+          done
+          while true; do
+            if docker manifest inspect opencrvs/ocrvs-farajaland:${{ github.event.inputs.countryconfig-image-tag }}; then
+              break
+            fi
+            sleep 10
+          done
+  
 
       - name: Deploy to QA
         if: ${{ github.event.inputs.environment == 'qa' }}
@@ -114,6 +130,7 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=production --host=${{ env.PRODUCTION_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
@@ -138,6 +155,7 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=development --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}

@@ -27,7 +27,6 @@
           - mongodb_admin_username is defined
           - mongodb_admin_password is defined
           - elasticsearch_superuser_password is defined
-          - country_config_path is defined
           - disk_encryption_key is defined
           - encrypted_disk_size is defined
 
@@ -355,6 +354,21 @@
         rule: allow
         name: OpenSSH
 
+    - name: 'Install Fail2Ban'
+      apt:
+        name: fail2ban
+        state: present
+
+    - name: 'Copy fail2ban jail.local'
+      copy:
+        src: ../jail.local
+        dest: /etc/fail2ban/
+
+    - name: 'Start fail2ban and reload jail.local'
+      service:
+        name: fail2ban
+        state: restarted
+
     - name: 'Copy logrotate script'
       copy:
         src: ../logrotate.conf
@@ -392,7 +406,112 @@
         default: deny
         direction: incoming
 
-    - include_tasks: '{{ country_config_path }}/playbook.yml'
+    - name: 'Create secrets directory'
+      file:
+        path: /data/secrets
+        state: directory
+        group: 1000
+        owner: 1000
+        mode: g+rwx
+
+    - name: Save secrets into encrypted folder for access by scripts
+      ansible.builtin.copy:
+        dest: /data/secrets/opencrvs.secrets
+        group: 1000
+        owner: 1000
+        mode: g+rwx
+        content: |
+          MONGODB_ADMIN_PASSWORD={{ mongodb_admin_password }}
+          MONGODB_ADMIN_USER={{ mongodb_admin_username }}
+          ELASTICSEARCH_ADMIN_PASSWORD={{elasticsearch_superuser_password}}
+          ELASTICSEARCH_ADMIN_USER=elastic
+
+    - name: Save disk encryption key into a file as an example (in production use a hardware security module)
+      ansible.builtin.copy:
+        dest: /root/disk-encryption-key.txt
+        group: 1000
+        owner: 1000
+        mode: g+rwx
+        content: |
+          DISK_ENCRYPTION_KEY={{ disk_encryption_key }}
+
+    - name: Copy reboot.service systemd file. Must decrypt disk on reboot
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/reboot.service
+        group: 1000
+        owner: 1000
+        mode: g+rwx
+        content: |
+          [Unit]
+          Description=Mount encrypted dir
+
+          [Service]
+          ExecStart=bash /opt/opencrvs/infrastructure/cryptfs/decrypt.sh -key /root/disk-encryption-key.txt >> /var/log/cryptfs-reboot.log 2>&1
+
+          [Install]
+          WantedBy=multi-user.target
+      when: encryptedFileSystemPostCheck.stat.exists
+
+    - name: 'Setup systemd to mount encrypted folder'
+      shell: systemctl daemon-reload && systemctl enable reboot.service
+      when: encryptedFileSystemPostCheck.stat.exists
+
+    # MOSIP integration requires wireguard and some secrets to be installed
+    # Here is an example configuration that we use on our 3 node demo production environment
+    # Ensure that the MOSIP supplied peer conf file containing your keys already exists on your servers in /etc/wireguard/
+    # - name: Install wireguard package
+    # apt:
+    #   name: wireguard
+    #   state: present
+    #   update_cache: yes
+
+    # - name: Copy mosip wireguard peer 1 file
+    # ansible.builtin.copy:
+    #   src: '{{ mosip_wireguard_peer_1_path }}'
+    #   dest: /etc/wireguard/mosip-peer1.conf
+    # when: ansible_hostname == data1_hostname
+
+    # - name: 'Run wireguard peer 1'
+    # shell: systemctl enable wg-quick@mosip-peer1 && systemctl start wg-quick@mosip-peer1
+    # when: ansible_hostname == data1_hostname
+
+    # - name: Copy mosip wireguard peer 2 file
+    # ansible.builtin.copy:
+    #   src: '{{ mosip_wireguard_peer_2_path }}'
+    #   dest: /etc/wireguard/mosip-peer2.conf
+    # when: ansible_hostname == data2_hostname
+
+    # - name: 'Run wireguard peer 2'
+    # shell: systemctl enable wg-quick@mosip-peer2 && systemctl start wg-quick@mosip-peer2
+    # when: ansible_hostname == data2_hostname
+
+    # - name: Copy mosip wireguard peer 3 file
+    # ansible.builtin.copy:
+    #   src: '{{ mosip_wireguard_peer_3_path }}'
+    #   dest: /etc/wireguard/mosip-peer3.conf
+    # when: ansible_hostname == data3_hostname
+
+    # - name: 'Run wireguard peer 3'
+    # shell: systemctl enable wg-quick@mosip-peer3 && systemctl start wg-quick@mosip-peer3
+    # when: ansible_hostname == data3_hostname
+
+    # - name: 'Create mosip secrets directory'
+    # file:
+    #   path: /data/secrets/mosip
+    #   state: directory
+    #   group: 1000
+    #   owner: 1000
+    #   mode: g+rwx
+
+    # - name: Copy mosip encrypt cert file
+    # ansible.builtin.copy:
+    #   src: '{{ mosip_seeder_encrypt_cert_path }}'
+    #   dest: /data/secrets/mosip/{{ mosip_seeder_encrypt_cert_filename }}
+
+    # - name: Copy mosip encrypt sig file
+    # ansible.builtin.copy:
+    #   src: '{{ mosip_seeder_encrypt_sig_path }}'
+    #   dest: /data/secrets/mosip/{{ mosip_seeder_encrypt_sig_filename }}
 
 - hosts: docker-manager-first
   become: yes
