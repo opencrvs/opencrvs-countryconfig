@@ -24,6 +24,7 @@ import {
   getGender,
   getNationalID,
   getNationality,
+  getPlaceOfBirthFields,
   getReasonNotExisting,
   informantType,
   otherInformantType
@@ -241,6 +242,7 @@ export const birthRegisterForms: ISerializedForm = {
               isValidChildBirthDate,
               'eventDate'
             ), // Required field.
+            ...getPlaceOfBirthFields(),
             {
               name: 'seperator',
               type: 'SUBSECTION',

@@ -12,10 +12,6 @@
 
 import { MessageDescriptor } from 'react-intl'
 import {
-  getPlaceOfEventAddressFields,
-  EventLocationAddressCases
-} from '../addresses'
-import {
   formMessageDescriptors,
   informantMessageDescriptors
 } from '../formatjs-messages'
@@ -305,8 +301,7 @@ export const getPlaceOfBirthFields = (): SerializedFormField[] => [
         parameters: []
       }
     }
-  },
-  ...getPlaceOfEventAddressFields(EventLocationAddressCases.PLACE_OF_BIRTH)
+  }
 ]
 
 export const informantType: SerializedFormField = {
