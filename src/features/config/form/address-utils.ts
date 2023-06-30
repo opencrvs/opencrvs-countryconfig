@@ -82,7 +82,7 @@ export function getDependency(location: string, useCase: string) {
   }
 }
 
-export function getLocationSelect(
+export function getAddressLineLocationSelect(
   location: string,
   useCase: string,
   locationIndex: number
@@ -112,17 +112,16 @@ export function getLocationSelect(
     conditionals: getAddressConditionals(location, useCase),
     mapping: {
       mutation: {
-        operation: 'fieldToAddressTransformer',
+        operation: 'fieldToAddressLineTransformer',
         parameters: [
           useCase.toUpperCase() === 'PRIMARY'
             ? AddressCases.PRIMARY_ADDRESS
             : AddressCases.SECONDARY_ADDRESS,
-          locationIndex,
-          location
+          locationIndex
         ]
       },
       query: {
-        operation: 'addressToFieldTransformer',
+        operation: 'addressLineToFieldTransformer',
         parameters: [
           useCase.toUpperCase() === 'PRIMARY'
             ? AddressCases.PRIMARY_ADDRESS
@@ -135,10 +134,60 @@ export function getLocationSelect(
   }
 }
 
+export function getAddrressFhirPropertyLocationSelect(
+  location: string,
+  useCase: string
+): SerializedFormField {
+  return {
+    name: `${location}${sentenceCase(useCase)}`,
+    type: 'SELECT_WITH_DYNAMIC_OPTIONS',
+    label: {
+      defaultMessage: '',
+      description: `Title for the ${location} select`,
+      id: `form.field.label.${location}`
+    },
+    previewGroup: `${useCase}Address`,
+    required: true,
+    initialValue: '',
+    validator: [],
+    placeholder: {
+      defaultMessage: 'Select',
+      description: 'Placeholder text for a select',
+      id: 'form.field.select.placeholder'
+    },
+    dynamicOptions: {
+      resource: 'locations',
+      dependency: getDependency(location, useCase),
+      initialValue: 'agentDefault'
+    },
+    conditionals: getAddressConditionals(location, useCase),
+    mapping: {
+      mutation: {
+        operation: 'fieldToAddressFhirPropertyTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          location
+        ]
+      },
+      query: {
+        operation: 'addressFhirPropertyToFieldTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          location
+        ]
+      }
+    }
+  }
+}
+
 export function getPlaceOfEventLocationSelect(
   location: string,
   configCase: EventLocationAddressCases,
-  locationIndex: number
+  locationIndex?: number
 ): SerializedFormField {
   return {
     name: location,
@@ -176,12 +225,14 @@ export function getPlaceOfEventLocationSelect(
             : configCase === EventLocationAddressCases.PLACE_OF_DEATH
             ? 'deathEventLocationMutationTransformer'
             : 'marriageEventLocationMutationTransformer',
-        parameters: [locationIndex]
+        parameters: [
+          { transformedFieldName: location, lineNumber: locationIndex }
+        ]
       },
       query: {
         operation: 'eventLocationQueryTransformer',
         parameters: [
-          locationIndex,
+          { transformedFieldName: location, lineNumber: locationIndex },
           location,
           {
             fieldsToIgnoreForLocalAddress: [
