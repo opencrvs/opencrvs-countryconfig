@@ -226,6 +226,10 @@ if [ -z "$NATIONAL_ID_OIDP_JWT_AUD_CLAIM" ] ; then
   echo 'Info: Missing optional National ID verification environment variable NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY'
 fi
 
+if [ -z "$EMAIL_API_KEY" ] ; then
+    echo 'Info: Missing optional environment variable EMAIL_API_KEY.'
+fi
+
 SSH_USER=${SSH_USER:-root}
 SSH_HOST=${SSH_HOST:-$HOST}
 LOG_LOCATION=${LOG_LOCATION:-/var/log}
@@ -386,7 +390,6 @@ split_and_join() {
    echo $SPLIT
 }
 
-
 docker_stack_deploy() {
   environment_compose=$1
   replicas_compose=$2
@@ -414,6 +417,7 @@ docker_stack_deploy() {
   MONGODB_ADMIN_PASSWORD=$MONGODB_ADMIN_PASSWORD
   MINIO_ROOT_USER=$MINIO_ROOT_USER
   MINIO_ROOT_PASSWORD=$MINIO_ROOT_PASSWORD
+  EMAIL_API_KEY=$EMAIL_API_KEY
   DOCKERHUB_ACCOUNT=$DOCKERHUB_ACCOUNT
   DOCKERHUB_REPO=$DOCKERHUB_REPO
   ELASTICSEARCH_SUPERUSER_PASSWORD=$ELASTICSEARCH_SUPERUSER_PASSWORD

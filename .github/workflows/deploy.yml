@@ -105,9 +105,10 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
         run: |
           cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=qa --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+          yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=qa --host=${{ env.QA_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
 
       - name: Deploy to production
         if: ${{ github.event.inputs.environment == 'production' }}
@@ -129,9 +130,10 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
         run: |
           cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=production --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+          yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=production --host=${{ env.PRODUCTION_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
 
       - name: Deploy to staging
         if: ${{ github.event.inputs.environment == 'staging' }}
@@ -153,6 +155,7 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=development --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
