@@ -1,4 +1,5 @@
 [
+  "constants.skipToMainContent",
   "login.username",
   "login.passwordLabel",
   "validations.required",

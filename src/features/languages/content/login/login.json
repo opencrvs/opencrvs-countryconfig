@@ -88,7 +88,8 @@
         "userSetup.securityQuestions.favoriteTeacher": "What is the name of your favorite school teacher?",
         "userSetup.securityQuestions.firstChildName": "What is your first child's name?",
         "userSetup.securityQuestions.hightSchool": "What is the name of your high school?",
-        "userSetup.securityQuestions.motherName": "What is your mother's name?"
+        "userSetup.securityQuestions.motherName": "What is your mother's name?",
+        "constants.skipToMainContent": "Skip to main content"
       }
     },
     {
@@ -180,7 +181,8 @@
         "userSetup.securityQuestions.favoriteTeacher": "Quel est le nom de votre professeur d'école préféré ?",
         "userSetup.securityQuestions.firstChildName": "Quel est le nom de votre premier enfant ?",
         "userSetup.securityQuestions.hightSchool": "Quel est le nom de votre école secondaire ?",
-        "userSetup.securityQuestions.motherName": "Quel est le nom de votre mère ?"
+        "userSetup.securityQuestions.motherName": "Quel est le nom de votre mère ?",
+        "constants.skipToMainContent": "Passer au contenu principal"
       }
     }
   ]

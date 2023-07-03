@@ -1,5 +1,6 @@
 {
   "data": {
+    "constants.skipToMainContent": "Label for a keyboard accessibility link which skips to the main content",
     "login.username": "The label that appears on the mobile number input",
     "login.passwordLabel": "The label that appears on the password input",
     "validations.required": "The error message that appears on required fields",
