@@ -1,5 +1,5 @@
 name: Deploy
-
+run-name: Deploy to ${{ github.event.inputs.environment }} core=${{ github.event.inputs.core-image-tag }} country config=${{ github.event.inputs.countryconfig-image-tag }}
 on:
   workflow_dispatch:
     inputs:
