@@ -16,9 +16,6 @@ on:
         description: 'Branch to run from'
         required: false
         default: 'develop'
-      districts:
-        description: 'District ids separated by comma'
-        required: false
       environment:
         type: choice
         description: Environment to deploy to
@@ -45,7 +42,6 @@ jobs:
       - name: Start generating test data
         run: yarn data-generator
         env:
-          DISTRICTS: ${{ github.event.inputs.districts }}
           COUNTRY_CONFIG_HOST: ${{ secrets.COUNTRY_CONFIG_HOST }}
           AUTH_API_HOST: ${{ secrets.AUTH_API_HOST }}
           GATEWAY_HOST: ${{ secrets.GATEWAY_HOST }}
