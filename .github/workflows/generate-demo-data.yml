@@ -44,6 +44,7 @@ jobs:
         env:
           COUNTRY_CONFIG_HOST: ${{ secrets.COUNTRY_CONFIG_HOST }}
           AUTH_API_HOST: ${{ secrets.AUTH_API_HOST }}
-          GATEWAY_HOST: ${{ secrets.GATEWAY_HOST }}
+          GATEWAY_GQL_HOST: ${{ secrets.GATEWAY_GQL_HOST }}
+          GATEWAY_API_HOST: ${{ secrets.GATEWAY_API_HOST }}
           CONFIG_HOST: ${{ secrets.CONFIG_HOST }}
           CONCURRENCY: ${{ secrets.CONCURRENCY }}
