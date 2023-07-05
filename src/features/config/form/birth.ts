@@ -173,49 +173,37 @@ export const birthRegisterForms: ISerializedForm = {
           ],
           fields: [
             {
-              name: 'paragraph',
-              type: 'PARAGRAPH',
+              name: 'list',
+              type: 'BULLET_LIST',
+              items: [
+                {
+                  defaultMessage:
+                    'I am going to help you make a declaration of birth.',
+                  description: 'Form information for birth',
+                  id: 'form.section.information.birth.bullet1'
+                },
+                {
+                  defaultMessage:
+                    'As the legal Informant it is important that all the information provided by you is accurate.',
+                  description: 'Form information for birth',
+                  id: 'form.section.information.birth.bullet2'
+                },
+                {
+                  defaultMessage:
+                    'Once the declaration is processed you will receive you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
+                  description: 'Form information for birth',
+                  id: 'form.section.information.birth.bullet3'
+                },
+                {
+                  defaultMessage:
+                    'Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.',
+                  description: 'Form information for birth',
+                  id: 'form.section.information.birth.bullet4'
+                }
+              ],
+              // this is to set the title of the page
               label: {
-                defaultMessage:
-                  'I am going to help you make a declaration of birth.',
-                description: 'Form information for birth',
-                id: 'form.section.information.birth.bullet1'
-              },
-              initialValue: '',
-              validator: []
-            },
-            {
-              name: 'paragraph',
-              type: 'PARAGRAPH',
-              label: {
-                defaultMessage:
-                  'As the legal Informant it is important that all the information provided by you is accurate.',
-                description: 'Form information for birth',
-                id: 'form.section.information.birth.bullet2'
-              },
-              initialValue: '',
-              validator: []
-            },
-            {
-              name: 'paragraph',
-              type: 'PARAGRAPH',
-              label: {
-                defaultMessage:
-                  'Once the declaration is processed you will receive you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
-                description: 'Form information for birth',
-                id: 'form.section.information.birth.bullet3'
-              },
-              initialValue: '',
-              validator: []
-            },
-            {
-              name: 'paragraph',
-              type: 'PARAGRAPH',
-              label: {
-                defaultMessage:
-                  'Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.',
-                description: 'Form information for birth',
-                id: 'form.section.information.birth.bullet4'
+                id: 'register.eventInfo.birth.title'
               },
               initialValue: '',
               validator: []
