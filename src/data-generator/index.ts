@@ -447,7 +447,7 @@ async function main() {
               }
             })
             return acc
-          }, {})
+          }, {} as Record<number, number>)
       })
 
       for (let ix = 0; ix < delta; ix++) {
@@ -505,7 +505,7 @@ async function main() {
               }
             })
             return acc
-          }, {})
+          }, {} as Record<number, number>)
       })
 
       for (let ix = 0; ix < deathDelta; ix++) {

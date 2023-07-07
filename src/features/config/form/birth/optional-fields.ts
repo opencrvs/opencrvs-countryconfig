@@ -12,8 +12,8 @@
 
 import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from '../formatjs-messages'
-import { IConditional, SerializedFormField } from '../types'
-import { hideIfInformantMotherOrFather } from '../validations-and-conditionals'
+import { Conditional, SerializedFormField } from '../types/types'
+import { hideIfInformantMotherOrFather } from './utils'
 
 export const attendantAtBirth: SerializedFormField = {
   name: 'attendantAtBirth',
@@ -207,7 +207,7 @@ export const registrationEmail: SerializedFormField = {
 
 export const getNIDVerificationButton = (
   fieldName: string,
-  conditionals: IConditional[],
+  conditionals: Conditional[],
   validator: any[]
 ): SerializedFormField => ({
   name: fieldName,
@@ -260,8 +260,9 @@ export const exactDateOfBirthUnknown: SerializedFormField = {
     {
       action: 'hide',
       expression: '!window.config.DATE_OF_BIRTH_UNKNOWN || !values.detailsExist'
-    }
-  ].concat(hideIfInformantMotherOrFather),
+    },
+    ...hideIfInformantMotherOrFather
+  ],
   mapping: {
     query: {
       operation: 'booleanTransformer'
@@ -274,7 +275,7 @@ export const exactDateOfBirthUnknown: SerializedFormField = {
 
 export const getAgeOfIndividualInYears = (
   label: MessageDescriptor,
-  conditionals: IConditional[]
+  conditionals: Conditional[]
 ): SerializedFormField => ({
   name: 'ageOfIndividualInYears',
   type: 'NUMBER',

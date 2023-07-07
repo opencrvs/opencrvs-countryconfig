@@ -9,6 +9,7 @@ import {
   checkFacilityExistsInAnyLocation
 } from './humdata-validation'
 import {
+  AdminLevel,
   extractLocationTree,
   extractStatisticsMap,
   getChildLocations,
@@ -59,7 +60,7 @@ export const Location = z.object({
   admin4Name_alias: z.string().optional()
 })
 
-const Locations = (maxAdminLevel: number) =>
+const Locations = (maxAdminLevel: AdminLevel) =>
   z
     .array(Location)
     .superRefine(zodValidateDuplicates(`admin${maxAdminLevel}Pcode`))

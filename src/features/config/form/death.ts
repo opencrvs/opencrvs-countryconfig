@@ -18,7 +18,7 @@ import {
   deathDocumentForWhomFhirMapping,
   deathDocumentTypeFhirMapping
 } from './options'
-import { ISerializedForm, IntegratingSystemType, TEXTAREA } from './types'
+import { ISerializedForm, IntegratingSystemType, TEXTAREA } from './types/types'
 
 const nidIntegrationConditionals = {
   hideIfNidIntegrationEnabled: {
@@ -43,9 +43,9 @@ const nidIntegrationConditionals = {
       !nationalIdSystem.settings.openIdProviderClaims;
     `
   }
-}
+} as const
 
-export const deathRegisterForms: ISerializedForm = {
+export const deathRegisterForms = {
   sections: [
     {
       id: 'registration',
@@ -1498,4 +1498,4 @@ export const deathRegisterForms: ISerializedForm = {
       ]
     }
   ]
-}
+} satisfies ISerializedForm

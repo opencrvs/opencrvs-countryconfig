@@ -15,7 +15,7 @@ import {
   SerializedFormField,
   IPreviewGroup,
   ISerializedForm
-} from './types'
+} from './types/types'
 import { formMessageDescriptors } from './formatjs-messages'
 import { MessageDescriptor } from 'react-intl'
 import {
@@ -28,17 +28,16 @@ import {
   sentenceCase
 } from './address-utils'
 import { cloneDeep } from 'lodash'
+import { getPreviewGroups } from './birth/preview-groups'
 import {
-  FATHER_DETAILS_DONT_EXIST,
-  MOTHER_DETAILS_DONT_EXIST,
-  fathersDetailsDontExist,
-  getRuralOrUrbanConditionals,
   informantNotMotherOrFather,
+  secondaryAddressesDisabled,
+  MOTHER_DETAILS_DONT_EXIST,
+  FATHER_DETAILS_DONT_EXIST,
   mothersDetailsDontExistOnOtherPage,
   primaryAddressSameAsOtherPrimaryAddress,
-  secondaryAddressesDisabled
-} from './validations-and-conditionals'
-import { getPreviewGroups } from './birth/preview-groups'
+  getRuralOrUrbanConditionals
+} from './birth/utils'
 
 // ADMIN_LEVELS must equate to the number of levels of administrative structure provided by your Humdata CSV import
 // For example, in Farajaland, we have 2 main administrative levels: State and District.
@@ -72,6 +71,8 @@ export enum AddressSubsections {
   PRIMARY_ADDRESS_SUBSECTION = 'primaryAddress',
   SECONDARY_ADDRESS_SUBSECTION = 'secondaryAddress'
 }
+
+const fathersDetailsDontExist = '!values.detailsExist'
 
 // TODO: will deprecate this once all are set up
 export const defaultAddressConfiguration: IAddressConfiguration[] = [

@@ -44,6 +44,8 @@ import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/features/map/handler'
 import { formHandler } from '@countryconfig/features/config/form'
 import { countryLogoHandler } from '@countryconfig/features/countryLogo/handler'
+import { validatorsHandler } from './features/config/form/validators-handler'
+import { conditionalsHandler } from './features/config/form/conditionals-handler'
 
 export interface ITokenPayload {
   sub: string
@@ -247,10 +249,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/validators.js',
-    handler: (_, h) => {
-      const file = '/features/config/form/validators.js'
-      return h.file(join(__dirname, file))
-    },
+    handler: validatorsHandler,
     options: {
       auth: false,
       tags: ['api'],
@@ -261,10 +260,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/conditionals.js',
-    handler: (_, h) => {
-      const file = '/features/config/form/conditionals.js'
-      return h.file(join(__dirname, file))
-    },
+    handler: conditionalsHandler,
     options: {
       auth: false,
       tags: ['api'],

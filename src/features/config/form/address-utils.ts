@@ -11,17 +11,17 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import { ISerializedForm, SerializedFormField, Event } from './types'
-import {
-  getAddressConditionals,
-  getPlaceOfEventConditionals
-} from './validations-and-conditionals'
+import { ISerializedForm, SerializedFormField, Event } from './types/types'
 import {
   AddressCases,
   AddressCopyConfigCases,
   AddressSubsections,
   EventLocationAddressCases
 } from './addresses'
+import {
+  getAddressConditionals,
+  getPlaceOfEventConditionals
+} from './birth/utils'
 
 export interface IAddressConfiguration {
   precedingFieldId: string

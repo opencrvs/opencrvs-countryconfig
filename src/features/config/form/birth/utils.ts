@@ -10,98 +10,16 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-// TODO: add in all the validations and conditionals logic and generate a js file client can load
-
-import { MessageDescriptor } from 'react-intl'
-import { IFormData, IFormFieldValue, IntegratingSystemType } from './types'
-import { sentenceCase } from './address-utils'
-import { ADMIN_LEVELS, EventLocationAddressCases } from './addresses'
-
-export interface IConditional {
-  description?: string
-  action: string
-  expression: string
-}
-
-export interface IConditionals {
-  informantType: IConditional
-  iDType: IConditional
-  isOfficePreSelected: IConditional
-  fathersDetailsExist: IConditional
-  primaryAddressSameAsOtherPrimary: IConditional
-  countryPrimary: IConditional
-  statePrimary: IConditional
-  districtPrimary: IConditional
-  addressLine4Primary: IConditional
-  addressLine3Primary: IConditional
-  country: IConditional
-  state: IConditional
-  district: IConditional
-  addressLine4: IConditional
-  addressLine3: IConditional
-  uploadDocForWhom: IConditional
-  motherCollectsCertificate: IConditional
-  fatherCollectsCertificate: IConditional
-  informantCollectsCertificate: IConditional
-  otherPersonCollectsCertificate: IConditional
-  birthCertificateCollectorNotVerified: IConditional
-  deathCertificateCollectorNotVerified: IConditional
-  placeOfBirthHospital: IConditional
-  placeOfDeathTypeHeathInstitue: IConditional
-  otherBirthEventLocation: IConditional
-  isNotCityLocation: IConditional
-  isCityLocation: IConditional
-  isDefaultCountry: IConditional
-  isNotCityLocationPrimary: IConditional
-  isDefaultCountryPrimary: IConditional
-  isCityLocationPrimary: IConditional
-  informantPrimaryAddressSameAsCurrent: IConditional
-  iDAvailable: IConditional
-  deathPlaceOther: IConditional
-  deathPlaceAtPrivateHome: IConditional
-  deathPlaceAtOtherLocation: IConditional
-  causeOfDeathEstablished: IConditional
-  isMarried: IConditional
-  identifierIDSelected: IConditional
-  fatherContactDetailsRequired: IConditional
-  withInTargetDays: IConditional
-  between46daysTo5yrs: IConditional
-  after5yrs: IConditional
-  deceasedNationIdSelected: IConditional
-  isRegistrarRoleSelected: IConditional
-  certCollectorOther: IConditional
-  userAuditReasonSpecified: IConditional
-  userAuditReasonOther: IConditional
-  isAuditActionDeactivate: IConditional
-  isAuditActionReactivate: IConditional
-}
-export interface IValidationResult {
-  message: MessageDescriptor
-  props?: { [key: string]: any }
-}
-
-export type RangeValidation = (
-  min: number,
-  max: number
-) => (value: IFormFieldValue) => IValidationResult | undefined
-
-export type MaxLengthValidation = (
-  customisation: number
-) => (value: IFormFieldValue) => IValidationResult | undefined
-
-export type Validation = (
-  value: IFormFieldValue,
-  drafts?: IFormData,
-  offlineCountryConfig?: any
-) => IValidationResult | undefined
-
-export type ValidationInitializer = (...value: any[]) => Validation
+import { sentenceCase } from '../address-utils'
+import { EventLocationAddressCases, ADMIN_LEVELS } from '../addresses'
+import { Conditional, IntegratingSystemType } from '../types/types'
+import { Validator } from '../types/validators'
 
 export const isValidChildBirthDate = [
   {
     operation: 'isValidChildBirthDate'
   }
-]
+] satisfies Validator[]
 
 export const hideIfNidIntegrationDisabled = [
   {
@@ -167,7 +85,7 @@ export const parentsBirthDateValidators = [
     operation: 'isValidParentsBirthDate',
     parameters: [5]
   }
-]
+] satisfies Validator[]
 
 export function getNationalIDValidators(configCase: string) {
   if (configCase === 'informant') {
@@ -359,9 +277,6 @@ export const fatherFamilyNameConditionals = [
 export const mothersDetailsDontExistOnOtherPage =
   'draftData && draftData.mother && !draftData.mother.detailsExist'
 
-// if mothers details do not exist
-export const mothersDetailsDontExist = '!values.detailsExist'
-
 // if fathers details do not exist
 export const fathersDetailsDontExist = '!values.detailsExist'
 
@@ -516,9 +431,9 @@ export function getPlaceOfEventConditionals(
 
 export function getRuralOrUrbanConditionals(
   useCase: string,
-  defaultConditionals: IConditional[]
+  defaultConditionals: Conditional[]
 ) {
-  let customConditionals: IConditional[] = []
+  let customConditionals: Conditional[] = []
   switch (ADMIN_LEVELS) {
     case 1:
       customConditionals = [

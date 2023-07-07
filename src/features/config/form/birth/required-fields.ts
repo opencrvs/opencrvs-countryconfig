@@ -15,296 +15,300 @@ import {
   formMessageDescriptors,
   informantMessageDescriptors
 } from '../formatjs-messages'
-import { SerializedFormField } from '../types'
-import { IConditional } from '../validations-and-conditionals'
+import { Conditional, SerializedFormField } from '../types/types'
 
 export const getBirthDate = (
   fieldName: string,
-  conditionals: IConditional[],
+  conditionals: Conditional[],
   validator: any[],
   certificateHandlebar: string
-): SerializedFormField => ({
-  name: fieldName, // A field with this name MUST exist
-  type: 'DATE',
-  label: formMessageDescriptors.dateOfBirth,
-  required: true,
-  conditionals,
-  initialValue: '',
-  validator,
-  mapping: {
-    template: {
-      operation: 'dateFormatTransformer',
-      fieldName: certificateHandlebar,
-      parameters: ['birthDate', 'en', 'do MMMM yyyy']
-    },
-    mutation: {
-      operation: 'longDateTransformer',
-      parameters: ['birthDate']
-    },
-    query: {
-      operation: 'fieldValueTransformer',
-      parameters: ['birthDate']
-    }
-  }
-})
-
-export const getGender = (
-  certificateHandlebar: string
-): SerializedFormField => ({
-  name: 'gender', // A field with this name MUST exist
-  type: 'SELECT_WITH_OPTIONS',
-  label: formMessageDescriptors.sex,
-  required: true,
-  initialValue: '',
-  validator: [],
-  placeholder: formMessageDescriptors.formSelectPlaceholder,
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'selectTransformer'
-    }
-  },
-  options: [
-    {
-      value: 'male',
-      label: formMessageDescriptors.sexMale
-    },
-    {
-      value: 'female',
-      label: formMessageDescriptors.sexFemale
-    },
-    {
-      value: 'unknown',
-      label: formMessageDescriptors.sexUnknown
-    }
-  ]
-})
-
-export const getFamilyNameField = (
-  previewGroup: string,
-  conditionals: IConditional[],
-  certificateHandlebar: string
-): SerializedFormField => ({
-  name: 'familyNameEng', // A field with this name MUST exist
-  previewGroup,
-  conditionals,
-  type: 'TEXT',
-  label: formMessageDescriptors.familyName,
-  maxLength: 32,
-  required: true,
-  initialValue: '',
-  validator: [
-    {
-      operation: 'englishOnlyNameFormat'
-    }
-  ],
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'nameToFieldTransformer',
-      parameters: ['en', 'familyName']
-    },
-    mutation: {
-      operation: 'fieldToNameTransformer',
-      parameters: ['en', 'familyName']
-    },
-    query: {
-      operation: 'nameToFieldTransformer',
-      parameters: ['en', 'familyName']
-    }
-  }
-})
-
-export const getFirstNameField = (
-  previewGroup: string,
-  conditionals: IConditional[],
-  certificateHandlebar: string
-): SerializedFormField => ({
-  name: 'firstNamesEng', // A field with this name MUST exist
-  previewGroup,
-  type: 'TEXT',
-  label: {
-    defaultMessage: 'First name(s)',
-    description: 'Label for form field: First names',
-    id: 'form.field.label.firstNames'
-  },
-  conditionals,
-  maxLength: 32,
-  required: true,
-  initialValue: '',
-  validator: [
-    {
-      operation: 'englishOnlyNameFormat'
-    }
-  ],
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'nameToFieldTransformer',
-      parameters: ['en', 'firstNames']
-    },
-    mutation: {
-      operation: 'fieldToNameTransformer',
-      parameters: ['en', 'firstNames']
-    },
-    query: {
-      operation: 'nameToFieldTransformer',
-      parameters: ['en', 'firstNames']
-    }
-  }
-})
-
-export const getNationality = (
-  certificateHandlebar: string,
-  conditionals: IConditional[]
-): SerializedFormField => ({
-  name: 'nationality',
-  type: 'SELECT_WITH_OPTIONS',
-  label: formMessageDescriptors.nationality,
-  required: true,
-  initialValue: 'FAR',
-  validator: [],
-  placeholder: formMessageDescriptors.formSelectPlaceholder,
-  options: {
-    resource: 'countries'
-  },
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!values.detailsExist'
-    }
-  ].concat(conditionals),
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'nationalityTransformer'
-    },
-    mutation: {
-      operation: 'fieldToArrayTransformer'
-    },
-    query: {
-      operation: 'arrayToFieldTransformer'
-    }
-  }
-})
-
-export const getNationalID = (
-  fieldName: string,
-  conditionals: IConditional[],
-  validator: any[],
-  certificateHandlebar: string
-): SerializedFormField => ({
-  name: fieldName,
-  type: 'TEXT',
-  label: formMessageDescriptors.iDTypeNationalID,
-  required: false,
-  initialValue: '',
-  validator,
-  conditionals,
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'identityToFieldTransformer',
-      parameters: ['id', 'NATIONAL_ID']
-    },
-    mutation: {
-      operation: 'fieldToIdentityTransformer',
-      parameters: ['id', 'NATIONAL_ID']
-    },
-    query: {
-      operation: 'identityToFieldTransformer',
-      parameters: ['id', 'NATIONAL_ID']
-    }
-  }
-})
-
-export const getPlaceOfBirthFields = (): SerializedFormField[] => [
-  {
-    name: 'placeOfBirthTitle',
-    type: 'SUBSECTION',
-    label: formMessageDescriptors.placeOfBirthPreview,
-    previewGroup: 'placeOfBirth',
-    ignoreBottomMargin: true,
+) =>
+  ({
+    name: fieldName, // A field with this name MUST exist
+    type: 'DATE',
+    label: formMessageDescriptors.dateOfBirth,
+    required: true,
+    conditionals,
     initialValue: '',
-    validator: []
-  },
-  {
-    name: 'placeOfBirth',
+    validator,
+    mapping: {
+      template: {
+        operation: 'dateFormatTransformer',
+        fieldName: certificateHandlebar,
+        parameters: ['birthDate', 'en', 'do MMMM yyyy']
+      },
+      mutation: {
+        operation: 'longDateTransformer',
+        parameters: ['birthDate']
+      },
+      query: {
+        operation: 'fieldValueTransformer',
+        parameters: ['birthDate']
+      }
+    }
+  } satisfies SerializedFormField)
+
+export const getGender = (certificateHandlebar: string): SerializedFormField =>
+  ({
+    name: 'gender', // A field with this name MUST exist
     type: 'SELECT_WITH_OPTIONS',
-    previewGroup: 'placeOfBirth',
-    ignoreFieldLabelOnErrorMessage: true,
-    label: formMessageDescriptors.placeOfBirth,
+    label: formMessageDescriptors.sex,
     required: true,
     initialValue: '',
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
+    mapping: {
+      template: {
+        fieldName: certificateHandlebar,
+        operation: 'selectTransformer'
+      }
+    },
     options: [
       {
-        value: 'HEALTH_FACILITY',
-        label: formMessageDescriptors.healthInstitution
+        value: 'male',
+        label: formMessageDescriptors.sexMale
       },
       {
-        value: 'PRIVATE_HOME',
-        label: formMessageDescriptors.privateHome
+        value: 'female',
+        label: formMessageDescriptors.sexFemale
       },
       {
-        value: 'OTHER',
-        label: formMessageDescriptors.otherInstitution
+        value: 'unknown',
+        label: formMessageDescriptors.sexUnknown
       }
-    ],
-    mapping: {
-      mutation: {
-        operation: 'birthEventLocationMutationTransformer',
-        parameters: [{}]
-      },
-      query: {
-        operation: 'eventLocationTypeQueryTransformer',
-        parameters: []
-      }
-    }
-  },
-  {
-    name: 'birthLocation',
-    type: 'LOCATION_SEARCH_INPUT',
-    label: formMessageDescriptors.healthInstitution,
-    previewGroup: 'placeOfBirth',
+    ]
+  } satisfies SerializedFormField)
+
+export const getFamilyNameField = (
+  previewGroup: string,
+  conditionals: Conditional[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: 'familyNameEng', // A field with this name MUST exist
+    previewGroup,
+    conditionals,
+    type: 'TEXT',
+    label: formMessageDescriptors.familyName,
+    maxLength: 32,
     required: true,
     initialValue: '',
-    searchableResource: ['facilities'],
-    searchableType: ['HEALTH_FACILITY'],
-    dynamicOptions: {
-      resource: 'facilities'
-    },
     validator: [
       {
-        operation: 'facilityMustBeSelected'
-      }
-    ],
-    conditionals: [
-      {
-        action: 'hide',
-        expression: '(values.placeOfBirth!="HEALTH_FACILITY")'
+        operation: 'englishOnlyNameFormat'
       }
     ],
     mapping: {
       template: {
-        fieldName: 'placeOfBirth',
-        operation: 'eventLocationNameQueryOfflineTransformer',
-        parameters: ['facilities', 'placeOfBirth']
+        fieldName: certificateHandlebar,
+        operation: 'nameToFieldTransformer',
+        parameters: ['en', 'familyName']
       },
       mutation: {
-        operation: 'birthEventLocationMutationTransformer',
-        parameters: [{}]
+        operation: 'fieldToNameTransformer',
+        parameters: ['en', 'familyName']
       },
       query: {
-        operation: 'eventLocationIDQueryTransformer',
-        parameters: []
+        operation: 'nameToFieldTransformer',
+        parameters: ['en', 'familyName']
       }
     }
-  }
-]
+  } satisfies SerializedFormField)
 
-export const informantType: SerializedFormField = {
+export const getFirstNameField = (
+  previewGroup: string,
+  conditionals: Conditional[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: 'firstNamesEng', // A field with this name MUST exist
+    previewGroup,
+    type: 'TEXT',
+    label: {
+      defaultMessage: 'First name(s)',
+      description: 'Label for form field: First names',
+      id: 'form.field.label.firstNames'
+    },
+    conditionals,
+    maxLength: 32,
+    required: true,
+    initialValue: '',
+    validator: [
+      {
+        operation: 'englishOnlyNameFormat'
+      }
+    ],
+    mapping: {
+      template: {
+        fieldName: certificateHandlebar,
+        operation: 'nameToFieldTransformer',
+        parameters: ['en', 'firstNames']
+      },
+      mutation: {
+        operation: 'fieldToNameTransformer',
+        parameters: ['en', 'firstNames']
+      },
+      query: {
+        operation: 'nameToFieldTransformer',
+        parameters: ['en', 'firstNames']
+      }
+    }
+  } satisfies SerializedFormField)
+
+export const getNationality = (
+  certificateHandlebar: string,
+  conditionals: Conditional[]
+) =>
+  ({
+    name: 'nationality',
+    type: 'SELECT_WITH_OPTIONS',
+    label: formMessageDescriptors.nationality,
+    required: true,
+    initialValue: 'FAR',
+    validator: [],
+    placeholder: formMessageDescriptors.formSelectPlaceholder,
+    options: {
+      resource: 'countries'
+    },
+    conditionals: [
+      {
+        action: 'hide',
+        expression: '!values.detailsExist'
+      }
+    ].concat(conditionals),
+    mapping: {
+      template: {
+        fieldName: certificateHandlebar,
+        operation: 'nationalityTransformer'
+      },
+      mutation: {
+        operation: 'fieldToArrayTransformer'
+      },
+      query: {
+        operation: 'arrayToFieldTransformer'
+      }
+    }
+  } satisfies SerializedFormField)
+
+export const getNationalID = (
+  fieldName: string,
+  conditionals: Conditional[],
+  validator: any[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: fieldName,
+    type: 'TEXT',
+    label: formMessageDescriptors.iDTypeNationalID,
+    required: false,
+    initialValue: '',
+    validator,
+    conditionals,
+    mapping: {
+      template: {
+        fieldName: certificateHandlebar,
+        operation: 'identityToFieldTransformer',
+        parameters: ['id', 'NATIONAL_ID']
+      },
+      mutation: {
+        operation: 'fieldToIdentityTransformer',
+        parameters: ['id', 'NATIONAL_ID']
+      },
+      query: {
+        operation: 'identityToFieldTransformer',
+        parameters: ['id', 'NATIONAL_ID']
+      }
+    }
+  } satisfies SerializedFormField)
+
+export const getPlaceOfBirthFields = () =>
+  [
+    {
+      name: 'placeOfBirthTitle',
+      type: 'SUBSECTION',
+      label: formMessageDescriptors.placeOfBirthPreview,
+      previewGroup: 'placeOfBirth',
+      ignoreBottomMargin: true,
+      initialValue: '',
+      validator: []
+    },
+    {
+      name: 'placeOfBirth',
+      type: 'SELECT_WITH_OPTIONS',
+      previewGroup: 'placeOfBirth',
+      ignoreFieldLabelOnErrorMessage: true,
+      label: formMessageDescriptors.placeOfBirth,
+      required: true,
+      initialValue: '',
+      validator: [],
+      placeholder: formMessageDescriptors.formSelectPlaceholder,
+      options: [
+        {
+          value: 'HEALTH_FACILITY',
+          label: formMessageDescriptors.healthInstitution
+        },
+        {
+          value: 'PRIVATE_HOME',
+          label: formMessageDescriptors.privateHome
+        },
+        {
+          value: 'OTHER',
+          label: formMessageDescriptors.otherInstitution
+        }
+      ],
+      mapping: {
+        mutation: {
+          operation: 'birthEventLocationMutationTransformer',
+          parameters: [{}]
+        },
+        query: {
+          operation: 'eventLocationTypeQueryTransformer',
+          parameters: []
+        }
+      }
+    },
+    {
+      name: 'birthLocation',
+      type: 'LOCATION_SEARCH_INPUT',
+      label: formMessageDescriptors.healthInstitution,
+      previewGroup: 'placeOfBirth',
+      required: true,
+      initialValue: '',
+      searchableResource: ['facilities'],
+      searchableType: ['HEALTH_FACILITY'],
+      dynamicOptions: {
+        resource: 'facilities'
+      },
+      validator: [
+        {
+          operation: 'facilityMustBeSelected'
+        }
+      ],
+      conditionals: [
+        {
+          action: 'hide',
+          expression: '(values.placeOfBirth!="HEALTH_FACILITY")'
+        }
+      ],
+      mapping: {
+        template: {
+          fieldName: 'placeOfBirth',
+          operation: 'eventLocationNameQueryOfflineTransformer',
+          parameters: ['facilities', 'placeOfBirth']
+        },
+        mutation: {
+          operation: 'birthEventLocationMutationTransformer',
+          parameters: [{}]
+        },
+        query: {
+          operation: 'eventLocationIDQueryTransformer',
+          parameters: []
+        }
+      }
+    }
+  ] satisfies SerializedFormField[]
+
+export const informantType = {
   name: 'informantType',
   type: 'SELECT_WITH_OPTIONS',
   label: informantMessageDescriptors.birthInformantTitle,
@@ -365,9 +369,9 @@ export const informantType: SerializedFormField = {
       label: informantMessageDescriptors.OTHER
     }
   ]
-}
+} satisfies SerializedFormField
 
-export const otherInformantType: SerializedFormField = {
+export const otherInformantType = {
   name: 'otherInformantType',
   type: 'TEXT',
   label: formMessageDescriptors.informantsRelationWithChild,
@@ -395,48 +399,48 @@ export const otherInformantType: SerializedFormField = {
       parameters: ['registration.otherInformantType']
     }
   }
-}
+} satisfies SerializedFormField
 
 export const getDetailsExist = (
   label: MessageDescriptor,
-  conditionals: IConditional[]
-): SerializedFormField => ({
-  name: 'detailsExist',
-  type: 'CHECKBOX',
-  label,
-  required: true,
-  checkedValue: false,
-  uncheckedValue: true,
-  hideHeader: true,
-  initialValue: true,
-  validator: [],
-  conditionals,
-  mapping: {
-    query: {
-      operation: 'booleanTransformer'
+  conditionals: Conditional[]
+) =>
+  ({
+    name: 'detailsExist',
+    type: 'CHECKBOX',
+    label,
+    required: true,
+    checkedValue: false,
+    uncheckedValue: true,
+    hideHeader: true,
+    initialValue: true,
+    validator: [],
+    conditionals,
+    mapping: {
+      query: {
+        operation: 'booleanTransformer'
+      }
     }
-  }
-})
+  } satisfies SerializedFormField)
 
-export const getReasonNotExisting = (
-  certificateHandlebar: string
-): SerializedFormField => ({
-  name: 'reasonNotApplying',
-  conditionals: [
-    {
-      action: 'hide',
-      expression: 'values.detailsExist'
+export const getReasonNotExisting = (certificateHandlebar: string) =>
+  ({
+    name: 'reasonNotApplying',
+    conditionals: [
+      {
+        action: 'hide',
+        expression: 'values.detailsExist'
+      }
+    ],
+    type: 'TEXT',
+    label: formMessageDescriptors.reasonNA,
+    validator: [],
+    initialValue: '',
+    required: true,
+    mapping: {
+      template: {
+        fieldName: certificateHandlebar,
+        operation: 'plainInputTransformer'
+      }
     }
-  ],
-  type: 'TEXT',
-  label: formMessageDescriptors.reasonNA,
-  validator: [],
-  initialValue: '',
-  required: true,
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'plainInputTransformer'
-    }
-  }
-})
+  } satisfies SerializedFormField)

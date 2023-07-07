@@ -46,7 +46,7 @@ async function addStatisticalData() {
   // If it needs to be added in the future, amend the condition to be `adminLevel >= 0`
   for (let adminLevel = maxAdminLevel; adminLevel > 0; adminLevel--) {
     for (let i = 0; i < rawLocations.length; i++) {
-      const column = `admin${adminLevel}Pcode`
+      const column = `admin${adminLevel}Pcode` as const
       const location = rawLocations[i][column]!
       const name = rawLocations[i][`admin${adminLevel}Name_en`]!
 

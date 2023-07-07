@@ -40,7 +40,6 @@ export const COUNTRY_WIDE_CRUDE_DEATH_RATE =
   process.env.COUNTRY_WIDE_CRUDE_DEATH_RATE || 10
 
 import * as path from 'path'
-import { readFileSync } from 'fs'
 
 export const LANGUAGES_SOURCE = path.join(
   process.cwd(),
@@ -57,14 +56,4 @@ export const QUESTIONS_SOURCE = path.join(
   'src/zmb/features/forms/'
 )
 
-export const CMS_API_KEY =
-  process.env.CMS_API_KEY ||
-  (process.env.CMS_API_KEY && readFileSync(process.env.CMS_API_KEY)) ||
-  ''
-export const CONTENTFUL_SPACE_ID =
-  process.env.CONTENTFUL_SPACE_ID ||
-  (process.env.CONTENTFUL_SPACE_ID &&
-    readFileSync(process.env.CONTENTFUL_SPACE_ID)) ||
-  ''
-export const CMS = process.env.CMS // || 'contentful'
 export const DEFAULT_TIMEOUT = 600000

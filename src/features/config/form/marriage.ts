@@ -18,7 +18,7 @@ import {
   marriageDocumentForWhomFhirMapping,
   marriageDocumentTypeFhirMapping
 } from './options'
-import { ISerializedForm } from './types'
+import { ISerializedForm } from './types/types'
 
 export const marriageRegisterForms: ISerializedForm = {
   sections: [

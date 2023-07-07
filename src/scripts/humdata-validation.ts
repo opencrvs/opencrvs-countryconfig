@@ -1,4 +1,7 @@
-import { extractLocationTree } from '@countryconfig/features/administrative/scripts/utils'
+import {
+  AdminLevel,
+  extractLocationTree
+} from '@countryconfig/features/administrative/scripts/utils'
 import { IFacility } from '@countryconfig/features/facilities/scripts/utils'
 import { z } from 'zod'
 import { IHumdataLocation, Location } from './validate-source-files'
@@ -25,7 +28,7 @@ export const zodValidateDuplicates =
 
 /** Validates location data by Map<Location, ParentLocation>. If there are locations that have different parent location than previously added ones, an error will be thrown */
 export const validateSensicalityOfLocationTree =
-  (maxAdminLevel: number) =>
+  (maxAdminLevel: AdminLevel) =>
   (locations: Array<z.infer<typeof Location>>, ctx: z.RefinementCtx) =>
     extractLocationTree(locations, maxAdminLevel, ({ id, row, column }) => {
       ctx.addIssue({
@@ -36,7 +39,7 @@ export const validateSensicalityOfLocationTree =
     })
 
 export function checkFacilityExistsInAnyLocation(
-  maxAdminLevel: number,
+  maxAdminLevel: AdminLevel,
   locations: IHumdataLocation[],
   facility: IFacility
 ) {

@@ -11,15 +11,38 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import * as labels from './formatjs-messages'
-import { identityTypeMapper } from './options'
-import {
-  IConditionals,
-  ValidationInitializer
-} from './validations-and-conditionals'
+import * as labels from '../formatjs-messages'
+import { identityTypeMapper } from '../options'
+import { Validator } from './validators'
 
 // TODO: only list out supported mappings in core include custom form field mappings
 // replace string with the names of all the functions.
+
+export interface Conditionals {
+  isDefaultCountry: Conditional
+  causeOfDeathEstablished: Conditional
+}
+export interface ValidationResult {
+  message: MessageDescriptor
+  props?: { [key: string]: any }
+}
+
+export type RangeValidation = (
+  min: number,
+  max: number
+) => (value: IFormFieldValue) => ValidationResult | undefined
+
+export type MaxLengthValidation = (
+  customisation: number
+) => (value: IFormFieldValue) => ValidationResult | undefined
+
+export type Validation = (
+  value: IFormFieldValue,
+  drafts?: IFormData,
+  offlineCountryConfig?: any
+) => ValidationResult | undefined
+
+export type ValidationInitializer = (...value: any[]) => Validation
 
 export enum Event {
   Birth = 'birth',
@@ -177,7 +200,7 @@ export interface ICheckboxOption {
 export interface RadioComponentOption {
   label: string
   value: string | boolean
-  conditionals?: IConditionals[]
+  conditionals?: Conditionals[]
   disabled?: boolean
 }
 
@@ -500,14 +523,13 @@ export type IFormFieldTemplateMapOperation =
   | [string, IFormFieldQueryMapFunction]
   | [string]
 
-// TODO: fix validators type
 export interface IFormFieldBase {
   name: string
   type: IFormField['type']
   label: MessageDescriptor
   helperText?: MessageDescriptor
   tooltip?: MessageDescriptor
-  validator: any
+  validator: Validator[]
   required?: boolean
   // Whether or not to run validation functions on the field if it's empty
   // Default false
@@ -521,7 +543,7 @@ export interface IFormFieldBase {
   initialValue?: IFormFieldValue
   initialValueKey?: string
   extraValue?: IFormFieldValue
-  conditionals?: IConditional[]
+  conditionals?: Conditional[]
   description?: MessageDescriptor
   placeholder?: MessageDescriptor
   mapping?: IFormFieldMapping
@@ -546,7 +568,7 @@ export interface IFormFieldBase {
     }
     position?: REVIEW_OVERRIDE_POSITION
     labelAs?: MessageDescriptor
-    conditionals?: IConditional[]
+    conditionals?: Conditional[]
   }
   ignoreFieldLabelOnErrorMessage?: boolean
   ignoreBottomMargin?: boolean
@@ -554,8 +576,9 @@ export interface IFormFieldBase {
   ignoreMediaQuery?: boolean
 }
 
-export interface IConditional {
+export interface Conditional {
   description?: string
+  /** 'hide' or 'disable' */
   action: string
   expression: string
 }
@@ -567,7 +590,7 @@ export interface IFormSectionGroup {
   previewGroups?: IPreviewGroup[]
   disabled?: boolean
   ignoreSingleFieldView?: boolean
-  conditionals?: IConditional[]
+  conditionals?: Conditional[]
   error?: MessageDescriptor
   preventContinueIfError?: boolean
   showExitButtonOnly?: boolean
@@ -609,7 +632,6 @@ export interface IStaticFieldType {
   staticType: string
 }
 
-// TODO: fix validator types
 export interface ISerializedDynamicFormFieldDefinitions {
   label?: {
     dependency: string
@@ -636,7 +658,7 @@ export interface ISerializedDynamicFormFieldDefinitions {
       }
   validator?: Array<{
     dependencies: string[]
-    validator: any
+    validator: Validator[]
   }>
 }
 
@@ -682,7 +704,6 @@ export interface ISelectFormFieldWithOptions extends IFormFieldBase {
   optionCondition?: string
 }
 
-// TODO: bring in validation types
 export type SerializedFormField = UnionOmit<
   | Exclude<
       IFormField,
@@ -695,7 +716,7 @@ export type SerializedFormField = UnionOmit<
   | ILoaderButtonWithSerializedQueryMap,
   'validator' | 'mapping'
 > & {
-  validator: any
+  validator: Validator[]
   mapping?: IFormFieldMapping
 }
 

@@ -10,10 +10,18 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-export const conditionals = {
-  // This is an example how you can override the conditionals found from opencrvs-core
-  iDType: {
-    action: 'hide',
-    expression: "!values.iDType || (values.iDType !== 'OTHER')"
+import { IFormFieldValue, ValidationResult } from './types/types'
+
+export function isNumberLessThan21(value: IFormFieldValue) {
+  if (Number(value) < 21) {
+    return {
+      message: {
+        defaultMessage: 'Must be less than 21',
+        description:
+          'The error message appears when the the given value is less than 21'
+      }
+    } satisfies ValidationResult
   }
+
+  return {}
 }
