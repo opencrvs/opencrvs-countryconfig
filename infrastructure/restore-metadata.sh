@@ -68,6 +68,21 @@ restore_metadata () {
   docker run --rm -v $DIR/default_backups:/default_backups --network=$NETWORK mongo:4.4 bash -c "$COMMAND"
 }
 
+elasticsearch_host() {
+  if [ ! -z ${ELASTICSEARCH_ADMIN_USER+x} ] || [ ! -z ${ELASTICSEARCH_ADMIN_PASSWORD+x} ]; then
+    echo "$ELASTICSEARCH_ADMIN_USER:$ELASTICSEARCH_ADMIN_PASSWORD@elasticsearch:9200";
+  else
+    echo "elasticsearch:9200";
+  fi
+}
+
+create_elastic_index () {
+  local index_name=$1
+  echo "Creating ElasticSearch Index: ${index_name}"
+  docker run --rm --network=$NETWORK appropriate/curl curl -XPUT "http://$(elasticsearch_host)/$index_name" -v
+}
+
+
 restore_metadata "/default_backups/hearth-dev.gz";
 
 restore_metadata "/default_backups/openhim-dev.gz"
@@ -75,6 +90,8 @@ restore_metadata "/default_backups/openhim-dev.gz"
 restore_metadata "/default_backups/user-mgnt.gz";
 
 restore_metadata "/default_backups/application-config.gz"
+
+create_elastic_index "ocrvs"
 
 # run migration by restarting migration service
 docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration
