@@ -11,6 +11,16 @@
  */
 
 import {
+  FATHER_DETAILS_DONT_EXIST,
+  MOTHER_DETAILS_DONT_EXIST,
+  fathersDetailsDontExist,
+  getRuralOrUrbanConditionals,
+  informantNotMotherOrFather,
+  mothersDetailsDontExistOnOtherPage,
+  primaryAddressSameAsOtherPrimaryAddress,
+  secondaryAddressesDisabled
+} from './birth/utils'
+import {
   FLEX_DIRECTION,
   SerializedFormField,
   IPreviewGroup,
@@ -30,38 +40,10 @@ import {
 import { cloneDeep } from 'lodash'
 import { getPreviewGroups } from './birth/preview-groups'
 import {
-  informantNotMotherOrFather,
-  secondaryAddressesDisabled,
-  MOTHER_DETAILS_DONT_EXIST,
-  FATHER_DETAILS_DONT_EXIST,
-  mothersDetailsDontExistOnOtherPage,
-  primaryAddressSameAsOtherPrimaryAddress,
-  getRuralOrUrbanConditionals
-} from './birth/utils'
-
-// ADMIN_LEVELS must equate to the number of levels of administrative structure provided by your Humdata CSV import
-// For example, in Farajaland, we have 2 main administrative levels: State and District.
-// Therefore our ADMIN_LEVELS property is 2.
-// You can set up to 5 supported administrative levels.
-
-export const ADMIN_LEVELS: Number = 2
-
-// Addresses take up a lot of repeated code in the forms, making the birth.ts, marriage.ts and death.ts files long and difficult to read
-// Therefore we apply the addresses dynamically to sections of the form using this configuration constant
-// Its possible to show and hide address fields for individuals using conditionals.
-// Its also possible to add 2 addresses per individual: PRIMARY_ADDRESS & SECONDARY_ADDRESS depending if the global config setting: secondaryAddressesDisabled is true/false
-
-export enum EventLocationAddressCases {
-  PLACE_OF_BIRTH = 'placeOfBirth',
-  PLACE_OF_DEATH = 'placeOfDeath',
-  PLACE_OF_MARRIAGE = 'placeOfMarriage'
-}
-
-export enum AddressCases {
-  // the below are UPPER_CASE because they map to GQLAddress type enums
-  PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
-  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
-}
+  ADMIN_LEVELS,
+  EventLocationAddressCases,
+  AddressCases
+} from './address-settings'
 
 export enum AddressCopyConfigCases {
   PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY = 'primaryAddressSameAsOtherPrimary'
@@ -71,8 +53,6 @@ export enum AddressSubsections {
   PRIMARY_ADDRESS_SUBSECTION = 'primaryAddress',
   SECONDARY_ADDRESS_SUBSECTION = 'secondaryAddress'
 }
-
-const fathersDetailsDontExist = '!values.detailsExist'
 
 // TODO: will deprecate this once all are set up
 export const defaultAddressConfiguration: IAddressConfiguration[] = [
@@ -90,7 +70,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_MARRIAGE }]
   },
   {
-    precedingFieldId: 'birth.informant.informant-view-group.familyNameEng',
+    precedingFieldId:
+      'birth.informant.informant-view-group.informantNidVerification',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -118,11 +99,11 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.primaryAddress,
-        conditionalCase: `${MOTHER_DETAILS_DONT_EXIST}`
+        conditionalCase: MOTHER_DETAILS_DONT_EXIST
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        conditionalCase: `${MOTHER_DETAILS_DONT_EXIST}`
+        conditionalCase: MOTHER_DETAILS_DONT_EXIST
       },
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
@@ -404,7 +385,6 @@ export function populateRegisterFormsWithAddresses(
   event: string
 ): ISerializedForm {
   const newForm = cloneDeep(defaultEventForm)
-
   defaultAddressConfiguration.forEach(
     ({ precedingFieldId, configurations }: IAddressConfiguration) => {
       if (precedingFieldId.includes(event)) {
@@ -434,6 +414,7 @@ export function populateRegisterFormsWithAddresses(
       }
     }
   )
+
   return newForm
 }
 

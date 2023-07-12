@@ -10,10 +10,18 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
+// TODO: add in all the validations and conditionals logic and generate a js file client can load
+
 import { sentenceCase } from '../address-utils'
-import { EventLocationAddressCases, ADMIN_LEVELS } from '../addresses'
+import { EventLocationAddressCases, ADMIN_LEVELS } from '../address-settings'
 import { Conditional, IntegratingSystemType } from '../types/types'
 import { Validator } from '../types/validators'
+
+export interface IConditional {
+  description?: string
+  action: string
+  expression: string
+}
 
 export const isValidChildBirthDate = [
   {
@@ -203,10 +211,6 @@ export const informantFirstNameConditionals = [
   {
     action: 'disable',
     expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
-  },
-  {
-    action: 'hide',
-    expression: '!values.detailsExist'
   }
 ]
 
@@ -216,6 +220,7 @@ export const informantFamilyNameConditionals = [
     expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
   }
 ]
+
 export const fathersBirthDateConditionals = [
   {
     action: 'hide',

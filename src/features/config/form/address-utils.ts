@@ -11,17 +11,13 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import { ISerializedForm, SerializedFormField, Event } from './types/types'
-import {
-  AddressCases,
-  AddressCopyConfigCases,
-  AddressSubsections,
-  EventLocationAddressCases
-} from './addresses'
 import {
   getAddressConditionals,
   getPlaceOfEventConditionals
 } from './birth/utils'
+import { AddressCases, EventLocationAddressCases } from './address-settings'
+import { ISerializedForm, SerializedFormField, Event } from './types/types'
+import { AddressCopyConfigCases, AddressSubsections } from './addresses'
 
 export interface IAddressConfiguration {
   precedingFieldId: string
@@ -233,7 +229,6 @@ export function getPlaceOfEventLocationSelect(
         operation: 'eventLocationQueryTransformer',
         parameters: [
           { transformedFieldName: location, lineNumber: locationIndex },
-          location,
           {
             fieldsToIgnoreForLocalAddress: [
               'internationalDistrict',

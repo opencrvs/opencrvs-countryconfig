@@ -15,6 +15,7 @@ import {
   formMessageDescriptors,
   informantMessageDescriptors
 } from '../formatjs-messages'
+import { IConditional } from './utils'
 import { Conditional, SerializedFormField } from '../types/types'
 
 export const getBirthDate = (
@@ -48,7 +49,7 @@ export const getBirthDate = (
     }
   } satisfies SerializedFormField)
 
-export const getGender = (certificateHandlebar: string): SerializedFormField =>
+export const getGender = (certificateHandlebar: string) =>
   ({
     name: 'gender', // A field with this name MUST exist
     type: 'SELECT_WITH_OPTIONS',
@@ -81,7 +82,7 @@ export const getGender = (certificateHandlebar: string): SerializedFormField =>
 
 export const getFamilyNameField = (
   previewGroup: string,
-  conditionals: Conditional[],
+  conditionals: IConditional[],
   certificateHandlebar: string
 ) =>
   ({
@@ -117,7 +118,7 @@ export const getFamilyNameField = (
 
 export const getFirstNameField = (
   previewGroup: string,
-  conditionals: Conditional[],
+  conditionals: IConditional[],
   certificateHandlebar: string
 ) =>
   ({
@@ -157,7 +158,7 @@ export const getFirstNameField = (
 
 export const getNationality = (
   certificateHandlebar: string,
-  conditionals: Conditional[]
+  conditionals: IConditional[]
 ) =>
   ({
     name: 'nationality',
@@ -170,12 +171,7 @@ export const getNationality = (
     options: {
       resource: 'countries'
     },
-    conditionals: [
-      {
-        action: 'hide',
-        expression: '!values.detailsExist'
-      }
-    ].concat(conditionals),
+    conditionals: conditionals,
     mapping: {
       template: {
         fieldName: certificateHandlebar,
@@ -221,94 +217,93 @@ export const getNationalID = (
     }
   } satisfies SerializedFormField)
 
-export const getPlaceOfBirthFields = () =>
-  [
-    {
-      name: 'placeOfBirthTitle',
-      type: 'SUBSECTION',
-      label: formMessageDescriptors.placeOfBirthPreview,
-      previewGroup: 'placeOfBirth',
-      ignoreBottomMargin: true,
-      initialValue: '',
-      validator: []
-    },
-    {
-      name: 'placeOfBirth',
-      type: 'SELECT_WITH_OPTIONS',
-      previewGroup: 'placeOfBirth',
-      ignoreFieldLabelOnErrorMessage: true,
-      label: formMessageDescriptors.placeOfBirth,
-      required: true,
-      initialValue: '',
-      validator: [],
-      placeholder: formMessageDescriptors.formSelectPlaceholder,
-      options: [
-        {
-          value: 'HEALTH_FACILITY',
-          label: formMessageDescriptors.healthInstitution
-        },
-        {
-          value: 'PRIVATE_HOME',
-          label: formMessageDescriptors.privateHome
-        },
-        {
-          value: 'OTHER',
-          label: formMessageDescriptors.otherInstitution
-        }
-      ],
-      mapping: {
-        mutation: {
-          operation: 'birthEventLocationMutationTransformer',
-          parameters: [{}]
-        },
-        query: {
-          operation: 'eventLocationTypeQueryTransformer',
-          parameters: []
-        }
-      }
-    },
-    {
-      name: 'birthLocation',
-      type: 'LOCATION_SEARCH_INPUT',
-      label: formMessageDescriptors.healthInstitution,
-      previewGroup: 'placeOfBirth',
-      required: true,
-      initialValue: '',
-      searchableResource: ['facilities'],
-      searchableType: ['HEALTH_FACILITY'],
-      dynamicOptions: {
-        resource: 'facilities'
+export const getPlaceOfBirthFields = (): SerializedFormField[] => [
+  {
+    name: 'placeOfBirthTitle',
+    type: 'SUBSECTION',
+    label: formMessageDescriptors.placeOfBirthPreview,
+    previewGroup: 'placeOfBirth',
+    ignoreBottomMargin: true,
+    initialValue: '',
+    validator: []
+  },
+  {
+    name: 'placeOfBirth',
+    type: 'SELECT_WITH_OPTIONS',
+    previewGroup: 'placeOfBirth',
+    ignoreFieldLabelOnErrorMessage: true,
+    label: formMessageDescriptors.placeOfBirth,
+    required: true,
+    initialValue: '',
+    validator: [],
+    placeholder: formMessageDescriptors.formSelectPlaceholder,
+    options: [
+      {
+        value: 'HEALTH_FACILITY',
+        label: formMessageDescriptors.healthInstitution
       },
-      validator: [
-        {
-          operation: 'facilityMustBeSelected'
-        }
-      ],
-      conditionals: [
-        {
-          action: 'hide',
-          expression: '(values.placeOfBirth!="HEALTH_FACILITY")'
-        }
-      ],
-      mapping: {
-        template: {
-          fieldName: 'placeOfBirth',
-          operation: 'eventLocationNameQueryOfflineTransformer',
-          parameters: ['facilities', 'placeOfBirth']
-        },
-        mutation: {
-          operation: 'birthEventLocationMutationTransformer',
-          parameters: [{}]
-        },
-        query: {
-          operation: 'eventLocationIDQueryTransformer',
-          parameters: []
-        }
+      {
+        value: 'PRIVATE_HOME',
+        label: formMessageDescriptors.privateHome
+      },
+      {
+        value: 'OTHER',
+        label: formMessageDescriptors.otherInstitution
+      }
+    ],
+    mapping: {
+      mutation: {
+        operation: 'birthEventLocationMutationTransformer',
+        parameters: [{}]
+      },
+      query: {
+        operation: 'eventLocationTypeQueryTransformer',
+        parameters: []
       }
     }
-  ] satisfies SerializedFormField[]
+  },
+  {
+    name: 'birthLocation',
+    type: 'LOCATION_SEARCH_INPUT',
+    label: formMessageDescriptors.healthInstitution,
+    previewGroup: 'placeOfBirth',
+    required: true,
+    initialValue: '',
+    searchableResource: ['facilities'],
+    searchableType: ['HEALTH_FACILITY'],
+    dynamicOptions: {
+      resource: 'facilities'
+    },
+    validator: [
+      {
+        operation: 'facilityMustBeSelected'
+      }
+    ],
+    conditionals: [
+      {
+        action: 'hide',
+        expression: '(values.placeOfBirth!="HEALTH_FACILITY")'
+      }
+    ],
+    mapping: {
+      template: {
+        fieldName: 'placeOfBirth',
+        operation: 'eventLocationNameQueryOfflineTransformer',
+        parameters: ['facilities', 'placeOfBirth']
+      },
+      mutation: {
+        operation: 'birthEventLocationMutationTransformer',
+        parameters: [{}]
+      },
+      query: {
+        operation: 'eventLocationIDQueryTransformer',
+        parameters: []
+      }
+    }
+  }
+]
 
-export const informantType = {
+export const informantType: SerializedFormField = {
   name: 'informantType',
   type: 'SELECT_WITH_OPTIONS',
   label: informantMessageDescriptors.birthInformantTitle,
@@ -319,12 +314,12 @@ export const informantType = {
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   mapping: {
     mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['registration.informantType']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantType']
     },
     query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['registration.informantType']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantType']
     },
     template: {
       fieldName: 'informantType',
@@ -369,9 +364,9 @@ export const informantType = {
       label: informantMessageDescriptors.OTHER
     }
   ]
-} satisfies SerializedFormField
+}
 
-export const otherInformantType = {
+export const otherInformantType: SerializedFormField = {
   name: 'otherInformantType',
   type: 'TEXT',
   label: formMessageDescriptors.informantsRelationWithChild,
@@ -399,7 +394,7 @@ export const otherInformantType = {
       parameters: ['registration.otherInformantType']
     }
   }
-} satisfies SerializedFormField
+}
 
 export const getDetailsExist = (
   label: MessageDescriptor,

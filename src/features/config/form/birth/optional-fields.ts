@@ -13,7 +13,6 @@
 import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from '../formatjs-messages'
 import { Conditional, SerializedFormField } from '../types/types'
-import { hideIfInformantMotherOrFather } from './utils'
 
 export const attendantAtBirth: SerializedFormField = {
   name: 'attendantAtBirth',
@@ -167,8 +166,8 @@ export const registrationPhone: SerializedFormField = {
       parameters: ['registration.contactPhoneNumber']
     },
     query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['registration.contactPhoneNumber']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'contactPhoneNumber']
     },
     template: {
       fieldName: 'contactPhoneNumber',
@@ -192,14 +191,14 @@ export const registrationEmail: SerializedFormField = {
   mapping: {
     mutation: {
       operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['registration.email']
+      parameters: ['registration.contactEmail']
     },
     query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['registration.email']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'contactEmail']
     },
     template: {
-      fieldName: 'email',
+      fieldName: 'contactEmail',
       operation: 'plainInputTransformer'
     }
   }
@@ -260,8 +259,7 @@ export const exactDateOfBirthUnknown: SerializedFormField = {
     {
       action: 'hide',
       expression: '!window.config.DATE_OF_BIRTH_UNKNOWN || !values.detailsExist'
-    },
-    ...hideIfInformantMotherOrFather
+    }
   ],
   mapping: {
     query: {

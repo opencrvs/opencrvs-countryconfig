@@ -1023,7 +1023,15 @@ export const marriageRegisterForms: ISerializedForm = {
             }
           ]
         }
-      ]
+      ],
+      mapping: {
+        mutation: {
+          operation: 'setInformantSectionTransformer'
+        },
+        query: {
+          operation: 'getInformantSectionTransformer'
+        }
+      }
     },
     {
       id: 'witnessTwo',
@@ -1166,7 +1174,15 @@ export const marriageRegisterForms: ISerializedForm = {
             }
           ]
         }
-      ]
+      ],
+      mapping: {
+        mutation: {
+          operation: 'setInformantSectionTransformer'
+        },
+        query: {
+          operation: 'getInformantSectionTransformer'
+        }
+      }
     },
     {
       id: 'documents',

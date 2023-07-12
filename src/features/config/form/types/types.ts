@@ -11,8 +11,8 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import * as labels from '../formatjs-messages'
 import { identityTypeMapper } from '../options'
+import * as labels from '../formatjs-messages'
 import { Validator } from './validators'
 
 // TODO: only list out supported mappings in core include custom form field mappings
@@ -42,13 +42,13 @@ export type Validation = (
   offlineCountryConfig?: any
 ) => ValidationResult | undefined
 
-export type ValidationInitializer = (...value: any[]) => Validation
-
 export enum Event {
   Birth = 'birth',
   Death = 'death',
   Marriage = 'marriage'
 }
+
+export type ValidationInitializer = (...value: any[]) => Validation
 
 type IIgnoreFields = {
   fieldsToIgnoreForLocalAddress: string[]

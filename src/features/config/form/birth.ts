@@ -77,7 +77,7 @@ export const birthRegisterForms: ISerializedForm = {
   sections: [
     {
       id: 'registration', // A hidden 'registration' section must be included to store identifiers in a form draft that are used in certificates
-      viewType: 'hidden',
+      viewType: 'form',
       name: {
         defaultMessage: 'Registration',
         description: 'Form section name for Registration',
@@ -264,13 +264,6 @@ export const birthRegisterForms: ISerializedForm = {
       groups: [
         {
           id: 'informant-view-group',
-          conditionals: [
-            {
-              action: 'hide',
-              expression:
-                "(draftData && draftData.registration && draftData.registration.informantType && selectedInformantAndContactType.selectedInformantType && (selectedInformantAndContactType.selectedInformantType === 'MOTHER' || selectedInformantAndContactType.selectedInformantType === 'FATHER'))"
-            }
-          ],
           fields: [
             informantType, // Required field.
             otherInformantType, // Required field.
@@ -358,7 +351,7 @@ export const birthRegisterForms: ISerializedForm = {
             exactDateOfBirthUnknown,
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfMother,
-              detailsExist
+              exactDateOfBirthUnknownConditional
             ),
             getFirstNameField(
               'motherNameInEnglish',
@@ -445,7 +438,7 @@ export const birthRegisterForms: ISerializedForm = {
             exactDateOfBirthUnknown,
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfFather,
-              detailsExist
+              exactDateOfBirthUnknownConditional
             ),
             getFirstNameField(
               'fatherNameInEnglish',

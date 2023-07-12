@@ -358,6 +358,7 @@ async function main() {
       if (!ownStat) {
         continue
       }
+      // eslint-disable-next-line no-unsafe-optional-chaining
       for (const year of ownStat?.years) {
         const yearWiseChildrenStats = childrenLocations
           .map((e) => statisticsMap.get(e))
