@@ -510,6 +510,11 @@ export const formMessageDescriptors = {
     description: 'Form section name for Deceased',
     id: 'form.section.deceased.name'
   },
+  relationshipToDeceased: {
+    defaultMessage: 'Relationship to deceased',
+    description: 'Relationship of applicant to the deceased person',
+    id: 'form.section.deceased.relationship'
+  },
   deceasedTitle: {
     defaultMessage: 'What are the deceased details?',
     description: 'Form section title for Deceased',
@@ -702,6 +707,11 @@ export const formMessageDescriptors = {
     defaultMessage: 'Married Last name (if different)',
     description: 'Label for married last name text input',
     id: 'form.field.label.marriedLastName'
+  },
+  lastNameAtBirth: {
+    defaultMessage: 'Last name at birth (if different from above)',
+    description: 'Label for a different last name text input',
+    id: 'form.field.label.lastNameAtBirth'
   },
   brideName: {
     defaultMessage: 'Bride',

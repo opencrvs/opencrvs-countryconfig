@@ -71,7 +71,8 @@ export const birthDocumentTypeFhirMapping = {
 export const marriageDocumentForWhomFhirMapping = {
   GROOM: 'GROOM',
   BRIDE: 'BRIDE',
-  MARRIAGE_NOTICE_PROOF: 'MARRIAGE_NOTICE_PROOF'
+  MARRIAGE_NOTICE_PROOF: 'MARRIAGE_NOTICE_PROOF',
+  INFORMANT: 'INFORMANT'
 }
 
 export const marriageDocumentTypeFhirMapping = {

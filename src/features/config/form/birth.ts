@@ -17,30 +17,34 @@ import {
 } from './options'
 import { formMessageDescriptors } from './formatjs-messages'
 import {
-  getBirthDate,
   getDetailsExist,
+  getReasonNotExisting,
+  getPlaceOfBirthFields
+} from './birth/required-fields'
+import {
+  getBirthDate,
+  getGender,
   getFamilyNameField,
   getFirstNameField,
-  getGender,
   getNationalID,
   getNationality,
-  getPlaceOfBirthFields,
-  getReasonNotExisting,
   informantType,
   otherInformantType
-} from './birth/required-fields'
+} from './common-required-fields'
+import {
+  exactDateOfBirthUnknown,
+  getAgeOfIndividualInYears,
+  getMaritalStatus,
+  registrationEmail,
+  registrationPhone
+} from './common-optional-fields'
 import {
   attendantAtBirth,
   birthType,
-  exactDateOfBirthUnknown,
-  getAgeOfIndividualInYears,
   getEducation,
-  getMaritalStatus,
   getNIDVerificationButton,
   getOccupation,
   multipleBirth,
-  registrationEmail,
-  registrationPhone,
   weightAtBirth
 } from './birth/optional-fields'
 import {
@@ -51,13 +55,7 @@ import {
 } from './birth/preview-groups'
 import {
   isValidChildBirthDate,
-  informantFirstNameConditionals,
   hideIfInformantMotherOrFather,
-  informantFamilyNameConditionals,
-  informantBirthDateConditionals,
-  exactDateOfBirthUnknownConditional,
-  hideIfNidIntegrationEnabled,
-  getNationalIDValidators,
   hideIfNidIntegrationDisabled,
   mothersDetailsExistConditionals,
   mothersBirthDateConditionals,
@@ -72,6 +70,14 @@ import {
   fatherFamilyNameConditionals,
   fatherNationalIDVerfication
 } from './birth/utils'
+import {
+  getNationalIDValidators,
+  informantFirstNameConditionals,
+  informantFamilyNameConditionals,
+  informantBirthDateConditionals,
+  exactDateOfBirthUnknownConditional,
+  hideIfNidIntegrationEnabled
+} from './common-utils'
 
 export const birthRegisterForms: ISerializedForm = {
   sections: [

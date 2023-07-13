@@ -39,6 +39,7 @@ import {
 } from './address-utils'
 import { cloneDeep } from 'lodash'
 import { getPreviewGroups } from './birth/preview-groups'
+import { hideIfInformantBrideOrGroom } from './marriage/utils'
 import {
   ADMIN_LEVELS,
   EventLocationAddressCases,
@@ -166,7 +167,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
-    precedingFieldId: 'death.informant.informant-view-group.familyNameEng',
+    precedingFieldId: 'death.informant.informant-view-group.informantID',
     configurations: [
       {
         config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
@@ -233,6 +234,36 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressCases.SECONDARY_ADDRESS,
         conditionalCase: `${secondaryAddressesDisabled}`
+      }
+    ]
+  },
+  {
+    precedingFieldId:
+      'marriage.informant.who-is-applying-view-group.informantID',
+    configurations: [
+      {
+        config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
+        label: formMessageDescriptors.primaryAddress,
+        conditionalCase: hideIfInformantBrideOrGroom[0].expression
+      },
+      {
+        config: AddressCases.PRIMARY_ADDRESS,
+        conditionalCase: hideIfInformantBrideOrGroom[0].expression
+      },
+      {
+        config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
+        label: formMessageDescriptors.secondaryAddress,
+        conditionalCase: `${
+          secondaryAddressesDisabled ||
+          hideIfInformantBrideOrGroom[0].expression
+        }`
+      },
+      {
+        config: AddressCases.SECONDARY_ADDRESS,
+        conditionalCase: `${
+          secondaryAddressesDisabled ||
+          hideIfInformantBrideOrGroom[0].expression
+        }`
       }
     ]
   }

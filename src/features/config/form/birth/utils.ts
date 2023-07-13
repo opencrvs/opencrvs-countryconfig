@@ -9,19 +9,10 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-
-// TODO: add in all the validations and conditionals logic and generate a js file client can load
-
 import { sentenceCase } from '../address-utils'
 import { EventLocationAddressCases, ADMIN_LEVELS } from '../address-settings'
 import { Conditional, IntegratingSystemType } from '../types/types'
 import { Validator } from '../types/validators'
-
-export interface IConditional {
-  description?: string
-  action: string
-  expression: string
-}
 
 export const isValidChildBirthDate = [
   {
@@ -95,55 +86,6 @@ export const parentsBirthDateValidators = [
   }
 ] satisfies Validator[]
 
-export function getNationalIDValidators(configCase: string) {
-  if (configCase === 'informant') {
-    return [
-      {
-        operation: 'validIDNumber',
-        parameters: ['NATIONAL_ID']
-      },
-      {
-        operation: 'duplicateIDNumber',
-        parameters: ['deceased.iD']
-      },
-      {
-        operation: 'duplicateIDNumber',
-        parameters: ['mother.iD']
-      },
-      {
-        operation: 'duplicateIDNumber',
-        parameters: ['father.iD']
-      }
-    ]
-  } else {
-    // mother
-    return [
-      {
-        operation: 'validIDNumber',
-        parameters: ['NATIONAL_ID']
-      },
-      {
-        operation: 'duplicateIDNumber',
-        parameters: ['father.iD']
-      }
-    ]
-  }
-}
-
-export const hideIfNidIntegrationEnabled = [
-  {
-    action: 'hide',
-    expression: `const nationalIdSystem =
-          offlineCountryConfig &&
-          offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
-          nationalIdSystem &&
-          nationalIdSystem.settings.openIdProviderBaseUrl &&
-          nationalIdSystem.settings.openIdProhideIfNidIntegrationDisabledviderClientId &&
-          nationalIdSystem.settings.openIdProviderClaims;
-      `
-  }
-]
-
 export const detailsExist = [
   {
     action: 'hide',
@@ -159,13 +101,6 @@ export const hideIfInformantMotherOrFather = [
   {
     action: 'hide',
     expression: informantNotMotherOrFather
-  }
-]
-
-export const exactDateOfBirthUnknownConditional = [
-  {
-    action: 'hide',
-    expression: '!values.exactDateOfBirthUnknown'
   }
 ]
 
@@ -193,31 +128,6 @@ export const fathersDetailsExistConditionals = [
   {
     action: 'hideInPreview',
     expression: 'values.detailsExist'
-  }
-]
-
-export const informantBirthDateConditionals = [
-  {
-    action: 'disable',
-    expression: 'values.exactDateOfBirthUnknown'
-  },
-  {
-    action: 'disable',
-    expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('informantBirthDate')`
-  }
-]
-
-export const informantFirstNameConditionals = [
-  {
-    action: 'disable',
-    expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
-  }
-]
-
-export const informantFamilyNameConditionals = [
-  {
-    action: 'disable',
-    expression: `draftData?.informant?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
   }
 ]
 
