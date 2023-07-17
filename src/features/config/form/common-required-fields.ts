@@ -297,12 +297,12 @@ export const otherInformantType: SerializedFormField = {
   ],
   mapping: {
     mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['registration.otherInformantType']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'otherInformantType']
     },
     query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['registration.otherInformantType']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'otherInformantType']
     }
   }
 }

@@ -53,7 +53,7 @@ export const getDeathDate = (
 })
 
 export const deathInformantType: SerializedFormField = {
-  name: 'contactPoint',
+  name: 'informantType',
   type: 'SELECT_WITH_OPTIONS',
   label: formMessageDescriptors.relationshipToDeceased,
   required: true,
@@ -64,15 +64,15 @@ export const deathInformantType: SerializedFormField = {
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   mapping: {
     mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['registration.contact']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantType']
     },
     query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['registration.contact']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantType']
     },
     template: {
-      fieldName: 'contactPoint',
+      fieldName: 'informantType',
       operation: 'selectTransformer'
     }
   },
