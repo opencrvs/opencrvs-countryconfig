@@ -38,11 +38,10 @@ import {
   getMarriageDate,
   getRelationshipToSpousesForWitness,
   marriageInformantType,
-  witnessName,
   witnessRelationshipForOthers
 } from './marriage/required-fields-marriage'
 import { marriageDocumentTypeFhirMapping } from './options'
-import { ISerializedForm } from './types/types'
+import { Event, ISerializedForm } from './types/types'
 import {
   exactDateOfBirthUnknownConditional,
   getNationalIDValidators
@@ -135,7 +134,7 @@ export const marriageRegisterForms: ISerializedForm = {
           showExitButtonOnly: true,
           fields: [
             marriageInformantType,
-            otherInformantType,
+            otherInformantType(Event.Marriage),
             getFirstNameField(
               'informantNameInEnglish',
               hideIfInformantBrideOrGroom,
@@ -181,59 +180,11 @@ export const marriageRegisterForms: ISerializedForm = {
         }
       ],
       mapping: {
-        template: [
-          {
-            fieldName: 'registrationNumber',
-            operation: 'registrationNumberTransformer'
-          },
-          {
-            fieldName: 'certificateDate',
-            operation: 'certificateDateTransformer',
-            parameters: ['en', 'dd MMMM yyyy']
-          },
-          {
-            fieldName: 'registrarName',
-            operation: 'registrarNameUserTransformer'
-          },
-          {
-            fieldName: 'role',
-            operation: 'roleUserTransformer'
-          },
-          {
-            fieldName: 'registrarSignature',
-            operation: 'registrarSignatureUserTransformer'
-          },
-          {
-            fieldName: 'registrationDate',
-            operation: 'registrationDateTransformer',
-            parameters: ['en', 'dd MMMM yyyy']
-          },
-          {
-            fieldName: 'registrationLocation',
-            operation: 'registrationLocationUserTransformer'
-          },
-          {
-            fieldName: 'groomSignature',
-            operation: 'groomSignatureTransformer'
-          },
-          {
-            fieldName: 'brideSignature',
-            operation: 'brideSignatureTransformer'
-          },
-          {
-            fieldName: 'witnessOneSignature',
-            operation: 'witnessOneSignatureTransformer'
-          },
-          {
-            fieldName: 'witnessTwoSignature',
-            operation: 'witnessTwoSignatureTransformer'
-          }
-        ],
         mutation: {
-          operation: 'setMarriageRegistrationSectionTransformer'
+          operation: 'setInformantSectionTransformer'
         },
         query: {
-          operation: 'getMarriageRegistrationSectionTransformer'
+          operation: 'getInformantSectionTransformer'
         }
       }
     },
@@ -383,19 +334,15 @@ export const marriageRegisterForms: ISerializedForm = {
         {
           id: 'witness-view-group',
           fields: [
-            witnessName(
-              'firstNamesEng',
+            getFirstNameField(
               'witnessOneNameInEnglish',
-              'witnessOneFirstName',
-              'firstNames',
-              'firstName'
+              [],
+              'witnessOneFirstName'
             ),
-            witnessName(
-              'familyNameEng',
+            getFamilyNameField(
               'witnessOneNameInEnglish',
-              'witnessOneFamilyName',
-              'familyName',
-              'familyName'
+              [],
+              'witnessOneFamilyName'
             ),
             getRelationshipToSpousesForWitness,
             witnessRelationshipForOthers
@@ -432,19 +379,15 @@ export const marriageRegisterForms: ISerializedForm = {
         {
           id: 'witness-view-group',
           fields: [
-            witnessName(
-              'firstNamesEng',
+            getFirstNameField(
               'witnessTwoNameInEnglish',
-              'witnessTwoFirstName',
-              'firstNames',
-              'firstName'
+              [],
+              'witnessTwoFirstName'
             ),
-            witnessName(
-              'familyNameEng',
+            getFamilyNameField(
               'witnessTwoNameInEnglish',
-              'witnessTwoFamilyName',
-              'familyName',
-              'familyName'
+              [],
+              'witnessTwoFamilyName'
             ),
             getRelationshipToSpousesForWitness,
             witnessRelationshipForOthers

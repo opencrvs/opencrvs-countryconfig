@@ -28,12 +28,12 @@ export const marriageInformantType: SerializedFormField = {
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   mapping: {
     mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['registration.informantType']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantType']
     },
     query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['registration.informantType']
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantType']
     },
     template: {
       fieldName: 'informantType',

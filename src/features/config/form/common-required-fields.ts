@@ -14,7 +14,7 @@ import {
   formMessageDescriptors,
   informantMessageDescriptors
 } from './formatjs-messages'
-import { SerializedFormField, Conditional } from './types/types'
+import { SerializedFormField, Conditional, Event } from './types/types'
 
 export const getBirthDate = (
   fieldName: string,
@@ -277,32 +277,38 @@ export const informantType: SerializedFormField = {
   ]
 }
 
-export const otherInformantType: SerializedFormField = {
-  name: 'otherInformantType',
-  type: 'TEXT',
-  label: formMessageDescriptors.informantsRelationWithChild,
-  placeholder: formMessageDescriptors.relationshipPlaceHolder,
-  required: true,
-  initialValue: '',
-  validator: [
-    {
-      operation: 'englishOnlyNameFormat'
+export const otherInformantType = (event: Event) =>
+  ({
+    name: 'otherInformantType',
+    type: 'TEXT',
+    label:
+      event == Event.Birth
+        ? formMessageDescriptors.informantsRelationWithChild
+        : event == Event.Death
+        ? formMessageDescriptors.relationshipToDeceased
+        : formMessageDescriptors.relationshipToSpouses,
+    placeholder: formMessageDescriptors.relationshipPlaceHolder,
+    required: true,
+    initialValue: '',
+    validator: [
+      {
+        operation: 'englishOnlyNameFormat'
+      }
+    ],
+    conditionals: [
+      {
+        action: 'hide',
+        expression: 'values.informantType !== "OTHER"'
+      }
+    ],
+    mapping: {
+      mutation: {
+        operation: 'fieldValueSectionExchangeTransformer',
+        parameters: ['registration', 'otherInformantType']
+      },
+      query: {
+        operation: 'fieldValueSectionExchangeTransformer',
+        parameters: ['registration', 'otherInformantType']
+      }
     }
-  ],
-  conditionals: [
-    {
-      action: 'hide',
-      expression: 'values.informantType !== "OTHER"'
-    }
-  ],
-  mapping: {
-    mutation: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'otherInformantType']
-    },
-    query: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'otherInformantType']
-    }
-  }
-}
+  } satisfies SerializedFormField)
