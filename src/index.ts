@@ -47,6 +47,7 @@ import { countryLogoHandler } from '@countryconfig/features/countryLogo/handler'
 import { locationsHandler } from './features/locations/handler'
 import { certificateHandler } from './features/certificates/handler'
 import { rolesHandler } from './features/roles/handler'
+import { applicationConfigHandler } from './features/config/application/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -392,6 +393,17 @@ export async function createServer() {
     }
   })
 
+  server.route({
+    method: 'GET',
+    path: '/application-config',
+    handler: applicationConfigHandler,
+    options: {
+      auth: false,
+      tags: ['api', 'application-config'],
+      description: 'Returns default application configuration'
+    }
+  })
+  
   server.route({
     method: 'GET',
     path: '/locations',
