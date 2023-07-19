@@ -66,8 +66,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_DEATH }]
   },
   {
-    precedingFieldId:
-      'marriage.marriageEvent.marriage-event-details.placeOfMarriageTitle',
+    precedingFieldId: 'marriage.marriageEvent.marriage-event-details.seperator',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_MARRIAGE }]
   },
   {
@@ -328,7 +327,7 @@ export const getAddressSubsection = (
   const fields: SerializedFormField[] = []
   const subsection: SerializedFormField = {
     name: previewGroup,
-    type: 'SUBSECTION',
+    type: 'SUBSECTION_HEADER',
     label,
     previewGroup: previewGroup,
     initialValue: '',

@@ -635,7 +635,7 @@ export enum CustomFieldType {
   Number = 'NUMBER',
   Paragraph = 'PARAGRAPH',
   SelectWithOptions = 'SELECT_WITH_OPTIONS',
-  Subsection = 'SUBSECTION',
+  Subsection = 'SUBSECTION_HEADER',
   Tel = 'TEL',
   Text = 'TEXT',
   Textarea = 'TEXTAREA'

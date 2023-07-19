@@ -217,9 +217,9 @@ export const registrationPhone: SerializedFormField = {
   }
 }
 
-export const seperatorSubsection: SerializedFormField = {
+export const seperatorDivider: SerializedFormField = {
   name: 'seperator',
-  type: 'SUBSECTION',
+  type: 'DIVIDER',
   label: {
     defaultMessage: ' ',
     description: 'empty string',

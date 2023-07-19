@@ -79,7 +79,7 @@ export const getTypeOfMarriage: SerializedFormField = {
 
 export const placeOfMarriageSubsection: SerializedFormField = {
   name: 'placeOfMarriageTitle',
-  type: 'SUBSECTION',
+  type: 'HEADING3',
   label: formMessageDescriptors.placeOfMarriage,
   previewGroup: 'placeOfMarriage',
   ignoreBottomMargin: true,

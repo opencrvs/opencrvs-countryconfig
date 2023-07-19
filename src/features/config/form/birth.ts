@@ -36,7 +36,8 @@ import {
   getAgeOfIndividualInYears,
   getMaritalStatus,
   registrationEmail,
-  registrationPhone
+  registrationPhone,
+  seperatorDivider
 } from './common-optional-fields'
 import {
   attendantAtBirth,
@@ -237,19 +238,7 @@ export const birthRegisterForms: ISerializedForm = {
               'eventDate'
             ), // Required field.
             ...getPlaceOfBirthFields(),
-            {
-              name: 'seperator',
-              type: 'SUBSECTION',
-              label: {
-                defaultMessage: ' ',
-                description: 'empty string',
-                id: 'form.field.label.empty'
-              },
-              initialValue: '',
-              ignoreBottomMargin: true,
-              validator: [],
-              conditionals: []
-            },
+            seperatorDivider,
             attendantAtBirth,
             birthType,
             weightAtBirth
@@ -381,24 +370,7 @@ export const birthRegisterForms: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(motherNationalIDVerfication),
               []
             ),
-            {
-              name: 'seperator',
-              type: 'SUBSECTION',
-              label: {
-                defaultMessage: ' ',
-                description: 'empty string',
-                id: 'form.field.label.empty'
-              },
-              initialValue: '',
-              ignoreBottomMargin: true,
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression: '!values.detailsExist'
-                }
-              ]
-            },
+            seperatorDivider,
             getMaritalStatus('motherMaritalStatus'),
             multipleBirth,
             getOccupation('motherOccupation'),
@@ -468,24 +440,7 @@ export const birthRegisterForms: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(fatherNationalIDVerfication),
               []
             ),
-            {
-              name: 'seperator',
-              type: 'SUBSECTION',
-              label: {
-                defaultMessage: ' ',
-                description: 'empty string',
-                id: 'form.field.label.empty'
-              },
-              initialValue: '',
-              ignoreBottomMargin: true,
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression: '!values.detailsExist'
-                }
-              ]
-            },
+            seperatorDivider,
             getMaritalStatus('fatherMaritalStatus'),
             multipleBirth,
             getOccupation('fatherOccupation'),

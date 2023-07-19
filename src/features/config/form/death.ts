@@ -16,7 +16,7 @@ import {
   getMaritalStatus,
   registrationEmail,
   registrationPhone,
-  seperatorSubsection
+  seperatorDivider
 } from './common-optional-fields'
 import {
   getGender,
@@ -216,7 +216,6 @@ export const deathRegisterForms = {
               getNationalIDValidators('deceased'),
               'deceasedNID'
             ),
-            seperatorSubsection,
             getMaritalStatus('deceasedMaritalStatus')
             // PRIMARY ADDRESS SUBSECTION
             // PRIMARY ADDRESS
@@ -311,7 +310,7 @@ export const deathRegisterForms = {
               getNationalIDValidators('informant'),
               'informantNID'
             ),
-            seperatorSubsection,
+            seperatorDivider,
             registrationPhone,
             registrationEmail
             // PRIMARY ADDRESS SUBSECTION

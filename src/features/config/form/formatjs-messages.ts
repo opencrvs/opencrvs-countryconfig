@@ -14,7 +14,7 @@ import { MessageDescriptor } from 'react-intl'
 // TODO: Where possible, move all the message descriptors from core into farajaland
 export const informantMessageDescriptors = {
   birthInformantTitle: {
-    defaultMessage: 'Who is applying for birth registration?',
+    defaultMessage: 'Informant type',
     description: 'Who is applying for birth registration',
     id: 'register.selectInformant.birthInformantTitle'
   },

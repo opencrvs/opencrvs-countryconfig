@@ -14,7 +14,8 @@ import {
   exactDateOfBirthUnknown,
   getAgeOfIndividualInYears,
   registrationEmail,
-  registrationPhone
+  registrationPhone,
+  seperatorDivider
 } from './common-optional-fields'
 import {
   getBirthDate,
@@ -320,7 +321,8 @@ export const marriageRegisterForms: ISerializedForm = {
           fields: [
             getMarriageDate,
             getTypeOfMarriage,
-            placeOfMarriageSubsection
+            placeOfMarriageSubsection,
+            seperatorDivider
           ]
         }
       ]
