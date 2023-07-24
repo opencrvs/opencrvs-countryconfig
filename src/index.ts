@@ -47,6 +47,7 @@ import { countryLogoHandler } from '@countryconfig/features/countryLogo/handler'
 import { locationsHandler } from './features/locations/handler'
 import { certificateHandler } from './features/certificates/handler'
 import { rolesHandler } from './features/roles/handler'
+import { usersHandler } from './features/employees/handler'
 import { applicationConfigHandler } from './features/config/application/handler'
 
 export interface ITokenPayload {
@@ -403,7 +404,7 @@ export async function createServer() {
       description: 'Returns default application configuration'
     }
   })
-  
+
   server.route({
     method: 'GET',
     path: '/locations',
@@ -434,6 +435,17 @@ export async function createServer() {
       auth: false,
       tags: ['api', 'user-roles'],
       description: 'Returns user roles metadata'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/users',
+    handler: usersHandler,
+    options: {
+      auth: false,
+      tags: ['api', 'users'],
+      description: 'Returns users metadata'
     }
   })
 
