@@ -204,11 +204,24 @@ export const registrationPhone: SerializedFormField = {
   mapping: {
     mutation: {
       operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['registration.contactPhoneNumber']
+      parameters: [
+        'registration.contactPhoneNumber',
+        {
+          operation: 'msisdnTransformer',
+          parameters: ['registration.contactPhoneNumber']
+        }
+      ]
     },
     query: {
       operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'contactPhoneNumber']
+      parameters: [
+        'registration',
+        'contactPhoneNumber',
+        {
+          operation: 'localPhoneTransformer',
+          parameters: ['registration.contactPhoneNumber']
+        }
+      ]
     },
     template: {
       fieldName: 'contactPhoneNumber',
