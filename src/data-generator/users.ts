@@ -7,6 +7,9 @@ import { GATEWAY_GQL_HOST } from './constants'
 import { expand } from 'regex-to-strings'
 import { convertToMSISDN } from '@countryconfig/features/utils'
 import { getAgentRoles } from '@countryconfig/features/employees/scripts/utils'
+import { readFileSync } from 'fs'
+import { join } from 'path'
+import { MutationCreateOrUpdateUserArgs } from './gateway'
 
 export type User = {
   username: string
@@ -42,6 +45,10 @@ interface ISystemInfo {
 
 const nationalSystemAdmin: User[] = []
 
+const SIGNATURE = readFileSync(
+  join(__dirname, 'assets', '528KB-random.png')
+).toString('base64')
+
 export async function createUser(
   token: string,
   primaryOfficeId: string,
@@ -57,7 +64,7 @@ export async function createUser(
   const generatedPhoneNumber = phoneNumberExpander.getIterator().next().value
   countryAlpha3 = countryAlpha3.toUpperCase() === 'FAR' ? 'ZMB' : countryAlpha3
 
-  const user = {
+  const user: Partial<MutationCreateOrUpdateUserArgs['user']> = {
     name: [
       {
         use: 'en',
@@ -79,6 +86,16 @@ export async function createUser(
     email: faker.internet.email(),
     primaryOffice: primaryOfficeId,
     ...overrides
+  }
+
+  if (
+    overrides?.systemRole === SystemRole.LocalRegistrar ||
+    overrides?.systemRole === SystemRole.RegistrationAgent
+  ) {
+    user.signature = {
+      data: 'data:image/png;base64,' + SIGNATURE,
+      type: 'image/png'
+    }
   }
 
   const createUserRes = await fetch(GATEWAY_GQL_HOST, {

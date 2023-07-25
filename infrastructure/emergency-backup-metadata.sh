@@ -16,6 +16,14 @@
 #------------------------------------------------------------------------------------------------------------------
 set -e
 
+WORKING_DIR=$(pwd)
+
+if docker service ls > /dev/null 2>&1; then
+  IS_LOCAL=false
+else
+  IS_LOCAL=true
+fi
+
 # Reading Named parameters
 for i in "$@"; do
   case $i in
@@ -65,38 +73,60 @@ print_usage_and_exit() {
   exit 1
 }
 
-if [ -z "$SSH_USER" ]; then
-  echo "Error: Argument for the --ssh_user is required."
-  print_usage_and_exit
-fi
-if [ -z "$SSH_HOST" ]; then
-  echo "Error: Argument for the --ssh_host is required."
-  print_usage_and_exit
-fi
-if [ -z "$SSH_PORT" ]; then
-  echo "Error: Argument for the --ssh_port is required."
-  print_usage_and_exit
-fi
-if [ -z "$PRODUCTION_IP" ]; then
-  echo "Error: Argument for the --production_ip is required."
-  print_usage_and_exit
-fi
-if [ -z "$REMOTE_DIR" ]; then
-  echo "Error: Argument for the --remote_dir is required."
-  print_usage_and_exit
-fi
-if [ -z "$REPLICAS" ]; then
-  echo "Error: Argument for the --replicas is required."
-  print_usage_and_exit
+if [ "$IS_LOCAL" = false ]; then
+  ROOT_PATH=${ROOT_PATH:-/data}
+  if [ -z "$SSH_USER" ]; then
+    echo "Error: Argument for the --ssh_user is required."
+    print_usage_and_exit
+  fi
+  if [ -z "$SSH_HOST" ]; then
+    echo "Error: Argument for the --ssh_host is required."
+    print_usage_and_exit
+  fi
+  if [ -z "$SSH_PORT" ]; then
+    echo "Error: Argument for the --ssh_port is required."
+    print_usage_and_exit
+  fi
+  if [ -z "$PRODUCTION_IP" ]; then
+    echo "Error: Argument for the --production_ip is required."
+    print_usage_and_exit
+  fi
+  if [ -z "$REMOTE_DIR" ]; then
+    echo "Error: Argument for the --remote_dir is required."
+    print_usage_and_exit
+  fi
+  if [ -z "$REPLICAS" ]; then
+    echo "Error: Argument for the --replicas is required."
+    print_usage_and_exit
+  fi
+  # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
+  # We recommend that the secrets are served via a secure API from a Hardware Security Module
+  source /data/secrets/opencrvs.secrets
+else
+  ROOT_PATH=${ROOT_PATH:-../opencrvs-core/data}
+
+  if [ ! -d "$ROOT_PATH" ]; then
+    echo "Error: ROOT_PATH ($ROOT_PATH) doesn't exist"
+    print_usage_and_exit
+  fi
+
+  ROOT_PATH=$(cd "$ROOT_PATH" && pwd)
 fi
 
-# In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
-# We recommend that the secrets are served via a secure API from a Hardware Security Module
-source /data/secrets/opencrvs.secrets
+mkdir -p $ROOT_PATH/backups/elasticsearch
+mkdir -p $ROOT_PATH/backups/influxdb
+mkdir -p $ROOT_PATH/backups/mongo
+mkdir -p $ROOT_PATH/backups/minio
+mkdir -p $ROOT_PATH/backups/metabase
+mkdir -p $ROOT_PATH/backups/vsexport
 
 # Select docker network and replica set in production
 #----------------------------------------------------
-if [ "$REPLICAS" = "0" ]; then
+if [ "$IS_LOCAL" = true ]; then
+  HOST=mongo1
+  NETWORK=opencrvs_default
+  echo "Working in a local environment"
+elif [ "$REPLICAS" = "0" ]; then
   HOST=mongo1
   NETWORK=opencrvs_default
   echo "Working with no replicas"
@@ -138,19 +168,21 @@ elasticsearch_host() {
 BACKUP_DATE=$(date +%Y-%m-%d)
 
 # Backup Hearth, OpenHIM, User, Application-config and any other service related Mongo databases into a mongo sub folder
-#---------------------------------------------------------------------------------------------
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+# ---------------------------------------------------------------------------------------------
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d hearth-dev --gzip --archive=/data/backups/mongo/hearth-dev-${VERSION:-$BACKUP_DATE}.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev --gzip --archive=/data/backups/mongo/openhim-dev-${VERSION:-$BACKUP_DATE}.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d user-mgnt --gzip --archive=/data/backups/mongo/user-mgnt-${VERSION:-$BACKUP_DATE}.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d application-config --gzip --archive=/data/backups/mongo/application-config-${VERSION:-$BACKUP_DATE}.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d metrics --gzip --archive=/data/backups/mongo/metrics-${VERSION:-$BACKUP_DATE}.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d webhooks --gzip --archive=/data/backups/mongo/webhooks-${VERSION:-$BACKUP_DATE}.gz"
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+  -c "mongodump $(mongo_credentials) --host $HOST -d performance --gzip --archive=/data/backups/mongo/performance-${VERSION:-$BACKUP_DATE}.gz"
 
 # Register backup folder as an Elasticsearch repository for backing up the search data
 #-------------------------------------------------------------------------------------
@@ -163,59 +195,77 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X PUT -H "Content-Type
 
 # Get the container ID and host details of any running InfluxDB container, as the only way to backup is by using the Influxd CLI inside a running opencrvs_metrics container
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-INFLUXDB_CONTAINER_ID=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}')
-INFLUXDB_CONTAINER_NAME=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}')
-INFLUXDB_HOSTNAME=$(echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}')
-INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
-INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
+if  [ "$IS_LOCAL" = true ]; then
+  INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
+else
+  INFLUXDB_CONTAINER_ID=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}')
+  INFLUXDB_CONTAINER_NAME=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}')
+  INFLUXDB_HOSTNAME=$(echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}')
+  INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
+  INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
+  OWN_IP=$(hostname -I | cut -d' ' -f1)
+fi
 
 # If required, SSH into the node running the opencrvs_metrics container and backup the metrics data into an influxdb subfolder
 #-----------------------------------------------------------------------------------------------------------------------------
 
-OWN_IP=$(hostname -I | cut -d' ' -f1)
-if [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
+if [ "$IS_LOCAL" = true ]; then
+  echo "Backing up Influx locally $INFLUXDB_CONTAINER_ID"
+  docker exec $INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${VERSION:-$BACKUP_DATE}
+  docker cp $INFLUXDB_CONTAINER_ID:/home/user/${VERSION:-$BACKUP_DATE} $ROOT_PATH/backups/influxdb/${VERSION:-$BACKUP_DATE}
+elif [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
   echo "Backing up Influx on own node"
   docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${VERSION:-$BACKUP_DATE}
-  docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${VERSION:-$BACKUP_DATE} /data/backups/influxdb/${VERSION:-$BACKUP_DATE}
+  docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${VERSION:-$BACKUP_DATE} $ROOT_PATH/backups/influxdb/${VERSION:-$BACKUP_DATE}
 else
   echo "Backing up Influx on other node $INFLUXDB_HOST"
-  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" /data/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
+  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" $ROOT_PATH/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
   ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${VERSION:-$BACKUP_DATE}"
   ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${VERSION:-$BACKUP_DATE} /data/backups/influxdb/${VERSION:-$BACKUP_DATE}"
   echo "Replacing backup for influxdb on manager node with new backup"
-  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb /data/backups/influxdb
+  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb $ROOT_PATH/backups/influxdb
 fi
 
-# Backup Minio
-cd /data/minio && tar -zcvf /data/backups/minio/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz * && cd /
+echo "Creating a backup for Minio"
+mkdir -p $ROOT_PATH/backups/minio
+cd $ROOT_PATH/minio && tar -zcvf $ROOT_PATH/backups/minio/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz . && cd /
 
-# Backup Metabase
-cd /data/metabase && tar -zcvf /data/backups/metabase/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz * && cd /
+echo "Creating a backup for Metabase"
+mkdir -p $ROOT_PATH/backups/metabase
+cd $ROOT_PATH/metabase && tar -zcvf $ROOT_PATH/backups/metabase/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz . && cd /
 
-# Backup VSExport
-cd /data/vsexport && tar -zcvf /data/backups/vsexport/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz * && cd /
+echo "Creating a backup for VSExport"
+mkdir -p $ROOT_PATH/backups/vsexport
+cd $ROOT_PATH/vsexport && tar -zcvf $ROOT_PATH/backups/vsexport/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz . && cd /
+
+if [[ "$IS_LOCAL" = true ]]; then
+  echo $WORKING_DIR
+  cd $ROOT_PATH/backups && tar -zcvf $WORKING_DIR/ocrvs-${VERSION:-$BACKUP_DATE}.tar.gz .
+  exit 0
+fi
 
 # Copy the backups to an offsite server in production
 #----------------------------------------------------
 if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)" ]]; then
-  script -q -c "rsync -a -r --progress --rsh='ssh -p$SSH_PORT' /data/backups/elasticsearch/ $SSH_USER@$SSH_HOST:$REMOTE_DIR/elasticsearch" && echo "Copied elasticsearch backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/minio/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/minio" && echo "Copied minio backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/metabase/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/metabase" && echo "Copied Metabase backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/influxdb/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/influxdb" && echo "Copied influx backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/hearth-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied hearth backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/user-mgnt-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied user backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/openhim-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied openhim backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/application-config-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied application-config backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/metrics-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied metrics backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' /data/backups/mongo/webhooks-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied webhooks backup files to remote server."
+  script -q -c "rsync -a -r --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/elasticsearch/ $SSH_USER@$SSH_HOST:$REMOTE_DIR/elasticsearch" && echo "Copied elasticsearch backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/minio/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/minio" && echo "Copied minio backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/metabase/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/metabase" && echo "Copied Metabase backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/influxdb/${VERSION:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/influxdb" && echo "Copied influx backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/mongo/hearth-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied hearth backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/mongo/user-mgnt-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied user backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/mongo/openhim-dev-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied openhim backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/mongo/application-config-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied application-config backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/mongo/metrics-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied metrics backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/mongo/webhooks-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied webhooks backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/mongo/performance-${VERSION:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied performance backup files to remote server."
 fi
 
 # Cleanup any old backups from influx or mongo. Keep previous 7 days of data and all elastic data
 # Elastic snapshots require a random selection of files in the data/backups/elasticsearch/indices
 # folder
 #------------------------------------------------------------------------------------------------
-find /data/backups/influxdb -mtime +7 -exec rm {} \;
-find /data/backups/mongo -mtime +7 -exec rm {} \;
-find /data/backups/minio -mtime +7 -exec rm {} \;
-find /data/backups/metabase -mtime +7 -exec rm {} \;
-find /data/backups/vsexport -mtime +7 -exec rm {} \;
+find $ROOT_PATH/backups/influxdb -mtime +7 -exec rm {} \;
+find $ROOT_PATH/backups/mongo -mtime +7 -exec rm {} \;
+find $ROOT_PATH/backups/minio -mtime +7 -exec rm {} \;
+find $ROOT_PATH/backups/metabase -mtime +7 -exec rm {} \;
+find $ROOT_PATH/backups/vsexport -mtime +7 -exec rm {} \;
