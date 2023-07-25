@@ -13,6 +13,13 @@
 # This script clears all data and restores a specific day's data.  It is irreversable, so use with caution.
 #------------------------------------------------------------------------------------------------------------------
 
+if docker service ls > /dev/null 2>&1; then
+  IS_LOCAL=false
+else
+  IS_LOCAL=true
+fi
+
+
 # Reading Named parameters
 for i in "$@"; do
   case $i in
@@ -49,14 +56,26 @@ if [ -z "$LABEL" ]; then
   print_usage_and_exit
 fi
 
-if [ -z "$REPLICAS" ]; then
-  echo "Error: Argument for the --replicas is required."
-  print_usage_and_exit
-fi
+if [ "$IS_LOCAL" = false ]; then
+  ROOT_PATH=${ROOT_PATH:-/data}
 
-# In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
-# We recommend that the secrets are served via a secure API from a Hardware Security Module
-source /data/secrets/opencrvs.secrets
+  if [ -z "$REPLICAS" ]; then
+    echo "Error: Argument for the --replicas is required."
+    print_usage_and_exit
+  fi
+  # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
+  # We recommend that the secrets are served via a secure API from a Hardware Security Module
+  source /data/secrets/opencrvs.secrets
+else
+  ROOT_PATH=${ROOT_PATH:-../opencrvs-core/data}
+
+  if [ ! -d "$ROOT_PATH" ]; then
+    echo "Error: ROOT_PATH ($ROOT_PATH) doesn't exist"
+    print_usage_and_exit
+  fi
+
+  ROOT_PATH=$(cd "$ROOT_PATH" && pwd)
+fi
 
 # Retrieve 2-step verification to continue
 #-----------------------------------------
@@ -77,7 +96,11 @@ fi
 
 # Select docker network and replica set in production
 #----------------------------------------------------
-if [ "$REPLICAS" = "0" ]; then
+if [ "$IS_LOCAL" = true ]; then
+  HOST=mongo1
+  NETWORK=opencrvs_default
+  echo "Working in local environment"
+elif [ "$REPLICAS" = "0" ]; then
   HOST=mongo1
   NETWORK=opencrvs_default
   echo "Working with no replicas"
@@ -137,32 +160,34 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 
 # Delete all data from minio
 #-----------------------------
-rm -rf /data/minio/ocrvs
-mkdir -p /data/minio/ocrvs
+rm -rf $ROOT_PATH/minio/ocrvs
+mkdir -p $ROOT_PATH/minio/ocrvs
 
 # Delete all data from metabase
 #-----------------------------
-rm -rf /data/metabase/*
+rm -rf $ROOT_PATH/metabase/*
 
 # Delete all data from vsExport
 #-----------------------------
-rm -rf /data/vsexport
-mkdir -p /data/vsexport
+rm -rf $ROOT_PATH/vsexport
+mkdir -p $ROOT_PATH/vsexport
 
 # Restore all data from a backup into Hearth, OpenHIM, User, Application-config and any other service related Mongo databases
 #--------------------------------------------------------------------------------------------------
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/hearth-dev-$LABEL.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/openhim-dev-$LABEL.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/user-mgnt-$LABEL.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/application-config-$LABEL.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/metrics-$LABEL.gz"
-docker run --rm -v /data/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/webhooks-$LABEL.gz"
+docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
+  -c "mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/performance-$LABEL.gz"
 
 # Register backup folder as an Elasticsearch repository for restoring the search data
 #-------------------------------------------------------------------------------------
@@ -176,18 +201,26 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST -H "Content-Typ
 
 # Get the container ID and host details of any running InfluxDB container, as the only way to restore is by using the Influxd CLI inside a running opencrvs_metrics container
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-INFLUXDB_CONTAINER_ID=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}')
-INFLUXDB_CONTAINER_NAME=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}')
-INFLUXDB_HOSTNAME=$(echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}')
-INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
-INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
+if  [ "$IS_LOCAL" = true ]; then
+  INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
+else
+  INFLUXDB_CONTAINER_ID=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}')
+  INFLUXDB_CONTAINER_NAME=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}')
+  INFLUXDB_HOSTNAME=$(echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}')
+  INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
+  INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
+  OWN_IP=$(echo $(hostname -I | cut -d' ' -f1))
+fi
 
+if [ "$IS_LOCAL" = true ]; then
+  docker exec $INFLUXDB_CONTAINER_ID mkdir -p /home/user
+  docker cp $ROOT_PATH/backups/influxdb/$LABEL/ $INFLUXDB_CONTAINER_ID:/home/user/$LABEL
+  docker exec $INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /home/user/$LABEL
 # If required, SSH into the node running the opencrvs_metrics container and restore the metrics data from an influxdb subfolder
 #------------------------------------------------------------------------------------------------------------------------------
-OWN_IP=$(echo $(hostname -I | cut -d' ' -f1))
-if [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
+elif [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
   docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID mkdir -p /home/user
-  docker cp /data/backups/influxdb/$LABEL/ $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/$LABEL
+  docker cp $ROOT_PATH/backups/influxdb/$LABEL/ $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/$LABEL
   docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /home/user/$LABEL
 else
   scp -r /data/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
@@ -197,14 +230,16 @@ else
 fi
 # Restore all data from Minio
 #----------------------------
-tar -xzvf /data/backups/minio/ocrvs-$LABEL.tar.gz -C /data/minio
+tar -xzvf $ROOT_PATH/backups/minio/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/minio
 
 # Restore all data from Metabase
 #----------------------------
-tar -xzvf /data/backups/metabase/ocrvs-$LABEL.tar.gz -C /data/metabase
+tar -xzvf $ROOT_PATH/backups/metabase/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/metabase
 
 # Restore VSExport
-tar -xzvf /data/backups/vsexport/ocrvs-$LABEL.tar.gz -C /data/vsexport
+tar -xzvf $ROOT_PATH/backups/vsexport/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/vsexport
 
 # Run migrations by restarting migration service
-docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration
+if [ "$IS_LOCAL" = false ]; then
+  docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration
+fi
