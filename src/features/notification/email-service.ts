@@ -21,11 +21,35 @@ if (EMAIL_API_KEY) {
   sgMail.setApiKey(EMAIL_API_KEY)
 }
 
-const readTemplate = <T extends Record<string, string>>(templateName: string) =>
+const readBirthTemplate = <T extends Record<string, string>>(
+  templateName: string
+) =>
   Handlebars.compile<T>(
     fs
       .readFileSync(
-        join(__dirname, `../../email-templates/${templateName}.html`)
+        join(__dirname, `../../email-templates/birth/${templateName}.html`)
+      )
+      .toString()
+  )
+
+const readDeathTemplate = <T extends Record<string, string>>(
+  templateName: string
+) =>
+  Handlebars.compile<T>(
+    fs
+      .readFileSync(
+        join(__dirname, `../../email-templates/death/${templateName}.html`)
+      )
+      .toString()
+  )
+
+const readOtherTemplate = <T extends Record<string, string>>(
+  templateName: string
+) =>
+  Handlebars.compile<T>(
+    fs
+      .readFileSync(
+        join(__dirname, `../../email-templates/other/${templateName}.html`)
       )
       .toString()
   )
@@ -83,50 +107,119 @@ type UsernameUpdateVariables = {
   countryLogo: string
 }
 
+type DeclarationCommonVariables = {
+  trackingID: string
+  crvsOffice: string
+  applicationName: string
+}
+
+type InProgressDeclarationVariables = DeclarationCommonVariables
+
+type InReviewDeclarationVariables = DeclarationCommonVariables & {
+  informantName: string
+}
+
+type RegistrationDeclarationVariables = DeclarationCommonVariables & {
+  informantName: string
+  name: string
+  registrationNumber: string
+}
+
+type RejectionDeclarationVariables = DeclarationCommonVariables & {
+  informantName: string
+  name: string
+}
+
 const templates = {
   'onboarding-invite': {
     type: 'onboarding-invite',
     subject: 'Welcome to OpenCRVS!',
-    template: readTemplate<OnboardingInviteVariables>('onboarding-invite')
+    template: readOtherTemplate<OnboardingInviteVariables>('onboarding-invite')
   },
   '2-factor-authentication': {
     type: '2-factor-authentication',
     subject: 'Two factor authentication',
-    template: readTemplate<TwoFactorAuthenticationVariables>(
+    template: readOtherTemplate<TwoFactorAuthenticationVariables>(
       '2-factor-authentication'
     )
   },
   'change-phone-number': {
     type: 'change-phone-number',
     subject: 'Phone number change request',
-    template: readTemplate<ChangePhoneNumberVariables>('change-phone-number')
+    template: readOtherTemplate<ChangePhoneNumberVariables>(
+      'change-phone-number'
+    )
   },
   'change-email-address': {
     type: 'change-email-address',
     subject: 'Email address change request',
-    template: readTemplate<ChangeEmailAddressVariables>('change-email-address')
+    template: readOtherTemplate<ChangeEmailAddressVariables>(
+      'change-email-address'
+    )
   },
   'password-reset-by-system-admin': {
     type: 'password-reset-by-system-admin',
     subject: 'Account password reset invitation',
-    template: readTemplate<ResetPasswordBySysAdminVariables>(
+    template: readOtherTemplate<ResetPasswordBySysAdminVariables>(
       'password-reset-by-system-admin'
     )
   },
   'password-reset': {
     type: 'password-reset',
     subject: 'Account password reset request',
-    template: readTemplate<ResetPasswordVariables>('password-reset')
+    template: readOtherTemplate<ResetPasswordVariables>('password-reset')
   },
   'username-reminder': {
     type: 'username-reminder',
     subject: 'Account username reminder',
-    template: readTemplate<UsernameReminderVariables>('username-reminder')
+    template: readOtherTemplate<UsernameReminderVariables>('username-reminder')
   },
   'username-updated': {
     type: 'username-updated',
     subject: 'Account username updated',
-    template: readTemplate<UsernameUpdateVariables>('username-reminder')
+    template: readOtherTemplate<UsernameUpdateVariables>('username-updated')
+  },
+  birthInProgressNotification: {
+    type: 'birthInProgressNotification',
+    subject: 'Birth declaration in progress',
+    template: readBirthTemplate<InProgressDeclarationVariables>('inProgress')
+  },
+  birthDeclarationNotification: {
+    type: 'birthDeclarationNotification',
+    subject: 'Birth declaration in review',
+    template: readBirthTemplate<InReviewDeclarationVariables>('inReview')
+  },
+  birthRegistrationNotification: {
+    type: 'birthRegistrationNotification',
+    subject: 'Birth declaration registered',
+    template:
+      readBirthTemplate<RegistrationDeclarationVariables>('registration')
+  },
+  birthRejectionNotification: {
+    type: 'birthRejectionNotification',
+    subject: 'Birth declaration required update',
+    template: readBirthTemplate<RejectionDeclarationVariables>('rejection')
+  },
+  deathInProgressNotification: {
+    type: 'deathInProgressNotification',
+    subject: 'Death declaration in progress',
+    template: readDeathTemplate<InProgressDeclarationVariables>('inProgress')
+  },
+  deathDeclarationNotification: {
+    type: 'deathDeclarationNotification',
+    subject: 'Death declaration in review',
+    template: readDeathTemplate<InReviewDeclarationVariables>('inReview')
+  },
+  deathRegistrationNotification: {
+    type: 'deathRegistrationNotification',
+    subject: 'Death declaration registered',
+    template:
+      readDeathTemplate<RegistrationDeclarationVariables>('registration')
+  },
+  deathRejectionNotification: {
+    type: 'deathRejectionNotification',
+    subject: 'Death declaration required update',
+    template: readDeathTemplate<RejectionDeclarationVariables>('rejection')
   }
 }
 
@@ -148,39 +241,9 @@ export const sendEmail = async (
 ) => {
   let emailSubject = ''
   let emailBody = ''
-  if (type === 'onboarding-invite') {
-    emailSubject = templates[type].subject
-    emailBody = templates[type].template(variables as OnboardingInviteVariables)
-  } else if (type === '2-factor-authentication') {
-    emailSubject = templates[type].subject
-    emailBody = templates[type].template(
-      variables as TwoFactorAuthenticationVariables
-    )
-  } else if (type === 'change-phone-number') {
-    emailSubject = templates[type].subject
-    emailBody = templates[type].template(
-      variables as ChangePhoneNumberVariables
-    )
-  } else if (type === 'change-email-address') {
-    emailSubject = templates[type].subject
-    emailBody = templates[type].template(
-      variables as ChangeEmailAddressVariables
-    )
-  } else if (type === 'password-reset-by-system-admin') {
-    emailSubject = templates[type].subject
-    emailBody = templates[type].template(
-      variables as ResetPasswordBySysAdminVariables
-    )
-  } else if (type === 'password-reset') {
-    emailSubject = templates[type].subject
-    emailBody = templates[type].template(variables as ResetPasswordVariables)
-  } else if (type === 'username-reminder') {
-    emailSubject = templates[type].subject
-    emailBody = templates[type].template(variables as UsernameReminderVariables)
-  } else if (type === 'username-updated') {
-    emailSubject = templates[type].subject
-    emailBody = templates[type].template(variables as UsernameUpdateVariables)
-  }
+
+  emailSubject = templates[type].subject
+  emailBody = templates[type].template(variables as any)
 
   const msg = {
     to: recipient,

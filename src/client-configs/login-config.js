@@ -19,6 +19,7 @@ window.config = {
   CLIENT_APP_URL: 'http://localhost:3000/',
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
   USER_NOTIFICATION_DELIVERY_METHOD: 'sms', // 'email'
+  INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms', // 'email'
   SENTRY:
     'https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604',
   LOGROCKET: ''

@@ -12,6 +12,7 @@
 import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from './formatjs-messages'
 import { SerializedFormField, Conditional } from './types/types'
+import { INFORMANT_NOTIFICATION_DELIVERY_METHOD } from '@countryconfig/features/notification/constant'
 
 export const exactDateOfBirthUnknown: SerializedFormField = {
   name: 'exactDateOfBirthUnknown',
@@ -165,7 +166,7 @@ export const registrationEmail: SerializedFormField = {
   name: 'registrationEmail',
   type: 'TEL',
   label: formMessageDescriptors.email,
-  required: false,
+  required: INFORMANT_NOTIFICATION_DELIVERY_METHOD === 'email',
   initialValue: '',
   validator: [
     {
@@ -193,7 +194,7 @@ export const registrationPhone: SerializedFormField = {
   name: 'registrationPhone',
   type: 'TEL',
   label: formMessageDescriptors.phoneNumber,
-  required: false,
+  required: INFORMANT_NOTIFICATION_DELIVERY_METHOD === 'sms',
   initialValue: '',
   validator: [
     {
