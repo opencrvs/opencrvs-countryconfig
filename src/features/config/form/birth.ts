@@ -442,7 +442,6 @@ export const birthRegisterForms: ISerializedForm = {
             ),
             seperatorDivider,
             getMaritalStatus('fatherMaritalStatus'),
-            multipleBirth,
             getOccupation('fatherOccupation'),
             getEducation('fatherEducationalAttainment')
           ],
