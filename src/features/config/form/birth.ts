@@ -613,7 +613,7 @@ export const birthRegisterForms: ISerializedForm = {
                 {
                   action: 'hide',
                   expression:
-                    "(draftData && draftData.registration && draftData.registration.informantType && selectedInformantAndContactType.selectedInformantType && (selectedInformantAndContactType.selectedInformantType === 'MOTHER' || selectedInformantAndContactType.selectedInformantType === 'FATHER'))"
+                    "draftData?.informant?.informantType === 'MOTHER' || draftData?.informant?.informantType === 'FATHER'"
                 }
               ],
               mapping: {
