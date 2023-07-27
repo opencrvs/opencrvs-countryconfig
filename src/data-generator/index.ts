@@ -51,6 +51,8 @@ import {
   markBirthAsIssued,
   markDeathAsIssued
 } from './issue'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 // import { callVSExportAPIToGenerateDeclarationData } from './vsExport'
 /*
  *
@@ -91,6 +93,10 @@ const CERTIFY = process.env.CERTIFY !== 'false'
 
 const BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.8
 const DEATH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.4
+
+const ATTACHMENT = readFileSync(join(__dirname, 'assets', '528KB-random.png'), {
+  encoding: 'base64'
+})
 
 const today = new Date()
 const currentYear = today.getFullYear()
@@ -685,7 +691,8 @@ function birthDeclarationWorkflow(
           birthDate,
           submissionTime,
           location,
-          randomFacility
+          randomFacility,
+          ATTACHMENT
         )
       }
 
@@ -831,7 +838,8 @@ function deathDeclarationWorkflow(
         keepDeclarationIncomplete ? undefined : sex,
         submissionTime,
         location,
-        randomFacility
+        randomFacility,
+        ATTACHMENT
       )
 
       if (!REGISTER) {
