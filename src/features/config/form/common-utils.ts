@@ -25,7 +25,7 @@ export const isValidBirthDate = [
   }
 ] satisfies Validator[]
 
-export function getNationalIDValidators(configCase: string) {
+export function getNationalIDValidators(configCase: string): Validator[] {
   if (configCase === 'father') {
     return [
       {
@@ -35,10 +35,6 @@ export function getNationalIDValidators(configCase: string) {
       {
         operation: 'duplicateIDNumber',
         parameters: ['mother.iD']
-      },
-      {
-        operation: 'duplicateIDNumber',
-        parameters: ['informant.informantID']
       }
     ]
   } else if (configCase === 'mother') {
@@ -50,10 +46,6 @@ export function getNationalIDValidators(configCase: string) {
       {
         operation: 'duplicateIDNumber',
         parameters: ['father.iD']
-      },
-      {
-        operation: 'duplicateIDNumber',
-        parameters: ['informant.informantID']
       }
     ]
   } else if (configCase === 'deceased') {

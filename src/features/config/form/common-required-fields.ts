@@ -15,6 +15,7 @@ import {
   informantMessageDescriptors
 } from './formatjs-messages'
 import { SerializedFormField, Conditional, Event } from './types/types'
+import { Validator } from './types/validators'
 
 export const getBirthDate = (
   fieldName: string,
@@ -186,7 +187,7 @@ export const getNationality = (
 export const getNationalID = (
   fieldName: string,
   conditionals: Conditional[],
-  validator: any[],
+  validator: Validator[],
   certificateHandlebar: string
 ) =>
   ({
