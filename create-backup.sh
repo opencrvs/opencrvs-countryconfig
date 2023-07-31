@@ -32,31 +32,43 @@ for i in "$@"; do
   esac
 done
 
-if [ -z $path_to_core ]; then
-    echo "MISSING OR INCORRECT PARAMETER: --path_to_core"
-    echo
-    print_usage_and_exit
+if [ "$CI" = "true" ]; then
+  echo "CI environment variable is set to true."
+  HOST=172.17.0.1 # localhost inside docker container
+  NETWORK=bridge
+else
+  HOST=mongo1
+  NETWORK=opencrvs_default
 fi
 
 DIR=$(cd "$(dirname "$0")"; pwd)
 echo "Working dir: $DIR"
 
-echo "Reverting migrations before creating backups"
+if [ "$CI" != "true" ]; then
+  if [ -z $path_to_core ]; then
+      echo "MISSING OR INCORRECT PARAMETER: --path_to_core"
+      echo
+      print_usage_and_exit
+  fi
+fi
+
+echo "Creating backups"
 echo
-source $path_to_core/packages/migration/revertMigrations.sh $path_to_core/packages/migration
 
 
-#echo "Creating backups"
-#echo
-docker run --rm -v $DIR/backups:/backups --network=opencrvs_default mongo:4.4 bash \
- -c "mongodump --host mongo1 -d hearth-dev --gzip --archive=/backups/hearth-dev.gz"
+mkdir -p $DIR/backups/minio
 
-docker run --rm -v $DIR/backups:/backups --network=opencrvs_default mongo:4.4 bash \
- -c "mongodump --host mongo1 -d openhim-dev --gzip --archive=/backups/openhim-dev.gz"
+# Backup Minio
+cd $path_to_core/data/minio && tar -zcvf $DIR/backups/minio.tar.gz * && cd -
 
-docker run --rm -v $DIR/backups:/backups --network=opencrvs_default mongo:4.4 bash \
- -c "mongodump --host mongo1 -d user-mgnt --gzip --archive=/backups/user-mgnt.gz"
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
+ -c "mongodump --host $HOST -d hearth-dev --gzip --archive=/backups/hearth-dev.gz"
 
-docker run --rm -v $DIR/backups:/backups --network=opencrvs_default mongo:4.4 bash \
- -c "mongodump --host mongo1 -d application-config --gzip --archive=/backups/application-config.gz"
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
+ -c "mongodump --host $HOST -d openhim-dev --gzip --archive=/backups/openhim-dev.gz"
 
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
+ -c "mongodump --host $HOST -d user-mgnt --gzip --archive=/backups/user-mgnt.gz"
+
+docker run --rm -v $DIR/backups:/backups --network=$NETWORK mongo:4.4 bash \
+ -c "mongodump --host $HOST -d application-config --gzip --archive=/backups/application-config.gz"

@@ -49,6 +49,8 @@ import { certificateHandler } from './features/certificates/handler'
 import { rolesHandler } from './features/roles/handler'
 import { usersHandler } from './features/employees/handler'
 import { applicationConfigHandler } from './features/config/application/handler'
+import { validatorsHandler } from './features/config/form/validators-handler'
+import { conditionalsHandler } from './features/config/form/conditionals-handler'
 
 export interface ITokenPayload {
   sub: string
@@ -252,10 +254,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/validators.js',
-    handler: (_, h) => {
-      const file = '/features/config/form/validators.js'
-      return h.file(join(__dirname, file))
-    },
+    handler: validatorsHandler,
     options: {
       auth: false,
       tags: ['api'],
@@ -266,10 +265,7 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/conditionals.js',
-    handler: (_, h) => {
-      const file = '/features/config/form/conditionals.js'
-      return h.file(join(__dirname, file))
-    },
+    handler: conditionalsHandler,
     options: {
       auth: false,
       tags: ['api'],

@@ -29,7 +29,9 @@ export async function rolesHandler(_: Request, h: ResponseToolkit) {
         )
       }
     })
-    .reduce((acc, role) => {
+    .reduce<
+      Record<string, Array<{ labels: Array<{ lang: string; label: string }> }>>
+    >((acc, role) => {
       if (!acc[role.systemRole]) {
         acc[role.systemRole] = []
       }

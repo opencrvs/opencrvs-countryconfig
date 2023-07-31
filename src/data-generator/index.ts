@@ -51,6 +51,8 @@ import {
   markBirthAsIssued,
   markDeathAsIssued
 } from './issue'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 // import { callVSExportAPIToGenerateDeclarationData } from './vsExport'
 /*
  *
@@ -79,14 +81,22 @@ const CONCURRENCY = process.env.CONCURRENCY
   ? parseInt(process.env.CONCURRENCY, 10)
   : 3
 
-const START_YEAR = 2021
-const END_YEAR = 2023
+const END_YEAR = process.env.END_YEAR
+  ? parseInt(process.env.END_YEAR, 10)
+  : new Date().getFullYear()
+const START_YEAR = process.env.START_YEAR
+  ? parseInt(process.env.START_YEAR, 10)
+  : END_YEAR - 2
 
 const REGISTER = process.env.REGISTER !== 'false'
 const CERTIFY = process.env.CERTIFY !== 'false'
 
 const BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.8
 const DEATH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.4
+
+const ATTACHMENT = readFileSync(join(__dirname, 'assets', '528KB-random.png'), {
+  encoding: 'base64'
+})
 
 const today = new Date()
 const currentYear = today.getFullYear()
@@ -182,6 +192,7 @@ async function main() {
    */
 
   for (let y = END_YEAR; y >= START_YEAR; y--) {
+    log('Generating data for year', y)
     /*
      *
      * Loop through all locations
@@ -296,6 +307,7 @@ async function main() {
         female: femalesPerDay.reduce((a, x) => a + x),
         death: deathsPerDay.reduce((a, x) => a + x)
       })
+
       /*
        *
        * Loop through days in the year (last day of the year -> start of the year)
@@ -447,7 +459,7 @@ async function main() {
               }
             })
             return acc
-          }, {})
+          }, {} as Record<number, number>)
       })
 
       for (let ix = 0; ix < delta; ix++) {
@@ -505,7 +517,7 @@ async function main() {
               }
             })
             return acc
-          }, {})
+          }, {} as Record<number, number>)
       })
 
       for (let ix = 0; ix < deathDelta; ix++) {
@@ -679,7 +691,8 @@ function birthDeclarationWorkflow(
           birthDate,
           submissionTime,
           location,
-          randomFacility
+          randomFacility,
+          ATTACHMENT
         )
       }
 
@@ -825,7 +838,8 @@ function deathDeclarationWorkflow(
         keepDeclarationIncomplete ? undefined : sex,
         submissionTime,
         location,
-        randomFacility
+        randomFacility,
+        ATTACHMENT
       )
 
       if (!REGISTER) {

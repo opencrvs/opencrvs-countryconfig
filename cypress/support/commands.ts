@@ -42,6 +42,7 @@ import {
   generateLocationResource,
   Location
 } from '../../src/data-generator/location'
+import { get } from 'lodash'
 
 const users = {
   fieldWorker: {
@@ -289,19 +290,6 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.get('#continue').click()
 
   // EVENT INFO
-  cy.get('#continue').click()
-
-  // SELECT INFORMANT
-
-  cy.get('#informantType_MOTHER').click()
-
-  cy.goToNextFormSection()
-  // SELECT MAIN CONTACT POINT
-
-  cy.get('#contactPoint_MOTHER').click()
-  cy.get('#contactPoint\\.nestedFields\\.registrationPhone').type(
-    '07' + getRandomNumbers(8)
-  )
   cy.goToNextFormSection()
 
   // DECLARATION FORM
@@ -317,15 +305,25 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
     Math.floor(1 + Math.random() * 12).toString()
   )
   cy.get('#childBirthDate-yyyy').type('2018')
-  cy.selectOption('#birthType', 'Single', 'Single')
   cy.selectOption('#placeOfBirth', 'Private_Home', 'Residential address')
   cy.selectOption('#country', 'Farajaland', 'Farajaland')
   cy.selectOption('#state', 'Pualula', 'Pualula')
   cy.selectOption('#district', 'Embe', 'Embe')
   cy.goToNextFormSection()
 
+  // SELECT INFORMANT
+  cy.selectOption(
+    '#informantType',
+    'Mother',
+    'Mother'
+  )
+  cy.get('#registrationPhone').type(
+    '07' + getRandomNumbers(8)
+  )
+  cy.goToNextFormSection()
+
   // MOTHER DETAILS
-  cy.get('#iD').type('3214567891')
+  cy.get('#iD').type(getRandomNumbers(10))
   cy.get('#firstNamesEng').type('Rokeya')
   cy.get('#familyNameEng').type(faker.name.lastName())
   cy.get('#motherBirthDate-dd').type('23')
@@ -334,18 +332,16 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.selectOption('#countryPrimary-form-input', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePrimary', 'Pualula', 'Pualula')
   cy.selectOption('#districtPrimary', 'Embe', 'Embe')
-
   cy.goToNextFormSection()
 
   // FATHER DETAILS
-  cy.get('#iD').type('3313453781')
+  cy.get('#iD').type(getRandomNumbers(10))
 
   cy.get('#firstNamesEng').type('Joe')
   cy.get('#familyNameEng').type('Bieden')
   cy.get('#fatherBirthDate-dd').type('23')
   cy.get('#fatherBirthDate-mm').type('10')
   cy.get('#fatherBirthDate-yyyy').type('1969')
-
   cy.goToNextFormSection()
 
   // DOCUMENTS
@@ -395,16 +391,24 @@ function getRandomFacility(token, location) {
     })
 }
 
+const readAttachmentFile = () =>
+  new Promise<string>((resolve) => {
+    cy.readFile('./assets/528KB-random.png', 'base64').then((file) => {
+      resolve(file)
+    })
+  })
+
 Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
   return getToken(role).then((token) => {
     return getLocationWithName(token, 'Ibombo').then((location) => {
-      return getRandomFacility(token, location).then((facility) => {
+      return getRandomFacility(token, location).then(async (facility) => {
         const details = createBirthDeclarationData(
           'male',
           new Date('2018-05-18T13:18:26.240Z'),
           new Date(),
           location,
-          facility
+          facility,
+          await readAttachmentFile()
         )
 
         if (options.firstName) {
@@ -459,27 +463,6 @@ Cypress.Commands.add('enterMaximumInput', (options) => {
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_birth_event').click()
   cy.get('#continue').click()
-  // EVENT INFO
-  cy.get('#continue').click()
-
-  if (
-    options?.informantDoB &&
-    options?.informantFirstNames &&
-    options?.informantFamilyName
-  ) {
-    //TO CREATE INFORMANT INPUTFLOW
-    cy.get('#informantType_GRANDFATHER').click()
-  } else {
-    cy.get('#informantType_FATHER').click()
-  }
-
-  cy.goToNextFormSection()
-
-  // SELECT MAIN CONTACT POINT
-  cy.get('#contactPoint_FATHER').click()
-  cy.get('#contactPoint\\.nestedFields\\.registrationPhone').type(
-    '07' + getRandomNumbers(8)
-  )
   cy.goToNextFormSection()
 
   // DECLARATION FORM
@@ -515,23 +498,31 @@ Cypress.Commands.add('enterMaximumInput', (options) => {
   cy.get('#addressLine3UrbanOption').type('My residential area')
   cy.get('#addressLine2UrbanOption').type('My street')
   cy.get('#numberUrbanOption').type('40')
-
   cy.goToNextFormSection()
+
+  // SELECT INFORMANT
+  cy.selectOption(
+    '#informantType',
+    options?.informantType || 'Grandfather',
+    options?.informantType || 'Grandfather'
+  )
+  cy.get('#registrationPhone').type(
+    '07' + getRandomNumbers(8)
+  )
+  cy.get('#registrationEmail').type('axonishere@gmail.com')
 
   //INFORMANT DETAILS(IF informant data is available)
   if (
-    options?.informantDoB &&
-    options?.informantFirstNames &&
-    options?.informantFamilyName
+    !['Father', 'Mother'].includes(options?.informantType)
   ) {
     // INFORMANT'S DETAILS
-    cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-    cy.get('#informantID').type('1234567111')
+    cy.get('#firstNamesEng').type(options?.informantFirstNames || 'Alom')
+    cy.get('#familyNameEng').type(options?.informantFamilyName || 'Mia')
     cy.get('#informantBirthDate-dd').type(informantDoBSplit.dd || '23')
     cy.get('#informantBirthDate-mm').type(informantDoBSplit.mm || '10')
     cy.get('#informantBirthDate-yyyy').type(informantDoBSplit.yyyy || '1975')
-    cy.get('#firstNamesEng').type(options?.informantFirstNames || 'Alom')
-    cy.get('#familyNameEng').type(options?.informantFamilyName || 'Mia')
+    cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
+    cy.get('#informantID').type(getRandomNumbers(10))
     cy.selectOption('#countryPrimary-form-input', 'Farajaland', 'Farajaland')
     cy.selectOption('#statePrimary', 'Pualula', 'Pualula')
     cy.selectOption('#districtPrimary', 'Embe', 'Embe')
@@ -539,17 +530,17 @@ Cypress.Commands.add('enterMaximumInput', (options) => {
   }
 
   // MOTHER DETAILS
-  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#iD').type('1934567771')
-
+  cy.get('#iD').type(getRandomNumbers(10))
+  cy.get('#motherBirthDate-dd').type(motherDoBSplit?.dd || '23')
+  cy.get('#motherBirthDate-mm').type(motherDoBSplit?.mm || '10')
+  cy.get('#motherBirthDate-yyyy').type(motherDoBSplit?.yyyy || '1969')
   cy.get('#firstNamesEng').type(options?.motherFirstNames || 'Agnes')
   cy.get('#familyNameEng').type(
     options?.motherFamilyName || faker.name.lastName()
   )
-  cy.get('#motherBirthDate-dd').type(motherDoBSplit?.dd || '23')
-  cy.get('#motherBirthDate-mm').type(motherDoBSplit?.mm || '10')
-  cy.get('#motherBirthDate-yyyy').type(motherDoBSplit?.yyyy || '1969')
+  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.selectOption('#maritalStatus', 'Married', 'Married')
+  cy.get('#multipleBirth').type('2')
   cy.get('#occupation').type('Lawyer')
   cy.selectOption('#educationalAttainment', 'PRIMARY_ISCED_1', 'Primary')
   cy.selectOption('#countryPrimary-form-input', 'Farajaland', 'Farajaland')
@@ -563,20 +554,17 @@ Cypress.Commands.add('enterMaximumInput', (options) => {
   cy.goToNextFormSection()
 
   // FATHER DETAILS
-  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#iD').type('9123453781')
-
-  cy.get('#firstNamesEng').type(options?.fatherFirstNames || 'Jack')
-  cy.get('#familyNameEng').type(options?.fatherFamilyName || 'Maa')
+  cy.get('#iD').type(getRandomNumbers(10))
   cy.get('#fatherBirthDate-dd').type(fatherDoBSplit?.dd || '23')
   cy.get('#fatherBirthDate-mm').type(fatherDoBSplit?.mm || '10')
   cy.get('#fatherBirthDate-yyyy').type(fatherDoBSplit?.yyyy || '1969')
+  cy.get('#firstNamesEng').type(options?.fatherFirstNames || 'Jack')
+  cy.get('#familyNameEng').type(options?.fatherFamilyName || 'Maa')
+  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
   cy.selectOption('#maritalStatus', 'Married', 'Married')
   cy.get('#occupation').type('Lawyer')
   cy.selectOption('#educationalAttainment', 'PRIMARY_ISCED_1', 'Primary')
-
   cy.get('#primaryAddressSameAsOtherPrimary_false').click()
-
   cy.selectOption('#countryPrimary', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePrimary', 'Pualula', 'Pualula')
   cy.selectOption('#districtPrimary', 'Embe', 'Embe')
@@ -801,26 +789,10 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_birth_event').click()
   cy.get('#continue').click()
+
   // EVENT INFO
-  cy.get('#continue').click()
-  // SELECT INFORMANT
-  cy.get('#informantType_FATHER').click()
   cy.goToNextFormSection()
 
-  // SELECT INFORMANT
-
-  cy.get('#contactPoint_OTHER').click()
-  // cy.get('#informant\\.nestedFields\\.otherRelationShip').type(
-  //   'Unnamed relation'
-  // )
-  // cy.goToNextFormSection()
-  // SELECT MAIN CONTACT POINT
-
-  cy.get('#contactPoint_MOTHER').click()
-  cy.get('#contactPoint\\.nestedFields\\.registrationPhone').type(
-    '07' + getRandomNumbers(8)
-  )
-  cy.goToNextFormSection()
   // DECLARATION FORM
   // CHILD DETAILS
   cy.get('#firstNamesEng').type('Aniq')
@@ -836,16 +808,40 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.selectOption('#country', 'Farajaland', 'Farajaland')
   cy.selectOption('#state', 'Pualula', 'Pualula')
   cy.selectOption('#district', 'Embe', 'Embe')
-
   cy.get('#cityUrbanOption').type('My city')
   cy.get('#addressLine3UrbanOption').type('My residential area')
   cy.get('#addressLine2UrbanOption').type('My street')
   cy.get('#numberUrbanOption').type('40')
-
   cy.goToNextFormSection()
+
+  // SELECT INFORMANT
+  cy.selectOption(
+    '#informantType',
+    'Someone else',
+    'Someone else'
+  )
+  cy.get('#otherInformantType').type('Someone else')
+  cy.get('#registrationPhone').type(
+    '07' + getRandomNumbers(8)
+  )
+  cy.get('#registrationEmail').type('axonishere@gmail.com')
+
   // INFORMANT'S DETAILS
+  cy.get('#firstNamesEng').type('Alom')
+  cy.get('#familyNameEng').type('Mia')
+  cy.get('#informantBirthDate-dd').type('23')
+  cy.get('#informantBirthDate-mm').type('10')
+  cy.get('#informantBirthDate-yyyy').type('1975')
   cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
-  cy.get('#iD').type('1234567111')
+  cy.get('#informantID').type('1234567111')
+  cy.selectOption('#countryPrimary-form-input', 'Farajaland', 'Farajaland')
+  cy.selectOption('#statePrimary', 'Pualula', 'Pualula')
+  cy.selectOption('#districtPrimary', 'Embe', 'Embe')
+  cy.goToNextFormSection()
+
+  // MOTHER DETAILS
+  cy.selectOption('#nationality', 'Farajaland', 'Farajaland')
+  cy.get('#iD').type(getRandomNumbers(10))
   cy.get('#motherBirthDate-dd').type('23')
   cy.get('#motherBirthDate-mm').type('10')
   cy.get('#motherBirthDate-yyyy').type('1975')
@@ -854,20 +850,17 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.selectOption('#countryPrimary-form-input', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePrimary', 'Pualula', 'Pualula')
   cy.selectOption('#districtPrimary', 'Embe', 'Embe')
-
   cy.goToNextFormSection()
-  //  PRIMARY CARE GIVER DETAILS
-  cy.get('#iD').type('1212567891')
+
+  //  FATHER DETAILS
+  cy.get('#iD').type(getRandomNumbers(10))
   cy.get('#firstNamesEng').type('Karim')
   cy.get('#familyNameEng').type('Sheikh')
   cy.get('#fatherBirthDate-dd').type('10')
   cy.get('#fatherBirthDate-mm').type('10')
   cy.get('#fatherBirthDate-yyyy').type('1971')
-
   cy.goToNextFormSection()
-  // //  Why are the mother and father not applying?
 
-  cy.goToNextFormSection()
-  //  Who is looking after the child?
   // DOCUMENTS
+  cy.goToNextFormSection()
 })

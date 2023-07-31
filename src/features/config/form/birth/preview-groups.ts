@@ -10,10 +10,10 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
+import { EventLocationAddressCases, AddressCases } from '../address-settings'
 import { AllowedAddressConfigurations } from '../address-utils'
-import { AddressCases, EventLocationAddressCases } from '../addresses'
 import { formMessageDescriptors } from '../formatjs-messages'
-import { IPreviewGroup } from '../types'
+import { IPreviewGroup } from '../types/types'
 
 // Preview groups are used to structure data nicely in Review Page UI
 

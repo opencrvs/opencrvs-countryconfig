@@ -13,7 +13,7 @@
 // A file just to store the constants until we decide what to do with removing hardcoded options from core
 
 import { formMessageDescriptors } from './formatjs-messages'
-import { BIG_NUMBER, IDynamicFieldTypeMapper, TEXT } from './types'
+import { BIG_NUMBER, IDynamicFieldTypeMapper, TEXT } from './types/types'
 import { MessageDescriptor } from 'react-intl'
 
 export const NATIONAL_ID = 'NATIONAL_ID'
@@ -71,7 +71,8 @@ export const birthDocumentTypeFhirMapping = {
 export const marriageDocumentForWhomFhirMapping = {
   GROOM: 'GROOM',
   BRIDE: 'BRIDE',
-  MARRIAGE_NOTICE_PROOF: 'MARRIAGE_NOTICE_PROOF'
+  MARRIAGE_NOTICE_PROOF: 'MARRIAGE_NOTICE_PROOF',
+  INFORMANT: 'INFORMANT'
 }
 
 export const marriageDocumentTypeFhirMapping = {

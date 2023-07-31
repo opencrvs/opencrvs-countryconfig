@@ -2,7 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@countryconfig/*": ["./*"]
+      "@countryconfig/*": [
+        "./*"
+      ]
     },
     "target": "es6",
     "module": "commonjs",
@@ -10,17 +12,28 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "rootDir": ".",
-    "lib": ["esnext.asynciterable", "es6", "es2017", "es2019"],
+    "lib": [
+      "esnext.asynciterable",
+      "es6",
+      "es2017",
+      "es2019"
+    ],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "types": ["fhir", "jest", "geojson"]
+    "types": [
+      "fhir",
+      "jest",
+      "geojson"
+    ]
   },
-  "include": ["src/**/*.ts", "typings"],
+  "include": [
+    "src/**/*.ts",
+    "typings"
+  ],
   "exclude": [
     "node_modules",
     "cypress",
@@ -29,5 +42,8 @@
     "acceptance-tests",
     "src/setupTests.ts",
     "src/**/*.test.ts"
-  ]
+  ],
+  "ts-node": {
+    "files": true
+  }
 }

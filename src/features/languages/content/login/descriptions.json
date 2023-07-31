@@ -1,5 +1,6 @@
 {
   "data": {
+    "constants.skipToMainContent": "Label for a keyboard accessibility link which skips to the main content",
     "login.username": "The label that appears on the mobile number input",
     "login.passwordLabel": "The label that appears on the password input",
     "validations.required": "The error message that appears on required fields",
@@ -47,7 +48,7 @@
     "label.error": "Generic error message for invalid form nput",
     "error.errorPhoneNumberNotFound": "Error message for phone number not found",
     "error.errorEmailAddressNotFound": "Error message for email address not found",
-    "resend.sms": "Text for button that resends SMS verification code",
+    "resend.sms": "Text for button that resend SMS or email verification code",
     "error.networkError": "The error that appears when there is no internet connection",
     "login.stepOneInstruction": "The instruction that appears in step one of the form",
     "login.stepOneText": "The instruction that appears in step one of the login form",
@@ -59,7 +60,7 @@
     "login.fieldMissing": "The error if user doesn't fill all the field",
     "login.stepTwoTitle": "The title that appears in step two of the form",
     "login.stepTwoResendTitle": "The title that appears in step two of the form after resend button click",
-    "login.resendMobile": "Text for button that resends SMS verification code",
+    "login.resend": "Text for button that resends SMS or email verification code",
     "login.stepTwoInstruction.sms": "The instruction that appears in step two of the form that lets users know that code has been sent to phone",
     "login.stepTwoInstruction.email": "The instruction that appears in step two of the form that lets users know that code has been sent to email",
     "login.verify": "The label that appears on the verify code button",

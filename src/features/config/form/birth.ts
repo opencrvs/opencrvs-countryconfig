@@ -10,73 +10,81 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { ISerializedForm } from './types'
+import { Event, ISerializedForm } from './types/types'
 import {
   birthDocumentForWhomFhirMapping,
   birthDocumentTypeFhirMapping
 } from './options'
 import { formMessageDescriptors } from './formatjs-messages'
 import {
-  getBirthDate,
   getDetailsExist,
+  getReasonNotExisting,
+  getPlaceOfBirthFields
+} from './birth/required-fields'
+import {
+  getBirthDate,
+  getGender,
   getFamilyNameField,
   getFirstNameField,
-  getGender,
   getNationalID,
   getNationality,
-  getReasonNotExisting,
   informantType,
   otherInformantType
-} from './birth/required-fields'
+} from './common-required-fields'
+import {
+  exactDateOfBirthUnknown,
+  getAgeOfIndividualInYears,
+  getMaritalStatus,
+  registrationEmail,
+  registrationPhone,
+  seperatorDivider
+} from './common-optional-fields'
 import {
   attendantAtBirth,
   birthType,
-  exactDateOfBirthUnknown,
-  getAgeOfIndividualInYears,
   getEducation,
-  getMaritalStatus,
   getNIDVerificationButton,
   getOccupation,
   multipleBirth,
-  registrationEmail,
-  registrationPhone,
   weightAtBirth
 } from './birth/optional-fields'
-import {
-  isValidChildBirthDate,
-  informantFamilyNameConditionals,
-  informantFirstNameConditionals,
-  informantBirthDateConditionals,
-  hideIfNidIntegrationEnabled,
-  hideIfNidIntegrationDisabled,
-  mothersDetailsExistConditionals,
-  getNationalIDValidators,
-  motherNationalIDVerfication,
-  mothersBirthDateConditionals,
-  parentsBirthDateValidators,
-  motherFirstNameConditionals,
-  motherFamilyNameConditionals,
-  fatherNationalIDVerfication,
-  fatherFamilyNameConditionals,
-  fatherFirstNameConditionals,
-  fathersBirthDateConditionals,
-  fathersDetailsExistConditionals,
-  detailsExist,
-  hideIfInformantMotherOrFather,
-  exactDateOfBirthUnknownConditional
-} from './validations-and-conditionals'
 import {
   childNameInEnglish,
   fatherNameInEnglish,
   informantNameInEnglish,
   motherNameInEnglish
 } from './birth/preview-groups'
+import {
+  isValidChildBirthDate,
+  hideIfInformantMotherOrFather,
+  hideIfNidIntegrationDisabled,
+  mothersDetailsExistConditionals,
+  mothersBirthDateConditionals,
+  parentsBirthDateValidators,
+  detailsExist,
+  motherFirstNameConditionals,
+  motherFamilyNameConditionals,
+  motherNationalIDVerfication,
+  fathersDetailsExistConditionals,
+  fathersBirthDateConditionals,
+  fatherFirstNameConditionals,
+  fatherFamilyNameConditionals,
+  fatherNationalIDVerfication
+} from './birth/utils'
+import {
+  getNationalIDValidators,
+  informantFirstNameConditionals,
+  informantFamilyNameConditionals,
+  informantBirthDateConditionals,
+  exactDateOfBirthUnknownConditional,
+  hideIfNidIntegrationEnabled
+} from './common-utils'
 
 export const birthRegisterForms: ISerializedForm = {
   sections: [
     {
       id: 'registration', // A hidden 'registration' section must be included to store identifiers in a form draft that are used in certificates
-      viewType: 'hidden',
+      viewType: 'form',
       name: {
         defaultMessage: 'Registration',
         description: 'Form section name for Registration',
@@ -172,49 +180,37 @@ export const birthRegisterForms: ISerializedForm = {
           ],
           fields: [
             {
-              name: 'paragraph',
-              type: 'PARAGRAPH',
+              name: 'list',
+              type: 'BULLET_LIST',
+              items: [
+                {
+                  defaultMessage:
+                    'I am going to help you make a declaration of birth.',
+                  description: 'Form information for birth',
+                  id: 'form.section.information.birth.bullet1'
+                },
+                {
+                  defaultMessage:
+                    'As the legal Informant it is important that all the information provided by you is accurate.',
+                  description: 'Form information for birth',
+                  id: 'form.section.information.birth.bullet2'
+                },
+                {
+                  defaultMessage:
+                    'Once the declaration is processed you will receive you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
+                  description: 'Form information for birth',
+                  id: 'form.section.information.birth.bullet3'
+                },
+                {
+                  defaultMessage:
+                    'Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.',
+                  description: 'Form information for birth',
+                  id: 'form.section.information.birth.bullet4'
+                }
+              ],
+              // this is to set the title of the page
               label: {
-                defaultMessage:
-                  'I am going to help you make a declaration of birth.',
-                description: 'Form information for birth',
-                id: 'form.section.information.birth.bullet1'
-              },
-              initialValue: '',
-              validator: []
-            },
-            {
-              name: 'paragraph',
-              type: 'PARAGRAPH',
-              label: {
-                defaultMessage:
-                  'As the legal Informant it is important that all the information provided by you is accurate.',
-                description: 'Form information for birth',
-                id: 'form.section.information.birth.bullet2'
-              },
-              initialValue: '',
-              validator: []
-            },
-            {
-              name: 'paragraph',
-              type: 'PARAGRAPH',
-              label: {
-                defaultMessage:
-                  'Once the declaration is processed you will receive you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
-                description: 'Form information for birth',
-                id: 'form.section.information.birth.bullet3'
-              },
-              initialValue: '',
-              validator: []
-            },
-            {
-              name: 'paragraph',
-              type: 'PARAGRAPH',
-              label: {
-                defaultMessage:
-                  'Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.',
-                description: 'Form information for birth',
-                id: 'form.section.information.birth.bullet4'
+                id: 'register.eventInfo.birth.title'
               },
               initialValue: '',
               validator: []
@@ -241,19 +237,8 @@ export const birthRegisterForms: ISerializedForm = {
               isValidChildBirthDate,
               'eventDate'
             ), // Required field.
-            {
-              name: 'seperator',
-              type: 'SUBSECTION',
-              label: {
-                defaultMessage: ' ',
-                description: 'empty string',
-                id: 'form.field.label.empty'
-              },
-              initialValue: '',
-              ignoreBottomMargin: true,
-              validator: [],
-              conditionals: []
-            },
+            ...getPlaceOfBirthFields(),
+            seperatorDivider,
             attendantAtBirth,
             birthType,
             weightAtBirth
@@ -274,16 +259,9 @@ export const birthRegisterForms: ISerializedForm = {
       groups: [
         {
           id: 'informant-view-group',
-          conditionals: [
-            {
-              action: 'hide',
-              expression:
-                "(draftData && draftData.registration && draftData.registration.informantType && selectedInformantAndContactType.selectedInformantType && (selectedInformantAndContactType.selectedInformantType === 'MOTHER' || selectedInformantAndContactType.selectedInformantType === 'FATHER'))"
-            }
-          ],
           fields: [
             informantType, // Required field.
-            otherInformantType, // Required field.
+            otherInformantType(Event.Birth), // Required field.
             registrationPhone,
             registrationEmail,
             getFirstNameField(
@@ -368,7 +346,7 @@ export const birthRegisterForms: ISerializedForm = {
             exactDateOfBirthUnknown,
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfMother,
-              detailsExist
+              exactDateOfBirthUnknownConditional
             ),
             getFirstNameField(
               'motherNameInEnglish',
@@ -392,24 +370,7 @@ export const birthRegisterForms: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(motherNationalIDVerfication),
               []
             ),
-            {
-              name: 'seperator',
-              type: 'SUBSECTION',
-              label: {
-                defaultMessage: ' ',
-                description: 'empty string',
-                id: 'form.field.label.empty'
-              },
-              initialValue: '',
-              ignoreBottomMargin: true,
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression: '!values.detailsExist'
-                }
-              ]
-            },
+            seperatorDivider,
             getMaritalStatus('motherMaritalStatus'),
             multipleBirth,
             getOccupation('motherOccupation'),
@@ -455,7 +416,7 @@ export const birthRegisterForms: ISerializedForm = {
             exactDateOfBirthUnknown,
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfFather,
-              detailsExist
+              exactDateOfBirthUnknownConditional
             ),
             getFirstNameField(
               'fatherNameInEnglish',
@@ -479,26 +440,8 @@ export const birthRegisterForms: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(fatherNationalIDVerfication),
               []
             ),
-            {
-              name: 'seperator',
-              type: 'SUBSECTION',
-              label: {
-                defaultMessage: ' ',
-                description: 'empty string',
-                id: 'form.field.label.empty'
-              },
-              initialValue: '',
-              ignoreBottomMargin: true,
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression: '!values.detailsExist'
-                }
-              ]
-            },
+            seperatorDivider,
             getMaritalStatus('fatherMaritalStatus'),
-            multipleBirth,
             getOccupation('fatherOccupation'),
             getEducation('fatherEducationalAttainment')
           ],
@@ -670,7 +613,7 @@ export const birthRegisterForms: ISerializedForm = {
                 {
                   action: 'hide',
                   expression:
-                    "(draftData && draftData.registration && draftData.registration.informantType && selectedInformantAndContactType.selectedInformantType && (selectedInformantAndContactType.selectedInformantType === 'MOTHER' || selectedInformantAndContactType.selectedInformantType === 'FATHER'))"
+                    "draftData?.informant?.informantType === 'MOTHER' || draftData?.informant?.informantType === 'FATHER'"
                 }
               ],
               mapping: {

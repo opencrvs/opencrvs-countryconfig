@@ -17,6 +17,7 @@ window.config = {
   MINIO_BUCKET: 'ocrvs',
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
   USER_NOTIFICATION_DELIVERY_METHOD: 'sms',
+  INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms',
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
   AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',

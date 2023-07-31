@@ -89,7 +89,11 @@ export async function locationsHandler(_: Request, h: ResponseToolkit) {
           partOf:
             locationLevel == 1
               ? 'Location/0'
-              : `Location/${humdataLocation[`admin${locationLevel - 1}Pcode`]}`,
+              : `Location/${
+                  humdataLocation[
+                    `admin${(locationLevel - 1) as 1 | 2 | 3}Pcode`
+                  ]
+                }`,
           locationType: 'ADMIN_STRUCTURE',
           jurisdictionType: JURISDICTION_TYPE[locationLevel - 1],
           statistics: statisticsMap.get(id)?.years

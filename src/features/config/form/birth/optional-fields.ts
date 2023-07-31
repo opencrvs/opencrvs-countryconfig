@@ -9,11 +9,8 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-
-import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from '../formatjs-messages'
-import { IConditional, SerializedFormField } from '../types'
-import { hideIfInformantMotherOrFather } from '../validations-and-conditionals'
+import { Conditional, SerializedFormField } from '../types/types'
 
 export const attendantAtBirth: SerializedFormField = {
   name: 'attendantAtBirth',
@@ -149,65 +146,9 @@ export const weightAtBirth: SerializedFormField = {
   inputFieldWidth: '78px'
 }
 
-export const registrationPhone: SerializedFormField = {
-  name: 'registrationPhone',
-  type: 'TEL',
-  label: formMessageDescriptors.phoneNumber,
-  required: false,
-  initialValue: '',
-  validator: [
-    {
-      operation: 'phoneNumberFormat'
-    }
-  ],
-  conditionals: [],
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['registration.contactPhoneNumber']
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['registration.contactPhoneNumber']
-    },
-    template: {
-      fieldName: 'contactPhoneNumber',
-      operation: 'selectTransformer'
-    }
-  }
-}
-
-export const registrationEmail: SerializedFormField = {
-  name: 'registrationEmail',
-  type: 'TEL',
-  label: formMessageDescriptors.email,
-  required: false,
-  initialValue: '',
-  validator: [
-    {
-      operation: 'emailAddressFormat'
-    }
-  ],
-  conditionals: [],
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['registration.email']
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['registration.email']
-    },
-    template: {
-      fieldName: 'email',
-      operation: 'plainInputTransformer'
-    }
-  }
-}
-
 export const getNIDVerificationButton = (
   fieldName: string,
-  conditionals: IConditional[],
+  conditionals: Conditional[],
   validator: any[]
 ): SerializedFormField => ({
   name: fieldName,
@@ -230,153 +171,6 @@ export const getNIDVerificationButton = (
   labelForOffline: formMessageDescriptors.nidOffline
 })
 
-export const exactDateOfBirthUnknown: SerializedFormField = {
-  name: 'exactDateOfBirthUnknown',
-  type: 'CHECKBOX',
-  label: {
-    defaultMessage: 'Exact date of birth unknown',
-    description: 'Checkbox for exact date of birth unknown',
-    id: 'form.field.label.exactDateOfBirthUnknown'
-  },
-  hideInPreview: true,
-  required: false,
-  hideHeader: true,
-  initialValue: false,
-  validator: [
-    {
-      operation: 'range',
-      parameters: [12, 120]
-    },
-    {
-      operation: 'maxLength',
-      parameters: [3]
-    },
-    {
-      operation: 'isValidParentsBirthDate',
-      parameters: [5, true]
-    }
-  ],
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!window.config.DATE_OF_BIRTH_UNKNOWN || !values.detailsExist'
-    }
-  ].concat(hideIfInformantMotherOrFather),
-  mapping: {
-    query: {
-      operation: 'booleanTransformer'
-    },
-    mutation: {
-      operation: 'ignoreFieldTransformer'
-    }
-  }
-}
-
-export const getAgeOfIndividualInYears = (
-  label: MessageDescriptor,
-  conditionals: IConditional[]
-): SerializedFormField => ({
-  name: 'ageOfIndividualInYears',
-  type: 'NUMBER',
-  label,
-  required: true,
-  initialValue: '',
-  validator: [
-    {
-      operation: 'range',
-      parameters: [12, 120]
-    },
-    {
-      operation: 'maxLength',
-      parameters: [3]
-    },
-    {
-      operation: 'isValidParentsBirthDate',
-      parameters: [10, true]
-    }
-  ],
-  conditionals,
-  postfix: 'years',
-  inputFieldWidth: '78px'
-})
-
-export const getMaritalStatus = (
-  certificateHandlebar: string
-): SerializedFormField => ({
-  name: 'maritalStatus',
-  type: 'SELECT_WITH_OPTIONS',
-  label: {
-    defaultMessage: 'Marital status',
-    description: 'Label for form field: Marital status',
-    id: 'form.field.label.maritalStatus'
-  },
-  required: false,
-  initialValue: '',
-  validator: [],
-  placeholder: formMessageDescriptors.formSelectPlaceholder,
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'selectTransformer'
-    }
-  },
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!values.detailsExist'
-    }
-  ],
-  options: [
-    {
-      value: 'SINGLE',
-      label: {
-        defaultMessage: 'Single',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusSingle'
-      }
-    },
-    {
-      value: 'MARRIED',
-      label: {
-        defaultMessage: 'Married',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusMarried'
-      }
-    },
-    {
-      value: 'WIDOWED',
-      label: {
-        defaultMessage: 'Widowed',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusWidowed'
-      }
-    },
-    {
-      value: 'DIVORCED',
-      label: {
-        defaultMessage: 'Divorced',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusDivorced'
-      }
-    },
-    {
-      value: 'SEPARATED',
-      label: {
-        id: 'form.field.label.maritalStatusSeparated',
-        defaultMessage: 'Separated',
-        description: 'Option for form field: Marital status'
-      }
-    },
-    {
-      value: 'NOT_STATED',
-      label: {
-        defaultMessage: 'Not stated',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusNotStated'
-      }
-    }
-  ]
-})
 export const multipleBirth: SerializedFormField = {
   name: 'multipleBirth',
   type: 'NUMBER',

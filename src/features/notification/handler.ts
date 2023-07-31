@@ -13,7 +13,6 @@ import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
 import {
   SMSTemplateType,
-  informantTemplates,
   sendSMSClickatell,
   sendSMSInfobip
 } from './sms-service'
@@ -25,7 +24,9 @@ import {
 import {
   SMS_PROVIDER,
   USER_NOTIFICATION_DELIVERY_METHOD,
-  COUNTRY_LOGO_URL
+  COUNTRY_LOGO_URL,
+  LOGIN_URL,
+  INFORMANT_NOTIFICATION_DELIVERY_METHOD
 } from './constant'
 import { logger } from '@countryconfig/logger'
 import { getApplicationConfig } from '../utils'
@@ -33,12 +34,13 @@ import { getApplicationConfig } from '../utils'
 type NotificationPayload = {
   templateName: {
     sms: SMSTemplateType
-    email?: EmailTemplateType
+    email: EmailTemplateType
   }
   recipient: {
     sms?: string
     email?: string
   }
+  type: 'user' | 'informant'
   locale: string
   variables: TemplateVariables
   convertUnicode?: boolean
@@ -46,20 +48,21 @@ type NotificationPayload = {
 
 export const notificationScheme = Joi.object({
   templateName: Joi.object({
-    email: Joi.string().allow('').optional(),
+    email: Joi.string().required(),
     sms: Joi.string().required()
   }),
   recipient: Joi.object({
-    email: Joi.string().allow('').optional(),
-    sms: Joi.string()
-  })
+    email: Joi.string().allow(null, '').optional(),
+    sms: Joi.string().allow(null, '').optional()
+  }),
+  type: Joi.string().valid('user', 'informant').required()
 }).unknown(true)
 
 export async function notificationHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  const { templateName, variables, recipient, locale, convertUnicode } =
+  const { templateName, variables, recipient, locale, convertUnicode, type } =
     request.payload as NotificationPayload
 
   if (process.env.NODE_ENV !== 'production') {
@@ -68,18 +71,18 @@ export async function notificationHandler(
         {
           templateName,
           recipient,
-          convertUnicode
+          convertUnicode,
+          type
         }
       )}`
     )
     return h.response().code(200)
   }
 
-  const isInformantNotification =
-    !templateName?.email && templateName.sms in informantTemplates
-  const notificationMethod = isInformantNotification
-    ? 'sms'
-    : USER_NOTIFICATION_DELIVERY_METHOD
+  const notificationMethod =
+    type == 'user'
+      ? USER_NOTIFICATION_DELIVERY_METHOD
+      : INFORMANT_NOTIFICATION_DELIVERY_METHOD
   logger.info(
     `Notification method is ${notificationMethod} and recipient ${
       notificationMethod === 'email' ? recipient.email : recipient.sms
@@ -87,11 +90,12 @@ export async function notificationHandler(
   )
   const applicationName = (await getApplicationConfig()).APPLICATION_NAME
   const countryLogo = COUNTRY_LOGO_URL
+  const loginURL = LOGIN_URL
   switch (notificationMethod) {
     case 'email':
       await sendEmail(
         templateName.email as EmailTemplateType,
-        { ...variables, applicationName, countryLogo },
+        { ...variables, applicationName, countryLogo, loginURL },
         recipient.email as string
       )
       break

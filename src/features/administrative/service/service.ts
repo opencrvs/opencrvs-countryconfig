@@ -48,7 +48,7 @@ export async function getStatistics() {
        * This parses the format we store statistics in FHIR into a more API-consumer friendly format
        */
 
-      const statistics = {}
+      const statistics: Record<string, string> = {}
 
       entry.resource.extension
         ?.filter((ext): ext is StatisticsExtension =>

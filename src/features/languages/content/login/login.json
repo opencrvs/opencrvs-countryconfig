@@ -31,7 +31,7 @@
         "login.resentSMS": "Authentication code sent to {number}",
         "login.resentEMAIL": "Authentication code sent to {email}",
         "login.stepTwoResendTitle": "Authentication code resent",
-        "login.resendMobile": "Resend SMS",
+        "login.resend": "Resend {notificationMethod, select, sms {SMS} email {Email} other {}}",
         "login.optionalLabel": "Optional",
         "login.stepTwoTitle": "Verify your account",
         "login.stepOneText": "Login to Farajaland CRVS",
@@ -43,7 +43,7 @@
         "login.manager.registerAppDescription": "Manage declarations, registrations and certifications here.",
         "login.manager.performanceAppTitle": "Performance Management",
         "login.manager.performanceAppDescription": "Analyse the performance of a particular area of your country in it's Civil Registration.",
-        "resend.sms": "Resend SMS",
+        "resend.sms": "Resend {notificationMethod, select, sms {SMS} email {Email} other {}}",
         "resetCredentials.form.title": "{forgottenItem, select, username {Username reminder} password {Password reset} other {}}",
         "resetCredentials.forgottenItem.form.title": "Can't login",
         "resetCredentials.forgottenItem.form.body.header": "Select an option",
@@ -88,7 +88,8 @@
         "userSetup.securityQuestions.favoriteTeacher": "What is the name of your favorite school teacher?",
         "userSetup.securityQuestions.firstChildName": "What is your first child's name?",
         "userSetup.securityQuestions.hightSchool": "What is the name of your high school?",
-        "userSetup.securityQuestions.motherName": "What is your mother's name?"
+        "userSetup.securityQuestions.motherName": "What is your mother's name?",
+        "constants.skipToMainContent": "Skip to main content"
       }
     },
     {
@@ -122,7 +123,7 @@
         "login.resentSMS": "Nous venons de vous envoyer un autre code à {number}.",
         "login.resentEMAIL": "Nous venons de vous envoyer un autre code à {email}.",
         "login.stepTwoResendTitle": "Envoi du code de vérification",
-        "login.resendMobile": "Renvoyer le SMS",
+        "login.resend": "Renvoyer le {notificationMethod, select, sms {SMS} email {Email} other {}}",
         "login.optionalLabel": "Optionnel",
         "login.stepTwoTitle": "Vérifier votre compte",
         "login.stepOneText": "Connectez-vous à Farajaland CRVS",
@@ -134,7 +135,7 @@
         "login.manager.registerAppDescription": "Gérez ici vos déclarations, enregistrements et certifications.",
         "login.manager.performanceAppTitle": "Gestion des performances",
         "login.manager.performanceAppDescription": "Analysez les performances d'une région particulière de votre pays en matière d'enregistrement des faits d'état civil.",
-        "resend.sms": "Renvoyer un SMS",
+        "resend.sms": "Renvoyer un {notificationMethod, select, sms {SMS} email {Email} other {}}",
         "resetCredentials.form.title": "{forgottenItem, select, username {Demande de rappel de nom d'utilisateur} password {Réinitialisation du mot de passe} other {}}",
         "resetCredentials.forgottenItem.form.title": "Impossible de se connecter",
         "resetCredentials.forgottenItem.form.body.header": "Qu'avez-vous oublié ?",
@@ -180,7 +181,8 @@
         "userSetup.securityQuestions.favoriteTeacher": "Quel est le nom de votre professeur d'école préféré ?",
         "userSetup.securityQuestions.firstChildName": "Quel est le nom de votre premier enfant ?",
         "userSetup.securityQuestions.hightSchool": "Quel est le nom de votre école secondaire ?",
-        "userSetup.securityQuestions.motherName": "Quel est le nom de votre mère ?"
+        "userSetup.securityQuestions.motherName": "Quel est le nom de votre mère ?",
+        "constants.skipToMainContent": "Passer au contenu principal"
       }
     }
   ]

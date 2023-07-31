@@ -162,12 +162,18 @@ export async function getStatistics(path?: string) {
 }
 
 // eslint-disable-next-line no-unused-vars
-type ErrorCallback = (_: { id: number; row: number; column: string }) => void
+type ErrorCallback = (_: {
+  id: number | string
+  row: number
+  column: string
+}) => void
 type LocationMap = Map<string, string>
+
+export type AdminLevel = 0 | 1 | 2 | 3 | 4
 
 export function extractLocationTree(
   locations: Array<z.infer<typeof Location>>,
-  maxAdminLevel: number,
+  maxAdminLevel: AdminLevel,
   errorCallback?: ErrorCallback
 ) {
   const locationMap: LocationMap = new Map()
@@ -176,12 +182,14 @@ export function extractLocationTree(
     const row = locations[i]
 
     for (let adminLevel = maxAdminLevel; adminLevel >= 0; adminLevel--) {
-      const column = `admin${adminLevel}Pcode`
-      const id = row[column]
-      const parentColumn = `admin${adminLevel - 1}Pcode`
+      const column = `admin${adminLevel}Pcode` as const
+      const id = row[column]!
+      const parentColumn = `admin${
+        (adminLevel - 1) as AdminLevel
+      }Pcode` as const
 
       if (!locationMap.get(id)) {
-        locationMap.set(id, row[parentColumn])
+        locationMap.set(id, row[parentColumn]!)
       } else {
         if (row[parentColumn] !== locationMap.get(id) && errorCallback) {
           errorCallback({ id, row: i, column })
@@ -196,7 +204,7 @@ export function extractLocationTree(
 
 export const extractMaxAdminLevel = (rawLocations: []) => {
   const csvLocationHeaders = [...new Set(rawLocations.flatMap(Object.keys))]
-  let MAX_ADMIN_LEVEL: 0 | 1 | 2 | 3 | 4 = 0
+  let MAX_ADMIN_LEVEL: AdminLevel = 0
 
   for (const header of csvLocationHeaders) {
     const currentLevel = /^admin(\d+)Pcode$/i.exec(header)

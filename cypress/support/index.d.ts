@@ -50,6 +50,7 @@ interface DeclarationOptions {
   fatherDoB?: string
   fatherDoBStart?: string
   fatherDoBEnd?: string
+  informantType?: string
   informantFirstNames?: string
   informantFamilyName?: string
   informantDoB?: string
@@ -62,12 +63,13 @@ declare namespace Cypress {
     login: (userType: string) => void
     logout: () => void
     selectOption: (selector: string, text: string, option: string) => void
+    selectLocation: (selector: string, text: string) => void
     goToNextFormSection: () => void
     createPin: () => void
     reviewForm: () => void
     clickUserListItemByName: (name: string, actionText: string) => void
     submitForm: () => void
-    submitDeclaration: () => void
+    submitDeclaration: (type?: 'birth' | 'death') => void
     createBirthRegistrationAs: (
       role: string,
       options?: BirthDeclarationOptions
