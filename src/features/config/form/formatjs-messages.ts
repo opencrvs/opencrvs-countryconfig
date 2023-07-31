@@ -373,9 +373,9 @@ export const formMessageDescriptors = {
     id: 'form.section.child.title'
   },
   birthInformantTitle: {
-    defaultMessage: "What are the informant's details?",
+    defaultMessage: "Informant's details?",
     description: 'Form section title for informants',
-    id: 'form.section.informant.birth.title'
+    id: 'form.section.informant.title'
   },
   ageOfInformant: {
     defaultMessage: 'Age of informant',
@@ -418,8 +418,7 @@ export const formMessageDescriptors = {
     id: 'form.section.documents.name'
   },
   documentsParagraph: {
-    defaultMessage:
-      'For birth regiatration of children below 5 years old, one of the documents listed below is required:',
+    defaultMessage: 'The following documents are required',
     description: 'Documents Paragraph text',
     id: 'form.section.documents.birth.requirements'
   },
@@ -490,10 +489,10 @@ export const formMessageDescriptors = {
     description: 'Label for registration name',
     id: 'form.field.label.registrationName'
   },
-  registrationTitle: {
-    defaultMessage: 'Registration Title',
-    description: 'Label for registration title',
-    id: 'form.field.label.registrationTitle'
+  informantTitle: {
+    defaultMessage: "Informant's details",
+    description: 'Label for informant details',
+    id: 'form.field.label.informantTitle'
   },
   reviewLabelMainContact: {
     defaultMessage: 'Main Contact',
@@ -628,9 +627,9 @@ export const formMessageDescriptors = {
     id: 'form.section.informant.name'
   },
   deathInformantTitle: {
-    defaultMessage: "What are the informant's details?",
+    defaultMessage: "Informant's details?",
     description: 'Form section title for informants',
-    id: 'form.section.informant.death.title'
+    id: 'form.section.informant.title'
   },
   documentsTitle: {
     defaultMessage: 'Attach supporting documents',
