@@ -3529,7 +3529,7 @@
         "misc.reEnterDescription": "Assurons-nous que nous avons recueilli votre code PIN correctement.",
         "misc.reEnterTitle": "Saisissez à nouveau votre nouveau code PIN",
         "misc.session.expired": "Votre session a expiré. Veuillez vous connecter à nouveau.",
-        "misc.title.declarationStatus": "Envoyer pour {draftStatus, select, true {approval} other {approval or reject}}?",
+        "misc.title.declarationStatus": "Envoyer pour {draftStatus, select, true {approbation} other {approbation ou rejeter}}?",
         "misc.nidCallback.authenticatingNid": "Authentification de l'identité nationale",
         "misc.nidCallback.failedToAuthenticateNid": "Échec de l'authentification de l'ID national",
         "navigation.application": "Application",
