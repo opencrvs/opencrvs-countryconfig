@@ -125,7 +125,7 @@ export const marriageRegisterForms: ISerializedForm = {
       id: 'informant',
       viewType: 'form',
       name: formMessageDescriptors.registrationName,
-      title: formMessageDescriptors.registrationTitle,
+      title: formMessageDescriptors.informantTitle,
       groups: [
         {
           id: 'who-is-applying-view-group',
@@ -176,6 +176,18 @@ export const marriageRegisterForms: ISerializedForm = {
             ),
             registrationPhone,
             registrationEmail
+          ],
+          previewGroups: [
+            {
+              id: 'informantNameInEnglish',
+              label: {
+                defaultMessage: 'Full name',
+                description: "Group label for informant's name in english",
+                id: 'form.preview.group.label.informant.english.name'
+              },
+              fieldToRedirect: 'familyNameEng',
+              delimiter: ' '
+            }
           ]
         }
       ],
@@ -334,7 +346,7 @@ export const marriageRegisterForms: ISerializedForm = {
             {
               id: 'witnessOneNameInEnglish',
               label: {
-                defaultMessage: 'Full name',
+                defaultMessage: 'Witness One English name',
                 description: 'Label for Witness one name in english',
                 id: 'form.preview.group.label.witness.one.english.name'
               },
