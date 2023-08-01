@@ -138,7 +138,6 @@ jobs:
         if: ${{ github.event.inputs.environment == 'staging' }}
         env:
           STAGING_DOMAIN: ${{ secrets.STAGING_DOMAIN }}
-          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
           REPLICAS: ${{ secrets.REPLICAS }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
@@ -157,7 +156,7 @@ jobs:
           EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
         run: |
           cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=development --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+          yarn deploy --clear_data=no --restore_metadata=no --environment=development --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
 
       - name: Deploy to config
         if: ${{ inputs.environment == 'config' }}
