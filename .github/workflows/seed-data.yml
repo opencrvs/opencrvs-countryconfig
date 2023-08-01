@@ -48,7 +48,7 @@ jobs:
           timeout_minutes: 5
           max_attempts: 3
           command: yarn seed
-        working-directory: ./opencrvs-core
+          working-directory: ./opencrvs-core
         env:
           GATEWAY_URL: ${{ secrets.GATEWAY_HOST }}
           GATEWAY_GQL_HOST: ${{ secrets.GATEWAY_GQL_HOST }}
