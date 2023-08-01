@@ -39,9 +39,11 @@ jobs:
           git checkout ${{ github.event.inputs.core-image-tag }}
 
       - name: Install dependencies
+        working-directory: ./opencrvs-core
         run: yarn install
 
       - name: Seed data on given environment
+        working-directory: ./opencrvs-core
         uses: nick-fields/retry@v2
         with:
           timeout_minutes: 5
