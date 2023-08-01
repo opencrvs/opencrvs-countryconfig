@@ -108,7 +108,7 @@ type UsernameUpdateVariables = {
 }
 
 type DeclarationCommonVariables = {
-  trackingID: string
+  trackingId: string
   crvsOffice: string
   applicationName: string
 }
