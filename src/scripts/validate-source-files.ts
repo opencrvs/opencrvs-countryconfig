@@ -9,6 +9,7 @@ import {
   checkFacilityExistsInAnyLocation
 } from './humdata-validation'
 import {
+  AdminLevel,
   extractLocationTree,
   extractStatisticsMap,
   getChildLocations,
@@ -59,7 +60,7 @@ export const Location = z.object({
   admin4Name_alias: z.string().optional()
 })
 
-const Locations = (maxAdminLevel: number) =>
+const Locations = (maxAdminLevel: AdminLevel) =>
   z
     .array(Location)
     .superRefine(zodValidateDuplicates(`admin${maxAdminLevel}Pcode`))
@@ -357,6 +358,7 @@ async function main() {
       if (!ownStat) {
         continue
       }
+      // eslint-disable-next-line no-unsafe-optional-chaining
       for (const year of ownStat?.years) {
         const yearWiseChildrenStats = childrenLocations
           .map((e) => statisticsMap.get(e))

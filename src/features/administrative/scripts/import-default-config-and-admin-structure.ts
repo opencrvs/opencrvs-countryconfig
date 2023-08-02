@@ -41,7 +41,7 @@ export default async function importAdminStructure() {
 
   let rawLocations: any = await readCSVToJSON(process.argv[2])
 
-  rawLocations = rawLocations.map((location: {}) => {
+  rawLocations = rawLocations.map((location: Record<string, string>) => {
     for (const key in location) {
       if (nameExpression.exec(key)) {
         location[key.split('_')[0].toUpperCase()] = location[key]

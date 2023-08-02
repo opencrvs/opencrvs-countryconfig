@@ -36,6 +36,9 @@ export const INFOBIP_SENDER_ID = process.env.INFOBIP_SENDER_ID_PATH
 export const USER_NOTIFICATION_DELIVERY_METHOD =
   process.env.USER_NOTIFICATION_DELIVERY_METHOD || 'sms'
 
+export const INFORMANT_NOTIFICATION_DELIVERY_METHOD =
+  process.env.INFORMANT_NOTIFICATION_DELIVERY_METHOD || 'sms'
+
 export const EMAIL_API_KEY = process.env.EMAIL_API_KEY
 
 export const COUNTRY_LOGO_URL = process.env.COUNTRY_LOGO_URL as string

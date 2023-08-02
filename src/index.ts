@@ -42,7 +42,10 @@ import {
 import { mosipMediatorHandler } from '@countryconfig/features/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/features/map/handler'
+import { formHandler } from '@countryconfig/features/config/form'
 import { countryLogoHandler } from '@countryconfig/features/countryLogo/handler'
+import { validatorsHandler } from './features/config/form/validators-handler'
+import { conditionalsHandler } from './features/config/form/conditionals-handler'
 
 export interface ITokenPayload {
   sub: string
@@ -211,12 +214,12 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/client-config.js',
-    handler: (request, h) => {
+    handler: async (request, h) => {
       const file =
         process.env.NODE_ENV === 'production'
           ? '/client-configs/client-config.prod.js'
           : '/client-configs/client-config.js'
-      // @ts-ignore
+
       return h.file(join(__dirname, file))
     },
     options: {
@@ -234,7 +237,6 @@ export async function createServer() {
         process.env.NODE_ENV === 'production'
           ? '/client-configs/login-config.prod.js'
           : '/client-configs/login-config.js'
-      // @ts-ignore
       return h.file(join(__dirname, file))
     },
     options: {
@@ -246,12 +248,44 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
+    path: '/validators.js',
+    handler: validatorsHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves validation functions as JS'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/conditionals.js',
+    handler: conditionalsHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves conditionals as JS'
+    }
+  })
+
+  server.route({
+    method: 'GET',
     path: '/content/{application}',
     handler: contentHandler,
     options: {
       auth: false,
       tags: ['api'],
       description: 'Serves language content'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/forms',
+    handler: formHandler,
+    options: {
+      tags: ['api'],
+      description: 'Serves form configuration'
     }
   })
 

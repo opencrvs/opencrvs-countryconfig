@@ -18,6 +18,8 @@ import { createReadStream } from 'fs'
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
 import * as bcrypt from 'bcryptjs'
 import { URL } from 'url'
+import { build } from 'esbuild'
+import { memoize } from 'lodash'
 export const GENERATE_TYPE_RN = 'registrationNumber'
 export const CHILD_CODE = 'child-details'
 export const DECEASED_CODE = 'deceased-details'
@@ -175,9 +177,11 @@ export function getEventDateFromBundle(bundle: fhir.Bundle): string {
           eventDateFieldKey: 'birthDate'
         }
   const patient = findPersonEntryFromBundle(personInfo.sectionCode, bundle)
+  // @ts-ignore
   if (!patient || !patient[personInfo.eventDateFieldKey]) {
     throw new Error('Unable to find event date from given bundle')
   }
+  // @ts-ignore
   return patient[personInfo.eventDateFieldKey] as string
 }
 
@@ -334,6 +338,7 @@ export function checkDuplicate(
   inputArray: ISupportedType[]
 ): boolean {
   const valueArr = inputArray.map((item: ISupportedType) => {
+    // @ts-ignore TODO: A typing error here
     return item[propertyName]
   })
   const isDuplicate = valueArr.some((item, index) => {
@@ -425,3 +430,15 @@ export async function getApplicationConfig() {
   const configData = (await res.json()) as IApplicationConfigResponse
   return configData.config
 }
+
+export const buildTypeScriptToJavaScript = memoize(async (path: string) => {
+  const result = await build({
+    entryPoints: [path],
+    write: false,
+    loader: { '.ts': 'ts' },
+    format: 'esm',
+    platform: 'browser'
+  })
+
+  return result.outputFiles[0].text
+})
