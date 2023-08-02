@@ -47,7 +47,7 @@ context('Death Integration Test', () => {
     cy.registerDeclaration()
   })
 
-  it('Tests from declaration to registration using minimum input', () => {
+  it('Login as field agent and tests from declaration to registration using minimum input ', () => {
     cy.registerDeathDeclarationWithMinimumInput()
   })
 
@@ -58,7 +58,7 @@ context('Death Integration Test', () => {
     cy.submitForm()
   })
 
-  it('Tests from declaration to registration using maximum input', () => {
+  it('Login as field agent and tests from declaration to registration using maximum input', () => {
     cy.registerDeathDeclarationWithMaximumInput()
   })
 
