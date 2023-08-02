@@ -18,10 +18,6 @@ for i in "$@"; do
         CLEAR_DATA="${i#*=}"
         shift
         ;;
-    --restore_metadata=*)
-        RESTORE_METADATA="${i#*=}"
-        shift
-        ;;        
     --host=*)
         HOST="${i#*=}"
         shift
@@ -66,9 +62,8 @@ function trapint {
 }
 
 print_usage_and_exit () {
-    echo 'Usage: ./deploy.sh --clear_data=yes|no --restore_metadata=yes|no --host --environment --version --country_config_version --replicas'
+    echo 'Usage: ./deploy.sh --clear_data=yes|no --host --environment --version --country_config_version --replicas'
     echo "  --clear_data must have a value of 'yes' or 'no' set e.g. --clear_data=yes"
-    echo "  --restore_metadata must have a value of 'yes' or 'no' set e.g. --restore_metadata=yes"
     echo "  --environment can be 'production' or 'development' or 'qa' or 'demo'"
     echo '  --host    is the server to deploy to'
     echo "  --version can be any OpenCRVS Core docker image tag or 'latest'"
@@ -79,11 +74,6 @@ print_usage_and_exit () {
 
 if [ -z "$CLEAR_DATA" ] || { [ $CLEAR_DATA != 'no' ] && [ $CLEAR_DATA != 'yes' ] ;} ; then
     echo 'Error: Argument --clear_data is required & must be either yes or no.'
-    print_usage_and_exit
-fi
-
-if [ -z "$RESTORE_METADATA" ] || { [ $RESTORE_METADATA != 'no' ] && [ $RESTORE_METADATA != 'yes' ] ;} ; then
-    echo 'Error: Argument --restore_metadata is required & must be either yes or no.'
     print_usage_and_exit
 fi
 
@@ -517,11 +507,12 @@ if [ $CLEAR_DATA == "yes" ] ; then
         MONGODB_ADMIN_USER=$MONGODB_ADMIN_USER \
         MONGODB_ADMIN_PASSWORD=$MONGODB_ADMIN_PASSWORD \
         /opt/opencrvs/infrastructure/clear-all-data.sh $REPLICAS $ENV"
-fi
 
-if [ $RESTORE_METADATA == "yes" ] ; then
     echo
-    echo "Restoring metadata..."
+    echo "Running migrations..."
     echo
-    ssh $SSH_USER@$SSH_HOST "MONGODB_ADMIN_USER=$MONGODB_ADMIN_USER MONGODB_ADMIN_PASSWORD=$MONGODB_ADMIN_PASSWORD /opt/opencrvs/infrastructure/restore-metadata.sh $REPLICAS $ENV"
+    ssh $SSH_USER@$SSH_HOST "
+        ELASTICSEARCH_ADMIN_USER=elastic \
+        ELASTICSEARCH_ADMIN_PASSWORD=$ELASTICSEARCH_SUPERUSER_PASSWORD \
+        /opt/opencrvs/infrastructure/run-migrations.sh"
 fi

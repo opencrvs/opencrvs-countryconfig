@@ -39,6 +39,7 @@ jobs:
           git checkout ${{ github.event.inputs.core-image-tag }}
 
       - name: Install dependencies
+        working-directory: ./opencrvs-core
         run: yarn install
 
       - name: Seed data on given environment
@@ -46,7 +47,9 @@ jobs:
         with:
           timeout_minutes: 5
           max_attempts: 3
-          command: yarn seed
+          command: |
+            cd ./opencrvs-core
+            yarn seed
         env:
           GATEWAY_URL: ${{ secrets.GATEWAY_HOST }}
           GATEWAY_GQL_HOST: ${{ secrets.GATEWAY_GQL_HOST }}

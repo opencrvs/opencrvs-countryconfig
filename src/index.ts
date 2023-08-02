@@ -44,6 +44,11 @@ import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/features/map/handler'
 import { formHandler } from '@countryconfig/features/config/form'
 import { countryLogoHandler } from '@countryconfig/features/countryLogo/handler'
+import { locationsHandler } from './features/locations/handler'
+import { certificateHandler } from './features/certificates/handler'
+import { rolesHandler } from './features/roles/handler'
+import { usersHandler } from './features/employees/handler'
+import { applicationConfigHandler } from './features/config/application/handler'
 import { validatorsHandler } from './features/config/form/validators-handler'
 import { conditionalsHandler } from './features/config/form/conditionals-handler'
 
@@ -382,6 +387,61 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Handles submission of mosip generaed NID'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/application-config',
+    handler: applicationConfigHandler,
+    options: {
+      auth: false,
+      tags: ['api', 'application-config'],
+      description: 'Returns default application configuration'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/locations',
+    handler: locationsHandler,
+    options: {
+      auth: false,
+      tags: ['api', 'locations'],
+      description: 'Returns the locations metadata'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/certificates',
+    handler: certificateHandler,
+    options: {
+      auth: false,
+      tags: ['api', 'certificates'],
+      description: 'Returns certificate metadata'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/roles',
+    handler: rolesHandler,
+    options: {
+      auth: false,
+      tags: ['api', 'user-roles'],
+      description: 'Returns user roles metadata'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/users',
+    handler: usersHandler,
+    options: {
+      auth: false,
+      tags: ['api', 'users'],
+      description: 'Returns users metadata'
     }
   })
 

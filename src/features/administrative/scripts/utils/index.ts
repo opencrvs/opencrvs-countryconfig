@@ -135,7 +135,7 @@ export type LocationStatistic = {
 
 export async function getStatistics(path?: string) {
   if (!path) {
-    path = join(__dirname, './source/farajaland-statistics.csv')
+    path = join(__dirname, '../../source/farajaland-statistics.csv')
   }
   const data = await readCSVToJSON<
     Array<Record<string, string> & { adminPcode: string }>
