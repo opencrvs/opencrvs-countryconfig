@@ -29,7 +29,7 @@ elasticsearch_host() {
 create_elastic_index () {
   local index_name=$1
   echo "Creating ElasticSearch Index: ${index_name}"
-  docker run --rm --network=$NETWORK appropriate/curl curl -XPUT "http://$(elasticsearch_host)/$index_name" -v
+  docker run --rm --network=opencrvs_overlay_net appropriate/curl curl -XPUT "http://$(elasticsearch_host)/$index_name" -v
 }
 
 create_elastic_index "ocrvs"
