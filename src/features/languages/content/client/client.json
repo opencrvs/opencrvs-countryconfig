@@ -3682,6 +3682,8 @@
         "print.certificate.review.modal.body": "Un fichier PDF du certificat s'ouvrira dans un nouvel onglet - veuillez l'imprimer à partir de là.",
         "print.certificate.review.printModalTitle": "Imprimer le certificat ?",
         "print.certificate.review.printAndIssueModalTitle": "Imprimer et émettre le certificat ?",
+        "print.certificate.review.modal.body.print": "Un PDF du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer. Cet enregistrement sera ensuite déplacé vers votre file d'attente de travail prêt à émettre",
+        "print.certificate.review.modal.body.printAndIssue": "Un PDF du certificat s'ouvrira dans un nouvel onglet que vous pourrez imprimer et émettre",
         "print.certificate.review.title": "Prêt à certifier ?",
         "print.certificate.section.title": "Certifier l'enregistrement",
         "print.certificate.selectSignature": "Sélectionner les signatures électroniques",
