@@ -245,7 +245,46 @@ export const birthRegisterForms: ISerializedForm = {
           ],
           previewGroups: [childNameInEnglish] // Preview groups are used to structure data nicely in Review Page UI
         }
-      ]
+      ],
+      mapping: {
+        template: [
+          {
+            fieldName: 'birthConfigurableIdentifier1',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_1']]
+          },
+          {
+            fieldName: 'birthConfigurableIdentifier2',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_2']]
+          },
+          {
+            fieldName: 'birthConfigurableIdentifier3',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_3']]
+          }
+        ],
+        mutation: {
+          operation: 'childFieldToIdentityTransformer',
+          parameters: [
+            [
+              'BIRTH_CONFIGURABLE_IDENTIFIER_1',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_2',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_3'
+            ]
+          ]
+        },
+        query: {
+          operation: 'childIdentityToFieldTransformer',
+          parameters: [
+            [
+              'BIRTH_CONFIGURABLE_IDENTIFIER_1',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_2',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_3'
+            ]
+          ]
+        }
+      }
     },
     {
       id: 'informant',
