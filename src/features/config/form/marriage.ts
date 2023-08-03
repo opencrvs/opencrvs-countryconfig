@@ -111,6 +111,22 @@ export const marriageRegisterForms: ISerializedForm = {
           {
             fieldName: 'registrationLocation',
             operation: 'registrationLocationUserTransformer'
+          },
+          {
+            fieldName: 'groomSignature',
+            operation: 'groomSignatureTransformer'
+          },
+          {
+            fieldName: 'brideSignature',
+            operation: 'brideSignatureTransformer'
+          },
+          {
+            fieldName: 'witnessOneSignature',
+            operation: 'witnessOneSignatureTransformer'
+          },
+          {
+            fieldName: 'witnessTwoSignature',
+            operation: 'witnessTwoSignatureTransformer'
           }
         ],
         mutation: {
