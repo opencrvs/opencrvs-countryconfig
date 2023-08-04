@@ -59,8 +59,6 @@ One of the key dependencies and enablers for OpenCRVS is country configuration a
 
 - Docker Compose scripts that allow you to customise individual OpenCRVS Core microservices and the countryconfig microservice
 
-- Backups _(Backup zips of default reference data for a nation, for a factory reset, clean installation or for local development purposes.)_
-
 - The [src](https://github.com/opencrvs/opencrvs-farajaland/master/src) folder contians the code required to run the countryconfig microservice and configure your country implementation.  For more information please [read this section of the documentation.](https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration)
 
 - A data-generator example is included that populates a demo environment with example registrations so you can see what performance analytics look like at scale. 
