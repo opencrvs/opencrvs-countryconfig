@@ -111,22 +111,19 @@ type DeclarationCommonVariables = {
   trackingId: string
   crvsOffice: string
   applicationName: string
+  informantName: string
 }
 
 type InProgressDeclarationVariables = DeclarationCommonVariables
 
-type InReviewDeclarationVariables = DeclarationCommonVariables & {
-  informantName: string
-}
+type InReviewDeclarationVariables = DeclarationCommonVariables
 
 type RegistrationDeclarationVariables = DeclarationCommonVariables & {
-  informantName: string
   name: string
   registrationNumber: string
 }
 
 type RejectionDeclarationVariables = DeclarationCommonVariables & {
-  informantName: string
   name: string
 }
 
@@ -233,6 +230,10 @@ export type TemplateVariables =
   | ResetPasswordVariables
   | UsernameReminderVariables
   | UsernameUpdateVariables
+  | InProgressDeclarationVariables
+  | InReviewDeclarationVariables
+  | RegistrationDeclarationVariables
+  | RejectionDeclarationVariables
 
 export const sendEmail = async (
   type: EmailTemplateType,
