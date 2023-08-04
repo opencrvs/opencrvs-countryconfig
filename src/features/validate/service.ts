@@ -30,6 +30,7 @@ export async function createWebHookResponseFromBundle(bundle: fhir.Bundle) {
     trackingId,
     registrationNumber: await generateRegistrationNumber(trackingId),
     ...(taskResource.code?.coding?.[0].code === 'BIRTH' && {
+      // The values should be replaced with actual id
       childIdentifiers: [
         {
           type: 'BIRTH_CONFIGURABLE_IDENTIFIER_1',
