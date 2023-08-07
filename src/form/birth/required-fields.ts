@@ -11,9 +11,43 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import { formMessageDescriptors } from '../formatjs-messages'
+import {
+  formMessageDescriptors,
+  informantMessageDescriptors
+} from '../common/messages'
 import { Conditional, SerializedFormField } from '../types/types'
-import { seperatorDivider } from '../common-optional-fields'
+import { seperatorDivider } from '../common/common-optional-fields'
+import {
+  birthInformantTypeOptions,
+  placeOfBirthOptions
+} from '../common/select-options'
+import { certificateHandlebars } from './certificate-handlebars'
+
+export const informantType: SerializedFormField = {
+  name: 'informantType',
+  type: 'SELECT_WITH_OPTIONS',
+  label: informantMessageDescriptors.birthInformantTitle,
+  required: true,
+  hideInPreview: false,
+  initialValue: '',
+  validator: [],
+  placeholder: formMessageDescriptors.formSelectPlaceholder,
+  mapping: {
+    mutation: {
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantType']
+    },
+    query: {
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantType']
+    },
+    template: {
+      fieldName: certificateHandlebars.informantType,
+      operation: 'selectTransformer'
+    }
+  },
+  options: birthInformantTypeOptions
+}
 
 export const getPlaceOfBirthFields = (): SerializedFormField[] => [
   {
@@ -36,20 +70,7 @@ export const getPlaceOfBirthFields = (): SerializedFormField[] => [
     initialValue: '',
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
-    options: [
-      {
-        value: 'HEALTH_FACILITY',
-        label: formMessageDescriptors.healthInstitution
-      },
-      {
-        value: 'PRIVATE_HOME',
-        label: formMessageDescriptors.privateHome
-      },
-      {
-        value: 'OTHER',
-        label: formMessageDescriptors.otherInstitution
-      }
-    ],
+    options: placeOfBirthOptions,
     mapping: {
       mutation: {
         operation: 'birthEventLocationMutationTransformer',
@@ -86,7 +107,7 @@ export const getPlaceOfBirthFields = (): SerializedFormField[] => [
     ],
     mapping: {
       template: {
-        fieldName: 'placeOfBirth',
+        fieldName: certificateHandlebars.placeOfBirth,
         operation: 'eventLocationNameQueryOfflineTransformer',
         parameters: ['facilities', 'placeOfBirth']
       },

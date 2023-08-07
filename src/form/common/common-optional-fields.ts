@@ -10,9 +10,12 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import { MessageDescriptor } from 'react-intl'
-import { formMessageDescriptors } from './formatjs-messages'
-import { SerializedFormField, Conditional } from './types/types'
+import { formMessageDescriptors } from './messages'
+import { SerializedFormField, Conditional } from '../types/types'
 import { INFORMANT_NOTIFICATION_DELIVERY_METHOD } from '@countryconfig/api/notification/constant'
+import { Validator } from '../types/validators'
+import { maritalStatusOptions } from './select-options'
+import { certificateHandlebars } from '../birth/certificate-handlebars'
 
 export const exactDateOfBirthUnknown: SerializedFormField = {
   name: 'exactDateOfBirthUnknown',
@@ -55,6 +58,37 @@ export const exactDateOfBirthUnknown: SerializedFormField = {
     }
   }
 }
+
+export const getNationalID = (
+  fieldName: string,
+  conditionals: Conditional[],
+  validator: Validator[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: fieldName,
+    type: 'TEXT',
+    label: formMessageDescriptors.iDTypeNationalID,
+    required: false,
+    initialValue: '',
+    validator,
+    conditionals,
+    mapping: {
+      template: {
+        fieldName: certificateHandlebar,
+        operation: 'identityToFieldTransformer',
+        parameters: ['id', 'NATIONAL_ID']
+      },
+      mutation: {
+        operation: 'fieldToIdentityTransformer',
+        parameters: ['id', 'NATIONAL_ID']
+      },
+      query: {
+        operation: 'identityToFieldTransformer',
+        parameters: ['id', 'NATIONAL_ID']
+      }
+    }
+  } satisfies SerializedFormField)
 
 export const getAgeOfIndividualInYears = (
   label: MessageDescriptor,
@@ -110,56 +144,7 @@ export const getMaritalStatus = (
       expression: '!values.detailsExist'
     }
   ],
-  options: [
-    {
-      value: 'SINGLE',
-      label: {
-        defaultMessage: 'Single',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusSingle'
-      }
-    },
-    {
-      value: 'MARRIED',
-      label: {
-        defaultMessage: 'Married',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusMarried'
-      }
-    },
-    {
-      value: 'WIDOWED',
-      label: {
-        defaultMessage: 'Widowed',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusWidowed'
-      }
-    },
-    {
-      value: 'DIVORCED',
-      label: {
-        defaultMessage: 'Divorced',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusDivorced'
-      }
-    },
-    {
-      value: 'SEPARATED',
-      label: {
-        id: 'form.field.label.maritalStatusSeparated',
-        defaultMessage: 'Separated',
-        description: 'Option for form field: Marital status'
-      }
-    },
-    {
-      value: 'NOT_STATED',
-      label: {
-        defaultMessage: 'Not stated',
-        description: 'Option for form field: Marital status',
-        id: 'form.field.label.maritalStatusNotStated'
-      }
-    }
-  ]
+  options: maritalStatusOptions
 })
 
 export const registrationEmail: SerializedFormField = {
@@ -184,7 +169,7 @@ export const registrationEmail: SerializedFormField = {
       parameters: ['registration', 'contactEmail']
     },
     template: {
-      fieldName: 'contactEmail',
+      fieldName: certificateHandlebars.contactEmail,
       operation: 'plainInputTransformer'
     }
   }
@@ -225,7 +210,7 @@ export const registrationPhone: SerializedFormField = {
       ]
     },
     template: {
-      fieldName: 'contactPhoneNumber',
+      fieldName: certificateHandlebars.contactPhoneNumber,
       operation: 'selectTransformer'
     }
   }

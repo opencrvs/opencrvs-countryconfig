@@ -10,8 +10,8 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import { MessageDescriptor } from 'react-intl'
-// TODO: A quick fix to not need to think I18N yet. Creates a proxy object which always returns the key as value
-// TODO: Where possible, move all the message descriptors from core into farajaland
+// FORMATJS MESSAGE CONSTANTS FOR MULTI-LINGUAL TRANSLATION
+
 export const informantMessageDescriptors = {
   birthInformantTitle: {
     defaultMessage: 'Informant type',

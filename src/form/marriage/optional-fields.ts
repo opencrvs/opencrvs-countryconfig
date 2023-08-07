@@ -10,10 +10,14 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { formMessageDescriptors } from '../formatjs-messages'
+import { formMessageDescriptors } from '../common/messages'
+import { typeOfMarriageOptions } from '../common/select-options'
 import { SerializedFormField } from '../types/types'
+import { certificateHandlebars } from './certificate-handlebars'
 
-export const getMarriedLastName: SerializedFormField = {
+export const getMarriedLastName = (
+  certificateHandlebar: string
+): SerializedFormField => ({
   name: 'marriedLastNameEng',
   previewGroup: 'marriedLastNameInEnglish',
   type: 'TEXT',
@@ -28,7 +32,7 @@ export const getMarriedLastName: SerializedFormField = {
   ],
   mapping: {
     template: {
-      fieldName: 'marriedLastNameEng',
+      fieldName: certificateHandlebar,
       operation: 'nameToFieldTransformer',
       parameters: ['en', 'marriedLastName']
     },
@@ -41,7 +45,7 @@ export const getMarriedLastName: SerializedFormField = {
       parameters: ['en', 'marriedLastName']
     }
   }
-}
+})
 
 export const getTypeOfMarriage: SerializedFormField = {
   name: 'typeOfMarriage',
@@ -51,16 +55,7 @@ export const getTypeOfMarriage: SerializedFormField = {
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  options: [
-    {
-      value: 'MONOGAMY',
-      label: formMessageDescriptors.monogamy
-    },
-    {
-      value: 'POLYGAMY',
-      label: formMessageDescriptors.polygamy
-    }
-  ],
+  options: typeOfMarriageOptions,
   mapping: {
     mutation: {
       operation: 'sectionFieldToBundleFieldTransformer',
@@ -71,7 +66,7 @@ export const getTypeOfMarriage: SerializedFormField = {
       parameters: ['typeOfMarriage']
     },
     template: {
-      fieldName: 'typeOfMarriage',
+      fieldName: certificateHandlebars.typeOfMarriage,
       operation: 'selectTransformer'
     }
   }

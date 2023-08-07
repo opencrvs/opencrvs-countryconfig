@@ -9,8 +9,14 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { formMessageDescriptors } from '../formatjs-messages'
+import { formMessageDescriptors } from '../common/messages'
+import {
+  attendantAtBirthOptions,
+  educationalAttainmentOptions,
+  typeOfBirthOptions
+} from '../common/select-options'
 import { Conditional, SerializedFormField } from '../types/types'
+import { certificateHandlebars } from './certificate-handlebars'
 
 export const attendantAtBirth: SerializedFormField = {
   name: 'attendantAtBirth',
@@ -20,36 +26,7 @@ export const attendantAtBirth: SerializedFormField = {
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  options: [
-    {
-      value: 'PHYSICIAN',
-      label: formMessageDescriptors.physician
-    },
-    {
-      value: 'NURSE',
-      label: formMessageDescriptors.attendantAtBirthNurse
-    },
-    {
-      value: 'MIDWIFE',
-      label: formMessageDescriptors.attendantAtBirthMidwife
-    },
-    {
-      value: 'OTHER_PARAMEDICAL_PERSONNEL',
-      label: formMessageDescriptors.attendantAtBirthOtherParamedicalPersonnel
-    },
-    {
-      value: 'LAYPERSON',
-      label: formMessageDescriptors.attendantAtBirthLayperson
-    },
-    {
-      value: 'TRADITIONAL_BIRTH_ATTENDANT',
-      label: formMessageDescriptors.attendantAtBirthTraditionalBirthAttendant
-    },
-    {
-      value: 'NONE',
-      label: formMessageDescriptors.attendantAtBirthNone
-    }
-  ],
+  options: attendantAtBirthOptions,
   mapping: {
     mutation: {
       operation: 'sectionFieldToBundleFieldTransformer',
@@ -60,7 +37,7 @@ export const attendantAtBirth: SerializedFormField = {
       parameters: []
     },
     template: {
-      fieldName: 'attendantAtBirth',
+      fieldName: certificateHandlebars.attendantAtBirth,
       operation: 'selectTransformer'
     }
   }
@@ -78,28 +55,7 @@ export const birthType: SerializedFormField = {
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  options: [
-    {
-      value: 'SINGLE',
-      label: formMessageDescriptors.birthTypeSingle
-    },
-    {
-      value: 'TWIN',
-      label: formMessageDescriptors.birthTypeTwin
-    },
-    {
-      value: 'TRIPLET',
-      label: formMessageDescriptors.birthTypeTriplet
-    },
-    {
-      value: 'QUADRUPLET',
-      label: formMessageDescriptors.birthTypeQuadruplet
-    },
-    {
-      value: 'HIGHER_MULTIPLE_DELIVERY',
-      label: formMessageDescriptors.birthTypeHigherMultipleDelivery
-    }
-  ],
+  options: typeOfBirthOptions,
   mapping: {
     mutation: {
       operation: 'sectionFieldToBundleFieldTransformer',
@@ -110,7 +66,7 @@ export const birthType: SerializedFormField = {
       parameters: []
     },
     template: {
-      fieldName: 'birthType',
+      fieldName: certificateHandlebars.birthType,
       operation: 'selectTransformer'
     }
   }
@@ -139,7 +95,7 @@ export const weightAtBirth: SerializedFormField = {
       parameters: []
     },
     template: {
-      fieldName: 'weightAtBirth',
+      fieldName: certificateHandlebars.weightAtBirth,
       operation: 'plainInputTransformer'
     }
   },
@@ -198,7 +154,7 @@ export const multipleBirth: SerializedFormField = {
   ],
   mapping: {
     template: {
-      fieldName: 'multipleBirth',
+      fieldName: certificateHandlebars.multipleBirth,
       operation: 'plainInputTransformer'
     }
   }
@@ -247,40 +203,7 @@ export const getEducation = (
     }
   ],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  options: [
-    {
-      value: 'NO_SCHOOLING',
-      label: {
-        defaultMessage: 'No schooling',
-        description: 'Option for form field: no education',
-        id: 'form.field.label.educationAttainmentNone'
-      }
-    },
-    {
-      value: 'PRIMARY_ISCED_1',
-      label: {
-        defaultMessage: 'Primary',
-        description: 'Option for form field: ISCED1 education',
-        id: 'form.field.label.educationAttainmentISCED1'
-      }
-    },
-    {
-      value: 'POST_SECONDARY_ISCED_4',
-      label: {
-        defaultMessage: 'Secondary',
-        description: 'Option for form field: ISCED4 education',
-        id: 'form.field.label.educationAttainmentISCED4'
-      }
-    },
-    {
-      value: 'FIRST_STAGE_TERTIARY_ISCED_5',
-      label: {
-        defaultMessage: 'Tertiary',
-        description: 'Option for form field: ISCED5 education',
-        id: 'form.field.label.educationAttainmentISCED5'
-      }
-    }
-  ],
+  options: educationalAttainmentOptions,
   mapping: {
     template: {
       fieldName: certificateHandlebar,

@@ -204,7 +204,7 @@ This object holds sections for birth declaration forms. All sections are contain
 
   The following fields are standard address fields configured in the file **administrative/addresses.ts**. We have separate inputs for address lines. They maintain a cascading appearance by their own conditional properties. Sometimes we have a configurable primary and secondary address.
 
-  With the exception of state, district, postcodes and city, address lines map into an address lines array in a FHIR Location at the following indexes:
+  With the exception of state, district, postcodes and city, address lines map into an address **lines** array in a FHIR Location at the following indexes:
 
   - #### `country`
 

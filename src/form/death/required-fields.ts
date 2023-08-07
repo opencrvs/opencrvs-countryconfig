@@ -10,18 +10,24 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { seperatorDivider } from '../common-optional-fields'
+import { seperatorDivider } from '../common/common-optional-fields'
 import {
   formMessageDescriptors,
   informantMessageDescriptors
-} from '../formatjs-messages'
+} from '../common/messages'
+import {
+  causeOfDeathReportedOptions,
+  deathInformantTypeOptions,
+  mannerOfDeathOptions,
+  placeOfDeathOptions
+} from '../common/select-options'
 import { SerializedFormField, TEXTAREA, Conditional } from '../types/types'
+import { certificateHandlebars } from './certficate-handlebars'
 
 export const getDeathDate = (
   fieldName: string,
   conditionals: Conditional[],
-  validator: any[],
-  certificateHandlebar: string
+  validator: any[]
 ): SerializedFormField => ({
   name: fieldName, // A field with this name MUST exist
   type: 'DATE',
@@ -33,7 +39,7 @@ export const getDeathDate = (
   mapping: {
     template: {
       operation: 'deceasedDateFormatTransformation',
-      fieldName: certificateHandlebar,
+      fieldName: certificateHandlebars.eventDate,
       parameters: ['en', 'do MMMM yyyy', 'deceased']
     },
     mutation: {
@@ -73,52 +79,11 @@ export const deathInformantType: SerializedFormField = {
       parameters: ['registration', 'informantType']
     },
     template: {
-      fieldName: 'informantType',
+      fieldName: certificateHandlebars.informantType,
       operation: 'selectTransformer'
     }
   },
-  options: [
-    {
-      value: 'SPOUSE',
-      label: informantMessageDescriptors.SPOUSE
-    },
-    {
-      value: 'SON',
-      label: informantMessageDescriptors.SON
-    },
-    {
-      value: 'DAUGHTER',
-      label: informantMessageDescriptors.DAUGHTER
-    },
-    {
-      value: 'SON_IN_LAW',
-      label: informantMessageDescriptors.SON_IN_LAW
-    },
-    {
-      value: 'DAUGHTER_IN_LAW',
-      label: informantMessageDescriptors.DAUGHTER_IN_LAW
-    },
-    {
-      value: 'MOTHER',
-      label: informantMessageDescriptors.MOTHER
-    },
-    {
-      value: 'FATHER',
-      label: informantMessageDescriptors.FATHER
-    },
-    {
-      value: 'GRANDSON',
-      label: informantMessageDescriptors.GRANDSON
-    },
-    {
-      value: 'GRANDDAUGHTER',
-      label: informantMessageDescriptors.GRANDDAUGHTER
-    },
-    {
-      value: 'OTHER',
-      label: informantMessageDescriptors.OTHER
-    }
-  ]
+  options: deathInformantTypeOptions
 }
 
 export const getMannerOfDeath: SerializedFormField = {
@@ -129,28 +94,7 @@ export const getMannerOfDeath: SerializedFormField = {
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  options: [
-    {
-      value: 'NATURAL_CAUSES',
-      label: formMessageDescriptors.mannerNatural
-    },
-    {
-      value: 'ACCIDENT',
-      label: formMessageDescriptors.mannerAccident
-    },
-    {
-      value: 'SUICIDE',
-      label: formMessageDescriptors.mannerSuicide
-    },
-    {
-      value: 'HOMICIDE',
-      label: formMessageDescriptors.mannerHomicide
-    },
-    {
-      value: 'MANNER_UNDETERMINED',
-      label: formMessageDescriptors.mannerUndetermined
-    }
-  ],
+  options: mannerOfDeathOptions,
   mapping: {
     mutation: {
       operation: 'sectionFieldToBundleFieldTransformer',
@@ -161,7 +105,7 @@ export const getMannerOfDeath: SerializedFormField = {
       parameters: ['mannerOfDeath']
     },
     template: {
-      fieldName: 'mannerOfDeath',
+      fieldName: certificateHandlebars.mannerOfDeath,
       operation: 'selectTransformer'
     }
   }
@@ -187,7 +131,7 @@ export const getCauseOfDeath: SerializedFormField = {
       parameters: ['causeOfDeathEstablished']
     },
     template: {
-      fieldName: 'causeOfDeathEstablished',
+      fieldName: certificateHandlebars.causeOfDeathEstablished,
       operation: 'plainInputTransformer'
     }
   }
@@ -207,24 +151,7 @@ export const getCauseOfDeathMethod: SerializedFormField = {
       expression: 'values.causeOfDeathEstablished !== "true"'
     }
   ],
-  options: [
-    {
-      value: 'PHYSICIAN',
-      label: formMessageDescriptors.physician
-    },
-    {
-      value: 'LAY_REPORTED',
-      label: formMessageDescriptors.layReported
-    },
-    {
-      value: 'VERBAL_AUTOPSY',
-      label: formMessageDescriptors.verbalAutopsy
-    },
-    {
-      value: 'MEDICALLY_CERTIFIED',
-      label: formMessageDescriptors.medicallyCertified
-    }
-  ],
+  options: causeOfDeathReportedOptions,
   mapping: {
     mutation: {
       operation: 'sectionFieldToBundleFieldTransformer',
@@ -235,7 +162,7 @@ export const getCauseOfDeathMethod: SerializedFormField = {
       parameters: ['causeOfDeathMethod']
     },
     template: {
-      fieldName: 'causeOfDeathMethod',
+      fieldName: certificateHandlebars.causeOfDeathMethod,
       operation: 'selectTransformer'
     }
   }
@@ -266,7 +193,7 @@ export const getDeathDescription: SerializedFormField = {
       parameters: ['deathDescription']
     },
     template: {
-      fieldName: 'deathDescription',
+      fieldName: certificateHandlebars.deathDescription,
       operation: 'plainInputTransformer'
     }
   }
@@ -294,20 +221,7 @@ export const getPlaceOfDeathFields = () =>
       initialValue: '',
       validator: [],
       placeholder: formMessageDescriptors.formSelectPlaceholder,
-      options: [
-        {
-          value: 'HEALTH_FACILITY',
-          label: formMessageDescriptors.healthInstitution
-        },
-        {
-          value: 'DECEASED_USUAL_RESIDENCE',
-          label: formMessageDescriptors.placeOfDeathSameAsPrimary
-        },
-        {
-          value: 'OTHER',
-          label: formMessageDescriptors.otherInstitution
-        }
-      ],
+      options: placeOfDeathOptions,
       mapping: {
         mutation: {
           operation: 'deathEventLocationMutationTransformer',
@@ -344,7 +258,7 @@ export const getPlaceOfDeathFields = () =>
       ],
       mapping: {
         template: {
-          fieldName: 'placeOfDeath',
+          fieldName: certificateHandlebars.placeOfDeath,
           operation: 'eventLocationNameQueryOfflineTransformer',
           parameters: ['facilities', 'placeOfDeath']
         },

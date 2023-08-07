@@ -10,12 +10,9 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import {
-  formMessageDescriptors,
-  informantMessageDescriptors
-} from './formatjs-messages'
-import { SerializedFormField, Conditional, Event } from './types/types'
-import { Validator } from './types/validators'
+import { formMessageDescriptors } from './messages'
+import { SerializedFormField, Conditional, Event } from '../types/types'
+import { genderOptions } from './select-options'
 
 export const getBirthDate = (
   fieldName: string,
@@ -62,20 +59,7 @@ export const getGender = (certificateHandlebar: string) =>
         operation: 'selectTransformer'
       }
     },
-    options: [
-      {
-        value: 'male',
-        label: formMessageDescriptors.sexMale
-      },
-      {
-        value: 'female',
-        label: formMessageDescriptors.sexFemale
-      },
-      {
-        value: 'unknown',
-        label: formMessageDescriptors.sexUnknown
-      }
-    ]
+    options: genderOptions
   } satisfies SerializedFormField)
 
 export const getFamilyNameField = (
@@ -183,100 +167,6 @@ export const getNationality = (
       }
     }
   } satisfies SerializedFormField)
-
-export const getNationalID = (
-  fieldName: string,
-  conditionals: Conditional[],
-  validator: Validator[],
-  certificateHandlebar: string
-) =>
-  ({
-    name: fieldName,
-    type: 'TEXT',
-    label: formMessageDescriptors.iDTypeNationalID,
-    required: false,
-    initialValue: '',
-    validator,
-    conditionals,
-    mapping: {
-      template: {
-        fieldName: certificateHandlebar,
-        operation: 'identityToFieldTransformer',
-        parameters: ['id', 'NATIONAL_ID']
-      },
-      mutation: {
-        operation: 'fieldToIdentityTransformer',
-        parameters: ['id', 'NATIONAL_ID']
-      },
-      query: {
-        operation: 'identityToFieldTransformer',
-        parameters: ['id', 'NATIONAL_ID']
-      }
-    }
-  } satisfies SerializedFormField)
-
-export const informantType: SerializedFormField = {
-  name: 'informantType',
-  type: 'SELECT_WITH_OPTIONS',
-  label: informantMessageDescriptors.birthInformantTitle,
-  required: true,
-  hideInPreview: false,
-  initialValue: '',
-  validator: [],
-  placeholder: formMessageDescriptors.formSelectPlaceholder,
-  mapping: {
-    mutation: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'informantType']
-    },
-    query: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'informantType']
-    },
-    template: {
-      fieldName: 'informantType',
-      operation: 'selectTransformer'
-    }
-  },
-  options: [
-    {
-      value: 'MOTHER',
-      label: informantMessageDescriptors.MOTHER
-    },
-    {
-      value: 'FATHER',
-      label: informantMessageDescriptors.FATHER
-    },
-    {
-      value: 'GRANDFATHER',
-      label: informantMessageDescriptors.GRANDFATHER
-    },
-    {
-      value: 'GRANDMOTHER',
-      label: informantMessageDescriptors.GRANDMOTHER
-    },
-    {
-      value: 'BROTHER',
-      label: informantMessageDescriptors.BROTHER
-    },
-    {
-      value: 'SISTER',
-      label: informantMessageDescriptors.SISTER
-    },
-    {
-      value: 'OTHER_FAMILY_MEMBER',
-      label: informantMessageDescriptors.OTHER_FAMILY_MEMBER
-    },
-    {
-      value: 'LEGAL_GUARDIAN',
-      label: informantMessageDescriptors.LEGAL_GUARDIAN
-    },
-    {
-      value: 'OTHER',
-      label: informantMessageDescriptors.OTHER
-    }
-  ]
-}
 
 export const otherInformantType = (event: Event) =>
   ({

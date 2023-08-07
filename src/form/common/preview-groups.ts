@@ -10,12 +10,15 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { EventLocationAddressCases, AddressCases } from '../address-settings'
-import { AllowedAddressConfigurations } from '../address-utils'
-import { formMessageDescriptors } from '../formatjs-messages'
+import {
+  AddressCases,
+  AllowedAddressConfigurations,
+  EventLocationAddressCases
+} from '../addresses/address-utils'
+import { formMessageDescriptors } from './messages'
 import { IPreviewGroup } from '../types/types'
 
-// Preview groups are used to structure data nicely in Review Page UI
+// Preview groups are used to group data nicely in Review Page UI
 
 export const childNameInEnglish: IPreviewGroup = {
   id: 'childNameInEnglish',
@@ -35,6 +38,35 @@ export const informantNameInEnglish: IPreviewGroup = {
   delimiter: ' '
 }
 
+export const deceasedNameInEnglish: IPreviewGroup = {
+  id: 'deceasedNameInEnglish',
+  label: formMessageDescriptors.nameInEnglishPreviewGroup,
+  fieldToRedirect: 'familyNameEng',
+  delimiter: ' '
+}
+
+export const groomNameInEnglish: IPreviewGroup = {
+  id: 'groomNameInEnglish',
+  label: {
+    defaultMessage: 'Full name',
+    description: "Group label for groom's name in english",
+    id: 'form.preview.group.label.groom.english.name'
+  },
+  fieldToRedirect: 'familyNameEng',
+  delimiter: ' '
+}
+
+export const brideNameInEnglish: IPreviewGroup = {
+  id: 'brideNameInEnglish',
+  label: {
+    defaultMessage: 'Full name',
+    description: "Group label for bride's name in english",
+    id: 'form.preview.group.label.bride.english.name'
+  },
+  fieldToRedirect: 'familyNameEng',
+  delimiter: ' '
+}
+
 export const motherNameInEnglish: IPreviewGroup = {
   id: 'motherNameInEnglish',
   label: {
@@ -43,6 +75,28 @@ export const motherNameInEnglish: IPreviewGroup = {
     id: 'form.preview.group.label.mother.english.name'
   },
   fieldToRedirect: 'familyNameEng',
+  delimiter: ' '
+}
+
+export const witnessOneNameInEnglish: IPreviewGroup = {
+  id: 'witnessOneNameInEnglish',
+  label: {
+    defaultMessage: 'Witness One English name',
+    description: 'Label for Witness one name in english',
+    id: 'form.preview.group.label.witness.one.english.name'
+  },
+  fieldToRedirect: 'witnessOneFamilyNameEng',
+  delimiter: ' '
+}
+
+export const witnessTwoNameInEnglish: IPreviewGroup = {
+  id: 'witnessTwoNameInEnglish',
+  label: {
+    defaultMessage: 'Full name',
+    description: 'Label for Witness two name in english',
+    id: 'form.preview.group.label.witness.two.english.name'
+  },
+  fieldToRedirect: 'witnessTwoFamilyNameEng',
   delimiter: ' '
 }
 

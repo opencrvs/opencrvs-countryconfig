@@ -13,9 +13,13 @@
 import {
   formMessageDescriptors,
   informantMessageDescriptors
-} from '../formatjs-messages'
-import { marriageDocumentForWhomFhirMapping } from '../options'
+} from '../common/messages'
+import {
+  getMarriageInformantTypeOptions,
+  witnessRelationshipOptions
+} from '../common/select-options'
 import { ISelectOption, SerializedFormField, Conditional } from '../types/types'
+import { certificateHandlebars } from './certificate-handlebars'
 
 export const marriageInformantType: SerializedFormField = {
   name: 'informantType',
@@ -36,32 +40,11 @@ export const marriageInformantType: SerializedFormField = {
       parameters: ['registration', 'informantType']
     },
     template: {
-      fieldName: 'informantType',
+      fieldName: certificateHandlebars.informantType,
       operation: 'selectTransformer'
     }
   },
-  options: [
-    {
-      value: 'GROOM',
-      label: informantMessageDescriptors.GROOM
-    },
-    {
-      value: 'BRIDE',
-      label: informantMessageDescriptors.BRIDE
-    },
-    {
-      value: 'HEAD_OF_GROOM_FAMILY',
-      label: formMessageDescriptors.headOfGroomFamily
-    },
-    {
-      value: 'HEAD_OF_BRIDE_FAMILY',
-      label: formMessageDescriptors.headOfBrideFamily
-    },
-    {
-      value: 'OTHER',
-      label: informantMessageDescriptors.OTHER
-    }
-  ]
+  options: getMarriageInformantTypeOptions
 }
 
 export const getMarriageDate: SerializedFormField = {
@@ -79,7 +62,7 @@ export const getMarriageDate: SerializedFormField = {
   mapping: {
     template: {
       operation: 'marriageDateFormatTransformation',
-      fieldName: 'eventDate',
+      fieldName: certificateHandlebars.eventDate,
       parameters: ['en', 'do MMMM yyyy', ['bride', 'groom']]
     },
     mutation: {
@@ -99,55 +82,6 @@ export const getMarriageDate: SerializedFormField = {
   }
 }
 
-export const witnessName = (
-  name: string,
-  previewGroup: string,
-  certificateHandlebar: string,
-  parameters: string,
-  label: 'firstName' | 'familyName'
-): SerializedFormField => ({
-  name,
-  previewGroup,
-  type: 'TEXT',
-  label: formMessageDescriptors[label],
-  maxLength: 32,
-  required: true,
-  initialValue: '',
-  validator: [
-    {
-      operation: 'englishOnlyNameFormat'
-    }
-  ],
-  mapping: {
-    mutation: {
-      operation: 'fieldValueNestingTransformer',
-      parameters: [
-        'individual',
-        {
-          operation: 'fieldToNameTransformer',
-          parameters: ['en', parameters]
-        },
-        'name'
-      ]
-    },
-    query: {
-      operation: 'nestedValueToFieldTransformer',
-      parameters: [
-        'individual',
-        {
-          operation: 'nameToFieldTransformer',
-          parameters: ['en', parameters]
-        }
-      ]
-    },
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'nameToFieldTransformer',
-      parameters: ['en', parameters, 'informant', 'individual']
-    }
-  }
-})
-
 export const getRelationshipToSpousesForWitness: SerializedFormField = {
   name: 'relationship',
   type: 'SELECT_WITH_OPTIONS',
@@ -156,20 +90,7 @@ export const getRelationshipToSpousesForWitness: SerializedFormField = {
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  options: [
-    {
-      value: 'headOfGroomFamily',
-      label: formMessageDescriptors.headOfGroomFamily
-    },
-    {
-      value: 'headOfBrideFamily',
-      label: formMessageDescriptors.headOfBrideFamily
-    },
-    {
-      value: 'other',
-      label: formMessageDescriptors.other
-    }
-  ]
+  options: witnessRelationshipOptions
 }
 
 export const witnessRelationshipForOthers: SerializedFormField = {
@@ -188,6 +109,16 @@ export const witnessRelationshipForOthers: SerializedFormField = {
   ]
 }
 
+const marriageDocumentExtraValue = {
+  GROOM: 'GROOM',
+  BRIDE: 'BRIDE',
+  MARRIAGE_NOTICE_PROOF: 'MARRIAGE_NOTICE_PROOF',
+  INFORMANT: 'INFORMANT',
+  OTHER: 'OTHER',
+  HEAD_OF_GROOM_FAMILY: 'HEAD_OF_GROOM_FAMILY',
+  HEAD_OF_BRIDE_FAMILY: 'HEAD_OF_BRIDE_FAMILY'
+}
+
 export const getDocUploaderForMarriage = (
   name: string,
   label:
@@ -204,7 +135,7 @@ export const getDocUploaderForMarriage = (
   label: formMessageDescriptors[label],
   required: false,
   initialValue: '',
-  extraValue: marriageDocumentForWhomFhirMapping[extraValueEnum],
+  extraValue: marriageDocumentExtraValue[extraValueEnum],
   hideAsterisk: true,
   conditionals,
   validator: [],

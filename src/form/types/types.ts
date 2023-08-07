@@ -11,8 +11,8 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import { identityTypeMapper } from '../options'
-import * as labels from '../formatjs-messages'
+import { identityTypeMapper } from '../common/select-options'
+import * as labels from '../common/messages'
 import { Validator } from './validators'
 
 // TODO: only list out supported mappings in core include custom form field mappings
