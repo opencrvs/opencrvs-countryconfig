@@ -701,6 +701,7 @@
     "dashboard.dashboardTitle": "Dashboard title",
     "dashboard.leaderboardTitle": "Leaderboards title",
     "dashboard.statisticTitle": "Statistics title",
+    "duplicates.content.header": "Declaration details header of two duplicate ones",
     "duplicates.review.header": "Review page header for duplicates declarations",
     "duplicates.content.title": "Duplicates content title message",
     "duplicates.content.subtitle": "Duplicates content subtitle message",
