@@ -26,47 +26,6 @@ export const DECEASED_CODE = 'deceased-details'
 export const OPENCRVS_SPECIFICATION_URL = 'http://opencrvs.org/specs/'
 import { join } from 'path'
 
-export interface ISaltedHash {
-  hash: string
-  salt: string
-}
-
-export enum EVENT_TYPE {
-  BIRTH = 'BIRTH',
-  DEATH = 'DEATH'
-}
-
-export interface ILocation {
-  id?: string
-  name?: string
-  status?: string
-  alias?: string
-  physicalType?: string
-  jurisdictionType?: string
-  type?: string
-  partOf?: string
-}
-
-type ISupportedType =
-  | fhir.Practitioner
-  | fhir.PractitionerRole
-  | fhir.Location
-  | fhir.Patient
-  | ICSVLocation
-
-export interface ICSVLocation {
-  statisticalID: string
-  name: string
-  alias: string
-  partOf: string
-  code: string
-  physicalType: string
-}
-
-export interface IStatistic {
-  [key: string]: string
-}
-
 export interface ILocation {
   id?: string
   name?: string

@@ -1,4 +1,4 @@
-import { getInformantConditionalForMarriageDocUpload } from '../common/default-validation-conditionals-utils'
+import { getInformantConditionalForMarriageDocUpload } from '../common/default-validation-conditionals'
 import { formMessageDescriptors } from '../common/messages'
 import { ISelectOption, ISerializedFormSection } from '../types/types'
 import { certificateHandlebars } from './certificate-handlebars'

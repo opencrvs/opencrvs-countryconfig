@@ -44,11 +44,11 @@ import { Event, ISerializedForm } from '../types/types'
 import {
   exactDateOfBirthUnknownConditional,
   getNationalIDValidators
-} from '../common/default-validation-conditionals-utils'
+} from '../common/default-validation-conditionals'
 import {
   hideIfInformantBrideOrGroom,
   brideOrGroomBirthDateValidators
-} from '../common/default-validation-conditionals-utils'
+} from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import {
   brideNameInEnglish,

@@ -46,7 +46,7 @@ import {
   informantFirstNameConditionals,
   exactDateOfBirthUnknownConditional,
   isValidBirthDate
-} from '../common/default-validation-conditionals-utils'
+} from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import {
   deceasedNameInEnglish,

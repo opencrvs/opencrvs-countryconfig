@@ -10,7 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { IFormFieldValue, ValidationResult } from './types/types'
+import { IFormFieldValue, ValidationResult } from '../../types/types'
 
 export function isNumberLessThan21(value: IFormFieldValue) {
   if (Number(value) < 21) {

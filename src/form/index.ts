@@ -11,9 +11,9 @@
  */
 
 import { decorateFormsWithAddresses } from './addresses/address-utils'
-import { birthForm } from './birth/birth'
-import { deathForm } from './death/death'
-import { marriageForm } from './marriage/marriage'
+import { birthForm } from './birth'
+import { deathForm } from './death'
+import { marriageForm } from './marriage'
 import { IForms, Event } from './types/types'
 
 export async function formHandler(): Promise<IForms> {

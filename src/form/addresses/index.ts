@@ -25,7 +25,7 @@ import {
 import {
   hideIfInformantBrideOrGroom,
   informantNotMotherOrFather
-} from '../common/default-validation-conditionals-utils'
+} from '../common/default-validation-conditionals'
 import { formMessageDescriptors } from '../common/messages'
 
 // ADMIN_LEVELS must equate to the number of levels of administrative structure provided by your Humdata CSV import

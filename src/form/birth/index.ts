@@ -66,7 +66,7 @@ import {
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
   fatherNationalIDVerfication
-} from '../common/default-validation-conditionals-utils'
+} from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
   informantFirstNameConditionals,
@@ -74,7 +74,7 @@ import {
   informantBirthDateConditionals,
   exactDateOfBirthUnknownConditional,
   hideIfNidIntegrationEnabled
-} from '../common/default-validation-conditionals-utils'
+} from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
 
