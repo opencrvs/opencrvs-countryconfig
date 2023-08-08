@@ -1,10 +1,13 @@
 import { MessageDescriptor } from 'react-intl'
-import { FLEX_DIRECTION, SerializedFormField } from '../types/types'
 import {
   AddressCases,
   AddressCopyConfigCases,
   AddressSubsections,
   EventLocationAddressCases,
+  FLEX_DIRECTION,
+  SerializedFormField
+} from '../types/types'
+import {
   getAddressConditionals,
   getDependency,
   getPlaceOfEventConditionals,

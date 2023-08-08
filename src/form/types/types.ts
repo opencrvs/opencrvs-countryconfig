@@ -897,3 +897,38 @@ export interface IForms {
   death: ISerializedForm
   marriage: ISerializedForm
 }
+
+export enum AddressSubsections {
+  PRIMARY_ADDRESS_SUBSECTION = 'primaryAddress',
+  SECONDARY_ADDRESS_SUBSECTION = 'secondaryAddress'
+}
+
+export enum AddressCases {
+  PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
+  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
+}
+export enum EventLocationAddressCases {
+  PLACE_OF_BIRTH = 'placeOfBirth',
+  PLACE_OF_DEATH = 'placeOfDeath',
+  PLACE_OF_MARRIAGE = 'placeOfMarriage'
+}
+export enum AddressCopyConfigCases {
+  PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY = 'primaryAddressSameAsOtherPrimary'
+}
+
+export interface IAddressConfiguration {
+  precedingFieldId: string
+  configurations: AllowedAddressConfigurations[]
+}
+
+export type AllowedAddressConfigurations = {
+  config:
+    | AddressCases
+    | AddressSubsections
+    | AddressCopyConfigCases
+    | EventLocationAddressCases
+  label?: MessageDescriptor
+  xComparisonSection?: string
+  yComparisonSection?: string
+  conditionalCase?: string
+}

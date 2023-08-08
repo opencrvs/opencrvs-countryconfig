@@ -11,12 +11,7 @@
  */
 
 import {
-  AddressCases,
-  AddressCopyConfigCases,
-  AddressSubsections,
-  EventLocationAddressCases,
   FATHER_DETAILS_DONT_EXIST,
-  IAddressConfiguration,
   MOTHER_DETAILS_DONT_EXIST,
   fathersDetailsDontExist,
   mothersDetailsDontExistOnOtherPage,
@@ -27,6 +22,13 @@ import {
   informantNotMotherOrFather
 } from '../common/default-validation-conditionals'
 import { formMessageDescriptors } from '../common/messages'
+import {
+  AddressCases,
+  AddressCopyConfigCases,
+  AddressSubsections,
+  EventLocationAddressCases,
+  IAddressConfiguration
+} from '../types/types'
 
 // ADMIN_LEVELS must equate to the number of levels of administrative structure provided by your Humdata CSV import
 // The property is used to define how many standardised, dynamic location selects that are rendered in the address form configuration

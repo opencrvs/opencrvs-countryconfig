@@ -48,8 +48,8 @@ import { certificateHandler } from './data-seeding/certificates/handler'
 import { rolesHandler } from './data-seeding/roles/handler'
 import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
-import { validatorsHandler } from './form/common/custom-conditionals-validations/validators-handler'
-import { conditionalsHandler } from './form/common/custom-conditionals-validations/conditionals-handler'
+import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
+import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
 import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/apllication-config-default'
 
 export interface ITokenPayload {

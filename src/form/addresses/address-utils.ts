@@ -17,7 +17,13 @@ import {
   SerializedFormField,
   Event,
   Conditional,
-  IPreviewGroup
+  IPreviewGroup,
+  EventLocationAddressCases,
+  AddressCases,
+  AllowedAddressConfigurations,
+  AddressSubsections,
+  AddressCopyConfigCases,
+  IAddressConfiguration
 } from '../types/types'
 import {
   getAddressFields,
@@ -26,15 +32,6 @@ import {
 } from './address-fields'
 import { getPreviewGroups } from '../common/preview-groups'
 import { cloneDeep } from 'lodash'
-
-export enum AddressCopyConfigCases {
-  PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY = 'primaryAddressSameAsOtherPrimary'
-}
-
-export enum AddressSubsections {
-  PRIMARY_ADDRESS_SUBSECTION = 'primaryAddress',
-  SECONDARY_ADDRESS_SUBSECTION = 'secondaryAddress'
-}
 
 export const FATHER_DETAILS_DONT_EXIST =
   '(draftData?.father && !draftData?.father.detailsExist) || !values.detailsExist'
@@ -51,34 +48,6 @@ export const fathersDetailsDontExist = '!values.detailsExist'
 // primary address same as other primary
 export const primaryAddressSameAsOtherPrimaryAddress =
   'values.primaryAddressSameAsOtherPrimary'
-
-export enum EventLocationAddressCases {
-  PLACE_OF_BIRTH = 'placeOfBirth',
-  PLACE_OF_DEATH = 'placeOfDeath',
-  PLACE_OF_MARRIAGE = 'placeOfMarriage'
-}
-
-export enum AddressCases {
-  PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
-  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
-}
-
-export interface IAddressConfiguration {
-  precedingFieldId: string
-  configurations: AllowedAddressConfigurations[]
-}
-
-export type AllowedAddressConfigurations = {
-  config:
-    | AddressCases
-    | AddressSubsections
-    | AddressCopyConfigCases
-    | EventLocationAddressCases
-  label?: MessageDescriptor
-  xComparisonSection?: string
-  yComparisonSection?: string
-  conditionalCase?: string
-}
 
 export function getPlaceOfEventConditionals(
   location: string,
