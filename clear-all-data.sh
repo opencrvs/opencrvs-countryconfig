@@ -59,3 +59,8 @@ if [ -d $PATH_TO_MINIO_DIR ] ; then
   docker exec opencrvs_minio_1 mkdir -p /data/minio/ocrvs
   echo "**** Removed minio data ****"
 fi
+
+echo "Running migrations"
+echo
+
+yarn --cwd="$path_to_core/packages/migration" start
