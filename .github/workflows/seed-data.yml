@@ -55,3 +55,4 @@ jobs:
           GATEWAY_GQL_HOST: ${{ secrets.GATEWAY_GQL_HOST }}
           AUTH_URL: ${{ secrets.AUTH_API_HOST }}
           COUNTRY_CONFIG_URL: ${{ secrets.COUNTRY_CONFIG_HOST }}
+          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}

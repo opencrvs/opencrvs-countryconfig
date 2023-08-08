@@ -163,6 +163,11 @@ if [ -z "$MONGODB_ADMIN_PASSWORD" ] ; then
     print_usage_and_exit
 fi
 
+if [ -z "$SUPER_USER_PASSWORD" ] ; then
+    echo 'Error: Missing environment variable SUPER_USER_PASSWORD.'
+    print_usage_and_exit
+fi
+
 if [ -z "$DOCKERHUB_ACCOUNT" ] ; then
     echo 'Error: Missing environment variable DOCKERHUB_ACCOUNT.'
     print_usage_and_exit
