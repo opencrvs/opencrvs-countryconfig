@@ -77,6 +77,7 @@ import {
 } from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
+// import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
 
@@ -88,7 +89,7 @@ import { certificateHandlebars } from './certificate-handlebars'
 
 // OPTIONAL FIELDS CAN BE REMOVED IF NOT REQUIRED
 
-// DUPLICATE & FOLLOW THE INSTRUCTIONS IN THE createCustomField FUNCTION WHEN REQUIRED FOR ADDING NEW FIELDS
+// DUPLICATE & FOLLOW THE INSTRUCTIONS IN THE createCustomFieldExample FUNCTION WHEN REQUIRED FOR ADDING NEW CUSTOM FIELDS
 
 export const birthForm: ISerializedForm = {
   sections: [
@@ -117,7 +118,6 @@ export const birthForm: ISerializedForm = {
             }
           ],
           fields: [
-            // COMMENT IN AND DUPLICATE TO CREATE A CUSTOM FIELD: createCustomField(),
             {
               name: 'list',
               type: 'BULLET_LIST',
@@ -167,6 +167,8 @@ export const birthForm: ISerializedForm = {
         {
           id: 'child-view-group',
           fields: [
+            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
+            // createCustomFieldExample(),
             getFirstNameField(
               'childNameInEnglish',
               [],

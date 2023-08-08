@@ -33,22 +33,6 @@ import {
 import { getPreviewGroups } from '../common/preview-groups'
 import { cloneDeep } from 'lodash'
 
-export const FATHER_DETAILS_DONT_EXIST =
-  '(draftData?.father && !draftData?.father.detailsExist) || !values.detailsExist'
-export const MOTHER_DETAILS_DONT_EXIST =
-  '(draftData?.mother && !draftData?.mother.detailsExist) || !values.detailsExist'
-
-// if mothers details do not exist on other page
-export const mothersDetailsDontExistOnOtherPage =
-  'draftData && draftData.mother && !draftData.mother.detailsExist'
-
-// if fathers details do not exist
-export const fathersDetailsDontExist = '!values.detailsExist'
-
-// primary address same as other primary
-export const primaryAddressSameAsOtherPrimaryAddress =
-  'values.primaryAddressSameAsOtherPrimary'
-
 export function getPlaceOfEventConditionals(
   location: string,
   configCase: EventLocationAddressCases

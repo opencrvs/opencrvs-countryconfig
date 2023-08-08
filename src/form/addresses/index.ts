@@ -14,12 +14,10 @@ import {
   FATHER_DETAILS_DONT_EXIST,
   MOTHER_DETAILS_DONT_EXIST,
   fathersDetailsDontExist,
+  hideIfInformantBrideOrGroom,
+  informantNotMotherOrFather,
   mothersDetailsDontExistOnOtherPage,
   primaryAddressSameAsOtherPrimaryAddress
-} from './address-utils'
-import {
-  hideIfInformantBrideOrGroom,
-  informantNotMotherOrFather
 } from '../common/default-validation-conditionals'
 import { formMessageDescriptors } from '../common/messages'
 import {
