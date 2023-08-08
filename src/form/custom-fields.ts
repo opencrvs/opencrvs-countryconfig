@@ -16,11 +16,13 @@ import { SerializedFormField } from './types/types'
 // ======================= CUSTOM FIELD CONFIGURATION =======================
 
 // A CUSTOM FIELD CAN BE ADDED TO APPEAR IN ANY SECTION
+// DUPLICATE AND RENAME FUNCTIONS LIKE THESE IN ORDER TO USE SIMILAR FIELDS
 
 export function createCustomFieldExample(): SerializedFormField {
   // THE fieldId STRING IS A DOT SEPARATED STRING AND IS IMPORTANT TO SET CORRECTLY
   // THE FORMAT IS event.sectionId.groupId.uniqueFieldName
   const fieldId: string = 'birth.child.child-view-group.favouriteColor'
+
   // THE HANDLEBAR IS CREATED BY THIS FUNCTION IN ORDER TO USE THE VALUE ON A CERTIFICATE
   const customFieldCertificateHandlebar =
     createCustomFieldHandlebarName(fieldId)
@@ -28,6 +30,7 @@ export function createCustomFieldExample(): SerializedFormField {
     'Custom field addded with handlebar: ',
     customFieldCertificateHandlebar
   ) // WILL RESOLVE TO "{{birthChildFavouriteColor}}"
+
   return {
     name: 'favoriteColor',
     customQuesstionMappingId: fieldId,

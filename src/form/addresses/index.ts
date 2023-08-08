@@ -28,27 +28,27 @@ import {
   IAddressConfiguration
 } from '../types/types'
 
-// ADMIN_LEVELS must equate to the number of levels of administrative structure provided by your Humdata CSV import
-// The property is used to define how many standardised, dynamic location selects that are rendered in the address form configuration
-// For example, in our example country: Farajaland, we have 2 main administrative levels: State and District.
-// Therefore our ADMIN_LEVELS property is 2.
-// You can set up to 5 supported administrative levels.
+// ADMIN_LEVELS MUST EQUATE TO THE NUMBER OF LEVELS OF ADMINISTRATIVE STRUCTURE PROVIDED BY YOUR HUMDATA CSV IMPORT
+// THE PROPERTY IS USED TO DEFINE HOW MANY STANDARDISED, DYNAMIC LOCATION SELECTS THAT ARE RENDERED IN THE ADDRESS FORM CONFIGURATION
+// FOR EXAMPLE, IN OUR EXAMPLE COUNTRY: FARAJALAND, WE HAVE 2 MAIN ADMINISTRATIVE LEVELS: STATE AND DISTRICT.
+// THEREFORE OUR ADMIN_LEVELS PROPERTY IS 2.
+// YOU CAN SET UP TO 5 SUPPORTED ADMINISTRATIVE LEVELS.
 
 export const ADMIN_LEVELS: Number = 2
 
-// Addresses take up a lot of repeated code in the forms, making the birth.ts, marriage.ts and death.ts files long and difficult to read
-// Therefore we decorate the addresses dynamically to sections of the form using this configuration constant
-// Its possible to show and hide address fields for individuals using conditionals.
+// ADDRESSES TAKE UP A LOT OF REPEATED CODE IN THE FORMS, MAKING THE BIRTH.TS, MARRIAGE.TS AND DEATH.TS FILES LONG AND DIFFICULT TO READ
+// THEREFORE WE DECORATE THE ADDRESSES DYNAMICALLY TO SECTIONS OF THE FORM USING THIS CONFIGURATION CONSTANT
+// ITS POSSIBLE TO SHOW AND HIDE ADDRESS FIELDS FOR INDIVIDUALS USING CONDITIONALS.
 
 export const defaultAddressConfiguration: IAddressConfiguration[] = [
   {
     // ====================== NOTE REGARDING IAddressConfiguration ======================
 
-    // The "precedingFieldId" property identifies after which field in vertical order the address field configuration will display
-    // It is a dot separated string relating to: event.section.group.name
+    // THE "precedingFieldId" PROPERTY IDENTIFIES AFTER WHICH FIELD IN VERTICAL ORDER THE ADDRESS FIELD CONFIGURATION WILL DISPLAY
+    // IT IS A DOT SEPARATED STRING RELATING TO: EVENT.SECTION.GROUP.NAME
 
-    // The "configurations" array lists the available fieldset configurations that will render
-    // Options are the full place of event fields, standard address fields, address subsection dividers, or radio buttons to simplify form entry
+    // THE "configurations" ARRAY LISTS THE AVAILABLE FIELDSET CONFIGURATIONS THAT WILL RENDER
+    // OPTIONS ARE THE FULL PLACE OF EVENT FIELDS, STANDARD ADDRESS FIELDS, ADDRESS SUBSECTION DIVIDERS, OR RADIO BUTTONS TO SIMPLIFY FORM ENTRY
 
     precedingFieldId: 'birth.child.child-view-group.birthLocation',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_BIRTH }]
@@ -68,10 +68,10 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       }
       // ====================== NOTE REGARDING SECONDARY ADDRESS ======================
 
-      // Its possible to add 2 addresses per individual: PRIMARY_ADDRESS & SECONDARY_ADDRESS
-      // This is a requirement in countries where individuals have 2 official addresses
-      // This is often the case where migrant worker populations are considerable.
-      // Comment in the SECONDARY_ADDRESS_SUBSECTION & SECONDARY_ADDRESS code in each configuration to reveal this
+      // ITS POSSIBLE TO ADD 2 ADDRESSES PER INDIVIDUAL: PRIMARY_ADDRESS & SECONDARY_ADDRESS
+      // THIS IS A REQUIREMENT IN COUNTRIES WHERE INDIVIDUALS HAVE 2 OFFICIAL ADDRESSES
+      // THIS IS OFTEN THE CASE WHERE MIGRANT WORKER POPULATIONS ARE CONSIDERABLE.
+      // COMMENT IN THE SECONDARY_ADDRESS_SUBSECTION & SECONDARY_ADDRESS CODE IN EACH CONFIGURATION TO REVEAL THIS
 
       /*,{
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
