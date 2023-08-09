@@ -24,8 +24,8 @@ on:
         required: true
         default: 'no'
         options:
-          - yes
-          - no
+          - 'yes'
+          - 'no'
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
