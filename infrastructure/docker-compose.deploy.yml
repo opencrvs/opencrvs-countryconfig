@@ -355,6 +355,9 @@ services:
     command: logstash -f /etc/logstash/logstash.conf --verbose
     depends_on:
       - elasticsearch
+    ports:
+      - '12201:12201'
+      - '12201:12201/udp'
     configs:
       - source: logstash-pipeline.{{ts}}
         target: /etc/logstash/logstash.conf
