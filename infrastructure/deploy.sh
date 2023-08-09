@@ -473,7 +473,7 @@ else
 fi
 
 # Deploy the OpenCRVS stack onto the swarm
-if [[ "$ENV" = "development" ]]; then
+if [[ "$ENV" = "staging" ]]; then
   ENVIRONMENT_COMPOSE="docker-compose.countryconfig.staging-deploy.yml docker-compose.staging-deploy.yml"
   FILES_TO_ROTATE="${FILES_TO_ROTATE} /opt/opencrvs/docker-compose.countryconfig.staging-deploy.yml /opt/opencrvs/docker-compose.staging-deploy.yml"
 elif [[ "$ENV" = "qa" ]]; then
