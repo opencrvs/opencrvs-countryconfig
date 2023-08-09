@@ -511,7 +511,7 @@ if [ $CLEAR_DATA == "yes" ] ; then
         ELASTICSEARCH_ADMIN_PASSWORD=$ELASTICSEARCH_SUPERUSER_PASSWORD \
         MONGODB_ADMIN_USER=$MONGODB_ADMIN_USER \
         MONGODB_ADMIN_PASSWORD=$MONGODB_ADMIN_PASSWORD \
-        /opt/opencrvs/infrastructure/clear-all-data.sh $REPLICAS $ENV"
+        /opt/opencrvs/infrastructure/clear-all-data.sh $REPLICAS"
 
     echo
     echo "Running migrations..."
