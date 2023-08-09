@@ -13,50 +13,80 @@ require('app-module-path').addPath(require('path').join(__dirname))
 
 import fetch from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
-import getPlugins from '@countryconfig/config/plugins'
-import * as usrMgntDB from '@countryconfig/database'
+import * as Pino from 'hapi-pino'
+import * as JWT from 'hapi-auth-jwt2'
+import * as inert from '@hapi/inert'
+import * as Sentry from 'hapi-sentry'
+import { SENTRY_DSN } from '@countryconfig/constants'
 import {
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
-  COUNTRY_WIDE_CRUDE_DEATH_RATE,
   HOSTNAME,
   DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
-import { statisticsHandler } from '@countryconfig/features/administrative/handler'
-import { contentHandler } from '@countryconfig/features/content/handler'
+import { statisticsHandler } from '@countryconfig/api/data-generator/handler'
 import {
-  generatorHandler,
-  requestSchema as generatorRequestSchema,
-  responseSchema as generatorResponseSchema
-} from '@countryconfig/features/generateRegistrationNumber/handler'
-import { validateRegistrationHandler } from '@countryconfig/features/validate/handler'
+  contentHandler,
+  countryLogoHandler
+} from '@countryconfig/api/content/handler'
+import { eventRegistrationHandler } from '@countryconfig/api/event-registration/handler'
 import * as decode from 'jwt-decode'
 import { join } from 'path'
 import { logger } from '@countryconfig/logger'
 import {
   notificationHandler,
   notificationScheme
-} from './features/notification/handler'
-import { mosipMediatorHandler } from '@countryconfig/features/mediators/mosip-openhim-mediator/handler'
+} from './api/notification/handler'
+import { mosipMediatorHandler } from '@countryconfig/api/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
-import { mapGeojsonHandler } from '@countryconfig/features/map/handler'
-import { formHandler } from '@countryconfig/features/config/form'
-import { countryLogoHandler } from '@countryconfig/features/countryLogo/handler'
-import { locationsHandler } from './features/locations/handler'
-import { certificateHandler } from './features/certificates/handler'
-import { rolesHandler } from './features/roles/handler'
-import { usersHandler } from './features/employees/handler'
-import { applicationConfigHandler } from './features/config/application/handler'
-import { validatorsHandler } from './features/config/form/validators-handler'
-import { conditionalsHandler } from './features/config/form/conditionals-handler'
+import { mapGeojsonHandler } from '@countryconfig/api/dashboard-map/handler'
+import { formHandler } from '@countryconfig/form'
+import { locationsHandler } from './data-seeding/locations/handler'
+import { certificateHandler } from './data-seeding/certificates/handler'
+import { rolesHandler } from './data-seeding/roles/handler'
+import { usersHandler } from './data-seeding/employees/handler'
+import { applicationConfigHandler } from './api/application/handler'
+import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
+import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
+import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/apllication-config-default'
 
 export interface ITokenPayload {
   sub: string
   exp: string
   algorithm: string
   scope: string[]
+}
+
+export default function getPlugins() {
+  const plugins: any[] = [
+    inert,
+    JWT,
+    {
+      plugin: Pino,
+      options: {
+        prettyPrint: false,
+        logPayload: false,
+        instance: logger
+      }
+    }
+  ]
+
+  if (SENTRY_DSN) {
+    plugins.push({
+      plugin: Sentry,
+      options: {
+        client: {
+          environment: process.env.NODE_ENV,
+          dsn: SENTRY_DSN
+        },
+        catchLogErrors: true
+      }
+    })
+  }
+
+  return plugins
 }
 
 const getTokenPayload = (token: string): ITokenPayload => {
@@ -222,8 +252,8 @@ export async function createServer() {
     handler: async (request, h) => {
       const file =
         process.env.NODE_ENV === 'production'
-          ? '/client-configs/client-config.prod.js'
-          : '/client-configs/client-config.js'
+          ? '/client-config.prod.js'
+          : '/client-config.js'
 
       return h.file(join(__dirname, file))
     },
@@ -240,8 +270,8 @@ export async function createServer() {
     handler: (request, h) => {
       const file =
         process.env.NODE_ENV === 'production'
-          ? '/client-configs/login-config.prod.js'
-          : '/client-configs/login-config.js'
+          ? '/login-config.prod.js'
+          : '/login-config.js'
       return h.file(join(__dirname, file))
     },
     options: {
@@ -318,29 +348,12 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/validate/registration',
-    handler: validateRegistrationHandler,
+    path: '/event-registration',
+    handler: eventRegistrationHandler,
     options: {
       tags: ['api'],
       description:
-        'Validates a registration and if successful returns a BRN for that record'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/generate/{type}',
-    handler: generatorHandler,
-    options: {
-      tags: ['api'],
-      validate: {
-        payload: generatorRequestSchema
-      },
-      response: {
-        schema: generatorResponseSchema
-      },
-      description:
-        'Generates registration numbers based on country specific implementation logic'
+        'Opportunity for sychrounous integrations with 3rd party systems as a final step in event registration. If successful returns identifiers for that event.'
     }
   })
 
@@ -455,13 +468,11 @@ export async function createServer() {
 
   async function stop() {
     await server.stop()
-    await usrMgntDB.disconnect()
     server.log('info', 'server stopped')
   }
 
   async function start() {
     await server.start()
-    await usrMgntDB.connect()
     server.log(
       'info',
       `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
