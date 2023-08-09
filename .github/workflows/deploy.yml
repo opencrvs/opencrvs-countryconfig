@@ -19,6 +19,7 @@ on:
         description: Your Country Config DockerHub image tag
         required: true
       clear-data:
+        type: choice
         description: Whether to clear the environment
         required: true
         default: 'no'
