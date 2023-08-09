@@ -100,6 +100,7 @@ jobs:
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
           EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=no --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
