@@ -1,5 +1,5 @@
 name: Deploy(development)
-run-name: Deploy to ${{ github.event.inputs.environment }} with clear-data=${{ github.event.inputs.clear-data }} core=${{ github.event.inputs.core-image-tag }} country config=${{ github.event.inputs.countryconfig-image-tag }}
+run-name: Deploy to ${{ github.event.inputs.environment }} with reset=${{ github.event.inputs.reset }} core=${{ github.event.inputs.core-image-tag }} country config=${{ github.event.inputs.countryconfig-image-tag }}
 on:
   workflow_dispatch:
     inputs:
@@ -18,9 +18,9 @@ on:
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
-      clear-data:
+      reset:
         type: choice
-        description: Whether to clear the environment
+        description: Whether to reset the environment
         required: true
         default: 'no'
         options:
@@ -91,6 +91,7 @@ jobs:
   
 
       - name: Deploy to ${{ github.event.inputs.environment }}
+        id: deploy
         env:
           DOMAIN: ${{ vars.DOMAIN }}
           REPLICAS: ${{ vars.REPLICAS }}
@@ -112,4 +113,11 @@ jobs:
           SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
         run: |
           cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=${{ github.event.inputs.clear-data }} --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+          yarn deploy --clear_data=${{ github.event.inputs.reset }} --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+      - name: Seed data
+        if: ${{ github.event.inputs.reset == 'yes' && steps.deploy.outcome == 'success' }}
+        uses: ./.github/workflows/seed-data.yml
+        with:
+          environment: ${{ github.event.inputs.environment }}
+          core-image-tag: ${{ env.CORE_VERSION }}
+        secrets: inherit

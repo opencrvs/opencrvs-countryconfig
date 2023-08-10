@@ -1,6 +1,14 @@
 name: Seed data
 run-name: Seed data to ${{ github.event.inputs.environment }} core=${{ github.event.inputs.core-image-tag }}
 on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      core-image-tag:
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       environment:
