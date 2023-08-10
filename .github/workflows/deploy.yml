@@ -13,7 +13,7 @@ on:
           - qa
       core-image-tag:
         description: Core DockerHub image tag
-        required: false
+        required: true
         default: 'v1.2.0'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
@@ -30,6 +30,8 @@ jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
+    outputs:
+      outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
     strategy:
       matrix:
@@ -47,20 +49,16 @@ jobs:
           fetch-depth: 0
           path: './${{ github.event.repository.name }}'
 
-      - name: Set COUNTRY_CONFIG_VERSION from inputs
-        if: ${{ github.event.inputs.countryconfig-image-tag }}
+      - name: Checkout country githash
         run: |
           cd ${{ github.event.repository.name }}
-          echo "COUNTRY_CONFIG_VERSION=${{ github.event.inputs.countryconfig-image-tag }}" >> $GITHUB_ENV
           git checkout ${{ github.event.inputs.countryconfig-image-tag }}
           cd ../
 
-      - name: Set CORE_VERSION from inputs
-        if: ${{ github.event.inputs.core-image-tag }}
+      - name: Checkout core githash
         run: |
           cd opencrvs-core
           git checkout ${{ github.event.inputs.core-image-tag }}
-          echo "CORE_VERSION=${{ github.event.inputs.core-image-tag }}" >> $GITHUB_ENV
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
@@ -113,11 +111,12 @@ jobs:
           SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
         run: |
           cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=${{ github.event.inputs.reset }} --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
-      - name: Seed data
-        if: ${{ github.event.inputs.reset == 'yes' && steps.deploy.outcome == 'success' }}
-        uses: ./.github/workflows/seed-data.yml
-        with:
-          environment: ${{ github.event.inputs.environment }}
-          core-image-tag: ${{ env.CORE_VERSION }}
-        secrets: inherit
+          yarn deploy --clear_data=${{ github.event.inputs.reset }} --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{ github.event.inputs.core-image-tag }} --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+  seed-data:
+    needs: deploy
+    if: ${{ github.event.inputs.reset == 'yes' && needs.deploy.outputs.outcome == 'success' }}
+    uses: ./.github/workflows/seed-data.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      core-image-tag: ${{ github.event.inputs.core-image-tag }}
+    secrets: inherit
