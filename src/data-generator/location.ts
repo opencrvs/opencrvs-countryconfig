@@ -1,4 +1,4 @@
-import { ILocation } from '@countryconfig/features/utils'
+import { ILocation } from '@countryconfig/utils'
 import fetch from 'node-fetch'
 import { GATEWAY_API_HOST } from './constants'
 
