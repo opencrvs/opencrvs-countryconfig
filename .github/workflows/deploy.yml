@@ -49,13 +49,13 @@ jobs:
           fetch-depth: 0
           path: './${{ github.event.repository.name }}'
 
-      - name: Checkout country githash
+      - name: Checkout country branch
         run: |
           cd ${{ github.event.repository.name }}
           git checkout ${{ github.event.inputs.countryconfig-image-tag }}
           cd ../
 
-      - name: Checkout core githash
+      - name: Checkout core branch
         run: |
           cd opencrvs-core
           git checkout ${{ github.event.inputs.core-image-tag }}
