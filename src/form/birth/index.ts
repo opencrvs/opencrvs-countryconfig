@@ -187,7 +187,7 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.eventDate
             ), // Required field.
             ...getPlaceOfBirthFields(), // Required fields.
-            seperatorDivider,
+            seperatorDivider('place-of-birth-seperator'),
             attendantAtBirth,
             birthType,
             weightAtBirth
@@ -322,7 +322,7 @@ export const birthForm: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(motherNationalIDVerfication),
               []
             ),
-            seperatorDivider,
+            seperatorDivider('mother-nid-seperator'),
             getMaritalStatus(certificateHandlebars.motherMaritalStatus),
             multipleBirth,
             getOccupation(certificateHandlebars.motherOccupation),
@@ -395,7 +395,7 @@ export const birthForm: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(fatherNationalIDVerfication),
               []
             ),
-            seperatorDivider,
+            seperatorDivider('father-nid-seperator'),
             getMaritalStatus(certificateHandlebars.fatherMaritalStatus),
             getOccupation(certificateHandlebars.fatherOccupation),
             getEducation(certificateHandlebars.fatherEducationalAttainment)

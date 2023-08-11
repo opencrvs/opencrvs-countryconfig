@@ -245,7 +245,7 @@ export const deathForm = {
               getNationalIDValidators('informant'),
               certificateHandlebars.informantNID
             ),
-            seperatorDivider,
+            seperatorDivider('place-of-death'),
             registrationPhone,
             registrationEmail
           ],
