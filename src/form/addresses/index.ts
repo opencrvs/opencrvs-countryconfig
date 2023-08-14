@@ -186,7 +186,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
-    precedingFieldId: 'marriage.marriageEvent.marriage-event-details.seperator',
+    precedingFieldId:
+      'marriage.marriageEvent.marriage-event-details.place-of-marriage-seperator',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_MARRIAGE }]
   },
   {

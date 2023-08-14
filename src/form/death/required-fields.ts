@@ -210,7 +210,7 @@ export const getPlaceOfDeathFields = () =>
       initialValue: '',
       validator: []
     },
-    seperatorDivider,
+    seperatorDivider('place-of-death-seperator'),
     {
       name: 'placeOfDeath',
       type: 'SELECT_WITH_OPTIONS',

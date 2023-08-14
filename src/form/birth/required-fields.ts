@@ -59,7 +59,7 @@ export const getPlaceOfBirthFields = (): SerializedFormField[] => [
     initialValue: '',
     validator: []
   },
-  seperatorDivider,
+  seperatorDivider('place-of-birth'),
   {
     name: 'placeOfBirth',
     type: 'SELECT_WITH_OPTIONS',

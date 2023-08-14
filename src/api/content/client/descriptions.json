@@ -954,6 +954,7 @@
     "recordAudit.placeOfBirth": "Label for place of birth",
     "recordAudit.placeOfDeath": "Label for place of death",
     "recordAudit.placeOfMarriage": "Label for place of marriage",
+    "recordAudit.rn": "Label for Birth Registration Number",
     "recordAudit.registrationNo": "Label for Event Registration Number",
     "recordAudit.noStatus": "Label for status not available",
     "recordAudit.noName": "Label for name not available",
