@@ -273,14 +273,7 @@ echo
 echo "Deploying COUNTRY_CONFIG_VERSION $COUNTRY_CONFIG_VERSION to $SSH_HOST..."
 echo
 
-mkdir -p /tmp/opencrvs/infrastructure/default_backups
 mkdir -p /tmp/opencrvs/infrastructure/cryptfs
-
-# Copy selected country default backups to infrastructure default_backups folder
-cp $BASEDIR/../backups/hearth-dev.gz /tmp/opencrvs/infrastructure/default_backups/hearth-dev.gz
-cp $BASEDIR/../backups/openhim-dev.gz /tmp/opencrvs/infrastructure/default_backups/openhim-dev.gz
-cp $BASEDIR/../backups/user-mgnt.gz /tmp/opencrvs/infrastructure/default_backups/user-mgnt.gz
-cp $BASEDIR/../backups/application-config.gz /tmp/opencrvs/infrastructure/default_backups/application-config.gz
 
 # Copy decrypt script
 cp $BASEDIR/decrypt.sh /tmp/opencrvs/infrastructure/cryptfs/decrypt.sh

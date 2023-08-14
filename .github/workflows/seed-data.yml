@@ -49,7 +49,11 @@ jobs:
           max_attempts: 3
           command: |
             cd ./opencrvs-core
-            yarn seed
+            if [[ ${{ github.event.inputs.environment }} == 'production' ]]; then
+                yarn seed:prod
+            else
+                yarn seed:dev
+            fi
         env:
           GATEWAY_URL: ${{ secrets.GATEWAY_HOST }}
           GATEWAY_GQL_HOST: ${{ secrets.GATEWAY_GQL_HOST }}
