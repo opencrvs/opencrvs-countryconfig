@@ -605,7 +605,6 @@ export interface IFormSectionGroup {
   conditionals?: Conditional[]
   error?: MessageDescriptor
   preventContinueIfError?: boolean
-  showExitButtonOnly?: boolean
 }
 
 export type IFormFieldMutationMapFunction = (

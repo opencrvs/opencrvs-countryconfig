@@ -78,7 +78,6 @@ export const marriageForm: ISerializedForm = {
           id: 'who-is-applying-view-group',
           title: informantMessageDescriptors.marriageInformantTitle,
           conditionals: [],
-          showExitButtonOnly: true,
           fields: [
             marriageInformantType,
             otherInformantType(Event.Marriage), // Required field
