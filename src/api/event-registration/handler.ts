@@ -22,7 +22,7 @@ export async function eventRegistrationHandler(
 ) {
   // This synchronous API exists as it is the final step before legal registration of an event.
 
-  // Some countries desire to create multiple identifiers for citizens at the point of registration using external systems.
+  // Some countries desire to create multiple identifiers for citizens at the point of birth registration using external systems.
   // Some countries wish to integrate with another legacy system just before registration.  A synchronous 3rd party system can be integrated at this point.
   // Some countries wish to customise the registration number format.  The registration number can be created at this point.
 
@@ -33,13 +33,12 @@ export async function eventRegistrationHandler(
   try {
     const bundle = request.payload as fhir.Bundle
 
-    const webHookResponse = await createUniqueRegistrationNumberFromBundle(
-      bundle
-    )
+    const eventRegistrationIdentifiersResponse =
+      await createUniqueRegistrationNumberFromBundle(bundle)
 
     fetch(CONFIRM_REGISTRATION_URL, {
       method: 'POST',
-      body: JSON.stringify(webHookResponse),
+      body: JSON.stringify(eventRegistrationIdentifiersResponse),
       headers: request.headers
     })
   } catch (err) {
