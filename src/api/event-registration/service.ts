@@ -39,6 +39,24 @@ export async function createUniqueRegistrationNumberFromBundle(
 
   return {
     trackingId,
-    registrationNumber: generateRegistrationNumber(trackingId)
+    registrationNumber: generateRegistrationNumber(trackingId),
+    ...(taskResource.code?.coding?.[0].code === 'BIRTH' && {
+      // Some countries desire to create multiple identifiers for citizens at the point of birth registration using external systems.
+      // OpenCRVS supports up to 3 additional, custom identifiers that can be created
+      childIdentifiers: [
+        {
+          type: 'BIRTH_CONFIGURABLE_IDENTIFIER_1',
+          value: ''
+        },
+        {
+          type: 'BIRTH_CONFIGURABLE_IDENTIFIER_2',
+          value: ''
+        },
+        {
+          type: 'BIRTH_CONFIGURABLE_IDENTIFIER_3',
+          value: ''
+        }
+      ]
+    })
   }
 }

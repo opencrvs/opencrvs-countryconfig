@@ -50,7 +50,7 @@ import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
 import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
 import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
-import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/apllication-config-default'
+import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config-default'
 
 export interface ITokenPayload {
   sub: string

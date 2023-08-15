@@ -8,7 +8,9 @@ export async function conditionalsHandler(
 ) {
   return h
     .response(
-      await buildTypeScriptToJavaScript(join(__dirname, 'conditionals.ts'))
+      await buildTypeScriptToJavaScript(
+        join(__dirname, 'custom-conditionals.ts')
+      )
     )
     .type('text/javascript')
 }

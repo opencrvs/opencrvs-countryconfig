@@ -163,6 +163,45 @@ export const birthForm: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.childTab,
       title: formMessageDescriptors.childTitle,
+      mapping: {
+        template: [
+          {
+            fieldName: 'birthConfigurableIdentifier1',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_1']]
+          },
+          {
+            fieldName: 'birthConfigurableIdentifier2',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_2']]
+          },
+          {
+            fieldName: 'birthConfigurableIdentifier3',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_3']]
+          }
+        ],
+        mutation: {
+          operation: 'childFieldToIdentityTransformer',
+          parameters: [
+            [
+              'BIRTH_CONFIGURABLE_IDENTIFIER_1',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_2',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_3'
+            ]
+          ]
+        },
+        query: {
+          operation: 'childIdentityToFieldTransformer',
+          parameters: [
+            [
+              'BIRTH_CONFIGURABLE_IDENTIFIER_1',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_2',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_3'
+            ]
+          ]
+        }
+      }, // These mappings support configurable identifiers in
       groups: [
         {
           id: 'child-view-group',
@@ -187,7 +226,7 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.eventDate
             ), // Required field.
             ...getPlaceOfBirthFields(), // Required fields.
-            seperatorDivider,
+            seperatorDivider('place-of-birth-seperator'),
             attendantAtBirth,
             birthType,
             weightAtBirth
@@ -322,7 +361,7 @@ export const birthForm: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(motherNationalIDVerfication),
               []
             ),
-            seperatorDivider,
+            seperatorDivider('mother-nid-seperator'),
             getMaritalStatus(certificateHandlebars.motherMaritalStatus),
             multipleBirth,
             getOccupation(certificateHandlebars.motherOccupation),
@@ -395,7 +434,7 @@ export const birthForm: ISerializedForm = {
               hideIfNidIntegrationDisabled.concat(fatherNationalIDVerfication),
               []
             ),
-            seperatorDivider,
+            seperatorDivider('father-nid-seperator'),
             getMaritalStatus(certificateHandlebars.fatherMaritalStatus),
             getOccupation(certificateHandlebars.fatherOccupation),
             getEducation(certificateHandlebars.fatherEducationalAttainment)
