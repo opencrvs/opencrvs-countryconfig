@@ -36,7 +36,6 @@ if [ -z $path_to_core ]; then
     print_usage_and_exit
 fi
 
-
 # It's fine if these fail as it might be that the databases do not exist at this point
 docker run --rm --network=opencrvs_default mongo:4.4 mongo --host mongo1 --eval "\
 db.getSiblingDB('hearth-dev').dropDatabase();\
@@ -59,3 +58,8 @@ if [ -d $PATH_TO_MINIO_DIR ] ; then
   docker exec opencrvs_minio_1 mkdir -p /data/minio/ocrvs
   echo "**** Removed minio data ****"
 fi
+
+echo "Running migrations"
+echo
+
+yarn --cwd="$path_to_core/packages/migration" start

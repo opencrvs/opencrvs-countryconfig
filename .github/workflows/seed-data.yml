@@ -1,0 +1,69 @@
+name: Seed data
+run-name: Seed data to ${{ github.event.inputs.environment }} core=${{ github.event.inputs.core-image-tag }}
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      core-image-tag:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Environment to seed data
+        required: true
+        default: 'staging'
+        options:
+          - staging
+          - qa
+          - production
+      core-image-tag:
+        description: Core DockerHub image tag
+jobs:
+  seed-data:
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-20.04
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        node-version: [16.20.0]
+    steps:
+      - name: Clone core
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          repository: 'opencrvs/opencrvs-core'
+          path: './opencrvs-core'
+
+      - name: Set CORE_VERSION from inputs
+        if: ${{ github.event.inputs.core-image-tag }}
+        run: |
+          cd opencrvs-core
+          git checkout ${{ github.event.inputs.core-image-tag }}
+
+      - name: Install dependencies
+        working-directory: ./opencrvs-core
+        run: yarn install
+
+      - name: Seed data on given environment
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          command: |
+            cd ./opencrvs-core
+            if [[ ${{ github.event.inputs.environment }} == 'production' ]]; then
+                yarn seed:prod
+            else
+                yarn seed:dev
+            fi
+        env:
+          ACTIVATE_USERS: ${{ vars.ACTIVATE_USERS }}
+          GATEWAY_URL: ${{ vars.GATEWAY_HOST }}
+          GATEWAY_GQL_HOST: ${{ vars.GATEWAY_GQL_HOST }}
+          AUTH_URL: ${{ vars.AUTH_API_HOST }}
+          COUNTRY_CONFIG_URL: ${{ vars.COUNTRY_CONFIG_HOST }}
+          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}

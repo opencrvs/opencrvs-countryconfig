@@ -26,7 +26,7 @@ context('User Integration Test', () => {
     cy.get('#familyNameEng').type('Ahmed')
     cy.get('#phoneNumber').type('0711919045')
     //cy.get('#nid').type('199475632')
-    cy.selectOption('#role', 'Health Worker', 'Health Worker')
+    cy.selectOption('#role', 'Field Agent', 'Field Agent')
     cy.get('#device').type('Xiamoi MI 8')
     cy.get('#confirm_form').click()
     // PREVIEW
@@ -78,13 +78,13 @@ context('User Integration Test', () => {
     cy.get('#continue').click()
 
     // Phone number verification form appears
-    cy.get('#phone-number-verification-form').should('be.visible')
+    cy.get('#phone-or-email-verification-form').should('be.visible')
     cy.get('#phone-number-input').type('0711919045')
     cy.get('#continue').click()
 
     // Security question form appears
     cy.get('#security-question-form').should('be.visible')
-    cy.get('#question').then($q => {
+    cy.get('#content-name').then($q => {
       const question = $q.text()
       let answer
       if (question === 'What is your favorite food?') {
@@ -117,7 +117,7 @@ context('User Integration Test', () => {
     cy.get('#continue').click()
 
     // Phone number verification form appears
-    cy.get('#phone-number-verification-form').should('be.visible')
+    cy.get('#phone-or-email-verification-form').should('be.visible')
     cy.get('#phone-number-input').type('0711919045')
     cy.get('#continue').click()
 
@@ -127,7 +127,7 @@ context('User Integration Test', () => {
     cy.get('#continue').click()
     // Security question form appears
     cy.get('#security-question-form').should('be.visible')
-    cy.get('#question').then($q => {
+    cy.get('#content-name').then($q => {
       const question = $q.text()
       let answer
       if (question === 'What is your favorite food?') {

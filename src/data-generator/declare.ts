@@ -34,9 +34,15 @@ import {
   FETCH_REGISTRATION_QUERY,
   SEARCH_EVENTS
 } from './queries'
+import { join } from 'path'
+import { readFileSync } from 'fs'
 
 const HOME_BIRTH_WEIGHT = 0.2
 const HOME_DEATH_WEIGHT = 0.2
+const NUMBER_OF_ATTACHMENTS_PER_RECORD = process.env
+  .NUMBER_OF_ATTACHMENTS_PER_RECORD
+  ? parseInt(process.env.NUMBER_OF_ATTACHMENTS_PER_RECORD, 10)
+  : 2
 
 function randomWeightInKg() {
   return Math.round(2.5 + 2 * Math.random())
@@ -151,7 +157,8 @@ export function createBirthDeclarationData(
   birthDate: Date,
   declarationTime: Date,
   location: Location,
-  facility: Facility
+  facility: Facility,
+  base64Attachment: string
 ): BirthRegistrationInput {
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const familyName = faker.name.lastName()
@@ -203,14 +210,14 @@ export function createBirthDeclarationData(
         }
       ],
       draftId: faker.datatype.uuid(),
-      attachments: [
-        {
+      attachments: Array.from({ length: NUMBER_OF_ATTACHMENTS_PER_RECORD }).map(
+        () => ({
           contentType: 'image/png',
-          data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+          data: 'data:image/png;base64,' + base64Attachment,
           subject: AttachmentSubject.Child,
           type: AttachmentType.NotificationOfBirth
-        }
-      ],
+        })
+      ),
       inCompleteFields: !sex ? 'child/child-view-group/gender' : undefined
     },
     father: {
@@ -262,14 +269,16 @@ export async function createBirthDeclaration(
   birthDate: Date,
   declarationTime: Date,
   location: Location,
-  facility: Facility
+  facility: Facility,
+  base64Attachment: string
 ) {
   const details = createBirthDeclarationData(
     sex,
     birthDate,
     declarationTime,
     location,
-    facility
+    facility,
+    base64Attachment
   )
 
   const name = details.child?.name
@@ -323,7 +332,8 @@ export async function createDeathDeclaration(
   sex: 'male' | 'female' | undefined,
   declarationTime: Date,
   location: Location,
-  facility: Facility
+  facility: Facility,
+  base64Attachment: string
 ) {
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
@@ -342,6 +352,14 @@ export async function createDeathDeclaration(
       contact: 'SPOUSE',
       contactPhoneNumber:
         '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
+      attachments: Array.from({ length: NUMBER_OF_ATTACHMENTS_PER_RECORD }).map(
+        () => ({
+          contentType: 'image/png',
+          data: 'data:image/png;base64,' + base64Attachment,
+          subject: AttachmentSubject.DeceasedDeathCauseProof,
+          type: AttachmentType.CoronersReport
+        })
+      ),
       contactRelationship: 'Mother',
       draftId: faker.datatype.uuid(),
       status: [

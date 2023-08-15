@@ -1,5 +1,5 @@
-name: Deploy
-
+name: Deploy(development)
+run-name: Deploy to ${{ github.event.inputs.environment }} with reset=${{ github.event.inputs.reset }} core=${{ github.event.inputs.core-image-tag }} country config=${{ github.event.inputs.countryconfig-image-tag }}
 on:
   workflow_dispatch:
     inputs:
@@ -11,20 +11,27 @@ on:
         options:
           - staging
           - qa
-          - production
-          - config
-          - demo
       core-image-tag:
         description: Core DockerHub image tag
-        required: false
+        required: true
         default: 'v1.2.0'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
+      reset:
+        type: choice
+        description: Whether to reset the environment
+        required: true
+        default: 'no'
+        options:
+          - 'yes'
+          - 'no'
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
+    outputs:
+      outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
     strategy:
       matrix:
@@ -42,26 +49,16 @@ jobs:
           fetch-depth: 0
           path: './${{ github.event.repository.name }}'
 
-      - name: Set COUNTRY_CONFIG_VERSION from inputs
-        if: ${{ github.event.inputs.countryconfig-image-tag }}
+      - name: Checkout country branch
         run: |
           cd ${{ github.event.repository.name }}
-          echo "COUNTRY_CONFIG_VERSION=${{ github.event.inputs.countryconfig-image-tag }}" >> $GITHUB_ENV
           git checkout ${{ github.event.inputs.countryconfig-image-tag }}
           cd ../
 
-      - name: Set CORE_VERSION from inputs
-        if: ${{ github.event.inputs.core-image-tag }}
+      - name: Checkout core branch
         run: |
           cd opencrvs-core
           git checkout ${{ github.event.inputs.core-image-tag }}
-          echo "CORE_VERSION=${{ github.event.inputs.core-image-tag }}" >> $GITHUB_ENV
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
@@ -69,39 +66,33 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
-      - name: Deploy to QA
-        if: ${{ github.event.inputs.environment == 'qa' }}
-        env:
-          QA_DOMAIN: ${{ secrets.QA_DOMAIN }}
-          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
-          REPLICAS: ${{ secrets.REPLICAS }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
-          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
-          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
-          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
-          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
-          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
-          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          USER_NOTIFICATION_DELIVERY_METHOD: ${{ secrets.USER_NOTIFICATION_DELIVERY_METHOD }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+  
+      - name: Wait for images to be available
         run: |
-          cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=qa --host=${{ env.QA_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+          while true; do
+            if docker manifest inspect opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}; then
+              break
+            fi
+            sleep 10
+          done
+          while true; do
+            if docker manifest inspect opencrvs/ocrvs-farajaland:${{ github.event.inputs.countryconfig-image-tag }}; then
+              break
+            fi
+            sleep 10
+          done
+  
 
-      - name: Deploy to production
-        if: ${{ github.event.inputs.environment == 'production' }}
+      - name: Deploy to ${{ github.event.inputs.environment }}
+        id: deploy
         env:
-          PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
-          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
-          REPLICAS: ${{ secrets.REPLICAS }}
+          DOMAIN: ${{ vars.DOMAIN }}
+          REPLICAS: ${{ vars.REPLICAS }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
@@ -117,91 +108,20 @@ jobs:
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
           EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+          INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          SMS_PROVIDER: ${{ secrets.SMS_PROVIDER }}
-          CLICKATELL_USER: ${{ secrets.CLICKATELL_USER }}
-          CLICKATELL_PASSWORD: ${{ secrets.CLICKATELL_PASSWORD }}
-          CLICKATELL_API_ID: ${{ secrets.CLICKATELL_API_ID }}
           INFOBIP_GATEWAY_ENDPOINT: ${{ secrets.INFOBIP_GATEWAY_ENDPOINT }}
           INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
-          INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
-          USER_NOTIFICATION_DELIVERY_METHOD: ${{ secrets.USER_NOTIFICATION_DELIVERY_METHOD }}
+          SENDER_EMAIL_ADDRESS: ${{ secrets.SENDER_EMAIL_ADDRESS }}
+          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
         run: |
           cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=production --host=${{ env.PRODUCTION_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
-
-      - name: Deploy to staging
-        if: ${{ github.event.inputs.environment == 'staging' }}
-        env:
-          STAGING_DOMAIN: ${{ secrets.STAGING_DOMAIN }}
-          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
-          REPLICAS: ${{ secrets.REPLICAS }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
-          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
-          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
-          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
-          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
-          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
-          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          USER_NOTIFICATION_DELIVERY_METHOD: ${{ secrets.USER_NOTIFICATION_DELIVERY_METHOD }}
-        run: |
-          cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=${{ env.FACTORY_RESET }} --restore_metadata=${{ env.FACTORY_RESET }} --environment=development --host=${{ env.STAGING_DOMAIN }} --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
-
-      - name: Deploy to config
-        if: ${{ inputs.environment == 'config' }}
-        env:
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
-          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
-          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
-          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
-          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
-          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
-        run: |
-          cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=yes --restore-metadata=yes --environment=development --host=farajaland-config.opencrvs.org --version=${{ env.CORE_VERSION }} --country_config_version=${{ env.COUNTRY_CONFIG_VERSION }} --country_config_path=../${{ github.event.repository.name }} --replicas=1
-
-      - name: Deploy to demo
-        if: ${{ github.event.inputs.environment == 'demo' }}
-        env:
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
-          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
-          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
-          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
-          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          NATIONAL_ID_OIDP_CLIENT_ID: ${{ secrets.NATIONAL_ID_OIDP_CLIENT_ID }}
-          NATIONAL_ID_OIDP_BASE_URL: ${{ secrets.NATIONAL_ID_OIDP_BASE_URL }}
-          NATIONAL_ID_OIDP_REST_URL: ${{ secrets.NATIONAL_ID_OIDP_REST_URL }}
-          NATIONAL_ID_OIDP_ESSENTIAL_CLAIMS: ${{ secrets.NATIONAL_ID_OIDP_ESSENTIAL_CLAIMS }}
-          NATIONAL_ID_OIDP_VOLUNTARY_CLAIMS: ${{ secrets.NATIONAL_ID_OIDP_VOLUNTARY_CLAIMS }}
-          NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY: ${{ secrets.NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY }}
-          NATIONAL_ID_OIDP_JWT_AUD_CLAIM: ${{ secrets.NATIONAL_ID_OIDP_JWT_AUD_CLAIM }}
-          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
-          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
-        run: |
-          cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=no --restore-metadata=no --environment=demo --host=farajaland-demo.opencrvs.org --version=v1.2.0 --country_config_version=v1.2.0 --country_config_path=../${{ github.event.repository.name }} --replicas=1
+          yarn deploy --clear_data=${{ github.event.inputs.reset }} --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{ github.event.inputs.core-image-tag }} --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+  seed-data:
+    needs: deploy
+    if: ${{ github.event.inputs.reset == 'yes' && needs.deploy.outputs.outcome == 'success' }}
+    uses: ./.github/workflows/seed-data.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      core-image-tag: ${{ github.event.inputs.core-image-tag }}
+    secrets: inherit

@@ -1,0 +1,12 @@
+systemRole,label_en,label_fr
+FIELD_AGENT,Field Agent,Agent de terrain
+FIELD_AGENT,Police Officer,Officier de police
+FIELD_AGENT,Social Worker,Travailleur social
+FIELD_AGENT,Healthcare Worker,Personnel de santé
+FIELD_AGENT,Local Leader,Leader local
+REGISTRATION_AGENT,Registration Agent,Agent d'enregistrement
+LOCAL_REGISTRAR,Local Registrar,Registraire local
+LOCAL_SYSTEM_ADMIN,Local System Admin,Administrateur système local
+NATIONAL_SYSTEM_ADMIN,National System Admin,Administrateur système national
+PERFORMANCE_MANAGEMENT,Performance Manager,Gestion des performances
+NATIONAL_REGISTRAR,National Registrar,Registraire national

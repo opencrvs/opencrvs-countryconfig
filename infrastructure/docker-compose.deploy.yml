@@ -14,7 +14,7 @@ services:
   # Note: these published port will override UFW rules as Docker manages it's own iptables
   # Only publish the exact ports that are required for OpenCRVS to work
   traefik:
-    image: 'traefik:v2.8'
+    image: 'traefik:v2.9'
     ports:
       - target: 80
         published: 80
@@ -257,8 +257,6 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true
-    ports:
-      - 9200:9200
     networks:
       - overlay_net
     logging:
@@ -385,8 +383,6 @@ services:
     cap_add: ['CHOWN', 'DAC_OVERRIDE', 'SETGID', 'SETUID']
     cap_drop: ['ALL']
     restart: always
-    ports:
-      - 8200:8200
     networks:
       - overlay_net
     deploy:
@@ -520,6 +516,7 @@ services:
     environment:
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_LOGO_URL=https://countryconfig.{{hostname}}/content/country-logo
+      - LOGIN_URL=https://login.{{hostname}}
     networks:
       - overlay_net
     logging:
@@ -791,6 +788,7 @@ services:
       - MINIO_HOST=minio
       - MINIO_PORT=9000
       - MINIO_BUCKET=ocrvs
+      - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=false'
