@@ -1,7 +1,7 @@
 primaryOfficeId,givenNames,familyName,systemRole,role,mobile,username,email,password
 CRVS_OFFICE_JWMRGwDBXK,Kalusha,Bwalya,FIELD_AGENT,Social Worker,0911111111,k.bwalya,k.bwalya@test.org,test
-CRVS_OFFICE_JWMRGwDBXK,Felix,Katongo,REGISTRATION_AGENT,Registration Agent,0922222222,f.katongo,f.katongo@test.org,test
-CRVS_OFFICE_JWMRGwDBXK,Kennedy,Mweene,LOCAL_REGISTRAR,Local Registrar,0933333333,k.mweene,k.mweene@test.org,test
+CRVS_OFFICE_JWMRGwDBXK,Felix,Katongo,REGISTRATION_AGENT,Registration Agent,0922222222,f.katongo,fkatongo153@gmail.com,test
+CRVS_OFFICE_JWMRGwDBXK,Kennedy,Mweene,LOCAL_REGISTRAR,Local Registrar,0933333333,k.mweene,kmweene08@gmail.com,test
 CRVS_OFFICE_JWMRGwDBXK,Emmanuel,Mayuka,LOCAL_SYSTEM_ADMIN,Local System Admin,0921681112,e.mayuka,e.mayuka@test.org,test
 CRVS_OFFICE_2OKicPQMNI,Jonathan,Campbell,NATIONAL_SYSTEM_ADMIN,National System Admin,0921111111,j.campbell,j.campbell@test.org,test
 CRVS_OFFICE_okQp4uKCz0,Patrick,Gondwe,FIELD_AGENT,Local Leader,0912121212,p.gondwe,p.gondwe@test.org,test

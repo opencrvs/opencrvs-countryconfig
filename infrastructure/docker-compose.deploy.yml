@@ -788,6 +788,7 @@ services:
       - MINIO_HOST=minio
       - MINIO_PORT=9000
       - MINIO_BUCKET=ocrvs
+      - SUPER_USER_PASSWORD=${SUPER_USER_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=false'

@@ -163,6 +163,45 @@ export const birthForm: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.childTab,
       title: formMessageDescriptors.childTitle,
+      mapping: {
+        template: [
+          {
+            fieldName: 'birthConfigurableIdentifier1',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_1']]
+          },
+          {
+            fieldName: 'birthConfigurableIdentifier2',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_2']]
+          },
+          {
+            fieldName: 'birthConfigurableIdentifier3',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_3']]
+          }
+        ],
+        mutation: {
+          operation: 'childFieldToIdentityTransformer',
+          parameters: [
+            [
+              'BIRTH_CONFIGURABLE_IDENTIFIER_1',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_2',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_3'
+            ]
+          ]
+        },
+        query: {
+          operation: 'childIdentityToFieldTransformer',
+          parameters: [
+            [
+              'BIRTH_CONFIGURABLE_IDENTIFIER_1',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_2',
+              'BIRTH_CONFIGURABLE_IDENTIFIER_3'
+            ]
+          ]
+        }
+      }, // These mappings support configurable identifiers in
       groups: [
         {
           id: 'child-view-group',

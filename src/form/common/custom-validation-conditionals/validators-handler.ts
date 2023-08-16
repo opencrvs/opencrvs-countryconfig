@@ -8,7 +8,7 @@ export async function validatorsHandler(
 ) {
   return h
     .response(
-      await buildTypeScriptToJavaScript(join(__dirname, 'validators.ts'))
+      await buildTypeScriptToJavaScript(join(__dirname, 'custom-validators.ts'))
     )
     .type('text/javascript')
 }

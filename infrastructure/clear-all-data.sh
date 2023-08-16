@@ -12,7 +12,7 @@
 set -e
 
 print_usage_and_exit () {
-    echo 'Usage: ./clear-all-data.sh REPLICAS ENV'
+    echo 'Usage: ./clear-all-data.sh REPLICAS'
     echo ""
     echo "If your MongoDB is password protected, an admin user's credentials can be given as environment variables:"
     echo "MONGODB_ADMIN_USER=your_user MONGODB_ADMIN_PASSWORD=your_pass"
@@ -27,13 +27,7 @@ if [ -z "$1" ] ; then
     print_usage_and_exit
 fi
 
-if [ -z "$2" ] ; then
-    echo 'Error: Argument ENV is required in position 2.'
-    print_usage_and_exit
-fi
-
 REPLICAS=$1
-ENV=$2
 
 if [ "$REPLICAS" = "0" ]; then
   HOST=mongo1

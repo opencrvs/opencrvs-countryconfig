@@ -163,6 +163,11 @@ if [ -z "$MONGODB_ADMIN_PASSWORD" ] ; then
     print_usage_and_exit
 fi
 
+if [ -z "$SUPER_USER_PASSWORD" ] ; then
+    echo 'Error: Missing environment variable SUPER_USER_PASSWORD.'
+    print_usage_and_exit
+fi
+
 if [ -z "$DOCKERHUB_ACCOUNT" ] ; then
     echo 'Error: Missing environment variable DOCKERHUB_ACCOUNT.'
     print_usage_and_exit
@@ -409,6 +414,7 @@ docker_stack_deploy() {
   ROTATING_SEARCH_ELASTIC_PASSWORD=$ROTATING_SEARCH_ELASTIC_PASSWORD
   KIBANA_USERNAME=$KIBANA_USERNAME
   KIBANA_PASSWORD=$KIBANA_PASSWORD
+  SUPER_USER_PASSWORD=$SUPER_USER_PASSWORD
   TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK=$TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK
   TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY=$TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY
   TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD=$TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD
@@ -461,7 +467,7 @@ else
 fi
 
 # Deploy the OpenCRVS stack onto the swarm
-if [[ "$ENV" = "development" ]]; then
+if [[ "$ENV" = "staging" ]]; then
   ENVIRONMENT_COMPOSE="docker-compose.countryconfig.staging-deploy.yml docker-compose.staging-deploy.yml"
   FILES_TO_ROTATE="${FILES_TO_ROTATE} /opt/opencrvs/docker-compose.countryconfig.staging-deploy.yml /opt/opencrvs/docker-compose.staging-deploy.yml"
 elif [[ "$ENV" = "qa" ]]; then
@@ -499,7 +505,7 @@ if [ $CLEAR_DATA == "yes" ] ; then
         ELASTICSEARCH_ADMIN_PASSWORD=$ELASTICSEARCH_SUPERUSER_PASSWORD \
         MONGODB_ADMIN_USER=$MONGODB_ADMIN_USER \
         MONGODB_ADMIN_PASSWORD=$MONGODB_ADMIN_PASSWORD \
-        /opt/opencrvs/infrastructure/clear-all-data.sh $REPLICAS $ENV"
+        /opt/opencrvs/infrastructure/clear-all-data.sh $REPLICAS"
 
     echo
     echo "Running migrations..."

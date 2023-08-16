@@ -36,12 +36,6 @@ if [ -z $path_to_core ]; then
     print_usage_and_exit
 fi
 
-if docker service ls > /dev/null 2>&1; then
-  IS_LOCAL=false
-else
-  IS_LOCAL=true
-fi
-
 # It's fine if these fail as it might be that the databases do not exist at this point
 docker run --rm --network=opencrvs_default mongo:4.4 mongo --host mongo1 --eval "\
 db.getSiblingDB('hearth-dev').dropDatabase();\
@@ -65,9 +59,7 @@ if [ -d $PATH_TO_MINIO_DIR ] ; then
   echo "**** Removed minio data ****"
 fi
 
-# Run migrations by restarting migration service
-if [ "$IS_LOCAL" = false ]; then
-  docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration
-else
-  yarn --cwd="$path_to_core/packages/migration" start
-fi
+echo "Running migrations"
+echo
+
+yarn --cwd="$path_to_core/packages/migration" start

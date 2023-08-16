@@ -42,9 +42,9 @@ jobs:
       - name: Start generating test data
         run: yarn data-generator
         env:
-          COUNTRY_CONFIG_HOST: ${{ secrets.COUNTRY_CONFIG_HOST }}
-          AUTH_API_HOST: ${{ secrets.AUTH_API_HOST }}
-          GATEWAY_GQL_HOST: ${{ secrets.GATEWAY_GQL_HOST }}
-          GATEWAY_API_HOST: ${{ secrets.GATEWAY_API_HOST }}
-          CONFIG_HOST: ${{ secrets.CONFIG_HOST }}
-          CONCURRENCY: ${{ secrets.CONCURRENCY }}
+          COUNTRY_CONFIG_HOST: ${{ vars.COUNTRY_CONFIG_HOST }}
+          AUTH_API_HOST: ${{ vars.AUTH_API_HOST }}
+          GATEWAY_GQL_HOST: ${{ vars.GATEWAY_GQL_HOST }}
+          GATEWAY_API_HOST: ${{ vars.GATEWAY_API_HOST }}
+          CONFIG_HOST: ${{ vars.CONFIG_HOST }}
+          CONCURRENCY: ${{ vars.CONCURRENCY }}
