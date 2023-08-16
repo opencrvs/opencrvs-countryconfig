@@ -9,7 +9,11 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-import { getFromFhir, updateResourceInHearth } from '@countryconfig/utils'
+import {
+  OPENCRVS_SPECIFICATION_URL,
+  getFromFhir,
+  updateResourceInHearth
+} from '@countryconfig/utils'
 import { hasScope } from '@countryconfig/index'
 import { unauthorized } from '@hapi/boom'
 import * as Hapi from '@hapi/hapi'
@@ -76,7 +80,14 @@ async function processPSUT(uinToken: string, brn: string): Promise<boolean> {
       !personAlreadyUpdated
     ) {
       person.identifier.push({
-        type: 'MOSIP_PSUT_TOKEN_ID',
+        type: {
+          coding: [
+            {
+              system: `${OPENCRVS_SPECIFICATION_URL}identifier-type`,
+              code: 'MOSIP_PSUT_TOKEN_ID'
+            }
+          ]
+        },
         value: uinToken
       } as fhir.CodeableConcept)
       try {
@@ -152,7 +163,13 @@ function confirmIdentifierExists(
 ): boolean {
   const relevantIdentifier: fhir.Identifier[] = identifiers.filter(
     (identifier: fhir.Identifier) => {
-      return identifier[label] === labelValue && identifier.value === value
+      let matchingValue: string
+      if (label === 'type') {
+        matchingValue = identifier.type?.coding?.[0].code!
+      } else {
+        matchingValue = identifier[label]!
+      }
+      return matchingValue === labelValue && identifier.value === value
     }
   )
   return relevantIdentifier.length === 1 ? true : false
