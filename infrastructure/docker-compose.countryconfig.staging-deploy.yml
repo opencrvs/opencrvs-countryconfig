@@ -13,7 +13,7 @@ services:
   notification:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
       
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
@@ -30,9 +30,7 @@ services:
       - CHECK_INVALID_TOKEN=true
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - HOSTNAME=${HOSTNAME}
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
-      - USER_NOTIFICATION_DELIVERY_METHOD=sms
-      - INFORMANT_NOTIFICATION_DELIVERY_METHOD=email
+      - SENTRY_DSN=${SENTRY_DSN}
 
     deploy:
       replicas: 1
@@ -46,38 +44,37 @@ services:
   gateway:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
       - COUNTRY=FAR
-      - USER_NOTIFICATION_DELIVERY_METHOD=sms
 
   workflow:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   auth:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   config:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   metrics:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   search:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   user-mgnt:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   webhooks:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
 
 secrets:

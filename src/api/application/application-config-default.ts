@@ -44,7 +44,9 @@ export const defaultApplicationConfig = {
   MARRIAGE_REGISTRATION: false,
   DATE_OF_BIRTH_UNKNOWN: false,
   INFORMANT_SIGNATURE: true,
-  INFORMANT_SIGNATURE_REQUIRED: true
+  INFORMANT_SIGNATURE_REQUIRED: true,
+  USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
+  INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email' // or 'sms', or '' ... You can use 'sms' for WhatsApp
 }
 
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE = 10

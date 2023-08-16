@@ -13,7 +13,7 @@ services:
   notification:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
   
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
@@ -29,17 +29,12 @@ services:
       - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - HOSTNAME=${HOSTNAME}
-      - USER_NOTIFICATION_DELIVERY_METHOD=sms
-      - INFORMANT_NOTIFICATION_DELIVERY_METHOD=email
       - EMAIL_API_KEY=${EMAIL_API_KEY}
-      #- SMS_PROVIDER=
-      #- CLICKATELL_USER_PATH=
-      #- CLICKATELL_PASSWORD_PATH=
-      #- CLICKATELL_API_ID_PATH=
-      #- INFOBIP_GATEWAY_ENDPOINT_PATH=
-      #- INFOBIP_API_KEY_PATH=
-      #- INFOBIP_SENDER_ID_PATH=
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - INFOBIP_GATEWAY_ENDPOINT=${INFOBIP_GATEWAY_ENDPOINT}
+      - INFOBIP_API_KEY=${INFOBIP_API_KEY}
+      - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID}
+      - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
+      - SENTRY_DSN=${SENTRY_DSN}
 
     deploy:
       replicas: 1
@@ -53,38 +48,37 @@ services:
   gateway:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
       - COUNTRY=FAR
-      - USER_NOTIFICATION_DELIVERY_METHOD=sms
 
   workflow:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   auth:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   user-mgnt:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   config:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   metrics:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   search:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
   webhooks:
     environment:
-      - SENTRY_DSN=https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604
+      - SENTRY_DSN=${SENTRY_DSN}
 
 secrets:
   openhim-user:

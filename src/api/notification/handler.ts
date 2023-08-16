@@ -11,23 +11,13 @@
  */
 import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
-import {
-  SMSTemplateType,
-  sendSMSClickatell,
-  sendSMSInfobip
-} from './sms-service'
+import { SMSTemplateType, sendSMS } from './sms-service'
 import {
   EmailTemplateType,
   TemplateVariables,
   sendEmail
 } from './email-service'
-import {
-  SMS_PROVIDER,
-  USER_NOTIFICATION_DELIVERY_METHOD,
-  COUNTRY_LOGO_URL,
-  LOGIN_URL,
-  INFORMANT_NOTIFICATION_DELIVERY_METHOD
-} from './constant'
+import { COUNTRY_LOGO_URL, LOGIN_URL } from './constant'
 import { logger } from '@countryconfig/logger'
 import { getApplicationConfig } from '../../utils'
 
@@ -64,7 +54,7 @@ export async function notificationHandler(
 ) {
   const { templateName, variables, recipient, locale, convertUnicode, type } =
     request.payload as NotificationPayload
-
+  const applicationConfig = await getApplicationConfig()
   if (process.env.NODE_ENV !== 'production') {
     logger.info(
       `Ignoring notification due to NODE_ENV not being 'production'. Params: ${JSON.stringify(
@@ -81,14 +71,14 @@ export async function notificationHandler(
 
   const notificationMethod =
     type == 'user'
-      ? USER_NOTIFICATION_DELIVERY_METHOD
-      : INFORMANT_NOTIFICATION_DELIVERY_METHOD
+      ? applicationConfig.USER_NOTIFICATION_DELIVERY_METHOD
+      : applicationConfig.INFORMANT_NOTIFICATION_DELIVERY_METHOD
   logger.info(
     `Notification method is ${notificationMethod} and recipient ${
       notificationMethod === 'email' ? recipient.email : recipient.sms
     }`
   )
-  const applicationName = (await getApplicationConfig()).APPLICATION_NAME
+  const applicationName = applicationConfig.APPLICATION_NAME
   const countryLogo = COUNTRY_LOGO_URL
   const loginURL = LOGIN_URL
   switch (notificationMethod) {
@@ -100,22 +90,13 @@ export async function notificationHandler(
       )
       break
     case 'sms':
-      if (SMS_PROVIDER === 'infobip') {
-        await sendSMSInfobip(
-          templateName.sms as SMSTemplateType,
-          { ...variables, applicationName, countryLogo },
-          recipient.sms as string,
-          locale
-        )
-      } else if (SMS_PROVIDER === 'clickatell') {
-        await sendSMSClickatell(
-          templateName.sms as SMSTemplateType,
-          { ...variables, applicationName, countryLogo },
-          recipient.sms as string,
-          locale,
-          convertUnicode
-        )
-      }
+      await sendSMS(
+        templateName.sms as SMSTemplateType,
+        { ...variables, applicationName, countryLogo },
+        recipient.sms as string,
+        locale
+      )
+
       break
   }
   return h.response().code(200)

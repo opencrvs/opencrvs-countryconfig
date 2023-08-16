@@ -10,16 +10,11 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 import {
-  CLICKATELL_API_ID,
-  CLICKATELL_PASSWORD,
-  CLICKATELL_USER,
   INFOBIP_API_KEY,
   INFOBIP_GATEWAY_ENDPOINT,
   INFOBIP_SENDER_ID
 } from './constant'
-import { Iconv } from 'iconv'
 import { logger } from '@countryconfig/logger'
-import { stringify } from 'querystring'
 import fetch from 'node-fetch'
 import { readFileSync } from 'fs'
 import * as Handlebars from 'handlebars'
@@ -55,51 +50,7 @@ interface ISMSNotificationTemplate {
   messages: Record<SMSTemplateType, string>
 }
 
-export async function sendSMSClickatell(
-  type: SMSTemplateType,
-  variables: Record<string, string>,
-  recipient: string,
-  locale: string,
-  convertUnicode?: boolean
-) {
-  const message = compileMessages(type, variables, locale)
-  let params = {
-    user: CLICKATELL_USER,
-    password: CLICKATELL_PASSWORD,
-    api_id: CLICKATELL_API_ID,
-    to: recipient,
-    text: message,
-    unicode: 0
-  }
-  /* character limit for unicoded sms is 70 otherwise 160 */
-  if (convertUnicode) {
-    params = {
-      ...params,
-      text: new Iconv('UTF-8', 'UCS-2BE').convert(message).toString('hex'),
-      unicode: 1
-    }
-  }
-  logger.info(`Sending an sms: ${JSON.stringify(params)}`)
-
-  const url = `https://api.clickatell.com/http/sendmsg?${stringify(params)}`
-
-  let res
-  try {
-    res = await fetch(url)
-  } catch (err) {
-    logger.error(err)
-    throw err
-  }
-
-  const body = await res.text()
-  if (body.includes('ERR')) {
-    logger.error(`Failed to send sms to ${recipient}. Error: ${body}`)
-    throw internal('Failed to send notification', body)
-  }
-  logger.info('Received success response from Clickatell: Success')
-}
-
-export async function sendSMSInfobip(
+export async function sendSMS(
   type: SMSTemplateType,
   variables: Record<string, string>,
   recipient: string,

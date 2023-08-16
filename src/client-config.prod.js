@@ -16,14 +16,11 @@ window.config = {
   AUTH_URL: 'https://auth.{{hostname}}',
   MINIO_BUCKET: 'ocrvs',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
-  USER_NOTIFICATION_DELIVERY_METHOD: 'sms', // 'email'
-  INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email',
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
   AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',
   LANGUAGES: 'en,fr',
-  SENTRY:
-    'https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604',
+  SENTRY: '{{sentry}}',
   LOGROCKET: '',
   LEADERBOARDS_DASHBOARD_URL:
     'https://metabase.{{hostname}}/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300',
