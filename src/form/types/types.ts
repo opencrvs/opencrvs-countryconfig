@@ -55,7 +55,7 @@ type IIgnoreFields = {
   fieldsToIgnoreForInternationalAddress: string[]
 }
 
-type IHandlebarTemplates = {
+export type IHandlebarTemplates = {
   fieldName: string
   operation: string
   parameters?: (string | (string | number) | number | string[])[]
@@ -71,7 +71,7 @@ type IAddressLineMapper = {
   lineNumber?: number
 }
 
-type IQueryMapper = {
+export type IQueryMapper = {
   operation: string
   parameters?: (
     | string
@@ -83,7 +83,7 @@ type IQueryMapper = {
   )[]
 }
 
-type IMutationMapper = {
+export type IMutationMapper = {
   operation: string
   parameters?: (
     | string

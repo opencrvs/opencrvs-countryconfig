@@ -23,17 +23,18 @@ import {
   AllowedAddressConfigurations,
   AddressSubsections,
   AddressCopyConfigCases,
-  IAddressConfiguration
+  IAddressConfiguration,
+  IFormFieldMapping,
+  IQueryMapper,
+  IMutationMapper,
+  IHandlebarTemplates
 } from '../types/types'
-import {
-  getAddressFields,
-  getPlaceOfEventAddressFields,
-  getXAddressSameAsY
-} from './address-fields'
+import { getAddressFields, getXAddressSameAsY } from './address-fields'
 import { getPreviewGroups } from '../common/preview-groups'
 import { cloneDeep } from 'lodash'
 
-export function getRuralOrUrbanConditionals(
+// Use this function to edit the visibility of fields depending on user input
+function getRuralOrUrbanConditionals(
   useCase: string,
   defaultConditionals: Conditional[]
 ) {
@@ -99,6 +100,7 @@ export function getRuralOrUrbanConditionals(
   return defaultConditionals.concat(customConditionals)
 }
 
+// Use this function to edit the visibility of fields depending on user input
 export function getPlaceOfEventConditionals(location: string, useCase: string) {
   switch (location) {
     case 'country':
@@ -303,6 +305,20 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
           expression: '!isDefaultCountry(values.country)'
         }
       ])
+    case 'international':
+      return [
+        {
+          action: 'hide',
+          expression: 'isDefaultCountry(values.country)'
+        },
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        }
+      ]
     default:
       throw Error(
         'Supplied event location is unsupported by current conditionals'
@@ -310,6 +326,7 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
   }
 }
 
+// Use this function to edit the visibility of fields depending on user input
 export function getAddressConditionals(location: string, useCase: string) {
   switch (location) {
     case 'country':
@@ -473,166 +490,228 @@ export function getAddressConditionals(location: string, useCase: string) {
           )})`
         }
       ])
+    case 'international':
+      return [
+        {
+          action: 'hide',
+          expression: `isDefaultCountry(values.country${sentenceCase(useCase)})`
+        }
+      ]
     default:
       throw Error('Supplied location is unsupported by current conditionals')
   }
 }
+
+// ====== THE FOLLOWING UTILITY FUNCTIONS SHOULD NOT BE EDITED DURING COUNTRY CONFIGURATION! ========
+// ====================== IF YOU BELIEVE THERE IS A BUG HERE, RAISE IN GITHUB! ======================
+
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export const sentenceCase = (str: string): string =>
   str.replace(/\w\S*/g, (txt: string) => {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
   })
 
-export function getDependency(location: string, useCase: string) {
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
+export function getDependency(
+  location: string,
+  useCase: string,
+  section: string
+) {
   switch (location) {
     case 'state':
-      return useCase === 'placeOfBirth' ||
-        useCase === 'placeOfDeath' ||
-        useCase === 'placeOfMarriage'
-        ? 'country'
-        : `country${sentenceCase(useCase)}`
+      return `country${sentenceCase(useCase)}${sentenceCase(section)}`
     case 'district':
-      return useCase === 'placeOfBirth' ||
-        useCase === 'placeOfDeath' ||
-        useCase === 'placeOfMarriage'
-        ? 'state'
-        : `state${sentenceCase(useCase)}`
+      return `state${sentenceCase(useCase)}${sentenceCase(section)}`
     case 'locationLevel3':
-      return useCase === 'placeOfBirth' ||
-        useCase === 'placeOfDeath' ||
-        useCase === 'placeOfMarriage'
-        ? 'district'
-        : `district${sentenceCase(useCase)}`
+      return `district${sentenceCase(useCase)}${sentenceCase(section)}`
     case 'locationLevel4':
-      return useCase === 'placeOfBirth' ||
-        useCase === 'placeOfDeath' ||
-        useCase === 'placeOfMarriage'
-        ? 'locationLevel3'
-        : `locationLevel3${sentenceCase(useCase)}`
+      return `locationLevel3${sentenceCase(useCase)}${sentenceCase(section)}`
     case 'locationLevel5':
-      return useCase === 'placeOfBirth' ||
-        useCase === 'placeOfDeath' ||
-        useCase === 'placeOfMarriage'
-        ? 'locationLevel4'
-        : `locationLevel4${sentenceCase(useCase)}`
+      return `locationLevel4${sentenceCase(useCase)}${sentenceCase(section)}`
     default:
       throw Error('Supplied address dependency is unsupported')
   }
 }
-
-export function getMapping(
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
+function getTemplateMapping(
   location: string,
   useCase: string,
   fieldName: string,
   locationIndex?: number
-) {
-  return {
-    template:
-      useCase in EventLocationAddressCases
-        ? locationIndex
-          ? {
-              fieldName,
-              operation: 'eventLocationAddressLineTemplateTransformer',
-              parameters: [locationIndex, getAddressLineLocationLevel(location)]
-            }
-          : {
-              fieldName,
-              operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
-              parameters: [location]
-            }
-        : locationIndex
-        ? {
-            fieldName,
-            operation: 'addressLineTemplateTransformer',
-            parameters: [useCase, locationIndex, fieldName]
-          }
-        : {
-            fieldName,
-            operation: 'addressFHIRPropertyTemplateTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              location
-            ]
-          },
-    mutation:
-      useCase in EventLocationAddressCases
-        ? {
-            operation:
-              useCase === EventLocationAddressCases.PLACE_OF_BIRTH
-                ? 'birthEventLocationMutationTransformer'
-                : useCase === EventLocationAddressCases.PLACE_OF_DEATH
-                ? 'deathEventLocationMutationTransformer'
-                : 'marriageEventLocationMutationTransformer',
-            parameters: [
-              { transformedFieldName: location, lineNumber: locationIndex }
-            ]
-          }
-        : locationIndex
-        ? {
-            operation: 'fieldToAddressLineTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              locationIndex
-            ]
-          }
-        : {
-            operation: 'fieldToAddressFhirPropertyTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              location
-            ]
-          },
-    query:
-      useCase in EventLocationAddressCases
-        ? {
-            operation: 'eventLocationQueryTransformer',
-            parameters: [
-              { transformedFieldName: location, lineNumber: locationIndex },
-              {
-                fieldsToIgnoreForLocalAddress: [
-                  `internationalDistrict${sentenceCase(useCase)}`,
-                  `internationalState${sentenceCase(useCase)}`
-                ],
-                fieldsToIgnoreForInternationalAddress: [
-                  `locationLevel3${sentenceCase(useCase)}`,
-                  `locationLevel4${sentenceCase(useCase)}`,
-                  `locationLevel5${sentenceCase(useCase)}`,
-                  `district${sentenceCase(useCase)}`,
-                  `state${sentenceCase(useCase)}`
-                ]
-              }
-            ]
-          }
-        : locationIndex
-        ? {
-            operation: 'addressLineToFieldTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              locationIndex,
-              location
-            ]
-          }
-        : {
-            operation: 'addressFhirPropertyToFieldTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              location
-            ]
-          }
+): IHandlebarTemplates {
+  return useCase in EventLocationAddressCases
+    ? locationIndex
+      ? {
+          fieldName,
+          operation: 'eventLocationAddressLineTemplateTransformer',
+          parameters: [locationIndex, getSupportedExtraLocationLevels(location)]
+        }
+      : {
+          fieldName,
+          operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
+          parameters: [location]
+        }
+    : locationIndex
+    ? {
+        fieldName,
+        operation: 'addressLineTemplateTransformer',
+        parameters: [useCase, locationIndex, fieldName]
+      }
+    : {
+        fieldName,
+        operation: 'addressFHIRPropertyTemplateTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          location
+        ]
+      }
+}
+
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
+function getMutationMapping(
+  type:
+    | 'TEXT'
+    | 'RADIO_GROUP'
+    | 'SELECT_WITH_OPTIONS'
+    | 'SELECT_WITH_DYNAMIC_OPTIONS',
+  location: string,
+  useCase: string,
+  locationIndex?: number
+): IMutationMapper {
+  return useCase in EventLocationAddressCases
+    ? {
+        operation:
+          useCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            ? 'birthEventLocationMutationTransformer'
+            : useCase === EventLocationAddressCases.PLACE_OF_DEATH
+            ? 'deathEventLocationMutationTransformer'
+            : 'marriageEventLocationMutationTransformer',
+        parameters: [
+          type === 'RADIO_GROUP'
+            ? { lineNumber: locationIndex }
+            : type === 'TEXT'
+            ? { transformedFieldName: location }
+            : { transformedFieldName: location, lineNumber: locationIndex }
+        ]
+      }
+    : locationIndex
+    ? {
+        operation: 'fieldToAddressLineTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          locationIndex
+        ]
+      }
+    : {
+        operation: 'fieldToAddressFhirPropertyTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          location
+        ]
+      }
+}
+
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
+function getQueryMapping(
+  type:
+    | 'TEXT'
+    | 'RADIO_GROUP'
+    | 'SELECT_WITH_OPTIONS'
+    | 'SELECT_WITH_DYNAMIC_OPTIONS',
+  location: string,
+  useCase: string,
+  locationIndex?: number
+): IQueryMapper {
+  return useCase in EventLocationAddressCases
+    ? {
+        operation: 'eventLocationQueryTransformer',
+        parameters:
+          type === 'SELECT_WITH_OPTIONS' ||
+          type === 'SELECT_WITH_DYNAMIC_OPTIONS'
+            ? [
+                { transformedFieldName: location, lineNumber: locationIndex },
+                {
+                  fieldsToIgnoreForLocalAddress: [
+                    `internationalDistrict${sentenceCase(useCase)}`,
+                    `internationalState${sentenceCase(useCase)}`
+                  ],
+                  fieldsToIgnoreForInternationalAddress: [
+                    `locationLevel3${sentenceCase(useCase)}`,
+                    `locationLevel4${sentenceCase(useCase)}`,
+                    `locationLevel5${sentenceCase(useCase)}`,
+                    `district${sentenceCase(useCase)}`,
+                    `state${sentenceCase(useCase)}`
+                  ]
+                }
+              ]
+            : [{ lineNumber: locationIndex }]
+      }
+    : locationIndex
+    ? {
+        operation: 'addressLineToFieldTransformer',
+        parameters:
+          type === 'SELECT_WITH_OPTIONS' ||
+          type === 'SELECT_WITH_DYNAMIC_OPTIONS'
+            ? [
+                useCase.toUpperCase() === 'PRIMARY'
+                  ? AddressCases.PRIMARY_ADDRESS
+                  : AddressCases.SECONDARY_ADDRESS,
+                locationIndex,
+                location
+              ]
+            : [
+                useCase.toUpperCase() === 'PRIMARY'
+                  ? AddressCases.PRIMARY_ADDRESS
+                  : AddressCases.SECONDARY_ADDRESS,
+                locationIndex
+              ]
+      }
+    : {
+        operation: 'addressFhirPropertyToFieldTransformer',
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          location
+        ]
+      }
+}
+
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
+export function getMapping(
+  type:
+    | 'TEXT'
+    | 'RADIO_GROUP'
+    | 'SELECT_WITH_OPTIONS'
+    | 'SELECT_WITH_DYNAMIC_OPTIONS',
+  location: string, // used to filter offline locations and for FHIR props - use empty string for address lines
+  useCase: string,
+  fieldName: string,
+  locationIndex?: number
+): IFormFieldMapping {
+  if (type !== 'RADIO_GROUP') {
+    return {
+      template: getTemplateMapping(location, useCase, fieldName, locationIndex),
+      mutation: getMutationMapping(type, location, useCase, locationIndex),
+      query: getQueryMapping(type, location, useCase, locationIndex)
+    }
+  } else {
+    // Radio Groups in addresses have no need for certificate template
+    return {
+      mutation: getMutationMapping(type, location, useCase, locationIndex),
+      query: getQueryMapping(type, location, useCase, locationIndex)
+    }
   }
 }
 
-// this function name is horrible, rename it
-export function getAddressLineLocationLevel(location: string) {
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
+function getSupportedExtraLocationLevels(location: string) {
   switch (location) {
     case 'locationLevel3':
       return 'locationLevel3'
@@ -645,6 +724,7 @@ export function getAddressLineLocationLevel(location: string) {
   }
 }
 
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export function getIdentifiersFromFieldId(fieldId: string) {
   const splitIds = fieldId.split('.')
   return {
@@ -655,20 +735,23 @@ export function getIdentifiersFromFieldId(fieldId: string) {
   }
 }
 
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export function getSectionIdentifiers(fieldId: string, form: ISerializedForm) {
   const { event, sectionId } = getIdentifiersFromFieldId(fieldId)
 
   const sectionIndex = form.sections.findIndex(({ id }) => id === sectionId)
   return {
     event,
-    sectionIndex
+    sectionIndex,
+    sectionId
   }
 }
 
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export function getGroupIdentifiers(fieldId: string, form: ISerializedForm) {
   const { event, groupId } = getIdentifiersFromFieldId(fieldId)
 
-  const { sectionIndex } = getSectionIdentifiers(fieldId, form)
+  const { sectionIndex, sectionId } = getSectionIdentifiers(fieldId, form)
 
   const groups = form.sections[sectionIndex].groups
 
@@ -677,14 +760,19 @@ export function getGroupIdentifiers(fieldId: string, form: ISerializedForm) {
   return {
     event,
     sectionIndex,
+    sectionId,
     groupIndex
   }
 }
 
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export function getFieldIdentifiers(fieldId: string, form: ISerializedForm) {
   const { event, fieldName } = getIdentifiersFromFieldId(fieldId)
 
-  const { sectionIndex, groupIndex } = getGroupIdentifiers(fieldId, form)
+  const { sectionIndex, groupIndex, sectionId } = getGroupIdentifiers(
+    fieldId,
+    form
+  )
 
   const fields = form.sections[sectionIndex].groups[groupIndex].fields
 
@@ -693,11 +781,13 @@ export function getFieldIdentifiers(fieldId: string, form: ISerializedForm) {
   return {
     event,
     sectionIndex,
+    sectionId,
     groupIndex,
     fieldIndex
   }
 }
 
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export const getAddressSubsection = (
   previewGroup: AddressSubsections,
   label: MessageDescriptor,
@@ -725,21 +815,25 @@ export const getAddressSubsection = (
   return fields
 }
 
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 function getAddressFieldsByConfiguration(
-  configuration: AllowedAddressConfigurations
+  configuration: AllowedAddressConfigurations,
+  section: string
 ): SerializedFormField[] {
   switch (configuration.config) {
     case EventLocationAddressCases.PLACE_OF_BIRTH:
     case EventLocationAddressCases.PLACE_OF_DEATH:
     case EventLocationAddressCases.PLACE_OF_MARRIAGE:
-      return getPlaceOfEventAddressFields(configuration.config)
+      return getAddressFields(section, configuration.config)
     case AddressCases.PRIMARY_ADDRESS:
       return getAddress(
+        section,
         AddressCases.PRIMARY_ADDRESS,
         configuration.conditionalCase
       )
     case AddressCases.SECONDARY_ADDRESS:
       return getAddress(
+        section,
         AddressCases.SECONDARY_ADDRESS,
         configuration.conditionalCase
       )
@@ -776,6 +870,7 @@ function getAddressFieldsByConfiguration(
   }
 }
 
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export function decorateFormsWithAddresses(
   defaultEventForm: ISerializedForm,
   event: string
@@ -784,16 +879,14 @@ export function decorateFormsWithAddresses(
   defaultAddressConfiguration.forEach(
     ({ precedingFieldId, configurations }: IAddressConfiguration) => {
       if (precedingFieldId.includes(event)) {
-        const { sectionIndex, groupIndex, fieldIndex } = getFieldIdentifiers(
-          precedingFieldId,
-          newForm
-        )
+        const { sectionIndex, sectionId, groupIndex, fieldIndex } =
+          getFieldIdentifiers(precedingFieldId, newForm)
 
         let addressFields: SerializedFormField[] = []
         let previewGroups: IPreviewGroup[] = []
         configurations.forEach((configuration) => {
           addressFields = addressFields.concat(
-            getAddressFieldsByConfiguration(configuration)
+            getAddressFieldsByConfiguration(configuration, sectionId)
           )
           previewGroups = previewGroups.concat(getPreviewGroups(configuration))
         })
@@ -816,11 +909,16 @@ export function decorateFormsWithAddresses(
   return newForm
 }
 
-export function getAddress(
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
+function getAddress(
+  section: string,
   addressCase: AddressCases,
   conditionalCase?: string
 ): SerializedFormField[] {
-  const defaultFields: SerializedFormField[] = getAddressFields(addressCase)
+  const defaultFields: SerializedFormField[] = getAddressFields(
+    section,
+    addressCase
+  )
   if (conditionalCase) {
     defaultFields.forEach((field) => {
       let conditional
