@@ -979,6 +979,8 @@
     "register.form.modal.desc.saveDeclarationConfirm": "Description for save declaration confirmation modal",
     "register.form.modal.title.deleteDeclarationConfirm": "Title for delete declaration confirmation modal",
     "register.form.modal.desc.deleteDeclarationConfirm": "Description for delete declaration confirmation modal",
+    "register.form.modal.title.exitWithoutSavingModalForCorrection": "Title for exiting correction record without saving confirmation",
+    "register.form.modal.desc.exitWithoutSavingModalForCorrection": "Description for exit declaration without saving confirmation modal for correct record",
     "register.form.modal.title.exitWithoutSavingDeclarationConfirm": "Title for exit declaration without saving confirmation modal",
     "register.form.modal.desc.exitWithoutSavingDeclarationConfirm": "Description for exit declaration without saving confirmation modal",
     "regHome.issued": "Label for registration status issued",
