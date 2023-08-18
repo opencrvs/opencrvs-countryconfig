@@ -35,6 +35,7 @@ import { cloneDeep } from 'lodash'
 
 // Use this function to edit the visibility of fields depending on user input
 function getRuralOrUrbanConditionals(
+  section: string,
   useCase: string,
   defaultConditionals: Conditional[]
 ) {
@@ -44,7 +45,9 @@ function getRuralOrUrbanConditionals(
       customConditionals = [
         {
           action: 'hide',
-          expression: `!values.state${sentenceCase(useCase)}`
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         }
       ]
       break
@@ -52,11 +55,15 @@ function getRuralOrUrbanConditionals(
       customConditionals = [
         {
           action: 'hide',
-          expression: `!values.state${sentenceCase(useCase)}`
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.district${sentenceCase(useCase)}`
+          expression: `!values.district${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         }
       ]
       break
@@ -64,15 +71,21 @@ function getRuralOrUrbanConditionals(
       customConditionals = [
         {
           action: 'hide',
-          expression: `!values.state${sentenceCase(useCase)}`
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.district${sentenceCase(useCase)}`
+          expression: `!values.district${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.locationLevel3${sentenceCase(useCase)}`
+          expression: `!values.locationLevel3${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}`
         }
       ]
       break
@@ -80,19 +93,27 @@ function getRuralOrUrbanConditionals(
       customConditionals = [
         {
           action: 'hide',
-          expression: `!values.state${sentenceCase(useCase)}`
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.district${sentenceCase(useCase)}`
+          expression: `!values.district${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.locationLevel3${sentenceCase(useCase)}`
+          expression: `!values.locationLevel3${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}`
         },
         {
           action: 'hide',
-          expression: `!values.locationLevel4${sentenceCase(useCase)}`
+          expression: `!values.locationLevel4${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}`
         }
       ]
       break
@@ -101,7 +122,11 @@ function getRuralOrUrbanConditionals(
 }
 
 // Use this function to edit the visibility of fields depending on user input
-export function getPlaceOfEventConditionals(location: string, useCase: string) {
+export function getPlaceOfEventConditionals(
+  section: string,
+  location: string,
+  useCase: string
+) {
   switch (location) {
     case 'country':
       return [
@@ -117,7 +142,9 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
       return [
         {
           action: 'hide',
-          expression: '!values.country'
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
@@ -128,18 +155,24 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
         },
         {
           action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         }
       ]
     case 'district':
       return [
         {
           action: 'hide',
-          expression: '!values.country'
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: '!values.state'
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
@@ -150,22 +183,30 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
         },
         {
           action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         }
       ]
     case 'locationLevel3':
       return [
         {
           action: 'hide',
-          expression: '!values.country'
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: '!values.state'
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: '!values.district'
+          expression: `!values.district${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
@@ -176,26 +217,36 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
         },
         {
           action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         }
       ]
     case 'locationLevel4':
       return [
         {
           action: 'hide',
-          expression: '!values.country'
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: '!values.state'
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: '!values.district'
+          expression: `!values.district${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: '!values.locationLevel3'
+          expression: `!values.locationLevel3${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}`
         },
         {
           action: 'hide',
@@ -206,30 +257,42 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
         },
         {
           action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         }
       ]
     case 'locationLevel5':
       return [
         {
           action: 'hide',
-          expression: '!values.country'
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: '!values.state'
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: '!values.district'
+          expression: `!values.district${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: '!values.locationLevel3'
+          expression: `!values.locationLevel3${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}`
         },
         {
           action: 'hide',
-          expression: '!values.locationLevel4'
+          expression: `!values.locationLevel4${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         },
         {
           action: 'hide',
@@ -240,14 +303,18 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
         },
         {
           action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         }
       ]
     case 'ruralOrUrban':
-      return getRuralOrUrbanConditionals('', [
+      return getRuralOrUrbanConditionals(section, useCase, [
         {
           action: 'hide',
-          expression: '!values.country'
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
@@ -258,14 +325,18 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
         },
         {
           action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         }
       ])
     case 'urban':
-      return getRuralOrUrbanConditionals('', [
+      return getRuralOrUrbanConditionals(section, useCase, [
         {
           action: 'hide',
-          expression: '!values.country'
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
@@ -276,18 +347,24 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
         },
         {
           action: 'hide',
-          expression: 'values.ruralOrUrban !== "URBAN"'
+          expression: `values.ruralOrUrban${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}) !== "URBAN"`
         },
         {
           action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         }
       ])
     case 'rural':
-      return getRuralOrUrbanConditionals('', [
+      return getRuralOrUrbanConditionals(section, useCase, [
         {
           action: 'hide',
-          expression: '!values.country'
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
@@ -298,18 +375,24 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
         },
         {
           action: 'hide',
-          expression: 'values.ruralOrUrban !== "RURAL"'
+          expression: `values.ruralOrUrban${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}) !== "RURAL"`
         },
         {
           action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         }
       ])
     case 'international':
       return [
         {
           action: 'hide',
-          expression: 'isDefaultCountry(values.country)'
+          expression: `isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         },
         {
           action: 'hide',
@@ -327,7 +410,11 @@ export function getPlaceOfEventConditionals(location: string, useCase: string) {
 }
 
 // Use this function to edit the visibility of fields depending on user input
-export function getAddressConditionals(location: string, useCase: string) {
+export function getAddressConditionals(
+  section: string,
+  location: string,
+  useCase: string
+) {
   switch (location) {
     case 'country':
       return [
@@ -335,166 +422,208 @@ export function getAddressConditionals(location: string, useCase: string) {
           action: 'disable',
           expression: `values?.fieldsModifiedByNidUserInfo?.includes('country${sentenceCase(
             useCase
-          )}')`
+          )}${sentenceCase(section)}')`
         }
       ]
     case 'state':
       return [
         {
           action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}`
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
           expression: `!isDefaultCountry(values.country${sentenceCase(
             useCase
-          )})`
+          )}${sentenceCase(section)})`
         }
       ]
     case 'district':
       return [
         {
           action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}`
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.state${sentenceCase(useCase)}`
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
           expression: `!isDefaultCountry(values.country${sentenceCase(
             useCase
-          )})`
+          )}${sentenceCase(section)})`
         }
       ]
     case 'locationLevel3':
       return [
         {
           action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}`
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.state${sentenceCase(useCase)}`
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.district${sentenceCase(useCase)}`
+          expression: `!values.district${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
           expression: `!isDefaultCountry(values.country${sentenceCase(
             useCase
-          )})`
+          )}${sentenceCase(section)})`
         }
       ]
     case 'locationLevel4':
       return [
         {
           action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}`
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.state${sentenceCase(useCase)}`
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.district${sentenceCase(useCase)}`
+          expression: `!values.district${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.locationLevel3${sentenceCase(useCase)}`
+          expression: `!values.locationLevel3${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}`
         },
         {
           action: 'hide',
           expression: `!isDefaultCountry(values.country${sentenceCase(
             useCase
-          )})`
+          )}${sentenceCase(section)})`
         }
       ]
     case 'locationLevel5':
       return [
         {
           action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}`
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.state${sentenceCase(useCase)}`
+          expression: `!values.state${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.district${sentenceCase(useCase)}`
+          expression: `!values.district${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `!values.locationLevel3${sentenceCase(useCase)}`
+          expression: `!values.locationLevel3${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}`
         },
         {
           action: 'hide',
-          expression: `!values.locationLevel4${sentenceCase(useCase)}`
+          expression: `!values.locationLevel4${sentenceCase(
+            useCase
+          )}${sentenceCase(section)}`
         },
         {
           action: 'hide',
           expression: `!isDefaultCountry(values.country${sentenceCase(
             useCase
-          )})`
+          )}${sentenceCase(section)})`
         }
       ]
     case 'ruralOrUrban':
-      return getRuralOrUrbanConditionals(useCase, [
+      return getRuralOrUrbanConditionals(section, useCase, [
         {
           action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}`
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
           expression: `!isDefaultCountry(values.country${sentenceCase(
             useCase
-          )})`
+          )}${sentenceCase(section)})`
         }
       ])
     case 'urban':
-      return getRuralOrUrbanConditionals(useCase, [
+      return getRuralOrUrbanConditionals(section, useCase, [
         {
           action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}`
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `values.ruralOrUrban${sentenceCase(useCase)} !== "URBAN"`
+          expression: `values.ruralOrUrban${sentenceCase(
+            useCase
+          )}${sentenceCase(section)} !== "URBAN"`
         },
         {
           action: 'hide',
           expression: `!isDefaultCountry(values.country${sentenceCase(
             useCase
-          )})`
+          )}${sentenceCase(section)})`
         }
       ])
     case 'rural':
-      return getRuralOrUrbanConditionals(useCase, [
+      return getRuralOrUrbanConditionals(section, useCase, [
         {
           action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}`
+          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
+            section
+          )}`
         },
         {
           action: 'hide',
-          expression: `values.ruralOrUrban${sentenceCase(useCase)} !== "RURAL"`
+          expression: `values.ruralOrUrban${sentenceCase(
+            useCase
+          )}${sentenceCase(section)} !== "RURAL"`
         },
         {
           action: 'hide',
           expression: `!isDefaultCountry(values.country${sentenceCase(
             useCase
-          )})`
+          )}${sentenceCase(section)})`
         }
       ])
     case 'international':
       return [
         {
           action: 'hide',
-          expression: `isDefaultCountry(values.country${sentenceCase(useCase)})`
+          expression: `isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )}${sentenceCase(section)})`
         }
       ]
     default:
@@ -824,7 +953,7 @@ function getAddressFieldsByConfiguration(
     case EventLocationAddressCases.PLACE_OF_BIRTH:
     case EventLocationAddressCases.PLACE_OF_DEATH:
     case EventLocationAddressCases.PLACE_OF_MARRIAGE:
-      return getAddressFields(section, configuration.config)
+      return getAddressFields('', configuration.config)
     case AddressCases.PRIMARY_ADDRESS:
       return getAddress(
         section,

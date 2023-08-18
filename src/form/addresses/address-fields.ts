@@ -104,10 +104,11 @@ export function getAddressLocationSelect(
     conditionals:
       useCase in EventLocationAddressCases
         ? getPlaceOfEventConditionals(
+            section,
             location,
             useCase as EventLocationAddressCases
           )
-        : getAddressConditionals(location, useCase),
+        : getAddressConditionals(section, location, useCase),
     mapping: getMapping(
       'SELECT_WITH_DYNAMIC_OPTIONS',
       location,
@@ -190,8 +191,8 @@ export function getAddressFields(
       },
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('country', useCase)
-          : getAddressConditionals('country', useCase),
+          ? getPlaceOfEventConditionals(section, 'country', useCase)
+          : getAddressConditionals(section, 'country', useCase),
       mapping: getMapping(
         'SELECT_WITH_OPTIONS',
         'country', // Maps form value to FHIR prop. Use empty string for FHIR Address line index
@@ -218,8 +219,8 @@ export function getAddressFields(
       validator: [],
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('ruralOrUrban', useCase)
-          : getAddressConditionals('ruralOrUrban', useCase),
+          ? getPlaceOfEventConditionals(section, 'ruralOrUrban', useCase)
+          : getAddressConditionals(section, 'ruralOrUrban', useCase),
       mapping: getMapping(
         'RADIO_GROUP',
         '', // No FHIR prop exists for this custom address prop. Use empty string for FHIR Address line index
@@ -243,8 +244,8 @@ export function getAddressFields(
       dependency: 'district',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('urban', useCase)
-          : getAddressConditionals('urban', useCase),
+          ? getPlaceOfEventConditionals(section, 'urban', useCase)
+          : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
         'TEXT',
         'city',
@@ -269,8 +270,8 @@ export function getAddressFields(
       dependency: 'district',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('urban', useCase)
-          : getAddressConditionals('urban', useCase),
+          ? getPlaceOfEventConditionals(section, 'urban', useCase)
+          : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
         'TEXT',
         '',
@@ -298,8 +299,8 @@ export function getAddressFields(
       dependency: 'district',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('urban', useCase)
-          : getAddressConditionals('urban', useCase),
+          ? getPlaceOfEventConditionals(section, 'urban', useCase)
+          : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
         'TEXT',
         '',
@@ -327,8 +328,8 @@ export function getAddressFields(
       dependency: 'district',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('urban', useCase)
-          : getAddressConditionals('urban', useCase),
+          ? getPlaceOfEventConditionals(section, 'urban', useCase)
+          : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
         'TEXT',
         '',
@@ -354,8 +355,8 @@ export function getAddressFields(
       dependency: 'district',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('urban', useCase)
-          : getAddressConditionals('urban', useCase),
+          ? getPlaceOfEventConditionals(section, 'urban', useCase)
+          : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
         'TEXT',
         'postalCode',
@@ -381,8 +382,8 @@ export function getAddressFields(
       dependency: 'district',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('rural', useCase)
-          : getAddressConditionals('rural', useCase),
+          ? getPlaceOfEventConditionals(section, 'rural', useCase)
+          : getAddressConditionals(section, 'rural', useCase),
       mapping: getMapping(
         'TEXT',
         '',
@@ -410,8 +411,8 @@ export function getAddressFields(
       dependency: 'country',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('international', useCase)
-          : getAddressConditionals('international', useCase),
+          ? getPlaceOfEventConditionals(section, 'international', useCase)
+          : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
         'TEXT',
         'state',
@@ -436,8 +437,8 @@ export function getAddressFields(
       dependency: 'country',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('international', useCase)
-          : getAddressConditionals('international', useCase),
+          ? getPlaceOfEventConditionals(section, 'international', useCase)
+          : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
         'TEXT',
         'district',
@@ -460,8 +461,8 @@ export function getAddressFields(
       dependency: 'country',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('international', useCase)
-          : getAddressConditionals('international', useCase),
+          ? getPlaceOfEventConditionals(section, 'international', useCase)
+          : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
         'TEXT',
         'city',
@@ -486,8 +487,8 @@ export function getAddressFields(
       dependency: 'country',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('international', useCase)
-          : getAddressConditionals('international', useCase),
+          ? getPlaceOfEventConditionals(section, 'international', useCase)
+          : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
         'TEXT',
         '',
@@ -515,8 +516,8 @@ export function getAddressFields(
       dependency: 'country',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('international', useCase)
-          : getAddressConditionals('international', useCase),
+          ? getPlaceOfEventConditionals(section, 'international', useCase)
+          : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
         'TEXT',
         '',
@@ -544,8 +545,8 @@ export function getAddressFields(
       dependency: 'country',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('international', useCase)
-          : getAddressConditionals('international', useCase),
+          ? getPlaceOfEventConditionals(section, 'international', useCase)
+          : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
         'TEXT',
         '',
@@ -557,7 +558,7 @@ export function getAddressFields(
       )
     },
     {
-      name: `internationalPostcode${sentenceCase(useCase)}${sentenceCase(
+      name: `internationalPostalCode${sentenceCase(useCase)}${sentenceCase(
         section
       )}`,
       type: 'TEXT',
@@ -573,13 +574,15 @@ export function getAddressFields(
       dependency: 'country',
       conditionals:
         useCase in EventLocationAddressCases
-          ? getPlaceOfEventConditionals('international', useCase)
-          : getAddressConditionals('international', useCase),
+          ? getPlaceOfEventConditionals(section, 'international', useCase)
+          : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
         'TEXT',
         'postalCode',
         useCase,
-        `internationalPostcode${sentenceCase(useCase)}${sentenceCase(section)}`
+        `internationalPostalCode${sentenceCase(useCase)}${sentenceCase(
+          section
+        )}`
       )
     }
   ]
