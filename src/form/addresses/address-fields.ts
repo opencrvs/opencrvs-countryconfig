@@ -9,7 +9,9 @@ import {
 } from '../types/types'
 import {
   getAddressConditionals,
+  getAddressLineLocationLevel,
   getDependency,
+  getMapping,
   getPlaceOfEventConditionals,
   getRuralOrUrbanConditionals,
   sentenceCase
@@ -72,15 +74,17 @@ export function getAddressLocationSelect(
   useCase: string,
   locationIndex?: number
 ): SerializedFormField {
+  const fieldName = `${location}${sentenceCase(useCase)}`
   return {
-    name: `${location}${sentenceCase(useCase)}`,
+    name: fieldName,
     type: 'SELECT_WITH_DYNAMIC_OPTIONS',
     label: {
-      defaultMessage: '',
+      defaultMessage: sentenceCase(location),
       description: `Title for the ${location} select`,
       id: `form.field.label.${location}`
     },
-    previewGroup: `${useCase}Address`,
+    previewGroup:
+      useCase in EventLocationAddressCases ? useCase : `${useCase}Address`,
     required: true,
     initialValue: '',
     validator: [],
@@ -94,117 +98,14 @@ export function getAddressLocationSelect(
       dependency: getDependency(location, useCase),
       initialValue: 'agentDefault'
     },
-    conditionals: getAddressConditionals(location, useCase),
-    mapping: locationIndex
-      ? {
-          mutation: {
-            operation: 'fieldToAddressLineTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              locationIndex
-            ]
-          },
-          query: {
-            operation: 'addressLineToFieldTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              locationIndex,
-              location
-            ]
-          }
-        }
-      : {
-          mutation: {
-            operation: 'fieldToAddressFhirPropertyTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              location
-            ]
-          },
-          query: {
-            operation: 'addressFhirPropertyToFieldTransformer',
-            parameters: [
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-              location
-            ]
-          }
-        }
-  }
-}
-
-export function getPlaceOfEventLocationSelect(
-  location: string,
-  configCase: EventLocationAddressCases,
-  locationIndex?: number
-): SerializedFormField {
-  return {
-    name: location,
-    type: 'SELECT_WITH_DYNAMIC_OPTIONS',
-    label: {
-      defaultMessage: sentenceCase(location),
-      description: `Title for the ${location} select`,
-      id: `form.field.label.${location}`
-    },
-    previewGroup: configCase,
-    required: true,
-    initialValue: '',
-    validator: [],
-    placeholder: {
-      defaultMessage: 'Select',
-      description: 'Placeholder text for a select',
-      id: 'form.field.select.placeholder'
-    },
-    dynamicOptions: {
-      resource: 'locations',
-      dependency: getDependency(location, configCase),
-      initialValue: 'agentDefault'
-    },
-    conditionals: getPlaceOfEventConditionals(location, configCase),
-    mapping: {
-      template: {
-        fieldName: configCase,
-        operation: 'eventLocationAddressOfflineTransformer',
-        parameters: [location, configCase]
-      },
-      mutation: {
-        operation:
-          configCase === EventLocationAddressCases.PLACE_OF_BIRTH
-            ? 'birthEventLocationMutationTransformer'
-            : configCase === EventLocationAddressCases.PLACE_OF_DEATH
-            ? 'deathEventLocationMutationTransformer'
-            : 'marriageEventLocationMutationTransformer',
-        parameters: [
-          { transformedFieldName: location, lineNumber: locationIndex }
-        ]
-      },
-      query: {
-        operation: 'eventLocationQueryTransformer',
-        parameters: [
-          { transformedFieldName: location, lineNumber: locationIndex },
-          {
-            fieldsToIgnoreForLocalAddress: [
-              'internationalDistrict',
-              'internationalState'
-            ],
-            fieldsToIgnoreForInternationalAddress: [
-              'locationLevel3',
-              'locationLevel4',
-              'locationLevel5',
-              'district',
-              'state'
-            ]
-          }
-        ]
-      }
-    }
+    conditionals:
+      useCase in EventLocationAddressCases
+        ? getPlaceOfEventConditionals(
+            location,
+            useCase as EventLocationAddressCases
+          )
+        : getAddressConditionals(location, useCase),
+    mapping: getMapping(location, useCase, fieldName, locationIndex)
   }
 }
 
@@ -243,56 +144,23 @@ function getAdminLevelSelects(useCase: string): SerializedFormField[] {
   }
 }
 
-function getPlaceOfEventAdminLevelSelects(
-  configCase: EventLocationAddressCases
-): SerializedFormField[] {
-  switch (ADMIN_LEVELS) {
-    case 1:
-      return [getPlaceOfEventLocationSelect('state', configCase)]
-    case 2:
-      return [
-        getPlaceOfEventLocationSelect('state', configCase),
-        getPlaceOfEventLocationSelect('district', configCase)
-      ]
-    case 3:
-      return [
-        getPlaceOfEventLocationSelect('state', configCase),
-        getPlaceOfEventLocationSelect('district', configCase),
-        getPlaceOfEventLocationSelect('locationLevel3', configCase, 10)
-      ]
-    case 4:
-      return [
-        getPlaceOfEventLocationSelect('state', configCase),
-        getPlaceOfEventLocationSelect('district', configCase),
-        getPlaceOfEventLocationSelect('locationLevel3', configCase, 10),
-        getPlaceOfEventLocationSelect('locationLevel4', configCase, 11)
-      ]
-    case 5:
-      return [
-        getPlaceOfEventLocationSelect('state', configCase),
-        getPlaceOfEventLocationSelect('district', configCase),
-        getPlaceOfEventLocationSelect('locationLevel3', configCase, 10),
-        getPlaceOfEventLocationSelect('locationLevel4', configCase, 11),
-        getPlaceOfEventLocationSelect('locationLevel5', configCase, 12)
-      ]
-    default:
-      return [getPlaceOfEventLocationSelect('state', configCase)]
-  }
-}
-
 export function getPlaceOfEventAddressFields(
-  configCase: EventLocationAddressCases
+  addressCase: EventLocationAddressCases | AddressCases
 ): SerializedFormField[] {
+  let useCase = addressCase as string
+  if (addressCase in AddressCases) {
+    useCase = useCase === AddressCases.PRIMARY_ADDRESS ? 'primary' : 'secondary'
+  }
   return [
     {
-      name: 'country',
+      name: `country${sentenceCase(useCase)}`,
       type: 'SELECT_WITH_OPTIONS',
       label: {
         defaultMessage: 'Country',
         description: 'Title for the country select',
         id: 'form.field.label.country'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: true,
       initialValue: 'FAR',
       validator: [],
@@ -304,39 +172,15 @@ export function getPlaceOfEventAddressFields(
       options: {
         resource: 'countries'
       },
-      conditionals: [
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        }
-      ],
-      mapping: {
-        template: {
-          fieldName: configCase,
-          operation: 'eventLocationAddressOfflineTransformer',
-          parameters: ['country', configCase]
-        },
-        mutation: {
-          operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
-              ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
-              ? 'deathEventLocationMutationTransformer'
-              : 'marriageEventLocationMutationTransformer',
-          parameters: [{ transformedFieldName: 'country' }]
-        },
-        query: {
-          operation: 'eventLocationQueryTransformer',
-          parameters: [{ transformedFieldName: 'country' }]
-        }
-      }
+      conditionals:
+        useCase in AddressCases
+          ? getPlaceOfEventConditionals('country', useCase)
+          : getAddressConditionals('country', useCase),
+      mapping: getMapping('country', useCase, `country${sentenceCase(useCase)}`)
     },
-    ...getPlaceOfEventAdminLevelSelects(configCase),
+    ...getAdminLevelSelects(useCase),
     {
-      name: 'ruralOrUrban',
+      name: `ruralOrUrban${sentenceCase(useCase)}`,
       type: 'RADIO_GROUP',
       label: {
         defaultMessage: ' ',
@@ -348,86 +192,69 @@ export function getPlaceOfEventAddressFields(
       flexDirection: FLEX_DIRECTION.ROW,
       required: false,
       hideValueInPreview: true,
-      previewGroup: configCase,
+      previewGroup: useCase,
       validator: [],
-      conditionals: getRuralOrUrbanConditionals('', [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]),
-      mapping: {
-        mutation: {
-          operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
-              ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
-              ? 'deathEventLocationMutationTransformer'
-              : 'marriageEventLocationMutationTransformer',
-          parameters: [{ lineNumber: 5 }]
-        },
-        query: {
-          operation: 'eventLocationQueryTransformer',
-          parameters: [{ lineNumber: 5 }]
-        }
-      }
+      conditionals:
+        useCase in AddressCases
+          ? getPlaceOfEventConditionals('ruralOrUrban', useCase)
+          : getAddressConditionals('ruralOrUrban', useCase),
+      mapping:
+        //ruralOrUrban radio has no certificate template
+        useCase in AddressCases
+          ? {
+              mutation: {
+                operation:
+                  useCase === EventLocationAddressCases.PLACE_OF_BIRTH
+                    ? 'birthEventLocationMutationTransformer'
+                    : useCase === EventLocationAddressCases.PLACE_OF_DEATH
+                    ? 'deathEventLocationMutationTransformer'
+                    : 'marriageEventLocationMutationTransformer',
+                parameters: [{ lineNumber: 5 }]
+              },
+              query: {
+                operation: 'eventLocationQueryTransformer',
+                parameters: [{ lineNumber: 5 }]
+              }
+            }
+          : {
+              mutation: {
+                operation: 'fieldToAddressLineTransformer',
+                parameters: [addressCase, 5]
+              },
+              query: {
+                operation: 'addressLineToFieldTransformer',
+                parameters: [addressCase, 5]
+              }
+            }
     },
     {
-      name: 'cityUrbanOption',
+      name: `city${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Town',
         description: 'Title for the address line 4',
         id: 'form.field.label.cityUrbanOption'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
       dependency: 'district',
-      conditionals: getRuralOrUrbanConditionals('', [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: 'values.ruralOrUrban !== "URBAN"'
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]),
+      conditionals:
+        useCase in AddressCases
+          ? getPlaceOfEventConditionals('urban', useCase)
+          : getAddressConditionals('urban', useCase),
       mapping: {
         template: {
-          fieldName: configCase,
-          operation: 'eventLocationAddressOfflineTransformer',
-          parameters: ['city', configCase]
+          fieldName: `city${sentenceCase(useCase)}`,
+          operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
+          parameters: ['city']
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ transformedFieldName: 'city' }]
@@ -439,50 +266,33 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'addressLine3UrbanOption',
+      name: `addressLine3UrbanOption${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Residential Area',
         description: 'Title for the address line 3 option 2',
         id: 'form.field.label.addressLine3UrbanOption'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
       dependency: 'district',
-      conditionals: getRuralOrUrbanConditionals('', [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: 'values.ruralOrUrban !== "URBAN"'
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]),
+      conditionals:
+        useCase in AddressCases
+          ? getPlaceOfEventConditionals('urban', useCase)
+          : getAddressConditionals('urban', useCase),
       mapping: {
         template: {
-          fieldName: configCase,
+          fieldName: `addressLine3UrbanOption${sentenceCase(useCase)}`,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [2, `${configCase}AddressLine3`]
+          parameters: [2]
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ lineNumber: 2 }]
@@ -494,50 +304,33 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'addressLine2UrbanOption',
+      name: `addressLine2UrbanOption${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Street',
         description: 'Title for the address line 1',
         id: 'form.field.label.addressLine2UrbanOption'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
       dependency: 'district',
-      conditionals: getRuralOrUrbanConditionals('', [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: 'values.ruralOrUrban !== "URBAN"'
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]),
+      conditionals:
+        useCase in AddressCases
+          ? getPlaceOfEventConditionals('urban', useCase)
+          : getAddressConditionals('urban', useCase),
       mapping: {
         template: {
-          fieldName: configCase,
+          fieldName: `addressLine2UrbanOption${sentenceCase(useCase)}`,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [1, `${configCase}AddressLine2`]
+          parameters: [1]
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ lineNumber: 1 }]
@@ -549,50 +342,33 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'numberUrbanOption',
+      name: `addressLine1UrbanOption${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Number',
         description: 'Title for the number field',
         id: 'form.field.label.number'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
       dependency: 'district',
-      conditionals: getRuralOrUrbanConditionals('', [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: 'values.ruralOrUrban !== "URBAN"'
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]),
+      conditionals:
+        useCase in AddressCases
+          ? getPlaceOfEventConditionals('urban', useCase)
+          : getAddressConditionals('urban', useCase),
       mapping: {
         template: {
-          fieldName: configCase,
+          fieldName: `addressLine1UrbanOption${sentenceCase(useCase)}`,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [0, `${configCase}Number`]
+          parameters: [0]
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ lineNumber: 0 }]
@@ -604,50 +380,33 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'postalCode',
+      name: `postalCode${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Postcode / Zip',
         description: 'Title for the international postcode',
         id: 'form.field.label.internationalPostcode'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
       dependency: 'district',
-      conditionals: getRuralOrUrbanConditionals('', [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: 'values.ruralOrUrban !== "URBAN"'
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]),
+      conditionals:
+        useCase in AddressCases
+          ? getPlaceOfEventConditionals('urban', useCase)
+          : getAddressConditionals('urban', useCase),
       mapping: {
         template: {
-          fieldName: configCase,
-          operation: 'eventLocationAddressOfflineTransformer',
-          parameters: ['postalCode', configCase]
+          fieldName: `postalCode${sentenceCase(useCase)}`,
+          operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
+          parameters: ['postalCode']
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ transformedFieldName: 'postalCode' }]
@@ -659,50 +418,33 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'addressLine5',
+      name: `addressLine1RuralOption${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Village',
         description: 'Title for the address line 1',
-        id: 'form.field.label.addressLine5'
+        id: 'form.field.label.addressLine1RuralOption'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
       dependency: 'district',
-      conditionals: getRuralOrUrbanConditionals('', [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: 'values.ruralOrUrban !== "RURAL"'
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]),
+      conditionals:
+        useCase in AddressCases
+          ? getPlaceOfEventConditionals('rural', useCase)
+          : getAddressConditionals('rural', useCase),
       mapping: {
         template: {
-          fieldName: configCase,
+          fieldName: `addressLine1RuralOption${sentenceCase(useCase)}`,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [4, `${configCase}AddressLine5`]
+          parameters: [4]
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ lineNumber: 4 }]
@@ -714,14 +456,14 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'internationalState',
+      name: `internationalState${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'State',
         description: 'Title for the international state select',
         id: 'form.field.label.internationalState'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: true,
       initialValue: '',
       validator: [],
@@ -734,22 +476,22 @@ export function getPlaceOfEventAddressFields(
         {
           action: 'hide',
           expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
               : ''
         }
       ],
       mapping: {
         template: {
-          fieldName: configCase,
-          operation: 'eventLocationAddressOfflineTransformer',
-          parameters: ['state', configCase]
+          fieldName: `internationalState${sentenceCase(useCase)}`,
+          operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
+          parameters: ['state']
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ transformedFieldName: 'state' }]
@@ -760,24 +502,27 @@ export function getPlaceOfEventAddressFields(
             { transformedFieldName: 'state' },
             {
               fieldsToIgnoreForLocalAddress: [
-                'internationalDistrict',
-                'internationalState'
+                `internationalDistrict${sentenceCase(useCase)}`,
+                `internationalState${sentenceCase(useCase)}`
               ],
-              fieldsToIgnoreForInternationalAddress: ['district', 'state']
+              fieldsToIgnoreForInternationalAddress: [
+                `district${sentenceCase(useCase)}`,
+                `state${sentenceCase(useCase)}`
+              ]
             }
           ]
         }
       }
     },
     {
-      name: 'internationalDistrict',
+      name: `internationalDistrict${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'District',
         description: 'Title for the international district select',
         id: 'form.field.label.internationalDistrict'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: true,
       initialValue: '',
       validator: [],
@@ -790,22 +535,22 @@ export function getPlaceOfEventAddressFields(
         {
           action: 'hide',
           expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
               : ''
         }
       ],
       mapping: {
         template: {
-          fieldName: configCase,
-          operation: 'eventLocationAddressOfflineTransformer',
-          parameters: ['district', configCase]
+          fieldName: `internationalDistrict${sentenceCase(useCase)}`,
+          operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
+          parameters: ['district']
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ transformedFieldName: 'district' }]
@@ -816,24 +561,27 @@ export function getPlaceOfEventAddressFields(
             { transformedFieldName: 'district' },
             {
               fieldsToIgnoreForLocalAddress: [
-                'internationalDistrict',
-                'internationalState'
+                `internationalDistrict${sentenceCase(useCase)}`,
+                `internationalState${sentenceCase(useCase)}`
               ],
-              fieldsToIgnoreForInternationalAddress: ['district', 'state']
+              fieldsToIgnoreForInternationalAddress: [
+                `district${sentenceCase(useCase)}`,
+                `state${sentenceCase(useCase)}`
+              ]
             }
           ]
         }
       }
     },
     {
-      name: 'internationalCity',
+      name: `internationalCity${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'City / Town',
         description: 'Title for the international city select',
         id: 'form.field.label.internationalCity'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
@@ -846,17 +594,22 @@ export function getPlaceOfEventAddressFields(
         {
           action: 'hide',
           expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
               : ''
         }
       ],
       mapping: {
+        template: {
+          fieldName: `internationalCity${sentenceCase(useCase)}`,
+          operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
+          parameters: ['state']
+        },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ transformedFieldName: 'city' }]
@@ -868,14 +621,14 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'internationalAddressLine1',
+      name: `internationalAddressLine1${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Address Line 1',
         description: 'Title for the international address line 1 select',
         id: 'form.field.label.internationalAddressLine1'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
@@ -888,22 +641,22 @@ export function getPlaceOfEventAddressFields(
         {
           action: 'hide',
           expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
               : ''
         }
       ],
       mapping: {
         template: {
-          fieldName: configCase,
+          fieldName: `internationalAddressLine1${sentenceCase(useCase)}`,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [6, `${configCase}AddressLine1`]
+          parameters: [6]
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ lineNumber: 6 }]
@@ -915,14 +668,14 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'internationalAddressLine2',
+      name: `internationalAddressLine2${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Address Line 2',
         description: 'Title for the international address line 2 select',
         id: 'form.field.label.internationalAddressLine2'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
@@ -935,22 +688,22 @@ export function getPlaceOfEventAddressFields(
         {
           action: 'hide',
           expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
               : ''
         }
       ],
       mapping: {
         template: {
-          fieldName: configCase,
+          fieldName: `internationalAddressLine2${sentenceCase(useCase)}`,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [7, `${configCase}AddressLine2`]
+          parameters: [7]
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ lineNumber: 7 }]
@@ -962,14 +715,14 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'internationalAddressLine3',
+      name: `internationalAddressLine3${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Address Line 3',
         description: 'Title for the international address line 3 select',
         id: 'form.field.label.internationalAddressLine3'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
@@ -982,22 +735,22 @@ export function getPlaceOfEventAddressFields(
         {
           action: 'hide',
           expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
               : ''
         }
       ],
       mapping: {
         template: {
-          fieldName: configCase,
+          fieldName: `internationalAddressLine3${sentenceCase(useCase)}`,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [8, `${configCase}AddressLine3`]
+          parameters: [8]
         },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ lineNumber: 8 }]
@@ -1009,14 +762,14 @@ export function getPlaceOfEventAddressFields(
       }
     },
     {
-      name: 'internationalPostcode',
+      name: `internationalPostcode${sentenceCase(useCase)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Postcode / Zip',
         description: 'Title for the international postcode',
         id: 'form.field.label.internationalPostcode'
       },
-      previewGroup: configCase,
+      previewGroup: useCase,
       required: false,
       initialValue: '',
       validator: [],
@@ -1029,17 +782,22 @@ export function getPlaceOfEventAddressFields(
         {
           action: 'hide',
           expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
               : ''
         }
       ],
       mapping: {
+        template: {
+          fieldName: `internationalPostcode${sentenceCase(useCase)}`,
+          operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
+          parameters: ['postalCode']
+        },
         mutation: {
           operation:
-            configCase === EventLocationAddressCases.PLACE_OF_BIRTH
+            useCase === EventLocationAddressCases.PLACE_OF_BIRTH
               ? 'birthEventLocationMutationTransformer'
-              : configCase === EventLocationAddressCases.PLACE_OF_DEATH
+              : useCase === EventLocationAddressCases.PLACE_OF_DEATH
               ? 'deathEventLocationMutationTransformer'
               : 'marriageEventLocationMutationTransformer',
           parameters: [{ transformedFieldName: 'postalCode' }]
@@ -1088,7 +846,7 @@ export function getAddressFields(
       mapping: {
         template: {
           fieldName: `country${sentenceCase(useCase)}`,
-          operation: 'individualAddressTransformer',
+          operation: 'addressFHIRPropertyTemplateTransformer',
           parameters: [addressCase, 'country']
         },
         mutation: {
@@ -1172,7 +930,7 @@ export function getAddressFields(
       mapping: {
         template: {
           fieldName: `cityUrbanOption${sentenceCase(useCase)}`,
-          operation: 'individualAddressTransformer',
+          operation: 'addressFHIRPropertyTemplateTransformer',
           parameters: [addressCase, 'city']
         },
         mutation: {
@@ -1352,7 +1110,7 @@ export function getAddressFields(
       mapping: {
         template: {
           fieldName: `postcode${sentenceCase(useCase)}`,
-          operation: 'individualAddressTransformer',
+          operation: 'addressFHIRPropertyTemplateTransformer',
           parameters: [addressCase, 'postalCode']
         },
         mutation: {
@@ -1371,7 +1129,7 @@ export function getAddressFields(
       label: {
         defaultMessage: 'Village',
         description: 'Title for the address line 1',
-        id: 'form.field.label.addressLine5'
+        id: 'form.field.label.addressLine1RuralOption'
       },
       previewGroup: `${useCase}Address`,
       required: false,
@@ -1436,7 +1194,7 @@ export function getAddressFields(
       mapping: {
         template: {
           fieldName: `internationalState${sentenceCase(useCase)}`,
-          operation: 'individualAddressTransformer',
+          operation: 'addressFHIRPropertyTemplateTransformer',
           parameters: [addressCase, 'state']
         },
         mutation: {
@@ -1475,7 +1233,7 @@ export function getAddressFields(
       mapping: {
         template: {
           fieldName: `internationalDistrict${sentenceCase(useCase)}`,
-          operation: 'individualAddressTransformer',
+          operation: 'addressFHIRPropertyTemplateTransformer',
           parameters: [addressCase, 'district']
         },
         mutation: {
@@ -1514,7 +1272,7 @@ export function getAddressFields(
       mapping: {
         template: {
           fieldName: `internationalCity${sentenceCase(useCase)}`,
-          operation: 'individualAddressTransformer',
+          operation: 'addressFHIRPropertyTemplateTransformer',
           parameters: [addressCase, 'city']
         },
         mutation: {
@@ -1662,7 +1420,7 @@ export function getAddressFields(
       mapping: {
         template: {
           fieldName: `internationalPostcode${sentenceCase(useCase)}`,
-          operation: 'individualAddressTransformer',
+          operation: 'addressFHIRPropertyTemplateTransformer',
           parameters: [addressCase, 'postalCode']
         },
         mutation: {

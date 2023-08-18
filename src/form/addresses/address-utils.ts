@@ -33,148 +33,6 @@ import {
 import { getPreviewGroups } from '../common/preview-groups'
 import { cloneDeep } from 'lodash'
 
-export function getPlaceOfEventConditionals(
-  location: string,
-  configCase: EventLocationAddressCases
-) {
-  switch (location) {
-    case 'state':
-      return [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]
-    case 'district':
-      return [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression: '!values.state'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]
-    case 'locationLevel3':
-      return [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression: '!values.state'
-        },
-        {
-          action: 'hide',
-          expression: '!values.district'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]
-    case 'locationLevel4':
-      return [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression: '!values.state'
-        },
-        {
-          action: 'hide',
-          expression: '!values.district'
-        },
-        {
-          action: 'hide',
-          expression: '!values.locationLevel3'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]
-    case 'locationLevel5':
-      return [
-        {
-          action: 'hide',
-          expression: '!values.country'
-        },
-        {
-          action: 'hide',
-          expression: '!values.state'
-        },
-        {
-          action: 'hide',
-          expression: '!values.district'
-        },
-        {
-          action: 'hide',
-          expression: '!values.locationLevel3'
-        },
-        {
-          action: 'hide',
-          expression: '!values.locationLevel4'
-        },
-        {
-          action: 'hide',
-          expression:
-            configCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${configCase}!="OTHER" && values.${configCase}!="PRIVATE_HOME")`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: '!isDefaultCountry(values.country)'
-        }
-      ]
-    default:
-      throw Error(
-        'Supplied event location is unsupported by current conditionals'
-      )
-  }
-}
-
 export function getRuralOrUrbanConditionals(
   useCase: string,
   defaultConditionals: Conditional[]
@@ -241,8 +99,228 @@ export function getRuralOrUrbanConditionals(
   return defaultConditionals.concat(customConditionals)
 }
 
+export function getPlaceOfEventConditionals(location: string, useCase: string) {
+  switch (location) {
+    case 'country':
+      return [
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        }
+      ]
+    case 'state':
+      return [
+        {
+          action: 'hide',
+          expression: '!values.country'
+        },
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        },
+        {
+          action: 'hide',
+          expression: '!isDefaultCountry(values.country)'
+        }
+      ]
+    case 'district':
+      return [
+        {
+          action: 'hide',
+          expression: '!values.country'
+        },
+        {
+          action: 'hide',
+          expression: '!values.state'
+        },
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        },
+        {
+          action: 'hide',
+          expression: '!isDefaultCountry(values.country)'
+        }
+      ]
+    case 'locationLevel3':
+      return [
+        {
+          action: 'hide',
+          expression: '!values.country'
+        },
+        {
+          action: 'hide',
+          expression: '!values.state'
+        },
+        {
+          action: 'hide',
+          expression: '!values.district'
+        },
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        },
+        {
+          action: 'hide',
+          expression: '!isDefaultCountry(values.country)'
+        }
+      ]
+    case 'locationLevel4':
+      return [
+        {
+          action: 'hide',
+          expression: '!values.country'
+        },
+        {
+          action: 'hide',
+          expression: '!values.state'
+        },
+        {
+          action: 'hide',
+          expression: '!values.district'
+        },
+        {
+          action: 'hide',
+          expression: '!values.locationLevel3'
+        },
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        },
+        {
+          action: 'hide',
+          expression: '!isDefaultCountry(values.country)'
+        }
+      ]
+    case 'locationLevel5':
+      return [
+        {
+          action: 'hide',
+          expression: '!values.country'
+        },
+        {
+          action: 'hide',
+          expression: '!values.state'
+        },
+        {
+          action: 'hide',
+          expression: '!values.district'
+        },
+        {
+          action: 'hide',
+          expression: '!values.locationLevel3'
+        },
+        {
+          action: 'hide',
+          expression: '!values.locationLevel4'
+        },
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        },
+        {
+          action: 'hide',
+          expression: '!isDefaultCountry(values.country)'
+        }
+      ]
+    case 'ruralOrUrban':
+      return getRuralOrUrbanConditionals('', [
+        {
+          action: 'hide',
+          expression: '!values.country'
+        },
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        },
+        {
+          action: 'hide',
+          expression: '!isDefaultCountry(values.country)'
+        }
+      ])
+    case 'urban':
+      return getRuralOrUrbanConditionals('', [
+        {
+          action: 'hide',
+          expression: '!values.country'
+        },
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        },
+        {
+          action: 'hide',
+          expression: 'values.ruralOrUrban !== "URBAN"'
+        },
+        {
+          action: 'hide',
+          expression: '!isDefaultCountry(values.country)'
+        }
+      ])
+    case 'rural':
+      return getRuralOrUrbanConditionals('', [
+        {
+          action: 'hide',
+          expression: '!values.country'
+        },
+        {
+          action: 'hide',
+          expression:
+            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
+              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              : ''
+        },
+        {
+          action: 'hide',
+          expression: 'values.ruralOrUrban !== "RURAL"'
+        },
+        {
+          action: 'hide',
+          expression: '!isDefaultCountry(values.country)'
+        }
+      ])
+    default:
+      throw Error(
+        'Supplied event location is unsupported by current conditionals'
+      )
+  }
+}
+
 export function getAddressConditionals(location: string, useCase: string) {
   switch (location) {
+    case 'country':
+      return [
+        {
+          action: 'disable',
+          expression: `values?.fieldsModifiedByNidUserInfo?.includes('country${sentenceCase(
+            useCase
+          )}')`
+        }
+      ]
     case 'state':
       return [
         {
@@ -348,6 +426,53 @@ export function getAddressConditionals(location: string, useCase: string) {
           )})`
         }
       ]
+    case 'ruralOrUrban':
+      return getRuralOrUrbanConditionals(useCase, [
+        {
+          action: 'hide',
+          expression: `!values.country${sentenceCase(useCase)}`
+        },
+        {
+          action: 'hide',
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )})`
+        }
+      ])
+    case 'urban':
+      return getRuralOrUrbanConditionals(useCase, [
+        {
+          action: 'hide',
+          expression: `!values.country${sentenceCase(useCase)}`
+        },
+        {
+          action: 'hide',
+          expression: `values.ruralOrUrban${sentenceCase(useCase)} !== "URBAN"`
+        },
+        {
+          action: 'hide',
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )})`
+        }
+      ])
+    case 'rural':
+      return getRuralOrUrbanConditionals(useCase, [
+        {
+          action: 'hide',
+          expression: `!values.country${sentenceCase(useCase)}`
+        },
+        {
+          action: 'hide',
+          expression: `values.ruralOrUrban${sentenceCase(useCase)} !== "RURAL"`
+        },
+        {
+          action: 'hide',
+          expression: `!isDefaultCountry(values.country${sentenceCase(
+            useCase
+          )})`
+        }
+      ])
     default:
       throw Error('Supplied location is unsupported by current conditionals')
   }
@@ -394,55 +519,129 @@ export function getDependency(location: string, useCase: string) {
   }
 }
 
-export function getCustomAdminLevelSelect(
+export function getMapping(
   location: string,
   useCase: string,
-  locationIndex: number
-): SerializedFormField {
+  fieldName: string,
+  locationIndex?: number
+) {
   return {
-    name: `${location}${sentenceCase(useCase)}`,
-    type: 'SELECT_WITH_DYNAMIC_OPTIONS',
-    label: {
-      defaultMessage: '',
-      description: `Title for the ${location} select`,
-      id: `form.field.label.${location}`
-    },
-    previewGroup: `${useCase}Address`,
-    required: true,
-    initialValue: '',
-    validator: [],
-    placeholder: {
-      defaultMessage: 'Select',
-      description: 'Placeholder text for a select',
-      id: 'form.field.select.placeholder'
-    },
-    dynamicOptions: {
-      resource: 'locations',
-      dependency: getDependency(location, useCase),
-      initialValue: 'agentDefault'
-    },
-    conditionals: getAddressConditionals(location, useCase),
-    mapping: {
-      mutation: {
-        operation: 'fieldToAddressLineTransformer',
-        parameters: [
-          useCase.toUpperCase() === 'PRIMARY'
-            ? AddressCases.PRIMARY_ADDRESS
-            : AddressCases.SECONDARY_ADDRESS,
-          locationIndex
-        ]
-      },
-      query: {
-        operation: 'addressLineToFieldTransformer',
-        parameters: [
-          useCase.toUpperCase() === 'PRIMARY'
-            ? AddressCases.PRIMARY_ADDRESS
-            : AddressCases.SECONDARY_ADDRESS,
-          locationIndex,
-          location
-        ]
-      }
-    }
+    template:
+      useCase in EventLocationAddressCases
+        ? locationIndex
+          ? {
+              fieldName,
+              operation: 'eventLocationAddressLineTemplateTransformer',
+              parameters: [locationIndex, getAddressLineLocationLevel(location)]
+            }
+          : {
+              fieldName,
+              operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
+              parameters: [location]
+            }
+        : locationIndex
+        ? {
+            fieldName,
+            operation: 'addressLineTemplateTransformer',
+            parameters: [useCase, locationIndex, fieldName]
+          }
+        : {
+            fieldName,
+            operation: 'addressFHIRPropertyTemplateTransformer',
+            parameters: [
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+              location
+            ]
+          },
+    mutation:
+      useCase in EventLocationAddressCases
+        ? {
+            operation:
+              useCase === EventLocationAddressCases.PLACE_OF_BIRTH
+                ? 'birthEventLocationMutationTransformer'
+                : useCase === EventLocationAddressCases.PLACE_OF_DEATH
+                ? 'deathEventLocationMutationTransformer'
+                : 'marriageEventLocationMutationTransformer',
+            parameters: [
+              { transformedFieldName: location, lineNumber: locationIndex }
+            ]
+          }
+        : locationIndex
+        ? {
+            operation: 'fieldToAddressLineTransformer',
+            parameters: [
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+              locationIndex
+            ]
+          }
+        : {
+            operation: 'fieldToAddressFhirPropertyTransformer',
+            parameters: [
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+              location
+            ]
+          },
+    query:
+      useCase in EventLocationAddressCases
+        ? {
+            operation: 'eventLocationQueryTransformer',
+            parameters: [
+              { transformedFieldName: location, lineNumber: locationIndex },
+              {
+                fieldsToIgnoreForLocalAddress: [
+                  `internationalDistrict${sentenceCase(useCase)}`,
+                  `internationalState${sentenceCase(useCase)}`
+                ],
+                fieldsToIgnoreForInternationalAddress: [
+                  `locationLevel3${sentenceCase(useCase)}`,
+                  `locationLevel4${sentenceCase(useCase)}`,
+                  `locationLevel5${sentenceCase(useCase)}`,
+                  `district${sentenceCase(useCase)}`,
+                  `state${sentenceCase(useCase)}`
+                ]
+              }
+            ]
+          }
+        : locationIndex
+        ? {
+            operation: 'addressLineToFieldTransformer',
+            parameters: [
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+              locationIndex,
+              location
+            ]
+          }
+        : {
+            operation: 'addressFhirPropertyToFieldTransformer',
+            parameters: [
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+              location
+            ]
+          }
+  }
+}
+
+// this function name is horrible, rename it
+export function getAddressLineLocationLevel(location: string) {
+  switch (location) {
+    case 'locationLevel3':
+      return 'locationLevel3'
+    case 'locationLevel4':
+      return 'locationLevel4'
+    case 'locationLevel5':
+      return 'locationLevel5'
+    default:
+      return ''
   }
 }
 
