@@ -351,7 +351,7 @@ export const birthForm: ISerializedForm = {
               detailsExist
             ), // Required field.
             getNationalID(
-              'iD',
+              'motherID',
               hideIfNidIntegrationEnabled.concat(detailsExist),
               getNationalIDValidators('mother'),
               certificateHandlebars.motherNID
@@ -424,7 +424,7 @@ export const birthForm: ISerializedForm = {
               detailsExist
             ), // Required field.
             getNationalID(
-              'iD',
+              'fatherID',
               hideIfNidIntegrationEnabled.concat(detailsExist),
               getNationalIDValidators('father'),
               certificateHandlebars.fatherNID

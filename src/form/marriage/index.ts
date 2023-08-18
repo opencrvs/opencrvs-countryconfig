@@ -170,7 +170,7 @@ export const marriageForm: ISerializedForm = {
             ),
             getNationality(certificateHandlebars.groomNationality, []), // Required field
             getNationalID(
-              'iD',
+              'groomID',
               [],
               getNationalIDValidators('groom'),
               certificateHandlebars.groomNID
@@ -215,7 +215,7 @@ export const marriageForm: ISerializedForm = {
             ]),
             getNationality(certificateHandlebars.brideNationality, []), // Required field
             getNationalID(
-              'iD',
+              'brideID',
               [],
               getNationalIDValidators('bride'),
               certificateHandlebars.brideNID
