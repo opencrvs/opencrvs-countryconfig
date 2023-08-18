@@ -371,7 +371,12 @@ export const birthForm: ISerializedForm = {
               []
             ),
             seperatorDivider('mother-nid-seperator'),
-            getMaritalStatus(certificateHandlebars.motherMaritalStatus),
+            getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
+              {
+                action: 'hide',
+                expression: '!values.detailsExist'
+              }
+            ]),
             multipleBirth,
             getOccupation(certificateHandlebars.motherOccupation),
             getEducation(certificateHandlebars.motherEducationalAttainment)
@@ -444,7 +449,12 @@ export const birthForm: ISerializedForm = {
               []
             ),
             seperatorDivider('father-nid-seperator'),
-            getMaritalStatus(certificateHandlebars.fatherMaritalStatus),
+            getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
+              {
+                action: 'hide',
+                expression: '!values.detailsExist'
+              }
+            ]),
             getOccupation(certificateHandlebars.fatherOccupation),
             getEducation(certificateHandlebars.fatherEducationalAttainment)
           ],

@@ -164,7 +164,7 @@ export const deathForm = {
               getNationalIDValidators('deceased'),
               certificateHandlebars.deceasedNID
             ),
-            getMaritalStatus(certificateHandlebars.deceasedMaritalStatus)
+            getMaritalStatus(certificateHandlebars.deceasedMaritalStatus, [])
           ],
           previewGroups: [deceasedNameInEnglish]
         }
