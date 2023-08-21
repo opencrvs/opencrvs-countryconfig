@@ -10,7 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import { decorateFormsWithAddresses } from './addresses/address-utils'
+import { decorateFormsWithAddresses } from '../utils/address-utils'
 import { birthForm } from './birth'
 import { deathForm } from './death'
 import { marriageForm } from './marriage'

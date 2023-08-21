@@ -11,7 +11,7 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import { ADMIN_LEVELS, defaultAddressConfiguration } from '.'
+import { ADMIN_LEVELS, defaultAddressConfiguration } from '../form/addresses'
 import {
   ISerializedForm,
   SerializedFormField,
@@ -28,9 +28,12 @@ import {
   IQueryMapper,
   IMutationMapper,
   IHandlebarTemplates
-} from '../types/types'
-import { getAddressFields, getXAddressSameAsY } from './address-fields'
-import { getPreviewGroups } from '../common/preview-groups'
+} from '../form/types/types'
+import {
+  getAddressFields,
+  getXAddressSameAsY
+} from '../form/addresses/address-fields'
+import { getPreviewGroups } from '../form/common/preview-groups'
 import { cloneDeep } from 'lodash'
 
 // Use this function to edit the visibility of fields depending on user input
@@ -134,7 +137,7 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         }
       ]
@@ -150,7 +153,7 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         },
         {
@@ -178,7 +181,7 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         },
         {
@@ -212,7 +215,7 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         },
         {
@@ -252,7 +255,7 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         },
         {
@@ -298,7 +301,7 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         },
         {
@@ -320,7 +323,7 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         },
         {
@@ -342,14 +345,14 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         },
         {
           action: 'hide',
           expression: `values.ruralOrUrban${sentenceCase(
             useCase
-          )}${sentenceCase(section)}) !== "URBAN"`
+          )}${sentenceCase(section)} !== "URBAN"`
         },
         {
           action: 'hide',
@@ -370,14 +373,14 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         },
         {
           action: 'hide',
           expression: `values.ruralOrUrban${sentenceCase(
             useCase
-          )}${sentenceCase(section)}) !== "RURAL"`
+          )}${sentenceCase(section)} !== "RURAL"`
         },
         {
           action: 'hide',
@@ -398,7 +401,7 @@ export function getPlaceOfEventConditionals(
           action: 'hide',
           expression:
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `(values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME")`
+              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
         }
       ]
@@ -668,7 +671,7 @@ function getTemplateMapping(
   fieldName: string,
   locationIndex?: number
 ): IHandlebarTemplates {
-  return useCase in EventLocationAddressCases
+  return isUseCaseForPlaceOfEvent(useCase)
     ? locationIndex
       ? {
           fieldName,
@@ -709,7 +712,7 @@ function getMutationMapping(
   useCase: string,
   locationIndex?: number
 ): IMutationMapper {
-  return useCase in EventLocationAddressCases
+  return isUseCaseForPlaceOfEvent(useCase)
     ? {
         operation:
           useCase === EventLocationAddressCases.PLACE_OF_BIRTH
@@ -757,7 +760,7 @@ function getQueryMapping(
   useCase: string,
   locationIndex?: number
 ): IQueryMapper {
-  return useCase in EventLocationAddressCases
+  return isUseCaseForPlaceOfEvent(useCase)
     ? {
         operation: 'eventLocationQueryTransformer',
         parameters:
@@ -914,6 +917,12 @@ export function getFieldIdentifiers(fieldId: string, form: ISerializedForm) {
     groupIndex,
     fieldIndex
   }
+}
+
+export function isUseCaseForPlaceOfEvent(useCase: string): Boolean {
+  return Object.values(
+    EventLocationAddressCases as Record<string, string>
+  ).includes(useCase)
 }
 
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)

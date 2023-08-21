@@ -25,23 +25,91 @@ export const certificateHandlebars = {
   registrationLocation: 'registrationLocation',
   contactEmail: 'contactEmail',
   contactPhoneNumber: 'contactPhoneNumber',
-  placeOfDeath: 'placeOfDeath',
-  deathDescription: 'deathDescription',
-  causeOfDeathMethod: 'causeOfDeathMethod',
-  causeOfDeathEstablished: 'causeOfDeathEstablished',
-  mannerOfDeath: 'mannerOfDeath',
-  informantType: 'informantType',
   eventDate: 'eventDate',
-  informantNID: 'informantNID',
-  informantNationality: 'informantNationality',
-  informantBirthDate: 'informantBirthDate',
-  informantFamilyName: 'informantFamilyName',
-  informantFirstName: 'informantFirstName',
-  deceasedMaritalStatus: 'deceasedMaritalStatus',
-  deceasedNID: 'deceasedNID',
-  deceasedNationality: 'deceasedNationality',
-  deceasedBirthDate: 'deceasedBirthDate',
-  deceasedGender: 'deceasedGender',
   deceasedFirstName: 'deceasedFirstName',
-  deceasedFamilyName: 'deceasedFamilyName'
+  deceasedFamilyName: 'deceasedFamilyName',
+  deceasedGender: 'deceasedGender',
+  deceasedBirthDate: 'deceasedBirthDate',
+  deceasedNationality: 'deceasedNationality',
+  deceasedNID: 'deceasedNID',
+  deceasedMaritalStatus: 'deceasedMaritalStatus',
+  countryPrimaryDeceased: 'countryPrimaryDeceased',
+  statePrimaryDeceased: 'statePrimaryDeceased',
+  districtPrimaryDeceased: 'districtPrimaryDeceased',
+  cityPrimaryDeceased: 'cityPrimaryDeceased',
+  addressLine3UrbanOptionPrimaryDeceased:
+    'addressLine3UrbanOptionPrimaryDeceased',
+  addressLine2UrbanOptionPrimaryDeceased:
+    'addressLine2UrbanOptionPrimaryDeceased',
+  addressLine1UrbanOptionPrimaryDeceased:
+    'addressLine1UrbanOptionPrimaryDeceased',
+  postalCodePrimaryDeceased: 'postalCodePrimaryDeceased',
+  addressLine1RuralOptionPrimaryDeceased:
+    'addressLine1RuralOptionPrimaryDeceased',
+  internationalStatePrimaryDeceased: 'internationalStatePrimaryDeceased',
+  internationalDistrictPrimaryDeceased: 'internationalDistrictPrimaryDeceased',
+  internationalCityPrimaryDeceased: 'internationalCityPrimaryDeceased',
+  internationalAddressLine1PrimaryDeceased:
+    'internationalAddressLine1PrimaryDeceased',
+  internationalAddressLine2PrimaryDeceased:
+    'internationalAddressLine2PrimaryDeceased',
+  internationalAddressLine3PrimaryDeceased:
+    'internationalAddressLine3PrimaryDeceased',
+  internationalPostalCodePrimaryDeceased:
+    'internationalPostalCodePrimaryDeceased',
+  mannerOfDeath: 'mannerOfDeath',
+  causeOfDeathEstablished: 'causeOfDeathEstablished',
+  causeOfDeathMethod: 'causeOfDeathMethod',
+  deathDescription: 'deathDescription',
+  placeOfDeath: 'placeOfDeath',
+  countryPlaceofdeath: 'countryPlaceofdeath',
+  statePlaceofdeath: 'statePlaceofdeath',
+  districtPlaceofdeath: 'districtPlaceofdeath',
+  cityPlaceofdeath: 'cityPlaceofdeath',
+  addressLine3UrbanOptionPlaceofdeath: 'addressLine3UrbanOptionPlaceofdeath',
+  addressLine2UrbanOptionPlaceofdeath: 'addressLine2UrbanOptionPlaceofdeath',
+  addressLine1UrbanOptionPlaceofdeath: 'addressLine1UrbanOptionPlaceofdeath',
+  postalCodePlaceofdeath: 'postalCodePlaceofdeath',
+  addressLine1RuralOptionPlaceofdeath: 'addressLine1RuralOptionPlaceofdeath',
+  internationalStatePlaceofdeath: 'internationalStatePlaceofdeath',
+  internationalDistrictPlaceofdeath: 'internationalDistrictPlaceofdeath',
+  internationalCityPlaceofdeath: 'internationalCityPlaceofdeath',
+  internationalAddressLine1Placeofdeath:
+    'internationalAddressLine1Placeofdeath',
+  internationalAddressLine2Placeofdeath:
+    'internationalAddressLine2Placeofdeath',
+  internationalAddressLine3Placeofdeath:
+    'internationalAddressLine3Placeofdeath',
+  internationalPostalCodePlaceofdeath: 'internationalPostalCodePlaceofdeath',
+  informantType: 'informantType',
+  informantFirstName: 'informantFirstName',
+  informantFamilyName: 'informantFamilyName',
+  informantBirthDate: 'informantBirthDate',
+  informantNationality: 'informantNationality',
+  informantNID: 'informantNID',
+  countryPrimaryInformant: 'countryPrimaryInformant',
+  statePrimaryInformant: 'statePrimaryInformant',
+  districtPrimaryInformant: 'districtPrimaryInformant',
+  cityPrimaryInformant: 'cityPrimaryInformant',
+  addressLine3UrbanOptionPrimaryInformant:
+    'addressLine3UrbanOptionPrimaryInformant',
+  addressLine2UrbanOptionPrimaryInformant:
+    'addressLine2UrbanOptionPrimaryInformant',
+  addressLine1UrbanOptionPrimaryInformant:
+    'addressLine1UrbanOptionPrimaryInformant',
+  postalCodePrimaryInformant: 'postalCodePrimaryInformant',
+  addressLine1RuralOptionPrimaryInformant:
+    'addressLine1RuralOptionPrimaryInformant',
+  internationalStatePrimaryInformant: 'internationalStatePrimaryInformant',
+  internationalDistrictPrimaryInformant:
+    'internationalDistrictPrimaryInformant',
+  internationalCityPrimaryInformant: 'internationalCityPrimaryInformant',
+  internationalAddressLine1PrimaryInformant:
+    'internationalAddressLine1PrimaryInformant',
+  internationalAddressLine2PrimaryInformant:
+    'internationalAddressLine2PrimaryInformant',
+  internationalAddressLine3PrimaryInformant:
+    'internationalAddressLine3PrimaryInformant',
+  internationalPostalCodePrimaryInformant:
+    'internationalPostalCodePrimaryInformant'
 }
