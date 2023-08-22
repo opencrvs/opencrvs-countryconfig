@@ -224,8 +224,8 @@ export const getPlaceOfDeathFields = () =>
       options: placeOfDeathOptions,
       mapping: {
         mutation: {
-          operation: 'deathEventLocationMutationTransformer',
-          parameters: [{}]
+          operation: 'eventLocationMutationTransformer',
+          parameters: [{ useCase: 'placeOfDeath' }]
         },
         query: {
           operation: 'eventLocationTypeQueryTransformer',
@@ -263,8 +263,8 @@ export const getPlaceOfDeathFields = () =>
           parameters: ['facilities', 'placeOfDeath']
         },
         mutation: {
-          operation: 'deathEventLocationMutationTransformer',
-          parameters: [{}]
+          operation: 'eventLocationMutationTransformer',
+          parameters: [{ useCase: 'placeOfDeath' }]
         },
         query: {
           operation: 'eventLocationIDQueryTransformer',

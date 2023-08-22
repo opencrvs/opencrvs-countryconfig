@@ -356,8 +356,7 @@ export function getAddressFields(
         'TEXT',
         'postalCode',
         useCase,
-        `postalCode${sentenceCase(useCase)}${sentenceCase(section)}`,
-        0
+        `postalCode${sentenceCase(useCase)}${sentenceCase(section)}`
       )
     },
     {

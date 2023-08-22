@@ -68,6 +68,7 @@ type ISubMapper = {
 
 type IAddressLineMapper = {
   transformedFieldName?: string
+  useCase?: string
   lineNumber?: number
 }
 

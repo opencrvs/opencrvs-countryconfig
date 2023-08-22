@@ -672,7 +672,7 @@ function getTemplateMapping(
   locationIndex?: number
 ): IHandlebarTemplates {
   return isUseCaseForPlaceOfEvent(useCase)
-    ? locationIndex
+    ? locationIndex || locationIndex === 0
       ? {
           fieldName,
           operation: 'eventLocationAddressLineTemplateTransformer',
@@ -683,7 +683,7 @@ function getTemplateMapping(
           operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
           parameters: [location]
         }
-    : locationIndex
+    : locationIndex || locationIndex === 0
     ? {
         fieldName,
         operation: 'addressLineTemplateTransformer',
@@ -713,38 +713,38 @@ function getMutationMapping(
   locationIndex?: number
 ): IMutationMapper {
   return isUseCaseForPlaceOfEvent(useCase)
+    ? locationIndex || locationIndex === 0
+      ? {
+          operation: 'eventLocationMutationTransformer',
+          parameters: [{ useCase, lineNumber: locationIndex }]
+        }
+      : {
+          operation: 'eventLocationMutationTransformer',
+          parameters: [{ useCase, transformedFieldName: location }]
+        }
+    : locationIndex || locationIndex === 0
     ? {
-        operation:
-          useCase === EventLocationAddressCases.PLACE_OF_BIRTH
-            ? 'birthEventLocationMutationTransformer'
-            : useCase === EventLocationAddressCases.PLACE_OF_DEATH
-            ? 'deathEventLocationMutationTransformer'
-            : 'marriageEventLocationMutationTransformer',
+        operation: 'addressMutationTransformer',
         parameters: [
-          type === 'RADIO_GROUP'
-            ? { lineNumber: locationIndex }
-            : type === 'TEXT'
-            ? { transformedFieldName: location }
-            : { transformedFieldName: location, lineNumber: locationIndex }
-        ]
-      }
-    : locationIndex
-    ? {
-        operation: 'fieldToAddressLineTransformer',
-        parameters: [
-          useCase.toUpperCase() === 'PRIMARY'
-            ? AddressCases.PRIMARY_ADDRESS
-            : AddressCases.SECONDARY_ADDRESS,
-          locationIndex
+          {
+            useCase:
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+            lineNumber: locationIndex
+          }
         ]
       }
     : {
-        operation: 'fieldToAddressFhirPropertyTransformer',
+        operation: 'addressMutationTransformer',
         parameters: [
-          useCase.toUpperCase() === 'PRIMARY'
-            ? AddressCases.PRIMARY_ADDRESS
-            : AddressCases.SECONDARY_ADDRESS,
-          location
+          {
+            useCase:
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+            transformedFieldName: location
+          }
         ]
       }
 }
@@ -784,7 +784,7 @@ function getQueryMapping(
               ]
             : [{ lineNumber: locationIndex }]
       }
-    : locationIndex
+    : locationIndex || locationIndex === 0
     ? {
         operation: 'addressLineToFieldTransformer',
         parameters:
@@ -919,6 +919,7 @@ export function getFieldIdentifiers(fieldId: string, form: ISerializedForm) {
   }
 }
 
+// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export function isUseCaseForPlaceOfEvent(useCase: string): Boolean {
   return Object.values(
     EventLocationAddressCases as Record<string, string>
