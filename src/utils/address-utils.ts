@@ -786,31 +786,39 @@ function getQueryMapping(
       }
     : locationIndex || locationIndex === 0
     ? {
-        operation: 'addressLineToFieldTransformer',
+        operation: 'addressQueryTransformer',
         parameters:
           type === 'SELECT_WITH_OPTIONS' ||
           type === 'SELECT_WITH_DYNAMIC_OPTIONS'
             ? [
-                useCase.toUpperCase() === 'PRIMARY'
-                  ? AddressCases.PRIMARY_ADDRESS
-                  : AddressCases.SECONDARY_ADDRESS,
-                locationIndex,
-                location
+                {
+                  useCase:
+                    useCase.toUpperCase() === 'PRIMARY'
+                      ? AddressCases.PRIMARY_ADDRESS
+                      : AddressCases.SECONDARY_ADDRESS,
+                  lineNumber: locationIndex
+                }
               ]
             : [
-                useCase.toUpperCase() === 'PRIMARY'
-                  ? AddressCases.PRIMARY_ADDRESS
-                  : AddressCases.SECONDARY_ADDRESS,
-                locationIndex
+                {
+                  useCase:
+                    useCase.toUpperCase() === 'PRIMARY'
+                      ? AddressCases.PRIMARY_ADDRESS
+                      : AddressCases.SECONDARY_ADDRESS,
+                  lineNumber: locationIndex
+                }
               ]
       }
     : {
-        operation: 'addressFhirPropertyToFieldTransformer',
+        operation: 'addressQueryTransformer',
         parameters: [
-          useCase.toUpperCase() === 'PRIMARY'
-            ? AddressCases.PRIMARY_ADDRESS
-            : AddressCases.SECONDARY_ADDRESS,
-          location
+          {
+            useCase:
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+            transformedFieldName: location
+          }
         ]
       }
 }

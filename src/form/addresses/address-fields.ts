@@ -179,7 +179,9 @@ export function getAddressFields(
         description: 'Title for the country select',
         id: 'form.field.label.country'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: true,
       initialValue: 'FAR',
       validator: [],
@@ -216,7 +218,9 @@ export function getAddressFields(
       flexDirection: FLEX_DIRECTION.ROW,
       required: false,
       hideValueInPreview: true,
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       validator: [],
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'ruralOrUrban', useCase)
@@ -237,7 +241,9 @@ export function getAddressFields(
         description: 'Title for the address line 4',
         id: 'form.field.label.cityUrbanOption'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -262,7 +268,9 @@ export function getAddressFields(
         description: 'Title for the address line 3 option 2',
         id: 'form.field.label.addressLine3UrbanOption'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -290,7 +298,9 @@ export function getAddressFields(
         description: 'Title for the address line 1',
         id: 'form.field.label.addressLine2UrbanOption'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -318,7 +328,9 @@ export function getAddressFields(
         description: 'Title for the number field',
         id: 'form.field.label.number'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -344,7 +356,9 @@ export function getAddressFields(
         description: 'Title for the international postcode',
         id: 'form.field.label.internationalPostcode'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -369,7 +383,9 @@ export function getAddressFields(
         description: 'Title for the address line 1',
         id: 'form.field.label.addressLine1RuralOption'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -397,7 +413,9 @@ export function getAddressFields(
         description: 'Title for the international state select',
         id: 'form.field.label.internationalState'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: true,
       initialValue: '',
       validator: [],
@@ -422,7 +440,9 @@ export function getAddressFields(
         description: 'Title for the international district select',
         id: 'form.field.label.internationalDistrict'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: true,
       initialValue: '',
       validator: [],
@@ -445,7 +465,9 @@ export function getAddressFields(
         description: 'Title for the international city select',
         id: 'form.field.label.internationalCity'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -470,7 +492,9 @@ export function getAddressFields(
         description: 'Title for the international address line 1 select',
         id: 'form.field.label.internationalAddressLine1'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -498,7 +522,9 @@ export function getAddressFields(
         description: 'Title for the international address line 2 select',
         id: 'form.field.label.internationalAddressLine2'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -526,7 +552,9 @@ export function getAddressFields(
         description: 'Title for the international address line 3 select',
         id: 'form.field.label.internationalAddressLine3'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],
@@ -554,7 +582,9 @@ export function getAddressFields(
         description: 'Title for the international postcode',
         id: 'form.field.label.internationalPostcode'
       },
-      previewGroup: useCase,
+      previewGroup: isUseCaseForPlaceOfEvent(useCase)
+        ? useCase
+        : `${useCase}Address`,
       required: false,
       initialValue: '',
       validator: [],

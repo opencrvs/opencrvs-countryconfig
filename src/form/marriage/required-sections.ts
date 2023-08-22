@@ -21,7 +21,7 @@ export const registrationSection = {
       },
       {
         fieldName: certificateHandlebars.qrCode,
-        operation: 'QRCodeTransformerTransformer'
+        operation: 'QRCodeTransformer'
       },
       {
         fieldName: certificateHandlebars.certificateDate,

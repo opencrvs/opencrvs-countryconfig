@@ -41,7 +41,7 @@ export const defaultApplicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
-  MARRIAGE_REGISTRATION: false,
+  MARRIAGE_REGISTRATION: true,
   DATE_OF_BIRTH_UNKNOWN: false,
   INFORMANT_SIGNATURE: true,
   INFORMANT_SIGNATURE_REQUIRED: true,
