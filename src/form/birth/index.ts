@@ -347,7 +347,10 @@ export const birthForm: ISerializedForm = {
               formMessageDescriptors.mothersDetailsExist,
               mothersDetailsExistConditionals
             ), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            divider('mother-details-seperator'),
+            divider(
+              'mother-details-seperator',
+              mothersDetailsExistConditionals
+            ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
             getFirstNameField(
               'motherNameInEnglish',
@@ -428,7 +431,10 @@ export const birthForm: ISerializedForm = {
               formMessageDescriptors.fathersDetailsExist,
               fathersDetailsExistConditionals
             ), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            divider('father-details-seperator'),
+            divider(
+              'father-details-seperator',
+              fathersDetailsExistConditionals
+            ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
             getFirstNameField(
               'fatherNameInEnglish',
