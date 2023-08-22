@@ -16,7 +16,6 @@ import { callingCountries } from 'country-data'
 import * as csv2json from 'csv2json'
 import { createReadStream } from 'fs'
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
-import * as bcrypt from 'bcryptjs'
 import { URL } from 'url'
 import { build } from 'esbuild'
 import { memoize } from 'lodash'
@@ -30,6 +29,7 @@ export interface ILocation {
   id?: string
   name?: string
   alias?: string
+  status?: string
   address?: string
   physicalType?: string
   jurisdictionType?: string

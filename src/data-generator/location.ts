@@ -99,11 +99,11 @@ export function generateLocationResource(
   fhirLocation: fhir.Location
 ): ILocation {
   const loc = {} as ILocation
-  loc.id = fhirLocation.id as string
-  loc.name = fhirLocation.name as string
+  loc.id = fhirLocation.id
+  loc.name = fhirLocation.name
   loc.alias =
     fhirLocation.alias && fhirLocation.alias[0] ? fhirLocation.alias[0] : ''
-  loc.status = fhirLocation.status as string
+  loc.status = fhirLocation.status
   loc.physicalType =
     fhirLocation.physicalType &&
     fhirLocation.physicalType.coding &&
