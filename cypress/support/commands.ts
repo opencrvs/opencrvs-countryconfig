@@ -313,14 +313,8 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.goToNextFormSection()
 
   // SELECT INFORMANT
-  cy.selectOption(
-    '#informantType',
-    'Mother',
-    'Mother'
-  )
-  cy.get('#registrationPhone').type(
-    '07' + getRandomNumbers(8)
-  )
+  cy.selectOption('#informantType', 'Mother', 'Mother')
+  cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.goToNextFormSection()
 
   // MOTHER DETAILS
@@ -396,55 +390,56 @@ Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
   return getToken(role).then((token) => {
     return getLocationWithName(token, 'Ibombo').then((location) => {
       return getRandomFacility(token, location).then(async (facility) => {
-        cy.readFile('cypress/support/assets/528KB-random.png', 'base64').then((file) => {
-          const details = createBirthDeclarationData(
-            'male',
-            new Date('2018-05-18T13:18:26.240Z'),
-            new Date(),
-            location,
-            facility,
-            file
-          )
+        cy.readFile('cypress/support/assets/528KB-random.png', 'base64').then(
+          (file) => {
+            const details = createBirthDeclarationData(
+              'male',
+              new Date('2018-05-18T13:18:26.240Z'),
+              new Date(),
+              location,
+              facility,
+              file
+            )
 
-          if (options.firstName) {
-            details.child.name = [
-              {
-                use: 'en',
-                firstNames: options.firstName || faker.name.firstName(),
-                familyName: options.familyName || faker.name.lastName()
+            if (options.firstName) {
+              details.child.name = [
+                {
+                  use: 'en',
+                  firstNames: options.firstName || faker.name.firstName(),
+                  familyName: options.familyName || faker.name.lastName()
+                }
+              ]
+            }
+            cy.intercept('/graphql', (req) => {
+              if (hasOperationName(req, 'createBirthRegistration')) {
+                req.on('response', (res) => {
+                  const compositionId =
+                    res.body?.data?.createBirthRegistration?.compositionId
+                  expect(compositionId).to.be.a('string')
+                })
               }
-            ]
-          }
-          cy.intercept('/graphql', (req) => {
-            if (hasOperationName(req, 'createBirthRegistration')) {
-              req.on('response', (res) => {
-                const compositionId =
-                  res.body?.data?.createBirthRegistration?.compositionId
-                expect(compositionId).to.be.a('string')
-              })
-            }
-          })
+            })
 
-          cy.request({
-            url: Cypress.env('GATEWAY_URL') + 'graphql',
-            method: 'POST',
-            headers: {
-              authorization: `Bearer ${token}`
-            },
-            body: {
-              operationName: 'createBirthRegistration',
-              variables: {
-                details
+            cy.request({
+              url: Cypress.env('GATEWAY_URL') + 'graphql',
+              method: 'POST',
+              headers: {
+                authorization: `Bearer ${token}`
               },
-              query:
-                'mutation createBirthRegistration($details: BirthRegistrationInput!) {\n  createBirthRegistration(details: $details) {\n    trackingId\n    compositionId\n    __typename\n  }\n}\n'
-            }
-          }).as('createRegistration')
-          cy.get('@createRegistration').should((response) => {
-            expect((response as any).status).to.eq(200)
-          })
-        })
-
+              body: {
+                operationName: 'createBirthRegistration',
+                variables: {
+                  details
+                },
+                query:
+                  'mutation createBirthRegistration($details: BirthRegistrationInput!) {\n  createBirthRegistration(details: $details) {\n    trackingId\n    compositionId\n    __typename\n  }\n}\n'
+              }
+            }).as('createRegistration')
+            cy.get('@createRegistration').should((response) => {
+              expect((response as any).status).to.eq(200)
+            })
+          }
+        )
       })
     })
   })
@@ -503,15 +498,11 @@ Cypress.Commands.add('enterMaximumInput', (options) => {
     options?.informantType || 'Grandfather',
     options?.informantType || 'Grandfather'
   )
-  cy.get('#registrationPhone').type(
-    '07' + getRandomNumbers(8)
-  )
+  cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.get('#registrationEmail').type('axonishere@gmail.com')
 
   //INFORMANT DETAILS(IF informant data is available)
-  if (
-    !['Father', 'Mother'].includes(options?.informantType)
-  ) {
+  if (!['Father', 'Mother'].includes(options?.informantType)) {
     // INFORMANT'S DETAILS
     cy.get('#firstNamesEng').type(options?.informantFirstNames || 'Alom')
     cy.get('#familyNameEng').type(options?.informantFamilyName || 'Mia')
@@ -812,15 +803,9 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.goToNextFormSection()
 
   // SELECT INFORMANT
-  cy.selectOption(
-    '#informantType',
-    'Someone else',
-    'Someone else'
-  )
+  cy.selectOption('#informantType', 'Someone else', 'Someone else')
   cy.get('#otherInformantType').type('Someone else')
-  cy.get('#registrationPhone').type(
-    '07' + getRandomNumbers(8)
-  )
+  cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.get('#registrationEmail').type('axonishere@gmail.com')
 
   // INFORMANT'S DETAILS
