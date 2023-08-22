@@ -211,7 +211,10 @@ export const registrationPhone: SerializedFormField = {
   }
 }
 
-export const seperatorDivider = (name = 'seperator'): SerializedFormField => ({
+export const divider = (
+  name = 'seperator',
+  conditionals?: Conditional[]
+): SerializedFormField => ({
   name,
   type: 'DIVIDER',
   label: {
@@ -222,5 +225,5 @@ export const seperatorDivider = (name = 'seperator'): SerializedFormField => ({
   initialValue: '',
   ignoreBottomMargin: true,
   validator: [],
-  conditionals: []
+  conditionals
 })

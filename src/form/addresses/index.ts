@@ -55,7 +55,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },
   {
     precedingFieldId:
-      'birth.informant.informant-view-group.informantNidVerification',
+      'birth.informant.informant-view-group.informant-nid-seperator',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -85,7 +85,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
-    precedingFieldId: 'birth.mother.mother-view-group.educationalAttainment',
+    precedingFieldId: 'birth.mother.mother-view-group.mother-nid-seperator',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -108,7 +108,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
-    precedingFieldId: 'birth.father.father-view-group.educationalAttainment',
+    precedingFieldId: 'birth.father.father-view-group.father-nid-seperator',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,

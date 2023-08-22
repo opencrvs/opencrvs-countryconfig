@@ -32,6 +32,7 @@ import {
 } from './address-fields'
 import { getPreviewGroups } from '../common/preview-groups'
 import { cloneDeep } from 'lodash'
+import { divider } from '../common/common-optional-fields'
 
 export function getPlaceOfEventConditionals(
   location: string,
@@ -507,7 +508,7 @@ export const getAddressSubsection = (
   const fields: SerializedFormField[] = []
   const subsection: SerializedFormField = {
     name: previewGroup,
-    type: 'SUBSECTION_HEADER',
+    type: 'HEADING3',
     label,
     previewGroup: previewGroup,
     initialValue: '',

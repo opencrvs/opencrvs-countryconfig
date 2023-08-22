@@ -16,7 +16,7 @@ import {
   informantMessageDescriptors
 } from '../common/messages'
 import { Conditional, SerializedFormField } from '../types/types'
-import { seperatorDivider } from '../common/common-optional-fields'
+import { divider } from '../common/common-optional-fields'
 import {
   birthInformantTypeOptions,
   placeOfBirthOptions
@@ -26,7 +26,7 @@ import { certificateHandlebars } from './certificate-handlebars'
 export const informantType: SerializedFormField = {
   name: 'informantType',
   type: 'SELECT_WITH_OPTIONS',
-  label: informantMessageDescriptors.birthInformantTitle,
+  label: formMessageDescriptors.informantsRelationWithChild,
   required: true,
   hideInPreview: false,
   initialValue: '',
@@ -50,22 +50,13 @@ export const informantType: SerializedFormField = {
 }
 
 export const getPlaceOfBirthFields = (): SerializedFormField[] => [
-  {
-    name: 'placeOfBirthTitle',
-    type: 'HEADING3',
-    label: formMessageDescriptors.placeOfBirthPreview,
-    previewGroup: 'placeOfBirth',
-    ignoreBottomMargin: true,
-    initialValue: '',
-    validator: []
-  },
-  seperatorDivider('place-of-birth'),
+  divider('place-of-birth'),
   {
     name: 'placeOfBirth',
     type: 'SELECT_WITH_OPTIONS',
     previewGroup: 'placeOfBirth',
     ignoreFieldLabelOnErrorMessage: true,
-    label: formMessageDescriptors.placeOfBirth,
+    label: formMessageDescriptors.placeOfBirthPreview,
     required: true,
     initialValue: '',
     validator: [],
@@ -142,7 +133,8 @@ export const getDetailsExist = (
       query: {
         operation: 'booleanTransformer'
       }
-    }
+    },
+    ignoreBottomMargin: true
   } satisfies SerializedFormField)
 
 export const getReasonNotExisting = (certificateHandlebar: string) =>

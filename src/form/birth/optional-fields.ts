@@ -157,7 +157,8 @@ export const multipleBirth: SerializedFormField = {
       fieldName: certificateHandlebars.multipleBirth,
       operation: 'plainInputTransformer'
     }
-  }
+  },
+  inputFieldWidth: '64px'
 }
 
 export const getOccupation = (

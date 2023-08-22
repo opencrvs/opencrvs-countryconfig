@@ -16,7 +16,7 @@ import {
   getMaritalStatus,
   registrationEmail,
   registrationPhone,
-  seperatorDivider,
+  divider,
   getNationalID
 } from '../common/common-optional-fields'
 import {
@@ -245,7 +245,7 @@ export const deathForm = {
               getNationalIDValidators('informant'),
               certificateHandlebars.informantNID
             ),
-            seperatorDivider('place-of-death'),
+            divider('place-of-death'),
             registrationPhone,
             registrationEmail
           ],
