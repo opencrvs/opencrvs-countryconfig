@@ -850,6 +850,60 @@ export function getMapping(
   }
 }
 
+export function getEventLocationSelectionMapping(
+  mappingId: string,
+  certificateHandlebar: string = ''
+): IFormFieldMapping {
+  switch (mappingId) {
+    case 'placeOfBirth':
+    case 'placeOfDeath':
+      return {
+        mutation: {
+          operation: 'eventLocationMutationTransformer',
+          parameters: [{ useCase: mappingId }]
+        },
+        query: {
+          operation: 'eventLocationTypeQueryTransformer',
+          parameters: []
+        }
+      }
+    case 'birthLocation':
+      return {
+        template: {
+          fieldName: certificateHandlebar,
+          operation: 'eventLocationNameQueryOfflineTransformer',
+          parameters: ['facilities', 'placeOfBirth']
+        },
+        mutation: {
+          operation: 'eventLocationMutationTransformer',
+          parameters: [{ useCase: 'placeOfBirth' }]
+        },
+        query: {
+          operation: 'eventLocationIDQueryTransformer',
+          parameters: []
+        }
+      }
+    case 'deathLocation':
+      return {
+        template: {
+          fieldName: certificateHandlebar,
+          operation: 'eventLocationNameQueryOfflineTransformer',
+          parameters: ['facilities', 'placeOfDeath']
+        },
+        mutation: {
+          operation: 'eventLocationMutationTransformer',
+          parameters: [{ useCase: 'placeOfDeath' }]
+        },
+        query: {
+          operation: 'eventLocationIDQueryTransformer',
+          parameters: []
+        }
+      }
+    default:
+      throw Error(`Mapping not supported for ${mappingId}`)
+  }
+}
+
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 function getSupportedExtraLocationLevels(location: string) {
   switch (location) {

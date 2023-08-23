@@ -10,6 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
+import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { seperatorDivider } from '../common/common-optional-fields'
 import {
   formMessageDescriptors,
@@ -23,6 +24,7 @@ import {
 } from '../common/select-options'
 import { SerializedFormField, TEXTAREA, Conditional } from '../types/types'
 import { certificateHandlebars } from './certficate-handlebars'
+import { getEventLocationSelectionMapping } from '@countryconfig/utils/address-utils'
 
 export const getDeathDate = (
   fieldName: string,
@@ -36,27 +38,7 @@ export const getDeathDate = (
   conditionals,
   initialValue: '',
   validator,
-  mapping: {
-    template: {
-      operation: 'deceasedDateFormatTransformation',
-      fieldName: certificateHandlebars.eventDate,
-      parameters: ['en', 'do MMMM yyyy', 'deceased']
-    },
-    mutation: {
-      operation: 'fieldToDeceasedDateTransformation',
-      parameters: [
-        'deceased',
-        {
-          operation: 'longDateTransformer',
-          parameters: []
-        }
-      ]
-    },
-    query: {
-      operation: 'deceasedDateToFieldTransformation',
-      parameters: ['deceased']
-    }
-  }
+  mapping: getFieldMapping('deathDate', certificateHandlebars.eventDate)
 })
 
 export const deathInformantType: SerializedFormField = {
@@ -69,20 +51,10 @@ export const deathInformantType: SerializedFormField = {
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  mapping: {
-    mutation: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'informantType']
-    },
-    query: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'informantType']
-    },
-    template: {
-      fieldName: certificateHandlebars.informantType,
-      operation: 'selectTransformer'
-    }
-  },
+  mapping: getFieldMapping(
+    'informantType',
+    certificateHandlebars.informantType
+  ),
   options: deathInformantTypeOptions
 }
 
@@ -95,20 +67,7 @@ export const getMannerOfDeath: SerializedFormField = {
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   options: mannerOfDeathOptions,
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['mannerOfDeath']
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['mannerOfDeath']
-    },
-    template: {
-      fieldName: certificateHandlebars.mannerOfDeath,
-      operation: 'selectTransformer'
-    }
-  }
+  mapping: getFieldMapping('mannerOfDeath', certificateHandlebars.mannerOfDeath)
 }
 
 export const getCauseOfDeath: SerializedFormField = {
@@ -121,20 +80,10 @@ export const getCauseOfDeath: SerializedFormField = {
   hideHeader: true,
   initialValue: 'false',
   validator: [],
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['causeOfDeathEstablished']
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['causeOfDeathEstablished']
-    },
-    template: {
-      fieldName: certificateHandlebars.causeOfDeathEstablished,
-      operation: 'plainInputTransformer'
-    }
-  }
+  mapping: getFieldMapping(
+    'causeOfDeathEstablished',
+    certificateHandlebars.causeOfDeathEstablished
+  )
 }
 
 export const getCauseOfDeathMethod: SerializedFormField = {
@@ -152,20 +101,10 @@ export const getCauseOfDeathMethod: SerializedFormField = {
     }
   ],
   options: causeOfDeathReportedOptions,
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['causeOfDeathMethod']
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['causeOfDeathMethod']
-    },
-    template: {
-      fieldName: certificateHandlebars.causeOfDeathMethod,
-      operation: 'selectTransformer'
-    }
-  }
+  mapping: getFieldMapping(
+    'causeOfDeathMethod',
+    certificateHandlebars.causeOfDeathMethod
+  )
 }
 
 export const getDeathDescription: SerializedFormField = {
@@ -183,20 +122,10 @@ export const getDeathDescription: SerializedFormField = {
   validator: [],
   required: true,
   maxLength: 500,
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['deathDescription']
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['deathDescription']
-    },
-    template: {
-      fieldName: certificateHandlebars.deathDescription,
-      operation: 'plainInputTransformer'
-    }
-  }
+  mapping: getFieldMapping(
+    'deathDescription',
+    certificateHandlebars.deathDescription
+  )
 }
 
 export const getPlaceOfDeathFields = () =>
@@ -222,16 +151,7 @@ export const getPlaceOfDeathFields = () =>
       validator: [],
       placeholder: formMessageDescriptors.formSelectPlaceholder,
       options: placeOfDeathOptions,
-      mapping: {
-        mutation: {
-          operation: 'eventLocationMutationTransformer',
-          parameters: [{ useCase: 'placeOfDeath' }]
-        },
-        query: {
-          operation: 'eventLocationTypeQueryTransformer',
-          parameters: []
-        }
-      }
+      mapping: getEventLocationSelectionMapping('placeOfDeath')
     },
     {
       name: 'deathLocation',
@@ -256,20 +176,9 @@ export const getPlaceOfDeathFields = () =>
           expression: '(values.placeOfDeath!="HEALTH_FACILITY")'
         }
       ],
-      mapping: {
-        template: {
-          fieldName: certificateHandlebars.placeOfDeath,
-          operation: 'eventLocationNameQueryOfflineTransformer',
-          parameters: ['facilities', 'placeOfDeath']
-        },
-        mutation: {
-          operation: 'eventLocationMutationTransformer',
-          parameters: [{ useCase: 'placeOfDeath' }]
-        },
-        query: {
-          operation: 'eventLocationIDQueryTransformer',
-          parameters: []
-        }
-      }
+      mapping: getEventLocationSelectionMapping(
+        'deathLocation',
+        certificateHandlebars.placeOfDeath
+      )
     }
   ] satisfies SerializedFormField[]

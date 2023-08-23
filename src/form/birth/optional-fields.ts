@@ -9,13 +9,14 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
+import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { formMessageDescriptors } from '../common/messages'
 import {
   attendantAtBirthOptions,
   educationalAttainmentOptions,
   typeOfBirthOptions
 } from '../common/select-options'
-import { Conditional, SerializedFormField } from '../types/types'
+import { SerializedFormField } from '../types/types'
 import { certificateHandlebars } from './certificate-handlebars'
 
 export const attendantAtBirth: SerializedFormField = {
@@ -27,20 +28,10 @@ export const attendantAtBirth: SerializedFormField = {
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   options: attendantAtBirthOptions,
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: []
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: []
-    },
-    template: {
-      fieldName: certificateHandlebars.attendantAtBirth,
-      operation: 'selectTransformer'
-    }
-  }
+  mapping: getFieldMapping(
+    'attendantAtBirth',
+    certificateHandlebars.attendantAtBirth
+  )
 }
 
 export const birthType: SerializedFormField = {
@@ -56,21 +47,9 @@ export const birthType: SerializedFormField = {
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   options: typeOfBirthOptions,
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: []
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: []
-    },
-    template: {
-      fieldName: certificateHandlebars.birthType,
-      operation: 'selectTransformer'
-    }
-  }
+  mapping: getFieldMapping('birthType', certificateHandlebars.birthType)
 }
+
 export const weightAtBirth: SerializedFormField = {
   name: 'weightAtBirth',
   type: 'NUMBER',
@@ -85,47 +64,12 @@ export const weightAtBirth: SerializedFormField = {
     }
   ],
   postfix: 'Kg',
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: []
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: []
-    },
-    template: {
-      fieldName: certificateHandlebars.weightAtBirth,
-      operation: 'plainInputTransformer'
-    }
-  },
+  mapping: getFieldMapping(
+    'weightAtBirth',
+    certificateHandlebars.weightAtBirth
+  ),
   inputFieldWidth: '78px'
 }
-
-export const getNIDVerificationButton = (
-  fieldName: string,
-  conditionals: Conditional[],
-  validator: any[]
-): SerializedFormField => ({
-  name: fieldName,
-  type: 'NID_VERIFICATION_BUTTON',
-  label: formMessageDescriptors.iDTypeNationalID,
-  required: true,
-  initialValue: '',
-  validator,
-  conditionals,
-  mapping: {
-    mutation: {
-      operation: 'nidVerificationFieldToIdentityTransformer'
-    },
-    query: {
-      operation: 'identityToNidVerificationFieldTransformer'
-    }
-  },
-  labelForVerified: formMessageDescriptors.nidVerified,
-  labelForUnverified: formMessageDescriptors.nidNotVerified,
-  labelForOffline: formMessageDescriptors.nidOffline
-})
 
 export const multipleBirth: SerializedFormField = {
   name: 'multipleBirth',
@@ -152,12 +96,7 @@ export const multipleBirth: SerializedFormField = {
       parameters: [2]
     }
   ],
-  mapping: {
-    template: {
-      fieldName: certificateHandlebars.multipleBirth,
-      operation: 'plainInputTransformer'
-    }
-  }
+  mapping: getFieldMapping('multipleBirth', certificateHandlebars.multipleBirth)
 }
 
 export const getOccupation = (
@@ -179,12 +118,7 @@ export const getOccupation = (
       expression: '!values.detailsExist'
     }
   ],
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'plainInputTransformer'
-    }
-  }
+  mapping: getFieldMapping('occupation', certificateHandlebar)
 })
 
 export const getEducation = (
@@ -204,10 +138,5 @@ export const getEducation = (
   ],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   options: educationalAttainmentOptions,
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'selectTransformer'
-    }
-  }
+  mapping: getFieldMapping('educationalAttainment', certificateHandlebar)
 })

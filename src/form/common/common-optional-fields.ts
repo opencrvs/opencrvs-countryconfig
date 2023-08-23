@@ -15,6 +15,7 @@ import { SerializedFormField, Conditional } from '../types/types'
 import { Validator } from '../types/validators'
 import { maritalStatusOptions } from './select-options'
 import { certificateHandlebars } from '../birth/certificate-handlebars'
+import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 
 export const exactDateOfBirthUnknown: SerializedFormField = {
   name: 'exactDateOfBirthUnknown',
@@ -48,14 +49,7 @@ export const exactDateOfBirthUnknown: SerializedFormField = {
       expression: '!window.config.DATE_OF_BIRTH_UNKNOWN || !values.detailsExist'
     }
   ],
-  mapping: {
-    query: {
-      operation: 'booleanTransformer'
-    },
-    mutation: {
-      operation: 'ignoreFieldTransformer'
-    }
-  }
+  mapping: getFieldMapping('exactDateOfBirthUnknown')
 }
 
 export const getNationalID = (
@@ -72,21 +66,7 @@ export const getNationalID = (
     initialValue: '',
     validator,
     conditionals,
-    mapping: {
-      template: {
-        fieldName: certificateHandlebar,
-        operation: 'identityToFieldTransformer',
-        parameters: ['id', 'NATIONAL_ID']
-      },
-      mutation: {
-        operation: 'fieldToIdentityTransformer',
-        parameters: ['id', 'NATIONAL_ID']
-      },
-      query: {
-        operation: 'identityToFieldTransformer',
-        parameters: ['id', 'NATIONAL_ID']
-      }
-    }
+    mapping: getFieldMapping('nationalId', certificateHandlebar)
   } satisfies SerializedFormField)
 
 export const getAgeOfIndividualInYears = (
@@ -131,12 +111,7 @@ export const getMaritalStatus = (
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'selectTransformer'
-    }
-  },
+  mapping: getFieldMapping('maritalStatus', certificateHandlebar),
   conditionals: [
     {
       action: 'hide',
@@ -158,20 +133,10 @@ export const registrationEmail: SerializedFormField = {
     }
   ],
   conditionals: [],
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['registration.contactEmail']
-    },
-    query: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'contactEmail']
-    },
-    template: {
-      fieldName: certificateHandlebars.contactEmail,
-      operation: 'plainInputTransformer'
-    }
-  }
+  mapping: getFieldMapping(
+    'registrationEmail',
+    certificateHandlebars.contactEmail
+  )
 }
 
 export const registrationPhone: SerializedFormField = {
@@ -186,33 +151,10 @@ export const registrationPhone: SerializedFormField = {
     }
   ],
   conditionals: [],
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: [
-        'registration.contactPhoneNumber',
-        {
-          operation: 'msisdnTransformer',
-          parameters: ['registration.contactPhoneNumber']
-        }
-      ]
-    },
-    query: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: [
-        'registration',
-        'contactPhoneNumber',
-        {
-          operation: 'localPhoneTransformer',
-          parameters: ['registration.contactPhoneNumber']
-        }
-      ]
-    },
-    template: {
-      fieldName: certificateHandlebars.contactPhoneNumber,
-      operation: 'selectTransformer'
-    }
-  }
+  mapping: getFieldMapping(
+    'registrationPhone',
+    certificateHandlebars.contactPhoneNumber
+  )
 }
 
 export const seperatorDivider = (name = 'seperator'): SerializedFormField => ({
@@ -227,4 +169,22 @@ export const seperatorDivider = (name = 'seperator'): SerializedFormField => ({
   ignoreBottomMargin: true,
   validator: [],
   conditionals: []
+})
+
+export const getNIDVerificationButton = (
+  fieldName: string,
+  conditionals: Conditional[],
+  validator: any[]
+): SerializedFormField => ({
+  name: fieldName,
+  type: 'NID_VERIFICATION_BUTTON',
+  label: formMessageDescriptors.iDTypeNationalID,
+  required: true,
+  initialValue: '',
+  validator,
+  conditionals,
+  mapping: getFieldMapping('nationalIdVerification'),
+  labelForVerified: formMessageDescriptors.nidVerified,
+  labelForUnverified: formMessageDescriptors.nidNotVerified,
+  labelForOffline: formMessageDescriptors.nidOffline
 })

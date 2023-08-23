@@ -10,6 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
+import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import {
   formMessageDescriptors,
   informantMessageDescriptors
@@ -30,20 +31,10 @@ export const marriageInformantType: SerializedFormField = {
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  mapping: {
-    mutation: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'informantType']
-    },
-    query: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'informantType']
-    },
-    template: {
-      fieldName: certificateHandlebars.informantType,
-      operation: 'selectTransformer'
-    }
-  },
+  mapping: getFieldMapping(
+    'informantType',
+    certificateHandlebars.informantType
+  ),
   options: getMarriageInformantTypeOptions
 }
 
@@ -59,27 +50,7 @@ export const getMarriageDate: SerializedFormField = {
       parameters: [18]
     }
   ],
-  mapping: {
-    template: {
-      operation: 'marriageDateFormatTransformation',
-      fieldName: certificateHandlebars.eventDate,
-      parameters: ['en', 'do MMMM yyyy', ['bride', 'groom']]
-    },
-    mutation: {
-      operation: 'fieldToMarriageDateTransformation',
-      parameters: [
-        ['bride', 'groom'],
-        {
-          operation: 'longDateTransformer',
-          parameters: []
-        }
-      ]
-    },
-    query: {
-      operation: 'marriageDateToFieldTransformation',
-      parameters: [['bride', 'groom']]
-    }
-  }
+  mapping: getFieldMapping('marriageDate', certificateHandlebars.eventDate)
 }
 
 export const getRelationshipToSpousesForWitness: SerializedFormField = {
@@ -140,12 +111,5 @@ export const getDocUploaderForMarriage = (
   conditionals,
   validator: [],
   options,
-  mapping: {
-    mutation: {
-      operation: 'eventFieldToAttachmentTransformer'
-    },
-    query: {
-      operation: 'eventAttachmentToFieldTransformer'
-    }
-  }
+  mapping: getFieldMapping('documents')
 })
