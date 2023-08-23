@@ -70,6 +70,7 @@ export const getXAddressSameAsY = (
 }
 
 // A select field that uses the loaded administrative location levels from Humdata
+// We recommend that you do not edit this function
 export function getAddressLocationSelect(
   section: string,
   location: string,
@@ -121,6 +122,7 @@ export function getAddressLocationSelect(
 }
 
 // Select fields are added for each administrative location level from Humdata
+// We recommend that you do not edit this function
 function getAdminLevelSelects(
   section: string,
   useCase: string
@@ -160,7 +162,16 @@ function getAdminLevelSelects(
 }
 
 // The fields that appear whenever an address is rendered
-// We do not advise changing address fields
+
+// ====================== WARNING REGARDING ADDRESS CONFIGURATION ======================
+
+// WE HAVE SPENT CONSIDERABLE TIME WORKING IN COLLABORATION WITH INTERNATIONAL STANDARDS COMMITTEES ON INTEROPERABLE ADDRESS FORMAT.
+// WE STRONGLY BELIEVE THAT OUR ADDRESS STRUCTURE IS BEST OPTIMISED FOR EVERY POSSIBLE ADDRESS, ANYWHERE IN THE WORLD. (URBAN OR RURAL - STANDARDISED OR UNSTANDARDISED)
+// OUR APPROACH TO ADDRESS FORMAT INTEROPERATES WITH OTHER DIGITAL PUBLIC GOODS USING FHIR & OPENID
+// OUR RECOMENDATION IS THAT YOU ADOPT THESE ADDRESS FIELDS, OTHERWISE YOU MAY LOSE VALUABLE ANALYTICAL AND INTEROPERABLE FUNCTIONALITY
+// WE MARK REQUIRED AND OPTIONAL FIELDS BELOW ACCORDINGLY
+
+// ==================================== END WARNING ====================================
 export function getAddressFields(
   section: string,
   addressCase: EventLocationAddressCases | AddressCases
@@ -202,9 +213,9 @@ export function getAddressFields(
         useCase,
         `country${sentenceCase(useCase)}${sentenceCase(section)}`
       )
-    },
+    }, // Required
     // Select fields are added for each administrative location level from Humdata
-    ...getAdminLevelSelects(section, useCase),
+    ...getAdminLevelSelects(section, useCase), // Required
     {
       name: `ruralOrUrban${sentenceCase(useCase)}${sentenceCase(section)}`,
       type: 'RADIO_GROUP',
@@ -403,6 +414,8 @@ export function getAddressFields(
         4
       )
     },
+    // INTERNATIONAL ADDRESSES ARE SUPPLIED BECAUSE INFORMANTS & CITIZENS MAY LIVE ABROAD & REGISTER AN EVENT AT ONE OF YOUR FOREIGN EMBASSIES
+    // SOMETIMES THIS IS ALSO REQUIRED FOR DIPLOMATIC REASONS OR FOR MILITARY FORCES
     {
       name: `internationalState${sentenceCase(useCase)}${sentenceCase(
         section
