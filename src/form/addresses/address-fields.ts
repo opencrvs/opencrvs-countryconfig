@@ -112,6 +112,7 @@ export function getAddressLocationSelect(
         )
       : getAddressConditionals(section, location, useCase),
     mapping: getMapping(
+      section,
       'SELECT_WITH_DYNAMIC_OPTIONS',
       location,
       useCase,
@@ -208,6 +209,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'country', useCase)
         : getAddressConditionals(section, 'country', useCase),
       mapping: getMapping(
+        section,
         'SELECT_WITH_OPTIONS',
         'country', // Maps form value to FHIR prop. Use empty string for FHIR Address line index
         useCase,
@@ -237,6 +239,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'ruralOrUrban', useCase)
         : getAddressConditionals(section, 'ruralOrUrban', useCase),
       mapping: getMapping(
+        section,
         'RADIO_GROUP',
         '', // No FHIR prop exists for this custom address prop. Use empty string for FHIR Address line index
         useCase,
@@ -263,6 +266,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         'city',
         useCase,
@@ -290,6 +294,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         '',
         useCase,
@@ -320,6 +325,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         '',
         useCase,
@@ -350,6 +356,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         '',
         useCase,
@@ -378,6 +385,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         'postalCode',
         useCase,
@@ -405,6 +413,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'rural', useCase)
         : getAddressConditionals(section, 'rural', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         '',
         useCase,
@@ -437,6 +446,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         'state',
         useCase,
@@ -464,6 +474,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         'district',
         useCase,
@@ -489,6 +500,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         'city',
         useCase,
@@ -516,6 +528,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         '',
         useCase,
@@ -546,6 +559,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         '',
         useCase,
@@ -576,6 +590,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         '',
         useCase,
@@ -606,6 +621,7 @@ export function getAddressFields(
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
       mapping: getMapping(
+        section,
         'TEXT',
         'postalCode',
         useCase,

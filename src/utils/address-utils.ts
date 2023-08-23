@@ -751,6 +751,7 @@ function getMutationMapping(
 
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 function getQueryMapping(
+  section: string,
   type:
     | 'TEXT'
     | 'RADIO_GROUP'
@@ -758,6 +759,7 @@ function getQueryMapping(
     | 'SELECT_WITH_DYNAMIC_OPTIONS',
   location: string,
   useCase: string,
+  fieldName: string,
   locationIndex?: number
 ): IQueryMapper {
   return isUseCaseForPlaceOfEvent(useCase)
@@ -765,20 +767,40 @@ function getQueryMapping(
         operation: 'eventLocationQueryTransformer',
         parameters:
           type === 'SELECT_WITH_OPTIONS' ||
-          type === 'SELECT_WITH_DYNAMIC_OPTIONS'
+          type === 'SELECT_WITH_DYNAMIC_OPTIONS' ||
+          fieldName ===
+            `internationalState${sentenceCase(useCase)}${sentenceCase(
+              section
+            )}` ||
+          fieldName ===
+            `internationalDistrict${sentenceCase(useCase)}${sentenceCase(
+              section
+            )}` ||
+          fieldName ===
+            `internationalCity${sentenceCase(useCase)}${sentenceCase(section)}`
             ? [
                 { transformedFieldName: location, lineNumber: locationIndex },
                 {
                   fieldsToIgnoreForLocalAddress: [
-                    `internationalDistrict${sentenceCase(useCase)}`,
-                    `internationalState${sentenceCase(useCase)}`
+                    `internationalDistrict${sentenceCase(
+                      useCase
+                    )}${sentenceCase(section)}`,
+                    `internationalState${sentenceCase(useCase)}${sentenceCase(
+                      section
+                    )}`
                   ],
                   fieldsToIgnoreForInternationalAddress: [
-                    `locationLevel3${sentenceCase(useCase)}`,
-                    `locationLevel4${sentenceCase(useCase)}`,
-                    `locationLevel5${sentenceCase(useCase)}`,
-                    `district${sentenceCase(useCase)}`,
-                    `state${sentenceCase(useCase)}`
+                    `locationLevel3${sentenceCase(useCase)}${sentenceCase(
+                      section
+                    )}`,
+                    `locationLevel4${sentenceCase(useCase)}${sentenceCase(
+                      section
+                    )}`,
+                    `locationLevel5${sentenceCase(useCase)}${sentenceCase(
+                      section
+                    )}`,
+                    `district${sentenceCase(useCase)}${sentenceCase(section)}`,
+                    `state${sentenceCase(useCase)}${sentenceCase(section)}`
                   ]
                 }
               ]
@@ -825,6 +847,7 @@ function getQueryMapping(
 
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export function getMapping(
+  section: string,
   type:
     | 'TEXT'
     | 'RADIO_GROUP'
@@ -839,13 +862,27 @@ export function getMapping(
     return {
       template: getTemplateMapping(location, useCase, fieldName, locationIndex),
       mutation: getMutationMapping(type, location, useCase, locationIndex),
-      query: getQueryMapping(type, location, useCase, locationIndex)
+      query: getQueryMapping(
+        section,
+        type,
+        location,
+        useCase,
+        fieldName,
+        locationIndex
+      )
     }
   } else {
     // Radio Groups in addresses have no need for certificate template
     return {
       mutation: getMutationMapping(type, location, useCase, locationIndex),
-      query: getQueryMapping(type, location, useCase, locationIndex)
+      query: getQueryMapping(
+        section,
+        type,
+        location,
+        useCase,
+        fieldName,
+        locationIndex
+      )
     }
   }
 }
