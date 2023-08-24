@@ -274,14 +274,14 @@ export function getAddressFields(
       )
     },
     {
-      name: `addressLine3UrbanOption${sentenceCase(useCase)}${sentenceCase(
+      name: `addressLine1UrbanOption${sentenceCase(useCase)}${sentenceCase(
         section
       )}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Residential Area',
-        description: 'Title for the address line 3 option 2',
-        id: 'form.field.label.addressLine3UrbanOption'
+        description: 'Title for the address line 1',
+        id: 'form.field.label.addressLine1UrbanOption'
       },
       previewGroup: isUseCaseForPlaceOfEvent(useCase)
         ? useCase
@@ -298,7 +298,7 @@ export function getAddressFields(
         'TEXT',
         '',
         useCase,
-        `addressLine3UrbanOption${sentenceCase(useCase)}${sentenceCase(
+        `addressLine1UrbanOption${sentenceCase(useCase)}${sentenceCase(
           section
         )}`,
         2
@@ -311,7 +311,7 @@ export function getAddressFields(
       type: 'TEXT',
       label: {
         defaultMessage: 'Street',
-        description: 'Title for the address line 1',
+        description: 'Title for the address line 2',
         id: 'form.field.label.addressLine2UrbanOption'
       },
       previewGroup: isUseCaseForPlaceOfEvent(useCase)
@@ -336,7 +336,7 @@ export function getAddressFields(
       )
     },
     {
-      name: `addressLine1UrbanOption${sentenceCase(useCase)}${sentenceCase(
+      name: `addressLine3UrbanOption${sentenceCase(useCase)}${sentenceCase(
         section
       )}`,
       type: 'TEXT',
@@ -360,7 +360,7 @@ export function getAddressFields(
         'TEXT',
         '',
         useCase,
-        `addressLine1UrbanOption${sentenceCase(useCase)}${sentenceCase(
+        `addressLine3UrbanOption${sentenceCase(useCase)}${sentenceCase(
           section
         )}`,
         0
