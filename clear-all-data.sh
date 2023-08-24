@@ -63,3 +63,9 @@ echo "Running migrations"
 echo
 
 yarn --cwd="$path_to_core/packages/migration" start
+
+echo
+echo "Restarting openhim for the db changes to take effect"
+echo
+
+docker restart opencrvs_openhim-core_1
