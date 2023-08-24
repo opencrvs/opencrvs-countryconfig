@@ -49,13 +49,9 @@ jobs:
         run: yarn install
 
       - name: Seed data on given environment
-        uses: nick-fields/retry@v2
-        with:
-          timeout_minutes: 5
-          max_attempts: 3
-          command: |
-            cd ./opencrvs-core
-            yarn seed:prod
+        run: |
+          cd ./opencrvs-core
+          yarn seed:prod
         env:
           ACTIVATE_USERS: ${{ vars.ACTIVATE_USERS }}
           GATEWAY_URL: ${{ vars.GATEWAY_HOST }}
