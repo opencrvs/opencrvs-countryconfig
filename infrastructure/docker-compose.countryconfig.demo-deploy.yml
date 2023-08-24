@@ -30,6 +30,8 @@ services:
       - CHECK_INVALID_TOKEN=true
       - HOSTNAME=${HOSTNAME}
       - SENTRY_DSN=${SENTRY_DSN}
+      - EMAIL_API_KEY=${EMAIL_API_KEY}
+      - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
 
     deploy:
       replicas: 1
