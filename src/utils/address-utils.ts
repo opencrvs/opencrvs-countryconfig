@@ -672,22 +672,29 @@ function getTemplateMapping(
   locationIndex?: number
 ): IHandlebarTemplates {
   return isUseCaseForPlaceOfEvent(useCase)
-    ? locationIndex || locationIndex === 0
+    ? locationIndex
       ? {
           fieldName,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [locationIndex, getSupportedExtraLocationLevels(location)]
+          parameters: [locationIndex, fieldName, location]
         }
       : {
           fieldName,
           operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
           parameters: [location]
         }
-    : locationIndex || locationIndex === 0
+    : locationIndex
     ? {
         fieldName,
         operation: 'addressLineTemplateTransformer',
-        parameters: [useCase, locationIndex, fieldName]
+        parameters: [
+          useCase.toUpperCase() === 'PRIMARY'
+            ? AddressCases.PRIMARY_ADDRESS
+            : AddressCases.SECONDARY_ADDRESS,
+          locationIndex,
+          fieldName,
+          location
+        ]
       }
     : {
         fieldName,
@@ -938,20 +945,6 @@ export function getEventLocationSelectionMapping(
       }
     default:
       throw Error(`Mapping not supported for ${mappingId}`)
-  }
-}
-
-// You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
-function getSupportedExtraLocationLevels(location: string) {
-  switch (location) {
-    case 'locationLevel3':
-      return 'locationLevel3'
-    case 'locationLevel4':
-      return 'locationLevel4'
-    case 'locationLevel5':
-      return 'locationLevel5'
-    default:
-      return ''
   }
 }
 
