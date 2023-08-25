@@ -148,11 +148,16 @@ export const deathForm = {
             getGender(certificateHandlebars.deceasedGender), // Required field.
             getBirthDate(
               'deceasedBirthDate',
-              [],
+              [
+                {
+                  action: 'hide',
+                  expression: 'values.exactDateOfBirthUnknown'
+                }
+              ],
               isValidBirthDate,
               certificateHandlebars.deceasedBirthDate
             ), // Required field.,
-            exactDateOfBirthUnknown,
+            exactDateOfBirthUnknown([]),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional
@@ -233,7 +238,7 @@ export const deathForm = {
               ],
               certificateHandlebars.informantBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown,
+            exactDateOfBirthUnknown([]),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional

@@ -33,6 +33,13 @@ export const hideIfNidIntegrationDisabled = [
   }
 ]
 
+export const detailsExistConditional: Conditional[] = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  }
+]
+
 export const motherNationalIDVerfication = [
   {
     action: 'hide',
@@ -61,7 +68,7 @@ export const mothersBirthDateConditionals = [
     expression: '!values.detailsExist'
   },
   {
-    action: 'disable',
+    action: 'hide',
     expression: 'values.exactDateOfBirthUnknown'
   },
   {
@@ -131,7 +138,7 @@ export const fathersBirthDateConditionals = [
     expression: '!values.detailsExist'
   },
   {
-    action: 'disable',
+    action: 'hide',
     expression: 'values.exactDateOfBirthUnknown'
   },
   {
@@ -337,7 +344,7 @@ export const hideIfNidIntegrationEnabled = [
 
 export const informantBirthDateConditionals = [
   {
-    action: 'disable',
+    action: 'hide',
     expression: 'values.exactDateOfBirthUnknown'
   },
   {

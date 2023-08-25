@@ -94,7 +94,12 @@ export const marriageForm: ISerializedForm = {
             ), // Required field
             getBirthDate(
               'informantBirthDate',
-              hideIfInformantBrideOrGroom,
+              hideIfInformantBrideOrGroom.concat([
+                {
+                  action: 'hide',
+                  expression: 'values.exactDateOfBirthUnknown'
+                }
+              ]),
               [
                 {
                   operation: 'dateFormatIsCorrect',
@@ -107,7 +112,7 @@ export const marriageForm: ISerializedForm = {
               ],
               certificateHandlebars.informantBirthDate
             ), // Required field
-            exactDateOfBirthUnknown,
+            exactDateOfBirthUnknown(hideIfInformantBrideOrGroom),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(
@@ -160,11 +165,16 @@ export const marriageForm: ISerializedForm = {
             ), // Required field
             getBirthDate(
               'groomBirthDate',
-              [],
+              [
+                {
+                  action: 'hide',
+                  expression: 'values.exactDateOfBirthUnknown'
+                }
+              ],
               brideOrGroomBirthDateValidators('groom'),
               certificateHandlebars.groomBirthDate
             ), // Required field
-            exactDateOfBirthUnknown,
+            exactDateOfBirthUnknown([]),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfGroom,
               exactDateOfBirthUnknownConditional
@@ -203,11 +213,16 @@ export const marriageForm: ISerializedForm = {
             ), // Required field
             getBirthDate(
               'brideBirthDate',
-              [],
+              [
+                {
+                  action: 'hide',
+                  expression: 'values.exactDateOfBirthUnknown'
+                }
+              ],
               brideOrGroomBirthDateValidators('bride'),
               certificateHandlebars.brideBirthDate
             ), // Required field
-            exactDateOfBirthUnknown,
+            exactDateOfBirthUnknown([]),
             getAgeOfIndividualInYears(formMessageDescriptors.ageOfBride, [
               {
                 action: 'hide',
