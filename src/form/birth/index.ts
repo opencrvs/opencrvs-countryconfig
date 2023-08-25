@@ -33,13 +33,13 @@ import {
   registrationEmail,
   registrationPhone,
   seperatorDivider,
-  getNationalID
+  getNationalID,
+  getNIDVerificationButton
 } from '../common/common-optional-fields'
 import {
   attendantAtBirth,
   birthType,
   getEducation,
-  getNIDVerificationButton,
   getOccupation,
   multipleBirth,
   weightAtBirth
@@ -77,17 +77,23 @@ import {
 } from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
+import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
+import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
 
 // A REGISTRATION FORM IS MADE UP OF PAGES OR "SECTIONS"
 
-// A "SECTION" CAN BE SPLIT OVER MULTIPLE PAGES USING "GROUPS" ALTHOUGH THIS MAY BE DEPRECATED
+// A "SECTION" CAN BE SPLIT OVER MULTIPLE SUB-PAGES USING "GROUPS"
+
+// GROUPS CONTAIN A FIELDS ARRAY AND EACH FIELD IS RENDERED BY A FORM FIELD FUNCTION
+
+// MOVE FORM FIELD FUNCTIONS UP AND DOWN TO CHANGE THE VERTICAL ORDER OF FIELDS
 
 // IN EACH GROUP, REQUIRED FIELDS MUST BE INCLUDED AS-IS FOR OPENCRVS TO FUNCTION
 
-// OPTIONAL FIELDS CAN BE REMOVED IF NOT REQUIRED
+// OPTIONAL FIELDS CAN BE COMMENTED OUT OR REMOVED IF NOT REQUIRED
 
 // DUPLICATE & FOLLOW THE INSTRUCTIONS IN THE createCustomFieldExample FUNCTION WHEN REQUIRED FOR ADDING NEW CUSTOM FIELDS
 
@@ -163,45 +169,7 @@ export const birthForm: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.childTab,
       title: formMessageDescriptors.childTitle,
-      mapping: {
-        template: [
-          {
-            fieldName: 'birthConfigurableIdentifier1',
-            operation: 'childIdentityToFieldTransformer',
-            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_1']]
-          },
-          {
-            fieldName: 'birthConfigurableIdentifier2',
-            operation: 'childIdentityToFieldTransformer',
-            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_2']]
-          },
-          {
-            fieldName: 'birthConfigurableIdentifier3',
-            operation: 'childIdentityToFieldTransformer',
-            parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_3']]
-          }
-        ],
-        mutation: {
-          operation: 'childFieldToIdentityTransformer',
-          parameters: [
-            [
-              'BIRTH_CONFIGURABLE_IDENTIFIER_1',
-              'BIRTH_CONFIGURABLE_IDENTIFIER_2',
-              'BIRTH_CONFIGURABLE_IDENTIFIER_3'
-            ]
-          ]
-        },
-        query: {
-          operation: 'childIdentityToFieldTransformer',
-          parameters: [
-            [
-              'BIRTH_CONFIGURABLE_IDENTIFIER_1',
-              'BIRTH_CONFIGURABLE_IDENTIFIER_2',
-              'BIRTH_CONFIGURABLE_IDENTIFIER_3'
-            ]
-          ]
-        }
-      }, // These mappings support configurable identifiers in
+      mapping: getSectionMapping('child'), // These mappings support configurable identifiers in the event-registration API
       groups: [
         {
           id: 'child-view-group',
@@ -297,19 +265,12 @@ export const birthForm: ISerializedForm = {
                 hideIfInformantMotherOrFather
               ),
               []
-            )
+            ) // This optional field is used to validate user input with an externally integrated national ID system
           ],
           previewGroups: [informantNameInEnglish]
         }
       ],
-      mapping: {
-        mutation: {
-          operation: 'setInformantSectionTransformer'
-        },
-        query: {
-          operation: 'getInformantSectionTransformer'
-        }
-      }
+      mapping: getCommonSectionMapping('informant')
     },
     {
       id: 'mother',
@@ -360,7 +321,7 @@ export const birthForm: ISerializedForm = {
               'motherNidVerification',
               hideIfNidIntegrationDisabled.concat(motherNationalIDVerfication),
               []
-            ),
+            ), // This optional field is used to validate user input with an externally integrated national ID system
             seperatorDivider('mother-nid-seperator'),
             getMaritalStatus(certificateHandlebars.motherMaritalStatus),
             multipleBirth,
@@ -370,11 +331,7 @@ export const birthForm: ISerializedForm = {
           previewGroups: [motherNameInEnglish]
         }
       ],
-      mapping: {
-        query: {
-          operation: 'emptyMotherSectionTransformer'
-        }
-      }
+      mapping: getSectionMapping('mother')
     },
     {
       id: 'father',
@@ -433,7 +390,7 @@ export const birthForm: ISerializedForm = {
               'fatherNidVerification',
               hideIfNidIntegrationDisabled.concat(fatherNationalIDVerfication),
               []
-            ),
+            ), // This optional field is used to validate user input with an externally integrated national ID system
             seperatorDivider('father-nid-seperator'),
             getMaritalStatus(certificateHandlebars.fatherMaritalStatus),
             getOccupation(certificateHandlebars.fatherOccupation),
@@ -442,11 +399,7 @@ export const birthForm: ISerializedForm = {
           previewGroups: [fatherNameInEnglish]
         }
       ],
-      mapping: {
-        query: {
-          operation: 'emptyFatherSectionTransformer'
-        }
-      }
+      mapping: getSectionMapping('father')
     },
     documentsSection // REQUIRED SECTION FOR DOCUMENT ATTACHMENTS
   ]

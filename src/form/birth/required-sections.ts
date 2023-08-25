@@ -1,6 +1,7 @@
+import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
 import { formMessageDescriptors } from '../common/messages'
 import { ISerializedFormSection } from '../types/types'
-import { certificateHandlebars } from './certificate-handlebars'
+import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 
 export const registrationSection = {
   id: 'registration', // A hidden 'registration' section must be included to store identifiers in a form draft that are used in certificates
@@ -11,68 +12,7 @@ export const registrationSection = {
     id: 'form.section.declaration.name'
   },
   groups: [],
-  mapping: {
-    template: [
-      {
-        fieldName: certificateHandlebars.registrationNumber,
-        operation: 'registrationNumberTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.qrCode,
-        operation: 'QRCodeTransformerTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.mosipAid,
-        operation: 'mosipAidTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.mosipAIDLabel,
-        operation: 'mosipAidLabelTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.certificateDate,
-        operation: 'certificateDateTransformer',
-        parameters: ['en', 'dd MMMM yyyy']
-      },
-      {
-        fieldName: certificateHandlebars.registrar,
-        operation: 'userTransformer',
-        parameters: ['REGISTERED']
-      },
-      {
-        fieldName: certificateHandlebars.registrationAgent,
-        operation: 'userTransformer',
-        parameters: ['VALIDATED']
-      },
-      {
-        fieldName: certificateHandlebars.registrarName,
-        operation: 'registrarNameUserTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.role,
-        operation: 'roleUserTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.registrarSignature,
-        operation: 'registrarSignatureUserTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.registrationDate,
-        operation: 'registrationDateTransformer',
-        parameters: ['en', 'dd MMMM yyyy']
-      },
-      {
-        fieldName: certificateHandlebars.registrationLocation,
-        operation: 'registrationLocationUserTransformer'
-      }
-    ],
-    mutation: {
-      operation: 'setBirthRegistrationSectionTransformer'
-    },
-    query: {
-      operation: 'getBirthRegistrationSectionTransformer'
-    }
-  }
+  mapping: getSectionMapping('registration')
 } as ISerializedFormSection
 
 export const birthDocumentExtraValue = {
@@ -129,14 +69,7 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeChildBirthProof
             }
           ],
-          mapping: {
-            mutation: {
-              operation: 'eventFieldToAttachmentTransformer'
-            },
-            query: {
-              operation: 'eventAttachmentToFieldTransformer'
-            }
-          }
+          mapping: getFieldMapping('documents')
         },
         {
           name: 'uploadDocForMother',
@@ -172,14 +105,7 @@ export const documentsSection = {
                 'draftData && draftData.mother && !draftData.mother.detailsExist'
             }
           ],
-          mapping: {
-            mutation: {
-              operation: 'eventFieldToAttachmentTransformer'
-            },
-            query: {
-              operation: 'eventAttachmentToFieldTransformer'
-            }
-          }
+          mapping: getFieldMapping('documents')
         },
         {
           name: 'uploadDocForFather',
@@ -215,14 +141,7 @@ export const documentsSection = {
                 'draftData && draftData.father && !draftData.father.detailsExist'
             }
           ],
-          mapping: {
-            mutation: {
-              operation: 'eventFieldToAttachmentTransformer'
-            },
-            query: {
-              operation: 'eventAttachmentToFieldTransformer'
-            }
-          }
+          mapping: getFieldMapping('documents')
         },
         {
           name: 'uploadDocForInformant',
@@ -257,14 +176,7 @@ export const documentsSection = {
                 "draftData?.informant?.informantType === 'MOTHER' || draftData?.informant?.informantType === 'FATHER'"
             }
           ],
-          mapping: {
-            mutation: {
-              operation: 'eventFieldToAttachmentTransformer'
-            },
-            query: {
-              operation: 'eventAttachmentToFieldTransformer'
-            }
-          }
+          mapping: getFieldMapping('documents')
         },
         {
           name: 'uploadDocForProofOfLegalGuardian',
@@ -291,14 +203,7 @@ export const documentsSection = {
                 "(draftData && draftData.registration && draftData.registration.informantType && selectedInformantAndContactType.selectedInformantType && (selectedInformantAndContactType.selectedInformantType === 'MOTHER' || selectedInformantAndContactType.selectedInformantType === 'FATHER'))"
             }
           ],
-          mapping: {
-            mutation: {
-              operation: 'eventFieldToAttachmentTransformer'
-            },
-            query: {
-              operation: 'eventAttachmentToFieldTransformer'
-            }
-          }
+          mapping: getFieldMapping('documents')
         }
       ]
     }

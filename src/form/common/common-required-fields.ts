@@ -13,6 +13,7 @@
 import { formMessageDescriptors } from './messages'
 import { SerializedFormField, Conditional, Event } from '../types/types'
 import { genderOptions } from './select-options'
+import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 
 export const getBirthDate = (
   fieldName: string,
@@ -27,21 +28,7 @@ export const getBirthDate = (
   conditionals,
   initialValue: '',
   validator,
-  mapping: {
-    template: {
-      operation: 'dateFormatTransformer',
-      fieldName: certificateHandlebar,
-      parameters: ['birthDate', 'en', 'do MMMM yyyy']
-    },
-    mutation: {
-      operation: 'longDateTransformer',
-      parameters: ['birthDate']
-    },
-    query: {
-      operation: 'fieldValueTransformer',
-      parameters: ['birthDate']
-    }
-  }
+  mapping: getFieldMapping('birthDate', certificateHandlebar)
 })
 
 export const getGender = (certificateHandlebar: string) =>
@@ -53,12 +40,7 @@ export const getGender = (certificateHandlebar: string) =>
     initialValue: '',
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
-    mapping: {
-      template: {
-        fieldName: certificateHandlebar,
-        operation: 'selectTransformer'
-      }
-    },
+    mapping: getFieldMapping('gender', certificateHandlebar),
     options: genderOptions
   } satisfies SerializedFormField)
 
@@ -81,21 +63,7 @@ export const getFamilyNameField = (
         operation: 'englishOnlyNameFormat'
       }
     ],
-    mapping: {
-      template: {
-        fieldName: certificateHandlebar,
-        operation: 'nameToFieldTransformer',
-        parameters: ['en', 'familyName']
-      },
-      mutation: {
-        operation: 'fieldToNameTransformer',
-        parameters: ['en', 'familyName']
-      },
-      query: {
-        operation: 'nameToFieldTransformer',
-        parameters: ['en', 'familyName']
-      }
-    }
+    mapping: getFieldMapping('familyName', certificateHandlebar)
   } satisfies SerializedFormField)
 
 export const getFirstNameField = (
@@ -121,21 +89,7 @@ export const getFirstNameField = (
         operation: 'englishOnlyNameFormat'
       }
     ],
-    mapping: {
-      template: {
-        fieldName: certificateHandlebar,
-        operation: 'nameToFieldTransformer',
-        parameters: ['en', 'firstNames']
-      },
-      mutation: {
-        operation: 'fieldToNameTransformer',
-        parameters: ['en', 'firstNames']
-      },
-      query: {
-        operation: 'nameToFieldTransformer',
-        parameters: ['en', 'firstNames']
-      }
-    }
+    mapping: getFieldMapping('firstNames', certificateHandlebar)
   } satisfies SerializedFormField)
 
 export const getNationality = (
@@ -154,18 +108,7 @@ export const getNationality = (
       resource: 'countries'
     },
     conditionals,
-    mapping: {
-      template: {
-        fieldName: certificateHandlebar,
-        operation: 'nationalityTransformer'
-      },
-      mutation: {
-        operation: 'fieldToArrayTransformer'
-      },
-      query: {
-        operation: 'arrayToFieldTransformer'
-      }
-    }
+    mapping: getFieldMapping('nationality', certificateHandlebar)
   } satisfies SerializedFormField)
 
 export const otherInformantType = (event: Event) =>
@@ -192,14 +135,5 @@ export const otherInformantType = (event: Event) =>
         expression: 'values.informantType !== "OTHER"'
       }
     ],
-    mapping: {
-      mutation: {
-        operation: 'fieldValueSectionExchangeTransformer',
-        parameters: ['registration', 'otherInformantType']
-      },
-      query: {
-        operation: 'fieldValueSectionExchangeTransformer',
-        parameters: ['registration', 'otherInformantType']
-      }
-    }
+    mapping: getFieldMapping('otherInformantType')
   } satisfies SerializedFormField)
