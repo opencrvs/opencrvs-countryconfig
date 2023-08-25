@@ -54,7 +54,7 @@ type IIgnoreFields = {
   fieldsToIgnoreForInternationalAddress: string[]
 }
 
-type IHandlebarTemplates = {
+export type IHandlebarTemplates = {
   fieldName: string
   operation: string
   parameters?: (string | (string | number) | number | string[])[]
@@ -67,10 +67,11 @@ type ISubMapper = {
 
 type IAddressLineMapper = {
   transformedFieldName?: string
+  useCase?: string
   lineNumber?: number
 }
 
-type IQueryMapper = {
+export type IQueryMapper = {
   operation: string
   parameters?: (
     | string
@@ -82,7 +83,7 @@ type IQueryMapper = {
   )[]
 }
 
-type IMutationMapper = {
+export type IMutationMapper = {
   operation: string
   parameters?: (
     | string
@@ -604,7 +605,6 @@ export interface IFormSectionGroup {
   conditionals?: Conditional[]
   error?: MessageDescriptor
   preventContinueIfError?: boolean
-  showExitButtonOnly?: boolean
 }
 
 export type IFormFieldMutationMapFunction = (

@@ -10,6 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
+import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { formMessageDescriptors } from '../common/messages'
 import { typeOfMarriageOptions } from '../common/select-options'
 import { SerializedFormField } from '../types/types'
@@ -30,21 +31,7 @@ export const getMarriedLastName = (
       operation: 'englishOnlyNameFormat'
     }
   ],
-  mapping: {
-    template: {
-      fieldName: certificateHandlebar,
-      operation: 'nameToFieldTransformer',
-      parameters: ['en', 'marriedLastName']
-    },
-    mutation: {
-      operation: 'fieldToNameTransformer',
-      parameters: ['en', 'marriedLastName']
-    },
-    query: {
-      operation: 'nameToFieldTransformer',
-      parameters: ['en', 'marriedLastName']
-    }
-  }
+  mapping: getFieldMapping('marriedLastName', certificateHandlebar)
 })
 
 export const getTypeOfMarriage: SerializedFormField = {
@@ -56,20 +43,10 @@ export const getTypeOfMarriage: SerializedFormField = {
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   options: typeOfMarriageOptions,
-  mapping: {
-    mutation: {
-      operation: 'sectionFieldToBundleFieldTransformer',
-      parameters: ['typeOfMarriage']
-    },
-    query: {
-      operation: 'bundleFieldToSectionFieldTransformer',
-      parameters: ['typeOfMarriage']
-    },
-    template: {
-      fieldName: certificateHandlebars.typeOfMarriage,
-      operation: 'selectTransformer'
-    }
-  }
+  mapping: getFieldMapping(
+    'typeOfMarriage',
+    certificateHandlebars.typeOfMarriage
+  )
 }
 
 export const placeOfMarriageSubsection: SerializedFormField = {

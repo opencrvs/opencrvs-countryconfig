@@ -22,6 +22,8 @@ import {
   placeOfBirthOptions
 } from '../common/select-options'
 import { certificateHandlebars } from './certificate-handlebars'
+import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { getEventLocationSelectionMapping } from '@countryconfig/utils/address-utils'
 
 export const informantType: SerializedFormField = {
   name: 'informantType',
@@ -32,20 +34,10 @@ export const informantType: SerializedFormField = {
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  mapping: {
-    mutation: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'informantType']
-    },
-    query: {
-      operation: 'fieldValueSectionExchangeTransformer',
-      parameters: ['registration', 'informantType']
-    },
-    template: {
-      fieldName: certificateHandlebars.informantType,
-      operation: 'selectTransformer'
-    }
-  },
+  mapping: getFieldMapping(
+    'informantType',
+    certificateHandlebars.informantType
+  ),
   options: birthInformantTypeOptions
 }
 
@@ -62,16 +54,7 @@ export const getPlaceOfBirthFields = (): SerializedFormField[] => [
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     options: placeOfBirthOptions,
-    mapping: {
-      mutation: {
-        operation: 'birthEventLocationMutationTransformer',
-        parameters: [{}]
-      },
-      query: {
-        operation: 'eventLocationTypeQueryTransformer',
-        parameters: []
-      }
-    }
+    mapping: getEventLocationSelectionMapping('placeOfBirth')
   },
   {
     name: 'birthLocation',
@@ -96,21 +79,10 @@ export const getPlaceOfBirthFields = (): SerializedFormField[] => [
         expression: '(values.placeOfBirth!="HEALTH_FACILITY")'
       }
     ],
-    mapping: {
-      template: {
-        fieldName: certificateHandlebars.placeOfBirth,
-        operation: 'eventLocationNameQueryOfflineTransformer',
-        parameters: ['facilities', 'placeOfBirth']
-      },
-      mutation: {
-        operation: 'birthEventLocationMutationTransformer',
-        parameters: [{}]
-      },
-      query: {
-        operation: 'eventLocationIDQueryTransformer',
-        parameters: []
-      }
-    }
+    mapping: getEventLocationSelectionMapping(
+      'birthLocation',
+      certificateHandlebars.placeOfBirth
+    )
   }
 ]
 
@@ -129,11 +101,7 @@ export const getDetailsExist = (
     initialValue: true,
     validator: [],
     conditionals,
-    mapping: {
-      query: {
-        operation: 'booleanTransformer'
-      }
-    },
+    mapping: getFieldMapping('detailsExist'),
     ignoreBottomMargin: true
   } satisfies SerializedFormField)
 
@@ -151,10 +119,5 @@ export const getReasonNotExisting = (certificateHandlebar: string) =>
     validator: [],
     initialValue: '',
     required: true,
-    mapping: {
-      template: {
-        fieldName: certificateHandlebar,
-        operation: 'plainInputTransformer'
-      }
-    }
+    mapping: getFieldMapping('reasonNotApplying', certificateHandlebar)
   } satisfies SerializedFormField)

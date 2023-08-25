@@ -15,8 +15,6 @@
 export const certificateHandlebars = {
   registrationNumber: 'registrationNumber',
   qrCode: 'qrCode',
-  mosipAid: 'mosipAid',
-  mosipAIDLabel: 'mosipAIDLabel',
   certificateDate: 'certificateDate',
   registrar: 'registrar',
   registrationAgent: 'registrationAgent',
@@ -27,6 +25,11 @@ export const certificateHandlebars = {
   registrationLocation: 'registrationLocation',
   contactEmail: 'contactEmail',
   contactPhoneNumber: 'contactPhoneNumber',
+  mosipAid: 'mosipAid',
+  mosipAIDLabel: 'mosipAIDLabel',
+  birthConfigurableIdentifier1: 'birthConfigurableIdentifier1',
+  birthConfigurableIdentifier2: 'birthConfigurableIdentifier2',
+  birthConfigurableIdentifier3: 'birthConfigurableIdentifier3',
   placeOfBirth: 'placeOfBirth',
   informantType: 'informantType',
   attendantAtBirth: 'attendantAtBirth',
@@ -58,5 +61,88 @@ export const certificateHandlebars = {
   fatherNID: 'fatherNID',
   fatherMaritalStatus: 'fatherMaritalStatus',
   fatherOccupation: 'fatherOccupation',
-  fatherEducationalAttainment: 'fatherEducationalAttainment'
+  fatherEducationalAttainment: 'fatherEducationalAttainment',
+  countryPlaceofbirth: 'countryPlaceofbirth',
+  statePlaceofbirth: 'statePlaceofbirth',
+  districtPlaceofbirth: 'districtPlaceofbirth',
+  cityPlaceofbirth: 'cityPlaceofbirth',
+  addressLine3UrbanOptionPlaceofbirth: 'addressLine3UrbanOptionPlaceofbirth',
+  addressLine2UrbanOptionPlaceofbirth: 'addressLine2UrbanOptionPlaceofbirth',
+  addressLine1UrbanOptionPlaceofbirth: 'addressLine1UrbanOptionPlaceofbirth',
+  postalCodePlaceofbirth: 'postalCodePlaceofbirth',
+  addressLine1RuralOptionPlaceofbirth: 'addressLine1RuralOptionPlaceofbirth',
+  internationalStatePlaceofbirth: 'internationalStatePlaceofbirth',
+  internationalDistrictPlaceofbirth: 'internationalDistrictPlaceofbirth',
+  internationalCityPlaceofbirth: 'internationalCityPlaceofbirth',
+  internationalAddressLine1Placeofbirth:
+    'internationalAddressLine1Placeofbirth',
+  internationalAddressLine2Placeofbirth:
+    'internationalAddressLine2Placeofbirth',
+  internationalAddressLine3Placeofbirth:
+    'internationalAddressLine3Placeofbirth',
+  internationalPostalCodePlaceofbirth: 'internationalPostalCodePlaceofbirth',
+  countryPrimaryInformant: 'countryPrimaryInformant',
+  statePrimaryInformant: 'statePrimaryInformant',
+  districtPrimaryInformant: 'districtPrimaryInformant',
+  cityPrimaryInformant: 'cityPrimaryInformant',
+  addressLine3UrbanOptionPrimaryInformant:
+    'addressLine3UrbanOptionPrimaryInformant',
+  addressLine2UrbanOptionPrimaryInformant:
+    'addressLine2UrbanOptionPrimaryInformant',
+  addressLine1UrbanOptionPrimaryInformant:
+    'addressLine1UrbanOptionPrimaryInformant',
+  postalCodePrimaryInformant: 'postalCodePrimaryInformant',
+  addressLine1RuralOptionPrimaryInformant:
+    'addressLine1RuralOptionPrimaryInformant',
+  internationalStatePrimaryInformant: 'internationalStatePrimaryInformant',
+  internationalDistrictPrimaryInformant:
+    'internationalDistrictPrimaryInformant',
+  internationalCityPrimaryInformant: 'internationalCityPrimaryInformant',
+  internationalAddressLine1PrimaryInformant:
+    'internationalAddressLine1PrimaryInformant',
+  internationalAddressLine2PrimaryInformant:
+    'internationalAddressLine2PrimaryInformant',
+  internationalAddressLine3PrimaryInformant:
+    'internationalAddressLine3PrimaryInformant',
+  internationalPostalCodePrimaryInformant:
+    'internationalPostalCodePrimaryInformant',
+  countryPrimaryMother: 'countryPrimaryMother',
+  statePrimaryMother: 'statePrimaryMother',
+  districtPrimaryMother: 'districtPrimaryMother',
+  cityPrimaryMother: 'cityPrimaryMother',
+  addressLine3UrbanOptionPrimaryMother: 'addressLine3UrbanOptionPrimaryMother',
+  addressLine2UrbanOptionPrimaryMother: 'addressLine2UrbanOptionPrimaryMother',
+  addressLine1UrbanOptionPrimaryMother: 'addressLine1UrbanOptionPrimaryMother',
+  postalCodePrimaryMother: 'postalCodePrimaryMother',
+  addressLine1RuralOptionPrimaryMother: 'addressLine1RuralOptionPrimaryMother',
+  internationalStatePrimaryMother: 'internationalStatePrimaryMother',
+  internationalDistrictPrimaryMother: 'internationalDistrictPrimaryMother',
+  internationalCityPrimaryMother: 'internationalCityPrimaryMother',
+  internationalAddressLine1PrimaryMother:
+    'internationalAddressLine1PrimaryMother',
+  internationalAddressLine2PrimaryMother:
+    'internationalAddressLine2PrimaryMother',
+  internationalAddressLine3PrimaryMother:
+    'internationalAddressLine3PrimaryMother',
+  internationalPostalCodePrimaryMother: 'internationalPostalCodePrimaryMother',
+  fatherReasonNotApplying: 'fatherReasonNotApplying',
+  countryPrimaryFather: 'countryPrimaryFather',
+  statePrimaryFather: 'statePrimaryFather',
+  districtPrimaryFather: 'districtPrimaryFather',
+  cityPrimaryFather: 'cityPrimaryFather',
+  addressLine3UrbanOptionPrimaryFather: 'addressLine3UrbanOptionPrimaryFather',
+  addressLine2UrbanOptionPrimaryFather: 'addressLine2UrbanOptionPrimaryFather',
+  addressLine1UrbanOptionPrimaryFather: 'addressLine1UrbanOptionPrimaryFather',
+  postalCodePrimaryFather: 'postalCodePrimaryFather',
+  addressLine1RuralOptionPrimaryFather: 'addressLine1RuralOptionPrimaryFather',
+  internationalStatePrimaryFather: 'internationalStatePrimaryFather',
+  internationalDistrictPrimaryFather: 'internationalDistrictPrimaryFather',
+  internationalCityPrimaryFather: 'internationalCityPrimaryFather',
+  internationalAddressLine1PrimaryFather:
+    'internationalAddressLine1PrimaryFather',
+  internationalAddressLine2PrimaryFather:
+    'internationalAddressLine2PrimaryFather',
+  internationalAddressLine3PrimaryFather:
+    'internationalAddressLine3PrimaryFather',
+  internationalPostalCodePrimaryFather: 'internationalPostalCodePrimaryFather'
 }

@@ -1,6 +1,7 @@
+import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 import { formMessageDescriptors } from '../common/messages'
 import { ISerializedFormSection } from '../types/types'
-import { certificateHandlebars } from './certficate-handlebars'
+import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 
 export const registrationSection = {
   id: 'registration',
@@ -11,60 +12,7 @@ export const registrationSection = {
     id: 'form.section.declaration.name'
   },
   groups: [],
-  mapping: {
-    template: [
-      {
-        fieldName: certificateHandlebars.registrationNumber,
-        operation: 'registrationNumberTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.qrCode,
-        operation: 'QRCodeTransformerTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.certificateDate,
-        operation: 'certificateDateTransformer',
-        parameters: ['en', 'dd MMMM yyyy']
-      },
-      {
-        fieldName: certificateHandlebars.registrar,
-        operation: 'userTransformer',
-        parameters: ['REGISTERED']
-      },
-      {
-        fieldName: certificateHandlebars.registrationAgent,
-        operation: 'userTransformer',
-        parameters: ['VALIDATED']
-      },
-      {
-        fieldName: certificateHandlebars.registrarName,
-        operation: 'registrarNameUserTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.role,
-        operation: 'roleUserTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.registrarSignature,
-        operation: 'registrarSignatureUserTransformer'
-      },
-      {
-        fieldName: certificateHandlebars.registrationDate,
-        operation: 'registrationDateTransformer',
-        parameters: ['en', 'dd MMMM yyyy']
-      },
-      {
-        fieldName: certificateHandlebars.registrationLocation,
-        operation: 'registrationLocationUserTransformer'
-      }
-    ],
-    mutation: {
-      operation: 'setDeathRegistrationSectionTransformer'
-    },
-    query: {
-      operation: 'getDeathRegistrationSectionTransformer'
-    }
-  }
+  mapping: getSectionMapping('registration')
 } as ISerializedFormSection
 
 export const deathDocumentExtraValue = {
@@ -129,14 +77,7 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeOther
             }
           ],
-          mapping: {
-            mutation: {
-              operation: 'eventFieldToAttachmentTransformer'
-            },
-            query: {
-              operation: 'eventAttachmentToFieldTransformer'
-            }
-          }
+          mapping: getFieldMapping('documents')
         },
         {
           name: 'uploadDocForInformant',
@@ -164,14 +105,7 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeOther
             }
           ],
-          mapping: {
-            mutation: {
-              operation: 'eventFieldToAttachmentTransformer'
-            },
-            query: {
-              operation: 'eventAttachmentToFieldTransformer'
-            }
-          }
+          mapping: getFieldMapping('documents')
         },
         {
           name: 'uploadDocForDeceasedDeath',
@@ -207,14 +141,7 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeOther
             }
           ],
-          mapping: {
-            mutation: {
-              operation: 'eventFieldToAttachmentTransformer'
-            },
-            query: {
-              operation: 'eventAttachmentToFieldTransformer'
-            }
-          }
+          mapping: getFieldMapping('documents')
         },
         {
           name: 'uploadDocForCauseOfDeath',
@@ -245,14 +172,7 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeOther
             }
           ],
-          mapping: {
-            mutation: {
-              operation: 'eventFieldToAttachmentTransformer'
-            },
-            query: {
-              operation: 'eventAttachmentToFieldTransformer'
-            }
-          }
+          mapping: getFieldMapping('documents')
         }
       ]
     }

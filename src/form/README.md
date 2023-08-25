@@ -280,7 +280,7 @@ This object holds sections for birth declaration forms. All sections are contain
 
     Array index: 9
 
-    - #### `internationalPostcode`
+    - #### `internationalPostalCode`
 
 3.  ### `informant`
     This section takes information of the informant if he/she is a legal guardian. This section has only one view group informant-view-group.
