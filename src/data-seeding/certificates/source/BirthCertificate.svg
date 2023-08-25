@@ -28,7 +28,11 @@
   <tspan x="50%" y="384.004" text-anchor="middle">&#10;</tspan>
 </text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
-  <tspan x="50%" y="367.828" text-anchor="middle">{{placeOfBirth}}&#10;</tspan>
+{{#ifCond placeOfBirth '===' 'HEALTH_FACILITY' }}
+<tspan x="50%" y="367.828" text-anchor="middle">{{placeOfBirth}}&#10;</tspan>
+    {{else}}
+<tspan x="50%" y="367.828" text-anchor="middle">{{districtPlaceofbirth}}{{internationalDistrictPlaceofbirth}}, {{statePlaceofbirth}}{{internationalStatePlaceofbirth}}, {{countryPlaceofbirth}}&#10;</tspan>
+{{/ifCond}}
 </text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
   <tspan x="50%" y="245.828" text-anchor="middle">{{childFirstName}} {{childFamilyName}}&#10;</tspan>

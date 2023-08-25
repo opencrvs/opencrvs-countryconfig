@@ -27,7 +27,7 @@
 </text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="400" letter-spacing="0px">
 <tspan x="10%" y="210" >{{countryPlaceofbirth}}{{countryPlaceofdeath}}{{countryPlaceofmarriage}}&#10;</tspan>
-<tspan x="10%" y="222" >{{statePlaceofbirth}}{{internationalStatePlaceofbirth}}{{internationalStatePlaceofdeath}}{{internationalStatePlaceofdeath}}{{internationalStatePlaceofmarriage}}{{internationalStatePlaceofmarriage}}&#10;</tspan>
+<tspan x="10%" y="222" >{{statePlaceofbirth}}{{internationalStatePlaceofbirth}}{{statePlaceofdeath}}{{internationalStatePlaceofdeath}}{{statePlaceofmarriage}}{{internationalStatePlaceofmarriage}}&#10;</tspan>
 <tspan x="10%" y="234" >{{districtPlaceofbirth}}{{internationalDistrictPlaceofbirth}}{{districtPlaceofdeath}}{{internationalDistrictPlaceofdeath}}{{districtPlaceofmarriage}}{{internationalDistrictPlaceofmarriage}}&#10;</tspan>
 <tspan x="10%" y="246" >{{cityPlaceofbirth}}{{internationalCityPlaceofbirth}}{{cityPlaceofdeath}}{{internationalCityPlaceofdeath}}{{cityPlaceofmarriage}}{{internationalCityPlaceofmarriage}}{{addressLine1RuralOptionPlaceofbirth}}{{addressLine1RuralOptionPlaceofdeath}}{{addressLine1RuralOptionPlaceofmarriage}}&#10;</tspan>
 <tspan x="10%" y="258" >{{addressLine1UrbanOptionPlaceofbirth}}{{internationalAddressLine1Placeofbirth}}{{addressLine1UrbanOptionPlaceofdeath}}{{internationalAddressLine1Placeofdeath}}{{addressLine1UrbanOptionPlaceofmarriage}}{{internationalAddressLine1Placeofmarriage}}&#10;</tspan>
