@@ -55,8 +55,8 @@ context('Birth Integration Test', () => {
     cy.submitForm()
     cy.logout()
   })
-  //TODO: problem with readAttachmentFile function, may need to fix
-  it.skip('login as a registrar and reject a maximum input declaration', () => {
+
+  it('login as a registrar and reject a maximum input declaration', () => {
     // Create declaration with an API call
     cy.createBirthRegistrationAs('fieldWorker')
 

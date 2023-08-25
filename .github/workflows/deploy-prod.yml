@@ -17,6 +17,14 @@ on:
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
+      deploy-script-environment:
+        type: choice
+        description: Deploy script environment
+        required: true
+        default: 'production'
+        options:
+          - production
+          - demo
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
@@ -96,7 +104,12 @@ jobs:
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
           EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+          INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          INFOBIP_GATEWAY_ENDPOINT: ${{ secrets.INFOBIP_GATEWAY_ENDPOINT }}
+          INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
+          SENDER_EMAIL_ADDRESS: ${{ secrets.SENDER_EMAIL_ADDRESS }}
           SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
         run: |
           cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=no --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{{ github.event.inputs.core-image-tag }}} --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+          yarn deploy --clear_data=no --environment=${{ github.event.inputs.deploy-script-environment }} --host=${{ env.DOMAIN }} --version=${{ github.event.inputs.core-image-tag }} --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}

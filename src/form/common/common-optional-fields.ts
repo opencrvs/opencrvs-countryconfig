@@ -17,7 +17,16 @@ import { maritalStatusOptions } from './select-options'
 import { certificateHandlebars } from '../birth/certificate-handlebars'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 
-export const exactDateOfBirthUnknown: SerializedFormField = {
+const exactDobConditional: Conditional[] = [
+  {
+    action: 'hide',
+    expression: '!window.config.DATE_OF_BIRTH_UNKNOWN'
+  }
+]
+
+export const exactDateOfBirthUnknown = (
+  conditionalCase: Conditional[]
+): SerializedFormField => ({
   name: 'exactDateOfBirthUnknown',
   type: 'CHECKBOX',
   label: {
@@ -29,28 +38,17 @@ export const exactDateOfBirthUnknown: SerializedFormField = {
   required: false,
   hideHeader: true,
   initialValue: false,
-  validator: [
-    {
-      operation: 'range',
-      parameters: [12, 120]
+  validator: [],
+  conditionals: exactDobConditional.concat(conditionalCase),
+  mapping: {
+    query: {
+      operation: 'booleanTransformer'
     },
-    {
-      operation: 'maxLength',
-      parameters: [3]
-    },
-    {
-      operation: 'isValidParentsBirthDate',
-      parameters: [5, true]
+    mutation: {
+      operation: 'ignoreFieldTransformer'
     }
-  ],
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!window.config.DATE_OF_BIRTH_UNKNOWN || !values.detailsExist'
-    }
-  ],
-  mapping: getFieldMapping('exactDateOfBirthUnknown')
-}
+  }
+})
 
 export const getNationalID = (
   fieldName: string,
@@ -98,7 +96,8 @@ export const getAgeOfIndividualInYears = (
 })
 
 export const getMaritalStatus = (
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  conditionals: Conditional[]
 ): SerializedFormField => ({
   name: 'maritalStatus',
   type: 'SELECT_WITH_OPTIONS',
@@ -112,12 +111,7 @@ export const getMaritalStatus = (
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
   mapping: getFieldMapping('maritalStatus', certificateHandlebar),
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!values.detailsExist'
-    }
-  ],
+  conditionals,
   options: maritalStatusOptions
 })
 
@@ -157,7 +151,10 @@ export const registrationPhone: SerializedFormField = {
   )
 }
 
-export const seperatorDivider = (name = 'seperator'): SerializedFormField => ({
+export const divider = (
+  name = 'seperator',
+  conditionals?: Conditional[]
+): SerializedFormField => ({
   name,
   type: 'DIVIDER',
   label: {
@@ -168,9 +165,10 @@ export const seperatorDivider = (name = 'seperator'): SerializedFormField => ({
   initialValue: '',
   ignoreBottomMargin: true,
   validator: [],
-  conditionals: []
+  conditionals
 })
 
+// This optional field is used to validate user input with an externally integrated national ID system
 export const getNIDVerificationButton = (
   fieldName: string,
   conditionals: Conditional[],

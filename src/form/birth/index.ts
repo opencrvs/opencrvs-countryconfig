@@ -32,9 +32,8 @@ import {
   getMaritalStatus,
   registrationEmail,
   registrationPhone,
-  seperatorDivider,
-  getNationalID,
-  getNIDVerificationButton
+  divider,
+  getNationalID
 } from '../common/common-optional-fields'
 import {
   attendantAtBirth,
@@ -65,7 +64,9 @@ import {
   fathersBirthDateConditionals,
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
-  fatherNationalIDVerfication
+  fatherNationalIDVerfication,
+  informantNotMotherOrFather,
+  detailsExistConditional
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -194,7 +195,7 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.eventDate
             ), // Required field.
             ...getPlaceOfBirthFields(), // Required fields.
-            seperatorDivider('place-of-birth-seperator'),
+            divider('place-of-birth-seperator'),
             attendantAtBirth,
             birthType,
             weightAtBirth
@@ -218,8 +219,6 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            registrationPhone,
-            registrationEmail,
             getFirstNameField(
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(
@@ -239,10 +238,19 @@ export const birthForm: ISerializedForm = {
               informantBirthDateConditionals.concat(
                 hideIfInformantMotherOrFather
               ),
-              [],
+              [
+                {
+                  operation: 'dateFormatIsCorrect',
+                  parameters: []
+                },
+                {
+                  operation: 'dateInPast',
+                  parameters: []
+                }
+              ],
               certificateHandlebars.informantBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown,
+            exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(
@@ -259,13 +267,21 @@ export const birthForm: ISerializedForm = {
               getNationalIDValidators('informant'),
               certificateHandlebars.informantNID
             ),
-            getNIDVerificationButton(
-              'informantNidVerification',
-              hideIfNidIntegrationDisabled.concat(
-                hideIfInformantMotherOrFather
-              ),
-              []
-            ) // This optional field is used to validate user input with an externally integrated national ID system
+            // preceding field of address fields
+            divider('informant-nid-seperator', [
+              {
+                action: 'hide',
+                expression: informantNotMotherOrFather
+              }
+            ]),
+            divider('informant-address-seperator', [
+              {
+                action: 'hide',
+                expression: informantNotMotherOrFather
+              }
+            ]),
+            registrationPhone, // If you wish to enable automated SMS notifications to informants, include this
+            registrationEmail // If you wish to enable automated Email notifications to informants, include this
           ],
           previewGroups: [informantNameInEnglish]
         }
@@ -285,18 +301,11 @@ export const birthForm: ISerializedForm = {
               formMessageDescriptors.mothersDetailsExist,
               mothersDetailsExistConditionals
             ), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getBirthDate(
-              'motherBirthDate',
-              mothersBirthDateConditionals,
-              parentsBirthDateValidators,
-              certificateHandlebars.motherBirthDate
-            ), // Required field.
-            exactDateOfBirthUnknown,
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfMother,
-              exactDateOfBirthUnknownConditional
+            divider(
+              'mother-details-seperator',
+              mothersDetailsExistConditionals
             ),
+            getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
             getFirstNameField(
               'motherNameInEnglish',
               motherFirstNameConditionals,
@@ -307,6 +316,17 @@ export const birthForm: ISerializedForm = {
               motherFamilyNameConditionals,
               certificateHandlebars.motherFamilyName
             ), // Required field.
+            getBirthDate(
+              'motherBirthDate',
+              mothersBirthDateConditionals,
+              parentsBirthDateValidators,
+              certificateHandlebars.motherBirthDate
+            ), // Required field.
+            exactDateOfBirthUnknown(detailsExistConditional),
+            getAgeOfIndividualInYears(
+              formMessageDescriptors.ageOfMother,
+              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
+            ),
             getNationality(
               certificateHandlebars.motherNationality,
               detailsExist
@@ -317,16 +337,18 @@ export const birthForm: ISerializedForm = {
               getNationalIDValidators('mother'),
               certificateHandlebars.motherNID
             ),
-            getNIDVerificationButton(
-              'motherNidVerification',
-              hideIfNidIntegrationDisabled.concat(motherNationalIDVerfication),
-              []
-            ), // This optional field is used to validate user input with an externally integrated national ID system
-            seperatorDivider('mother-nid-seperator'),
-            getMaritalStatus(certificateHandlebars.motherMaritalStatus),
-            multipleBirth,
+            // preceding field of address fields
+            divider('mother-nid-seperator', detailsExist),
+            divider('mother-address-seperator', detailsExist),
+            getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
+              {
+                action: 'hide',
+                expression: '!values.detailsExist'
+              }
+            ]),
+            getEducation(certificateHandlebars.motherEducationalAttainment),
             getOccupation(certificateHandlebars.motherOccupation),
-            getEducation(certificateHandlebars.motherEducationalAttainment)
+            multipleBirth
           ],
           previewGroups: [motherNameInEnglish]
         }
@@ -354,18 +376,11 @@ export const birthForm: ISerializedForm = {
               formMessageDescriptors.fathersDetailsExist,
               fathersDetailsExistConditionals
             ), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getBirthDate(
-              'fatherBirthDate',
-              fathersBirthDateConditionals,
-              parentsBirthDateValidators,
-              certificateHandlebars.fatherBirthDate
-            ), // Required field.
-            exactDateOfBirthUnknown,
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfFather,
-              exactDateOfBirthUnknownConditional
+            divider(
+              'father-details-seperator',
+              fathersDetailsExistConditionals
             ),
+            getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
             getFirstNameField(
               'fatherNameInEnglish',
               fatherFirstNameConditionals,
@@ -376,6 +391,17 @@ export const birthForm: ISerializedForm = {
               fatherFamilyNameConditionals,
               certificateHandlebars.fatherFamilyName
             ), // Required field.
+            getBirthDate(
+              'fatherBirthDate',
+              fathersBirthDateConditionals,
+              parentsBirthDateValidators,
+              certificateHandlebars.fatherBirthDate
+            ), // Required field.
+            exactDateOfBirthUnknown(detailsExistConditional),
+            getAgeOfIndividualInYears(
+              formMessageDescriptors.ageOfFather,
+              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
+            ),
             getNationality(
               certificateHandlebars.fatherNationality,
               detailsExist
@@ -386,15 +412,17 @@ export const birthForm: ISerializedForm = {
               getNationalIDValidators('father'),
               certificateHandlebars.fatherNID
             ),
-            getNIDVerificationButton(
-              'fatherNidVerification',
-              hideIfNidIntegrationDisabled.concat(fatherNationalIDVerfication),
-              []
-            ), // This optional field is used to validate user input with an externally integrated national ID system
-            seperatorDivider('father-nid-seperator'),
-            getMaritalStatus(certificateHandlebars.fatherMaritalStatus),
-            getOccupation(certificateHandlebars.fatherOccupation),
-            getEducation(certificateHandlebars.fatherEducationalAttainment)
+            // preceding field of address fields
+            divider('father-nid-seperator', detailsExist),
+            divider('father-address-seperator', detailsExist),
+            getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
+              {
+                action: 'hide',
+                expression: '!values.detailsExist'
+              }
+            ]),
+            getEducation(certificateHandlebars.fatherEducationalAttainment),
+            getOccupation(certificateHandlebars.fatherOccupation)
           ],
           previewGroups: [fatherNameInEnglish]
         }

@@ -96,7 +96,11 @@ export const multipleBirth: SerializedFormField = {
       parameters: [2]
     }
   ],
-  mapping: getFieldMapping('multipleBirth', certificateHandlebars.multipleBirth)
+  mapping: getFieldMapping(
+    'multipleBirth',
+    certificateHandlebars.multipleBirth
+  ),
+  inputFieldWidth: '64px'
 }
 
 export const getOccupation = (

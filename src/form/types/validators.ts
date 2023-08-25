@@ -10,7 +10,7 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import * as customValidators from '../validators'
+import * as customValidators from '../common/custom-validation-conditionals/custom-validators'
 
 /** Validators that are built in to core. You can create your own ones, or override these ones in `src/features/config/form/validators.ts` */
 type CoreValidator =

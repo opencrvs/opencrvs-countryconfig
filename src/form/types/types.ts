@@ -11,7 +11,6 @@
  */
 
 import { MessageDescriptor } from 'react-intl'
-import { identityTypeMapper } from '../common/select-options'
 import * as labels from '../common/messages'
 import { Validator } from './validators'
 
@@ -666,7 +665,7 @@ export interface ISerializedDynamicFormFieldDefinitions {
     | {
         kind: 'dynamic'
         dependency: string
-        typeMapper: Operation<typeof identityTypeMapper>
+        typeMapper: Operation<IDynamicFieldTypeMapper>
       }
   validator?: Array<{
     dependencies: string[]

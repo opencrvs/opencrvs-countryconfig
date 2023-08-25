@@ -16,7 +16,7 @@ import {
   getMaritalStatus,
   registrationEmail,
   registrationPhone,
-  seperatorDivider,
+  divider,
   getNationalID
 } from '../common/common-optional-fields'
 import {
@@ -161,11 +161,16 @@ export const deathForm = {
             getGender(certificateHandlebars.deceasedGender), // Required field.
             getBirthDate(
               'deceasedBirthDate',
-              [],
+              [
+                {
+                  action: 'hide',
+                  expression: 'values.exactDateOfBirthUnknown'
+                }
+              ],
               isValidBirthDate,
               certificateHandlebars.deceasedBirthDate
             ), // Required field.,
-            exactDateOfBirthUnknown,
+            exactDateOfBirthUnknown([]),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional
@@ -177,7 +182,7 @@ export const deathForm = {
               getNationalIDValidators('deceased'),
               certificateHandlebars.deceasedNID
             ),
-            getMaritalStatus(certificateHandlebars.deceasedMaritalStatus)
+            getMaritalStatus(certificateHandlebars.deceasedMaritalStatus, [])
           ],
           previewGroups: [deceasedNameInEnglish]
         }
@@ -246,7 +251,7 @@ export const deathForm = {
               ],
               certificateHandlebars.informantBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown,
+            exactDateOfBirthUnknown([]),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional
@@ -258,7 +263,7 @@ export const deathForm = {
               getNationalIDValidators('informant'),
               certificateHandlebars.informantNID
             ),
-            seperatorDivider('place-of-death'),
+            divider('place-of-death'),
             registrationPhone,
             registrationEmail
           ],

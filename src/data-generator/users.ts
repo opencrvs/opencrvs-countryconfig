@@ -6,10 +6,11 @@ import { getToken, getTokenForSystemClient } from './auth'
 import { GATEWAY_GQL_HOST } from './constants'
 import { expand } from 'regex-to-strings'
 import { convertToMSISDN } from '@countryconfig/utils'
-import { getAgentRoles } from '@countryconfig/features/employees/scripts/utils'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { MutationCreateOrUpdateUserArgs } from './gateway'
+import { getSystemRolesQuery } from '@countryconfig/data-generator/queries'
+import { SystemRole as GQLSystemRole } from '@countryconfig/data-generator/gateway'
 
 export type User = {
   username: string
@@ -48,6 +49,30 @@ const nationalSystemAdmin: User[] = []
 const SIGNATURE = readFileSync(
   join(__dirname, 'assets', '528KB-random.png')
 ).toString('base64')
+
+export async function getAgentRoles(token: string): Promise<GQLSystemRole[]> {
+  const res = await fetch(GATEWAY_GQL_HOST, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      query: getSystemRolesQuery,
+      variables: {
+        active: true
+      }
+    })
+  })
+
+  if (!res.ok) {
+    throw new Error(
+      `Could not fetch agent roles, ${res.statusText} ${res.status}`
+    )
+  }
+  const roles = await res.json()
+  return roles.data.getSystemRoles
+}
 
 export async function createUser(
   token: string,
@@ -375,16 +400,18 @@ export async function createUsers(
   if (!nationalSystemAdmin.length) {
     const natlUserRes = await getUserByRole(token, 'NATIONAL_SYSTEM_ADMIN')
     const mappedNatlUserRes = await Promise.all(
-      natlUserRes.map(async (user) => {
-        return {
-          username: user.username,
-          password: 'test',
-          token: await getToken(user.username, 'test'),
-          stillInUse: true,
-          primaryOfficeId: user.primaryOffice.id,
-          isSystemUser: false
-        }
-      })
+      natlUserRes
+        .filter(({ username }) => username !== 'o.admin')
+        .map(async (user) => {
+          return {
+            username: user.username,
+            password: 'test',
+            token: await getToken(user.username, 'test'),
+            stillInUse: true,
+            primaryOfficeId: user.primaryOffice.id,
+            isSystemUser: false
+          }
+        })
     )
     nationalSystemAdmin.push(mappedNatlUserRes[0])
   }
