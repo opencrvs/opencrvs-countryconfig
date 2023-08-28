@@ -3,7 +3,7 @@ import { log } from './util'
 import { Facility, getFacilities, Location } from './location'
 import fetch from 'node-fetch'
 import { getToken, getTokenForSystemClient } from './auth'
-import { GATEWAY_GQL_HOST } from './constants'
+import { GATEWAY_HOST } from './constants'
 import { expand } from 'regex-to-strings'
 import { convertToMSISDN } from '@countryconfig/utils'
 import { readFileSync } from 'fs'
@@ -51,7 +51,7 @@ const SIGNATURE = readFileSync(
 ).toString('base64')
 
 export async function getAgentRoles(token: string): Promise<GQLSystemRole[]> {
-  const res = await fetch(GATEWAY_GQL_HOST, {
+  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ export async function createUser(
     }
   }
 
-  const createUserRes = await fetch(GATEWAY_GQL_HOST, {
+  const createUserRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ export async function createUser(
 
   const userToken = await getToken(data.createOrUpdateUser.username, 'test')
 
-  const res = await fetch(GATEWAY_GQL_HOST, {
+  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -188,7 +188,7 @@ export async function createUser(
 }
 
 export async function getUsers(token: string, locationId: string) {
-  const getUsersRes = await fetch(GATEWAY_GQL_HOST, {
+  const getUsersRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -236,7 +236,7 @@ export async function getUsers(token: string, locationId: string) {
 }
 
 export async function getUserByRole(token: string, systemRole: string) {
-  const getUsersRes = await fetch(GATEWAY_GQL_HOST, {
+  const getUsersRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -288,7 +288,7 @@ const registerSystemClient = async (
   type: string,
   token: string
 ) => {
-  const createUserRes = await fetch(GATEWAY_GQL_HOST, {
+  const createUserRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

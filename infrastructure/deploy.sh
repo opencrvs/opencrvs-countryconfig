@@ -34,10 +34,6 @@ for i in "$@"; do
         COUNTRY_CONFIG_VERSION="${i#*=}"
         shift
         ;;
-    --country_config_path=*)
-        COUNTRY_CONFIG_PATH="${i#*=}"
-        shift
-        ;;
     --replicas=*)
         REPLICAS="${i#*=}"
         shift
