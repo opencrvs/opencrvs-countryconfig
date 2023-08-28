@@ -117,7 +117,7 @@ export const getMaritalStatus = (
 
 export const registrationEmail: SerializedFormField = {
   name: 'registrationEmail',
-  type: 'TEL',
+  type: 'TEXT',
   label: formMessageDescriptors.email,
   required: true, // Email is the configured INFORMANT_NOTIFICATION_DELIVERY_METHOD in Farajaland
   initialValue: '',
