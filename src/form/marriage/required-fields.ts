@@ -75,7 +75,7 @@ export const witnessRelationshipForOthers: SerializedFormField = {
   conditionals: [
     {
       action: 'hide',
-      expression: '(values.relationship!="other")'
+      expression: '(values.relationship!=="OTHER")'
     }
   ]
 }
