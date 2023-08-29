@@ -462,6 +462,7 @@
     "print.cert.coll.id.actions.send": "The for the dialog when details of the collector not verified",
     "print.cert.coll.id.description": "The description for the dialog when details of the collector not verified",
     "print.certificate.collector.idCheckDialog.title": "The title for the dialog when details of the collector not verified",
+    "correction.summary.idCheckForCorrection": "The title for the dialog when details of the collector not verified for correction",
     "print.certificate.collector.idCheck.title": "The title for id check component",
     "print.cert.coll.idCheck.actions.ver": "The label for id check component action when verify details",
     "print.cert.coll.idCheck.actions.noVer": "The label for id check component action when does not verify details",
