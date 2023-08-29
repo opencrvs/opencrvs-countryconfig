@@ -12,7 +12,7 @@ import {
   PaymentType
 } from './gateway'
 import { omit } from 'lodash'
-import { GATEWAY_GQL_HOST } from './constants'
+import { GATEWAY_HOST } from './constants'
 import { MARK_BIRTH_AS_CERTIFIED, MARK_DEATH_AS_CERTIFIED } from './queries'
 import { differenceInDays } from 'date-fns'
 import { ConfigResponse } from './config'
@@ -164,7 +164,7 @@ export async function markBirthAsCertified(
 
   const requestStart = Date.now()
 
-  const certifyDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const certifyDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -211,7 +211,7 @@ export async function markDeathAsCertified(
 
   const requestStart = Date.now()
 
-  const certifyDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const certifyDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

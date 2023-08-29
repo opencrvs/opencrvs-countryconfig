@@ -1,6 +1,6 @@
 import { ILocation } from '@countryconfig/utils'
 import fetch from 'node-fetch'
-import { GATEWAY_API_HOST } from './constants'
+import { GATEWAY_HOST } from './constants'
 
 export type Location = {
   id: string
@@ -22,7 +22,7 @@ export type Facility = {
 }
 
 export async function getLocations(token: string) {
-  const url = `${GATEWAY_API_HOST}/location?type=ADMIN_STRUCTURE&_count=0`
+  const url = `${GATEWAY_HOST}/location?type=ADMIN_STRUCTURE&_count=0`
 
   const res = await fetch(url, {
     method: 'GET'
@@ -56,10 +56,10 @@ export async function getLocations(token: string) {
 
 export async function getFacilities(token: string) {
   const resCRVSOffices = await fetch(
-    `${GATEWAY_API_HOST}/location?type=CRVS_OFFICE&_count=0`
+    `${GATEWAY_HOST}/location?type=CRVS_OFFICE&_count=0`
   )
   const resHealthFacilities = await fetch(
-    `${GATEWAY_API_HOST}/location?type=HEALTH_FACILITY&_count=0`
+    `${GATEWAY_HOST}/location?type=HEALTH_FACILITY&_count=0`
   )
 
   const locationBundleCRVSOffices = await resCRVSOffices.json()

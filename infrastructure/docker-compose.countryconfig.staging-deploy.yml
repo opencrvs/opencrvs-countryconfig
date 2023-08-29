@@ -76,15 +76,3 @@ services:
     environment:
       - SENTRY_DSN=${SENTRY_DSN}
 
-
-secrets:
-  openhim-user:
-    external: true
-  openhim-password:
-    external: true
-  clickatell-user:
-    external: true
-  clickatell-password:
-    external: true
-  clickatell-api-id:
-    external: true

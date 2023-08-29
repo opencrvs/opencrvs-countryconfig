@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import { differenceInDays, differenceInYears, sub } from 'date-fns'
 import fetch from 'node-fetch'
 import { createAddressInput } from './address'
-import { GATEWAY_GQL_HOST, GATEWAY_API_HOST } from './constants'
+import { GATEWAY_HOST } from './constants'
 import {
   BirthRegistrationInput,
   CreateDeathDeclarationMutation,
@@ -125,18 +125,15 @@ export async function sendBirthNotification(
     office: `Location/${office.id}`
   })
 
-  const createBirthNotification = await fetch(
-    `${GATEWAY_API_HOST}/notification`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-        'x-correlation-id': `birth-notification-${firstName}-${lastName}`
-      },
-      body: JSON.stringify(notification)
-    }
-  )
+  const createBirthNotification = await fetch(`${GATEWAY_HOST}/notification`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'x-correlation-id': `birth-notification-${firstName}-${lastName}`
+    },
+    body: JSON.stringify(notification)
+  })
 
   if (!createBirthNotification.ok) {
     log(
@@ -295,7 +292,7 @@ export async function createBirthDeclaration(
     ?.map((name) => `${name?.firstNames} ${name?.familyName}`)
     .join(' ')
   const requestStart = Date.now()
-  const createDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const createDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -475,7 +472,7 @@ export async function createDeathDeclaration(
     }
   }
 
-  const createDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const createDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -518,7 +515,7 @@ export async function createDeathDeclaration(
 }
 
 export async function fetchRegistration(user: User, compositionId: string) {
-  const fetchDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const fetchDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -549,7 +546,7 @@ export async function fetchDeathRegistration(
   user: User,
   compositionId: string
 ) {
-  const fetchDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const fetchDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -581,7 +578,7 @@ export async function fetchAlreadyGeneratedInterval(
   locationId: string
 ): Promise<Date[]> {
   const fetchFirst = async (sort: 'desc' | 'asc') => {
-    const res = await fetch(GATEWAY_GQL_HOST, {
+    const res = await fetch(`${GATEWAY_HOST}/graphql`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -54,8 +54,7 @@ jobs:
           yarn seed:prod
         env:
           ACTIVATE_USERS: ${{ vars.ACTIVATE_USERS }}
-          GATEWAY_URL: ${{ vars.GATEWAY_HOST }}
-          GATEWAY_GQL_HOST: ${{ vars.GATEWAY_GQL_HOST }}
-          AUTH_URL: ${{ vars.AUTH_API_HOST }}
-          COUNTRY_CONFIG_URL: ${{ vars.COUNTRY_CONFIG_HOST }}
+          GATEWAY_HOST: ${{ vars.GATEWAY_HOST }}
+          AUTH_HOST: ${{ vars.AUTH_HOST }}
+          COUNTRY_CONFIG_HOST: ${{ vars.COUNTRY_CONFIG_HOST }}
           SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
