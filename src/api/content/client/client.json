@@ -1622,7 +1622,7 @@
         "recordAudit.placeOfMarriage": "Place of marriage",
         "recordAudit.regAction.assigned": "Assigned",
         "recordAudit.regAction.downloaded": "Retrieved",
-        "recordAudit.regAction.reinstated": "Reinstated to {regStatus, select, registered{registered} validated{ready for review} in_progress{in progress} declared{ready for review} rejected{requires updates} other{}}",
+        "recordAudit.regAction.reinstated": "Reinstated to {regStatus, select, validated{ready for review} in_progress{in progress} declared{ready for review} rejected{requires updates} other{}}",
         "recordAudit.regAction.requestedCorrection": "Correction requested",
         "recordAudit.regAction.approvedCorrection": "Correction approved",
         "recordAudit.regAction.rejectedCorrection": "Correction rejected",
