@@ -849,6 +849,7 @@
     "regHome.outbox.statusWaitingToSubmit": "Label for declaration status waiting for reject",
     "misc.notif.userAuditSuccess": "Label for user audit success notification",
     "misc.notif.sorryError": "The message that appears in notification when a new user creation fails",
+    "misc.notif.offlineError": "The message that appears in notification when a new user creation fails in offline mode",
     "misc.notif.userFormSuccess": "The message that appears in notification when a new user is created",
     "misc.notif.userFormUpdateSuccess": "The message that appears in notification when user details have been updated",
     "regHome.outbox.waitingToRetry": "Label for declaration status waiting for connection",
