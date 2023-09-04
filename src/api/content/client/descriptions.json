@@ -274,7 +274,7 @@
     "form.field.label.UNION": "Label for Union",
     "form.field.label.DIVISION": "Label for Division",
     "form.field.label.district": "Label for District",
-    "form.field.label.cityUrbanOption": "Label for City",
+    "form.field.label.city": "Label for City",
     "form.field.label.state": "Label for State",
     "form.field.label.locationLevel3": "Label for locationLevel3",
     "form.field.label.locationLevel4": "Label for locationLevel4",

@@ -10,10 +10,6 @@
   },
   "scripts": {
     "dev": "yarn start",
-    "e2e": "cypress run",
-    "open:e2e": "CYPRESS_COUNTRYCONFIG_URL=http://localhost:3040/ CYPRESS_GATEWAY_URL=http://localhost:7070/ CYPRESS_LOGIN_URL=http://localhost:3020/ CYPRESS_CLIENT_URL=http://localhost:3000/ CYPRESS_AUTH_URL=http://localhost:4040/ cypress open",
-    "openqa:e2e": "CYPRESS_COUNTRYCONFIG_URL=https://countryconfig.farajaland-qa.opencrvs.org/ CYPRESS_GATEWAY_URL=https://gateway.farajaland-qa.opencrvs.org/ CYPRESS_LOGIN_URL=https://login.farajaland-qa.opencrvs.org/ CYPRESS_CLIENT_URL=https://register.farajaland-qa.opencrvs.org/ CYPRESS_AUTH_URL=https://auth.farajaland-qa.opencrvs.org/ cypress open",
-    "openstaging:e2e": "CYPRESS_COUNTRYCONFIG_URL=https://countryconfig.farajaland-staging.opencrvs.org/ CYPRESS_GATEWAY_URL=https://gateway.farajaland-staging.opencrvs.org/ CYPRESS_LOGIN_URL=https://login.farajaland-staging.opencrvs.org/ CYPRESS_CLIENT_URL=https://register.farajaland-staging.opencrvs.org/ CYPRESS_AUTH_URL=https://auth.farajaland-staging.opencrvs.org/ cypress open",
     "test:watch": "jest --watch",
     "open:cov": "yarn test && opener coverage/index.html",
     "precommit": "lint-staged",
@@ -24,8 +20,6 @@
     "db:clear:all": "bash clear-all-data.sh",
     "compose:push:version": "export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION",
     "compose:push:release": "export COUNTRY_CONFIG_VERSION=`git describe --tags --abbrev=0` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION",
-    "data-generator": "ts-node -r tsconfig-paths/register -T src/data-generator/index.ts",
-    "data-generator:generate-types": "graphql-codegen --config codegen.yml && yarn prettier --write src/data-generator/gateway.ts",
     "deploy": "bash infrastructure/deploy.sh"
   },
   "devDependencies": {
@@ -41,7 +35,6 @@
     "@types/react-intl": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
-    "cypress-xpath": "^2.0.1",
     "dotenv": "^6.1.0",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
@@ -90,7 +83,6 @@
     "country-data": "^0.0.31",
     "cross-env": "^6.0.3",
     "csv2json": "^1.4.2",
-    "cypress": "9.6.1",
     "date-fns": "^2.28.0",
     "esbuild": "^0.18.9",
     "google-libphonenumber": "^3.2.32",

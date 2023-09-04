@@ -41,10 +41,10 @@ export const defaultApplicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
-  MARRIAGE_REGISTRATION: true,
+  MARRIAGE_REGISTRATION: false,
   DATE_OF_BIRTH_UNKNOWN: false,
-  INFORMANT_SIGNATURE: true,
-  INFORMANT_SIGNATURE_REQUIRED: true,
+  INFORMANT_SIGNATURE: false,
+  INFORMANT_SIGNATURE_REQUIRED: false,
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email' // or 'sms', or '' ... You can use 'sms' for WhatsApp
 }
