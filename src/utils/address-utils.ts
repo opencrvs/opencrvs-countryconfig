@@ -776,6 +776,8 @@ function getQueryMapping(
           type === 'SELECT_WITH_OPTIONS' ||
           type === 'SELECT_WITH_DYNAMIC_OPTIONS' ||
           fieldName ===
+            `city${sentenceCase(useCase)}${sentenceCase(section)}` ||
+          fieldName ===
             `internationalState${sentenceCase(useCase)}${sentenceCase(
               section
             )}` ||
