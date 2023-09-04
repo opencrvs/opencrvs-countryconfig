@@ -680,6 +680,8 @@ function getQueryMapping(
           fieldName ===
             `city${sentenceCase(useCase)}${sentenceCase(section)}` ||
           fieldName ===
+            `postalCode${sentenceCase(useCase)}${sentenceCase(section)}` ||
+          fieldName ===
             `internationalState${sentenceCase(useCase)}${sentenceCase(
               section
             )}` ||
@@ -720,27 +722,15 @@ function getQueryMapping(
     : locationIndex || locationIndex === 0
     ? {
         operation: 'addressQueryTransformer',
-        parameters:
-          type === 'SELECT_WITH_OPTIONS' ||
-          type === 'SELECT_WITH_DYNAMIC_OPTIONS'
-            ? [
-                {
-                  useCase:
-                    useCase.toUpperCase() === 'PRIMARY'
-                      ? AddressCases.PRIMARY_ADDRESS
-                      : AddressCases.SECONDARY_ADDRESS,
-                  lineNumber: locationIndex
-                }
-              ]
-            : [
-                {
-                  useCase:
-                    useCase.toUpperCase() === 'PRIMARY'
-                      ? AddressCases.PRIMARY_ADDRESS
-                      : AddressCases.SECONDARY_ADDRESS,
-                  lineNumber: locationIndex
-                }
-              ]
+        parameters: [
+          {
+            useCase:
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+            lineNumber: locationIndex
+          }
+        ]
       }
     : {
         operation: 'addressQueryTransformer',

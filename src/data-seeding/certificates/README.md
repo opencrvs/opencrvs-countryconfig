@@ -37,8 +37,6 @@ internationalAddressLine3PrimaryInformant
 internationalPostalCodePrimaryInformant
 
 ### SPECIFICALLY BIRTH:
-mosipAid
-mosipAIDLabel
 birthConfigurableIdentifier1
 birthConfigurableIdentifier2
 birthConfigurableIdentifier3
