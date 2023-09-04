@@ -26,7 +26,6 @@ import {
   HOSTNAME,
   DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
-import { statisticsHandler } from '@countryconfig/api/data-generator/handler'
 import {
   contentHandler,
   countryLogoHandler
@@ -39,7 +38,6 @@ import {
   notificationHandler,
   notificationScheme
 } from './api/notification/handler'
-import { mosipMediatorHandler } from '@countryconfig/api/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/api/dashboard-map/handler'
 import { formHandler } from '@countryconfig/form'
@@ -370,17 +368,6 @@ export async function createServer() {
   })
 
   server.route({
-    method: 'GET',
-    path: '/statistics',
-    handler: statisticsHandler,
-    options: {
-      tags: ['api'],
-      description:
-        'Returns population and crude birth rate statistics for each location'
-    }
-  })
-
-  server.route({
     method: 'POST',
     path: '/notification',
     handler: notificationHandler,
@@ -390,16 +377,6 @@ export async function createServer() {
         payload: notificationScheme
       },
       description: 'Handles sending SMS'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/mosip-openhim-mediator',
-    handler: mosipMediatorHandler,
-    options: {
-      tags: ['api'],
-      description: 'Handles submission of mosip generaed NID'
     }
   })
 

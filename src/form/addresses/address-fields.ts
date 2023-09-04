@@ -219,41 +219,12 @@ export function getAddressFields(
     // Select fields are added for each administrative location level from Humdata
     ...getAdminLevelSelects(section, useCase), // Required
     {
-      name: `ruralOrUrban${sentenceCase(useCase)}${sentenceCase(section)}`,
-      type: 'RADIO_GROUP',
-      label: {
-        defaultMessage: ' ',
-        description: 'Empty label for form field',
-        id: 'form.field.label.emptyLabel'
-      },
-      options: urbanRuralRadioOptions,
-      initialValue: 'URBAN',
-      flexDirection: FLEX_DIRECTION.ROW,
-      required: false,
-      hideValueInPreview: true,
-      previewGroup: isUseCaseForPlaceOfEvent(useCase)
-        ? useCase
-        : `${useCase}Address`,
-      validator: [],
-      conditionals: isUseCaseForPlaceOfEvent(useCase)
-        ? getPlaceOfEventConditionals(section, 'ruralOrUrban', useCase)
-        : getAddressConditionals(section, 'ruralOrUrban', useCase),
-      mapping: getMapping(
-        section,
-        'RADIO_GROUP',
-        '', // No FHIR prop exists for this custom address prop. Use empty string for FHIR Address line index
-        useCase,
-        `country${sentenceCase(useCase)}${sentenceCase(section)}`,
-        5 // The selected index in the FHIR Address line array to store this value
-      )
-    },
-    {
       name: `city${sentenceCase(useCase)}${sentenceCase(section)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Town',
         description: 'Title for the address line 4',
-        id: 'form.field.label.cityUrbanOption'
+        id: 'form.field.label.city'
       },
       previewGroup: isUseCaseForPlaceOfEvent(useCase)
         ? useCase
@@ -263,8 +234,12 @@ export function getAddressFields(
       validator: [],
       dependency: 'district',
       conditionals: isUseCaseForPlaceOfEvent(useCase)
-        ? getPlaceOfEventConditionals(section, 'urban', useCase)
-        : getAddressConditionals(section, 'urban', useCase),
+        ? getPlaceOfEventConditionals(
+            section,
+            'configurableAddressLines',
+            useCase
+          )
+        : getAddressConditionals(section, 'configurableAddressLines', useCase),
       mapping: getMapping(
         section,
         'TEXT',
@@ -274,14 +249,12 @@ export function getAddressFields(
       )
     },
     {
-      name: `addressLine1UrbanOption${sentenceCase(useCase)}${sentenceCase(
-        section
-      )}`,
+      name: `addressLine1${sentenceCase(useCase)}${sentenceCase(section)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Residential Area',
         description: 'Title for the address line 1',
-        id: 'form.field.label.addressLine1UrbanOption'
+        id: 'form.field.label.addressLine1'
       },
       previewGroup: isUseCaseForPlaceOfEvent(useCase)
         ? useCase
@@ -291,28 +264,28 @@ export function getAddressFields(
       validator: [],
       dependency: 'district',
       conditionals: isUseCaseForPlaceOfEvent(useCase)
-        ? getPlaceOfEventConditionals(section, 'urban', useCase)
-        : getAddressConditionals(section, 'urban', useCase),
+        ? getPlaceOfEventConditionals(
+            section,
+            'configurableAddressLines',
+            useCase
+          )
+        : getAddressConditionals(section, 'configurableAddressLines', useCase),
       mapping: getMapping(
         section,
         'TEXT',
         '',
         useCase,
-        `addressLine1UrbanOption${sentenceCase(useCase)}${sentenceCase(
-          section
-        )}`,
+        `addressLine1${sentenceCase(useCase)}${sentenceCase(section)}`,
         2
       )
     },
     {
-      name: `addressLine2UrbanOption${sentenceCase(useCase)}${sentenceCase(
-        section
-      )}`,
+      name: `addressLine2${sentenceCase(useCase)}${sentenceCase(section)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Street',
         description: 'Title for the address line 2',
-        id: 'form.field.label.addressLine2UrbanOption'
+        id: 'form.field.label.addressLine2'
       },
       previewGroup: isUseCaseForPlaceOfEvent(useCase)
         ? useCase
@@ -322,23 +295,23 @@ export function getAddressFields(
       validator: [],
       dependency: 'district',
       conditionals: isUseCaseForPlaceOfEvent(useCase)
-        ? getPlaceOfEventConditionals(section, 'urban', useCase)
-        : getAddressConditionals(section, 'urban', useCase),
+        ? getPlaceOfEventConditionals(
+            section,
+            'configurableAddressLines',
+            useCase
+          )
+        : getAddressConditionals(section, 'configurableAddressLines', useCase),
       mapping: getMapping(
         section,
         'TEXT',
         '',
         useCase,
-        `addressLine2UrbanOption${sentenceCase(useCase)}${sentenceCase(
-          section
-        )}`,
+        `addressLine2${sentenceCase(useCase)}${sentenceCase(section)}`,
         1
       )
     },
     {
-      name: `addressLine3UrbanOption${sentenceCase(useCase)}${sentenceCase(
-        section
-      )}`,
+      name: `addressLine3${sentenceCase(useCase)}${sentenceCase(section)}`,
       type: 'TEXT',
       label: {
         defaultMessage: 'Number',
@@ -353,16 +326,18 @@ export function getAddressFields(
       validator: [],
       dependency: 'district',
       conditionals: isUseCaseForPlaceOfEvent(useCase)
-        ? getPlaceOfEventConditionals(section, 'urban', useCase)
-        : getAddressConditionals(section, 'urban', useCase),
+        ? getPlaceOfEventConditionals(
+            section,
+            'configurableAddressLines',
+            useCase
+          )
+        : getAddressConditionals(section, 'configurableAddressLines', useCase),
       mapping: getMapping(
         section,
         'TEXT',
         '',
         useCase,
-        `addressLine3UrbanOption${sentenceCase(useCase)}${sentenceCase(
-          section
-        )}`,
+        `addressLine3${sentenceCase(useCase)}${sentenceCase(section)}`,
         0
       )
     },
@@ -382,45 +357,18 @@ export function getAddressFields(
       validator: [],
       dependency: 'district',
       conditionals: isUseCaseForPlaceOfEvent(useCase)
-        ? getPlaceOfEventConditionals(section, 'urban', useCase)
-        : getAddressConditionals(section, 'urban', useCase),
+        ? getPlaceOfEventConditionals(
+            section,
+            'configurableAddressLines',
+            useCase
+          )
+        : getAddressConditionals(section, 'configurableAddressLines', useCase),
       mapping: getMapping(
         section,
         'TEXT',
         'postalCode',
         useCase,
         `postalCode${sentenceCase(useCase)}${sentenceCase(section)}`
-      )
-    },
-    {
-      name: `addressLine1RuralOption${sentenceCase(useCase)}${sentenceCase(
-        section
-      )}`,
-      type: 'TEXT',
-      label: {
-        defaultMessage: 'Village',
-        description: 'Title for the address line 1',
-        id: 'form.field.label.addressLine1RuralOption'
-      },
-      previewGroup: isUseCaseForPlaceOfEvent(useCase)
-        ? useCase
-        : `${useCase}Address`,
-      required: false,
-      initialValue: '',
-      validator: [],
-      dependency: 'district',
-      conditionals: isUseCaseForPlaceOfEvent(useCase)
-        ? getPlaceOfEventConditionals(section, 'rural', useCase)
-        : getAddressConditionals(section, 'rural', useCase),
-      mapping: getMapping(
-        section,
-        'TEXT',
-        '',
-        useCase,
-        `addressLine1RuralOption${sentenceCase(useCase)}${sentenceCase(
-          section
-        )}`,
-        4
       )
     },
     // INTERNATIONAL ADDRESSES ARE SUPPLIED BECAUSE INFORMANTS & CITIZENS MAY LIVE ABROAD & REGISTER AN EVENT AT ONE OF YOUR FOREIGN EMBASSIES

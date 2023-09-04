@@ -174,49 +174,6 @@ if [ -z "$DOCKERHUB_REPO" ] ; then
     print_usage_and_exit
 fi
 
-if [ -z "$TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK" ] ; then
-    echo 'Info: Missing optional MOSIP environment variable TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK.'
-    TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK=''
-fi
-
-if [ -z "$TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY" ] ; then
-    echo 'Info: Missing optional MOSIP environment variable TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY.'
-    TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY=''
-fi
-
-if [ -z "$TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD" ] ; then
-    echo 'Info: Missing optional MOSIP environment variable TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD.'
-    TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD=''
-fi
-
-if [ -z "$NATIONAL_ID_OIDP_CLIENT_ID" ] ; then
-  echo 'Info: Missing optional National ID verification environment variable NATIONAL_ID_OIDP_CLIENT_ID'
-fi
-
-if [ -z "$NATIONAL_ID_OIDP_BASE_URL" ] ; then
-  echo 'Info: Missing optional National ID verification environment variable NATIONAL_ID_OIDP_BASE_URL'
-fi
-
-if [ -z "$NATIONAL_ID_OIDP_REST_URL" ] ; then
-  echo 'Info: Missing optional National ID verification environment variable NATIONAL_ID_OIDP_REST_URL'
-fi
-
-if [ -z "$NATIONAL_ID_OIDP_ESSENTIAL_CLAIMS" ] ; then
-  echo 'Info: Missing optional National ID verification environment variable NATIONAL_ID_OIDP_ESSENTIAL_CLAIMS'
-fi
-
-if [ -z "$NATIONAL_ID_OIDP_VOLUNTARY_CLAIMS" ] ; then
-  echo 'Info: Missing optional National ID verification environment variable NATIONAL_ID_OIDP_VOLUNTARY_CLAIMS'
-fi
-
-if [ -z "$NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY" ] ; then
-  echo 'Info: Missing optional National ID verification environment variable NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY'
-fi
-
-if [ -z "$NATIONAL_ID_OIDP_JWT_AUD_CLAIM" ] ; then
-  echo 'Info: Missing optional National ID verification environment variable NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY'
-fi
-
 if [ -z "$EMAIL_API_KEY" ] ; then
     echo 'Info: Missing optional environment variable EMAIL_API_KEY.'
 fi
@@ -437,17 +394,7 @@ docker_stack_deploy() {
   ROTATING_SEARCH_ELASTIC_PASSWORD=$ROTATING_SEARCH_ELASTIC_PASSWORD
   KIBANA_USERNAME=$KIBANA_USERNAME
   KIBANA_PASSWORD=$KIBANA_PASSWORD
-  SUPER_USER_PASSWORD=$SUPER_USER_PASSWORD
-  TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK=$TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK
-  TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY=$TOKENSEEDER_MOSIP_AUTH__PARTNER_APIKEY
-  TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD=$TOKENSEEDER_CRYPTO_SIGNATURE__SIGN_P12_FILE_PASSWORD
-  NATIONAL_ID_OIDP_CLIENT_ID=$NATIONAL_ID_OIDP_CLIENT_ID
-  NATIONAL_ID_OIDP_BASE_URL=$NATIONAL_ID_OIDP_BASE_URL
-  NATIONAL_ID_OIDP_REST_URL=$NATIONAL_ID_OIDP_REST_URL
-  NATIONAL_ID_OIDP_ESSENTIAL_CLAIMS=$NATIONAL_ID_OIDP_ESSENTIAL_CLAIMS
-  NATIONAL_ID_OIDP_VOLUNTARY_CLAIMS=$NATIONAL_ID_OIDP_VOLUNTARY_CLAIMS
-  NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY=$NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY
-  NATIONAL_ID_OIDP_JWT_AUD_CLAIM=$NATIONAL_ID_OIDP_JWT_AUD_CLAIM"
+  SUPER_USER_PASSWORD=$SUPER_USER_PASSWORD"
 
   echo "Pulling all docker images. This might take a while"
 

@@ -37,7 +37,7 @@ import { getPreviewGroups } from '../form/common/preview-groups'
 import { cloneDeep } from 'lodash'
 
 // Use this function to edit the visibility of fields depending on user input
-function getRuralOrUrbanConditionals(
+function getLocationLevelConditionals(
   section: string,
   useCase: string,
   defaultConditionals: Conditional[]
@@ -311,8 +311,8 @@ export function getPlaceOfEventConditionals(
           )}${sentenceCase(section)})`
         }
       ]
-    case 'ruralOrUrban':
-      return getRuralOrUrbanConditionals(section, useCase, [
+    case 'configurableAddressLines':
+      return getLocationLevelConditionals(section, useCase, [
         {
           action: 'hide',
           expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
@@ -325,62 +325,6 @@ export function getPlaceOfEventConditionals(
             useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
               ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
               : ''
-        },
-        {
-          action: 'hide',
-          expression: `!isDefaultCountry(values.country${sentenceCase(
-            useCase
-          )}${sentenceCase(section)})`
-        }
-      ])
-    case 'urban':
-      return getRuralOrUrbanConditionals(section, useCase, [
-        {
-          action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
-            section
-          )}`
-        },
-        {
-          action: 'hide',
-          expression:
-            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: `values.ruralOrUrban${sentenceCase(
-            useCase
-          )}${sentenceCase(section)} !== "URBAN"`
-        },
-        {
-          action: 'hide',
-          expression: `!isDefaultCountry(values.country${sentenceCase(
-            useCase
-          )}${sentenceCase(section)})`
-        }
-      ])
-    case 'rural':
-      return getRuralOrUrbanConditionals(section, useCase, [
-        {
-          action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
-            section
-          )}`
-        },
-        {
-          action: 'hide',
-          expression:
-            useCase !== EventLocationAddressCases.PLACE_OF_MARRIAGE
-              ? `values.${useCase}!="OTHER" && values.${useCase}!="PRIVATE_HOME"`
-              : ''
-        },
-        {
-          action: 'hide',
-          expression: `values.ruralOrUrban${sentenceCase(
-            useCase
-          )}${sentenceCase(section)} !== "RURAL"`
         },
         {
           action: 'hide',
@@ -563,55 +507,13 @@ export function getAddressConditionals(
           )}${sentenceCase(section)})`
         }
       ]
-    case 'ruralOrUrban':
-      return getRuralOrUrbanConditionals(section, useCase, [
+    case 'configurableAddressLines':
+      return getLocationLevelConditionals(section, useCase, [
         {
           action: 'hide',
           expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
             section
           )}`
-        },
-        {
-          action: 'hide',
-          expression: `!isDefaultCountry(values.country${sentenceCase(
-            useCase
-          )}${sentenceCase(section)})`
-        }
-      ])
-    case 'urban':
-      return getRuralOrUrbanConditionals(section, useCase, [
-        {
-          action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
-            section
-          )}`
-        },
-        {
-          action: 'hide',
-          expression: `values.ruralOrUrban${sentenceCase(
-            useCase
-          )}${sentenceCase(section)} !== "URBAN"`
-        },
-        {
-          action: 'hide',
-          expression: `!isDefaultCountry(values.country${sentenceCase(
-            useCase
-          )}${sentenceCase(section)})`
-        }
-      ])
-    case 'rural':
-      return getRuralOrUrbanConditionals(section, useCase, [
-        {
-          action: 'hide',
-          expression: `!values.country${sentenceCase(useCase)}${sentenceCase(
-            section
-          )}`
-        },
-        {
-          action: 'hide',
-          expression: `values.ruralOrUrban${sentenceCase(
-            useCase
-          )}${sentenceCase(section)} !== "RURAL"`
         },
         {
           action: 'hide',
@@ -776,6 +678,10 @@ function getQueryMapping(
           type === 'SELECT_WITH_OPTIONS' ||
           type === 'SELECT_WITH_DYNAMIC_OPTIONS' ||
           fieldName ===
+            `city${sentenceCase(useCase)}${sentenceCase(section)}` ||
+          fieldName ===
+            `postalCode${sentenceCase(useCase)}${sentenceCase(section)}` ||
+          fieldName ===
             `internationalState${sentenceCase(useCase)}${sentenceCase(
               section
             )}` ||
@@ -816,27 +722,15 @@ function getQueryMapping(
     : locationIndex || locationIndex === 0
     ? {
         operation: 'addressQueryTransformer',
-        parameters:
-          type === 'SELECT_WITH_OPTIONS' ||
-          type === 'SELECT_WITH_DYNAMIC_OPTIONS'
-            ? [
-                {
-                  useCase:
-                    useCase.toUpperCase() === 'PRIMARY'
-                      ? AddressCases.PRIMARY_ADDRESS
-                      : AddressCases.SECONDARY_ADDRESS,
-                  lineNumber: locationIndex
-                }
-              ]
-            : [
-                {
-                  useCase:
-                    useCase.toUpperCase() === 'PRIMARY'
-                      ? AddressCases.PRIMARY_ADDRESS
-                      : AddressCases.SECONDARY_ADDRESS,
-                  lineNumber: locationIndex
-                }
-              ]
+        parameters: [
+          {
+            useCase:
+              useCase.toUpperCase() === 'PRIMARY'
+                ? AddressCases.PRIMARY_ADDRESS
+                : AddressCases.SECONDARY_ADDRESS,
+            lineNumber: locationIndex
+          }
+        ]
       }
     : {
         operation: 'addressQueryTransformer',
