@@ -68,4 +68,4 @@ echo
 echo "Restarting openhim for the db changes to take effect"
 echo
 
-docker restart `docker ps --format "{{.Names}}" | grep opencrvs_openhim-core`
+docker restart `docker ps --format "{{.Names}}" | grep openhim-core`
