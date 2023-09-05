@@ -141,6 +141,7 @@ export const marriageForm: ISerializedForm = {
               getNationalIDValidators('informant'),
               certificateHandlebars.informantNID
             ),
+            // ADDRESS FIELDS WILL RENDER HERE
             registrationPhone,
             registrationEmail
           ],
@@ -168,6 +169,7 @@ export const marriageForm: ISerializedForm = {
               [],
               certificateHandlebars.groomFamilyName
             ), // Required field
+            // ADDRESS FIELDS WILL RENDER HERE
             getBirthDate(
               'groomBirthDate',
               [
@@ -216,6 +218,7 @@ export const marriageForm: ISerializedForm = {
               [],
               certificateHandlebars.brideFamilyName
             ), // Required field
+            // ADDRESS FIELDS WILL RENDER HERE
             getBirthDate(
               'brideBirthDate',
               [
@@ -260,6 +263,7 @@ export const marriageForm: ISerializedForm = {
             getTypeOfMarriage,
             placeOfMarriageSubsection,
             divider('place-of-marriage-seperator')
+            // PLACE OF MARRIAGE FIELDS WILL RENDER HERE
           ]
         }
       ]

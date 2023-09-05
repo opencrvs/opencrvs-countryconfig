@@ -15,7 +15,6 @@ import { formMessageDescriptors } from '../common/messages'
 import {
   getDetailsExist,
   getReasonNotExisting,
-  getPlaceOfBirthFields,
   informantType
 } from './required-fields'
 import {
@@ -52,19 +51,16 @@ import {
 import {
   isValidChildBirthDate,
   hideIfInformantMotherOrFather,
-  hideIfNidIntegrationDisabled,
   mothersDetailsExistConditionals,
   mothersBirthDateConditionals,
   parentsBirthDateValidators,
   detailsExist,
   motherFirstNameConditionals,
   motherFamilyNameConditionals,
-  motherNationalIDVerfication,
   fathersDetailsExistConditionals,
   fathersBirthDateConditionals,
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
-  fatherNationalIDVerfication,
   informantNotMotherOrFather,
   detailsExistConditional
 } from '../common/default-validation-conditionals'
@@ -194,7 +190,7 @@ export const birthForm: ISerializedForm = {
               isValidChildBirthDate,
               certificateHandlebars.eventDate
             ), // Required field.
-            ...getPlaceOfBirthFields(), // Required fields.
+            // PLACE OF BIRTH FIELDS WILL RENDER HERE
             divider('place-of-birth-seperator'),
             attendantAtBirth,
             birthType,
@@ -274,6 +270,7 @@ export const birthForm: ISerializedForm = {
                 expression: informantNotMotherOrFather
               }
             ]),
+            // ADDRESS FIELDS WILL RENDER HERE
             divider('informant-address-seperator', [
               {
                 action: 'hide',
@@ -339,6 +336,7 @@ export const birthForm: ISerializedForm = {
             ),
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
+            // ADDRESS FIELDS WILL RENDER HERE
             divider('mother-address-seperator', detailsExist),
             getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
               {
@@ -414,6 +412,7 @@ export const birthForm: ISerializedForm = {
             ),
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
+            // ADDRESS FIELDS WILL RENDER HERE
             divider('father-address-seperator', detailsExist),
             getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
               {
