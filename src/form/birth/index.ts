@@ -52,19 +52,16 @@ import {
 import {
   isValidChildBirthDate,
   hideIfInformantMotherOrFather,
-  hideIfNidIntegrationDisabled,
   mothersDetailsExistConditionals,
   mothersBirthDateConditionals,
   parentsBirthDateValidators,
   detailsExist,
   motherFirstNameConditionals,
   motherFamilyNameConditionals,
-  motherNationalIDVerfication,
   fathersDetailsExistConditionals,
   fathersBirthDateConditionals,
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
-  fatherNationalIDVerfication,
   informantNotMotherOrFather,
   detailsExistConditional
 } from '../common/default-validation-conditionals'
