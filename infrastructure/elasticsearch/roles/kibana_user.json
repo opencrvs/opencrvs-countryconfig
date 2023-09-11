@@ -10,7 +10,6 @@
       "privileges": [
         "view_index_metadata",
         "monitor",
-        "create_index",
         "read",
         "read_cross_cluster"
       ],
