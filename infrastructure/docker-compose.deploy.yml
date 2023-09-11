@@ -333,8 +333,8 @@ services:
     image: jertel/elastalert2:2.3.0
     restart: unless-stopped
     environment:
-      - ES_USERNAME=search-user
-      - ES_PASSWORD=${ROTATING_SEARCH_ELASTIC_PASSWORD}
+      - ES_USERNAME=${KIBANA_USERNAME}
+      - ES_PASSWORD=${KIBANA_PASSWORD}
     volumes:
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/elastalert.yaml:/opt/elastalert/config.yaml'
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/rules:/opt/elastalert/rules'
