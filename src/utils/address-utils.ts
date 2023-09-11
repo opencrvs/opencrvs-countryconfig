@@ -1101,7 +1101,7 @@ export function decorateFormsWithAddresses(
   const newForm = cloneDeep(defaultEventForm)
   defaultAddressConfiguration.forEach(
     ({ precedingFieldId, configurations }: IAddressConfiguration) => {
-      if (precedingFieldId.includes(event)) {
+      if (precedingFieldId.startsWith(event)) {
         const { sectionIndex, sectionId, groupIndex, fieldIndex } =
           getFieldIdentifiers(precedingFieldId, newForm)
 
