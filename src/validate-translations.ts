@@ -56,14 +56,17 @@ async function validateMessages() {
       if (!Object.keys(messages!).includes(item)) {
         missingKey = true
         console.log(`${chalk.white(`${lang}`)} ${chalk.red(
-          `translations missing for this key: `
+          `translation is missing for this key: `
         )} ${chalk.green(`${item}`)}  
           `)
       }
     })
   })
 
-  if (!missingKey) console.log('No translations are missing')
+  if (!missingKey) {
+    console.log('No translations are missing')
+    process.exit(0)
+  } else process.exit(1)
 }
 
 validateMessages()
