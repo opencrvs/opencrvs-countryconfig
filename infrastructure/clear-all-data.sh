@@ -88,7 +88,6 @@ drop_database performance;
 # Delete all data from elasticsearch
 #-----------------------------------
 docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE "http://$(elasticsearch_host)/ocrvs" -v
-docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE "http://$(elasticsearch_host)/elastalert_status" -v
 
 # Delete all data from metrics
 #-----------------------------
