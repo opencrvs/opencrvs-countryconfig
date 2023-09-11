@@ -337,6 +337,7 @@ services:
       - ES_PASSWORD=${KIBANA_PASSWORD}
     volumes:
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/elastalert.yaml:/opt/elastalert/config.yaml'
+      - '/opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml:/opt/elastalert/auth.yaml'
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/rules:/opt/elastalert/rules'
     networks:
       - overlay_net
