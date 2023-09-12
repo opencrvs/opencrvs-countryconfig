@@ -329,7 +329,7 @@ rsync -rP $BASEDIR/docker-compose* infrastructure $SSH_USER@$SSH_HOST:/opt/openc
 rsync -rP $BASEDIR/docker-compose.countryconfig* infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/
 
 # Override configuration files with country specific files
-rsync -rP --delete /tmp/opencrvs/infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs
+rsync -rP /tmp/opencrvs/infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs
 
 rotate_secrets() {
   files_to_rotate=$1
