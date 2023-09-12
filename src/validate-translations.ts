@@ -14,24 +14,22 @@ import * as fs from 'fs'
 import { join } from 'path'
 import { ILanguage } from './api/content/service'
 
-async function validateMessages() {
+function validateMessages(path: string, name: string) {
   let allMessageData!: {
     data: Array<{
       lang: string
       displayName: string
-      messagess: Record<string, string>
+      messages: Record<string, string>
     }>
   }
 
   try {
     allMessageData = JSON.parse(
-      fs
-        .readFileSync(join(__dirname, `./api/content/client/client.json`))
-        .toString()
+      fs.readFileSync(join(__dirname, path)).toString()
     )
   } catch (err) {
     console.log(err)
-    process.exit(1)
+    return false
   }
 
   const availableTranslations = allMessageData.data.map(
@@ -50,23 +48,69 @@ async function validateMessages() {
     })
   })
 
-  let missingKey = false
-  allTranslationKeysSet.forEach((item: string) => {
-    availableTranslations.map(({ lang, messages }) => {
-      if (!Object.keys(messages!).includes(item)) {
-        missingKey = true
-        console.log(`${chalk.white(`${lang}`)} ${chalk.red(
-          `translation is missing for this key: `
-        )} ${chalk.green(`${item}`)}  
-          `)
-      }
-    })
+  const langAndKeys = []
+
+  langAndKeys.push(
+    ...availableTranslations.map(({ lang, messages }) => ({
+      lang,
+      keys: Object.keys(messages!)
+    }))
+  )
+
+  function missingKeysFinder(
+    originalSet: Iterable<unknown> | null | undefined,
+    setToCompare: any
+  ) {
+    const differenceSet = new Set(originalSet)
+
+    for (const i of setToCompare) {
+      differenceSet.delete(i)
+    }
+    return Array.from(differenceSet)
+  }
+
+  let missingKeys: any = []
+
+  langAndKeys.map((obj: any) => {
+    const comparableSet = new Set(obj.keys)
+    missingKeys = missingKeysFinder(allTranslationKeysSet, comparableSet)
+
+    if (missingKeys.length !== 0) {
+      console.log(
+        `${chalk.white(
+          `There are missing keys for ${name}.json in ${obj.lang}:\n`
+        )}`
+      )
+
+      missingKeys.forEach((o: any) => {
+        console.log(`${chalk.red(`${o}`)}`)
+      })
+      console.log(`\n`)
+    } else {
+      console.log(
+        `No translations are missing for ${name}.json in ${obj.lang}:\n`
+      )
+    }
   })
 
-  if (!missingKey) {
-    console.log('No translations are missing')
-    process.exit(0)
-  } else process.exit(1)
+  if (!missingKeys) {
+    return true
+  } else return false
 }
 
-validateMessages()
+const clientValidation = validateMessages(
+  `./api/content/client/client.json`,
+  'client'
+)
+const loginValidation = validateMessages(
+  `./api/content/login/login.json`,
+  'login'
+)
+const notificationValidation = validateMessages(
+  `./api/content/notification/notification.json`,
+  'notification'
+)
+
+if (clientValidation || loginValidation || notificationValidation) {
+  process.exit(0)
+} else process.exit(1)
