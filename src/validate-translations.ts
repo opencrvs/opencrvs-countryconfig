@@ -14,19 +14,19 @@ import * as fs from 'fs'
 import { join } from 'path'
 import { ILanguage } from './api/content/service'
 
+type translationType = {
+  data: ILanguage[]
+}
+
 function validateMessages(path: string, name: string) {
-  let allMessageData!: {
-    data: Array<{
-      lang: string
-      displayName: string
-      messages: Record<string, string>
-    }>
+  let allMessageData
+
+  function readFile(path: string): translationType {
+    return JSON.parse(fs.readFileSync(join(__dirname, path)).toString())
   }
 
   try {
-    allMessageData = JSON.parse(
-      fs.readFileSync(join(__dirname, path)).toString()
-    )
+    allMessageData = readFile(path)
   } catch (err) {
     console.log(err)
     return false
@@ -77,8 +77,8 @@ function validateMessages(path: string, name: string) {
 
     if (missingKeys.length !== 0) {
       console.log(
-        `${chalk.white(
-          `There are missing keys for ${name}.json in ${obj.lang}:\n`
+        `${chalk.bold(
+          `There are missing keys in ${name}.json for ${obj.lang}:\n`
         )}`
       )
 
@@ -88,7 +88,7 @@ function validateMessages(path: string, name: string) {
       console.log(`\n`)
     } else {
       console.log(
-        `No translations are missing for ${name}.json in ${obj.lang}:\n`
+        `No translations are missing in ${name}.json for ${obj.lang}:\n`
       )
     }
   })
