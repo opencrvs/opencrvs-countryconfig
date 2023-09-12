@@ -54,7 +54,7 @@ services:
     networks:
       - overlay_net
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:7.17.0
+    image: docker.elastic.co/beats/metricbeat:7.17.13
 
     user: root
     volumes:
