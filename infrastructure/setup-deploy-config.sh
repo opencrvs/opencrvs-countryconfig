@@ -28,8 +28,8 @@ for file in /opt/opencrvs/infrastructure/monitoring/elastalert/rules/*.yaml; do
     sed -i -e "s%{{SMTP_PORT}}%$SMTP_PORT%" $file
     sed -i -e "s%{{ALERT_EMAIL}}%$ALERT_EMAIL%" $file
 done
-sed -i -e "s%{{SMTP_USERNAME}}%$SMTP_USERNAME%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/auth.yaml
-sed -i -e "s%{{SMTP_PASSWORD}}%$SMTP_PASSWORD%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/auth.yaml
+sed -i -e "s%{{SMTP_USERNAME}}%$SMTP_USERNAME%" /opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml
+sed -i -e "s%{{SMTP_PASSWORD}}%$SMTP_PASSWORD%" /opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml
 
 
 echo "DONE - `date --iso-8601=ns`"
