@@ -307,6 +307,10 @@ services:
 
   mc-configurator:
     image: minio/mc
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc admin trace -a minio --verbose
+      "
     depends_on:
       - minio
     volumes:
