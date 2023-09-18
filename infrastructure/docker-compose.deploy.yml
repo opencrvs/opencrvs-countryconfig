@@ -280,17 +280,9 @@ services:
       - MINIO_DOMAIN=minio.{{hostname}}
       - MINIO_SERVER_URL=http://minio:9000
       - MINIO_BROWSER_REDIRECT_URL=https://minio-console.{{hostname}}
-      - MINIO_LOG_CONSOLE=true
-      - MINIO_LOG_LEVEL=debug
-      - MINIO_LOG_FORMAT=json
     volumes:
       - '/data/minio:/data'
     command: server --console-address ":9001" /data
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'minio'
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -313,6 +305,22 @@ services:
     networks:
       - overlay_net
 
+  mc-configurator:
+    image: minio/mc
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        mc config host add minio http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+        mc alias set minio http://minio:9000
+        mc admin trace -a minio --verbose
+    depends_on:
+      - minio
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'minio'
+  
   setup-elasticsearch-users:
     image: ubuntu:bionic
     entrypoint: ['bash', '/usr/app/setup.sh']
