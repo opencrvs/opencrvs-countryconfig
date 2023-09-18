@@ -42,6 +42,8 @@ services:
       - --entrypoints.web.http.redirections.entrypoint.permanent=true
       - --serverstransport.insecureskipverify=true
       - --entrypoints.websecure.address=:443
+      - --accesslog=true
+      - --accesslog.format=json
       - --ping=true
     deploy:
       replicas: 1
@@ -51,6 +53,11 @@ services:
       placement:
         constraints:
           - node.role == manager
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'traefik'
     networks:
       - overlay_net
   metricbeat:
@@ -276,6 +283,11 @@ services:
     volumes:
       - '/data/minio:/data'
     command: server --console-address ":9001" /data
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'minio'
     deploy:
       labels:
         - 'traefik.enable=true'
