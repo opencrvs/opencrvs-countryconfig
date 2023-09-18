@@ -315,6 +315,8 @@ services:
       - minio
     volumes:
       - /opt/opencrvs/infrastructure/mc-config:/root/.mc
+    networks:
+      - overlay_net
     logging:
       driver: gelf
       options:
