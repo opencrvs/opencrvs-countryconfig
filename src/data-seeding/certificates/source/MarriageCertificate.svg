@@ -51,7 +51,7 @@
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" letter-spacing="0px">
   <tspan x="50%" y="115.69" text-anchor="middle">Marriage Registration No&#10;</tspan>
 </text>
-<rect x="354.771" y="534" width="40" height="40" fill="url(#pattern1)"/>
+<rect x="353.771" y="531" width="40" height="40" fill="url(#pattern1)"/>
 <path d="M236.262 49.14C236.265 58.416 236.253 67.695 236.268 76.971C236.274 77.379 236.148 77.766 235.938 78.093C235.743 78.393 235.473 78.639 235.151 78.804L211.04 92.718C210.707 92.907 210.352 93 210.007 93C209.653 93 209.296 92.901 208.978 92.718L184.878 78.816C184.548 78.651 184.269 78.402 184.071 78.099C183.858 77.766 183.732 77.379 183.732 76.968L183.741 76.782L183.735 49.032C183.729 48.66 183.831 48.309 184.005 48.006L184.011 48C184.191 47.688 184.452 47.43 184.764 47.247L208.963 33.282C209.296 33.093 209.653 33 209.995 33C210.349 33 210.71 33.099 211.025 33.282L235.232 47.25C235.572 47.445 235.833 47.727 236.01 48.048L236.016 48.054C236.193 48.384 236.28 48.762 236.262 49.14Z" fill="#EFCFA4"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M218.07 86.28H201.936L210.001 90.933L218.07 86.28Z" fill="#EFCFA4"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M201.936 86.28H218.07L226.138 81.624H193.868L201.936 86.28Z" fill="#F1B162"/>
@@ -92,7 +92,7 @@
 <use xlink:href="#image_registrar" transform="scale(0.000818331 0.00224215)"/>
 </pattern>
 <pattern id="pattern1" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image_qrcode" transform="translate(0 -0.0207101) scale(0.00295858)"/>
+<use xlink:href="#image1_745_269" transform="translate(0 -0.0207101) scale(0.00295858)"/>
 </pattern>
 <pattern id="pattern2" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image_groom" transform="scale(0.000818331 0.00224215)"/>
@@ -103,6 +103,6 @@
 <image id="image_registrar" width="1222" height="446" data-content="signature" xlink:href="{{registrarSignature}}"/>
 <image id="image_groom" width="1222" height="446" data-content="groomSignature" xlink:href="{{groomSignature}}"/>
 <image id="image_bride" width="1222" height="446" data-content="brideSignature" xlink:href="{{brideSignature}}"/>
-<image id="image_qrcode" width="1222" height="446" data-content="qrcode" xlink:href="{{qrCode}}"/>
+<image id="image1_745_269" width="338" height="352" xlink:href="{{qrCode}}" />
 </defs>
 </svg>
