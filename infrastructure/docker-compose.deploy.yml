@@ -315,6 +315,8 @@ services:
         mc admin trace -a minio --verbose
     depends_on:
       - minio
+    volumes:
+      - ./mc-config:/root/.mc
     logging:
       driver: gelf
       options:
