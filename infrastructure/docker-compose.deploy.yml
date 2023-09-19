@@ -309,7 +309,7 @@ services:
     image: minio/mc
     entrypoint: >
       /bin/sh -c "
-      /usr/bin/mc admin trace -a minio --verbose
+      /usr/bin/mc admin trace --path ocrvs/* minio
       "
     depends_on:
       - minio
