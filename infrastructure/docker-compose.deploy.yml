@@ -305,7 +305,7 @@ services:
     networks:
       - overlay_net
 
-  mc-configurator:
+  minio-mc:
     image: minio/mc
     entrypoint: >
       /bin/sh -c "
