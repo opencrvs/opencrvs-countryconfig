@@ -89,12 +89,6 @@ export async function createUser(
   const generatedPhoneNumber = phoneNumberExpander.getIterator().next().value
   countryAlpha3 = countryAlpha3.toUpperCase() === 'FAR' ? 'ZMB' : countryAlpha3
 
-  const informantEmail = faker.internet.email()
-  const informantEmailWithExampleDomain = informantEmail.replace(
-    /@.+/,
-    '@example.com'
-  )
-
   const user: Partial<MutationCreateOrUpdateUserArgs['user']> = {
     name: [
       {
@@ -114,7 +108,7 @@ export async function createUser(
     username:
       firstName.toLocaleLowerCase() + '.' + familyName.toLocaleLowerCase(),
     mobile: convertToMSISDN(generatedPhoneNumber, countryAlpha3),
-    email: informantEmailWithExampleDomain,
+    email: faker.internet.email(undefined, undefined, 'example.com'),
     primaryOffice: primaryOfficeId,
     ...overrides
   }
