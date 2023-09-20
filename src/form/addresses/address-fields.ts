@@ -284,7 +284,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -312,7 +312,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -343,7 +343,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -374,7 +374,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -403,7 +403,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -431,7 +431,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'rural', useCase)
         : getAddressConditionals(section, 'rural', useCase),
