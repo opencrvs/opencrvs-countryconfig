@@ -354,7 +354,7 @@ export async function createDeathDeclaration(
   const details: DeathRegistrationInput = {
     causeOfDeathEstablished: 'true',
     causeOfDeathMethod: causeOfDeathMethod.physician,
-    deathDescription: 'Pneumonia',
+    deathDescription: '',
     createdAt: declarationTime.toISOString(),
     registration: {
       informantType: 'SPOUSE',
