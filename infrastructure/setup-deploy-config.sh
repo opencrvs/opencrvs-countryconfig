@@ -25,6 +25,8 @@ sed -i -e "s%{{SMTP_PORT}}%$SMTP_PORT%" /opt/opencrvs/infrastructure/monitoring/
 sed -i -e "s%{{ALERT_EMAIL}}%$ALERT_EMAIL%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/alert.yaml
 sed -i -e "s%{{SMTP_USERNAME}}%$SMTP_USERNAME%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/auth.yaml
 sed -i -e "s%{{SMTP_PASSWORD}}%$SMTP_PASSWORD%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/auth.yaml
+sed -i -e "s%{{MINIO_ROOT_USER}}%$MINIO_ROOT_USER%" /opt/opencrvs/infrastructure/mc-config/config.json
+sed -i -e "s%{{MINIO_ROOT_PASSWORD}}%$MINIO_ROOT_PASSWORD%" /opt/opencrvs/infrastructure/mc-config/config.json
 
 
 echo "DONE - `date --iso-8601=ns`"

@@ -33,8 +33,7 @@ import {
   getCauseOfDeathMethod,
   getDeathDate,
   getDeathDescription,
-  getMannerOfDeath,
-  getPlaceOfDeathFields
+  getMannerOfDeath
 } from './required-fields'
 import { formMessageDescriptors } from '../common/messages'
 import { Event, ISerializedForm } from '../types/types'
@@ -209,8 +208,8 @@ export const deathForm = {
             getMannerOfDeath,
             getCauseOfDeath,
             getCauseOfDeathMethod,
-            getDeathDescription,
-            ...getPlaceOfDeathFields()
+            getDeathDescription
+            // PLACE OF DEATH FIELDS WILL RENDER HERE
           ]
         }
       ]
@@ -263,7 +262,8 @@ export const deathForm = {
               getNationalIDValidators('informant'),
               certificateHandlebars.informantNID
             ),
-            divider('place-of-death'),
+            // ADDRESS FIELDS WILL RENDER HERE
+            divider('informant-address-separator'),
             registrationPhone,
             registrationEmail
           ],

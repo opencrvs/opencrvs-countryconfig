@@ -30,7 +30,7 @@ export function createCustomFieldExample(): SerializedFormField {
 
   return {
     name: fieldName,
-    customQuesstionMappingId: fieldId,
+    customQuestionMappingId: fieldId,
     custom: true,
     required: true,
     type: 'TEXT', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
