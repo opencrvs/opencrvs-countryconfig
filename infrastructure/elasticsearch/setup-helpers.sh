@@ -254,7 +254,7 @@ function create_elastic_index {
 
   echo "${output}"
 
-  if [[ "${output: -3}" -eq 200 ]]; then
+  if [[ "${output: -3}" -eq 200 || $output == *"resource_already_exists"* ]]; then
     result=0
   fi
 
