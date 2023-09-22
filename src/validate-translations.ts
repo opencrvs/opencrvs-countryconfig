@@ -93,24 +93,24 @@ function validateMessages(path: string, name: string) {
     }
   })
 
-  if (!missingKeys) {
+  if (missingKeys.length > 0) {
     return true
   } else return false
 }
 
-const clientValidation = validateMessages(
+const clientMissingKeys = validateMessages(
   `./api/content/client/client.json`,
   'client'
 )
-const loginValidation = validateMessages(
+const loginMissingKeys = validateMessages(
   `./api/content/login/login.json`,
   'login'
 )
-const notificationValidation = validateMessages(
+const notificationMissingKeys = validateMessages(
   `./api/content/notification/notification.json`,
   'notification'
 )
 
-if (clientValidation || loginValidation || notificationValidation) {
-  process.exit(0)
-} else process.exit(1)
+if (clientMissingKeys || loginMissingKeys || notificationMissingKeys) {
+  process.exit(1)
+} else process.exit(0)

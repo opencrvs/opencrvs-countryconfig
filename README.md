@@ -17,7 +17,7 @@
 
 **This is the fictional country "Farajaland" OpenCRVS country configuration repository for [OpenCRVS](https://github.com/opencrvs/opencrvs-core) You must fork this for your own country.**
 
-<a href="https://documentation.opencrvs.org">Read our documentation</a> to learn how to set up your own country configuration using this repo as an example.
+<a href="https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration">Read our documentation</a> to learn how to set up your own country configuration using this repo as an example.
 
 ## What is this module for?
 
@@ -37,18 +37,6 @@ This module also provides a logical location where you may wish to store the cod
 
 Thats it! 🎉
 
-**If you did not run the OpenCRVS Core `bash setup.sh` command, or you are forking this repository in order to build your own country configuration.** 
-
-1. Ensure that you are running [OpenCRVS Core](https://github.com/opencrvs/opencrvs-core).  
-
-In a separate Terminal window, checkout this repository and checkout the master branch.  The develop branch is used for active feature development.
-
-2. Run `git clone https://github.com/opencrvs/opencrvs-farajaland.git`
-3. Run `cd opencrvs-farajaland`
-4. Run `git checkout master`
-5. Run `yarn install`
-6. Run `yarn dev`
-
 ## What is in the Farajaland configuration module repository?
 
 One of the key dependencies and enablers for OpenCRVS is country configuration and a reference data source. This source is bespoke for every implementing nation. If you would like to create your own country implementation, we recommend that you duplicate this repository and use it as a template. So what does it contain?
@@ -57,9 +45,7 @@ One of the key dependencies and enablers for OpenCRVS is country configuration a
 
 - The "infrastructure" folder containing all Ansible server configuration files, deployment scripts and docker-compose files allowing you to configure OpenCRVS to run on any infrastructure stack without requiring a fork in opencrvs-core.
 
-- The [src](https://github.com/opencrvs/opencrvs-farajaland/master/src) folder contians the code required to run the countryconfig microservice, configure your registration form and seed your country implementation with reference data. Essentially this repository could be re-written from NodeJS into Java or another language as long as the service provided the same API endpoints and served the same files as listed below. For more information please [read this section of the documentation.](https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration)
-
-- Commands to clear all data from your local development environment or remote environment - USE WITH CARE. 
+- The [src](https://github.com/opencrvs/opencrvs-countryconfig/master/src) folder contains the code required to run the countryconfig microservice apis, configure your registration form and seed your country implementation with reference data. Essentially this repository could be re-written from NodeJS into Java or another language as long as the service provided the same API endpoints and served the same files as listed below. For more information please [read this section of the documentation.](https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration)
 
 - Postman collections demonstrate how to interoperate with OpenCRVS.  You can build any custom integration into OpenCRVS in this repository if you need to.
 
