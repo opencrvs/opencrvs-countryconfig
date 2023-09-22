@@ -51,22 +51,17 @@ export async function getTokenForSystemClient(
   clientSecret: string
 ): Promise<string> {
   const authenticateResponse = await fetch(
-    `${AUTH_HOST}/authenticateSystemClient`,
+    `${AUTH_HOST}/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-correlation-id': clientId + '-' + Date.now()
-      },
-      body: JSON.stringify({
-        client_id: clientId,
-        client_secret: clientSecret
-      })
+      }
     }
   )
   const res = await authenticateResponse.json()
-
-  return res.token
+  return res.access_token
 }
 
 export function readToken(token: string) {

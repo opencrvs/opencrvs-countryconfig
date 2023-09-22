@@ -1,0 +1,12 @@
+{
+	"version": "10",
+	"aliases": {
+		"minio": {
+			"url": "http://minio:9000",
+			"accessKey": "{{MINIO_ROOT_USER}}",
+			"secretKey": "{{MINIO_ROOT_PASSWORD}}",
+			"api": "S3v4",
+			"path": "auto"
+		}
+	}
+}

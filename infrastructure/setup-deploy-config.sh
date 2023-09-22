@@ -30,7 +30,8 @@ for file in /opt/opencrvs/infrastructure/monitoring/elastalert/rules/*.yaml; do
 done
 sed -i -e "s%{{SMTP_USERNAME}}%$SMTP_USERNAME%" /opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml
 sed -i -e "s%{{SMTP_PASSWORD}}%$SMTP_PASSWORD%" /opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml
-
+sed -i -e "s%{{MINIO_ROOT_USER}}%$MINIO_ROOT_USER%" /opt/opencrvs/infrastructure/mc-config/config.json
+sed -i -e "s%{{MINIO_ROOT_PASSWORD}}%$MINIO_ROOT_PASSWORD%" /opt/opencrvs/infrastructure/mc-config/config.json
 
 echo "DONE - `date --iso-8601=ns`"
 echo

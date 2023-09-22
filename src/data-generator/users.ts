@@ -108,7 +108,7 @@ export async function createUser(
     username:
       firstName.toLocaleLowerCase() + '.' + familyName.toLocaleLowerCase(),
     mobile: convertToMSISDN(generatedPhoneNumber, countryAlpha3),
-    email: faker.internet.email(),
+    email: faker.internet.email(undefined, undefined, 'example.com'),
     primaryOffice: primaryOfficeId,
     ...overrides
   }

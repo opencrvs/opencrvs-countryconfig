@@ -42,6 +42,8 @@ services:
       - --entrypoints.web.http.redirections.entrypoint.permanent=true
       - --serverstransport.insecureskipverify=true
       - --entrypoints.websecure.address=:443
+      - --accesslog=true
+      - --accesslog.format=json
       - --ping=true
     deploy:
       replicas: 1
@@ -51,6 +53,11 @@ services:
       placement:
         constraints:
           - node.role == manager
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'traefik'
     networks:
       - overlay_net
   metricbeat:
@@ -298,6 +305,24 @@ services:
     networks:
       - overlay_net
 
+  minio-mc:
+    image: minio/mc
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc admin trace --path ocrvs/* minio
+      "
+    depends_on:
+      - minio
+    volumes:
+      - /opt/opencrvs/infrastructure/mc-config:/root/.mc
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'minio'
+  
   setup-elasticsearch-users:
     image: ubuntu:bionic
     entrypoint: ['bash', '/usr/app/setup.sh']
