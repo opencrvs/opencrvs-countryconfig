@@ -13,7 +13,7 @@ set -e
 sed -i "s/{{hostname}}/$HOSTNAME/g" src/client-config.prod.js
 sed -i "s/{{hostname}}/$HOSTNAME/g" src/login-config.prod.js
 
-sed -i "s/{{sentry}}/$SENTRY_DSN/g" src/client-config.prod.js
-sed -i "s/{{sentry}}/$SENTRY_DSN/g" src/login-config.prod.js
+sed -i "s={{sentry}}=$SENTRY_DSN=g" src/client-config.prod.js
+sed -i "s={{sentry}}=$SENTRY_DSN=g" src/login-config.prod.js
 
 yarn start:prod

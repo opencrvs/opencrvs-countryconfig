@@ -78,6 +78,7 @@
 <g mask="url(#mask0_925_20)">
   <rect x="145.558" y="461.257" width="129.116" height="45.2572" fill="url(#pattern0)" />
 </g>
+<rect x="353.771" y="531" width="40" height="40" fill="url(#pattern1)"/>
 <defs>
   <style type="text/css">
     @font-face {
@@ -88,6 +89,10 @@
   <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
     <use xlink:href="#image0_925_20" transform="scale(0.000818331 0.00224215)" />
   </pattern>
+  <pattern id="pattern1" patternContentUnits="objectBoundingBox" width="1" height="1">
+  <use xlink:href="#image1_745_269" transform="translate(0 -0.0207101) scale(0.00295858)"/>
+  </pattern>
   <image id="image0_925_20" width="1222" height="446" data-content="signature" xlink:href="{{registrarSignature}}" />
+  <image id="image1_745_269" width="338" height="352" xlink:href="{{qrCode}}" />
 </defs>
 </svg>

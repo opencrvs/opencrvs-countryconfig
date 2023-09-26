@@ -278,6 +278,11 @@ export const sendEmail = async (
     html: emailBody
   }
 
+  if (recipient.endsWith('@example.com')) {
+    logger.info(`Example email detected: ${msg.to}. Not sending the email.`)
+    return
+  }
+
   try {
     logger.info(`Sending email to ${msg.to}`)
     await sgMail.send(msg)

@@ -5,7 +5,7 @@ import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-util
 
 export const registrationSection = {
   id: 'registration', // A hidden 'registration' section must be included to store identifiers in a form draft that are used in certificates
-  viewType: 'form',
+  viewType: 'hidden',
   name: {
     defaultMessage: 'Registration',
     description: 'Form section name for Registration',

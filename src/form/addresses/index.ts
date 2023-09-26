@@ -50,10 +50,12 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     // THE "configurations" ARRAY LISTS THE AVAILABLE FIELDSET CONFIGURATIONS THAT WILL RENDER
     // OPTIONS ARE THE FULL PLACE OF EVENT FIELDS, STANDARD ADDRESS FIELDS, ADDRESS SUBSECTION DIVIDERS, OR RADIO BUTTONS TO SIMPLIFY FORM ENTRY
 
-    precedingFieldId: 'birth.child.child-view-group.birthLocation',
+    // PLACE OF BIRTH ADDRESS FIELDS
+    precedingFieldId: 'birth.child.child-view-group.childBirthDate',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_BIRTH }]
   },
   {
+    // INFORMANT ADDRESS FIELDS
     precedingFieldId:
       'birth.informant.informant-view-group.informant-nid-seperator',
     configurations: [
@@ -85,6 +87,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
+    // MOTHER ADDRESS FIELDS
     precedingFieldId: 'birth.mother.mother-view-group.mother-nid-seperator',
     configurations: [
       {
@@ -108,6 +111,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
+    // FATHER ADDRESS FIELDS
     precedingFieldId: 'birth.father.father-view-group.father-nid-seperator',
     configurations: [
       {
@@ -138,10 +142,12 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
-    precedingFieldId: 'death.deathEvent.death-event-details.deathLocation',
+    // PLACE OF DEATH ADDRESS FIELDS
+    precedingFieldId: 'death.deathEvent.death-event-details.deathDescription',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_DEATH }]
   },
   {
+    // DECEASED ADDRESS FIELDS
     precedingFieldId: 'death.deceased.deceased-view-group.maritalStatus',
     configurations: [
       {
@@ -159,6 +165,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
+    // INFORMANT ADDRESS FIELDS
     precedingFieldId: 'death.informant.informant-view-group.informantID',
     configurations: [
       {
@@ -186,11 +193,13 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
+    // PLACE OF MARRIAGE ADDRESS FIELDS
     precedingFieldId:
       'marriage.marriageEvent.marriage-event-details.place-of-marriage-seperator',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_MARRIAGE }]
   },
   {
+    // GRROM ADDRESS FIELDS
     precedingFieldId: 'marriage.groom.groom-view-group.marriedLastNameEng',
     configurations: [
       {
@@ -210,6 +219,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
+    // BRIDE ADDRESS FIELDS
     precedingFieldId: 'marriage.bride.bride-view-group.marriedLastNameEng',
     configurations: [
       {
@@ -229,6 +239,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     ]
   },
   {
+    // INFORMANT ADDRESS FIELDS
     precedingFieldId:
       'marriage.informant.who-is-applying-view-group.informantID',
     configurations: [

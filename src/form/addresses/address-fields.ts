@@ -20,6 +20,8 @@ import {
   yesNoRadioOptions
 } from '../common/select-options'
 import { ADMIN_LEVELS } from '.'
+import { getPlaceOfBirthFields } from '../birth/required-fields'
+import { getPlaceOfDeathFields } from '../death/required-fields'
 
 // A radio group field that allows you to select an address from another section
 export const getXAddressSameAsY = (
@@ -162,6 +164,21 @@ function getAdminLevelSelects(
   }
 }
 
+// Place of birth and death fields require a select option to choose a hospital from health facility databases
+// We recommend that you do not edit this function
+function getPlaceOfEventFields(useCase: EventLocationAddressCases) {
+  switch (useCase) {
+    case EventLocationAddressCases.PLACE_OF_BIRTH:
+      return [...getPlaceOfBirthFields()]
+    case EventLocationAddressCases.PLACE_OF_DEATH:
+      return [...getPlaceOfDeathFields()]
+    case EventLocationAddressCases.PLACE_OF_MARRIAGE:
+      return []
+    default:
+      return []
+  }
+}
+
 // The fields that appear whenever an address is rendered
 
 // ====================== WARNING REGARDING ADDRESS CONFIGURATION ======================
@@ -178,11 +195,17 @@ export function getAddressFields(
   addressCase: EventLocationAddressCases | AddressCases
 ): SerializedFormField[] {
   let useCase = addressCase as string
+  let placeOfEventFields: SerializedFormField[] = []
   if (addressCase in AddressCases) {
     useCase = useCase === AddressCases.PRIMARY_ADDRESS ? 'primary' : 'secondary'
+  } else {
+    placeOfEventFields = getPlaceOfEventFields(
+      useCase as EventLocationAddressCases
+    )
   }
 
   return [
+    ...placeOfEventFields,
     {
       name: `country${sentenceCase(useCase)}${sentenceCase(section)}`,
       type: 'SELECT_WITH_OPTIONS',
@@ -261,7 +284,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -289,7 +312,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -320,7 +343,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -351,7 +374,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -380,7 +403,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'urban', useCase)
         : getAddressConditionals(section, 'urban', useCase),
@@ -408,7 +431,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'district',
+      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'rural', useCase)
         : getAddressConditionals(section, 'rural', useCase),
@@ -441,7 +464,7 @@ export function getAddressFields(
       required: true,
       initialValue: '',
       validator: [],
-      dependency: 'country',
+      dependency: `country${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
@@ -469,7 +492,7 @@ export function getAddressFields(
       required: true,
       initialValue: '',
       validator: [],
-      dependency: 'country',
+      dependency: `country${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
@@ -495,7 +518,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'country',
+      dependency: `country${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
@@ -523,7 +546,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'country',
+      dependency: `country${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
@@ -554,7 +577,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'country',
+      dependency: `country${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
@@ -585,7 +608,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'country',
+      dependency: `country${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
@@ -616,7 +639,7 @@ export function getAddressFields(
       required: false,
       initialValue: '',
       validator: [],
-      dependency: 'country',
+      dependency: `country${sentenceCase(useCase)}${sentenceCase(section)}`,
       conditionals: isUseCaseForPlaceOfEvent(useCase)
         ? getPlaceOfEventConditionals(section, 'international', useCase)
         : getAddressConditionals(section, 'international', useCase),
