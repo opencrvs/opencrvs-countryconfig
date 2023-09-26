@@ -15,15 +15,15 @@ import {
   getAgeOfIndividualInYears,
   registrationEmail,
   registrationPhone,
-  divider,
-  getNationalID
+  divider
 } from '../common/common-optional-fields'
 import {
   getBirthDate,
   getFamilyNameField,
   getFirstNameField,
   getNationality,
-  otherInformantType
+  otherInformantType,
+  getNationalID
 } from '../common/common-required-fields'
 import {
   formMessageDescriptors,

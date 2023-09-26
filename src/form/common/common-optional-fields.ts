@@ -12,7 +12,6 @@
 import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from './messages'
 import { SerializedFormField, Conditional } from '../types/types'
-import { Validator } from '../types/validators'
 import { maritalStatusOptions } from './select-options'
 import { certificateHandlebars } from '../birth/certificate-handlebars'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
@@ -49,23 +48,6 @@ export const exactDateOfBirthUnknown = (
     }
   }
 })
-
-export const getNationalID = (
-  fieldName: string,
-  conditionals: Conditional[],
-  validator: Validator[],
-  certificateHandlebar: string
-) =>
-  ({
-    name: fieldName,
-    type: 'TEXT',
-    label: formMessageDescriptors.iDTypeNationalID,
-    required: false,
-    initialValue: '',
-    validator,
-    conditionals,
-    mapping: getFieldMapping('nationalId', certificateHandlebar)
-  } satisfies SerializedFormField)
 
 export const getAgeOfIndividualInYears = (
   label: MessageDescriptor,

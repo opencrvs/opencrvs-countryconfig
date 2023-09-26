@@ -16,8 +16,7 @@ import {
   getMaritalStatus,
   registrationEmail,
   registrationPhone,
-  divider,
-  getNationalID
+  divider
 } from '../common/common-optional-fields'
 import {
   getGender,
@@ -25,7 +24,8 @@ import {
   getFamilyNameField,
   getFirstNameField,
   getNationality,
-  otherInformantType
+  otherInformantType,
+  getNationalID
 } from '../common/common-required-fields'
 import {
   deathInformantType,
