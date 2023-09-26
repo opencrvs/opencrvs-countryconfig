@@ -149,7 +149,7 @@ export const getNationalID = (
     name: fieldName,
     type: 'TEXT',
     label: formMessageDescriptors.iDTypeNationalID,
-    required: false,
+    required: true,
     initialValue: '',
     validator,
     conditionals,
