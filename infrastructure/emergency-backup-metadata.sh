@@ -113,7 +113,15 @@ else
   ROOT_PATH=$(cd "$ROOT_PATH" && pwd)
 fi
 
+# Find and remove all empty subdirectories under the top-level directories
+for BACKUP_DIR in $ROOT_PATH/backups/*; do
+  if [ -d "$BACKUP_DIR" ]; then
+    rm -rf $BACKUP_DIR/*
+  fi
+done
+
 mkdir -p $ROOT_PATH/backups/elasticsearch
+mkdir -p $ROOT_PATH/backups/elasticsearch/indices
 mkdir -p $ROOT_PATH/backups/influxdb
 mkdir -p $ROOT_PATH/backups/mongo
 mkdir -p $ROOT_PATH/backups/minio
@@ -163,6 +171,15 @@ elasticsearch_host() {
   fi
 }
 
+# Do not include OpenHIM transactions for local snapshots
+excluded_collections() {
+  if [ "$IS_LOCAL" = true ]; then
+    echo "--excludeCollection=transactions"
+  else
+    echo ""
+  fi
+}
+
 # Today's date is used for filenames if LABEL is not provided
 #-----------------------------------
 BACKUP_DATE=$(date +%Y-%m-%d)
@@ -172,7 +189,7 @@ BACKUP_DATE=$(date +%Y-%m-%d)
 docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d hearth-dev --gzip --archive=/data/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz"
 docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev --gzip --archive=/data/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz"
+  -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev $(excluded_collections) --gzip --archive=/data/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz"
 docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d user-mgnt --gzip --archive=/data/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz"
 docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
@@ -184,14 +201,49 @@ docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWO
 docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d performance --gzip --archive=/data/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz"
 
-# Register backup folder as an Elasticsearch repository for backing up the search data
-#-------------------------------------------------------------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}'
 
-sleep 10
-# Backup Elasticsearch as a set of snapshot files into an elasticsearch sub folder
+#-------------------------------------------------------------------------------------
+
+echo ""
+echo "Delete all currently existing snapshots"
+echo ""
+docker run --rm --network=$NETWORK appropriate/curl curl -a -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
+
+#-------------------------------------------------------------------------------------
+echo ""
+echo "Register backup folder as an Elasticsearch repository for backing up the search data"
+echo ""
+
+create_elasticsearch_snapshot_repository() {
+  OUTPUT=$(docker run --rm --network=opencrvs_default appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}' 2>/dev/null)
+  while [ "$OUTPUT" != '{"acknowledged":true}' ]; do
+    echo "Failed to register backup folder as an Elasticsearch repository. Trying again in..."
+    sleep 1
+    create_elasticsearch_snapshot_repository
+  done
+}
+
+create_elasticsearch_snapshot_repository
+
 #---------------------------------------------------------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }'
+
+echo ""
+echo "Backup Elasticsearch as a set of snapshot files into an elasticsearch sub folder"
+echo ""
+
+create_elasticsearch_backup() {
+  OUTPUT=""
+  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${VERSION:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
+  if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
+    echo "Snapshot state is SUCCESS"
+  else
+    echo $OUTPUT
+    echo "Failed to backup Elasticsearch. Trying again in..."
+    create_elasticsearch_backup
+  fi
+}
+
+create_elasticsearch_backup
 
 # Get the container ID and host details of any running InfluxDB container, as the only way to backup is by using the Influxd CLI inside a running opencrvs_metrics container
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -231,6 +283,8 @@ mkdir -p $ROOT_PATH/backups/minio
 cd $ROOT_PATH/minio && tar -zcvf $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz . && cd /
 
 echo "Creating a backup for Metabase"
+
+mkdir -p $ROOT_PATH/metabase # This might not exist in local project if metabase has never been run
 mkdir -p $ROOT_PATH/backups/metabase
 cd $ROOT_PATH/metabase && tar -zcvf $ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz . && cd /
 
