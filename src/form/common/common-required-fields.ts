@@ -14,6 +14,7 @@ import { formMessageDescriptors } from './messages'
 import { SerializedFormField, Conditional, Event } from '../types/types'
 import { genderOptions } from './select-options'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { Validator } from '../types/validators'
 
 export const getBirthDate = (
   fieldName: string,
@@ -136,4 +137,21 @@ export const otherInformantType = (event: Event) =>
       }
     ],
     mapping: getFieldMapping('otherInformantType')
+  } satisfies SerializedFormField)
+
+export const getNationalID = (
+  fieldName: string,
+  conditionals: Conditional[],
+  validator: Validator[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: fieldName,
+    type: 'TEXT',
+    label: formMessageDescriptors.iDTypeNationalID,
+    required: true,
+    initialValue: '',
+    validator,
+    conditionals,
+    mapping: getFieldMapping('nationalId', certificateHandlebar)
   } satisfies SerializedFormField)
