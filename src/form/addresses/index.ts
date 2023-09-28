@@ -193,7 +193,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       }*/
     ]
   },
-  {
+  /*{
     // MOTHER ADDRESS FIELDS
     precedingFieldId: 'death.mother.mother-view-group.mother-nid-seperator',
     configurations: [
@@ -205,16 +205,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressCases.PRIMARY_ADDRESS,
         conditionalCase: MOTHER_DETAILS_DONT_EXIST
-      } /*,
-      {
-        config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
-        label: formMessageDescriptors.secondaryAddress,
-        conditionalCase: MOTHER_DETAILS_DONT_EXIST
-      },
-      {
-        config: AddressCases.SECONDARY_ADDRESS,
-        conditionalCase: MOTHER_DETAILS_DONT_EXIST
-      }*/
+      }
     ]
   },
   {
@@ -236,16 +227,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressCases.PRIMARY_ADDRESS,
         conditionalCase: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
-      } /*,
-      {
-        config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
-        label: formMessageDescriptors.secondaryAddress,
-        conditionalCase: FATHER_DETAILS_DONT_EXIST
-      },
-      {
-        config: AddressCases.SECONDARY_ADDRESS,
-        conditionalCase: FATHER_DETAILS_DONT_EXIST
-      }*/
+      }
     ]
   },
   {
@@ -267,18 +249,9 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressCases.PRIMARY_ADDRESS,
         conditionalCase: `((${SPOUSE_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) || (${detailsDontExist}))`
-      } /*,
-      {
-        config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
-        label: formMessageDescriptors.secondaryAddress,
-        conditionalCase: SPOUSE_DETAILS_DONT_EXIST
-      },
-      {
-        config: AddressCases.SECONDARY_ADDRESS,
-        conditionalCase: SPOUSE_DETAILS_DONT_EXIST
-      }*/
+      }
     ]
-  },
+  },*/
   {
     // PLACE OF MARRIAGE ADDRESS FIELDS
     precedingFieldId:
