@@ -26,9 +26,9 @@ import {
   getFirstNameField,
   getNationality,
   otherInformantType,
-  getNationalID,
+  getNationalID /*,
   getDetailsExist,
-  getReasonNotExisting
+  getReasonNotExisting*/
 } from '../common/common-required-fields'
 import {
   deathInformantType,
@@ -47,7 +47,7 @@ import {
   informantFamilyNameConditionals,
   informantFirstNameConditionals,
   exactDateOfBirthUnknownConditional,
-  isValidBirthDate,
+  isValidBirthDate /*,
   spouseFirstNameConditionals,
   spouseFamilyNameConditionals,
   spouseBirthDateConditionals,
@@ -62,19 +62,19 @@ import {
   motherFamilyNameConditionals,
   mothersBirthDateConditionals,
   mothersDetailsExistConditionals,
-  spouseDetailsExistConditionals
+  spouseDetailsExistConditionals*/
 } from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import {
   deceasedNameInEnglish,
+  informantNameInEnglish /*,
   fatherNameInEnglish,
-  informantNameInEnglish,
   motherNameInEnglish,
-  spouseNameInEnglish
+  spouseNameInEnglish*/
 } from '../common/preview-groups'
 import { certificateHandlebars } from './certficate-handlebars'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
+//import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -294,7 +294,10 @@ export const deathForm = {
       ],
       mapping: getCommonSectionMapping('informant')
     },
-    /*{
+    /*
+    OTHER POSSIBLE SECTIONS FOR DEATH INCLUDE:
+    
+    {
       id: 'spouse',
       viewType: 'form',
       name: formMessageDescriptors.spouseSectionName,
