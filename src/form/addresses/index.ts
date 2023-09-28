@@ -13,7 +13,8 @@
 import {
   FATHER_DETAILS_DONT_EXIST,
   MOTHER_DETAILS_DONT_EXIST,
-  fathersDetailsDontExist,
+  SPOUSE_DETAILS_DONT_EXIST,
+  detailsDontExist,
   hideIfInformantBrideOrGroom,
   informantNotMotherOrFather,
   mothersDetailsDontExistOnOtherPage,
@@ -124,11 +125,11 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
         label: formMessageDescriptors.primaryAddressSameAsOtherPrimary,
         xComparisonSection: 'father',
         yComparisonSection: 'mother',
-        conditionalCase: `(${fathersDetailsDontExist} || ${mothersDetailsDontExistOnOtherPage})`
+        conditionalCase: `(${detailsDontExist} || ${mothersDetailsDontExistOnOtherPage})`
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        conditionalCase: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${fathersDetailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
+        conditionalCase: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
       } /*,
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
@@ -189,6 +190,92 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.SECONDARY_ADDRESS
+      }*/
+    ]
+  },
+  {
+    // MOTHER ADDRESS FIELDS
+    precedingFieldId: 'death.mother.mother-view-group.mother-nid-seperator',
+    configurations: [
+      {
+        config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
+        label: formMessageDescriptors.primaryAddress,
+        conditionalCase: MOTHER_DETAILS_DONT_EXIST
+      },
+      {
+        config: AddressCases.PRIMARY_ADDRESS,
+        conditionalCase: MOTHER_DETAILS_DONT_EXIST
+      } /*,
+      {
+        config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
+        label: formMessageDescriptors.secondaryAddress,
+        conditionalCase: MOTHER_DETAILS_DONT_EXIST
+      },
+      {
+        config: AddressCases.SECONDARY_ADDRESS,
+        conditionalCase: MOTHER_DETAILS_DONT_EXIST
+      }*/
+    ]
+  },
+  {
+    // FATHER ADDRESS FIELDS
+    precedingFieldId: 'death.father.father-view-group.father-nid-seperator',
+    configurations: [
+      {
+        config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
+        label: formMessageDescriptors.primaryAddress,
+        conditionalCase: `${FATHER_DETAILS_DONT_EXIST}`
+      },
+      {
+        config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
+        label: formMessageDescriptors.primaryAddressSameAsOtherPrimary,
+        xComparisonSection: 'father',
+        yComparisonSection: 'mother',
+        conditionalCase: `(${detailsDontExist} || ${mothersDetailsDontExistOnOtherPage})`
+      },
+      {
+        config: AddressCases.PRIMARY_ADDRESS,
+        conditionalCase: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
+      } /*,
+      {
+        config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
+        label: formMessageDescriptors.secondaryAddress,
+        conditionalCase: FATHER_DETAILS_DONT_EXIST
+      },
+      {
+        config: AddressCases.SECONDARY_ADDRESS,
+        conditionalCase: FATHER_DETAILS_DONT_EXIST
+      }*/
+    ]
+  },
+  {
+    // SPOUSE ADDRESS FIELDS
+    precedingFieldId: 'death.spouse.spouse-view-group.spouse-nid-seperator',
+    configurations: [
+      {
+        config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
+        label: formMessageDescriptors.primaryAddress,
+        conditionalCase: `${SPOUSE_DETAILS_DONT_EXIST}`
+      },
+      {
+        config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
+        label: formMessageDescriptors.primaryAddressSameAsDeceasedsPrimary,
+        xComparisonSection: 'spouse',
+        yComparisonSection: 'deceased',
+        conditionalCase: `${detailsDontExist}`
+      },
+      {
+        config: AddressCases.PRIMARY_ADDRESS,
+        conditionalCase: `((${SPOUSE_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) || (${detailsDontExist}))`
+      } /*,
+      {
+        config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
+        label: formMessageDescriptors.secondaryAddress,
+        conditionalCase: SPOUSE_DETAILS_DONT_EXIST
+      },
+      {
+        config: AddressCases.SECONDARY_ADDRESS,
+        conditionalCase: SPOUSE_DETAILS_DONT_EXIST
       }*/
     ]
   },
