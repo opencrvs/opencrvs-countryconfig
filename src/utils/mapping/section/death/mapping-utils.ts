@@ -86,7 +86,7 @@ export function getSectionMapping(mappingId: string): ISectionMapping {
     case 'spouse':
       return {
         query: {
-          operation: 'getSpouseSectionTransformer'
+          operation: 'emptySpouseSectionTransformer'
         }
       }
     default:
