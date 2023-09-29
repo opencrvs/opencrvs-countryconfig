@@ -61,7 +61,7 @@ services:
     networks:
       - overlay_net
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:7.17.0
+    image: docker.elastic.co/beats/metricbeat:7.17.13
 
     user: root
     volumes:
@@ -357,8 +357,12 @@ services:
   elastalert:
     image: jertel/elastalert2:2.3.0
     restart: unless-stopped
+    environment:
+      - ES_USERNAME=elastic
+      - ES_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
     volumes:
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/elastalert.yaml:/opt/elastalert/config.yaml'
+      - '/opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml:/opt/elastalert/auth.yaml'
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/rules:/opt/elastalert/rules'
     networks:
       - overlay_net

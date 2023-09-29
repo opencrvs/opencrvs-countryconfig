@@ -132,6 +132,11 @@ export const formMessageDescriptors = {
     description: 'Title of the primary adress ',
     id: 'form.field.label.primaryAddress'
   },
+  spouseSectionName: {
+    defaultMessage: 'Spouse details',
+    description: 'Title of the spouse section',
+    id: 'form.section.deceased.spouse.title'
+  },
   informantSecondaryAddress: {
     defaultMessage: 'Secondary Address',
     description: 'Title for the secondary address fields for the informant',
@@ -382,6 +387,11 @@ export const formMessageDescriptors = {
     description: 'Label for form field: Age of informant',
     id: 'form.field.label.ageOfInformant'
   },
+  ageOfSpouse: {
+    defaultMessage: 'Age of spouse',
+    description: 'Label for form field: Age of spouse',
+    id: 'form.field.label.ageOfSpouse'
+  },
   motherName: {
     defaultMessage: 'Mother',
     description: 'Form section name for Mother',
@@ -396,6 +406,11 @@ export const formMessageDescriptors = {
     defaultMessage: "Mother's details are not available",
     description: "Question to ask the user if they have the mother's details",
     id: 'form.field.label.mothersDetailsExist'
+  },
+  spouseDetailsExist: {
+    defaultMessage: "Spouse's details are not available",
+    description: "Question to ask the user if they have the spouse's details",
+    id: 'form.field.label.spouseDetailsExist'
   },
   ageOfMother: {
     defaultMessage: 'Age of mother',

@@ -85,39 +85,3 @@ export const getPlaceOfBirthFields = (): SerializedFormField[] => [
     )
   }
 ]
-
-export const getDetailsExist = (
-  label: MessageDescriptor,
-  conditionals: Conditional[]
-) =>
-  ({
-    name: 'detailsExist',
-    type: 'CHECKBOX',
-    label,
-    required: true,
-    checkedValue: false,
-    uncheckedValue: true,
-    hideHeader: true,
-    initialValue: true,
-    validator: [],
-    conditionals,
-    mapping: getFieldMapping('detailsExist'),
-    ignoreBottomMargin: true
-  } satisfies SerializedFormField)
-
-export const getReasonNotExisting = (certificateHandlebar: string) =>
-  ({
-    name: 'reasonNotApplying',
-    conditionals: [
-      {
-        action: 'hide',
-        expression: 'values.detailsExist'
-      }
-    ],
-    type: 'TEXT',
-    label: formMessageDescriptors.reasonNA,
-    validator: [],
-    initialValue: '',
-    required: true,
-    mapping: getFieldMapping('reasonNotApplying', certificateHandlebar)
-  } satisfies SerializedFormField)

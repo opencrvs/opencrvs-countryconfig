@@ -14,6 +14,8 @@ import { formMessageDescriptors } from './messages'
 import { SerializedFormField, Conditional, Event } from '../types/types'
 import { genderOptions } from './select-options'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { Validator } from '../types/validators'
+import { MessageDescriptor } from 'react-intl'
 
 export const getBirthDate = (
   fieldName: string,
@@ -136,4 +138,57 @@ export const otherInformantType = (event: Event) =>
       }
     ],
     mapping: getFieldMapping('otherInformantType')
+  } satisfies SerializedFormField)
+
+export const getNationalID = (
+  fieldName: string,
+  conditionals: Conditional[],
+  validator: Validator[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: fieldName,
+    type: 'TEXT',
+    label: formMessageDescriptors.iDTypeNationalID,
+    required: true,
+    initialValue: '',
+    validator,
+    conditionals,
+    mapping: getFieldMapping('nationalId', certificateHandlebar)
+  } satisfies SerializedFormField)
+
+export const getDetailsExist = (
+  label: MessageDescriptor,
+  conditionals: Conditional[]
+) =>
+  ({
+    name: 'detailsExist',
+    type: 'CHECKBOX',
+    label,
+    required: true,
+    checkedValue: false,
+    uncheckedValue: true,
+    hideHeader: true,
+    initialValue: true,
+    validator: [],
+    conditionals,
+    mapping: getFieldMapping('detailsExist'),
+    ignoreBottomMargin: true
+  } satisfies SerializedFormField)
+
+export const getReasonNotExisting = (certificateHandlebar: string) =>
+  ({
+    name: 'reasonNotApplying',
+    conditionals: [
+      {
+        action: 'hide',
+        expression: 'values.detailsExist'
+      }
+    ],
+    type: 'TEXT',
+    label: formMessageDescriptors.reasonNA,
+    validator: [],
+    initialValue: '',
+    required: true,
+    mapping: getFieldMapping('reasonNotApplying', certificateHandlebar)
   } satisfies SerializedFormField)
