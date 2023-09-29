@@ -19,7 +19,8 @@
     "start:prod": "ts-node --transpile-only -r tsconfig-paths/register src/index.ts",
     "compose:push:version": "export COUNTRY_CONFIG_VERSION=`git log -1 --pretty=format:%h` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION",
     "compose:push:release": "export COUNTRY_CONFIG_VERSION=`git describe --tags --abbrev=0` && bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION",
-    "deploy": "bash infrastructure/deploy.sh"
+    "deploy": "bash infrastructure/deploy.sh",
+    "validate-translations": "ts-node src/validate-translations.ts"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
@@ -70,7 +71,6 @@
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.117",
     "@types/mime-types": "^2.1.0",
-    "@types/mongoose": "^5.0.16",
     "@types/node": "^10.12.5",
     "@types/node-fetch": "^2.6.2",
     "@types/pino": "^5.14.0",
@@ -94,7 +94,7 @@
     "joi": "^17.4.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.21",
-    "mongoose": "^5.13.20",
+    "mongoose": "6.11.3",
     "node-fetch": "^2.6.1",
     "opener": "^1.5.1",
     "p-queue": "^6.6.2",
