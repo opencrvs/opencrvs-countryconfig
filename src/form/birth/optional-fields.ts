@@ -13,7 +13,6 @@ import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-util
 import { formMessageDescriptors } from '../common/messages'
 import {
   attendantAtBirthOptions,
-  educationalAttainmentOptions,
   typeOfBirthOptions
 } from '../common/select-options'
 import { SerializedFormField } from '../types/types'
@@ -102,45 +101,3 @@ export const multipleBirth: SerializedFormField = {
   ),
   inputFieldWidth: '64px'
 }
-
-export const getOccupation = (
-  certificateHandlebar: string
-): SerializedFormField => ({
-  name: 'occupation',
-  type: 'TEXT',
-  label: {
-    defaultMessage: 'Occupation',
-    description: 'text for occupation form field',
-    id: 'form.field.label.occupation'
-  },
-  required: false,
-  initialValue: '',
-  validator: [],
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!values.detailsExist'
-    }
-  ],
-  mapping: getFieldMapping('occupation', certificateHandlebar)
-})
-
-export const getEducation = (
-  certificateHandlebar: string
-): SerializedFormField => ({
-  name: 'educationalAttainment',
-  type: 'SELECT_WITH_OPTIONS',
-  label: formMessageDescriptors.educationAttainment,
-  required: false,
-  initialValue: '',
-  validator: [],
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!values.detailsExist'
-    }
-  ],
-  placeholder: formMessageDescriptors.formSelectPlaceholder,
-  options: educationalAttainmentOptions,
-  mapping: getFieldMapping('educationalAttainment', certificateHandlebar)
-})

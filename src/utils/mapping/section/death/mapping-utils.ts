@@ -71,6 +71,24 @@ export function getSectionMapping(mappingId: string): ISectionMapping {
           operation: 'getDeathRegistrationSectionTransformer'
         }
       }
+    case 'mother':
+      return {
+        query: {
+          operation: 'emptyMotherSectionTransformer'
+        }
+      }
+    case 'father':
+      return {
+        query: {
+          operation: 'emptyFatherSectionTransformer'
+        }
+      }
+    case 'spouse':
+      return {
+        query: {
+          operation: 'emptySpouseSectionTransformer'
+        }
+      }
     default:
       throw Error(`Mapping not supported for ${mappingId}`)
   }

@@ -12,11 +12,7 @@
 
 import { Event, ISerializedForm } from '../types/types'
 import { formMessageDescriptors } from '../common/messages'
-import {
-  getDetailsExist,
-  getReasonNotExisting,
-  informantType
-} from './required-fields'
+import { informantType } from './required-fields'
 import {
   getBirthDate,
   getGender,
@@ -24,7 +20,9 @@ import {
   getFirstNameField,
   getNationality,
   otherInformantType,
-  getNationalID
+  getNationalID,
+  getDetailsExist,
+  getReasonNotExisting
 } from '../common/common-required-fields'
 import {
   exactDateOfBirthUnknown,
@@ -32,13 +30,13 @@ import {
   getMaritalStatus,
   registrationEmail,
   registrationPhone,
+  getEducation,
+  getOccupation,
   divider
 } from '../common/common-optional-fields'
 import {
   attendantAtBirth,
   birthType,
-  getEducation,
-  getOccupation,
   multipleBirth,
   weightAtBirth
 } from './optional-fields'

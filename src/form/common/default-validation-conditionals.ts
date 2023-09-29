@@ -121,6 +121,17 @@ export const mothersDetailsExistConditionals = [
   }
 ]
 
+export const spouseDetailsExistConditionals = [
+  {
+    action: 'hide',
+    expression: 'draftData?.informant?.informantType==="SPOUSE"'
+  },
+  {
+    action: 'hideInPreview',
+    expression: 'values.detailsExist'
+  }
+]
+
 export const fathersDetailsExistConditionals = [
   {
     action: 'hide',
@@ -353,6 +364,21 @@ export const informantBirthDateConditionals = [
   }
 ]
 
+export const spouseBirthDateConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'hide',
+    expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.spouse?.fieldsModifiedByNidUserInfo?.includes('spouseBirthDate')`
+  }
+]
+
 export const informantFirstNameConditionals = [
   {
     action: 'disable',
@@ -367,17 +393,41 @@ export const informantFamilyNameConditionals = [
   }
 ]
 
+export const spouseFirstNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.spouse?.fieldsModifiedByNidUserInfo?.includes('firstNamesEng')`
+  }
+]
+
+export const spouseFamilyNameConditionals = [
+  {
+    action: 'hide',
+    expression: '!values.detailsExist'
+  },
+  {
+    action: 'disable',
+    expression: `draftData?.spouse?.fieldsModifiedByNidUserInfo?.includes('familyNameEng')`
+  }
+]
+
 export const FATHER_DETAILS_DONT_EXIST =
   '(draftData?.father && !draftData?.father.detailsExist) || !values.detailsExist'
 export const MOTHER_DETAILS_DONT_EXIST =
   '(draftData?.mother && !draftData?.mother.detailsExist) || !values.detailsExist'
+export const SPOUSE_DETAILS_DONT_EXIST =
+  '(draftData?.spouse && !draftData?.spouse.detailsExist) || !values.detailsExist'
 
 // if mothers details do not exist on other page
 export const mothersDetailsDontExistOnOtherPage =
   'draftData && draftData.mother && !draftData.mother.detailsExist'
 
 // if fathers details do not exist
-export const fathersDetailsDontExist = '!values.detailsExist'
+export const detailsDontExist = '!values.detailsExist'
 
 // primary address same as other primary
 export const primaryAddressSameAsOtherPrimaryAddress =
