@@ -111,6 +111,17 @@ export const fatherNameInEnglish: IPreviewGroup = {
   delimiter: ' '
 }
 
+export const spouseNameInEnglish: IPreviewGroup = {
+  id: 'spouseNameInEnglish',
+  label: {
+    defaultMessage: 'Full name',
+    description: "Group label for spouse's name in english",
+    id: 'form.preview.group.label.spouse.english.name'
+  },
+  fieldToRedirect: 'familyNameEng',
+  delimiter: ' '
+}
+
 export function getPreviewGroups(
   configuration: AllowedAddressConfigurations
 ): IPreviewGroup[] {

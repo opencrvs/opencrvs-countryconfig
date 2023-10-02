@@ -27,7 +27,8 @@
     "data-generator:generate-types": "graphql-codegen --config codegen.yml && yarn prettier --write src/data-generator/gateway.ts",
     "deploy": "bash infrastructure/deploy.sh",
     "restore-snapshot": "bash infrastructure/restore-snapshot.sh",
-    "snapshot": "bash infrastructure/emergency-backup-metadata.sh"
+    "snapshot": "bash infrastructure/emergency-backup-metadata.sh",
+    "validate-translations": "ts-node src/validate-translations.ts"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
