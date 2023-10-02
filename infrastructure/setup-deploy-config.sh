@@ -20,14 +20,18 @@ sed -i "s/{{hostname}}/$1/g" /opt/opencrvs/docker-compose.deploy.yml
 # Setup an encryption key for Kibana
 KIBANA_ENCRYPTION_KEY=`uuidgen`
 sed -i "s/{{KIBANA_ENCRYPTION_KEY}}/$KIBANA_ENCRYPTION_KEY/g" /opt/opencrvs/infrastructure/monitoring/kibana/kibana.yml
-sed -i -e "s%{{SMTP_HOST}}%$SMTP_HOST%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/alert.yaml
-sed -i -e "s%{{SMTP_PORT}}%$SMTP_PORT%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/alert.yaml
-sed -i -e "s%{{ALERT_EMAIL}}%$ALERT_EMAIL%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/alert.yaml
-sed -i -e "s%{{SMTP_USERNAME}}%$SMTP_USERNAME%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/auth.yaml
-sed -i -e "s%{{SMTP_PASSWORD}}%$SMTP_PASSWORD%" /opt/opencrvs/infrastructure/monitoring/elastalert/rules/auth.yaml
+
+# Replace environment variables from all alert definition files
+for file in /opt/opencrvs/infrastructure/monitoring/elastalert/rules/*.yaml; do
+    sed -i -e "s%{{HOST}}%$1%" $file
+    sed -i -e "s%{{SMTP_HOST}}%$SMTP_HOST%" $file
+    sed -i -e "s%{{SMTP_PORT}}%$SMTP_PORT%" $file
+    sed -i -e "s%{{ALERT_EMAIL}}%$ALERT_EMAIL%" $file
+done
+sed -i -e "s%{{SMTP_USERNAME}}%$SMTP_USERNAME%" /opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml
+sed -i -e "s%{{SMTP_PASSWORD}}%$SMTP_PASSWORD%" /opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml
 sed -i -e "s%{{MINIO_ROOT_USER}}%$MINIO_ROOT_USER%" /opt/opencrvs/infrastructure/mc-config/config.json
 sed -i -e "s%{{MINIO_ROOT_PASSWORD}}%$MINIO_ROOT_PASSWORD%" /opt/opencrvs/infrastructure/mc-config/config.json
-
 
 echo "DONE - `date --iso-8601=ns`"
 echo

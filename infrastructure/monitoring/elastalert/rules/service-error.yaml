@@ -7,9 +7,9 @@
 #
 # Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
 # graphic logo are (registered/a) trademark(s) of Plan International.
-name: 'alert'
+name: 'service alert'
 type: 'frequency'
-index: 'kibana-alert-history-default'
+index: 'kibana-alert-history-services'
 is_enabled: true
 num_events: 1
 realert:
@@ -22,13 +22,14 @@ timestamp_type: 'iso'
 use_strftime_index: false
 # https://github.com/Yelp/elastalert/issues/1260
 raw_count_keys: false
-alert_subject: '{{HOST}} {}: {} 🚨'
+alert_subject: '{{HOST}} {}: {} {} 🚨'
 alert_subject_args:
-  - 'kibana.alert.context.metrics__alert__inventory__threshold.alertState'
+  - 'event.kind'
   - 'rule.name'
-alert_text: 'Reason: {}. Login to https://kibana.{{HOST}} to view the alert.'
+  - 'kibana.alert.context.apm__error_rate.serviceName'
+alert_text: 'Login to https://kibana.{{HOST}}/app/apm/services/{}/overview to view the alert.'
 alert_text_args:
-  - 'kibana.alert.context.metrics__alert__inventory__threshold.reason'
+  - 'kibana.alert.context.apm__error_rate.serviceName'
 filter:
   - query:
       query_string:

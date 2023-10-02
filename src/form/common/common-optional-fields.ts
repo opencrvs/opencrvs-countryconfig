@@ -12,8 +12,10 @@
 import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from './messages'
 import { SerializedFormField, Conditional } from '../types/types'
-import { Validator } from '../types/validators'
-import { maritalStatusOptions } from './select-options'
+import {
+  educationalAttainmentOptions,
+  maritalStatusOptions
+} from './select-options'
 import { certificateHandlebars } from '../birth/certificate-handlebars'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 
@@ -49,23 +51,6 @@ export const exactDateOfBirthUnknown = (
     }
   }
 })
-
-export const getNationalID = (
-  fieldName: string,
-  conditionals: Conditional[],
-  validator: Validator[],
-  certificateHandlebar: string
-) =>
-  ({
-    name: fieldName,
-    type: 'TEXT',
-    label: formMessageDescriptors.iDTypeNationalID,
-    required: false,
-    initialValue: '',
-    validator,
-    conditionals,
-    mapping: getFieldMapping('nationalId', certificateHandlebar)
-  } satisfies SerializedFormField)
 
 export const getAgeOfIndividualInYears = (
   label: MessageDescriptor,
@@ -185,4 +170,45 @@ export const getNIDVerificationButton = (
   labelForVerified: formMessageDescriptors.nidVerified,
   labelForUnverified: formMessageDescriptors.nidNotVerified,
   labelForOffline: formMessageDescriptors.nidOffline
+})
+export const getOccupation = (
+  certificateHandlebar: string
+): SerializedFormField => ({
+  name: 'occupation',
+  type: 'TEXT',
+  label: {
+    defaultMessage: 'Occupation',
+    description: 'text for occupation form field',
+    id: 'form.field.label.occupation'
+  },
+  required: false,
+  initialValue: '',
+  validator: [],
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!values.detailsExist'
+    }
+  ],
+  mapping: getFieldMapping('occupation', certificateHandlebar)
+})
+
+export const getEducation = (
+  certificateHandlebar: string
+): SerializedFormField => ({
+  name: 'educationalAttainment',
+  type: 'SELECT_WITH_OPTIONS',
+  label: formMessageDescriptors.educationAttainment,
+  required: false,
+  initialValue: '',
+  validator: [],
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!values.detailsExist'
+    }
+  ],
+  placeholder: formMessageDescriptors.formSelectPlaceholder,
+  options: educationalAttainmentOptions,
+  mapping: getFieldMapping('educationalAttainment', certificateHandlebar)
 })
