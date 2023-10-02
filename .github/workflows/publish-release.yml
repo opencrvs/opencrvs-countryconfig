@@ -20,8 +20,8 @@ jobs:
           secret: ${{ github.TOKEN }}
           approvers: euanmillar
           minimum-approvals: 1
-          issue-title: "Pushing release: ${{ github.event.inputs.branch_name }} to OpenCRVS"
-          issue-body: "Please approve or deny the publishing of release ${{ github.event.inputs.branch_name }}"
+          issue-title: "Release: ${{ github.event.inputs.release_version }}"
+          issue-body: "Please approve or deny the publishing of release: ${{ github.event.inputs.release_version }} to Dockerhub"
           exclude-workflow-initiator-as-approver: false
       - uses: actions/checkout@v2
         if: github.event_name == 'workflow_dispatch'
