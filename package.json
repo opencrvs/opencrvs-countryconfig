@@ -28,6 +28,7 @@
     "deploy": "bash infrastructure/deploy.sh",
     "restore-snapshot": "bash infrastructure/restore-snapshot.sh",
     "snapshot": "bash infrastructure/emergency-backup-metadata.sh",
+    "port-forward": "bash infrastructure/port-forward.sh",
     "validate-translations": "ts-node src/validate-translations.ts"
   },
   "devDependencies": {
