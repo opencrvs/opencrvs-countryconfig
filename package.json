@@ -26,6 +26,7 @@
     "data-generator": "ts-node -r tsconfig-paths/register -T src/data-generator/index.ts",
     "data-generator:generate-types": "graphql-codegen --config codegen.yml && yarn prettier --write src/data-generator/gateway.ts",
     "deploy": "bash infrastructure/deploy.sh",
+    "port-forward": "bash infrastructure/port-forward.sh",
     "validate-translations": "ts-node src/validate-translations.ts"
   },
   "devDependencies": {
