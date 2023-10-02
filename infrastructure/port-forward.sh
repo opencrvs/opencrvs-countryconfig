@@ -36,8 +36,3 @@ ssh -tL $LOCAL_PORT:localhost:$SOCAT_PORT root@$TARGET_SERVER \
 'docker run --rm --name '$CONTAINER_NAME' --network=opencrvs_overlay_net --publish '$SOCAT_PORT:$SOCAT_PORT' alpine/socat tcp-listen:'$SOCAT_PORT',fork,reuseaddr tcp-connect:'$TARGET_CONTAINER_NAME:$PORT''
 
 echo -e "${GREEN}Port forwarding established and tunnel is online! Press Ctrl+C to close.${NC}"
-
-# Keep the script running so that the trap can catch the Ctrl+C
-while true; do
-  sleep 1
-done
