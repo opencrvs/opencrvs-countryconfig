@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
 
-import { COUNTRY_CONFIG_HOST, GATEWAY_GQL_HOST } from './constants'
+import { COUNTRY_CONFIG_HOST, GATEWAY_HOST } from './constants'
 import { GetTotalMetricsQuery } from './gateway'
 
 type StatisticUrls =
@@ -46,7 +46,6 @@ export const TOTAL_METRICS = print(gql`
         maleEstimation
         femaleEstimation
         locationId
-        estimationYear
         locationLevel
         __typename
       }
@@ -70,7 +69,7 @@ export async function getLocationMetrics(
   locationId: string,
   type: 'BIRTH' | 'DEATH'
 ) {
-  const res = await fetch(GATEWAY_GQL_HOST, {
+  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
     headers: {
       authorization: `Bearer ${token}`,
       'content-type': 'application/json'

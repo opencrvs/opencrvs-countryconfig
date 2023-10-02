@@ -1,13 +1,16 @@
 import faker from '@faker-js/faker'
 import { log } from './util'
 import { Facility, getFacilities, Location } from './location'
-
 import fetch from 'node-fetch'
 import { getToken, getTokenForSystemClient } from './auth'
-import { GATEWAY_GQL_HOST } from './constants'
+import { GATEWAY_HOST } from './constants'
 import { expand } from 'regex-to-strings'
-import { convertToMSISDN } from '@countryconfig/features/utils'
-import { FIELD_AGENT_TYPES } from '@countryconfig/features/employees/scripts/utils'
+import { convertToMSISDN } from '@countryconfig/utils'
+import { readFileSync } from 'fs'
+import { join } from 'path'
+import { MutationCreateOrUpdateUserArgs } from './gateway'
+import { getSystemRolesQuery } from '@countryconfig/data-generator/queries'
+import { SystemRole as GQLSystemRole } from '@countryconfig/data-generator/gateway'
 
 export type User = {
   username: string
@@ -25,7 +28,7 @@ type Config = {
   localRegistrars: number
 }
 
-enum Role {
+enum SystemRole {
   NationalSystemAdmin = 'NATIONAL_SYSTEM_ADMIN',
   FieldAgent = 'FIELD_AGENT',
   LocalRegistrar = 'LOCAL_REGISTRAR',
@@ -41,7 +44,35 @@ interface ISystemInfo {
   shaSecret: string
 }
 
-const nationalSystemAdmin: User[]  = []
+const nationalSystemAdmin: User[] = []
+
+const SIGNATURE = readFileSync(
+  join(__dirname, 'assets', '528KB-random.png')
+).toString('base64')
+
+export async function getAgentRoles(token: string): Promise<GQLSystemRole[]> {
+  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      query: getSystemRolesQuery,
+      variables: {
+        active: true
+      }
+    })
+  })
+
+  if (!res.ok) {
+    throw new Error(
+      `Could not fetch agent roles, ${res.statusText} ${res.status}`
+    )
+  }
+  const roles = await res.json()
+  return roles.data.getSystemRoles
+}
 
 export async function createUser(
   token: string,
@@ -58,7 +89,7 @@ export async function createUser(
   const generatedPhoneNumber = phoneNumberExpander.getIterator().next().value
   countryAlpha3 = countryAlpha3.toUpperCase() === 'FAR' ? 'ZMB' : countryAlpha3
 
-  const user = {
+  const user: Partial<MutationCreateOrUpdateUserArgs['user']> = {
     name: [
       {
         use: 'en',
@@ -77,12 +108,22 @@ export async function createUser(
     username:
       firstName.toLocaleLowerCase() + '.' + familyName.toLocaleLowerCase(),
     mobile: convertToMSISDN(generatedPhoneNumber, countryAlpha3),
-    email: faker.internet.email(),
+    email: faker.internet.email(undefined, undefined, 'example.com'),
     primaryOffice: primaryOfficeId,
     ...overrides
   }
 
-  const createUserRes = await fetch(GATEWAY_GQL_HOST, {
+  if (
+    overrides?.systemRole === SystemRole.LocalRegistrar ||
+    overrides?.systemRole === SystemRole.RegistrationAgent
+  ) {
+    user.signature = {
+      data: 'data:image/png;base64,' + SIGNATURE,
+      type: 'image/png'
+    }
+  }
+
+  const createUserRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -108,9 +149,10 @@ export async function createUser(
   const { data } = resp as {
     data: { createOrUpdateUser: { username: string; id: string } }
   }
+
   const userToken = await getToken(data.createOrUpdateUser.username, 'test')
 
-  const res = await fetch(GATEWAY_GQL_HOST, {
+  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -146,7 +188,7 @@ export async function createUser(
 }
 
 export async function getUsers(token: string, locationId: string) {
-  const getUsersRes = await fetch(GATEWAY_GQL_HOST, {
+  const getUsersRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -169,7 +211,7 @@ export async function getUsers(token: string, locationId: string) {
                 id
               }
               username
-              role
+              systemRole
             }
           }
         }
@@ -182,8 +224,8 @@ export async function getUsers(token: string, locationId: string) {
       searchUsers: {
         results: Array<{
           username: string
-          role: Role
-          type: string
+          systemRole: SystemRole
+          role: string
           primaryOffice: { id: string }
         }>
       }
@@ -193,8 +235,8 @@ export async function getUsers(token: string, locationId: string) {
   return res.data.searchUsers.results
 }
 
-export async function getUserByRole(token: string, role: string) {
-  const getUsersRes = await fetch(GATEWAY_GQL_HOST, {
+export async function getUserByRole(token: string, systemRole: string) {
+  const getUsersRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -204,12 +246,12 @@ export async function getUserByRole(token: string, role: string) {
     body: JSON.stringify({
       operationName: null,
       variables: {
-        role: role,
+        systemRole,
         count: 100
       },
       query: `
-        query ($count: Int, $skip: Int, $role: String) {
-          searchUsers(count: $count, skip: $skip, role: $role) {
+        query ($count: Int, $skip: Int, $systemRole: String) {
+          searchUsers(count: $count, skip: $skip, systemRole: $systemRole) {
             totalItems
             results {
               id
@@ -217,7 +259,7 @@ export async function getUserByRole(token: string, role: string) {
                 id
               }
               username
-              role
+              systemRole
             }
           }
         }
@@ -230,8 +272,8 @@ export async function getUserByRole(token: string, role: string) {
       searchUsers: {
         results: Array<{
           username: string
-          role: Role
-          type: string
+          systemRole: SystemRole
+          role: string
           primaryOffice: { id: string }
         }>
       }
@@ -241,12 +283,16 @@ export async function getUserByRole(token: string, role: string) {
   return res.data.searchUsers.results
 }
 
-const registerSystemClient = async(name: string, type:string, token: string) => {
-  const createUserRes =  await fetch(GATEWAY_GQL_HOST, {
+const registerSystemClient = async (
+  name: string,
+  type: string,
+  token: string
+) => {
+  const createUserRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
       query: `
@@ -254,44 +300,40 @@ const registerSystemClient = async(name: string, type:string, token: string) => 
         registerSystem(system: $system) {
           clientSecret
           system {
-            _id
             clientId
-            name
             shaSecret
-            status
-            type
-            settings {
-              event
-              permissions
-            }
           }
         }
       }
     `,
-      variables: {system :{ name, type } }
+      variables: { system: { name, type } }
     })
   })
 
-  
   return await createUserRes.json()
 }
 
 export async function createSystemClient(
   officeId: string,
+  systemClientName: string,
   scope:
     | 'HEALTH'
     | 'NATIONAL_ID'
     | 'EXTERNAL_VALIDATION'
     | 'AGE_CHECK'
     | 'RECORD_SEARCH',
-    natlSystemAdmin: User
+  natlSystemAdmin: User
 ): Promise<User> {
-  const credentialsRes = await registerSystemClient(faker.word.noun(5), scope, natlSystemAdmin.token)
+  const credentialsRes = await registerSystemClient(
+    systemClientName,
+    scope,
+    natlSystemAdmin.token
+  )
   const credentials: {
-    system : ISystemInfo
+    system: ISystemInfo
     clientSecret: string
   } = credentialsRes.data.registerSystem
-  
+
   const systemToken = await getTokenForSystemClient(
     credentials.system.clientId,
     credentials.clientSecret
@@ -320,7 +362,7 @@ export async function createUsers(
 
   const fieldAgents: User[] = await Promise.all(
     existingUsers
-      .filter(({ role }) => role === 'FIELD_AGENT')
+      .filter(({ systemRole }) => systemRole === 'FIELD_AGENT')
       .map(async (user) => ({
         username: user.username,
         password: 'test',
@@ -332,7 +374,7 @@ export async function createUsers(
   )
   const registrationAgents: User[] = await Promise.all(
     existingUsers
-      .filter(({ role }) => role === 'REGISTRATION_AGENT')
+      .filter(({ systemRole }) => systemRole === 'REGISTRATION_AGENT')
       .map(async (user) => ({
         username: user.username,
         password: 'test',
@@ -344,7 +386,7 @@ export async function createUsers(
   )
   const registrars: User[] = await Promise.all(
     existingUsers
-      .filter(({ role }) => role === 'LOCAL_REGISTRAR')
+      .filter(({ systemRole }) => systemRole === 'LOCAL_REGISTRAR')
       .map(async (user) => ({
         username: user.username,
         password: 'test',
@@ -355,53 +397,74 @@ export async function createUsers(
       }))
   )
 
-  if(!nationalSystemAdmin.length){
+  if (!nationalSystemAdmin.length) {
     const natlUserRes = await getUserByRole(token, 'NATIONAL_SYSTEM_ADMIN')
-    const mappedNatlUserRes =  await Promise.all(natlUserRes.map(async (user) => {
-      return {
-        username: user.username,
-        password: 'test',
-        token: await getToken(user.username, 'test'),
-        stillInUse: true,
-        primaryOfficeId: user.primaryOffice.id,
-        isSystemUser: false
-      }
-    }))
+    const mappedNatlUserRes = await Promise.all(
+      natlUserRes
+        .filter(({ username }) => username !== 'o.admin')
+        .map(async (user) => {
+          return {
+            username: user.username,
+            password: 'test',
+            token: await getToken(user.username, 'test'),
+            stillInUse: true,
+            primaryOfficeId: user.primaryOffice.id,
+            isSystemUser: false
+          }
+        })
+    )
     nationalSystemAdmin.push(mappedNatlUserRes[0])
   }
 
-
   // These cannot be fetched through gateway, so we'll always have to regenerate them
   const hospitals: User[] = []
-  
-  const crvsOffices = (await getFacilities(token))
+
+  const facilities = await getFacilities(token)
+
+  const crvsOffices = facilities
     .filter(({ type }: Facility) => type === 'CRVS_OFFICE')
+    .filter(({ partOf }: Facility) => partOf === 'Location/' + location.id)
+
+  const healthFacilities = facilities
+    .filter(({ type }: Facility) => type === 'HEALTH_FACILITY')
     .filter(({ partOf }: Facility) => partOf === 'Location/' + location.id)
 
   if (crvsOffices.length === 0) {
     throw new Error(`Cannot find any CRVS offices for ${location.name}`)
   }
+
+  const userRoles = (await getAgentRoles(token))?.reduce(
+    (rolesObj, userRole) => {
+      return {
+        ...rolesObj,
+        [userRole.value]: userRole.roles.map((role) => role._id)
+      }
+    },
+    {}
+  ) as Record<string, string[]>
+
+  const FIELD_AGENT_ROLES = userRoles.FIELD_AGENT
   const randomOffice =
     crvsOffices[Math.floor(Math.random() * crvsOffices.length)]
-  const randomFieldAgentType =
-    FIELD_AGENT_TYPES[Math.floor(Math.random() * FIELD_AGENT_TYPES.length)]
   log('Creating field agents')
   for (let i = fieldAgents.length; i < config.fieldAgents; i++) {
+    const randomFieldAgentRole =
+      FIELD_AGENT_ROLES[Math.floor(Math.random() * FIELD_AGENT_ROLES.length)]
     fieldAgents.push(
       await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
-        role: 'FIELD_AGENT',
-        type: randomFieldAgentType
+        systemRole: 'FIELD_AGENT',
+        role: randomFieldAgentRole
       })
     )
   }
+
   log('Field agents created')
-
   log('Creating', config.hospitalFieldAgents, 'hospitals')
-  const natlSystemAdminUser = nationalSystemAdmin[0] 
-
+  const natlSystemAdminUser = nationalSystemAdmin[0]
   for (let i = 0; i < config.hospitalFieldAgents; i++) {
     const user = await createSystemClient(
       randomOffice.id,
+      faker.helpers.arrayElement(healthFacilities).name,
       'HEALTH',
       natlSystemAdminUser
     )
@@ -409,23 +472,34 @@ export async function createUsers(
   }
 
   log('Hospitals created')
+
+  const REGISTRATION_AGENT_ROLES = userRoles.REGISTRATION_AGENT
   log('Creating registration agents')
   for (let i = registrationAgents.length; i < config.registrationAgents; i++) {
+    const randomRegistrationAgentRole =
+      REGISTRATION_AGENT_ROLES[
+        Math.floor(Math.random() * REGISTRATION_AGENT_ROLES.length)
+      ]
     registrationAgents.push(
       await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
-        role: 'REGISTRATION_AGENT',
-        type: ''
+        systemRole: 'REGISTRATION_AGENT',
+        role: randomRegistrationAgentRole
       })
     )
   }
   log('Registration agents created')
-  log('Creating local registrars')
 
+  const LOCAL_REGISTRAR_ROLES = userRoles.LOCAL_REGISTRAR
+  log('Creating local registrars')
   for (let i = registrars.length; i < config.localRegistrars; i++) {
+    const randomLocalRegRole =
+      LOCAL_REGISTRAR_ROLES[
+        Math.floor(Math.random() * LOCAL_REGISTRAR_ROLES.length)
+      ]
     registrars.push(
       await createUser(token, randomOffice.id, countryCode, phoneNumberRegex, {
-        role: 'LOCAL_REGISTRAR',
-        type: ''
+        systemRole: 'LOCAL_REGISTRAR',
+        role: randomLocalRegRole
       })
     )
   }

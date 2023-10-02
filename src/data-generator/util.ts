@@ -45,7 +45,7 @@ export function createConcurrentBuffer(concurrency: number) {
   }
 }
 
-export function nullsToEmptyString(object: object) {
+export function nullsToEmptyString(object: any) {
   for (const key of Object.keys(object)) {
     const value = object[key]
     if (value === null) {

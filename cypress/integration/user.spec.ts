@@ -6,8 +6,7 @@
  * OpenCRVS is also distributed under the terms of the Civil Registration
  * & Healthcare Disclaimer located at http://opencrvs.org/license.
  *
- * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
- * graphic logo are (registered/a) trademark(s) of Plan International.
+ * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 /// <reference types="Cypress" />
 
@@ -27,7 +26,6 @@ context('User Integration Test', () => {
     cy.get('#phoneNumber').type('0711919045')
     //cy.get('#nid').type('199475632')
     cy.selectOption('#role', 'Field Agent', 'Field Agent')
-    cy.selectOption('#type', 'Healthcare Worker', 'Healthcare Worker')
     cy.get('#device').type('Xiamoi MI 8')
     cy.get('#confirm_form').click()
     // PREVIEW
@@ -79,13 +77,13 @@ context('User Integration Test', () => {
     cy.get('#continue').click()
 
     // Phone number verification form appears
-    cy.get('#phone-number-verification-form').should('be.visible')
+    cy.get('#phone-or-email-verification-form').should('be.visible')
     cy.get('#phone-number-input').type('0711919045')
     cy.get('#continue').click()
 
     // Security question form appears
     cy.get('#security-question-form').should('be.visible')
-    cy.get('#question').then($q => {
+    cy.get('#content-name').then($q => {
       const question = $q.text()
       let answer
       if (question === 'What is your favorite food?') {
@@ -118,7 +116,7 @@ context('User Integration Test', () => {
     cy.get('#continue').click()
 
     // Phone number verification form appears
-    cy.get('#phone-number-verification-form').should('be.visible')
+    cy.get('#phone-or-email-verification-form').should('be.visible')
     cy.get('#phone-number-input').type('0711919045')
     cy.get('#continue').click()
 
@@ -128,7 +126,7 @@ context('User Integration Test', () => {
     cy.get('#continue').click()
     // Security question form appears
     cy.get('#security-question-form').should('be.visible')
-    cy.get('#question').then($q => {
+    cy.get('#content-name').then($q => {
       const question = $q.text()
       let answer
       if (question === 'What is your favorite food?') {

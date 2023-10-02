@@ -6,8 +6,7 @@
  * OpenCRVS is also distributed under the terms of the Civil Registration
  * & Healthcare Disclaimer located at http://opencrvs.org/license.
  *
- * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
- * graphic logo are (registered/a) trademark(s) of Plan International.
+ * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 /// <reference types="Cypress" />
 
@@ -32,7 +31,6 @@ context('Team Integration Test', () => {
     cy.get('#familyNameEng').type(testUserLastname)
     cy.get('#phoneNumber').type('0755658545')
     cy.selectOption('#role', 'Field Agent', 'Field Agent')
-    cy.selectOption('#type', 'Healthcare Worker', 'Healthcare Worker')
     cy.get('#device').type('Xiamoi MI 8')
     cy.get('#confirm_form').click()
     // PREVIEW
@@ -96,7 +94,6 @@ context('Team Integration Test', () => {
     cy.login('nsysAdmin')
     cy.createPin()
     cy.get('#navigation_team').click()
-    cy.get('#navigation_team').click()
     cy.get('#location-range-picker-action').click()
     cy.get('#locationSearchInput').type('Ibombo')
     cy.contains('Ibombo').click()
@@ -116,7 +113,6 @@ context('Team Integration Test', () => {
     // LOG IN AS national SYSTEM ADMIN
     cy.login('nsysAdmin')
     cy.createPin()
-    cy.get('#navigation_team').click()
     cy.get('#navigation_team').click()
     cy.get('#location-range-picker-action').click()
     cy.get('#locationSearchInput').type('Ibombo')

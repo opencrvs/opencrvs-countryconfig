@@ -20,29 +20,27 @@ const birthRegistrationFragment = gql`
     informant {
       id
       relationship
-      individual {
+      _fhirIDPatient
+      identifier {
         id
-        identifier {
-          id
-          type
-        }
-        name {
-          use
-          firstNames
-          familyName
-        }
-        occupation
-        nationality
-        birthDate
-        address {
-          type
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
+        type
+      }
+      name {
+        use
+        firstNames
+        familyName
+      }
+      occupation
+      nationality
+      birthDate
+      address {
+        type
+        line
+        district
+        state
+        city
+        postalCode
+        country
       }
     }
     mother {
@@ -113,11 +111,12 @@ const birthRegistrationFragment = gql`
     }
     registration {
       id
-      contact
-      contactRelationship
+      informantType
       contactPhoneNumber
+      contactEmail
       attachments {
         data
+        uri
         type
         contentType
         subject
@@ -151,77 +150,6 @@ const birthRegistrationFragment = gql`
     questionnaire {
       fieldId
       value
-    }
-    history {
-      date
-      action
-      regStatus
-      statusReason {
-        text
-      }
-      location {
-        id
-        name
-      }
-      office {
-        id
-        name
-      }
-      user {
-        id
-        type
-        role
-        name {
-          firstNames
-          familyName
-          use
-        }
-        avatar {
-          data
-          type
-        }
-      }
-      comments {
-        user {
-          id
-          username
-          avatar {
-            data
-            type
-          }
-        }
-        comment
-        createdAt
-      }
-      input {
-        valueCode
-        valueId
-        valueString
-      }
-      output {
-        valueCode
-        valueId
-        valueString
-      }
-      certificates {
-        hasShowedVerifiedDocument
-        collector {
-          relationship
-          otherRelationship
-          individual {
-            name {
-              use
-              firstNames
-              familyName
-            }
-            telecom {
-              system
-              value
-              use
-            }
-          }
-        }
-      }
     }
   }
 `
@@ -261,9 +189,24 @@ export const MARK_BIRTH_AS_CERTIFIED = print(gql`
     markBirthAsCertified(id: $id, details: $details)
   }
 `)
+
 export const MARK_DEATH_AS_CERTIFIED = print(gql`
   mutation markDeathAsCertified($id: ID!, $details: DeathRegistrationInput!) {
     markDeathAsCertified(id: $id, details: $details)
+  }
+`)
+
+export const MARK_BIRTH_AS_ISSUED = print(
+  gql`
+    mutation markBirthAsIssued($id: ID!, $details: BirthRegistrationInput!) {
+      markBirthAsIssued(id: $id, details: $details)
+    }
+  `
+)
+
+export const MARK_DEATH_AS_ISSUED = print(gql`
+  mutation markDeathAsIssued($id: ID!, $details: DeathRegistrationInput!) {
+    markDeathAsIssued(id: $id, details: $details)
   }
 `)
 
@@ -346,33 +289,31 @@ export const FETCH_DEATH_REGISTRATION_QUERY = print(gql`
       informant {
         id
         relationship
-        individual {
+        _fhirIDPatient
+        identifier {
           id
-          identifier {
-            id
-            type
-          }
-          name {
-            use
-            firstNames
-            familyName
-          }
-          nationality
-          occupation
-          birthDate
-          telecom {
-            system
-            value
-          }
-          address {
-            type
-            line
-            district
-            state
-            city
-            postalCode
-            country
-          }
+          type
+        }
+        name {
+          use
+          firstNames
+          familyName
+        }
+        nationality
+        occupation
+        birthDate
+        telecom {
+          system
+          value
+        }
+        address {
+          type
+          line
+          district
+          state
+          city
+          postalCode
+          country
         }
       }
       father {
@@ -398,11 +339,12 @@ export const FETCH_DEATH_REGISTRATION_QUERY = print(gql`
       }
       registration {
         id
-        contact
-        contactRelationship
+        informantType
         contactPhoneNumber
+        contactEmail
         attachments {
           data
+          uri
           type
           contentType
           subject
@@ -434,6 +376,20 @@ export const FETCH_DEATH_REGISTRATION_QUERY = print(gql`
       femaleDependentsOfDeceased
       causeOfDeathEstablished
       causeOfDeathMethod
+    }
+  }
+`)
+
+export const getSystemRolesQuery = print(gql`
+  query getSystemRoles {
+    getSystemRoles(active: true) {
+      value
+      roles {
+        _id
+        labels {
+          label
+        }
+      }
     }
   }
 `)

@@ -15,7 +15,7 @@ import {
 import {
   createBirthCertificationDetails,
   createDeathCertificationDetails,
-  markAsCertified,
+  markBirthAsCertified,
   markDeathAsCertified
 } from './certify'
 
@@ -45,6 +45,15 @@ import PQueue from 'p-queue'
 import { BirthRegistrationInput } from './gateway'
 import { ConfigResponse, getConfig, getCountryAlpha3 } from './config'
 import { markEventAsRejected } from './reject'
+import {
+  createBirthIssuingDetails,
+  createDeathIssuingDetails,
+  markBirthAsIssued,
+  markDeathAsIssued
+} from './issue'
+import { readFileSync } from 'fs'
+import { join } from 'path'
+// import { callVSExportAPIToGenerateDeclarationData } from './vsExport'
 /*
  *
  * Configuration
@@ -72,14 +81,22 @@ const CONCURRENCY = process.env.CONCURRENCY
   ? parseInt(process.env.CONCURRENCY, 10)
   : 3
 
-const START_YEAR = 2021
-const END_YEAR = 2022
+const END_YEAR = process.env.END_YEAR
+  ? parseInt(process.env.END_YEAR, 10)
+  : new Date().getFullYear()
+const START_YEAR = process.env.START_YEAR
+  ? parseInt(process.env.START_YEAR, 10)
+  : END_YEAR - 2
 
 const REGISTER = process.env.REGISTER !== 'false'
 const CERTIFY = process.env.CERTIFY !== 'false'
 
 const BIRTH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.8
 const DEATH_OVERALL_REGISTRATIONS_COMPARED_TO_ESTIMATE = 0.4
+
+const ATTACHMENT = readFileSync(join(__dirname, 'assets', '528KB-random.png'), {
+  encoding: 'base64'
+})
 
 const today = new Date()
 const currentYear = today.getFullYear()
@@ -156,84 +173,87 @@ async function main() {
 
   log('Got token for system administrator')
   log('Fetching locations')
-  const locations =  await getLocations(localSYSAdminToken)
+  const locations = await getLocations(localSYSAdminToken)
   const facilities = await getFacilities(localSYSAdminToken)
-  const crvsOffices = facilities.filter(({ type }: Location) => type === 'CRVS_OFFICE')
-  
+  const crvsOffices = facilities.filter(
+    ({ type }: Location) => type === 'CRVS_OFFICE'
+  )
+
   const healthFacilities = facilities.filter(
     ({ type }: Facility) => type === 'HEALTH_FACILITY'
   )
-  
+
   log('Found', locations.length, 'locations')
 
   /*
    *
-   * Loop through all locations
+   * Loop through years (END_YEAR -> START_YEAR)
    *
    */
 
-  for (const location of locations) {
-    log('Fetching already generated interval')
-    const generatedInterval = await fetchAlreadyGeneratedInterval(
-      registrarToken,
-      location.id
-    )
+  for (let y = END_YEAR; y >= START_YEAR; y--) {
+    log('Generating data for year', y)
+    /*
+     *
+     * Loop through all locations
+     *
+     */
 
-    if (generatedInterval.length === 0) {
-      log('No events have been generated for this location')
-    } else {
-      log(
-        'Events already exist for this location between',
-        generatedInterval[0],
-        '-',
-        generatedInterval[1]
+    for (const location of locations) {
+      log('Fetching already generated interval')
+      const generatedInterval = await fetchAlreadyGeneratedInterval(
+        registrarToken,
+        location.id
       )
-    }
 
-    /*
-     *
-     * Create required users & authorization tokens
-     *
-     */
-    log('Creating users for', location.name, '(', location.id, ')')
-
-    const users = await createUsers(
-      localSYSAdminToken,
-      location,
-      countryAlpha3,
-      config.config.PHONE_NUMBER_PATTERN,
-      {
-        fieldAgents: FIELD_AGENTS,
-        hospitalFieldAgents: HOSPITAL_FIELD_AGENTS,
-        registrationAgents: REGISTRATION_AGENTS,
-        localRegistrars: LOCAL_REGISTRARS
+      if (generatedInterval.length === 0) {
+        log('No events have been generated for this location')
+      } else {
+        log(
+          'Events already exist for this location between',
+          generatedInterval[0],
+          '-',
+          generatedInterval[1]
+        )
       }
-    )
-    const allUsers = [
-      ...users.fieldAgents,
-      ...users.hospitals,
-      ...users.registrationAgents,
-      ...users.registrars
-    ]
 
-    // User tokens expire after 20 minutes, so we need to
-    // keep on refreshing them as long as the user is in use
-    keepTokensValid(allUsers)
+      /*
+       *
+       * Create required users & authorization tokens
+       *
+       */
+      log('Creating users for', location.name, '(', location.id, ')')
 
-    const deathDeclarers = [...users.fieldAgents, ...users.registrationAgents]
-    const birthDeclararers = [
-      ...users.fieldAgents,
-      ...users.hospitals,
-      ...users.registrationAgents
-    ]
+      const users = await createUsers(
+        localSYSAdminToken,
+        location,
+        countryAlpha3,
+        config.config.PHONE_NUMBER_PATTERN,
+        {
+          fieldAgents: FIELD_AGENTS,
+          hospitalFieldAgents: HOSPITAL_FIELD_AGENTS,
+          registrationAgents: REGISTRATION_AGENTS,
+          localRegistrars: LOCAL_REGISTRARS
+        }
+      )
+      const allUsers = [
+        ...users.fieldAgents,
+        ...users.hospitals,
+        ...users.registrationAgents,
+        ...users.registrars
+      ]
 
-    /*
-     *
-     * Loop through years (END_YEAR -> START_YEAR)
-     *
-     */
+      // User tokens expire after 20 minutes, so we need to
+      // keep on refreshing them as long as the user is in use
+      keepTokensValid(allUsers)
 
-    for (let y = END_YEAR; y >= START_YEAR; y--) {
+      const deathDeclarers = [...users.fieldAgents, ...users.registrationAgents]
+      const birthDeclararers = [
+        ...users.fieldAgents,
+        ...users.hospitals,
+        ...users.registrationAgents
+      ]
+
       const isCurrentYear = y === currentYear
 
       const randomRegistrar =
@@ -287,6 +307,7 @@ async function main() {
         female: femalesPerDay.reduce((a, x) => a + x),
         death: deathsPerDay.reduce((a, x) => a + x)
       })
+
       /*
        *
        * Loop through days in the year (last day of the year -> start of the year)
@@ -323,6 +344,7 @@ async function main() {
           deathsToday
         )
 
+        // Create death declarations
         const operations = []
         for (let ix = 0; ix < deathsToday; ix++) {
           const completionDays = getRandomFromBrackets(
@@ -390,6 +412,8 @@ async function main() {
           )
         }
         await queue.addAll(operations)
+        // Doesnt work because the API isnt exposed in deployed environments: https://github.com/opencrvs/opencrvs-core/issues/4761
+        // await callVSExportAPIToGenerateDeclarationData(submissionDate)
       }
 
       /*
@@ -435,7 +459,7 @@ async function main() {
               }
             })
             return acc
-          }, {})
+          }, {} as Record<number, number>)
       })
 
       for (let ix = 0; ix < delta; ix++) {
@@ -493,7 +517,7 @@ async function main() {
               }
             })
             return acc
-          }, {})
+          }, {} as Record<number, number>)
       })
 
       for (let ix = 0; ix < deathDelta; ix++) {
@@ -523,11 +547,11 @@ async function main() {
         )
       }
       await queue.addAll(operations)
-    }
 
-    allUsers.forEach((user) => {
-      user.stillInUse = false
-    })
+      allUsers.forEach((user) => {
+        user.stillInUse = false
+      })
+    }
   }
 
   process.exit(0)
@@ -667,7 +691,8 @@ function birthDeclarationWorkflow(
           birthDate,
           submissionTime,
           location,
-          randomFacility
+          randomFacility,
+          ATTACHMENT
         )
       }
 
@@ -726,10 +751,25 @@ function birthDeclarationWorkflow(
           // Wait for few seconds so registration gets updated to elasticsearch before certifying
           await wait(2000)
           log('Certifying', id)
-          await markAsCertified(
+          await markBirthAsCertified(
             registration.id,
             randomRegistrar,
             createBirthCertificationDetails(
+              add(new Date(submissionTime), {
+                days: 1
+              }),
+              registration,
+              config
+            )
+          )
+
+          // Wait for few seconds so registration gets updated to elasticsearch before issuing
+          await wait(2000)
+          log('Issuing', id)
+          await markBirthAsIssued(
+            registration.id,
+            randomRegistrar,
+            createBirthIssuingDetails(
               add(new Date(submissionTime), {
                 days: 1
               }),
@@ -798,7 +838,8 @@ function deathDeclarationWorkflow(
         keepDeclarationIncomplete ? undefined : sex,
         submissionTime,
         location,
-        randomFacility
+        randomFacility,
+        ATTACHMENT
       )
 
       if (!REGISTER) {
@@ -854,6 +895,20 @@ function deathDeclarationWorkflow(
             registration.id,
             randomRegistrar,
             createDeathCertificationDetails(
+              add(new Date(submissionTime), {
+                days: 2
+              }),
+              registration,
+              config
+            )
+          )
+
+          log('Issuing', registration.id)
+          await wait(2000)
+          await markDeathAsIssued(
+            registration.id,
+            randomRegistrar,
+            createDeathIssuingDetails(
               add(new Date(submissionTime), {
                 days: 2
               }),

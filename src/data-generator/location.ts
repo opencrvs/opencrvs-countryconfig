@@ -1,6 +1,6 @@
-import { ILocation } from '@countryconfig/features/utils'
+import { ILocation } from '@countryconfig/utils'
 import fetch from 'node-fetch'
-import { GATEWAY_API_HOST } from './constants'
+import { GATEWAY_HOST } from './constants'
 
 export type Location = {
   id: string
@@ -22,7 +22,7 @@ export type Facility = {
 }
 
 export async function getLocations(token: string) {
-  const url = `${GATEWAY_API_HOST}/location?type=ADMIN_STRUCTURE&_count=0`
+  const url = `${GATEWAY_HOST}/location?type=ADMIN_STRUCTURE&_count=0`
 
   const res = await fetch(url, {
     method: 'GET'
@@ -49,15 +49,17 @@ export async function getLocations(token: string) {
       {}
     )
   }
-  return Object.values<Location>(locations.data).filter(({ partOf }: any) => partOf !== 'Location/0')
+  return Object.values<Location>(locations.data).filter(
+    ({ partOf }: any) => partOf !== 'Location/0'
+  )
 }
 
 export async function getFacilities(token: string) {
   const resCRVSOffices = await fetch(
-    `${GATEWAY_API_HOST}/location?type=CRVS_OFFICE&_count=0`
+    `${GATEWAY_HOST}/location?type=CRVS_OFFICE&_count=0`
   )
   const resHealthFacilities = await fetch(
-    `${GATEWAY_API_HOST}/location?type=HEALTH_FACILITY&_count=0`
+    `${GATEWAY_HOST}/location?type=HEALTH_FACILITY&_count=0`
   )
 
   const locationBundleCRVSOffices = await resCRVSOffices.json()
@@ -93,13 +95,15 @@ export async function getFacilities(token: string) {
   return Object.values<Facility>(facilities)
 }
 
-function generateLocationResource(fhirLocation: fhir.Location): ILocation {
+export function generateLocationResource(
+  fhirLocation: fhir.Location
+): ILocation {
   const loc = {} as ILocation
-  loc.id = fhirLocation.id as string
-  loc.name = fhirLocation.name as string
+  loc.id = fhirLocation.id
+  loc.name = fhirLocation.name
   loc.alias =
     fhirLocation.alias && fhirLocation.alias[0] ? fhirLocation.alias[0] : ''
-  loc.status = fhirLocation.status as string
+  loc.status = fhirLocation.status
   loc.physicalType =
     fhirLocation.physicalType &&
     fhirLocation.physicalType.coding &&

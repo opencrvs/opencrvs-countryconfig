@@ -1,11 +1,7 @@
 import faker from '@faker-js/faker'
-import { AddressType } from './gateway'
 import { Location } from './location'
 
-export function createAddressInput(
-  location: Location,
-  type: AddressType = AddressType.PrivateHome
-) {
+export function createAddressInput(location: Location, type: string) {
   return {
     country: 'FAR',
     state: location.partOf.split('/')[1],

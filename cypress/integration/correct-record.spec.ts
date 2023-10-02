@@ -6,14 +6,13 @@
  * OpenCRVS is also distributed under the terms of the Civil Registration
  * & Healthcare Disclaimer located at http://opencrvs.org/license.
  *
- * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
- * graphic logo are (registered/a) trademark(s) of Plan International.
+ * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 /// <reference types="Cypress" />
 
 import faker from '@faker-js/faker'
 
-context('Search Integration Test', () => {
+context('Correct Record Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
@@ -51,9 +50,11 @@ context('Search Integration Test', () => {
         cy.get('#continue_button').click()
         cy.get('#supportDocumentRequiredForCorrection_false').click()
         cy.get('#confirm_form').click()
+        // we need to figure out a way to remove these waits
         cy.wait(5000)
         cy.get('#type_CLERICAL_ERROR').click()
         cy.get('#confirm_form').click()
+        cy.wait(5000)
         cy.get('#correctionFees_NOT_REQUIRED').click()
         cy.get('#make_correction').click()
         cy.wait(10000)

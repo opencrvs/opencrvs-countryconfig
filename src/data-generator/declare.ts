@@ -2,25 +2,13 @@ import { faker } from '@faker-js/faker'
 import { differenceInDays, differenceInYears, sub } from 'date-fns'
 import fetch from 'node-fetch'
 import { createAddressInput } from './address'
-import { GATEWAY_GQL_HOST, GATEWAY_API_HOST } from './constants'
+import { GATEWAY_HOST } from './constants'
 import {
-  AddressType,
-  AttachmentSubject,
-  AttachmentType,
-  AttendantType,
   BirthRegistrationInput,
-  BirthType,
-  CauseOfDeathMethodType,
   CreateDeathDeclarationMutation,
   DeathRegistrationInput,
-  EducationType,
   FetchBirthRegistrationQuery,
   FetchDeathRegistrationQuery,
-  IdentityIdType,
-  InformantType,
-  LocationType,
-  MannerOfDeath,
-  MaritalStatusType,
   PersonInput,
   SearchEventsQuery
 } from './gateway'
@@ -34,9 +22,32 @@ import {
   FETCH_REGISTRATION_QUERY,
   SEARCH_EVENTS
 } from './queries'
+import {
+  BIRTH_ATTACHMENTS,
+  DEATH_ATTACHMENTS,
+  education,
+  identity,
+  maritalStatus,
+  location as locationTypes,
+  address,
+  informant,
+  mannerOfDeath,
+  birth,
+  attendant,
+  causeOfDeathMethod
+} from './options'
 
 const HOME_BIRTH_WEIGHT = 0.2
 const HOME_DEATH_WEIGHT = 0.2
+/*
+ * Number of attachments per record. Please see `BIRTH_ATTACHMENTS`
+ * and `DEATH_ATTACHMENTS`, this number cannot exceed the biggest
+ * index of either of them.
+ */
+const NUMBER_OF_ATTACHMENTS_PER_RECORD = process.env
+  .NUMBER_OF_ATTACHMENTS_PER_RECORD
+  ? parseInt(process.env.NUMBER_OF_ATTACHMENTS_PER_RECORD, 10)
+  : 2
 
 function randomWeightInKg() {
   return Math.round(2.5 + 2 * Math.random())
@@ -67,6 +78,7 @@ export async function sendBirthNotification(
 ): Promise<string> {
   const lastName = faker.name.lastName()
   const firstName = faker.name.firstName()
+  const motherFirstName = faker.name.firstName('female')
   const requestStart = Date.now()
 
   const notification = birthNotification({
@@ -77,16 +89,20 @@ export async function sendBirthNotification(
       gender: sex
     },
     father: {
-      firstName: 'Dad',
+      firstName: faker.name.firstName('male'),
       lastName,
-      nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString(),
+      nid: faker.datatype
+        .number({ min: 1000000000, max: 9999999999 })
+        .toString(),
       dateOfBirth: sub(birthDate, { years: 20 }).toISOString().split('T')[0]
     },
     mother: {
-      firstName: 'Mum',
+      firstName: motherFirstName,
       lastName,
       dateOfBirth: sub(birthDate, { years: 20 }).toISOString().split('T')[0],
-      nid: faker.datatype.number({ min: 100000000, max: 999999999 }).toString()
+      nid: faker.datatype
+        .number({ min: 1000000000, max: 9999999999 })
+        .toString()
     },
     createdAt: createdAt.toISOString(),
     address: [
@@ -102,23 +118,22 @@ export async function sendBirthNotification(
     ],
     phoneNumber:
       '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
+    email: faker.internet.email(motherFirstName, lastName),
     dateOfBirth: birthDate.toISOString().split('T')[0],
     placeOfBirth: `Location/${facility.id}`,
-    officeLocation: office.partOf
+    officeLocation: office.partOf,
+    office: `Location/${office.id}`
   })
 
-  const createBirthNotification = await fetch(
-    `${GATEWAY_API_HOST}/notification`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-        'x-correlation-id': `birth-notification-${firstName}-${lastName}`
-      },
-      body: JSON.stringify(notification)
-    }
-  )
+  const createBirthNotification = await fetch(`${GATEWAY_HOST}/notification`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'x-correlation-id': `birth-notification-${firstName}-${lastName}`
+    },
+    body: JSON.stringify(notification)
+  })
 
   if (!createBirthNotification.ok) {
     log(
@@ -150,49 +165,50 @@ export function createBirthDeclarationData(
   birthDate: Date,
   declarationTime: Date,
   location: Location,
-  facility: Facility
+  facility: Facility,
+  base64Attachment: string
 ): BirthRegistrationInput {
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
+  const motherFirstName = faker.name.firstName('female')
 
   const mother: PersonInput = {
     nationality: ['FAR'],
     occupation: 'Bookkeeper',
-    educationalAttainment: EducationType.PrimaryIsced_1,
+    educationalAttainment: education.primaryIsced_1,
     dateOfMarriage: sub(birthDate, { years: 2 }).toISOString().split('T')[0],
     identifier: [
       {
         id: faker.datatype
           .number({ min: 1000000000, max: 9999999999 })
           .toString(),
-        type: IdentityIdType.NationalId
+        type: identity.nationalId
       }
     ],
     name: [
       {
         use: 'en',
-        firstNames: faker.name.firstName('female'),
+        firstNames: motherFirstName,
         familyName: familyName
       }
     ],
     birthDate: sub(birthDate, { years: 20 }).toISOString().split('T')[0],
-    maritalStatus: MaritalStatusType.Married,
+    maritalStatus: maritalStatus.married,
     address: [
-      createAddressInput(location, AddressType.PrimaryAddress),
-      createAddressInput(location, AddressType.PrimaryAddress)
+      createAddressInput(location, address.primaryAddress),
+      createAddressInput(location, address.primaryAddress)
     ]
   }
 
   return {
     createdAt: declarationTime.toISOString(),
     registration: {
-      informantType: InformantType.Mother,
-      contact: 'MOTHER',
+      informantType: informant.mother,
       otherInformantType: '',
       contactPhoneNumber:
         '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
-      contactRelationship: 'Mother',
+      contactEmail: faker.internet.email(motherFirstName, familyName),
       status: [
         {
           timestamp: sub(declarationTime, {
@@ -202,14 +218,13 @@ export function createBirthDeclarationData(
         }
       ],
       draftId: faker.datatype.uuid(),
-      attachments: [
-        {
+      attachments: faker.helpers
+        .arrayElements(BIRTH_ATTACHMENTS, NUMBER_OF_ATTACHMENTS_PER_RECORD)
+        .map((attachment) => ({
+          ...attachment,
           contentType: 'image/png',
-          data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
-          subject: AttachmentSubject.Child,
-          type: AttachmentType.NotificationOfBirth
-        }
-      ],
+          data: 'data:image/png;base64,' + base64Attachment
+        })),
       inCompleteFields: !sex ? 'child/child-view-group/gender' : undefined
     },
     father: {
@@ -228,8 +243,8 @@ export function createBirthDeclarationData(
       birthDate: birthDate.toISOString().split('T')[0],
       multipleBirth: Math.round(Math.random() * 5)
     },
-    attendantAtBirth: AttendantType.Physician,
-    birthType: BirthType.Single,
+    attendantAtBirth: attendant.physician,
+    birthType: birth.single,
     weightAtBirth: Math.round(2.5 + 2 * Math.random() * 10) / 10,
     eventLocation:
       Math.random() < HOME_BIRTH_WEIGHT
@@ -246,7 +261,7 @@ export function createBirthDeclarationData(
                 'URBAN'
               ]
             },
-            type: LocationType.PrivateHome
+            type: locationTypes.privateHome
           }
         : {
             _fhirID: facility.id
@@ -261,21 +276,23 @@ export async function createBirthDeclaration(
   birthDate: Date,
   declarationTime: Date,
   location: Location,
-  facility: Facility
+  facility: Facility,
+  base64Attachment: string
 ) {
   const details = createBirthDeclarationData(
     sex,
     birthDate,
     declarationTime,
     location,
-    facility
+    facility,
+    base64Attachment
   )
 
   const name = details.child?.name
     ?.map((name) => `${name?.firstNames} ${name?.familyName}`)
     .join(' ')
   const requestStart = Date.now()
-  const createDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const createDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -322,10 +339,12 @@ export async function createDeathDeclaration(
   sex: 'male' | 'female' | undefined,
   declarationTime: Date,
   location: Location,
-  facility: Facility
+  facility: Facility,
+  base64Attachment: string
 ) {
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
+  const spouseFirstName = faker.name.firstName()
 
   const requestStart = Date.now()
 
@@ -334,14 +353,21 @@ export async function createDeathDeclaration(
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
   const details: DeathRegistrationInput = {
     causeOfDeathEstablished: 'true',
-    causeOfDeathMethod: CauseOfDeathMethodType.Physician,
-    deathDescription: 'Pneumonia',
+    causeOfDeathMethod: causeOfDeathMethod.physician,
+    deathDescription: '',
     createdAt: declarationTime.toISOString(),
     registration: {
-      contact: 'SPOUSE',
+      informantType: 'SPOUSE',
       contactPhoneNumber:
         '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
-      contactRelationship: 'Mother',
+      contactEmail: faker.internet.email(spouseFirstName, familyName),
+      attachments: faker.helpers
+        .arrayElements(DEATH_ATTACHMENTS, NUMBER_OF_ATTACHMENTS_PER_RECORD)
+        .map((attachment) => ({
+          ...attachment,
+          contentType: 'image/png',
+          data: 'data:image/png;base64,' + base64Attachment
+        })),
       draftId: faker.datatype.uuid(),
       status: [
         {
@@ -360,13 +386,13 @@ export async function createDeathDeclaration(
           id: faker.datatype
             .number({ min: 1000000000, max: 9999999999 })
             .toString(),
-          type: IdentityIdType.NationalId
+          type: identity.nationalId
         },
         {
           id: faker.datatype
             .number({ min: 100000000, max: 999999999 })
             .toString(),
-          type: IdentityIdType.SocialSecurityNo
+          type: identity.socialSecurityNumber
         }
       ],
       nationality: ['FAR'],
@@ -379,57 +405,54 @@ export async function createDeathDeclaration(
       ],
       birthDate: birthDate.toISOString().split('T')[0],
       gender: sex,
-      maritalStatus: MaritalStatusType.Married,
-      address: [createAddressInput(location, AddressType.PrimaryAddress)],
+      maritalStatus: maritalStatus.married,
+      address: [createAddressInput(location, address.primaryAddress)],
       age: Math.max(1, differenceInYears(deathDay, birthDate)),
       deceased: {
         deceased: true,
         deathDate: deathDay.toISOString().split('T')[0]
       }
     },
-    mannerOfDeath: MannerOfDeath.NaturalCauses,
+    mannerOfDeath: mannerOfDeath.naturalCauses,
     maleDependentsOfDeceased: Math.round(Math.random() * 5),
     femaleDependentsOfDeceased: Math.round(Math.random() * 5),
     eventLocation:
       Math.random() < HOME_DEATH_WEIGHT
         ? {
             address: {
-              type: AddressType.PrimaryAddress,
+              type: address.primaryAddress,
               line: ['', '', '', '', '', ''],
               country: 'FAR',
               state: location.partOf.replace('Location/', ''),
               district: location.id
             },
-            type: LocationType.DeceasedUsualResidence
+            type: locationTypes.deceasedUsualResidence
           }
         : {
             _fhirID: facility.id
           },
     informant: {
-      individual: {
-        birthDate: sub(declarationTime, { years: 20 })
-          .toISOString()
-          .split('T')[0],
-        occupation: 'consultant',
-        nationality: ['FAR'],
-        identifier: [
-          {
-            id: faker.datatype
-              .number({ min: 1000000000, max: 9999999999 })
-              .toString(),
-            type: IdentityIdType.NationalId
-          }
-        ],
-        name: [
-          {
-            use: 'en',
-            firstNames: firstNames,
-            familyName: familyName
-          }
-        ],
-        address: [createAddressInput(location, AddressType.PrimaryAddress)]
-      },
-      relationship: 'SON'
+      birthDate: sub(declarationTime, { years: 20 })
+        .toISOString()
+        .split('T')[0],
+      occupation: 'consultant',
+      nationality: ['FAR'],
+      identifier: [
+        {
+          id: faker.datatype
+            .number({ min: 1000000000, max: 9999999999 })
+            .toString(),
+          type: identity.nationalId
+        }
+      ],
+      name: [
+        {
+          use: 'en',
+          firstNames: spouseFirstName,
+          familyName: familyName
+        }
+      ],
+      address: [createAddressInput(location, address.primaryAddress)]
     },
     father: {
       name: [
@@ -449,7 +472,7 @@ export async function createDeathDeclaration(
     }
   }
 
-  const createDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const createDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -492,7 +515,7 @@ export async function createDeathDeclaration(
 }
 
 export async function fetchRegistration(user: User, compositionId: string) {
-  const fetchDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const fetchDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -523,7 +546,7 @@ export async function fetchDeathRegistration(
   user: User,
   compositionId: string
 ) {
-  const fetchDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const fetchDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -555,7 +578,7 @@ export async function fetchAlreadyGeneratedInterval(
   locationId: string
 ): Promise<Date[]> {
   const fetchFirst = async (sort: 'desc' | 'asc') => {
-    const res = await fetch(GATEWAY_GQL_HOST, {
+    const res = await fetch(`${GATEWAY_HOST}/graphql`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

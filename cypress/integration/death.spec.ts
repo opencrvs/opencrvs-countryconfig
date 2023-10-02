@@ -6,10 +6,10 @@
  * OpenCRVS is also distributed under the terms of the Civil Registration
  * & Healthcare Disclaimer located at http://opencrvs.org/license.
  *
- * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
- * graphic logo are (registered/a) trademark(s) of Plan International.
+ * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 /// <reference types="Cypress" />
+import faker from '@faker-js/faker'
 
 context('Death Integration Test', () => {
   beforeEach(() => {
@@ -21,11 +21,32 @@ context('Death Integration Test', () => {
     cy.createPin()
     cy.verifyLandingPageVisible()
 
-    cy.enterDeathMaximumInput()
+    const deceasedFirstNames = faker.name.firstName()
+    const deceasedFamilyName = faker.name.lastName()
+    const deceasedDoB = '1978-03-19'
+    const deceasedGender = 'Male'
+    const informantFirstNames = faker.name.firstName()
+    const informantFamilyName = faker.name.lastName()
+    const informantDoB = '1985-05-20'
+    const eventCountry = 'Farajaland'
+    const eventLocationLevel1 = 'Pualula'
+    const eventLocationLevel2 = 'Embe'
+    cy.enterDeathMaximumInput({
+      deceasedFirstNames,
+      deceasedFamilyName,
+      deceasedDoB,
+      deceasedGender,
+      informantFirstNames,
+      informantFamilyName,
+      informantDoB,
+      eventCountry,
+      eventLocationLevel1,
+      eventLocationLevel2
+    })
     cy.registerDeclaration()
   })
 
-  it('Tests from declaration to registration using minimum input', () => {
+  it('Login as field agent and tests from declaration to registration using minimum input ', () => {
     cy.registerDeathDeclarationWithMinimumInput()
   })
 
@@ -36,7 +57,7 @@ context('Death Integration Test', () => {
     cy.submitForm()
   })
 
-  it('Tests from declaration to registration using maximum input', () => {
+  it('Login as field agent and tests from declaration to registration using maximum input', () => {
     cy.registerDeathDeclarationWithMaximumInput()
   })
 
@@ -48,7 +69,29 @@ context('Death Integration Test', () => {
   })
 
   it('Tests from declaration to rejection using minimum input', () => {
-    cy.declareDeathDeclarationWithMinimumInput()
+    const deceasedFirstNames = faker.name.firstName()
+    const deceasedFamilyName = faker.name.lastName()
+    const deceasedDoB = '1958-03-19'
+    const deceasedGender = 'Male'
+    const informantFirstNames = faker.name.firstName()
+    const informantFamilyName = faker.name.lastName()
+    const informantDoB = '1983-03-15'
+    const eventCountry = 'Farajaland'
+    const eventLocationLevel1 = 'Pualula'
+    const eventLocationLevel2 = 'Embe'
+
+    cy.declareDeathDeclarationWithMinimumInput({
+      deceasedFirstNames,
+      deceasedFamilyName,
+      deceasedDoB,
+      deceasedGender,
+      informantFirstNames,
+      informantFamilyName,
+      informantDoB,
+      eventCountry,
+      eventLocationLevel1,
+      eventLocationLevel2
+    })
   })
 
   it('Login As Register & Reject Minimum input Death Declaration', () => {
@@ -59,7 +102,12 @@ context('Death Integration Test', () => {
   })
 
   it('Tests from declaration to rejection using maximum input', () => {
-    cy.declareDeathDeclarationWithMaximumInput()
+    const deceasedFirstNames = faker.name.firstName()
+    const deceasedFamilyName = faker.name.lastName()
+    cy.declareDeathDeclarationWithMaximumInput({
+      deceasedFirstNames,
+      deceasedFamilyName
+    })
   })
 
   it('Login As Register & Reject Maximum input Death Declaration', () => {

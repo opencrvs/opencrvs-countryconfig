@@ -6,18 +6,18 @@ import {
   AttachmentInput,
   BirthRegistrationInput,
   DeathRegistrationInput,
-  LocationType,
   MarkBirthAsCertifiedMutation,
   MarkDeathAsCertifiedMutation,
   PaymentOutcomeType,
   PaymentType
 } from './gateway'
 import { omit } from 'lodash'
-import { GATEWAY_GQL_HOST } from './constants'
+import { GATEWAY_HOST } from './constants'
 import { MARK_BIRTH_AS_CERTIFIED, MARK_DEATH_AS_CERTIFIED } from './queries'
 import { differenceInDays } from 'date-fns'
 import { ConfigResponse } from './config'
 import { fetchDeathRegistration, fetchRegistration } from './declare'
+import { location } from './options'
 
 export function createBirthCertificationDetails(
   createdAt: Date,
@@ -27,35 +27,15 @@ export function createBirthCertificationDetails(
   const withIdsRemoved = idsToFHIRIds(
     omit(declaration, ['__typename', 'id', 'registration.type']),
     [
-      'id',
       'eventLocation.id',
       'mother.id',
       'father.id',
       'child.id',
       'registration.id',
-      'informant.individual.id',
       'informant.id'
     ]
   )
-  delete withIdsRemoved.history
 
-  const completionDays = differenceInDays(
-    createdAt,
-    new Date(declaration.child?.birthDate!)
-  )
-
-  const paymentAmount =
-    completionDays < config.config.BIRTH.REGISTRATION_TARGET
-      ? config.config.BIRTH.FEE.ON_TIME
-      : completionDays < config.config.BIRTH.LATE_REGISTRATION_TARGET
-      ? config.config.BIRTH.FEE.LATE
-      : config.config.BIRTH.FEE.DELAYED
-  log(
-    'Collecting certification payment of',
-    paymentAmount,
-    'for completion days',
-    completionDays
-  )
   const data = {
     ...withIdsRemoved,
     eventLocation: {
@@ -74,15 +54,6 @@ export function createBirthCertificationDetails(
       certificates: [
         {
           hasShowedVerifiedDocument: false,
-          payments: [
-            {
-              type: PaymentType.Manual,
-              total: paymentAmount,
-              amount: paymentAmount,
-              outcome: PaymentOutcomeType.Completed,
-              date: createdAt
-            }
-          ],
           data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
           collector: {
             relationship: 'MOTHER'
@@ -106,7 +77,6 @@ export function createDeathCertificationDetails(
       'eventLocation.id',
       'mother.id',
       'father.id',
-      'informant.individual.id',
       'informant.id',
       'deceased.id',
       'registration.id'
@@ -141,10 +111,10 @@ export function createDeathCertificationDetails(
       )
     },
     eventLocation:
-      withIdsRemoved.eventLocation?.type === LocationType.PrivateHome
+      withIdsRemoved.eventLocation?.type === location.privateHome
         ? {
-            address: withIdsRemoved.eventLocation.address,
-            type: withIdsRemoved.eventLocation.type
+            address: withIdsRemoved.eventLocation?.address,
+            type: withIdsRemoved.eventLocation?.type
           }
         : {
             _fhirID: withIdsRemoved.eventLocation?._fhirID
@@ -185,7 +155,7 @@ export function createDeathCertificationDetails(
   return removeEmptyFields(data)
 }
 
-export async function markAsCertified(
+export async function markBirthAsCertified(
   id: string,
   user: User,
   details: BirthRegistrationInput
@@ -194,7 +164,7 @@ export async function markAsCertified(
 
   const requestStart = Date.now()
 
-  const certifyDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const certifyDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -216,6 +186,7 @@ export async function markAsCertified(
   }
 
   if (result.errors) {
+    // eslint-disable-next-line no-console
     console.error(JSON.stringify(result.errors, null, 2))
     throw new Error('Birth declaration could not be certified')
   }
@@ -240,7 +211,7 @@ export async function markDeathAsCertified(
 
   const requestStart = Date.now()
 
-  const certifyDeclarationRes = await fetch(GATEWAY_GQL_HOST, {
+  const certifyDeclarationRes = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -261,12 +232,14 @@ export async function markDeathAsCertified(
     data: MarkDeathAsCertifiedMutation
   }
   if (result.errors) {
+    // eslint-disable-next-line no-console
     console.error(JSON.stringify(result.errors, null, 2))
     details.registration?.certificates?.forEach((cert) => {
       if (cert?.data) {
         cert.data = 'REDACTED'
       }
     })
+    // eslint-disable-next-line no-console
     console.error(JSON.stringify(details))
     throw new Error('Death declaration could not be certified')
   }

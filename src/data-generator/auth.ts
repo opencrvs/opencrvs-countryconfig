@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { AUTH_API_HOST } from './constants'
+import { AUTH_HOST } from './constants'
 import { VERIFICATION_CODE } from './index'
 import { User } from './users'
 
@@ -7,7 +7,7 @@ export async function getToken(
   username: string,
   password: string
 ): Promise<string> {
-  const authenticateResponse = await fetch(`${AUTH_API_HOST}/authenticate`, {
+  const authenticateResponse = await fetch(`${AUTH_HOST}/authenticate`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export async function getToken(
     return token
   }
 
-  const verifyResponse = await fetch(`${AUTH_API_HOST}/verifyCode`, {
+  const verifyResponse = await fetch(`${AUTH_HOST}/verifyCode`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -51,22 +51,17 @@ export async function getTokenForSystemClient(
   clientSecret: string
 ): Promise<string> {
   const authenticateResponse = await fetch(
-    `${AUTH_API_HOST}/authenticateSystemClient`,
+    `${AUTH_HOST}/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-correlation-id': clientId + '-' + Date.now()
-      },
-      body: JSON.stringify({
-        client_id: clientId,
-        client_secret: clientSecret
-      })
+      }
     }
   )
   const res = await authenticateResponse.json()
-
-  return res.token
+  return res.access_token
 }
 
 export function readToken(token: string) {

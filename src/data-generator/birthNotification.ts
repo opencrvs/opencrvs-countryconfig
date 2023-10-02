@@ -6,8 +6,7 @@
  * OpenCRVS is also distributed under the terms of the Civil Registration
  * & Healthcare Disclaimer located at http://opencrvs.org/license.
  *
- * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
- * graphic logo are (registered/a) trademark(s) of Plan International.
+ * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 interface BirthNotification {
   child: {
@@ -29,11 +28,13 @@ interface BirthNotification {
     nid: string
   }
   phoneNumber: string
+  email: string
   address: fhir.Address[]
   dateOfBirth: string
   placeOfBirth: string // Location Resource
   createdAt: string
   officeLocation: string
+  office: string
 }
 
 export function birthNotification({
@@ -41,11 +42,13 @@ export function birthNotification({
   father,
   mother,
   phoneNumber,
+  email,
   address,
   dateOfBirth,
   placeOfBirth,
   createdAt,
-  officeLocation
+  officeLocation,
+  office
 }: BirthNotification) {
   return {
     resourceType: 'Bundle',
@@ -204,6 +207,10 @@ export function birthNotification({
               valueString: phoneNumber
             },
             {
+              url: 'http://opencrvs.org/specs/extension/contact-person-email',
+              valueString: email
+            },
+            {
               url: 'http://opencrvs.org/specs/extension/timeLoggedMS',
               valueInteger: 0
             },
@@ -215,6 +222,12 @@ export function birthNotification({
               url: 'http://opencrvs.org/specs/extension/regLastLocation',
               valueReference: {
                 reference: officeLocation
+              }
+            },
+            {
+              url: 'http://opencrvs.org/specs/extension/regLastOffice',
+              valueReference: {
+                reference: office
               }
             }
           ]
@@ -246,7 +259,14 @@ export function birthNotification({
           identifier: [
             {
               use: 'official',
-              type: 'NATIONAL_ID',
+              type: {
+                coding: [
+                  {
+                    system: 'http://opencrvs.org/specs/identifier-type',
+                    code: 'NATIONAL_ID'
+                  }
+                ]
+              },
               value: mother.nid
             }
           ],
@@ -340,7 +360,14 @@ export function birthNotification({
           identifier: [
             {
               use: 'official',
-              type: 'NATIONAL_ID',
+              type: {
+                coding: [
+                  {
+                    system: 'http://opencrvs.org/specs/identifier-type',
+                    code: 'NATIONAL_ID'
+                  }
+                ]
+              },
               value: father.nid
             }
           ],
