@@ -1,5 +1,5 @@
-name: Deploy
-
+name: Deploy(development)
+run-name: Deploy to ${{ github.event.inputs.environment }} with reset=${{ github.event.inputs.reset }} core=${{ github.event.inputs.core-image-tag }} country config=${{ github.event.inputs.countryconfig-image-tag }}
 on:
   workflow_dispatch:
     inputs:
@@ -11,22 +11,31 @@ on:
         options:
           - staging
           - qa
-          - production
       core-image-tag:
         description: Core DockerHub image tag
-        required: false
-        default: 'v1.2.0'
+        required: true
+        default: 'v1.3.0'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
+      reset:
+        type: choice
+        description: Whether to reset the environment
+        required: true
+        default: 'no'
+        options:
+          - 'yes'
+          - 'no'
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
+    outputs:
+      outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
     strategy:
       matrix:
-        node-version: [14.17.0]
+        node-version: [16.20.0]
     steps:
       - name: Clone core
         uses: actions/checkout@v3
@@ -40,26 +49,16 @@ jobs:
           fetch-depth: 0
           path: './${{ github.event.repository.name }}'
 
-      - name: Set COUNTRY_CONFIG_VERSION from inputs
-        if: ${{ github.event.inputs.countryconfig-image-tag }}
+      - name: Checkout country branch
         run: |
           cd ${{ github.event.repository.name }}
-          echo "COUNTRY_CONFIG_VERSION=${{ github.event.inputs.countryconfig-image-tag }}" >> $GITHUB_ENV
           git checkout ${{ github.event.inputs.countryconfig-image-tag }}
           cd ../
 
-      - name: Set CORE_VERSION from inputs
-        if: ${{ github.event.inputs.core-image-tag }}
+      - name: Checkout core branch
         run: |
           cd opencrvs-core
           git checkout ${{ github.event.inputs.core-image-tag }}
-          echo "CORE_VERSION=${{ github.event.inputs.core-image-tag }}" >> $GITHUB_ENV
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
@@ -67,36 +66,33 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
-      - name: Deploy to QA
-        if: ${{ github.event.inputs.environment == 'qa' }}
-        env:
-          QA_DOMAIN: ${{ secrets.QA_DOMAIN }}
-          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
-          REPLICAS: ${{ secrets.REPLICAS }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
-          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
-          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
-          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
-          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
-          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+  
+      - name: Wait for images to be available
         run: |
-          cd opencrvs-core
-          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} qa ${{ env.QA_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
+          while true; do
+            if docker manifest inspect opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}; then
+              break
+            fi
+            sleep 10
+          done
+          while true; do
+            if docker manifest inspect opencrvs/ocrvs-farajaland:${{ github.event.inputs.countryconfig-image-tag }}; then
+              break
+            fi
+            sleep 10
+          done
+  
 
-      - name: Deploy to production
-        if: ${{ github.event.inputs.environment == 'production' }}
+      - name: Deploy to ${{ github.event.inputs.environment }}
+        id: deploy
         env:
-          PRODUCTION_DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
-          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
-          REPLICAS: ${{ secrets.REPLICAS }}
+          DOMAIN: ${{ vars.DOMAIN }}
+          REPLICAS: ${{ vars.REPLICAS }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
@@ -111,30 +107,21 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
+          INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          INFOBIP_GATEWAY_ENDPOINT: ${{ secrets.INFOBIP_GATEWAY_ENDPOINT }}
+          INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
+          SENDER_EMAIL_ADDRESS: ${{ secrets.SENDER_EMAIL_ADDRESS }}
+          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
         run: |
-          cd opencrvs-core
-          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} production ${{ env.PRODUCTION_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
-
-      - name: Deploy to staging
-        if: ${{ github.event.inputs.environment == 'staging' }}
-        env:
-          STAGING_DOMAIN: ${{ secrets.STAGING_DOMAIN }}
-          FACTORY_RESET: ${{ secrets.FACTORY_RESET }}
-          REPLICAS: ${{ secrets.REPLICAS }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
-          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
-          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
-          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
-          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
-          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
-        run: |
-          cd opencrvs-core
-          bash deploy.sh --clear-data=${{ env.FACTORY_RESET }} --restore-metadata=${{ env.FACTORY_RESET }} development ${{ env.STAGING_DOMAIN }} ${{ env.CORE_VERSION }} ${{ env.COUNTRY_CONFIG_VERSION }} ../${{ github.event.repository.name }} ${{ env.REPLICAS }}
+          cd ./${{ github.event.repository.name }}
+          yarn deploy --clear_data=${{ github.event.inputs.reset }} --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{ github.event.inputs.core-image-tag }} --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+  seed-data:
+    needs: deploy
+    if: ${{ github.event.inputs.reset == 'yes' && needs.deploy.outputs.outcome == 'success' }}
+    uses: ./.github/workflows/seed-data.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      core-image-tag: ${{ github.event.inputs.core-image-tag }}
+    secrets: inherit

@@ -5,8 +5,7 @@
 # OpenCRVS is also distributed under the terms of the Civil Registration
 # & Healthcare Disclaimer located at http://opencrvs.org/license.
 #
-# Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
-# graphic logo are (registered/a) trademark(s) of Plan International.
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
 print_usage_and_exit () {
     echo 'Usage: ./clear-all-data.sh --path_to_core=XXX'
     echo "This script clears all OpenCRVS data locally.  To run it you must pass the directory path to opencrvs-core."
@@ -36,15 +35,16 @@ if [ -z $path_to_core ]; then
     print_usage_and_exit
 fi
 
-
 # It's fine if these fail as it might be that the databases do not exist at this point
-docker run --rm --network=opencrvs_default mongo:4.4 mongo hearth-dev --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo openhim-dev --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo user-mgnt --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo application-config --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo metrics --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo reports --host mongo1 --eval "db.dropDatabase()"
-docker run --rm --network=opencrvs_default mongo:4.4 mongo webhooks --host mongo1 --eval "db.dropDatabase()"
+docker run --rm --network=opencrvs_default mongo:4.4 mongo --host mongo1 --eval "\
+db.getSiblingDB('hearth-dev').dropDatabase();\
+db.getSiblingDB('openhim-dev').dropDatabase();\
+db.getSiblingDB('user-mgnt').dropDatabase();\
+db.getSiblingDB('application-config').dropDatabase();\
+db.getSiblingDB('metrics').dropDatabase();\
+db.getSiblingDB('config').dropDatabase();\
+db.getSiblingDB('performance').dropDatabase();\
+db.getSiblingDB('webhooks').dropDatabase();"
 
 docker run --rm --network=opencrvs_default appropriate/curl curl -XDELETE 'http://elasticsearch:9200/*' -v
 docker run --rm --network=opencrvs_default appropriate/curl curl -X POST 'http://influxdb:8086/query?db=ocrvs' --data-urlencode "q=DROP SERIES FROM /.*/" -v
@@ -57,3 +57,14 @@ if [ -d $PATH_TO_MINIO_DIR ] ; then
   docker exec opencrvs_minio_1 mkdir -p /data/minio/ocrvs
   echo "**** Removed minio data ****"
 fi
+
+echo "Running migrations"
+echo
+
+yarn --cwd="$path_to_core/packages/migration" start
+
+echo
+echo "Restarting openhim for the db changes to take effect"
+echo
+
+docker restart `docker ps --format "{{.Names}}" | grep openhim-core`
