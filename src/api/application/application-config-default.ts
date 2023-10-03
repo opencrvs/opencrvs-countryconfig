@@ -2,9 +2,6 @@ import { countryLogo } from '@countryconfig/api/application/country-logo'
 
 export const defaultApplicationConfig = {
   APPLICATION_NAME: 'Farajaland CRS',
-  FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
-  DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
-  EXTERNAL_VALIDATION_WORKQUEUE: false,
   BIRTH: {
     REGISTRATION_TARGET: 30,
     LATE_REGISTRATION_TARGET: 365,
@@ -41,6 +38,10 @@ export const defaultApplicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
+  // Following constants aren't configurable via UI
+  FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
+  DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
+  EXTERNAL_VALIDATION_WORKQUEUE: false,
   MARRIAGE_REGISTRATION: true,
   DATE_OF_BIRTH_UNKNOWN: false,
   INFORMANT_SIGNATURE: true,
