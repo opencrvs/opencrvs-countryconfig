@@ -126,6 +126,14 @@ mkdir -p $ROOT_PATH/backups/mongo
 mkdir -p $ROOT_PATH/backups/minio
 mkdir -p $ROOT_PATH/backups/metabase
 mkdir -p $ROOT_PATH/backups/vsexport
+mkdir -p $ROOT_PATH/backups/metabase
+
+# This enables root-created directory to be writable by the docker user
+chown -R 1000:1000 $ROOT_PATH/backups
+
+# This might not exist if project is empty
+mkdir -p $ROOT_PATH/metabase
+chown -R 1000:1000 $ROOT_PATH/metabase
 
 # Select docker network and replica set in production
 #----------------------------------------------------
@@ -214,7 +222,7 @@ echo "Register backup folder as an Elasticsearch repository for backing up the s
 echo ""
 
 create_elasticsearch_snapshot_repository() {
-  OUTPUT=$(docker run --rm --network=opencrvs_default appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}' 2>/dev/null)
+  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}' 2>/dev/null)
   while [ "$OUTPUT" != '{"acknowledged":true}' ]; do
     echo "Failed to register backup folder as an Elasticsearch repository. Trying again in..."
     sleep 1
@@ -278,17 +286,13 @@ else
 fi
 
 echo "Creating a backup for Minio"
-mkdir -p $ROOT_PATH/backups/minio
 cd $ROOT_PATH/minio && tar -zcvf $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz . && cd /
 
 echo "Creating a backup for Metabase"
 
-mkdir -p $ROOT_PATH/metabase # This might not exist in local project if metabase has never been run
-mkdir -p $ROOT_PATH/backups/metabase
 cd $ROOT_PATH/metabase && tar -zcvf $ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz . && cd /
 
 echo "Creating a backup for VSExport"
-mkdir -p $ROOT_PATH/backups/vsexport
 cd $ROOT_PATH/vsexport && tar -zcvf $ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz . && cd /
 
 if [[ "$IS_LOCAL" = true ]]; then
