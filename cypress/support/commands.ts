@@ -313,6 +313,7 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
 
   // SELECT INFORMANT
   cy.selectOption('#informantType', 'Mother', 'Mother')
+  cy.wait(500)
   cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.goToNextFormSection()
 
@@ -323,9 +324,9 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.get('#motherBirthDate-dd').type('23')
   cy.get('#motherBirthDate-mm').type('10')
   cy.get('#motherBirthDate-yyyy').type('1969')
-  cy.selectOption('#countryPrimary-form-input', 'Farajaland', 'Farajaland')
-  cy.selectOption('#statePrimary', 'Pualula', 'Pualula')
-  cy.selectOption('#districtPrimary', 'Embe', 'Embe')
+  cy.selectOption('#countryPrimaryMother', 'Farajaland', 'Farajaland')
+  cy.selectOption('#statePrimaryMother', 'Pualula', 'Pualula')
+  cy.selectOption('#districtPrimaryMother', 'Embe', 'Embe')
   cy.goToNextFormSection()
 
   // FATHER DETAILS
@@ -624,6 +625,7 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
   // MANNER OF DEATH
   cy.selectOption('#mannerOfDeath', '', 'Natural causes')
   cy.get('#causeOfDeathEstablished').click()
+  cy.wait(500)
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', "Deceased's usual place of residence")
 
@@ -726,6 +728,7 @@ Cypress.Commands.add('enterDeathMaximumInput', (options) => {
   // CAUSE OF DEATH DETAILS
   cy.selectOption('#mannerOfDeath', '', 'Homicide')
   cy.get('#causeOfDeathEstablished').click()
+  cy.wait(500)
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', 'Other')
 
@@ -805,6 +808,7 @@ Cypress.Commands.add('someoneElseJourney', () => {
 
   // SELECT INFORMANT
   cy.selectOption('#informantType', 'Someone else', 'Someone else')
+  cy.wait(500)
   cy.get('#otherInformantType').type('Someone else')
   cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.get('#registrationEmail').type('axonishere@gmail.com')
@@ -830,9 +834,9 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#motherBirthDate-yyyy').type('1975')
   cy.get('#firstNamesEng').type('Agnes')
   cy.get('#familyNameEng').type('Aktar')
-  cy.selectOption('#countryPrimary-form-input', 'Farajaland', 'Farajaland')
-  cy.selectOption('#statePrimary', 'Pualula', 'Pualula')
-  cy.selectOption('#districtPrimary', 'Embe', 'Embe')
+  cy.selectOption('#countryPrimaryMother', 'Farajaland', 'Farajaland')
+  cy.selectOption('#statePrimaryMother', 'Pualula', 'Pualula')
+  cy.selectOption('#districtPrimaryMother', 'Embe', 'Embe')
   cy.goToNextFormSection()
 
   //  FATHER DETAILS
