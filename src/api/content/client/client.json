@@ -484,7 +484,7 @@
         "correction.corrector.idCheck": "Check proof of ID",
         "correction.corrector.idCheckVerify": "Yes",
         "correction.corrector.idCheckWithoutVerify": "No",
-        "correction.corrector.informant": "Informant",
+        "correction.corrector.informant": "Informant ({informant})",
         "correction.corrector.legalGuardian": "Legal guardian",
         "correction.corrector.me": "Me",
         "correction.corrector.mother": "Mother",
