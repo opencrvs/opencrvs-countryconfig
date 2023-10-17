@@ -286,14 +286,19 @@ else
 fi
 
 echo "Creating a backup for Minio"
-cd $ROOT_PATH/minio && tar -zcvf $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz . && cd /
+
+LOCAL_MINIO_BACKUP=$ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
+cd $ROOT_PATH/minio && tar -zcvf $LOCAL_MINIO_BACKUP . && cd /
 
 echo "Creating a backup for Metabase"
 
-cd $ROOT_PATH/metabase && tar -zcvf $ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz . && cd /
+LOCAL_METABASE_BACKUP=$ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
+cd $ROOT_PATH/metabase && tar -zcvf $LOCAL_METABASE_BACKUP . && cd /
 
 echo "Creating a backup for VSExport"
-cd $ROOT_PATH/vsexport && tar -zcvf $ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz . && cd /
+
+LOCAL_VSEXPORT_BACKUP=$ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
+cd $ROOT_PATH/vsexport && tar -zcvf $LOCAL_VSEXPORT_BACKUP . && cd /
 
 if [[ "$IS_LOCAL" = true ]]; then
   echo $WORKING_DIR
@@ -305,8 +310,8 @@ fi
 #----------------------------------------------------
 if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)" ]]; then
   script -q -c "rsync -a -r --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/elasticsearch/ $SSH_USER@$SSH_HOST:$REMOTE_DIR/elasticsearch" && echo "Copied elasticsearch backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/minio/${LABEL:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/minio" && echo "Copied minio backup files to remote server."
-  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/metabase/${LABEL:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/metabase" && echo "Copied Metabase backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $LOCAL_MINIO_BACKUP $SSH_USER@$SSH_HOST:$REMOTE_DIR/minio" && echo "Copied minio backup files to remote server."
+  script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $LOCAL_METABASE_BACKUP $SSH_USER@$SSH_HOST:$REMOTE_DIR/metabase" && echo "Copied Metabase backup files to remote server."
   script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE} $SSH_USER@$SSH_HOST:$REMOTE_DIR/influxdb" && echo "Copied influx backup files to remote server."
   script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied hearth backup files to remote server."
   script -q -c "rsync -a -r --ignore-existing --progress --rsh='ssh -p$SSH_PORT' $ROOT_PATH/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/mongo" && echo "Copied user backup files to remote server."
