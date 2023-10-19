@@ -82,7 +82,7 @@ export const getFirstNameField = (
       id: 'form.field.label.firstNames'
     },
     conditionals,
-    maxLength: 32,
+    maxLength: 250,
     required: true,
     initialValue: '',
     validator: [
