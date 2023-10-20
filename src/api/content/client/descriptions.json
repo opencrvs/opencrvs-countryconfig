@@ -470,6 +470,7 @@
     "print.certificate.manualPaymentMethod": "The label for select option for manual payment method",
     "print.certificate.collector.mother": "The label for select value when mother is the collector of certificate",
     "certificate.parent.details.label.nationality": "Parent Nationality",
+    "certificate.parent.details.label.age": "Person age",
     "certificate.parent.details.label.number": "Parent number",
     "print.certificate.collector.other": "The label for select value when the collector of certificate is other person",
     "print.certificate.payment": "The title for payment section",
