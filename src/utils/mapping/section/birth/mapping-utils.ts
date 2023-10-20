@@ -49,6 +49,13 @@ export function getSectionMapping(mappingId: string): ISectionMapping {
             operation: 'userTransformer',
             parameters: ['VALIDATED']
           },
+          // one has to update the SIGNATURE_REQUIRED_FOR_ROLES array in application-config-default.ts
+          // and add a system role in the array e.g. 'FIELD_AGENT' for the signature of that user
+          // {
+          //   fieldName: 'fieldAgent',
+          //   operation: 'userTransformer',
+          //   parameters: ['VALIDATED', 'IN_PROGRESS', 'DECLARED']
+          // },
           {
             fieldName: certificateHandlebars.registrarName,
             operation: 'registrarNameUserTransformer'
