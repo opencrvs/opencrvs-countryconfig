@@ -175,10 +175,6 @@ export const birthInformantTypeOptions: ISelectOption[] = [
     label: informantMessageDescriptors.SISTER
   },
   {
-    value: informantTypes.OTHER_FAMILY_MEMBER,
-    label: informantMessageDescriptors.OTHER_FAMILY_MEMBER
-  },
-  {
     value: informantTypes.LEGAL_GUARDIAN,
     label: informantMessageDescriptors.LEGAL_GUARDIAN
   },

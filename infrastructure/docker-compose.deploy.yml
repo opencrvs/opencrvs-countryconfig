@@ -283,6 +283,10 @@ services:
       - '/data/minio:/data'
     command: server --console-address ":9001" /data
     deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.data1 == true
       labels:
         - 'traefik.enable=true'
         - 'traefik.docker.network=opencrvs_overlay_net'
@@ -321,7 +325,7 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'minio'
-  
+
   setup-elasticsearch-users:
     image: ubuntu:bionic
     entrypoint: ['bash', '/usr/app/setup.sh']
@@ -725,6 +729,9 @@ services:
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
     deploy:
+      placement:
+        constraints:
+          - node.labels.data1 == true
       labels:
         - 'traefik.enable=false'
       replicas: 1
