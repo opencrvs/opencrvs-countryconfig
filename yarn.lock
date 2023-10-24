@@ -3500,10 +3500,10 @@
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
   integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
 
-"@types/fhir@^0.0.30":
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/@types/fhir/-/fhir-0.0.30.tgz#a0aec3b2d7dd2a7584474dac446ede5f9a4d7a13"
-  integrity sha512-vDU62tUFeAYBVQThiWAfGd6D25TiLLDDS5pV19vim52FLpwWTBliLMvotbF4D/U+BmjxBKIuHGZgFnoh/HtV5g==
+"@types/fhir@^0.0.38":
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/@types/fhir/-/fhir-0.0.38.tgz#07b9240ffbb0e6368b191f7145c63a010dff36df"
+  integrity sha512-0ia8Ng9OR6yI3J1+TkZxAzp02oarQLfM0mGBUjVf1+7X+hD9UW7TNz7/heRP5QQ9evyRz89Ok/IxSuubx2TzMg==
 
 "@types/geojson@^7946.0.4":
   version "7946.0.12"
