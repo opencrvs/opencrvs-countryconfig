@@ -471,8 +471,8 @@ export async function createServer() {
   })
 
   server.route({
-    method: 'GET',
-    path: '/tracking-id/{eventType}',
+    method: 'POST',
+    path: '/tracking-id',
     handler: trackingIDHandler,
     options: {
       tags: ['api'],
