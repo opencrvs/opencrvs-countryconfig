@@ -50,7 +50,7 @@ import { applicationConfigHandler } from './api/application/handler'
 import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
 import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
 import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config-default'
-import { handlebarsHandler } from './form/common/custom-validation-conditionals/handlebars-handler'
+import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
 
 export interface ITokenPayload {
@@ -279,6 +279,18 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Serves login client configuration as a static file'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/handlebars.js',
+    handler: handlebarsHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description:
+        'Serves custom handlebar helper functions as JS to be used in certificates'
     }
   })
 
