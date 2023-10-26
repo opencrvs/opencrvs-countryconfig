@@ -8,7 +8,7 @@ const EVENTS = {
 type ValueOf<T> = T[keyof T]
 type EVENT_TYPE = ValueOf<typeof EVENTS>
 
-const FHIR_TO_OPENCRVS_EVENT_MAP: Record<string, EVENT_TYPE> = {
+const FHIR_TO_OPENCRVS_EVENT_MAP = {
   'birth-notification': EVENTS.BIRTH,
   'birth-declaration': EVENTS.BIRTH,
   'death-notification': EVENTS.DEATH,
@@ -17,9 +17,10 @@ const FHIR_TO_OPENCRVS_EVENT_MAP: Record<string, EVENT_TYPE> = {
   'marriage-declaration': EVENTS.MARRIAGE
 }
 
-function getCompositionEventType(compoition: fhir.Composition) {
-  const eventType = compoition?.type?.coding?.[0].code
-  return eventType && FHIR_TO_OPENCRVS_EVENT_MAP[eventType]
+function getCompositionEventType(composition: fhir.Composition) {
+  const eventType = composition?.type?.coding?.[0]
+    .code as keyof typeof FHIR_TO_OPENCRVS_EVENT_MAP
+  return eventType && (FHIR_TO_OPENCRVS_EVENT_MAP[eventType] as EVENT_TYPE)
 }
 
 function getEventType(fhirBundle: fhir.Bundle) {
@@ -27,9 +28,7 @@ function getEventType(fhirBundle: fhir.Bundle) {
     (item) => item.resource?.resourceType === 'Composition'
   )?.resource as fhir.Composition
   if (composition) {
-    return getCompositionEventType(
-      composition as fhir.Composition
-    ) as EVENT_TYPE
+    return getCompositionEventType(composition as fhir.Composition)
   }
   throw new Error('Composition not found in FHIR bundle')
 }
