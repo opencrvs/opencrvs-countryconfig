@@ -24,6 +24,7 @@ import {
   AddressCases,
   AddressCopyConfigCases,
   AddressSubsections,
+  AdministrativeLevel,
   EventLocationAddressCases,
   IAddressConfiguration
 } from '../types/types'
@@ -34,7 +35,7 @@ import {
 // THEREFORE OUR ADMIN_LEVELS PROPERTY IS 2.
 // YOU CAN SET UP TO 5 SUPPORTED ADMINISTRATIVE LEVELS.
 
-export const ADMIN_LEVELS: Number = 2
+export const ADMIN_LEVELS: AdministrativeLevel = 2
 
 // ADDRESSES TAKE UP A LOT OF REPEATED CODE IN THE FORMS, MAKING THE BIRTH, MARRIAGE AND DEATH FORM CODE LONG AND DIFFICULT TO READ
 // THEREFORE WE DECORATE THE ADDRESSES DYNAMICALLY TO SECTIONS OF THE FORM USING THIS CONFIGURATION CONSTANT
