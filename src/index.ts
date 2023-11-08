@@ -56,6 +56,8 @@ import { conditionalsHandler } from './form/common/custom-validation-conditional
 import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config-default'
 import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
+import { fontsHandler } from './api/fonts/handler'
+import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -234,6 +236,11 @@ export async function createServer() {
   server.auth.default('jwt')
 
   // add ping route by default for health check
+  server.route({
+    method: 'GET',
+    path: '/certificates/{event}.svg',
+    handler: certificateHandler
+  })
 
   server.route({
     method: 'GET',
@@ -248,6 +255,28 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Health check endpoint'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/fonts/{filename}',
+    handler: fontsHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves available fonts'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/certificate-configuration',
+    handler: certificateConfigurationHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves certificate configurations'
     }
   })
 

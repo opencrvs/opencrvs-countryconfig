@@ -20,6 +20,8 @@ export const ORG_URL = 'http://opencrvs.org'
 export const COUNTRY_CONFIG_HOST = process.env.COUNTRY_CONFIG_HOST || '0.0.0.0'
 export const COUNTRY_CONFIG_PORT = process.env.COUNTRY_CONFIG_PORT || 3040
 export const AUTH_URL = process.env.AUTH_URL || 'http://localhost:4040'
+export const COUNTRY_CONFIG_URL =
+  process.env.COUNTRY_CONFIG_URL || 'http://localhost:3040'
 export const APPLICATION_CONFIG_URL =
   process.env.APPLICATION_CONFIG_URL || 'http://localhost:2021/'
 export const SENTRY_DSN = process.env.SENTRY_DSN

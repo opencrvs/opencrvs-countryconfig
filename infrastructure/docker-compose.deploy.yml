@@ -547,7 +547,7 @@ services:
       replicas: 1
     environment:
       - APN_SERVICE_URL=http://apm-server:8200
-      - COUNTRY_LOGO_URL=https://countryconfig.{{hostname}}/content/country-logo
+      - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
