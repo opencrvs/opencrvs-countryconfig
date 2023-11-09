@@ -1,3 +1,5 @@
+import { COUNTRY_CONFIG_URL } from '@countryconfig/constants'
+
 /* SMTP (Email) */
 export const SMTP_HOST = process.env.SMTP_HOST
 export const SMTP_PORT = process.env.SMTP_PORT
@@ -19,7 +21,7 @@ export const INFOBIP_SENDER_ID = process.env.INFOBIP_SENDER_ID
 
 export const EMAIL_API_KEY = process.env.EMAIL_API_KEY
 
-export const COUNTRY_LOGO_URL = process.env.COUNTRY_LOGO_URL as string
+export const COUNTRY_LOGO_URL = `${COUNTRY_CONFIG_URL}/content/country-logo`
 
 export const LOGIN_URL = process.env.LOGIN_URL as string
 
