@@ -16,7 +16,7 @@ services:
   apm-server:
     deploy:
       replicas: 2
-    
+
   client:
     deploy:
       replicas: 2
@@ -52,6 +52,8 @@ services:
       replicas: 2
 
   workflow:
+    environment:
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1,mongo2,mongo3/hearth-dev?replicaSet=rs0
     deploy:
       replicas: 2
 
@@ -64,7 +66,7 @@ services:
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1,mongo2,mongo3/webhooks?replicaSet=rs0
     deploy:
       replicas: 2
-  
+
   metrics:
     environment:
       - MONGO_URL=mongodb://metrics:${METRICS_MONGODB_PASSWORD}@mongo1,mongo2,mongo3/metrics?replicaSet=rs0

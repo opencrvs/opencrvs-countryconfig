@@ -668,21 +668,21 @@ function getTemplateMapping(
   location: string,
   useCase: string,
   fieldName: string,
-  locationIndex?: number
+  fhirLineArrayPosition?: number
 ): IHandlebarTemplates {
   return isUseCaseForPlaceOfEvent(useCase)
-    ? locationIndex
+    ? fhirLineArrayPosition
       ? {
           fieldName,
           operation: 'eventLocationAddressLineTemplateTransformer',
-          parameters: [locationIndex, fieldName, location]
+          parameters: [fhirLineArrayPosition, fieldName, location]
         }
       : {
           fieldName,
           operation: 'eventLocationAddressFHIRPropertyTemplateTransformer',
           parameters: [location]
         }
-    : locationIndex
+    : fhirLineArrayPosition
     ? {
         fieldName,
         operation: 'addressLineTemplateTransformer',
@@ -690,7 +690,7 @@ function getTemplateMapping(
           useCase.toUpperCase() === 'PRIMARY'
             ? AddressCases.PRIMARY_ADDRESS
             : AddressCases.SECONDARY_ADDRESS,
-          locationIndex,
+          fhirLineArrayPosition,
           fieldName,
           location
         ]
@@ -708,27 +708,40 @@ function getTemplateMapping(
 }
 
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
-function getMutationMapping(
-  type:
-    | 'TEXT'
-    | 'RADIO_GROUP'
-    | 'SELECT_WITH_OPTIONS'
-    | 'SELECT_WITH_DYNAMIC_OPTIONS',
-  location: string,
-  useCase: string,
-  locationIndex?: number
-): IMutationMapper {
+function getMutationMapping({
+  location,
+  useCase,
+  fhirLineArrayPosition,
+  isLowestAdministrativeLevel
+}: {
+  location: string
+  useCase: string
+  fhirLineArrayPosition?: number
+  isLowestAdministrativeLevel?: boolean
+}): IMutationMapper {
   return isUseCaseForPlaceOfEvent(useCase)
-    ? locationIndex || locationIndex === 0
+    ? fhirLineArrayPosition || fhirLineArrayPosition === 0
       ? {
           operation: 'eventLocationMutationTransformer',
-          parameters: [{ useCase, lineNumber: locationIndex }]
+          parameters: [
+            {
+              useCase,
+              lineNumber: fhirLineArrayPosition,
+              isLowestAdministrativeLevel
+            }
+          ]
         }
       : {
           operation: 'eventLocationMutationTransformer',
-          parameters: [{ useCase, transformedFieldName: location }]
+          parameters: [
+            {
+              useCase,
+              transformedFieldName: location,
+              isLowestAdministrativeLevel
+            }
+          ]
         }
-    : locationIndex || locationIndex === 0
+    : fhirLineArrayPosition || fhirLineArrayPosition === 0
     ? {
         operation: 'addressMutationTransformer',
         parameters: [
@@ -737,7 +750,8 @@ function getMutationMapping(
               useCase.toUpperCase() === 'PRIMARY'
                 ? AddressCases.PRIMARY_ADDRESS
                 : AddressCases.SECONDARY_ADDRESS,
-            lineNumber: locationIndex
+            lineNumber: fhirLineArrayPosition,
+            isLowestAdministrativeLevel
           }
         ]
       }
@@ -749,7 +763,8 @@ function getMutationMapping(
               useCase.toUpperCase() === 'PRIMARY'
                 ? AddressCases.PRIMARY_ADDRESS
                 : AddressCases.SECONDARY_ADDRESS,
-            transformedFieldName: location
+            transformedFieldName: location,
+            isLowestAdministrativeLevel
           }
         ]
       }
@@ -766,7 +781,7 @@ function getQueryMapping(
   location: string,
   useCase: string,
   fieldName: string,
-  locationIndex?: number
+  fhirLineArrayPosition?: number
 ): IQueryMapper {
   return isUseCaseForPlaceOfEvent(useCase)
     ? {
@@ -789,7 +804,10 @@ function getQueryMapping(
           fieldName ===
             `internationalCity${sentenceCase(useCase)}${sentenceCase(section)}`
             ? [
-                { transformedFieldName: location, lineNumber: locationIndex },
+                {
+                  transformedFieldName: location,
+                  lineNumber: fhirLineArrayPosition
+                },
                 {
                   fieldsToIgnoreForLocalAddress: [
                     `internationalDistrict${sentenceCase(
@@ -814,9 +832,9 @@ function getQueryMapping(
                   ]
                 }
               ]
-            : [{ lineNumber: locationIndex }]
+            : [{ lineNumber: fhirLineArrayPosition }]
       }
-    : locationIndex || locationIndex === 0
+    : fhirLineArrayPosition || fhirLineArrayPosition === 0
     ? {
         operation: 'addressQueryTransformer',
         parameters: [
@@ -825,7 +843,7 @@ function getQueryMapping(
               useCase.toUpperCase() === 'PRIMARY'
                 ? AddressCases.PRIMARY_ADDRESS
                 : AddressCases.SECONDARY_ADDRESS,
-            lineNumber: locationIndex
+            lineNumber: fhirLineArrayPosition
           }
         ]
       }
@@ -844,42 +862,66 @@ function getQueryMapping(
 }
 
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
-export function getMapping(
-  section: string,
+export function getMapping({
+  section,
+  type,
+  location,
+  useCase,
+  fieldName,
+  fhirLineArrayPosition,
+  isLowestAdministrativeLevel
+}: {
+  section: string
   type:
     | 'TEXT'
     | 'RADIO_GROUP'
     | 'SELECT_WITH_OPTIONS'
-    | 'SELECT_WITH_DYNAMIC_OPTIONS',
-  location: string, // used to filter offline locations and for FHIR props - use empty string for address lines
-  useCase: string,
-  fieldName: string,
-  locationIndex?: number
-): IFormFieldMapping {
+    | 'SELECT_WITH_DYNAMIC_OPTIONS'
+  location: string
+  useCase: string
+  fieldName: string
+  fhirLineArrayPosition?: number
+  isLowestAdministrativeLevel?: boolean
+}): IFormFieldMapping {
   if (type !== 'RADIO_GROUP') {
     return {
-      template: getTemplateMapping(location, useCase, fieldName, locationIndex),
-      mutation: getMutationMapping(type, location, useCase, locationIndex),
+      template: getTemplateMapping(
+        location,
+        useCase,
+        fieldName,
+        fhirLineArrayPosition
+      ),
+      mutation: getMutationMapping({
+        location,
+        useCase,
+        fhirLineArrayPosition,
+        isLowestAdministrativeLevel
+      }),
       query: getQueryMapping(
         section,
         type,
         location,
         useCase,
         fieldName,
-        locationIndex
+        fhirLineArrayPosition
       )
     }
   } else {
     // Radio Groups in addresses have no need for certificate template
     return {
-      mutation: getMutationMapping(type, location, useCase, locationIndex),
+      mutation: getMutationMapping({
+        location,
+        useCase,
+        fhirLineArrayPosition,
+        isLowestAdministrativeLevel
+      }),
       query: getQueryMapping(
         section,
         type,
         location,
         useCase,
         fieldName,
-        locationIndex
+        fhirLineArrayPosition
       )
     }
   }
