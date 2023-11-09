@@ -36,8 +36,8 @@ done
 
 print_usage_and_exit() {
   echo 'Usage: ./emergency-restore-metadata.sh --label=XXX --replicas=XXX'
-  echo "This script CLEARS ALL DATA and RESTORES'S A SPECIFIC DAY'S or VERSION'S DATA.  This process is irreversable, so USE WITH CAUTION."
-  echo "Script must receive a label parameter to restore data from that specific day in format +%Y-%m-%d i.e. 2019-01-01 or that version"
+  echo "This script CLEARS ALL DATA and RESTORES'S A SPECIFIC DAY'S or label's data.  This process is irreversable, so USE WITH CAUTION."
+  echo "Script must receive a label parameter to restore data from that specific day in format +%Y-%m-%d i.e. 2019-01-01 or that label"
   echo "The Hearth, OpenHIM User and Application-config db backup zips you would like to restore from: hearth-dev-{label}.gz, openhim-dev-{label}.gz, user-mgnt-{label}.gz and  application-config-{label}.gz must exist in /data/backups/mongo/ folder"
   echo "The Elasticsearch backup folder /data/backups/elasticsearch must exist with all previous snapshots and indices. All files are required"
   echo "The InfluxDB backup files must exist in the /data/backups/influxdb/{label} folder"
@@ -51,7 +51,7 @@ print_usage_and_exit() {
 }
 
 if [ -z "$LABEL" ]; then
-  echo "Error: Argument for the --label is required.  You must select which day's or which version's data you would like to roll back to."
+  echo "Error: Argument for the --label is required.  You must select which day's or which label's data you would like to roll back to."
   print_usage_and_exit
 fi
 

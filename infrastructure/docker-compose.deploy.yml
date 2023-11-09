@@ -470,7 +470,7 @@ services:
   client:
     environment:
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
-      - HOST={{hostname}}
+      - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
       - MINIO_URL=https://minio.{{hostname}}
     deploy:
       labels:
@@ -547,8 +547,10 @@ services:
       replicas: 1
     environment:
       - APN_SERVICE_URL=http://apm-server:8200
-      - COUNTRY_LOGO_URL=https://countryconfig.{{hostname}}/content/country-logo
+      - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
+      - CLIENT_APP_URL=https://register.{{hostname}}
+      - DOMAIN={{hostname}}
     networks:
       - overlay_net
     logging:
@@ -559,7 +561,7 @@ services:
   login:
     environment:
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
-      - HOST={{hostname}}
+      - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -592,6 +594,9 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PRIVATE_KEY_PATH=/run/secrets/jwt-private-key.{{ts}}
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - LOGIN_URL=https://login.{{hostname}}
+      - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
+      - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
     deploy:
       labels:
@@ -658,6 +663,8 @@ services:
     environment:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - LOGIN_URL=https://login.{{hostname}}
+      - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
     deploy:
       labels:
@@ -786,6 +793,8 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
+      - LOGIN_URL=https://login.{{hostname}}
+      - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
     deploy:
       labels:
@@ -966,6 +975,7 @@ services:
   dashboards:
     volumes:
       - /data/metabase:/data/metabase
+      - /data/metabase/metabase.init.db.sql:/metabase.init.db.sql
     networks:
       - overlay_net
     environment:

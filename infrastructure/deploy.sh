@@ -9,6 +9,7 @@
 set -e
 
 BASEDIR=$(dirname $0)
+PARENT_DIR=$(dirname $(dirname $0))
 
 # Reading Names parameters
 for i in "$@"; do
@@ -173,6 +174,10 @@ if [ -z "$DOCKERHUB_REPO" ] ; then
     print_usage_and_exit
 fi
 
+if [ -z "$CONTENT_SECURITY_POLICY_WILDCARD" ] ; then
+    echo 'Error: Missing environment variable CONTENT_SECURITY_POLICY_WILDCARD.'
+    print_usage_and_exit
+fi
 if [ -z "$EMAIL_API_KEY" ] ; then
     echo 'Info: Missing optional environment variable EMAIL_API_KEY.'
 fi
@@ -265,6 +270,9 @@ cp $BASEDIR/emergency-restore-metadata.sh /tmp/opencrvs/infrastructure/emergency
 
 # Copy authorized keys
 cp $BASEDIR/authorized_keys /tmp/opencrvs/infrastructure/authorized_keys
+
+# Copy metabase database
+cp $PARENT_DIR/src/api/dashboards/file/metabase.init.db.sql /tmp/opencrvs/infrastructure/metabase.init.db.sql
 
 rotate_authorized_keys() {
   # file exists and has a size of more than 0 bytes
@@ -393,7 +401,8 @@ docker_stack_deploy() {
   ROTATING_SEARCH_ELASTIC_PASSWORD=$ROTATING_SEARCH_ELASTIC_PASSWORD
   KIBANA_USERNAME=$KIBANA_USERNAME
   KIBANA_PASSWORD=$KIBANA_PASSWORD
-  SUPER_USER_PASSWORD=$SUPER_USER_PASSWORD"
+  SUPER_USER_PASSWORD=$SUPER_USER_PASSWORD
+  CONTENT_SECURITY_POLICY_WILDCARD=$CONTENT_SECURITY_POLICY_WILDCARD"
 
   echo "Pulling all docker images. This might take a while"
 
