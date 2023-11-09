@@ -14,7 +14,7 @@ on:
       core-image-tag:
         description: Core DockerHub image tag
         required: true
-        default: 'v1.3.0'
+        default: 'v1.3.1'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
@@ -81,12 +81,11 @@ jobs:
             sleep 10
           done
           while true; do
-            if docker manifest inspect opencrvs/ocrvs-farajaland:${{ github.event.inputs.countryconfig-image-tag }}; then
+            if docker manifest inspect ${{ secrets.DOCKERHUB_ACCOUNT }}/${{ secrets.DOCKERHUB_REPO }}:${{ github.event.inputs.countryconfig-image-tag }}; then
               break
             fi
             sleep 10
           done
-  
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
@@ -114,6 +113,7 @@ jobs:
           INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
           SENDER_EMAIL_ADDRESS: ${{ secrets.SENDER_EMAIL_ADDRESS }}
           SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
+          CONTENT_SECURITY_POLICY_WILDCARD: ${{ vars.CONTENT_SECURITY_POLICY_WILDCARD }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy --clear_data=${{ github.event.inputs.reset }} --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{ github.event.inputs.core-image-tag }} --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}

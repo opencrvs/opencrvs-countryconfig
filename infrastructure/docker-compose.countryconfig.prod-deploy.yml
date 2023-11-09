@@ -65,6 +65,7 @@ services:
 
   config:
     environment:
+      - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN}
 
   metrics:

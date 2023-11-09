@@ -239,7 +239,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{gateway}}/location?name=Ibombo",
+					"raw": "{{gateway}}/location?name=Ibombo&type=ADMIN_STRUCTURE",
 					"host": [
 						"{{gateway}}"
 					],
@@ -250,6 +250,10 @@
 						{
 							"key": "name",
 							"value": "Ibombo"
+						},
+						{
+							"key": "type",
+							"value": "ADMIN_STRUCTURE"
 						}
 					]
 				}

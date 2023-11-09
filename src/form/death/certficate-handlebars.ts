@@ -106,6 +106,8 @@ export const certificateHandlebars = {
   spouseBirthDate: 'spouseBirthDate',
   spouseNationality: 'spouseNationality',
   spouseNID: 'spouseNID',
+  spouseOccupation: 'spouseOccupation',
+  spouseEducationalAttainment: 'spouseEducationalAttainment',
   countryPrimarySpouse: 'countryPrimarySpouse',
   statePrimarySpouse: 'statePrimarySpouse',
   districtPrimarySpouse: 'districtPrimarySpouse',

@@ -64,6 +64,11 @@
         name: python3-pip
         state: present
 
+    - name: 'Install jq'
+      apt:
+        name: jq
+        state: present
+
     - name: 'Install pexpect python module for ansible expect commands'
       pip:
         name: pexpect
@@ -350,12 +355,12 @@
       ufw:
         rule: allow
         name: OpenSSH
-    
+
     - name: 'Install Fail2Ban'
       apt:
         name: fail2ban
         state: present
-        
+
     - name: 'Copy fail2ban jail.local'
       copy:
         src: ../jail.local
