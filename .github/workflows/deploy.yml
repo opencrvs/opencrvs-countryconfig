@@ -81,7 +81,7 @@ jobs:
             sleep 10
           done
           while true; do
-            if docker manifest inspect opencrvs/ocrvs-farajaland:${{ github.event.inputs.countryconfig-image-tag }}; then
+            if docker manifest inspect ${{ secrets.DOCKERHUB_ACCOUNT }}/${{ secrets.DOCKERHUB_REPO }}:${{ github.event.inputs.countryconfig-image-tag }}; then
               break
             fi
             sleep 10
