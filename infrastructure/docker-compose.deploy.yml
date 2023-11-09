@@ -975,6 +975,7 @@ services:
   dashboards:
     volumes:
       - /data/metabase:/data/metabase
+      - /data/metabase/metabase.init.db.sql:/metabase.init.db.sql
     networks:
       - overlay_net
     environment:

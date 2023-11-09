@@ -44,7 +44,7 @@ import {
 } from './api/notification/handler'
 import { mosipMediatorHandler } from '@countryconfig/api/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
-import { mapGeojsonHandler } from '@countryconfig/api/dashboard-map/handler'
+import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
 import { formHandler } from '@countryconfig/form'
 import { locationsHandler } from './data-seeding/locations/handler'
 import { certificateHandler } from './data-seeding/certificates/handler'
@@ -56,6 +56,7 @@ import { conditionalsHandler } from './form/common/custom-validation-conditional
 import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config-default'
 import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
+import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
 
@@ -357,6 +358,16 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Serves language content'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/dashboards/queries.json',
+    handler: dashboardQueriesHandler,
+    options: {
+      tags: ['api'],
+      description: 'Serves dashboard view refresher queries'
     }
   })
 

@@ -32,3 +32,5 @@ export const CONFIRM_REGISTRATION_URL =
   process.env.CONFIRM_REGISTRATION_URL ||
   'http://localhost:5001/confirm/registration'
 export const DEFAULT_TIMEOUT = 600000
+export const PRODUCTION = process.env.NODE_ENV === 'production'
+export const QA_ENV = process.env.QA_ENV || false

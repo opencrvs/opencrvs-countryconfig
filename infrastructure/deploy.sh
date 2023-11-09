@@ -9,6 +9,7 @@
 set -e
 
 BASEDIR=$(dirname $0)
+PARENT_DIR=$(dirname $(dirname $0))
 
 # Reading Names parameters
 for i in "$@"; do
@@ -313,6 +314,9 @@ cp $BASEDIR/emergency-restore-metadata.sh /tmp/opencrvs/infrastructure/emergency
 
 # Copy authorized keys
 cp $BASEDIR/authorized_keys /tmp/opencrvs/infrastructure/authorized_keys
+
+# Copy metabase database
+cp $PARENT_DIR/src/api/dashboards/file/metabase.init.db.sql /tmp/opencrvs/infrastructure/metabase.init.db.sql
 
 rotate_authorized_keys() {
   # file exists and has a size of more than 0 bytes
