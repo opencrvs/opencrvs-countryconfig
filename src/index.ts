@@ -16,13 +16,17 @@ import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
 import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
-import { SENTRY_DSN } from '@countryconfig/constants'
+import {
+  CLIENT_APP_URL,
+  HOSTNAME,
+  LOGIN_URL,
+  SENTRY_DSN
+} from '@countryconfig/constants'
 import {
   COUNTRY_CONFIG_HOST,
   COUNTRY_CONFIG_PORT,
   CHECK_INVALID_TOKEN,
   AUTH_URL,
-  HOSTNAME,
   DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
 import {
@@ -38,7 +42,7 @@ import {
   notificationScheme
 } from './api/notification/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
-import { mapGeojsonHandler } from '@countryconfig/api/dashboard-map/handler'
+import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
 import { formHandler } from '@countryconfig/form'
 import { locationsHandler } from './data-seeding/locations/handler'
 import { certificateHandler } from './data-seeding/certificates/handler'
@@ -48,6 +52,11 @@ import { applicationConfigHandler } from './api/application/handler'
 import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
 import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
 import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config-default'
+import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
+import { trackingIDHandler } from './api/tracking-id/handler'
+import { dashboardQueriesHandler } from './api/dashboards/handler'
+import { fontsHandler } from './api/fonts/handler'
+import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -167,9 +176,9 @@ async function getPublicKey(): Promise<string> {
 export async function createServer() {
   let whitelist: string[] = [HOSTNAME]
   if (HOSTNAME[0] !== '*') {
-    whitelist = [`https://login.${HOSTNAME}`, `https://register.${HOSTNAME}`]
+    whitelist = [LOGIN_URL, CLIENT_APP_URL]
   }
-  logger.info('Whitelist: ', JSON.stringify(whitelist))
+  logger.info(`Whitelist: ${JSON.stringify(whitelist)}`)
   const server = new Hapi.Server({
     host: COUNTRY_CONFIG_HOST,
     port: COUNTRY_CONFIG_PORT,
@@ -226,6 +235,11 @@ export async function createServer() {
   server.auth.default('jwt')
 
   // add ping route by default for health check
+  server.route({
+    method: 'GET',
+    path: '/certificates/{event}.svg',
+    handler: certificateHandler
+  })
 
   server.route({
     method: 'GET',
@@ -240,6 +254,28 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Health check endpoint'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/fonts/{filename}',
+    handler: fontsHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves available fonts'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/certificate-configuration',
+    handler: certificateConfigurationHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves certificate configurations'
     }
   })
 
@@ -280,6 +316,18 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
+    path: '/handlebars.js',
+    handler: handlebarsHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description:
+        'Serves custom handlebar helper functions as JS to be used in certificates'
+    }
+  })
+
+  server.route({
+    method: 'GET',
     path: '/validators.js',
     handler: validatorsHandler,
     options: {
@@ -302,12 +350,33 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
+    path: '/handlebars.js',
+    handler: handlebarsHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      description: 'Serves handlebars as JS'
+    }
+  })
+
+  server.route({
+    method: 'GET',
     path: '/content/{application}',
     handler: contentHandler,
     options: {
       auth: false,
       tags: ['api'],
       description: 'Serves language content'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/dashboards/queries.json',
+    handler: dashboardQueriesHandler,
+    options: {
+      tags: ['api'],
+      description: 'Serves dashboard view refresher queries'
     }
   })
 
@@ -431,6 +500,16 @@ export async function createServer() {
       auth: false,
       tags: ['api', 'users'],
       description: 'Returns users metadata'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/tracking-id',
+    handler: trackingIDHandler,
+    options: {
+      tags: ['api'],
+      description: 'Provides a tracking id'
     }
   })
 
