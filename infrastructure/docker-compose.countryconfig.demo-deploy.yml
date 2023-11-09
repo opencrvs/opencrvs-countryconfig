@@ -66,6 +66,7 @@ services:
 
   config:
     environment:
+      - QA_ENV=true
       - SENTRY_DSN=${SENTRY_DSN}
 
   metrics:

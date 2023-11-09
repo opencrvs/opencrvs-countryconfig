@@ -120,6 +120,7 @@ type RejectCorrectionVariables = ApproveCorrectionVariables & { reason: string }
 type DeclarationCommonVariables = {
   trackingId: string
   crvsOffice: string
+  registrationLocation: string
   applicationName: string
   informantName: string
 }
