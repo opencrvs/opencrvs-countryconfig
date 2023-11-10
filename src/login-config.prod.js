@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 window.config = {
-  AUTH_API_URL: 'https://auth.{{hostname}}/',
+  AUTH_API_URL: 'https://gateway.{{hostname}}/auth/',
   CONFIG_API_URL: 'https://config.{{hostname}}',
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',

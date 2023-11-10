@@ -12,7 +12,7 @@ window.config = {
   API_GATEWAY_URL: 'http://localhost:7070/',
   CONFIG_API_URL: 'http://localhost:2021',
   LOGIN_URL: 'http://localhost:3020',
-  AUTH_URL: 'http://localhost:4040',
+  AUTH_URL: 'http://localhost:7070/auth',
   MINIO_BUCKET: 'ocrvs',
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
   // Country code in uppercase ALPHA-3 format
