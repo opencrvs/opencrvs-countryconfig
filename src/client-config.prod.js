@@ -12,7 +12,7 @@ window.config = {
   API_GATEWAY_URL: 'https://gateway.{{hostname}}/',
   CONFIG_API_URL: 'https://config.{{hostname}}',
   LOGIN_URL: 'https://login.{{hostname}}',
-  AUTH_URL: 'https://gateway.{{hostname}}/auth',
+  AUTH_URL: 'https://gateway.{{hostname}}/auth/',
   MINIO_BUCKET: 'ocrvs',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
   // Country code in uppercase ALPHA-3 format
