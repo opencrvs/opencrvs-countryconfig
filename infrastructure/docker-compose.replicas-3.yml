@@ -60,6 +60,8 @@ services:
   search:
     deploy:
       replicas: 2
+    environment:
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1,mongo2,mongo3/hearth-dev?replicaSet=rs0
 
   webhooks:
     environment:
