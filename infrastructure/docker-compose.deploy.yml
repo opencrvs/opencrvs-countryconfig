@@ -283,6 +283,10 @@ services:
       - '/data/minio:/data'
     command: server --console-address ":9001" /data
     deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.data1 == true
       labels:
         - 'traefik.enable=true'
         - 'traefik.docker.network=opencrvs_overlay_net'
