@@ -9,6 +9,7 @@
 set -e
 
 BASEDIR=$(dirname $0)
+PARENT_DIR=$(dirname $(dirname $0))
 
 # Reading Names parameters
 for i in "$@"; do
@@ -173,6 +174,11 @@ if [ -z "$DOCKERHUB_REPO" ] ; then
     print_usage_and_exit
 fi
 
+if [ -z "$CONTENT_SECURITY_POLICY_WILDCARD" ] ; then
+    echo 'Error: Missing environment variable CONTENT_SECURITY_POLICY_WILDCARD.'
+    print_usage_and_exit
+fi
+
 if [ -z "$TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK" ] ; then
     echo 'Info: Missing optional MOSIP environment variable TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK.'
     TOKENSEEDER_MOSIP_AUTH__PARTNER_MISP_LK=''
@@ -308,6 +314,9 @@ cp $BASEDIR/emergency-restore-metadata.sh /tmp/opencrvs/infrastructure/emergency
 
 # Copy authorized keys
 cp $BASEDIR/authorized_keys /tmp/opencrvs/infrastructure/authorized_keys
+
+# Copy metabase database
+cp $PARENT_DIR/src/api/dashboards/file/metabase.init.db.sql /tmp/opencrvs/infrastructure/metabase.init.db.sql
 
 rotate_authorized_keys() {
   # file exists and has a size of more than 0 bytes
@@ -446,7 +455,8 @@ docker_stack_deploy() {
   NATIONAL_ID_OIDP_ESSENTIAL_CLAIMS=$NATIONAL_ID_OIDP_ESSENTIAL_CLAIMS
   NATIONAL_ID_OIDP_VOLUNTARY_CLAIMS=$NATIONAL_ID_OIDP_VOLUNTARY_CLAIMS
   NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY=$NATIONAL_ID_OIDP_CLIENT_PRIVATE_KEY
-  NATIONAL_ID_OIDP_JWT_AUD_CLAIM=$NATIONAL_ID_OIDP_JWT_AUD_CLAIM"
+  NATIONAL_ID_OIDP_JWT_AUD_CLAIM=$NATIONAL_ID_OIDP_JWT_AUD_CLAIM
+  CONTENT_SECURITY_POLICY_WILDCARD=$CONTENT_SECURITY_POLICY_WILDCARD"
 
   echo "Pulling all docker images. This might take a while"
 
