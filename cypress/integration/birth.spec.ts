@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import faker from "@faker-js/faker"
+import faker from '@faker-js/faker'
 
 context('Birth Integration Test', () => {
   beforeEach(() => {
@@ -30,7 +30,18 @@ context('Birth Integration Test', () => {
     cy.login('fieldWorker')
     cy.createPin()
     cy.verifyLandingPageVisible()
-    cy.enterMaximumInput({ informantType, motherDoB, motherFirstNames, motherFamilyName, fatherDoB, fatherFirstNames, fatherFamilyName, informantFirstNames, informantFamilyName, informantDoB })
+    cy.enterMaximumInput({
+      informantType,
+      motherDoB,
+      motherFirstNames,
+      motherFamilyName,
+      fatherDoB,
+      fatherFirstNames,
+      fatherFamilyName,
+      informantFirstNames,
+      informantFamilyName,
+      informantDoB
+    })
     cy.submitDeclaration()
     cy.logout()
   })
@@ -81,7 +92,18 @@ context('Birth Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.verifyLandingPageVisible()
-    cy.enterMaximumInput({ informantType, motherDoB, motherFirstNames, motherFamilyName, fatherDoB, fatherFirstNames, fatherFamilyName, informantFirstNames, informantFamilyName, informantDoB })
+    cy.enterMaximumInput({
+      informantType,
+      motherDoB,
+      motherFirstNames,
+      motherFamilyName,
+      fatherDoB,
+      fatherFirstNames,
+      fatherFamilyName,
+      informantFirstNames,
+      informantFamilyName,
+      informantDoB
+    })
     //register declaration
     cy.get('#registerDeclarationBtn').click()
     cy.get('#submit_confirm').click()

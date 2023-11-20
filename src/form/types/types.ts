@@ -68,6 +68,7 @@ type IAddressLineMapper = {
   transformedFieldName?: string
   useCase?: string
   lineNumber?: number
+  isLowestAdministrativeLevel?: boolean
 }
 
 export type IQueryMapper = {
@@ -930,3 +931,5 @@ export type AllowedAddressConfigurations = {
   yComparisonSection?: string
   conditionalCase?: string
 }
+
+export type AdministrativeLevel = 1 | 2 | 3 | 4 | 5
