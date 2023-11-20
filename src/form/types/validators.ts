@@ -11,7 +11,7 @@
 
 import * as customValidators from '../common/custom-validation-conditionals/custom-validators'
 
-/** Validators that are built in to core. You can create your own ones, or override these ones in `src/features/config/form/validators.ts` */
+/** Validators that are built in to core. You can create your own ones, or override these ones in the custom validators file imported above */
 type CoreValidator =
   | 'requiredBasic'
   | 'requiredSymbol'
