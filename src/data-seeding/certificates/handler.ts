@@ -11,8 +11,20 @@
 
 import { Request, ResponseToolkit } from '@hapi/hapi'
 import { readFileSync } from 'fs'
+import { capitalize } from 'lodash'
 
-export async function certificateHandler(_: Request, h: ResponseToolkit) {
+export async function certificateHandler(request: Request, h: ResponseToolkit) {
+  if (request.params.event) {
+    const res = JSON.stringify(
+      readFileSync(
+        `./src/data-seeding/certificates/source/${capitalize(
+          request.params.event
+        )}Certificate.svg`
+      ).toString()
+    )
+    return h.response(res).code(200)
+  }
+
   const Certificates = [
     {
       event: 'birth',
