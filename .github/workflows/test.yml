@@ -1,0 +1,29 @@
+name: Compile, lint and test
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checking out git repo
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 16.20
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.20'
+          cache: 'npm'
+
+      - name: Runs dependency installation
+        run: yarn
+
+      - name: Compile
+        run: yarn test:compilation
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test
