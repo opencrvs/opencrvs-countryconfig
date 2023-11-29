@@ -61,6 +61,12 @@ export interface IApplicationConfigResponse {
   config: IApplicationConfig
 }
 
+export function getCompositionId(resBody: fhir.Bundle) {
+  return resBody.entry
+    ?.map((e) => e.resource)
+    .find((res) => res?.resourceType === 'Composition')?.id
+}
+
 export function getTaskResource(
   bundle: fhir.Bundle & fhir.BundleEntry
 ): fhir.Task | undefined {
