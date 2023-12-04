@@ -286,10 +286,6 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       {
         operation: 'duplicateIDNumber',
         parameters: ['bride.iD']
-      },
-      {
-        operation: 'duplicateIDNumber',
-        parameters: ['informant.informantID']
       }
     ]
   } else if (configCase === 'bride') {
@@ -301,10 +297,6 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       {
         operation: 'duplicateIDNumber',
         parameters: ['groom.iD']
-      },
-      {
-        operation: 'duplicateIDNumber',
-        parameters: ['informant.informantID']
       }
     ]
   } else {
