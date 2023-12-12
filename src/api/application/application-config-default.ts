@@ -41,10 +41,14 @@ export const defaultApplicationConfig = {
   // Following constants aren't configurable via UI
   FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
   DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
-  EXTERNAL_VALIDATION_WORKQUEUE: false,
-  MARRIAGE_REGISTRATION: true,
+  FEATURES: {
+    DEATH_REGISTRATION: true,
+    MARRIAGE_REGISTRATION: true,
+    EXTERNAL_VALIDATION_WORKQUEUE: false,
+    INFORMANT_SIGNATURE: true,
+    PRINT_DECLARATION: true
+  },
   DATE_OF_BIRTH_UNKNOWN: false,
-  INFORMANT_SIGNATURE: true,
   INFORMANT_SIGNATURE_REQUIRED: false,
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp

@@ -27,5 +27,6 @@ window.config = {
   // http://localhost:4444/public/dashboard/fec78656-e4f9-4b51-b540-0fed81dbd821#bordered=false&titled=false&refresh=300
   REGISTRATIONS_DASHBOARD_URL: '',
   // http://localhost:4444/public/dashboard/a17e9bc0-15a2-4bd1-92fa-ab0f346227ca#bordered=false&titled=false&refresh=300
-  STATISTICS_DASHBOARD_URL: ''
+  STATISTICS_DASHBOARD_URL: '',
+  FEATURES: {}
 }
