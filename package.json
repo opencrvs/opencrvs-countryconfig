@@ -93,7 +93,7 @@
     "country-data": "^0.0.31",
     "cross-env": "^6.0.3",
     "csv2json": "^1.4.2",
-    "cypress": "9.6.1",
+    "cypress": "13.5.0",
     "date-fns": "^2.28.0",
     "esbuild": "^0.18.9",
     "google-libphonenumber": "^3.2.32",

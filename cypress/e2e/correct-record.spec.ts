@@ -12,18 +12,40 @@
 
 import faker from '@faker-js/faker'
 
+function refreshTrackingIdSearchUntilNameIsFound(
+  trackingId: string,
+  firstName: string,
+  lastName: string
+) {
+  cy.get('#searchText').clear()
+  cy.get('#searchText').type('E2E REFRESHING')
+  cy.get('#searchText').type('{enter}')
+  cy.get('#searchText').clear()
+  cy.get('#searchText').type(trackingId)
+  cy.get('#searchText').type('{enter}')
+
+  cy.get('#row_0')
+    .invoke('text')
+    .then((text) => {
+      if (!text.includes(`${firstName} ${lastName}`)) {
+        cy.wait(1000)
+        refreshTrackingIdSearchUntilNameIsFound(trackingId, firstName, lastName)
+      }
+    })
+}
+
 context('Correct Record Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
 
   it("declaration can be found with child's name", () => {
-    let firstName = faker.name.firstName()
-    let familyName = faker.name.lastName()
+    const originalFirstName = faker.name.firstName()
+    const originalLastName = faker.name.lastName()
 
     cy.createBirthRegistrationAs('registrar', {
-      firstName,
-      familyName
+      firstName: originalFirstName,
+      familyName: originalLastName
     })
 
     cy.login('registrar')
@@ -42,27 +64,27 @@ context('Correct Record Integration Test', () => {
           .click()
         cy.get('#confirm_form').click()
         cy.get('#btn_change_child_familyNameEng').click()
-        cy.get('#firstNamesEng').clear().type('Jonas')
-        cy.get('#familyNameEng').clear().type('Kahnwald')
-        firstName = 'Jonas'
-        familyName = 'Kahnwald'
+        const newFirstName = faker.name.firstName()
+        const newLastName = faker.name.lastName()
+        cy.get('#firstNamesEng').clear().type(newFirstName)
+        cy.get('#familyNameEng').clear().type(newLastName)
         cy.get('#back-to-review-button').click()
         cy.get('#continue_button').click()
         cy.get('#supportDocumentRequiredForCorrection_false').click()
         cy.get('#confirm_form').click()
-        // we need to figure out a way to remove these waits
-        cy.wait(5000)
-        cy.get('#type_CLERICAL_ERROR').click()
+        cy.get('#type_CLERICAL_ERROR', { timeout: 10000 }).click()
         cy.get('#confirm_form').click()
-        cy.wait(5000)
-        cy.get('#correctionFees_NOT_REQUIRED').click()
+        cy.get('#correctionFees_NOT_REQUIRED', { timeout: 10000 }).click()
         cy.get('#make_correction').click()
-        cy.wait(10000)
-        cy.get('#searchType').click()
+
+        cy.get('#searchType', { timeout: 10000 }).click()
         cy.get('#tracking-id').click()
-        cy.get('#searchText').type(trackingId)
-        cy.get('#searchText').type('{enter}')
-        cy.get(`:contains("${firstName} ${familyName}")`).should('be.visible')
+
+        refreshTrackingIdSearchUntilNameIsFound(
+          trackingId,
+          newFirstName,
+          newLastName
+        )
       })
   })
 })
