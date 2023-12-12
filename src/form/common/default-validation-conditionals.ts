@@ -230,6 +230,47 @@ export const brideOrGroomBirthDateValidators = (spouseType: string) => [
   }
 ]
 
+export const brideOrGroomAgeValidators = [
+  {
+    operation: 'range',
+    parameters: [18, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+] satisfies Validator[]
+
+export const ageOfIndividualConditionals: Validator[] = [
+  {
+    operation: 'range',
+    parameters: [12, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+]
+
+export const ageOfParentsConditionals = [
+  ...ageOfIndividualConditionals,
+  {
+    operation: 'isValidParentsBirthDate',
+    parameters: [10, true]
+  }
+]
+
+export const ageOfDeceasedConditionals = [
+  {
+    operation: 'range',
+    parameters: [0, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+] satisfies Validator[]
+
 export const exactDateOfBirthUnknownConditional = [
   {
     action: 'hide',
