@@ -258,7 +258,7 @@ export const ageOfParentsConditionals = [
     operation: 'isValidParentsBirthDate',
     parameters: [10, true]
   }
-]
+] satisfies Validator[]
 
 export const ageOfDeceasedConditionals = [
   {
