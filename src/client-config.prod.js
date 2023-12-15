@@ -20,7 +20,6 @@ window.config = {
   AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',
   LANGUAGES: 'en,fr',
   SENTRY: '{{sentry}}',
-  LOGROCKET: '',
   LEADERBOARDS_DASHBOARD_URL:
     'https://metabase.{{hostname}}/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300',
   REGISTRATIONS_DASHBOARD_URL:

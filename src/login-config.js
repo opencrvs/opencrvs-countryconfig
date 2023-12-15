@@ -17,6 +17,5 @@ window.config = {
   AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',
   CLIENT_APP_URL: 'http://localhost:3000/',
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
-  SENTRY: '',
-  LOGROCKET: ''
+  SENTRY: ''
 }
