@@ -16,6 +16,5 @@ window.config = {
   LANGUAGES: 'en,fr',
   CLIENT_APP_URL: 'https://register.{{hostname}}/',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
-  SENTRY: '{{sentry}}',
-  LOGROCKET: ''
+  SENTRY: '{{sentry}}'
 }

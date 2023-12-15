@@ -19,7 +19,6 @@ window.config = {
   COUNTRY: 'FAR',
   LANGUAGES: 'en,fr',
   SENTRY: '',
-  LOGROCKET: '',
   // Use the values in comments when Metabase is running locally
   // http://localhost:4444/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300
   LEADERBOARDS_DASHBOARD_URL: '',
