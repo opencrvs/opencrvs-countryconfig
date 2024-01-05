@@ -383,7 +383,7 @@ services:
         tag: 'elastalert'
 
   logstash:
-    image: logstash:7.17.0
+    image: logstash:7.17.16
     command: logstash -f /etc/logstash/logstash.conf --verbose
     depends_on:
       - elasticsearch
