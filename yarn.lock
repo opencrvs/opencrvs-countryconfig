@@ -3220,9 +3220,9 @@
   integrity sha512-sgZtDIS22MwVDYhWaHWYCm3MWdfMFtBxUPHLl0EJq6nxayz/J3WVuXaewLSqINxWyRgvzhYMvjf1h8K/jj+1OA==
 
 "@types/csv2json@^1.4.0":
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/@types/csv2json/-/csv2json-1.4.4.tgz#c855ed7e07d859db0345d72856444b807c2fa962"
-  integrity sha512-td6M5wwVO5sowevjZmUuEQgVEmZTOLborta1qdnlByhG22ZEJzT/KMXbFKnOkrStxhPX5pf2PVsD7lA3ApXwTA==
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/@types/csv2json/-/csv2json-1.4.5.tgz#b037221439878f22944faaa7361f157d81052dfd"
+  integrity sha512-152IxknP/Mp2FJAjppaNIwNr2ufWXtVcbNgU+2UTcawSr2FWnqhaTk2sIVOmlntFAyJrGdNACs3AzKz5gIpNOA==
   dependencies:
     "@types/pumpify" "*"
 
@@ -3234,9 +3234,9 @@
     "@types/node" "*"
 
 "@types/duplexify@*":
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/@types/duplexify/-/duplexify-3.6.3.tgz#42b1716c5d52a42ba9072696c0d33ca0a9bffd6d"
-  integrity sha512-KE0Yb3JraglJMB53+A/RMXbd9w//pQfiSqkrsoAxKcNOEIe1EHfEgbvoi2lkk2AvhhJtplugJSB2Mptc3DZMNA==
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/@types/duplexify/-/duplexify-3.6.4.tgz#aa7e916c33fcc05be8769546fd0441d9b368613e"
+  integrity sha512-2eahVPsd+dy3CL6FugAzJcxoraWhUghZGEQJns1kTKfCXWKJ5iG/VkaB05wRVrDKHfOFKqb0X0kXh91eE99RZg==
   dependencies:
     "@types/node" "*"
 
@@ -3435,11 +3435,11 @@
     form-data "^4.0.0"
 
 "@types/node@*":
-  version "20.8.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.8.tgz#adee050b422061ad5255fc38ff71b2bb96ea2a0e"
-  integrity sha512-YRsdVxq6OaLfmR9Hy816IMp33xOBjfyOgUd77ehqg96CFywxAPbDbXvAsuN2KVg2HOT8Eh6uAfU+l4WffwPVrQ==
+  version "20.10.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.6.tgz#a3ec84c22965802bf763da55b2394424f22bfbb5"
+  integrity sha512-Vac8H+NlRNNlAmDfGUP7b5h/KA+AtWIzuXy0E6OyP8f1tCLYAtPvKRRDJjAPqhpCb0t6U2j7/xqAuLEebW2kiw==
   dependencies:
-    undici-types "~5.25.1"
+    undici-types "~5.26.4"
 
 "@types/node@^10.12.5":
   version "10.17.60"
@@ -3489,9 +3489,9 @@
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
 "@types/pumpify@*":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@types/pumpify/-/pumpify-1.4.3.tgz#cf8b1abc4b2b58ed1cce28a8f9ca604fef0b7bcd"
-  integrity sha512-ie6+WgKnjXYFA37OdIfI72b+RSQ4lIlOwcp38SYr16xJo6qOGAovvVR4j2UuBohgkAGiYWRwMNCfxdRGQloEyw==
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@types/pumpify/-/pumpify-1.4.4.tgz#2246750e9380a1f885bf43c58cb31ddbb280d4a7"
+  integrity sha512-+cWbQUecD04MQYkjNBhPmcUIP368aloYmqm+ImdMKA8rMpxRNAhZAD6gIj+sAVTF1DliqrT/qUp6aGNi/9U3tw==
   dependencies:
     "@types/duplexify" "*"
     "@types/node" "*"
@@ -10166,11 +10166,6 @@ underscore@>1.4.4:
   version "1.13.6"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.6.tgz#04786a1f589dc6c09f761fc5f45b89e935136441"
   integrity sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==
-
-undici-types@~5.25.1:
-  version "5.25.3"
-  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-5.25.3.tgz#e044115914c85f0bcbb229f346ab739f064998c3"
-  integrity sha512-Ga1jfYwRn7+cP9v8auvEXN1rX3sWqlayd4HP7OKk4mZWylEmu3KzXDUGrQUN6Ol7qo1gPvB2e5gX6udnyEPgdA==
 
 undici-types@~5.26.4:
   version "5.26.5"
