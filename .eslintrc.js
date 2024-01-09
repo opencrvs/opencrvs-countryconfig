@@ -18,7 +18,6 @@ module.exports = {
     fhir: true
   },
   env: {
-    node: true,
-    jest: true
+    node: true
   }
 }
