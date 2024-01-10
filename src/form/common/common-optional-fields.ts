@@ -17,6 +17,7 @@ import {
 } from './select-options'
 import { certificateHandlebars } from '../birth/certificate-handlebars'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { Validator } from '../types/validators'
 
 const exactDobConditional: Conditional[] = [
   {
@@ -53,27 +54,15 @@ export const exactDateOfBirthUnknown = (
 
 export const getAgeOfIndividualInYears = (
   label: MessageDescriptor,
-  conditionals: Conditional[]
+  conditionals: Conditional[],
+  validators: Validator[]
 ): SerializedFormField => ({
   name: 'ageOfIndividualInYears',
   type: 'NUMBER',
   label,
   required: true,
   initialValue: '',
-  validator: [
-    {
-      operation: 'range',
-      parameters: [12, 120]
-    },
-    {
-      operation: 'maxLength',
-      parameters: [3]
-    },
-    {
-      operation: 'isValidParentsBirthDate',
-      parameters: [10, true]
-    }
-  ],
+  validator: validators,
   conditionals,
   postfix: 'years',
   inputFieldWidth: '78px'

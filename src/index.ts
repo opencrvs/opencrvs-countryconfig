@@ -338,17 +338,6 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/handlebars.js',
-    handler: handlebarsHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves handlebars as JS'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/content/{application}',
     handler: contentHandler,
     options: {

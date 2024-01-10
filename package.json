@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "OpenCRVS country configuration for reference data",
   "license": "MPL-2.0",
   "husky": {
@@ -28,8 +28,8 @@
     "@graphql-codegen/typescript": "^3.0.4",
     "@graphql-codegen/typescript-operations": "^3.0.4",
     "@types/google-libphonenumber": "^7.4.23",
+    "@types/hapi__inert": "5.2.1",
     "@types/handlebars": "^4.1.0",
-    "@types/hapi__inert": "^5.2.3",
     "@types/react-intl": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
