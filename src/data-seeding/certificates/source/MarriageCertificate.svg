@@ -26,7 +26,7 @@
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="300" letter-spacing="0px">
   <tspan x="50%" y="328.69" text-anchor="middle">Place of Marriage&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans Bengali" font-size="12" font-weight="500" letter-spacing="0px"><tspan x="210" y="367.004">&#10;</tspan></text>
+<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="500" letter-spacing="0px"><tspan x="210" y="367.004">&#10;</tspan></text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
   <tspan x="50%" y="350.828" text-anchor="middle">{{districtPlaceofmarriage}}{{internationalDistrictPlaceofmarriage}}, {{statePlaceofmarriage}}{{internationalStatePlaceofmarriage}}, {{countryPlaceofmarriage}}&#10;</tspan>
 </text>
