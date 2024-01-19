@@ -41,6 +41,8 @@ import {
 } from './required-fields'
 import { Event, ISerializedForm } from '../types/types'
 import {
+  ageOfIndividualConditionals,
+  brideOrGroomAgeValidators,
   exactDateOfBirthUnknownConditional,
   getNationalIDValidators
 } from '../common/default-validation-conditionals'
@@ -128,7 +130,8 @@ export const marriageForm: ISerializedForm = {
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantBrideOrGroom
-              )
+              ),
+              ageOfIndividualConditionals
             ),
             getNationality(
               certificateHandlebars.informantNationality,
@@ -183,7 +186,8 @@ export const marriageForm: ISerializedForm = {
             exactDateOfBirthUnknown([]),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfGroom,
-              exactDateOfBirthUnknownConditional
+              exactDateOfBirthUnknownConditional,
+              brideOrGroomAgeValidators
             ),
             getNationality(certificateHandlebars.groomNationality, []), // Required field
             getNationalID(
@@ -230,12 +234,11 @@ export const marriageForm: ISerializedForm = {
               certificateHandlebars.brideBirthDate
             ), // Required field
             exactDateOfBirthUnknown([]),
-            getAgeOfIndividualInYears(formMessageDescriptors.ageOfBride, [
-              {
-                action: 'hide',
-                expression: '!values.exactDateOfBirthUnknown'
-              }
-            ]),
+            getAgeOfIndividualInYears(
+              formMessageDescriptors.ageOfBride,
+              exactDateOfBirthUnknownConditional,
+              brideOrGroomAgeValidators
+            ),
             getNationality(certificateHandlebars.brideNationality, []), // Required field
             getNationalID(
               'iD',
