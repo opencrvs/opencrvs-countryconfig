@@ -9,7 +9,7 @@
   <tspan x="50%" y="387.552" text-anchor="middle">This event was registered at&#10;</tspan>
 </text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-  <tspan x="50%" y="403.552" text-anchor="middle">{{registrationLocation}}&#10;</tspan>
+  <tspan x="50%" y="403.552" text-anchor="middle">{{location registrar.officeId 'name'}}, {{location registrar.districtId 'name'}}, {{location registrar.stateId 'name'}}&#10;</tspan>
 </text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
   <tspan x="50%" y="218.828" text-anchor="middle">{{groomFirstName}} {{groomFamilyName}} &amp;</tspan><tspan x="50%" y="236.828" text-anchor="middle">{{brideFirstName}} {{brideFamilyName}}&#10;</tspan>
@@ -28,7 +28,7 @@
 </text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="500" letter-spacing="0px"><tspan x="210" y="367.004">&#10;</tspan></text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
-  <tspan x="50%" y="350.828" text-anchor="middle">{{districtPlaceofmarriage}}{{internationalDistrictPlaceofmarriage}}, {{statePlaceofmarriage}}{{internationalStatePlaceofmarriage}}, {{countryPlaceofmarriage}}&#10;</tspan>
+  <tspan x="50%" y="350.828" text-anchor="middle">{{location districtPlaceofmarriageId 'name'}}{{internationalDistrictPlaceofmarriage}}, {{location statePlaceofmarriageId 'name'}}{{internationalStatePlaceofmarriage}}, {{countryPlaceofmarriage}}&#10;</tspan>
 </text>
 <line x1="43.4985" y1="367.75" x2="376.499" y2="365.75" stroke="#EEEEEE" stroke-width="0.5"/>
 <line x1="43.4985" y1="173.75" x2="376.499" y2="171.75" stroke="#EEEEEE" stroke-width="0.5"/>

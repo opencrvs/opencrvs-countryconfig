@@ -13,7 +13,7 @@
   <tspan x="50%" y="445.552" text-anchor="middle">&#10;</tspan>
 </text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-  <tspan x="50%" y="429.552" text-anchor="middle">This event was registered at {{registrationLocation}}&#10;</tspan>
+  <tspan x="50%" y="429.552" text-anchor="middle">This event was registered at {{location registrar.officeId 'name'}}, {{location registrar.districtId 'name'}}, {{location registrar.stateId 'name'}}&#10;</tspan>
 </text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
   <tspan x="50%" y="308.828" text-anchor="middle">{{eventDate}}&#10;</tspan>
@@ -31,7 +31,7 @@
 {{#ifCond placeOfBirth '===' 'HEALTH_FACILITY' }}
 <tspan x="50%" y="367.828" text-anchor="middle">{{placeOfDeath}}&#10;</tspan>
     {{else}}
-<tspan x="50%" y="367.828" text-anchor="middle">{{districtPlaceofdeath}}{{internationalDistrictPlaceofdeath}}, {{statePlaceofdeath}}{{internationalStatePlaceofdeath}}, {{countryPlaceofdeath}}&#10;</tspan>
+<tspan x="50%" y="367.828" text-anchor="middle">{{location districtPlaceofdeathId 'name'}}{{internationalDistrictPlaceofdeath}}, {{location statePlaceofdeathId 'name'}}{{internationalStatePlaceofdeath}}, {{countryPlaceofdeath}}&#10;</tspan>
 {{/ifCond}}
 </text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
