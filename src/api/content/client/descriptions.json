@@ -1063,6 +1063,7 @@
     "misc.title.declarationStatus": "Title for review action component",
     "review.actions.description.confirmComplete": "Description for review action component when complete declaration",
     "review.actions.description.confirmInComplete": "Description for review action component when incomplete declaration",
+    "review.actions.description.hasError": "Description for review action component when declaration has errors on fields",
     "review.actions.title.declarationStatus": "Title for review action component",
     "review.form.section.review.name": "Form section name for Review",
     "review.form.section.review.title": "Form section title for Review",

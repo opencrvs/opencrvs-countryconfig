@@ -13,7 +13,7 @@ on:
       core-image-tag:
         description: Core DockerHub image tag
         required: true
-        default: 'v1.3.1'
+        default: 'v1.3.2'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
@@ -68,7 +68,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-  
+
       - name: Wait for images to be available
         run: |
           while true; do
@@ -83,7 +83,6 @@ jobs:
             fi
             sleep 10
           done
-  
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         env:

@@ -59,7 +59,9 @@ import {
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
   informantNotMotherOrFather,
-  detailsExistConditional
+  detailsExistConditional,
+  ageOfIndividualConditionals,
+  ageOfParentsConditionals
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -248,7 +250,8 @@ export const birthForm: ISerializedForm = {
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantMotherOrFather
-              )
+              ),
+              ageOfIndividualConditionals
             ),
             getNationality(
               certificateHandlebars.informantNationality,
@@ -319,7 +322,10 @@ export const birthForm: ISerializedForm = {
             exactDateOfBirthUnknown(detailsExistConditional),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfMother,
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
+              exactDateOfBirthUnknownConditional.concat(
+                detailsExistConditional
+              ),
+              ageOfParentsConditionals
             ),
             getNationality(
               certificateHandlebars.motherNationality,
@@ -395,7 +401,10 @@ export const birthForm: ISerializedForm = {
             exactDateOfBirthUnknown(detailsExistConditional),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfFather,
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
+              exactDateOfBirthUnknownConditional.concat(
+                detailsExistConditional
+              ),
+              ageOfParentsConditionals
             ),
             getNationality(
               certificateHandlebars.fatherNationality,
