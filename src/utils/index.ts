@@ -12,7 +12,7 @@
 import fetch from 'node-fetch'
 import { APPLICATION_CONFIG_URL, FHIR_URL } from '@countryconfig/constants'
 import { callingCountries } from 'country-data'
-import * as csv2json from 'csv2json'
+import csv2json from 'csv2json'
 import { createReadStream } from 'fs'
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
 import { URL } from 'url'
