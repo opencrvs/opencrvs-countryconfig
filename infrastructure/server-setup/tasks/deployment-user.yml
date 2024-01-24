@@ -1,0 +1,14 @@
+#
+# Configures the user used for provisioning to be the deployment user
+# A separate deployment user will be added in 1.4.0
+#
+- name: Ensure group "docker" exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Add user to Docker group
+  user:
+    name: '{{ ansible_user }}'
+    groups: docker
+    append: yes

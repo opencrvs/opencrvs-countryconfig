@@ -1,0 +1,17 @@
+# Fail2Ban configuration
+
+{% if only_allow_access_from_addresses is defined %}
+[DEFAULT]
+# Whitelisted IP addresses
+ignoreip = 127.0.0.1/8 ::1 {% for ip in only_allow_access_from_addresses %}{{ ip }} {% endfor %}
+{% endif %}
+
+[sshd]
+mode = aggressive
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 10
+bantime = 5m
+findtime = 5m

@@ -21,23 +21,16 @@ timestamp_type: 'iso'
 use_strftime_index: false
 # https://github.com/Yelp/elastalert/issues/1260
 raw_count_keys: false
-alert_subject: '{{HOST}} {}: {} {} 🚨'
-alert_subject_args:
-  - 'event.kind'
-  - 'rule.name'
-  - 'kibana.alert.context.apm__error_rate.serviceName'
-alert_text: 'Login to https://kibana.{{HOST}}/app/apm/services/{}/overview to view the alert.'
-alert_text_args:
-  - 'kibana.alert.context.apm__error_rate.serviceName'
 filter:
   - query:
-      query_string:
-        query: '@timestamp:*'
-alert:
-  - 'email'
-email: '{{ALERT_EMAIL}}'
-from_addr: 'alert@opencrvs.org'
-smtp_host: '{{SMTP_HOST}}'
-smtp_port: {{SMTP_PORT}}
-smtp_ssl: false
-smtp_auth_file: '/opt/elastalert/auth.yaml'
+      term:
+        rule.name.keyword:
+          value: 'Error in service'
+
+alert: post2
+http_post2_url: 'http://countryconfig:3040/email'
+http_post2_payload:
+  subject: '{% raw %}{{DOMAIN}}{% endraw %} {{event.kind}}: {{rule.name}} {{kibana.alert.context.apm__error_rate.serviceName}} 🚨'
+  html: 'Login to https://kibana.{% raw %}{{DOMAIN}}{% endraw %}/app/apm/services/{{kibana.alert.context.apm__error_rate.serviceName}}/overview to view the alert.'
+  from: '{% raw %}{{SENDER_EMAIL_ADDRESS}}{% endraw %}'
+  to: '{% raw %}{{ALERT_EMAIL}}{% endraw %}'

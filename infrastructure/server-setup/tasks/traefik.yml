@@ -1,0 +1,5 @@
+- name: 'Create acme file for traefik'
+  file:
+    path: /data/traefik/acme.json
+    state: touch
+    mode: '600'

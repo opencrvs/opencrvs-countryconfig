@@ -15,10 +15,11 @@ on:
         type: choice
         description: Environment to seed data
         required: true
-        default: 'staging'
+        default: 'development'
         options:
-          - staging
+          - development
           - qa
+          - staging
           - production
       core-image-tag:
         description: Core DockerHub image tag
@@ -27,9 +28,6 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
     timeout-minutes: 60
-    strategy:
-      matrix:
-        node-version: [16.20.0]
     steps:
       - name: Clone core
         uses: actions/checkout@v3

@@ -16,6 +16,8 @@ buffer_time:
 
 es_host: elasticsearch
 es_port: 9200
+es_username: '{{ES_USERNAME}}'
+es_password: '{{ES_PASSWORD}}'
 
 writeback_index: elastalert_status
 
