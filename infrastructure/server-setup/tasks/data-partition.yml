@@ -1,0 +1,235 @@
+- name: 'Precheck if encrypted file system exists so we dont try to bootstrap'
+  stat:
+    path: /cryptfs_file_sparse.img
+    get_checksum: False
+  register: encryptedFileSystemPreCheck
+
+- name: 'Bootstrap encrypted data folder'
+  script: ../cryptfs/bootstrap.sh -s {{encrypted_disk_size}} -p {{disk_encryption_key}}
+  when: (not encryptedFileSystemPreCheck.stat.exists)
+
+- name: Wait for encrypted file system
+  ansible.builtin.wait_for:
+    path: /cryptfs_file_sparse.img
+    state: present
+
+- name: 'Register encrypted file system'
+  stat:
+    path: /cryptfs_file_sparse.img
+    get_checksum: False
+  register: encryptedFileSystemPostCheck
+
+- name: Check if cryptfs_file_sparse.img is already mounted
+  shell: mount | grep -q 'cryptfs on /data'
+  register: is_mounted
+  ignore_errors: true
+  changed_when: false
+
+- name: 'Mount encrypted data folder'
+  script: ../cryptfs/mount.sh -p {{ disk_encryption_key }}
+  when:
+    - encryptedFileSystemPostCheck.stat.exists
+    # Check if cryptfs_file_sparse.img is already mounted
+    - is_mounted.rc != 0
+
+  # Create data directories
+- name: Check mongo data directory
+  stat:
+    path: /data/mongo
+  register: mongo_data
+
+- name: 'Create mongo data directory'
+  file:
+    path: /data/mongo
+    state: directory
+  when: not mongo_data.stat.exists
+
+- name: Check mongo data backup directory
+  stat:
+    path: /data/backups/mongo
+  register: mongo_data_backup
+
+- name: 'Create mongo backup directory'
+  file:
+    path: /data/backups/mongo
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+  when: not mongo_data_backup.stat.exists
+
+- name: 'Create traefik data directory'
+  file:
+    path: /data/traefik
+    state: directory
+
+- name: Check elasticsearch data directory
+  stat:
+    path: /data/elasticsearch
+  register: elasticsearch_data
+
+- name: 'Create elasticsearch data directory'
+  file:
+    path: /data/elasticsearch
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+  when: not elasticsearch_data.stat.exists
+
+- name: Check elasticsearch data backup directory
+  stat:
+    path: /data/backups/elasticsearch
+  register: elasticsearch_data_backup
+
+- name: 'Create elasticsearch backup directory'
+  file:
+    path: /data/backups/elasticsearch
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: ugo+rwx
+  when: not elasticsearch_data_backup.stat.exists
+
+- name: Check metabase data directory
+  stat:
+    path: /data/metabase
+  register: metabase_data
+
+- name: 'Create metabase data directory'
+  file:
+    path: /data/metabase
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+  when: not metabase_data.stat.exists
+
+- name: Check metabase data backup directory
+  stat:
+    path: /data/backups/metabase
+  register: metabase_data_backup
+
+- name: 'Create metabase backup directory'
+  file:
+    path: /data/backups/metabase
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: ugo+rwx
+  when: not metabase_data_backup.stat.exists
+
+- name: Check influxdb data directory
+  stat:
+    path: /data/influxdb
+  register: influxdb_data
+
+- name: 'Create influxdb data directory'
+  file:
+    path: /data/influxdb
+    state: directory
+  when: not influxdb_data.stat.exists
+
+- name: Check influxdb data backup directory
+  stat:
+    path: /data/backups/influxdb
+  register: influxdb_data_backup
+
+- name: 'Create influxdb backup directory'
+  file:
+    path: /data/backups/influxdb
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+  when: not influxdb_data_backup.stat.exists
+
+- name: Check minio data directory
+  stat:
+    path: /data/minio
+  register: minio_data
+
+- name: 'Create minio data directory'
+  file:
+    path: /data/minio
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: ugo+rwx
+  when: not minio_data.stat.exists
+
+- name: Check minio data backup directory
+  stat:
+    path: /data/backups/minio
+  register: minio_data_backup
+
+- name: 'Create minio backup directory'
+  file:
+    path: /data/backups/minio
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: ugo+rwx
+  when: not minio_data_backup.stat.exists
+
+- name: Check wireguard data backup directory
+  stat:
+    path: /data/wireguard
+  register: wireguard_data
+
+- name: 'Create wireguard backup directory'
+  file:
+    path: /data/wireguard
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: ugo+rwx
+  when: not wireguard_data.stat.exists
+
+- name: Check vsexport data directory
+  stat:
+    path: /data/vsexport
+  register: vsexport_data
+
+- name: 'Create vsexport data directory'
+  file:
+    path: /data/vsexport
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: ugo+rwx
+  when: not vsexport_data.stat.exists
+
+- name: Check vsexport data backup directory
+  stat:
+    path: /data/backups/vsexport
+  register: vsexport_data_backup
+
+- name: 'Create vsexport backup directory'
+  file:
+    path: /data/backups/vsexport
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: ugo+rwx
+  when: not vsexport_data_backup.stat.exists
+
+- name: 'Create secrets directory'
+  file:
+    path: /data/secrets
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+
+- name: Save secrets into encrypted folder for access by scripts
+  ansible.builtin.copy:
+    dest: /data/secrets/opencrvs.secrets
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+    content: |
+      MONGODB_ADMIN_PASSWORD={{ mongodb_admin_password }}
+      MONGODB_ADMIN_USER={{ mongodb_admin_username }}
+      ELASTICSEARCH_ADMIN_PASSWORD={{elasticsearch_superuser_password}}
+      ELASTICSEARCH_ADMIN_USER=elastic

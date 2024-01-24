@@ -1,0 +1,17 @@
+- name: 'Allow secure docker swarm node communication (managers only)'
+  ufw:
+    rule: allow
+    port: 2377
+    proto: tcp
+
+- name: 'Create primary swarm manager'
+  shell: docker swarm init --advertise-addr {{ ansible_default_ipv4.address }}
+  when: "docker_info.stdout.find('Swarm: inactive') != -1"
+
+- name: 'Get docker swarm manager token'
+  shell: docker swarm join-token -q manager
+  register: manager_token
+
+- name: 'Get docker swarm worker token'
+  shell: docker swarm join-token -q worker
+  register: worker_token

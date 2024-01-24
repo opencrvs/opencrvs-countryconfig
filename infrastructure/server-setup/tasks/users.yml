@@ -1,0 +1,205 @@
+- name: Ensure users are present
+  user:
+    name: '{{ item.name }}'
+    state: '{{ item.state }}'
+  with_items: '{{ users }}'
+
+- name: Grant passwordless sudo to the users, but prevent usage of 'su'
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/{{ item.name }}
+    line: '{{ item.name }} ALL=(ALL) NOPASSWD:ALL, !/usr/bin/su'
+    validate: 'visudo -cf %s'
+    create: yes
+  become: yes
+  when: item.state == 'present' and item.sudoer == true
+  with_items: '{{ users }}'
+
+- name: Set authorized keys for users
+  authorized_key:
+    user: '{{ item.0.name }}'
+    key: '{{ item.1 }}'
+  when: item.0.state == 'present'
+  with_subelements:
+    - '{{ users }}'
+    - ssh_keys
+
+- name: Ensure user's shell is bash
+  user:
+    name: '{{ item.name }}'
+    shell: /bin/bash
+  when: item.state == 'present'
+  with_items: '{{ users }}'
+
+- name: Ensure TERM is set in .bashrc
+  lineinfile:
+    path: /home/{{ item.name }}/.bashrc
+    line: 'export TERM=xterm'
+    create: yes
+  when: item.state == 'present'
+  with_items: '{{ users }}'
+
+- name: Ensure history has timestamps
+  lineinfile:
+    path: /home/{{ item.name }}/.bashrc
+    line: 'export HISTTIMEFORMAT="%d/%m/%y %T "'
+    create: yes
+  when: item.state == 'present'
+  with_items: '{{ users }}'
+
+- name: Check if Docker group exists
+  command: getent group docker
+  register: docker_group
+  ignore_errors: yes
+
+- name: Add user to Docker group
+  when: docker_group.rc == 0 and item.state == 'present'
+  with_items: '{{ users }}'
+  ignore_errors: yes
+  user:
+    name: '{{ item.name }}'
+    groups: docker
+    append: yes
+
+- name: Ensure 2FA setup lines are present in .profile for each user
+  blockinfile:
+    path: '/home/{{ item.name }}/.profile'
+    block: |
+      if [ ! -f "$HOME/.google_authenticator" ]; then
+          echo "You must set up two-factor authentication."
+          (trap 'echo "Ctrl+C detected."' INT; google-authenticator) || exit 1
+      fi
+    create: yes
+    owner: '{{ item.name }}'
+    group: '{{ item.name }}'
+    mode: '0644'
+  when: item.state == 'present' and (item.two_factor | default(true)) != false
+  with_items: '{{ users }}'
+
+- name: 'Install libpam-google-authenticator'
+  apt:
+    name: libpam-google-authenticator
+    state: present
+    update_cache: yes
+
+- name: Ensure pam_google_authenticator.so is present in /etc/pam.d/sshd
+  lineinfile:
+    path: /etc/pam.d/sshd
+    line: 'auth required pam_google_authenticator.so nullok'
+    state: present
+
+- name: Add condition for users in users.yml for 2FA in /etc/pam.d/sshd
+  lineinfile:
+    path: /etc/pam.d/sshd
+    insertafter: 'auth required pam_google_authenticator.so nullok'
+    line: 'auth required pam_permit.so'
+    state: present
+
+- name: Disable default auth mechanism (password) in PAM
+  lineinfile:
+    path: /etc/pam.d/sshd
+    regexp: '^@include common-auth'
+    line: '#@include common-auth'
+    state: present
+
+- name: Set AuthenticationMethods to publickey,keyboard-interactive
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?AuthenticationMethods'
+    line: 'AuthenticationMethods publickey,keyboard-interactive'
+    state: present
+
+- name: Enable ChallengeResponseAuthentication in SSHD Config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?ChallengeResponseAuthentication'
+    line: 'ChallengeResponseAuthentication yes'
+    state: present
+
+- name: Enable PubkeyAuthentication in SSHD Config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PubkeyAuthentication'
+    line: 'PubkeyAuthentication yes'
+    state: present
+
+- name: Disable SSH root login so all maintainers log in as their own user
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitRootLogin'
+    line: 'PermitRootLogin no'
+    state: present
+  when: ansible_user != "root"
+
+- name: Disable root account login completely
+  ansible.builtin.command:
+    cmd: passwd -l root
+  become: yes
+  when: ansible_user != "root"
+
+- name: Enable KbdInteractiveAuthentication in SSHD Config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?KbdInteractiveAuthentication'
+    line: 'KbdInteractiveAuthentication yes'
+    state: present
+
+- name: Disable PasswordAuthentication in SSHD Config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+    state: present
+
+- name: Disable PermitEmptyPasswords in SSHD Config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PermitEmptyPasswords'
+    line: 'PermitEmptyPasswords no'
+    state: present
+
+- name: Only require public key from the user "{{ ansible_user }}"
+  blockinfile:
+    path: /etc/ssh/sshd_config
+    block: |
+      Match User {{ ansible_user }}
+        PasswordAuthentication no
+        AuthenticationMethods publickey
+    marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER {{ ansible_user }}'
+  become: yes
+
+- name: Enable logging in to the provisioning user with specified SSH keys
+  authorized_key:
+    user: '{{ ansible_user }}'
+    key: '{{ item }}'
+  with_items: '{{ additional_keys_for_provisioning_user | default([]) }}'
+
+- name: Check SSH config syntax
+  command: sshd -T
+  register: check_result
+  ignore_errors: yes
+
+# Ubuntu 22.10
+- name: Check if sshd service exists
+  command: systemctl status sshd
+  register: sshd_status
+  ignore_errors: yes
+
+- name: Restart SSH service (sshd)
+  service:
+    name: sshd
+    state: restarted
+  when: sshd_status.rc == 0
+  become: yes
+
+# Ubuntu 23.10
+- name: Check if ssh service exists
+  command: systemctl status ssh
+  register: ssh_status
+  ignore_errors: yes
+
+- name: Restart SSH service (ssh)
+  service:
+    name: ssh
+    state: restarted
+  when: ssh_status.rc == 0 and sshd_status.rc != 0
+  become: yes

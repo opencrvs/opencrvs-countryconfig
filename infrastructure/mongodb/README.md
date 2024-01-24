@@ -50,4 +50,4 @@ my-new-service:
     - MONGO_URL=mongodb://my-new-user:${MY_SERVICE_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
 ```
 
-Remember to update the variable also in `docker-compose.deploy.yml` and `docker-compose.replicas-3.yml` and `docker-compose.replicas-5.yml`.
+Remember to update the variable also in `docker-compose.deploy.yml`.

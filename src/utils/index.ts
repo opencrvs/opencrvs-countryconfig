@@ -47,7 +47,7 @@ interface ICountryLogo {
   file: string
 }
 
-interface IApplicationConfig {
+export interface IApplicationConfig {
   APPLICATION_NAME: string
   COUNTRY: string
   COUNTRY_LOGO: ICountryLogo
