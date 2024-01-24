@@ -43,7 +43,7 @@ export const defaultApplicationConfig = {
   DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
   EXTERNAL_VALIDATION_WORKQUEUE: false,
   MARRIAGE_REGISTRATION: true,
-  DATE_OF_BIRTH_UNKNOWN: false,
+  DATE_OF_BIRTH_UNKNOWN: true,
   INFORMANT_SIGNATURE: true,
   INFORMANT_SIGNATURE_REQUIRED: false,
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
