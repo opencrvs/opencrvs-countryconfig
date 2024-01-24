@@ -36,7 +36,7 @@ import {
   countryLogoHandler
 } from '@countryconfig/api/content/handler'
 import { eventRegistrationHandler } from '@countryconfig/api/event-registration/handler'
-import * as decode from 'jwt-decode'
+import decode from 'jwt-decode'
 import { join } from 'path'
 import { logger } from '@countryconfig/logger'
 import {
