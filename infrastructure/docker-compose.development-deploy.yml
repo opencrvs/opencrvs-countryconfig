@@ -1,11 +1,3 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at https://mozilla.org/MPL/2.0/.
-#
-# OpenCRVS is also distributed under the terms of the Civil Registration
-# & Healthcare Disclaimer located at http://opencrvs.org/license.
-#
-# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
 version: '3.3'
 
 services:
@@ -13,15 +5,16 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN}
-  
+      - QA_ENV=true
+      - NODE_ENV=production
+
   countryconfig:
-    image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION:-latest}
+    image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION}
     restart: unless-stopped
     secrets:
       - jwt-public-key.{{ts}}
     environment:
-      - NODE_ENV=production # NODE_ENV must always be production in countryconfig in order to send correct window.config js files to login and client react apps
-      - QA_ENV=true
+      - NODE_ENV=production
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021
@@ -29,9 +22,14 @@ services:
       - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
-      - HOSTNAME=${HOSTNAME}
       - SENTRY_DSN=${SENTRY_DSN}
-
+      - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
+      - ALERT_EMAIL=${ALERT_EMAIL}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_SECURE=${SMTP_SECURE}
     deploy:
       replicas: 1
     networks:
@@ -39,40 +37,65 @@ services:
 
   client:
     environment:
-      - DECLARED_DECLARATION_SEARCH_QUERY_COUNT = 100
+      - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
 
   gateway:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN}
       - COUNTRY=FAR
+      - QA_ENV=true
+      - NODE_ENV=production
 
   workflow:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN}
-
-  auth:
-    environment:
-      - SENTRY_DSN=${SENTRY_DSN}
-
-  config:
-    environment:
-      - SENTRY_DSN=${SENTRY_DSN}
-
-  metrics:
-    environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - QA_ENV=true
+      - NODE_ENV=production
 
   search:
     environment:
       - SENTRY_DSN=${SENTRY_DSN}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  metrics:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  auth:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+      - QA_ENV=true
+      - NODE_ENV=production
 
   user-mgnt:
     environment:
       - SENTRY_DSN=${SENTRY_DSN}
+      - QA_ENV=true
+      - NODE_ENV=production
 
   webhooks:
     environment:
       - SENTRY_DSN=${SENTRY_DSN}
+      - QA_ENV=true
+      - NODE_ENV=production
 
+  config:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  documents:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  scheduler:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production

@@ -60,4 +60,4 @@ cat $ARCHIVE_PATH | tar -xzf - -C $OPENCRVS_CORE_PATH/data/backups
 # Automatically detect the label
 LABEL=$(ls -t $OPENCRVS_CORE_PATH/data/backups/influxdb | head -n 1)
 
-yes | bash $DIR/infrastructure/emergency-restore-metadata.sh --label=$LABEL --replicas=1
+yes | bash $DIR/infrastructure/backups/restore.sh --label=$LABEL --replicas=1

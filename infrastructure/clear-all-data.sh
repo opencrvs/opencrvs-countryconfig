@@ -26,27 +26,27 @@ if [ -z "$1" ] ; then
     print_usage_and_exit
 fi
 
+
 REPLICAS=$1
+if ! [[ "$REPLICAS" =~ ^[0-9]+$ ]]; then
+  echo "Script must be passed a positive integer number of replicas. Got '$REPLICAS'"
+  print_usage_and_exit
+fi
 
 if [ "$REPLICAS" = "0" ]; then
   HOST=mongo1
   NETWORK=opencrvs_default
   echo "Working with no replicas"
-elif [ "$REPLICAS" = "1" ]; then
-  HOST=rs0/mongo1
-  NETWORK=opencrvs_overlay_net
-  echo "Working with 1 replica"
-elif [ "$REPLICAS" = "3" ]; then
-  HOST=rs0/mongo1,mongo2,mongo3
-  NETWORK=opencrvs_overlay_net
-  echo "Working with 3 replicas"
-elif [ "$REPLICAS" = "5" ]; then
-  HOST=rs0/mongo1,mongo2,mongo3,mongo4,mongo5
-  NETWORK=opencrvs_overlay_net
-  echo "Working with 5 replicas"
 else
-  echo "Script must be passed an understandable number of replicas: 0,1,3 or 5"
-  exit 1
+  NETWORK=opencrvs_overlay_net
+  # Construct the HOST string rs0/mongo1,mongo2... based on the number of replicas
+  HOST="rs0/"
+  for (( i=1; i<=REPLICAS; i++ )); do
+    if [ $i -gt 1 ]; then
+      HOST="${HOST},"
+    fi
+    HOST="${HOST}mongo${i}"
+  done
 fi
 
 mongo_credentials() {
@@ -94,9 +94,13 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 
 # Delete all data from minio
 #-----------------------------
-rm -rf /data/minio/ocrvs
-mkdir -p /data/minio/ocrvs
+docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc -c "\
+  mc alias set myminio http://minio:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD && \
+  mc rm --recursive --force myminio/ocrvs && \
+  mc rb myminio/ocrvs && \
+  mc mb myminio/ocrvs"
 
 # Delete all data from metabase
 #-----------------------------
-rm -rf /data/metabase/*
+docker exec $(docker ps | grep opencrvs_dashboards | awk '{print $1}' | head -n 1) /bin/sh -c "rm -rf /data/metabase/*"
+

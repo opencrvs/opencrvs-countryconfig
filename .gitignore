@@ -21,3 +21,5 @@ data
 
 graphql.schema.json
 *.tar.gz
+.secrets
+.env*

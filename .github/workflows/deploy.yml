@@ -1,4 +1,4 @@
-name: Deploy(development)
+name: Deploy (development)
 run-name: Deploy to ${{ github.event.inputs.environment }} with reset=${{ github.event.inputs.reset }} core=${{ github.event.inputs.core-image-tag }} country config=${{ github.event.inputs.countryconfig-image-tag }}
 on:
   workflow_dispatch:
@@ -11,21 +11,22 @@ on:
         options:
           - staging
           - qa
+          - development
       core-image-tag:
         description: Core DockerHub image tag
         required: true
-        default: 'v1.3.2'
+        default: 'v1.4.0'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
       reset:
-        type: choice
-        description: Whether to reset the environment
-        required: true
-        default: 'no'
-        options:
-          - 'yes'
-          - 'no'
+        type: boolean
+        description: Reset the environment
+        default: false
+      debug:
+        type: boolean
+        description: Open SSH session to the runner after deployment
+        default: false
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
@@ -33,9 +34,6 @@ jobs:
     outputs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
-    strategy:
-      matrix:
-        node-version: [16.20.0]
     steps:
       - name: Clone core
         uses: actions/checkout@v3
@@ -60,18 +58,30 @@ jobs:
           cd opencrvs-core
           git checkout ${{ github.event.inputs.core-image-tag }}
 
+      - name: Read known hosts
+        run: |
+          cd ${{ github.event.repository.name }}
+          echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
+          sed -i -e '$a\' ./infrastructure/.known-hosts
+          cat ./infrastructure/.known-hosts >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+
+      - name: Unset KNOWN_HOSTS variable
+        run: |
+          echo "KNOWN_HOSTS=" >> $GITHUB_ENV
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-  
+          password: ${{ secrets.DOCKER_TOKEN }}
+
       - name: Wait for images to be available
         run: |
           while true; do
@@ -89,16 +99,21 @@ jobs:
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
+        continue-on-error: ${{ github.event.inputs.debug == true }}
         env:
           DOMAIN: ${{ vars.DOMAIN }}
           REPLICAS: ${{ vars.REPLICAS }}
+          NOTIFICATION_TRANSPORT: ${{ vars.NOTIFICATION_TRANSPORT }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
           ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
           DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
           DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
           KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
           KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
           MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
@@ -106,20 +121,72 @@ jobs:
           ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
           MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
-          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
           INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           INFOBIP_GATEWAY_ENDPOINT: ${{ secrets.INFOBIP_GATEWAY_ENDPOINT }}
           INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
+          WIREGUARD_ADMIN_PASSWORD: ${{ secrets.WIREGUARD_ADMIN_PASSWORD }}
           SENDER_EMAIL_ADDRESS: ${{ secrets.SENDER_EMAIL_ADDRESS }}
           SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
+          SSH_ARGS: ${{ vars.SSH_ARGS }}
           CONTENT_SECURITY_POLICY_WILDCARD: ${{ vars.CONTENT_SECURITY_POLICY_WILDCARD }}
         run: |
           cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=${{ github.event.inputs.reset }} --environment=${{ github.event.inputs.environment }} --host=${{ env.DOMAIN }} --version=${{ github.event.inputs.core-image-tag }} --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
-  seed-data:
+          yarn deploy \
+          --clear_data=no \
+          --environment=${{ github.event.inputs.environment }} \
+          --host=${{ env.DOMAIN }} \
+          --ssh_host=${{ secrets.SSH_HOST }} \
+          --ssh_user=${{ secrets.SSH_USER }} \
+          --version=${{ github.event.inputs.core-image-tag }} \
+          --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
+          --replicas=${{ env.REPLICAS }}
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event.inputs.debug == true }}
+        env:
+          DOMAIN: ${{ vars.DOMAIN }}
+          REPLICAS: ${{ vars.REPLICAS }}
+          NOTIFICATION_TRANSPORT: ${{ vars.NOTIFICATION_TRANSPORT }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
+          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
+          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
+          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
+          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
+          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
+          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
+          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          WIREGUARD_ADMIN_PASSWORD: ${{ secrets.WIREGUARD_ADMIN_PASSWORD }}
+          INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
+          INFOBIP_GATEWAY_ENDPOINT: ${{ secrets.INFOBIP_GATEWAY_ENDPOINT }}
+          INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
+          SENDER_EMAIL_ADDRESS: ${{ secrets.SENDER_EMAIL_ADDRESS }}
+          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_ARGS: ${{ vars.SSH_ARGS }}
+          CONTENT_SECURITY_POLICY_WILDCARD: ${{ vars.CONTENT_SECURITY_POLICY_WILDCARD }}
+  reset:
     needs: deploy
-    if: ${{ github.event.inputs.reset == 'yes' && needs.deploy.outputs.outcome == 'success' }}
+    if: ${{ github.event.inputs.reset == 'true' && needs.deploy.outputs.outcome == 'success' }}
+    uses: ./.github/workflows/clear-environment.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+    secrets: inherit
+
+  seed-data:
+    needs: reset
+    if: ${{ github.event.inputs.reset == 'true' && needs.reset.outputs.outcome == 'success' }}
     uses: ./.github/workflows/seed-data.yml
     with:
       environment: ${{ github.event.inputs.environment }}
