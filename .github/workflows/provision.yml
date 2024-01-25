@@ -2,6 +2,9 @@ name: Provision environment
 run-name: Provision ${{ github.event.inputs.environment }}
 on:
   workflow_dispatch:
+    push:
+      branches:
+        - release-v1.4.0
     inputs:
       environment:
         type: choice
