@@ -97,85 +97,65 @@ jobs:
             sleep 10
           done
 
+      - name: Export all secrets and environment variables
+        run: |
+          cd ./${{ github.event.repository.name }}
+
+          SECRETS_JSON_WITH_NEWLINES=$(cat<<EOF
+            ${{ toJSON(secrets) }}
+          EOF)
+
+          #
+          # Secrets & variables with newlines are filtered out automatically
+          # This includes SSH_KEY and KNOWN_HOSTS
+          #
+          while IFS= read -r secret; do
+            echo "$secret" >> .env.${{ github.event.inputs.environment }}
+          done < <(
+            jq -r '
+              to_entries |
+              map(
+                select(.value | test("\n") | not) |
+                "\(.key)=\"\(.value)\""
+              ) |
+              .[]' <<< "$SECRETS_JSON_WITH_NEWLINES"
+          )
+
+          VARS_JSON_WITH_NEWLINES=$(cat<<EOF
+            ${{ toJSON(vars) }}
+          EOF)
+
+          while IFS= read -r var; do
+            echo "$var" >> .env.${{ github.event.inputs.environment }}
+          done < <(
+            jq -r '
+              to_entries |
+              map(
+                select(.value | test("\n") | not) |
+                "\(.key)=\"\(.value)\""
+              ) |
+              .[]' <<< "$VARS_JSON_WITH_NEWLINES"
+          )
+
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
         continue-on-error: ${{ github.event.inputs.debug == true }}
-        env:
-          DOMAIN: ${{ vars.DOMAIN }}
-          REPLICAS: ${{ vars.REPLICAS }}
-          NOTIFICATION_TRANSPORT: ${{ vars.NOTIFICATION_TRANSPORT }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
-          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
-          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
-          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
-          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
-          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
-          INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          INFOBIP_GATEWAY_ENDPOINT: ${{ secrets.INFOBIP_GATEWAY_ENDPOINT }}
-          INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
-          WIREGUARD_ADMIN_PASSWORD: ${{ secrets.WIREGUARD_ADMIN_PASSWORD }}
-          SENDER_EMAIL_ADDRESS: ${{ secrets.SENDER_EMAIL_ADDRESS }}
-          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
-          SSH_ARGS: ${{ vars.SSH_ARGS }}
-          CONTENT_SECURITY_POLICY_WILDCARD: ${{ vars.CONTENT_SECURITY_POLICY_WILDCARD }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy \
           --clear_data=no \
           --environment=${{ github.event.inputs.environment }} \
-          --host=${{ env.DOMAIN }} \
+          --host=${{ vars.DOMAIN }} \
           --ssh_host=${{ secrets.SSH_HOST }} \
           --ssh_user=${{ secrets.SSH_USER }} \
           --version=${{ github.event.inputs.core-image-tag }} \
           --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
-          --replicas=${{ env.REPLICAS }}
+          --replicas=${{ vars.REPLICAS }}
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
         if: ${{ github.event.inputs.debug == true }}
-        env:
-          DOMAIN: ${{ vars.DOMAIN }}
-          REPLICAS: ${{ vars.REPLICAS }}
-          NOTIFICATION_TRANSPORT: ${{ vars.NOTIFICATION_TRANSPORT }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
-          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
-          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
-          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
-          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
-          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          WIREGUARD_ADMIN_PASSWORD: ${{ secrets.WIREGUARD_ADMIN_PASSWORD }}
-          INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
-          INFOBIP_GATEWAY_ENDPOINT: ${{ secrets.INFOBIP_GATEWAY_ENDPOINT }}
-          INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
-          SENDER_EMAIL_ADDRESS: ${{ secrets.SENDER_EMAIL_ADDRESS }}
-          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-          SSH_ARGS: ${{ vars.SSH_ARGS }}
-          CONTENT_SECURITY_POLICY_WILDCARD: ${{ vars.CONTENT_SECURITY_POLICY_WILDCARD }}
+
   reset:
     needs: deploy
     if: ${{ github.event.inputs.reset == 'true' && needs.deploy.outputs.outcome == 'success' }}
