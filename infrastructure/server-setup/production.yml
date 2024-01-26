@@ -13,8 +13,6 @@ all:
     # This should always be set when configuring a production server if there is no other firewall in front of the server.
     # SSH and other services should never be exposed to the public internet.
     enable_backups: true
-    # external_backup_server_remote_directory: Defined in --extra-vars by the provisioning pipeline
-    # external_backup_server_user: Defined in --extra-vars by the provisioning pipeline
     # external_backup_server_ssh_port: Defined in --extra-vars by the provisioning pipeline
     # external_backup_server_ip: Defined in --extra-vars by the provisioning pipeline
     only_allow_access_from_addresses:

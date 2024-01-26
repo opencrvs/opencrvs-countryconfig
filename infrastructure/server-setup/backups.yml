@@ -85,7 +85,6 @@
   become: yes
   become_method: sudo
   vars:
-    external_backup_server_user: 'backup_user' # Replace with actual username
     manager_hostname: "{{ groups['docker-manager-first'][0] }}"
   tasks:
     - name: Ensure backup user is present
@@ -139,7 +138,7 @@
 
     - name: 'Create backup directory'
       file:
-        path: '{{ external_backup_server_remote_directory }}' # Replace with the actual directory path
+        path: '{{ external_backup_server_remote_directory }}'
         state: directory
         owner: '{{ external_backup_server_user }}'
       tags:

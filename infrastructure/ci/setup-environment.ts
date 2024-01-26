@@ -613,28 +613,6 @@ const backupQuestions = [
     scope: 'ENVIRONMENT' as const
   },
   {
-    name: 'backupSshUser',
-    type: 'text' as const,
-    message:
-      'What user should application servers use to login to the backup server?',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'BACKUP_SSH_USER',
-    initial: process.env.BACKUP_SSH_USER,
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'backupDirectory',
-    type: 'text' as const,
-    message:
-      'What is the full path to a directory on your backup server where encrypted backups will be stored?',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'BACKUP_DIRECTORY',
-    initial: process.env.BACKUP_DIRECTORY,
-    scope: 'ENVIRONMENT' as const
-  },
-  {
     name: 'backupEncryptionPassprase',
     type: 'text' as const,
     message: 'Input a long random passphrase to be used for encrypting backups',
@@ -649,19 +627,21 @@ const vpnQuestions = [
   {
     name: 'vpnHostAddress',
     type: 'text' as const,
-    message: `Please enter the IP address users logged in to the VPN will use`,
+    message: `Please enter the source IP address for users connecting to this environment. This is the public IP address of the VPN server.`,
     initial: process.env.VPN_HOST_ADDRESS || '',
     validate: notEmpty,
     valueType: 'VARIABLE' as const,
     valueLabel: 'VPN_HOST_ADDRESS',
     scope: 'ENVIRONMENT' as const
-  },
+  }
+]
+const vpnHostQuestions = [
   {
     name: 'vpnAdminPassword',
     type: 'text' as const,
     message: `Admin password for Wireguard UI`,
     initial: generateLongPassword(),
-    valueType: 'VARIABLE' as const,
+    valueType: 'SECRET' as const,
     valueLabel: 'VPN_ADMIN_PASSWORD',
     scope: 'ENVIRONMENT' as const
   }
@@ -743,6 +723,7 @@ ALL_QUESTIONS.push(
   ...emailQuestions,
   ...backupQuestions,
   ...vpnQuestions,
+  ...vpnHostQuestions,
   ...sentryQuestions,
   ...derivedVariables
 )
@@ -875,20 +856,31 @@ ALL_QUESTIONS.push(
     existingValues
   )
   log('\n', kleur.bold().underline('Sentry'))
-  const { useSentry } = await prompts(
-    [
-      {
-        name: 'useSentry',
-        type: 'confirm' as const,
-        message: 'Do you want to use Sentry?',
-        scope: 'ENVIRONMENT' as const,
-        initial: Boolean(process.env.SENTRY_DNS)
-      }
-    ].map(questionToPrompt)
+  const sentryDSNExists = findExistingValue(
+    'SENTRY_DSN',
+    'SECRET',
+    'ENVIRONMENT',
+    existingValues
   )
 
-  if (useSentry) {
+  if (sentryDSNExists) {
     await promptAndStoreAnswer(environment, sentryQuestions, existingValues)
+  } else {
+    const { useSentry } = await prompts(
+      [
+        {
+          name: 'useSentry',
+          type: 'confirm' as const,
+          message: 'Do you want to use Sentry?',
+          scope: 'ENVIRONMENT' as const,
+          initial: Boolean(process.env.SENTRY_DNS)
+        }
+      ].map(questionToPrompt)
+    )
+
+    if (useSentry) {
+      await promptAndStoreAnswer(environment, sentryQuestions, existingValues)
+    }
   }
 
   if (['production', 'staging'].includes(type)) {
@@ -896,20 +888,34 @@ ALL_QUESTIONS.push(
     await promptAndStoreAnswer(environment, backupQuestions, existingValues)
 
     log('\n', kleur.bold().underline('VPN'))
-    const { vpnEnabled } = await prompts(
+
+    await promptAndStoreAnswer(environment, vpnQuestions, existingValues)
+  }
+
+  const vpnAdminPasswordExists = findExistingValue(
+    'VPN_ADMIN_PASSWORD',
+    'SECRET',
+    'ENVIRONMENT',
+    existingValues
+  )
+
+  if (vpnAdminPasswordExists) {
+    await promptAndStoreAnswer(environment, vpnHostQuestions, existingValues)
+  } else {
+    const { isVPNHost } = await prompts(
       [
         {
-          name: 'vpnEnabled',
+          name: 'isVPNHost',
           type: 'confirm' as const,
-          message: `Do you want to setup a VPN (Wireguard) to connect to your ${type} environment?`,
+          message: `Is this environment going to be used as the VPN server (Wireguard)?`,
           scope: 'ENVIRONMENT' as const,
           initial: true
         }
       ].map(questionToPrompt)
     )
 
-    if (vpnEnabled) {
-      await promptAndStoreAnswer(environment, vpnQuestions, existingValues)
+    if (isVPNHost) {
+      await promptAndStoreAnswer(environment, vpnHostQuestions, existingValues)
     }
   }
 

@@ -10,3 +10,5 @@ ansible_python_interpreter: /usr/bin/python3
 encrypt_data: False
 swap_file_path: /swapfile
 swap_file_size_mb: 8000
+external_backup_server_remote_directory: /home/backup/backups
+external_backup_server_user: 'backup'

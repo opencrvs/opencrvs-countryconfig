@@ -127,7 +127,7 @@ services:
     image: ghcr.io/wg-easy/wg-easy:8
     environment:
       - WG_HOST=vpn.{{hostname}}
-      - PASSWORD=${WIREGUARD_ADMIN_PASSWORD}
+      - PASSWORD=${VPN_ADMIN_PASSWORD}
       - WG_DEFAULT_ADDRESS=10.13.13.x
       - WG_ALLOWED_IPS=0.0.0.0/0
       - WG_PORT=51822
