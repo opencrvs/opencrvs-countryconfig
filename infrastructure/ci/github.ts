@@ -55,47 +55,23 @@ export async function getRepositoryId(
   return response.data.id
 }
 
-export async function createSecret(
+async function getRepositoryPublicKey(
   octokit: Octokit,
-  repositoryId: number,
-  environment: string,
-  key: string,
-  keyId: string,
-  name: string,
-  secret: string
-): Promise<void> {
-  //Check if libsodium is ready and then proceed.
-  await sodium.ready
-
-  // Convert Secret & Base64 key to Uint8Array.
-  const binkey = sodium.from_base64(key, sodium.base64_variants.ORIGINAL)
-  const binsec = sodium.from_string(secret)
-
-  //Encrypt the secret using LibSodium
-  const encBytes = sodium.crypto_box_seal(binsec, binkey)
-
-  // Convert encrypted Uint8Array to Base64
-  const encryptedValue = sodium.to_base64(
-    encBytes,
-    sodium.base64_variants.ORIGINAL
-  )
-
-  await octokit.request(
-    `PUT /repositories/${repositoryId}/environments/${environment}/secrets/${name}`,
+  owner: string,
+  repo: string
+): Promise<any> {
+  const res = await octokit.request(
+    'GET /repos/{owner}/{repo}/actions/secrets/public-key',
     {
-      repository_id: repositoryId,
-      environment_name: environment,
-      secret_name: name,
-      encrypted_value: encryptedValue,
-      key_id: keyId,
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
+      owner: owner,
+      repo: repo
     }
   )
+
+  return res.data
 }
 
-export async function getPublicKey(
+async function getPublicKey(
   octokit: Octokit,
   environment: string,
   ORGANISATION: string,
@@ -129,10 +105,129 @@ export async function getPublicKey(
 
   return res.data
 }
-export type Secret = { type: 'SECRET'; name: string }
-export type Variable = { type: 'VARIABLE'; name: string; value: string }
 
-export async function listRepoSecrets(
+export async function createEnvironmentSecret(
+  octokit: Octokit,
+  repositoryId: number,
+  environment: string,
+  name: string,
+  secret: string,
+  organisationName: string,
+  repositoryName: string
+): Promise<void> {
+  //Check if libsodium is ready and then proceed.
+  await sodium.ready
+
+  const { key, key_id } = await getPublicKey(
+    octokit,
+    environment,
+    organisationName,
+    repositoryName
+  )
+
+  // Convert Secret & Base64 key to Uint8Array.
+  const binkey = sodium.from_base64(key, sodium.base64_variants.ORIGINAL)
+  const binsec = sodium.from_string(secret)
+
+  //Encrypt the secret using LibSodium
+  const encBytes = sodium.crypto_box_seal(binsec, binkey)
+
+  // Convert encrypted Uint8Array to Base64
+  const encryptedValue = sodium.to_base64(
+    encBytes,
+    sodium.base64_variants.ORIGINAL
+  )
+
+  await octokit.request(
+    `PUT /repositories/${repositoryId}/environments/${environment}/secrets/${name}`,
+    {
+      repository_id: repositoryId,
+      environment_name: environment,
+      secret_name: name,
+      encrypted_value: encryptedValue,
+      key_id,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    }
+  )
+}
+
+export async function createRepositorySecret(
+  octokit: Octokit,
+  repositoryId: number,
+  name: string,
+  secret: string,
+  organisationName: string,
+  repositoryName: string
+): Promise<void> {
+  //Check if libsodium is ready and then proceed.
+  await sodium.ready
+  const { key, key_id } = await getRepositoryPublicKey(
+    octokit,
+    organisationName,
+    repositoryName
+  )
+
+  // Convert Secret & Base64 key to Uint8Array.
+  const binkey = sodium.from_base64(key, sodium.base64_variants.ORIGINAL)
+  const binsec = sodium.from_string(secret)
+
+  //Encrypt the secret using LibSodium
+  const encBytes = sodium.crypto_box_seal(binsec, binkey)
+
+  // Convert encrypted Uint8Array to Base64
+  const encryptedValue = sodium.to_base64(
+    encBytes,
+    sodium.base64_variants.ORIGINAL
+  )
+
+  await octokit.request(
+    `PUT /repositories/${repositoryId}/actions/secrets/${name}`,
+    {
+      encrypted_value: encryptedValue,
+      key_id,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    }
+  )
+}
+
+export async function createEnvironment(
+  octokit: Octokit,
+  environment: string,
+  ORGANISATION: string,
+  REPOSITORY_NAME: string
+): Promise<boolean> {
+  try {
+    await octokit.request(
+      `PUT /repos/${ORGANISATION}/${REPOSITORY_NAME}/environments/${environment}`,
+      {
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
+      }
+    )
+    return true
+  } catch (err) {
+    throw new Error('Cannot create environment')
+  }
+}
+
+export type Secret = {
+  type: 'SECRET'
+  name: string
+  scope: 'ENVIRONMENT' | 'REPOSITORY'
+}
+export type Variable = {
+  type: 'VARIABLE'
+  name: string
+  value: string
+  scope: 'ENVIRONMENT' | 'REPOSITORY'
+}
+
+export async function listEnvironmentSecrets(
   octokit: Octokit,
   owner: string,
   repositoryId: number,
@@ -146,10 +241,33 @@ export async function listRepoSecrets(
       environment_name: environmentName
     }
   )
-  return response.data.secrets.map((secret) => ({ ...secret, type: 'SECRET' }))
+  return response.data.secrets.map((secret) => ({
+    ...secret,
+    type: 'SECRET',
+    scope: 'ENVIRONMENT'
+  }))
 }
 
-export async function listRepoVariables(
+export async function listRepositorySecrets(
+  octokit: Octokit,
+  owner: string,
+  repositoryName: string
+): Promise<Secret[]> {
+  const response = await octokit.request(
+    'GET /repos/{owner}/{repo}/actions/secrets',
+    {
+      owner: owner,
+      repo: repositoryName
+    }
+  )
+  return response.data.secrets.map((secret) => ({
+    ...secret,
+    type: 'SECRET',
+    scope: 'REPOSITORY'
+  }))
+}
+
+export async function listEnvironmentVariables(
   octokit: Octokit,
   repositoryId: number,
   environmentName: string
@@ -166,8 +284,11 @@ export async function listRepoVariables(
     }
   )
 
-  return response.data.variables.map((variable) => ({
-    ...variable,
-    type: 'VARIABLE'
-  }))
+  return response.data.variables
+    .map((variable) => ({
+      ...variable,
+      type: 'VARIABLE' as const,
+      scope: 'ENVIRONMENT' as const
+    }))
+    .filter((variable) => variable.name !== 'ACTIONS_RUNNER_DEBUG')
 }
