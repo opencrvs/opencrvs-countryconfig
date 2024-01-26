@@ -58,4 +58,6 @@
 
 ## Bug fixes
 
+- Updated translations for form introduction page and sending for approval to reflect the default notification method being email.
+
 See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
