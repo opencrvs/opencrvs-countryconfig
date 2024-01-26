@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import { basename } from 'path'
 
 function extractEnvVars(content: string): string[] {
   const regex = /(?<!\$)\$\{(.*?)\}/g
@@ -27,7 +28,7 @@ function main(): void {
   // Taking file paths from command line arguments
   const filePaths = process.argv.slice(2)
   if (filePaths.length === 0) {
-    console.log('Please provide YAML file paths as arguments.')
+    console.error('Please provide YAML file paths as arguments.')
     process.exit(1)
   }
 
@@ -38,8 +39,16 @@ function main(): void {
   const missingValues = requiredValues.filter((name) => !process.env[name])
 
   if (missingValues.length > 0) {
-    console.log('Missing values for the following variables:')
-    console.log(missingValues)
+    console.log('\n\n')
+    console.error(
+      'Missing secrets or variables for values found in docker compose files:'
+    )
+    console.error(missingValues)
+    console.error(
+      '\nCheck the following files for more details:\n',
+      filePaths.map((path) => `- ${basename(path)}`).join('\n')
+    )
+    console.log('\n')
     process.exit(1)
   }
 }

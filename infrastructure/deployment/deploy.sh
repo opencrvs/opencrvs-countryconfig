@@ -73,7 +73,6 @@ COMPOSE_FILES_USED="$COMPOSE_FILES_DOWNLOADED_FROM_CORE $INFRASTRUCTURE_DIRECTOR
 
 echo $COMPOSE_FILES_USED
 
-
 # Read environment variable file for the environment
 # .env.qa
 # .env.development
@@ -164,7 +163,7 @@ configured_rsync() {
 get_environment_variables() {
   local env_vars=""
   # Define an array of variables to exclude
-  local exclude_vars=("PATH" "SSH_ARGS" "HOME" "LANG" "USER" "SHELL" "PWD" "KNOWN_HOSTS")
+  local exclude_vars=("PATH" "SSH_ARGS" "HOME" "LANG" "USER" "SHELL" "PWD")
 
   while IFS='=' read -r name value; do
     # Check if the variable is in the exclude list
