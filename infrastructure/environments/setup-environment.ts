@@ -20,6 +20,11 @@ import {
 
 import editor from '@inquirer/editor'
 import { writeFileSync } from 'fs'
+import { exec as callbackExec } from 'child_process'
+import { promisify } from 'util'
+import { join } from 'path'
+
+const exec = promisify(callbackExec)
 
 const notEmpty = (value: string | number) =>
   value.toString().trim().length > 0 ? true : 'Please enter a value'
@@ -65,6 +70,7 @@ function questionToPrompt<T extends string>({
 
 // eslint-disable-next-line no-console
 const log = console.log
+const warn = console.warn
 
 const ALL_QUESTIONS: Array<QuestionDescriptor<any>> = []
 const ALL_ANSWERS: Array<Record<string, string>> = []
@@ -842,11 +848,36 @@ ALL_QUESTIONS.push(
   }
 
   log('\n', kleur.bold().underline('Server setup'))
-  await promptAndStoreAnswer(
+  const { domain } = await promptAndStoreAnswer(
     environment,
     infrastructureQuestions,
     existingValues
   )
+
+  const { updateHosts } = await prompts(
+    [
+      {
+        name: 'updateHosts',
+        type: 'confirm' as const,
+        message: `Do you want to update the hosts file entry for ${domain}?`,
+        scope: 'REPOSITORY' as const,
+        initial: true
+      }
+    ].map(questionToPrompt)
+  )
+
+  if (updateHosts) {
+    try {
+      const res = await exec(
+        `sh ${join(__dirname, './update-known-hosts.sh')} ${domain}`
+      )
+      console.log(res.stdout)
+    } catch (error) {
+      warn(
+        'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
+      )
+    }
+  }
 
   log('\n', kleur.bold().underline('Databases & monitoring'))
 

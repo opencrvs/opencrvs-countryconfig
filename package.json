@@ -28,7 +28,7 @@
     "snapshot": "bash infrastructure/backups/backup.sh",
     "port-forward": "bash infrastructure/port-forward.sh",
     "validate-translations": "ts-node src/validate-translations.ts",
-    "create-github-environment": "ts-node infrastructure/ci/setup-environment.ts"
+    "environment:init": "ts-node infrastructure/environments/setup-environment.ts"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
