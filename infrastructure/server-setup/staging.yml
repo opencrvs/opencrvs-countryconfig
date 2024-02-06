@@ -35,6 +35,11 @@ all:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGUprcQyUFYwRto0aRpgriR95C1pgNxrQ0lEWEe1D8he haidertameem@gmail.com
         state: present
         sudoer: true
+      - name: ashikul
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFr/v3hUGEbc2wQsDLCmqLrwiz964yVrnLZ6kafemjmX8aRGLp1CNFvrZ674SLnXidZGMkx9d5xVvv8IdFR3R50MqSqfolF43MV34/JVHjQHh9Vk4MJT/3GIaeNmr2GQ/38qAmt2BQn1ecnb7FjNO2bFvHokLhm2wCXt+A4avuTgJe0p4e6uu01IHeIzDb5sPzZ3ID0h6jJnjEDcET+Lf5NGpCjn7YKhLhBWSSl9cXQdOGLzNzg3aBk32kgJ1beP1funSeVd0jniJPZeZRC1G/kRdqBUOHKiENtwgquzZxXzdHkZV9+4mF7YGlx6LpQdNuDpW7JADtYNldtdbexdyfrgNoRzKwyMmaKNDbeHd1FsIHSDJmGm9hCoLTM2dEtsGzgghfe0tat8sOWmsj5v2en0V8rKV+w8OQEmHtaQkgMjqmZaAnd8uWiB2xIbrUuax5Pq8zkj37xnfbRxUPOEkMlOUbhh1wzGbqeUEB7nbv/vXZxwC0b7ryMk5egBP+0ZRONsdib9RkSTr3B9uSb7iTOQftdhy+CTqqOq+6s+TyC2qnu12B1WZb9sx9jQl0mBHd9gx/FgYDs8jfIr2vF4jRkejW/moaVqvCd/FLyS91eCMXQjIXdGKWKPUUL7GEBqdZRLnYSJOqgPp9sk1+NEvMabTXlWmoUjaShq8z+o7JsQ== nileeeem36@gmail.com
+        state: present
+        sudoer: true
 docker-manager-first:
   hosts:
     farajaland-staging:
