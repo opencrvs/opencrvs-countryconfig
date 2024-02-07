@@ -26,6 +26,7 @@
 - HTTPS setup now offers three options: HTTP challenge, DNS challenge, and using a pre-issued certificate file.
 - There's now a generic purpose POST /email endpoint only available from the internal network. Elastalert2 is configured to use this endpoint instead of directly using SMTP details or the Sendgrid API key.
 - 🔒 QA environment now hosts a Wireguard server and admin panel (wg-easy). After deploying, you can access the admin panel at vpn.<your domain>.
+- Allow configuring additional SSH parameters globally using `SSH_ARGS` Github variable.
 
 ### Breaking changes
 
