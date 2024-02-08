@@ -853,8 +853,6 @@ export interface IFormData {
   [key: string]: IFormSectionData
 }
 
-// Initial type as it's always used as an object.
-// @todo should be stricter than this
 export type TransformedData = { [key: string]: any }
 
 export type IFormSectionMutationMapFunction = (
