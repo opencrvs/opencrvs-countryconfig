@@ -12,11 +12,10 @@ on:
         type: choice
         description: Environment to reset
         required: true
-        default: 'development'
+        default: 'qa'
         options:
           - staging
           - qa
-          - development
 jobs:
   reset-data:
     name: 'Reset data'
