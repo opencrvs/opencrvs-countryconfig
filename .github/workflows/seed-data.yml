@@ -15,8 +15,9 @@ on:
         type: choice
         description: Environment to seed data
         required: true
-        default: 'qa'
+        default: 'development'
         options:
+          - development
           - qa
           - staging
           - production

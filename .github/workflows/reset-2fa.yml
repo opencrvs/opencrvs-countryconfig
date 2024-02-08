@@ -12,6 +12,7 @@ on:
         default: qa
         required: true
         options:
+          - development
           - staging
           - qa
           - production

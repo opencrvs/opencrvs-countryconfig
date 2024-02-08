@@ -75,7 +75,7 @@ echo $COMPOSE_FILES_USED
 
 # Read environment variable file for the environment
 # .env.qa
-# .env.staging
+# .env.development
 # .env.production
 if [ -f $PROJECT_ROOT/.env.$ENV ]
 then
@@ -89,7 +89,7 @@ function trapint {
 
 print_usage_and_exit () {
   echo 'Usage: ./deploy.sh --host --environment --ssh_host --ssh_user --version --country_config_version --replicas'
-  echo "  --environment can be 'production', 'qa' or similar"
+  echo "  --environment can be 'production', 'development', 'qa' or similar"
   echo '  --host    is the server to deploy to'
   echo "  --version can be any OpenCRVS Core docker image tag or 'latest'"
   echo "  --country_config_version can be any OpenCRVS Country Configuration docker image tag or 'latest'"
