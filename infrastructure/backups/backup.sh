@@ -263,37 +263,17 @@ create_elasticsearch_backup() {
 
 create_elasticsearch_backup
 
-# Get the container ID and host details of any running InfluxDB container, as the only way to backup is by using the Influxd CLI inside a running opencrvs_metrics container
-#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-if  [ "$IS_LOCAL" = true ]; then
-  INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
-else
-  INFLUXDB_CONTAINER_ID=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}')
-  INFLUXDB_CONTAINER_NAME=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}')
-  INFLUXDB_HOSTNAME=$(echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}')
-  INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
-  INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
-  OWN_IP=$(hostname -I | cut -d' ' -f1)
-fi
-
 # If required, SSH into the node running the opencrvs_metrics container and backup the metrics data into an influxdb subfolder
 #-----------------------------------------------------------------------------------------------------------------------------
 
 if [ "$IS_LOCAL" = true ]; then
+  INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
   echo "Backing up Influx locally $INFLUXDB_CONTAINER_ID"
   docker exec $INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}
   docker cp $INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}
-elif [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
-  echo "Backing up Influx on own node"
-  docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}
-  docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}
 else
-  echo "Backing up Influx on other node $INFLUXDB_HOST"
-  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" $ROOT_PATH/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
-  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}"
-  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} /data/backups/influxdb/${LABEL:-$BACKUP_DATE}"
-  echo "Replacing backup for influxdb on manager node with new backup"
-  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb $ROOT_PATH/backups/influxdb
+  echo "Backing up Influx in remote environment"
+  docker run --rm -v $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}:/backup --network=$NETWORK influxdb:1.8.0 influxd backup -portable -host influxdb:8088 /backup
 fi
 
 echo "Creating a backup for Minio"

@@ -87,8 +87,9 @@ services:
 
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:7.17.13
-
     user: root
+    cap_add:
+      - SYS_PTRACE
     volumes:
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro

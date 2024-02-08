@@ -62,8 +62,8 @@ jobs:
         run: |
           cd ${{ github.event.repository.name }}
           echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
-          sed -i -e '$a\' ./infrastructure/.known-hosts
-          cat ./infrastructure/.known-hosts >> $GITHUB_ENV
+          sed -i -e '$a\' ./infrastructure/known-hosts
+          cat ./infrastructure/known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Install SSH Key
@@ -139,7 +139,7 @@ jobs:
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
-        continue-on-error: ${{ github.event.inputs.debug == true }}
+        continue-on-error: ${{ github.event.inputs.debug == 'true' }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy \
@@ -154,7 +154,7 @@ jobs:
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
-        if: ${{ github.event.inputs.debug == true }}
+        if: ${{ github.event.inputs.debug == 'true' }}
 
   reset:
     needs: deploy

@@ -239,36 +239,14 @@ sleep 60
 # ------ INFLUXDB -----
 ##
 
-# Get the container ID and host details of any running InfluxDB container, as the only way to restore is by using the Influxd CLI inside a running opencrvs_metrics container
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-if  [ "$IS_LOCAL" = true ]; then
-  INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
-else
-  INFLUXDB_CONTAINER_ID=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}')
-  INFLUXDB_CONTAINER_NAME=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}')
-  INFLUXDB_HOSTNAME=$(echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}')
-  INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
-  INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
-  OWN_IP=$(echo $(hostname -I | cut -d' ' -f1))
-fi
-
 if [ "$IS_LOCAL" = true ]; then
+  INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
   docker exec $INFLUXDB_CONTAINER_ID mkdir -p /home/user
   docker cp $ROOT_PATH/backups/influxdb/$LABEL/ $INFLUXDB_CONTAINER_ID:/home/user/$LABEL
   docker exec $INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /home/user/$LABEL
-# If required, SSH into the node running the opencrvs_metrics container and restore the metrics data from an influxdb subfolder
-#------------------------------------------------------------------------------------------------------------------------------
-elif [[ "$OWN_IP" = "$INFLUXDB_HOST" ]]; then
-  docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID mkdir -p /home/user
-  docker cp $ROOT_PATH/backups/influxdb/$LABEL/ $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/$LABEL
-  docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /home/user/$LABEL
 else
-  scp -r /data/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
-  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID mkdir -p /home/user"
-  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker cp /data/backups/influxdb/$LABEL/ $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user"
-  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /home/user/$LABEL"
+  docker run --rm -v $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}:/backup --network=$NETWORK influxdb:1.8.0 influxd restore -portable -host influxdb:8088 -db ocrvs /backup
 fi
-
 
 ##
 # ------ MINIO -----
