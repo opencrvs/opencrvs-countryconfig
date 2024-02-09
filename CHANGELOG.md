@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.4.1)
+## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
 ## [1.4.0](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.4.0)
 
