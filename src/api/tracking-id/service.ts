@@ -1,4 +1,4 @@
-import * as ShortUIDGen from 'short-uid'
+import ShortUIDGen from 'short-uid'
 
 const EVENTS = {
   BIRTH: 'BIRTH' as const,

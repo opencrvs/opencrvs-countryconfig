@@ -1,0 +1,50 @@
+- name: 'Add docker repository key'
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: 'Add docker repository'
+  apt_repository:
+    repo: 'deb [arch=arm64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable'
+    state: present
+    update_cache: yes
+  when: ansible_architecture == "aarch64"
+
+- name: 'Add docker repository'
+  apt_repository:
+    repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable'
+    state: present
+    update_cache: yes
+  when: ansible_architecture != "aarch64"
+
+- name: 'Install docker'
+  apt: name=docker-ce state=present update_cache=yes install_recommends=yes allow_unauthenticated=yes
+  when: ansible_distribution == "Ubuntu"
+  retries: 3
+  delay: 20
+
+- name: 'Ensure Docker service started'
+  service: name=docker state=started
+
+- name: 'Get docker info'
+  shell: docker info
+  register: docker_info
+  changed_when: False
+
+- name: 'Install docker python module for ansible docker commands'
+  apt:
+    name: python3-docker
+    state: present
+
+- name: 'Log into DockerHub'
+  docker_login:
+    username: '{{dockerhub_username}}'
+    password: '{{dockerhub_password}}'
+
+- name: 'Setup crontab to clean up docker images'
+  cron:
+    user: '{{ crontab_user }}'
+    name: 'cleanup docker images'
+    minute: '0'
+    hour: '0'
+    job: '/usr/bin/docker system prune -af >> /var/log/docker-prune.log'

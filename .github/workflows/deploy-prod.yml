@@ -1,4 +1,4 @@
-name: Deploy(production)
+name: Deploy (production)
 run-name: Deploy to ${{ github.event.inputs.environment }} core=${{ github.event.inputs.core-image-tag }} country config=${{ github.event.inputs.countryconfig-image-tag }}
 on:
   workflow_dispatch:
@@ -7,33 +7,32 @@ on:
         type: choice
         description: Environment to deploy to
         required: true
-        default: 'production'
+        default: 'staging'
         options:
           - production
+          - staging
       core-image-tag:
         description: Core DockerHub image tag
         required: true
-        default: 'v1.3.2'
+        default: 'v1.4.0'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
-      deploy-script-environment:
-        type: choice
-        description: Deploy script environment
-        required: true
-        default: 'production'
-        options:
-          - production
-          - demo
+
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-20.04
     timeout-minutes: 60
-    strategy:
-      matrix:
-        node-version: [16.20.0]
     steps:
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: euanmillar,rikukissa
+          minimum-approvals: 1
+          issue-title: 'Deploy (Prod): core: ${{ github.event.inputs.core-image-tag }} country config: ${{ github.event.inputs.countryconfig-image-tag }}'
+          issue-body: 'Please approve or deny the deployment of core: ${{ github.event.inputs.core-image-tag }} country config: ${{ github.event.inputs.countryconfig-image-tag }} to production'
+          exclude-workflow-initiator-as-approver: false
       - name: Clone core
         uses: actions/checkout@v3
         with:
@@ -57,17 +56,29 @@ jobs:
           cd opencrvs-core
           git checkout ${{ github.event.inputs.core-image-tag }}
 
+      - name: Read known hosts
+        run: |
+          cd ${{ github.event.repository.name }}
+          echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
+          sed -i -e '$a\' ./infrastructure/known-hosts
+          cat ./infrastructure/known-hosts >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+
+      - name: Unset KNOWN_HOSTS variable
+        run: |
+          echo "KNOWN_HOSTS=" >> $GITHUB_ENV
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Wait for images to be available
         run: |
@@ -84,32 +95,55 @@ jobs:
             sleep 10
           done
 
-      - name: Deploy to ${{ github.event.inputs.environment }}
-        env:
-          DOMAIN: ${{ vars.DOMAIN }}
-          REPLICAS: ${{ vars.REPLICAS }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
-          DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
-          DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
-          KIBANA_USERNAME: ${{ secrets.KIBANA_USERNAME }}
-          KIBANA_PASSWORD: ${{ secrets.KIBANA_PASSWORD }}
-          MONGODB_ADMIN_USER: ${{ secrets.MONGODB_ADMIN_USER }}
-          MONGODB_ADMIN_PASSWORD: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          ELASTICSEARCH_SUPERUSER_PASSWORD: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
-          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
-          EMAIL_API_KEY: ${{ secrets.EMAIL_API_KEY }}
-          INFOBIP_SENDER_ID: ${{ secrets.INFOBIP_SENDER_ID }}
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          INFOBIP_GATEWAY_ENDPOINT: ${{ secrets.INFOBIP_GATEWAY_ENDPOINT }}
-          INFOBIP_API_KEY: ${{ secrets.INFOBIP_API_KEY }}
-          SENDER_EMAIL_ADDRESS: ${{ secrets.SENDER_EMAIL_ADDRESS }}
-          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
-          CONTENT_SECURITY_POLICY_WILDCARD: ${{ vars.CONTENT_SECURITY_POLICY_WILDCARD }}
+      - name: Export all secrets and environment variables
         run: |
           cd ./${{ github.event.repository.name }}
-          yarn deploy --clear_data=no --environment=${{ github.event.inputs.deploy-script-environment }} --host=${{ env.DOMAIN }} --version=${{ github.event.inputs.core-image-tag }} --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} --country_config_path=../${{ github.event.repository.name }} --replicas=${{ env.REPLICAS }}
+
+          SECRETS_JSON_WITH_NEWLINES=$(cat<<EOF
+            ${{ toJSON(secrets) }}
+          EOF)
+
+          #
+          # Secrets & variables with newlines are filtered out automatically
+          # This includes SSH_KEY and KNOWN_HOSTS
+          #
+          while IFS= read -r secret; do
+            echo "$secret" >> .env.${{ github.event.inputs.environment }}
+          done < <(
+            jq -r '
+              to_entries |
+              map(
+                select(.value | test("\n") | not) |
+                "\(.key)=\"\(.value)\""
+              ) |
+              .[]' <<< "$SECRETS_JSON_WITH_NEWLINES"
+          )
+
+          VARS_JSON_WITH_NEWLINES=$(cat<<EOF
+            ${{ toJSON(vars) }}
+          EOF)
+
+          while IFS= read -r var; do
+            echo "$var" >> .env.${{ github.event.inputs.environment }}
+          done < <(
+            jq -r '
+              to_entries |
+              map(
+                select(.value | test("\n") | not) |
+                "\(.key)=\"\(.value)\""
+              ) |
+              .[]' <<< "$VARS_JSON_WITH_NEWLINES"
+          )
+
+      - name: Deploy to ${{ github.event.inputs.environment }}
+        run: |
+          cd ./${{ github.event.repository.name }}
+          yarn deploy \
+          --clear_data=no \
+          --environment=${{ github.event.inputs.environment }} \
+          --host=${{ vars.DOMAIN }} \
+          --ssh_host=${{ secrets.SSH_HOST }} \
+          --ssh_user=${{ secrets.SSH_USER }} \
+          --version=${{ github.event.inputs.core-image-tag }} \
+          --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
+          --replicas=${{ vars.REPLICAS }}

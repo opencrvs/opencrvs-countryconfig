@@ -17,16 +17,22 @@ apt-get install -y curl
 curl -L https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait --output /wait
 chmod +x /wait
 
-if [ "$REPLICAS" = "1" ]; then
-  WAIT_TIMEOUT=240 WAIT_HOSTS=mongo1:27017 /wait
-elif [ "$REPLICAS" = "3" ]; then
-  WAIT_TIMEOUT=240 WAIT_HOSTS=mongo1:27017,mongo2:27017,mongo3:27017 /wait
-elif [ "$REPLICAS" = "5" ]; then
-  WAIT_TIMEOUT=240 WAIT_HOSTS=mongo1:27017,mongo2:27017,mongo3:27017,mongo4:27017,mongo5:27017 /wait
-else
-  echo "Script must be passed an understandable number of replicas: 0,1,3 or 5"
+# Check if REPLICAS is a number and greater than 0
+if ! [[ "$REPLICAS" =~ ^[0-9]+$ ]] || [ "$REPLICAS" -lt 1 ]; then
+  echo "Script must be passed a positive integer number of replicas"
   exit 1
 fi
+
+# Initialize WAIT_HOSTS
+WAIT_HOSTS=""
+
+# Construct the WAIT_HOSTS string based on the number of replicas
+for (( i=1; i<=REPLICAS; i++ )); do
+  if [ $i -gt 1 ]; then
+    WAIT_HOSTS="${WAIT_HOSTS},"
+  fi
+  WAIT_HOSTS="${WAIT_HOSTS}mongo${i}:27017"
+done
 
 
 mongo_credentials() {
@@ -37,20 +43,31 @@ mongo_credentials() {
   fi
 }
 
-# Initialise replica sets
-if [ "$REPLICAS" = "1" ]; then
-  mongo $(mongo_credentials) --host mongo1 --eval "rs.initiate({_id:\"rs0\",members:[{_id:0,host:\"mongo1:27017\"}]})"
-  HOST=rs0/mongo1
-elif [ "$REPLICAS" = "3" ]; then
-  mongo $(mongo_credentials) --host mongo1 --eval "rs.initiate({_id:\"rs0\",members:[{_id:0,host:\"mongo1:27017\"},{_id:1,host:\"mongo2:27017\"},{_id:2,host:\"mongo3:27017\"}]})"
-  HOST=rs0/mongo1,mongo2,mongo3
-elif [ "$REPLICAS" = "5" ]; then
-  mongo $(mongo_credentials) --host mongo1 --eval "rs.initiate({_id:\"rs0\",members:[{_id:0,host:\"mongo1:27017\"},{_id:1,host:\"mongo2:27017\"},{_id:2,host:\"mongo3:27017\"},{_id:3,host:\"mongo4:27017\"},{_id:4,host:\"mongo5:27017\"}]})"
-  HOST=rs0/mongo1,mongo2,mongo3,mongo4,mongo5
-else
-  echo "Script must be passed an understandable number of replicas: 0,1,3 or 5"
-  exit 1
-fi
+# Construct the members array based on the number of replicas
+# The output is a JSON array with the following format:
+# [{_id:0,host:"mongo1:27017"},{_id:1,host:"mongo2:27017"},...]
+
+MEMBERS="["
+for (( i=1; i<=REPLICAS; i++ )); do
+  if [ $i -gt 1 ]; then
+    MEMBERS="${MEMBERS},"
+  fi
+  MEMBERS="${MEMBERS}{_id:$(($i - 1)),host:\"mongo${i}:27017\"}"
+done
+MEMBERS="${MEMBERS}]"
+
+# Initiate the replica set
+mongo $(mongo_credentials) --host mongo1 --eval "rs.initiate({_id:\"rs0\",members:${MEMBERS}})"
+
+# Construct the HOST string rs0/mongo1,mongo2... based on the number of replicas
+HOST="rs0/"
+for (( i=1; i<=REPLICAS; i++ )); do
+  if [ $i -gt 1 ]; then
+    HOST="${HOST},"
+  fi
+  HOST="${HOST}mongo${i}"
+done
+
 
 function checkIfUserExists {
   local user=$1

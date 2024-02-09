@@ -1,0 +1,17 @@
+- name: 'Create acme file for traefik'
+  file:
+    path: /data/traefik/acme.json
+    state: touch
+    owner: root
+    group: application
+    # Owner has rw, others no permissions
+    mode: '0600'
+
+- name: 'Create certs directory for traefik'
+  file:
+    path: /data/traefik/certs
+    state: directory
+    owner: root
+    group: application
+    # Owner has rwx, group r, others no permissions
+    mode: '0740'

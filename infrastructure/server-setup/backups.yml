@@ -1,0 +1,138 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+---
+- hosts: localhost
+  tasks:
+    - name: Generate SSH keypair for application -> backup server connection
+      command: ssh-keygen -t rsa -b 4096 -f /tmp/backup_ssh_key -N ""
+      tags:
+        - backups
+
+- hosts: docker-manager-first
+  become: yes
+  vars:
+    crontab_user: root
+
+  tasks:
+    - name: Get crontab user home directory
+      getent:
+        database: passwd
+        key: '{{ crontab_user }}'
+      register: getent_passwd_crontab
+      tags:
+        - backups
+
+    - set_fact:
+        crontab_user_home: '{{ getent_passwd_crontab.ansible_facts.getent_passwd[crontab_user][4] }}'
+      tags:
+        - backups
+
+    - name: Check if crontab user already has an ssh key
+      stat:
+        path: '{{ crontab_user_home }}/.ssh/id_rsa.pub'
+      register: file_check
+      tags:
+        - backups
+
+    - name: Ensure .ssh directory exists for crontab user
+      file:
+        path: '{{ crontab_user_home }}/.ssh'
+        state: directory
+        owner: '{{ crontab_user }}'
+        mode: '0700'
+      tags:
+        - backups
+
+    - name: Create an SSH key for crontab user if they do not have one
+      copy:
+        src: /tmp/backup_ssh_key
+        dest: '{{ crontab_user_home }}/.ssh/id_rsa'
+        mode: 0600
+      when: not file_check.stat.exists
+      tags:
+        - backups
+
+    - name: Create public key file from private key
+      shell: ssh-keygen -y -f '{{ crontab_user_home }}/.ssh/id_rsa' > '{{ crontab_user_home }}/.ssh/id_rsa.pub'
+      tags:
+        - backups
+
+    - include_tasks:
+        file: tasks/backups/crontab.yml
+        apply:
+          tags:
+            - crontab
+            - backups
+      tags:
+        - crontab
+        - backups
+
+    - name: Fetch the public SSH key so it can be transferred to the backup machine
+      fetch:
+        src: '{{ crontab_user_home }}/.ssh/id_rsa.pub'
+        dest: '/tmp/docker-manager-first_id_rsa.pub'
+        flat: yes
+      tags:
+        - backups
+
+- hosts: backups
+  become: yes
+  become_method: sudo
+  vars:
+    manager_hostname: "{{ groups['docker-manager-first'][0] }}"
+  tasks:
+    - name: Ensure backup user is present
+      user:
+        name: '{{ external_backup_server_user }}'
+        state: present
+        create_home: true
+        home: '/home/{{ external_backup_server_user }}'
+        shell: /bin/bash
+      tags:
+        - backups
+
+    - set_fact:
+        external_backup_server_user_home: '/home/{{ external_backup_server_user }}'
+      tags:
+        - backups
+
+    - name: Check if authorized_keys already exists
+      stat:
+        path: '{{ external_backup_server_user_home }}/.ssh/authorized_keys'
+      register: file_check
+      tags:
+        - backups
+
+    - name: Ensure .ssh directory exists for external backup server user
+      file:
+        path: '{{ external_backup_server_user_home }}/.ssh'
+        state: directory
+        owner: '{{ external_backup_server_user }}'
+        mode: '0700'
+      tags:
+        - backups
+
+    - name: Ensure backup application servers can login to backup server
+      blockinfile:
+        path: '{{ external_backup_server_user_home }}/.ssh/authorized_keys'
+        block: |
+          {{ lookup('file', '/tmp/docker-manager-first_id_rsa.pub') }}
+        marker: '# {mark} ANSIBLE MANAGED BLOCK docker-manager-first {{ manager_hostname }}'
+        create: yes
+        mode: 0600
+      tags:
+        - backups
+
+    - name: 'Create backup directory'
+      file:
+        path: '{{ external_backup_server_remote_directory }}'
+        state: directory
+        owner: '{{ external_backup_server_user }}'
+      tags:
+        - backups

@@ -1,0 +1,14 @@
+- name: 'Install Fail2Ban'
+  apt:
+    name: fail2ban
+    state: present
+
+- name: 'Template fail2ban jail.local'
+  ansible.builtin.template:
+    src: ./templates/jail.local.j2
+    dest: /etc/fail2ban/jail.local
+
+- name: 'Start fail2ban and reload jail.local'
+  service:
+    name: fail2ban
+    state: restarted

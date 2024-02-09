@@ -1,56 +1,116 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at https://mozilla.org/MPL/2.0/.
-#
-# OpenCRVS is also distributed under the terms of the Civil Registration
-# & Healthcare Disclaimer located at http://opencrvs.org/license.
-#
-# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
 version: '3.3'
 
 services:
+  traefik:
+    networks:
+      - overlay_net
+      - vpn
+    command:
+      # Use HTTP-01 challenge as the web server is publicly available
+      # https://doc.traefik.io/traefik/https/acme/#httpchallenge
+      # For DNS-01 challenge and manual certificates, check staging and production configurations
+      - --certificatesresolvers.certResolver.acme.email=riku@opencrvs.org
+      - --certificatesresolvers.certResolver.acme.storage=acme.json
+      - --certificatesresolvers.certResolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.certResolver.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.certResolver.acme.httpchallenge=true
+
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --providers.docker
+      - --providers.docker.swarmMode=true
+      - --api.dashboard=true
+      - --api.insecure=true
+      - --log.level=WARNING
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.web.http.redirections.entrypoint.permanent=true
+      - --serverstransport.insecureskipverify=true
+      - --entrypoints.websecure.address=:443
+      - --accesslog=true
+      - --accesslog.format=json
+      - --ping=true
+
+  notification:
+    environment:
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  countryconfig:
+    image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION}
+    restart: unless-stopped
+    secrets:
+      - jwt-public-key.{{ts}}
+    environment:
+      - NODE_ENV=production
+      - QA_ENV=true
+      - FHIR_URL=http://hearth:3447/fhir
+      - AUTH_URL=http://auth:4040
+      - APPLICATION_CONFIG_URL=http://config:2021
+      - OPENHIM_URL=http://openhim-core:5001/fhir
+      - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
+      - CHECK_INVALID_TOKEN=true
+      - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
+      - SENTRY_DSN=${SENTRY_DSN}
+    deploy:
+      replicas: 1
+    networks:
+      - overlay_net
+
+  client:
+    environment:
+      - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
+
   gateway:
     environment:
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN}
+      - COUNTRY=FAR
       - QA_ENV=true
       - NODE_ENV=production
 
   workflow:
     environment:
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN}
       - QA_ENV=true
       - NODE_ENV=production
 
   search:
     environment:
+      - SENTRY_DSN=${SENTRY_DSN}
       - QA_ENV=true
       - NODE_ENV=production
 
   metrics:
     environment:
+      - SENTRY_DSN=${SENTRY_DSN}
       - QA_ENV=true
       - NODE_ENV=production
 
   auth:
     environment:
+      - SENTRY_DSN=${SENTRY_DSN}
       - QA_ENV=true
       - NODE_ENV=production
 
   user-mgnt:
     environment:
-      - QA_ENV=true
-      - NODE_ENV=production
-
-  notification:
-    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
       - QA_ENV=true
       - NODE_ENV=production
 
   webhooks:
     environment:
+      - SENTRY_DSN=${SENTRY_DSN}
       - QA_ENV=true
       - NODE_ENV=production
 
   config:
     environment:
+      - SENTRY_DSN=${SENTRY_DSN}
       - QA_ENV=true
       - NODE_ENV=production
 
@@ -61,5 +121,49 @@ services:
 
   scheduler:
     environment:
-    - QA_ENV=true
-    - NODE_ENV=production
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy:8
+    environment:
+      - WG_HOST=vpn.{{hostname}}
+      - PASSWORD=${VPN_ADMIN_PASSWORD}
+      - WG_DEFAULT_ADDRESS=10.13.13.x
+      - WG_ALLOWED_IPS=0.0.0.0/0
+      - WG_PORT=51822
+      - WG_POST_UP=iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE
+      - WG_POST_DOWN=iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE
+    volumes:
+      - /data/wireguard:/etc/wireguard
+    ports:
+      - '51822:51820/udp'
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+    deploy:
+      labels:
+        - 'traefik.enable=true'
+        - 'traefik.http.routers.vpn.rule=Host(`vpn.{{hostname}}`)'
+        - 'traefik.http.services.vpn.loadbalancer.server.port=51821'
+        - 'traefik.http.routers.vpn.tls=true'
+        - 'traefik.http.routers.vpn.tls.certresolver=certResolver'
+        - 'traefik.http.routers.vpn.entrypoints=web,websecure'
+        - 'traefik.docker.network=opencrvs_vpn'
+        - 'traefik.http.middlewares.vpn.headers.customresponseheaders.Pragma=no-cache'
+        - 'traefik.http.middlewares.vpn.headers.customresponseheaders.Cache-control=no-store'
+        - 'traefik.http.middlewares.vpn.headers.customresponseheaders.X-Robots-Tag=none'
+        - 'traefik.http.middlewares.vpn.headers.stsseconds=31536000'
+        - 'traefik.http.middlewares.vpn.headers.stsincludesubdomains=true'
+        - 'traefik.http.middlewares.vpn.headers.stspreload=true'
+    restart: unless-stopped
+    networks:
+      - vpn
+
+networks:
+  vpn:
+    driver: overlay
+    attachable: false

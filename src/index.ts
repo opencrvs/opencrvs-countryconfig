@@ -9,6 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 require('app-module-path').addPath(require('path').join(__dirname))
+require('dotenv').config()
 
 import fetch from 'node-fetch'
 import * as Hapi from '@hapi/hapi'
@@ -18,7 +19,7 @@ import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
 import {
   CLIENT_APP_URL,
-  HOSTNAME,
+  DOMAIN,
   LOGIN_URL,
   SENTRY_DSN
 } from '@countryconfig/constants'
@@ -35,12 +36,14 @@ import {
   countryLogoHandler
 } from '@countryconfig/api/content/handler'
 import { eventRegistrationHandler } from '@countryconfig/api/event-registration/handler'
-import * as decode from 'jwt-decode'
+import decode from 'jwt-decode'
 import { join } from 'path'
 import { logger } from '@countryconfig/logger'
 import {
+  emailHandler,
+  emailSchema,
   notificationHandler,
-  notificationScheme
+  notificationSchema
 } from './api/notification/handler'
 import { mosipMediatorHandler } from '@countryconfig/api/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
@@ -176,8 +179,8 @@ async function getPublicKey(): Promise<string> {
 }
 
 export async function createServer() {
-  let whitelist: string[] = [HOSTNAME]
-  if (HOSTNAME[0] !== '*') {
+  let whitelist: string[] = [DOMAIN]
+  if (DOMAIN[0] !== '*') {
     whitelist = [LOGIN_URL, CLIENT_APP_URL]
   }
   logger.info(`Whitelist: ${JSON.stringify(whitelist)}`)
@@ -450,7 +453,26 @@ export async function createServer() {
     options: {
       tags: ['api'],
       validate: {
-        payload: notificationScheme
+        payload: notificationSchema
+      },
+      description:
+        'Handles sending either SMS or email using a predefined template file'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/email',
+    handler: emailHandler,
+    options: {
+      /*
+       * In deployed environments, the email path is blocked by Traefik.
+       * See docker-compose.deploy.yml for more details.
+       */
+      auth: false,
+      tags: ['api'],
+      validate: {
+        payload: emailSchema
       },
       description: 'Handles sending SMS'
     }

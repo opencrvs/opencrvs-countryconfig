@@ -1,0 +1,55 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+all:
+  vars:
+    # This configuration variable blocks all access to the server, including SSH, except from the IP addresses specified below.
+    # This should always be set when configuring a production server if there is no other firewall in front of the server.
+    # SSH and other services should never be exposed to the public internet.
+    only_allow_access_from_addresses:
+      - 165.22.110.53
+    enable_backups: false
+    periodic_restore_from_backup: true
+    # restore_backup_encryption_passphrase: Defined in --extra-vars by the provisioning pipeline
+    # external_backup_server_ssh_port: Defined in --extra-vars by the provisioning pipeline
+    # external_backup_server_ip: Defined in --extra-vars by the provisioning pipeline
+    users:
+      # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
+      - name: riku
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWIF63S4f3z9wQMvWibmvl7MPuJ6EVrkP0HuvgNhcs/4DZYMcR/GRBvV4ldOSYMlBevIXycgGzNDxKJgENUuwIWanjBu7uVAHyD6+cIRD1h63qq7Cjv/2HYTfBDKOrKzPOhA6zWvKO0ZGWsjRXk5LWMCbKOkvKJCxOpj/NVBxeE4FTK5YADYPV3OSsmBtqTHrVLm2sMmShU/2hMYYswWkobidjX65+nK/X+3C+yJbHwiydVvn+QCrFlFfCLPWKe8rUpOxyxofPqWVQh6CHhHfT8okaOc9sOE8Qeip9ljo84DftJh3Xm3ynOdWK1hH2BvRvxNadWqcE1qECbkg4tx2x riku.rouvila@gmail.com
+        state: present
+        sudoer: true
+      - name: euan
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDECqHO65UpyrrO8uueD06RxGaVVq22f152Rf8qVQQAAIGAMu6gCs7ztlZ8a3yQgSEIjM/Jl1/RqIVs6CziTEef74nLFTZ5Ufz3CLRVgdebBeSBEmhTfTUV0HLkSyNzwKFpuzJxucGd72ulPvEp6eHvyJAPJz37YcU8cjaL1v05T6s2ee99li35GlDDtCzfjVV4ZPAg5JdfWuTj41RAVC0LQhk2/NB4qEu37UxGGjhRFSjBEsS5LxI9QfvgrsHpl/VOn+soH7ZkK7kS6qRgNP/uYsXRWXhHaamcl5OX68gJWTbrW6c7PCqlbCWGnsHJswCmqPIthwXXMfC7ULDNLSKG6mslAt5Dyc8/MCr3vTW7pDyr2d0FvvY86SMQUggxv3qF7TZewqfX1bhK0fMLarIxVMQ1RFo//wN9QGA+2we8rxd2Y1Kr1DBuJyuwXPfv+Exo8yNYQ+x/AYH5k6UVcSYuaB8eYmplG2KQCxt8RBFtoChrwOKNRWLqXdKyfpdp5XmnnWxPvR95gf3h3yLocVYkF0i0uvKKJ0vt8J0Ezfkdfow0B1kUg5bPXKJROX7PwbaCPdYcxyDaO6wwOigRnSmoFvkH1pLb4j1RQAXcX531CHgfN6Izi/h0mpMS4bnyIUcv2GQr+h4z4TxcCtj7qpH2y6yw7XG12jVh7TfeesXG2Q== euanmillar77@gmail.com
+        state: present
+        sudoer: true
+      - name: tameem
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGUprcQyUFYwRto0aRpgriR95C1pgNxrQ0lEWEe1D8he haidertameem@gmail.com
+        state: present
+        sudoer: true
+      - name: ashikul
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFr/v3hUGEbc2wQsDLCmqLrwiz964yVrnLZ6kafemjmX8aRGLp1CNFvrZ674SLnXidZGMkx9d5xVvv8IdFR3R50MqSqfolF43MV34/JVHjQHh9Vk4MJT/3GIaeNmr2GQ/38qAmt2BQn1ecnb7FjNO2bFvHokLhm2wCXt+A4avuTgJe0p4e6uu01IHeIzDb5sPzZ3ID0h6jJnjEDcET+Lf5NGpCjn7YKhLhBWSSl9cXQdOGLzNzg3aBk32kgJ1beP1funSeVd0jniJPZeZRC1G/kRdqBUOHKiENtwgquzZxXzdHkZV9+4mF7YGlx6LpQdNuDpW7JADtYNldtdbexdyfrgNoRzKwyMmaKNDbeHd1FsIHSDJmGm9hCoLTM2dEtsGzgghfe0tat8sOWmsj5v2en0V8rKV+w8OQEmHtaQkgMjqmZaAnd8uWiB2xIbrUuax5Pq8zkj37xnfbRxUPOEkMlOUbhh1wzGbqeUEB7nbv/vXZxwC0b7ryMk5egBP+0ZRONsdib9RkSTr3B9uSb7iTOQftdhy+CTqqOq+6s+TyC2qnu12B1WZb9sx9jQl0mBHd9gx/FgYDs8jfIr2vF4jRkejW/moaVqvCd/FLyS91eCMXQjIXdGKWKPUUL7GEBqdZRLnYSJOqgPp9sk1+NEvMabTXlWmoUjaShq8z+o7JsQ== nileeeem36@gmail.com
+        state: present
+        sudoer: true
+docker-manager-first:
+  hosts:
+    farajaland-staging:
+      ansible_host: '167.172.105.70'
+      data_label: data1
+      ansible_ssh_common_args: '-J jump@165.22.110.53 -o StrictHostKeyChecking=no'
+
+# QA and staging servers are not configured to use workers.
+docker-workers: {}
+backups:
+  hosts:
+    farajaland-qa:
+      ansible_host: '165.22.110.53'

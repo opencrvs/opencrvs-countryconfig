@@ -1,0 +1,29 @@
+- name: Save disk encryption key into a file as an example (in production use a hardware security module)
+  ansible.builtin.copy:
+    dest: /root/disk-encryption-key.txt
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+    content: |
+      DISK_ENCRYPTION_KEY={{ disk_encryption_key }}
+
+- name: Copy reboot.service systemd file. Must decrypt disk on reboot
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/reboot.service
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+    content: |
+      [Unit]
+      Description=Mount encrypted dir
+
+      [Service]
+      ExecStart=bash /opt/opencrvs/infrastructure/cryptfs/decrypt.sh -key /root/disk-encryption-key.txt >> /var/log/cryptfs-reboot.log 2>&1
+
+      [Install]
+      WantedBy=multi-user.target
+  when: encryptedFileSystemPostCheck.stat.exists
+
+- name: 'Setup systemd to mount encrypted folder'
+  shell: systemctl daemon-reload && systemctl enable reboot.service
+  when: encryptedFileSystemPostCheck.stat.exists

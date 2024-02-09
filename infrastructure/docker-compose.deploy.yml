@@ -13,7 +13,7 @@ services:
   # Note: these published port will override UFW rules as Docker manages it's own iptables
   # Only publish the exact ports that are required for OpenCRVS to work
   traefik:
-    image: 'traefik:v2.9'
+    image: 'traefik:v2.10'
     ports:
       - target: 80
         published: 80
@@ -32,10 +32,11 @@ services:
       - --api.dashboard=true
       - --api.insecure=true
       - --log.level=WARNING
-      - --certificatesresolvers.certResolver.acme.email=ryan@jembi.org
+      - --certificatesresolvers.certResolver.acme.email=riku@opencrvs.org
       - --certificatesresolvers.certResolver.acme.storage=acme.json
       - --certificatesresolvers.certResolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.certResolver.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.certResolver.acme.httpchallenge=true
       - --entrypoints.web.http.redirections.entryPoint.to=websecure
       - --entrypoints.web.http.redirections.entryPoint.scheme=https
       - --entrypoints.web.http.redirections.entrypoint.permanent=true
@@ -59,10 +60,38 @@ services:
         tag: 'traefik'
     networks:
       - overlay_net
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.17.0
+    user: root
+    networks:
+      - overlay_net
+    configs:
+      - source: filebeat.{{ts}}
+        target: /usr/share/filebeat/filebeat.yml
+      - source: beat-rollover-policy.{{ts}}
+        target: /usr/share/filebeat/rollover-policy.json
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
+      - /var/log/:/var/log/:ro
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
+      - KIBANA_HOST=kibana:5601
+    command: ['--strict.perms=false']
+    deploy:
+      mode: global
+      labels:
+        - 'traefik.enable=false'
+
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:7.17.16
 
     user: root
+    cap_add:
+      - SYS_PTRACE
     volumes:
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -89,7 +118,7 @@ services:
     configs:
       - source: metricbeat-conf.{{ts}}
         target: /usr/share/metricbeat/metricbeat.yml
-      - source: metricbeat-rollover-policy.{{ts}}
+      - source: beat-rollover-policy.{{ts}}
         target: /usr/share/metricbeat/rollover-policy.json
     logging:
       driver: gelf
@@ -115,6 +144,7 @@ services:
     depends_on:
       - kibana
     volumes:
+      # Exceed Docker config file 500 kb file limit, thus a volume mount
       - '/opt/opencrvs/infrastructure/monitoring/kibana/config.ndjson:/config.ndjson'
     networks:
       - overlay_net
@@ -164,7 +194,6 @@ services:
   mongo1:
     command: mongod --auth --replSet rs0 --keyFile /etc/mongodb-keyfile
     hostname: 'mongo1'
-    container_name: 'mongo1'
     volumes:
       - '/data/mongo:/data/db'
       - '/mongodb-keyfile:/mongodb-keyfile'
@@ -243,7 +272,9 @@ services:
     volumes:
       - '/data/elasticsearch:/usr/share/elasticsearch/data'
       - '/data/backups/elasticsearch:/data/backups/elasticsearch'
-      - './infrastructure/elasticsearch/jvm.options:/usr/share/elasticsearch/config/jvm.options.d/jvm.options'
+    configs:
+      - source: jvm-options.{{ts}}
+        target: /usr/share/elasticsearch/config/jvm.options.d/jvm.options
     deploy:
       resources:
         limits:
@@ -316,10 +347,17 @@ services:
       "
     depends_on:
       - minio
-    volumes:
-      - /opt/opencrvs/infrastructure/mc-config:/root/.mc
+    configs:
+      - source: minio-mc-config.{{ts}}
+        target: /root/.mc/config.json
     networks:
       - overlay_net
+    deploy:
+      labels:
+        - 'traefik.enable=false'
+      placement:
+        constraints:
+          - node.role == manager
     logging:
       driver: gelf
       options:
@@ -365,7 +403,6 @@ services:
       - ES_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
     volumes:
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/elastalert.yaml:/opt/elastalert/config.yaml'
-      - '/opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml:/opt/elastalert/auth.yaml'
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/rules:/opt/elastalert/rules'
     networks:
       - overlay_net
@@ -532,7 +569,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`)'
+        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -544,12 +581,29 @@ services:
         - 'traefik.http.middlewares.countryconfig.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.countryconfig.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.countryconfig.headers.stspreload=true'
+        # This is an invalid IP range, effectively blocking all IPs from accessing /email path.
+        # It's only meant to be accessed from the internal docker network.
+        - 'traefik.http.middlewares.block-email.ipwhitelist.sourcerange=255.255.255.255'
+        - 'traefik.http.routers.block-email.rule=Host(`countryconfig.{{hostname}}`) && Path(`/email`)'
+        - 'traefik.http.routers.block-email.middlewares=block-email'
       replicas: 1
     environment:
+      - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
+      - CONFIG_MONGO_URL=mongodb://mongo1/application-config?replicaSet=rs0
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
+      - NOTIFICATION_TRANSPORT=${NOTIFICATION_TRANSPORT}
+      - ALERT_EMAIL=${ALERT_EMAIL:-""}
+      - SMTP_HOST=${SMTP_HOST:-""}
+      - SMTP_PORT=${SMTP_PORT:-""}
+      - SMTP_USERNAME=${SMTP_USERNAME:-""}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-""}
+      - SMTP_SECURE=${SMTP_SECURE:-""}
+      - INFOBIP_GATEWAY_ENDPOINT=${INFOBIP_GATEWAY_ENDPOINT:-""}
+      - INFOBIP_API_KEY=${INFOBIP_API_KEY:-""}
+      - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-""}
       - DOMAIN={{hostname}}
     networks:
       - overlay_net
@@ -880,14 +934,7 @@ services:
       - mongo1
     deploy:
       labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.openhimapi.rule=Host(`openhim-api.{{hostname}}`)'
-        - 'traefik.http.services.openhimapi.loadbalancer.server.port=8080'
-        - 'traefik.http.routers.openhimapi.tls=true'
-        - 'traefik.http.routers.openhimapi.service=openhimapi'
-        - 'traefik.http.routers.openhimapi.entrypoints=web,websecure'
-        - 'traefik.http.routers.openhimapi.tls.certresolver=certResolver'
-        - 'traefik.http.services.openhimapi.loadbalancer.server.scheme=https'
+        - 'traefik.enable=false'
 
         # To expose OpenHIM to external systems as an interoperability layer
         # Given OpenCRVS has it's own integrations UI and control.  This functionality is currently disabled
@@ -920,16 +967,7 @@ services:
   openhim-console:
     deploy:
       labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.openhim.rule=Host(`openhim.{{hostname}}`)'
-        - 'traefik.http.services.openhim.loadbalancer.server.port=80'
-        - 'traefik.http.routers.openhim.tls=true'
-        - 'traefik.http.routers.openhim.tls.certresolver=certResolver'
-        - 'traefik.http.routers.openhim.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.openhim.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.openhim.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.openhim.headers.stspreload=true'
+        - 'traefik.enable=false'
       replicas: 1
     configs:
       - source: openhim-console-conf.{{ts}}
@@ -976,7 +1014,8 @@ services:
   dashboards:
     volumes:
       - /data/metabase:/data/metabase
-      - /data/metabase/metabase.init.db.sql:/metabase.init.db.sql
+      # Exceed Docker config file 500 kb file limit, thus a volume mount
+      - /opt/opencrvs/infrastructure/metabase/metabase.init.db.sql:/metabase.init.db.sql
     networks:
       - overlay_net
     environment:
@@ -1018,27 +1057,33 @@ secrets:
     external: true
 configs:
   openhim-console-conf.{{ts}}:
-    file: ./infrastructure/openhim-console-config.deploy.json
+    file: /opt/opencrvs/infrastructure/openhim-console-config.deploy.json
   hearth-check-dupe-plugin.{{ts}}:
-    file: ./infrastructure/hearth-plugins/checkDuplicateTask.js
+    file: /opt/opencrvs/infrastructure/hearth-plugins/checkDuplicateTask.js
   hearth-queryparam-extensions-conf.{{ts}}:
-    file: ./infrastructure/hearth-queryparam-extensions.json
+    file: /opt/opencrvs/infrastructure/hearth-queryparam-extensions.json
   metricbeat-conf.{{ts}}:
-    file: ./infrastructure/monitoring/beats/metricbeat.yml
+    file: /opt/opencrvs/infrastructure/monitoring/beats/metricbeat.yml
+  filebeat.{{ts}}:
+    file: /opt/opencrvs/infrastructure/monitoring/filebeat/filebeat.yml
   mongo-on-deploy.{{ts}}:
-    file: ./infrastructure/mongodb/on-deploy.sh
-  metricbeat-rollover-policy.{{ts}}:
-    file: ./infrastructure/monitoring/beats/rollover-policy.json
+    file: /opt/opencrvs/infrastructure/mongodb/on-deploy.sh
+  beat-rollover-policy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/monitoring/beats/rollover-policy.json
   kibana.{{ts}}:
-    file: ./infrastructure/monitoring/kibana/kibana.yml
+    file: /opt/opencrvs/infrastructure/monitoring/kibana/kibana.yml
   apm.{{ts}}:
-    file: ./infrastructure/monitoring/apm/apm-server.yml
+    file: /opt/opencrvs/infrastructure/monitoring/apm/apm-server.yml
   logstash.{{ts}}:
-    file: ./infrastructure/monitoring/logstash/logstash.yml
+    file: /opt/opencrvs/infrastructure/monitoring/logstash/logstash.yml
   logstash-pipeline.{{ts}}:
-    file: ./infrastructure/monitoring/logstash/logstash.conf
+    file: /opt/opencrvs/infrastructure/monitoring/logstash/logstash.conf
   influxdb-conf.{{ts}}:
-    file: ./infrastructure/influxdb.conf
+    file: /opt/opencrvs/infrastructure/influxdb.conf
+  jvm-options.{{ts}}:
+    file: /opt/opencrvs/infrastructure/elasticsearch/jvm.options
+  minio-mc-config.{{ts}}:
+    file: /opt/opencrvs/infrastructure/mc-config/config.json
 networks:
   overlay_net:
     driver: overlay
