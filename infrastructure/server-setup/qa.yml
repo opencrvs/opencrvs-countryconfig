@@ -21,6 +21,8 @@ all:
       # if no, then you can remove this user.
       - name: jump
         state: present
+        sudoer: false
+        two_factor: false
         ssh_keys:
           # if yes, then this should list the public keys of the private keys that are used when connecting to the production servers.
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-243 # example provision user key

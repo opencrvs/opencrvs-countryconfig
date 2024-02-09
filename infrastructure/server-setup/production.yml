@@ -46,7 +46,7 @@ docker-workers:
     prod-02: # @todo set this to be the hostname of your target server
       ansible_host: '33.33.33.33'
       data_label: data2
-      ansible_ssh_common_args: '-J jump@165.22.110.53 -o StrictHostKeyChecking=no'
+      ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
 
 backups:
   hosts:
