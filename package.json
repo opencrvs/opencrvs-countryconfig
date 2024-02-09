@@ -29,7 +29,7 @@
     "@graphql-codegen/typescript": "^3.0.4",
     "@graphql-codegen/typescript-operations": "^3.0.4",
     "@inquirer/editor": "^1.2.13",
-    "@octokit/core": "4.2.1",
+    "@octokit/core": "4.2.4",
     "@types/google-libphonenumber": "^7.4.23",
     "@types/handlebars": "^4.1.0",
     "@types/hapi__inert": "5.2.1",
