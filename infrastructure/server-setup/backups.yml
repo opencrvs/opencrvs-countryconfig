@@ -92,20 +92,13 @@
         name: '{{ external_backup_server_user }}'
         state: present
         create_home: true
+        home: '/home/{{ external_backup_server_user }}'
         shell: /bin/bash
       tags:
         - backups
 
-    - name: Get external backup server user home directory
-      getent:
-        database: passwd
-        key: '{{ external_backup_server_user }}'
-      register: getent_passwd_backup
-      tags:
-        - backups
-
     - set_fact:
-        external_backup_server_user_home: '{{ getent_passwd_backup.ansible_facts.getent_passwd[external_backup_server_user][4] }}'
+        external_backup_server_user_home: '/home/{{ external_backup_server_user }}'
       tags:
         - backups
 
