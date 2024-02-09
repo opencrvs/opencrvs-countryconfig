@@ -20,6 +20,7 @@ all:
       # @todo will this host be used as a bastion / jump server for the CI/CD pipeline to access production servers?
       # if no, then you can remove this user.
       - name: jump
+        state: present
         ssh_keys:
           # if yes, then this should list the public keys of the private keys that are used when connecting to the production servers.
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-243 # example provision user key
