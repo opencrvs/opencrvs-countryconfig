@@ -79,7 +79,9 @@ echo $COMPOSE_FILES_USED
 # .env.production
 if [ -f $PROJECT_ROOT/.env.$ENV ]
 then
-  export $(cat $PROJECT_ROOT/.env.$ENV | sed 's/#.*//g' | xargs)
+  while IFS='' read -r line || [[ -n "$line" ]]; do
+    eval "export $line"
+  done < $PROJECT_ROOT/.env.$ENV
 fi
 
 trap trapint SIGINT SIGTERM

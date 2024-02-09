@@ -109,6 +109,7 @@ services:
       - --certificatesresolvers.certResolver.acme.storage=acme.json
       - --certificatesresolvers.certResolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.certResolver.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.certResolver.acme.httpchallenge=true
 
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443

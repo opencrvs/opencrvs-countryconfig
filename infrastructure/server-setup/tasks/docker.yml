@@ -43,6 +43,7 @@
 
 - name: 'Setup crontab to clean up docker images'
   cron:
+    user: '{{ crontab_user }}'
     name: 'cleanup docker images'
     minute: '0'
     hour: '0'

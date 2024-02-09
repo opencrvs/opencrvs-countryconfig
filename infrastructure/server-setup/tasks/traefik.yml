@@ -4,14 +4,13 @@
     state: touch
     owner: root
     group: application
-    # Owner has rwx, group r, others no permissions
-    mode: '0740'
+    # Owner has rw, others no permissions
+    mode: '0600'
 
 - name: 'Create certs directory for traefik'
   file:
     path: /data/traefik/certs
     state: directory
-    mode: '700'
     owner: root
     group: application
     # Owner has rwx, group r, others no permissions

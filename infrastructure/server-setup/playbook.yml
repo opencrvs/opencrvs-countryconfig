@@ -164,13 +164,6 @@
       tags:
         - traefik
 
-    - name: Label nodes
-      shell: docker node update --label-add {{ hostvars[hostname]['data_label'] }}=true {{ hostname }}
-      loop: "{{ groups['docker-manager-first'] + groups['docker-workers'] }}"
-      loop_control:
-        loop_var: hostname
-      when: hostvars[hostname]['data_label'] is defined
-
 - hosts: docker-workers
   become: yes
   become_method: sudo
@@ -182,5 +175,16 @@
       when: "docker_info.stdout.find('Swarm: inactive') != -1"
       retries: 3
       delay: 20
+
+- hosts: docker-manager-first
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Label nodes
+      shell: docker node update --label-add {{ hostvars[hostname]['data_label'] }}=true {{ hostname }}
+      loop: "{{ groups['docker-manager-first'] + groups['docker-workers'] }}"
+      loop_control:
+        loop_var: hostname
+      when: hostvars[hostname]['data_label'] is defined
 
 - import_playbook: backups.yml
