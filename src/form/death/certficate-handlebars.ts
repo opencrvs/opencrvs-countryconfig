@@ -17,11 +17,11 @@ export const certificateHandlebars = {
   certificateDate: 'certificateDate',
   registrar: 'registrar',
   registrationAgent: 'registrationAgent',
-  registrarName: 'registrarName', // @deprecated use registrar.name instead
-  role: 'role', // @deprecated use registrar.role instead
-  registrarSignature: 'registrarSignature', // @deprecated use registrar.signature instead
+  registrarName: 'registrarName',
+  role: 'role',
+  registrarSignature: 'registrarSignature',
   registrationDate: 'registrationDate',
-  registrationLocation: 'registrationLocation', // @deprecated use registrar.office/state/district instead
+  registrationLocation: 'registrationLocation',
   contactEmail: 'contactEmail',
   contactPhoneNumber: 'contactPhoneNumber',
   eventDate: 'eventDate',
@@ -33,10 +33,8 @@ export const certificateHandlebars = {
   deceasedNID: 'deceasedNID',
   deceasedMaritalStatus: 'deceasedMaritalStatus',
   countryPrimaryDeceased: 'countryPrimaryDeceased',
-  statePrimaryDeceased: 'statePrimaryDeceased', // @deprecated use statePrimaryDeceasedId instead
-  statePrimaryDeceasedId: 'statePrimaryDeceasedId',
-  districtPrimaryDeceased: 'districtPrimaryDeceased', // @deprecated use districtPrimaryDeceasedId instead
-  districtPrimaryDeceasedId: 'districtPrimaryDeceasedId',
+  statePrimaryDeceased: 'statePrimaryDeceased',
+  districtPrimaryDeceased: 'districtPrimaryDeceased',
   cityPrimaryDeceased: 'cityPrimaryDeceased',
   addressLine3UrbanOptionPrimaryDeceased:
     'addressLine3UrbanOptionPrimaryDeceased',
@@ -64,10 +62,8 @@ export const certificateHandlebars = {
   deathDescription: 'deathDescription',
   placeOfDeath: 'placeOfDeath',
   countryPlaceofdeath: 'countryPlaceofdeath',
-  statePlaceofdeath: 'statePlaceofdeath', // @deprecated use statePlaceofdeathId instead
-  statePlaceofdeathId: 'statePlaceofdeathId',
-  districtPlaceofdeath: 'districtPlaceofdeath', // @deprecated use districtPlaceofdeathId instead
-  districtPlaceofdeathId: 'districtPlaceofdeathId',
+  statePlaceofdeath: 'statePlaceofdeath',
+  districtPlaceofdeath: 'districtPlaceofdeath',
   cityPlaceofdeath: 'cityPlaceofdeath',
   addressLine3UrbanOptionPlaceofdeath: 'addressLine3UrbanOptionPlaceofdeath',
   addressLine2UrbanOptionPlaceofdeath: 'addressLine2UrbanOptionPlaceofdeath',
@@ -91,10 +87,8 @@ export const certificateHandlebars = {
   informantNationality: 'informantNationality',
   informantNID: 'informantNID',
   countryPrimaryInformant: 'countryPrimaryInformant',
-  statePrimaryInformant: 'statePrimaryInformant', // @deprecated use statePrimaryInformantId instead
-  statePrimaryInformantId: 'statePrimaryInformantId',
-  districtPrimaryInformant: 'districtPrimaryInformant', // @deprecated use districtPrimaryInformantId instead
-  districtPrimaryInformantId: 'districtPrimaryInformantId',
+  statePrimaryInformant: 'statePrimaryInformant',
+  districtPrimaryInformant: 'districtPrimaryInformant',
   cityPrimaryInformant: 'cityPrimaryInformant',
   addressLine3UrbanOptionPrimaryInformant:
     'addressLine3UrbanOptionPrimaryInformant',
@@ -126,10 +120,8 @@ export const certificateHandlebars = {
   spouseOccupation: 'spouseOccupation',
   spouseEducationalAttainment: 'spouseEducationalAttainment',
   countryPrimarySpouse: 'countryPrimarySpouse',
-  statePrimarySpouse: 'statePrimarySpouse', // @deprecated use statePrimarySpouseId instead
-  statePrimarySpouseId: 'statePrimarySpouseId',
-  districtPrimarySpouse: 'districtPrimarySpouse', // @deprecated use districtPrimarySpouseId instead
-  districtPrimarySpouseId: 'districtPrimarySpouseId',
+  statePrimarySpouse: 'statePrimarySpouse',
+  districtPrimarySpouse: 'districtPrimarySpouse',
   cityPrimarySpouse: 'cityPrimarySpouse',
   addressLine3UrbanOptionPrimarySpouse: 'addressLine3UrbanOptionPrimarySpouse',
   addressLine2UrbanOptionPrimarySpouse: 'addressLine2UrbanOptionPrimarySpouse',
@@ -164,10 +156,8 @@ export const certificateHandlebars = {
   fatherOccupation: 'fatherOccupation',
   fatherEducationalAttainment: 'fatherEducationalAttainment',
   countryPrimaryMother: 'countryPrimaryMother',
-  statePrimaryMother: 'statePrimaryMother', // @deprecated use statePrimaryMotherId instead
-  statePrimaryMotherId: 'statePrimaryMotherId',
-  districtPrimaryMother: 'districtPrimaryMother', // @deprecated use districtPrimaryMotherId instead
-  districtPrimaryMotherId: 'districtPrimaryMotherId',
+  statePrimaryMother: 'statePrimaryMother',
+  districtPrimaryMother: 'districtPrimaryMother',
   cityPrimaryMother: 'cityPrimaryMother',
   addressLine3UrbanOptionPrimaryMother: 'addressLine3UrbanOptionPrimaryMother',
   addressLine2UrbanOptionPrimaryMother: 'addressLine2UrbanOptionPrimaryMother',
@@ -186,10 +176,8 @@ export const certificateHandlebars = {
   internationalPostalCodePrimaryMother: 'internationalPostalCodePrimaryMother',
   fatherReasonNotApplying: 'fatherReasonNotApplying',
   countryPrimaryFather: 'countryPrimaryFather',
-  statePrimaryFather: 'statePrimaryFather', // @deprecated use statePrimaryFatherId instead
-  statePrimaryFatherId: 'statePrimaryFatherId',
-  districtPrimaryFather: 'districtPrimaryFather', // @deprecated use districtPrimaryFatherId instead
-  districtPrimaryFatherId: 'districtPrimaryFatherId',
+  statePrimaryFather: 'statePrimaryFather',
+  districtPrimaryFather: 'districtPrimaryFather',
   cityPrimaryFather: 'cityPrimaryFather',
   addressLine3UrbanOptionPrimaryFather: 'addressLine3UrbanOptionPrimaryFather',
   addressLine2UrbanOptionPrimaryFather: 'addressLine2UrbanOptionPrimaryFather',
