@@ -160,7 +160,8 @@ export const getNIDVerificationButton = (
   labelForOffline: formMessageDescriptors.nidOffline
 })
 export const getOccupation = (
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  conditionals: Conditional[] = []
 ): SerializedFormField => ({
   name: 'occupation',
   type: 'TEXT',
@@ -172,12 +173,7 @@ export const getOccupation = (
   required: false,
   initialValue: '',
   validator: [],
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!values.detailsExist'
-    }
-  ],
+  conditionals,
   mapping: getFieldMapping('occupation', certificateHandlebar)
 })
 

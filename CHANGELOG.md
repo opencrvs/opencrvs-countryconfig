@@ -59,5 +59,6 @@
 ## Bug fixes
 
 - Updated translations for form introduction page and sending for approval to reflect the default notification method being email.
+- Remove hard-coded conditionals from "occupation" field to make it usable in the deceased form
 
 See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
