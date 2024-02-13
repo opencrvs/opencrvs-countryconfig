@@ -19,25 +19,25 @@ all:
     # SSH and other services should never be exposed to the public internet.
     only_allow_access_from_addresses:
       # @todo place the IP address of your VPN server or other explicitly allowed traffic sources here
-      - 55.55.55.55 # example VPN server IP address
+      - 167.99.195.231 # example VPN server IP address
     enable_backups: false
     periodic_restore_from_backup: true
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+      - name: euan
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDECqHO65UpyrrO8uueD06RxGaVVq22f152Rf8qVQQAAIGAMu6gCs7ztlZ8a3yQgSEIjM/Jl1/RqIVs6CziTEef74nLFTZ5Ufz3CLRVgdebBeSBEmhTfTUV0HLkSyNzwKFpuzJxucGd72ulPvEp6eHvyJAPJz37YcU8cjaL1v05T6s2ee99li35GlDDtCzfjVV4ZPAg5JdfWuTj41RAVC0LQhk2/NB4qEu37UxGGjhRFSjBEsS5LxI9QfvgrsHpl/VOn+soH7ZkK7kS6qRgNP/uYsXRWXhHaamcl5OX68gJWTbrW6c7PCqlbCWGnsHJswCmqPIthwXXMfC7ULDNLSKG6mslAt5Dyc8/MCr3vTW7pDyr2d0FvvY86SMQUggxv3qF7TZewqfX1bhK0fMLarIxVMQ1RFo//wN9QGA+2we8rxd2Y1Kr1DBuJyuwXPfv+Exo8yNYQ+x/AYH5k6UVcSYuaB8eYmplG2KQCxt8RBFtoChrwOKNRWLqXdKyfpdp5XmnnWxPvR95gf3h3yLocVYkF0i0uvKKJ0vt8J0Ezfkdfow0B1kUg5bPXKJROX7PwbaCPdYcxyDaO6wwOigRnSmoFvkH1pLb4j1RQAXcX531CHgfN6Izi/h0mpMS4bnyIUcv2GQr+h4z4TxcCtj7qpH2y6yw7XG12jVh7TfeesXG2Q== euanmillar77@gmail.com
         state: present
         sudoer: true
 
 docker-manager-first:
   hosts:
-    staging: # @todo set this to be the hostname of your target server
-      ansible_host: '11.11.11.11' # todo set this to be the hostname of your target server
+    opencrvs-countryconfig-staging: # @todo set this to be the hostname of your target server
+      ansible_host: '178.128.172.42' # todo set this to be the hostname of your target server
       data_label: data1
       # @todo as production servers are not directly accessible from the internet, you need to use a jump server to access them.
-      ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
+      ansible_ssh_common_args: '-J jump@countryconfig-qa.opencrvs.org -o StrictHostKeyChecking=no'
 
 # This staging servers is configured to only use one server
 docker-workers: {}
@@ -46,5 +46,5 @@ docker-workers: {}
 # @todo if you do not intend to set up automatic sync from the backup server, you can remove this section.
 backups:
   hosts:
-    qa:
-      ansible_host: '66.66.66.66' # set this to be the IP address of your backup server
+    opencrvs-countryconfig-backup: # @todo set this to be the hostname of your backup server
+      ansible_host: '167.99.92.15' # set this to be the IP address of your backup server
