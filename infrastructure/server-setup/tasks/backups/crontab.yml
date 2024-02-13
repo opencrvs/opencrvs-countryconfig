@@ -18,7 +18,7 @@
 
 - name: Throw an error if periodic_restore_from_backup is true but restore_backup_encryption_passphrase is not defined
   fail:
-    msg: 'Error: restore_backup_encryption_passphrase is not defined. It usually means you haven't set RESTORE_BACKUP_ENCRYPTION_PASSPHRASE in your staging environments secrets'
+    msg: 'Error: restore_backup_encryption_passphrase is not defined. It usually means you have not set BACKUP_ENCRYPTION_PASSPHRASE in your staging environments secrets'
   when: periodic_restore_from_backup and restore_backup_encryption_passphrase is not defined
 
 - name: 'Setup crontab to download a backup periodically the opencrvs data'
