@@ -43,7 +43,7 @@ docker-manager-first:
 # This should depend on the size of your country and the number of end users.
 docker-workers:
   hosts:
-    prod-02: # @todo set this to be the hostname of your target server
+    opencrvs-countryconfig-prod-02: # @todo set this to be the hostname of your target server
       ansible_host: '134.122.110.42'
       data_label: data2
       ansible_ssh_common_args: '-J jump@countryconfig-qa.opencrvs.org -o StrictHostKeyChecking=no'
