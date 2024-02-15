@@ -352,6 +352,12 @@ EOF
 
 # Setup configuration files and compose file for the deployment domain
 configured_ssh "
+  HOST=$HOST
+  SMTP_HOST=$SMTP_HOST
+  SMTP_PORT=$SMTP_PORT
+  ALERT_EMAIL=$ALERT_EMAIL
+  SENDER_EMAIL_ADDRESS=$SENDER_EMAIL_ADDRESS
+  DOMAIN=$DOMAIN
   MINIO_ROOT_USER=$MINIO_ROOT_USER
   MINIO_ROOT_PASSWORD=$MINIO_ROOT_PASSWORD
   /opt/opencrvs/infrastructure/setup-deploy-config.sh $HOST | tee -a $LOG_LOCATION/setup-deploy-config.log"
