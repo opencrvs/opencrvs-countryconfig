@@ -82,6 +82,7 @@ import { getNumberOfDependants } from '@countryconfig/form/death/custom-fields'
 import { getIDNumberFields, getIDType } from '@countryconfig/form/custom-fields'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 //import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
+import { getReasonForLateRegistration } from '../custom-fields'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -232,6 +233,7 @@ export const deathForm = {
                 }
               ]
             ),
+            getReasonForLateRegistration('death'),
             getMannerOfDeath,
             getCauseOfDeath,
             getCauseOfDeathMethod,

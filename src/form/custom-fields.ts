@@ -8,7 +8,7 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-
+import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from './common/messages'
 import { Conditional, SerializedFormField } from './types/types'
 import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
@@ -45,7 +45,54 @@ export function createCustomFieldExample(): SerializedFormField {
     initialValue: '',
     validator: [], // EDIT VALIDATORS AS YOU SEE FIT
     mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals: [], // EDIT VALIDATORS AS YOU SEE FIT
+    conditionals: [], // EDIT CONDITIONALS AS YOU SEE FIT
+    maxLength: 250
+  }
+}
+
+export function getReasonForLateRegistration(
+  event: string
+): SerializedFormField {
+  const fieldName: string = 'reasonForLateRegistration'
+  const fieldId: string =
+    event === 'birth'
+      ? `birth.child.child-view-group.${fieldName}`
+      : `death.deathEvent.death-event-details.${fieldName}`
+  const label: MessageDescriptor =
+    event === 'birth'
+      ? {
+          id: 'form.customField.label.reasonForLateRegistrationBirth',
+          description:
+            'A form field that asks the reason for a late registration.',
+          defaultMessage: 'Reason for delayed registration'
+        }
+      : {
+          id: 'form.customField.label.reasonForLateRegistrationDeath',
+          description:
+            'A form field that asks the reason for a late registration.',
+          defaultMessage: 'Reason for late registration'
+        }
+  const expression: string =
+    event === 'birth'
+      ? 'const pattern = /^\\d{4}-\\d{2}-\\d{2}$/; const today = new Date(); const eventDatePlusLateRegistrationTarget = new Date(values.childBirthDate); const lateRegistrationTarget = offlineCountryConfig && offlineCountryConfig.config.BIRTH.LATE_REGISTRATION_TARGET; eventDatePlusLateRegistrationTarget.setDate(eventDatePlusLateRegistrationTarget.getDate() + lateRegistrationTarget); !pattern.test(values.childBirthDate) || today < eventDatePlusLateRegistrationTarget;'
+      : 'const pattern = /^\\d{4}-\\d{2}-\\d{2}$/; const today = new Date(); const eventDatePlusLateRegistrationTarget = new Date(values.deathDate); const lateRegistrationTarget = offlineCountryConfig && offlineCountryConfig.config.DEATH.REGISTRATION_TARGET; eventDatePlusLateRegistrationTarget.setDate(eventDatePlusLateRegistrationTarget.getDate() + lateRegistrationTarget); !pattern.test(values.deathDate) || today < eventDatePlusLateRegistrationTarget;'
+
+  return {
+    name: fieldName,
+    customQuestionMappingId: fieldId,
+    custom: true,
+    required: true,
+    type: 'TEXT',
+    label,
+    initialValue: '',
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: [
+      {
+        action: 'hide',
+        expression
+      }
+    ], // EDIT CONDITIONALS AS YOU SEE FIT
     maxLength: 250
   }
 }
