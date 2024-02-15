@@ -13,7 +13,6 @@ set -e
 # Define Docker command with the image and network
 docker_command="docker run --rm -v /opt/opencrvs/infrastructure/monitoring/kibana/config.ndjson:/config.ndjson --network=opencrvs_overlay_net curlimages/curl"
 
-echo "test: $ELASTICSEARCH_SUPERUSER_PASSWORD"
 # First delete all alerts. This is because the import doesn't remove alerts that are no longer in the config
 $docker_command --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD http://kibana:5601/api/alerting/rules/_find\?page\=1\&per_page\=100\&default_search_operator\=AND\&sort_field\=name\&sort_order\=asc | docker run --rm -i --network=opencrvs_overlay_net stedolan/jq -r '.data[].id' | while read -r id; do
   $docker_command --connect-timeout 60 -X DELETE -H 'kbn-xsrf: true' -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD "http://kibana:5601/api/alerting/rule/$id"

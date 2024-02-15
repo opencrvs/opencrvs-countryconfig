@@ -372,6 +372,7 @@ echo
 echo "Waiting 2 mins for mongo to deploy before working with data. Please note it can take up to 10 minutes for the entire stack to deploy in some scenarios."
 echo
 
+sleep 120 # Required as Kibana cannot be immediately contacted
 echo "Setting up Kibana config & alerts"
 
 while true; do
