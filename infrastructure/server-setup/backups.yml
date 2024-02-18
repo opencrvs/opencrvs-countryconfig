@@ -30,11 +30,15 @@
       authorized_key:
         state: present
         key: "{{ lookup('file','{{ crontab_user_home }}/.ssh/id_rsa.pub') }}"
+      tags:
+        - backups
 
     - name: Print authorized_key information from the previous task
       ansible.builtin.debug:
         var: authorized_key
         verbosity: 2
+      tags:
+        - backups
 
     - name: Check if crontab user already has an ssh key
       stat:
