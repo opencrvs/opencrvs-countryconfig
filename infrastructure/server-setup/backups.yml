@@ -17,7 +17,7 @@
 - hosts: docker-manager-first
   become: yes
   vars:
-    crontab_user: root
+    crontab_user: provision
 
   tasks:
     - name: Get crontab user home directory
