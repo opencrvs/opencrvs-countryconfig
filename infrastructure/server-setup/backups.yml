@@ -7,13 +7,6 @@
 #
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
 ---
-- hosts: localhost
-  tasks:
-    - name: Generate SSH keypair for application -> backup server connection
-      command: ssh-keygen -t rsa -b 4096 -f /tmp/backup_ssh_key -N ""
-      tags:
-        - backups
-
 - hosts: docker-manager-first
   become: yes
   vars:
@@ -33,6 +26,11 @@
       tags:
         - backups
 
+    - name: Print crontab_user_home information from the previous task
+      ansible.builtin.debug:
+        var: crontab_user_home
+        verbosity: 2
+
     - name: Check if crontab user already has an ssh key
       stat:
         path: '{{ crontab_user_home }}/.ssh/id_rsa.pub'
@@ -46,20 +44,6 @@
         state: directory
         owner: '{{ crontab_user }}'
         mode: '0700'
-      tags:
-        - backups
-
-    - name: Create an SSH key for crontab user if they do not have one
-      copy:
-        src: /tmp/backup_ssh_key
-        dest: '{{ crontab_user_home }}/.ssh/id_rsa'
-        mode: 0600
-      when: not file_check.stat.exists
-      tags:
-        - backups
-
-    - name: Create public key file from private key
-      shell: ssh-keygen -y -f '{{ crontab_user_home }}/.ssh/id_rsa' > '{{ crontab_user_home }}/.ssh/id_rsa.pub'
       tags:
         - backups
 
