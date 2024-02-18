@@ -26,13 +26,14 @@
       tags:
         - backups
     
-    - name: read file on host
-      vars:
-        contents: "{{ lookup('file','{{ crontab_user_home }}/.ssh/id_rsa.pub') }}"
+    - name: "Copy the public key using lookup"
+      authorized_key:
+        state: present
+        key: "{{ lookup('file','{{ crontab_user_home }}/.ssh/id_rsa.pub') }}"
 
-    - name: Print contents information from the previous task
+    - name: Print authorized_key information from the previous task
       ansible.builtin.debug:
-        var: contents
+        var: authorized_key
         verbosity: 2
 
     - name: Check if crontab user already has an ssh key
