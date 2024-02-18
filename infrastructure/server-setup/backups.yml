@@ -25,10 +25,14 @@
         crontab_user_home: '{{ getent_passwd_crontab.ansible_facts.getent_passwd[crontab_user][4] }}'
       tags:
         - backups
+    
+    - name: read file on host
+      vars:
+        contents: "{{ lookup('file','{{ crontab_user_home }}/.ssh/id_rsa.pub') }}"
 
-    - name: Print crontab_user_home information from the previous task
+    - name: Print contents information from the previous task
       ansible.builtin.debug:
-        var: crontab_user_home
+        var: contents
         verbosity: 2
 
     - name: Check if crontab user already has an ssh key
