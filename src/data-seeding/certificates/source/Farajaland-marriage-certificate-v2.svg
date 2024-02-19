@@ -61,7 +61,10 @@
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px"><tspan x="189.962" y="340.264"> /&#x2028;</tspan></text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px"><tspan x="104.68" y="340.264">Place of marriage</tspan><tspan x="104.68" y="355.264">Lieu de mariage</tspan></text>
 <g clip-path="url(#clip7_1157_5110)">
-<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px"><tspan x="289.95" y="340.264">{{location districtPlaceofmarriageId 'name'}}&#10;</tspan><tspan x="289.95" y="355.264">{{location statePlaceofmarriageId 'name'}}, {{countryPlaceofmarriage}}</tspan></text>
+<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
+    <tspan x="289.95" y="340.264">{{location districtPlaceofmarriageId 'name'}}{{internationalDistrictPlaceofmarriage}}, &#10;</tspan>
+    <tspan x="289.95" y="355.264">{{location statePlaceofmarriageId 'name'}}{{internationalStatePlaceofmarriage}}, {{countryPlaceofmarriage}}</tspan>
+</text>
 </g>
 <line x1="81.3997" y1="364.335" x2="512.08" y2="364.335" stroke="#ECECEC" stroke-width="0.97"/>
 <line x1="81.3997" y1="364.335" x2="512.08" y2="364.335" stroke="#ECECEC" stroke-width="0.97"/>

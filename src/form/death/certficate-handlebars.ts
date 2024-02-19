@@ -38,6 +38,7 @@ export const certificateHandlebars = {
   districtPrimaryDeceased: 'districtPrimaryDeceased', // @deprecated use districtPrimaryDeceasedId instead
   districtPrimaryDeceasedId: 'districtPrimaryDeceasedId',
   cityPrimaryDeceased: 'cityPrimaryDeceased',
+  ageOfDeceasedInYears: 'ageOfDeceasedInYears',
   addressLine3UrbanOptionPrimaryDeceased:
     'addressLine3UrbanOptionPrimaryDeceased',
   addressLine2UrbanOptionPrimaryDeceased:

@@ -55,7 +55,8 @@ export const exactDateOfBirthUnknown = (
 export const getAgeOfIndividualInYears = (
   label: MessageDescriptor,
   conditionals: Conditional[],
-  validators: Validator[]
+  validators: Validator[],
+  certificateHandlebar?: string
 ): SerializedFormField => ({
   name: 'ageOfIndividualInYears',
   type: 'NUMBER',
@@ -65,7 +66,10 @@ export const getAgeOfIndividualInYears = (
   validator: validators,
   conditionals,
   postfix: 'years',
-  inputFieldWidth: '78px'
+  inputFieldWidth: '78px',
+  ...(certificateHandlebar && {
+    mapping: getFieldMapping('ageOfIndividualInYears', certificateHandlebar)
+  })
 })
 
 export const getMaritalStatus = (
