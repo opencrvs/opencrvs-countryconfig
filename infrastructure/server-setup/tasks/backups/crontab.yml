@@ -16,10 +16,10 @@
     periodic_restore_from_backup: false
   when: periodic_restore_from_backup is not defined
 
-- name: Throw an error if periodic_restore_from_backup is true but restore_backup_encryption_passphrase is not defined
+- name: Throw an error if periodic_restore_from_backup is true but backup_encryption_passphrase is not defined
   fail:
-    msg: 'Error: restore_backup_encryption_passphrase is not defined. It usually means you haven't set RESTORE_BACKUP_ENCRYPTION_PASSPHRASE in your staging environments secrets'
-  when: periodic_restore_from_backup and restore_backup_encryption_passphrase is not defined
+    msg: 'Error: backup_encryption_passphrase is not defined. It usually means you have not set backup_encryption_passphrase in your staging environments secrets'
+  when: periodic_restore_from_backup and backup_encryption_passphrase is not defined
 
 - name: 'Setup crontab to download a backup periodically the opencrvs data'
   cron:
@@ -27,8 +27,8 @@
     name: 'download opencrvs backup'
     minute: '30'
     hour: '0'
-    job: 'cd / && bash /opt/opencrvs/infrastructure/backups/download.sh --passphrase={{ restore_backup_encryption_passphrase }} --ssh_user={{ external_backup_server_user }} --ssh_host={{ external_backup_server_ip }} --ssh_port={{ external_backup_server_ssh_port }} --remote_dir={{ external_backup_server_remote_directory }} >> /var/log/opencrvs-restore.log 2>&1'
-    state: "{{ 'present' if (external_backup_server_ip is defined and restore_backup_encryption_passphrase and periodic_restore_from_backup) else 'absent' }}"
+    job: 'cd / && bash /opt/opencrvs/infrastructure/backups/download.sh --passphrase={{ backup_encryption_passphrase }} --ssh_user={{ external_backup_server_user }} --ssh_host={{ external_backup_server_ip }} --ssh_port={{ external_backup_server_ssh_port }} --remote_dir={{ external_backup_server_remote_directory }} >> /var/log/opencrvs-restore.log 2>&1'
+    state: "{{ 'present' if (external_backup_server_ip is defined and backup_encryption_passphrase and periodic_restore_from_backup) else 'absent' }}"
 
 - name: 'Setup crontab to restore the opencrvs data'
   cron:
@@ -37,4 +37,4 @@
     minute: '0'
     hour: '1'
     job: 'cd / && bash /opt/opencrvs/infrastructure/backups/restore.sh --replicas=1 >> /var/log/opencrvs-restore.log 2>&1'
-    state: "{{ 'present' if (external_backup_server_ip is defined and restore_backup_encryption_passphrase and periodic_restore_from_backup) else 'absent' }}"
+    state: "{{ 'present' if (external_backup_server_ip is defined and backup_encryption_passphrase and periodic_restore_from_backup) else 'absent' }}"
