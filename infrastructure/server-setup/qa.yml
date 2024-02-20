@@ -28,15 +28,6 @@ all:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-243 # example provision user key
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-244 # example provision user key
 
-    # If the machine is repurposed to also be the backup host, we need to add more keys to the authorized_keys file so that
-    # when the application servers get provisioned, the provision user of this machine can be used.
-    #
-    # @todo remove this key if the machine is not used as a backup host.
-    # Otherwise, add the public key of the private key that's used for the "provision" user on the server of which backups this machine hosts.
-    additional_keys_for_provisioning_user:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-243 # example provision user key
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-244 # example provision user key
-
 docker-manager-first:
   hosts:
     qa: # @todo set this to be the hostname of your target server

@@ -26,6 +26,19 @@ done
 KIBANA_ENCRYPTION_KEY=`uuidgen`
 sed -i "s/{{KIBANA_ENCRYPTION_KEY}}/$KIBANA_ENCRYPTION_KEY/g" /opt/opencrvs/infrastructure/monitoring/kibana/kibana.yml
 
+# Move metabase file
+mv /opt/opencrvs/infrastructure/metabase.init.db.sql /data/metabase/metabase.init.db.sql
+
+# Replace environment variables from all alert definition files
+for file in /opt/opencrvs/infrastructure/monitoring/elastalert/rules/*.yaml; do
+    sed -i -e "s%{{HOST}}%$1%" $file
+    sed -i -e "s%{{SMTP_HOST}}%$SMTP_HOST%" $file
+    sed -i -e "s%{{SMTP_PORT}}%$SMTP_PORT%" $file
+    sed -i -e "s%{{ALERT_EMAIL}}%$ALERT_EMAIL%" $file
+    sed -i -e "s%{{SENDER_EMAIL_ADDRESS}}%$SENDER_EMAIL_ADDRESS%" $file
+    sed -i -e "s%{{DOMAIN}}%$DOMAIN%" $file
+done
+
 sed -i -e "s%{{MINIO_ROOT_USER}}%$MINIO_ROOT_USER%" /opt/opencrvs/infrastructure/mc-config/config.json
 sed -i -e "s%{{MINIO_ROOT_PASSWORD}}%$MINIO_ROOT_PASSWORD%" /opt/opencrvs/infrastructure/mc-config/config.json
 
