@@ -46,16 +46,12 @@ import {
   informantFirstNameConditionals,
   exactDateOfBirthUnknownConditional,
   isValidBirthDate /*,
-  spouseFirstNameConditionals,
-  spouseFamilyNameConditionals,
-  spouseBirthDateConditionals,
   fathersDetailsExistConditionals,
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
   fathersBirthDateConditionals,
   parentsBirthDateValidators,
   detailsExistConditional,
-  detailsExist,
   motherFirstNameConditionals,
   motherFamilyNameConditionals,
   mothersBirthDateConditionals,
@@ -351,10 +347,10 @@ export const deathForm = {
               ],
               certificateHandlebars.spouseBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown([]),
+            exactDateOfBirthUnknown(detailsExist),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfSpouse,
-              exactDateOfBirthUnknownConditional,
+              exactDateOfBirthUnknownConditional.concat(detailsExist),
               ageOfIndividualValidators
             ),
             getNationality(
