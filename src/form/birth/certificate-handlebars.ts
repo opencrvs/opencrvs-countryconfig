@@ -29,12 +29,9 @@ export const certificateHandlebars = {
   birthConfigurableIdentifier1: 'birthConfigurableIdentifier1',
   birthConfigurableIdentifier2: 'birthConfigurableIdentifier2',
   birthConfigurableIdentifier3: 'birthConfigurableIdentifier3',
-  placeOfBirth: 'placeOfBirth', // equal to either the name of a HEALTH_FACILITY or undefined
+  placeOfBirth: 'placeOfBirth', // equal to the full place of birth
   placeOfBirthFacility: 'placeOfBirthFacility', // equal to either the name of a HEALTH_FACILITY or undefined
-  placeOfBirthCountry: 'placeOfBirthCountry', // used where event occurs in a HEALTH_FACILITY
-  placeOfBirthDistrict: 'placeOfBirthDistrict', // used where event occurs in a HEALTH_FACILITY
-  placeOfBirthState: 'placeOfBirthState', // used where event occurs in a HEALTH_FACILITY
-  countryPlaceofbirth: 'countryPlaceofbirth', // THE FOLLOWING are used where event occurs in a PRIVATE_HOME or OTHER therefore placeOfBirth is undefined
+  countryPlaceofbirth: 'countryPlaceofbirth',
   statePlaceofbirth: 'statePlaceofbirth', // @deprecated use statePlaceofbirthId instead: Refer to https://github.com/opencrvs/opencrvs-farajaland/pull/815
   statePlaceofbirthId: 'statePlaceofbirthId', // Use with location helper like this: {{location statePlaceofbirthId 'name'}}
   districtPlaceofbirth: 'districtPlaceofbirth', // @deprecated use districtPlaceofbirthId instead: Refer to https://github.com/opencrvs/opencrvs-farajaland/pull/815
@@ -68,13 +65,19 @@ export const certificateHandlebars = {
   informantFamilyName: 'informantFamilyName',
   informantBirthDate: 'informantBirthDate',
   informantNationality: 'informantNationality',
-  informantNID: 'informantNID',
+  informantNationalId: 'informantNationalId',
+  informantPassport: 'informantPassport',
+  informantAliedId: 'informantAliedId',
+  informantRefugeeId: 'informantRefugeeId',
   motherReasonNotApplying: 'motherReasonNotApplying',
   motherBirthDate: 'motherBirthDate',
   motherFirstName: 'motherFirstName',
   motherFamilyName: 'motherFamilyName',
   motherNationality: 'motherNationality',
-  motherNID: 'motherNID',
+  motherNationalId: 'motherNationalId',
+  motherPassport: 'motherPassport',
+  motherAliedId: 'motherAliedId',
+  motherRefugeeId: 'motherRefugeeId',
   motherMaritalStatus: 'motherMaritalStatus',
   motherOccupation: 'motherOccupation',
   motherEducationalAttainment: 'motherEducationalAttainment',
@@ -82,7 +85,10 @@ export const certificateHandlebars = {
   fatherFirstName: 'fatherFirstName',
   fatherFamilyName: 'fatherFamilyName',
   fatherNationality: 'fatherNationality',
-  fatherNID: 'fatherNID',
+  fatherNationalId: 'fatherNationalId',
+  fatherPassport: 'fatherPassport',
+  fatherAliedId: 'fatherAliedId',
+  fatherRefugeeId: 'fatherRefugeeId',
   fatherMaritalStatus: 'fatherMaritalStatus',
   fatherOccupation: 'fatherOccupation',
   fatherEducationalAttainment: 'fatherEducationalAttainment',
