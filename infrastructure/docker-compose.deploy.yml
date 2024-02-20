@@ -405,6 +405,8 @@ services:
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/rules:/opt/elastalert/rules'
     networks:
       - overlay_net
+    depends_on:
+      - elasticsearch
     deploy:
       labels:
         - 'traefik.enable=false'
