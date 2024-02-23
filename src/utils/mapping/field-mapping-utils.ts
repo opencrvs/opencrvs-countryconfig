@@ -116,6 +116,13 @@ export function getFieldMapping(
           operation: 'ignoreFieldTransformer'
         }
       }
+    case 'ageOfIndividualInYears':
+      return {
+        template: {
+          operation: 'plainInputTransformer',
+          fieldName: certificateHandlebar
+        }
+      }
     case 'informantType':
       return {
         mutation: {
