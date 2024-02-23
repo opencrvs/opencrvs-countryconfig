@@ -44,6 +44,11 @@ all:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINUml9O5ySwPtEMD1yGEYHlf9Z3jro97NWAnM9+ew9gn tahmidrahman.dsi@gmail.com
         state: present
         sudoer: true
+      - name: pyry
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBcrSLLdrkLrhqNQi7Uo/ZIWXb1y4kc0vGb16e2s0Jq pyry@opencrvs.org
+        state: present
+        sudoer: true
 docker-manager-first:
   hosts:
     farajaland-staging:
