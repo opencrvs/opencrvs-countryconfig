@@ -19,7 +19,6 @@ import {
   getFirstNameField,
   getNationality,
   otherInformantType,
-  getNationalID,
   getDetailsExist,
   getReasonNotExisting
 } from '../common/common-required-fields'
@@ -60,11 +59,10 @@ import {
   fatherFamilyNameConditionals,
   informantNotMotherOrFather,
   detailsExistConditional,
-  ageOfIndividualConditionals,
+  ageOfIndividualValidators,
   ageOfParentsConditionals
 } from '../common/default-validation-conditionals'
 import {
-  getNationalIDValidators,
   informantFirstNameConditionals,
   informantFamilyNameConditionals,
   informantBirthDateConditionals,
@@ -75,6 +73,8 @@ import { documentsSection, registrationSection } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { getReasonForLateRegistration } from '../custom-fields'
+import { getIDNumberFields, getIDType } from '../custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -189,6 +189,7 @@ export const birthForm: ISerializedForm = {
               isValidChildBirthDate,
               certificateHandlebars.eventDate
             ), // Required field.
+            getReasonForLateRegistration('birth'),
             // PLACE OF BIRTH FIELDS WILL RENDER HERE
             divider('place-of-birth-seperator'),
             attendantAtBirth,
@@ -251,17 +252,22 @@ export const birthForm: ISerializedForm = {
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantMotherOrFather
               ),
-              ageOfIndividualConditionals
+              ageOfIndividualValidators
             ),
             getNationality(
               certificateHandlebars.informantNationality,
               hideIfInformantMotherOrFather
             ), // Required field.
-            getNationalID(
-              'informantID',
+            getIDType(
+              'birth',
+              'informant',
               hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
-              getNationalIDValidators('informant'),
-              certificateHandlebars.informantNID
+              true
+            ),
+            ...getIDNumberFields(
+              'informant',
+              hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
+              true
             ),
             // preceding field of address fields
             divider('informant-nid-seperator', [
@@ -331,11 +337,16 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.motherNationality,
               detailsExist
             ), // Required field.
-            getNationalID(
-              'iD',
+            getIDType(
+              'birth',
+              'mother',
               hideIfNidIntegrationEnabled.concat(detailsExist),
-              getNationalIDValidators('mother'),
-              certificateHandlebars.motherNID
+              true
+            ),
+            ...getIDNumberFields(
+              'mother',
+              hideIfNidIntegrationEnabled.concat(detailsExist),
+              true
             ),
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
@@ -348,7 +359,12 @@ export const birthForm: ISerializedForm = {
               }
             ]),
             getEducation(certificateHandlebars.motherEducationalAttainment),
-            getOccupation(certificateHandlebars.motherOccupation),
+            getOccupation(certificateHandlebars.motherOccupation, [
+              {
+                action: 'hide',
+                expression: '!values.detailsExist'
+              }
+            ]),
             multipleBirth
           ],
           previewGroups: [motherNameInEnglish]
@@ -410,11 +426,16 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.fatherNationality,
               detailsExist
             ), // Required field.
-            getNationalID(
-              'iD',
+            getIDType(
+              'birth',
+              'father',
               hideIfNidIntegrationEnabled.concat(detailsExist),
-              getNationalIDValidators('father'),
-              certificateHandlebars.fatherNID
+              true
+            ),
+            ...getIDNumberFields(
+              'father',
+              hideIfNidIntegrationEnabled.concat(detailsExist),
+              true
             ),
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
@@ -427,7 +448,12 @@ export const birthForm: ISerializedForm = {
               }
             ]),
             getEducation(certificateHandlebars.fatherEducationalAttainment),
-            getOccupation(certificateHandlebars.fatherOccupation)
+            getOccupation(certificateHandlebars.fatherOccupation, [
+              {
+                action: 'hide',
+                expression: '!values.detailsExist'
+              }
+            ])
           ],
           previewGroups: [fatherNameInEnglish]
         }

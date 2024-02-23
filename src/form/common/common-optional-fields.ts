@@ -55,7 +55,8 @@ export const exactDateOfBirthUnknown = (
 export const getAgeOfIndividualInYears = (
   label: MessageDescriptor,
   conditionals: Conditional[],
-  validators: Validator[]
+  validators: Validator[],
+  certificateHandlebar?: string
 ): SerializedFormField => ({
   name: 'ageOfIndividualInYears',
   type: 'NUMBER',
@@ -65,7 +66,10 @@ export const getAgeOfIndividualInYears = (
   validator: validators,
   conditionals,
   postfix: 'years',
-  inputFieldWidth: '78px'
+  inputFieldWidth: '78px',
+  ...(certificateHandlebar && {
+    mapping: getFieldMapping('ageOfIndividualInYears', certificateHandlebar)
+  })
 })
 
 export const getMaritalStatus = (
@@ -160,7 +164,8 @@ export const getNIDVerificationButton = (
   labelForOffline: formMessageDescriptors.nidOffline
 })
 export const getOccupation = (
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  conditionals: Conditional[] = []
 ): SerializedFormField => ({
   name: 'occupation',
   type: 'TEXT',
@@ -172,12 +177,7 @@ export const getOccupation = (
   required: false,
   initialValue: '',
   validator: [],
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!values.detailsExist'
-    }
-  ],
+  conditionals,
   mapping: getFieldMapping('occupation', certificateHandlebar)
 })
 
