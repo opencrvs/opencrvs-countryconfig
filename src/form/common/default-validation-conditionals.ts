@@ -109,6 +109,16 @@ export const hideIfInformantMotherOrFather = [
   }
 ]
 
+export const isInformantSpouse =
+  '!values.informantType || values.informantType==="SPOUSE"'
+
+export const hideIfInformantSpouse = [
+  {
+    action: 'hide',
+    expression: isInformantSpouse
+  }
+]
+
 export const mothersDetailsExistConditionals = [
   {
     action: 'hide',
@@ -241,7 +251,7 @@ export const brideOrGroomAgeValidators = [
   }
 ] satisfies Validator[]
 
-export const ageOfIndividualConditionals: Validator[] = [
+export const ageOfIndividualValidators: Validator[] = [
   {
     operation: 'range',
     parameters: [12, 120]
@@ -253,7 +263,7 @@ export const ageOfIndividualConditionals: Validator[] = [
 ]
 
 export const ageOfParentsConditionals = [
-  ...ageOfIndividualConditionals,
+  ...ageOfIndividualValidators,
   {
     operation: 'isValidParentsBirthDate',
     parameters: [10, true]
