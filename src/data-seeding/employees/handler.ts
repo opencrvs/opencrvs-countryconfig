@@ -16,7 +16,7 @@ export async function usersHandler(_: Request, h: ResponseToolkit) {
   const users: unknown[] = await readCSVToJSON(
     process.env.NODE_ENV === 'production' && !QA_ENV
       ? './src/data-seeding/employees/source/prod-employees.csv'
-      : './src/data-seeding/employees/source/test-employees.csv'
+      : './src/data-seeding/employees/source/default-employees.csv'
   )
   return h.response(users)
 }
