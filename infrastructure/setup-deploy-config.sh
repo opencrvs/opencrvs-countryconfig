@@ -8,13 +8,19 @@
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
 set -e
 echo
-echo "Setting up deployment config for $1 - `date --iso-8601=ns`"
+
+HOST=$1
+
+echo "Setting up deployment config for $HOST - `date --iso-8601=ns`"
 
 # Set hostname in openhim-console config
-sed -i "s/{{hostname}}/$1/g" /opt/opencrvs/infrastructure/openhim-console-config.deploy.json
+sed -i "s/{{hostname}}/$HOST/g" /opt/opencrvs/infrastructure/openhim-console-config.deploy.json
+
 
 # Set hostname in compose file
-sed -i "s/{{hostname}}/$1/g" /opt/opencrvs/docker-compose.deploy.yml
+for file in /opt/opencrvs/infrastructure/docker-compose*.yml; do
+    sed -i "s/{{hostname}}/$HOST/g" "$file"
+done
 
 # Setup an encryption key for Kibana
 KIBANA_ENCRYPTION_KEY=`uuidgen`
@@ -29,9 +35,10 @@ for file in /opt/opencrvs/infrastructure/monitoring/elastalert/rules/*.yaml; do
     sed -i -e "s%{{SMTP_HOST}}%$SMTP_HOST%" $file
     sed -i -e "s%{{SMTP_PORT}}%$SMTP_PORT%" $file
     sed -i -e "s%{{ALERT_EMAIL}}%$ALERT_EMAIL%" $file
+    sed -i -e "s%{{SENDER_EMAIL_ADDRESS}}%$SENDER_EMAIL_ADDRESS%" $file
+    sed -i -e "s%{{DOMAIN}}%$DOMAIN%" $file
 done
-sed -i -e "s%{{SMTP_USERNAME}}%$SMTP_USERNAME%" /opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml
-sed -i -e "s%{{SMTP_PASSWORD}}%$SMTP_PASSWORD%" /opt/opencrvs/infrastructure/monitoring/elastalert/auth.yaml
+
 sed -i -e "s%{{MINIO_ROOT_USER}}%$MINIO_ROOT_USER%" /opt/opencrvs/infrastructure/mc-config/config.json
 sed -i -e "s%{{MINIO_ROOT_PASSWORD}}%$MINIO_ROOT_PASSWORD%" /opt/opencrvs/infrastructure/mc-config/config.json
 

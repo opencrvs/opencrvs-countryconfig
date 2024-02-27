@@ -1,0 +1,127 @@
+name: Provision environment
+run-name: Provision ${{ github.event.inputs.environment }}
+on:
+  push:
+    branches:
+      - release-v1.4.0
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Machine to provision
+        default: qa
+        required: true
+        options:
+          - development
+          - staging
+          - qa
+          - production
+      tag:
+        type: choice
+        description: Select group tag you want to execute
+        default: all
+        options:
+          - all
+          - backups
+          - checks
+          - updates
+          - application
+          - tools
+          - docker
+          - deployment
+          - users
+          - crontab
+          - mongodb
+          - data
+          - swap
+          - ufw
+          - fail2ban
+          - decrypt
+          - swarm
+          - elasticsearch
+          - traefik
+      debug:
+        type: boolean
+        description: Open SSH session to the runner after deployment
+        default: false
+jobs:
+  provision:
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-20.04
+    outputs:
+      outcome: ${{ steps.deploy.outcome }}
+    timeout-minutes: 60
+    steps:
+      - name: Clone country config resource package
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          path: './${{ github.event.repository.name }}'
+
+      - name: Set variables for ansible in production environments
+        id: ansible-variables
+        run: |
+          JSON_WITH_NEWLINES=$(cat<<EOF
+            ${{ toJSON(env) }}
+          EOF)
+          JSON_WITHOUT_NEWLINES=$(echo $JSON_WITH_NEWLINES | jq -R -c .)
+          echo "EXTRA_VARS=$JSON_WITHOUT_NEWLINES" >> $GITHUB_OUTPUT
+        env:
+          encrypted_disk_size: ${{ vars.DISK_SPACE }}
+          disk_encryption_key: ${{ secrets.ENCRYPTION_KEY }}
+          dockerhub_username: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKER_TOKEN }}
+          mongodb_admin_username: ${{ secrets.MONGODB_ADMIN_USER }}
+          mongodb_admin_password: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
+          backup_encryption_passphrase: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
+          elasticsearch_superuser_password: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
+          external_backup_server_ssh_port: 22
+          external_backup_server_ip: ${{ secrets.BACKUP_HOST }}
+          manager_production_server_ip: ${{ secrets.SSH_HOST }}
+          ansible_user: ${{ secrets.SSH_USER }}
+
+      - name: Read known hosts
+        run: |
+          cd ${{ github.event.repository.name }}
+          echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
+          sed -i -e '$a\' ./infrastructure/known-hosts
+          cat ./infrastructure/known-hosts >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+
+      - name: Setup tmate session
+        if: ${{ github.event.inputs.debug == 'true' }}
+        uses: mxschmitt/action-tmate@v3
+        env:
+          encrypted_disk_size: ${{ vars.DISK_SPACE }}
+          disk_encryption_key: ${{ secrets.ENCRYPTION_KEY }}
+          dockerhub_username: ${{ secrets.DOCKER_USERNAME }}
+          dockerhub_password: ${{ secrets.DOCKER_TOKEN }}
+          mongodb_admin_username: ${{ secrets.MONGODB_ADMIN_USER }}
+          mongodb_admin_password: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
+          backup_encryption_passphrase: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
+          elasticsearch_superuser_password: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
+          external_backup_server_ssh_port: 22
+          external_backup_server_ip: ${{ secrets.BACKUP_HOST }}
+          manager_production_server_ip: ${{ secrets.SSH_HOST }}
+          ansible_user: ${{ secrets.SSH_USER }}
+
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        env:
+          ANSIBLE_PERSISTENT_COMMAND_TIMEOUT: 10
+          ANSIBLE_SSH_TIMEOUT: 10
+          ANSIBLE_SSH_RETRIES: 5
+        with:
+          playbook: playbook.yml
+          directory: ${{ github.event.repository.name }}/infrastructure/server-setup
+          options: |
+            --verbose
+            --inventory ${{ github.event.inputs.environment }}.yml
+            ${{ inputs.tag != 'all' && format('--tags={0}', inputs.tag) || ''}}
+            --extra-vars ""${{ steps.ansible-variables.outputs.EXTRA_VARS }}""

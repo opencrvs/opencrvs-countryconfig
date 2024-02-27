@@ -1,0 +1,192 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+---
+- hosts: localhost
+  tasks:
+    - name: Create MongoDB replicate key file locally
+      local_action: shell openssl rand -base64 755 > /tmp/mongodb-keyfile
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - include_tasks:
+        file: tasks/checks.yml
+        apply:
+          tags:
+            - checks
+      tags:
+        - checks
+
+    - include_tasks:
+        file: tasks/updates.yml
+        apply:
+          tags:
+            - updates
+      tags:
+        - updates
+
+- hosts: docker-manager-first, docker-workers
+  become: yes
+  become_method: sudo  
+  vars:
+    crontab_user: root
+  tasks:
+    - include_tasks:
+        file: tasks/application.yml
+        apply:
+          tags:
+            - application
+      tags:
+        - application
+
+    - include_tasks:
+        file: tasks/tools.yml
+        apply:
+          tags:
+            - tools
+      tags:
+        - tools
+
+    - include_tasks:
+        file: tasks/docker.yml
+        apply:
+          tags:
+            - docker
+      tags:
+        - docker
+
+    - include_tasks:
+        file: tasks/deployment-user.yml
+        apply:
+          tags:
+            - deployment-user
+            - users
+      tags:
+        - deployment-user
+        - users
+
+    - include_tasks:
+        file: tasks/users.yml
+        apply:
+          tags:
+            - users
+      tags:
+        - users
+
+    - include_tasks:
+        file: tasks/mongodb.yml
+        apply:
+          tags:
+            - mongodb
+      tags:
+        - mongodb
+
+    - include_tasks:
+        file: tasks/data-partition.yml
+        apply:
+          tags:
+            - data-partition
+      tags:
+        - data-partition
+
+    - include_tasks:
+        file: tasks/swap.yml
+        apply:
+          tags:
+            - swap
+      tags:
+        - swap
+
+    - include_tasks:
+        file: tasks/ufw.yml
+        apply:
+          tags:
+            - ufw
+      tags:
+        - ufw
+
+    - include_tasks:
+        file: tasks/fail2ban.yml
+        apply:
+          tags:
+            - fail2ban
+      tags:
+        - fail2ban
+
+    - name: 'Copy logrotate script'
+      copy:
+        src: ../logrotate.conf
+        dest: /etc/
+
+    - name: 'Save system logs to Papertrail'
+      register: papaertrailSystemLogs
+      shell: ' cd / && wget -qO - --header="X-Papertrail-Token: {{ papertrail_token }}" \ https://papertrailapp.com/destinations/16712142/setup.sh | sudo bash >> /var/log/papertrail.log 2>&1'
+      when: papertrail_token is defined
+
+    - include_tasks:
+        file: tasks/decrypt-on-boot.yml
+        apply:
+          tags:
+            - decrypt-on-boot
+      tags:
+        - decrypt-on-boot
+
+- hosts: docker-manager-first
+  become: yes
+  become_method: sudo
+  tasks:
+    - include_tasks:
+        file: tasks/swarm.yml
+        apply:
+          tags:
+            - swarm
+      tags:
+        - swarm
+
+    - include_tasks:
+        file: tasks/elasticsearch.yml
+        apply:
+          tags:
+            - elasticsearch
+      tags:
+        - elasticsearch
+
+    - include_tasks:
+        file: tasks/traefik.yml
+        apply:
+          tags:
+            - traefik
+      tags:
+        - traefik
+
+- hosts: docker-workers
+  become: yes
+  become_method: sudo
+  vars:
+    manager_hostname: "{{ groups['docker-manager-first'][0] }}"
+  tasks:
+    - name: 'Join as a worker'
+      shell: "docker swarm join --token {{ hostvars[manager_hostname]['worker_token']['stdout'] }} {{ hostvars[manager_hostname]['ansible_default_ipv4']['address'] }}:2377"
+      when: "docker_info.stdout.find('Swarm: inactive') != -1"
+      retries: 3
+      delay: 20
+
+- hosts: docker-manager-first
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Label nodes
+      shell: docker node update --label-add {{ hostvars[hostname]['data_label'] }}=true {{ hostname }}
+      loop: "{{ groups['docker-manager-first'] + groups['docker-workers'] }}"
+      loop_control:
+        loop_var: hostname
+      when: hostvars[hostname]['data_label'] is defined
+
+- import_playbook: backups.yml

@@ -1,0 +1,57 @@
+- name: 'Install UFW'
+  apt:
+    name: ufw
+    state: present
+
+- name: Allow OpenSSH for IPv4 from specific addresses
+  ufw:
+    rule: allow
+    port: 22
+    proto: tcp
+    src: '{{ item }}'
+  loop: '{{ only_allow_access_from_addresses }}'
+  when: only_allow_access_from_addresses is defined and only_allow_access_from_addresses | length > 0
+
+- name: Remove general OpenSSH allow rule
+  ufw:
+    rule: allow
+    name: OpenSSH
+    delete: yes
+  when: only_allow_access_from_addresses is defined and only_allow_access_from_addresses | length > 0
+
+- name: Allow OpenSSH through UFW universally
+  ufw:
+    rule: allow
+    name: OpenSSH
+  when: only_allow_access_from_addresses is undefined or only_allow_access_from_addresses | length == 0
+
+# Docker swarm ports - Note: all published docker container port will override UFW rules!
+- name: 'Allow secure docker client communication'
+  ufw:
+    rule: allow
+    port: 2376
+    proto: tcp
+
+- name: 'Allow docker swarm communication among nodes - TCP'
+  ufw:
+    rule: allow
+    port: 7946
+    proto: tcp
+
+- name: 'Allow docker swarm communication among nodes - UDP'
+  ufw:
+    rule: allow
+    port: 7946
+    proto: udp
+
+- name: 'Allow docker overlay network traffic'
+  ufw:
+    rule: allow
+    port: 4789
+    proto: udp
+
+- name: 'Deny everything else and enable UFW'
+  ufw:
+    state: enabled
+    default: deny
+    direction: incoming

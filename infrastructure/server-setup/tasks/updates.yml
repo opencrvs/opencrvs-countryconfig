@@ -1,0 +1,36 @@
+- name: Update apt repository
+  apt:
+    update_cache: yes
+
+- name: Upgrade all packages to the latest version
+  apt:
+    upgrade: dist
+
+- name: Remove unnecessary packages
+  apt:
+    autoremove: yes
+
+- name: Clean up apt cache
+  apt:
+    autoclean: yes
+
+- name: Install unattended-upgrades package
+  apt:
+    name: unattended-upgrades
+    state: present
+
+- name: Configure Unattended Upgrades
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    content: |
+      Unattended-Upgrade::Package-Blacklist {};
+      Unattended-Upgrade::DevRelease "auto";
+      Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+      Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
+      Unattended-Upgrade::Remove-Unused-Dependencies "true";
+      Unattended-Upgrade::Allowed-Origins {
+          "${distro_id}:${distro_codename}-security";
+      };
+    owner: root
+    group: root
+    mode: '0644'
