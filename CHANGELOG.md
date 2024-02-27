@@ -2,6 +2,13 @@
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
+- Improved logging for emails being sent
+- Deployment: Verifies Kibana is ready before setting up alert configuration
+- Deployment: Removes `depends_on` configuration from docker compose files
+- Deployment: Removes some deprecated deployment code around Elastalert config file formatting
+- Provisioning: Creates backup user on backup servers automatically
+- Provisioning: Update ansible Github action task version
+
 ## [1.4.0](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.4.0)
 
 - Added examples for configuring HTTP-01, DNS-01, and manual HTTPS certificates. By default, development and QA environments use HTTP-01, while others use DNS-01.

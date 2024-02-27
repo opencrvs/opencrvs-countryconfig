@@ -351,16 +351,7 @@ configured_ssh << EOF
 EOF
 
 # Setup configuration files and compose file for the deployment domain
-configured_ssh "
-  HOST=$HOST
-  SMTP_HOST=$SMTP_HOST
-  SMTP_PORT=$SMTP_PORT
-  ALERT_EMAIL=$ALERT_EMAIL
-  SENDER_EMAIL_ADDRESS=$SENDER_EMAIL_ADDRESS
-  DOMAIN=$DOMAIN
-  MINIO_ROOT_USER=$MINIO_ROOT_USER
-  MINIO_ROOT_PASSWORD=$MINIO_ROOT_PASSWORD
-  /opt/opencrvs/infrastructure/setup-deploy-config.sh $HOST | tee -a $LOG_LOCATION/setup-deploy-config.log"
+configured_ssh "/opt/opencrvs/infrastructure/setup-deploy-config.sh $HOST"
 
 rotate_secrets
 
@@ -372,7 +363,6 @@ echo
 echo "Waiting 2 mins for mongo to deploy before working with data. Please note it can take up to 10 minutes for the entire stack to deploy in some scenarios."
 echo
 
-sleep 120 # Required as Kibana cannot be immediately contacted
 echo "Setting up Kibana config & alerts"
 
 while true; do

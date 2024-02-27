@@ -145,8 +145,6 @@ services:
   hearth:
     environment:
       - mongodb__url=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
-    depends_on:
-      - mongo1
     deploy:
       replicas: 1
 
@@ -158,15 +156,11 @@ services:
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
       - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200
-    depends_on:
-      - mongo1
 
   openhim-core:
     environment:
       - mongo_url=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
       - mongo_atnaUrl=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-    depends_on:
-      - mongo1
     deploy:
       replicas: 1
 
@@ -175,8 +169,6 @@ services:
       replicas: 1
 
   mongo-on-update:
-    depends_on:
-      - mongo1
     environment:
       - REPLICAS=1
 
