@@ -272,3 +272,7 @@ export function createCustomFieldHandlebarName(fieldId: string) {
     fieldIdNameArray[fieldIdNameArray.length - 1]
   }`
 }
+
+export function uppercaseFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}

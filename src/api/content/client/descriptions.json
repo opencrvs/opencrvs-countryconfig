@@ -271,8 +271,6 @@
     "constants.issueToInformant": "Issuance of death to informant",
     "constants.issueConfirmationMessage": "Confirmation of issuance",
     "constants.idCheckWithoutVerify": "Issuance without the confirmation of proof",
-    "form.field.label.UNION": "Label for Union",
-    "form.field.label.DIVISION": "Label for Division",
     "form.field.label.district": "Label for District",
     "form.field.label.cityUrbanOption": "Label for City",
     "form.field.label.state": "Label for State",
