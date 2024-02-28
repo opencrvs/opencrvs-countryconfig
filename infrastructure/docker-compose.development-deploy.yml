@@ -15,6 +15,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
+      - QA_ENV=true
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021

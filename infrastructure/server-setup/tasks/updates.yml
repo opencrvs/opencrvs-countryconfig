@@ -25,6 +25,9 @@
     content: |
       Unattended-Upgrade::Package-Blacklist {};
       Unattended-Upgrade::DevRelease "auto";
+      Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+      Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
+      Unattended-Upgrade::Remove-Unused-Dependencies "true";
       Unattended-Upgrade::Allowed-Origins {
           "${distro_id}:${distro_codename}-security";
       };

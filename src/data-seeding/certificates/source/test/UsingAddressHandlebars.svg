@@ -6,11 +6,8 @@
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
 <tspan x="10%" y="30" >Event facility location in one handlebar for births and deaths:&#10;</tspan>
 </text>
-<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="300" letter-spacing="0px">
-  <tspan x="50%" y="445.552" text-anchor="middle">&#10;</tspan>
-</text>
-<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-  <tspan x="50%" y="429.552" text-anchor="middle">This event was registered at {{location registrar.officeId 'name'}}, {{location registrar.districtId 'name'}}, {{location registrar.stateId 'name'}}&#10;</tspan>
+<text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="400" letter-spacing="0px">
+<tspan x="10%" y="42" >{{placeOfBirth}}{{placeOfDeath}}</tspan>
 </text>
 <text fill="#222222" xml:space="default" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="600" letter-spacing="0px">
 <tspan x="10%" y="66" >Informant address</tspan>
