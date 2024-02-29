@@ -25,7 +25,7 @@ filter:
   - query:
       term:
         rule.name.keyword:
-          value: 'Succesful SSH login'
+          value: 'Successful SSH login'
 
 alert: post2
 http_post2_url: 'http://countryconfig:3040/email'
