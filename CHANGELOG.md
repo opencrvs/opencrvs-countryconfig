@@ -3,6 +3,7 @@
 ## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
 - Improved logging for emails being sent
+- Updated default Metabase init file so that it's compatible with the current Metabase version
 - Deployment: Verifies Kibana is ready before setting up alert configuration
 - Deployment: Removes `depends_on` configuration from docker compose files
 - Deployment: Removes some deprecated deployment code around Elastalert config file formatting
