@@ -33,7 +33,7 @@ services:
 
   notification:
     environment:
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN}
       - QA_ENV=true
       - NODE_ENV=production
@@ -65,7 +65,7 @@ services:
 
   gateway:
     environment:
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN}
       - COUNTRY=FAR
       - QA_ENV=true
@@ -73,7 +73,7 @@ services:
 
   workflow:
     environment:
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN}
       - QA_ENV=true
       - NODE_ENV=production
