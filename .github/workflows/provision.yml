@@ -29,7 +29,7 @@ on:
           - users
           - crontab
           - mongodb
-          - data
+          - data-partition
           - swap
           - ufw
           - fail2ban
