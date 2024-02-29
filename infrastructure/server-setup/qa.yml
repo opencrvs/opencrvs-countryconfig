@@ -11,27 +11,17 @@ all:
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+      - name: provision
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZbwej/JwjAR8hHEZuHMJ3wRHGHfOGxEdGrk7l+PricqkYZbGdJOKxpLptIL5RMh4vtjXuW6IZ2AGtdS91qBvlKE5v7dpFR6wjOcSsSXBbN16DSrHPzrV4UMr4AqRfQ4b27AeBRhbfMriZXs9XfMt4BJC2Vt3Sh80Kq1bingp2Ny+/Sku0Tc2SMCK/NDG/fdwdJEJHpp9ddEZZ5rjxAW66bNT67FQ3I43nNKAVdnrahdS1r9+JGE+rULDBvrpn46ckdCsaavtZYMgj9OSNBhVouD9BAcO1lUUc7hudwYDgw/et0wHF2Tj154s2GFquArJaIRcmiyiIFt4VYRHj4+xjz3CRiIo7hVW8xOuiDv7hy7KqzdAGjQdLX9rJFqBNtcoubMXyLN3yMdTsSzx9+hOFdn3wOJmVBBl8Go1ogdpRueEMlrfxC/xliZU/K/J7Qg0B9gT9QtNFbaYggojwa3IreMHYF25Clm9FmdXtTp4OkRDG4Svw7CDXrL6Wo3htIeU= provision@e2e-69-146        
         state: present
         sudoer: true
 
-      # @todo will this host be used as a bastion / jump server for the CI/CD pipeline to access production servers?
-      # if no, then you can remove this user.
-      - name: jump
-        state: present
-        sudoer: false
-        two_factor: false
-        ssh_keys:
-          # if yes, then this should list the public keys of the private keys that are used when connecting to the production servers.
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-243 # example provision user key
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-244 # example provision user key
 
 docker-manager-first:
   hosts:
-    qa: # @todo set this to be the hostname of your target server
-      ansible_host: '55.55.55.55' # @todo set this to be the IP address of your server
+    e2e-69-146: # @todo set this to be the hostname of your target server
+      ansible_host: '164.52.201.146' # @todo set this to be the IP address of your server
       data_label: data1 # for manager machines, this should always be "data1"
 
 # QA and staging servers are not configured to use workers.
