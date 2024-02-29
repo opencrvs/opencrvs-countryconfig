@@ -27,7 +27,7 @@ export function certificateConfigurationHandler(): Configuration {
     fonts: {
       ['Noto Sans']: {
         normal: `${COUNTRY_CONFIG_URL}/fonts/NotoSans-Regular.ttf`,
-        bold: `${COUNTRY_CONFIG_URL}/fonts/NotoSans-SemiBold.ttf`,
+        bold: `${COUNTRY_CONFIG_URL}/fonts/NotoSans-Bold.ttf`,
         italics: `${COUNTRY_CONFIG_URL}/fonts/NotoSans-Regular.ttf`,
         bolditalics: `${COUNTRY_CONFIG_URL}/fonts/NotoSans-Regular.ttf`
       }

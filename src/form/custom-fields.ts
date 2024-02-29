@@ -8,9 +8,13 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-
-import { SerializedFormField } from './types/types'
+import { MessageDescriptor } from 'react-intl'
+import { formMessageDescriptors } from './common/messages'
+import { Conditional, SerializedFormField } from './types/types'
 import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { getNationalIDValidators } from './common/default-validation-conditionals'
+import { camelCase } from 'lodash'
+import { uppercaseFirstLetter } from '@countryconfig/utils'
 
 // ======================= CUSTOM FIELD CONFIGURATION =======================
 
@@ -41,7 +45,189 @@ export function createCustomFieldExample(): SerializedFormField {
     initialValue: '',
     validator: [], // EDIT VALIDATORS AS YOU SEE FIT
     mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals: [], // EDIT VALIDATORS AS YOU SEE FIT
+    conditionals: [], // EDIT CONDITIONALS AS YOU SEE FIT
     maxLength: 250
   }
+}
+
+export function getReasonForLateRegistration(
+  event: string
+): SerializedFormField {
+  const fieldName: string = 'reasonForLateRegistration'
+  const fieldId: string =
+    event === 'birth'
+      ? `birth.child.child-view-group.${fieldName}`
+      : `death.deathEvent.death-event-details.${fieldName}`
+  const label: MessageDescriptor =
+    event === 'birth'
+      ? {
+          id: 'form.customField.label.reasonForLateRegistrationBirth',
+          description:
+            'A form field that asks the reason for a late registration.',
+          defaultMessage: 'Reason for delayed registration'
+        }
+      : {
+          id: 'form.customField.label.reasonForLateRegistrationDeath',
+          description:
+            'A form field that asks the reason for a late registration.',
+          defaultMessage: 'Reason for late registration'
+        }
+  const expression: string =
+    event === 'birth'
+      ? 'const pattern = /^\\d{4}-\\d{2}-\\d{2}$/; const today = new Date(); const eventDatePlusLateRegistrationTarget = new Date(values.childBirthDate); const lateRegistrationTarget = offlineCountryConfig && offlineCountryConfig.config.BIRTH.LATE_REGISTRATION_TARGET; eventDatePlusLateRegistrationTarget.setDate(eventDatePlusLateRegistrationTarget.getDate() + lateRegistrationTarget); !pattern.test(values.childBirthDate) || today < eventDatePlusLateRegistrationTarget;'
+      : 'const pattern = /^\\d{4}-\\d{2}-\\d{2}$/; const today = new Date(); const eventDatePlusLateRegistrationTarget = new Date(values.deathDate); const lateRegistrationTarget = offlineCountryConfig && offlineCountryConfig.config.DEATH.REGISTRATION_TARGET; eventDatePlusLateRegistrationTarget.setDate(eventDatePlusLateRegistrationTarget.getDate() + lateRegistrationTarget); !pattern.test(values.deathDate) || today < eventDatePlusLateRegistrationTarget;'
+
+  return {
+    name: fieldName,
+    customQuestionMappingId: fieldId,
+    custom: true,
+    required: true,
+    type: 'TEXT',
+    label,
+    initialValue: '',
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: [
+      {
+        action: 'hide',
+        expression
+      }
+    ], // EDIT CONDITIONALS AS YOU SEE FIT
+    maxLength: 250
+  }
+}
+
+type ArrayElement<ArrayType> = ArrayType extends readonly (infer ElementType)[]
+  ? ElementType
+  : never
+
+const idTypeOptions = [
+  {
+    value: 'NATIONAL_ID' as const,
+    label: {
+      defaultMessage: 'National ID',
+      description: 'Option for form field: Type of ID',
+      id: 'form.field.label.iDTypeNationalID'
+    }
+  },
+  {
+    value: 'PASSPORT' as const,
+    label: {
+      defaultMessage: 'Passport',
+      description: 'Option for form field: Type of ID',
+      id: 'form.field.label.iDTypePassport'
+    }
+  },
+  {
+    value: 'BIRTH_REGISTRATION_NUMBER' as const,
+    label: {
+      defaultMessage: 'Birth Registration Number',
+      description: 'Option for form field: Type of ID',
+      id: 'form.field.label.iDTypeBRN'
+    }
+  },
+  {
+    value: 'NONE' as const,
+    label: {
+      defaultMessage: 'None',
+      description: 'Option for form field: Type of ID',
+      id: 'form.field.label.iDTypeNone'
+    }
+  }
+]
+
+type IDType = ArrayElement<typeof idTypeOptions>['value']
+
+export function getIDType(
+  event: string,
+  sectionId: string,
+  conditionals: Conditional[] = [],
+  required: boolean
+): SerializedFormField {
+  const fieldName: string = `${sectionId}IdType`
+  const fieldId: string = `${event}.${sectionId}.${sectionId}-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    customQuestionMappingId: fieldId,
+    custom: true,
+    required,
+    type: 'SELECT_WITH_OPTIONS',
+    label: {
+      id: 'form.field.label.iDType',
+      description: 'A form field that asks for the type of ID.',
+      defaultMessage: 'Type of ID'
+    },
+    initialValue: '',
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    placeholder: formMessageDescriptors.formSelectPlaceholder,
+    conditionals,
+    options: idTypeOptions
+  }
+}
+
+function getValidators(configCase: string, idValue: IDType) {
+  if (idValue === 'NATIONAL_ID') {
+    return getNationalIDValidators(configCase)
+  }
+  return []
+}
+
+export function getIDNumber(
+  sectionId: string,
+  idValue: IDType,
+  conditionals: Conditional[] = [],
+  required: boolean
+): SerializedFormField {
+  const fieldName: string = `${sectionId}${uppercaseFirstLetter(
+    camelCase(idValue)
+  )}`
+  const validators = getValidators(sectionId, idValue)
+  // eslint-disable-next-line no-console
+  console.log('Custom field addded with handlebar: ', fieldName)
+  return {
+    name: fieldName,
+    required,
+    type: 'TEXT',
+    custom: true,
+    label: {
+      id: 'form.field.label.iD',
+      description: 'A form field that asks for the id number.',
+      defaultMessage: 'ID number'
+    },
+    initialValue: '',
+    validator: validators,
+    mapping: {
+      template: {
+        fieldName: fieldName,
+        operation: 'identityToFieldTransformer',
+        parameters: ['id', idValue]
+      },
+      mutation: {
+        operation: 'fieldToIdentityTransformer',
+        parameters: ['id', idValue]
+      },
+      query: {
+        operation: 'identityToFieldTransformer',
+        parameters: ['id', idValue]
+      }
+    },
+    conditionals: [
+      {
+        action: 'hide',
+        expression: `(values.${sectionId}IdType!=="${idValue}") || (values.${sectionId}IdType==="NONE")`
+      }
+    ].concat(conditionals),
+    maxLength: 250
+  }
+}
+
+export function getIDNumberFields(
+  section: string,
+  conditionals: Conditional[] = [],
+  required: boolean
+) {
+  return idTypeOptions
+    .filter((opt) => opt.value !== 'NONE')
+    .map((opt) => getIDNumber(section, opt.value, conditionals, required))
 }
