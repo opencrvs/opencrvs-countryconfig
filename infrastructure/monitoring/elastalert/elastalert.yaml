@@ -16,7 +16,8 @@ buffer_time:
 
 es_host: elasticsearch
 es_port: 9200
-
+# es_username: <passed as environment variables>
+# es_password: <passed as environment variables>
 writeback_index: elastalert_status
 
 alert_time_limit:
