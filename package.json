@@ -27,7 +27,8 @@
     "restore-snapshot": "bash infrastructure/restore-snapshot.sh",
     "snapshot": "bash infrastructure/emergency-backup-metadata.sh",
     "port-forward": "bash infrastructure/port-forward.sh",
-    "validate-translations": "ts-node src/validate-translations.ts"
+    "validate-translations": "ts-node src/validate-translations.ts",
+    "sort-translations": "ts-node src/sort-translations.ts"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
@@ -122,6 +123,11 @@
   "lint-staged": {
     "src/**/*.{ts,graphql}": [
       "eslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "src/api/content/**/!(descriptions)*.json": [
+      "yarn sort-translations",
       "prettier --write",
       "git add"
     ]
