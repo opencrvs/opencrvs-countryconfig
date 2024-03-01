@@ -34,7 +34,9 @@
 
 - hosts: docker-manager-first, docker-workers
   become: yes
-  become_method: sudo
+  become_method: sudo  
+  vars:
+    crontab_user: root
   tasks:
     - include_tasks:
         file: tasks/application.yml

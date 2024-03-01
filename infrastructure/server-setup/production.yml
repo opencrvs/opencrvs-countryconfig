@@ -50,5 +50,5 @@ docker-workers:
 
 backups:
   hosts:
-    qa:
+    backup: # @todo set this to be the hostname of your backup server
       ansible_host: '66.66.66.66'
