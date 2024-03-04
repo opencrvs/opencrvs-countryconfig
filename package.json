@@ -2,6 +2,13 @@
   "name": "@opencrvs/countryconfig",
   "version": "1.4.0",
   "description": "OpenCRVS country configuration for reference data",
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "engines": {
+    "node": "18.19.x"
+  },
   "license": "MPL-2.0",
   "husky": {
     "hooks": {
@@ -20,7 +27,7 @@
     "test": "jest  --silent --noStackTrace --coverage",
     "test:compilation": "tsc --noEmit",
     "lint": "eslint -c .eslintrc.js",
-    "start": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "start": "cross-env NODE_ENV=development NODE_OPTIONS=--dns-result-order=ipv4first nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
     "start:prod": "ts-node --transpile-only -r tsconfig-paths/register src/index.ts",
     "data-generator": "ts-node -r tsconfig-paths/register -T src/data-generator/index.ts",
     "data-generator:generate-types": "graphql-codegen --config codegen.yml && yarn prettier --write src/data-generator/gateway.ts",
