@@ -371,3 +371,16 @@ while true; do
   fi
   sleep 5
 done
+
+# Send a notification email to confirm emails are working
+EMAIL_PAYLOAD='{
+  "subject": "Deployment to '$ENV' finished",
+  "html": "Deployment to '$ENV' was successful with images '$VERSION' for core and '$COUNTRY_CONFIG_VERSION' for country config.",
+  "from": "{{SENDER_EMAIL_ADDRESS}}",
+  "to": "{{ALERT_EMAIL}}"
+}'
+
+configured_ssh "docker run --rm --network=opencrvs_overlay_net appropriate/curl \
+  -X POST 'http://countryconfig:3040/email' \
+  -H 'Content-Type: application/json' \
+  -d '$EMAIL_PAYLOAD'"

@@ -48,7 +48,7 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 
 <<<<<<< HEAD
 
-## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3) (TBD)
+## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
 
 ## Breaking changes
 
@@ -125,5 +125,15 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 - Updated translations for form introduction page and sending for approval to reflect the default notification method being email.
 - # Remove hard-coded conditionals from "occupation" field to make it usable in the deceased form
   > > > > > > > 10087d1f07b88ea201fab72bb9716c509f7d32cb
+
+## [1.3.4](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.3.4) (TBD)
+
+## Breaking changes
+
+## New features
+
+## Bug fixes
+
+- Fix typo in certificate handlebar names
 
 See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
