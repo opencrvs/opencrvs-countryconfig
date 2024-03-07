@@ -11,15 +11,8 @@
 import { readFileSync } from 'fs'
 import * as jwt from 'jsonwebtoken'
 import { createServer } from '@countryconfig/index'
-import * as locationsService from '@countryconfig/features/administrative/service/service'
 
 describe('Route authorization', () => {
-  beforeAll(() => {
-    jest
-      .spyOn(locationsService, 'getStatistics')
-      .mockReturnValue(Promise.resolve([]))
-  })
-
   it('tests the health check', async () => {
     const server = await createServer()
     const res = await server.server.inject({
