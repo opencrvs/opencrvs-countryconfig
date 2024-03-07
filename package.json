@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "OpenCRVS country configuration for reference data",
   "license": "MPL-2.0",
   "husky": {
@@ -28,7 +28,8 @@
     "snapshot": "bash infrastructure/backups/backup.sh",
     "port-forward": "bash infrastructure/port-forward.sh",
     "validate-translations": "ts-node src/validate-translations.ts",
-    "environment:init": "ts-node infrastructure/environments/setup-environment.ts"
+    "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
+    "sort-translations": "ts-node src/sort-translations.ts"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
@@ -134,6 +135,11 @@
   "lint-staged": {
     "src/**/*.{ts,graphql}": [
       "eslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "src/api/content/**/!(descriptions)*.json": [
+      "yarn sort-translations",
       "prettier --write",
       "git add"
     ]

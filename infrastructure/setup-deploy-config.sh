@@ -16,7 +16,6 @@ echo "Setting up deployment config for $HOST - `date --iso-8601=ns`"
 # Set hostname in openhim-console config
 sed -i "s/{{hostname}}/$HOST/g" /opt/opencrvs/infrastructure/openhim-console-config.deploy.json
 
-
 # Set hostname in compose file
 for file in /opt/opencrvs/infrastructure/docker-compose*.yml; do
     sed -i "s/{{hostname}}/$HOST/g" "$file"
