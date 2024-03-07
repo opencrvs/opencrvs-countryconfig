@@ -27,7 +27,6 @@
     "restore-snapshot": "bash infrastructure/backups/restore-snapshot.sh",
     "snapshot": "bash infrastructure/backups/backup.sh",
     "port-forward": "bash infrastructure/port-forward.sh",
-    "validate-translations": "ts-node src/validate-translations.ts",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
     "sort-translations": "ts-node src/sort-translations.ts"
   },
