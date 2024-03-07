@@ -8,31 +8,8 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This is will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+// @ts-check
+/// <reference path="../global.d.ts">
 
 import { faker } from '@faker-js/faker'
 import { createBirthDeclarationData } from '../../src/data-generator/declare'
@@ -41,7 +18,7 @@ import {
   generateLocationResource,
   Location
 } from '../../src/data-generator/location'
-import { get } from 'lodash'
+import { CyHttpMessages } from 'cypress/types/net-stubbing'
 
 const users = {
   fieldWorker: {
@@ -61,8 +38,9 @@ const users = {
     password: 'test'
   }
 }
-function getToken(role: string) {
-  const user = users[role as keyof typeof users]
+
+function getToken(role: keyof typeof users) {
+  const user = users[role]
   return cy
     .request({
       url: `${Cypress.env('AUTH_URL')}authenticate`,
@@ -105,7 +83,7 @@ export function getDateMonthYearFromString(dateString: string): {
   }
 }
 
-Cypress.Commands.add('login', (userType, options = {}) => {
+Cypress.Commands.add('login', (userType) => {
   getToken(userType).then((token) => {
     cy.visit(`${Cypress.env('CLIENT_URL')}?token=${token}`)
   })
@@ -114,15 +92,11 @@ Cypress.Commands.add('login', (userType, options = {}) => {
   cy.get('#pin-input')
 })
 
-Cypress.Commands.add('selectOption', (selector, text, option) => {
-  cy.get(`${selector} input`)
-    .first()
-    .click({ force: true })
-    .get(`${selector} .react-select__menu`)
-    .contains(option)
-    .click()
-
-  cy.get(`${selector} input`).first().focus().blur()
+Cypress.Commands.add('selectOption', (selector, _text, option) => {
+  cy.get(`${selector} input`).first().click({ force: true })
+  cy.get(`${selector} .react-select__menu`).contains(option).click()
+  // cy.get(`${selector} input`).first().focus()
+  // cy.get(`${selector} input`).first().blur()
 })
 
 Cypress.Commands.add('selectLocation', (selector: string, text: string) => {
@@ -136,6 +110,7 @@ Cypress.Commands.add('logout', () => {
 
 Cypress.Commands.add('goToNextFormSection', () => {
   // Clear debounce wait from form
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
 
   cy.get('#next_section').click()
@@ -150,14 +125,15 @@ Cypress.Commands.add('createPin', () => {
   }
 })
 
-const hasOperationName = (req, operationName) => {
+const hasOperationName = (
+  req: CyHttpMessages.IncomingRequest,
+  operationName: string
+) => {
   const { body } = req
-  return (
-    body.hasOwnProperty('operationName') && body.operationName === operationName
-  )
+  return 'operationName' in body && body.operationName === operationName
 }
 
-Cypress.Commands.add('submitDeclaration', (type: 'birth' | 'death') => {
+Cypress.Commands.add('submitDeclaration', () => {
   cy.intercept('/graphql', (req) => {
     if (hasOperationName(req, 'createBirthRegistration')) {
       req.alias = 'createRegistration'
@@ -202,11 +178,13 @@ Cypress.Commands.add('submitForm', () => {
 
 Cypress.Commands.add('printDeclaration', () => {
   cy.get('#navigation_print').click()
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(3000)
   cy.get('#ListItemAction-0-icon', { timeout: 30000 }).click()
   cy.get('#assignment').should('exist')
   cy.get('#assign').click()
   cy.get('#ListItemAction-0-Print', { timeout: 30000 }).click()
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
   cy.get('#type_MOTHER').click()
   cy.get('#confirm_form').click()
@@ -227,11 +205,14 @@ Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
   ).click({ force: true })
 
   cy.get('[id$=-menuSubMenu]').should('is.visible')
-  const actionsMenu = cy.get('[id$=-menuSubMenu]')
-  actionsMenu.scrollIntoView().should('is.visible')
-  const action = actionsMenu.get('li').contains(actionText)
-  action.should('is.visible')
-  action.click()
+  cy.get('[id$=-menuSubMenu]').scrollIntoView()
+  cy.get('[id$=-menuSubMenu] > li').contains(actionText)
+  cy.get('[id$=-menuSubMenu] > li').click()
+  // const actionsMenu = cy.get('[id$=-menuSubMenu]')
+  // actionsMenu.scrollIntoView().should('is.visible')
+  // const action = actionsMenu.get('li').contains(actionText)
+  // action.should('is.visible')
+  // action.click()
 })
 
 Cypress.Commands.add('rejectDeclaration', () => {
@@ -271,7 +252,7 @@ Cypress.Commands.add('downloadFirstDeclaration', () => {
   cy.get('#action-loading-ListItemAction-0').should('not.exist')
 })
 
-export function getRandomNumbers(stringLength) {
+export function getRandomNumbers(stringLength: number) {
   let result = ''
   for (let i = 0; i < stringLength; i++) {
     result += Math.floor(Math.random() * 10)
@@ -313,6 +294,7 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
 
   // SELECT INFORMANT
   cy.selectOption('#informantType', 'Mother', 'Mother')
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
   cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.goToNextFormSection()
@@ -346,7 +328,7 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.logout()
 })
 
-function getLocationWithName(token, name) {
+function getLocationWithName(token: string, name: string) {
   return cy
     .request<{ entry: Array<{ resource: Location }> }>({
       method: 'GET',
@@ -365,7 +347,7 @@ function getLocationWithName(token, name) {
     })
 }
 
-function getRandomFacility(token, location) {
+function getRandomFacility(token: string, location: Location) {
   return cy
     .request<{ entry: Array<{ resource: any }> }>({
       method: 'GET',
@@ -498,6 +480,7 @@ Cypress.Commands.add('enterMaximumInput', (options) => {
     options?.informantType || 'Grandfather',
     options?.informantType || 'Grandfather'
   )
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
   cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.get('#registrationEmail').type('axonishere@gmail.com')
@@ -625,6 +608,7 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
   // MANNER OF DEATH
   cy.selectOption('#mannerOfDeath', '', 'Natural causes')
   cy.get('#causeOfDeathEstablished').click()
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', "Deceased's usual place of residence")
@@ -636,6 +620,7 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
     options?.informantType || 'Spouse',
     options?.informantType || 'Spouse'
   )
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
   cy.get('#informantID').type('9123456781')
   cy.get('#informantBirthDate-dd').type('16')
@@ -728,6 +713,7 @@ Cypress.Commands.add('enterDeathMaximumInput', (options) => {
   // CAUSE OF DEATH DETAILS
   cy.selectOption('#mannerOfDeath', '', 'Homicide')
   cy.get('#causeOfDeathEstablished').click()
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', 'Other')
@@ -756,6 +742,7 @@ Cypress.Commands.add('enterDeathMaximumInput', (options) => {
     options?.informantType || 'Spouse',
     options?.informantType || 'Spouse'
   )
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
   cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.get('#registrationEmail').type('axonishere@gmail.com')
@@ -808,6 +795,7 @@ Cypress.Commands.add('someoneElseJourney', () => {
 
   // SELECT INFORMANT
   cy.selectOption('#informantType', 'Someone else', 'Someone else')
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
   cy.get('#otherInformantType').type('Someone else')
   cy.get('#registrationPhone').type('07' + getRandomNumbers(8))

@@ -8,6 +8,8 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+/// <reference types="cypress" />
+
 type BirthDeclarationOptions = {
   firstName?: string
   familyName?: string
@@ -57,9 +59,12 @@ interface DeclarationOptions {
   informantDoBEnd?: string
 }
 
+type UserType = 'fieldWorker' | 'registrar' | 'sysAdmin' | 'nsysAdmin'
+
+/* eslint-disable no-unused-vars */
 declare namespace Cypress {
   interface Chainable {
-    login: (userType: string) => void
+    login: (userType: UserType) => void
     logout: () => void
     selectOption: (selector: string, text: string, option: string) => void
     selectLocation: (selector: string, text: string) => void
@@ -70,7 +75,7 @@ declare namespace Cypress {
     submitForm: () => void
     submitDeclaration: (type?: 'birth' | 'death') => void
     createBirthRegistrationAs: (
-      role: string,
+      role: UserType,
       options?: BirthDeclarationOptions
     ) => void
     printDeclaration: () => void
@@ -104,3 +109,5 @@ declare namespace Cypress {
     someoneElseJourney: () => void
   }
 }
+
+/* eslint-enable no-unused-vars */
