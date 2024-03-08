@@ -176,8 +176,7 @@ export async function writeJSONToCSV(
   data: Array<Record<string, any>>
 ) {
   const csv = await csvStringify(data, {
-    header: true,
-    quoted: true
+    header: true
   })
   return fs.promises.writeFile(filename, csv, 'utf8')
 }
