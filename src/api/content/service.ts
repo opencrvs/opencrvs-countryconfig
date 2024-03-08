@@ -24,7 +24,10 @@ export interface ILanguage {
 
 export type ILanguageDataResponse = ILanguage[]
 
-type CSVRow = { id: string; description: string } & Record<string, string>
+export type CSVRow = { id: string; description: string } & Record<
+  string,
+  string
+>
 
 export async function getLanguages(
   application: string
