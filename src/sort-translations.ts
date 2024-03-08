@@ -8,31 +8,14 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import * as fs from 'fs'
-import { ILanguage } from './api/content/service'
+import { sortBy } from 'lodash'
+import { CSVRow } from './api/content/service'
+import { readCSVToJSON, writeJSONToCSV } from './utils'
 
-type Translations = {
-  data: ILanguage[]
-}
-
-function readFile(path: string): Translations {
-  return JSON.parse(fs.readFileSync(path).toString())
-}
-
-function sortMessages(path: string) {
-  const translations = readFile(path)
-  translations.data = translations.data.map((translation) => {
-    return {
-      ...translation,
-      messages: Object.keys(translation.messages)
-        .sort()
-        .reduce<ILanguage['messages']>((messages, key) => {
-          messages[key] = translation.messages[key]
-          return messages
-        }, {})
-    }
-  })
-  fs.writeFileSync(path, JSON.stringify(translations, null, 2))
+async function sortMessages(path: string) {
+  const translations = await readCSVToJSON<CSVRow[]>(path)
+  const data = sortBy(translations, (row) => row.id)
+  return writeJSONToCSV(path, data)
 }
 
 process.argv.slice(2).forEach((filePath) => sortMessages(filePath))
