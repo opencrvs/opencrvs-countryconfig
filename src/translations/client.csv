@@ -272,6 +272,7 @@ config.marriageTemplate,Label for marriage certificate template,Marriage certifi
 config.previewTemplate,,Preview,Prévisualiser
 config.printTemplate,Print action in certificate config action menu,Print,Imprimer
 config.uploadTemplate,Upload action in certificate config action menu,Upload,Télécharger
+config.userRoles.language,Language name,"{language, select, en {English} fr {French} other {{language}}}","{language, select, en {Anglais} fr {Français} other {{language}}}"
 config.userRoles.role,ListViewSimplified header for role,ROLE,RÔLE
 config.userRoles.roleUpdateInstruction,Instruction for adding/updating role in role management modal,Add the roles to be assigned the system role of {systemRole},Ajoutez les rôles auxquels attribuer le rôle système de {systemRole}
 config.userRoles.subtitle,Subtile for informant sms notification,Map user roles to each system role so that specific permissions and privileges are correctly assigned. To learn more about the different system roles see ... {link},"Associez les rôles d'utilisateur à chaque rôle système afin que les autorisations et les privilèges spécifiques soient correctement attribués. Pour en savoir plus sur les différents rôles système, voir ... {link}"
@@ -1896,7 +1897,7 @@ settings.changeAvatar,Avatar change modal header,Change profile image,Modifier l
 settings.changeAvatar.changeImage,Change image label,Change,Modifier l'image
 settings.changeAvatar.resizeAvatar,Avatar resize and position message,Resize and position the chosen image.,Redimensionnez et positionnez l'image choisie.
 settings.changeLanguage,Change language title,Change language,Changer de langue
-settings.changeLanguage.success,Change language success,Language updated to {language},Langue mise à jour en {language}
+settings.changeLanguage.success,Change language success,Language updated to English,Langue mise à jour en Français
 settings.changePassword,Password change modal header,Change password,Modifier le mot de passe
 settings.changePhone,Change phone number title,Change phone number,Changer de numéro de téléphone
 settings.message.changeLanguage,Change language message,Your prefered language that you want to use on OpenCRVS,Votre langue préférée que vous souhaitez utiliser sur OpenCRVS
@@ -1956,6 +1957,7 @@ system.user.settings.avatarUpdating,Profile image message when uploading,Updatin
 system.user.settings.emailAddressUpdated,Email change message on success,Email address updated,Adresse e-mail mise à jour
 system.user.settings.incorrectPassword,Response message for incorrect password for password change,Current password incorrect. Please try again.,Le mot de passe actuel est incorrect. Veuillez réessayer.
 system.user.settings.incorrectVerifyCode,Response message for incorrect Verify code for phone number change,Verify code incorrect. Please try again.,Code de vérification incorrect. Veuillez réessayer.
+system.user.settings.language,Language name,"{language, select, en {English} fr {Français} other {{language}}}","{language, select, en {English} fr {Français} other {{language}}}"
 system.user.settings.name,label for Name,Name,Nom
 system.user.settings.passwordUpdated,Password change message on success,Password was successfully changed,Le mot de passe a été changé avec succès
 system.user.settings.phonedNumberUpdated,Phone change message on success,Phone number updated,Numéro de téléphone mis à jour

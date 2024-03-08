@@ -15,6 +15,7 @@ login.codeSubmissionError,The error that appears when the user entered sms code 
 login.fieldMissing,The error if user doesn't fill all the field,Enter your username and password,Nom d'utilisateur/mot de passe requis
 login.forbiddenCredentialError,The error that appears when the user entered details are forbidden,User is currently deactivated,L'utilisateur est actuellement désactivé.
 login.forgotPassword,The label that appears on the Forgot password button,Can't login?,Vous ne pouvez pas vous connecter ?
+login.language,Language name,"{language, select, en {English} fr {Français} other {{language}}}","{language, select, en {English} fr {Français} other {{language}}}"
 login.manager.performanceAppDescription,,Analyse the performance of a particular area of your country in it's Civil Registration.,Analysez les performances d'une région particulière de votre pays en matière d'enregistrement des faits d'état civil.
 login.manager.performanceAppTitle,,Performance Management,Gestion des performances
 login.manager.registerAppDescription,,"Manage declarations, registrations and certifications here.","Gérez ici vos déclarations, enregistrements et certifications."
@@ -85,4 +86,3 @@ validations.numberRequired,The error message that appears on fields where the va
 validations.phoneNumberFormat,The error message that appears on phone numbers where the first character must be a 0,Enter a valid mobile phone number,"Doit être un numéro de téléphone mobile valide. Commençant par 0. Par exemple, {example}"
 validations.required,The error message that appears on required fields,required,requis
 validations.requiredSymbol,A blank error message. Used for highlighting a required field without showing an error,,
-,,,
