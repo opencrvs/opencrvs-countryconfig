@@ -85,3 +85,4 @@ validations.numberRequired,The error message that appears on fields where the va
 validations.phoneNumberFormat,The error message that appears on phone numbers where the first character must be a 0,Enter a valid mobile phone number,"Doit être un numéro de téléphone mobile valide. Commençant par 0. Par exemple, {example}"
 validations.required,The error message that appears on required fields,required,requis
 validations.requiredSymbol,A blank error message. Used for highlighting a required field without showing an error,,
+,,,

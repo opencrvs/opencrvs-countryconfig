@@ -367,7 +367,7 @@ constants.history,History heading,History,Histoire
 constants.id,ID Label,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?
 constants.inReview.status,A label for In Review,In review,En cours de révision
-constants.incomplete.status,A label for Incomplete,Incomplete ,Incomplet 
+constants.incomplete.status,A label for Incomplete,Incomplete ,Incomplet
 constants.informant,Informant Label,Informant,Informateur
 constants.informantContactNumber,The title of contact number label,Informant contact number,Numéro de contact de l'informateur
 constants.integrations,Integration title,Integrations,Intégrations
@@ -1758,7 +1758,7 @@ register.eventInfo.death.listItem2,,Make sure you collect the certificate. A dea
 register.eventInfo.death.listItem3,,,"Assurez-vous d'aller chercher le certificat. Un certificat de décès est essentiel pour soutenir les demandes d'héritage et pour régler les affaires du défunt, par exemple la clôture des comptes bancaires et le règlement des prêts."
 register.eventInfo.death.title,,Introduce the death registration process to the informant,Présenter la procédure d'enregistrement des décès à l'informateur
 register.eventInfo.event.title,,"Introduce the {eventType, select, birth{birth} death{death} other{marriage}} registration process to the informant","Présentez le processus d'enregistrement des {eventType, select, birth{naissance} death{décès} other{mariage}} à l'informateur."
-register.eventInfo.marriage.listItem0,,I am here to complete the marriage registration declaration for you. ,Je suis ici pour remplir la déclaration d'enregistrement du mariage pour vous. 
+register.eventInfo.marriage.listItem0,,I am here to complete the marriage registration declaration for you. ,Je suis ici pour remplir la déclaration d'enregistrement du mariage pour vous.
 register.eventInfo.marriage.listItem1,,"Once I complete the declaration, it will be sent to the registration office for review.","Une fois que j'aurai complété la déclaration, elle sera envoyée au bureau d'enregistrement pour examen."
 register.eventInfo.marriage.listItem2,,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,Attendez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Prenez votre pièce d'identité avec vous
 register.eventInfo.marriage.title,,Introduce the marriage registration process to the informant,Présenter la procédure d'enregistrement des mariages à l'informateur
@@ -2006,7 +2006,7 @@ user.profile.auditList.passwordReset,Description for User reset password action,
 user.profile.auditList.passwordResetByAdmin,Description for sending temporal password action,Sent password,Mot de passe envoyé
 user.profile.auditList.phoneNumberChanged,Description for user change phoneNumber,Phone number changed,Changement de numéro de téléphone
 user.profile.auditList.reInstatedToInProgress,Description for sending registration from Reinstated to In progress audit action,Reinstated to in progress,Réintégré dans les travaux en cours
-user.profile.auditList.reInstatedToInReview,Description for sending registration from Reinstated to In review audit action,Reinstated to ready for review,Réintégré à pret à l'examen 
+user.profile.auditList.reInstatedToInReview,Description for sending registration from Reinstated to In review audit action,Reinstated to ready for review,Réintégré à pret à l'examen
 user.profile.auditList.reInstatedToUpdate,Description for sending registration from Reinstated to require updates audit action,Reinstated to requires updates,Réintégré pour demander des mises à jour
 user.profile.auditList.retrieved,Description for declaration retrieved audit action,Retrieved,Récupéré
 user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Sent for approval,Envoyé pour approbation
