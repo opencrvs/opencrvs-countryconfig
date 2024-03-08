@@ -18,7 +18,6 @@ interface IMessageIdentifier {
 
 export interface ILanguage {
   lang: string
-  displayName: string
   messages: IMessageIdentifier
 }
 
@@ -47,7 +46,6 @@ export async function getLanguages(
 
     return {
       lang,
-      displayName: lang,
       messages
     }
   })
