@@ -10,10 +10,20 @@
  */
 /// <reference types="Cypress" />
 
+import faker from '@faker-js/faker'
+import { getRandomNumbers } from '../support/commands'
+
 context('User Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
   })
+
+  const firstName = faker.name.firstName()
+  const lastName = faker.name.lastName()
+  const username = `${firstName
+    .toLowerCase()
+    .charAt(0)}.${lastName.toLowerCase()}`
+  const email = faker.internet.email()
 
   it('creates user as SYSTEM ADMIN and to activate account login for the first time as REGISTRAR', () => {
     // LOG IN AS SYSTEM ADMIN
@@ -21,9 +31,10 @@ context('User Integration Test', () => {
     cy.createPin()
     cy.get('#navigation_team').click()
     cy.get('#add-user').click()
-    cy.get('#firstNamesEng').type('Naeem')
-    cy.get('#familyNameEng').type('Ahmed')
-    cy.get('#phoneNumber').type('0711919045')
+    cy.get('#firstNamesEng').type(firstName)
+    cy.get('#familyNameEng').type(lastName)
+    cy.get('#phoneNumber').type('07' + getRandomNumbers(8))
+    cy.get('#email').type(email)
     //cy.get('#nid').type('199475632')
     cy.selectOption('#role', 'Field Agent', 'Field Agent')
     cy.get('#device').type('Xiamoi MI 8')
@@ -35,7 +46,7 @@ context('User Integration Test', () => {
     cy.get('#ProfileMenuToggleButton').click()
     cy.get('#ProfileMenuItem1').click()
     // LOG IN AS FIELD AGENT
-    cy.get('#username').type('n.ahmed')
+    cy.get('#username').type(username)
     cy.get('#password').type('test')
     cy.get('#login-mobile-submit').click()
     cy.get('#user-setup-start-button', { timeout: 30000 }).click()
@@ -78,14 +89,14 @@ context('User Integration Test', () => {
 
     // Phone number verification form appears
     cy.get('#phone-or-email-verification-form').should('be.visible')
-    cy.get('#phone-number-input').type('0711919045')
+    cy.get('#email-address-input').type(email)
     cy.get('#continue').click()
 
     // Security question form appears
     cy.get('#security-question-form').should('be.visible')
-    cy.get('#content-name').then($q => {
+    cy.get('#content-name').then(($q) => {
       const question = $q.text()
-      let answer
+      let answer: string
       if (question === 'What is your favorite food?') {
         answer = 'Burger'
       } else if (question === 'What is your favorite movie?') {
@@ -117,7 +128,7 @@ context('User Integration Test', () => {
 
     // Phone number verification form appears
     cy.get('#phone-or-email-verification-form').should('be.visible')
-    cy.get('#phone-number-input').type('0711919045')
+    cy.get('#email-address-input').type(email)
     cy.get('#continue').click()
 
     // Recovery code entry form appears
@@ -126,9 +137,9 @@ context('User Integration Test', () => {
     cy.get('#continue').click()
     // Security question form appears
     cy.get('#security-question-form').should('be.visible')
-    cy.get('#content-name').then($q => {
+    cy.get('#content-name').then(($q) => {
       const question = $q.text()
-      let answer
+      let answer: string
       if (question === 'What is your favorite food?') {
         answer = 'Burger'
       } else if (question === 'What is your favorite movie?') {
@@ -143,8 +154,8 @@ context('User Integration Test', () => {
 
     // Password update form appears
     cy.get('#password-update-form').should('be.visible')
-    cy.get('#NewPassword').type('Asdf1234')
-    cy.get('#ConfirmPassword').type('Asdf1234')
+    cy.get('#NewPassword').type('Asdf12345678')
+    cy.get('#ConfirmPassword').type('Asdf12345678')
     cy.get('#continue-button').click()
 
     // Success page appears

@@ -175,9 +175,9 @@ Cypress.Commands.add('submitForm', () => {
 })
 
 Cypress.Commands.add('printDeclaration', () => {
-  cy.get('#navigation_print').click()
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(3000)
+  cy.get('#navigation_print').click()
   cy.downloadFirstDeclaration()
   cy.get('#ListItemAction-0-Print', { timeout: 30000 }).click()
   // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -197,18 +197,12 @@ Cypress.Commands.add('printDeclaration', () => {
 
 Cypress.Commands.add('clickUserListItemByName', (name, actionText) => {
   cy.xpath(
-    `//button[contains(text(), "${name}")]/ancestor::div[@data-test-id="list-view-label"]/../following-sibling::div[@data-test-id="list-view-actions"][1]/descendant::button`
+    `//button[contains(text(), "${name}")]/ancestor::tr/descendant::nav/button`
   ).click({ force: true })
 
   cy.get('[id$=-menuSubMenu]').should('is.visible')
   cy.get('[id$=-menuSubMenu]').scrollIntoView()
-  cy.get('[id$=-menuSubMenu] > li').contains(actionText)
-  cy.get('[id$=-menuSubMenu] > li').click()
-  // const actionsMenu = cy.get('[id$=-menuSubMenu]')
-  // actionsMenu.scrollIntoView().should('is.visible')
-  // const action = actionsMenu.get('li').contains(actionText)
-  // action.should('is.visible')
-  // action.click()
+  cy.get('[id$=-menuSubMenu] > li').contains(actionText).click()
 })
 
 Cypress.Commands.add('rejectDeclaration', () => {
@@ -306,7 +300,7 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.selectOption('#informantType', 'Mother', 'Mother')
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
-  cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
+  cy.get('#registrationEmail').type(faker.internet.email())
   cy.goToNextFormSection()
 
   // MOTHER DETAILS
@@ -636,9 +630,9 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
 
   const informantType = options?.informantType ?? 'Spouse'
 
+  cy.selectOption('#informantType', informantType, informantType)
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
-  cy.selectOption('#informantType', informantType, informantType)
 
   if (informantType !== 'Spouse') {
     cy.selectOption('#informantIdType', 'National ID', 'National ID')
@@ -649,7 +643,7 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
     cy.get('#firstNamesEng').type('Soumita')
     cy.get('#familyNameEng').type('Aktar')
   }
-  cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
+  cy.get('#registrationEmail').type(faker.internet.email())
 
   cy.goToNextFormSection()
 
@@ -778,9 +772,9 @@ Cypress.Commands.add('enterDeathMaximumInput', (options) => {
 
   const informantType = options?.informantType ?? 'Spouse'
 
+  cy.selectOption('#informantType', informantType, informantType)
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
-  cy.selectOption('#informantType', informantType, informantType)
 
   if (informantType !== 'Spouse') {
     cy.get('#firstNamesEng').type(options?.informantFirstNames || 'Alom')
