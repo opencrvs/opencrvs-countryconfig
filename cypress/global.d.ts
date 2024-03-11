@@ -89,15 +89,7 @@ declare namespace Cypress {
       firstName: string,
       lastName: string
     ) => void
-    registerDeclarationWithMaximumInput: (
-      firstName: string,
-      lastName: string
-    ) => void
     declareDeclarationWithMinimumInput: () => void
-    declareDeclarationWithMaximumInput: (
-      firstName: string,
-      lastName: string
-    ) => void
     declareDeathDeclarationWithMinimumInput: (
       options?: DeclarationOptions
     ) => void
