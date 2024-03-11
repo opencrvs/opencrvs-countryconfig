@@ -28,6 +28,7 @@ function refreshTrackingIdSearchUntilNameIsFound(
     .invoke('text')
     .then((text) => {
       if (!text.includes(`${firstName} ${lastName}`)) {
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(1000)
         refreshTrackingIdSearchUntilNameIsFound(trackingId, firstName, lastName)
       }
@@ -51,9 +52,7 @@ context('Correct Record Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.get('#navigation_print').click()
-    cy.get('#ListItemAction-0-icon').click()
-    cy.get('#assignment').should('exist')
-    cy.get('#assign').click()
+    cy.downloadFirstDeclaration()
     cy.get('#name_0').click()
     cy.get('[data-testid=trackingId-value]')
       .invoke('text')
@@ -66,8 +65,10 @@ context('Correct Record Integration Test', () => {
         cy.get('#btn_change_child_familyNameEng').click()
         const newFirstName = faker.name.firstName()
         const newLastName = faker.name.lastName()
-        cy.get('#firstNamesEng').clear().type(newFirstName)
-        cy.get('#familyNameEng').clear().type(newLastName)
+        cy.get('#firstNamesEng').clear()
+        cy.get('#firstNamesEng').type(newFirstName)
+        cy.get('#familyNameEng').clear()
+        cy.get('#familyNameEng').type(newLastName)
         cy.get('#back-to-review-button').click()
         cy.get('#continue_button').click()
         cy.get('#supportDocumentRequiredForCorrection_false').click()

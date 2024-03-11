@@ -163,9 +163,7 @@ Cypress.Commands.add('submitDeclaration', () => {
 
 Cypress.Commands.add('reviewForm', () => {
   cy.get('#navigation_readyForReview').click()
-  cy.get('#ListItemAction-0-icon').click()
-  cy.get('#assignment').should('exist')
-  cy.get('#assign').click()
+  cy.downloadFirstDeclaration()
   cy.get('#ListItemAction-0-Review').click()
 })
 
@@ -180,9 +178,7 @@ Cypress.Commands.add('printDeclaration', () => {
   cy.get('#navigation_print').click()
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(3000)
-  cy.get('#ListItemAction-0-icon', { timeout: 30000 }).click()
-  cy.get('#assignment').should('exist')
-  cy.get('#assign').click()
+  cy.downloadFirstDeclaration()
   cy.get('#ListItemAction-0-Print', { timeout: 30000 }).click()
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500)
@@ -245,8 +241,13 @@ Cypress.Commands.add('verifyLandingPageVisible', () => {
 Cypress.Commands.add('downloadFirstDeclaration', () => {
   cy.get('#ListItemAction-0-icon').should('exist')
   cy.get('#ListItemAction-0-icon').first().click()
-  cy.get('assignment').should('exist')
-  cy.get('#assign').click()
+  // If the declaration is already assigned to the user
+  // then the modal won't show up
+  cy.get('body').then(($body) => {
+    if ($body.find('#assignment').length) {
+      cy.get('#assign').click()
+    }
+  })
   cy.log('Waiting for declaration to sync...')
 
   cy.get('#action-loading-ListItemAction-0').should('not.exist')
@@ -280,12 +281,21 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   cy.get('#familyNameEng').type(faker.name.lastName())
   cy.selectOption('#gender', 'Male', 'Male')
   cy.get('#childBirthDate-dd').type(
-    Math.floor(1 + Math.random() * 27).toString()
+    Math.floor(1 + Math.random() * 27)
+      .toString()
+      .padStart(2, '0')
   )
   cy.get('#childBirthDate-mm').type(
-    Math.floor(1 + Math.random() * 12).toString()
+    Math.floor(1 + Math.random() * 12)
+      .toString()
+      .padStart(2, '0')
   )
   cy.get('#childBirthDate-yyyy').type('2018')
+  cy.get('body').then(($body) => {
+    if ($body.find('#reasonForLateRegistration').length) {
+      cy.get('#reasonForLateRegistration').type('Late registration')
+    }
+  })
   cy.selectOption('#placeOfBirth', 'Private_Home', 'Residential address')
   cy.selectOption('#countryPlaceofbirth', 'Farajaland', 'Farajaland')
   cy.selectOption('#statePlaceofbirth', 'Pualula', 'Pualula')
@@ -732,6 +742,11 @@ Cypress.Commands.add('enterDeathMaximumInput', (options) => {
   cy.get('#deathDate-dd').type('18')
   cy.get('#deathDate-mm').type('01')
   cy.get('#deathDate-yyyy').type('2019')
+  cy.get('body').then(($body) => {
+    if ($body.find('#reasonForLateRegistration').length) {
+      cy.get('#reasonForLateRegistration').type('Late registration')
+    }
+  })
 
   // CAUSE OF DEATH DETAILS
   cy.selectOption('#mannerOfDeath', '', 'Homicide')
@@ -827,6 +842,11 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#childBirthDate-dd').type('23')
   cy.get('#childBirthDate-mm').type('10')
   cy.get('#childBirthDate-yyyy').type('1994')
+  cy.get('body').then(($body) => {
+    if ($body.find('#reasonForLateRegistration').length) {
+      cy.get('#reasonForLateRegistration').type('Late registration')
+    }
+  })
   cy.selectOption('#attendantAtBirth', 'Physician', 'Physician')
   cy.selectOption('#birthType', 'Single', 'Single')
   cy.get('#weightAtBirth').type('1.5')
