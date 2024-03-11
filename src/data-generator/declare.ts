@@ -172,6 +172,7 @@ export function createBirthDeclarationData(
   const familyName = faker.name.lastName()
   const firstNames = faker.name.firstName()
   const motherFirstName = faker.name.firstName('female')
+  const isLateRegistration = differenceInDays(new Date(), birthDate) > 365
 
   const mother: PersonInput = {
     nationality: ['FAR'],
@@ -231,6 +232,14 @@ export function createBirthDeclarationData(
       detailsExist: false,
       reasonNotApplying: 'Father unknown'
     },
+    ...(isLateRegistration && {
+      questionnaire: [
+        {
+          fieldId: 'birth.child.child-view-group.reasonForLateRegistration',
+          value: 'Late registration'
+        }
+      ]
+    }),
     child: {
       name: [
         {
