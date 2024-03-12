@@ -73,7 +73,7 @@ declare namespace Cypress {
     reviewForm: () => void
     clickUserListItemByName: (name: string, actionText: string) => void
     submitForm: () => void
-    submitDeclaration: (type?: 'birth' | 'death') => void
+    submitDeclaration: (incomplete?: boolean) => void
     createBirthRegistrationAs: (
       role: UserType,
       options?: BirthDeclarationOptions
@@ -81,9 +81,9 @@ declare namespace Cypress {
     printDeclaration: () => void
     rejectDeclaration: () => void
     registerDeclaration: () => void
-    verifyLandingPageVisible: () => void
+    goToVitalEventSelection: () => void
     downloadFirstDeclaration: () => void
-    enterMaximumInput: (options?: DeclarationOptions) => void
+    enterBirthMaximumInput: (options?: DeclarationOptions) => void
     enterDeathMaximumInput: (options?: DeclarationOptions) => void
     registerDeclarationWithMinimumInput: (
       firstName: string,

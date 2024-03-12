@@ -19,7 +19,7 @@ context('Death Integration Test', () => {
   it('Tests registration by registrar using maximum input', () => {
     cy.login('registrar')
     cy.createPin()
-    cy.verifyLandingPageVisible()
+    cy.goToVitalEventSelection()
 
     const deceasedFirstNames = faker.name.firstName()
     const deceasedFamilyName = faker.name.lastName()

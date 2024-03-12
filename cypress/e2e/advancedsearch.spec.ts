@@ -70,8 +70,8 @@ context('Advanced Search Integration Test', () => {
     cy.createPin()
 
     //CREATE REGISTRATION
-    cy.verifyLandingPageVisible()
-    cy.enterMaximumInput({
+    cy.goToVitalEventSelection()
+    cy.enterBirthMaximumInput({
       childFirstNames,
       childLastName,
       childDoB,

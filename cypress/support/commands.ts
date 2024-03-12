@@ -110,16 +110,11 @@ Cypress.Commands.add('logout', () => {
 })
 
 Cypress.Commands.add('goToNextFormSection', () => {
-  // Clear debounce wait from form
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
-
   cy.get('#next_section').click()
 })
 
 Cypress.Commands.add('createPin', () => {
   // CREATE PIN
-  cy.get('#pin-input', { timeout: 130000 }).should('exist')
   cy.get('#pin-input', { timeout: 130000 }).click()
   for (let i = 1; i <= 8; i++) {
     cy.get('#pin-input').type(`${i % 2}`)
@@ -134,7 +129,7 @@ const hasOperationName = (
   return 'operationName' in body && body.operationName === operationName
 }
 
-Cypress.Commands.add('submitDeclaration', () => {
+Cypress.Commands.add('submitDeclaration', (incomplete = false) => {
   cy.intercept('/graphql', (req) => {
     if (hasOperationName(req, 'createBirthRegistration')) {
       req.alias = 'createRegistration'
@@ -153,6 +148,9 @@ Cypress.Commands.add('submitDeclaration', () => {
       })
     }
   })
+  if (!incomplete) {
+    cy.contains('Declaration complete')
+  }
   cy.get('#submit_form').click()
   cy.get('#submit_confirm').click()
 
@@ -228,13 +226,11 @@ Cypress.Commands.add('registerDeclaration', () => {
   cy.get('#navigation_readyForReview').contains('Ready for review')
 })
 
-Cypress.Commands.add('verifyLandingPageVisible', () => {
-  cy.get('#header_new_event', { timeout: 30000 }).should('be.visible')
+Cypress.Commands.add('goToVitalEventSelection', () => {
   cy.get('#header_new_event').click()
 })
 
 Cypress.Commands.add('downloadFirstDeclaration', () => {
-  cy.get('#ListItemAction-0-icon').should('exist')
   cy.get('#ListItemAction-0-icon').first().click()
   // If the declaration is already assigned to the user
   // then the modal won't show up
@@ -260,7 +256,7 @@ Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
   // LOGIN
   cy.login('fieldWorker')
   cy.createPin()
-  cy.verifyLandingPageVisible()
+  cy.goToVitalEventSelection()
   // EVENTS
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_birth_event').click()
@@ -434,19 +430,21 @@ Cypress.Commands.add('createBirthRegistrationAs', (role, options = {}) => {
   })
 })
 
-Cypress.Commands.add('enterMaximumInput', (options) => {
+Cypress.Commands.add('enterBirthMaximumInput', (options) => {
   const childDoBSplit = getDateMonthYearFromString(options?.childDoB)
   const motherDoBSplit = getDateMonthYearFromString(options?.motherDoB)
   const fatherDoBSplit = getDateMonthYearFromString(options?.fatherDoB)
   const informantDoBSplit = getDateMonthYearFromString(options?.informantDoB)
 
   // EVENTS
-  cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_birth_event').click()
   cy.get('#continue').click()
-  cy.goToNextFormSection()
 
   // DECLARATION FORM
+
+  // INTRODUCTION
+  cy.goToNextFormSection()
+
   // CHILD DETAILS
   cy.get('#firstNamesEng').type(
     options?.childFirstNames || faker.name.firstName()
@@ -486,6 +484,8 @@ Cypress.Commands.add('enterMaximumInput', (options) => {
   cy.get('#addressLine3UrbanOptionPlaceofbirth').type('40')
   cy.goToNextFormSection()
 
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500)
   // SELECT INFORMANT
   cy.selectOption(
     '#informantType',
@@ -584,7 +584,7 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
   // LOGIN
   cy.login('fieldWorker')
   cy.createPin()
-  cy.verifyLandingPageVisible()
+  cy.goToVitalEventSelection()
   // DECLARATION FORM
   cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_death_event').click()
@@ -676,7 +676,7 @@ Cypress.Commands.add('declareDeathDeclarationWithMaximumInput', (options) => {
   // LOGIN
   cy.login('fieldWorker')
   cy.createPin()
-  cy.verifyLandingPageVisible()
+  cy.goToVitalEventSelection()
   cy.enterDeathMaximumInput(options)
   // PREVIEW
   cy.submitDeclaration()

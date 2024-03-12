@@ -29,8 +29,8 @@ context('Birth Integration Test', () => {
     const fatherFamilyName = faker.name.lastName()
     cy.login('fieldWorker')
     cy.createPin()
-    cy.verifyLandingPageVisible()
-    cy.enterMaximumInput({
+    cy.goToVitalEventSelection()
+    cy.enterBirthMaximumInput({
       informantType,
       motherDoB,
       motherFirstNames,
@@ -91,8 +91,8 @@ context('Birth Integration Test', () => {
 
     cy.login('registrar')
     cy.createPin()
-    cy.verifyLandingPageVisible()
-    cy.enterMaximumInput({
+    cy.goToVitalEventSelection()
+    cy.enterBirthMaximumInput({
       informantType,
       motherDoB,
       motherFirstNames,
@@ -113,7 +113,7 @@ context('Birth Integration Test', () => {
   it('login as field agent, create birth declaration as "Someone else"', () => {
     cy.login('fieldWorker')
     cy.createPin()
-    cy.verifyLandingPageVisible()
+    cy.goToVitalEventSelection()
     cy.someoneElseJourney()
     cy.submitDeclaration()
     cy.logout()
