@@ -106,6 +106,7 @@ Cypress.Commands.add('selectLocation', (selector: string, text: string) => {
 Cypress.Commands.add('logout', () => {
   cy.get('#ProfileMenuToggleButton').click()
   cy.get('#ProfileMenuItem1').click()
+  cy.url().should('include', `${Cypress.env('LOGIN_URL')}`)
 })
 
 Cypress.Commands.add('goToNextFormSection', () => {
