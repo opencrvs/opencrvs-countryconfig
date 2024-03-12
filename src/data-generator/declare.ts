@@ -232,14 +232,20 @@ export function createBirthDeclarationData(
       detailsExist: false,
       reasonNotApplying: 'Father unknown'
     },
-    ...(isLateRegistration && {
-      questionnaire: [
-        {
-          fieldId: 'birth.child.child-view-group.reasonForLateRegistration',
-          value: 'Late registration'
-        }
-      ]
-    }),
+    questionnaire: [
+      ...(isLateRegistration
+        ? [
+            {
+              fieldId: 'birth.child.child-view-group.reasonForLateRegistration',
+              value: 'Late registration'
+            }
+          ]
+        : []),
+      {
+        fieldId: 'birth.mother.mother-view-group.motherIdType',
+        value: 'NATIONAL_ID'
+      }
+    ],
     child: {
       name: [
         {
