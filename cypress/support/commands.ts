@@ -252,85 +252,6 @@ export function getRandomNumbers(stringLength: number) {
   return result
 }
 
-Cypress.Commands.add('declareDeclarationWithMinimumInput', () => {
-  // LOGIN
-  cy.login('fieldWorker')
-  cy.createPin()
-  cy.goToVitalEventSelection()
-  // EVENTS
-  cy.get('#select_vital_event_view').should('be.visible')
-  cy.get('#select_birth_event').click()
-  cy.get('#continue').click()
-
-  // EVENT INFO
-  cy.goToNextFormSection()
-
-  // DECLARATION FORM
-  // CHILD DETAILS
-
-  cy.get('#firstNamesEng').type(faker.name.firstName())
-  cy.get('#familyNameEng').type(faker.name.lastName())
-  cy.selectOption('#gender', 'Male', 'Male')
-  cy.get('#childBirthDate-dd').type(
-    Math.floor(1 + Math.random() * 27)
-      .toString()
-      .padStart(2, '0')
-  )
-  cy.get('#childBirthDate-mm').type(
-    Math.floor(1 + Math.random() * 12)
-      .toString()
-      .padStart(2, '0')
-  )
-  cy.get('#childBirthDate-yyyy').type('2018')
-  cy.get('body').then(($body) => {
-    if ($body.find('#reasonForLateRegistration').length) {
-      cy.get('#reasonForLateRegistration').type('Late registration')
-    }
-  })
-  cy.selectOption('#placeOfBirth', 'Private_Home', 'Residential address')
-  cy.selectOption('#countryPlaceofbirth', 'Farajaland', 'Farajaland')
-  cy.selectOption('#statePlaceofbirth', 'Pualula', 'Pualula')
-  cy.selectOption('#districtPlaceofbirth', 'Embe', 'Embe')
-  cy.goToNextFormSection()
-
-  // SELECT INFORMANT
-  cy.selectOption('#informantType', 'Mother', 'Mother')
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
-  cy.get('#registrationEmail').type(faker.internet.email())
-  cy.goToNextFormSection()
-
-  // MOTHER DETAILS
-  cy.selectOption('#motherIdType', 'National ID', 'National ID')
-  cy.get('#motherNationalId').type(getRandomNumbers(10))
-  cy.get('#firstNamesEng').type('Rokeya')
-  cy.get('#familyNameEng').type(faker.name.lastName())
-  cy.get('#motherBirthDate-dd').type('23')
-  cy.get('#motherBirthDate-mm').type('10')
-  cy.get('#motherBirthDate-yyyy').type('1969')
-  cy.selectOption('#countryPrimaryMother', 'Farajaland', 'Farajaland')
-  cy.selectOption('#statePrimaryMother', 'Pualula', 'Pualula')
-  cy.selectOption('#districtPrimaryMother', 'Embe', 'Embe')
-  cy.goToNextFormSection()
-
-  // FATHER DETAILS
-  cy.selectOption('#fatherIdType', 'National ID', 'National ID')
-  cy.get('#fatherNationalId').type(getRandomNumbers(10))
-
-  cy.get('#firstNamesEng').type('Joe')
-  cy.get('#familyNameEng').type('Bieden')
-  cy.get('#fatherBirthDate-dd').type('23')
-  cy.get('#fatherBirthDate-mm').type('10')
-  cy.get('#fatherBirthDate-yyyy').type('1969')
-  cy.goToNextFormSection()
-
-  // DOCUMENTS
-  cy.goToNextFormSection()
-  cy.submitDeclaration()
-
-  cy.logout()
-})
-
 function getLocationWithName(token: string, name: string) {
   return cy
     .request<{ entry: Array<{ resource: Location }> }>({
@@ -564,20 +485,77 @@ Cypress.Commands.add('enterBirthMaximumInput', (options) => {
   cy.goToNextFormSection()
 })
 
-Cypress.Commands.add('registerDeclarationWithMinimumInput', () => {
-  // DECLARE DECLARATION AS FIELD AGENT
-  cy.declareDeclarationWithMinimumInput()
+Cypress.Commands.add('enterBirthMinimumInput', () => {
+  // EVENTS
+  cy.get('#select_birth_event').click()
+  cy.get('#continue').click()
 
-  // LOGIN AS LOCAL REGISTRAR
-  cy.login('registrar')
-  cy.createPin()
+  // DECLARATION FORM
 
-  // LANDING PAGE
-  cy.downloadFirstDeclaration()
-  cy.get('#ListItemAction-0-Review').should('exist')
-  cy.get('#ListItemAction-0-Review').first().click()
+  // INTRODUCTION
+  cy.goToNextFormSection()
 
-  cy.registerDeclaration()
+  // CHILD DETAILS
+  cy.get('#firstNamesEng').type(faker.name.firstName())
+  cy.get('#familyNameEng').type(faker.name.lastName())
+  cy.selectOption('#gender', 'Male', 'Male')
+  cy.get('#childBirthDate-dd').type(
+    Math.floor(1 + Math.random() * 27)
+      .toString()
+      .padStart(2, '0')
+  )
+  cy.get('#childBirthDate-mm').type(
+    Math.floor(1 + Math.random() * 12)
+      .toString()
+      .padStart(2, '0')
+  )
+  cy.get('#childBirthDate-yyyy').type('2018')
+  cy.get('body').then(($body) => {
+    if ($body.find('#reasonForLateRegistration').length) {
+      cy.get('#reasonForLateRegistration').type('Late registration')
+    }
+  })
+  cy.selectOption('#placeOfBirth', 'Private_Home', 'Residential address')
+  cy.selectOption('#countryPlaceofbirth', 'Farajaland', 'Farajaland')
+  cy.selectOption('#statePlaceofbirth', 'Pualula', 'Pualula')
+  cy.selectOption('#districtPlaceofbirth', 'Embe', 'Embe')
+  cy.goToNextFormSection()
+
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500)
+  // SELECT INFORMANT
+  cy.selectOption('#informantType', 'Mother', 'Mother')
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500)
+  cy.get('#registrationEmail').type(faker.internet.email())
+  cy.goToNextFormSection()
+
+  // MOTHER DETAILS
+  cy.selectOption('#motherIdType', 'National ID', 'National ID')
+  cy.get('#motherNationalId').type(getRandomNumbers(10))
+  cy.get('#firstNamesEng').type('Rokeya')
+  cy.get('#familyNameEng').type(faker.name.lastName())
+  cy.get('#motherBirthDate-dd').type('23')
+  cy.get('#motherBirthDate-mm').type('10')
+  cy.get('#motherBirthDate-yyyy').type('1969')
+  cy.selectOption('#countryPrimaryMother', 'Farajaland', 'Farajaland')
+  cy.selectOption('#statePrimaryMother', 'Pualula', 'Pualula')
+  cy.selectOption('#districtPrimaryMother', 'Embe', 'Embe')
+  cy.goToNextFormSection()
+
+  // FATHER DETAILS
+  cy.selectOption('#fatherIdType', 'National ID', 'National ID')
+  cy.get('#fatherNationalId').type(getRandomNumbers(10))
+
+  cy.get('#firstNamesEng').type('Joe')
+  cy.get('#familyNameEng').type('Bieden')
+  cy.get('#fatherBirthDate-dd').type('23')
+  cy.get('#fatherBirthDate-mm').type('10')
+  cy.get('#fatherBirthDate-yyyy').type('1969')
+  cy.goToNextFormSection()
+
+  // DOCUMENTS
+  cy.goToNextFormSection()
 })
 
 Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {

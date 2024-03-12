@@ -55,7 +55,11 @@ context('Birth Integration Test', () => {
   })
 
   it('login as a field agent, send a declaration using minimum input', () => {
-    cy.declareDeclarationWithMinimumInput()
+    cy.login('fieldWorker')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterBirthMinimumInput()
+    cy.submitDeclaration()
   })
 
   it('login as registrar to register minimum input declaration', () => {
