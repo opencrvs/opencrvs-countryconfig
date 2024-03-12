@@ -108,10 +108,8 @@ context('Birth Integration Test', () => {
       informantFamilyName,
       informantDoB
     })
-    //register declaration
-    cy.get('#registerDeclarationBtn').click()
-    cy.get('#submit_confirm').click()
-    cy.log('Waiting for declaration to sync...')
+    cy.submitForm()
+    cy.logout()
   })
 
   it('login as field agent, create birth declaration as "Someone else"', () => {
