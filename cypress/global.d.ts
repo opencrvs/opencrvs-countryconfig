@@ -72,7 +72,7 @@ declare namespace Cypress {
     createPin: () => void
     reviewForm: () => void
     clickUserListItemByName: (name: string, actionText: string) => void
-    submitForm: () => void
+    registerForm: () => void
     submitDeclaration: (incomplete?: boolean) => void
     createBirthRegistrationAs: (
       role: UserType,

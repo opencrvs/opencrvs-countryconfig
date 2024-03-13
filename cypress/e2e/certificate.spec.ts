@@ -22,7 +22,7 @@ context('Certificate Integration Test', () => {
 
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
     cy.printDeclaration()
   })
 })

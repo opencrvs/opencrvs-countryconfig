@@ -50,7 +50,7 @@ context('Birth Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
     cy.logout()
   })
 
@@ -66,7 +66,7 @@ context('Birth Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
     cy.logout()
   })
 
@@ -108,7 +108,7 @@ context('Birth Integration Test', () => {
       informantFamilyName,
       informantDoB
     })
-    cy.submitForm()
+    cy.registerForm()
     cy.logout()
   })
 
@@ -125,6 +125,6 @@ context('Birth Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
   })
 })

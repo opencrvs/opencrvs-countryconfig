@@ -54,7 +54,7 @@ context('Death Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
   })
 
   it('Login as field agent and tests from declaration to registration using maximum input', () => {
@@ -65,7 +65,7 @@ context('Death Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
   })
 
   it('Tests from declaration to rejection using minimum input', () => {

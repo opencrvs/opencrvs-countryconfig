@@ -166,7 +166,7 @@ Cypress.Commands.add('reviewForm', () => {
   cy.get('#ListItemAction-0-Review').click()
 })
 
-Cypress.Commands.add('submitForm', () => {
+Cypress.Commands.add('registerForm', () => {
   cy.get('#registerDeclarationBtn').click()
   cy.get('#submit_confirm').click()
   cy.get('#navigation_outbox').should('contain.text', '1')
