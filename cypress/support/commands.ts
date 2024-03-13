@@ -833,6 +833,8 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#addressLine3UrbanOptionPlaceofbirth').type('40')
   cy.goToNextFormSection()
 
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500)
   // SELECT INFORMANT
   cy.selectOption('#informantType', 'Someone else', 'Someone else')
   // eslint-disable-next-line cypress/no-unnecessary-waiting
