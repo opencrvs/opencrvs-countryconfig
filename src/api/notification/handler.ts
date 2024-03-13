@@ -175,7 +175,7 @@ interface MassEmailPayload {
 
 export const massEmailSchema = Joi.object({
   subject: Joi.string().required(),
-  html: Joi.string().required(),
+  body: Joi.string().required(),
   bcc: Joi.array().items(Joi.string())
 })
 
