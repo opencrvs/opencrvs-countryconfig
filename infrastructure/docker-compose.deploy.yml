@@ -928,59 +928,6 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'hearth'
-  openhim-core:
-    environment:
-      - mongo_url=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-      - mongo_atnaUrl=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-    depends_on:
-      - mongo1
-    deploy:
-      labels:
-        - 'traefik.enable=false'
-
-        # To expose OpenHIM to external systems as an interoperability layer
-        # Given OpenCRVS has it's own integrations UI and control.  This functionality is currently disabled
-        # If you wish to reopen OpenHIM interoperability, you can enable these lines
-        # Any subdomain labelled "api" is regularly spammed and can lead to DDOS attack
-        # Care must be taken to whitelist any access to this endpoint
-
-        # - 'traefik.http.routers.api.rule=Host(`api.{{hostname}}`)'
-        # - 'traefik.http.routers.api.tls=true'
-        # - 'traefik.http.routers.api.service=api'
-        # - 'traefik.http.routers.api.tls.certresolver=certResolver'
-        # - 'traefik.http.routers.api.entrypoints=web,websecure'
-        # - 'traefik.http.services.api.loadbalancer.server.port=5001'
-        # - 'traefik.http.middlewares.openhimapi-whitelist.ipwhitelist.sourcerange=<Comma separated IP list>'
-        # - "traefik.http.routers.openhimapi.middlewares=openhimapi-whitelist@docker"
-
-        - 'traefik.docker.network=opencrvs_overlay_net'
-
-        - 'traefik.http.middlewares.openhimcore.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.openhimcore.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.openhimcore.headers.stspreload=true'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'openhim-core'
-  openhim-console:
-    deploy:
-      labels:
-        - 'traefik.enable=false'
-      replicas: 1
-    configs:
-      - source: openhim-console-conf.{{ts}}
-        target: /usr/share/nginx/html/config/default.json
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'openhim-console'
 
   webhooks:
     secrets:

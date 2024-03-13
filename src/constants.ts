@@ -15,8 +15,6 @@ export const LOGIN_URL = process.env.LOGIN_URL || 'http://localhost:3020/'
 export const CLIENT_APP_URL =
   process.env.CLIENT_APP_URL || 'http://localhost:3000/'
 export const FHIR_URL = process.env.FHIR_URL || 'http://localhost:3447/fhir'
-export const OPENHIM_URL =
-  process.env.OPENHIM_URL || 'http://localhost:5001/fhir'
 export const ORG_URL = 'http://opencrvs.org'
 export const COUNTRY_CONFIG_HOST = process.env.COUNTRY_CONFIG_HOST || '0.0.0.0'
 export const COUNTRY_CONFIG_PORT = process.env.COUNTRY_CONFIG_PORT || 3040
@@ -31,7 +29,7 @@ export const SENTRY_DSN = process.env.SENTRY_DSN
 export const CHECK_INVALID_TOKEN = process.env.CHECK_INVALID_TOKEN || 'false'
 export const CONFIRM_REGISTRATION_URL =
   process.env.CONFIRM_REGISTRATION_URL ||
-  'http://localhost:5001/confirm/registration'
+  'http://localhost:5050/confirm/registration'
 export const DEFAULT_TIMEOUT = 600000
 export const PRODUCTION = process.env.NODE_ENV === 'production'
 export const QA_ENV = process.env.QA_ENV || false
