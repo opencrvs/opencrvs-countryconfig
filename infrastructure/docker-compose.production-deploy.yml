@@ -103,8 +103,7 @@ services:
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021
-      - OPENHIM_URL=http://openhim-core:5001/fhir
-      - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
+      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - SENTRY_DSN=${SENTRY_DSN}
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
@@ -154,18 +153,6 @@ services:
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1,mongo2/hearth-dev?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1,mongo2/openhim-dev?replicaSet=rs0
       - WAIT_HOSTS=mongo1:27017,mongo2:27017,influxdb:8086,minio:9000,elasticsearch:9200
-
-  openhim-core:
-    environment:
-      - mongo_url=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1,mongo2/openhim-dev?replicaSet=rs0
-      - mongo_atnaUrl=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1,mongo2/openhim-dev?replicaSet=rs0
-
-    deploy:
-      replicas: 2
-
-  openhim-console:
-    deploy:
-      replicas: 2
 
   mongo2:
     image: mongo:4.4
