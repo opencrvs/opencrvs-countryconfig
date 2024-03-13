@@ -166,3 +166,47 @@ export async function emailHandler(
 
   return h.response().code(200)
 }
+
+interface MassEmailPayload {
+  subject: string
+  body: string
+  bcc: string[]
+}
+
+export const massEmailSchema = Joi.object({
+  subject: Joi.string().required(),
+  html: Joi.string().required(),
+  bcc: Joi.array().items(Joi.string())
+})
+
+export async function massEmailHandler(
+  request: Hapi.Request,
+  h: Hapi.ResponseToolkit
+) {
+  const { bcc, ...variables } = request.payload as MassEmailPayload
+  if (process.env.NODE_ENV !== 'production') {
+    logger.info(
+      `Ignoring email due to NODE_ENV not being 'production'. Params: ${JSON.stringify(
+        variables
+      )}`
+    )
+    return h.response().code(200)
+  }
+
+  logger.info(`Emails are being sent to ${bcc[0]}...${bcc[bcc.length - 1]}`)
+
+  const template = getTemplate('allUserNotification')
+  const emailbody = renderTemplate(template, {
+    countryLogo: COUNTRY_LOGO_URL
+  })
+
+  await sendEmail({
+    ...variables,
+    to: bcc[0],
+    from: SENDER_EMAIL_ADDRESS,
+    bcc: bcc.slice(1),
+    html: emailbody
+  })
+
+  return h.response().code(200)
+}

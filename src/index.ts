@@ -42,6 +42,8 @@ import { logger } from '@countryconfig/logger'
 import {
   emailHandler,
   emailSchema,
+  massEmailHandler,
+  massEmailSchema,
   notificationHandler,
   notificationSchema
 } from './api/notification/handler'
@@ -550,6 +552,20 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Provides a tracking id'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/allUsersEmail',
+    handler: massEmailHandler,
+    options: {
+      auth: false,
+      tags: ['api'],
+      validate: {
+        payload: massEmailSchema
+      },
+      description: 'Handles sending mass email'
     }
   })
 

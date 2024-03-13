@@ -28,9 +28,15 @@ export const sendEmail = async (params: {
   html: string
   from: string
   to: string
+  bcc?: string[]
 }) => {
   if (params.to.endsWith('@example.com')) {
     logger.info(`Example email detected: ${params.to}. Not sending the email.`)
+    return
+  }
+
+  if (params.bcc?.every((email) => email.endsWith('@example.com'))) {
+    logger.info(`Example email detected: Not sending the batch emails.`)
     return
   }
 
@@ -57,13 +63,17 @@ export const sendEmail = async (params: {
       SENDER_EMAIL_ADDRESS: SENDER_EMAIL_ADDRESS
     })
 
+  const defaultMailOptions = {
+    from: replaceVariables(params.from),
+    to: replaceVariables(params.to),
+    subject: replaceVariables(params.subject),
+    html: replaceVariables(params.html)
+  }
+  const mailOptions = params.bcc
+    ? { ...defaultMailOptions, bcc: params.bcc }
+    : defaultMailOptions
   try {
-    await emailTransport.sendMail({
-      from: replaceVariables(params.from),
-      to: replaceVariables(params.to),
-      subject: replaceVariables(params.subject),
-      html: replaceVariables(params.html)
-    })
+    await emailTransport.sendMail(mailOptions)
   } catch (error) {
     logger.error(`Unable to send email to ${params.to} for error : ${error}`)
 
