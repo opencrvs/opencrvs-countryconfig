@@ -8,7 +8,8 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { readFile } from 'fs'
+import { readCSVToJSON } from '@countryconfig/utils'
+
 import { join } from 'path'
 
 interface IMessageIdentifier {
@@ -17,23 +18,35 @@ interface IMessageIdentifier {
 
 export interface ILanguage {
   lang: string
-  displayName: string
   messages: IMessageIdentifier
 }
 
-export interface ILanguageDataResponse {
-  data: ILanguage[]
-}
+export type ILanguageDataResponse = ILanguage[]
+
+export type CSVRow = { id: string; description: string } & Record<
+  string,
+  string
+>
 
 export async function getLanguages(
   application: string
 ): Promise<ILanguageDataResponse> {
-  return new Promise((resolve, reject) => {
-    readFile(
-      join('src/api/content/', `${application}/${application}.json`),
-      (err, data) => {
-        err ? reject(err) : resolve(JSON.parse(data.toString()))
-      }
-    )
+  const csvData = await readCSVToJSON<CSVRow[]>(
+    join('src/translations/', `${application}.csv`)
+  )
+  const languages = Object.keys(csvData[0]).filter(
+    (key) => !['id', 'description'].includes(key)
+  )
+
+  return languages.map((lang) => {
+    const messages: IMessageIdentifier = {}
+    csvData.forEach((row) => {
+      messages[row.id] = row[lang]
+    })
+
+    return {
+      lang,
+      messages
+    }
   })
 }

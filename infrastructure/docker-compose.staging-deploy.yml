@@ -144,8 +144,6 @@ services:
   hearth:
     environment:
       - mongodb__url=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
-    depends_on:
-      - mongo1
     deploy:
       replicas: 1
 
@@ -159,9 +157,8 @@ services:
       - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200
     depends_on:
       - mongo1
+
   mongo-on-update:
-    depends_on:
-      - mongo1
     environment:
       - REPLICAS=1
 

@@ -1,6 +1,18 @@
 # Changelog
 
-## [1.4.0](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.4.0) (TBD)
+## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
+
+- Improved logging for emails being sent
+- Updated default Metabase init file so that it's compatible with the current Metabase version
+- Deployment: Verifies Kibana is ready before setting up alert configuration
+- Deployment: Removes `depends_on` configuration from docker compose files
+- Deployment: Removes some deprecated deployment code around Elastalert config file formatting
+- Provisioning: Creates backup user on backup servers automatically
+- Provisioning: Update ansible Github action task version
+
+- Copy: All application copy is now located in src/translations as CSV files. This is so that copy would be easily editable in software like Excel and Google Sheets. After this change, `AVAILABLE_LANGUAGES_SELECT` doesn't need to be defined anymore by country config.
+
+## [1.4.0](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.4.0)
 
 - Added examples for configuring HTTP-01, DNS-01, and manual HTTPS certificates. By default, development and QA environments use HTTP-01, while others use DNS-01.
 - All secrets & variables defined in Github Secrets are now passed automatically to the deployment script.
@@ -44,7 +56,7 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 
 See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
 
-## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3) (TBD)
+## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
 
 ### Breaking changes
 
@@ -106,5 +118,15 @@ See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for rel
   ##### We will be deprecating the counterpart of the above mentioned handlebars that contains only the label of the specified location in a future version so we highly recommend that implementers update their certificates to use these new ones.
 
 ### Bug fixes
+
+## [1.3.4](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.3.4) (TBD)
+
+## Breaking changes
+
+## New features
+
+## Bug fixes
+
+- Fix typo in certificate handlebar names
 
 See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
