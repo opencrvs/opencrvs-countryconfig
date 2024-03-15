@@ -197,6 +197,7 @@ export async function massEmailHandler(
 
   const template = getTemplate('allUserNotification')
   const emailbody = renderTemplate(template, {
+    ...variables,
     countryLogo: COUNTRY_LOGO_URL
   })
 
