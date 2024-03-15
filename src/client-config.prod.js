@@ -17,7 +17,6 @@ window.config = {
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
-  AVAILABLE_LANGUAGES_SELECT: 'en:English,fr:Français',
   LANGUAGES: 'en,fr',
   SENTRY: '{{sentry}}',
   LEADERBOARDS_DASHBOARD_URL:

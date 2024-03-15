@@ -160,8 +160,6 @@ export async function emailHandler(
     return h.response().code(200)
   }
 
-  logger.info(`Email is being sent to ${payload.to}`)
-
   await sendEmail(payload)
 
   return h.response().code(200)
