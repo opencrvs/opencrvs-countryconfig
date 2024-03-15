@@ -14,6 +14,7 @@ import { APPLICATION_CONFIG_URL, FHIR_URL } from '@countryconfig/constants'
 import { callingCountries } from 'country-data'
 import csv2json from 'csv2json'
 import { createReadStream } from 'fs'
+import fs from 'fs'
 import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
 import { URL } from 'url'
 import { build } from 'esbuild'
@@ -23,6 +24,8 @@ export const CHILD_CODE = 'child-details'
 export const DECEASED_CODE = 'deceased-details'
 export const OPENCRVS_SPECIFICATION_URL = 'http://opencrvs.org/specs/'
 import { join } from 'path'
+import { promisify } from 'util'
+import { stringify, Options } from 'csv-stringify'
 
 export interface ILocation {
   id?: string
@@ -165,6 +168,17 @@ export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
       // which we do not want to keep for now
       .replace(/[\s-]/g, '')
   )
+}
+
+const csvStringify = promisify<Array<Record<string, any>>, Options>(stringify)
+export async function writeJSONToCSV(
+  filename: string,
+  data: Array<Record<string, any>>
+) {
+  const csv = await csvStringify(data, {
+    header: true
+  })
+  return fs.promises.writeFile(filename, csv, 'utf8')
 }
 
 export async function readCSVToJSON<T>(filename: string) {
