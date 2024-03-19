@@ -48,7 +48,7 @@ export const defaultApplicationConfig = {
     INFORMANT_SIGNATURE: true,
     PRINT_DECLARATION: true
   },
-  DATE_OF_BIRTH_UNKNOWN: false,
+  DATE_OF_BIRTH_UNKNOWN: true,
   INFORMANT_SIGNATURE_REQUIRED: false,
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp

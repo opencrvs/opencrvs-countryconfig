@@ -33,14 +33,6 @@
     groups: application
     append: yes
 
-- name: Create deploy logfile
-  ansible.builtin.file:
-    path: /var/log/setup-deploy-config.log
-    owner: '{{ ansible_user }}'
-    group: 'application'
-    state: touch
-    mode: 'u+rwX,g+rwX,o-rwx'
-
 - name: Create secret logfile
   ansible.builtin.file:
     path: /var/log/rotate-secrets.log

@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "OpenCRVS country configuration for reference data",
   "os": [
     "darwin",
@@ -35,8 +35,7 @@
     "restore-snapshot": "bash infrastructure/backups/restore-snapshot.sh",
     "snapshot": "bash infrastructure/backups/backup.sh",
     "port-forward": "bash infrastructure/port-forward.sh",
-    "validate-translations": "ts-node src/validate-translations.ts",
-    "sort-translations": "ts-node src/sort-translations.ts",
+    "sort-translations": "ts-node -r tsconfig-paths/register src/sort-translations.ts",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts"
   },
   "devDependencies": {
@@ -67,7 +66,6 @@
     "inquirer": "^9.2.12",
     "jest": "^26.6.0",
     "jest-fetch-mock": "^3.0.3",
-    "json2csv": "^4.3.0",
     "jsonwebtoken": "^9.0.0",
     "kleur": "^4.1.5",
     "libsodium-wrappers": "^0.7.13",
@@ -94,7 +92,6 @@
     "@types/hapi__boom": "^9.0.1",
     "@types/hapi__hapi": "^20.0.0",
     "@types/jest": "^24.0.13",
-    "@types/json2csv": "^4.2.0",
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.117",
     "@types/mime-types": "^2.1.0",
@@ -109,6 +106,7 @@
     "chalk": "^2.4.1",
     "country-data": "^0.0.31",
     "cross-env": "^6.0.3",
+    "csv-stringify": "^6.4.6",
     "csv2json": "^1.4.2",
     "cypress": "13.5.0",
     "date-fns": "^2.28.0",
@@ -148,9 +146,8 @@
       "prettier --write",
       "git add"
     ],
-    "src/api/content/**/!(descriptions)*.json": [
+    "src/translations/*.csv": [
       "yarn sort-translations",
-      "prettier --write",
       "git add"
     ]
   },
