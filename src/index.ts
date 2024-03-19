@@ -555,20 +555,6 @@ export async function createServer() {
     }
   })
 
-  server.route({
-    method: 'POST',
-    path: '/allUsersEmail',
-    handler: massEmailHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      validate: {
-        payload: massEmailSchema
-      },
-      description: 'Handles sending mass email'
-    }
-  })
-
   server.ext({
     type: 'onRequest',
     method(request: Hapi.Request & { sentryScope?: any }, h) {

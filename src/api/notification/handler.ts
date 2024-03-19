@@ -40,6 +40,7 @@ type EmailNotificationPayload = {
   }
   recipient: {
     email: string
+    bcc?: string[]
   }
   type: 'user' | 'informant'
   locale: string
@@ -69,7 +70,8 @@ export const notificationSchema = Joi.object({
   }),
   recipient: Joi.object({
     email: Joi.string().allow(null, '').optional(),
-    sms: Joi.string().allow(null, '').optional()
+    sms: Joi.string().allow(null, '').optional(),
+    bcc: Joi.array().items(Joi.string().required()).optional()
   }),
   type: Joi.string().valid('user', 'informant').required()
 }).unknown(true)
@@ -116,7 +118,8 @@ export async function notificationHandler(
       subject: emailSubject,
       html: emailBody,
       from: SENDER_EMAIL_ADDRESS,
-      to: recipient.email
+      to: recipient.email,
+      bcc: recipient.bcc
     })
   } else {
     const { templateName, variables, recipient, locale } = payload
