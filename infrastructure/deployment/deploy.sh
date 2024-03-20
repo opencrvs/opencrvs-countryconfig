@@ -374,7 +374,7 @@ done
 
 # Send a notification email to confirm emails are working
 EMAIL_PAYLOAD='{
-  "subject": "Deployment to '$ENV' finished",
+  "subject": "🚀 Deployment to '$ENV' finished",
   "html": "Deployment to '$ENV' was successful with images '$VERSION' for core and '$COUNTRY_CONFIG_VERSION' for country config.",
   "from": "{{SENDER_EMAIL_ADDRESS}}",
   "to": "{{ALERT_EMAIL}}"

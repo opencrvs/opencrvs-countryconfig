@@ -8,14 +8,14 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-window.config = {
-  AUTH_API_URL: 'http://localhost:4040/',
-  CONFIG_API_URL: 'http://localhost:2021',
-  // Country code in uppercase ALPHA-3 format
-  COUNTRY: 'FAR',
-  LANGUAGES: 'en,fr',
-  CLIENT_APP_URL: 'http://localhost:3000/',
-  COUNTRY_CONFIG_URL: 'http://localhost:3040',
-  SENTRY: '',
-  LOGROCKET: ''
+import { sortBy } from 'lodash'
+import { CSVRow } from './api/content/service'
+import { readCSVToJSON, writeJSONToCSV } from './utils'
+
+async function sortMessages(path: string) {
+  const translations = await readCSVToJSON<CSVRow[]>(path)
+  const data = sortBy(translations, (row) => row.id)
+  return writeJSONToCSV(path, data)
 }
+
+process.argv.slice(2).forEach((filePath) => sortMessages(filePath))
