@@ -253,10 +253,10 @@ config.deathDefaultTempDesc,Label for default death certificate template,Default
 config.deathTemplate,Label for death certificate template,Death certificate,Acte de mariage
 config.deathUpdatedTempDesc,,Updated {deathLongDate},Mise à jour de {deathLongDate}
 config.downloadTemplate,Download action in certificate config action menu,Download,Télécharger
-config.emailAllUsers.modal.supportingCopy,User will receive emails over the next 24 hours,L'utilisateur recevra des courriels au cours des prochaines 24 heures,
-config.emailAllUsers.modal.title,Send email to all users?,Envoyer un e-mail à tous les utilisateurs ?,
-config.emailAllUsers.subtitle,This email will be sent to all users you are active. Emails will be sent over the next 24 hours. Only one email can be sent per day,Cet e-mail sera envoyé à tous les utilisateurs que vous activez. Les courriels seront envoyés au cours des prochaines 24 heures. Un seul courriel peut être envoyé par jour,
-config.emailAllUsers.title,Email all users,Envoyer un e-mail à tous les utilisateurs,
+config.emailAllUsers.modal.supportingCopy,Label for send email all users confirmation supporting copy,User will receive emails over the next 24 hours,L'utilisateur recevra des courriels au cours des prochaines 24 heures
+config.emailAllUsers.modal.title,Label for send email all users confirmation title,Send email to all users?,Envoyer un e-mail à tous les utilisateurs ?
+config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users you are active. Emails will be sent over the next 24 hours. Only one email can be sent per day,Cet e-mail sera envoyé à tous les utilisateurs que vous activez. Les courriels seront envoyés au cours des prochaines 24 heures. Un seul courriel peut être envoyé par jour
+config.emailAllUsers.title,Title for email all users,Email all users,Envoyer un e-mail à tous les utilisateurs
 config.eventUpdatedTempDesc,Label for updated birth certificate template,"Updated {lastModified, date, ::dd MMMM yyyy}","Mis à jour {lastModified, date, ::dd MMMM yyyy}"
 config.form.settings.time,,Time input,Saisie de l'heure
 config.form.tools.input.customSelectWithDynamicOptions,,Custom select with dynamic options,Sélection personnalisée avec options dynamiques
@@ -348,6 +348,8 @@ constants.downloading,Label for declaration download status Downloading,Download
 constants.draft,A label for draft,Draft,Brouillon
 constants.duplicateOf,table header for `duplicate of` in record audit,Duplicate of,Duplicata de
 constants.emailAddress,Email label,Email Address,Adresse e-mail
+constants.emailBody,Label for email body input,Message,Message
+constants.emailSubject,Label for email subject input,Subject,Sujet
 constants.entrepeneur,The description for ENTREPENEUR type,Entrepeneur,Entrepeneur
 constants.estimatedNumberOfEvents,A label for Estimated number of events,"Estimated{lineBreak}no. of {eventType, select, birth {birth} death {death} other {birth}}s","Estimation{lineBreak}no. de {eventType, select, naissance {birth} décès {death} autre {birth}}s"
 constants.estimatedNumberOfRegistartion,A label for estimated no. of registrations,Estimated no. of registrations,Nombre estimé déclaration
@@ -1458,8 +1460,8 @@ misc.nidCallback.failedToAuthenticateNid,Label for nid authention failed phase,F
 misc.notif.declarationsSynced,The message that appears in notification when background sync takes place,"As you have connectivity, we can synchronize your declarations.","Comme vous disposez d'une connectivité, nous pouvons synchroniser vos déclarations."
 misc.notif.draftsSaved,The message that appears in notification when save drafts button is clicked,Your draft has been saved,Votre brouillon a été enregistré
 misc.notif.duplicateRecord,Label for when a duplicate record is detected when registering a record.,{trackingId} is a potential duplicate. Record is ready for review.,{trackingId} est un doublon potentiel. L'enregistrement est prêt à être examiné.
-misc.notif.emailAllUsersError,Only one email can be sent per day,Un seul e-mail peut être envoyé par jour,
-misc.notif.emailAllUsersSuccess,Email sent to all users,Email envoyé à tous les utilisateurs,
+misc.notif.emailAllUsersError,Label for Email all users error toast,Only one email can be sent per day,Un seul e-mail peut être envoyé par jour
+misc.notif.emailAllUsersSuccess,Label for Email all users success toast,Email sent to all users,Email envoyé à tous les utilisateurs
 misc.notif.offlineError,The message that appears in notification when a new user creation fails in offline mode,Offline. Try again when reconnected,Hors ligne. Réessayez une fois reconnecté
 misc.notif.onlineUserStatus,Label for online user status toast notification,You are back online,Vous êtes de nouveau en ligne
 misc.notif.outboxText,Declaration outbox text,Outbox ({num}),Boîte d'envoi({num})
@@ -1486,7 +1488,7 @@ navigation.completenessRates,Completeness rates in navigation,Completeness rates
 navigation.config,Config label in navigation,Configuration,Paramétrages
 navigation.dashboard,Dashboard Section,Dashboard,Tableau de bord
 navigation.declarationForms,Declaration forms label in navigation,Declaration forms,Formulaires de déclaration
-navigation.emailAllUsers,Email all users,Envoyer un e-mail à tous les utilisateurs,
+navigation.emailAllUsers,Email all users label in navigation,Email all users,Envoyer un e-mail à tous les utilisateurs
 navigation.informantNotification,Informant notifications label in navigation,Informant notifications,Notifications des informateurs
 navigation.integration,Integration forms label in navigation,Integrations,Intégrations
 navigation.leaderboards,Leaderboards Dashboard Section,Leaderboards,Classements
