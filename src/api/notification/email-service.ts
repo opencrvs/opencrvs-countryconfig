@@ -29,23 +29,6 @@ export const sendEmail = async (params: {
   from: string
   to: string
 }) => {
-  if (params.to.endsWith('@example.com')) {
-    logger.info(`Example email detected: ${params.to}. Not sending the email.`)
-    return
-  }
-
-  logger.info(`Sending email to ${params.to}`)
-
-  const emailTransport = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: SMTP_PORT,
-    secure: SMTP_SECURE,
-    auth: {
-      user: SMTP_USERNAME,
-      pass: SMTP_PASSWORD
-    }
-  })
-
   const replaceVariables = (text: string) =>
     Handlebars.compile(text)({
       /*
@@ -57,15 +40,38 @@ export const sendEmail = async (params: {
       SENDER_EMAIL_ADDRESS: SENDER_EMAIL_ADDRESS
     })
 
+  const formattedParams = {
+    from: replaceVariables(params.from),
+    to: replaceVariables(params.to),
+    subject: replaceVariables(params.subject),
+    html: replaceVariables(params.html)
+  }
+
+  if (formattedParams.to.endsWith('@example.com')) {
+    logger.info(
+      `Example email detected: ${formattedParams.to}. Not sending the email.`
+    )
+    return
+  }
+
+  logger.info(`Sending email to ${formattedParams.to}`)
+
+  const emailTransport = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: SMTP_PORT,
+    secure: SMTP_SECURE,
+    auth: {
+      user: SMTP_USERNAME,
+      pass: SMTP_PASSWORD
+    }
+  })
+
   try {
-    await emailTransport.sendMail({
-      from: replaceVariables(params.from),
-      to: replaceVariables(params.to),
-      subject: replaceVariables(params.subject),
-      html: replaceVariables(params.html)
-    })
+    await emailTransport.sendMail(formattedParams)
   } catch (error) {
-    logger.error(`Unable to send email to ${params.to} for error : ${error}`)
+    logger.error(
+      `Unable to send email to ${formattedParams.to} for error : ${error}`
+    )
 
     if (error.response) {
       logger.error(error.response.body)

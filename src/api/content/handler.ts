@@ -40,11 +40,10 @@ interface IDefinitionsResponse {
 }
 
 export async function contentHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
+  request: Hapi.Request
 ): Promise<IDefinitionsResponse> {
   const application = request.params.application
   return {
-    languages: (await getLanguages(application)).data
+    languages: await getLanguages(application)
   }
 }
