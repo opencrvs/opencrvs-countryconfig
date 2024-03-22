@@ -16,7 +16,7 @@ all:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
         state: present
         sudoer: true
-
+    enable_backups: false
 docker-manager-first:
   hosts:
     dev: # @todo set this to be the hostname of your target server
