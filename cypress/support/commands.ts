@@ -405,22 +405,13 @@ Cypress.Commands.add('enterBirthMaximumInput', (options) => {
   cy.get('#addressLine3UrbanOptionPlaceofbirth').type('40')
   cy.goToNextFormSection()
 
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
-  // SELECT INFORMANT
-  cy.selectOption(
-    '#informantType',
-    options?.informantType || 'Grandfather',
-    options?.informantType || 'Grandfather'
-  )
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
+  // INFORMANT DETAILS
+  selectInformant(options?.informantType || 'Grandfather')
   cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.get('#registrationEmail').type('axonishere@gmail.com')
 
   //INFORMANT DETAILS(IF informant data is available)
   if (!['Father', 'Mother'].includes(options?.informantType)) {
-    // INFORMANT'S DETAILS
     cy.get('#firstNamesEng').type(options?.informantFirstNames || 'Alom')
     cy.get('#familyNameEng').type(options?.informantFamilyName || 'Mia')
     cy.get('#informantBirthDate-dd').type(informantDoBSplit.dd || '23')
@@ -485,6 +476,15 @@ Cypress.Commands.add('enterBirthMaximumInput', (options) => {
   cy.goToNextFormSection()
 })
 
+function selectInformant(informantType: string) {
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500)
+  // SELECT INFORMANT
+  cy.selectOption('#informantType', informantType, informantType)
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500)
+}
+
 Cypress.Commands.add('enterBirthMinimumInput', () => {
   // EVENTS
   cy.get('#select_birth_event').click()
@@ -521,12 +521,9 @@ Cypress.Commands.add('enterBirthMinimumInput', () => {
   cy.selectOption('#districtPlaceofbirth', 'Embe', 'Embe')
   cy.goToNextFormSection()
 
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
-  // SELECT INFORMANT
-  cy.selectOption('#informantType', 'Mother', 'Mother')
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
+  // INFORMANT DETAILS
+  selectInformant('Mother')
+
   cy.get('#registrationEmail').type(faker.internet.email())
   cy.goToNextFormSection()
 
@@ -558,13 +555,8 @@ Cypress.Commands.add('enterBirthMinimumInput', () => {
   cy.goToNextFormSection()
 })
 
-Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
-  // LOGIN
-  cy.login('fieldWorker')
-  cy.createPin()
-  cy.goToVitalEventSelection()
+Cypress.Commands.add('enterDeathMinimumInput', (options) => {
   // DECLARATION FORM
-  cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_death_event').click()
   cy.get('#continue').click()
   // EVENT INFO
@@ -585,6 +577,7 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
   cy.selectOption('#statePrimaryDeceased', 'Pualula', 'Pualula')
   cy.selectOption('#districtPrimaryDeceased', 'Embe', 'Embe')
   cy.goToNextFormSection()
+
   // EVENT DETAILS
 
   cy.get('#deathDate-dd').type('18')
@@ -599,19 +592,16 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
   // MANNER OF DEATH
   cy.selectOption('#mannerOfDeath', '', 'Natural causes')
   cy.get('#causeOfDeathEstablished').click()
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', "Deceased's usual place of residence")
 
   cy.goToNextFormSection()
+
   // Informant details
 
   const informantType = options?.informantType ?? 'Spouse'
 
-  cy.selectOption('#informantType', informantType, informantType)
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
+  selectInformant(informantType)
 
   if (informantType !== 'Spouse') {
     cy.selectOption('#informantIdType', 'National ID', 'National ID')
@@ -641,42 +631,12 @@ Cypress.Commands.add('declareDeathDeclarationWithMinimumInput', (options) => {
   // Supporting documents
 
   cy.goToNextFormSection()
-
-  // Review
-
-  cy.submitDeclaration()
-
-  // LOG OUT
-  cy.logout()
-})
-
-Cypress.Commands.add('declareDeathDeclarationWithMaximumInput', (options) => {
-  // LOGIN
-  cy.login('fieldWorker')
-  cy.createPin()
-  cy.goToVitalEventSelection()
-  cy.enterDeathMaximumInput(options)
-  // PREVIEW
-  cy.submitDeclaration()
-
-  // LOG OUT
-  cy.get('#ProfileMenuToggleButton').click()
-  cy.get('#ProfileMenuItem1').click()
-})
-
-Cypress.Commands.add('registerDeathDeclarationWithMinimumInput', () => {
-  cy.declareDeathDeclarationWithMinimumInput()
-})
-
-Cypress.Commands.add('registerDeathDeclarationWithMaximumInput', () => {
-  cy.declareDeathDeclarationWithMaximumInput()
 })
 
 Cypress.Commands.add('enterDeathMaximumInput', (options) => {
   const deceasedDoBSplit = getDateMonthYearFromString(options?.deceasedDoB)
   const informantDoBSplit = getDateMonthYearFromString(options?.informantDoB)
   // DECLARATION FORM
-  cy.get('#select_vital_event_view').should('be.visible')
   cy.get('#select_death_event').click()
   cy.get('#continue').click()
   // EVENT INFO
@@ -711,6 +671,7 @@ Cypress.Commands.add('enterDeathMaximumInput', (options) => {
   cy.get('#addressLine3UrbanOptionPrimaryDeceased').type('40')
   cy.get('#postalCodePrimaryDeceased').type('9000')
   cy.goToNextFormSection()
+
   // EVENT DETAILS
   cy.get('#deathDate-dd').type('18')
   cy.get('#deathDate-mm').type('01')
@@ -724,8 +685,6 @@ Cypress.Commands.add('enterDeathMaximumInput', (options) => {
   // CAUSE OF DEATH DETAILS
   cy.selectOption('#mannerOfDeath', '', 'Homicide')
   cy.get('#causeOfDeathEstablished').click()
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
   cy.selectOption('#causeOfDeathMethod', '', 'Physician')
   cy.selectOption('#placeOfDeath', '', 'Other')
 
@@ -747,13 +706,11 @@ Cypress.Commands.add('enterDeathMaximumInput', (options) => {
   cy.get('#postalCodePlaceofdeath').type('9000')
 
   cy.goToNextFormSection()
+
   // INFORMANT DETAILS
 
   const informantType = options?.informantType ?? 'Spouse'
-
-  cy.selectOption('#informantType', informantType, informantType)
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
+  selectInformant(informantType)
 
   if (informantType !== 'Spouse') {
     cy.get('#firstNamesEng').type(options?.informantFirstNames || 'Alom')
@@ -833,17 +790,12 @@ Cypress.Commands.add('someoneElseJourney', () => {
   cy.get('#addressLine3UrbanOptionPlaceofbirth').type('40')
   cy.goToNextFormSection()
 
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
-  // SELECT INFORMANT
-  cy.selectOption('#informantType', 'Someone else', 'Someone else')
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
+  // INFORMANT'S DETAILS
+  selectInformant('Someone else')
   cy.get('#otherInformantType').type('Someone else')
   cy.get('#registrationPhone').type('07' + getRandomNumbers(8))
   cy.get('#registrationEmail').type('axonishere@gmail.com')
 
-  // INFORMANT'S DETAILS
   cy.get('#firstNamesEng').type('Alom')
   cy.get('#familyNameEng').type('Mia')
   cy.get('#informantBirthDate-dd').type('23')

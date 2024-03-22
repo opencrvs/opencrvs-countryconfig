@@ -86,14 +86,7 @@ declare namespace Cypress {
     enterBirthMaximumInput: (options?: DeclarationOptions) => void
     enterBirthMinimumInput: (options?: DeclarationOptions) => void
     enterDeathMaximumInput: (options?: DeclarationOptions) => void
-    declareDeathDeclarationWithMinimumInput: (
-      options?: DeclarationOptions
-    ) => void
-    registerDeathDeclarationWithMinimumInput: () => void
-    declareDeathDeclarationWithMaximumInput: (
-      options?: DeclarationOptions
-    ) => void
-    registerDeathDeclarationWithMaximumInput: () => void
+    enterDeathMinimumInput: (options?: DeclarationOptions) => void
     someoneElseJourney: () => void
   }
 }
