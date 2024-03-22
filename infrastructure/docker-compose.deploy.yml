@@ -140,8 +140,6 @@ services:
         'file=@/config.ndjson'
       ]
     restart: on-failure
-    depends_on:
-      - kibana
     volumes:
       # Exceed Docker config file 500 kb file limit, thus a volume mount
       - '/opt/opencrvs/infrastructure/monitoring/kibana/config.ndjson:/config.ndjson'
@@ -182,8 +180,6 @@ services:
     configs:
       - source: kibana.{{ts}}
         target: /usr/share/kibana/config/kibana.yml
-    depends_on:
-      - elasticsearch
     logging:
       driver: gelf
       options:
@@ -234,8 +230,6 @@ services:
       replicas: 1
       restart_policy:
         condition: none
-    depends_on:
-      - mongo1
     environment:
       - REPLICAS=1
       - MONGODB_ADMIN_USER=${MONGODB_ADMIN_USER}
@@ -344,8 +338,6 @@ services:
       /bin/sh -c "
       /usr/bin/mc admin trace --path ocrvs/* minio
       "
-    depends_on:
-      - minio
     configs:
       - source: minio-mc-config.{{ts}}
         target: /root/.mc/config.json
@@ -367,8 +359,6 @@ services:
     image: ubuntu:bionic
     entrypoint: ['bash', '/usr/app/setup.sh']
     restart: on-failure
-    depends_on:
-      - elasticsearch
     environment:
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTIC_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
@@ -405,8 +395,6 @@ services:
       - '/opt/opencrvs/infrastructure/monitoring/elastalert/rules:/opt/elastalert/rules'
     networks:
       - overlay_net
-    depends_on:
-      - elasticsearch
     deploy:
       labels:
         - 'traefik.enable=false'
@@ -423,8 +411,6 @@ services:
   logstash:
     image: logstash:7.17.0
     command: logstash -f /etc/logstash/logstash.conf --verbose
-    depends_on:
-      - elasticsearch
     ports:
       - '12201:12201'
       - '12201:12201/udp'
@@ -447,9 +433,6 @@ services:
       replicas: 1
   apm-server:
     image: docker.elastic.co/apm/apm-server:7.15.2
-    depends_on:
-      - elasticsearch
-      - kibana
     cap_add: ['CHOWN', 'DAC_OVERRIDE', 'SETGID', 'SETUID']
     cap_drop: ['ALL']
     restart: always
@@ -906,8 +889,6 @@ services:
     environment:
       - mongodb__url=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - logger__level=warn
-    depends_on:
-      - mongo1
     deploy:
       labels:
         - 'traefik.enable=false'
@@ -930,8 +911,6 @@ services:
     environment:
       - mongo_url=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
       - mongo_atnaUrl=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-    depends_on:
-      - mongo1
     deploy:
       labels:
         - 'traefik.enable=false'
