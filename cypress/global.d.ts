@@ -67,8 +67,6 @@ declare namespace Cypress {
     login: (userType: UserType) => void
     logout: () => void
     selectOption: (selector: string, text: string, option: string) => void
-    selectLocation: (selector: string, text: string) => void
-    goToNextFormSection: () => void
     createPin: () => void
     reviewForm: () => void
     clickUserListItemByName: (name: string, actionText: string) => void
@@ -78,7 +76,7 @@ declare namespace Cypress {
       role: UserType,
       options?: BirthDeclarationOptions
     ) => void
-    printDeclaration: () => void
+    waitForOutboxToClear: () => void
     rejectDeclaration: () => void
     registerDeclaration: () => void
     goToVitalEventSelection: () => void
@@ -90,5 +88,4 @@ declare namespace Cypress {
     someoneElseJourney: () => void
   }
 }
-
 /* eslint-enable no-unused-vars */
