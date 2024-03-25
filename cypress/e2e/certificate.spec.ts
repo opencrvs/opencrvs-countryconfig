@@ -18,11 +18,12 @@ context('Certificate Integration Test', () => {
 
   it('Prints minimum input declaration showing the pdf form', () => {
     cy.createBirthRegistrationAs('fieldWorker')
-    cy.login('registrar')
 
+    cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
     cy.registerForm()
     cy.printDeclaration()
+    cy.logout()
   })
 })

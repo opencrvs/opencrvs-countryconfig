@@ -49,9 +49,9 @@ context('User Integration Test', () => {
     cy.get('#username').type(username)
     cy.get('#password').type('test')
     cy.get('#login-mobile-submit').click()
-    cy.get('#user-setup-start-button', { timeout: 30000 }).click()
-    cy.get('#NewPassword').type('Test0000')
-    cy.get('#ConfirmPassword').type('Test0000')
+    cy.get('#user-setup-start-button').click()
+    cy.get('#NewPassword').type('Test00000000')
+    cy.get('#ConfirmPassword').type('Test00000000')
     cy.get('#Continue').click()
     // SECURITY QUESTIONS
     cy.get('#question-0').should('exist')

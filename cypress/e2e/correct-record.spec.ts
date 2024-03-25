@@ -73,12 +73,14 @@ context('Correct Record Integration Test', () => {
         cy.get('#continue_button').click()
         cy.get('#supportDocumentRequiredForCorrection_false').click()
         cy.get('#confirm_form').click()
-        cy.get('#type_CLERICAL_ERROR', { timeout: 10000 }).click()
+        cy.get('#type_CLERICAL_ERROR').click()
         cy.get('#confirm_form').click()
-        cy.get('#correctionFees_NOT_REQUIRED', { timeout: 10000 }).click()
+        cy.get('#correctionFees_NOT_REQUIRED').click()
         cy.get('#make_correction').click()
+        cy.get('#navigation_outbox').should('contain.text', '1')
+        cy.get('#navigation_outbox').should('not.contain.text', '1')
 
-        cy.get('#searchType', { timeout: 10000 }).click()
+        cy.get('#searchType').click()
         cy.get('#tracking-id').click()
 
         refreshTrackingIdSearchUntilNameIsFound(

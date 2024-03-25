@@ -38,9 +38,7 @@ context('Team Integration Test', () => {
     // PREVIEW
     cy.get('#submit_user_form').click()
     cy.get('#submissionSuccessToast').should('be.visible') // Wait for application to be sync'd
-    // LOG OUT
-    cy.get('#ProfileMenuToggleButton').click()
-    cy.get('#ProfileMenuItem1').click()
+    cy.logout()
     // LOG IN AS FIELD AGENT
     cy.get('#username').type(
       `${testUserFirstname[0].toLowerCase()}.${testUserLastname.toLowerCase()}`
@@ -48,8 +46,8 @@ context('Team Integration Test', () => {
     cy.get('#password').type('test')
     cy.get('#login-mobile-submit').click()
     cy.get('#user-setup-start-button', { timeout: 30000 }).click()
-    cy.get('#NewPassword').type('Test0000')
-    cy.get('#ConfirmPassword').type('Test0000')
+    cy.get('#NewPassword').type('Test00000000')
+    cy.get('#ConfirmPassword').type('Test00000000')
     cy.get('#Continue').click()
     // SECURITY QUESTIONS
     cy.get('#question-0').should('exist')

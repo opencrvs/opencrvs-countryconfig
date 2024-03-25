@@ -90,8 +90,7 @@ context('Advanced Search Integration Test', () => {
       eventLocationLevel2
     })
     //register declaration
-    cy.get('#registerDeclarationBtn').click()
-    cy.get('#submit_confirm').click()
+    cy.registerForm()
 
     //OPEN ADVANCED SEARCH
     cy.get('#searchType').click()
@@ -174,7 +173,11 @@ context('Advanced Search Integration Test', () => {
     const eventCountry = 'Farajaland'
     const eventLocationLevel1 = 'Pualula'
     const eventLocationLevel2 = 'Embe'
-    cy.declareDeathDeclarationWithMinimumInput({
+
+    cy.login('fieldWorker')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterDeathMinimumInput({
       deceasedFirstNames,
       deceasedFamilyName,
       deceasedDoB,
@@ -186,6 +189,8 @@ context('Advanced Search Integration Test', () => {
       eventLocationLevel1,
       eventLocationLevel2
     })
+    cy.submitDeclaration()
+    cy.logout()
 
     cy.login('registrar')
     cy.createPin()
@@ -219,7 +224,10 @@ context('Advanced Search Integration Test', () => {
     const eventLocationLevel1 = 'Pualula'
     const eventLocationLevel2 = 'Embe'
 
-    cy.declareDeathDeclarationWithMaximumInput({
+    cy.login('registrar')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterDeathMaximumInput({
       deceasedFirstNames,
       deceasedFamilyName,
       deceasedDoB,

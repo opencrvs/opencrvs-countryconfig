@@ -178,10 +178,8 @@ Cypress.Commands.add('printDeclaration', () => {
   cy.wait(3000)
   cy.get('#navigation_print').click()
   cy.downloadFirstDeclaration()
-  cy.get('#ListItemAction-0-Print', { timeout: 30000 }).click()
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(500)
-  cy.get('#type_MOTHER').click()
+  cy.get('#ListItemAction-0-Print').click()
+  cy.get('#type_INFORMANT_Mother').click()
   cy.get('#confirm_form').click()
   cy.get('#verifyPositive').click()
   // Verify payment
