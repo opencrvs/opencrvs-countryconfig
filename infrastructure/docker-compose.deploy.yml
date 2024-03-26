@@ -126,7 +126,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'metricbeat'
   setup-kibana-config:
-    image: curlimages/curl:7.83.1
+    image: curlimages/curl:7.88.1
     entrypoint:
       [
         'curl',
