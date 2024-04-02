@@ -19,25 +19,31 @@ all:
     # SSH and other services should never be exposed to the public internet.
     only_allow_access_from_addresses:
       # @todo place the IP address of your VPN server or other explicitly allowed traffic sources here
-      - 55.55.55.55 # example VPN server IP address
+      - 164.52.201.146 # example VPN server IP address
     enable_backups: false
     periodic_restore_from_backup: true
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+      - name: provision
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDZbwej/JwjAR8hHEZuHMJ3wRHGHfOGxEdGrk7l+PricqkYZbGdJOKxpLptIL5RMh4vtjXuW6IZ2AGtdS91qBvlKE5v7dpFR6wjOcSsSXBbN16DSrHPzrV4UMr4AqRfQ4b27AeBRhbfMriZXs9XfMt4BJC2Vt3Sh80Kq1bingp2Ny+/Sku0Tc2SMCK/NDG/fdwdJEJHpp9ddEZZ5rjxAW66bNT67FQ3I43nNKAVdnrahdS1r9+JGE+rULDBvrpn46ckdCsaavtZYMgj9OSNBhVouD9BAcO1lUUc7hudwYDgw/et0wHF2Tj154s2GFquArJaIRcmiyiIFt4VYRHj4+xjz3CRiIo7hVW8xOuiDv7hy7KqzdAGjQdLX9rJFqBNtcoubMXyLN3yMdTsSzx9+hOFdn3wOJmVBBl8Go1ogdpRueEMlrfxC/xliZU/K/J7Qg0B9gT9QtNFbaYggojwa3IreMHYF25Clm9FmdXtTp4OkRDG4Svw7CDXrL6Wo3htIeU= provision@e2e-69-146
         state: present
         sudoer: true
+      - name: riku
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWIF63S4f3z9wQMvWibmvl7MPuJ6EVrkP0HuvgNhcs/4DZYMcR/GRBvV4ldOSYMlBevIXycgGzNDxKJgENUuwIWanjBu7uVAHyD6+cIRD1h63qq7Cjv/2HYTfBDKOrKzPOhA6zWvKO0ZGWsjRXk5LWMCbKOkvKJCxOpj/NVBxeE4FTK5YADYPV3OSsmBtqTHrVLm2sMmShU/2hMYYswWkobidjX65+nK/X+3C+yJbHwiydVvn+QCrFlFfCLPWKe8rUpOxyxofPqWVQh6CHhHfT8okaOc9sOE8Qeip9ljo84DftJh3Xm3ynOdWK1hH2BvRvxNadWqcE1qECbkg4tx2x riku.rouvila@gmail.com
+        state: present
+        sudoer: true
+
 
 docker-manager-first:
   hosts:
     staging: # @todo set this to be the hostname of your target server
-      ansible_host: '11.11.11.11' # todo set this to be the hostname of your target server
+      ansible_host: '164.52.217.249' # todo set this to be the hostname of your target server
       data_label: data1
       # @todo as production servers are not directly accessible from the internet, you need to use a jump server to access them.
-      ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
+      ansible_ssh_common_args: '-J jump@164.52.201.146 -o StrictHostKeyChecking=no'
 
 # This staging servers is configured to only use one server
 docker-workers: {}
@@ -47,4 +53,4 @@ docker-workers: {}
 backups:
   hosts:
     backup: # @todo set this to be the hostname of your backup server
-      ansible_host: '66.66.66.66' # set this to be the IP address of your backup server
+      ansible_host: '164.52.196.254' # set this to be the IP address of your backup server
