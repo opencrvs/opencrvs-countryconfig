@@ -18,7 +18,7 @@ services:
     environment:
       - NODE_ENV=production
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
     deploy:
       replicas: 2
 
@@ -26,21 +26,21 @@ services:
     environment:
       - NODE_ENV=production
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
     deploy:
       replicas: 2
 
   search:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
     deploy:
       replicas: 2
 
   metrics:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
       - MONGO_URL=mongodb://metrics:${METRICS_MONGODB_PASSWORD}@mongo1,mongo2/metrics?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1,mongo2/hearth-dev?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1,mongo2/performance?replicaSet=rs0
@@ -48,14 +48,14 @@ services:
   auth:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
     deploy:
       replicas: 2
 
   user-mgnt:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
       - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1,mongo2/user-mgnt?replicaSet=rs0
     deploy:
       replicas: 2
@@ -64,14 +64,14 @@ services:
     environment:
       - NODE_ENV=production
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
     deploy:
       replicas: 2
 
   webhooks:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1,mongo2/webhooks?replicaSet=rs0
     deploy:
       replicas: 2
@@ -79,7 +79,7 @@ services:
   config:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1,mongo2/application-config?replicaSet=rs0
     deploy:
       replicas: 2
@@ -105,7 +105,7 @@ services:
       - APPLICATION_CONFIG_URL=http://config:2021
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-""}
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
       - ALERT_EMAIL=${ALERT_EMAIL}
       - SMTP_HOST=${SMTP_HOST}
