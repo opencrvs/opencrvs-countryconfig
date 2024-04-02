@@ -200,10 +200,13 @@ services:
     #   - --tls.stores.default.defaultcertificate.keyfile=/certs/crvs.cm.key
 
     environment:
-      - GOOGLE_DOMAINS_ACCESS_TOKEN=${GOOGLE_DOMAINS_ACCESS_TOKEN}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
     command:
       - --certificatesresolvers.certResolver.acme.dnschallenge=true
-      - --certificatesresolvers.certResolver.acme.dnschallenge.provider=googledomains
+      - --certificatesresolvers.certResolver.acme.dnschallenge.provider=route53
       - --certificatesresolvers.certResolver.acme.email=riku@opencrvs.org
       - --certificatesresolvers.certResolver.acme.storage=acme.json
 
