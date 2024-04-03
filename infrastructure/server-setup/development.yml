@@ -12,7 +12,7 @@ all:
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
       - name: pyry
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDH6qZgtXhWf+xKwpWmHez6F44VRWrUJPF/aa+qdAc+EUNcUUNq8a/KflVthI15GW83VdHSgOCqrqnZTl/shfjOlq9FxsCDI9BY1Zt2+Dc/YMiY4519jM8QEUpZllJTAsBbaz3MSfqda67lEY8sQp9Jk5hw3vUOYxPBtHLSBehwnj4rNnobRrQ4YeOPnLry+cwf8tuQ1ftaxmsKeSKc8blToj2zJHe5t2a5CkOmCOCjAoToVVHWtUZwZ8E3Xrwdyod1q3vnNjofHPr8TFYpuJlAaIAtko4w8XaeQAbfz+iWGpOSYjbaMhG3gq05kfTm3XUEUsbwSeWhZ8d7F0XDESjHDELQYcikHgm6ywnUtpMht16rbjnZ+h8mDlE/Ftz9N9gkzn7bTTMYRRUrjJUTppH9opNbzlcr38zAhNDEeRvGIhxx6/jRZ0xk1SqQhYh08M3URpvIDbh/Umm7NO/cN6ZX8ogrrMSRfoYvk2u4gioX5qfyIDSVwiVztMjkPdZ/rhU= pyry@opencrvs.org
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBcrSLLdrkLrhqNQi7Uo/ZIWXb1y4kc0vGb16e2s0Jq pyry@opencrvs.org
         state: present
         sudoer: true
       - name: tameem
