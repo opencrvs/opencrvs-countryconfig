@@ -49,7 +49,7 @@ services:
       replicas: 1
       labels:
         - 'traefik.http.services.traefik.loadbalancer.server.port=80'
-        - 'traefik.http.middlewares.test-compress.compress=true'
+        - 'traefik.http.middlewares.gzip-compression.compress=true'
       placement:
         constraints:
           - node.role == manager
@@ -126,7 +126,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'metricbeat'
   setup-kibana-config:
-    image: curlimages/curl:7.83.1
+    image: curlimages/curl:7.88.1
     entrypoint:
       [
         'curl',
@@ -498,7 +498,7 @@ services:
       labels:
         - 'traefik.enable=true'
         - 'traefik.http.routers.client.rule=Host(`register.{{hostname}}`,`{{hostname}}`)'
-        - 'traefik.http.routers.client.middlewares=test-replacepathregex'
+        - 'traefik.http.routers.client.middlewares=test-replacepathregex,gzip-compression'
         - 'traefik.http.routers.client.service=client'
         - 'traefik.http.services.client.loadbalancer.server.port=80'
         - 'traefik.http.routers.client.tls=true'
@@ -559,6 +559,7 @@ services:
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
         - 'traefik.http.routers.countryconfig.entrypoints=web,websecure'
+        - 'traefik.http.routers.countryconfig.middlewares=gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
         - 'traefik.http.middlewares.countryconfig.headers.customresponseheaders.Pragma=no-cache'
         - 'traefik.http.middlewares.countryconfig.headers.customresponseheaders.Cache-control=no-store'
@@ -609,6 +610,7 @@ services:
         - 'traefik.http.routers.login.tls=true'
         - 'traefik.http.routers.login.tls.certresolver=certResolver'
         - 'traefik.http.routers.login.entrypoints=web,websecure'
+        - 'traefik.http.routers.login.middlewares=gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
         - 'traefik.http.middlewares.login.headers.customresponseheaders.Pragma=no-cache'
         - 'traefik.http.middlewares.login.headers.customresponseheaders.Cache-control=no-store'
@@ -713,6 +715,7 @@ services:
         - 'traefik.http.routers.gateway.tls=true'
         - 'traefik.http.routers.gateway.tls.certresolver=certResolver'
         - 'traefik.http.routers.gateway.entrypoints=web,websecure'
+        - 'traefik.http.routers.gateway.middlewares=gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
         - 'traefik.http.middlewares.gateway.headers.customresponseheaders.Pragma=no-cache'
         - 'traefik.http.middlewares.gateway.headers.customresponseheaders.Cache-control=no-store'
