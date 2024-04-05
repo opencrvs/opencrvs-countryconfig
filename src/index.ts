@@ -42,8 +42,6 @@ import { logger } from '@countryconfig/logger'
 import {
   emailHandler,
   emailSchema,
-  massEmailHandler,
-  massEmailSchema,
   notificationHandler,
   notificationSchema
 } from './api/notification/handler'
@@ -454,6 +452,7 @@ export async function createServer() {
     handler: notificationHandler,
     options: {
       tags: ['api'],
+      auth: false,
       validate: {
         payload: notificationSchema
       },
