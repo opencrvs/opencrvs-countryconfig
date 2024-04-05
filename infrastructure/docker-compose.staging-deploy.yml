@@ -17,7 +17,7 @@ services:
   gateway:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN}
     deploy:
       replicas: 1
@@ -25,7 +25,7 @@ services:
   workflow:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN}
     deploy:
       replicas: 1
@@ -63,7 +63,7 @@ services:
   notification:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en
       - SENTRY_DSN=${SENTRY_DSN}
     deploy:
       replicas: 1
