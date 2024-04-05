@@ -39,7 +39,7 @@ all:
 
 docker-manager-first:
   hosts:
-    staging: # @todo set this to be the hostname of your target server
+    e2e-86-249: # @todo set this to be the hostname of your target server
       ansible_host: '164.52.217.249' # todo set this to be the hostname of your target server
       data_label: data1
       # @todo as production servers are not directly accessible from the internet, you need to use a jump server to access them.
