@@ -33,7 +33,7 @@ jobs:
         with:
           secret: ${{ github.TOKEN }}
           approvers: euanmillar,rikukissa
-          minimum-approvals: 1
+          minimum-approvals: 0
           issue-title: 'Release: ${{ env.TAG }}'
           issue-body: 'Please approve or deny the publishing of release: ${{ env.TAG }} to Dockerhub'
           exclude-workflow-initiator-as-approver: false
