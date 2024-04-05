@@ -31,12 +31,16 @@ for i in "$@"; do
     LABEL="${i#*=}"
     shift
     ;;
+  --run_cleanup=*)
+    CLEANUP_ARG="${i#*=}"
+    shift
+    ;;
   *) ;;
   esac
 done
 
 print_usage_and_exit() {
-  echo 'Usage: ./restore.sh --replicas=XXX'
+  echo 'Usage: ./restore.sh --replicas=XXX --run_cleanup=true|false'
   echo "This script CLEARS ALL DATA and RESTORES A SPECIFIC DAY'S or label's data. This process is irreversible, so USE WITH CAUTION."
   echo "Script must receive a label parameter to restore data from that specific day in format +%Y-%m-%d i.e. 2019-01-01 or that label"
   echo "The Hearth, OpenHIM User and Application-config db backup zips you would like to restore from: hearth-dev-{label}.gz, openhim-dev-{label}.gz, user-mgnt-{label}.gz and  application-config-{label}.gz must exist in /data/backups/mongo/ folder"
@@ -59,6 +63,13 @@ fi
 if ! [[ "$REPLICAS" =~ ^[0-9]+$ ]]; then
   echo "Script must be passed a positive integer number of replicas"
   exit 1
+fi
+
+RUN_CLEANUP="FALSE"
+if [ -n "$CLEANUP_ARG" ]; then
+  if [ "$CLEANUP_ARG" == "true" ]; then
+    RUN_CLEANUP="TRUE"
+  fi
 fi
 
 if [ "$IS_LOCAL" = false ]; then
@@ -270,4 +281,8 @@ tar -xzvf $ROOT_PATH/backups/vsexport/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/vsexport
 # Run migrations by restarting migration service
 if [ "$IS_LOCAL" = false ]; then
   docker service update --force --update-parallelism 1 opencrvs_migration
+fi
+
+if [ "$RUN_CLEANUP" == "true" ]; then
+  ./cleanup.sh
 fi

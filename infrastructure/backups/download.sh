@@ -9,7 +9,7 @@
 
 #------------------------------------------------------------------------------------------------------------------
 # By default OpenCRVS saves a backup of all data on a cron job every day in case of an emergency data loss incident
-# This script clears all data and restores a specific day's data.  It is irreversable, so use with caution.
+# This script downloads all the data based on --label (defaults to current day)
 #------------------------------------------------------------------------------------------------------------------
 
 set -e

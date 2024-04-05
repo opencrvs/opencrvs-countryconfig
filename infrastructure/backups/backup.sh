@@ -334,12 +334,6 @@ if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)"
   rm -r $BACKUP_RAW_FILES_DIR
 fi
 
-# Cleanup any old backups from influx or mongo. Keep previous 7 days of data and all elastic data
-# Elastic snapshots require a random selection of files in the data/backups/elasticsearch/indices
-# folder
-#------------------------------------------------------------------------------------------------
-find $ROOT_PATH/backups/influxdb -mtime +7 -exec rm {} \;
-find $ROOT_PATH/backups/mongo -mtime +7 -exec rm {} \;
-find $ROOT_PATH/backups/minio -mtime +7 -exec rm {} \;
-find $ROOT_PATH/backups/metabase -mtime +7 -exec rm {} \;
-find $ROOT_PATH/backups/vsexport -mtime +7 -exec rm {} \;
+# TODO: probably should be tunable how many files to keep
+# Clean up old backup files
+./cleanup.sh
