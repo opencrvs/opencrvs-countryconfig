@@ -29,14 +29,14 @@ jobs:
       - name: Set TAG environment variable
         run: echo "TAG=v${{ steps.get_version.outputs.version }}" >> $GITHUB_ENV
 
-      - uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.TOKEN }}
-          approvers: mdminhaj88
-          minimum-approvals: 1
-          issue-title: 'Release: ${{ env.TAG }}'
-          issue-body: 'Please approve or deny the publishing of release: ${{ env.TAG }} to Dockerhub'
-          exclude-workflow-initiator-as-approver: false
+   #   - uses: trstringer/manual-approval@v1
+    #    with:
+     #     secret: ${{ github.TOKEN }}
+       #   approvers: mdminhaj88
+       #   minimum-approvals: 1
+     #     issue-title: 'Release: ${{ env.TAG }}'
+     #     issue-body: 'Please approve or deny the publishing of release: ${{ env.TAG }} to Dockerhub'
+      #    exclude-workflow-initiator-as-approver: false
 
       - name: Push tag
         id: tag_version
