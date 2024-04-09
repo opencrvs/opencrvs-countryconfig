@@ -19,12 +19,13 @@ import {
 } from './github'
 
 import editor from '@inquirer/editor'
-import { writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { exec as callbackExec } from 'child_process'
 import { promisify } from 'util'
 import { join } from 'path'
 
 const exec = promisify(callbackExec)
+const dotenv = require('dotenv')
 
 const notEmpty = (value: string | number) =>
   value.toString().trim().length > 0 ? true : 'Please enter a value'
@@ -83,7 +84,7 @@ if (!environment || typeof environment !== 'string') {
 }
 
 // Read users .env file based on the environment name they gave above, e.g. .env.production
-require('dotenv').config({
+dotenv.config({
   path: `${process.cwd()}/.env.${environment}`
 })
 
@@ -214,9 +215,27 @@ function generateLongPassword() {
 }
 
 function storeSecrets(environment: string, answers: Answers) {
+  let currentConfig: Record<string, string> = {}
+  try {
+    currentConfig = dotenv.parse(readFileSync(`.env.${environment}`))
+  } catch (error) {
+    /* empty */
+  }
+  const allKnownKeys = Array.from(
+    new Set([...Object.keys(currentConfig), ...answers.map((a) => a.name)])
+  )
+
+  const secretsFromAnswers = Object.fromEntries(
+    answers.map((update) => [update.name, update.value])
+  )
+  const secrets = allKnownKeys.map((key) => [
+    key,
+    secretsFromAnswers[key] || currentConfig[key]
+  ])
+
   writeFileSync(
     `.env.${environment}`,
-    answers.map((update) => `${update.name}="${update.value}"`).join('\n')
+    secrets.map(([name, value]) => `${name}="${value}"`).join('\n')
   )
 }
 
@@ -834,13 +853,14 @@ ALL_QUESTIONS.push(
   log('\n', kleur.bold().underline('SSH'))
   await promptAndStoreAnswer(environment, sshQuestions, existingValues)
 
-  const SSH_KEY_EXISTS = existingValues.find(
+  const sshKeyExists = existingValues.find(
     (value) => value.name === 'SSH_KEY' && value.scope === 'ENVIRONMENT'
   )
 
-  if (!SSH_KEY_EXISTS) {
+  if (!sshKeyExists) {
     const sshKey = await editor({
-      message: `Paste the SSH private key for ${kleur.cyan('SSH_USER')} here:`
+      message: `Paste the SSH private key for ${kleur.cyan('SSH_USER')} here:`,
+      default: process.env.SSH_KEY
     })
 
     const formattedSSHKey = sshKey.endsWith('\n') ? sshKey : sshKey + '\n'
