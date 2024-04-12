@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -334,6 +336,6 @@ if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)"
   rm -r $BACKUP_RAW_FILES_DIR
 fi
 
-# TODO: probably should be tunable how many files to keep
-# Clean up old backup files
-./cleanup.sh
+# Wipe out local copies of backups
+#-------------------------------------
+rm -rf $ROOT_PATH/backups
