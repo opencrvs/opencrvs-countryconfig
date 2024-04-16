@@ -11,6 +11,7 @@
 /// <reference types="Cypress" />
 
 import { faker } from '@faker-js/faker'
+import { getRandomNumbers } from '../support/commands'
 
 context('Team Integration Test', () => {
   beforeEach(() => {
@@ -18,8 +19,8 @@ context('Team Integration Test', () => {
   })
 
   let testUserFirstname = faker.name.firstName()
-  let testUserLastname = faker.name.lastName()
-  let fullName = `${testUserFirstname} ${testUserLastname}`
+  const testUserLastname = faker.name.lastName()
+  const fullName = `${testUserFirstname} ${testUserLastname}`
 
   it('Tests Local admin can create a new user', () => {
     // LOG IN AS SYSTEM ADMIN
@@ -29,16 +30,15 @@ context('Team Integration Test', () => {
     cy.get('#add-user').click({ force: true })
     cy.get('#firstNamesEng').type(testUserFirstname)
     cy.get('#familyNameEng').type(testUserLastname)
-    cy.get('#phoneNumber').type('0755658545')
+    cy.get('#phoneNumber').type('07' + getRandomNumbers(8))
+    cy.get('#email').type(faker.internet.email())
     cy.selectOption('#role', 'Field Agent', 'Field Agent')
     cy.get('#device').type('Xiamoi MI 8')
     cy.get('#confirm_form').click()
     // PREVIEW
     cy.get('#submit_user_form').click()
     cy.get('#submissionSuccessToast').should('be.visible') // Wait for application to be sync'd
-    // LOG OUT
-    cy.get('#ProfileMenuToggleButton').click()
-    cy.get('#ProfileMenuItem1').click()
+    cy.logout()
     // LOG IN AS FIELD AGENT
     cy.get('#username').type(
       `${testUserFirstname[0].toLowerCase()}.${testUserLastname.toLowerCase()}`
@@ -46,8 +46,8 @@ context('Team Integration Test', () => {
     cy.get('#password').type('test')
     cy.get('#login-mobile-submit').click()
     cy.get('#user-setup-start-button', { timeout: 30000 }).click()
-    cy.get('#NewPassword').type('Test0000')
-    cy.get('#ConfirmPassword').type('Test0000')
+    cy.get('#NewPassword').type('Test00000000')
+    cy.get('#ConfirmPassword').type('Test00000000')
     cy.get('#Continue').click()
     // SECURITY QUESTIONS
     cy.get('#question-0').should('exist')
@@ -81,7 +81,8 @@ context('Team Integration Test', () => {
     cy.get('#navigation_team').click()
     cy.clickUserListItemByName(fullName, 'Edit details')
     cy.get('#btn_change_firstNamesEng').click()
-    cy.get('#firstNamesEng').clear().type('Sheikh')
+    cy.get('#firstNamesEng').clear()
+    cy.get('#firstNamesEng').type('Sheikh')
     testUserFirstname = 'Sheikh'
     cy.get('#confirm_form').click()
 
@@ -167,7 +168,10 @@ context('Team Integration Test', () => {
     cy.login('sysAdmin')
     cy.createPin()
     cy.get('#navigation_team').click()
-    cy.clickUserListItemByName(`${testUserFirstname} ${testUserLastname}`, 'Reset Password')
+    cy.clickUserListItemByName(
+      `${testUserFirstname} ${testUserLastname}`,
+      'Reset Password'
+    )
     cy.get('#reset-password-send').click()
     cy.get('#reset_password_success').should('be.visible')
   })
@@ -177,7 +181,10 @@ context('Team Integration Test', () => {
     cy.login('sysAdmin')
     cy.createPin()
     cy.get('#navigation_team').click()
-    cy.clickUserListItemByName(`${testUserFirstname} ${testUserLastname}`, 'Send username reminder')
+    cy.clickUserListItemByName(
+      `${testUserFirstname} ${testUserLastname}`,
+      'Send username reminder'
+    )
     cy.get('#username-reminder-send').click()
     cy.get('#username_reminder_success').should('be.visible')
   })

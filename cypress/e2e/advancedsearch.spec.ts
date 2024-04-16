@@ -9,9 +9,12 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 /// <reference types="Cypress" />
-
 import faker from '@faker-js/faker'
 import { getDateMonthYearFromString } from '../support/commands'
+
+function selectLocation(selector: string, text: string) {
+  cy.get(selector).contains(text).parent().click()
+}
 
 context('Advanced Search Integration Test', () => {
   beforeEach(() => {
@@ -70,8 +73,8 @@ context('Advanced Search Integration Test', () => {
     cy.createPin()
 
     //CREATE REGISTRATION
-    cy.verifyLandingPageVisible()
-    cy.enterMaximumInput({
+    cy.goToVitalEventSelection()
+    cy.enterBirthMaximumInput({
       childFirstNames,
       childLastName,
       childDoB,
@@ -90,8 +93,7 @@ context('Advanced Search Integration Test', () => {
       eventLocationLevel2
     })
     //register declaration
-    cy.get('#registerDeclarationBtn').click()
-    cy.get('#submit_confirm').click()
+    cy.registerForm()
 
     //OPEN ADVANCED SEARCH
     cy.get('#searchType').click()
@@ -100,7 +102,7 @@ context('Advanced Search Integration Test', () => {
     //ENTER REGISTRATION DETAILS FOR SEARCH
     cy.get('#BirthRegistrationDetails-accordion').click()
     cy.get('#placeOfRegistration').type('Ibombo District Office')
-    cy.selectLocation('span', 'Ibombo District Office')
+    selectLocation('span', 'Ibombo District Office')
     cy.get('#dateOfRegistration-date_range_button').click()
     cy.get('#date-range-confirm-action').click()
     cy.selectOption('#registrationStatuses', 'Any status', 'Any status')
@@ -174,7 +176,11 @@ context('Advanced Search Integration Test', () => {
     const eventCountry = 'Farajaland'
     const eventLocationLevel1 = 'Pualula'
     const eventLocationLevel2 = 'Embe'
-    cy.declareDeathDeclarationWithMinimumInput({
+
+    cy.login('fieldWorker')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterDeathMinimumInput({
       deceasedFirstNames,
       deceasedFamilyName,
       deceasedDoB,
@@ -186,6 +192,8 @@ context('Advanced Search Integration Test', () => {
       eventLocationLevel1,
       eventLocationLevel2
     })
+    cy.submitDeclaration()
+    cy.logout()
 
     cy.login('registrar')
     cy.createPin()
@@ -219,7 +227,10 @@ context('Advanced Search Integration Test', () => {
     const eventLocationLevel1 = 'Pualula'
     const eventLocationLevel2 = 'Embe'
 
-    cy.declareDeathDeclarationWithMaximumInput({
+    cy.login('registrar')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterDeathMaximumInput({
       deceasedFirstNames,
       deceasedFamilyName,
       deceasedDoB,
@@ -241,7 +252,7 @@ context('Advanced Search Integration Test', () => {
     //ENTER REGISTRATION DETAILS FOR SEARCH
     cy.get('#DeathRegistrationDetails-accordion').click()
     cy.get('#placeOfRegistration').type('Ibombo District Office')
-    cy.selectLocation('span', 'Ibombo District Office')
+    selectLocation('span', 'Ibombo District Office')
     cy.get('#dateOfRegistration-date_range_button').click()
     cy.get('#date-range-confirm-action').click()
     cy.selectOption('#registrationStatuses', 'Any status', 'Any status')
