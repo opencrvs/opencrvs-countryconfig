@@ -474,8 +474,7 @@ export async function createServer() {
       validate: {
         payload: emailSchema
       },
-      description:
-        'Handles sending either SMS or email using a predefined template file'
+      description: 'Handles sending email using a predefined template file'
     }
   })
 

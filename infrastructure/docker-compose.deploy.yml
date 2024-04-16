@@ -992,8 +992,6 @@ secrets:
   jwt-private-key.{{ts}}:
     external: true
 configs:
-  openhim-console-conf.{{ts}}:
-    file: /opt/opencrvs/infrastructure/openhim-console-config.deploy.json
   hearth-check-dupe-plugin.{{ts}}:
     file: /opt/opencrvs/infrastructure/hearth-plugins/checkDuplicateTask.js
   hearth-queryparam-extensions-conf.{{ts}}:
