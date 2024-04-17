@@ -8,6 +8,8 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+/// <reference types="cypress" />
+
 type BirthDeclarationOptions = {
   firstName?: string
   familyName?: string
@@ -57,50 +59,33 @@ interface DeclarationOptions {
   informantDoBEnd?: string
 }
 
+type UserType = 'fieldWorker' | 'registrar' | 'sysAdmin' | 'nsysAdmin'
+
+/* eslint-disable no-unused-vars */
 declare namespace Cypress {
   interface Chainable {
-    login: (userType: string) => void
+    login: (userType: UserType) => void
     logout: () => void
     selectOption: (selector: string, text: string, option: string) => void
-    selectLocation: (selector: string, text: string) => void
-    goToNextFormSection: () => void
     createPin: () => void
     reviewForm: () => void
     clickUserListItemByName: (name: string, actionText: string) => void
-    submitForm: () => void
-    submitDeclaration: (type?: 'birth' | 'death') => void
+    registerForm: () => void
+    submitDeclaration: (incomplete?: boolean) => void
     createBirthRegistrationAs: (
-      role: string,
+      role: UserType,
       options?: BirthDeclarationOptions
     ) => void
-    printDeclaration: () => void
+    waitForOutboxToClear: () => void
     rejectDeclaration: () => void
     registerDeclaration: () => void
-    verifyLandingPageVisible: () => void
+    goToVitalEventSelection: () => void
     downloadFirstDeclaration: () => void
-    enterMaximumInput: (options?: DeclarationOptions) => void
+    enterBirthMaximumInput: (options?: DeclarationOptions) => void
+    enterBirthMinimumInput: (options?: DeclarationOptions) => void
     enterDeathMaximumInput: (options?: DeclarationOptions) => void
-    registerDeclarationWithMinimumInput: (
-      firstName: string,
-      lastName: string
-    ) => void
-    registerDeclarationWithMaximumInput: (
-      firstName: string,
-      lastName: string
-    ) => void
-    declareDeclarationWithMinimumInput: () => void
-    declareDeclarationWithMaximumInput: (
-      firstName: string,
-      lastName: string
-    ) => void
-    declareDeathDeclarationWithMinimumInput: (
-      options?: DeclarationOptions
-    ) => void
-    registerDeathDeclarationWithMinimumInput: () => void
-    declareDeathDeclarationWithMaximumInput: (
-      options?: DeclarationOptions
-    ) => void
-    registerDeathDeclarationWithMaximumInput: () => void
+    enterDeathMinimumInput: (options?: DeclarationOptions) => void
     someoneElseJourney: () => void
   }
 }
+/* eslint-enable no-unused-vars */

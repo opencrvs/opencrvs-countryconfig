@@ -19,7 +19,7 @@ context('Death Integration Test', () => {
   it('Tests registration by registrar using maximum input', () => {
     cy.login('registrar')
     cy.createPin()
-    cy.verifyLandingPageVisible()
+    cy.goToVitalEventSelection()
 
     const deceasedFirstNames = faker.name.firstName()
     const deceasedFamilyName = faker.name.lastName()
@@ -44,28 +44,41 @@ context('Death Integration Test', () => {
       eventLocationLevel2
     })
     cy.registerDeclaration()
+    cy.logout()
   })
 
   it('Login as field agent and tests from declaration to registration using minimum input ', () => {
-    cy.registerDeathDeclarationWithMinimumInput()
+    cy.login('fieldWorker')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterDeathMinimumInput()
+    cy.submitDeclaration()
+    cy.logout()
   })
 
   it('Login as registrar to register minimum input death declaration', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
+    cy.logout()
   })
 
   it('Login as field agent and tests from declaration to registration using maximum input', () => {
-    cy.registerDeathDeclarationWithMaximumInput()
+    cy.login('fieldWorker')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterDeathMaximumInput()
+    cy.submitDeclaration()
+    cy.logout()
   })
 
   it('Login as registrar to register maximum input death declaration', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
+    cy.logout()
   })
 
   it('Tests from declaration to rejection using minimum input', () => {
@@ -80,7 +93,10 @@ context('Death Integration Test', () => {
     const eventLocationLevel1 = 'Pualula'
     const eventLocationLevel2 = 'Embe'
 
-    cy.declareDeathDeclarationWithMinimumInput({
+    cy.login('fieldWorker')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterDeathMinimumInput({
       deceasedFirstNames,
       deceasedFamilyName,
       deceasedDoB,
@@ -92,6 +108,8 @@ context('Death Integration Test', () => {
       eventLocationLevel1,
       eventLocationLevel2
     })
+    cy.submitDeclaration()
+    cy.logout()
   })
 
   it('Login As Register & Reject Minimum input Death Declaration', () => {
@@ -99,15 +117,22 @@ context('Death Integration Test', () => {
     cy.createPin()
     cy.reviewForm()
     cy.rejectDeclaration()
+    cy.logout()
   })
 
   it('Tests from declaration to rejection using maximum input', () => {
     const deceasedFirstNames = faker.name.firstName()
     const deceasedFamilyName = faker.name.lastName()
-    cy.declareDeathDeclarationWithMaximumInput({
+
+    cy.login('fieldWorker')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterDeathMaximumInput({
       deceasedFirstNames,
       deceasedFamilyName
     })
+    cy.submitDeclaration()
+    cy.logout()
   })
 
   it('Login As Register & Reject Maximum input Death Declaration', () => {
@@ -115,5 +140,6 @@ context('Death Integration Test', () => {
     cy.createPin()
     cy.reviewForm()
     cy.rejectDeclaration()
+    cy.logout()
   })
 })

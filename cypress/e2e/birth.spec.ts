@@ -29,8 +29,8 @@ context('Birth Integration Test', () => {
     const fatherFamilyName = faker.name.lastName()
     cy.login('fieldWorker')
     cy.createPin()
-    cy.verifyLandingPageVisible()
-    cy.enterMaximumInput({
+    cy.goToVitalEventSelection()
+    cy.enterBirthMaximumInput({
       informantType,
       motherDoB,
       motherFirstNames,
@@ -50,19 +50,23 @@ context('Birth Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
     cy.logout()
   })
 
   it('login as a field agent, send a declaration using minimum input', () => {
-    cy.declareDeclarationWithMinimumInput()
+    cy.login('fieldWorker')
+    cy.createPin()
+    cy.goToVitalEventSelection()
+    cy.enterBirthMinimumInput()
+    cy.submitDeclaration()
   })
 
   it('login as registrar to register minimum input declaration', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
     cy.logout()
   })
 
@@ -91,8 +95,8 @@ context('Birth Integration Test', () => {
 
     cy.login('registrar')
     cy.createPin()
-    cy.verifyLandingPageVisible()
-    cy.enterMaximumInput({
+    cy.goToVitalEventSelection()
+    cy.enterBirthMaximumInput({
       informantType,
       motherDoB,
       motherFirstNames,
@@ -104,16 +108,14 @@ context('Birth Integration Test', () => {
       informantFamilyName,
       informantDoB
     })
-    //register declaration
-    cy.get('#registerDeclarationBtn').click()
-    cy.get('#submit_confirm').click()
-    cy.log('Waiting for declaration to sync...')
+    cy.registerForm()
+    cy.logout()
   })
 
   it('login as field agent, create birth declaration as "Someone else"', () => {
     cy.login('fieldWorker')
     cy.createPin()
-    cy.verifyLandingPageVisible()
+    cy.goToVitalEventSelection()
     cy.someoneElseJourney()
     cy.submitDeclaration()
     cy.logout()
@@ -123,6 +125,6 @@ context('Birth Integration Test', () => {
     cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
+    cy.registerForm()
   })
 })

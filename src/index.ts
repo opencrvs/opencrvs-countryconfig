@@ -45,7 +45,6 @@ import {
   notificationHandler,
   notificationSchema
 } from './api/notification/handler'
-import { mosipMediatorHandler } from '@countryconfig/api/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
 import { formHandler } from '@countryconfig/form'
@@ -452,6 +451,7 @@ export async function createServer() {
     handler: notificationHandler,
     options: {
       tags: ['api'],
+      auth: false,
       validate: {
         payload: notificationSchema
       },
@@ -475,16 +475,6 @@ export async function createServer() {
         payload: emailSchema
       },
       description: 'Handles sending SMS'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/mosip-openhim-mediator',
-    handler: mosipMediatorHandler,
-    options: {
-      tags: ['api'],
-      description: 'Handles submission of mosip generaed NID'
     }
   })
 

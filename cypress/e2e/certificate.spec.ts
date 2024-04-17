@@ -18,11 +18,30 @@ context('Certificate Integration Test', () => {
 
   it('Prints minimum input declaration showing the pdf form', () => {
     cy.createBirthRegistrationAs('fieldWorker')
-    cy.login('registrar')
 
+    cy.login('registrar')
     cy.createPin()
     cy.reviewForm()
-    cy.submitForm()
-    cy.printDeclaration()
+    cy.registerForm()
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(3000)
+    cy.get('#navigation_print').click()
+    cy.downloadFirstDeclaration()
+    cy.get('#ListItemAction-0-Print').click()
+    cy.get('#type_INFORMANT_Mother').click()
+    cy.get('#confirm_form').click()
+    cy.get('#verifyPositive').click()
+
+    // Verify payment
+    cy.get('#Continue').click()
+    cy.get('#confirm-print').click()
+    cy.get('.react-pdf__message react-pdf__message--no-data').should(
+      'not.exist'
+    )
+
+    cy.get('#print-certificate').click()
+    cy.waitForOutboxToClear()
+
+    cy.logout()
   })
 })

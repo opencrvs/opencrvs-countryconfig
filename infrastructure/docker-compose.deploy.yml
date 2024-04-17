@@ -242,6 +242,7 @@ services:
       - METRICS_MONGODB_PASSWORD=${METRICS_MONGODB_PASSWORD}
       - OPENHIM_MONGODB_PASSWORD=${OPENHIM_MONGODB_PASSWORD}
       - WEBHOOKS_MONGODB_PASSWORD=${WEBHOOKS_MONGODB_PASSWORD}
+      - NOTIFICATION_MONGODB_PASSWORD=${NOTIFICATION_MONGODB_PASSWORD}
     networks:
       - overlay_net
     logging:
@@ -554,7 +555,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`)'
+        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -572,6 +573,8 @@ services:
         - 'traefik.http.middlewares.block-email.ipwhitelist.sourcerange=255.255.255.255'
         - 'traefik.http.routers.block-email.rule=Host(`countryconfig.{{hostname}}`) && Path(`/email`)'
         - 'traefik.http.routers.block-email.middlewares=block-email'
+        - 'traefik.http.routers.block-notification.rule=Host(`countryconfig.{{hostname}}`) && Path(`/notification`)'
+        - 'traefik.http.routers.block-notification.middlewares=block-email'
       replicas: 1
     environment:
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
@@ -687,6 +690,7 @@ services:
     environment:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
     deploy:
       replicas: 1
       labels:
@@ -989,8 +993,6 @@ secrets:
   jwt-private-key.{{ts}}:
     external: true
 configs:
-  openhim-console-conf.{{ts}}:
-    file: /opt/opencrvs/infrastructure/openhim-console-config.deploy.json
   hearth-check-dupe-plugin.{{ts}}:
     file: /opt/opencrvs/infrastructure/hearth-plugins/checkDuplicateTask.js
   hearth-queryparam-extensions-conf.{{ts}}:
