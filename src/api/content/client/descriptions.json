@@ -1180,6 +1180,7 @@
     "form.field.label.socialSecurityNumber": "",
     "form.field.label.someoneElse": "Other Label",
     "form.field.label.someoneElseCollector": "",
+    "form.field.label.city": "Label for City",
     "form.field.label.state": "Label for State",
     "form.field.label.typeOfDocument": "",
     "form.field.label.typeOfId": "",
