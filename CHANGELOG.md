@@ -1,4 +1,4 @@
-## [1.3.4](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.3.4)
+## [1.3.4](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.3.3...v1.3.4)
 
 ## Breaking changes
 
@@ -8,9 +8,9 @@
 
 - Fix typo in certificate handlebar names
 
-See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
+See [Releases](https://github.com/opencrvs/opencrvs-countryconfig/releases) for release notes of older releases.
 
-## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
+## [1.3.3](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.3.2...v1.3.3)
 
 ## Breaking changes
 
