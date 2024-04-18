@@ -10,6 +10,7 @@ on:
         default: 'qa'
         options:
           - qa
+          - staging
           - development
 jobs:
   restart-and-mount:
