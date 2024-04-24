@@ -65,14 +65,14 @@ type NotificationPayload = SMSNotificationPayload | EmailNotificationPayload
 
 export const notificationSchema = Joi.object({
   templateName: Joi.object({
-    email: Joi.string(),
-    sms: Joi.string()
-  }).xor('email', 'sms'),
+    email: Joi.string().required(),
+    sms: Joi.string().required()
+  }),
   recipient: Joi.object({
-    email: Joi.string(),
-    sms: Joi.string(),
+    email: Joi.string().allow(null, '').optional(),
+    sms: Joi.string().allow(null, '').optional(),
     bcc: Joi.array().items(Joi.string().required()).optional()
-  }).xor('email', 'sms'),
+  }),
   type: Joi.string().valid('user', 'informant').required()
 }).unknown(true)
 
