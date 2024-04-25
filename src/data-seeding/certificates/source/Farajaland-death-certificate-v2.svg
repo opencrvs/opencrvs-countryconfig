@@ -1,17 +1,15 @@
 <svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="595" height="842" fill="white"/>
+<image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
+{{#ifCond printInAdvance '!==' true}}<image width="140" height="70" xlink:href="{{registrar.signature}}" x="347" y="605"></image>{{/ifCond}}
 <g clip-path="url(#clip0_1157_5058)">
 <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="6" font-weight="600" letter-spacing="0px"><tspan x="62" y="780.593">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE </tspan><tspan x="62" y="790.593">IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES A LA FALSIFIATION OU &#xc0; LA MODIFICATION D&#39;UN </tspan><tspan x="62" y="800.593">CERTIFICAT ET A L&#39;UTILISATION OU LA POSSESSION D&#39;UN FAUX CERTIFICAT. UN CERTIFICAT N&#39;EST PAS UNE PREUVE D&#39;IDENTITE</tspan></text>
-<rect x="499.47" y="771.29" width="33.95" height="33.95" fill="url(#pattern0)"/>
 </g>
 <path d="M62 762.075H533.42V761.105H62V762.075Z" fill="#ECECEC"/>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px"><tspan x="234.289" y="613.552">&#x2028;</tspan><tspan x="81" y="626.352">{{certificateDate}}</tspan></text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px"><tspan x="81" y="613.552">Date of certification / Date de d&#xe9;livrance</tspan></text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px"><tspan x="240.727" y="647.312">&#x2028;</tspan><tspan x="81" y="660.112">{{location registrar.officeId 'name'}}</tspan><tspan x="81" y="672.912">{{location registrar.districtId 'name'}}, {{location registrar.stateId 'name'}}, Farajaland</tspan></text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px"><tspan x="81" y="647.312">Place of certification / Lieu de certification</tspan></text>
-<g clip-path="url(#clip1_1157_5058)">
-<rect x="321.759" y="605.421" width="190.241" height="65.8389" fill="url(#pattern1)"/>
-</g>
 <path d="M321.76 674.331L512.079 675.229" stroke="#CCCCCC" stroke-width="0.75879" stroke-dasharray="3.04 1.52"/>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" font-weight="600" letter-spacing="0px"><tspan x="357.752" y="687.343">Registrar / L&#39;Officier de l&#39;&#xc9;tat Civil</tspan></text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" letter-spacing="0px"><tspan x="398.064" y="699.954">{{registrar.name}}</tspan></text>
@@ -116,12 +114,6 @@
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" font-weight="bold" letter-spacing="0px"><tspan x="186.255" y="126.364">REPUBLIC OF FARAJALAND / REPUBLIQUE DE FARAJALAND</tspan></text>
 <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="11.64" font-weight="bold" letter-spacing="0px"><tspan x="182.782" y="145.364">CERTIFICATE OF DEATH / ACTE DE DEATH</tspan></text>
 <defs>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_1143_4237" transform="translate(-0.05 -0.0727811) scale(0.00325444)"/>
-</pattern>
-<pattern id="pattern1" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image1_1143_4237" transform="scale(0.000818331 0.00224215)"/>
-</pattern>
 <pattern id="pattern2" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image2_1143_4237" transform="matrix(0.000400862 0 0 0.00053697 -0.0550657 -0.000554468)"/>
 </pattern>
@@ -161,7 +153,5 @@
 <clipPath id="clip11_1157_5058">
 <rect width="469.48" height="62.08" fill="white" transform="translate(62.97 45.7305)"/>
 </clipPath>
-<image id="image0_1143_4237" width="338" height="352" xlink:href="{{qrCode}}"/>
-{{#ifCond printInAdvance '!==' true}}<image id="image1_1143_4237" width="1222" height="446" xlink:href="{{registrar.signature}}"/>{{/ifCond}}
 </defs>
 </svg>
