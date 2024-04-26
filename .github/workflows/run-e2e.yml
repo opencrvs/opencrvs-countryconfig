@@ -1,0 +1,45 @@
+name: E2E
+run-name: Deploy to ${{ github.event.inputs.environment }} and E2E
+on:
+  push:
+    branches:
+      - auto-e2e
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Environment to deploy to
+        required: true
+        default: 'development'
+        options:
+          - development
+      core-image-tag:
+        description: Core DockerHub image tag
+        required: true
+        default: 'v1.4.1'
+      countryconfig-image-tag:
+        description: Your Country Config DockerHub image tag
+        required: true
+        default: 'v1.4.1'
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      core-image-tag: ${{ github.event.inputs.core-image-tag }}
+      countryconfig-image-tag: ${{ github.event.inputs.countryconfig-image-tag }}
+    secrets: inherit
+
+  clear:
+    needs: deploy
+    uses: ./.github/workflows/clear-environment.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+    secrets: inherit
+
+  seed-data:
+    uses: ./.github/workflows/seed-data.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      core-image-tag: ${{ github.event.inputs.core-image-tag }}
+    secrets: inherit
