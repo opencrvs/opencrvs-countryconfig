@@ -17,9 +17,9 @@ on:
         description: Your Country Config DockerHub image tag
         required: true
       reset:
-        type: boolean
+        type: string
         description: Reset the environment
-        default: false
+        default: 'false'
         required: false
       debug:
         type: boolean
@@ -60,6 +60,20 @@ jobs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
     steps:
+      - name: Debug 1
+        run: |
+          echo "${{ inputs.reset }}"
+
+      - name: Debug 2
+        if: ${{ inputs.reset == 'true' }}
+        run: |
+          echo "${{ inputs.reset }}"
+
+      - name: Debug 3
+        if: ${{ inputs.reset == true }}
+        run: |
+          echo "${{ inputs.reset }}"
+
       - name: Clone core
         uses: actions/checkout@v3
         with:
