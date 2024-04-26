@@ -336,6 +336,3 @@ if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)"
   rm -r $BACKUP_RAW_FILES_DIR
 fi
 
-# Wipe out local copies of backups
-#-------------------------------------
-rm -rf $ROOT_PATH/backups
