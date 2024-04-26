@@ -46,12 +46,10 @@ jobs:
         run: yarn
 
       - name: Run tests
-        env:
-          HOST: ${{ vars.DOMAIN }}
         run: |
-          export CYPRESS_COUNTRYCONFIG_URL=https://countryconfig.$HOST/
-          export CYPRESS_GATEWAY_URL=https://gateway.$HOST/
-          export CYPRESS_LOGIN_URL=https://login.$HOST/
-          export CYPRESS_CLIENT_URL=https://register.$HOST/
-          export CYPRESS_AUTH_URL=https://auth.$HOST/
-          cypress run
+          export CYPRESS_COUNTRYCONFIG_URL=https://countryconfig.${{ vars.DOMAIN }}/
+          export CYPRESS_GATEWAY_URL=https://gateway.${{ vars.DOMAIN }}/
+          export CYPRESS_LOGIN_URL=https://login.${{ vars.DOMAIN }}/
+          export CYPRESS_CLIENT_URL=https://register.${{ vars.DOMAIN }}/
+          export CYPRESS_AUTH_URL=https://auth.${{ vars.DOMAIN }}/
+          npx cypress run
