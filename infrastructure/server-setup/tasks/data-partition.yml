@@ -217,19 +217,4 @@
 - name: 'Create secrets directory'
   file:
     path: /data/secrets
-    state: directory
-    group: 1000
-    owner: 1000
-    mode: g+rwx
-
-- name: Save secrets into encrypted folder for access by scripts
-  ansible.builtin.copy:
-    dest: /data/secrets/opencrvs.secrets
-    group: 1000
-    owner: 1000
-    mode: g+rwx
-    content: |
-      MONGODB_ADMIN_PASSWORD={{ mongodb_admin_password }}
-      MONGODB_ADMIN_USER={{ mongodb_admin_username }}
-      ELASTICSEARCH_ADMIN_PASSWORD={{elasticsearch_superuser_password}}
-      ELASTICSEARCH_ADMIN_USER=elastic
+    state: absent

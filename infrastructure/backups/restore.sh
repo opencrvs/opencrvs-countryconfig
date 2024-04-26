@@ -68,9 +68,6 @@ if [ "$IS_LOCAL" = false ]; then
     echo "Error: Argument for the --replicas is required."
     print_usage_and_exit
   fi
-  # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
-  # We recommend that the secrets are served via a secure API from a Hardware Security Module
-  source /data/secrets/opencrvs.secrets
 else
   ROOT_PATH=${ROOT_PATH:-../opencrvs-core/data}
 

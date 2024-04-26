@@ -1,3 +1,20 @@
+- name: Set environment variables in crontab
+  become: yes
+  cron:
+    name: '{{ item.name }}'
+    env: yes
+    job: '{{ item.value }}'
+    user: '{{ crontab_user }}'
+    state: "{{ 'present' if (external_backup_server_ip is defined and backup_encryption_passphrase and (enable_backups | default(false))) else 'absent' }}"
+  loop:
+    - { name: 'MONGODB_ADMIN_PASSWORD', value: '{{ mongodb_admin_password }}' }
+    - { name: 'MONGODB_ADMIN_USER', value: '{{ mongodb_admin_username }}' }
+    - {
+        name: 'ELASTICSEARCH_ADMIN_PASSWORD',
+        value: '{{ elasticsearch_superuser_password }}'
+      }
+    - { name: 'ELASTICSEARCH_ADMIN_USER', value: 'elastic' }
+
 - name: 'Setup crontab to backup the opencrvs data'
   cron:
     user: '{{ crontab_user }}'
@@ -38,7 +55,6 @@
     hour: '1'
     job: 'cd / && bash /opt/opencrvs/infrastructure/backups/restore.sh --replicas=1 >> /var/log/opencrvs-restore.log 2>&1'
     state: "{{ 'present' if (external_backup_server_ip is defined and backup_encryption_passphrase and periodic_restore_from_backup) else 'absent' }}"
-
 
 - name: 'Setup backup rotation'
   cron:

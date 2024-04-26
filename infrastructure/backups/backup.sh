@@ -18,46 +18,35 @@
 set -e
 
 WORKING_DIR=$(pwd)
+# Create a temporary directory and assign the path to BACKUP_FILES_PATH
+BACKUP_FILES_PATH=$(mktemp -d)
+FINAL_BACKUP_FILENAME=$(date +"%Y-%m-%d_%H-%M-%S")
 
-if docker service ls > /dev/null 2>&1; then
+OUT="$FINAL_BACKUP_FILENAME.tar.gz"
+
+
+if docker node ls > /dev/null 2>&1; then
   IS_LOCAL=false
+  IS_PRODUCTION=true
 else
+  REPLICAS="0"
   IS_LOCAL=true
+  IS_PRODUCTION=false
 fi
 
 # Reading Named parameters
 for i in "$@"; do
   case $i in
-  --ssh_user=*)
-    SSH_USER="${i#*=}"
-    shift
-    ;;
-  --ssh_host=*)
-    SSH_HOST="${i#*=}"
-    shift
-    ;;
-  --ssh_port=*)
-    SSH_PORT="${i#*=}"
-    shift
-    ;;
-  --production_ip=*)
-    PRODUCTION_IP="${i#*=}"
-    shift
-    ;;
-  --remote_dir=*)
-    REMOTE_DIR="${i#*=}"
-    shift
-    ;;
   --replicas=*)
     REPLICAS="${i#*=}"
     shift
     ;;
-  --label=*)
-    LABEL="${i#*=}"
-    shift
-    ;;
   --passphrase=*)
     PASSPHRASE="${i#*=}"
+    shift
+    ;;
+  --out=*)
+    OUT="${i#*=}"
     shift
     ;;
   *) ;;
@@ -65,7 +54,7 @@ for i in "$@"; do
 done
 
 print_usage_and_exit() {
-  echo 'Usage: ./backup.sh --passphrase=XXX --ssh_user=XXX --ssh_host=XXX --ssh_port=XXX --production_ip=XXX --remote_dir=XXX --replicas=XXX --label=XXX'
+  echo 'Usage: ./backup.sh --replicas=XXX'
   echo "Script must receive SSH details and a target directory of a remote server to copy backup files to."
   echo "Optionally a LABEL i.e. 'v1.0.1' can be provided to be appended to the backup file labels"
   echo "7 days of backup data will be retained in the manager node"
@@ -78,94 +67,39 @@ print_usage_and_exit() {
   exit 1
 }
 
-# Check if REPLICAS is a number and greater than 0
-if ! [[ "$REPLICAS" =~ ^[0-9]+$ ]]; then
-  echo "Script must be passed a positive integer number of replicas"
-  exit 1
-fi
-
-if [ "$IS_LOCAL" = false ]; then
-  ROOT_PATH=${ROOT_PATH:-/data}
-  if [ -z "$SSH_USER" ]; then
-    echo "Error: Argument for the --ssh_user is required."
-    print_usage_and_exit
-  fi
-  if [ -z "$SSH_HOST" ]; then
-    echo "Error: Argument for the --ssh_host is required."
-    print_usage_and_exit
-  fi
-  if [ -z "$SSH_PORT" ]; then
-    echo "Error: Argument for the --ssh_port is required."
-    print_usage_and_exit
-  fi
-  if [ -z "$PRODUCTION_IP" ]; then
-    echo "Error: Argument for the --production_ip is required."
-    print_usage_and_exit
-  fi
-  if [ -z "$REMOTE_DIR" ]; then
-    echo "Error: Argument for the --remote_dir is required."
-    print_usage_and_exit
-  fi
+if [ "$IS_PRODUCTION" = true ]; then
   if [ -z "$REPLICAS" ]; then
     echo "Error: Argument for the --replicas is required."
     print_usage_and_exit
   fi
+
+  # Check if REPLICAS is a number and greater than 0
+  if ! [[ "$REPLICAS" =~ ^[0-9]+$ ]]; then
+    echo "Script must be passed a positive integer number of replicas"
+    exit 1
+  fi
+
   if [ -z "$PASSPHRASE" ]; then
     echo "Error: Argument for the --passphrase is required."
     print_usage_and_exit
   fi
-  # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
-  # We recommend that the secrets are served via a secure API from a Hardware Security Module
-  source /data/secrets/opencrvs.secrets
-else
-  ROOT_PATH=${ROOT_PATH:-../opencrvs-core/data}
-
-  if [ ! -d "$ROOT_PATH" ]; then
-    echo "Error: ROOT_PATH ($ROOT_PATH) doesn't exist"
-    print_usage_and_exit
-  fi
-
-  ROOT_PATH=$(cd "$ROOT_PATH" && pwd)
 fi
 
-# Find and remove all empty subdirectories under the top-level directories
-for BACKUP_DIR in $ROOT_PATH/backups/*; do
-  if [ -d "$BACKUP_DIR" ]; then
-    rm -rf $BACKUP_DIR/*
-  fi
-done
 
-mkdir -p $ROOT_PATH/backups/elasticsearch
-mkdir -p $ROOT_PATH/backups/elasticsearch/indices
-mkdir -p $ROOT_PATH/backups/influxdb
-mkdir -p $ROOT_PATH/backups/mongo
-mkdir -p $ROOT_PATH/backups/minio
-mkdir -p $ROOT_PATH/backups/metabase
-mkdir -p $ROOT_PATH/backups/vsexport
-mkdir -p $ROOT_PATH/backups/metabase
-
-# This enables root-created directory to be writable by the docker user
-chown -R 1000:1000 $ROOT_PATH/backups
-
-# This might not exist if project is empty
-mkdir -p $ROOT_PATH/metabase
-chown -R 1000:1000 $ROOT_PATH/metabase
+echo "Backup files path: $BACKUP_FILES_PATH"
+echo "Data path: $BACKUP_FILES_PATH"
 
 
 # Select docker network and replica set in production
 #----------------------------------------------------
-if [ "$IS_LOCAL" = true ]; then
+if [ "$IS_LOCAL" = true ] || [ "$REPLICAS" = "0" ]; then
   HOST=mongo1
   NETWORK=opencrvs_default
   echo "Working in a local environment"
-elif [ "$REPLICAS" = "0" ]; then
-  HOST=mongo1
-  NETWORK=opencrvs_default
-  echo "Working with no replicas"
 else
-  NETWORK=opencrvs_overlay_net
   # Construct the HOST string rs0/mongo1,mongo2... based on the number of replicas
   HOST="rs0/"
+  NETWORK=opencrvs_overlay_net
   for (( i=1; i<=REPLICAS; i++ )); do
     if [ $i -gt 1 ]; then
       HOST="${HOST},"
@@ -204,138 +138,130 @@ excluded_collections() {
 BACKUP_DATE=$(date +%Y-%m-%d)
 REMOTE_DIR="$REMOTE_DIR/${LABEL:-$BACKUP_DATE}"
 
-# Backup Hearth, OpenHIM, User, Application-config and any other service related Mongo databases into a mongo sub folder
-# ---------------------------------------------------------------------------------------------
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d hearth-dev --gzip --archive=/data/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev $(excluded_collections) --gzip --archive=/data/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d user-mgnt --gzip --archive=/data/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d application-config --gzip --archive=/data/backups/mongo/application-config-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d metrics --gzip --archive=/data/backups/mongo/metrics-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d webhooks --gzip --archive=/data/backups/mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d performance --gzip --archive=/data/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz"
+echo
+echo -e "\e[33m---------------------------\e[0m"
+echo -e "\e[33m          MONGODB          \e[0m"
+echo -e "\e[33m---------------------------\e[0m"
 
+mkdir -p $BACKUP_FILES_PATH/mongo
 
-#-------------------------------------------------------------------------------------
+docker run --rm -v $BACKUP_FILES_PATH/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash -c \
+  "function get_databases() {
+     mongo $(mongo_credentials) --host $HOST --quiet --eval \"db.adminCommand('listDatabases').databases.map(db => db.name).filter(name => !['admin', 'local', 'config'].includes(name)).join(' ')\"
+   }
+   databases=\$(get_databases)
+   for db in \$databases; do
+     mongodump $(mongo_credentials) --host $HOST -d \$db --gzip --archive=/data/backups/mongo/\${db}-\${LABEL:-\$(date +%Y%m%d%H%M%S)}.gz
+   done"
 
-echo ""
-echo "Delete all currently existing snapshots"
-echo ""
-docker run --rm --network=$NETWORK appropriate/curl curl -a -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
+echo
+echo -e "\e[33m---------------------------\e[0m"
+echo -e "\e[33m       ELASTICSEARCH       \e[0m"
+echo -e "\e[33m---------------------------\e[0m"
 
-#-------------------------------------------------------------------------------------
-echo ""
-echo "Register backup folder as an Elasticsearch repository for backing up the search data"
-echo ""
+mkdir -p $BACKUP_FILES_PATH/elasticsearch
+docker run --rm \
+  -v $BACKUP_FILES_PATH/elasticsearch:/data \
+  --network=$NETWORK \
+  elasticdump/elasticsearch-dump --input=http://$(elasticsearch_host)/ocrvs --output=/data/ocrvs.json --type=data
 
-create_elasticsearch_snapshot_repository() {
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}' 2>/dev/null)
-  while [ "$OUTPUT" != '{"acknowledged":true}' ]; do
-    echo "Failed to register backup folder as an Elasticsearch repository. Trying again in..."
-    sleep 1
-    create_elasticsearch_snapshot_repository
-  done
-}
+echo
+echo -e "\e[33m---------------------------\e[0m"
+echo -e "\e[33m          INFLUXDB         \e[0m"
+echo -e "\e[33m---------------------------\e[0m"
 
-create_elasticsearch_snapshot_repository
+mkdir -p $BACKUP_FILES_PATH/influxdb
+docker run --rm \
+  --network=$NETWORK \
+  -v $BACKUP_FILES_PATH/influxdb:/var/lib/influxdb/backup \
+  influxdb:1.8.10 influxd backup -database ocrvs -host influxdb:8088 /var/lib/influxdb/backup
 
-#---------------------------------------------------------------------------------
+echo
+echo -e "\e[33m---------------------------\e[0m"
+echo -e "\e[33m           MINIO           \e[0m"
+echo -e "\e[33m---------------------------\e[0m"
 
-echo ""
-echo "Backup Elasticsearch as a set of snapshot files into an elasticsearch sub folder"
-echo ""
+mkdir -p $BACKUP_FILES_PATH/minio
+container_id=$(docker ps --filter "name=minio" --format "{{.ID}} {{.Names}}" | grep -v "minio-mc" | grep "minio" | awk '{print $1}')
 
-create_elasticsearch_backup() {
-  OUTPUT=""
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
-  if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
-    echo "Snapshot state is SUCCESS"
-  else
-    echo $OUTPUT
-    echo "Failed to backup Elasticsearch. Trying again in..."
-    create_elasticsearch_backup
-  fi
-}
-
-create_elasticsearch_backup
-
-# If required, SSH into the node running the opencrvs_metrics container and backup the metrics data into an influxdb subfolder
-#-----------------------------------------------------------------------------------------------------------------------------
-
-if [ "$IS_LOCAL" = true ]; then
-  INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
-  echo "Backing up Influx locally $INFLUXDB_CONTAINER_ID"
-  docker exec $INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}
-  docker cp $INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}
+if [ -z "$container_id" ]; then
+  echo "No MinIO container found that matches the criteria."
+  exit 1
 else
-  echo "Backing up Influx in remote environment"
-  docker run --rm -v $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}:/backup --network=$NETWORK influxdb:1.8.0 influxd backup -portable -host influxdb:8088 /backup
+  echo "Found MinIO container with ID: $container_id"
 fi
 
-echo "Creating a backup for Minio"
+docker cp "$container_id:/data" "$BACKUP_FILES_PATH/minio"
 
-LOCAL_MINIO_BACKUP=$ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
-cd $ROOT_PATH/minio && tar -zcvf $LOCAL_MINIO_BACKUP . && cd /
+echo
+echo -e "\e[33m---------------------------\e[0m"
+echo -e "\e[33m         METABASE          \e[0m"
+echo -e "\e[33m---------------------------\e[0m"
 
-echo "Creating a backup for Metabase"
+container_id=$(docker ps --filter "name=metabase" --format "{{.ID}}")
 
-LOCAL_METABASE_BACKUP=$ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
-cd $ROOT_PATH/metabase && tar -zcvf $LOCAL_METABASE_BACKUP . && cd /
+if [ -z "$container_id" ]; then
+  echo "No Metabase container found that matches the criteria."
 
-echo "Creating a backup for VSExport"
-
-LOCAL_VSEXPORT_BACKUP=$ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
-cd $ROOT_PATH/vsexport && tar -zcvf $LOCAL_VSEXPORT_BACKUP . && cd /
-
-if [[ "$IS_LOCAL" = true ]]; then
-  echo $WORKING_DIR
-  cd $ROOT_PATH/backups && tar -zcvf $WORKING_DIR/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz .
-  exit 0
+  if [ "$IS_LOCAL" = false ]; then
+    exit 1
+  fi
+  echo "Continuing with the backup process as this is a local environment"
+else
+  mkdir -p $BACKUP_FILES_PATH/metabase
+  echo "Found Metabase container with ID: $container_id"
+  docker cp "$container_id:/data" "$BACKUP_FILES_PATH/metabase"
 fi
 
-# Copy the backups to an offsite server in production
-#----------------------------------------------------
-if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)" ]]; then
+echo
+echo -e "\e[33m---------------------------\e[0m"
+echo -e "\e[33m         VSEXPORTS         \e[0m"
+echo -e "\e[33m---------------------------\e[0m"
 
-  # Create a temporary directory to store the backup files before packaging
-  BACKUP_RAW_FILES_DIR=/tmp/backup-${LABEL:-$BACKUP_DATE}/
-  mkdir -p $BACKUP_RAW_FILES_DIR
+container_id=$(docker ps --filter "name=metrics" --format "{{.ID}}")
 
-  # Copy full directories to the temporary directory
-  cp -r $ROOT_PATH/backups/elasticsearch/ $BACKUP_RAW_FILES_DIR/elasticsearch/
-  cp -r $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE} $BACKUP_RAW_FILES_DIR/influxdb/
-
-
-  mkdir -p $BACKUP_RAW_FILES_DIR/minio/ && cp $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/minio/
-  mkdir -p $BACKUP_RAW_FILES_DIR/metabase/ && cp $ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/metabase/
-  mkdir -p $BACKUP_RAW_FILES_DIR/vsexport/ && cp $ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/vsexport/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/application-config-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/metrics-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-
-  tar -czf /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -C "$BACKUP_RAW_FILES_DIR" .
-
-  openssl enc -aes-256-cbc -salt -pbkdf2 -in /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -out /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc -pass pass:$PASSPHRASE
-
-  rsync -a -r --rsync-path="mkdir -p $REMOTE_DIR/ && rsync" --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc $SSH_USER@$SSH_HOST:$REMOTE_DIR/
-
-  echo "Copied backup files to remote server."
-
-  rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
-  rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
-  rm -r $BACKUP_RAW_FILES_DIR
+if [ -z "$container_id" ]; then
+  echo "No Metrics container found that matches the criteria."
+  if [ "$IS_LOCAL" = false ]; then
+    exit 1
+  fi
+  echo "Continuing with the backup process as this is a local environment"
+else
+  echo "Found Metrics container with ID: $container_id"
+  mkdir -p $BACKUP_FILES_PATH/vsexport
+  docker cp "$container_id:/usr/src/app/packages/metrics/src/scripts" "$BACKUP_FILES_PATH/vsexport"
 fi
 
-# Wipe out local copies of backups
-#-------------------------------------
-rm -rf $ROOT_PATH/backups
+echo
+echo -e "\e[33m---------------------------\e[0m"
+echo -e "\e[33m   INTEGRITY VERIFICATION  \e[0m"
+echo -e "\e[33m---------------------------\e[0m"
+
+du -s $BACKUP_FILES_PATH/* | while read -r size dir; do
+  if [ $size -gt 0 ]; then
+    echo "✅ Directory '$(basename $dir)' is not empty"
+  else
+    echo "❌ Directory '$(basename $dir)' is has no content"
+    exit 1
+  fi
+done
+
+TEMPORARY_BACKUP_FILENAME=$(mktemp)
+
+
+# Package all files to a temporary file
+tar -czf $TEMPORARY_BACKUP_FILENAME -C $BACKUP_FILES_PATH .
+
+if [ -v PASSPHRASE ]; then
+  echo
+  echo "🔒 Encrypting backup file"
+  # Encrypt file and write it to the current directory
+  openssl enc -aes-256-cbc -salt -pbkdf2 -in $TEMPORARY_BACKUP_FILENAME -out $OUT -pass pass:$PASSPHRASE
+else
+  mv $TEMPORARY_BACKUP_FILENAME $OUT
+fi
+echo
+echo "Backup completed successfully. File written to $OUT"
+
+rm $TEMPORARY_BACKUP_FILENAME
+rm -r $BACKUP_FILES_PATH
