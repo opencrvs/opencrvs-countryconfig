@@ -25,19 +25,33 @@ jobs:
       environment: ${{ github.event.inputs.environment }}
       core-image-tag: ${{ github.event.inputs.core-image-tag }}
       countryconfig-image-tag: ${{ github.event.inputs.countryconfig-image-tag }}
+      reset: true
     secrets: inherit
+  test:
+    runs-on: ubuntu-20.04
 
-  clear:
-    needs: deploy
-    uses: ./.github/workflows/clear-environment.yml
-    with:
-      environment: ${{ github.event.inputs.environment }}
-    secrets: inherit
+    steps:
+      - name: Checking out git repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
 
-  seed-data:
-    needs: clear
-    uses: ./.github/workflows/seed-data.yml
-    with:
-      environment: ${{ github.event.inputs.environment }}
-      core-image-tag: ${{ github.event.inputs.core-image-tag }}
-    secrets: inherit
+      - name: Use Node.js 18.19
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.19'
+          cache: 'npm'
+
+      - name: Runs dependency installation
+        run: yarn
+
+      - name: Run tests
+        env:
+          HOST: ${{ vars.DOMAIN }}
+        run: |
+          export CYPRESS_COUNTRYCONFIG_URL=https://countryconfig.$HOST/
+          export CYPRESS_GATEWAY_URL=https://gateway.$HOST/
+          export CYPRESS_LOGIN_URL=https://login.$HOST/
+          export CYPRESS_CLIENT_URL=https://register.$HOST/
+          export CYPRESS_AUTH_URL=https://auth.$HOST/
+          cypress run
