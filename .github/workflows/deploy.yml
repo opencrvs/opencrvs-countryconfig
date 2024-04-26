@@ -1,6 +1,31 @@
 name: Deploy (development)
 run-name: Deploy to ${{ github.event.inputs.environment }} with reset=${{ github.event.inputs.reset }} core=${{ github.event.inputs.core-image-tag }} country config=${{ github.event.inputs.countryconfig-image-tag }}
 on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: Environment to deploy to
+        required: true
+      core-image-tag:
+        type: string
+        description: Core DockerHub image tag
+        required: true
+        default: 'v1.4.1'
+      countryconfig-image-tag:
+        type: string
+        description: Your Country Config DockerHub image tag
+        required: true
+      reset:
+        type: boolean
+        description: Reset the environment
+        default: false
+        required: false
+      debug:
+        type: boolean
+        description: Open SSH session to the runner after deployment
+        default: false
+        required: false
   workflow_dispatch:
     inputs:
       environment:
