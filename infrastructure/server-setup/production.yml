@@ -57,6 +57,5 @@ backups:
   hosts:
     farajaland-qa:
       ansible_host: '165.22.110.53'
-      vars:
-        # @todo how many days to store backups for?
-        amount_of_backups_to_keep: 3
+      # @todo how many days to store backups for?
+      amount_of_backups_to_keep: 3

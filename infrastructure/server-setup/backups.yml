@@ -140,7 +140,7 @@
 
     - name: Copy rotate_backups.sh file to external_backup_server_user's home directory
       copy:
-        src: infrastructure/backups/rotate_backups.sh
+        src: ../backups/rotate_backups.sh
         dest: '{{ external_backup_server_user_home }}/rotate_backups.sh'
         owner: '{{ external_backup_server_user }}'
         mode: 0755
@@ -155,3 +155,5 @@
         hour: '0'
         job: 'bash {{ external_backup_server_user_home }}/rotate_backups.sh --backup_dir={{ external_backup_server_remote_directory }} --amount_to_keep={{ amount_of_backups_to_keep }} >> /var/log/opencrvs-rotate-backups.log 2>&1'
         state: "{{ 'present' if (amount_of_backups_to_keep) else 'absent' }}"
+      tags:
+        - backups
