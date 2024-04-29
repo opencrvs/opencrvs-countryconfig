@@ -243,8 +243,7 @@ context('Advanced Search Integration Test', () => {
       eventLocationLevel2
     })
     cy.registerDeclaration()
-    //WAIT FOR OUTBOX TO BE READY
-    cy.get('#navigation_outbox').should('have.text', 'Outbox')
+    cy.waitForOutboxToClear()
     //OPEN ADVANCED SEARCH
     cy.get('#searchType').click()
     cy.get('#advanced-search').click()
