@@ -52,3 +52,5 @@ backups:
   hosts:
     backup: # @todo set this to be the hostname of your backup server
       ansible_host: '66.66.66.66'
+      # @todo how many days to store backups for?
+      amount_of_backups_to_keep: 3

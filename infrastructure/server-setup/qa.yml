@@ -27,7 +27,6 @@ all:
           # if yes, then this should list the public keys of the private keys that are used when connecting to the production servers.
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-243 # example provision user key
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-244 # example provision user key
-      amount_of_backups_to_keep: 3
 
 docker-manager-first:
   hosts:
