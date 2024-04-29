@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -9,7 +11,7 @@
 
 #------------------------------------------------------------------------------------------------------------------
 # By default OpenCRVS saves a backup of all data on a cron job every day in case of an emergency data loss incident
-# This script clears all data and restores a specific day's data.  It is irreversable, so use with caution.
+# This script downloads all the data based on --label (defaults to current day)
 #------------------------------------------------------------------------------------------------------------------
 
 set -e
@@ -26,10 +28,6 @@ for i in "$@"; do
     ;;
   --ssh_port=*)
     SSH_PORT="${i#*=}"
-    shift
-    ;;
-  --replicas=*)
-    REPLICAS="${i#*=}"
     shift
     ;;
   --label=*)
@@ -100,8 +98,8 @@ openssl enc -d -aes-256-cbc -salt -pbkdf2 -in $BACKUP_RAW_FILES_DIR/${LABEL}.tar
 mkdir -p $BACKUP_RAW_FILES_DIR/extract
 tar -xvf $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz -C $BACKUP_RAW_FILES_DIR/extract
 
-# Move folders
-rm -r /data/backups/elasticsearch
+# Delete previous days restore(s) and move the newly downloaded one in place
+rm -rf /data/backups/*
 mv $BACKUP_RAW_FILES_DIR/extract/elasticsearch /data/backups/elasticsearch
 
 mv $BACKUP_RAW_FILES_DIR/extract/influxdb /data/backups/influxdb/${LABEL}
