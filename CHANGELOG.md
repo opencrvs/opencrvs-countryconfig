@@ -2,6 +2,9 @@
 
 ## [1.4.2](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.2)
 
+- Bugfix: fix critical bug stopping backups from being sent to target backup server
+- Bugfix: add a mechanism for controlling the amount of backups stored on the backup server.
+
 ## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
 - Improved logging for emails being sent
