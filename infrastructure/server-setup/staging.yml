@@ -13,7 +13,9 @@ all:
     # SSH and other services should never be exposed to the public internet.
     only_allow_access_from_addresses:
       - 165.22.110.53
-    enable_backups: false
+    # Enable backups but write them to a different location from where production writes them
+    enable_backups: true
+    external_backup_server_remote_directory: /home/backup/staging-backups
     periodic_restore_from_backup: true
     # external_backup_server_ssh_port: Defined in --extra-vars by the provisioning pipeline
     # external_backup_server_ip: Defined in --extra-vars by the provisioning pipeline
@@ -67,3 +69,6 @@ backups:
   hosts:
     farajaland-qa:
       ansible_host: '165.22.110.53'
+      vars:
+        # @todo how many days to store backups for?
+        amount_of_backups_to_keep: 3
