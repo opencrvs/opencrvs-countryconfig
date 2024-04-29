@@ -82,10 +82,24 @@ jobs:
         run: yarn
 
       - name: Run tests
-        run: |
-          export CYPRESS_COUNTRYCONFIG_URL=https://countryconfig.${{ vars.DOMAIN }}/
-          export CYPRESS_GATEWAY_URL=https://gateway.${{ vars.DOMAIN }}/
-          export CYPRESS_LOGIN_URL=https://login.${{ vars.DOMAIN }}/
-          export CYPRESS_CLIENT_URL=https://register.${{ vars.DOMAIN }}/
-          export CYPRESS_AUTH_URL=https://auth.${{ vars.DOMAIN }}/
-          npx cypress run
+        uses: cypress-io/github-action@v6.6.1
+        env:
+          CYPRESS_COUNTRYCONFIG_URL: 'https://countryconfig.${{ vars.DOMAIN }}/'
+          CYPRESS_GATEWAY_URL: 'https://gateway.${{ vars.DOMAIN }}/'
+          CYPRESS_LOGIN_URL: 'https://login.${{ vars.DOMAIN }}/'
+          CYPRESS_CLIENT_URL: 'https://register.${{ vars.DOMAIN }}/'
+          CYPRESS_AUTH_URL: 'https://auth.${{ vars.DOMAIN }}/'
+        with:
+          record: true
+
+      - name: Archive Cypress screenshots
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots/
+
+      - name: Archive Cypress videos
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: cypress/videos/
