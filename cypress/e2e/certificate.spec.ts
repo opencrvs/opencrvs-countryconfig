@@ -14,18 +14,6 @@
 context('Certificate Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
-
-    cy.intercept(/blob:/, (req) => {
-      const pdfName = req.url.split('/')?.at(-1)
-      console.log('Downloading pdf instead of opening in browser', {
-        url: req.url,
-        pdfName
-      })
-
-      req.continue((res) => {
-        res.headers['Content-Disposition'] = `attachment; filename=${pdfName};`
-      })
-    })
   })
 
   it('Prints minimum input declaration showing the pdf form', () => {
@@ -50,6 +38,16 @@ context('Certificate Integration Test', () => {
     cy.get('.react-pdf__message react-pdf__message--no-data').should(
       'not.exist'
     )
+
+    cy.window().then((win) => {
+      cy.stub(win, 'open')
+        .as('open')
+        .returns({
+          location: {
+            href: ''
+          }
+        })
+    })
 
     cy.get('#print-certificate').click()
     cy.waitForOutboxToClear()
