@@ -15,7 +15,7 @@ context('Certificate Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
 
-    cy.intercept(/.*\.pdf$/, (req) => {
+    cy.intercept(/blob:/, (req) => {
       const pdfName = req.url.split('/')?.at(-1)
       console.log('Downloading pdf instead of opening in browser', {
         url: req.url,
