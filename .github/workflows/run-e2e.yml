@@ -92,15 +92,3 @@ jobs:
           CYPRESS_AUTH_URL: 'https://auth.${{ vars.DOMAIN }}/'
         with:
           record: true
-
-      - name: Archive Cypress screenshots
-        uses: actions/upload-artifact@v2
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots/
-
-      - name: Archive Cypress videos
-        uses: actions/upload-artifact@v2
-        with:
-          name: cypress-videos
-          path: cypress/videos/
