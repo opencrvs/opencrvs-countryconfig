@@ -14,6 +14,18 @@
 context('Certificate Integration Test', () => {
   beforeEach(() => {
     indexedDB.deleteDatabase('OpenCRVS')
+
+    cy.intercept(/.*\.pdf$/, (req) => {
+      const pdfName = req.url.split('/')?.at(-1)
+      console.log('Downloading pdf instead of opening in browser', {
+        url: req.url,
+        pdfName
+      })
+
+      req.continue((res) => {
+        res.headers['Content-Disposition'] = `attachment; filename=${pdfName};`
+      })
+    })
   })
 
   it('Prints minimum input declaration showing the pdf form', () => {
