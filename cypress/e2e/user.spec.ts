@@ -118,7 +118,13 @@ context('User Integration Test', () => {
   })
 
   it('should reset password successfully', () => {
-    cy.visit(Cypress.env('CLIENT_URL'))
+    cy.intercept('GET', Cypress.env('COUNTRYCONFIG_URL') + 'content/login').as(
+      'loginPage'
+    )
+    cy.visit(Cypress.env('LOGIN_URL'))
+
+    cy.wait('@loginPage')
+
     cy.get('#login-forgot-password').click()
 
     // Forgotten item form appears
@@ -128,6 +134,7 @@ context('User Integration Test', () => {
 
     // Phone number verification form appears
     cy.get('#phone-or-email-verification-form').should('be.visible')
+
     cy.get('#email-address-input').type(email)
     cy.get('#continue').click()
 
