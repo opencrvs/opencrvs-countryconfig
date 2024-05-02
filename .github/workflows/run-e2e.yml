@@ -36,7 +36,7 @@ jobs:
       - name: Get latest commit SHA
         if: github.event_name == 'push'
         id: get_latest_commit
-        run: echo "::set-output name=commit_sha::$(git rev-parse HEAD)"
+        run: echo "::set-output name=commit_sha::$(git rev-parse HEAD | cut -c 1-7)"
 
   get-country-config-commit:
     runs-on: ubuntu-latest
