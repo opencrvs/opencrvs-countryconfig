@@ -39,6 +39,16 @@ context('Certificate Integration Test', () => {
       'not.exist'
     )
 
+    cy.window().then((win) => {
+      cy.stub(win, 'open')
+        .as('open')
+        .returns({
+          location: {
+            href: ''
+          }
+        })
+    })
+
     cy.get('#print-certificate').click()
     cy.waitForOutboxToClear()
 
