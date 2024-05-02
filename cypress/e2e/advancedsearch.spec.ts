@@ -242,9 +242,8 @@ context('Advanced Search Integration Test', () => {
       eventLocationLevel1,
       eventLocationLevel2
     })
-
-    cy.login('registrar')
-    cy.createPin()
+    cy.registerDeclaration()
+    cy.waitForOutboxToClear()
     //OPEN ADVANCED SEARCH
     cy.get('#searchType').click()
     cy.get('#advanced-search').click()
