@@ -1,5 +1,5 @@
 name: Seed data
-run-name: Seed data to ${{ github.event.inputs.environment }} core=${{ github.event.inputs.core-image-tag }}
+run-name: Seed data to ${{ inputs.environment }} core=${{ inputs.core-image-tag }}
 on:
   workflow_call:
     inputs:
@@ -25,7 +25,7 @@ on:
         description: Core DockerHub image tag
 jobs:
   seed-data:
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-20.04
     outputs:
       outcome: ${{ steps.seed.outcome }}
@@ -39,10 +39,10 @@ jobs:
           path: './opencrvs-core'
 
       - name: Set CORE_VERSION from inputs
-        if: ${{ github.event.inputs.core-image-tag }}
+        if: ${{ inputs.core-image-tag }}
         run: |
           cd opencrvs-core
-          git checkout ${{ github.event.inputs.core-image-tag }}
+          git checkout ${{ inputs.core-image-tag }}
 
       - name: Install dependencies
         working-directory: ./opencrvs-core
