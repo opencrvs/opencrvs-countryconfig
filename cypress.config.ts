@@ -9,8 +9,8 @@ export default defineConfig({
   defaultCommandTimeout: 60000,
   videoCompression: 0,
   retries: {
-    runMode: 5,
-    openMode: 2,
+    runMode: 1,
+    openMode: 2
   },
   e2e: {
     // We've imported your old cypress plugins here.
@@ -18,6 +18,6 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.js')(on, config)
     },
-    specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
-  },
+    specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}'
+  }
 })
