@@ -582,6 +582,7 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
+      - GATEWAY_URL=https://gateway.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - NOTIFICATION_TRANSPORT=${NOTIFICATION_TRANSPORT}
       - ALERT_EMAIL=${ALERT_EMAIL:-""}
