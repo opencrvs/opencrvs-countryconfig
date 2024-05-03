@@ -10,6 +10,7 @@
  */
 export const TEST_SOURCE = `${process.cwd()}/src/tests/`
 export const DOMAIN = process.env.DOMAIN || '*'
+export const GATEWAY_URL = process.env.GATEWAY_URL || 'http://localhost:7070'
 export const LOGIN_URL = process.env.LOGIN_URL || 'http://localhost:3020/'
 export const CLIENT_APP_URL =
   process.env.CLIENT_APP_URL || 'http://localhost:3000/'
