@@ -23,6 +23,11 @@ on:
         description: Your Country Config DockerHub image tag
         required: true
         default: 'v1.4.1'
+
+concurrency:
+  group: ci-build
+  cancel-in-progress: false
+
 jobs:
   get-core-commit:
     runs-on: ubuntu-latest
@@ -30,13 +35,13 @@ jobs:
       latest_commit_sha: ${{ steps.get_latest_commit.outputs.commit_sha }}
     steps:
       - name: Checkout opencrvs-core repository
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
         uses: actions/checkout@v3
         with:
           repository: 'opencrvs/opencrvs-core'
           ref: 'develop'
       - name: Get latest commit SHA
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
         id: get_latest_commit
         run: echo "::set-output name=commit_sha::$(git rev-parse HEAD | cut -c 1-7)"
 
@@ -48,11 +53,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
       - name: Get short commit hash
         id: set_short_sha
         run: echo "::set-output name=short_sha::${GITHUB_SHA:0:7}"
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
 
   deploy:
     needs: [get-country-config-commit, get-core-commit]
