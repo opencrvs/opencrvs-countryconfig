@@ -44,7 +44,7 @@ on:
 jobs:
   provision:
     environment: ${{ github.event.inputs.environment }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
