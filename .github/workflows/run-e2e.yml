@@ -1,6 +1,8 @@
 name: E2E
 run-name: Deploy to ${{ github.event.inputs.environment }} and E2E
 on:
+  repository_dispatch:
+    types: [run_e2e]
   push:
     branches:
       - develop
