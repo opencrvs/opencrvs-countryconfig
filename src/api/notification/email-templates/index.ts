@@ -119,7 +119,7 @@ type RejectionDeclarationVariables = DeclarationCommonVariables & {
   name: string
 }
 
-type AllUserNotificationVariables = {
+export type AllUserNotificationVariables = {
   subject: string
   body: string
 }
@@ -262,3 +262,4 @@ export type TemplateVariables =
   | InReviewDeclarationVariables
   | RegistrationDeclarationVariables
   | RejectionDeclarationVariables
+  | AllUserNotificationVariables
