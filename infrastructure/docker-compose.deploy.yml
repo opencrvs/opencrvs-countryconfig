@@ -582,7 +582,9 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
-      - GATEWAY_URL=https://gateway.{{hostname}}
+      # This needs to be the internal swarm url
+      # as containers cannot connect to the web
+      - GATEWAY_URL=http://gateway:7070
       - CLIENT_APP_URL=https://register.{{hostname}}
       - NOTIFICATION_TRANSPORT=${NOTIFICATION_TRANSPORT}
       - ALERT_EMAIL=${ALERT_EMAIL:-""}
