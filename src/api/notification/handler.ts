@@ -16,6 +16,7 @@ import { COUNTRY_LOGO_URL, LOGIN_URL, SENDER_EMAIL_ADDRESS } from './constant'
 import { sendEmail } from './email-service'
 import { SMSTemplateType, sendSMS } from './sms-service'
 import {
+  AllUserNotificationVariables,
   EmailTemplateType,
   TemplateVariables,
   getTemplate,
@@ -105,7 +106,10 @@ export async function notificationHandler(
     logger.info(`Notification method is email and recipient ${recipient.email}`)
 
     const template = getTemplate(templateName.email)
-    const emailSubject = template.subject
+    const emailSubject =
+      template.type === 'allUserNotification'
+        ? (variables as AllUserNotificationVariables).subject
+        : template.subject
 
     const emailBody = renderTemplate(template, {
       ...variables,
