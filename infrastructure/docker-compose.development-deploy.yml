@@ -46,6 +46,7 @@ services:
       - COUNTRY=FAR
       - QA_ENV=true
       - NODE_ENV=production
+      - DISABLE_RATE_LIMIT=true
 
   workflow:
     environment:
