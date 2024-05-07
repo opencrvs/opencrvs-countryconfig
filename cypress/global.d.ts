@@ -86,6 +86,10 @@ declare namespace Cypress {
     enterDeathMaximumInput: (options?: DeclarationOptions) => void
     enterDeathMinimumInput: (options?: DeclarationOptions) => void
     someoneElseJourney: () => void
+    getReduxStore: () => Cypress.Chainable<{
+      getState: () => any
+      dispatch: (action: any) => void
+    }>
   }
 }
 /* eslint-enable no-unused-vars */

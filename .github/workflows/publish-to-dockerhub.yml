@@ -6,6 +6,7 @@ on:
       - master
       - develop
       - main
+      - e2e/*
   workflow_dispatch:
     inputs:
       branch_name:

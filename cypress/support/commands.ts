@@ -813,3 +813,22 @@ Cypress.Commands.add('someoneElseJourney', () => {
   // DOCUMENTS
   goToNextFormSection()
 })
+
+Cypress.Commands.add('getReduxStore', () => {
+  return cy.window().then((win) => {
+    const container = Object.entries(win.document.getElementById('root')).find(
+      ([x, y]) => x.includes('reactContainer')
+    )[1]
+
+    if (!container) {
+      throw new Error('React container not found')
+    }
+
+    const store = container.memoizedState?.element?.props?.store
+    if (!store) {
+      throw new Error('Redux store not found')
+    }
+
+    return store
+  })
+})

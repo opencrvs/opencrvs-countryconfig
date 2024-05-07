@@ -1,4 +1,4 @@
-name: E2E
+name: Deploy & run E2E
 run-name: Deploy to ${{ github.event.inputs.environment }} and E2E
 on:
   repository_dispatch:
@@ -30,6 +30,7 @@ concurrency:
 
 jobs:
   get-core-commit:
+    name: Resolve latest core tag
     runs-on: ubuntu-latest
     outputs:
       latest_commit_sha: ${{ steps.get_latest_commit.outputs.commit_sha }}
@@ -46,6 +47,7 @@ jobs:
         run: echo "::set-output name=commit_sha::$(git rev-parse HEAD | cut -c 1-7)"
 
   get-country-config-commit:
+    name: Resolve latest Farajaland tag
     runs-on: ubuntu-latest
     needs: get-core-commit
     outputs:
@@ -69,33 +71,63 @@ jobs:
       reset: 'true'
     secrets: inherit
 
-  test:
-    needs: deploy
-    runs-on: ubuntu-20.04
-    environment: ${{ github.event.inputs.environment || 'development' }}
+  discover-tests:
+    name: Discover test directories
+    runs-on: ubuntu-22.04
+    outputs:
+      test_matrix: ${{ steps.list-tests.outputs.test_matrix }}
     steps:
-      - name: Checking out git repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
+      - name: Check out code
+        uses: actions/checkout@v4
 
-      - name: Use Node.js 18.19
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18.19'
-          cache: 'npm'
+      - name: List Test Directories
+        id: list-tests
+        run: |
+          test_dirs=$(find ./e2e/testcases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | jq -R -s -c 'split("\n")[:-1]')
+          echo "Test directories: $test_dirs"
+          echo "test_matrix=$test_dirs" >> $GITHUB_OUTPUT
+          echo "test_matrix=$test_dirs"
 
-      - name: Runs dependency installation
+  test:
+    needs: [deploy, discover-tests]
+    runs-on: ubuntu-22.04
+    environment: ${{ github.event.inputs.environment || 'development' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        test_dir: ${{ fromJson(needs.discover-tests.outputs.test_matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Check for Spec Files
+        id: check-specs
+        run: |
+          if ls ./e2e/testcases/${{ matrix.test_dir }}/*.spec.ts > /dev/null 2>&1; then
+            echo "::set-output name=has_spec_files::true"
+          else
+            echo "::set-output name=has_spec_files::false"
+          fi
+
+      - name: Install Dependencies
+        if: steps.check-specs.outputs.has_spec_files == 'true'
         run: yarn
 
-      - name: Run tests
-        uses: cypress-io/github-action@v6.6.1
+      - name: Install Playwright Browsers
+        if: steps.check-specs.outputs.has_spec_files == 'true'
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright Tests
+        if: steps.check-specs.outputs.has_spec_files == 'true'
+        run: npx playwright test ./e2e/testcases/${{ matrix.test_dir }}
         env:
-          CYPRESS_RECORD_KEY: '${{ secrets.CYPRESS_RECORD_KEY }}'
-          CYPRESS_COUNTRYCONFIG_URL: 'https://countryconfig.${{ vars.DOMAIN }}/'
-          CYPRESS_GATEWAY_URL: 'https://gateway.${{ vars.DOMAIN }}/'
-          CYPRESS_LOGIN_URL: 'https://login.${{ vars.DOMAIN }}/'
-          CYPRESS_CLIENT_URL: 'https://register.${{ vars.DOMAIN }}/'
-          CYPRESS_AUTH_URL: 'https://auth.${{ vars.DOMAIN }}/'
+          DOMAIN: '${{ vars.DOMAIN }}'
+
+      - uses: actions/upload-artifact@v4
+        if: steps.check-specs.outputs.has_spec_files == 'true'
         with:
-          record: true
+          name: playwright-report-${{ matrix.test_dir }}
+          path: playwright-report/
+          retention-days: 30
