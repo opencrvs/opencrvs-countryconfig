@@ -1,5 +1,5 @@
 name: Deploy & run E2E
-run-name: Deploy to ${{ github.event.inputs.environment }} and E2E
+run-name: Deploy & E2E, triggered by ${{ github.event.client_payload.actor || github.actor }} to ${{ github.event.inputs.environment }}
 on:
   repository_dispatch:
     types: [run_e2e]
