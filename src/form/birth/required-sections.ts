@@ -49,13 +49,6 @@ export const documentsSection = {
       id: 'documents-view-group',
       fields: [
         {
-          name: 'paragraph',
-          type: 'PARAGRAPH',
-          label: formMessageDescriptors.documentsParagraph,
-          initialValue: '',
-          validator: []
-        },
-        {
           name: 'uploadDocForChildDOB',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.proofOfBirth,

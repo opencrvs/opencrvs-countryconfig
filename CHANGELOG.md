@@ -1,6 +1,10 @@
 # Changelog
+## 1.5.0 (TBD)
 
-## [1.3.4](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.3.3...v1.3.4)
+- Remove dependency on openhim. The openhim db is kept for backwards compatibility reasons and will be removed in v1.6
+- Change condition of Number of previous births 
+
+## [1.3.4](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.3.4)
 
 ## Breaking changes
 
@@ -10,9 +14,9 @@
 
 - Fix typo in certificate handlebar names
 
-See [Releases](https://github.com/opencrvs/opencrvs-countryconfig/releases) for release notes of older releases.
+See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
 
-## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
+## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
 - Improved logging for emails being sent
 - Updated default Metabase init file so that it's compatible with the current Metabase version
@@ -66,13 +70,13 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 - The `infrastructure` directory and related pipelines will be moved to a new repository.
 - Both the new infrastructure repository and the OpenCRVS country resource package repositories will start following their own release cycles, mostly independent from the core's release cycle. From this release forward, both packages are released as "OpenCRVS minor compatible" releases, meaning that the OpenCRVS countryconfig 1.3.0-<incrementing release number> is compatible with OpenCRVS 1.3.0, 1.3.1, 1.3.2, etc. This allows for the release of new hotfix versions of the core without having to publish a new version of the infrastructure or countryconfig.
 
-### Bug fixes
+See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
 
-## [1.3.3](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.3.2...v1.3.3)
+## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
 
-## Breaking changes
+### Breaking changes
 
-## New features
+### New features
 
 - #### Greater customizability of location data in certificates
 
@@ -129,23 +133,9 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 
   ##### We will be deprecating the counterpart of the above mentioned handlebars that contains only the label of the specified location in a future version so we highly recommend that implementers update their certificates to use these new ones.
 
-- #### "Spouse" section in Farajaland death form
+### Bug fixes
 
-  Spouse section is an optional section in death form. Going forward it will be included in Farajaland example configuration.
-
-- #### Type of ID dropdown
-  Farajaland forms will now include a dropdown to select the type of ID an individual is providing e.g. National ID, Driving License etc. instead of being restricted to only national ID number.
-- #### Number of dependents of deceased field
-  As an example of custom field, the deceased section in death form will now include the **numberOfDependants** field.
-- #### Reason for late registration field
-  The birth & death forms will include another custom field, **reasonForLateRegistration**, which makes use of "LATE_REGISTRATION_TARGET" configuration option in it's visibility conditional.
-
-## Bug fixes
-
-- Updated translations for form introduction page and sending for approval to reflect the default notification method being email.
-- # Remove hard-coded conditionals from "occupation" field to make it usable in the deceased form
-
-## [1.3.3](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.3.2...v1.3.3)
+## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
 
 ## Breaking changes
 

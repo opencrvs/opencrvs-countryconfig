@@ -6,6 +6,9 @@ on:
       environment:
         required: true
         type: string
+    outputs:
+      outcome:
+        value: ${{ jobs.reset-data.outputs.outcome }}
   workflow_dispatch:
     inputs:
       environment:
@@ -20,14 +23,16 @@ on:
 jobs:
   reset-data:
     name: 'Reset data'
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-22.04
     timeout-minutes: 60
+    outputs:
+      outcome: ${{ steps.reset.outcome }}
     steps:
       - name: Clone country config resource package
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 1
           path: './${{ github.event.repository.name }}'
 
       - name: Read known hosts
@@ -45,6 +50,7 @@ jobs:
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
       - name: Reset data
+        id: reset
         env:
           HOST: ${{ vars.DOMAIN }}
           ENV: ${{ vars.ENVIRONMENT_TYPE }}

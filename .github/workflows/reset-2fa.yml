@@ -28,7 +28,7 @@ jobs:
       - name: Clone country config resource package
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 1
           path: './${{ github.event.repository.name }}'
 
       - name: Read known hosts
@@ -47,4 +47,4 @@ jobs:
 
       - name: Remove 2FA
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} ${{ vars.SSH_ARGS }} "rm /home/${{ github.event.inputs.user }}/.google_authenticator"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT || 22 }} ${{ vars.SSH_ARGS }} "sudo rm /home/${{ github.event.inputs.user }}/.google_authenticator"

@@ -348,6 +348,7 @@ export interface INumberFormField extends IFormFieldBase {
   max?: number
   inputFieldWidth?: string
   inputWidth?: number
+  maxLength?: number
 }
 export interface IBigNumberFormField extends IFormFieldBase {
   type: typeof BIG_NUMBER
@@ -528,7 +529,6 @@ export interface IDynamicOptions {
   jurisdictionType?: string
   resource?: string
   options?: { [key: string]: ISelectOption[] }
-  initialValue?: string
 }
 
 export type IFormFieldTemplateMapOperation =

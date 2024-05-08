@@ -17,11 +17,11 @@ export const certificateHandlebars = {
   certificateDate: 'certificateDate',
   registrar: 'registrar',
   registrationAgent: 'registrationAgent',
-  registrarName: 'registrarName', // @deprecated use registrar.name instead
-  role: 'role', // @deprecated use registrar.role instead
-  registrarSignature: 'registrarSignature', // @deprecated use registrar.signature instead
+  registrarName: 'registrarName',
+  role: 'role',
+  registrarSignature: 'registrarSignature',
   registrationDate: 'registrationDate',
-  registrationLocation: 'registrationLocation', // @deprecated use registrar.office/state/district instead
+  registrationLocation: 'registrationLocation',
   contactEmail: 'contactEmail',
   contactPhoneNumber: 'contactPhoneNumber',
   birthConfigurableIdentifier1: 'birthConfigurableIdentifier1',

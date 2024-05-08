@@ -231,3 +231,25 @@ else
   })
 EOF
 fi
+
+NOTIFICATION_USER=$(echo $(checkIfUserExists "notification"))
+if [[ $NOTIFICATION_USER != "FOUND" ]]; then
+  echo "notification user not found"
+  mongo $(mongo_credentials) --host $HOST <<EOF
+  use notification
+  db.createUser({
+    user: 'notification',
+    pwd: '$NOTIFICATION_MONGODB_PASSWORD',
+    roles: [{ role: 'readWrite', db: 'notification' }]
+  })
+EOF
+else
+  echo "notification user exists"
+  mongo $(mongo_credentials) --host $HOST <<EOF
+  use notification
+  db.updateUser('notification', {
+    pwd: '$NOTIFICATION_MONGODB_PASSWORD',
+    roles: [{ role: 'readWrite', db: 'notification' }]
+  })
+EOF
+fi
