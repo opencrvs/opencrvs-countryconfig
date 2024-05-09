@@ -18,7 +18,7 @@ build
 # But, keep the .gitignore so the folder is created
 !.secrets/.gitignore
 .idea
-data
+/data
 
 .vscode/launch.json
 .history

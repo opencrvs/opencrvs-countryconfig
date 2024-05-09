@@ -19,6 +19,7 @@
     "dev": "yarn start",
     "e2e": "yarn playwright test --ui",
     "e2e:cypress": "CYPRESS_COUNTRYCONFIG_URL=https://countryconfig.farajaland-dev.opencrvs.org/ CYPRESS_GATEWAY_URL=https://gateway.farajaland-dev.opencrvs.org/ CYPRESS_LOGIN_URL=https://login.farajaland-dev.opencrvs.org/ CYPRESS_CLIENT_URL=https://register.farajaland-dev.opencrvs.org/ CYPRESS_AUTH_URL=https://auth.farajaland-dev.opencrvs.org/ cypress open",
+    "e2e:generate-types": "graphql-codegen --config e2e/codegen.yml && yarn prettier --write e2e/gateway.ts",
     "test:watch": "jest --watch",
     "open:cov": "yarn test && opener coverage/index.html",
     "precommit": "lint-staged",

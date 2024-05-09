@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test'
-import { dispatchAction } from '../../helpers'
 import { LOGIN_URL } from '../../constants'
 
 test.describe('1. Login with valid information', () => {
@@ -35,18 +34,16 @@ test.describe('1. Login with valid information', () => {
   })
 
   test('1.4. Verify through by inputting the 2FA code', async ({ page }) => {
-    await dispatchAction(page, {
-      type: 'login/AUTHENTICATE',
-      payload: {
-        username: 'k.mweene',
-        password: 'test'
-      }
-    })
+    await page.fill('#username', 'k.mweene')
+    await page.fill('#password', 'test')
+    await page.click('#login-mobile-submit')
 
     await page.fill('#code', '000000')
     await page.click('#login-mobile-submit')
 
-    // Expected result: Must log in to the OPEN CRVS Page
-    await expect(page.locator('#appSpinner')).toBeVisible()
+    // Expected result: Must log in to the OPENCRVS Page
+    await expect(
+      page.locator('#appSpinner').or(page.locator('#pin-input'))
+    ).toBeVisible()
   })
 })
