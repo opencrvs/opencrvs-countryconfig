@@ -9,9 +9,8 @@
 all:
   vars:
     users:
-      # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+      - name: pyry
         ssh_keys:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBcrSLLdrkLrhqNQi7Uo/ZIWXb1y4kc0vGb16e2s0Jq pyry@opencrvs.org
         state: present
@@ -39,9 +38,9 @@ all:
     enable_backups: false
 docker-manager-first:
   hosts:
-    dev: # @todo set this to be the hostname of your target server
-      ansible_host: '44.44.44.44' # @todo set this to be the IP address of your server
-      data_label: data1 # for manager machines, this should always be "data1"
+    farajaland-dev:
+      ansible_host: '104.248.36.17'
+      data_label: data1
 
-# Development servers are not configured to use workers.
+# QA and staging servers are not configured to use workers.
 docker-workers: {}

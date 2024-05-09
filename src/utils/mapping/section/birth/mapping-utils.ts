@@ -27,6 +27,14 @@ export function getSectionMapping(mappingId: string): ISectionMapping {
             operation: 'QRCodeTransformer'
           },
           {
+            fieldName: certificateHandlebars.mosipAid,
+            operation: 'mosipAidTransformer'
+          },
+          {
+            fieldName: certificateHandlebars.mosipAIDLabel,
+            operation: 'mosipAidLabelTransformer'
+          },
+          {
             fieldName: certificateHandlebars.certificateDate,
             operation: 'certificateDateTransformer',
             parameters: ['en', 'dd MMMM yyyy']

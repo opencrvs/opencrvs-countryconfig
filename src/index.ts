@@ -30,6 +30,7 @@ import {
   AUTH_URL,
   DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
+import { statisticsHandler } from '@countryconfig/api/data-generator/handler'
 import {
   contentHandler,
   countryLogoHandler
@@ -359,18 +360,6 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/handlebars.js',
-    handler: handlebarsHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description:
-        'Serves custom handlebar helper functions as JS to be used in certificates'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/content/{application}',
     handler: contentHandler,
     options: {
@@ -446,6 +435,17 @@ export async function createServer() {
   })
 
   server.route({
+    method: 'GET',
+    path: '/statistics',
+    handler: statisticsHandler,
+    options: {
+      tags: ['api'],
+      description:
+        'Returns population and crude birth rate statistics for each location'
+    }
+  })
+
+  server.route({
     method: 'POST',
     path: '/notification',
     handler: notificationHandler,
@@ -474,8 +474,7 @@ export async function createServer() {
       validate: {
         payload: emailSchema
       },
-      description:
-        'Handles sending either SMS or email using a predefined template file'
+      description: 'Handles sending SMS'
     }
   })
 

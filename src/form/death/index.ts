@@ -255,7 +255,7 @@ export const deathForm = {
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(hideIfInformantSpouse),
               certificateHandlebars.informantFirstName
-            ), // Required field.
+            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
               informantFamilyNameConditionals.concat(hideIfInformantSpouse),

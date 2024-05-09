@@ -40,10 +40,15 @@ export const certificateHandlebars = {
   districtPrimaryDeceased: 'districtPrimaryDeceased',
   cityPrimaryDeceased: 'cityPrimaryDeceased',
   ageOfDeceasedInYears: 'ageOfDeceasedInYears',
-  addressLine3PrimaryDeceased: 'addressLine3PrimaryDeceased',
-  addressLine2PrimaryDeceased: 'addressLine2PrimaryDeceased',
-  addressLine1PrimaryDeceased: 'addressLine1PrimaryDeceased',
+  addressLine3UrbanOptionPrimaryDeceased:
+    'addressLine3UrbanOptionPrimaryDeceased',
+  addressLine2UrbanOptionPrimaryDeceased:
+    'addressLine2UrbanOptionPrimaryDeceased',
+  addressLine1UrbanOptionPrimaryDeceased:
+    'addressLine1UrbanOptionPrimaryDeceased',
   postalCodePrimaryDeceased: 'postalCodePrimaryDeceased',
+  addressLine1RuralOptionPrimaryDeceased:
+    'addressLine1RuralOptionPrimaryDeceased',
   internationalStatePrimaryDeceased: 'internationalStatePrimaryDeceased',
   internationalDistrictPrimaryDeceased: 'internationalDistrictPrimaryDeceased',
   internationalCityPrimaryDeceased: 'internationalCityPrimaryDeceased',
@@ -70,10 +75,11 @@ export const certificateHandlebars = {
   districtPlaceofdeath: 'districtPlaceofdeath', // @deprecated use districtPlaceofdeathId instead
   districtPlaceofdeathId: 'districtPlaceofdeathId',
   cityPlaceofdeath: 'cityPlaceofdeath',
-  addressLine3Placeofdeath: 'addressLine3Placeofdeath',
-  addressLine2Placeofdeath: 'addressLine2Placeofdeath',
-  addressLine1Placeofdeath: 'addressLine1Placeofdeath',
+  addressLine3UrbanOptionPlaceofdeath: 'addressLine3UrbanOptionPlaceofdeath',
+  addressLine2UrbanOptionPlaceofdeath: 'addressLine2UrbanOptionPlaceofdeath',
+  addressLine1UrbanOptionPlaceofdeath: 'addressLine1UrbanOptionPlaceofdeath',
   postalCodePlaceofdeath: 'postalCodePlaceofdeath',
+  addressLine1RuralOptionPlaceofdeath: 'addressLine1RuralOptionPlaceofdeath',
   internationalStatePlaceofdeath: 'internationalStatePlaceofdeath',
   internationalDistrictPlaceofdeath: 'internationalDistrictPlaceofdeath',
   internationalCityPlaceofdeath: 'internationalCityPlaceofdeath',
@@ -97,10 +103,15 @@ export const certificateHandlebars = {
   statePrimaryInformant: 'statePrimaryInformant',
   districtPrimaryInformant: 'districtPrimaryInformant',
   cityPrimaryInformant: 'cityPrimaryInformant',
-  addressLine3PrimaryInformant: 'addressLine3PrimaryInformant',
-  addressLine2PrimaryInformant: 'addressLine2PrimaryInformant',
-  addressLine1PrimaryInformant: 'addressLine1PrimaryInformant',
+  addressLine3UrbanOptionPrimaryInformant:
+    'addressLine3UrbanOptionPrimaryInformant',
+  addressLine2UrbanOptionPrimaryInformant:
+    'addressLine2UrbanOptionPrimaryInformant',
+  addressLine1UrbanOptionPrimaryInformant:
+    'addressLine1UrbanOptionPrimaryInformant',
   postalCodePrimaryInformant: 'postalCodePrimaryInformant',
+  addressLine1RuralOptionPrimaryInformant:
+    'addressLine1RuralOptionPrimaryInformant',
   internationalStatePrimaryInformant: 'internationalStatePrimaryInformant',
   internationalDistrictPrimaryInformant:
     'internationalDistrictPrimaryInformant',
