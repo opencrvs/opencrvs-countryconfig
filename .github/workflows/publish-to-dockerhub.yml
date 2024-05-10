@@ -15,7 +15,7 @@ on:
         required: true
 jobs:
   push:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
         if: github.event_name == 'workflow_dispatch'

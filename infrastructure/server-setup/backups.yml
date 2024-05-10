@@ -103,22 +103,6 @@
       tags:
         - backups
 
-    - name: Check if authorized_keys already exists
-      stat:
-        path: '{{ external_backup_server_user_home }}/.ssh/authorized_keys'
-      register: file_check
-      tags:
-        - backups
-
-    - name: Ensure .ssh directory exists for external backup server user
-      file:
-        path: '{{ external_backup_server_user_home }}/.ssh'
-        state: directory
-        owner: '{{ external_backup_server_user }}'
-        mode: '0700'
-      tags:
-        - backups
-
     - name: Ensure backup application servers can login to backup server
       blockinfile:
         path: '{{ external_backup_server_user_home }}/.ssh/authorized_keys'
