@@ -101,7 +101,7 @@ const registrations = ({ lastUpdatedAt }: { lastUpdatedAt: string }) => ({
     },
     {
       $addFields: {
-        allTasks: { $concatArrays: ['$task', '$task_history'] }
+        allTasks: { $concatArrays: ['$task_history', '$task'] }
       }
     },
     {
