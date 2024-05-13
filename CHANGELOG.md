@@ -1,4 +1,5 @@
 # Changelog
+
 ## 1.5.0 (TBD)
 
 - Change auth URLs to access them via gateway
