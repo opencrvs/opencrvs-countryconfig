@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.5.0]
+
 ## [1.3.4](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.3.3...v1.3.4)
 
 ## Breaking changes
