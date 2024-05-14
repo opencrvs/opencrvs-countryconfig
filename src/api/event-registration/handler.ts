@@ -35,7 +35,7 @@ export async function eventRegistrationHandler(
     const eventRegistrationIdentifiersResponse =
       await createUniqueRegistrationNumberFromBundle(bundle)
 
-    fetch(CONFIRM_REGISTRATION_URL, {
+    await fetch(CONFIRM_REGISTRATION_URL, {
       method: 'POST',
       body: JSON.stringify(eventRegistrationIdentifiersResponse),
       headers: request.headers

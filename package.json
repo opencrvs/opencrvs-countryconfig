@@ -2,6 +2,13 @@
   "name": "@opencrvs/countryconfig",
   "version": "1.4.1",
   "description": "OpenCRVS country configuration for reference data",
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "engines": {
+    "node": "18.x.x"
+  },
   "license": "MPL-2.0",
   "husky": {
     "hooks": {
@@ -13,7 +20,8 @@
     "precommit": "lint-staged",
     "test": "echo 'no tests, yet'",
     "test:compilation": "tsc --noEmit",
-    "start": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "lint": "eslint -c .eslintrc.js",
+    "start": "cross-env NODE_ENV=development NODE_OPTIONS=--dns-result-order=ipv4first nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
     "start:prod": "ts-node --transpile-only -r tsconfig-paths/register src/index.ts",
     "deploy": "bash infrastructure/deployment/deploy.sh",
     "restore-snapshot": "bash infrastructure/backups/restore-snapshot.sh",
@@ -81,6 +89,8 @@
     "dotenv": "^6.1.0",
     "esbuild": "^0.18.9",
     "google-libphonenumber": "^3.2.32",
+    "graphql": "^16.3.0",
+    "graphql-tag": "^2.12.6",
     "handlebars": "^4.7.7",
     "hapi-auth-jwt2": "10.4.0",
     "hapi-pino": "^6.3.0",

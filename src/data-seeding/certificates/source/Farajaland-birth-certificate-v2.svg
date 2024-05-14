@@ -1,8 +1,9 @@
 <svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="595" height="842" fill="white"/>
+<image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
+{{#ifCond printInAdvance '!==' true}}<image width="140" height="70" xlink:href="{{registrar.signature}}" x="347" y="644"></image>{{/ifCond}}
 <g clip-path="url(#clip0_1157_5003)">
 <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="6" font-weight="bold" letter-spacing="0px"><tspan x="61.9999" y="780.593">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE </tspan><tspan x="61.9999" y="790.593">IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES A LA FALSIFIATION OU &#xc0; LA MODIFICATION D&#39;UN </tspan><tspan x="61.9999" y="800.593">CERTIFICAT ET A L&#39;UTILISATION OU LA POSSESSION D&#39;UN FAUX CERTIFICAT. UN CERTIFICAT N&#39;EST PAS UNE PREUVE D&#39;IDENTITE</tspan></text>
-<rect x="499.47" y="771.29" width="33.95" height="33.95" fill="url(#pattern0)"/>
 </g>
 <path d="M61.9999 762.075H533.42V761.105H61.9999V762.075Z" fill="#ECECEC"/>
 <g clip-path="url(#clip1_1157_5003)">
@@ -39,9 +40,6 @@
         {{/ifCond}}
     </text>
     
-<g clip-path="url(#clip2_1157_5003)">
-<rect x="321.759" y="646.161" width="190" height="66" fill="url(#pattern1)"/>
-</g>
 <path d="M321.76 715.071L512.079                715.969" stroke="#CCCCCC" stroke-width="0.75879" stroke-dasharray="3.04 1.52"/>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" font-weight="bold" letter-spacing="0px"><tspan x="357.751" y="728.084">Registrar / L&#39;Officier de l&#39;&#xc9;tat Civil</tspan></text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" letter-spacing="0px"><tspan x="391.819" y="740.694">{{registrar.name}}</tspan></text>
@@ -131,12 +129,6 @@
 <path d="M62.9698 196.74H532.45" stroke="#038E86" stroke-width="1.94" stroke-linecap="round"/>
 <path d="M62.97 37H533.42" stroke="#DDDDDD" stroke-width="0.97" stroke-linecap="round"/>
 <defs>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_1143_4182" transform="translate(-0.05 -0.0727811) scale(0.00325444)"/>
-</pattern>
-<pattern id="pattern1" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image1_1143_4182" transform="scale(0.000818331 0.00224215)"/>
-</pattern>
 <pattern id="pattern2" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image2_1143_4182" transform="matrix(0.000400862 0 0 0.00053697 -0.0550657 -0.000554468)"/>
 </pattern>
@@ -179,7 +171,5 @@
 <clipPath id="clip12_1157_5003">
 <rect width="222.13" height="30" fill="white" transform="translate(289.95 543.99)"/>
 </clipPath>
-<image id="image0_1143_4182" width="338" height="352" xlink:href="{{qrCode}}"/>
-{{#ifCond printInAdvance '!==' true}}<image id="image1_1143_4182" width="1222" height="446" xlink:href="{{registrar.signature}}"/>{{/ifCond}}
 </defs>
 </svg>
