@@ -111,6 +111,16 @@ jobs:
             echo "::set-output name=has_spec_files::false"
           fi
 
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/yarn/v6
+          key: node-${{ hashFiles('**/yarn.lock', format('{0}/{1}',matrix.package,'package.json')) }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install Dependencies
         if: steps.check-specs.outputs.has_spec_files == 'true'
         run: yarn
