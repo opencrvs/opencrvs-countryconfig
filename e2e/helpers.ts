@@ -44,3 +44,14 @@ async function getToken(username: string, password: string) {
   const verifyBody = await verifyResponse.json()
   return verifyBody.token
 }
+
+export async function ensureLoginPageReady(page: Page) {
+  /*
+   * Wait until config for loading page has been loaded
+   */
+  await page.waitForSelector('#Box img', { state: 'attached' })
+  await page.waitForFunction(() => {
+    const img = document.querySelector<HTMLImageElement>('#Box img')!
+    return img && img.src && img.src.trim() !== ''
+  })
+}

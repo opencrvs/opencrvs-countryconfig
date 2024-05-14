@@ -1,17 +1,11 @@
 import { test, expect } from '@playwright/test'
 import { LOGIN_URL } from '../../constants'
+import { ensureLoginPageReady } from '../../helpers'
 
 test.describe('1. Login with valid information', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(LOGIN_URL)
-    /*
-     * Wait until config for loading page has been loaded
-     */
-    await page.waitForSelector('#Box img', { state: 'attached' })
-    await page.waitForFunction(() => {
-      const img = document.querySelector<HTMLImageElement>('#Box img')!
-      return img && img.src && img.src.trim() !== ''
-    })
+    await ensureLoginPageReady(page)
   })
 
   test('1.1. Navigate to the login URL', async ({ page }) => {
