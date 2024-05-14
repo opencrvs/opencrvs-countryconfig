@@ -1,5 +1,5 @@
 # Changelog
-## 1.5.0 (TBD)
+## [1.5.0]
 
 - Change auth URLs to access them via gateway
 - Add hearth URL to search service
