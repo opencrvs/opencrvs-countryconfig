@@ -97,6 +97,19 @@
       tags:
         - backups
 
+    - name: Ensure backup application servers can login to backup server
+      blockinfile:
+        path: '{{ backup_server_user_home }}/.ssh/authorized_keys'
+        block: |
+          {{ lookup('file', '/tmp/docker-manager-first_id_rsa.pub') }}
+        marker: '# {mark} ANSIBLE MANAGED BLOCK docker-manager-first {{ manager_hostname }}'
+        create: yes
+        mode: 0600
+        owner: '{{ external_backup_server_user }}'
+
+      tags:
+        - backups
+
     - name: 'Create backup directory'
       file:
         path: '{{ backup_server_remote_target_directory }}'
