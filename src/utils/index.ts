@@ -55,13 +55,18 @@ export interface IApplicationConfig {
   COUNTRY: string
   COUNTRY_LOGO: ICountryLogo
   SENTRY: string
-  LOGROCKET: string
   LOGIN_BACKGROUND: ILoginBackground
   USER_NOTIFICATION_DELIVERY_METHOD: string
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: string
 }
 export interface IApplicationConfigResponse {
   config: IApplicationConfig
+}
+
+export function getCompositionId(resBody: fhir.Bundle) {
+  return resBody.entry
+    ?.map((e) => e.resource)
+    .find((res) => res?.resourceType === 'Composition')?.id
 }
 
 export function getTaskResource(
