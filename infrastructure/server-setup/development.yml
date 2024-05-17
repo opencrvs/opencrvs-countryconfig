@@ -35,6 +35,11 @@ all:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINUml9O5ySwPtEMD1yGEYHlf9Z3jro97NWAnM9+ew9gn tahmidrahman.dsi@gmail.com
         state: present
         sudoer: true
+      - name: tareq
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCWQihdKkwxTItN+rwYAX1vBg+8sv59sFsjYoVaO2mzS01rARfh+M+UVqpEv3zFT/3v6Dr5Z5VhzYvvbH8akiGQxURqie9quEi1iBCqcq+LApkMZxNm7yyvexlFsbkKMHsSZyVCzjE2Wt+6fwR1NqkMQgJjZS+b4CB+CUTNP2i6ytUTmck9K5iAOp1Gpm+Xgyvz6ZEJPkAJ16gV7gzNJUt/DSCkCyV8G2BqYLWeR2QxAbKyuf3LzO5i4XZdiZi9o60QAt3A6KGGLazd0UuYdehQDqVwXzwimLeeuZbaPNmwoAy7DeatOdurrWbnL7ytaiPvAbwai6Grt3PhhM41qO+uojnqTdnFdSOEPVIYMR7+mYu9tuwHZcMJIbbvMPD6EvKumD5Ndn5OxiLY/zQF5PuG89pBdTkTzzREvbV1Dkh2hwAIvgavlZl3P64On+4+FAgjrAx5U55khoRAe2FbEvB+EUGwro0bRffiM2NmxkUBraEuT2Xt5K01ZoBU6F4feO0= tareq.aziz@dsinnovators.com
+        state: present
+        sudoer: true
     enable_backups: false
 docker-manager-first:
   hosts:

@@ -53,6 +53,11 @@ all:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGy93egakrVxXHb9LafRQ7T0Cl+p+gCTuymLyofTLK2ncwKhOZ/uV5SuzaKb4lJbBnpmxNdvAxsYXff5srvJfrV0ZZXFQdAAg0mmWuXxrhNfaE52S4s6WVKknTqDE5PhMxzVxzynBnaTdW9Cno7mO+rnS/VybjZIadpOuv5Bek1PztBmrUi4h0Qg1PxXNmFqzyc1dsil1T0nFeu5cH59G5fF1/oSUlC6CYBNoHdQ62IBoydBwMumk/trFoTlxPNK1wXgcUvsr8Sa5A4lN2Rrc6Y22CEGwomtyjHb2kDVbI+7B1Zq+S89yyyvkPFezEsCdK/Ehaj8HzfcsR/bassSn0/Xv3bL20eh7wv7cnut40kFizYifNGfpEqPvSzjfJbB4iG2WSKkW8F9t0/cvd0AdY/3jB0vXhvnRvCqHm1X6JVdGamF3GJeHUMk9JDg3rQdT47BZUtSJer4MGWWcNiALjeWPNLXK9cAvrI/6GbHbPyTzACfR6nhs03Z/eebuvpp0=
         state: present
         sudoer: true
+      - name: tareq
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCWQihdKkwxTItN+rwYAX1vBg+8sv59sFsjYoVaO2mzS01rARfh+M+UVqpEv3zFT/3v6Dr5Z5VhzYvvbH8akiGQxURqie9quEi1iBCqcq+LApkMZxNm7yyvexlFsbkKMHsSZyVCzjE2Wt+6fwR1NqkMQgJjZS+b4CB+CUTNP2i6ytUTmck9K5iAOp1Gpm+Xgyvz6ZEJPkAJ16gV7gzNJUt/DSCkCyV8G2BqYLWeR2QxAbKyuf3LzO5i4XZdiZi9o60QAt3A6KGGLazd0UuYdehQDqVwXzwimLeeuZbaPNmwoAy7DeatOdurrWbnL7ytaiPvAbwai6Grt3PhhM41qO+uojnqTdnFdSOEPVIYMR7+mYu9tuwHZcMJIbbvMPD6EvKumD5Ndn5OxiLY/zQF5PuG89pBdTkTzzREvbV1Dkh2hwAIvgavlZl3P64On+4+FAgjrAx5U55khoRAe2FbEvB+EUGwro0bRffiM2NmxkUBraEuT2Xt5K01ZoBU6F4feO0= tareq.aziz@dsinnovators.com
+        state: present
+        sudoer: true
     # If the machine is repurposed to also be the backup host, we need to add more keys to the authorized_keys file so that
     # when the application servers get provisioned, the provision user of this machine can be used.
     additional_keys_for_provisioning_user:
