@@ -16,6 +16,7 @@
 - Add smtp environment variables in qa compose file
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
+- Remove literal quotes as default value from compose files
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
