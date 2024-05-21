@@ -1373,9 +1373,9 @@ home.header.typeName,Search menu name type,Name,Nom
 home.header.typePhone,Search menu phone no type,Phone no.,N° de téléphone
 home.header.typeRN,Search menu brn drn type,Registration no.,N ° d'enregistrement.
 imageUploadOption.upload.documentType,Show error message if the document type is not selected,Please select the type of document first,Veuillez d'abord sélectionner le type de document
-imageUploadOption.upload.error,Show error messages while uploading,File format not supported. Please upload a .png or .jpg (max 5mb),"Format de fichier non pris en charge. Veuillez joindre un png, jpg (max 5mb)"
-imageUploadOption.upload.imageFormat,Show error message if the selected image type is not supported,File format not supported. Please upload a .png or .jpg (max 5mb),Le format d'image n'est pas supporté. Veuillez joindre un png ou un jpg (max 5mb)
-imageUploadOption.upload.overSized,Error message for Attachment size greater than 5mb.,File is too large. Please upload a file less than 5mb,Le fichier est trop volumineux. Veuillez joindre un fichier de moins de 5mb
+imageUploadOption.upload.error,Show error messages while uploading,File format not supported. Please upload a .png or .jpg (max {maxSize}mb),"Format de fichier non pris en charge. Veuillez joindre un png, jpg (max {maxSize}mb)"
+imageUploadOption.upload.imageFormat,Show error message if the selected image type is not supported,File format not supported. Please upload a .png or .jpg (max {maxSize}mb),Le format d'image n'est pas supporté. Veuillez joindre un png ou un jpg (max {maxSize}mb)
+imageUploadOption.upload.overSized,Error message for Attachment size greater than defined max size.,File is too large. Please upload a file less than {maxSize}mb,Le fichier est trop volumineux. Veuillez joindre un fichier de moins de {maxSize}mb
 informant.name,Informant section name,Informant,Informateur
 informant.title,Informant section title,Informant type,Sélectionner l'informateur
 integrations.activate,Label for activate option,Activate,Activer
