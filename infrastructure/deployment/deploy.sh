@@ -63,7 +63,6 @@ done
 
 
 # Default values
-SSH_PORT=22
 SSH_ARGS=${SSH_ARGS:-""}
 LOG_LOCATION=${LOG_LOCATION:-/var/log}
 
