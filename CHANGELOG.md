@@ -1,9 +1,5 @@
 # Changelog
 
-## 1.6.0 (TBD)
-
-- Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
-
 ## [1.5.0]
 
 - Change auth URLs to access them via gateway
