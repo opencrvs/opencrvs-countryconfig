@@ -1,4 +1,5 @@
 # Changelog
+
 ## [1.5.0]
 
 - Change auth URLs to access them via gateway
@@ -16,6 +17,7 @@
 - Add smtp environment variables in qa compose file
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
+- Remove authentication from dashboard queries route
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
