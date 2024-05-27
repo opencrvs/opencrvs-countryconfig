@@ -10,6 +10,11 @@ fi
 
 DOMAIN=$1
 IP=$(dig +short $DOMAIN)
+
+if [ -z "$IP" ]; then
+  IP=$DOMAIN
+fi
+
 KNOWN_HOSTS_FILE="infrastructure/known-hosts"
 
 # Ensure the known-hosts file exist
@@ -24,8 +29,14 @@ KEYSCAN_RESULT=""
 
 # Attempt to fetch the new SSH public key for the domain
 while [ -z "$KEYSCAN_RESULT" ]; do
-  # Use `|| true` to prevent script exit if ssh-keyscan fails
-  KEYSCAN_RESULT=$(ssh-keyscan "$DOMAIN" "$IP" 2>/dev/null) || true
+
+  if [ "$DOMAIN" == "$IP" ]; then
+    # Use `|| true` to prevent script exit if ssh-keyscan fails
+    KEYSCAN_RESULT=$(ssh-keyscan "$IP" 2>/dev/null) || true
+  else
+    # Use `|| true` to prevent script exit if ssh-keyscan fails
+    KEYSCAN_RESULT=$(ssh-keyscan "$DOMAIN" "$IP" 2>/dev/null) || true
+  fi
 
   # Check if ssh-keyscan was successful
   if [ -z "$KEYSCAN_RESULT" ]; then

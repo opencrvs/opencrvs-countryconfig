@@ -19,6 +19,12 @@
 - Generate default address according to logged-in user's location
 - Remove authentication from dashboard queries route
 
+**Infrastructure**
+
+- Treat backup host identically to other hosts. To migrate:
+  1. Move all inventory files (qa.yml, production.yml...) from `infrastructure/server-setup` to `infrastructure/server-setup/inventory`
+  2. Run environment creator for your backup server `yarn environment:init --environment=backup`
+
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
 - Improved logging for emails being sent

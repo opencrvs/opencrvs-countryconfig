@@ -23,6 +23,8 @@ import { writeFileSync } from 'fs'
 import { exec as callbackExec } from 'child_process'
 import { promisify } from 'util'
 import { join } from 'path'
+import { error, info, log, success, warn } from './logger'
+import { verifyConnection } from './ssh'
 
 const exec = promisify(callbackExec)
 
@@ -68,17 +70,13 @@ function questionToPrompt<T extends string>({
   return promptOptions
 }
 
-// eslint-disable-next-line no-console
-const log = console.log
-const warn = console.warn
-
 const ALL_QUESTIONS: Array<QuestionDescriptor<any>> = []
 const ALL_ANSWERS: Array<Record<string, string>> = []
 
 const { environment } = minimist(process.argv.slice(2))
 
 if (!environment || typeof environment !== 'string') {
-  console.error('Please specify an environment name with --environment=<name>')
+  error('Please specify an environment name with --environment=<name>')
   process.exit(1)
 }
 
@@ -236,17 +234,20 @@ const githubQuestions = [
     validate: notEmpty,
     initial: process.env.GITHUB_REPOSITORY,
     scope: 'REPOSITORY' as const
-  },
+  }
+]
+const githubTokenQuestion = [
   {
     name: 'githubToken',
     type: 'text' as const,
     message: 'What is your Github token?',
     validate: notEmpty,
     initial: process.env.GITHUB_TOKEN,
-    scope: 'REPOSITORY' as const
+    valueType: 'SECRET' as const,
+    scope: 'REPOSITORY' as const,
+    valueLabel: 'GH_TOKEN'
   }
 ]
-
 const dockerhubQuestions = [
   {
     name: 'dockerhubOrganisation',
@@ -296,7 +297,7 @@ const sshQuestions = [
     type: 'text' as const,
     message:
       'What is the target server IP address? Note: For "production" environment server clusters of (2, 3 or 5 replicas) this is always the IP address for just 1 manager server',
-    valueType: 'SECRET' as const,
+    valueType: 'VARIABLE' as const,
     validate: notEmpty,
     valueLabel: 'SSH_HOST',
     initial: process.env.SSH_HOST,
@@ -719,6 +720,7 @@ const derivedVariables = [
 ] as const
 
 ALL_QUESTIONS.push(
+  ...githubTokenQuestion,
   ...dockerhubQuestions,
   ...sshQuestions,
   ...sshKeyQuestions,
@@ -751,6 +753,7 @@ ALL_QUESTIONS.push(
             value: 'production'
           },
           { title: 'Quality assurance (no PII data)', value: 'qa' },
+          { title: 'Backup', value: 'backup' },
           { title: 'Other', value: 'development' }
         ]
       }
@@ -759,13 +762,19 @@ ALL_QUESTIONS.push(
 
   log('\n', kleur.bold().underline('Github'))
 
-  const { githubOrganisation, githubRepository, githubToken } = await prompts(
+  const { githubOrganisation, githubRepository } = await prompts(
     githubQuestions.map(questionToPrompt),
     {
       onCancel: () => {
         process.exit(1)
       }
     }
+  )
+
+  const { githubToken } = await promptAndStoreAnswer(
+    environment,
+    githubTokenQuestion,
+    []
   )
 
   const octokit = new Octokit({
@@ -827,12 +836,12 @@ ALL_QUESTIONS.push(
     log(kleur.green('\nSuccessfully logged in to Github\n'))
   }
 
-  log('\n', kleur.bold().underline('Docker Hub'))
-
-  await promptAndStoreAnswer(environment, dockerhubQuestions, existingValues)
-
   log('\n', kleur.bold().underline('SSH'))
-  await promptAndStoreAnswer(environment, sshQuestions, existingValues)
+  const { sshArgs, sshHost, sshUser } = await promptAndStoreAnswer(
+    environment,
+    sshQuestions,
+    existingValues
+  )
 
   const SSH_KEY_EXISTS = existingValues.find(
     (value) => value.name === 'SSH_KEY' && value.scope === 'ENVIRONMENT'
@@ -845,124 +854,180 @@ ALL_QUESTIONS.push(
 
     const formattedSSHKey = sshKey.endsWith('\n') ? sshKey : sshKey + '\n'
     ALL_ANSWERS.push({ sshKey: formattedSSHKey })
-  }
-
-  log('\n', kleur.bold().underline('Server setup'))
-  const { domain } = await promptAndStoreAnswer(
-    environment,
-    infrastructureQuestions,
-    existingValues
-  )
-
-  const { updateHosts } = await prompts(
-    [
-      {
-        name: 'updateHosts',
-        type: 'confirm' as const,
-        message: `Do you want to update the hosts file entry for ${domain}?`,
-        scope: 'REPOSITORY' as const,
-        initial: true
+    /*
+     * ssh2 library for Node.js doesn't support the same command line parameters
+     * as we store in the secrets, thus we cannot reliably do the connection verification here.
+     */
+    if (!sshArgs) {
+      info('Testing SSH connection...')
+      try {
+        await verifyConnection(sshHost, sshUser, formattedSSHKey)
+      } catch (err) {
+        error(
+          'Failed to connect to the target server.',
+          'Please try again.',
+          'If connecting to the server requires a VPN connection, please connect your VPN client before trying again.',
+          'If your connection is via a jump server, please specify the jump server in the SSH_ARGS variable.'
+        )
+        error('Reason:', err.message)
+        process.exit(1)
       }
-    ].map(questionToPrompt)
-  )
-
-  if (updateHosts) {
-    try {
-      const res = await exec(
-        `sh ${join(__dirname, './update-known-hosts.sh')} ${domain}`
-      )
-      console.log(res.stdout)
-    } catch (error) {
-      warn(
-        'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
+      success(
+        "Successfully connected to the target server's SSH. Now closing connection..."
       )
     }
   }
 
-  log('\n', kleur.bold().underline('Databases & monitoring'))
+  log('\n', kleur.bold().underline('Docker Hub'))
 
-  await promptAndStoreAnswer(
-    environment,
-    databaseAndMonitoringQuestions,
-    existingValues
-  )
-  log('\n', kleur.bold().underline('Sentry'))
-  const sentryDSNExists = findExistingValue(
-    'SENTRY_DSN',
-    'SECRET',
-    'ENVIRONMENT',
-    existingValues
-  )
+  await promptAndStoreAnswer(environment, dockerhubQuestions, existingValues)
 
-  if (sentryDSNExists) {
-    await promptAndStoreAnswer(environment, sentryQuestions, existingValues)
-  } else {
-    const { useSentry } = await prompts(
+  if (type === 'backup') {
+    const { updateHosts } = await prompts(
       [
         {
-          name: 'useSentry',
+          name: 'updateHosts',
           type: 'confirm' as const,
-          message: 'Do you want to use Sentry?',
-          scope: 'ENVIRONMENT' as const,
-          initial: Boolean(process.env.SENTRY_DNS)
-        }
-      ].map(questionToPrompt)
-    )
-
-    if (useSentry) {
-      await promptAndStoreAnswer(environment, sentryQuestions, existingValues)
-    }
-  }
-
-  if (['production', 'staging'].includes(type)) {
-    log('\n', kleur.bold().underline('Backups'))
-    await promptAndStoreAnswer(environment, backupQuestions, existingValues)
-
-    log('\n', kleur.bold().underline('VPN'))
-
-    await promptAndStoreAnswer(environment, vpnQuestions, existingValues)
-  }
-
-  const vpnAdminPasswordExists = findExistingValue(
-    'VPN_ADMIN_PASSWORD',
-    'SECRET',
-    'ENVIRONMENT',
-    existingValues
-  )
-
-  if (vpnAdminPasswordExists) {
-    await promptAndStoreAnswer(environment, vpnHostQuestions, existingValues)
-  } else {
-    const { isVPNHost } = await prompts(
-      [
-        {
-          name: 'isVPNHost',
-          type: 'confirm' as const,
-          message: `Is this environment going to be used as the VPN server (Wireguard)?`,
-          scope: 'ENVIRONMENT' as const,
+          message: `Do you want to update the hosts file entry for ${sshHost}?`,
+          scope: 'REPOSITORY' as const,
           initial: true
         }
       ].map(questionToPrompt)
     )
 
-    if (isVPNHost) {
-      await promptAndStoreAnswer(environment, vpnHostQuestions, existingValues)
+    if (updateHosts) {
+      try {
+        const res = await exec(
+          `sh ${join(__dirname, './update-known-hosts.sh')} ${sshHost}`
+        )
+        log(res.stdout)
+      } catch (error) {
+        warn(
+          'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
+        )
+      }
     }
-  }
+  } else {
+    log('\n', kleur.bold().underline('Server setup'))
+    const { domain } = await promptAndStoreAnswer(
+      environment,
+      infrastructureQuestions,
+      existingValues
+    )
 
-  log('\n', kleur.bold().underline('SMTP'))
-  await promptAndStoreAnswer(environment, emailQuestions, existingValues)
+    const { updateHosts } = await prompts(
+      [
+        {
+          name: 'updateHosts',
+          type: 'confirm' as const,
+          message: `Do you want to update the hosts file entry for ${domain}?`,
+          scope: 'REPOSITORY' as const,
+          initial: true
+        }
+      ].map(questionToPrompt)
+    )
 
-  log('\n', kleur.bold().underline('Notification'))
+    if (updateHosts) {
+      try {
+        const res = await exec(
+          `sh ${join(__dirname, './update-known-hosts.sh')} ${domain}`
+        )
+        console.log(res.stdout)
+      } catch (error) {
+        warn(
+          'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
+        )
+      }
+    }
+    log('\n', kleur.bold().underline('Databases & monitoring'))
 
-  const { notificationTransport } = await promptAndStoreAnswer(
-    environment,
-    notificationTransportQuestions,
-    existingValues
-  )
+    await promptAndStoreAnswer(
+      environment,
+      databaseAndMonitoringQuestions,
+      existingValues
+    )
+    log('\n', kleur.bold().underline('Sentry'))
+    const sentryDSNExists = findExistingValue(
+      'SENTRY_DSN',
+      'SECRET',
+      'ENVIRONMENT',
+      existingValues
+    )
 
-  if (notificationTransport.includes('sms')) {
-    await promptAndStoreAnswer(environment, smsQuestions, existingValues)
+    if (sentryDSNExists) {
+      await promptAndStoreAnswer(environment, sentryQuestions, existingValues)
+    } else {
+      const { useSentry } = await prompts(
+        [
+          {
+            name: 'useSentry',
+            type: 'confirm' as const,
+            message: 'Do you want to use Sentry?',
+            scope: 'ENVIRONMENT' as const,
+            initial: Boolean(process.env.SENTRY_DNS)
+          }
+        ].map(questionToPrompt)
+      )
+
+      if (useSentry) {
+        await promptAndStoreAnswer(environment, sentryQuestions, existingValues)
+      }
+    }
+
+    if (['production', 'staging'].includes(type)) {
+      log('\n', kleur.bold().underline('Backups'))
+      await promptAndStoreAnswer(environment, backupQuestions, existingValues)
+
+      log('\n', kleur.bold().underline('VPN'))
+
+      await promptAndStoreAnswer(environment, vpnQuestions, existingValues)
+    }
+
+    const vpnAdminPasswordExists = findExistingValue(
+      'VPN_ADMIN_PASSWORD',
+      'SECRET',
+      'ENVIRONMENT',
+      existingValues
+    )
+
+    if (vpnAdminPasswordExists) {
+      await promptAndStoreAnswer(environment, vpnHostQuestions, existingValues)
+    } else {
+      const { isVPNHost } = await prompts(
+        [
+          {
+            name: 'isVPNHost',
+            type: 'confirm' as const,
+            message: `Is this environment going to be used as the VPN server (Wireguard)?`,
+            scope: 'ENVIRONMENT' as const,
+            initial: true
+          }
+        ].map(questionToPrompt)
+      )
+
+      if (isVPNHost) {
+        await promptAndStoreAnswer(
+          environment,
+          vpnHostQuestions,
+          existingValues
+        )
+      }
+    }
+
+    log('\n', kleur.bold().underline('SMTP'))
+    await promptAndStoreAnswer(environment, emailQuestions, existingValues)
+
+    log('\n', kleur.bold().underline('Notification'))
+
+    const { notificationTransport } = await promptAndStoreAnswer(
+      environment,
+      notificationTransportQuestions,
+      existingValues
+    )
+
+    if (notificationTransport.includes('sms')) {
+      await promptAndStoreAnswer(environment, smsQuestions, existingValues)
+    }
   }
 
   const allAnswers = ALL_ANSWERS.reduce((acc, answer) => {
@@ -978,116 +1043,151 @@ ALL_QUESTIONS.push(
     fn: (value: string | undefined) => string
   ) => fn(variable || existingValue?.value) || ''
 
-  const derivedUpdates = [
-    {
-      type: 'VARIABLE' as const,
-      name: 'ACTIVATE_USERS',
-      value: ['production', 'staging'].includes(environment) ? 'false' : 'true',
-      didExist: findExistingValue(
-        'ACTIVATE_USERS',
-        'VARIABLE',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      type: 'VARIABLE' as const,
-      name: 'AUTH_HOST',
-      value: answerOrExisting(
-        allAnswers.domain,
-        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
-        (val) => `https://auth.${val}`
-      ),
-      didExist: findExistingValue(
-        'AUTH_HOST',
-        'VARIABLE',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      type: 'VARIABLE' as const,
-      name: 'COUNTRY_CONFIG_HOST',
-      value: answerOrExisting(
-        allAnswers.domain,
-        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
-        (val) => `https://countryconfig.${val}`
-      ),
-      didExist: findExistingValue(
-        'COUNTRY_CONFIG_HOST',
-        'VARIABLE',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      type: 'VARIABLE' as const,
-      name: 'GATEWAY_HOST',
-      value: answerOrExisting(
-        allAnswers.domain,
-        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
-        (val) => `https://gateway.${val}`
-      ),
-      didExist: findExistingValue(
-        'GATEWAY_HOST',
-        'VARIABLE',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      type: 'VARIABLE' as const,
-      name: 'CONTENT_SECURITY_POLICY_WILDCARD',
-      value: answerOrExisting(
-        allAnswers.domain,
-        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
-        (val) => `*.${val}`
-      ),
-      didExist: findExistingValue(
-        'CONTENT_SECURITY_POLICY_WILDCARD',
-        'VARIABLE',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      type: 'VARIABLE' as const,
-      name: 'CLIENT_APP_URL',
-      value: answerOrExisting(
-        allAnswers.domain,
-        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
-        (val) => `https://register.${val}`
-      ),
-      didExist: findExistingValue(
-        'CLIENT_APP_URL',
-        'VARIABLE',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      scope: 'ENVIRONMENT' as const
-    },
-    {
-      type: 'VARIABLE' as const,
-      name: 'LOGIN_URL',
-      value: answerOrExisting(
-        allAnswers.domain,
-        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
-        (val) => `https://login.${val}`
-      ),
-      didExist: findExistingValue(
-        'LOGIN_URL',
-        'VARIABLE',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      scope: 'ENVIRONMENT' as const
-    }
-  ]
+  const derivedUpdates =
+    type === 'backup'
+      ? []
+      : [
+          {
+            type: 'VARIABLE' as const,
+            name: 'ACTIVATE_USERS',
+            value: ['production', 'staging'].includes(environment)
+              ? 'false'
+              : 'true',
+            didExist: findExistingValue(
+              'ACTIVATE_USERS',
+              'VARIABLE',
+              'ENVIRONMENT',
+              existingValues
+            ),
+            scope: 'ENVIRONMENT' as const
+          },
+          {
+            type: 'VARIABLE' as const,
+            name: 'AUTH_HOST',
+            value: answerOrExisting(
+              allAnswers.domain,
+              findExistingValue(
+                'DOMAIN',
+                'VARIABLE',
+                'ENVIRONMENT',
+                existingValues
+              ),
+              (val) => `https://auth.${val}`
+            ),
+            didExist: findExistingValue(
+              'AUTH_HOST',
+              'VARIABLE',
+              'ENVIRONMENT',
+              existingValues
+            ),
+            scope: 'ENVIRONMENT' as const
+          },
+          {
+            type: 'VARIABLE' as const,
+            name: 'COUNTRY_CONFIG_HOST',
+            value: answerOrExisting(
+              allAnswers.domain,
+              findExistingValue(
+                'DOMAIN',
+                'VARIABLE',
+                'ENVIRONMENT',
+                existingValues
+              ),
+              (val) => `https://countryconfig.${val}`
+            ),
+            didExist: findExistingValue(
+              'COUNTRY_CONFIG_HOST',
+              'VARIABLE',
+              'ENVIRONMENT',
+              existingValues
+            ),
+            scope: 'ENVIRONMENT' as const
+          },
+          {
+            type: 'VARIABLE' as const,
+            name: 'GATEWAY_HOST',
+            value: answerOrExisting(
+              allAnswers.domain,
+              findExistingValue(
+                'DOMAIN',
+                'VARIABLE',
+                'ENVIRONMENT',
+                existingValues
+              ),
+              (val) => `https://gateway.${val}`
+            ),
+            didExist: findExistingValue(
+              'GATEWAY_HOST',
+              'VARIABLE',
+              'ENVIRONMENT',
+              existingValues
+            ),
+            scope: 'ENVIRONMENT' as const
+          },
+          {
+            type: 'VARIABLE' as const,
+            name: 'CONTENT_SECURITY_POLICY_WILDCARD',
+            value: answerOrExisting(
+              allAnswers.domain,
+              findExistingValue(
+                'DOMAIN',
+                'VARIABLE',
+                'ENVIRONMENT',
+                existingValues
+              ),
+              (val) => `*.${val}`
+            ),
+            didExist: findExistingValue(
+              'CONTENT_SECURITY_POLICY_WILDCARD',
+              'VARIABLE',
+              'ENVIRONMENT',
+              existingValues
+            ),
+            scope: 'ENVIRONMENT' as const
+          },
+          {
+            type: 'VARIABLE' as const,
+            name: 'CLIENT_APP_URL',
+            value: answerOrExisting(
+              allAnswers.domain,
+              findExistingValue(
+                'DOMAIN',
+                'VARIABLE',
+                'ENVIRONMENT',
+                existingValues
+              ),
+              (val) => `https://register.${val}`
+            ),
+            didExist: findExistingValue(
+              'CLIENT_APP_URL',
+              'VARIABLE',
+              'ENVIRONMENT',
+              existingValues
+            ),
+            scope: 'ENVIRONMENT' as const
+          },
+          {
+            type: 'VARIABLE' as const,
+            name: 'LOGIN_URL',
+            value: answerOrExisting(
+              allAnswers.domain,
+              findExistingValue(
+                'DOMAIN',
+                'VARIABLE',
+                'ENVIRONMENT',
+                existingValues
+              ),
+              (val) => `https://login.${val}`
+            ),
+            didExist: findExistingValue(
+              'LOGIN_URL',
+              'VARIABLE',
+              'ENVIRONMENT',
+              existingValues
+            ),
+            scope: 'ENVIRONMENT' as const
+          }
+        ]
 
   const updates: Answers = getAnswers(existingValues)
     .concat(...derivedUpdates)
