@@ -1,4 +1,5 @@
 # Changelog
+
 ## [1.5.0]
 
 - Change auth URLs to access them via gateway
@@ -12,10 +13,12 @@
 - Make SENTRY_DSN variable optional
 - Use docker compose v2 in github workflows
 - Mass email from national system admin
-- Remove dependency on openhim. The openhim db is kept for backwards compatibility reasons and will be removed in v1.6
+- Remove dependency on openhim. The openhim db is kept for backwards compatibility reasons and will be removed in
+  v1.6
 - Add smtp environment variables in qa compose file
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
+- Remove authentication from dashboard queries route
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
