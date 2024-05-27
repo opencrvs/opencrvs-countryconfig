@@ -119,6 +119,11 @@ validate_options() {
     print_usage_and_exit
   fi
 
+  if [ -z "$SSH_PORT" ] ; then
+    echo 'Error: Argument --ssh_port is required.'
+    print_usage_and_exit
+  fi
+
   if [ -z "$SSH_USER" ] ; then
     echo 'Error: Argument --ssh_user is required.'
     print_usage_and_exit
