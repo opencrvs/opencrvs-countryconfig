@@ -374,6 +374,7 @@ export async function createServer() {
     handler: dashboardQueriesHandler,
     options: {
       tags: ['api'],
+      auth: false,
       description: 'Serves dashboard view refresher queries'
     }
   })
