@@ -460,6 +460,53 @@ export const birthForm: ISerializedForm = {
       ],
       mapping: getSectionMapping('father')
     },
-    documentsSection // REQUIRED SECTION FOR DOCUMENT ATTACHMENTS
+    documentsSection, // REQUIRED SECTION FOR DOCUMENT ATTACHMENTS
+    {
+      id: 'preview',
+      viewType: 'preview',
+      name: {
+        defaultMessage: 'Preview',
+        description: 'Form section name for Preview',
+        id: 'register.form.section.preview.name'
+      },
+      title: {
+        defaultMessage: 'Preview',
+        description: 'Form section title for Preview',
+        id: 'register.form.section.preview.title'
+      },
+      groups: [
+        {
+          id: 'preview-view-group',
+          fields: [
+            {
+              ...getFirstNameField('randomName', [], 'yo'),
+              required: true,
+              initialValue: '',
+              validator: [
+                {
+                  operation: 'minLength',
+                  parameters: [1]
+                }
+              ],
+              mapping: {
+                // template: {
+                //   fieldName: 'yo',
+                //   operation: 'nameToFieldTransformer',
+                //   parameters: ['en', 'firstNames']
+                // },
+                mutation: {
+                  operation: 'fieldValueSectionExchangeTransformer',
+                  parameters: ['registration', 'informantsSignatureURI']
+                },
+                query: {
+                  operation: 'fieldValueSectionExchangeTransformer',
+                  parameters: ['registration', 'informantsSignatureURI']
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
