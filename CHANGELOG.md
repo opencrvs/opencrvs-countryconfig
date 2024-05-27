@@ -13,8 +13,7 @@
 - Make SENTRY_DSN variable optional
 - Use docker compose v2 in github workflows
 - Mass email from national system admin
-- Remove dependency on openhim. The openhim db is kept for backwards compatibility reasons and will be removed in
-  v1.6
+- Remove dependency on openhim. The openhim db is kept for backwards compatibility reasons and will be removed in v1.6
 - Add smtp environment variables in qa compose file
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
