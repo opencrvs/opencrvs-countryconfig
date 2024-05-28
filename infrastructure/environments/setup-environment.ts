@@ -316,7 +316,7 @@ const sshQuestions = [
     name: 'sshPort',
     type: 'number' as const,
     message:
-      'What port number is used in establishing the SSH connection? This usually is the standard 22. If you are an advanced user, and have set a different port, provide it here.',
+      'What port number is used in establishing the SSH connection? This usually is the default 22. If you are an advanced user, and have set a different port, provide it here.',
     valueType: 'SECRET' as const,
     validate: notEmpty,
     valueLabel: 'SSH_PORT',
