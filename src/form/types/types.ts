@@ -141,6 +141,8 @@ export const TIME = 'TIME'
 export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
+export const SIGNATURE = 'SIGNATURE'
+
 export enum RadioSize {
   LARGE = 'large',
   NORMAL = 'normal'
@@ -481,6 +483,10 @@ export interface IHeading3Field extends IFormFieldBase {
   type: typeof HEADING3
 }
 
+export interface ISignatureFormField extends IFormFieldBase {
+  type: typeof SIGNATURE
+}
+
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -513,6 +519,7 @@ export type IFormField =
   | INidVerificationButton
   | IDividerField
   | IHeading3Field
+  | ISignatureFormField
 
 export interface SelectComponentOption {
   value: string
