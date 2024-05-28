@@ -38,8 +38,12 @@ type Question<T extends string> = PromptObject<T> & {
   valueLabel?: string
 }
 
+type QuestionWithHiddenType<T extends string> = Omit<Question<T>, 'type'> & {
+  type: PromptObject<T>['type'] | 'hidden'
+}
+
 type QuestionDescriptor<T extends string> = Omit<Question<T>, 'type'> & {
-  type: 'disabled' | PromptObject<T>['type']
+  type: 'hidden' | 'disabled' | PromptObject<T>['type']
 }
 
 type SecretAnswer = {
@@ -101,7 +105,7 @@ function findExistingValue<T extends string>(
 
 async function promptAndStoreAnswer(
   environment: string,
-  questions: Array<Question<any>>,
+  questions: Array<QuestionWithHiddenType<any>>,
   existingValues: Array<Secret | Variable>
 ) {
   log('')
@@ -121,7 +125,7 @@ async function promptAndStoreAnswer(
         questionWithVariableLabel.scope,
         existingValues
       )
-      if (existingVariable) {
+      if (existingVariable && questionWithVariableLabel.type !== 'hidden') {
         return [
           {
             name: 'overWrite' + questionWithVariableLabel.name,
@@ -143,7 +147,10 @@ async function promptAndStoreAnswer(
       }
     }
 
-    if (questionWithVariableLabel.valueType === 'SECRET') {
+    if (
+      questionWithVariableLabel.valueType === 'SECRET' &&
+      questionWithVariableLabel.type !== 'hidden'
+    ) {
       const existingSecret = findExistingValue(
         questionWithVariableLabel.valueLabel,
         'SECRET',
@@ -177,12 +184,35 @@ async function promptAndStoreAnswer(
     }
     return questionWithVariableLabel
   })
-  const foo = processedQuestions.map(questionToPrompt)
-  const result = await prompts(foo, {
+
+  const promptQuestions = processedQuestions
+    .filter(({ type }) => type !== 'hidden')
+    .map(questionToPrompt)
+
+  const visibleQuestionResults = await prompts(promptQuestions, {
     onCancel: () => {
       process.exit(1)
     }
   })
+  const hiddenResults = Object.fromEntries(
+    processedQuestions
+      .filter(({ type }) => type === 'hidden')
+      .map((question) => {
+        if (question.valueType === 'VARIABLE') {
+          const existingVariable = findExistingValue(
+            question.valueLabel!,
+            'VARIABLE',
+            question.scope,
+            existingValues
+          )
+          return [question.name, existingVariable?.value || question.initial]
+        }
+        return undefined
+      })
+      .filter((x): x is [string, string] => Boolean(x))
+  )
+
+  const result = { ...visibleQuestionResults, ...hiddenResults }
   ALL_ANSWERS.push(result)
   storeSecrets(environment, getAnswers(existingValues))
 
@@ -248,6 +278,7 @@ const githubTokenQuestion = [
     valueLabel: 'GH_TOKEN'
   }
 ]
+
 const dockerhubQuestions = [
   {
     name: 'dockerhubOrganisation',
@@ -609,16 +640,6 @@ const emailQuestions = [
 ]
 
 const backupQuestions = [
-  {
-    name: 'backupHost',
-    type: 'text' as const,
-    message: 'What is your backup host IP address?',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'BACKUP_HOST',
-    initial: process.env.BACKUP_HOST,
-    scope: 'ENVIRONMENT' as const
-  },
   {
     name: 'backupEncryptionPassprase',
     type: 'text' as const,
@@ -1043,151 +1064,141 @@ ALL_QUESTIONS.push(
     fn: (value: string | undefined) => string
   ) => fn(variable || existingValue?.value) || ''
 
-  const derivedUpdates =
-    type === 'backup'
-      ? []
-      : [
-          {
-            type: 'VARIABLE' as const,
-            name: 'ACTIVATE_USERS',
-            value: ['production', 'staging'].includes(environment)
-              ? 'false'
-              : 'true',
-            didExist: findExistingValue(
-              'ACTIVATE_USERS',
-              'VARIABLE',
-              'ENVIRONMENT',
-              existingValues
-            ),
-            scope: 'ENVIRONMENT' as const
-          },
-          {
-            type: 'VARIABLE' as const,
-            name: 'AUTH_HOST',
-            value: answerOrExisting(
-              allAnswers.domain,
-              findExistingValue(
-                'DOMAIN',
-                'VARIABLE',
-                'ENVIRONMENT',
-                existingValues
-              ),
-              (val) => `https://auth.${val}`
-            ),
-            didExist: findExistingValue(
-              'AUTH_HOST',
-              'VARIABLE',
-              'ENVIRONMENT',
-              existingValues
-            ),
-            scope: 'ENVIRONMENT' as const
-          },
-          {
-            type: 'VARIABLE' as const,
-            name: 'COUNTRY_CONFIG_HOST',
-            value: answerOrExisting(
-              allAnswers.domain,
-              findExistingValue(
-                'DOMAIN',
-                'VARIABLE',
-                'ENVIRONMENT',
-                existingValues
-              ),
-              (val) => `https://countryconfig.${val}`
-            ),
-            didExist: findExistingValue(
-              'COUNTRY_CONFIG_HOST',
-              'VARIABLE',
-              'ENVIRONMENT',
-              existingValues
-            ),
-            scope: 'ENVIRONMENT' as const
-          },
-          {
-            type: 'VARIABLE' as const,
-            name: 'GATEWAY_HOST',
-            value: answerOrExisting(
-              allAnswers.domain,
-              findExistingValue(
-                'DOMAIN',
-                'VARIABLE',
-                'ENVIRONMENT',
-                existingValues
-              ),
-              (val) => `https://gateway.${val}`
-            ),
-            didExist: findExistingValue(
-              'GATEWAY_HOST',
-              'VARIABLE',
-              'ENVIRONMENT',
-              existingValues
-            ),
-            scope: 'ENVIRONMENT' as const
-          },
-          {
-            type: 'VARIABLE' as const,
-            name: 'CONTENT_SECURITY_POLICY_WILDCARD',
-            value: answerOrExisting(
-              allAnswers.domain,
-              findExistingValue(
-                'DOMAIN',
-                'VARIABLE',
-                'ENVIRONMENT',
-                existingValues
-              ),
-              (val) => `*.${val}`
-            ),
-            didExist: findExistingValue(
-              'CONTENT_SECURITY_POLICY_WILDCARD',
-              'VARIABLE',
-              'ENVIRONMENT',
-              existingValues
-            ),
-            scope: 'ENVIRONMENT' as const
-          },
-          {
-            type: 'VARIABLE' as const,
-            name: 'CLIENT_APP_URL',
-            value: answerOrExisting(
-              allAnswers.domain,
-              findExistingValue(
-                'DOMAIN',
-                'VARIABLE',
-                'ENVIRONMENT',
-                existingValues
-              ),
-              (val) => `https://register.${val}`
-            ),
-            didExist: findExistingValue(
-              'CLIENT_APP_URL',
-              'VARIABLE',
-              'ENVIRONMENT',
-              existingValues
-            ),
-            scope: 'ENVIRONMENT' as const
-          },
-          {
-            type: 'VARIABLE' as const,
-            name: 'LOGIN_URL',
-            value: answerOrExisting(
-              allAnswers.domain,
-              findExistingValue(
-                'DOMAIN',
-                'VARIABLE',
-                'ENVIRONMENT',
-                existingValues
-              ),
-              (val) => `https://login.${val}`
-            ),
-            didExist: findExistingValue(
-              'LOGIN_URL',
-              'VARIABLE',
-              'ENVIRONMENT',
-              existingValues
-            ),
-            scope: 'ENVIRONMENT' as const
-          }
-        ]
+  const derivedUpdates: Answers = [
+    {
+      name: 'GH_ENCRYPTION_PASSWORD',
+      type: 'SECRET' as const,
+      value: findExistingValue(
+        'GH_ENCRYPTION_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      )
+        ? ''
+        : process.env.GH_ENCRYPTION_PASSWORD || generateLongPassword(),
+      scope: 'REPOSITORY' as const,
+      didExist: findExistingValue(
+        'GH_ENCRYPTION_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      )
+    }
+  ]
+  const applicationServerUpdates = [
+    {
+      type: 'VARIABLE' as const,
+      name: 'ACTIVATE_USERS',
+      value: ['production', 'staging'].includes(environment) ? 'false' : 'true',
+      didExist: findExistingValue(
+        'ACTIVATE_USERS',
+        'VARIABLE',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      type: 'VARIABLE' as const,
+      name: 'AUTH_HOST',
+      value: answerOrExisting(
+        allAnswers.domain,
+        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
+        (val) => `https://auth.${val}`
+      ),
+      didExist: findExistingValue(
+        'AUTH_HOST',
+        'VARIABLE',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      type: 'VARIABLE' as const,
+      name: 'COUNTRY_CONFIG_HOST',
+      value: answerOrExisting(
+        allAnswers.domain,
+        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
+        (val) => `https://countryconfig.${val}`
+      ),
+      didExist: findExistingValue(
+        'COUNTRY_CONFIG_HOST',
+        'VARIABLE',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      type: 'VARIABLE' as const,
+      name: 'GATEWAY_HOST',
+      value: answerOrExisting(
+        allAnswers.domain,
+        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
+        (val) => `https://gateway.${val}`
+      ),
+      didExist: findExistingValue(
+        'GATEWAY_HOST',
+        'VARIABLE',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      type: 'VARIABLE' as const,
+      name: 'CONTENT_SECURITY_POLICY_WILDCARD',
+      value: answerOrExisting(
+        allAnswers.domain,
+        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
+        (val) => `*.${val}`
+      ),
+      didExist: findExistingValue(
+        'CONTENT_SECURITY_POLICY_WILDCARD',
+        'VARIABLE',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      type: 'VARIABLE' as const,
+      name: 'CLIENT_APP_URL',
+      value: answerOrExisting(
+        allAnswers.domain,
+        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
+        (val) => `https://register.${val}`
+      ),
+      didExist: findExistingValue(
+        'CLIENT_APP_URL',
+        'VARIABLE',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      type: 'VARIABLE' as const,
+      name: 'LOGIN_URL',
+      value: answerOrExisting(
+        allAnswers.domain,
+        findExistingValue('DOMAIN', 'VARIABLE', 'ENVIRONMENT', existingValues),
+        (val) => `https://login.${val}`
+      ),
+      didExist: findExistingValue(
+        'LOGIN_URL',
+        'VARIABLE',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      scope: 'ENVIRONMENT' as const
+    }
+  ]
+
+  if (type !== 'backup') {
+    derivedUpdates.push(...applicationServerUpdates)
+  }
 
   const updates: Answers = getAnswers(existingValues)
     .concat(...derivedUpdates)
@@ -1237,9 +1248,20 @@ ALL_QUESTIONS.push(
         `The following secrets will be added to Github for environment ${environment}:`
       )
     )
-    newSecrets.forEach((secret) => {
-      log(secret.name, '=', secret.value)
-    })
+    newSecrets
+      .filter(({ scope }) => scope === 'ENVIRONMENT')
+      .forEach((secret) => {
+        log(secret.name, '=', secret.value)
+      })
+    log('')
+    log(
+      kleur.yellow(`The following secrets will be added to Github repository:`)
+    )
+    newSecrets
+      .filter(({ scope }) => scope === 'REPOSITORY')
+      .forEach((secret) => {
+        log(secret.name, '=', secret.value)
+      })
     log('')
   }
   if (updatedSecrets.length > 0) {

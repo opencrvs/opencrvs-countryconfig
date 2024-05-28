@@ -22,6 +22,7 @@ all:
     only_allow_access_from_addresses:
       # @todo place the IP address of your VPN server or other explicitly allowed traffic sources here
       - 55.55.55.55 # example VPN server IP address
+    backup_server_remote_target_directory: /home/backup/backups
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
@@ -54,3 +55,6 @@ backups:
       ansible_host: '66.66.66.66'
       # @todo how many days to store backups for?
       amount_of_backups_to_keep: 3
+      # Written by provision pipeline. Assumes "backup" environment
+      # exists in Github environments
+      ansible_ssh_private_key_file: /tmp/backup_ssh_private_key

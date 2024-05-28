@@ -29,14 +29,13 @@
         apply:
           tags:
             - updates
-      tags:
-        - updates
+
+    - include_tasks:
+        file: tasks/backwards-compatibility.yml
 
 - hosts: docker-manager-first, docker-workers
   become: yes
-  become_method: sudo  
-  vars:
-    crontab_user: root
+  become_method: sudo
   tasks:
     - include_tasks:
         file: tasks/application.yml
