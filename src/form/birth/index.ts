@@ -479,15 +479,15 @@ export const birthForm: ISerializedForm = {
           id: 'preview-view-group',
           fields: [
             {
-              ...getFirstNameField('randomName', [], 'yo'),
+              name: 'informantSignature',
               required: true,
-              initialValue: '',
-              validator: [
-                {
-                  operation: 'minLength',
-                  parameters: [1]
-                }
-              ],
+              label: {
+                defaultMessage: 'Signature of informant',
+                description: 'Label for informants signature input',
+                id: 'review.inputs.informantsSignature'
+              },
+              validator: [],
+              type: 'SIGNATURE',
               mapping: {
                 // template: {
                 //   fieldName: 'yo',
