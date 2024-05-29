@@ -18,6 +18,7 @@
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
 - Remove authentication from dashboard queries route
+- Provide env variables for metabase admin credentials
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
