@@ -14,7 +14,7 @@ export async function createPIN(page: Page) {
   }
 }
 
-async function getToken(username: string, password: string) {
+export async function getToken(username: string, password: string) {
   const authUrl = `${AUTH_URL}/authenticate`
   const verifyUrl = `${AUTH_URL}/verifyCode`
 
@@ -43,6 +43,27 @@ async function getToken(username: string, password: string) {
 
   const verifyBody = await verifyResponse.json()
   return verifyBody.token
+}
+
+export const goToSection = async (
+  page: Page,
+  section: 'child' | 'informant' | 'father' | 'mother' | 'documents' | 'preview'
+) => {
+  while (!page.url().includes(section)) {
+    await page.getByRole('button', { name: 'Continue' }).click()
+  }
+}
+
+export const getRandomDate = (minAge: number, range: number) => {
+  const randomDate = new Date()
+  randomDate.setDate(
+    new Date().getDate() -
+      Math.random() * range -
+      minAge * 365 -
+      (minAge + 3) / 4
+  )
+  const [yyyy, mm, dd] = randomDate.toISOString().split('T')[0].split('-')
+  return { dd, mm, yyyy }
 }
 
 export async function ensureLoginPageReady(page: Page) {
