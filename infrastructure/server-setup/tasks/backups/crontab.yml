@@ -34,7 +34,7 @@
 
 - name: Throw an error if periodic_restore_from_backup is true but backup_restore_encryption_passphrase is not defined
   fail:
-    msg: 'Error: backup_restore_encryption_passphrase is not defined. This usually means you have enabled periodic restore from production but you haven't set up a production environment yet. Please set up a production environment first.'
+    msg: "Error: backup_restore_encryption_passphrase is not defined. This usually means you have enabled periodic restore from production but you haven't set up a production environment yet. Please set up a production environment first."
   when: periodic_restore_from_backup and backup_restore_encryption_passphrase is not defined
 
 - name: 'Setup crontab to download a backup periodically the opencrvs data'

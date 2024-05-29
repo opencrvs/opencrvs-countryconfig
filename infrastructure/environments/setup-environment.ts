@@ -38,12 +38,8 @@ type Question<T extends string> = PromptObject<T> & {
   valueLabel?: string
 }
 
-type QuestionWithHiddenType<T extends string> = Omit<Question<T>, 'type'> & {
-  type: PromptObject<T>['type'] | 'hidden'
-}
-
 type QuestionDescriptor<T extends string> = Omit<Question<T>, 'type'> & {
-  type: 'hidden' | 'disabled' | PromptObject<T>['type']
+  type: 'disabled' | PromptObject<T>['type']
 }
 
 type SecretAnswer = {
@@ -105,7 +101,7 @@ function findExistingValue<T extends string>(
 
 async function promptAndStoreAnswer(
   environment: string,
-  questions: Array<QuestionWithHiddenType<any>>,
+  questions: Array<QuestionDescriptor<any>>,
   existingValues: Array<Secret | Variable>
 ) {
   log('')
@@ -125,7 +121,7 @@ async function promptAndStoreAnswer(
         questionWithVariableLabel.scope,
         existingValues
       )
-      if (existingVariable && questionWithVariableLabel.type !== 'hidden') {
+      if (existingVariable) {
         return [
           {
             name: 'overWrite' + questionWithVariableLabel.name,
@@ -147,10 +143,7 @@ async function promptAndStoreAnswer(
       }
     }
 
-    if (
-      questionWithVariableLabel.valueType === 'SECRET' &&
-      questionWithVariableLabel.type !== 'hidden'
-    ) {
+    if (questionWithVariableLabel.valueType === 'SECRET') {
       const existingSecret = findExistingValue(
         questionWithVariableLabel.valueLabel,
         'SECRET',
@@ -185,34 +178,14 @@ async function promptAndStoreAnswer(
     return questionWithVariableLabel
   })
 
-  const promptQuestions = processedQuestions
-    .filter(({ type }) => type !== 'hidden')
-    .map(questionToPrompt)
+  const promptQuestions = processedQuestions.map(questionToPrompt)
 
-  const visibleQuestionResults = await prompts(promptQuestions, {
+  const result = await prompts(promptQuestions, {
     onCancel: () => {
       process.exit(1)
     }
   })
-  const hiddenResults = Object.fromEntries(
-    processedQuestions
-      .filter(({ type }) => type === 'hidden')
-      .map((question) => {
-        if (question.valueType === 'VARIABLE') {
-          const existingVariable = findExistingValue(
-            question.valueLabel!,
-            'VARIABLE',
-            question.scope,
-            existingValues
-          )
-          return [question.name, existingVariable?.value || question.initial]
-        }
-        return undefined
-      })
-      .filter((x): x is [string, string] => Boolean(x))
-  )
 
-  const result = { ...visibleQuestionResults, ...hiddenResults }
   ALL_ANSWERS.push(result)
   storeSecrets(environment, getAnswers(existingValues))
 
@@ -756,6 +729,14 @@ ALL_QUESTIONS.push(
   ...sentryQuestions,
   ...derivedVariables
 )
+
+/*
+ * These environment only need a subset of the environment variables
+ * as they are not used for application hosting
+ */
+
+const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
+
 ;(async () => {
   const { type } = await prompts(
     [
@@ -775,6 +756,7 @@ ALL_QUESTIONS.push(
           },
           { title: 'Quality assurance (no PII data)', value: 'qa' },
           { title: 'Backup', value: 'backup' },
+          { title: 'Jump / Bastion', value: 'jump' },
           { title: 'Other', value: 'development' }
         ]
       }
@@ -903,7 +885,7 @@ ALL_QUESTIONS.push(
 
   await promptAndStoreAnswer(environment, dockerhubQuestions, existingValues)
 
-  if (type === 'backup') {
+  if (SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(type)) {
     const { updateHosts } = await prompts(
       [
         {
@@ -1196,7 +1178,7 @@ ALL_QUESTIONS.push(
     }
   ]
 
-  if (type !== 'backup') {
+  if (!SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(type)) {
     derivedUpdates.push(...applicationServerUpdates)
   }
 
