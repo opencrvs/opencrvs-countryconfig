@@ -19,6 +19,7 @@ test.describe.serial('1. Death declaration case - 1', () => {
         type: 'National ID'
       },
       maritalStatus: 'Single',
+      dependants: 3,
       address: {
         country: 'Farajaland',
         province: 'Sulaka',
@@ -104,6 +105,10 @@ test.describe.serial('1. Death declaration case - 1', () => {
       await page
         .getByText(declaration.deceased.maritalStatus, { exact: true })
         .click()
+
+      await page
+        .locator('#numberOfDependants')
+        .fill(declaration.deceased.dependants.toString())
 
       await page.locator('#statePrimaryDeceased').click()
       await page
@@ -293,6 +298,14 @@ test.describe.serial('1. Death declaration case - 1', () => {
       )
       await expect(page.locator('#deceased-content #Marital')).toContainText(
         'Change'
+      )
+
+      /*
+       * Expected result: should include
+       * - Number of Deceased's Dependants
+       */
+      await expect(page.locator('#deceased-content')).toContainText(
+        'No. of dependants' + declaration.deceased.dependants.toString()
       )
 
       /*
@@ -623,6 +636,15 @@ test.describe.serial('1. Death declaration case - 1', () => {
       )
       await expect(page.locator('#deceased-content #Marital')).toContainText(
         'Change'
+      )
+
+      /*
+       * Expected result: should include
+       * - Number of Deceased's Dependants
+       * - Change button
+       */
+      await expect(page.locator('#deceased-content')).toContainText(
+        'No. of dependants' + declaration.deceased.dependants.toString()
       )
 
       /*
