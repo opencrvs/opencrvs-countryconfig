@@ -718,6 +718,25 @@ const derivedVariables = [
   }
 ] as const
 
+const metabaseAdminQuestions = [
+  {
+    valueType: 'VARIABLE',
+    name: 'OPENCRVS_METABASE_ADMIN_EMAIL',
+    type: 'text',
+    message: 'Email for metabase admin dashboard login',
+    valueLabel: 'OPENCRVS_METABASE_ADMIN_EMAIL',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    valueType: 'SECRET',
+    name: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
+    type: 'text',
+    message: 'Password for metabase admin dashboard login',
+    valueLabel: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
+    scope: 'ENVIRONMENT'
+  }
+] as const
+
 ALL_QUESTIONS.push(
   ...dockerhubQuestions,
   ...sshQuestions,
@@ -731,7 +750,8 @@ ALL_QUESTIONS.push(
   ...vpnQuestions,
   ...vpnHostQuestions,
   ...sentryQuestions,
-  ...derivedVariables
+  ...derivedVariables,
+  ...metabaseAdminQuestions
 )
 ;(async () => {
   const { type } = await prompts(
