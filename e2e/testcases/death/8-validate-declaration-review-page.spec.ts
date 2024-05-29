@@ -222,7 +222,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
         /*
          * Expected result: should include
-         * - Mother's Nationality
+         * - Deceased's Nationality
          * - Change button
          */
         await expect(
@@ -234,8 +234,8 @@ test.describe.serial('8. Validate declaration review page', () => {
 
         /*
          * Expected result: should include
-         * - Mother's Type of Id
-         * - Mother's Id Number
+         * - Deceased's Type of Id
+         * - Deceased's Id Number
          * - Change button
          */
         await expect(page.locator('#deceased-content #Type')).toContainText(
@@ -253,7 +253,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
         /*
          * Expected result: should include
-         * - Mother's address
+         * - Deceased's address
          * - Change button
          */
         await expect(page.locator('#deceased-content #Usual')).toContainText(
@@ -266,6 +266,49 @@ test.describe.serial('8. Validate declaration review page', () => {
           declaration.deceased.address.Province
         )
         await expect(page.locator('#deceased-content #Usual')).toContainText(
+          'Change'
+        )
+
+        /*
+         * Expected result: should include
+         * - Date of death
+         * - Change button
+         */
+        await expect(page.locator('#deathEvent-content #Date')).toContainText(
+          format(
+            new Date(
+              Number(declaration.event.date.yyyy),
+              Number(declaration.event.date.mm) - 1,
+              Number(declaration.event.date.dd)
+            ),
+            'dd MMMM yyyy'
+          )
+        )
+        await expect(page.locator('#deathEvent-content #Date')).toContainText(
+          'Change'
+        )
+
+        /*
+         * Expected result: should include
+         * - Cause of death has been established
+         * - Change button
+         */
+        await expect(page.locator('#deathEvent-content #Cause')).toContainText(
+          'No'
+        )
+        await expect(page.locator('#deathEvent-content #Cause')).toContainText(
+          'Change'
+        )
+
+        /*
+         * Expected result: should include
+         * - Place of death
+         * - Change button
+         */
+        await expect(page.locator('#deathEvent-content #Place')).toContainText(
+          declaration.event.place
+        )
+        await expect(page.locator('#deathEvent-content #Place')).toContainText(
           'Change'
         )
 
@@ -744,7 +787,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       /*
        * Expected result: should include
-       * - Mother's Nationality
+       * - Deceased's Nationality
        * - Change button
        */
       await expect(
@@ -756,8 +799,8 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       /*
        * Expected result: should include
-       * - Mother's Type of Id
-       * - Mother's Id Number
+       * - Deceased's Type of Id
+       * - Deceased's Id Number
        * - Change button
        */
       await expect(page.locator('#deceased-content #Type')).toContainText(
@@ -775,7 +818,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       /*
        * Expected result: should include
-       * - Mother's address
+       * - Deceased's address
        * - Change button
        */
       await expect(page.locator('#deceased-content #Usual')).toContainText(
@@ -888,7 +931,274 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
 
     test.describe('8.2.2 Click any "Change" link', async () => {
-      test.skip('Skipped for now', async () => {})
+      test("8.1.2.1 Change deceased's name", async () => {
+        await page
+          .locator('#deceased-content #Full')
+          .getByText('Change')
+          .click()
+        declaration.deceased.name = {
+          firstNames: faker.name.firstName('male'),
+          familyName: faker.name.lastName('male')
+        }
+        await page
+          .locator('#firstNamesEng')
+          .fill(declaration.deceased.name.firstNames)
+        await page
+          .locator('#familyNameEng')
+          .fill(declaration.deceased.name.familyName)
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change deceased's name
+         */
+        await expect(page.locator('#deceased-content #Full')).toContainText(
+          declaration.deceased.name.firstNames
+        )
+        await expect(page.locator('#deceased-content #Full')).toContainText(
+          declaration.deceased.name.familyName
+        )
+      })
+
+      test("8.1.2.2 Change deceased's gender", async () => {
+        await page.locator('#deceased-content #Sex').getByText('Change').click()
+        declaration.deceased.gender = 'Female'
+        await page.locator('#gender').click()
+        await page
+          .getByText(declaration.deceased.gender, { exact: true })
+          .click()
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change deceased's gender
+         */
+        await expect(page.locator('#deceased-content #Sex')).toContainText(
+          declaration.deceased.gender
+        )
+      })
+
+      test("8.1.2.3 Change deceased's birthday", async () => {
+        await page
+          .locator('#deceased-content #Date')
+          .getByText('Change')
+          .click()
+        declaration.deceased.birthDate = getRandomDate(5, 200)
+        await page
+          .getByPlaceholder('dd')
+          .fill(declaration.deceased.birthDate.dd)
+        await page
+          .getByPlaceholder('mm')
+          .fill(declaration.deceased.birthDate.mm)
+        await page
+          .getByPlaceholder('yyyy')
+          .fill(declaration.deceased.birthDate.yyyy)
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change deceased's birthday
+         */
+        await expect(page.locator('#deceased-content #Date')).toContainText(
+          format(
+            new Date(
+              Number(declaration.deceased.birthDate.yyyy),
+              Number(declaration.deceased.birthDate.mm) - 1,
+              Number(declaration.deceased.birthDate.dd)
+            ),
+            'dd MMMM yyyy'
+          )
+        )
+      })
+
+      test("8.1.2.4 Change deceased's ID type", async () => {
+        await page
+          .locator('#deceased-content #Type')
+          .getByText('Change')
+          .click()
+        declaration.deceased.identifier.type = 'Passport'
+        await page.locator('#deceasedIdType').click()
+        await page
+          .getByText(declaration.deceased.identifier.type, {
+            exact: true
+          })
+          .click()
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change deceased's ID type
+         */
+        await expect(page.locator('#deceased-content #Type')).toContainText(
+          declaration.deceased.identifier.type
+        )
+      })
+      test("8.1.2.5 Change deceased's ID", async () => {
+        await page.locator('#deceased-content #ID').getByText('Change').click()
+        declaration.deceased.identifier.id = faker.random.numeric(10)
+        await page
+          .locator('#deceasedPassport')
+          .fill(declaration.deceased.identifier.id)
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change deceased's ID
+         */
+        await expect(page.locator('#deceased-content #ID')).toContainText(
+          declaration.deceased.identifier.id
+        )
+      })
+
+      test("8.1.2.6 Change deceased's address", async () => {
+        await page
+          .locator('#deceased-content #Usual')
+          .getByText('Change')
+          .click()
+        declaration.deceased.address.Province = 'Sulaka'
+        declaration.deceased.address.District = 'Afue'
+        await page.locator('#statePrimaryDeceased').click()
+        await page
+          .getByText(declaration.deceased.address.Province, { exact: true })
+          .click()
+        await page.locator('#districtPrimaryDeceased').click()
+        await page
+          .getByText(declaration.deceased.address.District, { exact: true })
+          .click()
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change deceased's address
+         */
+        await expect(page.locator('#deceased-content #Usual')).toContainText(
+          declaration.deceased.address.District
+        )
+        await expect(page.locator('#deceased-content #Usual')).toContainText(
+          declaration.deceased.address.Province
+        )
+      })
+
+      test.skip('8.1.2.7 Change informant type', async () => {
+        await page
+          .locator('#informant-content #Informant')
+          .getByText('Change')
+          .click()
+        declaration.informantType = 'Father'
+        await page.waitForTimeout(500)
+        await page.locator('#informantType').click()
+        await page
+          .getByText(declaration.informantType, {
+            exact: true
+          })
+          .click()
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change informant type
+         */
+        await expect(
+          page.locator('#informant-content #Informant')
+        ).toContainText(declaration.informantType)
+      })
+
+      test('8.1.2.8 Change registration email', async () => {
+        await page
+          .locator('#informant-content #Email')
+          .getByText('Change')
+          .click()
+        declaration.informantEmail = faker.internet.email()
+        await page
+          .locator('#registrationEmail')
+          .fill(declaration.informantEmail)
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change registration email
+         */
+        await expect(page.locator('#informant-content #Email')).toContainText(
+          declaration.informantEmail
+        )
+      })
+
+      test("8.1.2.9 Change spouse's name", async () => {
+        await page.locator('#spouse-content #Full').getByText('Change').click()
+        declaration.spouse.name.firstNames = faker.name.firstName('female')
+        declaration.spouse.name.familyName = faker.name.lastName('female')
+        await page
+          .locator('#firstNamesEng')
+          .fill(declaration.spouse.name.firstNames)
+        await page
+          .locator('#familyNameEng')
+          .fill(declaration.spouse.name.familyName)
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change spouse's name
+         */
+        await expect(page.locator('#spouse-content #Full')).toContainText(
+          declaration.spouse.name.firstNames
+        )
+      })
+      test("8.1.2.10 Change spouse's birthday", async () => {
+        await page.locator('#spouse-content #Date').getByText('Change').click()
+        declaration.spouse.birthDate = getRandomDate(19, 200)
+        await page.getByPlaceholder('dd').fill(declaration.spouse.birthDate.dd)
+        await page.getByPlaceholder('mm').fill(declaration.spouse.birthDate.mm)
+        await page
+          .getByPlaceholder('yyyy')
+          .fill(declaration.spouse.birthDate.yyyy)
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change spouse's birthday
+         */
+        await expect(page.locator('#spouse-content #Date')).toContainText(
+          format(
+            new Date(
+              Number(declaration.spouse.birthDate.yyyy),
+              Number(declaration.spouse.birthDate.mm) - 1,
+              Number(declaration.spouse.birthDate.dd)
+            ),
+            'dd MMMM yyyy'
+          )
+        )
+      })
+      test("8.1.2.11 Change spouse's nationality", async () => {
+        await page
+          .locator('#spouse-content #Nationality')
+          .getByText('Change')
+          .click()
+        declaration.spouse.nationality = 'Holy See'
+        await page.locator('#nationality').click()
+        await page
+          .getByText(declaration.spouse.nationality, {
+            exact: true
+          })
+          .click()
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change spouse's nationality
+         */
+        await expect(
+          page.locator('#spouse-content #Nationality')
+        ).toContainText(declaration.spouse.nationality)
+      })
+      test("8.1.2.12 Change spouse's ID type", async () => {
+        await page.locator('#spouse-content #Type').getByText('Change').click()
+        declaration.spouse.identifier.type = 'Passport'
+        await page.locator('#spouseIdType').click()
+        await page
+          .getByText(declaration.spouse.identifier.type, {
+            exact: true
+          })
+          .click()
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change spouse's ID type
+         */
+        await expect(page.locator('#spouse-content #Type')).toContainText(
+          declaration.spouse.identifier.type
+        )
+      })
+      test("8.1.2.13 Change spouse's ID", async () => {
+        await page.locator('#spouse-content #ID').getByText('Change').click()
+        declaration.spouse.identifier.id = faker.random.numeric(10)
+        await page
+          .locator('#spousePassport')
+          .fill(declaration.spouse.identifier.id)
+        await page.getByRole('button', { name: 'Back to review' }).click()
+        /*
+         * Expected result: should change spouse's ID
+         */
+        await expect(page.locator('#spouse-content #ID')).toContainText(
+          declaration.spouse.identifier.id
+        )
+      })
     })
     test.describe('8.2.3 Validate supporting document', async () => {
       test.skip('Skipped for now', async () => {})
@@ -994,7 +1304,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       /*
        * Expected result: should include
-       * - Mother's Nationality
+       * - Deceased's Nationality
        * - Change button
        */
       await expect(
@@ -1006,8 +1316,8 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       /*
        * Expected result: should include
-       * - Mother's Type of Id
-       * - Mother's Id Number
+       * - Deceased's Type of Id
+       * - Deceased's Id Number
        * - Change button
        */
       await expect(page.locator('#deceased-content #Type')).toContainText(
@@ -1025,7 +1335,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       /*
        * Expected result: should include
-       * - Mother's address
+       * - Deceased's address
        * - Change button
        */
       await expect(page.locator('#deceased-content #Usual')).toContainText(
