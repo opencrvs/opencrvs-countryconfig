@@ -187,6 +187,8 @@ jobs:
           mongodb_admin_password: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
           backup_encryption_passphrase: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
           elasticsearch_superuser_password: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
+          # SSH_HOST was moved from a secret to a variable in OpenCRVS 1.5.0
+          # @todo @deprecated remove the fallback to secrets.SSH_HOST in OpenCRVS 1.7.0
           manager_production_server_ip: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
           ansible_user: ${{ secrets.SSH_USER }}
 
@@ -237,6 +239,8 @@ jobs:
           mongodb_admin_password: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
           backup_encryption_passphrase: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
           elasticsearch_superuser_password: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
+          # SSH_HOST was moved from a secret to a variable in OpenCRVS 1.5.0
+          # @todo @deprecated remove the fallback to secrets.SSH_HOST in OpenCRVS 1.7.0
           manager_production_server_ip: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
           ansible_user: ${{ secrets.SSH_USER }}
 
