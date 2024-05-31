@@ -64,7 +64,7 @@ done
 
 # Default values
 SSH_PORT=22
-SSH_ARGS=${SSH_ARGS:-""}
+SSH_ARGS=${SSH_ARGS:-}
 LOG_LOCATION=${LOG_LOCATION:-/var/log}
 
 COMPOSE_FILES_DOWNLOADED_FROM_CORE="/tmp/docker-compose.deps.yml /tmp/docker-compose.yml"
