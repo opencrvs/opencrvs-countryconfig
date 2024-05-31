@@ -78,7 +78,7 @@
       tags:
         - backups
 
-- hosts: backup-host
+- hosts: backups-host
   become: yes
   become_method: sudo
   tasks:
@@ -93,7 +93,7 @@
         - backups
 
     - set_fact:
-        external_backup_server_user_home: '/home/{{ external_backup_server_user }}'
+        backup_server_user_home: '/home/{{ backup_server_user }}'
       tags:
         - backups
 
@@ -125,6 +125,10 @@
       tags:
         - backups
 
+- hosts: backups
+  become: yes
+  become_method: sudo
+  tasks:
     - name: Get manager node hostname
       set_fact:
         manager_hostname: "{{ groups['docker-manager-first'][0] }}"
@@ -134,13 +138,13 @@
 
     - name: Ensure backup application servers can login to backup server
       blockinfile:
-        path: '{{ external_backup_server_user_home }}/.ssh/authorized_keys'
+        path: '{{ backup_server_user_home }}/.ssh/authorized_keys'
         block: |
           {{ lookup('file', '/tmp/docker-manager-first_id_rsa.pub') }}
         marker: '# {mark} ANSIBLE MANAGED BLOCK docker-manager-first {{ manager_hostname }}'
         create: yes
         mode: 0600
-        owner: '{{ external_backup_server_user }}'
+        owner: '{{ backup_server_user }}'
       when: "'docker-manager-first' in groups"
       tags:
         - backups
@@ -149,15 +153,17 @@
   become: yes
   tasks:
     - name: Set destination server
+      when: "'backups' in groups and groups['backups'] | length > 0"
       set_fact:
         destination_server: "{{ hostvars[groups['backups'][0]].ansible_host }}"
       tags:
         - backups
 
     - name: Check SSH connection to destination server
-      shell: ssh -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=5 {{ backup_server_user }}@{{ destination_server }} 'echo Connection successful'
+      shell: ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 {{ backup_server_user }}@{{ destination_server }} 'echo Connection successful'
       remote_user: '{{ crontab_user }}'
       register: ssh_test
+      when: "'backups' in groups and groups['backups'] | length > 0"
       ignore_errors: yes
       tags:
         - backups
@@ -165,6 +171,6 @@
     - name: Fail if SSH connection test failed
       fail:
         msg: 'SSH connection to the backup server failed'
-      when: ssh_test.rc != 0
+      when: "'backups' in groups and groups['backups'] | length > 0 and ssh_test.rc != 0"
       tags:
         - backups

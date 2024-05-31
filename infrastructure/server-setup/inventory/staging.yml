@@ -15,13 +15,18 @@
 all:
   vars:
     # This configuration variable blocks all access to the server, including SSH, except from the IP addresses specified below.
-    # This should always be set when configuring a production server if there is no other firewall in front of the server.
-    # SSH and other services should never be exposed to the public internet.
+    # In most cases these should be left empty, as the VPN server should be the only source of traffic.
+    # OpenCRVS should never be exposed to the public internet. If this is not possible to organise,
+    # then this should always be set when configuring a production server if there is no other firewall in front of the server.
+    # BE CAREFUL! This will block all SSH traffic except from the IP addresses listed here.
     only_allow_access_from_addresses:
-      # @todo place the IP address of your VPN server or other explicitly allowed traffic sources here
-      - 55.55.55.55 # example VPN server IP address
+      # @todo place the IP address of your jump server or other explicitly allowed traffic sources here
+      #- 55.55.55.55 # example jump server IP address
+      []
     enable_backups: false
-    periodic_restore_from_backup: true
+    # Turn this on if you want to restore daily production backups to your staging server.
+    # For this you need to first setup a backup environment
+    periodic_restore_from_backup: false
     backup_server_remote_source_directory: /home/backup/backups
     users:
       # @todo this is where you define which development team members have access to the server.
@@ -35,7 +40,7 @@ all:
 docker-manager-first:
   hosts:
     staging: # @todo set this to be the hostname of your target server
-      ansible_host: '11.11.11.11' # todo set this to be the hostname of your target server
+      ansible_host: '11.11.11.11' # @todo set this to be the hostname of your target server
       data_label: data1
       # @todo as production servers are not directly accessible from the internet, you need to use a jump server to access them.
       ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'

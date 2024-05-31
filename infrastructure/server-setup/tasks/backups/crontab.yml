@@ -4,7 +4,7 @@
     backup_port: "{{ hostvars[groups['backups'][0]].ansible_port | default('22') }}"
   tags:
     - backups
-  when: groups['backups'] | length == 1
+  when: "'backups' in groups and groups['backups'] | length == 1"
 
 - name: Copy backups.sh file to backup_server_user's home directory
   copy:
@@ -38,6 +38,7 @@
   when: periodic_restore_from_backup and backup_restore_encryption_passphrase is not defined
 
 - name: 'Setup crontab to download a backup periodically the opencrvs data'
+  when: periodic_restore_from_backup
   cron:
     user: '{{ crontab_user }}'
     name: 'download opencrvs backup'
@@ -47,6 +48,7 @@
     state: "{{ 'present' if (backup_hostname is defined and backup_restore_encryption_passphrase and periodic_restore_from_backup) else 'absent' }}"
 
 - name: 'Setup crontab to restore the opencrvs data'
+  when: periodic_restore_from_backup
   cron:
     user: '{{ crontab_user }}'
     name: 'restore opencrvs'

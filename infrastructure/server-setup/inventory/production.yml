@@ -15,13 +15,16 @@
 
 all:
   vars:
-    # This configuration variable blocks all access to the server, including SSH, except from the IP addresses specified below.
-    # This should always be set when configuring a production server if there is no other firewall in front of the server.
-    # SSH and other services should never be exposed to the public internet.
     enable_backups: true
+    # This configuration variable blocks all access to the server, including SSH, except from the IP addresses specified below.
+    # In most cases these should be left empty, as the VPN server should be the only source of traffic.
+    # OpenCRVS should never be exposed to the public internet. If this is not possible to organise,
+    # then this should always be set when configuring a production server if there is no other firewall in front of the server.
+    # BE CAREFUL! This will block all SSH traffic except from the IP addresses listed here.
     only_allow_access_from_addresses:
-      # @todo place the IP address of your VPN server or other explicitly allowed traffic sources here
-      - 55.55.55.55 # example VPN server IP address
+      # @todo place the IP address of your jump server or other explicitly allowed traffic sources here
+      #- 55.55.55.55 # example jump server IP address
+      []
     backup_server_remote_target_directory: /home/backup/backups
     users:
       # @todo this is where you define which development team members have access to the server.
@@ -35,7 +38,7 @@ all:
 docker-manager-first:
   hosts:
     prod-01: # @todo set this to be the hostname of your target server
-      ansible_host: '22.22.22.22' # todo set this to be the hostname of your target server
+      ansible_host: '22.22.22.22' # @todo set this to be the hostname of your target server
       data_label: data1
       # @todo as production servers are not directly accessible from the internet, you need to use a jump server to access them.
       ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
@@ -53,8 +56,6 @@ backups:
   hosts:
     backup: # @todo set this to be the hostname of your backup server
       ansible_host: '66.66.66.66'
-      # @todo how many days to store backups for?
-      amount_of_backups_to_keep: 3
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key

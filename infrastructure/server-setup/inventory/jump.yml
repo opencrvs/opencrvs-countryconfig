@@ -24,7 +24,7 @@ all:
         state: present
         sudoer: true
 
-jump:
+jump-host:
   hosts:
     backup: # @todo set this to be the hostname of your backup server
       ansible_host: '55.55.55.55'

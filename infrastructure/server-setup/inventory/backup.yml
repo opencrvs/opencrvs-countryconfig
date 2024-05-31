@@ -15,6 +15,7 @@
 
 all:
   vars:
+    # @todo how many days to store backups for?
     amount_of_backups_to_keep: 7
     backup_server_remote_target_directory: /home/backup/backups
     users:
@@ -26,9 +27,7 @@ all:
         state: present
         sudoer: true
 
-backup-host:
+backups-host:
   hosts:
     backup: # @todo set this to be the hostname of your backup server
       ansible_host: '66.66.66.66'
-      # @todo how many days to store backups for?
-      amount_of_backups_to_keep: 3

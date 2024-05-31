@@ -18,7 +18,7 @@
       tags:
         - jump
 
-- hosts: jump
+- hosts: jump-host
   become: yes
   become_method: sudo
   tasks:
@@ -44,10 +44,14 @@
       tags:
         - jump
 
+- hosts: jump
+  become: yes
+  become_method: sudo
+  tasks:
     - name: Get manager node hostname
       set_fact:
         manager_hostname: "{{ groups['docker-manager-first'][0] }}"
-      when: "'docker-manager-first' in groups"
+      when: "'docker-manager-first' in groups and groups['docker-manager-first'] | length > 0"
       tags:
         - jump
 
@@ -60,13 +64,20 @@
         create: yes
         mode: 0600
         owner: 'jump'
-      when: "'docker-manager-first' in groups"
+      when: "'docker-manager-first' in groups and groups['docker-manager-first'] | length > 0"
       tags:
         - jump
 
 - hosts: localhost
   tasks:
+    - name: Define application_server_using_jump
+      set_fact:
+        application_server_using_jump: "{{ 'docker-manager-first' in groups and 'jump' in groups and groups['jump'] | length > 0 }}"
+      tags:
+        - jump
+
     - name: Set destination server
+      when: 'application_server_using_jump'
       set_fact:
         destination_server: "{{ hostvars[groups['jump'][0]].ansible_host }}"
       tags:
@@ -74,7 +85,8 @@
 
     # This would use the CI runner machine and the currently installed SSH key which should be provision user's key
     - name: Check SSH connection to destination server
-      shell: ssh -i ~/.ssh/id_rsa -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=5 jump@{{ destination_server }} 'echo Connection successful'
+      shell: ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=5 jump@{{ destination_server }} 'echo Connection successful'
+      when: 'application_server_using_jump'
       register: ssh_test
       ignore_errors: yes
       tags:
@@ -83,6 +95,6 @@
     - name: Fail if SSH connection test failed
       fail:
         msg: 'SSH connection to the jump server failed'
-      when: ssh_test.rc != 0
+      when: 'application_server_using_jump and ssh_test.rc != 0'
       tags:
         - jump
