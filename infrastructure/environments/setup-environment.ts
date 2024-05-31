@@ -1,35 +1,51 @@
 import { Octokit } from '@octokit/core'
-import { PromptObject } from 'prompts'
-import prompts from 'prompts'
-import minimist from 'minimist'
-
+import { spawn } from 'child_process'
 import kleur from 'kleur'
+import minimist from 'minimist'
+import prompts, { PromptObject } from 'prompts'
 import {
-  Variable,
   Secret,
+  Variable,
+  createEnvironment,
+  createEnvironmentSecret,
+  createRepositorySecret,
+  createVariable,
   getRepositoryId,
   listEnvironmentSecrets,
   listEnvironmentVariables,
-  createRepositorySecret,
-  createEnvironmentSecret,
-  createVariable,
-  updateVariable,
-  createEnvironment,
-  listRepositorySecrets
+  listRepositorySecrets,
+  updateVariable
 } from './github'
 
 import editor from '@inquirer/editor'
 import { writeFileSync } from 'fs'
-import { exec as callbackExec } from 'child_process'
-import { promisify } from 'util'
 import { join } from 'path'
 import { error, info, log, success, warn } from './logger'
 import { verifyConnection } from './ssh'
 
-const exec = promisify(callbackExec)
-
 const notEmpty = (value: string | number) =>
   value.toString().trim().length > 0 ? true : 'Please enter a value'
+
+function runInteractiveShell(
+  command: string,
+  args: string[] = []
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const shell = spawn(command, args, { stdio: 'inherit' })
+
+    shell.on('close', (code) => {
+      if (code === 0) {
+        resolve(`Shell exited with code ${code}`)
+      } else {
+        reject(new Error(`Shell exited with code ${code}`))
+      }
+    })
+
+    shell.on('error', (err) => {
+      reject(err)
+    })
+  })
+}
 
 type Question<T extends string> = PromptObject<T> & {
   name: T
@@ -900,10 +916,10 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
     if (updateHosts) {
       try {
-        const res = await exec(
-          `sh ${join(__dirname, './update-known-hosts.sh')} ${sshHost}`
-        )
-        log(res.stdout)
+        await runInteractiveShell(`sh`, [
+          join(__dirname, './update-known-hosts.sh'),
+          sshHost
+        ])
       } catch (error) {
         warn(
           'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
@@ -932,10 +948,10 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
     if (updateHosts) {
       try {
-        const res = await exec(
-          `sh ${join(__dirname, './update-known-hosts.sh')} ${domain}`
-        )
-        console.log(res.stdout)
+        await runInteractiveShell(`sh`, [
+          join(__dirname, './update-known-hosts.sh'),
+          domain
+        ])
       } catch (error) {
         warn(
           'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
