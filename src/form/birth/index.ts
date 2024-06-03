@@ -489,18 +489,13 @@ export const birthForm: ISerializedForm = {
               validator: [],
               type: 'SIGNATURE',
               mapping: {
-                // template: {
-                //   fieldName: 'yo',
-                //   operation: 'nameToFieldTransformer',
-                //   parameters: ['en', 'firstNames']
-                // },
                 mutation: {
                   operation: 'fieldValueSectionExchangeTransformer',
-                  parameters: ['registration', 'informantsSignatureURI']
+                  parameters: ['registration', 'informantsSignature']
                 },
                 query: {
                   operation: 'fieldValueSectionExchangeTransformer',
-                  parameters: ['registration', 'informantsSignatureURI']
+                  parameters: ['registration', 'informantsSignature']
                 }
               }
             }
