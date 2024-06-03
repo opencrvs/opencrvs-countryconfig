@@ -720,7 +720,7 @@ const derivedVariables = [
 
 const metabaseAdminQuestions = [
   {
-    valueType: 'VARIABLE',
+    valueType: 'SECRET',
     name: 'OPENCRVS_METABASE_ADMIN_EMAIL',
     type: 'text',
     message: 'Email for metabase admin dashboard login',
