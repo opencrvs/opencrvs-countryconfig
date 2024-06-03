@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
-import { createPIN, login } from '../../helpers'
+import { createPIN, getToken, login } from '../../helpers'
+import { createDeathDeclaration } from './helpers'
 
 test.describe('1. Death event declaration', () => {
   test.describe.serial('Fill all form sections. Save & Exit', () => {
@@ -501,6 +502,15 @@ test.describe('1. Death event declaration', () => {
   })
 
   test.describe('1.12 Technical test for shortcuts', () => {
-    test.skip('Shortcut for quickly creating declarations', async () => {})
+    test('Shortcut for quickly creating declarations', async ({ page }) => {
+      const token = await getToken('k.mweene', 'test')
+      const res = await createDeathDeclaration(token)
+      expect(res).toStrictEqual({
+        trackingId: expect.any(String),
+        compositionId: expect.any(String),
+        isPotentiallyDuplicate: false,
+        __typename: 'CreatedIds'
+      })
+    })
   })
 })
