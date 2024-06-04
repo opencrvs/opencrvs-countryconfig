@@ -502,6 +502,48 @@ export const birthForm: ISerializedForm = {
           ]
         }
       ]
+    },
+    {
+      id: 'review',
+      viewType: 'review',
+      name: {
+        defaultMessage: 'Review',
+        description: 'Form section name for Review',
+        id: 'review.form.section.review.name'
+      },
+      title: {
+        defaultMessage: 'Review',
+        description: 'Form section title for Review',
+        id: 'review.form.section.review.title'
+      },
+      groups: [
+        {
+          id: 'review-view-group',
+          fields: [
+            {
+              name: 'informantSignature',
+              required: true,
+              label: {
+                defaultMessage: 'Signature of informant',
+                description: 'Label for informants signature input',
+                id: 'review.inputs.informantsSignature'
+              },
+              validator: [],
+              type: 'SIGNATURE',
+              mapping: {
+                mutation: {
+                  operation: 'fieldValueSectionExchangeTransformer',
+                  parameters: ['registration', 'informantsSignature']
+                },
+                query: {
+                  operation: 'fieldValueSectionExchangeTransformer',
+                  parameters: ['registration', 'informantsSignature']
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }
