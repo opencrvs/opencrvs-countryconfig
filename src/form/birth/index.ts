@@ -69,7 +69,12 @@ import {
   exactDateOfBirthUnknownConditional,
   hideIfNidIntegrationEnabled
 } from '../common/default-validation-conditionals'
-import { documentsSection, registrationSection } from './required-sections'
+import {
+  documentsSection,
+  registrationSection,
+  previewSection,
+  reviewSection
+} from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
@@ -461,89 +466,7 @@ export const birthForm: ISerializedForm = {
       mapping: getSectionMapping('father')
     },
     documentsSection, // REQUIRED SECTION FOR DOCUMENT ATTACHMENTS
-    {
-      id: 'preview',
-      viewType: 'preview',
-      name: {
-        defaultMessage: 'Preview',
-        description: 'Form section name for Preview',
-        id: 'register.form.section.preview.name'
-      },
-      title: {
-        defaultMessage: 'Preview',
-        description: 'Form section title for Preview',
-        id: 'register.form.section.preview.title'
-      },
-      groups: [
-        {
-          id: 'preview-view-group',
-          fields: [
-            {
-              name: 'informantSignature',
-              required: true,
-              label: {
-                defaultMessage: 'Signature of informant',
-                description: 'Label for informants signature input',
-                id: 'review.inputs.informantsSignature'
-              },
-              validator: [],
-              type: 'SIGNATURE',
-              mapping: {
-                mutation: {
-                  operation: 'fieldValueSectionExchangeTransformer',
-                  parameters: ['registration', 'informantsSignature']
-                },
-                query: {
-                  operation: 'fieldValueSectionExchangeTransformer',
-                  parameters: ['registration', 'informantsSignature']
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'review',
-      viewType: 'review',
-      name: {
-        defaultMessage: 'Review',
-        description: 'Form section name for Review',
-        id: 'review.form.section.review.name'
-      },
-      title: {
-        defaultMessage: 'Review',
-        description: 'Form section title for Review',
-        id: 'review.form.section.review.title'
-      },
-      groups: [
-        {
-          id: 'review-view-group',
-          fields: [
-            {
-              name: 'informantSignature',
-              required: true,
-              label: {
-                defaultMessage: 'Signature of informant',
-                description: 'Label for informants signature input',
-                id: 'review.inputs.informantsSignature'
-              },
-              validator: [],
-              type: 'SIGNATURE',
-              mapping: {
-                mutation: {
-                  operation: 'fieldValueSectionExchangeTransformer',
-                  parameters: ['registration', 'informantsSignature']
-                },
-                query: {
-                  operation: 'fieldValueSectionExchangeTransformer',
-                  parameters: ['registration', 'informantsSignature']
-                }
-              }
-            }
-          ]
-        }
-      ]
-    }
+    previewSection, // REQUIRED SECTION TO PREVIEW DECLARATION BEFORE SUBMIT
+    reviewSection // REQUIRED SECTION TO REVIEW SUBMITTED DECLARATION
   ]
 }

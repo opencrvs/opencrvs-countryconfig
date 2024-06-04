@@ -208,4 +208,88 @@ export const documentsSection = {
       ]
     }
   ]
-} as ISerializedFormSection
+} satisfies ISerializedFormSection
+
+export const previewSection = {
+  id: 'preview',
+  viewType: 'preview',
+  name: {
+    defaultMessage: 'Preview',
+    description: 'Form section name for Preview',
+    id: 'register.form.section.preview.name'
+  },
+  title: {
+    defaultMessage: 'Preview',
+    description: 'Form section title for Preview',
+    id: 'register.form.section.preview.title'
+  },
+  groups: [
+    {
+      id: 'preview-view-group',
+      fields: [
+        {
+          name: 'informantSignature',
+          label: {
+            defaultMessage: 'Signature of informant',
+            description: 'Label for informants signature input',
+            id: 'review.inputs.informantsSignature'
+          },
+          validator: [],
+          type: 'SIGNATURE',
+          mapping: {
+            mutation: {
+              operation: 'fieldValueSectionExchangeTransformer',
+              parameters: ['registration', 'informantsSignature']
+            },
+            query: {
+              operation: 'fieldValueSectionExchangeTransformer',
+              parameters: ['registration', 'informantsSignature']
+            }
+          }
+        }
+      ]
+    }
+  ]
+} satisfies ISerializedFormSection
+
+export const reviewSection = {
+  id: 'review',
+  viewType: 'review',
+  name: {
+    defaultMessage: 'Review',
+    description: 'Form section name for Review',
+    id: 'review.form.section.review.name'
+  },
+  title: {
+    defaultMessage: 'Review',
+    description: 'Form section title for Review',
+    id: 'review.form.section.review.title'
+  },
+  groups: [
+    {
+      id: 'review-view-group',
+      fields: [
+        {
+          name: 'informantSignature',
+          label: {
+            defaultMessage: 'Signature of informant',
+            description: 'Label for informants signature input',
+            id: 'review.inputs.informantsSignature'
+          },
+          validator: [],
+          type: 'SIGNATURE',
+          mapping: {
+            mutation: {
+              operation: 'fieldValueSectionExchangeTransformer',
+              parameters: ['registration', 'informantsSignature']
+            },
+            query: {
+              operation: 'fieldValueSectionExchangeTransformer',
+              parameters: ['registration', 'informantsSignature']
+            }
+          }
+        }
+      ]
+    }
+  ]
+} satisfies ISerializedFormSection
