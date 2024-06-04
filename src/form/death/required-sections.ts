@@ -2,6 +2,7 @@ import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/ma
 import { formMessageDescriptors } from '../common/messages'
 import { ISerializedFormSection } from '../types/types'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { informantsSignature } from '../common/common-optional-fields'
 
 export const registrationSection = {
   id: 'registration',
@@ -178,3 +179,45 @@ export const documentsSection = {
     }
   ]
 } as ISerializedFormSection
+
+export const previewSection = {
+  id: 'preview',
+  viewType: 'preview',
+  name: {
+    defaultMessage: 'Preview',
+    description: 'Form section name for Preview',
+    id: 'register.form.section.preview.name'
+  },
+  title: {
+    defaultMessage: 'Preview',
+    description: 'Form section title for Preview',
+    id: 'register.form.section.preview.title'
+  },
+  groups: [
+    {
+      id: 'preview-view-group',
+      fields: [informantsSignature]
+    }
+  ]
+} satisfies ISerializedFormSection
+
+export const reviewSection = {
+  id: 'review',
+  viewType: 'review',
+  name: {
+    defaultMessage: 'Review',
+    description: 'Form section name for Review',
+    id: 'review.form.section.review.name'
+  },
+  title: {
+    defaultMessage: 'Review',
+    description: 'Form section title for Review',
+    id: 'review.form.section.review.title'
+  },
+  groups: [
+    {
+      id: 'review-view-group',
+      fields: [informantsSignature]
+    }
+  ]
+} satisfies ISerializedFormSection
