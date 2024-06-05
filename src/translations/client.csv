@@ -383,7 +383,7 @@ constants.issueConfirmationMessage,Confirmation of issuance,Please confirm that 
 constants.issueToBride,Issuing to bride,Issue to bride,Délivré à) la mariée
 constants.issueToFather,Issuing to father,Issue to father,Délivré au père
 constants.issueToGroom,Issuing to groom,Issue to groom,délivré au marié
-constants.issueToInformant,Issuance of death to informant,Issue to informant ({informant}),Delivré à l'informateur
+constants.issueToInformant,Issuance of death to informant,"Issue to informant ({informant, select, MOTHER {Mother} FATHER {Father} GRANDFATHER {Grandfather} GRANDMOTHER {Grandmother} BROTHER {Brother} SISTER {Sister} LEGAL_GUARDIAN {Legal guardian} BRIDE {Bride} GROOM {Groom} HEAD_OF_GROOM_FAMILY {Head of groom's family} HEAD_OF_BRIDE_FAMILY {Head of bride's family} SPOUSE {Spouse} SON {Son} DAUGHTER {Daughter} SON_IN_LAW {Son in law} DAUGHTER_IN_LAW {Daughter in law} GRANDSON {Grandson} GRANDDAUGHTER {Granddaughter} other {{informant}}})","Delivré à l'informateur ({informant, select, MOTHER {Mère} FATHER {Père} GRANDFATHER {Grand-père} GRANDMOTHER {Grand-mère} BROTHER {Frère} SISTER {Sœur} LEGAL_GUARDIAN {Tuteur légal} BRIDE {Mariée} GROOM {Marié} HEAD_OF_GROOM_FAMILY {Chef de la famille du marié} HEAD_OF_BRIDE_FAMILY {Chef de la famille de la mariée} SPOUSE {Conjoint} SON {Fils} DAUGHTER {Fille} SON_IN_LAW {Beau-fils} DAUGHTER_IN_LAW {Belle-fille} GRANDSON {Petit-fils} GRANDDAUGHTER {Petite-fille} other {{informant}}})"
 constants.issueToMother,Issuing to mother,Issue to mother,Délivré à la mère
 constants.issueToSomeoneElse,Issuing to someone else,Issue to someone else,Délivrer à quelqu'un d'autre
 constants.issuedBy,The issued by sec text,Issued by,Délivré par
@@ -524,7 +524,7 @@ correction.corrector.groom,Label for groom option in certificate correction form
 correction.corrector.idCheck,,Check proof of ID,Vérifiez la preuve d'identité. Correspond-elle aux détails suivants ?
 correction.corrector.idCheckVerify,,Yes,Oui
 correction.corrector.idCheckWithoutVerify,,No,Non
-correction.corrector.informant,Label for informant option in certificate correction form,Informant ({informant}),Informateur
+correction.corrector.informant,Label for informant option in certificate correction form,"Informant ({informant, select, MOTHER {Mother} FATHER {Father} GRANDFATHER {Grandfather} GRANDMOTHER {Grandmother} BROTHER {Brother} SISTER {Sister} LEGAL_GUARDIAN {Legal guardian} BRIDE {Bride} GROOM {Groom} HEAD_OF_GROOM_FAMILY {Head of groom's family} HEAD_OF_BRIDE_FAMILY {Head of bride's family} SPOUSE {Spouse} SON {Son} DAUGHTER {Daughter} SON_IN_LAW {Son in law} DAUGHTER_IN_LAW {Daughter in law} GRANDSON {Grandson} GRANDDAUGHTER {Granddaughter} other {{informant}}})","Informateur ({informant, select, MOTHER {Mère} FATHER {Père} GRANDFATHER {Grand-père} GRANDMOTHER {Grand-mère} BROTHER {Frère} SISTER {Sœur} LEGAL_GUARDIAN {Tuteur légal} BRIDE {Mariée} GROOM {Marié} HEAD_OF_GROOM_FAMILY {Chef de la famille du marié} HEAD_OF_BRIDE_FAMILY {Chef de la famille de la mariée} SPOUSE {Conjoint} SON {Fils} DAUGHTER {Fille} SON_IN_LAW {Beau-fils} DAUGHTER_IN_LAW {Belle-fille} GRANDSON {Petit-fils} GRANDDAUGHTER {Petite-fille} other {{informant}}})"
 correction.corrector.legalGuardian,Label for legal guardian option in certificate correction form,Legal guardian,Tuteur légal
 correction.corrector.me,Label for registrar option in certificate correction form,Me,Moi
 correction.corrector.mother,Label for mother option in certificate correction form,Mother,Mère
@@ -910,8 +910,10 @@ form.field.label.ageOfGroom,,Age of groom,Âge du marié
 form.field.label.ageOfInformant,,Age of informant,Âge de l'informateur
 form.field.label.ageOfMother,,Age of mother,Âge de la mère
 form.field.label.ageOfSpouse,,Age of spouse,Âge du conjoint
+form.field.label.app.certifyRecordTo.bride,,Print and issue to bride,Imprimer et envoyer à la mariée
 form.field.label.app.certifyRecordTo.father,,Print and issue to father,Imprimer et remettre au père
-form.field.label.app.certifyRecordTo.informant,,Print and issue to informant ({informant}),Imprimer et remettre à l'informateur ({informant})
+form.field.label.app.certifyRecordTo.groom,,Print and issue to groom,Imprimer et envoyer au marié
+form.field.label.app.certifyRecordTo.informant,,"Print and issue to informant ({informant, select, MOTHER {Mother} FATHER {Father} GRANDFATHER {Grandfather} GRANDMOTHER {Grandmother} BROTHER {Brother} SISTER {Sister} LEGAL_GUARDIAN {Legal guardian} BRIDE {Bride} GROOM {Groom} HEAD_OF_GROOM_FAMILY {Head of groom's family} HEAD_OF_BRIDE_FAMILY {Head of bride's family} SPOUSE {Spouse} SON {Son} DAUGHTER {Daughter} SON_IN_LAW {Son in law} DAUGHTER_IN_LAW {Daughter in law} GRANDSON {Grandson} GRANDDAUGHTER {Granddaughter} other {{informant}}})","Imprimer et remettre à l'informateur ({informant, select, MOTHER {Mère} FATHER {Père} GRANDFATHER {Grand-père} GRANDMOTHER {Grand-mère} BROTHER {Frère} SISTER {Sœur} LEGAL_GUARDIAN {Tuteur légal} BRIDE {Mariée} GROOM {Marié} HEAD_OF_GROOM_FAMILY {Chef de la famille du marié} HEAD_OF_BRIDE_FAMILY {Chef de la famille de la mariée} SPOUSE {Conjoint} SON {Fils} DAUGHTER {Fille} SON_IN_LAW {Beau-fils} DAUGHTER_IN_LAW {Belle-fille} GRANDSON {Petit-fils} GRANDDAUGHTER {Petite-fille} other {{informant}}})"
 form.field.label.app.certifyRecordTo.mother,,Print and issue to mother,Imprimer et remettre à la mère
 form.field.label.app.phoneVerWarn,,Check with the informant that the mobile phone number you have entered is correct,Vérifiez auprès de l'informateur que le numéro de téléphone mobile que vous avez indiqué est correct.
 form.field.label.app.whoContDet.app,,Informant,Informateur
@@ -1296,7 +1298,7 @@ form.section.accountDetails,,Account details,Coordonnées du compte
 form.section.assignedRegistrationOffice,,Assign to a registration office,A quel bureau voulez-vous affecter un nouvel utilisateur ?
 form.section.assignedRegistrationOfficeGroupTitle,,Assigned registration office,Bureau d'enregistrement assigné
 form.section.bride.headOfBrideFamily,,Head of bride's family,Chef de la famille de la mariée
-form.section.bride.name,,Print and issue to bride,Imprimer et envoyer à la mariée
+form.section.bride.name,,Bride,Mariée
 form.section.bride.title,,Bride's details,Détails de la mariée
 form.section.causeOfDeath.name,,Cause of Death,Cause du décès
 form.section.causeOfDeath.title,,What is the medically certified cause of death?,Quelle est la cause de décès médicalement certifiée ?
@@ -1333,7 +1335,7 @@ form.section.documents.uploadImage,,Upload a photo of the supporting document,T�
 form.section.father.name,,Father,Père
 form.section.father.title,,Father's details,Information du père
 form.section.groom.headOfGroomFamily,,Head of groom's family,Chef de la famille du marié
-form.section.groom.name,,Print and issue to groom,Imprimer et envoyer au marié
+form.section.groom.name,,Groom,Marié
 form.section.groom.title,,Groom's details,Détails du marié
 form.section.informant.name,,Informant,Informateur
 form.section.informant.title,,Informant's details,information de l'informateur

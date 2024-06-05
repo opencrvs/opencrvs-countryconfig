@@ -555,7 +555,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`)'
+        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`) &!Path(`/dashboards/queries.json`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -568,13 +568,15 @@ services:
         - 'traefik.http.middlewares.countryconfig.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.countryconfig.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.countryconfig.headers.stspreload=true'
-        # This is an invalid IP range, effectively blocking all IPs from accessing /email path.
+        # This is an invalid IP range, effectively blocking all IPs from accessing below paths.
         # It's only meant to be accessed from the internal docker network.
-        - 'traefik.http.middlewares.block-email.ipwhitelist.sourcerange=255.255.255.255'
+        - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
         - 'traefik.http.routers.block-email.rule=Host(`countryconfig.{{hostname}}`) && Path(`/email`)'
-        - 'traefik.http.routers.block-email.middlewares=block-email'
+        - 'traefik.http.routers.block-email.middlewares=block-internal-routes'
         - 'traefik.http.routers.block-notification.rule=Host(`countryconfig.{{hostname}}`) && Path(`/notification`)'
-        - 'traefik.http.routers.block-notification.middlewares=block-email'
+        - 'traefik.http.routers.block-notification.middlewares=block-internal-routes'
+        - 'traefik.http.routers.block-dashboard-queries.rule=Host(`countryconfig.{{hostname}}`) && Path(`/dashboards/queries.json`)'
+        - 'traefik.http.routers.block-dashboard-queries.middlewares=block-internal-routes'
       replicas: 1
     environment:
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
@@ -849,7 +851,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.config.rule=Host(`config.{{hostname}}`)'
+        - 'traefik.http.routers.config.rule=Host(`config.{{hostname}}`) && !Path(`/dashboardQueries`)'
         - 'traefik.http.services.config.loadbalancer.server.port=2021'
         - 'traefik.http.routers.config.tls=true'
         - 'traefik.http.routers.config.tls.certresolver=certResolver'
@@ -861,6 +863,9 @@ services:
         - 'traefik.http.middlewares.config.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.config.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.config.headers.stspreload=true'
+        - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
+        - 'traefik.http.routers.block-dashboard-queries.rule=Host(`countryconfig.{{hostname}}`) && Path(`/dashboardQueries`)'
+        - 'traefik.http.routers.block-dashboard-queries.middlewares=block-internal-routes'
       replicas: 1
     networks:
       - overlay_net
