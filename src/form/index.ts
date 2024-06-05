@@ -14,7 +14,6 @@ import { birthForm } from './birth'
 import { deathForm } from './death'
 import { marriageForm } from './marriage'
 import { IForms, Event } from './types/types'
-
 import { fetchUserLocationHierarchy } from '@countryconfig/utils/users'
 
 export async function formHandler(req: Request): Promise<IForms> {
