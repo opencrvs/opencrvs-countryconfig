@@ -39,6 +39,7 @@
 
 - Improved support for non-22 SSH port
 - Added french translation of informant for print certificate flow, issue certificate flow & correction flow
+- In the certificate, the 'Place of Certification' now accurately reflects the correct location.
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
