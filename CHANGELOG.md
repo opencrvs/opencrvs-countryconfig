@@ -1,4 +1,9 @@
 # Changelog
+
+## 1.6.0 (TBD)
+
+- Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
+
 ## [1.5.0]
 
 - Change auth URLs to access them via gateway
@@ -16,6 +21,11 @@
 - Add smtp environment variables in qa compose file
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
+- Remove authentication from dashboard queries route
+- Added french translation of informant for print certificate flow, issue certificate flow & correction flow 
+- In the certificate, the 'Place of Certification' now accurately reflects the correct location.  
+- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
+- Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
