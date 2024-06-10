@@ -554,7 +554,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`) &!Path(`/dashboards/queries.json`)'
+        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -850,7 +850,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.config.rule=Host(`config.{{hostname}}`) && !Path(`/dashboardQueries`)'
+        - 'traefik.http.routers.config.rule=Host(`config.{{hostname}}`)'
         - 'traefik.http.services.config.loadbalancer.server.port=2021'
         - 'traefik.http.routers.config.tls=true'
         - 'traefik.http.routers.config.tls.certresolver=certResolver'
@@ -862,9 +862,6 @@ services:
         - 'traefik.http.middlewares.config.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.config.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.config.headers.stspreload=true'
-        - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
-        - 'traefik.http.routers.block-dashboard-queries.rule=Host(`countryconfig.{{hostname}}`) && Path(`/dashboardQueries`)'
-        - 'traefik.http.routers.block-dashboard-queries.middlewares=block-internal-routes'
       replicas: 1
     networks:
       - overlay_net
