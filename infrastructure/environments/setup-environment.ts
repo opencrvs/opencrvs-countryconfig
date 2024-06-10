@@ -23,6 +23,7 @@ import { writeFileSync } from 'fs'
 import { exec as callbackExec } from 'child_process'
 import { promisify } from 'util'
 import { join } from 'path'
+import { initial } from 'lodash'
 
 const exec = promisify(callbackExec)
 
@@ -720,22 +721,25 @@ const derivedVariables = [
 
 const metabaseAdminQuestions = [
   {
-    valueType: 'SECRET',
+    valueType: 'SECRET' as const,
     name: 'OPENCRVS_METABASE_ADMIN_EMAIL',
-    type: 'text',
-    message: 'Email for metabase admin dashboard login',
+    type: 'text' as const,
+    message:
+      'Email for Metabase super admin. Used as a username when logging in to the dashboard',
     valueLabel: 'OPENCRVS_METABASE_ADMIN_EMAIL',
-    scope: 'ENVIRONMENT'
+    scope: 'ENVIRONMENT' as const,
+    initial: 'user@opencrvs.org'
   },
   {
-    valueType: 'SECRET',
+    valueType: 'SECRET' as const,
     name: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
-    type: 'text',
-    message: 'Password for metabase admin dashboard login',
+    type: 'text' as const,
+    message: 'Password for Metabase super admin.',
     valueLabel: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
-    scope: 'ENVIRONMENT'
+    scope: 'ENVIRONMENT' as const,
+    initial: generateLongPassword()
   }
-] as const
+]
 
 ALL_QUESTIONS.push(
   ...dockerhubQuestions,
@@ -969,6 +973,13 @@ ALL_QUESTIONS.push(
       await promptAndStoreAnswer(environment, vpnHostQuestions, existingValues)
     }
   }
+
+  log('\n', kleur.bold().underline('METABASE ADMIN'))
+  await promptAndStoreAnswer(
+    environment,
+    metabaseAdminQuestions,
+    existingValues
+  )
 
   log('\n', kleur.bold().underline('SMTP'))
   await promptAndStoreAnswer(environment, emailQuestions, existingValues)
