@@ -26,6 +26,7 @@
 - In the certificate, the 'Place of Certification' now accurately reflects the correct location.  
 - Added french translation of informant for print certificate flow, issue certificate flow & correction flow
 - Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
+- Add support for image compression configuration
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
