@@ -1,4 +1,5 @@
 # Changelog
+
 ## [1.5.0]
 
 - Change auth URLs to access them via gateway
@@ -17,6 +18,9 @@
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
 - Remove literal quotes as default value from compose files
+- Remove authentication from dashboard queries route
+- Added french translation of informant for print certificate flow, issue certificate flow & correction flow 
+- In the certificate, the 'Place of Certification' now accurately reflects the correct location.
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
