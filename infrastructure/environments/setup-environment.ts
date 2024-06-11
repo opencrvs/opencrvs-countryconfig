@@ -588,52 +588,123 @@ const sentryQuestions = [
 
 const derivedVariables = [
   {
-    valueType: 'VARIABLE',
     name: 'ACTIVATE_USERS',
-    type: 'disabled',
     valueLabel: 'ACTIVATE_USERS',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'AUTH_HOST',
-    type: 'disabled',
     valueLabel: 'AUTH_HOST',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'COUNTRY_CONFIG_HOST',
-    type: 'disabled',
     valueLabel: 'COUNTRY_CONFIG_HOST',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'GATEWAY_HOST',
-    type: 'disabled',
     valueLabel: 'GATEWAY_HOST',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'CONTENT_SECURITY_POLICY_WILDCARD',
-    type: 'disabled',
     valueLabel: 'CONTENT_SECURITY_POLICY_WILDCARD',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'CLIENT_APP_URL',
-    type: 'disabled',
     valueLabel: 'CLIENT_APP_URL',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'LOGIN_URL',
-    type: 'disabled',
     valueLabel: 'LOGIN_URL',
+    valueType: 'VARIABLE',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
+    valueLabel: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'MINIO_ROOT_USER',
+    valueLabel: 'MINIO_ROOT_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'MINIO_ROOT_PASSWORD',
+    valueLabel: 'MINIO_ROOT_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'MONGODB_ADMIN_USER',
+    valueLabel: 'MONGODB_ADMIN_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'MONGODB_ADMIN_PASSWORD',
+    valueLabel: 'MONGODB_ADMIN_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'SUPER_USER_PASSWORD',
+    valueLabel: 'SUPER_USER_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'ENCRYPTION_KEY',
+    valueLabel: 'ENCRYPTION_KEY',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'GH_ENCRYPTION_PASSWORD',
+    valueLabel: 'GH_ENCRYPTION_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'REPOSITORY'
+  },
+  {
+    name: 'SSH_USER',
+    valueLabel: 'SSH_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT',
+    value: 'provision'
+  },
+  {
+    name: 'BACKUP_ENCRYPTION_PASSPHRASE',
+    valueLabel: 'BACKUP_ENCRYPTION_PASSPHRASE',
+    valueType: 'SECRET',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   }
 ] as const
@@ -781,7 +852,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
   if (!SSH_KEY_EXISTS) {
     const sshKey = await editor({
       message: `Paste the SSH private key for ${kleur.cyan(
-        'SSH_USER (provision'
+        'SSH_USER (provision)'
       )} here:`
     })
 
@@ -927,13 +998,13 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       didExist: findExistingValue(
         'ELASTICSEARCH_SUPERUSER_PASSWORD',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         existingValues
       ),
       value: findExistingOrDefine(
         'ELASTICSEARCH_SUPERUSER_PASSWORD',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         generateLongPassword()
       ),
       scope: 'ENVIRONMENT' as const
@@ -944,13 +1015,13 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       didExist: findExistingValue(
         'MINIO_ROOT_USER',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         existingValues
       ),
       value: findExistingOrDefine(
         'MINIO_ROOT_USER',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         generateLongPassword()
       ),
       scope: 'ENVIRONMENT' as const
@@ -961,13 +1032,13 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       didExist: findExistingValue(
         'MINIO_ROOT_PASSWORD',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         existingValues
       ),
       value: findExistingOrDefine(
         'MINIO_ROOT_PASSWORD',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         generateLongPassword()
       ),
       scope: 'ENVIRONMENT' as const
@@ -978,13 +1049,13 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       didExist: findExistingValue(
         'MONGODB_ADMIN_USER',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         existingValues
       ),
       value: findExistingOrDefine(
         'MONGODB_ADMIN_USER',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         generateLongPassword()
       ),
       scope: 'ENVIRONMENT' as const
@@ -995,13 +1066,13 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       didExist: findExistingValue(
         'MONGODB_ADMIN_PASSWORD',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         existingValues
       ),
       value: findExistingOrDefine(
         'MONGODB_ADMIN_PASSWORD',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         generateLongPassword()
       ),
       scope: 'ENVIRONMENT' as const
@@ -1012,13 +1083,13 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       didExist: findExistingValue(
         'SUPER_USER_PASSWORD',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         existingValues
       ),
       value: findExistingOrDefine(
         'SUPER_USER_PASSWORD',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         generateLongPassword()
       ),
       scope: 'ENVIRONMENT' as const
@@ -1029,13 +1100,13 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       didExist: findExistingValue(
         'ENCRYPTION_KEY',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         existingValues
       ),
       value: findExistingOrDefine(
         'ENCRYPTION_KEY',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         generateLongPassword()
       ),
       scope: 'ENVIRONMENT' as const
@@ -1063,9 +1134,9 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       scope: 'ENVIRONMENT' as const,
       value: 'provision',
       didExist: findExistingValue(
-        'GH_ENCRYPTION_PASSWORD',
+        'SSH_USER',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         existingValues
       )
     }
@@ -1078,18 +1149,19 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       didExist: findExistingValue(
         'BACKUP_ENCRYPTION_PASSPHRASE',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         existingValues
       ),
       value: findExistingOrDefine(
         'BACKUP_ENCRYPTION_PASSPHRASE',
         'SECRET',
-        'REPOSITORY',
+        'ENVIRONMENT',
         generateLongPassword()
       ),
       scope: 'ENVIRONMENT' as const
     })
   }
+
   const applicationServerUpdates = [
     {
       type: 'VARIABLE' as const,
