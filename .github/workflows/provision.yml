@@ -40,10 +40,6 @@ on:
           - ufw
           - updates
           - users
-      debug:
-        type: boolean
-        description: Open SSH session to the runner after deployment
-        default: false
 jobs:
   get-backup-ssh-key:
     name: Get backup SSH key
