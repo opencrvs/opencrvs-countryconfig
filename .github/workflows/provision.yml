@@ -168,22 +168,6 @@ jobs:
             echo "After that you can proceed with (re)provisioning your staging and production servers."
             exit 1
           fi
-      - name: Setup tmate session
-        if: ${{ github.event.inputs.debug == 'true' }}
-        uses: mxschmitt/action-tmate@v3
-        env:
-          encrypted_disk_size: ${{ vars.DISK_SPACE }}
-          disk_encryption_key: ${{ secrets.ENCRYPTION_KEY }}
-          dockerhub_username: ${{ secrets.DOCKER_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKER_TOKEN }}
-          mongodb_admin_username: ${{ secrets.MONGODB_ADMIN_USER }}
-          mongodb_admin_password: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          backup_encryption_passphrase: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
-          elasticsearch_superuser_password: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          # SSH_HOST was moved from a secret to a variable in OpenCRVS 1.5.0
-          # @todo @deprecated remove the fallback to secrets.SSH_HOST in OpenCRVS 1.7.0
-          manager_production_server_ip: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
-          ansible_user: ${{ secrets.SSH_USER }}
 
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2.8.0

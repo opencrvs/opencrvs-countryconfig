@@ -152,10 +152,6 @@ jobs:
           --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
           --replicas=${{ vars.REPLICAS }}
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ github.event.inputs.debug == 'true' }}
-
   reset:
     needs: deploy
     if: ${{ github.event.inputs.reset == 'true' && needs.deploy.outputs.outcome == 'success' }}
