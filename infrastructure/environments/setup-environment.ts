@@ -1,7 +1,7 @@
 import { Octokit } from '@octokit/core'
 import { spawn } from 'child_process'
-import kleur from 'kleur'
 import dotenv from 'dotenv'
+import kleur from 'kleur'
 import prompts, { PromptObject } from 'prompts'
 import {
   Secret,
@@ -709,6 +709,28 @@ const derivedVariables = [
   }
 ] as const
 
+const metabaseAdminQuestions = [
+  {
+    valueType: 'SECRET' as const,
+    name: 'OPENCRVS_METABASE_ADMIN_EMAIL',
+    type: 'text' as const,
+    message:
+      'Email for Metabase super admin. Used as a username when logging in to the dashboard',
+    valueLabel: 'OPENCRVS_METABASE_ADMIN_EMAIL',
+    scope: 'ENVIRONMENT' as const,
+    initial: 'user@opencrvs.org'
+  },
+  {
+    valueType: 'SECRET' as const,
+    name: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
+    type: 'text' as const,
+    message: 'Password for Metabase super admin.',
+    valueLabel: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
+    scope: 'ENVIRONMENT' as const,
+    initial: generateLongPassword()
+  }
+]
+
 ALL_QUESTIONS.push(
   ...githubTokenQuestion,
   ...dockerhubQuestions,
@@ -721,7 +743,8 @@ ALL_QUESTIONS.push(
   ...emailQuestions,
   ...vpnHostQuestions,
   ...sentryQuestions,
-  ...derivedVariables
+  ...derivedVariables,
+  ...metabaseAdminQuestions
 )
 
 /*
@@ -950,6 +973,13 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
         await promptAndStoreAnswer(environment, sentryQuestions, existingValues)
       }
     }
+
+    log('\n', kleur.bold().underline('METABASE ADMIN'))
+    await promptAndStoreAnswer(
+      environment,
+      metabaseAdminQuestions,
+      existingValues
+    )
 
     log('\n', kleur.bold().underline('SMTP'))
     await promptAndStoreAnswer(environment, emailQuestions, existingValues)

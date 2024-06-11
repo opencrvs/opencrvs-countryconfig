@@ -84,7 +84,7 @@ export const marriageForm: ISerializedForm = {
     {
       id: 'informant',
       viewType: 'form',
-      name: formMessageDescriptors.registrationName,
+      name: formMessageDescriptors.informantName,
       title: formMessageDescriptors.informantTitle,
       groups: [
         {
