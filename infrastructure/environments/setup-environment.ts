@@ -333,16 +333,6 @@ const sshQuestions = [
     scope: 'ENVIRONMENT' as const
   },
   {
-    name: 'sshUser',
-    type: 'text' as const,
-    message: 'What is the SSH login user to be used for provisioning?',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'SSH_USER',
-    initial: process.env.SSH_USER || 'provision',
-    scope: 'ENVIRONMENT' as const
-  },
-  {
     name: 'sshArgs',
     type: 'text' as const,
     message:
@@ -423,77 +413,6 @@ const databaseAndMonitoringQuestions = [
     validate: notEmpty,
     valueLabel: 'KIBANA_PASSWORD',
     initial: process.env.KIBANA_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'elasticsearchSuperuserPassword',
-    type: 'text' as const,
-    message: 'Input the password for the Elasticsearch superuser',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
-    initial:
-      process.env.ELASTICSEARCH_SUPERUSER_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'minioRootUser',
-    type: 'text' as const,
-    message: 'Input the username for the Minio root user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'MINIO_ROOT_USER',
-    initial: process.env.MINIO_ROOT_USER || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'minioRootPassword',
-    type: 'text' as const,
-    message: 'Input the password for the Minio root user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'MINIO_ROOT_PASSWORD',
-    initial: process.env.MINIO_ROOT_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'mongodbAdminUser',
-    type: 'text' as const,
-    message: 'Input the username for the MongoDB admin user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'MONGODB_ADMIN_USER',
-    initial: process.env.MONGODB_ADMIN_USER || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'mongodbAdminPassword',
-    type: 'text' as const,
-    message: 'Input the password for the MongoDB admin user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'MONGODB_ADMIN_PASSWORD',
-    initial: process.env.MONGODB_ADMIN_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'superUserPassword',
-    type: 'text' as const,
-    message: 'Input the password for the OpenCRVS super user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'SUPER_USER_PASSWORD',
-    initial: process.env.SUPER_USER_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'encryptionKey',
-    type: 'text' as const,
-    message: 'Input the password for the disk encryption key',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'ENCRYPTION_KEY',
-    initial: process.env.ENCRYPTION_KEY || generateLongPassword(),
     scope: 'ENVIRONMENT' as const
   }
 ]
@@ -859,7 +778,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
   }
 
   log('\n', kleur.bold().underline('SSH'))
-  const { sshArgs, sshHost, sshUser } = await promptAndStoreAnswer(
+  const { sshArgs, sshHost } = await promptAndStoreAnswer(
     environment,
     sshQuestions,
     existingValues
@@ -883,7 +802,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     if (!sshArgs) {
       info('Testing SSH connection...')
       try {
-        await verifyConnection(sshHost, sshUser, formattedSSHKey)
+        await verifyConnection(sshHost, 'provision', formattedSSHKey)
       } catch (err) {
         error(
           'Failed to connect to the target server.',
@@ -904,30 +823,16 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
   await promptAndStoreAnswer(environment, dockerhubQuestions, existingValues)
 
-  if (SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(type)) {
-    const { updateHosts } = await prompts(
-      [
-        {
-          name: 'updateHosts',
-          type: 'confirm' as const,
-          message: `Do you want to update the hosts file entry for ${sshHost}?`,
-          scope: 'REPOSITORY' as const,
-          initial: true
-        }
-      ].map(questionToPrompt)
-    )
-
-    if (updateHosts) {
-      try {
-        await runInteractiveShell(`sh`, [
-          join(__dirname, './update-known-hosts.sh'),
-          sshHost
-        ])
-      } catch (error) {
-        warn(
-          'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
-        )
-      }
+  if (SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(environment)) {
+    try {
+      await runInteractiveShell(`sh`, [
+        join(__dirname, './update-known-hosts.sh'),
+        sshHost
+      ])
+    } catch (error) {
+      warn(
+        'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
+      )
     }
   } else {
     log('\n', kleur.bold().underline('Server setup'))
@@ -937,30 +842,17 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       existingValues
     )
 
-    const { updateHosts } = await prompts(
-      [
-        {
-          name: 'updateHosts',
-          type: 'confirm' as const,
-          message: `Do you want to update the hosts file entry for ${domain}?`,
-          scope: 'REPOSITORY' as const,
-          initial: true
-        }
-      ].map(questionToPrompt)
-    )
-
-    if (updateHosts) {
-      try {
-        await runInteractiveShell(`sh`, [
-          join(__dirname, './update-known-hosts.sh'),
-          domain
-        ])
-      } catch (error) {
-        warn(
-          'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
-        )
-      }
+    try {
+      await runInteractiveShell(`sh`, [
+        join(__dirname, './update-known-hosts.sh'),
+        domain
+      ])
+    } catch (error) {
+      warn(
+        'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
+      )
     }
+
     log('\n', kleur.bold().underline('Databases & monitoring'))
 
     await promptAndStoreAnswer(
@@ -1061,19 +953,159 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     fn: (value: string | undefined) => string
   ) => fn(variable || existingValue?.value) || ''
 
-  const derivedUpdates: Answers = [
+  function findExistingOrDefine(
+    name: string,
+    type: 'SECRET' | 'VARIABLE',
+    scope: 'REPOSITORY' | 'ENVIRONMENT',
+    newValue: string
+  ) {
+    return findExistingValue(name, type, scope, existingValues)
+      ? null
+      : process.env[name] || newValue
+  }
+
+  const derivedUpdates: AnswerWithNullValue[] = [
+    {
+      name: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'ELASTICSEARCH_SUPERUSER_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'ELASTICSEARCH_SUPERUSER_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'MINIO_ROOT_USER',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'MINIO_ROOT_USER',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'MINIO_ROOT_USER',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'MINIO_ROOT_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'MINIO_ROOT_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'MINIO_ROOT_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'MONGODB_ADMIN_USER',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'MONGODB_ADMIN_USER',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'MONGODB_ADMIN_USER',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'MONGODB_ADMIN_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'MONGODB_ADMIN_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'MONGODB_ADMIN_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'SUPER_USER_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'SUPER_USER_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'SUPER_USER_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'ENCRYPTION_KEY',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'ENCRYPTION_KEY',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'ENCRYPTION_KEY',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
     {
       name: 'GH_ENCRYPTION_PASSWORD',
       type: 'SECRET' as const,
-      value: findExistingValue(
+      didExist: findExistingValue(
         'GH_ENCRYPTION_PASSWORD',
         'SECRET',
         'REPOSITORY',
         existingValues
-      )
-        ? ''
-        : process.env.GH_ENCRYPTION_PASSWORD || generateLongPassword(),
-      scope: 'REPOSITORY' as const,
+      ),
+      value: findExistingOrDefine(
+        'GH_ENCRYPTION_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'REPOSITORY' as const
+    },
+    {
+      name: 'SSH_USER',
+      type: 'SECRET' as const,
+      scope: 'ENVIRONMENT' as const,
+      value: 'provision',
       didExist: findExistingValue(
         'GH_ENCRYPTION_PASSWORD',
         'SECRET',
