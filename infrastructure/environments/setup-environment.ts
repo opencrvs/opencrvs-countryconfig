@@ -640,18 +640,7 @@ const backupQuestions = [
     scope: 'ENVIRONMENT' as const
   }
 ]
-const vpnQuestions = [
-  {
-    name: 'vpnHostAddress',
-    type: 'text' as const,
-    message: `Please enter the source IP address for users connecting to this environment. This is the public IP address of the VPN server.`,
-    initial: process.env.VPN_HOST_ADDRESS || '',
-    validate: notEmpty,
-    valueType: 'VARIABLE' as const,
-    valueLabel: 'VPN_HOST_ADDRESS',
-    scope: 'ENVIRONMENT' as const
-  }
-]
+
 const vpnHostQuestions = [
   {
     name: 'vpnAdminPassword',
@@ -740,7 +729,7 @@ ALL_QUESTIONS.push(
   ...smsQuestions,
   ...emailQuestions,
   ...backupQuestions,
-  ...vpnQuestions,
+
   ...vpnHostQuestions,
   ...sentryQuestions,
   ...derivedVariables

@@ -7,11 +7,6 @@ version: '3.3'
 # Before you deploy staging or production environments, make sure the application servers are
 # either in an internal network or protected with a firewall. No ports should be exposed to the internet.
 #
-# The VPN_HOST_ADDRESS environment variable should be set to the IP address where all inbound traffic is coming from.
-# In most cases, this is the VPN server's public IP address.
-#
-# ${VPN_HOST_ADDRESS}
-#
 
 services:
   gateway:
