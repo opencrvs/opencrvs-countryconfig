@@ -664,16 +664,16 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
         scope: 'ENVIRONMENT' as const,
         message: 'Purpose for the environment?',
         choices: [
-          {
-            title: 'Production (hosts PII data, requires frequent backups)',
-            value: 'production'
-          },
+          { title: 'Quality assurance (no PII data)', value: 'qa' },
           {
             title: 'Staging (hosts PII data, no backups)',
             value: 'production'
           },
-          { title: 'Quality assurance (no PII data)', value: 'qa' },
           { title: 'Backup', value: 'backup' },
+          {
+            title: 'Production (hosts PII data, requires frequent backups)',
+            value: 'production'
+          },
           { title: 'Jump / Bastion', value: 'jump' },
           { title: 'Other', value: 'development' }
         ]
