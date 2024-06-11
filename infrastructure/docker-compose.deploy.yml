@@ -972,6 +972,8 @@ services:
       - OPENCRVS_METABASE_MAP_URL=http://countryconfig:3040/content/farajaland-map.geojson
       - OPENCRVS_METABASE_MAP_REGION_KEY=State
       - OPENCRVS_METABASE_MAP_REGION_NAME=State
+      - OPENCRVS_METABASE_ADMIN_EMAIL=${OPENCRVS_METABASE_ADMIN_EMAIL}
+      - OPENCRVS_METABASE_ADMIN_PASSWORD=${OPENCRVS_METABASE_ADMIN_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=true'
