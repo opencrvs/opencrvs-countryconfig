@@ -20,6 +20,7 @@ import {
 import editor from '@inquirer/editor'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import { initial } from 'lodash'
 import { error, info, log, success, warn } from './logger'
 import { verifyConnection } from './ssh'
 
@@ -986,6 +987,13 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
         await promptAndStoreAnswer(environment, sentryQuestions, existingValues)
       }
     }
+
+    log('\n', kleur.bold().underline('METABASE ADMIN'))
+    await promptAndStoreAnswer(
+      environment,
+      metabaseAdminQuestions,
+      existingValues
+    )
 
     log('\n', kleur.bold().underline('METABASE ADMIN'))
     await promptAndStoreAnswer(
