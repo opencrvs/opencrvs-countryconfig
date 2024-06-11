@@ -230,9 +230,14 @@ function generateLongPassword() {
 }
 
 function storeSecrets(environment: string, answers: Answers) {
-  const envConfig = dotenv.parse(
-    readFileSync(`${process.cwd()}/.env.${environment}`)
-  )
+  let envConfig: Record<string, string> = {}
+  try {
+    envConfig = dotenv.parse(
+      readFileSync(`${process.cwd()}/.env.${environment}`)
+    )
+  } catch (error) {
+    envConfig = {}
+  }
 
   const linesFromAnswers = answers.map(
     (update) => `${update.name}="${update.value}"`
@@ -349,7 +354,7 @@ const sshKeyQuestions = [
   {
     name: 'sshKey',
     type: 'text' as const,
-    message: `Paste the SSH private key for SSH_USER here:`,
+    message: `Paste the SSH private key for SSH_USER (provision) here:`,
     valueType: 'SECRET' as const,
     validate: notEmpty,
     valueLabel: 'SSH_KEY',
@@ -775,7 +780,9 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
   if (!SSH_KEY_EXISTS) {
     const sshKey = await editor({
-      message: `Paste the SSH private key for ${kleur.cyan('SSH_USER')} here:`
+      message: `Paste the SSH private key for ${kleur.cyan(
+        'SSH_USER (provision'
+      )} here:`
     })
 
     const formattedSSHKey = sshKey.endsWith('\n') ? sshKey : sshKey + '\n'
