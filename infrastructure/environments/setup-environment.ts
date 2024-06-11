@@ -880,37 +880,6 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       }
     }
 
-    const vpnAdminPasswordExists = findExistingValue(
-      'VPN_ADMIN_PASSWORD',
-      'SECRET',
-      'ENVIRONMENT',
-      existingValues
-    )
-
-    if (vpnAdminPasswordExists) {
-      await promptAndStoreAnswer(environment, vpnHostQuestions, existingValues)
-    } else {
-      const { isVPNHost } = await prompts(
-        [
-          {
-            name: 'isVPNHost',
-            type: 'confirm' as const,
-            message: `Is this environment going to be used as the VPN server (Wireguard)?`,
-            scope: 'ENVIRONMENT' as const,
-            initial: true
-          }
-        ].map(questionToPrompt)
-      )
-
-      if (isVPNHost) {
-        await promptAndStoreAnswer(
-          environment,
-          vpnHostQuestions,
-          existingValues
-        )
-      }
-    }
-
     log('\n', kleur.bold().underline('SMTP'))
     await promptAndStoreAnswer(environment, emailQuestions, existingValues)
 
