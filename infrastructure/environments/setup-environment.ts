@@ -556,19 +556,6 @@ const emailQuestions = [
   }
 ]
 
-const backupQuestions = [
-  {
-    name: 'backupEncryptionPassprase',
-    type: 'text' as const,
-    message: 'Input a long random passphrase to be used for encrypting backups',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'BACKUP_ENCRYPTION_PASSPHRASE',
-    initial: process.env.BACKUP_ENCRYPTION_PASSPHRASE || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  }
-]
-
 const vpnHostQuestions = [
   {
     name: 'vpnAdminPassword',
@@ -656,8 +643,6 @@ ALL_QUESTIONS.push(
   ...notificationTransportQuestions,
   ...smsQuestions,
   ...emailQuestions,
-  ...backupQuestions,
-
   ...vpnHostQuestions,
   ...sentryQuestions,
   ...derivedVariables
@@ -888,11 +873,6 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       }
     }
 
-    if (['production', 'staging'].includes(environment)) {
-      log('\n', kleur.bold().underline('Backups'))
-      await promptAndStoreAnswer(environment, backupQuestions, existingValues)
-    }
-
     const vpnAdminPasswordExists = findExistingValue(
       'VPN_ADMIN_PASSWORD',
       'SECRET',
@@ -1114,6 +1094,26 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       )
     }
   ]
+
+  if (['production', 'staging'].includes(environment)) {
+    derivedUpdates.push({
+      name: 'BACKUP_ENCRYPTION_PASSPHRASE',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'BACKUP_ENCRYPTION_PASSPHRASE',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'BACKUP_ENCRYPTION_PASSPHRASE',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    })
+  }
   const applicationServerUpdates = [
     {
       type: 'VARIABLE' as const,
