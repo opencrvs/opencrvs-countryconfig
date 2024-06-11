@@ -1,7 +1,7 @@
 import { Octokit } from '@octokit/core'
 import { spawn } from 'child_process'
 import kleur from 'kleur'
-import minimist from 'minimist'
+import dotenv from 'dotenv'
 import prompts, { PromptObject } from 'prompts'
 import {
   Secret,
@@ -18,7 +18,7 @@ import {
 } from './github'
 
 import editor from '@inquirer/editor'
-import { writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { error, info, log, success, warn } from './logger'
 import { verifyConnection } from './ssh'
@@ -71,8 +71,18 @@ type VariableAnswer = {
   name: string
   didExist: Variable | undefined
   value: string
+  scope: 'ENVIRONMENT' | 'REPOSITORY'
 }
-type Answers = (SecretAnswer | VariableAnswer)[]
+
+type Answer = SecretAnswer | VariableAnswer
+type Answers = Answer[]
+type AnswerWithNullValue =
+  | (Omit<SecretAnswer, 'value'> & {
+      value: SecretAnswer['value'] | null
+    })
+  | (Omit<VariableAnswer, 'value'> & {
+      value: VariableAnswer['value'] | null
+    })
 
 function questionToPrompt<T extends string>({
   // eslint-disable-next-line no-unused-vars
@@ -88,18 +98,6 @@ function questionToPrompt<T extends string>({
 
 const ALL_QUESTIONS: Array<QuestionDescriptor<any>> = []
 const ALL_ANSWERS: Array<Record<string, string>> = []
-
-const { environment } = minimist(process.argv.slice(2))
-
-if (!environment || typeof environment !== 'string') {
-  error('Please specify an environment name with --environment=<name>')
-  process.exit(1)
-}
-
-// Read users .env file based on the environment name they gave above, e.g. .env.production
-require('dotenv').config({
-  path: `${process.cwd()}/.env.${environment}`
-})
 
 function findExistingValue<T extends string>(
   name: string,
@@ -203,6 +201,7 @@ async function promptAndStoreAnswer(
   })
 
   ALL_ANSWERS.push(result)
+
   storeSecrets(environment, getAnswers(existingValues))
 
   const existingValuesForQuestions = questions
@@ -231,10 +230,20 @@ function generateLongPassword() {
 }
 
 function storeSecrets(environment: string, answers: Answers) {
-  writeFileSync(
-    `.env.${environment}`,
-    answers.map((update) => `${update.name}="${update.value}"`).join('\n')
+  const envConfig = dotenv.parse(
+    readFileSync(`${process.cwd()}/.env.${environment}`)
   )
+
+  const linesFromAnswers = answers.map(
+    (update) => `${update.name}="${update.value}"`
+  )
+  const linesFromEnvConfig = Object.entries(envConfig)
+    .filter(([name]) => !answers.find((update) => update.name === name))
+    .map(([name, value]) => `${name}="${value}"`)
+
+  const allLines = [...linesFromEnvConfig, ...linesFromAnswers].sort()
+
+  writeFileSync(`.env.${environment}`, allLines.join('\n'))
 }
 
 const githubQuestions = [
@@ -743,7 +752,7 @@ ALL_QUESTIONS.push(
 const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
 ;(async () => {
-  const { type } = await prompts(
+  const { type: environment } = await prompts<string>(
     [
       {
         name: 'type',
@@ -767,6 +776,11 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       }
     ].map(questionToPrompt)
   )
+
+  // Read users .env file based on the environment name they gave above, e.g. .env.production
+  dotenv.config({
+    path: `${process.cwd()}/.env.${environment}`
+  })
 
   log('\n', kleur.bold().underline('Github'))
 
@@ -982,13 +996,9 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       }
     }
 
-    if (['production', 'staging'].includes(type)) {
+    if (['production', 'staging'].includes(environment)) {
       log('\n', kleur.bold().underline('Backups'))
       await promptAndStoreAnswer(environment, backupQuestions, existingValues)
-
-      log('\n', kleur.bold().underline('VPN'))
-
-      await promptAndStoreAnswer(environment, vpnQuestions, existingValues)
     }
 
     const vpnAdminPasswordExists = findExistingValue(
@@ -1183,12 +1193,16 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     }
   ]
 
-  if (!SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(type)) {
+  if (!SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(environment)) {
     derivedUpdates.push(...applicationServerUpdates)
   }
 
-  const updates: Answers = getAnswers(existingValues)
-    .concat(...derivedUpdates)
+  const updates = getAnswers(existingValues)
+    .concat(
+      ...derivedUpdates.filter(
+        (update): update is Answer => update.value !== null
+      )
+    )
     .filter(
       (variable) =>
         Boolean(variable.value) &&
