@@ -766,7 +766,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
           { title: 'Quality assurance (no PII data)', value: 'qa' },
           {
             title: 'Staging (hosts PII data, no backups)',
-            value: 'production'
+            value: 'staging'
           },
           { title: 'Backup', value: 'backup' },
           {
