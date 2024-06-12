@@ -40,6 +40,8 @@
 
 - Automate SSH key exchange between application and backup server. For staging servers, automatically fetch production backup encryption key if periodic restore is enabled
 
+- Improved support for non-22 SSH port
+
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
 - Improved logging for emails being sent

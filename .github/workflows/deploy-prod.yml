@@ -143,6 +143,7 @@ jobs:
           --environment=${{ github.event.inputs.environment }} \
           --host=${{ vars.DOMAIN }} \
           --ssh_host=${{ vars.SSH_HOST || secrets.SSH_HOST }} \
+          --ssh_port=${{ vars.SSH_PORT || secrets.SSH_PORT }} \
           --ssh_user=${{ secrets.SSH_USER }} \
           --version=${{ github.event.inputs.core-image-tag }} \
           --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \

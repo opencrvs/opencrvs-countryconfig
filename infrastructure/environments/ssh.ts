@@ -2,6 +2,7 @@ import { NodeSSH } from 'node-ssh'
 
 export async function verifyConnection(
   host: string,
+  port: number,
   username: string,
   privateKey: string
 ) {
@@ -10,6 +11,7 @@ export async function verifyConnection(
   await ssh.connect({
     host,
     username,
+    port,
     privateKey: privateKey ? privateKey : undefined
   })
   await ssh.dispose()
