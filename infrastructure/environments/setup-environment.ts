@@ -873,7 +873,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
   }
 
   log('\n', kleur.bold().underline('SSH'))
-  const { sshArgs, sshHost } = await promptAndStoreAnswer(
+  const { sshPort, sshArgs, sshHost } = await promptAndStoreAnswer(
     environment,
     sshQuestions,
     existingValues
@@ -899,7 +899,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     if (!sshArgs) {
       info('Testing SSH connection...')
       try {
-        await verifyConnection(sshHost, 'provision', formattedSSHKey)
+        await verifyConnection(sshHost, sshPort, 'provision', formattedSSHKey)
       } catch (err) {
         error(
           'Failed to connect to the target server.',
@@ -924,7 +924,8 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     try {
       await runInteractiveShell(`sh`, [
         join(__dirname, './update-known-hosts.sh'),
-        sshHost
+        sshHost,
+        sshPort
       ])
     } catch (error) {
       warn(
@@ -942,7 +943,8 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     try {
       await runInteractiveShell(`sh`, [
         join(__dirname, './update-known-hosts.sh'),
-        domain
+        domain,
+        sshPort
       ])
     } catch (error) {
       warn(

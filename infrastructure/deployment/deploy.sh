@@ -346,9 +346,9 @@ echo "Deploying COUNTRY_CONFIG_VERSION $COUNTRY_CONFIG_VERSION to $SSH_HOST..."
 echo
 echo "Syncing configuration files to the target server"
 
-if ! ssh-keygen -l -F $SSH_HOST -f $INFRASTRUCTURE_DIRECTORY/known-hosts; then
-  echo "Host key for $SSH_HOST not found in $INFRASTRUCTURE_DIRECTORY/known-hosts. Please add the host key to the known-hosts file."
-  echo "You cando this by running the following command:"
+if ! ssh-keygen -l -F [$SSH_HOST]:$SSH_PORT -f $INFRASTRUCTURE_DIRECTORY/known-hosts; then
+  echo "Host key for [$SSH_HOST]:$SSH_PORT not found in $INFRASTRUCTURE_DIRECTORY/known-hosts. Please add the host key to the known-hosts file."
+  echo "You can do this by running the following command:"
   echo "sh ./infrastructure/environments/update-known-hosts.sh <YOUR DOMAIN>"
   echo ""
   echo "or"
