@@ -41,13 +41,14 @@ docker-manager-first:
   hosts:
     rikuland-staging:
       ansible_host: '134.209.237.242'
+      ansible_port: 3434
       data_label: data1
 
 # This staging servers is configured to only use one server
 docker-workers: {}
 # For staging server to be able to restore from backups, it needs to have access to the backup server.
 # @todo if you do not intend to set up automatic sync from the backup server, you can remove this section.
-# backups:
+#backups:
 #   hosts:
 #     backup: # @todo set this to be the hostname of your backup server
 #       ansible_host: '66.66.66.66' # set this to be the IP address of your backup server
