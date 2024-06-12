@@ -154,11 +154,11 @@ jobs:
         if: needs.get-backup-ssh-key.outputs.environment_exists != 'true'
         run: |
           FILE=./${{ github.event.repository.name }}/infrastructure/server-setup/inventory/${{ github.event.inputs.environment }}.yml
-          if grep -q "backups: " "$FILE"; then
+          if grep -q '^[[:blank:]]*backups:[[:blank:]]*$' "$FILE"; then
             echo "Your inventory contains configuration for either a backup target or backup source."
             echo "If you are upgrading OpenCRVS, please start by running environment creator script for the backup server"
             echo ""
-            echo "yarn environment:init --environment=backup"
+            echo "yarn environment:init"
             echo ""
             echo "And after that, run this provisioning pipeline again but first to your backup server"
             echo "After that you can proceed with (re)provisioning your staging and production servers."
