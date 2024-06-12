@@ -338,6 +338,17 @@ const sshQuestions = [
     scope: 'ENVIRONMENT' as const
   },
   {
+    name: 'sshPort',
+    type: 'number' as const,
+    message:
+      'What port number is used in establishing the SSH connection? This usually is the default 22. If you are an advanced user, and have set a different port, provide it here.',
+    valueType: 'SECRET' as const,
+    validate: notEmpty,
+    valueLabel: 'SSH_PORT',
+    initial: process.env.SSH_PORT ? parseInt(process.env.SSH_PORT) : 22,
+    scope: 'ENVIRONMENT' as const
+  },
+  {
     name: 'sshArgs',
     type: 'text' as const,
     message:
