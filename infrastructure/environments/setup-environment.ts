@@ -1036,6 +1036,58 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
   const derivedUpdates: AnswerWithNullValue[] = [
     {
+      name: 'GH_ENCRYPTION_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'GH_ENCRYPTION_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'GH_ENCRYPTION_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'REPOSITORY' as const
+    },
+    {
+      name: 'SSH_USER',
+      type: 'SECRET' as const,
+      scope: 'ENVIRONMENT' as const,
+      value: 'provision',
+      didExist: findExistingValue(
+        'SSH_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      )
+    }
+  ]
+
+  if (['production', 'staging'].includes(environment)) {
+    derivedUpdates.push({
+      name: 'BACKUP_ENCRYPTION_PASSPHRASE',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'BACKUP_ENCRYPTION_PASSPHRASE',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'BACKUP_ENCRYPTION_PASSPHRASE',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    })
+  }
+
+  const applicationServerUpdates = [
+    {
       name: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
       type: 'SECRET' as const,
       didExist: findExistingValue(
@@ -1154,58 +1206,6 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       ),
       scope: 'ENVIRONMENT' as const
     },
-    {
-      name: 'GH_ENCRYPTION_PASSWORD',
-      type: 'SECRET' as const,
-      didExist: findExistingValue(
-        'GH_ENCRYPTION_PASSWORD',
-        'SECRET',
-        'REPOSITORY',
-        existingValues
-      ),
-      value: findExistingOrDefine(
-        'GH_ENCRYPTION_PASSWORD',
-        'SECRET',
-        'REPOSITORY',
-        generateLongPassword()
-      ),
-      scope: 'REPOSITORY' as const
-    },
-    {
-      name: 'SSH_USER',
-      type: 'SECRET' as const,
-      scope: 'ENVIRONMENT' as const,
-      value: 'provision',
-      didExist: findExistingValue(
-        'SSH_USER',
-        'SECRET',
-        'ENVIRONMENT',
-        existingValues
-      )
-    }
-  ]
-
-  if (['production', 'staging'].includes(environment)) {
-    derivedUpdates.push({
-      name: 'BACKUP_ENCRYPTION_PASSPHRASE',
-      type: 'SECRET' as const,
-      didExist: findExistingValue(
-        'BACKUP_ENCRYPTION_PASSPHRASE',
-        'SECRET',
-        'ENVIRONMENT',
-        existingValues
-      ),
-      value: findExistingOrDefine(
-        'BACKUP_ENCRYPTION_PASSPHRASE',
-        'SECRET',
-        'ENVIRONMENT',
-        generateLongPassword()
-      ),
-      scope: 'ENVIRONMENT' as const
-    })
-  }
-
-  const applicationServerUpdates = [
     {
       type: 'VARIABLE' as const,
       name: 'ACTIVATE_USERS',
@@ -1333,6 +1333,8 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
         (variable.type !== 'VARIABLE' ||
           variable.value !== variable.didExist?.value)
     )
+
+  storeSecrets(environment, updates)
 
   /*
    * List out all updates to the variables and confirm with the user
