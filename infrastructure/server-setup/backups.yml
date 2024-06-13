@@ -136,7 +136,7 @@
       tags:
         - backups
 
-    - name: Ensure backup application servers can login to backup server
+    - name: Ensure application servers can login to backup server
       blockinfile:
         path: '{{ backup_server_user_home }}/.ssh/authorized_keys'
         block: |
