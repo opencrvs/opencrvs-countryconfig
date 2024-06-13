@@ -14,6 +14,7 @@ import {
   ISectionMapping
 } from '@countryconfig/form/types/types'
 import { createCustomFieldHandlebarName } from '..'
+import { logger } from '@countryconfig/logger'
 
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
 export function getCommonSectionMapping(mappingId: string): ISectionMapping {
@@ -316,9 +317,8 @@ export function getFieldMapping(
 export function getCustomFieldMapping(fieldId: string): IFormFieldMapping {
   const customFieldCertificateHandlebar =
     createCustomFieldHandlebarName(fieldId)
-  console.log(
-    'Custom field addded with handlebar: ',
-    customFieldCertificateHandlebar
+  logger.info(
+    'Custom field addded with handlebar: ' + customFieldCertificateHandlebar
   )
   return {
     mutation: {
