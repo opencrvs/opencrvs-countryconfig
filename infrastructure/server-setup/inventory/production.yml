@@ -48,7 +48,7 @@ docker-workers:
 
 backups:
   hosts:
-    backup:
+    rikuland-backup:
       ansible_host: '64.226.125.31'
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
