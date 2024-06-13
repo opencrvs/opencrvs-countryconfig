@@ -49,5 +49,5 @@ jobs:
           sparse-checkout: |
             trivy.yaml
           sparse-checkout-cone-mode: false
-          image-ref: '${{ secrets.DOCKERHUB_ACCOUNT }}/${{ secrets.DOCKERHUB_REPO }}:$COUNTRY_CONFIG_VERSION'
+          image-ref: '${{ secrets.DOCKERHUB_ACCOUNT }}/${{ secrets.DOCKERHUB_REPO }}:${{ env.COUNTRY_CONFIG_VERSION }}'
           trivy-config: trivy.yaml
