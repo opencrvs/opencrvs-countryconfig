@@ -112,6 +112,20 @@ export const hideIfInformantMotherOrFather = [
 export const isInformantSpouse =
   '!values.informantType || values.informantType==="SPOUSE"'
 
+export const hideIfDeceasedAddressNotAvailable = [
+  {
+    action: 'hide',
+    expression: '!(draftData && draftData.deceased?.countryPrimaryDeceased)'
+  }
+]
+
+export const hideIfMotherAddressNotAvailable = [
+  {
+    action: 'hide',
+    expression: '!(draftData && draftData.mother?.countryPrimaryMother)'
+  }
+]
+
 export const hideIfInformantSpouse = [
   {
     action: 'hide',
