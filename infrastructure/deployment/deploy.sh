@@ -339,14 +339,13 @@ done
 
 validate_environment_variables
 
-echo
-echo "Deploying VERSION $VERSION to $SSH_HOST..."
-echo
-echo "Deploying COUNTRY_CONFIG_VERSION $COUNTRY_CONFIG_VERSION to $SSH_HOST..."
-echo
-echo "Syncing configuration files to the target server"
+if [ "$SSH_PORT" -eq 22 ]; then
+    SSH_HOST_TO_CHECK="$SSH_HOST"
+else
+    SSH_HOST_TO_CHECK="[$SSH_HOST]:$SSH_PORT"
+fi
 
-if ! ssh-keygen -l -F [$SSH_HOST]:$SSH_PORT -f $INFRASTRUCTURE_DIRECTORY/known-hosts; then
+if ! ssh-keygen -l -F "$SSH_HOST_TO_CHECK" -f "$INFRASTRUCTURE_DIRECTORY/known-hosts"; then
   echo "Host key for [$SSH_HOST]:$SSH_PORT not found in $INFRASTRUCTURE_DIRECTORY/known-hosts. Please add the host key to the known-hosts file."
   echo "You can do this by running the following command:"
   echo "sh ./infrastructure/environments/update-known-hosts.sh <YOUR DOMAIN>"
@@ -356,6 +355,14 @@ if ! ssh-keygen -l -F [$SSH_HOST]:$SSH_PORT -f $INFRASTRUCTURE_DIRECTORY/known-h
   echo "sh ./infrastructure/environments/update-known-hosts.sh <YOUR SERVER IP>"
   exit 1
 fi
+
+echo
+echo "Deploying VERSION $VERSION to $SSH_HOST..."
+echo
+echo "Deploying COUNTRY_CONFIG_VERSION $COUNTRY_CONFIG_VERSION to $SSH_HOST..."
+echo
+echo "Syncing configuration files to the target server"
+
 
 configured_rsync -rlD $PROJECT_ROOT/infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/ --delete --no-perms --omit-dir-times --verbose
 configured_rsync -rlD /tmp/docker-compose.yml /tmp/docker-compose.deps.yml $SSH_USER@$SSH_HOST:/opt/opencrvs/infrastructure --no-perms --omit-dir-times  --verbose
