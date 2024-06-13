@@ -26,7 +26,7 @@ all:
     enable_backups: false
     # Turn this on if you want to restore daily production backups to your staging server.
     # For this you need to first setup a backup environment
-    periodic_restore_from_backup: false
+    periodic_restore_from_backup: true
     backup_server_remote_source_directory: /home/backup/backups
     users:
       # @todo this is where you define which development team members have access to the server.
