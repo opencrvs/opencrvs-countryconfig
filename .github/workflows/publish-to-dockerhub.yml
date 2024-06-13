@@ -39,6 +39,15 @@ jobs:
           DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
         run: |
           # Check if the current commit has a tag and use it; otherwise, use the short SHA of the HEAD commit
-          export COUNTRY_CONFIG_VERSION=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short=7 HEAD)
+          echo "COUNTRY_CONFIG_VERSION=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short=7 HEAD)" >> $GITHUB_ENV
           echo "Publishing a Docker image with a tag $COUNTRY_CONFIG_VERSION"
-          bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION
+          docker compose build
+          docker compose push
+      - name: Run Trivy scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          sparse-checkout: |
+            trivy.yaml
+          sparse-checkout-cone-mode: false
+          image-ref: '${{ secrets.DOCKERHUB_ACCOUNT }}/${{ secrets.DOCKERHUB_REPO }}:$COUNTRY_CONFIG_VERSION'
+          trivy-config: trivy.yaml
