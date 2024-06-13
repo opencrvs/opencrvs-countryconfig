@@ -1,7 +1,7 @@
 import { Octokit } from '@octokit/core'
 import { spawn } from 'child_process'
+import dotenv from 'dotenv'
 import kleur from 'kleur'
-import minimist from 'minimist'
 import prompts, { PromptObject } from 'prompts'
 import {
   Secret,
@@ -18,7 +18,7 @@ import {
 } from './github'
 
 import editor from '@inquirer/editor'
-import { writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { error, info, log, success, warn } from './logger'
 import { verifyConnection } from './ssh'
@@ -71,8 +71,18 @@ type VariableAnswer = {
   name: string
   didExist: Variable | undefined
   value: string
+  scope: 'ENVIRONMENT' | 'REPOSITORY'
 }
-type Answers = (SecretAnswer | VariableAnswer)[]
+
+type Answer = SecretAnswer | VariableAnswer
+type Answers = Answer[]
+type AnswerWithNullValue =
+  | (Omit<SecretAnswer, 'value'> & {
+      value: SecretAnswer['value'] | null
+    })
+  | (Omit<VariableAnswer, 'value'> & {
+      value: VariableAnswer['value'] | null
+    })
 
 function questionToPrompt<T extends string>({
   // eslint-disable-next-line no-unused-vars
@@ -88,18 +98,6 @@ function questionToPrompt<T extends string>({
 
 const ALL_QUESTIONS: Array<QuestionDescriptor<any>> = []
 const ALL_ANSWERS: Array<Record<string, string>> = []
-
-const { environment } = minimist(process.argv.slice(2))
-
-if (!environment || typeof environment !== 'string') {
-  error('Please specify an environment name with --environment=<name>')
-  process.exit(1)
-}
-
-// Read users .env file based on the environment name they gave above, e.g. .env.production
-require('dotenv').config({
-  path: `${process.cwd()}/.env.${environment}`
-})
 
 function findExistingValue<T extends string>(
   name: string,
@@ -203,6 +201,7 @@ async function promptAndStoreAnswer(
   })
 
   ALL_ANSWERS.push(result)
+
   storeSecrets(environment, getAnswers(existingValues))
 
   const existingValuesForQuestions = questions
@@ -231,10 +230,25 @@ function generateLongPassword() {
 }
 
 function storeSecrets(environment: string, answers: Answers) {
-  writeFileSync(
-    `.env.${environment}`,
-    answers.map((update) => `${update.name}="${update.value}"`).join('\n')
+  let envConfig: Record<string, string> = {}
+  try {
+    envConfig = dotenv.parse(
+      readFileSync(`${process.cwd()}/.env.${environment}`)
+    )
+  } catch (error) {
+    envConfig = {}
+  }
+
+  const linesFromAnswers = answers.map(
+    (update) => `${update.name}="${update.value}"`
   )
+  const linesFromEnvConfig = Object.entries(envConfig)
+    .filter(([name]) => !answers.find((update) => update.name === name))
+    .map(([name, value]) => `${name}="${value}"`)
+
+  const allLines = [...linesFromEnvConfig, ...linesFromAnswers].sort()
+
+  writeFileSync(`.env.${environment}`, allLines.join('\n'))
 }
 
 const githubQuestions = [
@@ -324,13 +338,14 @@ const sshQuestions = [
     scope: 'ENVIRONMENT' as const
   },
   {
-    name: 'sshUser',
-    type: 'text' as const,
-    message: 'What is the SSH login user to be used for provisioning?',
-    valueType: 'SECRET' as const,
+    name: 'sshPort',
+    type: 'number' as const,
+    message:
+      'What port number is used in establishing the SSH connection? This usually is the default 22. If you are an advanced user, and have set a different port, provide it here.',
+    valueType: 'VARIABLE' as const,
     validate: notEmpty,
-    valueLabel: 'SSH_USER',
-    initial: process.env.SSH_USER || 'provision',
+    valueLabel: 'SSH_PORT',
+    initial: process.env.SSH_PORT ? parseInt(process.env.SSH_PORT) : 22,
     scope: 'ENVIRONMENT' as const
   },
   {
@@ -350,7 +365,7 @@ const sshKeyQuestions = [
   {
     name: 'sshKey',
     type: 'text' as const,
-    message: `Paste the SSH private key for SSH_USER here:`,
+    message: `Paste the SSH private key for SSH_USER (provision) here:`,
     valueType: 'SECRET' as const,
     validate: notEmpty,
     valueLabel: 'SSH_KEY',
@@ -414,77 +429,6 @@ const databaseAndMonitoringQuestions = [
     validate: notEmpty,
     valueLabel: 'KIBANA_PASSWORD',
     initial: process.env.KIBANA_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'elasticsearchSuperuserPassword',
-    type: 'text' as const,
-    message: 'Input the password for the Elasticsearch superuser',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
-    initial:
-      process.env.ELASTICSEARCH_SUPERUSER_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'minioRootUser',
-    type: 'text' as const,
-    message: 'Input the username for the Minio root user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'MINIO_ROOT_USER',
-    initial: process.env.MINIO_ROOT_USER || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'minioRootPassword',
-    type: 'text' as const,
-    message: 'Input the password for the Minio root user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'MINIO_ROOT_PASSWORD',
-    initial: process.env.MINIO_ROOT_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'mongodbAdminUser',
-    type: 'text' as const,
-    message: 'Input the username for the MongoDB admin user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'MONGODB_ADMIN_USER',
-    initial: process.env.MONGODB_ADMIN_USER || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'mongodbAdminPassword',
-    type: 'text' as const,
-    message: 'Input the password for the MongoDB admin user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'MONGODB_ADMIN_PASSWORD',
-    initial: process.env.MONGODB_ADMIN_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'superUserPassword',
-    type: 'text' as const,
-    message: 'Input the password for the OpenCRVS super user',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'SUPER_USER_PASSWORD',
-    initial: process.env.SUPER_USER_PASSWORD || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  },
-  {
-    name: 'encryptionKey',
-    type: 'text' as const,
-    message: 'Input the password for the disk encryption key',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'ENCRYPTION_KEY',
-    initial: process.env.ENCRYPTION_KEY || generateLongPassword(),
     scope: 'ENVIRONMENT' as const
   }
 ]
@@ -628,30 +572,6 @@ const emailQuestions = [
   }
 ]
 
-const backupQuestions = [
-  {
-    name: 'backupEncryptionPassprase',
-    type: 'text' as const,
-    message: 'Input a long random passphrase to be used for encrypting backups',
-    valueType: 'SECRET' as const,
-    validate: notEmpty,
-    valueLabel: 'BACKUP_ENCRYPTION_PASSPHRASE',
-    initial: process.env.BACKUP_ENCRYPTION_PASSPHRASE || generateLongPassword(),
-    scope: 'ENVIRONMENT' as const
-  }
-]
-const vpnQuestions = [
-  {
-    name: 'vpnHostAddress',
-    type: 'text' as const,
-    message: `Please enter the source IP address for users connecting to this environment. This is the public IP address of the VPN server.`,
-    initial: process.env.VPN_HOST_ADDRESS || '',
-    validate: notEmpty,
-    valueType: 'VARIABLE' as const,
-    valueLabel: 'VPN_HOST_ADDRESS',
-    scope: 'ENVIRONMENT' as const
-  }
-]
 const vpnHostQuestions = [
   {
     name: 'vpnAdminPassword',
@@ -679,55 +599,148 @@ const sentryQuestions = [
 
 const derivedVariables = [
   {
-    valueType: 'VARIABLE',
     name: 'ACTIVATE_USERS',
-    type: 'disabled',
     valueLabel: 'ACTIVATE_USERS',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'AUTH_HOST',
-    type: 'disabled',
     valueLabel: 'AUTH_HOST',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'COUNTRY_CONFIG_HOST',
-    type: 'disabled',
     valueLabel: 'COUNTRY_CONFIG_HOST',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'GATEWAY_HOST',
-    type: 'disabled',
     valueLabel: 'GATEWAY_HOST',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'CONTENT_SECURITY_POLICY_WILDCARD',
-    type: 'disabled',
     valueLabel: 'CONTENT_SECURITY_POLICY_WILDCARD',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'CLIENT_APP_URL',
-    type: 'disabled',
     valueLabel: 'CLIENT_APP_URL',
+    valueType: 'VARIABLE',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   },
   {
-    valueType: 'VARIABLE',
     name: 'LOGIN_URL',
-    type: 'disabled',
     valueLabel: 'LOGIN_URL',
+    valueType: 'VARIABLE',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
+    valueLabel: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'MINIO_ROOT_USER',
+    valueLabel: 'MINIO_ROOT_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'MINIO_ROOT_PASSWORD',
+    valueLabel: 'MINIO_ROOT_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'MONGODB_ADMIN_USER',
+    valueLabel: 'MONGODB_ADMIN_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'MONGODB_ADMIN_PASSWORD',
+    valueLabel: 'MONGODB_ADMIN_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'SUPER_USER_PASSWORD',
+    valueLabel: 'SUPER_USER_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'ENCRYPTION_KEY',
+    valueLabel: 'ENCRYPTION_KEY',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'GH_ENCRYPTION_PASSWORD',
+    valueLabel: 'GH_ENCRYPTION_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'REPOSITORY'
+  },
+  {
+    name: 'SSH_USER',
+    valueLabel: 'SSH_USER',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT',
+    value: 'provision'
+  },
+  {
+    name: 'BACKUP_ENCRYPTION_PASSPHRASE',
+    valueLabel: 'BACKUP_ENCRYPTION_PASSPHRASE',
+    valueType: 'SECRET',
+    type: 'disabled',
     scope: 'ENVIRONMENT'
   }
 ] as const
+
+const metabaseAdminQuestions = [
+  {
+    valueType: 'SECRET' as const,
+    name: 'OPENCRVS_METABASE_ADMIN_EMAIL',
+    type: 'text' as const,
+    message:
+      'Email for Metabase super admin. Used as a username when logging in to the dashboard',
+    valueLabel: 'OPENCRVS_METABASE_ADMIN_EMAIL',
+    scope: 'ENVIRONMENT' as const,
+    initial: 'user@opencrvs.org'
+  },
+  {
+    valueType: 'SECRET' as const,
+    name: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
+    type: 'text' as const,
+    message: 'Password for Metabase super admin.',
+    valueLabel: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
+    scope: 'ENVIRONMENT' as const,
+    initial: generateLongPassword()
+  }
+]
 
 ALL_QUESTIONS.push(
   ...githubTokenQuestion,
@@ -739,11 +752,10 @@ ALL_QUESTIONS.push(
   ...notificationTransportQuestions,
   ...smsQuestions,
   ...emailQuestions,
-  ...backupQuestions,
-  ...vpnQuestions,
   ...vpnHostQuestions,
   ...sentryQuestions,
-  ...derivedVariables
+  ...derivedVariables,
+  ...metabaseAdminQuestions
 )
 
 /*
@@ -754,7 +766,7 @@ ALL_QUESTIONS.push(
 const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
 ;(async () => {
-  const { type } = await prompts(
+  const { type: environment } = await prompts<string>(
     [
       {
         name: 'type',
@@ -762,22 +774,27 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
         scope: 'ENVIRONMENT' as const,
         message: 'Purpose for the environment?',
         choices: [
+          { title: 'Quality assurance (no PII data)', value: 'qa' },
+          {
+            title: 'Staging (hosts PII data, no backups)',
+            value: 'staging'
+          },
+          { title: 'Backup', value: 'backup' },
           {
             title: 'Production (hosts PII data, requires frequent backups)',
             value: 'production'
           },
-          {
-            title: 'Staging (hosts PII data, no backups)',
-            value: 'production'
-          },
-          { title: 'Quality assurance (no PII data)', value: 'qa' },
-          { title: 'Backup', value: 'backup' },
           { title: 'Jump / Bastion', value: 'jump' },
           { title: 'Other', value: 'development' }
         ]
       }
     ].map(questionToPrompt)
   )
+
+  // Read users .env file based on the environment name they gave above, e.g. .env.production
+  dotenv.config({
+    path: `${process.cwd()}/.env.${environment}`
+  })
 
   log('\n', kleur.bold().underline('Github'))
 
@@ -856,7 +873,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
   }
 
   log('\n', kleur.bold().underline('SSH'))
-  const { sshArgs, sshHost, sshUser } = await promptAndStoreAnswer(
+  const { sshPort, sshArgs, sshHost } = await promptAndStoreAnswer(
     environment,
     sshQuestions,
     existingValues
@@ -868,7 +885,9 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
   if (!SSH_KEY_EXISTS) {
     const sshKey = await editor({
-      message: `Paste the SSH private key for ${kleur.cyan('SSH_USER')} here:`
+      message: `Paste the SSH private key for ${kleur.cyan(
+        'SSH_USER (provision)'
+      )} here:`
     })
 
     const formattedSSHKey = sshKey.endsWith('\n') ? sshKey : sshKey + '\n'
@@ -880,7 +899,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     if (!sshArgs) {
       info('Testing SSH connection...')
       try {
-        await verifyConnection(sshHost, sshUser, formattedSSHKey)
+        await verifyConnection(sshHost, sshPort, 'provision', formattedSSHKey)
       } catch (err) {
         error(
           'Failed to connect to the target server.',
@@ -901,30 +920,17 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
   await promptAndStoreAnswer(environment, dockerhubQuestions, existingValues)
 
-  if (SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(type)) {
-    const { updateHosts } = await prompts(
-      [
-        {
-          name: 'updateHosts',
-          type: 'confirm' as const,
-          message: `Do you want to update the hosts file entry for ${sshHost}?`,
-          scope: 'REPOSITORY' as const,
-          initial: true
-        }
-      ].map(questionToPrompt)
-    )
-
-    if (updateHosts) {
-      try {
-        await runInteractiveShell(`sh`, [
-          join(__dirname, './update-known-hosts.sh'),
-          sshHost
-        ])
-      } catch (error) {
-        warn(
-          'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
-        )
-      }
+  if (SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(environment)) {
+    try {
+      await runInteractiveShell(`sh`, [
+        join(__dirname, './update-known-hosts.sh'),
+        sshHost,
+        sshPort
+      ])
+    } catch (error) {
+      warn(
+        'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
+      )
     }
   } else {
     log('\n', kleur.bold().underline('Server setup'))
@@ -934,30 +940,18 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       existingValues
     )
 
-    const { updateHosts } = await prompts(
-      [
-        {
-          name: 'updateHosts',
-          type: 'confirm' as const,
-          message: `Do you want to update the hosts file entry for ${domain}?`,
-          scope: 'REPOSITORY' as const,
-          initial: true
-        }
-      ].map(questionToPrompt)
-    )
-
-    if (updateHosts) {
-      try {
-        await runInteractiveShell(`sh`, [
-          join(__dirname, './update-known-hosts.sh'),
-          domain
-        ])
-      } catch (error) {
-        warn(
-          'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
-        )
-      }
+    try {
+      await runInteractiveShell(`sh`, [
+        join(__dirname, './update-known-hosts.sh'),
+        domain,
+        sshPort
+      ])
+    } catch (error) {
+      warn(
+        'Failed to update hosts file. Notice that unknown domains will cause a "host key verification failed" error on deployment.'
+      )
     }
+
     log('\n', kleur.bold().underline('Databases & monitoring'))
 
     await promptAndStoreAnswer(
@@ -993,45 +987,12 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       }
     }
 
-    if (['production', 'staging'].includes(type)) {
-      log('\n', kleur.bold().underline('Backups'))
-      await promptAndStoreAnswer(environment, backupQuestions, existingValues)
-
-      log('\n', kleur.bold().underline('VPN'))
-
-      await promptAndStoreAnswer(environment, vpnQuestions, existingValues)
-    }
-
-    const vpnAdminPasswordExists = findExistingValue(
-      'VPN_ADMIN_PASSWORD',
-      'SECRET',
-      'ENVIRONMENT',
+    log('\n', kleur.bold().underline('METABASE ADMIN'))
+    await promptAndStoreAnswer(
+      environment,
+      metabaseAdminQuestions,
       existingValues
     )
-
-    if (vpnAdminPasswordExists) {
-      await promptAndStoreAnswer(environment, vpnHostQuestions, existingValues)
-    } else {
-      const { isVPNHost } = await prompts(
-        [
-          {
-            name: 'isVPNHost',
-            type: 'confirm' as const,
-            message: `Is this environment going to be used as the VPN server (Wireguard)?`,
-            scope: 'ENVIRONMENT' as const,
-            initial: true
-          }
-        ].map(questionToPrompt)
-      )
-
-      if (isVPNHost) {
-        await promptAndStoreAnswer(
-          environment,
-          vpnHostQuestions,
-          existingValues
-        )
-      }
-    }
 
     log('\n', kleur.bold().underline('SMTP'))
     await promptAndStoreAnswer(environment, emailQuestions, existingValues)
@@ -1062,27 +1023,188 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     fn: (value: string | undefined) => string
   ) => fn(variable || existingValue?.value) || ''
 
-  const derivedUpdates: Answers = [
+  function findExistingOrDefine(
+    name: string,
+    type: 'SECRET' | 'VARIABLE',
+    scope: 'REPOSITORY' | 'ENVIRONMENT',
+    newValue: string
+  ) {
+    return findExistingValue(name, type, scope, existingValues)
+      ? null
+      : process.env[name] || newValue
+  }
+
+  const derivedUpdates: AnswerWithNullValue[] = [
+    {
+      name: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'ELASTICSEARCH_SUPERUSER_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'ELASTICSEARCH_SUPERUSER_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'MINIO_ROOT_USER',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'MINIO_ROOT_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'MINIO_ROOT_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'MINIO_ROOT_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'MINIO_ROOT_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'MINIO_ROOT_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'MONGODB_ADMIN_USER',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'MONGODB_ADMIN_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'MONGODB_ADMIN_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'MONGODB_ADMIN_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'MONGODB_ADMIN_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'MONGODB_ADMIN_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'SUPER_USER_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'SUPER_USER_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'SUPER_USER_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'ENCRYPTION_KEY',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'ENCRYPTION_KEY',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'ENCRYPTION_KEY',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
     {
       name: 'GH_ENCRYPTION_PASSWORD',
       type: 'SECRET' as const,
-      value: findExistingValue(
-        'GH_ENCRYPTION_PASSWORD',
-        'SECRET',
-        'REPOSITORY',
-        existingValues
-      )
-        ? ''
-        : process.env.GH_ENCRYPTION_PASSWORD || generateLongPassword(),
-      scope: 'REPOSITORY' as const,
       didExist: findExistingValue(
         'GH_ENCRYPTION_PASSWORD',
         'SECRET',
         'REPOSITORY',
         existingValues
+      ),
+      value: findExistingOrDefine(
+        'GH_ENCRYPTION_PASSWORD',
+        'SECRET',
+        'REPOSITORY',
+        generateLongPassword()
+      ),
+      scope: 'REPOSITORY' as const
+    },
+    {
+      name: 'SSH_USER',
+      type: 'SECRET' as const,
+      scope: 'ENVIRONMENT' as const,
+      value: 'provision',
+      didExist: findExistingValue(
+        'SSH_USER',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
       )
     }
   ]
+
+  if (['production', 'staging'].includes(environment)) {
+    derivedUpdates.push({
+      name: 'BACKUP_ENCRYPTION_PASSPHRASE',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'BACKUP_ENCRYPTION_PASSPHRASE',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'BACKUP_ENCRYPTION_PASSPHRASE',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    })
+  }
+
   const applicationServerUpdates = [
     {
       type: 'VARIABLE' as const,
@@ -1194,12 +1316,16 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
     }
   ]
 
-  if (!SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(type)) {
+  if (!SPECIAL_NON_APPLICATION_ENVIRONMENTS.includes(environment)) {
     derivedUpdates.push(...applicationServerUpdates)
   }
 
-  const updates: Answers = getAnswers(existingValues)
-    .concat(...derivedUpdates)
+  const updates = getAnswers(existingValues)
+    .concat(
+      ...derivedUpdates.filter(
+        (update): update is Answer => update.value !== null
+      )
+    )
     .filter(
       (variable) =>
         Boolean(variable.value) &&

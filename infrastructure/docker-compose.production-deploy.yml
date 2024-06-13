@@ -7,11 +7,6 @@ version: '3.3'
 # Before you deploy staging or production environments, make sure the application servers are
 # either in an internal network or protected with a firewall. No ports should be exposed to the internet.
 #
-# The VPN_HOST_ADDRESS environment variable should be set to the IP address where all inbound traffic is coming from.
-# In most cases, this is the VPN server's public IP address.
-#
-# ${VPN_HOST_ADDRESS}
-#
 
 services:
   gateway:
@@ -192,7 +187,15 @@ services:
     # These templates use an Automatic Certificate Management Environment (Let's Encrypt).
     # This makes sure that the HTTPS certificates are automatically generated and renewed without manual maintenance.
     #
-    # For your country to do this, your domain's DNS provider must be one of the ones listed here
+    # This default configuration will only work if OpenCRVS is directly accessible from the internet.
+    #
+    # WE STRONGLY RECOMMEND THAT YOU DO NOT EXPOSE PRODUCTION OPENCRVS TO THE INTERNET!
+    #
+    # If you are deploying OpenCRVS in a private network, you have two options:
+    # 1. Use a DNS provider that supports ACME DNS-01 challenges.
+    # 2. Use a manually renewed certificate file.
+
+    # For your country to use the DNS-01 challenge, your domain's DNS provider must be one of the ones listed here
     # https://doc.traefik.io/traefik/https/acme/#providers
     #
     # If your DNS provider is not listed, you can use manually renewed certificate files instead of Let's Encrypt.
@@ -210,13 +213,12 @@ services:
     #   - --tls.stores.default.defaultcertificate.certfile=/certs/crvs.cm.crt
     #   - --tls.stores.default.defaultcertificate.keyfile=/certs/crvs.cm.key
 
-    environment:
-      - GOOGLE_DOMAINS_ACCESS_TOKEN=${GOOGLE_DOMAINS_ACCESS_TOKEN}
     command:
-      - --certificatesresolvers.certResolver.acme.dnschallenge=true
-      - --certificatesresolvers.certResolver.acme.dnschallenge.provider=googledomains
       - --certificatesresolvers.certResolver.acme.email=riku@opencrvs.org
       - --certificatesresolvers.certResolver.acme.storage=acme.json
+      - --certificatesresolvers.certResolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.certResolver.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.certResolver.acme.httpchallenge=true
 
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443

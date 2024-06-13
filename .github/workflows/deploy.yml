@@ -23,10 +23,6 @@ on:
         type: boolean
         description: Reset the environment
         default: false
-      debug:
-        type: boolean
-        description: Open SSH session to the runner after deployment
-        default: false
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
@@ -139,7 +135,6 @@ jobs:
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
-        continue-on-error: ${{ github.event.inputs.debug == 'true' }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy \
@@ -147,14 +142,11 @@ jobs:
           --environment=${{ github.event.inputs.environment }} \
           --host=${{ vars.DOMAIN }} \
           --ssh_host=${{ vars.SSH_HOST || secrets.SSH_HOST }} \
+          --ssh_port=${{ vars.SSH_PORT || secrets.SSH_PORT }} \
           --ssh_user=${{ secrets.SSH_USER }} \
           --version=${{ github.event.inputs.core-image-tag }} \
           --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
           --replicas=${{ vars.REPLICAS }}
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ github.event.inputs.debug == 'true' }}
 
   reset:
     needs: deploy

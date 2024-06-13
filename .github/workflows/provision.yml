@@ -40,10 +40,6 @@ on:
           - ufw
           - updates
           - users
-      debug:
-        type: boolean
-        description: Open SSH session to the runner after deployment
-        default: false
 jobs:
   get-backup-ssh-key:
     name: Get backup SSH key
@@ -158,32 +154,16 @@ jobs:
         if: needs.get-backup-ssh-key.outputs.environment_exists != 'true'
         run: |
           FILE=./${{ github.event.repository.name }}/infrastructure/server-setup/inventory/${{ github.event.inputs.environment }}.yml
-          if grep -q "backups: " "$FILE"; then
+          if grep -q '^[[:blank:]]*backups:[[:blank:]]*$' "$FILE"; then
             echo "Your inventory contains configuration for either a backup target or backup source."
             echo "If you are upgrading OpenCRVS, please start by running environment creator script for the backup server"
             echo ""
-            echo "yarn environment:init --environment=backup"
+            echo "yarn environment:init"
             echo ""
             echo "And after that, run this provisioning pipeline again but first to your backup server"
             echo "After that you can proceed with (re)provisioning your staging and production servers."
             exit 1
           fi
-      - name: Setup tmate session
-        if: ${{ github.event.inputs.debug == 'true' }}
-        uses: mxschmitt/action-tmate@v3
-        env:
-          encrypted_disk_size: ${{ vars.DISK_SPACE }}
-          disk_encryption_key: ${{ secrets.ENCRYPTION_KEY }}
-          dockerhub_username: ${{ secrets.DOCKER_USERNAME }}
-          dockerhub_password: ${{ secrets.DOCKER_TOKEN }}
-          mongodb_admin_username: ${{ secrets.MONGODB_ADMIN_USER }}
-          mongodb_admin_password: ${{ secrets.MONGODB_ADMIN_PASSWORD }}
-          backup_encryption_passphrase: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
-          elasticsearch_superuser_password: ${{ secrets.ELASTICSEARCH_SUPERUSER_PASSWORD }}
-          # SSH_HOST was moved from a secret to a variable in OpenCRVS 1.5.0
-          # @todo @deprecated remove the fallback to secrets.SSH_HOST in OpenCRVS 1.7.0
-          manager_production_server_ip: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
-          ansible_user: ${{ secrets.SSH_USER }}
 
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2.8.0

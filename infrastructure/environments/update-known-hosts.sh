@@ -3,12 +3,13 @@
 set -e
 
 # Check if a domain is provided
-if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 <domain>"
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 <domain> <port>"
   exit 1
 fi
 
 DOMAIN=$1
+PORT=$2
 IP=$(dig +short $DOMAIN)
 
 if [ -z "$IP" ]; then
@@ -21,8 +22,8 @@ KNOWN_HOSTS_FILE="infrastructure/known-hosts"
 touch "$KNOWN_HOSTS_FILE"
 
 # Remove existing entry for the domain from the known-hosts file
-ssh-keygen -R "$DOMAIN" -f "$KNOWN_HOSTS_FILE" || true
-ssh-keygen -R "$IP" -f "$KNOWN_HOSTS_FILE" || true
+ssh-keygen -R "[$DOMAIN]:$PORT" -f "$KNOWN_HOSTS_FILE" || true
+ssh-keygen -R "[$IP]:$PORT" -f "$KNOWN_HOSTS_FILE" || true
 
 # Initialize keyscan result variable
 KEYSCAN_RESULT=""
@@ -32,10 +33,10 @@ while [ -z "$KEYSCAN_RESULT" ]; do
 
   if [ "$DOMAIN" == "$IP" ]; then
     # Use `|| true` to prevent script exit if ssh-keyscan fails
-    KEYSCAN_RESULT=$(ssh-keyscan "$IP" 2>/dev/null) || true
+    KEYSCAN_RESULT=$(ssh-keyscan -p $PORT "$IP" 2>/dev/null) || true
   else
     # Use `|| true` to prevent script exit if ssh-keyscan fails
-    KEYSCAN_RESULT=$(ssh-keyscan "$DOMAIN" "$IP" 2>/dev/null) || true
+    KEYSCAN_RESULT=$(ssh-keyscan -p $PORT "$DOMAIN" "$IP" 2>/dev/null) || true
   fi
 
   # Check if ssh-keyscan was successful
