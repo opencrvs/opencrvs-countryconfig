@@ -296,7 +296,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expect(page.locator('#deathEvent-content #Cause')).toContainText(
-          declaration.event.cause.established ? 'No' : 'Yes'
+          declaration.event.cause.established ? 'Yes' : 'No'
         )
         await expect(page.locator('#deathEvent-content #Cause')).toContainText(
           'Change'
