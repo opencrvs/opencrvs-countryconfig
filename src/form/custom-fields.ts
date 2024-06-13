@@ -8,13 +8,13 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+import { uppercaseFirstLetter } from '@countryconfig/utils'
+import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { camelCase } from 'lodash'
 import { MessageDescriptor } from 'react-intl'
+import { getNationalIDValidators } from './common/default-validation-conditionals'
 import { formMessageDescriptors } from './common/messages'
 import { Conditional, SerializedFormField } from './types/types'
-import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { getNationalIDValidators } from './common/default-validation-conditionals'
-import { camelCase } from 'lodash'
-import { uppercaseFirstLetter } from '@countryconfig/utils'
 
 // ======================= CUSTOM FIELD CONFIGURATION =======================
 
@@ -183,8 +183,7 @@ export function getIDNumber(
     camelCase(idValue)
   )}`
   const validators = getValidators(sectionId, idValue)
-  // eslint-disable-next-line no-console
-  console.log('Custom field addded with handlebar: ', fieldName)
+
   return {
     name: fieldName,
     required,
