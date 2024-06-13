@@ -1,6 +1,10 @@
 - name: Update apt repository
   apt:
     update_cache: yes
+    force_apt_get: yes
+
+- name: Wait for apt lock
+  shell: while fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done;
 
 - name: Upgrade all packages to the latest version
   apt:
