@@ -29,7 +29,7 @@ test.describe('1. Death event declaration', () => {
          * - Continue button
          * - Exit button
          */
-        await expect(page.getByLabel('Death')).toBeVisible()
+        await expect(page.getByLabel('Birth')).toBeVisible()
         await expect(page.getByLabel('Death')).toBeVisible()
         await expect(page.getByLabel('Marriage')).toBeVisible()
         await expect(
@@ -256,7 +256,7 @@ test.describe('1. Death event declaration', () => {
       test('1.7.1 validate the contents of spouse details page', async () => {
         /*
          * Expected result: should see
-         * - Mother's details block
+         * - Spouse details block
          * - Continue button
          * - Exit button
          * - Save & exit button

@@ -870,8 +870,4 @@ test.describe.serial('7. Death declaration case - 7', () => {
       )
     })
   })
-
-  // await page.getByLabel('Assign record').click()
-  // await page.getByRole('button', { name: 'Assign', exact: true }).click()
-  // await page.getByRole('button', { name: 'View', exact: true }).click()
 })

@@ -592,7 +592,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
     })
   })
 
-  test.describe('6.2 Declaration Review by Local Registrar', async () => {
+  test.describe('6.2 Declaration Review by Registration Agent', async () => {
     test('6.2.1 Navigate to the declaration review page', async () => {
       await login(page, 'f.katongo', 'test')
       await createPIN(page)

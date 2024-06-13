@@ -106,6 +106,8 @@ test.describe.serial('8. Validate declaration review page', () => {
           .getByText(declaration.deceased.address.District, { exact: true })
           .click()
 
+        // waiting for 500ms before continuing,
+        // otherwise some data entered in the page are lost
         await page.waitForTimeout(500)
         await page.getByRole('button', { name: 'Continue' }).click()
       })
@@ -294,7 +296,7 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expect(page.locator('#deathEvent-content #Cause')).toContainText(
-          'No'
+          declaration.event.cause.established ? 'No' : 'Yes'
         )
         await expect(page.locator('#deathEvent-content #Cause')).toContainText(
           'Change'

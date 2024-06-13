@@ -6,10 +6,9 @@ import faker from '@faker-js/faker'
 
 import { readFileSync } from 'fs'
 import uuid from 'uuid'
-import { format, subDays, subYears } from 'date-fns'
-import { Bundle } from 'typescript'
+import { format } from 'date-fns'
 import { join } from 'path'
-import { declaration } from './data/declarationData'
+import { getRandomDate } from '../../helpers'
 
 export const CREATE_DEATH_REGISTRATION = print(gql`
   mutation createDeathRegistration($details: DeathRegistrationInput!) {
@@ -22,6 +21,59 @@ export const CREATE_DEATH_REGISTRATION = print(gql`
   }
 `)
 
+const declaration = {
+  deceased: {
+    name: {
+      firstNames: faker.name.firstName('male'),
+      familyName: faker.name.lastName('male')
+    },
+    gender: 'male',
+    birthDate: getRandomDate(75, 200),
+    nationality: 'FAR',
+    identifier: {
+      type: 'NATIONAL_ID',
+      id: faker.random.numeric(10)
+    },
+    address: {
+      country: 'FAR',
+      province: 'Sulaka',
+      district: 'Zobwe',
+      urbanOrRural: 'Urban',
+      town: faker.address.city(),
+      residentialArea: faker.address.county(),
+      street: faker.address.streetName(),
+      number: faker.address.buildingNumber(),
+      postcodeOrZip: faker.address.zipCode()
+    }
+  },
+  event: {
+    manner: 'Natural causes',
+    date: getRandomDate(0, 20),
+    cause: {
+      established: true,
+      source: 'Physician'
+    },
+    place: "Deceased's usual place of residence"
+  },
+  informantType: 'Spouse',
+  informantEmail: faker.internet.email(),
+  spouse: {
+    name: {
+      firstNames: faker.name.firstName('female'),
+      familyName: faker.name.lastName('female')
+    },
+    birthDate: getRandomDate(50, 200),
+    nationality: 'Farajaland',
+    identifier: {
+      id: faker.random.numeric(10),
+      type: 'NATIONAL_ID'
+    },
+    address: {
+      sameAsDeceased: true
+    }
+  }
+}
+
 async function getAllLocations(
   type: 'ADMIN_STRUCTURE' | 'HEALTH_FACILITY' | 'CRVS_OFFICE'
 ) {
@@ -33,7 +85,7 @@ async function getAllLocations(
 
 function getLocationIdByName(locations: fhir.Location[], name: string) {
   const location = locations.find((location) => location.name === name)
-  if (!location) {
+  if (!location?.id) {
     throw new Error(`Location with name ${name} not found`)
   }
   return location.id
