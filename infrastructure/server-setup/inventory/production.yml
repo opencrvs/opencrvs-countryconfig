@@ -15,6 +15,7 @@
 
 all:
   vars:
+    # "enable_backups" is set to true on production.  Production will always backup it's own data.
     enable_backups: true
     # This configuration variable blocks all access to the server, including SSH, except from the IP addresses specified below.
     # In most cases these should be left empty, as the VPN server should be the only source of traffic.
@@ -40,17 +41,18 @@ docker-manager-first:
     prod-01: # @todo set this to be the hostname of your target server
       ansible_host: '22.22.22.22' # @todo set this to be the hostname of your target server
       data_label: data1
-      # @todo as production servers are not directly accessible from the internet, you need to use a jump server to access them.
-      ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
+      # If you are using a jump server to access this environment, enter other SSH args here.
+      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
 
 # @todo We recommend you add 2-4 workers for a scaled production deployment
 # This should depend on the size of your country and the number of end users.
+# If you are only using one production worker for very small countries or small pilot projects, replace with an empty block like so: docker-workers: {}
 docker-workers:
   hosts:
     prod-02: # @todo set this to be the hostname of your target server
       ansible_host: '33.33.33.33'
-      data_label: data2
-      ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
+      # If you are using a jump server to access this environment, enter other SSH args here.
+      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
 
 backups:
   hosts:
@@ -60,7 +62,8 @@ backups:
       # exists in Github environments
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
 
-jump:
-  hosts:
-    backup: # @todo set this to be the hostname of your backup server
-      ansible_host: '55.55.55.55'
+# If you are using a jump server to access this environment
+# jump:
+#   hosts:
+#     backup: # @todo set this to be the hostname of your backup server
+#       ansible_host: '55.55.55.55'
