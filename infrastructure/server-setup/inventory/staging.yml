@@ -20,11 +20,12 @@ all:
     # then this should always be set when configuring a production server if there is no other firewall in front of the server.
     # BE CAREFUL! This will block all SSH traffic except from the IP addresses listed here.
     only_allow_access_from_addresses:
-      # @todo place the IP address of your jump server or other explicitly allowed traffic sources here
+      # If you are using a jump server to access this environment, place the IP address of the jump server or other explicitly allowed traffic sources here
       #- 55.55.55.55 # example jump server IP address
       []
+    # "enable_backups" is set to false on staging.  Staging will not backup it's own data.
     enable_backups: false
-    # Turn this on if you want to restore daily production backups to your staging server.
+    # "periodic_restore_from_backup" restores daily production backups to your staging server.
     # For this you need to first setup a backup environment
     periodic_restore_from_backup: true
     backup_server_remote_source_directory: /home/backup/backups
@@ -43,6 +44,8 @@ docker-manager-first:
       ansible_host: '134.209.237.242'
       ansible_port: 3434
       data_label: data1
+      # If you are using a jump server to access this environment, enter other SSH args here.
+      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
 
 # This staging servers is configured to only use one server
 docker-workers: {}
@@ -55,6 +58,7 @@ backups:
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
+# If you are using a jump server to access this environment
 # jump:
 #   hosts:
 #     backup: # @todo set this to be the hostname of your backup server
