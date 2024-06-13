@@ -3,12 +3,10 @@
     update_cache: yes
     force_apt_get: yes
 
-- name: Wait for apt lock
-  shell: while fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done;
-
-- name: Upgrade all packages to the latest version
-  apt:
-    upgrade: dist
+- name: Wait for apt lock and upgrade all packages to the latest version
+  shell: |
+    while fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done
+    apt-get update && apt-get dist-upgrade -y
 
 - name: Remove unnecessary packages
   apt:
