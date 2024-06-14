@@ -22,7 +22,7 @@ import { Validator } from '../types/validators'
 const exactDobConditional: Conditional[] = [
   {
     action: 'hide',
-    expression: '!window.config.DATE_OF_BIRTH_UNKNOWN'
+    expression: '!window.config.FEATURES.DATE_OF_BIRTH_UNKNOWN'
   }
 ]
 

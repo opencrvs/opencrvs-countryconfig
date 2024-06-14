@@ -69,18 +69,18 @@ export interface ITokenPayload {
 }
 
 export default function getPlugins() {
-  const plugins: any[] = [
-    inert,
-    JWT,
-    {
+  const plugins: any[] = [inert, JWT]
+
+  if (process.env.NODE_ENV === 'production') {
+    plugins.push({
       plugin: Pino,
       options: {
         prettyPrint: false,
         logPayload: false,
         instance: logger
       }
-    }
-  ]
+    })
+  }
 
   if (SENTRY_DSN) {
     plugins.push({
@@ -165,7 +165,7 @@ async function getPublicKey(): Promise<string> {
     const response = await fetch(`${AUTH_URL}/.well-known`)
     return response.text()
   } catch (error) {
-    console.log(
+    logger.error(
       `Failed to fetch public key from Core. Make sure Core is running, and you are able to connect to ${AUTH_URL}/.well-known.`
     )
     if (process.env.NODE_ENV === 'production') {
@@ -374,6 +374,7 @@ export async function createServer() {
     handler: dashboardQueriesHandler,
     options: {
       tags: ['api'],
+      auth: false,
       description: 'Serves dashboard view refresher queries'
     }
   })
