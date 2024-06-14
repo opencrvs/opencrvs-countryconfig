@@ -23,6 +23,7 @@ import { writeFileSync } from 'fs'
 import { exec as callbackExec } from 'child_process'
 import { promisify } from 'util'
 import { join } from 'path'
+import { initial } from 'lodash'
 
 const exec = promisify(callbackExec)
 
@@ -310,6 +311,17 @@ const sshQuestions = [
     validate: notEmpty,
     valueLabel: 'SSH_USER',
     initial: process.env.SSH_USER || 'provision',
+    scope: 'ENVIRONMENT' as const
+  },
+  {
+    name: 'sshPort',
+    type: 'number' as const,
+    message:
+      'What port number is used in establishing the SSH connection? This usually is the default 22. If you are an advanced user, and have set a different port, provide it here.',
+    valueType: 'SECRET' as const,
+    validate: notEmpty,
+    valueLabel: 'SSH_PORT',
+    initial: process.env.SSH_PORT ? parseInt(process.env.SSH_PORT) : 22,
     scope: 'ENVIRONMENT' as const
   },
   {
@@ -718,6 +730,28 @@ const derivedVariables = [
   }
 ] as const
 
+const metabaseAdminQuestions = [
+  {
+    valueType: 'SECRET' as const,
+    name: 'OPENCRVS_METABASE_ADMIN_EMAIL',
+    type: 'text' as const,
+    message:
+      'Email for Metabase super admin. Used as a username when logging in to the dashboard',
+    valueLabel: 'OPENCRVS_METABASE_ADMIN_EMAIL',
+    scope: 'ENVIRONMENT' as const,
+    initial: 'user@opencrvs.org'
+  },
+  {
+    valueType: 'SECRET' as const,
+    name: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
+    type: 'text' as const,
+    message: 'Password for Metabase super admin.',
+    valueLabel: 'OPENCRVS_METABASE_ADMIN_PASSWORD',
+    scope: 'ENVIRONMENT' as const,
+    initial: generateLongPassword()
+  }
+]
+
 ALL_QUESTIONS.push(
   ...dockerhubQuestions,
   ...sshQuestions,
@@ -731,7 +765,8 @@ ALL_QUESTIONS.push(
   ...vpnQuestions,
   ...vpnHostQuestions,
   ...sentryQuestions,
-  ...derivedVariables
+  ...derivedVariables,
+  ...metabaseAdminQuestions
 )
 ;(async () => {
   const { type } = await prompts(
@@ -949,6 +984,13 @@ ALL_QUESTIONS.push(
       await promptAndStoreAnswer(environment, vpnHostQuestions, existingValues)
     }
   }
+
+  log('\n', kleur.bold().underline('METABASE ADMIN'))
+  await promptAndStoreAnswer(
+    environment,
+    metabaseAdminQuestions,
+    existingValues
+  )
 
   log('\n', kleur.bold().underline('SMTP'))
   await promptAndStoreAnswer(environment, emailQuestions, existingValues)
