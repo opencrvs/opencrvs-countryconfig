@@ -111,6 +111,8 @@
         marker: '# {mark} ANSIBLE MANAGED BLOCK docker-manager-first {{ manager_hostname }}'
         create: yes
         mode: 0600
+        owner: '{{ external_backup_server_user }}'
+
       tags:
         - backups
 

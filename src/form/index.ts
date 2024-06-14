@@ -14,15 +14,13 @@ import { birthForm } from './birth'
 import { deathForm } from './death'
 import { marriageForm } from './marriage'
 import { IForms, Event } from './types/types'
-import { getUserOfficeLocationHierarchy } from '@countryconfig/utils/users'
+import { fetchUserLocationHierarchy } from '@countryconfig/utils/users'
 
 export async function formHandler(req: Request): Promise<IForms> {
-  const addressHierarchy = (
-    await getUserOfficeLocationHierarchy(
-      req.headers.authorization,
-      req.auth.credentials.sub as string
-    )
-  ).map(({ id }) => id)
+  const addressHierarchy = await fetchUserLocationHierarchy(
+    req.headers.authorization,
+    req.auth.credentials.sub as string
+  )
   // ====================== NOTE REGARDING MIGRATING FROM OPNCRVS v1.2 OR EARLIER ======================
 
   // SIMPLY RETURN A JSON OF YOUR FULL FORM HERE, WITH THE ADDITION OF THE NEW MARRIAGE AND VERSION PROP

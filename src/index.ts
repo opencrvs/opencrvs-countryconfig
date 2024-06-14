@@ -375,6 +375,7 @@ export async function createServer() {
     handler: dashboardQueriesHandler,
     options: {
       tags: ['api'],
+      auth: false,
       description: 'Serves dashboard view refresher queries'
     }
   })
@@ -474,7 +475,7 @@ export async function createServer() {
       validate: {
         payload: emailSchema
       },
-      description: 'Handles sending SMS'
+      description: 'Handles sending email using a predefined template file'
     }
   })
 

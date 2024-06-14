@@ -1,20 +1,28 @@
 # Changelog
-## 1.5.0 (TBD)
 
+## [1.5.0]
+
+- Change auth URLs to access them via gateway
+- Add hearth URL to search service
+- Include an endpoint for serving individual certificates in development mode
+- Include compositionId in confirm registration payload
+- Move individual configuration options to feature flags
+- Remove logrocket refrences
+- Upgrade to node 18
+- Enable gzip compression in client & login
+- Make SENTRY_DSN variable optional
+- Use docker compose v2 in github workflows
+- Mass email from national system admin
 - Remove dependency on openhim. The openhim db is kept for backwards compatibility reasons and will be removed in v1.6
-- Change condition of Number of previous births 
-
-## [1.3.4](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.3.4)
-
-## Breaking changes
-
-## New features
-
-## Bug fixes
-
-- Fix typo in certificate handlebar names
-
-See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
+- Add smtp environment variables in qa compose file
+- Use image tag instead of patterns in certificate SVGs
+- Generate default address according to logged-in user's location
+- Remove authentication from dashboard queries route
+- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
+- Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
+- Change condition of Number of previous births
+- Remove 'Other' dropdown when informant is mother or father [#7011](https://github.com/opencrvs/opencrvs-core/issues/7011)
+- Hide same as other primary address field if the other person's details not available [#7000](https://github.com/opencrvs/opencrvs-core/issues/7000)
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
@@ -37,6 +45,7 @@ See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for rel
 - Each environment now has a dedicated docker-compose-<environment>-deploy.yml. Use `environment:init` to create a new environment and generate a corresponding file for customizable configurations.
 - 🔒 OpenHIM console is no longer exposed via HTTP.
 - Ansible playbooks are refactored into smaller task files.
+- Resolved the issue of National ID validation to prevent the informant, father, and mother from having the same ID. 
 
 ### New features
 
@@ -70,76 +79,17 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 - The `infrastructure` directory and related pipelines will be moved to a new repository.
 - Both the new infrastructure repository and the OpenCRVS country resource package repositories will start following their own release cycles, mostly independent from the core's release cycle. From this release forward, both packages are released as "OpenCRVS minor compatible" releases, meaning that the OpenCRVS countryconfig 1.3.0-<incrementing release number> is compatible with OpenCRVS 1.3.0, 1.3.1, 1.3.2, etc. This allows for the release of new hotfix versions of the core without having to publish a new version of the infrastructure or countryconfig.
 
-See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
+## [1.3.4](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.3.4)
+
+### Bug fixes
+
+- Fix typo in certificate handlebar names
 
 ## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
 
 ### Breaking changes
 
 ### New features
-
-- #### Greater customizability of location data in certificates
-
-  The various admin level handlebars e.g. **statePlaceofbirth**,
-  **districtPrimaryMother** only contained the name of that location which was
-  not able to take advantage of all the information OpenCRVS had available
-  about the various admin levels e.g. the name of that location in the
-  secondary language. So we are introducing a new set of admin level
-  handlebars that would contain the **id** of that location which we can
-  resolve into a value of the shape
-
-  ```
-  {
-    name: string
-    alias: string
-  }
-  ```
-
-  using the new **"location"** handlebar helper. Here name is the primary
-  label of the location and alias being the secondary one. Currently only
-  these 2 fields are available but we will be adding more fields depending on
-  various countries requirements. If previously the certificate svg used to
-  contain `{{districtPlaceofbirth}}` then now we can replace it with
-  `{{location districtPlaceofbirthId 'name'}}`. To access alias, the `'name'`
-  needs to be replaced with `'alias'`.
-
-  Below is a list of all the new handlebars that are meant to be used with the
-  "location" handlebar helper.
-
-  - statePrimaryInformantId
-  - districtPrimaryInformantId
-  - statePlaceofbirthId
-  - districtPlaceofbirthId
-  - statePrimaryMotherId
-  - districtPrimaryMotherId
-  - statePrimaryFatherId
-  - districtPrimaryFatherId
-  - statePrimaryDeceasedId
-  - districtPrimaryDeceasedId
-  - statePlaceofdeathId
-  - districtPlaceofdeathId
-  - statePrimaryGroomId
-  - districtPrimaryGroomId
-  - statePrimaryBrideId
-  - districtPrimaryBrideId
-  - statePlaceofmarriageId
-  - districtPlaceofmarriageId
-  - registrar.stateId
-  - registrar.districtId
-  - registrar.officeId
-  - registrationAgent.stateId
-  - registrationAgent.districtId
-  - registrationAgent.officeId
-
-  ##### We will be deprecating the counterpart of the above mentioned handlebars that contains only the label of the specified location in a future version so we highly recommend that implementers update their certificates to use these new ones.
-
-### Bug fixes
-
-## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
-
-## Breaking changes
-
-## New features
 
 - #### Greater customizability of location data in certificates
 
@@ -207,7 +157,9 @@ See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for rel
 - #### Reason for late registration field
   The birth & death forms will include another custom field, **reasonForLateRegistration**, which makes use of "LATE_REGISTRATION_TARGET" configuration option in it's visibility conditional.
 
-## Bug fixes
+### Bug fixes
 
 - Updated translations for form introduction page and sending for approval to reflect the default notification method being email.
 - Remove hard-coded conditionals from "occupation" field to make it usable in the deceased form
+
+See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
