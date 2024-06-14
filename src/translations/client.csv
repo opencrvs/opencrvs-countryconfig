@@ -665,7 +665,7 @@ countries.GTM,,Guatemala,Guatemala
 countries.GUF,,French Guiana,Guyane française
 countries.GUM,,Guam,Guam
 countries.GUY,,Guyana,Guyane
-countries.HKG,,"""China, Hong Kong Special Administrative Region"",""Chine, région administrative spéciale de Hong Kong",
+countries.HKG,,"China, Hong Kong Special Administrative Region","Chine, région administrative spéciale de Hong Kong",
 countries.HMD,,Heard Island and McDonald Islands,Île Heard et îles McDonald
 countries.HND,,Honduras,Honduras
 countries.HRV,,Croatia,Croatie
@@ -703,7 +703,7 @@ countries.LSO,,Lesotho,Lesotho
 countries.LTU,,Lithuania,Lituanie
 countries.LUX,,Luxembourg,Luxembourg
 countries.LVA,,Latvia,Lettonie
-countries.MAC,,"""China, Macao Special Administrative Region"",""Chine, Région administrative spéciale de Macao",
+countries.MAC,,"China, Macao Special Administrative Region","Chine, Région administrative spéciale de Macao",
 countries.MAF,,Saint Martin (French Part),Saint Martin (partie française)
 countries.MAR,,Morocco,Maroc
 countries.MCO,,Monaco,Monaco
