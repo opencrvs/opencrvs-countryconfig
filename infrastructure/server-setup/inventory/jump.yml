@@ -1,0 +1,30 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+
+# Example IP addressses used in this file:
+# 22.22.22.22 - Target staging server's IP address
+# 33.33.33.33 - Second worker node in this 2-server setup
+# 55.55.55.55 - This IP address is both the VPN server the server used as a bastion / jump host
+# 66.66.66.66 - This IP address is the address of a backup server
+
+all:
+  vars:
+    users:
+      # @todo this is where you define which development team members have access to the server.
+      # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
+      - name: my-user
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+        state: present
+        sudoer: true
+
+jump-host:
+  hosts:
+    backup: # @todo set this to be the hostname of your backup server
+      ansible_host: '55.55.55.55'
