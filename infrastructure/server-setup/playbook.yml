@@ -14,6 +14,8 @@
 
 - hosts: all
   become: yes
+  gather_facts: yes
+  ignore_unreachable: false
   become_method: sudo
   tasks:
     - include_tasks:
@@ -29,14 +31,20 @@
         apply:
           tags:
             - updates
-      tags:
-        - updates
 
-- hosts: docker-manager-first, docker-workers
+    - include_tasks:
+        file: tasks/users.yml
+        apply:
+          tags:
+            - users
+      tags:
+        - users
+
+- import_playbook: jump.yml
+
+- hosts: docker-manager-first:docker-workers
   become: yes
-  become_method: sudo  
-  vars:
-    crontab_user: root
+  become_method: sudo
   tasks:
     - include_tasks:
         file: tasks/application.yml
@@ -70,14 +78,6 @@
             - users
       tags:
         - deployment-user
-        - users
-
-    - include_tasks:
-        file: tasks/users.yml
-        apply:
-          tags:
-            - users
-      tags:
         - users
 
     - include_tasks:
