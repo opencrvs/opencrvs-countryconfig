@@ -48,3 +48,17 @@
     minute: '0'
     hour: '0'
     job: '/usr/bin/docker system prune -af >> /var/log/docker-prune.log'
+
+- name: Check if Docker group exists
+  command: getent group docker
+  register: docker_group
+  ignore_errors: yes
+
+- name: Add user to Docker group
+  when: docker_group.rc == 0 and item.state == 'present'
+  with_items: '{{ users }}'
+  ignore_errors: yes
+  user:
+    name: '{{ item.name }}'
+    groups: docker
+    append: yes

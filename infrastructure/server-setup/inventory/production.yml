@@ -1,0 +1,69 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+
+# Example IP addressses used in this file:
+# 22.22.22.22 - Target staging server's IP address
+# 33.33.33.33 - Second worker node in this 2-server setup
+# 55.55.55.55 - This IP address is both the VPN server the server used as a bastion / jump host
+# 66.66.66.66 - This IP address is the address of a backup server
+
+all:
+  vars:
+    # "enable_backups" is set to true on production.  Production will always backup it's own data.
+    enable_backups: true
+    # This configuration variable blocks all access to the server, including SSH, except from the IP addresses specified below.
+    # In most cases these should be left empty, as the VPN server should be the only source of traffic.
+    # OpenCRVS should never be exposed to the public internet. If this is not possible to organise,
+    # then this should always be set when configuring a production server if there is no other firewall in front of the server.
+    # BE CAREFUL! This will block all SSH traffic except from the IP addresses listed here.
+    only_allow_access_from_addresses:
+      # @todo place the IP address of your jump server or other explicitly allowed traffic sources here
+      #- 55.55.55.55 # example jump server IP address
+      []
+    backup_server_remote_target_directory: /home/backup/backups
+    users:
+      # @todo this is where you define which development team members have access to the server.
+      # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
+      - name: my-user
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+        state: present
+        sudoer: true
+
+docker-manager-first:
+  hosts:
+    prod-01: # @todo set this to be the hostname of your target server
+      ansible_host: '22.22.22.22' # @todo set this to be the hostname of your target server
+      data_label: data1
+      # If you are using a jump server to access this environment, enter other SSH args here.
+      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
+
+# @todo We recommend you add 2-4 workers for a scaled production deployment
+# This should depend on the size of your country and the number of end users.
+# If you are only using one production worker for very small countries or small pilot projects, replace with an empty block like so: docker-workers: {}
+docker-workers:
+  hosts:
+    prod-02: # @todo set this to be the hostname of your target server
+      ansible_host: '33.33.33.33'
+      # If you are using a jump server to access this environment, enter other SSH args here.
+      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
+
+backups:
+  hosts:
+    backup: # @todo set this to be the hostname of your backup server
+      ansible_host: '66.66.66.66'
+      # Written by provision pipeline. Assumes "backup" environment
+      # exists in Github environments
+      ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
+
+# If you are using a jump server to access this environment
+# jump:
+#   hosts:
+#     backup: # @todo set this to be the hostname of your backup server
+#       ansible_host: '55.55.55.55'

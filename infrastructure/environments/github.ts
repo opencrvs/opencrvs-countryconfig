@@ -1,5 +1,6 @@
 const sodium = require('libsodium-wrappers')
 import { Octokit } from '@octokit/core'
+import { error } from './logger'
 
 export async function createVariable(
   octokit: Octokit,
@@ -211,7 +212,12 @@ export async function createEnvironment(
     )
     return true
   } catch (err) {
-    throw new Error('Cannot create environment')
+    error(
+      `Cannot create environment: [${err.status}] ${err.response.data.message}`
+    )
+    throw new Error(
+      `Cannot create environment: [${err.status}] ${err.response.data.message}`
+    )
   }
 }
 

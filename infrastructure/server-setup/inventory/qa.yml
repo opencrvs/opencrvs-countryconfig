@@ -17,17 +17,6 @@ all:
         state: present
         sudoer: true
 
-      # @todo will this host be used as a bastion / jump server for the CI/CD pipeline to access production servers?
-      # if no, then you can remove this user.
-      - name: jump
-        state: present
-        sudoer: false
-        two_factor: false
-        ssh_keys:
-          # if yes, then this should list the public keys of the private keys that are used when connecting to the production servers.
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-243 # example provision user key
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= provision@github-runner-244 # example provision user key
-
 docker-manager-first:
   hosts:
     qa: # @todo set this to be the hostname of your target server

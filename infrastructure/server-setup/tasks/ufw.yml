@@ -12,17 +12,23 @@
   loop: '{{ only_allow_access_from_addresses }}'
   when: only_allow_access_from_addresses is defined and only_allow_access_from_addresses | length > 0
 
+- name: Set default SSH port
+  set_fact:
+    ssh_port: '{{ ansible_port | default(22) }}'
+
 - name: Remove general OpenSSH allow rule
   ufw:
     rule: allow
-    name: OpenSSH
+    port: '{{ ssh_port }}'
+    proto: tcp
     delete: yes
   when: only_allow_access_from_addresses is defined and only_allow_access_from_addresses | length > 0
 
 - name: Allow OpenSSH through UFW universally
   ufw:
     rule: allow
-    name: OpenSSH
+    port: '{{ ssh_port }}'
+    proto: tcp
   when: only_allow_access_from_addresses is undefined or only_allow_access_from_addresses | length == 0
 
 # Docker swarm ports - Note: all published docker container port will override UFW rules!

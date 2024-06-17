@@ -1,3 +1,13 @@
+- name: Check if external_backup_server_user is set
+  fail:
+    msg: 'external_backup_server_user variable was deprecated in OpenCRVS 1.5. Please rename the variable to backup_server_remote_target_directory'
+  when: external_backup_server_user is defined
+
+- name: Check if external_backup_server_remote_directory is set
+  fail:
+    msg: 'external_backup_server_remote_directory variable was deprecated in OpenCRVS 1.5. Please rename the variable to backup_server_remote_target_directory'
+  when: external_backup_server_remote_directory is defined
+
 - name: 'Check mandatory variables are defined'
   assert:
     that:
