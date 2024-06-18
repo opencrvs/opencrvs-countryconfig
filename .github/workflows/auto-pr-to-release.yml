@@ -117,7 +117,7 @@ jobs:
           echo "Commit range: $COMMIT_RANGE"
 
           # Attempt to cherry-pick the commits from the original PR
-          CHERRY_PICK_OUTPUT=$(git cherry-pick $COMMIT_RANGE 2>&1) || {
+          CHERRY_PICK_OUTPUT=$(git cherry-pick ${{ env.HEAD_BRANCH }} $COMMIT_RANGE 2>&1) || {
             git cherry-pick --abort || true
             # If cherry-pick fails, create a placeholder commit
             echo "Cherry-pick failed. Creating placeholder commit."
@@ -140,7 +140,7 @@ jobs:
 
             git checkout $NEW_BRANCH
             git reset --hard HEAD~1  # Remove placeholder commit
-            git cherry-pick $COMMIT_RANGE
+            git cherry-pick ${{ env.HEAD_BRANCH }} $COMMIT_RANGE
             \`\`\`
             "
           }
