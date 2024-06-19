@@ -17,7 +17,8 @@ all:
       - 159.89.14.13
     # Enable backups but write them to a different location from where production writes them
     enable_backups: true
-    backup_server_remote_source_directory: /home/backup/staging-backups
+    backup_server_remote_target_directory: /home/backup/staging-backups
+    backup_server_remote_source_directory: /home/backup/backups
     periodic_restore_from_backup: true
     # external_backup_server_ssh_port: Defined in --extra-vars by the provisioning pipeline
     # external_backup_server_ip: Defined in --extra-vars by the provisioning pipeline
