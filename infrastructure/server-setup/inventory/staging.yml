@@ -68,14 +68,14 @@ docker-manager-first:
     farajaland-staging:
       ansible_host: '167.172.105.70'
       data_label: data1
-      ansible_ssh_common_args: '-J jump@165.22.110.53 -o StrictHostKeyChecking=no'
+      ansible_ssh_common_args: '-J jump@159.89.14.13 -o StrictHostKeyChecking=no'
 
 # QA and staging servers are not configured to use workers.
 docker-workers: {}
 backups:
   hosts:
     farajaland-qa:
-      ansible_host: '165.22.110.53'
+      ansible_host: '64.226.95.104'
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
