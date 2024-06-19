@@ -54,6 +54,11 @@ export const goToSection = async (
   }
 }
 
+/*
+  Generates a random past date 
+  at least 'minAge' years ago 
+  and up to an additional 'range' days earlier
+*/
 export const getRandomDate = (minAge: number, range: number) => {
   const randomDate = new Date()
   randomDate.setDate(

@@ -30,6 +30,8 @@
 - Add query mapper for International Postal Code field
 - Add support for image compression configuration
 - Provide env variables for metabase admin credentials
+- Remove 'Other' dropdown when informant is mother or father [#7011](https://github.com/opencrvs/opencrvs-core/issues/7011)
+- Hide same as other primary address field if the other person's details not available [#7000](https://github.com/opencrvs/opencrvs-core/issues/7000)
 
 **Infrastructure**
 
@@ -65,6 +67,7 @@
 - Each environment now has a dedicated docker-compose-<environment>-deploy.yml. Use `environment:init` to create a new environment and generate a corresponding file for customizable configurations.
 - 🔒 OpenHIM console is no longer exposed via HTTP.
 - Ansible playbooks are refactored into smaller task files.
+- Resolved the issue of National ID validation to prevent the informant, father, and mother from having the same ID.
 
 ### New features
 
