@@ -2109,7 +2109,7 @@ validations.validNationalIDLengths,Nid valid lengths,9,9
 validations.validNationalId,The error message that appears when an invalid value is used as nid,The National ID can only be numeric and must be 10 digits long,Le numéro d'identification national ne peut être que numérique et doit avoir une longueur de 9 chiffres.
 validations.validPassportNumber,The error message that appears when an invalid value is used as passport number,The Passport Number can only be alpha numeric and must be {validLength} characters long,Le numéro de passeport ne peut être qu'alphanumérique et doit comporter {validLength} caractères.
 verifyCertificate.brn,Label for Birth Registration Number,BRN,Numéro de régistre de naissance
-verifyCertificate.createdAt,Label for date of certification,Date of certification,Date de l'émission du certificat de naissance
+verifyCertificate.certifiedAt,Label for date of certification,Date of certification,Date de l'émission du certificat de naissance
 verifyCertificate.dateOfBirth,Label for date of birth,Date of birth,Date de naissance
 verifyCertificate.dateOfDeath,Label for date of death,Date of death,Date du décès
 verifyCertificate.drn,Label for Death Registration Number,DRN,Numéro de régistre de décès
