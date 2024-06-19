@@ -68,4 +68,4 @@ all:
 jump-host:
   hosts:
     backup:
-      ansible_host: '165.22.110.53'
+      ansible_host: '159.89.14.13'

@@ -13,7 +13,7 @@ all:
     # This should always be set when configuring a production server if there is no other firewall in front of the server.
     # SSH and other services should never be exposed to the public internet.
     only_allow_access_from_addresses:
-      - 165.22.110.53
+      - 159.89.14.13
     # Enable backups
     enable_backups: true
     backup_server_remote_target_directory: /home/backup/backups
