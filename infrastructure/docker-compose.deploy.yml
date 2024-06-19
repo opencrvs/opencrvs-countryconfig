@@ -589,15 +589,15 @@ services:
       - GATEWAY_URL=http://gateway:7070
       - CLIENT_APP_URL=https://register.{{hostname}}
       - NOTIFICATION_TRANSPORT=${NOTIFICATION_TRANSPORT}
-      - ALERT_EMAIL=${ALERT_EMAIL:-""}
-      - SMTP_HOST=${SMTP_HOST:-""}
-      - SMTP_PORT=${SMTP_PORT:-""}
-      - SMTP_USERNAME=${SMTP_USERNAME:-""}
-      - SMTP_PASSWORD=${SMTP_PASSWORD:-""}
-      - SMTP_SECURE=${SMTP_SECURE:-""}
-      - INFOBIP_GATEWAY_ENDPOINT=${INFOBIP_GATEWAY_ENDPOINT:-""}
-      - INFOBIP_API_KEY=${INFOBIP_API_KEY:-""}
-      - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-""}
+      - ALERT_EMAIL=${ALERT_EMAIL:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-}
+      - SMTP_USERNAME=${SMTP_USERNAME:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_SECURE=${SMTP_SECURE:-}
+      - INFOBIP_GATEWAY_ENDPOINT=${INFOBIP_GATEWAY_ENDPOINT:-}
+      - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
+      - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
     networks:
       - overlay_net
@@ -976,6 +976,8 @@ services:
       - OPENCRVS_METABASE_MAP_URL=http://countryconfig:3040/content/farajaland-map.geojson
       - OPENCRVS_METABASE_MAP_REGION_KEY=State
       - OPENCRVS_METABASE_MAP_REGION_NAME=State
+      - OPENCRVS_METABASE_ADMIN_EMAIL=${OPENCRVS_METABASE_ADMIN_EMAIL}
+      - OPENCRVS_METABASE_ADMIN_PASSWORD=${OPENCRVS_METABASE_ADMIN_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=true'

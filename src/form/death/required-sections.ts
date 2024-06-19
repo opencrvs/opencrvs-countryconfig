@@ -170,4 +170,4 @@ export const documentsSection = {
       ]
     }
   ]
-} as ISerializedFormSection
+} satisfies ISerializedFormSection

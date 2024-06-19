@@ -1,23 +1,15 @@
 - name: Update apt repository
   apt:
     update_cache: yes
+    force_apt_get: yes
 
-- name: Upgrade all packages to the latest version
-  apt:
-    upgrade: dist
-
-- name: Remove unnecessary packages
-  apt:
-    autoremove: yes
-
-- name: Clean up apt cache
-  apt:
-    autoclean: yes
-
-- name: Install unattended-upgrades package
-  apt:
-    name: unattended-upgrades
-    state: present
+- name: Manage apt updates, upgrades, and package installation
+  shell: |
+    while fuser /var/lib/dpkg/lock >/dev/null 2>&1; do sleep 5; done
+    apt-get update && apt-get dist-upgrade -y
+    apt-get install -y unattended-upgrades
+    apt-get autoremove -y
+    apt-get autoclean -y
 
 - name: Configure Unattended Upgrades
   ansible.builtin.copy:

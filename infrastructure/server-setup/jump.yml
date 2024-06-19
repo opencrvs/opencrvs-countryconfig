@@ -1,0 +1,100 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+---
+- hosts: docker-manager-first
+  become: yes
+  tasks:
+    - name: Fetch the public SSH key so it can be transferred to the jump machine
+      fetch:
+        src: '/home/{{ provisioning_user }}/.ssh/authorized_keys'
+        dest: '/tmp/docker-manager-first_id_rsa.pub'
+        flat: yes
+      tags:
+        - jump
+
+- hosts: jump-host
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Ensure jump user is present
+      user:
+        name: 'jump'
+        state: present
+        create_home: true
+        home: '/home/jump'
+        shell: /bin/bash
+      tags:
+        - jump
+
+    - name: Only require public key from the user jump
+      blockinfile:
+        path: /etc/ssh/sshd_config
+        block: |
+          Match User jump
+            PasswordAuthentication no
+            AuthenticationMethods publickey
+        marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER jump'
+      become: yes
+      tags:
+        - jump
+
+- hosts: jump
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Get manager node hostname
+      set_fact:
+        manager_hostname: "{{ groups['docker-manager-first'][0] }}"
+      when: "'docker-manager-first' in groups and groups['docker-manager-first'] | length > 0"
+      tags:
+        - jump
+
+    - name: Ensure application servers can login to jump server
+      blockinfile:
+        path: '/home/jump/.ssh/authorized_keys'
+        block: |
+          {{ lookup('file', '/tmp/docker-manager-first_id_rsa.pub') }}
+        marker: '# {mark} ANSIBLE MANAGED BLOCK {{ manager_hostname }}'
+        create: yes
+        mode: 0600
+        owner: 'jump'
+      when: "'docker-manager-first' in groups and groups['docker-manager-first'] | length > 0"
+      tags:
+        - jump
+
+- hosts: localhost
+  tasks:
+    - name: Define application_server_using_jump
+      set_fact:
+        application_server_using_jump: "{{ 'docker-manager-first' in groups and 'jump' in groups and groups['jump'] | length > 0 }}"
+      tags:
+        - jump
+
+    - name: Set destination server
+      when: 'application_server_using_jump'
+      set_fact:
+        destination_server: "{{ hostvars[groups['jump'][0]].ansible_host }}"
+      tags:
+        - jump
+
+    # This would use the CI runner machine and the currently installed SSH key which should be provision user's key
+    - name: Check SSH connection to destination server
+      shell: ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=5 jump@{{ destination_server }} 'echo Connection successful'
+      when: 'application_server_using_jump'
+      register: ssh_test
+      ignore_errors: yes
+      tags:
+        - jump
+
+    - name: Fail if SSH connection test failed
+      fail:
+        msg: 'SSH connection to the jump server failed'
+      when: 'application_server_using_jump and ssh_test.rc != 0'
+      tags:
+        - jump

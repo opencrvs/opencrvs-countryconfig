@@ -794,6 +794,10 @@ function getQueryMapping(
           fieldName ===
             `postalCode${sentenceCase(useCase)}${sentenceCase(section)}` ||
           fieldName ===
+            `internationalPostalCode${sentenceCase(useCase)}${sentenceCase(
+              section
+            )}` ||
+          fieldName ===
             `internationalState${sentenceCase(useCase)}${sentenceCase(
               section
             )}` ||
