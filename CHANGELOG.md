@@ -21,6 +21,7 @@
 - Add smtp environment variables in qa compose file
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
+- Remove literal quotes as default value from compose files
 - Remove authentication from dashboard queries route
 - Added french translation of informant for print certificate flow, issue certificate flow & correction flow
 - In the certificate, the 'Place of Certification' now accurately reflects the correct location.
