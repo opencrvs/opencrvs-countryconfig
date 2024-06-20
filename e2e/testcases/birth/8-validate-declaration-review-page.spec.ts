@@ -946,7 +946,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       /*
        * Expected result: should redirect to registration home
        */
-      expect(page.url().includes('registration-home'))
+      expect(page.url().includes('registration-home')).toBeTruthy()
 
       await page.getByRole('button', { name: 'Sent for review' }).click()
       await expect(page.locator('#navigation_outbox')).not.toContainText('1', {
@@ -1274,7 +1274,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       /*
        * Expected result: should redirect to registration home
        */
-      expect(page.url().includes('registration-home'))
+      expect(page.url().includes('registration-home')).toBeTruthy()
 
       await page.getByRole('button', { name: 'Sent for approval' }).click()
       await expect(page.locator('#navigation_outbox')).not.toContainText('1', {
@@ -1603,7 +1603,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       /*
        * Expected result: should redirect to registration home
        */
-      expect(page.url().includes('registration-home'))
+      expect(page.url().includes('registration-home')).toBeTruthy()
 
       await page.getByRole('button', { name: 'Ready to print' }).click()
       await expect(page.locator('#navigation_outbox')).not.toContainText('1', {

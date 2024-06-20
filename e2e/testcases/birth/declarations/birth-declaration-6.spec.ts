@@ -569,11 +569,6 @@ test.describe.serial('6. Birth declaration case - 6', () => {
       await page.locator('#submit_confirm').click()
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
-      /*
-       * Expected result: should redirect to registration home
-       */
-      expect(page.url().includes('registration-home'))
-
       await expect(page.locator('#navigation_outbox')).not.toContainText('1', {
         timeout: 1000 * 30
       })
