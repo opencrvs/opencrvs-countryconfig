@@ -17,6 +17,7 @@ advancedSearch.form.recordStatusInReview,Option for form field: status of record
 advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress,En cours
 advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
 advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
+advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested,Correction demandée
 advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'inscription
 advancedSearch.form.statusOfRecordLabel,Label for input Status of record,Status of record,Etat d'avancement du dossier
 advancedSearchResult.pill.childDoB,The label for child d.o.b in active advancedSearchParams,Child d.o.b,Date de naissance enfant
@@ -1738,6 +1739,8 @@ regHome.outbox.statusWaitingToReject,Label for declaration status waiting for re
 regHome.outbox.statusWaitingToRequestCorrection,Label for declaration status waiting for request correction,Waiting to correct,En attente de correction
 regHome.outbox.statusWaitingToSubmit,Label for declaration status waiting for reject,Waiting to send,En attente d'envoi
 regHome.outbox.statusWaitingToValidate,Label for declaration status waiting for validate,Waiting to send for approval,En attente d'envoi pour approbation
+regHome.outbox.failed,Label for declaration status failed,Failed to send,Échec de l'envoi
+regHome.outbox.retry,Label for Retry button in Outbox shown for records that failed to send,Retry,Réessayer
 regHome.outbox.waitingToRetry,Label for declaration status waiting for connection,Waiting to retry,Attendre de réessayer
 regHome.queryError,,An error occurred while searching,Une erreur s'est produite lors de la recherche
 regHome.readyForReview,The title of ready for review,Ready for review,Prêt pour l'examen
