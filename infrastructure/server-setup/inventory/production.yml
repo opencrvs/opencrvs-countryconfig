@@ -13,10 +13,10 @@ all:
     # This should always be set when configuring a production server if there is no other firewall in front of the server.
     # SSH and other services should never be exposed to the public internet.
     only_allow_access_from_addresses:
-      - 165.22.110.53
+      - 159.89.14.13
     # Enable backups
     enable_backups: true
-    external_backup_server_remote_directory: /home/backup/backups
+    backup_server_remote_target_directory: /home/backup/backups
     # external_backup_server_ssh_port: Defined in --extra-vars by the provisioning pipeline
     # external_backup_server_ip: Defined in --extra-vars by the provisioning pipeline
     users:
@@ -42,20 +42,22 @@ docker-manager-first:
     farajaland-prod:
       ansible_host: '165.22.205.62'
       data_label: data1
-      ansible_ssh_common_args: '-J jump@165.22.110.53 -o StrictHostKeyChecking=no'
+      ansible_ssh_common_args: '-J jump@159.89.14.13 -o StrictHostKeyChecking=no'
 
 # We recommend you add 2-4 workers for a scaled production deployment
 # This should depend on the size of your country and the number of end users.
+# If you are only using one production worker for very small countries or small pilot projects, replace with an empty block like so: docker-workers: {}
 docker-workers:
   hosts:
     farajaland-prod-02:
       ansible_host: '178.128.245.255'
       data_label: data2
-      ansible_ssh_common_args: '-J jump@165.22.110.53 -o StrictHostKeyChecking=no'
+      ansible_ssh_common_args: '-J jump@159.89.14.13 -o StrictHostKeyChecking=no'
 
 backups:
   hosts:
-    farajaland-qa:
-      ansible_host: '165.22.110.53'
-      # @todo how many days to store backups for?
-      amount_of_backups_to_keep: 3
+    farajaland-backup:
+      ansible_host: '64.226.95.104'
+      # Written by provision pipeline. Assumes "backup" environment
+      # exists in Github environments
+      ansible_ssh_private_key_file: /tmp/backup_ssh_private_key

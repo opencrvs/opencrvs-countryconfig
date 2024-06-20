@@ -9,13 +9,16 @@
 all:
   vars:
     # This configuration variable blocks all access to the server, including SSH, except from the IP addresses specified below.
-    # This should always be set when configuring a production server if there is no other firewall in front of the server.
-    # SSH and other services should never be exposed to the public internet.
+    # In most cases these should be left empty, as the VPN server should be the only source of traffic.
+    # OpenCRVS should never be exposed to the public internet. If this is not possible to organise,
+    # then this should always be set when configuring a production server if there is no other firewall in front of the server.
+    # BE CAREFUL! This will block all SSH traffic except from the IP addresses listed here.
     only_allow_access_from_addresses:
-      - 165.22.110.53
+      - 159.89.14.13
     # Enable backups but write them to a different location from where production writes them
     enable_backups: true
-    external_backup_server_remote_directory: /home/backup/staging-backups
+    backup_server_remote_target_directory: /home/backup/staging-backups
+    backup_server_remote_source_directory: /home/backup/backups
     periodic_restore_from_backup: true
     # external_backup_server_ssh_port: Defined in --extra-vars by the provisioning pipeline
     # external_backup_server_ip: Defined in --extra-vars by the provisioning pipeline
@@ -66,13 +69,14 @@ docker-manager-first:
     farajaland-staging:
       ansible_host: '167.172.105.70'
       data_label: data1
-      ansible_ssh_common_args: '-J jump@165.22.110.53 -o StrictHostKeyChecking=no'
+      ansible_ssh_common_args: '-J jump@159.89.14.13 -o StrictHostKeyChecking=no'
 
 # QA and staging servers are not configured to use workers.
 docker-workers: {}
 backups:
   hosts:
     farajaland-qa:
-      ansible_host: '165.22.110.53'
-      # @todo how many days to store backups for?
-      amount_of_backups_to_keep: 3
+      ansible_host: '64.226.95.104'
+      # Written by provision pipeline. Assumes "backup" environment
+      # exists in Github environments
+      ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
