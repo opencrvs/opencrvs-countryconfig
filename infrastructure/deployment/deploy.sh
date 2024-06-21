@@ -224,6 +224,8 @@ get_docker_tags_from_compose_files() {
    IMAGE_TAG_LIST=$(cat $SPACE_SEPARATED_COMPOSE_FILE_LIST \
    `# Select rows with the image tag` \
    | grep image: \
+   `# Ignore the baseimage file as its not used directly` \
+   | grep -v ocrvs-base \
    `# Only keep the image version` \
    | sed "s/image://")
 
