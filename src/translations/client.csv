@@ -13,11 +13,11 @@ advancedSearch.form.placeOfRegistrationHelperText,Helper text for input Place of
 advancedSearch.form.recordStatusAchived,Option for form field: status of record,Archived,Archivé
 advancedSearch.form.recordStatusAny,Option for form field: status of record,Any status,Tout statut
 advancedSearch.form.recordStatusCertified,Option for form field: status of record,Certified,Agréé
+advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested,Correction demandée
 advancedSearch.form.recordStatusInReview,Option for form field: status of record,In review,En cours d'examen
 advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress,En cours
 advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
 advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
-advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested,Correction demandée
 advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'inscription
 advancedSearch.form.statusOfRecordLabel,Label for input Status of record,Status of record,Etat d'avancement du dossier
 advancedSearchResult.pill.childDoB,The label for child d.o.b in active advancedSearchParams,Child d.o.b,Date de naissance enfant
@@ -666,7 +666,7 @@ countries.GTM,,Guatemala,Guatemala
 countries.GUF,,French Guiana,Guyane française
 countries.GUM,,Guam,Guam
 countries.GUY,,Guyana,Guyane
-countries.HKG,,"China, Hong Kong Special Administrative Region","Chine, région administrative spéciale de Hong Kong",
+countries.HKG,,"China, Hong Kong Special Administrative Region","Chine, région administrative spéciale de Hong Kong"
 countries.HMD,,Heard Island and McDonald Islands,Île Heard et îles McDonald
 countries.HND,,Honduras,Honduras
 countries.HRV,,Croatia,Croatie
@@ -704,7 +704,7 @@ countries.LSO,,Lesotho,Lesotho
 countries.LTU,,Lithuania,Lituanie
 countries.LUX,,Luxembourg,Luxembourg
 countries.LVA,,Latvia,Lettonie
-countries.MAC,,"China, Macao Special Administrative Region","Chine, Région administrative spéciale de Macao",
+countries.MAC,,"China, Macao Special Administrative Region","Chine, Région administrative spéciale de Macao"
 countries.MAF,,Saint Martin (French Part),Saint Martin (partie française)
 countries.MAR,,Morocco,Maroc
 countries.MCO,,Monaco,Monaco
@@ -1721,6 +1721,8 @@ regHome.inPro.selector.hospital.drafts,The title of In progress Hospitals,Health
 regHome.inPro.selector.own.drafts,The title of In progress own drafts,My drafts,Mes brouillons
 regHome.inProgress,The title of In progress,In progress,En cours
 regHome.issued,Label for registration status issued,Issued,Émis
+regHome.outbox.failed,Label for declaration status failed,Failed to send,Échec de l'envoi
+regHome.outbox.retry,Label for Retry button in Outbox shown for records that failed to send,Retry,Réessayer
 regHome.outbox.statusArchiving,Label for application status Archiving,Archiving...,Archivage en cours
 regHome.outbox.statusCertifying,Label for declaration status Certifying,Certifying...,Certification en cours...
 regHome.outbox.statusIssuing,Label for declaration status Issuing,Issuing...,En cours d'émission...
@@ -1739,8 +1741,6 @@ regHome.outbox.statusWaitingToReject,Label for declaration status waiting for re
 regHome.outbox.statusWaitingToRequestCorrection,Label for declaration status waiting for request correction,Waiting to correct,En attente de correction
 regHome.outbox.statusWaitingToSubmit,Label for declaration status waiting for reject,Waiting to send,En attente d'envoi
 regHome.outbox.statusWaitingToValidate,Label for declaration status waiting for validate,Waiting to send for approval,En attente d'envoi pour approbation
-regHome.outbox.failed,Label for declaration status failed,Failed to send,Échec de l'envoi
-regHome.outbox.retry,Label for Retry button in Outbox shown for records that failed to send,Retry,Réessayer
 regHome.outbox.waitingToRetry,Label for declaration status waiting for connection,Waiting to retry,Attendre de réessayer
 regHome.queryError,,An error occurred while searching,Une erreur s'est produite lors de la recherche
 regHome.readyForReview,The title of ready for review,Ready for review,Prêt pour l'examen
