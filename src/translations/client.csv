@@ -1709,6 +1709,7 @@ recordAudit.regAction.viewed,,Viewed,Vu
 recordAudit.regStatus.archived,,Archived,Archivé
 recordAudit.regStatus.certified,,Certified,Certifié
 recordAudit.regStatus.correctionRequested,Label for when someone requested correction,Correction requested,Correction demandée
+recordAudit.regStatus.correctionRequested,Label for when someone requested correction,Correction requested,Correction demandée
 recordAudit.regStatus.declared,,Declaration started,Déclaration initiée
 recordAudit.regStatus.declared.sentNotification,Field agent sent notification,Sent notification for review,Envoi d'une notification pour examen
 recordAudit.regStatus.issued,,Issued,Émis
