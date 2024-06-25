@@ -517,7 +517,6 @@ export async function createServer() {
     path: '/roles',
     handler: rolesHandler,
     options: {
-      auth: false,
       tags: ['api', 'user-roles'],
       description: 'Returns user roles metadata'
     }
@@ -528,7 +527,6 @@ export async function createServer() {
     path: '/users',
     handler: usersHandler,
     options: {
-      auth: false,
       tags: ['api', 'users'],
       description: 'Returns users metadata'
     }
