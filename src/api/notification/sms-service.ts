@@ -48,7 +48,7 @@ export async function sendSMS(
   recipient: string,
   locale: string
 ) {
-  const message = compileMessages(type, variables, locale)
+  const message = await compileMessages(type, variables, locale)
   const body = JSON.stringify({
     messages: [
       {
@@ -105,5 +105,6 @@ const compileMessages = async (
     )
   }
 
-  return Handlebars.compile(language.messages[templateName])(variables)
+  const template = Handlebars.compile(language.messages[templateName])
+  return template(variables)
 }
