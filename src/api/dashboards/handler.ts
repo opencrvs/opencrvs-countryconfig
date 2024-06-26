@@ -17,7 +17,7 @@ export async function mapGeojsonHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  const filePath = join(__dirname, './file/farajaland-map.geojson')
+  const filePath = join(__dirname, './file/map.geojson')
   const fileContents = fs.readFileSync(filePath, 'utf8')
   return h.response(fileContents).type('text/plain')
 }
