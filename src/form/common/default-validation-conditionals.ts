@@ -476,3 +476,46 @@ export const locationOfBirthIsNotHealthFacility: Conditional[] = [
     expression: '(values.placeOfBirth=="HEALTH_FACILITY")'
   }
 ]
+
+export const ageOfIndividualValidators: Validator[] = [
+  {
+    operation: 'range',
+    parameters: [12, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+]
+
+export const ageOfDeceasedConditionals = [
+  {
+    operation: 'range',
+    parameters: [0, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+] satisfies Validator[]
+
+export const isInformantSpouse =
+  '!values.informantType || values.informantType==="SPOUSE"'
+
+export const hideIfInformantSpouse = [
+  {
+    action: 'hide',
+    expression: isInformantSpouse
+  }
+]
+
+export const brideOrGroomAgeValidators = [
+  {
+    operation: 'range',
+    parameters: [18, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+] satisfies Validator[]

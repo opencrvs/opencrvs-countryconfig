@@ -58,10 +58,10 @@ export const weightAtBirth: SerializedFormField = {
   validator: [
     {
       operation: 'range',
-      parameters: [0, 6]
+      parameters: [0, 6000]
     }
   ],
-  postfix: 'Kg',
+  postfix: 'Grammes',
   mapping: getFieldMapping(
     'weightAtBirth',
     certificateHandlebars.weightAtBirth

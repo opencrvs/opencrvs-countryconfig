@@ -54,8 +54,7 @@ import {
   fatherFamilyNameConditionals,
   informantNotMotherOrFather,
   detailsExistConditional,
-  primaryAddressSameAsOtherPrimary,
-  locationOfBirthIsNotHealthFacility
+  primaryAddressSameAsOtherPrimary
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
