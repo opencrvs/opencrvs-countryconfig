@@ -416,6 +416,16 @@ export const formMessageDescriptors = {
     description: 'Label for form field: Age of mother',
     id: 'form.field.label.ageOfMother'
   },
+  yearOfBirth: {
+    defaultMessage: 'Year of birth',
+    description: 'Label for form field: Year of birth',
+    id: 'form.field.label.yearOfBirth'
+  },
+  prefixAround: {
+    defaultMessage: 'Around',
+    description: 'Label for prefix around in field: getYearOfBirth',
+    id: 'form.field.label.prefixAround'
+  },
   fathersDetailsExist: {
     defaultMessage: "Father's details are not available",
     description: "Question to ask the user if they have the father's details",
@@ -442,9 +452,24 @@ export const formMessageDescriptors = {
     id: 'form.field.label.proofOfBirth'
   },
   docTypeChildBirthProof: {
-    defaultMessage: 'Notification of birth',
+    defaultMessage: 'Notification of birth (Recto)',
     description: 'Label for select option Notification of birth',
     id: 'form.field.label.docTypeChildBirthProof'
+  },
+  docTypeChildBirthProofVerso: {
+    defaultMessage: 'Notification of birth (Verso)',
+    description: 'Label for select option Notification of birth (verso)',
+    id: 'form.field.label.docTypeChildBirthVersoProof'
+  },
+  docTypeAdoption: {
+    defaultMessage: 'Adoption Letter',
+    description: 'Label for select option radio option Adoption Letter',
+    id: 'form.field.label.docTypeAdoption'
+  },
+  docTypeLivretDeFamille: {
+    defaultMessage: 'Livret de Famille',
+    description: 'Label for select option radio option Livret de Famille',
+    id: 'form.field.label.docTypeLivretDeFamille'
   },
   proofOfMothersID: {
     defaultMessage: "Mother's identity",
