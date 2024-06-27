@@ -1,34 +1,42 @@
 import { countryLogo } from '@countryconfig/api/application/country-logo'
+import * as fs from 'fs'
+import { join } from 'path'
 
 export const defaultApplicationConfig = {
-  APPLICATION_NAME: 'Farajaland CRS',
+  APPLICATION_NAME: 'SIECM',
+  FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
+  DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
+  EXTERNAL_VALIDATION_WORKQUEUE: false,
   BIRTH: {
     REGISTRATION_TARGET: 30,
     LATE_REGISTRATION_TARGET: 365,
     FEE: {
       ON_TIME: 0,
-      LATE: 5.5,
-      DELAYED: 15
+      LATE: 1000.0,
+      DELAYED: 2000
     },
     PRINT_IN_ADVANCE: true
   },
   COUNTRY_LOGO: countryLogo,
   CURRENCY: {
-    languagesAndCountry: ['en-US'],
-    isoCode: 'USD'
+    isoCode: 'MGA',
+    languagesAndCountry: ['en-US'] // mg-MG
   },
   DEATH: {
-    REGISTRATION_TARGET: 45,
+    REGISTRATION_TARGET: 30,
     FEE: {
       ON_TIME: 0,
-      DELAYED: 0
+      DELAYED: 2000
     },
     PRINT_IN_ADVANCE: true
   },
-  PHONE_NUMBER_PATTERN: '^0(7|9)[0-9]{8}$',
+  PHONE_NUMBER_PATTERN: '^[0-9]{10}|[0-9]{13}$',
   NID_NUMBER_PATTERN: '^[0-9]{10}$',
   LOGIN_BACKGROUND: {
-    backgroundColor: '36304E'
+    backgroundImage: `data:image/jpg;base64,${fs
+      .readFileSync(join(__dirname, 'login-bg-mdg.jpg'))
+      .toString('base64')}`,
+    imageFit: 'FILL'
   },
   MARRIAGE: {
     REGISTRATION_TARGET: 45,
@@ -38,18 +46,11 @@ export const defaultApplicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
-  // Following constants aren't configurable via UI
-  FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
-  DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
-  FEATURES: {
-    DEATH_REGISTRATION: true,
-    MARRIAGE_REGISTRATION: false,
-    EXTERNAL_VALIDATION_WORKQUEUE: false,
-    INFORMANT_SIGNATURE: false,
-    PRINT_DECLARATION: false,
-    DATE_OF_BIRTH_UNKNOWN: true,
-    INFORMANT_SIGNATURE_REQUIRED: false
-  },
+  DEATH_REGISTRATION: false,
+  MARRIAGE_REGISTRATION: false,
+  DATE_OF_BIRTH_UNKNOWN: false,
+  INFORMANT_SIGNATURE: true,
+  INFORMANT_SIGNATURE_REQUIRED: false,
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR']
