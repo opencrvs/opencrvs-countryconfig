@@ -25,6 +25,7 @@
 - Add query mapper for International Postal Code field
 - Add support for image compression configuration
 - Provide env variables for metabase admin credentials
+- Rename `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming
 
 **Infrastructure**
 
