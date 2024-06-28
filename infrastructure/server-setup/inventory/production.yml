@@ -61,9 +61,8 @@ backups:
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
-
 # If you are using a jump server to access this environment
 # jump:
 #   hosts:
-#     backup: # @todo set this to be the hostname of your backup server
+#     your-jumpserver-hostname-here: # @todo set this to be the hostname of your backup server
 #       ansible_host: '55.55.55.55'
