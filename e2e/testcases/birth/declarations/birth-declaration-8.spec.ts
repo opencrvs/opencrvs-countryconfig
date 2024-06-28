@@ -68,7 +68,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         .getByText(declaration.mother.maritalStatus, { exact: true })
         .click()
 
-      page.waitForTimeout(1000)
+      await page.waitForTimeout(500)
 
       await page.getByRole('button', { name: 'Continue' }).click()
     })
