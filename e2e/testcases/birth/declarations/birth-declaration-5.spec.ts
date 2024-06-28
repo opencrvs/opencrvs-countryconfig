@@ -557,7 +557,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       /*
        * Expected result: should redirect to registration home
        */
-      expect(page.url().includes('registration-home'))
+      expect(page.url().includes('registration-home')).toBeTruthy()
 
       await expect(page.locator('#navigation_outbox')).not.toContainText('1', {
         timeout: 1000 * 30

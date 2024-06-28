@@ -68,7 +68,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         .getByText(declaration.mother.maritalStatus, { exact: true })
         .click()
 
-      page.waitForTimeout(1000)
+      await page.waitForTimeout(500)
 
       await page.getByRole('button', { name: 'Continue' }).click()
     })
@@ -246,7 +246,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       /*
        * Expected result: should redirect to registration home
        */
-      expect(page.url().includes('registration-home'))
+      expect(page.url().includes('registration-home')).toBeTruthy()
 
       await expect(page.locator('#navigation_outbox')).not.toContainText('1', {
         timeout: 1000 * 30
