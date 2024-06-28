@@ -46,11 +46,15 @@ export const defaultApplicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
-  DEATH_REGISTRATION: false,
-  MARRIAGE_REGISTRATION: false,
-  DATE_OF_BIRTH_UNKNOWN: false,
-  INFORMANT_SIGNATURE: true,
-  INFORMANT_SIGNATURE_REQUIRED: false,
+  FEATURES: {
+    DEATH_REGISTRATION: false,
+    MARRIAGE_REGISTRATION: false,
+    EXTERNAL_VALIDATION_WORKQUEUE: false,
+    INFORMANT_SIGNATURE: true,
+    PRINT_DECLARATION: false,
+    DATE_OF_BIRTH_UNKNOWN: false,
+    INFORMANT_SIGNATURE_REQUIRED: false
+  },
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR']
