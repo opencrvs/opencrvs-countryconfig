@@ -16,6 +16,7 @@ import { COUNTRY_LOGO_URL, LOGIN_URL, SENDER_EMAIL_ADDRESS } from './constant'
 import { sendEmail } from './email-service'
 import { SMSTemplateType, sendSMS } from './sms-service'
 import {
+  AllUserNotificationVariables,
   EmailTemplateType,
   TemplateVariables,
   getTemplate,
@@ -40,6 +41,7 @@ type EmailNotificationPayload = {
   }
   recipient: {
     email: string
+    bcc?: string[]
   }
   type: 'user' | 'informant'
   locale: string
@@ -69,7 +71,8 @@ export const notificationSchema = Joi.object({
   }),
   recipient: Joi.object({
     email: Joi.string().allow(null, '').optional(),
-    sms: Joi.string().allow(null, '').optional()
+    sms: Joi.string().allow(null, '').optional(),
+    bcc: Joi.array().items(Joi.string().required()).optional()
   }),
   type: Joi.string().valid('user', 'informant').required()
 }).unknown(true)
@@ -103,7 +106,10 @@ export async function notificationHandler(
     logger.info(`Notification method is email and recipient ${recipient.email}`)
 
     const template = getTemplate(templateName.email)
-    const emailSubject = template.subject
+    const emailSubject =
+      template.type === 'allUserNotification'
+        ? (variables as AllUserNotificationVariables).subject
+        : template.subject
 
     const emailBody = renderTemplate(template, {
       ...variables,
@@ -116,7 +122,8 @@ export async function notificationHandler(
       subject: emailSubject,
       html: emailBody,
       from: SENDER_EMAIL_ADDRESS,
-      to: recipient.email
+      to: recipient.email,
+      bcc: recipient.bcc
     })
   } else {
     const { templateName, variables, recipient, locale } = payload

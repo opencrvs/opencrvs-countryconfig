@@ -113,9 +113,9 @@ When the OpenCRVS Core servers start up with un-seeded databases they call the f
 
 - The country logo is loaded into HTML emails so must be hosted
 
-9. `GET /content/farajaland-map.geojson`
+9. `GET /content/map.geojson`
 
-- A map of the country in GeoJSON must be hosted as it is loaded into OpenCVS Core Metabase Dashboards as a UI component
+- A map of the country in GeoJSON must be hosted as it is loaded into OpenCRVS Core Metabase Dashboards as a UI component
 
 10. `GET /ping`
 

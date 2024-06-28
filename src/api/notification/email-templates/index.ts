@@ -119,6 +119,11 @@ type RejectionDeclarationVariables = DeclarationCommonVariables & {
   name: string
 }
 
+export type AllUserNotificationVariables = {
+  subject: string
+  body: string
+}
+
 const templates = {
   'onboarding-invite': {
     type: 'onboarding-invite',
@@ -223,6 +228,13 @@ const templates = {
     type: 'deathRejectionNotification',
     subject: 'Death declaration required update',
     template: readDeathTemplate<RejectionDeclarationVariables>('rejection')
+  },
+  allUserNotification: {
+    type: 'allUserNotification',
+    subject: '', // Subject defined from National Sys Admin Dashboard
+    template: readOtherTemplate<AllUserNotificationVariables>(
+      'all-user-notification'
+    )
   }
 } as const
 
@@ -250,3 +262,4 @@ export type TemplateVariables =
   | InReviewDeclarationVariables
   | RegistrationDeclarationVariables
   | RejectionDeclarationVariables
+  | AllUserNotificationVariables

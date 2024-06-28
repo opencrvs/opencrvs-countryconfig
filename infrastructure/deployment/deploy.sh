@@ -63,8 +63,7 @@ done
 
 
 # Default values
-SSH_PORT=22
-SSH_ARGS=${SSH_ARGS:-""}
+SSH_ARGS=${SSH_ARGS:-}
 LOG_LOCATION=${LOG_LOCATION:-/var/log}
 
 COMPOSE_FILES_DOWNLOADED_FROM_CORE="/tmp/docker-compose.deps.yml /tmp/docker-compose.yml"
@@ -90,7 +89,7 @@ function trapint {
 }
 
 print_usage_and_exit () {
-  echo 'Usage: ./deploy.sh --host --environment --ssh_host --ssh_user --version --country_config_version --replicas'
+  echo 'Usage: ./deploy.sh --host --environment --ssh_host --ssh_port --ssh_user --version --country_config_version --replicas'
   echo "  --environment can be 'production', 'development', 'qa' or similar"
   echo '  --host    is the server to deploy to'
   echo "  --version can be any OpenCRVS Core docker image tag or 'latest'"
@@ -117,6 +116,11 @@ validate_options() {
 
   if [ -z "$SSH_HOST" ] ; then
     echo 'Error: Argument --ssh_host is required.'
+    print_usage_and_exit
+  fi
+
+  if [ -z "$SSH_PORT" ] ; then
+    echo 'Error: Argument --ssh_port is required.'
     print_usage_and_exit
   fi
 
@@ -307,6 +311,7 @@ export METRICS_MONGODB_PASSWORD=`generate_password`
 export PERFORMANCE_MONGODB_PASSWORD=`generate_password`
 export OPENHIM_MONGODB_PASSWORD=`generate_password`
 export WEBHOOKS_MONGODB_PASSWORD=`generate_password`
+export NOTIFICATION_MONGODB_PASSWORD=`generate_password`
 
 #
 # Elasticsearch credentials
@@ -334,6 +339,23 @@ done
 
 validate_environment_variables
 
+if [ "$SSH_PORT" -eq 22 ]; then
+    SSH_HOST_TO_CHECK="$SSH_HOST"
+else
+    SSH_HOST_TO_CHECK="[$SSH_HOST]:$SSH_PORT"
+fi
+
+if ! ssh-keygen -l -F "$SSH_HOST_TO_CHECK" -f "$INFRASTRUCTURE_DIRECTORY/known-hosts"; then
+  echo "Host key for [$SSH_HOST]:$SSH_PORT not found in $INFRASTRUCTURE_DIRECTORY/known-hosts. Please add the host key to the known-hosts file."
+  echo "You can do this by running the following command:"
+  echo "sh ./infrastructure/environments/update-known-hosts.sh <YOUR DOMAIN>"
+  echo ""
+  echo "or"
+  echo ""
+  echo "sh ./infrastructure/environments/update-known-hosts.sh <YOUR SERVER IP>"
+  exit 1
+fi
+
 echo
 echo "Deploying VERSION $VERSION to $SSH_HOST..."
 echo
@@ -341,14 +363,13 @@ echo "Deploying COUNTRY_CONFIG_VERSION $COUNTRY_CONFIG_VERSION to $SSH_HOST..."
 echo
 echo "Syncing configuration files to the target server"
 
+
 configured_rsync -rlD $PROJECT_ROOT/infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/ --delete --no-perms --omit-dir-times --verbose
 configured_rsync -rlD /tmp/docker-compose.yml /tmp/docker-compose.deps.yml $SSH_USER@$SSH_HOST:/opt/opencrvs/infrastructure --no-perms --omit-dir-times  --verbose
 
 echo "Logging to Dockerhub"
 
-configured_ssh << EOF
-  docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
-EOF
+configured_ssh "docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN"
 
 # Setup configuration files and compose file for the deployment domain
 configured_ssh "/opt/opencrvs/infrastructure/setup-deploy-config.sh $HOST"

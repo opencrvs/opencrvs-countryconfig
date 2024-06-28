@@ -23,14 +23,10 @@ on:
         type: boolean
         description: Reset the environment
         default: false
-      debug:
-        type: boolean
-        description: Open SSH session to the runner after deployment
-        default: false
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
@@ -77,7 +73,7 @@ jobs:
           echo "KNOWN_HOSTS=" >> $GITHUB_ENV
 
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
@@ -139,22 +135,18 @@ jobs:
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
-        continue-on-error: ${{ github.event.inputs.debug == 'true' }}
         run: |
           cd ./${{ github.event.repository.name }}
           yarn deploy \
           --clear_data=no \
           --environment=${{ github.event.inputs.environment }} \
           --host=${{ vars.DOMAIN }} \
-          --ssh_host=${{ secrets.SSH_HOST }} \
+          --ssh_host=${{ vars.SSH_HOST || secrets.SSH_HOST }} \
+          --ssh_port=${{ vars.SSH_PORT || secrets.SSH_PORT }} \
           --ssh_user=${{ secrets.SSH_USER }} \
           --version=${{ github.event.inputs.core-image-tag }} \
           --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
           --replicas=${{ vars.REPLICAS }}
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ github.event.inputs.debug == 'true' }}
 
   reset:
     needs: deploy

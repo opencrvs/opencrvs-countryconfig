@@ -28,6 +28,7 @@ export const sendEmail = async (params: {
   html: string
   from: string
   to: string
+  bcc?: string[]
 }) => {
   const replaceVariables = (text: string) =>
     Handlebars.compile(text)({
@@ -65,13 +66,20 @@ export const sendEmail = async (params: {
       pass: SMTP_PASSWORD
     }
   })
+  const mailOptions = params.bcc
+    ? { ...formattedParams, bcc: params.bcc }
+    : formattedParams
 
   try {
-    await emailTransport.sendMail(formattedParams)
+    await emailTransport.sendMail(mailOptions)
   } catch (error) {
-    logger.error(
-      `Unable to send email to ${formattedParams.to} for error : ${error}`
-    )
+    if (params.bcc) {
+      logger.error(`Unable to send mass email for error : ${error}`)
+    } else {
+      logger.error(
+        `Unable to send email to ${formattedParams.to} for error : ${error}`
+      )
+    }
 
     if (error.response) {
       logger.error(error.response.body)

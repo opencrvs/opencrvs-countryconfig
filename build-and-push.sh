@@ -9,5 +9,5 @@
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
 set -e
 
-docker-compose build
-docker-compose push
+docker compose build
+docker compose push

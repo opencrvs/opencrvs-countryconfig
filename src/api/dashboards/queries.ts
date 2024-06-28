@@ -101,7 +101,7 @@ const registrations = ({ lastUpdatedAt }: { lastUpdatedAt: string }) => ({
     },
     {
       $addFields: {
-        allTasks: { $concatArrays: ['$task', '$task_history'] }
+        allTasks: { $concatArrays: ['$task_history', '$task'] }
       }
     },
     {
@@ -486,7 +486,7 @@ const declarations = ({ lastUpdatedAt }: { lastUpdatedAt: string }) => ({
     {
       $match: {
         'meta.lastUpdated': { $gte: lastUpdatedAt },
-        'extension.url': 'http://opencrvs.org/specs/extension/requestCorrection'
+        'extension.url': 'http://opencrvs.org/specs/extension/makeCorrection'
       }
     },
     {

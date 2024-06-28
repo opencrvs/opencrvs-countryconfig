@@ -4,7 +4,7 @@ services:
   notification:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
@@ -19,11 +19,10 @@ services:
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021
-      - OPENHIM_URL=http://openhim-core:5001/fhir
-      - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
+      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
       - ALERT_EMAIL=${ALERT_EMAIL}
       - SMTP_HOST=${SMTP_HOST}
@@ -43,7 +42,7 @@ services:
   gateway:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - COUNTRY=FAR
       - QA_ENV=true
       - NODE_ENV=production
@@ -51,43 +50,43 @@ services:
   workflow:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   search:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   metrics:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   auth:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   user-mgnt:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   webhooks:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   config:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 

@@ -20,7 +20,7 @@ on:
 jobs:
   reset:
     environment: ${{ github.event.inputs.environment }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
@@ -47,4 +47,4 @@ jobs:
 
       - name: Remove 2FA
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} ${{ vars.SSH_ARGS }} "rm /home/${{ github.event.inputs.user }}/.google_authenticator"
+          ssh ${{ secrets.SSH_USER }}@${{ vars.SSH_HOST || secrets.SSH_HOST }} -p ${{ vars.SSH_PORT || secrets.SSH_PORT }} ${{ vars.SSH_ARGS }} "sudo rm /home/${{ github.event.inputs.user }}/.google_authenticator"

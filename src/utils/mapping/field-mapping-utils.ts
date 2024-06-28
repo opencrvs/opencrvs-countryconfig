@@ -316,10 +316,7 @@ export function getFieldMapping(
 export function getCustomFieldMapping(fieldId: string): IFormFieldMapping {
   const customFieldCertificateHandlebar =
     createCustomFieldHandlebarName(fieldId)
-  console.log(
-    'Custom field addded with handlebar: ',
-    customFieldCertificateHandlebar
-  )
+
   return {
     mutation: {
       operation: 'customFieldToQuestionnaireTransformer'
