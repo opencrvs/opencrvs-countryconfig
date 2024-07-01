@@ -148,6 +148,9 @@ jobs:
       previous_run_result: ${{ steps.set-output.outputs.result }}
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Get Previous Workflow Run
         id: get-previous-run
         run: |
