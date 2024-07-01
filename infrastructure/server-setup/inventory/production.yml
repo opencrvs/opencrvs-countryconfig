@@ -64,5 +64,5 @@ backups:
 # If you are using a jump server to access this environment
 # jump:
 #   hosts:
-#     your-jumpserver-hostname-here: # @todo set this to be the hostname of your backup server
+#     your-jumpserver-hostname-here: # @todo set this to be the hostname of your jump server
 #       ansible_host: '55.55.55.55'
