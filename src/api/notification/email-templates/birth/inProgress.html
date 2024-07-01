@@ -38,7 +38,11 @@
     <h1>Complete your birth declaration</h1>
 
     <p>
-        Hello {{informantName}},
+        {{#if informantName}}
+            Hello {{informantName}},
+        {{else}}
+            Hello,
+        {{/if}}
     </p>    
     <p>
         Please visit {{crvsOffice}} to complete your birth declaration. 
