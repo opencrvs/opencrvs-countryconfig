@@ -48,7 +48,12 @@ import {
   hideIfInformantBrideOrGroom,
   brideOrGroomBirthDateValidators
 } from '../common/default-validation-conditionals'
-import { documentsSection, registrationSection } from './required-sections'
+import {
+  documentsSection,
+  previewSection,
+  registrationSection,
+  reviewSection
+} from './required-sections'
 import {
   brideNameInEnglish,
   groomNameInEnglish,
@@ -320,6 +325,8 @@ export const marriageForm: ISerializedForm = {
       ],
       mapping: getCommonSectionMapping('informant')
     },
-    documentsSection
+    documentsSection,
+    previewSection,
+    reviewSection
   ]
 }
