@@ -509,8 +509,6 @@ correction.certificate.corrector.idCheck,The title for id check component,Verify
 correction.certificate.corrector.idCheckVerify,The label for id check component action when verify details,Verified,Vérifié
 correction.certificate.corrector.idCheckWithoutVerify,The label for id check component action when does not verify details,Identity does not match,L'identité ne correspond pas
 correction.certificate.corrector.otherIdCheck,The title for other id check component,Check proof of ID,Avez-vous vérifié leur preuve d'identification ?
-correction.correctRecordDialog.actions.cancel,The cancel button for the dialog when record correction sent by a registrar,Cancel,Annuler
-correction.correctRecordDialog.actions.send,The send button for the dialog when record correction sent by a registrar,Confirm,Confirmer
 correction.correctRecordDialog.description,The description for the dialog when record correction sent by a registrar,The informant will be notified of this correction and a record of this decision will be recorded,L'informateur sera informé de cette correction et une trace de cette décision sera enregistrée.
 correction.correctRecordDialog.title,The title for the dialog when record correction sent by a registrar,Correct record ?,enregistrement correct ?
 correction.correctionForApprovalDialog.actions.cancel,The cancel button for the dialog when record correction sent by registration agent for approval,Cancel,Annuler
