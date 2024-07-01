@@ -137,37 +137,6 @@ export function getLegacyBirthRegistrationTime(): SerializedFormField {
 
 /**
  *  Handlebar fields:
- *  birthMotherCustomizedExactDateOfBirthUnknown / birthFatherCustomizedExactDateOfBirthUnknown / birthInformantCustomizedExactDateOfBirthUnknown
- */
-export function getCustomizedExactDateOfBirthUnknown(
-  subject: 'mother' | 'father' | 'informant',
-  conditionals: Conditional[] = []
-): SerializedFormField {
-  const fieldName: string = 'customizedExactDateOfBirthUnknown'
-  const fieldId: string = `birth.${subject}.${subject}-view-group.${fieldName}`
-
-  return {
-    name: fieldName,
-    customQuestionMappingId: fieldId,
-    custom: true,
-    required: false,
-    hideHeader: true,
-    hideInPreview: true,
-    type: 'CHECKBOX', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
-    label: {
-      defaultMessage: 'Exact date of birth unknown',
-      description: 'Checkbox for exact date of birth unknown',
-      id: 'form.field.label.exactDateOfBirthUnknown'
-    },
-    initialValue: false,
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals // EDIT VALIDATORS AS YOU SEE FIT
-  }
-}
-
-/**
- *  Handlebar fields:
  *  birthMotherYearOfBirth / birthFatherYearOfBirth / birthInformantYearOfBirth
  */
 export function getYearOfBirth(
@@ -188,7 +157,7 @@ export function getYearOfBirth(
     validator: [
       {
         operation: 'range',
-        parameters: [1883, Number.parseInt(new Date().getFullYear().toString())]
+        parameters: [1883, 2060]
       },
       {
         operation: 'maxLength',
@@ -214,7 +183,6 @@ export function getYearOfBirth(
 export function getFokontanyCustomAdress(
   subject: 'child' | 'mother' | 'father' | 'informant',
   conditionals: Conditional[] = [],
-  required: boolean,
   labelOfFokontanyCustomAddress: MessageDescriptor
 ): SerializedFormField {
   const fieldName: string = 'fokontanyCustomAddress'
@@ -224,7 +192,7 @@ export function getFokontanyCustomAdress(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: required,
+    required: true,
     type: 'TEXT', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
     label: labelOfFokontanyCustomAddress,
     initialValue: '',

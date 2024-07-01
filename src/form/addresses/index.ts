@@ -12,6 +12,7 @@
 import {
   FATHER_DETAILS_DONT_EXIST,
   MOTHER_DETAILS_DONT_EXIST,
+  SPOUSE_DETAILS_DONT_EXIST,
   detailsDontExist,
   expressionToConditional,
   hideIfInformantBrideOrGroom,
@@ -262,7 +263,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
         conditionalCase: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
       }
     ]
-  },
+  },*/
   {
     // SPOUSE ADDRESS FIELDS
     precedingFieldId: 'death.spouse.spouse-view-group.spouse-nid-seperator',
@@ -296,7 +297,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
         conditionalCase: `((${SPOUSE_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) || (${detailsDontExist}))`
       }
     ]
-  },*/
+  },
   {
     // PLACE OF MARRIAGE ADDRESS FIELDS
     precedingFieldId:

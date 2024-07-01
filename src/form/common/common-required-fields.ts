@@ -102,7 +102,7 @@ export const getNationality = (
     type: 'SELECT_WITH_OPTIONS',
     label: formMessageDescriptors.nationality,
     required: true,
-    initialValue: 'FAR',
+    initialValue: 'MDG',
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     options: {
