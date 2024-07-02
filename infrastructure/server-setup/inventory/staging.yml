@@ -44,7 +44,7 @@ docker-manager-first:
       ansible_host: '11.11.11.11' # @todo set this to be the hostname of your target server
       data_label: data1
       # If you are using a jump server to access this environment, enter other SSH args here.
-      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
+      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
 
 # This staging servers is configured to only use one server
 docker-workers: {}
@@ -58,9 +58,9 @@ backups:
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
-
 # If you are using a jump server to access this environment
 # jump:
 #   hosts:
-#     backup: # @todo set this to be the hostname of your backup server
+#     your-jumpserver-hostname-here: # @todo set this to be the hostname of your backup server
+#       ansible_ssh_private_key_file: /tmp/jump_ssh_private_key # Written by provision pipeline. Assumes "jump" environment exists in Github environments
 #       ansible_host: '55.55.55.55'

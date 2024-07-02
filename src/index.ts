@@ -391,7 +391,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/content/farajaland-map.geojson',
+    path: '/content/map.geojson',
     handler: mapGeojsonHandler,
     options: {
       auth: false,
@@ -505,7 +505,6 @@ export async function createServer() {
     path: '/roles',
     handler: rolesHandler,
     options: {
-      auth: false,
       tags: ['api', 'user-roles'],
       description: 'Returns user roles metadata'
     }
@@ -516,7 +515,6 @@ export async function createServer() {
     path: '/users',
     handler: usersHandler,
     options: {
-      auth: false,
       tags: ['api', 'users'],
       description: 'Returns users metadata'
     }
