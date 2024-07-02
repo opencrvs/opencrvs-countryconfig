@@ -25,7 +25,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       event: 'birth',
       fileName: 'Farajaland-birth-certificate-v2.svg',
       svgCode: readFileSync(
-        './src/data-seeding/certificates/source/Farajaland-birth-certificate-v2.svg'
+        './src/data-seeding/certificates/source/BirthCertificate.svg'
       ).toString()
     },
     {
