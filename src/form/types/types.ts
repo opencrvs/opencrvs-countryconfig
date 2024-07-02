@@ -928,7 +928,7 @@ export type AllowedAddressConfigurations = {
   label?: MessageDescriptor
   xComparisonSection?: string
   yComparisonSection?: string
-  conditionalCase?: string
+  conditionalCase?: string | Conditional[]
 }
 
 export type AdministrativeLevel = 1 | 2 | 3 | 4 | 5

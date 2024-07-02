@@ -14,6 +14,7 @@ import {
   MOTHER_DETAILS_DONT_EXIST,
   SPOUSE_DETAILS_DONT_EXIST,
   detailsDontExist,
+  expressionToConditional,
   hideIfInformantBrideOrGroom,
   hideIfInformantSpouse,
   informantNotMotherOrFather,
@@ -121,14 +122,28 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.primaryAddress,
-        conditionalCase: `${FATHER_DETAILS_DONT_EXIST}`
+        conditionalCase: [
+          expressionToConditional(FATHER_DETAILS_DONT_EXIST),
+          expressionToConditional(
+            `${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}`,
+            'hideInPreview'
+          )
+        ]
       },
       {
         config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
         label: formMessageDescriptors.primaryAddressSameAsOtherPrimary,
         xComparisonSection: 'father',
         yComparisonSection: 'mother',
-        conditionalCase: `(${detailsDontExist} || ${mothersDetailsDontExistOnOtherPage})`
+        conditionalCase: [
+          expressionToConditional(
+            `(${detailsDontExist} || ${mothersDetailsDontExistOnOtherPage})`
+          ),
+          expressionToConditional(
+            `(${detailsDontExist} || ${mothersDetailsDontExistOnOtherPage} || !${primaryAddressSameAsOtherPrimaryAddress})`,
+            'hideInPreview'
+          )
+        ]
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
