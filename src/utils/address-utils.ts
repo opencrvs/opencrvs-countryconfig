@@ -34,6 +34,7 @@ import {
 } from '../form/addresses/address-fields'
 import { getPreviewGroups } from '../form/common/preview-groups'
 import { cloneDeep } from 'lodash'
+import { expressionToConditional } from '../form/common/default-validation-conditionals'
 
 // Use this function to edit the visibility of fields depending on user input
 function getLocationLevelConditionals(
@@ -961,7 +962,7 @@ export function isUseCaseForPlaceOfEvent(useCase: string): Boolean {
 export const getAddressSubsection = (
   previewGroup: AddressSubsections,
   label: MessageDescriptor,
-  conditionalCase?: string
+  conditionalCase?: string | Conditional[]
 ): SerializedFormField[] => {
   const fields: SerializedFormField[] = []
   const subsection: SerializedFormField = {
@@ -974,13 +975,12 @@ export const getAddressSubsection = (
   }
 
   if (conditionalCase) {
-    subsection['conditionals'] = [
-      {
-        action: 'hide',
-        expression: `${conditionalCase}`
-      }
-    ]
+    subsection['conditionals'] =
+      typeof conditionalCase === 'string'
+        ? [expressionToConditional(conditionalCase)]
+        : conditionalCase
   }
+
   fields.push(subsection)
   return fields
 }
@@ -1092,7 +1092,7 @@ function getAddress(
   section: string,
   addressCase: AddressCases,
   addressHierarchy: string[],
-  conditionalCase?: string
+  conditionalCase?: string | Conditional[]
 ): SerializedFormField[] {
   const defaultFields: SerializedFormField[] = getAddressFields(
     section,
@@ -1102,12 +1102,15 @@ function getAddress(
   if (conditionalCase) {
     defaultFields.forEach((field) => {
       let conditional
-      if (conditionalCase) {
-        conditional = {
-          action: 'hide',
-          expression: `${conditionalCase}`
-        }
+      if (typeof conditionalCase === 'string') {
+        conditional = expressionToConditional(conditionalCase)
       }
+
+      // @TODO Update this to handle multiple conditionals if the changes are otherwise good
+      if (Array.isArray(conditionalCase)) {
+        conditional = conditionalCase[0]
+      }
+
       if (
         conditional &&
         field.conditionals &&
@@ -1121,5 +1124,6 @@ function getAddress(
       }
     })
   }
+
   return defaultFields
 }

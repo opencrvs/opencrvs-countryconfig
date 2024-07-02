@@ -3,6 +3,7 @@ import {
   AddressCases,
   AddressCopyConfigCases,
   AddressSubsections,
+  Conditional,
   EventLocationAddressCases,
   SerializedFormField
 } from '../types/types'
@@ -18,13 +19,14 @@ import { yesNoRadioOptions } from '../common/select-options'
 import { ADMIN_LEVELS } from '.'
 import { getPlaceOfBirthFields } from '../birth/required-fields'
 import { getPlaceOfDeathFields } from '../death/required-fields'
+import { expressionToConditional } from '../common/default-validation-conditionals'
 
 // A radio group field that allows you to select an address from another section
 export const getXAddressSameAsY = (
   xComparisonSection: string,
   yComparisonSection: string,
   label: MessageDescriptor,
-  conditionalCase?: string
+  conditionals?: Conditional[] | string
 ): SerializedFormField[] => {
   const copyAddressField: SerializedFormField = {
     name: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
@@ -32,16 +34,12 @@ export const getXAddressSameAsY = (
     label,
     required: true,
     initialValue: true,
-    previewGroup: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
     validator: [],
     options: yesNoRadioOptions,
-    conditionals: conditionalCase
-      ? [
-          {
-            action: 'hide',
-            expression: `${conditionalCase}`
-          }
-        ]
+    conditionals: conditionals
+      ? typeof conditionals === 'string'
+        ? [expressionToConditional(conditionals)]
+        : conditionals
       : [],
     mapping: {
       mutation: {
