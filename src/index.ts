@@ -494,7 +494,6 @@ export async function createServer() {
     path: '/certificates',
     handler: certificateHandler,
     options: {
-      auth: false,
       tags: ['api', 'certificates'],
       description: 'Returns certificate metadata'
     }
