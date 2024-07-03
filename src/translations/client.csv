@@ -1363,8 +1363,9 @@ form.section.upload.documentsTitle,,Upload supporting documents,Joindre des docu
 form.section.user.preview.title,,Confirm details,Confirmer les détails
 form.section.user.title,,Create new user,Créer un nouvel utilisateur
 form.section.userDetails,,User details,information utilisateur
-form.section.witness.name,,Witness,Témoin
+form.section.witnessOne.name,Form section name for Witness one,Witness 1,Témoin 1
 form.section.witnessOne.title,,Witness 1 details,Détails du témoin 1
+form.section.witnessTwo.name,Form section name for Witness two,Witness 2,Témoin 2
 form.section.witnessTwo.title,,Witness 2 details,Détails du témoin 2
 home.header.advancedSearch,Search menu advanced search type,Advanced Search,Recherche avancée
 home.header.email,Search email type,Email,E-mail
