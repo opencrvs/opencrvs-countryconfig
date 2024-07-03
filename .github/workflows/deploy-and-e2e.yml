@@ -170,11 +170,7 @@ jobs:
       - name: Set Output Based on Conclusion
         id: set-output
         run: |
-          if [ "$PREVIOUS_CONCLUSION" == "success" ]; then
-            echo "result=success" >> $GITHUB_OUTPUT
-          else
-            echo "result=failure" >> $GITHUB_OUTPUT
-          fi
+          echo "result=$PREVIOUS_CONCLUSION" >> $GITHUB_OUTPUT
 
   notify-slack:
     name: Notify Slack on Failure
