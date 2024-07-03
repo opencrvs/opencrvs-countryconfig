@@ -262,7 +262,7 @@ export const brideOrGroomBirthDateValidators = (spouseType: string) => [
 export const exactDateOfBirthUnknownConditional = [
   {
     action: 'hide',
-    expression: '!values.customizedExactDateOfBirthUnknown'
+    expression: '!values.exactDateOfBirthUnknown'
     // '!values.exactDateOfBirthUnknown || !values.customizedExactDateOfBirthUnknown || !values.birthInformantCustomizedExactDateOfBirthUnknown'
   }
 ]
@@ -485,6 +485,10 @@ export const ageOfIndividualValidators: Validator[] = [
   {
     operation: 'maxLength',
     parameters: [3]
+  },
+  {
+    operation: 'isValidParentsBirthDate',
+    parameters: [10, true]
   }
 ]
 

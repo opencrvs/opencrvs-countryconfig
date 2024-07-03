@@ -41,7 +41,8 @@ export const exactDateOfBirthUnknown = (
   hideHeader: true,
   initialValue: false,
   validator: [],
-  conditionals: exactDobConditional.concat(conditionalCase),
+  conditionals: conditionalCase,
+  // conditionals: exactDobConditional.concat(conditionalCase),
   mapping: {
     query: {
       operation: 'booleanTransformer'
@@ -83,7 +84,7 @@ export const getMaritalStatus = (
     description: 'Label for form field: Marital status',
     id: 'form.field.label.maritalStatus'
   },
-  required: false,
+  required: true,
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
@@ -96,7 +97,7 @@ export const registrationEmail: SerializedFormField = {
   name: 'registrationEmail',
   type: 'TEXT',
   label: formMessageDescriptors.email,
-  required: true, // Email is the configured INFORMANT_NOTIFICATION_DELIVERY_METHOD in Farajaland
+  required: false, // Email is the configured INFORMANT_NOTIFICATION_DELIVERY_METHOD in Farajaland
   initialValue: '',
   validator: [
     {
@@ -164,8 +165,7 @@ export const getNIDVerificationButton = (
   labelForOffline: formMessageDescriptors.nidOffline
 })
 export const getOccupation = (
-  certificateHandlebar: string,
-  conditionals: Conditional[] = []
+  certificateHandlebar: string
 ): SerializedFormField => ({
   name: 'occupation',
   type: 'TEXT',
@@ -177,7 +177,12 @@ export const getOccupation = (
   required: false,
   initialValue: '',
   validator: [],
-  conditionals,
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!values.detailsExist'
+    }
+  ],
   mapping: getFieldMapping('occupation', certificateHandlebar)
 })
 
