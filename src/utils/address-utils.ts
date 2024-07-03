@@ -1090,30 +1090,29 @@ function getAddress(
     addressCase
   )
   if (conditionalCase) {
-    defaultFields.forEach((field) => {
-      let conditional
-      if (typeof conditionalCase === 'string') {
-        conditional = expressionToConditional(conditionalCase)
-      }
-
-      // @TODO Update this to handle multiple conditionals if the changes are otherwise good
-      if (Array.isArray(conditionalCase)) {
-        conditional = conditionalCase[0]
-      }
-
-      if (
-        conditional &&
-        field.conditionals &&
-        field.conditionals.filter(
-          (conditional) => conditional.expression === conditionalCase
-        ).length === 0
-      ) {
-        field.conditionals.push(conditional)
-      } else if (conditional && !field.conditionals) {
-        field.conditionals = [conditional]
-      }
-    })
+    return addConditionalsToFields(defaultFields, conditionalCase)
   }
 
   return defaultFields
+}
+
+/**
+ * Adds provided conditionals to each field. Mutates the given array.
+ */
+function addConditionalsToFields(
+  fields: SerializedFormField[],
+  conditionalCase: string | Conditional[]
+) {
+  fields.forEach((field) => {
+    const conditionals =
+      typeof conditionalCase === 'string'
+        ? [expressionToConditional(conditionalCase)]
+        : conditionalCase
+
+    if (conditionals.length > 0) {
+      field.conditionals = [...(field.conditionals || []), ...conditionals]
+    }
+  })
+
+  return fields
 }

@@ -15,7 +15,7 @@ import { Validator } from '../types/validators'
 /**
  * Turns a string expression into a Conditional object
  * @param expression conditional expression
- * @param action conditional action. e.g. 'hide' |'HideInPreview'. Defaults to 'hide'
+ * @param action conditional action. e.g. 'hide' |'hideInPreview'. Defaults to 'hide'
  */
 export const expressionToConditional = (
   expression: string,
