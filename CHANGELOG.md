@@ -46,6 +46,7 @@
 - Improved formatting of informant name for inProgress declaration emails
 - Rename `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming
 - Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field [#114](https://github.com/opencrvs/opencrvs-countryconfig/pull/114)
+- Enable authentication for certificates endpoint [#188](https://github.com/opencrvs/opencrvs-countryconfig/pull/188)
 
 - #### Infrastructure
 
