@@ -32,6 +32,8 @@
 - Provide env variables for metabase admin credentials
 - Remove 'Other' dropdown when informant is mother or father [#7011](https://github.com/opencrvs/opencrvs-core/issues/7011)
 - Hide same as other primary address field if the other person's details not available [#7000](https://github.com/opencrvs/opencrvs-core/issues/7000)
+- Improved formatting of informant name for inProgress declaration emails
+- Rename `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming
 
 **Infrastructure**
 

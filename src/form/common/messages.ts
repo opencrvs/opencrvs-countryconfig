@@ -128,7 +128,7 @@ export const informantMessageDescriptors = {
 export const formMessageDescriptors = {
   primaryAddress: {
     defaultMessage: 'Usual place of residence',
-    description: 'Title of the primary adress ',
+    description: 'Title of the primary adress',
     id: 'form.field.label.primaryAddress'
   },
   spouseSectionName: {
@@ -771,10 +771,15 @@ export const formMessageDescriptors = {
     description: 'Label for form field: Place of occurrence of marriage',
     id: 'form.field.label.placeOfMarriage'
   },
-  witnessName: {
-    defaultMessage: 'Witness',
-    description: 'Form section name for Witness',
-    id: 'form.section.witness.name'
+  witnessOneName: {
+    defaultMessage: 'Witness 1',
+    description: 'Form section name for Witness one',
+    id: 'form.section.witnessOne.name'
+  },
+  witnessTwoName: {
+    defaultMessage: 'Witness 2',
+    description: 'Form section name for Witness two',
+    id: 'form.section.witnessTwo.name'
   },
   witnessOneTitle: {
     defaultMessage: 'What are the witnesses one details?',
