@@ -12,6 +12,19 @@ import { Conditional } from '../types/types'
 import { IntegratingSystemType } from '../types/types'
 import { Validator } from '../types/validators'
 
+/**
+ * Turns a string expression into a Conditional object
+ * @param expression conditional expression
+ * @param action conditional action. e.g. 'hide' |'hideInPreview'. Defaults to 'hide'
+ */
+export const expressionToConditional = (
+  expression: string,
+  action: string = 'hide'
+): Conditional => ({
+  action,
+  expression: `${expression}`
+})
+
 export const isValidChildBirthDate = [
   {
     operation: 'isValidChildBirthDate'

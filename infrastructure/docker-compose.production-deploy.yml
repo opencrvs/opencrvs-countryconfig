@@ -99,10 +99,6 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
-      - FHIR_URL=http://hearth:3447/fhir
-      - AUTH_URL=http://auth:4040
-      - APPLICATION_CONFIG_URL=http://config:2021
-      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - SENTRY_DSN=${SENTRY_DSN:-}
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
