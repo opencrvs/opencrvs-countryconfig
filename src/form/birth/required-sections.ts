@@ -214,16 +214,8 @@ export const documentsSection = {
 export const previewSection = {
   id: 'preview',
   viewType: 'preview',
-  name: {
-    defaultMessage: 'Preview',
-    description: 'Form section name for Preview',
-    id: 'register.form.section.preview.name'
-  },
-  title: {
-    defaultMessage: 'Preview',
-    description: 'Form section title for Preview',
-    id: 'register.form.section.preview.title'
-  },
+  name: formMessageDescriptors.previewName,
+  title: formMessageDescriptors.previewTitle,
   groups: [
     {
       id: 'preview-view-group',
@@ -235,16 +227,8 @@ export const previewSection = {
 export const reviewSection = {
   id: 'review',
   viewType: 'review',
-  name: {
-    defaultMessage: 'Review',
-    description: 'Form section name for Review',
-    id: 'review.form.section.review.name'
-  },
-  title: {
-    defaultMessage: 'Review',
-    description: 'Form section title for Review',
-    id: 'review.form.section.review.title'
-  },
+  name: formMessageDescriptors.reviewName,
+  title: formMessageDescriptors.reviewTitle,
   groups: [
     {
       id: 'review-view-group',
