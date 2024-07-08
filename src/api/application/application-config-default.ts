@@ -52,7 +52,15 @@ export const defaultApplicationConfig = {
   },
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
-  SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR']
+  SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR'],
+  SEARCH_DEFAULT_CRITERIA: [
+    'TRACKING_ID',
+    'REGISTRATION_NUMBER',
+    'NATIONAL_ID',
+    'NAME',
+    'PHONE_NUMBER',
+    'EMAIL'
+  ]
 }
 
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE = 10
