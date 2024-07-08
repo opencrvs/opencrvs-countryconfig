@@ -22,10 +22,28 @@
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
 - Remove authentication from dashboard queries route
-- Added french translation of informant for print certificate flow, issue certificate flow & correction flow 
-- In the certificate, the 'Place of Certification' now accurately reflects the correct location.  
+- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
+- In the certificate, the 'Place of Certification' now accurately reflects the correct location.
 - Added french translation of informant for print certificate flow, issue certificate flow & correction flow
 - Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
+- Add query mapper for International Postal Code field
+- Add support for image compression configuration
+- Provide env variables for metabase admin credentials
+- Improved formatting of informant name for inProgress declaration emails
+- Rename `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming
+
+**Infrastructure**
+
+- Treat backup host identically to other hosts. To migrate:
+
+  1. Move all inventory files (qa.yml, production.yml...) from `infrastructure/server-setup` to `infrastructure/server-setup/inventory`
+  2. Run environment creator for your backup server `yarn environment:init --environment=backup`
+
+- Allow using staging to both period restore of production backup and also for backing up its own data to a different location using `backup_server_remote_target_directory` and `backup_server_remote_source_directory` ansible variables. This use case is mostly meant for OpenCRVS team internal use.
+
+- Automate SSH key exchange between application and backup server. For staging servers, automatically fetch production backup encryption key if periodic restore is enabled
+
+- Improved support for non-22 SSH port
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 

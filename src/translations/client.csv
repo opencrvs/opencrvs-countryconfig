@@ -13,6 +13,7 @@ advancedSearch.form.placeOfRegistrationHelperText,Helper text for input Place of
 advancedSearch.form.recordStatusAchived,Option for form field: status of record,Archived,Archivé
 advancedSearch.form.recordStatusAny,Option for form field: status of record,Any status,Tout statut
 advancedSearch.form.recordStatusCertified,Option for form field: status of record,Certified,Agréé
+advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested,Correction demandée
 advancedSearch.form.recordStatusInReview,Option for form field: status of record,In review,En cours d'examen
 advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress,En cours
 advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
@@ -508,6 +509,12 @@ correction.certificate.corrector.idCheck,The title for id check component,Verify
 correction.certificate.corrector.idCheckVerify,The label for id check component action when verify details,Verified,Vérifié
 correction.certificate.corrector.idCheckWithoutVerify,The label for id check component action when does not verify details,Identity does not match,L'identité ne correspond pas
 correction.certificate.corrector.otherIdCheck,The title for other id check component,Check proof of ID,Avez-vous vérifié leur preuve d'identification ?
+correction.correctRecordDialog.description,The description for the dialog when record correction sent by a registrar,The informant will be notified of this correction and a record of this decision will be recorded,L'informateur sera informé de cette correction et une trace de cette décision sera enregistrée.
+correction.correctRecordDialog.title,The title for the dialog when record correction sent by a registrar,Correct record ?,enregistrement correct ?
+correction.correctionForApprovalDialog.actions.cancel,The cancel button for the dialog when record correction sent by registration agent for approval,Cancel,Annuler
+correction.correctionForApprovalDialog.actions.send,The send button for the dialog when record correction sent by registration agent for approval,Confirm,Confirmer
+correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,The Registrar will be notified of this correction request and a record of this request will be recorded,Le greffier sera informé de cette demande de correction et un enregistrement de cette demande sera effectué
+correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Send record correction for approval ?,Envoyer la correction de l'enregistrement pour approbation ?
 correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent,Un autre agent d'enregistrement ou un agent de terrain
 correction.corrector.birth.note,Birth correction note,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.,"Note : Si l'enfant a atteint l'âge légal (18 ans), il est le seul à pouvoir demander une modification de son acte de naissance."
 correction.corrector.bride,Label for bride option in certificate correction form,Bride,Mariée
@@ -548,12 +555,15 @@ correction.summary.feesRequiredPositive,Positive label for Fees required for cer
 correction.summary.idCheck,ID check header for certificate correction summary,ID check,Contrôle d'identité
 correction.summary.idCheckForCorrection,The title for the dialog when details of the collector not verified for correction,Correct without proof of ID?,Correct sans pièce d'identité ?
 correction.summary.item,Corrected item table header for certificate correction summary,Item,Point
+correction.summary.office,Office where certificate correction summary was submitted,Office,Bureau
 correction.summary.original,Original value table header for certificate correction summary,Original,Original
 correction.summary.proofOfPayment,Proof of payment label fees payment document,Proof of payment,Preuve de paiement
 correction.summary.proofOfPaymentRequired,Validation for proof of payment document for certificate correction summary,Proof of payment is required,Une preuve de paiement est requise
 correction.summary.reasonForRequest,Reason for request header for certificate correction summary,Reason for request,Raison de la demande
 correction.summary.requestedBy,Requested by header for certificate correction summary,Requested by,Demandée par
+correction.summary.requestedOn,Date when certificate correction summary was submitted,Requested on,Demandé le
 correction.summary.required,Payment and proof of payment input error,Required for correction,Nécessaire pour la correction
+correction.summary.submitter,Submitter of certificate correction summary,Submitter,Déposant
 correction.summary.supportingDocuments,Supporting documents header for certificate correction summary,Supporting documents,Documents à l'appui
 correction.summary.title,Title for certificate correction summary,Correction summary,Résumé de la correction
 correction.summary.totalPaymentLabel,Label of total payment in correction summary,Total {currency},Total {currency}
@@ -665,7 +675,7 @@ countries.GTM,,Guatemala,Guatemala
 countries.GUF,,French Guiana,Guyane française
 countries.GUM,,Guam,Guam
 countries.GUY,,Guyana,Guyane
-countries.HKG,,"""China, Hong Kong Special Administrative Region"",""Chine, région administrative spéciale de Hong Kong",
+countries.HKG,,"China, Hong Kong Special Administrative Region","Chine, région administrative spéciale de Hong Kong"
 countries.HMD,,Heard Island and McDonald Islands,Île Heard et îles McDonald
 countries.HND,,Honduras,Honduras
 countries.HRV,,Croatia,Croatie
@@ -703,7 +713,7 @@ countries.LSO,,Lesotho,Lesotho
 countries.LTU,,Lithuania,Lituanie
 countries.LUX,,Luxembourg,Luxembourg
 countries.LVA,,Latvia,Lettonie
-countries.MAC,,"""China, Macao Special Administrative Region"",""Chine, Région administrative spéciale de Macao",
+countries.MAC,,"China, Macao Special Administrative Region","Chine, Région administrative spéciale de Macao"
 countries.MAF,,Saint Martin (French Part),Saint Martin (partie française)
 countries.MAR,,Morocco,Maroc
 countries.MCO,,Monaco,Monaco
@@ -1035,7 +1045,7 @@ form.field.label.educationAttainmentISCED6,,Second stage tertiary,Second degré 
 form.field.label.educationAttainmentNone,,No schooling,Pas de scolarité
 form.field.label.educationAttainmentNotStated,,Not stated,Non déclaré
 form.field.label.email,,Email,e-mail
-form.field.label.empty,empty string, , 
+form.field.label.empty,empty string,,
 form.field.label.exactDateOfBirthUnknown,,Exact date of birth unknown,Date de naissance exacte inconnue
 form.field.label.familyName,,Last name,Nom de famille
 form.field.label.father.nationality,,Nationality,Nationalité
@@ -1335,11 +1345,11 @@ form.section.informant.name,,Informant,Informateur
 form.section.informant.title,,Informant's details,information de l'informateur
 form.section.information.birth.bullet1,,I am going to help you make a declaration of birth.,Je vais vous aider à faire une déclaration de naissance.
 form.section.information.birth.bullet2,,As the legal Informant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes."
-form.section.information.birth.bullet3,,Once the declaration is processed you will receive you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
+form.section.information.birth.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
 form.section.information.birth.bullet4,,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.","Veillez à récupérer le certificat. Un certificat de naissance est essentiel pour cet enfant, notamment pour lui faciliter la vie plus tard. Il l'aidera à accéder aux services de santé, aux examens scolaires et aux prestations de l'État."
 form.section.information.death.bullet1,,I am going to help you make a declaration of death.,Je vais vous aider à faire une déclaration de décès.
 form.section.information.death.bullet2,,As the legal Informant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes."
-form.section.information.death.bullet3,,Once the declaration is processed you will receive you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
+form.section.information.death.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts."
 form.section.information.name,,Information,Informations
 form.section.marriageEvent.date,,Date of marriage,Date du mariage
@@ -1353,8 +1363,9 @@ form.section.upload.documentsTitle,,Upload supporting documents,Joindre des docu
 form.section.user.preview.title,,Confirm details,Confirmer les détails
 form.section.user.title,,Create new user,Créer un nouvel utilisateur
 form.section.userDetails,,User details,information utilisateur
-form.section.witness.name,,Witness,Témoin
+form.section.witnessOne.name,Form section name for Witness one,Witness 1,Témoin 1
 form.section.witnessOne.title,,Witness 1 details,Détails du témoin 1
+form.section.witnessTwo.name,Form section name for Witness two,Witness 2,Témoin 2
 form.section.witnessTwo.title,,Witness 2 details,Détails du témoin 2
 home.header.advancedSearch,Search menu advanced search type,Advanced Search,Recherche avancée
 home.header.email,Search email type,Email,E-mail
@@ -1375,9 +1386,9 @@ home.header.typeName,Search menu name type,Name,Nom
 home.header.typePhone,Search menu phone no type,Phone no.,N° de téléphone
 home.header.typeRN,Search menu brn drn type,Registration no.,N ° d'enregistrement.
 imageUploadOption.upload.documentType,Show error message if the document type is not selected,Please select the type of document first,Veuillez d'abord sélectionner le type de document
-imageUploadOption.upload.error,Show error messages while uploading,File format not supported. Please upload a .png or .jpg (max 5mb),"Format de fichier non pris en charge. Veuillez joindre un png, jpg (max 5mb)"
-imageUploadOption.upload.imageFormat,Show error message if the selected image type is not supported,File format not supported. Please upload a .png or .jpg (max 5mb),Le format d'image n'est pas supporté. Veuillez joindre un png ou un jpg (max 5mb)
-imageUploadOption.upload.overSized,Error message for Attachment size greater than 5mb.,File is too large. Please upload a file less than 5mb,Le fichier est trop volumineux. Veuillez joindre un fichier de moins de 5mb
+imageUploadOption.upload.error,Show error messages while uploading,File format not supported. Please upload a .png or .jpg (max {maxSize}mb),"Format de fichier non pris en charge. Veuillez joindre un png, jpg (max {maxSize}mb)"
+imageUploadOption.upload.imageFormat,Show error message if the selected image type is not supported,File format not supported. Please upload a .png or .jpg (max {maxSize}mb),Le format d'image n'est pas supporté. Veuillez joindre un png ou un jpg (max {maxSize}mb)
+imageUploadOption.upload.overSized,Error message for Attachment size greater than defined max size.,File is too large. Please upload a file less than {maxSize}mb,Le fichier est trop volumineux. Veuillez joindre un fichier de moins de {maxSize}mb
 informant.name,Informant section name,Informant,Informateur
 informant.title,Informant section title,Informant type,Sélectionner l'informateur
 integrations.activate,Label for activate option,Activate,Activer
@@ -1700,6 +1711,7 @@ recordAudit.regAction.verified,Verified action,Certificate verified,Certificat v
 recordAudit.regAction.viewed,,Viewed,Vu
 recordAudit.regStatus.archived,,Archived,Archivé
 recordAudit.regStatus.certified,,Certified,Certifié
+recordAudit.regStatus.correctionRequested,Label for when someone requested correction,Correction requested,Correction demandée
 recordAudit.regStatus.declared,,Declaration started,Déclaration initiée
 recordAudit.regStatus.declared.sentNotification,Field agent sent notification,Sent notification for review,Envoi d'une notification pour examen
 recordAudit.regStatus.issued,,Issued,Émis
@@ -1720,6 +1732,8 @@ regHome.inPro.selector.hospital.drafts,The title of In progress Hospitals,Health
 regHome.inPro.selector.own.drafts,The title of In progress own drafts,My drafts,Mes brouillons
 regHome.inProgress,The title of In progress,In progress,En cours
 regHome.issued,Label for registration status issued,Issued,Émis
+regHome.outbox.failed,Label for declaration status failed,Failed to send,Échec de l'envoi
+regHome.outbox.retry,Label for Retry button in Outbox shown for records that failed to send,Retry,Réessayer
 regHome.outbox.statusArchiving,Label for application status Archiving,Archiving...,Archivage en cours
 regHome.outbox.statusCertifying,Label for declaration status Certifying,Certifying...,Certification en cours...
 regHome.outbox.statusIssuing,Label for declaration status Issuing,Issuing...,En cours d'émission...
@@ -1791,12 +1805,16 @@ register.form.modal.areYouReadyToSubmit,,Are you ready to submit?,Êtes-vous pr�
 register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,"Are you certain you want to delete this draft declaration form? Please note, this action cant be undone.",Êtes-vous certain de vouloir supprimer ce projet de formulaire de déclaration? Veuillez noter que cette action ne peut pas être annulée.
 register.form.modal.desc.exitWithoutSavingDeclarationConfirm,Description for exit declaration without saving confirmation modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Voulez-vous vraiment quitter sans enregistrer ?
 register.form.modal.desc.exitWithoutSavingModalForCorrection,Description for exit declaration without saving confirmation modal for correct record,Are you sure you want to exit? Any corrections you have made will not be saved.,Êtes-vous sûr de vouloir quitter ? Les corrections que vous avez apportées ne seront pas sauvegardées.
+register.form.modal.desc.saveCorrectionConfirm,Description for save correction confirmation modal,The declarant will be notified of this correction and a record of this decision will be recorded,Le déclarant sera informé de cette correction et un procès-verbal de cette décision sera enregistré
+register.form.modal.desc.saveCorrectionReject,Description for reject correction modal,The declarant will be notified of this decision and a record of this decision will be recorded,Cette décision sera notifiée au déclarant et un procès-verbal de cette décision sera enregistré
 register.form.modal.desc.saveDeclarationConfirm,Description for save declaration confirmation modal,All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?,Toutes les données saisies seront conservées en toute sécurité pour de futures modifications. Êtes-vous prêt à enregistrer les modifications apportées à ce formulaire de déclaration?
 register.form.modal.desc.validateConfirmation,Description for validate confirmation modal,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
 register.form.modal.submitDescription,Submit description text on submit modal,By clicking “Submit” you confirm that the informant has read and reviewed the information and understands that this information will be shared with Civil Registration authorities.,"En cliquant sur Soumettre, vous confirmez que l'informateur a lu et revu les informations et qu'il comprend que ces informations seront partagées avec les autorités de l'état civil."
 register.form.modal.title.deleteDeclarationConfirm,Title for delete declaration confirmation modal,Delete draft?,Supprimer le brouillon?
 register.form.modal.title.exitWithoutSavingDeclarationConfirm,Title for exit declaration without saving confirmation modal,Exit without saving changes?,Quitter sans enregistrer les modifications?
 register.form.modal.title.exitWithoutSavingModalForCorrection,Title for exiting correction record without saving confirmation,Exit correct record?,Quitter l'enregistrement correct ?
+register.form.modal.title.saveCorrectionConfirm,Title for save correction confirmation modal,Approve correction?,Approuver la correction ?
+register.form.modal.title.saveCorrectionReject,Title for reject correction modal,Reject correction?,Rejeter la correction ?
 register.form.modal.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
 register.form.modal.title.submitConfirmation,,"{completeDeclaration, select, true {Send for review?} other {Send for review?}}","{completeDeclaration, select, true {Envoyer une déclaration pour examen ?} other {Envoyer une déclaration incomplète ?}}"
 register.form.modal.title.validateConfirmation,Title for validate confirmation modal,Send for approval?,Envoyer pour approbation ?
@@ -2015,6 +2033,7 @@ user.profile.audit.description.updated,Description for updated declaration,Updat
 user.profile.audit.description.validated,Description for validated declaration,Sent for approval,Déclaration envoyée pour approbation
 user.profile.audit.description.waiting_validation,,Sent declaration for external system validation,Déclaration envoyée pour la validation du système externe
 user.profile.audit.list.noDataFound,Text for audit list,No audits to display,Aucun audit à afficher
+user.profile.auditList.approvedCorrectionAuditAction,Description for record correction being approved,Approved correction request,Demande de correction approuvée
 user.profile.auditList.archived,Description for declaration archived,Archived,Archivé
 user.profile.auditList.assigned,Description for declaration assignment,Assigned,Assigné
 user.profile.auditList.corrected,Description for declaration corrected,Corrected record,dossier corrigé
@@ -2030,6 +2049,8 @@ user.profile.auditList.phoneNumberChanged,Description for user change phoneNumbe
 user.profile.auditList.reInstatedToInProgress,Description for sending registration from Reinstated to In progress audit action,Reinstated to in progress,Réintégré dans les travaux en cours
 user.profile.auditList.reInstatedToInReview,Description for sending registration from Reinstated to In review audit action,Reinstated to ready for review,Réintégré à pret à l'examen
 user.profile.auditList.reInstatedToUpdate,Description for sending registration from Reinstated to require updates audit action,Reinstated to requires updates,Réintégré pour demander des mises à jour
+user.profile.auditList.rejectedCorrectedAuditAction,Description for record correction being rejected,Rejected correction request,Demande de correction rejetée
+user.profile.auditList.requestedCorrectionAuditAction,Description for record correction being requested,Requested correction,Correction demandée
 user.profile.auditList.retrieved,Description for declaration retrieved audit action,Retrieved,Récupéré
 user.profile.auditList.sentForApproval,Description for sending registration for approval audit action,Sent for approval,Envoyé pour approbation
 user.profile.auditList.showMore,Label for show more link,Show next {pageSize} of {totalItems},Afficher le prochain {pageSize} de {totalItems
@@ -2083,6 +2104,7 @@ validations.englishOnlyNameFormat,"The error message that appears when a non Eng
 validations.facilityMustBeSelected,The error message appears when no valid facility is selected,No facility selected,Aucun établissement sélectionné
 validations.greaterThanZero,The error message appears when input is less than or equal to 0,Must be a greater than zero,Doit être supérieur à zéro
 validations.illegalMarriageAge,The error message appears when the birth date is not old enough to register for marriage,Illegal age of marriage,Age illègale pour mariage
+validations.invalidDate,The error message that appears when a date field is invalid,Invalid date field,Champ de date invalide
 validations.isDateNotAfterDeath,The error message appears when the given date of death is not valid,Date of birth must be before date of death,La date doit être antérieure à la date de décès
 validations.isDateNotBeforeBirth,The error message appears when the given date of death is not valid,Date of death must be after deceased date of birth,La date doit être postérieure à la date de naissance du défunt
 validations.isInformantOfLegalAge,The error message appears when the informant is not old enough to register an event,Informant is not of legal age,L'informateur n'est pas majeur
@@ -2109,7 +2131,7 @@ validations.validNationalIDLengths,Nid valid lengths,9,9
 validations.validNationalId,The error message that appears when an invalid value is used as nid,The National ID can only be numeric and must be 10 digits long,Le numéro d'identification national ne peut être que numérique et doit avoir une longueur de 9 chiffres.
 validations.validPassportNumber,The error message that appears when an invalid value is used as passport number,The Passport Number can only be alpha numeric and must be {validLength} characters long,Le numéro de passeport ne peut être qu'alphanumérique et doit comporter {validLength} caractères.
 verifyCertificate.brn,Label for Birth Registration Number,BRN,Numéro de régistre de naissance
-verifyCertificate.createdAt,Label for date of certification,Date of certification,Date de l'émission du certificat de naissance
+verifyCertificate.certifiedAt,Label for date of certification,Date of certification,Date de l'émission du certificat de naissance
 verifyCertificate.dateOfBirth,Label for date of birth,Date of birth,Date de naissance
 verifyCertificate.dateOfDeath,Label for date of death,Date of death,Date du décès
 verifyCertificate.drn,Label for Death Registration Number,DRN,Numéro de régistre de décès
@@ -2124,7 +2146,7 @@ verifyCertificate.registrationCenter,Label for registration center,Registration 
 verifyCertificate.sex,Label for sex,Sex,Sexe
 verifyCertificate.sexFemale,Option for form field: Sex name,Female,Femme
 verifyCertificate.sexMale,Option for form field: Sex name,Male,Homme
-verifyCertificate.successMessage,message for success alert,Compare the partial details of the record below against those against those recorded on the certificate,Comparez les données partielles de l'enregistrement ci-dessous avec celles qui figurent sur le certificat.
+verifyCertificate.successMessage,message for success alert,Compare the partial details of the record below against those recorded on the certificate,Comparez les données partielles de l'enregistrement ci-dessous avec celles qui figurent sur le certificat.
 verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR valide
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée

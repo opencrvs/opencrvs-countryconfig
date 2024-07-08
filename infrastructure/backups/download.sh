@@ -106,7 +106,7 @@ for BACKUP_DIR in /data/backups/*; do
 done
 
 
-mv $BACKUP_RAW_FILES_DIR/extract/elasticsearch /data/backups/elasticsearch
+mv $BACKUP_RAW_FILES_DIR/extract/elasticsearch/* /data/backups/elasticsearch/
 
 mv $BACKUP_RAW_FILES_DIR/extract/influxdb /data/backups/influxdb/${LABEL}
 mv $BACKUP_RAW_FILES_DIR/extract/minio/ocrvs-${LABEL}.tar.gz /data/backups/minio/

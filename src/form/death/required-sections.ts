@@ -178,7 +178,7 @@ export const documentsSection = {
       ]
     }
   ]
-} as ISerializedFormSection
+} satisfies ISerializedFormSection
 
 export const previewSection = {
   id: 'preview',

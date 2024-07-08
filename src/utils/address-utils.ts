@@ -34,6 +34,7 @@ import {
 } from '../form/addresses/address-fields'
 import { getPreviewGroups } from '../form/common/preview-groups'
 import { cloneDeep } from 'lodash'
+import { expressionToConditional } from '../form/common/default-validation-conditionals'
 
 // Use this function to edit the visibility of fields depending on user input
 function getLocationLevelConditionals(
@@ -696,6 +697,10 @@ function getQueryMapping(
           fieldName ===
             `postalCode${sentenceCase(useCase)}${sentenceCase(section)}` ||
           fieldName ===
+            `internationalPostalCode${sentenceCase(useCase)}${sentenceCase(
+              section
+            )}` ||
+          fieldName ===
             `internationalState${sentenceCase(useCase)}${sentenceCase(
               section
             )}` ||
@@ -957,7 +962,7 @@ export function isUseCaseForPlaceOfEvent(useCase: string): Boolean {
 export const getAddressSubsection = (
   previewGroup: AddressSubsections,
   label: MessageDescriptor,
-  conditionalCase?: string
+  conditionalCase?: string | Conditional[]
 ): SerializedFormField[] => {
   const fields: SerializedFormField[] = []
   const subsection: SerializedFormField = {
@@ -970,13 +975,12 @@ export const getAddressSubsection = (
   }
 
   if (conditionalCase) {
-    subsection['conditionals'] = [
-      {
-        action: 'hide',
-        expression: `${conditionalCase}`
-      }
-    ]
+    subsection['conditionals'] =
+      typeof conditionalCase === 'string'
+        ? [expressionToConditional(conditionalCase)]
+        : conditionalCase
   }
+
   fields.push(subsection)
   return fields
 }
@@ -1088,7 +1092,7 @@ function getAddress(
   section: string,
   addressCase: AddressCases,
   addressHierarchy: string[],
-  conditionalCase?: string
+  conditionalCase?: string | Conditional[]
 ): SerializedFormField[] {
   const defaultFields: SerializedFormField[] = getAddressFields(
     section,
@@ -1096,26 +1100,29 @@ function getAddress(
     addressHierarchy
   )
   if (conditionalCase) {
-    defaultFields.forEach((field) => {
-      let conditional
-      if (conditionalCase) {
-        conditional = {
-          action: 'hide',
-          expression: `${conditionalCase}`
-        }
-      }
-      if (
-        conditional &&
-        field.conditionals &&
-        field.conditionals.filter(
-          (conditional) => conditional.expression === conditionalCase
-        ).length === 0
-      ) {
-        field.conditionals.push(conditional)
-      } else if (conditional && !field.conditionals) {
-        field.conditionals = [conditional]
-      }
-    })
+    return addConditionalsToFields(defaultFields, conditionalCase)
   }
+
   return defaultFields
+}
+
+/**
+ * Adds provided conditionals to each field. Mutates the given array.
+ */
+function addConditionalsToFields(
+  fields: SerializedFormField[],
+  conditionalCase: string | Conditional[]
+) {
+  fields.forEach((field) => {
+    const conditionals =
+      typeof conditionalCase === 'string'
+        ? [expressionToConditional(conditionalCase)]
+        : conditionalCase
+
+    if (conditionals.length > 0) {
+      field.conditionals = [...(field.conditionals || []), ...conditionals]
+    }
+  })
+
+  return fields
 }

@@ -486,7 +486,7 @@ const declarations = ({ lastUpdatedAt }: { lastUpdatedAt: string }) => ({
     {
       $match: {
         'meta.lastUpdated': { $gte: lastUpdatedAt },
-        'extension.url': 'http://opencrvs.org/specs/extension/requestCorrection'
+        'extension.url': 'http://opencrvs.org/specs/extension/makeCorrection'
       }
     },
     {
