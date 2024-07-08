@@ -202,3 +202,29 @@ export function getFokontanyCustomAdress(
     maxLength: 255
   }
 }
+
+export const exactDateOfBirthUnknown = (
+  section: 'mother' | 'father' | 'informant',
+  conditionalCase: Conditional[]
+): SerializedFormField => {
+  const fieldName = 'exactDateOfBirthUnknown'
+  const fieldId: string = `birth.${section}.${section}-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'CHECKBOX',
+    label: {
+      defaultMessage: 'Exact date of birth unknown',
+      description: 'Checkbox for exact date of birth unknown',
+      id: 'form.field.label.exactDateOfBirthUnknown'
+    },
+    hideInPreview: true,
+    required: false,
+    custom: true,
+    customQuestionMappingId: fieldId,
+    hideHeader: true,
+    initialValue: false,
+    validator: [],
+    conditionals: conditionalCase,
+    mapping: getCustomFieldMapping(fieldId)
+  }
+}

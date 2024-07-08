@@ -24,7 +24,6 @@ import {
   getReasonNotExisting
 } from '../common/common-required-fields'
 import {
-  exactDateOfBirthUnknown,
   // getAgeOfIndividualInYears,
   getMaritalStatus,
   registrationEmail,
@@ -76,7 +75,8 @@ import {
   getLegacyBirthRegistrationTime,
   getPlaceOfBirth,
   getTimeOfBirth,
-  getYearOfBirth
+  getYearOfBirth,
+  exactDateOfBirthUnknown
 } from './custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -240,7 +240,7 @@ export const birthForm: ISerializedForm = {
               getNationalIDValidators('informant'),
               certificateHandlebars.informantNID
             ),
-            exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
+            exactDateOfBirthUnknown('informant', hideIfInformantMotherOrFather),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
@@ -345,7 +345,7 @@ export const birthForm: ISerializedForm = {
               getNationalIDValidators('mother'),
               certificateHandlebars.motherNID
             ),
-            exactDateOfBirthUnknown(detailsExistConditional),
+            exactDateOfBirthUnknown('mother', detailsExistConditional),
             getBirthDate(
               'motherBirthDate',
               mothersBirthDateConditionals,
@@ -432,7 +432,7 @@ export const birthForm: ISerializedForm = {
               getNationalIDValidators('father'),
               certificateHandlebars.fatherNID
             ),
-            exactDateOfBirthUnknown(detailsExistConditional),
+            exactDateOfBirthUnknown('father', detailsExistConditional),
             getBirthDate(
               'fatherBirthDate',
               fathersBirthDateConditionals,
@@ -467,7 +467,7 @@ export const birthForm: ISerializedForm = {
             getOccupation(certificateHandlebars.fatherOccupation),
             getFokontanyCustomAdress(
               'father',
-              primaryAddressSameAsOtherPrimary,
+              primaryAddressSameAsOtherPrimary.concat(detailsExistConditional),
               {
                 id: 'form.field.label.customAddress',
                 description:
