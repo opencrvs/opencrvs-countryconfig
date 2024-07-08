@@ -106,7 +106,7 @@ export const documentsSection = {
 } as ISerializedFormSection
 
 /*
- * In the Farajaland reference configuration the signature
+ * In this reference configuration the signature
  * fields for both the preview & review section are same
  * but they can potentially be different e.g. it could be
  * made such that the signatures are only required when
