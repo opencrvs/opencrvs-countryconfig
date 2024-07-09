@@ -38,7 +38,6 @@ export const defaultApplicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
-  // Following constants aren't configurable via UI
   FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
   DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
   FEATURES: {
@@ -53,14 +52,16 @@ export const defaultApplicationConfig = {
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR'],
-  SEARCH_DEFAULT_CRITERIA: [
-    'TRACKING_ID',
-    'REGISTRATION_NUMBER',
-    'NATIONAL_ID',
-    'NAME',
-    'PHONE_NUMBER',
-    'EMAIL'
-  ]
+  SEARCH_DEFAULT_CRITERIA: 'TRACKING_ID'
+  /*
+   * SEARCH_DEFAULT_CRITERIA's value can be one of the following
+   * | 'TRACKING_ID',
+   * | 'REGISTRATION_NUMBER',
+   * | 'NATIONAL_ID',
+   * | 'NAME',
+   * | 'PHONE_NUMBER',
+   * | 'EMAIL'
+   */
 }
 
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE = 10
