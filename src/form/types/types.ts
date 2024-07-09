@@ -348,7 +348,6 @@ export interface INumberFormField extends IFormFieldBase {
   type: typeof NUMBER
   step?: number
   max?: number
-  inputFieldWidth?: string
   inputWidth?: number
   maxLength?: number
 }
