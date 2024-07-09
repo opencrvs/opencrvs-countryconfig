@@ -200,3 +200,24 @@ export const getEducation = (
   options: educationalAttainmentOptions,
   mapping: getFieldMapping('educationalAttainment', certificateHandlebar)
 })
+
+export const informantsSignature = {
+  name: 'informantSignature',
+  label: {
+    defaultMessage: 'Signature of informant',
+    description: 'Label for informants signature input',
+    id: 'review.inputs.informantsSignature'
+  },
+  validator: [],
+  type: 'SIGNATURE',
+  mapping: {
+    mutation: {
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantsSignature']
+    },
+    query: {
+      operation: 'fieldValueSectionExchangeTransformer',
+      parameters: ['registration', 'informantsSignature']
+    }
+  }
+} satisfies SerializedFormField
