@@ -326,6 +326,26 @@ export const formMessageDescriptors = {
     description: 'Label for form field: Nationality',
     id: 'form.field.label.nationality'
   },
+  previewName: {
+    defaultMessage: 'Preview',
+    description: 'Form section name for Preview',
+    id: 'register.form.section.preview.name'
+  },
+  previewTitle: {
+    defaultMessage: 'Preview',
+    description: 'Form section title for Preview',
+    id: 'register.form.section.preview.title'
+  },
+  reviewName: {
+    defaultMessage: 'Review',
+    description: 'Form section name for Review',
+    id: 'review.form.section.review.name'
+  },
+  reviewTitle: {
+    defaultMessage: 'Review',
+    description: 'Form section title for Review',
+    id: 'review.form.section.review.title'
+  },
   placeOfBirthPreview: {
     defaultMessage: 'Place of delivery',
     description: 'Title for place of birth sub section',

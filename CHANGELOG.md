@@ -3,6 +3,7 @@
 ## 1.6.0 (TBD)
 
 - Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
+- New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
 
 ## [1.5.0]
 

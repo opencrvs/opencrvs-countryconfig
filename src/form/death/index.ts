@@ -65,7 +65,12 @@ import {
   hideIfNidIntegrationEnabled,
   hideIfDeceasedAddressNotAvailable
 } from '../common/default-validation-conditionals'
-import { documentsSection, registrationSection } from './required-sections'
+import {
+  documentsSection,
+  previewSection,
+  registrationSection,
+  reviewSection
+} from './required-sections'
 import {
   deceasedNameInEnglish,
   informantNameInEnglish /*,
@@ -516,6 +521,8 @@ export const deathForm = {
       ],
       mapping: getSectionMapping('father')
     },*/
-    documentsSection
+    documentsSection,
+    previewSection,
+    reviewSection
   ]
 } satisfies ISerializedForm
