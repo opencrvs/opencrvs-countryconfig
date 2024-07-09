@@ -99,7 +99,7 @@ test.describe('1. Birth event declaration', () => {
          * Expected result: should show
          * - I am going to help you make a declaration of birth.
          * - As the legal Informant it is important that all the information provided by you is accurate.
-         * - Once the declaration is processed you will receive you will receive an email to tell you
+         * - Once the declaration is processed you will receive an email to tell you
          *   when to visit the office to collect the certificate - Take your ID with you.
          * - Make sure you collect the certificate. A birth certificate is critical for this child,
          *   especially to make their life easy later on. It will help to access health services, school examinations and government benefits.
@@ -114,7 +114,7 @@ test.describe('1. Birth event declaration', () => {
         ).toBeVisible()
         await expect(
           page.getByText(
-            'Once the declaration is processed you will receive you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.'
+            'Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.'
           )
         ).toBeVisible()
         await expect(

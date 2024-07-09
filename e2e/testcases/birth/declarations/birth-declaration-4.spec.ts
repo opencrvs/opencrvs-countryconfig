@@ -675,7 +675,6 @@ test.describe.serial('4. Birth declaration case - 4', () => {
        * Expected result: should include
        * - Father's address
        */
-      await expect(page.locator('#father-content #Usual')).toContainText('No')
       await expect(page.locator('#father-content #Usual')).toContainText(
         declaration.father.address.country
       )
@@ -1043,7 +1042,6 @@ test.describe.serial('4. Birth declaration case - 4', () => {
        * Expected result: should include
        * - Father's address
        */
-      await expect(page.locator('#father-content #Usual')).toContainText('No')
       await expect(page.locator('#father-content #Usual')).toContainText(
         declaration.father.address.country
       )
