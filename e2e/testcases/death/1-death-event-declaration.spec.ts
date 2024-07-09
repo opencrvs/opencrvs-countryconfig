@@ -96,7 +96,7 @@ test.describe('1. Death event declaration', () => {
          * Expected result: should show
          * - I am going to help you make a declaration of death.
          * - As the legal Informant it is important that all the information provided by you is accurate.
-         * - Once the declaration is processed you will receive you will receive an email to tell you
+         * - Once the declaration is processed you will receive an email to tell you
          *   when to visit the office to collect the certificate - Take your ID with you.
          * - Make sure you collect the certificate. A death certificate is critical to support with
          *   inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.
@@ -111,7 +111,7 @@ test.describe('1. Death event declaration', () => {
         ).toBeVisible()
         await expect(
           page.getByText(
-            'Once the declaration is processed you will receive you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.'
+            'Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.'
           )
         ).toBeVisible()
         await expect(

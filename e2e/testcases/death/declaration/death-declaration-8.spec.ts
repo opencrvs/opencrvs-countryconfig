@@ -263,7 +263,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Spouse's address
        * - Change button
        */
-      await expect(page.locator('#spouse-content #Usual')).toContainText('Yes')
+      await expect(page.locator('#spouse-content #Same')).toContainText('Yes')
     })
 
     test('8.1.6 Send for review', async () => {
@@ -503,7 +503,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
        * - Spouse's address
        * - Change button
        */
-      await expect(page.locator('#spouse-content #Usual')).toContainText('Yes')
+      await expect(page.locator('#spouse-content #Same')).toContainText('Yes')
     })
   })
 })
