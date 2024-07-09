@@ -66,7 +66,6 @@ export const getAgeOfIndividualInYears = (
   validator: validators,
   conditionals,
   postfix: 'years',
-  inputFieldWidth: '78px',
   ...(certificateHandlebar && {
     mapping: getFieldMapping('ageOfIndividualInYears', certificateHandlebar)
   })
