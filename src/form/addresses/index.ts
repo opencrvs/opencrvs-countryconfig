@@ -144,7 +144,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
             `(${detailsDontExist} || ${mothersDetailsDontExistOnOtherPage}) || ${hideIfMotherAddressNotAvailable[0].expression}`
           ),
           expressionToConditional(
-            `(${detailsDontExist} || ${mothersDetailsDontExistOnOtherPage}) || ${hideIfMotherAddressNotAvailable[0].expression} || !${primaryAddressSameAsOtherPrimaryAddress})`,
+            `(${detailsDontExist} || ${mothersDetailsDontExistOnOtherPage}) || ${hideIfMotherAddressNotAvailable[0].expression} || !${primaryAddressSameAsOtherPrimaryAddress}`,
             'hideInPreview'
           )
         ]
