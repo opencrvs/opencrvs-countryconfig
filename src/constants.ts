@@ -9,6 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 export const TEST_SOURCE = `${process.cwd()}/src/tests/`
+export const HOSTNAME = process.env.DOMAIN || '*'
 export const DOMAIN = process.env.DOMAIN || '*'
 export const GATEWAY_URL = process.env.GATEWAY_URL || 'http://localhost:7070'
 export const LOGIN_URL = process.env.LOGIN_URL || 'http://localhost:3020/'

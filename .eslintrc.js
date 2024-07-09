@@ -1,10 +1,11 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'cypress'],
   extends: [
     'eslint:recommended',
     'plugin:prettier/recommended',
+    'plugin:cypress/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'prettier'
   ],
@@ -18,6 +19,7 @@ module.exports = {
     fhir: true
   },
   env: {
-    node: true
+    node: true,
+    jest: true
   }
 }
