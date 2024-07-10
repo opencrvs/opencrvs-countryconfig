@@ -12,9 +12,11 @@ window.config = {
   AUTH_API_URL: 'https://gateway.{{hostname}}/auth/',
   CONFIG_API_URL: 'https://config.{{hostname}}',
   // Country code in uppercase ALPHA-3 format
-  COUNTRY: 'FAR',
-  LANGUAGES: 'en,fr',
+  COUNTRY: 'MDG',
+  LANGUAGES: 'fr,en,mg',
+  AVAILABLE_LANGUAGES_SELECT: 'fr:Français,en:English,mg:Malagasy',
   CLIENT_APP_URL: 'https://register.{{hostname}}/',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
-  SENTRY: '{{sentry}}'
+  SENTRY: '{{sentry}}',
+  LOGROCKET: ''
 }

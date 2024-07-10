@@ -22,7 +22,7 @@ import { Validator } from '../types/validators'
 const exactDobConditional: Conditional[] = [
   {
     action: 'hide',
-    expression: '!window.config.FEATURES.DATE_OF_BIRTH_UNKNOWN'
+    expression: '!window.config.DATE_OF_BIRTH_UNKNOWN'
   }
 ]
 
@@ -36,12 +36,13 @@ export const exactDateOfBirthUnknown = (
     description: 'Checkbox for exact date of birth unknown',
     id: 'form.field.label.exactDateOfBirthUnknown'
   },
-  hideInPreview: true,
+  hideInPreview: false, // true
   required: false,
   hideHeader: true,
   initialValue: false,
   validator: [],
-  conditionals: exactDobConditional.concat(conditionalCase),
+  conditionals: conditionalCase,
+  // conditionals: exactDobConditional.concat(conditionalCase),
   mapping: {
     query: {
       operation: 'booleanTransformer'
@@ -83,7 +84,7 @@ export const getMaritalStatus = (
     description: 'Label for form field: Marital status',
     id: 'form.field.label.maritalStatus'
   },
-  required: false,
+  required: true,
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
@@ -96,7 +97,7 @@ export const registrationEmail: SerializedFormField = {
   name: 'registrationEmail',
   type: 'TEXT',
   label: formMessageDescriptors.email,
-  required: true, // Email is the configured INFORMANT_NOTIFICATION_DELIVERY_METHOD in Farajaland
+  required: false, // Email is the configured INFORMANT_NOTIFICATION_DELIVERY_METHOD in Farajaland
   initialValue: '',
   validator: [
     {
@@ -164,8 +165,7 @@ export const getNIDVerificationButton = (
   labelForOffline: formMessageDescriptors.nidOffline
 })
 export const getOccupation = (
-  certificateHandlebar: string,
-  conditionals: Conditional[] = []
+  certificateHandlebar: string
 ): SerializedFormField => ({
   name: 'occupation',
   type: 'TEXT',
@@ -174,10 +174,15 @@ export const getOccupation = (
     description: 'text for occupation form field',
     id: 'form.field.label.occupation'
   },
-  required: false,
+  required: true,
   initialValue: '',
   validator: [],
-  conditionals,
+  conditionals: [
+    {
+      action: 'hide',
+      expression: '!values.detailsExist'
+    }
+  ],
   mapping: getFieldMapping('occupation', certificateHandlebar)
 })
 

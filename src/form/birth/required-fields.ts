@@ -41,7 +41,7 @@ export const informantType: SerializedFormField = {
 }
 
 export const getPlaceOfBirthFields = (): SerializedFormField[] => [
-  divider('place-of-birth'),
+  //divider('place-of-birth'),
   {
     name: 'placeOfBirth',
     type: 'SELECT_WITH_OPTIONS',

@@ -56,7 +56,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     // OPTIONS ARE THE FULL PLACE OF EVENT FIELDS, STANDARD ADDRESS FIELDS, ADDRESS SUBSECTION DIVIDERS, OR RADIO BUTTONS TO SIMPLIFY FORM ENTRY
 
     // PLACE OF BIRTH ADDRESS FIELDS
-    precedingFieldId: 'birth.child.child-view-group.reasonForLateRegistration',
+    precedingFieldId: 'birth.child.child-view-group.weightAtBirth',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_BIRTH }]
   },
   {

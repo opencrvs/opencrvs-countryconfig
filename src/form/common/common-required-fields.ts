@@ -56,7 +56,7 @@ export const getFamilyNameField = (
     conditionals,
     type: 'TEXT',
     label: formMessageDescriptors.familyName,
-    maxLength: 32,
+    maxLength: 255,
     required: true,
     initialValue: '',
     validator: [
@@ -82,8 +82,8 @@ export const getFirstNameField = (
       id: 'form.field.label.firstNames'
     },
     conditionals,
-    maxLength: 32,
-    required: true,
+    maxLength: 255,
+    required: false,
     initialValue: '',
     validator: [
       {
@@ -102,7 +102,7 @@ export const getNationality = (
     type: 'SELECT_WITH_OPTIONS',
     label: formMessageDescriptors.nationality,
     required: true,
-    initialValue: 'FAR',
+    initialValue: 'MDG',
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     options: {
@@ -149,7 +149,7 @@ export const getNationalID = (
     name: fieldName,
     type: 'TEXT',
     label: formMessageDescriptors.iDTypeNationalID,
-    required: true,
+    required: false,
     initialValue: '',
     validator,
     conditionals,

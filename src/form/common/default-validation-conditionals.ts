@@ -84,6 +84,14 @@ export const mothersBirthDateConditionals = [
     expression: 'values.exactDateOfBirthUnknown'
   },
   {
+    action: 'hide',
+    expression: 'values.birthInformantCustomizedExactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.customizedExactDateOfBirthUnknown'
+  },
+  {
     action: 'disable',
     expression: `draftData?.mother?.fieldsModifiedByNidUserInfo?.includes('motherBirthDate')`
   }
@@ -119,16 +127,6 @@ export const hideIfInformantMotherOrFather = [
   {
     action: 'hide',
     expression: informantNotMotherOrFather
-  }
-]
-
-export const isInformantSpouse =
-  '!values.informantType || values.informantType==="SPOUSE"'
-
-export const hideIfInformantSpouse = [
-  {
-    action: 'hide',
-    expression: isInformantSpouse
   }
 ]
 
@@ -173,6 +171,14 @@ export const fathersBirthDateConditionals = [
   {
     action: 'hide',
     expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.birthInformantCustomizedExactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.customizedExactDateOfBirthUnknown'
   },
   {
     action: 'disable',
@@ -253,51 +259,11 @@ export const brideOrGroomBirthDateValidators = (spouseType: string) => [
   }
 ]
 
-export const brideOrGroomAgeValidators = [
-  {
-    operation: 'range',
-    parameters: [18, 120]
-  },
-  {
-    operation: 'maxLength',
-    parameters: [3]
-  }
-] satisfies Validator[]
-
-export const ageOfIndividualValidators: Validator[] = [
-  {
-    operation: 'range',
-    parameters: [12, 120]
-  },
-  {
-    operation: 'maxLength',
-    parameters: [3]
-  }
-]
-
-export const ageOfParentsConditionals = [
-  ...ageOfIndividualValidators,
-  {
-    operation: 'isValidParentsBirthDate',
-    parameters: [10, true]
-  }
-] satisfies Validator[]
-
-export const ageOfDeceasedConditionals = [
-  {
-    operation: 'range',
-    parameters: [0, 120]
-  },
-  {
-    operation: 'maxLength',
-    parameters: [3]
-  }
-] satisfies Validator[]
-
 export const exactDateOfBirthUnknownConditional = [
   {
     action: 'hide',
-    expression: '!values.exactDateOfBirthUnknown'
+    expression: '!values.customizedExactDateOfBirthUnknown'
+    // '!values.exactDateOfBirthUnknown || !values.customizedExactDateOfBirthUnknown || !values.birthInformantCustomizedExactDateOfBirthUnknown'
   }
 ]
 
@@ -350,6 +316,10 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       {
         operation: 'duplicateIDNumber',
         parameters: ['bride.iD']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['informant.informantID']
       }
     ]
   } else if (configCase === 'bride') {
@@ -361,6 +331,10 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       {
         operation: 'duplicateIDNumber',
         parameters: ['groom.iD']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['informant.informantID']
       }
     ]
   } else {
@@ -411,7 +385,8 @@ export const hideIfNidIntegrationEnabled = [
 export const informantBirthDateConditionals = [
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown || values.birthInformantCustomizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown'
   },
   {
     action: 'disable',
@@ -487,3 +462,64 @@ export const detailsDontExist = '!values.detailsExist'
 // primary address same as other primary
 export const primaryAddressSameAsOtherPrimaryAddress =
   'values.primaryAddressSameAsOtherPrimary'
+
+export const primaryAddressSameAsOtherPrimary: Conditional[] = [
+  {
+    action: 'hide',
+    expression: 'values.primaryAddressSameAsOtherPrimary'
+  }
+]
+
+export const locationOfBirthIsNotHealthFacility: Conditional[] = [
+  {
+    action: 'hide',
+    expression: '(values.placeOfBirth=="HEALTH_FACILITY")'
+  }
+]
+
+export const ageOfIndividualValidators: Validator[] = [
+  {
+    operation: 'range',
+    parameters: [12, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  },
+  {
+    operation: 'isValidParentsBirthDate',
+    parameters: [10, true]
+  }
+]
+
+export const ageOfDeceasedConditionals = [
+  {
+    operation: 'range',
+    parameters: [0, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+] satisfies Validator[]
+
+export const isInformantSpouse =
+  '!values.informantType || values.informantType==="SPOUSE"'
+
+export const hideIfInformantSpouse = [
+  {
+    action: 'hide',
+    expression: isInformantSpouse
+  }
+]
+
+export const brideOrGroomAgeValidators = [
+  {
+    operation: 'range',
+    parameters: [18, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+] satisfies Validator[]
