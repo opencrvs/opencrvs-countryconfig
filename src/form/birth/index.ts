@@ -26,7 +26,6 @@ import {
 import {
   // getAgeOfIndividualInYears,
   getMaritalStatus,
-  registrationEmail,
   registrationPhone,
   getOccupation,
   divider
@@ -53,8 +52,7 @@ import {
   fatherFamilyNameConditionals,
   informantNotMotherOrFather,
   detailsExistConditional,
-  primaryAddressSameAsOtherPrimary,
-  locationOfBirthIsNotHealthFacility
+  primaryAddressSameAsOtherPrimary
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -69,14 +67,14 @@ import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import {
+  getCustomizedExactDateOfBirthUnknown,
   getFokontanyCustomAdress,
   getLegacyBirthRegistrationDate,
   getLegacyBirthRegistrationNumber,
   getLegacyBirthRegistrationTime,
   getPlaceOfBirth,
   getTimeOfBirth,
-  getYearOfBirth,
-  exactDateOfBirthUnknown
+  getYearOfBirth
 } from './custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -141,7 +139,7 @@ export const birthForm: ISerializedForm = {
                 },
                 {
                   defaultMessage:
-                    'Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
+                    'Once the declaration is processed you will receive you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
                   description: 'Form information for birth',
                   id: 'form.section.information.birth.bullet3'
                 },
@@ -196,7 +194,15 @@ export const birthForm: ISerializedForm = {
             weightAtBirth,
             getFokontanyCustomAdress(
               'child',
-              locationOfBirthIsNotHealthFacility,
+              [
+                {
+                  action: 'hide',
+                  expression:
+                    'values.placeOfBirth!="PRIVATE_HOME" && values.placeOfBirth!="OTHER"'
+                }
+              ],
+              true,
+              // locationOfBirthIsNotHealthFacility, // this display the field fktCustomAddress at the first opening of child section
               {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
@@ -240,7 +246,11 @@ export const birthForm: ISerializedForm = {
               getNationalIDValidators('informant'),
               certificateHandlebars.informantNID
             ),
-            exactDateOfBirthUnknown('informant', hideIfInformantMotherOrFather),
+            getCustomizedExactDateOfBirthUnknown(
+              'informant',
+              hideIfInformantMotherOrFather
+            ),
+            // exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
@@ -286,24 +296,14 @@ export const birthForm: ISerializedForm = {
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             // getCustomAddress('informant', hideIfInformantMotherOrFather),
             registrationPhone, // If you wish to enable automated SMS notifications to informants, include this
-            registrationEmail, // If you wish to enable automated Email notifications to informants, include this
-            getFokontanyCustomAdress(
-              'informant',
-              hideIfInformantMotherOrFather,
-              {
-                id: 'form.field.label.customAddress',
-                description:
-                  'A form field that asks for informent current address',
-                defaultMessage: 'Address'
-              }
-            ),
+            // registrationEmail, // If you wish to enable automated Email notifications to informants, include this
             // preceding field of address fields
             divider('informant-nid-seperator', [
               {
                 action: 'hide',
                 expression: informantNotMotherOrFather
               }
-            ])
+            ]),
             // ADDRESS FIELDS WILL RENDER HERE
             /*  divider('informant-address-seperator', [
               {
@@ -311,6 +311,17 @@ export const birthForm: ISerializedForm = {
                 expression: informantNotMotherOrFather
               }
             ]), */
+            getFokontanyCustomAdress(
+              'informant',
+              hideIfInformantMotherOrFather,
+              true,
+              {
+                id: 'form.field.label.customAddress',
+                description:
+                  'A form field that asks for informent current address',
+                defaultMessage: 'Address'
+              }
+            )
           ],
           previewGroups: [informantNameInEnglish]
         }
@@ -345,7 +356,10 @@ export const birthForm: ISerializedForm = {
               getNationalIDValidators('mother'),
               certificateHandlebars.motherNID
             ),
-            exactDateOfBirthUnknown('mother', detailsExistConditional),
+            getCustomizedExactDateOfBirthUnknown(
+              'mother',
+              detailsExistConditional
+            ),
             getBirthDate(
               'motherBirthDate',
               mothersBirthDateConditionals,
@@ -356,6 +370,7 @@ export const birthForm: ISerializedForm = {
               'mother',
               exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
             ),
+            // exactDateOfBirthUnknown(detailsExistConditional),
             // getAgeOfIndividualInYears(
             //   formMessageDescriptors.ageOfMother,
             //   exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
@@ -378,16 +393,16 @@ export const birthForm: ISerializedForm = {
               }
             ]),
             getOccupation(certificateHandlebars.motherOccupation),
-            getFokontanyCustomAdress('mother', detailsExistConditional, {
-              id: 'form.field.label.customAddress',
-              description: 'A form field that asks for mother current address',
-              defaultMessage: 'Address'
-            }),
             // getCustomAddress('mother', detailsExist),
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            divider('mother-address-seperator', detailsExist)
+            getFokontanyCustomAdress('mother', detailsExistConditional, true, {
+              id: 'form.field.label.customAddress',
+              description: 'A form field that asks for mother current address',
+              defaultMessage: 'Address'
+            })
+            // divider('mother-address-seperator', detailsExist)
             // getEducation(certificateHandlebars.motherEducationalAttainment),
             // multipleBirth
           ],
@@ -432,7 +447,10 @@ export const birthForm: ISerializedForm = {
               getNationalIDValidators('father'),
               certificateHandlebars.fatherNID
             ),
-            exactDateOfBirthUnknown('father', detailsExistConditional),
+            getCustomizedExactDateOfBirthUnknown(
+              'father',
+              detailsExistConditional
+            ),
             getBirthDate(
               'fatherBirthDate',
               fathersBirthDateConditionals,
@@ -443,6 +461,7 @@ export const birthForm: ISerializedForm = {
               'father',
               exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
             ),
+            // exactDateOfBirthUnknown(detailsExistConditional),
             // getAgeOfIndividualInYears(
             //   formMessageDescriptors.ageOfFather,
             //   exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
@@ -465,9 +484,14 @@ export const birthForm: ISerializedForm = {
               }
             ]),
             getOccupation(certificateHandlebars.fatherOccupation),
+            // getCustomAddress('father', detailsExist),
+            // preceding field of address fields
+            divider('father-nid-seperator', detailsExist),
+            // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAdress(
               'father',
               primaryAddressSameAsOtherPrimary.concat(detailsExistConditional),
+              true,
               {
                 id: 'form.field.label.customAddress',
                 description:
@@ -475,10 +499,6 @@ export const birthForm: ISerializedForm = {
                 defaultMessage: 'Address'
               }
             ),
-            // getCustomAddress('father', detailsExist),
-            // preceding field of address fields
-            divider('father-nid-seperator', detailsExist),
-            // ADDRESS FIELDS WILL RENDER HERE
             divider('father-address-seperator', detailsExist)
             // getEducation(certificateHandlebars.fatherEducationalAttainment),
           ],

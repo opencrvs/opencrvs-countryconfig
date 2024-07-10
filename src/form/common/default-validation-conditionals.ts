@@ -262,7 +262,7 @@ export const brideOrGroomBirthDateValidators = (spouseType: string) => [
 export const exactDateOfBirthUnknownConditional = [
   {
     action: 'hide',
-    expression: '!values.exactDateOfBirthUnknown'
+    expression: '!values.customizedExactDateOfBirthUnknown'
     // '!values.exactDateOfBirthUnknown || !values.customizedExactDateOfBirthUnknown || !values.birthInformantCustomizedExactDateOfBirthUnknown'
   }
 ]

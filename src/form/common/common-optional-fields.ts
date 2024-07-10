@@ -22,7 +22,7 @@ import { Validator } from '../types/validators'
 const exactDobConditional: Conditional[] = [
   {
     action: 'hide',
-    expression: '!window.config.FEATURES.DATE_OF_BIRTH_UNKNOWN'
+    expression: '!window.config.DATE_OF_BIRTH_UNKNOWN'
   }
 ]
 
@@ -36,7 +36,7 @@ export const exactDateOfBirthUnknown = (
     description: 'Checkbox for exact date of birth unknown',
     id: 'form.field.label.exactDateOfBirthUnknown'
   },
-  hideInPreview: true,
+  hideInPreview: false, // true
   required: false,
   hideHeader: true,
   initialValue: false,
@@ -174,7 +174,7 @@ export const getOccupation = (
     description: 'text for occupation form field',
     id: 'form.field.label.occupation'
   },
-  required: false,
+  required: true,
   initialValue: '',
   validator: [],
   conditionals: [

@@ -31,8 +31,11 @@ export const birthDocumentType = {
   PASSPORT: 'PASSPORT',
   OTHER: 'OTHER',
   NOTIFICATION_OF_BIRTH: 'NOTIFICATION_OF_BIRTH',
+  NOTIFICATION_OF_BIRTH_VERSO: 'NOTIFICATION_OF_BIRTH_VERSO',
   PROOF_OF_LEGAL_GUARDIANSHIP: 'PROOF_OF_LEGAL_GUARDIANSHIP',
-  PROOF_OF_ASSIGNED_RESPONSIBILITY: 'PROOF_OF_ASSIGNED_RESPONSIBILITY'
+  PROOF_OF_ASSIGNED_RESPONSIBILITY: 'PROOF_OF_ASSIGNED_RESPONSIBILITY',
+  ADOPTION_LETTER: 'ADOPTION_LETTER',
+  LIVRET_DE_FAMILLE: 'LIVRET_DE_FAMILLE'
 }
 
 export const documentsSection = {
@@ -67,6 +70,10 @@ export const documentsSection = {
             {
               value: birthDocumentType.NOTIFICATION_OF_BIRTH,
               label: formMessageDescriptors.docTypeChildBirthProof
+            },
+            {
+              value: birthDocumentType.NOTIFICATION_OF_BIRTH_VERSO,
+              label: formMessageDescriptors.docTypeChildBirthProofVerso
             }
           ],
           mapping: getFieldMapping('documents')
@@ -131,6 +138,14 @@ export const documentsSection = {
             {
               value: birthDocumentType.OTHER,
               label: formMessageDescriptors.docTypeOther
+            },
+            {
+              value: birthDocumentType.ADOPTION_LETTER,
+              label: formMessageDescriptors.docTypeAdoption
+            },
+            {
+              value: birthDocumentType.LIVRET_DE_FAMILLE,
+              label: formMessageDescriptors.docTypeLivretDeFamille
             }
           ],
           conditionals: [
