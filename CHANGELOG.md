@@ -2,8 +2,11 @@
 
 ## 1.6.0 (TBD)
 
+### Breaking changes
+
 - Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
 - New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
+- Remove `inputFieldWidth` from Number type form field
 
 ## 1.5.0
 
