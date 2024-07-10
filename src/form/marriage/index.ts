@@ -84,7 +84,7 @@ export const marriageForm: ISerializedForm = {
     {
       id: 'informant',
       viewType: 'form',
-      name: formMessageDescriptors.registrationName,
+      name: formMessageDescriptors.informantName,
       title: formMessageDescriptors.informantTitle,
       groups: [
         {
@@ -269,7 +269,7 @@ export const marriageForm: ISerializedForm = {
     {
       id: 'witnessOne',
       viewType: 'form',
-      name: formMessageDescriptors.witnessName,
+      name: formMessageDescriptors.witnessOneName,
       title: formMessageDescriptors.witnessOneTitle,
       groups: [
         {
@@ -296,7 +296,7 @@ export const marriageForm: ISerializedForm = {
     {
       id: 'witnessTwo',
       viewType: 'form',
-      name: formMessageDescriptors.witnessName,
+      name: formMessageDescriptors.witnessTwoName,
       title: formMessageDescriptors.witnessTwoTitle,
       groups: [
         {

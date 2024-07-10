@@ -7,18 +7,13 @@ version: '3.3'
 # Before you deploy staging or production environments, make sure the application servers are
 # either in an internal network or protected with a firewall. No ports should be exposed to the internet.
 #
-# The VPN_HOST_ADDRESS environment variable should be set to the IP address where all inbound traffic is coming from.
-# In most cases, this is the VPN server's public IP address.
-#
-# ${VPN_HOST_ADDRESS}
-#
 
 services:
   gateway:
     environment:
       - NODE_ENV=production
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
 
@@ -26,21 +21,21 @@ services:
     environment:
       - NODE_ENV=production
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
 
   search:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
 
   metrics:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://metrics:${METRICS_MONGODB_PASSWORD}@mongo1/metrics?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
@@ -48,14 +43,14 @@ services:
   auth:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
 
   user-mgnt:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
     deploy:
       replicas: 1
@@ -64,14 +59,15 @@ services:
     environment:
       - NODE_ENV=production
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
     deploy:
       replicas: 1
 
   webhooks:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
     deploy:
       replicas: 1
@@ -79,7 +75,7 @@ services:
   config:
     environment:
       - NODE_ENV=production
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
     deploy:
       replicas: 1
@@ -103,10 +99,9 @@ services:
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021
-      - OPENHIM_URL=http://openhim-core:5001/fhir
-      - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
+      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
       - ALERT_EMAIL=${ALERT_EMAIL}
       - SMTP_HOST=${SMTP_HOST}
@@ -154,17 +149,6 @@ services:
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
       - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200
 
-  openhim-core:
-    environment:
-      - mongo_url=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-      - mongo_atnaUrl=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-    deploy:
-      replicas: 1
-
-  openhim-console:
-    deploy:
-      replicas: 1
-
   mongo-on-update:
     environment:
       - REPLICAS=1
@@ -173,7 +157,15 @@ services:
     # These templates use an Automatic Certificate Management Environment (Let's Encrypt).
     # This makes sure that the HTTPS certificates are automatically generated and renewed without manual maintenance.
     #
-    # For your country to do this, your domain's DNS provider must be one of the ones listed here
+    # This default configuration will only work if OpenCRVS is directly accessible from the internet.
+    #
+    # WE STRONGLY RECOMMEND THAT YOU DO NOT EXPOSE PRODUCTION OPENCRVS TO THE INTERNET!
+    #
+    # If you are deploying OpenCRVS in a private network, you have two options:
+    # 1. Use a DNS provider that supports ACME DNS-01 challenges.
+    # 2. Use a manually renewed certificate file.
+
+    # For your country to use the DNS-01 challenge, your domain's DNS provider must be one of the ones listed here
     # https://doc.traefik.io/traefik/https/acme/#providers
     #
     # If your DNS provider is not listed, you can use manually renewed certificate files instead of Let's Encrypt.
@@ -191,13 +183,12 @@ services:
     #   - --tls.stores.default.defaultcertificate.certfile=/certs/crvs.cm.crt
     #   - --tls.stores.default.defaultcertificate.keyfile=/certs/crvs.cm.key
 
-    environment:
-      - GOOGLE_DOMAINS_ACCESS_TOKEN=${GOOGLE_DOMAINS_ACCESS_TOKEN}
     command:
-      - --certificatesresolvers.certResolver.acme.dnschallenge=true
-      - --certificatesresolvers.certResolver.acme.dnschallenge.provider=googledomains
       - --certificatesresolvers.certResolver.acme.email=riku@opencrvs.org
       - --certificatesresolvers.certResolver.acme.storage=acme.json
+      - --certificatesresolvers.certResolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.certResolver.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.certResolver.acme.httpchallenge=true
 
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443

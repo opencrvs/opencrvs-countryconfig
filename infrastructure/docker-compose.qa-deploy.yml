@@ -4,7 +4,6 @@ services:
   traefik:
     networks:
       - overlay_net
-      - vpn
     command:
       # Use HTTP-01 challenge as the web server is publicly available
       # https://doc.traefik.io/traefik/https/acme/#httpchallenge
@@ -34,7 +33,7 @@ services:
   notification:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
@@ -49,11 +48,17 @@ services:
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021
-      - OPENHIM_URL=http://openhim-core:5001/fhir
-      - CONFIRM_REGISTRATION_URL=http://openhim-core:5001/confirm/registration
+      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS}
+      - ALERT_EMAIL=${ALERT_EMAIL}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_SECURE=${SMTP_SECURE}
     deploy:
       replicas: 1
     networks:
@@ -66,7 +71,7 @@ services:
   gateway:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - COUNTRY=FAR
       - QA_ENV=true
       - NODE_ENV=production
@@ -74,43 +79,43 @@ services:
   workflow:
     environment:
       - LANGUAGES=en,fr
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   search:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   metrics:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   auth:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   user-mgnt:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   webhooks:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
   config:
     environment:
-      - SENTRY_DSN=${SENTRY_DSN}
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
 
@@ -123,47 +128,3 @@ services:
     environment:
       - QA_ENV=true
       - NODE_ENV=production
-
-  wg-easy:
-    image: ghcr.io/wg-easy/wg-easy:8
-    environment:
-      - WG_HOST=vpn.{{hostname}}
-      - PASSWORD=${VPN_ADMIN_PASSWORD}
-      - WG_DEFAULT_ADDRESS=10.13.13.x
-      - WG_ALLOWED_IPS=0.0.0.0/0
-      - WG_PORT=51822
-      - WG_POST_UP=iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE
-      - WG_POST_DOWN=iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE
-    volumes:
-      - /data/wireguard:/etc/wireguard
-    ports:
-      - '51822:51820/udp'
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
-      - net.ipv4.ip_forward=1
-    deploy:
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.vpn.rule=Host(`vpn.{{hostname}}`)'
-        - 'traefik.http.services.vpn.loadbalancer.server.port=51821'
-        - 'traefik.http.routers.vpn.tls=true'
-        - 'traefik.http.routers.vpn.tls.certresolver=certResolver'
-        - 'traefik.http.routers.vpn.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_vpn'
-        - 'traefik.http.middlewares.vpn.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.vpn.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.vpn.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.vpn.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.vpn.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.vpn.headers.stspreload=true'
-    restart: unless-stopped
-    networks:
-      - vpn
-
-networks:
-  vpn:
-    driver: overlay
-    attachable: false

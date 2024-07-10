@@ -37,7 +37,11 @@
                 max-width: 100%;">
     <h1>Complete your marriage declaration</h1>
     <p>
-        Hello {{informantName}},
+        {{#if informantName}}
+            Hello {{informantName}},
+        {{else}}
+            Hello,
+        {{/if}}
     </p>
     <p>
         Please visit {{crvsOffice}} to complete your marriage declaration. Your marriage registration tracking ID is

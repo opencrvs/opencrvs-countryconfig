@@ -16,9 +16,6 @@
 
 - hosts: docker-manager-first
   become: yes
-  vars:
-    crontab_user: root
-
   tasks:
     - name: Get crontab user home directory
       getent:
@@ -81,42 +78,99 @@
       tags:
         - backups
 
-- hosts: backups
+- hosts: backups-host
   become: yes
   become_method: sudo
-  vars:
-    manager_hostname: "{{ groups['docker-manager-first'][0] }}"
   tasks:
     - name: Ensure backup user is present
       user:
-        name: '{{ external_backup_server_user }}'
+        name: '{{ backup_server_user }}'
         state: present
         create_home: true
-        home: '/home/{{ external_backup_server_user }}'
+        home: '{{ backup_server_user_home }}'
         shell: /bin/bash
       tags:
         - backups
 
     - set_fact:
-        external_backup_server_user_home: '/home/{{ external_backup_server_user }}'
-      tags:
-        - backups
-
-    - name: Ensure backup application servers can login to backup server
-      blockinfile:
-        path: '{{ external_backup_server_user_home }}/.ssh/authorized_keys'
-        block: |
-          {{ lookup('file', '/tmp/docker-manager-first_id_rsa.pub') }}
-        marker: '# {mark} ANSIBLE MANAGED BLOCK docker-manager-first {{ manager_hostname }}'
-        create: yes
-        mode: 0600
+        backup_server_user_home: '/home/{{ backup_server_user }}'
       tags:
         - backups
 
     - name: 'Create backup directory'
       file:
-        path: '{{ external_backup_server_remote_directory }}'
+        path: '{{ backup_server_remote_target_directory }}'
         state: directory
-        owner: '{{ external_backup_server_user }}'
+        owner: '{{ backup_server_user }}'
+      tags:
+        - backups
+
+    - name: Copy rotate_backups.sh file to backup_server_user's home directory
+      copy:
+        src: ../backups/rotate_backups.sh
+        dest: '{{ backup_server_user_home }}/rotate_backups.sh'
+        owner: '{{ backup_server_user }}'
+        mode: 0755
+      tags:
+        - backups
+
+    - name: 'Setup backup rotation'
+      cron:
+        user: '{{ crontab_user }}'
+        name: 'rotate backups in {{ backup_server_remote_target_directory }}'
+        minute: '0'
+        hour: '0'
+        job: 'bash {{ backup_server_user_home }}/rotate_backups.sh --backup_dir={{ backup_server_remote_target_directory }} --amount_to_keep={{ amount_of_backups_to_keep }} >> /var/log/opencrvs-rotate-backups.log 2>&1'
+        state: "{{ 'present' if (amount_of_backups_to_keep) else 'absent' }}"
+      tags:
+        - backups
+
+- hosts: backups
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Get manager node hostname
+      set_fact:
+        manager_hostname: "{{ groups['docker-manager-first'][0] }}"
+      when: "'docker-manager-first' in groups"
+      tags:
+        - backups
+
+    - name: Ensure application servers can login to backup server
+      blockinfile:
+        path: '{{ backup_server_user_home }}/.ssh/authorized_keys'
+        block: |
+          {{ lookup('file', '/tmp/docker-manager-first_id_rsa.pub') }}
+        marker: '# {mark} ANSIBLE MANAGED BLOCK docker-manager-first {{ manager_hostname }}'
+        create: yes
+        mode: 0600
+        owner: '{{ backup_server_user }}'
+      when: "'docker-manager-first' in groups"
+      tags:
+        - backups
+
+- hosts: docker-manager-first
+  become: yes
+  tasks:
+    - name: Set destination server
+      when: "'backups' in groups and groups['backups'] | length > 0"
+      set_fact:
+        destination_server: "{{ hostvars[groups['backups'][0]].ansible_host }}"
+      tags:
+        - backups
+
+    - name: Check SSH connection to destination server
+      shell: ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 {{ backup_server_user }}@{{ destination_server }} 'echo Connection successful'
+      remote_user: '{{ crontab_user }}'
+      register: ssh_test
+      when: "'backups' in groups and groups['backups'] | length > 0"
+      ignore_errors: yes
+      tags:
+        - backups
+
+    - name: Fail if SSH connection test failed
+      fail:
+        msg: 'SSH connection to the backup server failed'
+      when: "'backups' in groups and groups['backups'] | length > 0 and ssh_test.rc != 0"
       tags:
         - backups

@@ -69,18 +69,18 @@ export interface ITokenPayload {
 }
 
 export default function getPlugins() {
-  const plugins: any[] = [
-    inert,
-    JWT,
-    {
+  const plugins: any[] = [inert, JWT]
+
+  if (process.env.NODE_ENV === 'production') {
+    plugins.push({
       plugin: Pino,
       options: {
         prettyPrint: false,
         logPayload: false,
         instance: logger
       }
-    }
-  ]
+    })
+  }
 
   if (SENTRY_DSN) {
     plugins.push({
@@ -165,7 +165,7 @@ async function getPublicKey(): Promise<string> {
     const response = await fetch(`${AUTH_URL}/.well-known`)
     return response.text()
   } catch (error) {
-    console.log(
+    logger.error(
       `Failed to fetch public key from Core. Make sure Core is running, and you are able to connect to ${AUTH_URL}/.well-known.`
     )
     if (process.env.NODE_ENV === 'production') {
@@ -237,13 +237,19 @@ export async function createServer() {
 
   server.auth.default('jwt')
 
+  if (process.env.NODE_ENV !== 'production') {
+    server.route({
+      method: 'GET',
+      path: '/certificates/{event}.svg',
+      handler: certificateHandler,
+      options: {
+        auth: false,
+        tags: ['api', 'certificates'],
+        description: 'Returns only one certificate metadata'
+      }
+    })
+  }
   // add ping route by default for health check
-  server.route({
-    method: 'GET',
-    path: '/certificates/{event}.svg',
-    handler: certificateHandler
-  })
-
   server.route({
     method: 'GET',
     path: '/ping',
@@ -368,6 +374,7 @@ export async function createServer() {
     handler: dashboardQueriesHandler,
     options: {
       tags: ['api'],
+      auth: false,
       description: 'Serves dashboard view refresher queries'
     }
   })
@@ -384,7 +391,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/content/farajaland-map.geojson',
+    path: '/content/map.geojson',
     handler: mapGeojsonHandler,
     options: {
       auth: false,
@@ -433,6 +440,7 @@ export async function createServer() {
     handler: notificationHandler,
     options: {
       tags: ['api'],
+      auth: false,
       validate: {
         payload: notificationSchema
       },
@@ -455,8 +463,7 @@ export async function createServer() {
       validate: {
         payload: emailSchema
       },
-      description:
-        'Handles sending either SMS or email using a predefined template file'
+      description: 'Handles sending email using a predefined template file'
     }
   })
 
@@ -487,7 +494,6 @@ export async function createServer() {
     path: '/certificates',
     handler: certificateHandler,
     options: {
-      auth: false,
       tags: ['api', 'certificates'],
       description: 'Returns certificate metadata'
     }
@@ -498,7 +504,6 @@ export async function createServer() {
     path: '/roles',
     handler: rolesHandler,
     options: {
-      auth: false,
       tags: ['api', 'user-roles'],
       description: 'Returns user roles metadata'
     }
@@ -509,7 +514,6 @@ export async function createServer() {
     path: '/users',
     handler: usersHandler,
     options: {
-      auth: false,
       tags: ['api', 'users'],
       description: 'Returns users metadata'
     }

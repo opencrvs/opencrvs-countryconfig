@@ -15,10 +15,9 @@ import {
 } from './constant'
 import { logger } from '@countryconfig/logger'
 import fetch from 'node-fetch'
-import { readFileSync } from 'fs'
 import * as Handlebars from 'handlebars'
-import { join } from 'path'
 import { internal } from '@hapi/boom'
+import { getLanguages } from '../content/service'
 
 export const informantTemplates = {
   birthInProgressNotification: 'birthInProgressNotification',
@@ -43,19 +42,13 @@ export type SMSTemplateType =
   | keyof typeof otherTemplates
   | keyof typeof informantTemplates
 
-interface ISMSNotificationTemplate {
-  lang: string
-  displayName: string
-  messages: Record<SMSTemplateType, string>
-}
-
 export async function sendSMS(
   type: SMSTemplateType,
   variables: Record<string, string>,
   recipient: string,
   locale: string
 ) {
-  const message = compileMessages(type, variables, locale)
+  const message = await compileMessages(type, variables, locale)
   const body = JSON.stringify({
     messages: [
       {
@@ -87,31 +80,28 @@ export async function sendSMS(
   }
 
   const responseBody = await response.text()
-  logger.info(`Response from Infobip: ${JSON.stringify(responseBody)}`)
   if (!response.ok) {
-    logger.error(
-      `Failed to send sms to ${recipient}. Reason: ${response.text()}`
-    )
+    logger.error(`Failed to send sms to ${recipient}. Reason: ${responseBody}`)
     throw internal(
-      `Failed to send notification to ${recipient}. Reason: ${response.text()}`
+      `Failed to send notification to ${recipient}. Reason: ${responseBody}`
     )
   }
+  logger.info(`Response from Infobip: ${JSON.stringify(responseBody)}`)
 }
 
-function compileMessages(
+const compileMessages = async (
   templateName: SMSTemplateType,
   variables: Record<string, string>,
   locale: string
-): string {
-  const smsNotificationTemplate = JSON.parse(
-    readFileSync(
-      join(__dirname, '../languages/content/notification/notification.json')
-    ).toString()
-  ).data as ISMSNotificationTemplate[]
+) => {
+  const languages = await getLanguages('notification')
+  const language = languages.find(({ lang }) => lang === locale)
 
-  const language = smsNotificationTemplate.filter((obj) => {
-    return obj.lang === locale
-  })[0]
+  if (!language) {
+    throw new Error(
+      `Locale "${locale}" not found while compiling notification messages.`
+    )
+  }
 
   const template = Handlebars.compile(language.messages[templateName])
   return template(variables)
