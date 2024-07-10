@@ -475,10 +475,8 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Father's address
          * - Change button
          */
-        await expect(page.locator('#father-content #Usual')).toContainText(
-          'Yes'
-        )
-        await expect(page.locator('#father-content #Usual')).toContainText(
+        await expect(page.locator('#father-content #Same')).toContainText('Yes')
+        await expect(page.locator('#father-content #Same')).toContainText(
           'Change'
         )
       })

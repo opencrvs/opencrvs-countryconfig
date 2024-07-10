@@ -543,7 +543,7 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - informant's address
        * - Change button
        */
-      await expect(page.locator('#informant-content #Usual')).toContainText(
+      await expect(page.locator('#informant-content #Same')).toContainText(
         'Yes'
       )
 
@@ -958,7 +958,7 @@ test.describe.serial('2. Death declaration case - 2', () => {
        * - informant's address
        * - Change button
        */
-      await expect(page.locator('#informant-content #Usual')).toContainText(
+      await expect(page.locator('#informant-content #Same')).toContainText(
         'Yes'
       )
 
