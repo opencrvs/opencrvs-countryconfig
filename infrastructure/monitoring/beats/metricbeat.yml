@@ -19,39 +19,10 @@ metricbeat.modules:
   #------------------------------- System Module -------------------------------
   - module: system
     metricsets:
-      [
-        'cpu',
-        'load',
-        'memory',
-        'network',
-        'process',
-        'process_summary',
-        'core',
-        'diskio',
-        'socket'
-      ]
-    processes: ['.*']
-    process.include_top_n:
-      by_cpu: 5
-      by_memory: 5
-    period: 10s
-    cpu.metrics: ['percentages']
-    core.metrics: ['percentages']
-
-  # - module: system
-  #   period: 1m
-  #   metricsets:
-  #     - filesystem
-  #     - fsstat
-  #   processors:
-  #     - drop_event.when.regexp:
-  #         system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
-
-  - module: system
-    period: 15m
-    metricsets:
-      - uptime
-
+      - filesystem
+    processors:
+      - drop_event.when.regexp:
+          system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
   #------------------------------- Docker Module -------------------------------
   - module: docker
     metricsets:
