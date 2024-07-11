@@ -1,6 +1,6 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "OpenCRVS country configuration for reference data",
   "os": [
     "darwin",
