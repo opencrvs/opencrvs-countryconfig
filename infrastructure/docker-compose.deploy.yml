@@ -77,6 +77,7 @@ services:
       - ELASTICSEARCH_HOST=elasticsearch:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
+      - KIBANA_ACCESS_TOKEN=${KIBANA_ACCESS_TOKEN}
       - KIBANA_HOST=kibana:5601
     command: ['--strict.perms=false']
     deploy:
@@ -127,8 +128,8 @@ services:
     entrypoint:
       [
         'curl',
-        '-u',
-        'elastic:${ELASTICSEARCH_SUPERUSER_PASSWORD}',
+        '-H',
+        'Authorization: Bearer ${KIBANA_ACCESS_TOKEN}',
         '-X',
         'POST',
         'http://kibana:5601/api/saved_objects/_import?overwrite=true',
@@ -175,6 +176,7 @@ services:
     environment:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
+      - KIBANA_ACCESS_TOKEN=${KIBANA_ACCESS_TOKEN}
     configs:
       - source: kibana.{{ts}}
         target: /usr/share/kibana/config/kibana.yml
