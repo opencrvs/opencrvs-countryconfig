@@ -38,14 +38,14 @@ metricbeat.modules:
     cpu.metrics: ['percentages']
     core.metrics: ['percentages']
 
-  - module: system
-    period: 1m
-    metricsets:
-      - filesystem
-      - fsstat
-    processors:
-      - drop_event.when.regexp:
-          system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
+  # - module: system
+  #   period: 1m
+  #   metricsets:
+  #     - filesystem
+  #     - fsstat
+  #   processors:
+  #     - drop_event.when.regexp:
+  #         system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
 
   - module: system
     period: 15m
