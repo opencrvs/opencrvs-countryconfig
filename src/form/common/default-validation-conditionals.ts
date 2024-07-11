@@ -263,7 +263,6 @@ export const exactDateOfBirthUnknownConditional = [
   {
     action: 'hide',
     expression: '!values.customizedExactDateOfBirthUnknown'
-    // '!values.exactDateOfBirthUnknown || !values.customizedExactDateOfBirthUnknown || !values.birthInformantCustomizedExactDateOfBirthUnknown'
   }
 ]
 
@@ -466,7 +465,7 @@ export const primaryAddressSameAsOtherPrimaryAddress =
 export const primaryAddressSameAsOtherPrimary: Conditional[] = [
   {
     action: 'hide',
-    expression: 'values.primaryAddressSameAsOtherPrimary'
+    expression: primaryAddressSameAsOtherPrimaryAddress
   }
 ]
 

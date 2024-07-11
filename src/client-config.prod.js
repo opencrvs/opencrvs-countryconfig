@@ -16,8 +16,7 @@ window.config = {
   MINIO_BUCKET: 'ocrvs',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
   // Country code in uppercase ALPHA-3 format// Country code in uppercase ALPHA-3 format
-  COUNTRY: 'MDG', // MDG
-  AVAILABLE_LANGUAGES_SELECT: 'fr:Français,en:English,mg:Malagasy',
+  COUNTRY: 'MDG',
   LANGUAGES: 'fr,en,mg',
   SENTRY:
     'https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604',

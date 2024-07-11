@@ -14,9 +14,7 @@ window.config = {
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'MDG',
   LANGUAGES: 'fr,en,mg',
-  AVAILABLE_LANGUAGES_SELECT: 'fr:Français,en:English,mg:Malagasy',
   CLIENT_APP_URL: 'https://register.{{hostname}}/',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
-  SENTRY: '{{sentry}}',
-  LOGROCKET: ''
+  SENTRY: '{{sentry}}'
 }

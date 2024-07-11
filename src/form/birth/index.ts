@@ -24,7 +24,6 @@ import {
   getReasonNotExisting
 } from '../common/common-required-fields'
 import {
-  // getAgeOfIndividualInYears,
   getMaritalStatus,
   registrationPhone,
   getOccupation,
@@ -210,9 +209,6 @@ export const birthForm: ISerializedForm = {
               }
             ),
             // PLACE OF BIRTH FIELDS WILL RENDER HERE
-            // divider('place-of-birth-seperator'),
-            // attendantAtBirth,
-            // birthType
             getLegacyBirthRegistrationNumber('child'),
             getLegacyBirthRegistrationDate(),
             getLegacyBirthRegistrationTime()
@@ -250,7 +246,6 @@ export const birthForm: ISerializedForm = {
               'informant',
               hideIfInformantMotherOrFather
             ),
-            // exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
@@ -274,12 +269,6 @@ export const birthForm: ISerializedForm = {
                 hideIfInformantMotherOrFather
               )
             ),
-            // getAgeOfIndividualInYears(
-            //   formMessageDescriptors.ageOfInformant,
-            //   exactDateOfBirthUnknownConditional.concat(
-            //     hideIfInformantMotherOrFather
-            //   )
-            // ),
             getFamilyNameField(
               'informantNameInEnglish',
               informantFamilyNameConditionals.concat(
@@ -305,12 +294,6 @@ export const birthForm: ISerializedForm = {
               }
             ]),
             // ADDRESS FIELDS WILL RENDER HERE
-            /*  divider('informant-address-seperator', [
-              {
-                action: 'hide',
-                expression: informantNotMotherOrFather
-              }
-            ]), */
             getFokontanyCustomAdress(
               'informant',
               hideIfInformantMotherOrFather,
@@ -370,11 +353,6 @@ export const birthForm: ISerializedForm = {
               'mother',
               exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
             ),
-            // exactDateOfBirthUnknown(detailsExistConditional),
-            // getAgeOfIndividualInYears(
-            //   formMessageDescriptors.ageOfMother,
-            //   exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
-            // ),
             getPlaceOfBirth('mother', detailsExistConditional),
             getFamilyNameField(
               'motherNameInEnglish',
@@ -393,7 +371,6 @@ export const birthForm: ISerializedForm = {
               }
             ]),
             getOccupation(certificateHandlebars.motherOccupation),
-            // getCustomAddress('mother', detailsExist),
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -402,9 +379,6 @@ export const birthForm: ISerializedForm = {
               description: 'A form field that asks for mother current address',
               defaultMessage: 'Address'
             })
-            // divider('mother-address-seperator', detailsExist)
-            // getEducation(certificateHandlebars.motherEducationalAttainment),
-            // multipleBirth
           ],
           previewGroups: [motherNameInEnglish]
         }
@@ -461,11 +435,6 @@ export const birthForm: ISerializedForm = {
               'father',
               exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
             ),
-            // exactDateOfBirthUnknown(detailsExistConditional),
-            // getAgeOfIndividualInYears(
-            //   formMessageDescriptors.ageOfFather,
-            //   exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
-            // ),
             getPlaceOfBirth('father', detailsExistConditional),
             getFamilyNameField(
               'fatherNameInEnglish',
@@ -484,7 +453,6 @@ export const birthForm: ISerializedForm = {
               }
             ]),
             getOccupation(certificateHandlebars.fatherOccupation),
-            // getCustomAddress('father', detailsExist),
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -500,7 +468,6 @@ export const birthForm: ISerializedForm = {
               }
             ),
             divider('father-address-seperator', detailsExist)
-            // getEducation(certificateHandlebars.fatherEducationalAttainment),
           ],
           previewGroups: [fatherNameInEnglish]
         }

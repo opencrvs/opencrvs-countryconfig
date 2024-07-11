@@ -36,13 +36,12 @@ export const exactDateOfBirthUnknown = (
     description: 'Checkbox for exact date of birth unknown',
     id: 'form.field.label.exactDateOfBirthUnknown'
   },
-  hideInPreview: false, // true
+  hideInPreview: false,
   required: false,
   hideHeader: true,
   initialValue: false,
   validator: [],
   conditionals: conditionalCase,
-  // conditionals: exactDobConditional.concat(conditionalCase),
   mapping: {
     query: {
       operation: 'booleanTransformer'
@@ -97,7 +96,7 @@ export const registrationEmail: SerializedFormField = {
   name: 'registrationEmail',
   type: 'TEXT',
   label: formMessageDescriptors.email,
-  required: false, // Email is the configured INFORMANT_NOTIFICATION_DELIVERY_METHOD in Farajaland
+  required: false,
   initialValue: '',
   validator: [
     {

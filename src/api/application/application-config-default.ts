@@ -20,7 +20,7 @@ export const defaultApplicationConfig = {
   COUNTRY_LOGO: countryLogo,
   CURRENCY: {
     isoCode: 'MGA',
-    languagesAndCountry: ['en-US'] // mg-MG
+    languagesAndCountry: ['en-US']
   },
   DEATH: {
     REGISTRATION_TARGET: 30,
