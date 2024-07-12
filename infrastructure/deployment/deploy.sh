@@ -331,8 +331,6 @@ export ROTATING_METRICBEAT_ELASTIC_PASSWORD=`generate_password`
 # Used by APM for writing data to ElasticSearch
 export ROTATING_APM_ELASTIC_PASSWORD=`generate_password`
 
-# Used by Kibana for writing data to ElasticSearch
-export ROTATING_KIBANA_ELASTIC_PASSWORD=`generate_password`
 
 # Download core compose files to /tmp/
 for compose_file in ${COMPOSE_FILES_DOWNLOADED_FROM_CORE[@]}; do
