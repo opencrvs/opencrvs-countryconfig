@@ -128,7 +128,7 @@ services:
       [
         'curl',
         '-u',
-        'kibana_system:${ROTATING_KIBANA_ELASTIC_PASSWORD}',
+        'kibana_system:${KIBANA_SYSTEM_PASSWORD}',
         '-X',
         'POST',
         'http://kibana:5601/api/saved_objects/_import?overwrite=true',
@@ -174,7 +174,7 @@ services:
       - overlay_net
     environment:
       - ELASTICSEARCH_USERNAME=kibana_system
-      - ELASTICSEARCH_PASSWORD=${ROTATING_KIBANA_ELASTIC_PASSWORD}
+      - ELASTICSEARCH_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
     configs:
       - source: kibana.{{ts}}
         target: /usr/share/kibana/config/kibana.yml
@@ -365,7 +365,7 @@ services:
       - APM_ELASTIC_PASSWORD=${ROTATING_APM_ELASTIC_PASSWORD}
       - SEARCH_ELASTIC_USERNAME=search-user
       - SEARCH_ELASTIC_PASSWORD=${ROTATING_SEARCH_ELASTIC_PASSWORD}
-      - KIBANA_ELASTIC_PASSWORD=${ROTATING_KIBANA_ELASTIC_PASSWORD}
+      - KIBANA_SYSTEM_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
       - KIBANA_USERNAME=${KIBANA_USERNAME}
       - KIBANA_PASSWORD=${KIBANA_PASSWORD}
     volumes:
