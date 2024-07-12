@@ -917,6 +917,11 @@ export const formMessageDescriptors = {
     defaultMessage: 'Death Registration Number',
     description: 'Option for form field: Type of ID',
     id: 'form.field.label.iDTypeDRN'
+  },
+  nui: {
+    defaultMessage: 'NUI',
+    description: 'text for nuiOffline form field',
+    id: 'form.field.label.NUI'
   }
 }
 

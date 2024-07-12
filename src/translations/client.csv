@@ -1035,6 +1035,7 @@ form.field.dateRangepicker.checkbox.dateLabel,,{rangeStart} to {rangeEnd},{range
 form.field.hideLabel,Button to hide section,Hide,Cacher,Afenina
 form.field.label.NID,,NID,NID,NID
 form.field.label.NIDNetErr,,The request to the NID system was unsuccessful. Please try again with a better connection.,La demande au système NID n'a pas abouti. Veuillez réessayer avec une meilleure connexion.,Tsy nahomby ny fangatahana NUI nataonao. Hamarino tsara fa mandeha ilay internet anao dia avereno indray mandeha .
+form.field.label.NUI,,NUI,NUI,NUI
 form.field.label.ReasonNotApplying,,,,Antony nahatonga an'ireo tsy nanao fangatahana
 form.field.label.addFile,,Upload,Téléverser,Hikaroka
 form.field.label.addressLine1RuralOption,,Village,Village,

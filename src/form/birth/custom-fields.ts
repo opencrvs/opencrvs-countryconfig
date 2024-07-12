@@ -2,6 +2,7 @@ import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mappin
 import { Conditional, SerializedFormField } from '../types/types'
 import { MessageDescriptor } from 'react-intl'
 import { formMessageDescriptors } from '../common/messages'
+import { Validator } from '../types/validators'
 
 /**
  *  Handlebar field: birthChildBirthTime
@@ -232,5 +233,43 @@ export function getFokontanyCustomAdress(
     mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
     conditionals, // EDIT VALIDATORS AS YOU SEE FIT
     maxLength: 255
+  }
+}
+
+export function getNUI(
+  conditionals: Conditional[],
+  fieldSpecificValidators: Validator[] = []
+): SerializedFormField {
+  return {
+    name: 'iD',
+    type: 'TEXT',
+    label: formMessageDescriptors.nui,
+    required: true,
+    custom: true,
+    initialValue: '',
+    maxLength: 10,
+    conditionals,
+    validator: [
+      {
+        operation: 'validIDNumberCustom' as const,
+        parameters: ['NATIONAL_ID']
+      },
+      ...fieldSpecificValidators
+    ],
+    mapping: {
+      template: {
+        fieldName: 'childNID',
+        operation: 'identityToFieldTransformer',
+        parameters: ['id', 'NATIONAL_ID']
+      },
+      mutation: {
+        operation: 'fieldToIdentityTransformer',
+        parameters: ['id', 'NATIONAL_ID']
+      },
+      query: {
+        operation: 'identityToFieldTransformer',
+        parameters: ['id', 'NATIONAL_ID']
+      }
+    }
   }
 }

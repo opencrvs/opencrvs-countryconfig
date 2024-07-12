@@ -73,8 +73,11 @@ import {
   getLegacyBirthRegistrationTime,
   getPlaceOfBirth,
   getTimeOfBirth,
-  getYearOfBirth
+  getYearOfBirth,
+  getNUI
 } from './custom-fields'
+import { conditionals as birthCustomConditionals } from './custom-conditionals'
+import { conditionals as customConditionals } from '../common/custom-validation-conditionals/custom-conditionals'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -170,15 +173,6 @@ export const birthForm: ISerializedForm = {
         {
           id: 'child-view-group',
           fields: [
-            getBirthDate(
-              'childBirthDate',
-              [],
-              isValidChildBirthDate,
-              certificateHandlebars.eventDate
-            ), // Required field.
-            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
-            // createCustomFieldExample(),
-            getTimeOfBirth(),
             getFamilyNameField(
               'childNameInEnglish',
               [],
@@ -188,9 +182,18 @@ export const birthForm: ISerializedForm = {
               'childNameInEnglish',
               [],
               certificateHandlebars.childFirstName
-            ), // Required field.  Names in Latin characters must be provided for international passport
+            ),
             getGender(certificateHandlebars.childGender), // Required field.
+            getBirthDate(
+              'childBirthDate',
+              [],
+              isValidChildBirthDate,
+              certificateHandlebars.eventDate
+            ), // Required field.
+            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
+            getTimeOfBirth(),
             weightAtBirth,
+            // PLACE OF BIRTH FIELDS WILL RENDER HERE
             getFokontanyCustomAdress(
               'child',
               [
@@ -208,7 +211,23 @@ export const birthForm: ISerializedForm = {
                 defaultMessage: 'Fokontany'
               }
             ),
-            // PLACE OF BIRTH FIELDS WILL RENDER HERE
+            getNUI(
+              [
+                birthCustomConditionals.childHasNUI,
+                customConditionals.isOnline,
+                customConditionals.isUserRegistrarOrRegistrationAgent
+              ],
+              [
+                {
+                  operation: 'duplicateIDNumber',
+                  parameters: ['mother.iD']
+                },
+                {
+                  operation: 'duplicateIDNumber',
+                  parameters: ['father.iD']
+                }
+              ]
+            ),
             getLegacyBirthRegistrationNumber('child'),
             getLegacyBirthRegistrationDate(),
             getLegacyBirthRegistrationTime()
