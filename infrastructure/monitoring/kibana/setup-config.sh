@@ -15,7 +15,7 @@ kibana_alerting_api_url="http://kibana:5601/api/alerting/rules/_find?page=1&per_
 docker_command="docker run --rm -v /opt/opencrvs/infrastructure/monitoring/kibana/config.ndjson:/config.ndjson --network=opencrvs_overlay_net curlimages/curl"
 
 # Initial API status check to ensure Kibana is ready
-status_code=$($docker_command --connect-timeout 60 -H "Authorization: Bearer $KIBANA_ACCESS_TOKEN" -o /dev/null -w '%{http_code}' "$kibana_alerting_api_url")
+status_code=$($docker_command --connect-timeout 60 -u kibana_system:${ROTATING_KIBANA_ELASTIC_PASSWORD} -o /dev/null -w '%{http_code}' "$kibana_alerting_api_url")
 
 if [ "$status_code" -ne 200 ]; then
   echo "Kibana is not ready. API returned status code: $status_code"
@@ -23,16 +23,15 @@ if [ "$status_code" -ne 200 ]; then
 fi
 
 # Delete all alerts
-$docker_command --connect-timeout 60 -H "Authorization: Bearer $KIBANA_ACCESS_TOKEN" "$kibana_alerting_api_url" | docker run --rm -i --network=opencrvs_overlay_net ghcr.io/jqlang/jq -r '.data[].id' | while read -r id; do
-  $docker_command --connect-timeout 60 -X DELETE -H 'kbn-xsrf: true' -H "Authorization: Bearer $KIBANA_ACCESS_TOKEN" "http://kibana:5601/api/alerting/rule/$id"
+$docker_command --connect-timeout 60 -u kibana_system:${ROTATING_KIBANA_ELASTIC_PASSWORD} "$kibana_alerting_api_url" | docker run --rm -i --network=opencrvs_overlay_net ghcr.io/jqlang/jq -r '.data[].id' | while read -r id; do
+  $docker_command --connect-timeout 60 -X DELETE -H 'kbn-xsrf: true' -u kibana_system:${ROTATING_KIBANA_ELASTIC_PASSWORD} "http://kibana:5601/api/alerting/rule/$id"
 done
 
 # Import configuration
-$docker_command --connect-timeout 60 -H "Authorization: Bearer $KIBANA_ACCESS_TOKEN" -X POST "http://kibana:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' --form file=@/config.ndjson > /dev/null
+$docker_command --connect-timeout 60 -u kibana_system:${ROTATING_KIBANA_ELASTIC_PASSWORD} -X POST "http://kibana:5601/api/saved_objects/_import?overwrite=true" -H 'kbn-xsrf: true' --form file=@/config.ndjson > /dev/null
 
 # Re-enable all alerts
-$docker_command --connect-timeout 60 -H "Authorization: Bearer $KIBANA_ACCESS_TOKEN" "$kibana_alerting_api_url" | docker run --rm -i --network=opencrvs_overlay_net ghcr.io/jqlang/jq -r '.data[].id' | while read -r id; do
-  $docker_command --connect-timeout 60 -X POST -H 'kbn-xsrf: true' -H "Authorization: Bearer $KIBANA_ACCESS_TOKEN" "http://kibana:5601/api/alerting/rule/$id/_disable"
-  $docker_command --connect-timeout 60 -X POST -H 'kbn-xsrf: true' -H "Authorization: Bearer $KIBANA_ACCESS_TOKEN" "http://kibana:5601/api/alerting/rule/$id/_enable"
+$docker_command --connect-timeout 60 -u kibana_system:${ROTATING_KIBANA_ELASTIC_PASSWORD} "$kibana_alerting_api_url" | docker run --rm -i --network=opencrvs_overlay_net ghcr.io/jqlang/jq -r '.data[].id' | while read -r id; do
+  $docker_command --connect-timeout 60 -X POST -H 'kbn-xsrf: true' -u kibana_system:${ROTATING_KIBANA_ELASTIC_PASSWORD} "http://kibana:5601/api/alerting/rule/$id/_disable"
+  $docker_command --connect-timeout 60 -X POST -H 'kbn-xsrf: true' -u kibana_system:${ROTATING_KIBANA_ELASTIC_PASSWORD} "http://kibana:5601/api/alerting/rule/$id/_enable"
 done
-
