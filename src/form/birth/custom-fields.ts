@@ -1,8 +1,12 @@
 import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { Conditional, SerializedFormField } from '../types/types'
 import { MessageDescriptor } from 'react-intl'
-import { formMessageDescriptors } from '../common/messages'
+import {
+  formMessageDescriptors,
+  mentionMessageDescriptors
+} from '../common/messages'
 import { Validator } from '../types/validators'
+import { camelCase } from 'lodash'
 
 /**
  *  Handlebar field: birthChildBirthTime
@@ -285,5 +289,56 @@ export function getFatherHasFormallyRecognisedChild(
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
     conditionals
+  }
+}
+
+export const availableMentionTypes = [
+  'RECOGNITION',
+  'SIMPLE_ADOPTION',
+  'JUDICIAL_ADOPTION',
+  'NAME_CHANGE',
+  'MARRIAGE',
+  'DIVORCE',
+  'REJECTION',
+  'DEATH'
+] as const
+
+export const typeOfMention: SerializedFormField = {
+  name: 'typeOfMention',
+  type: 'SELECT_WITH_OPTIONS',
+  customQuestionMappingId: 'birth.mention.mention-view-group.typeOfMention',
+  initialValue: '',
+  label: mentionMessageDescriptors.typeOfMention,
+  required: false,
+  custom: true,
+  validator: [],
+  options: availableMentionTypes.map((type) => ({
+    label: mentionMessageDescriptors[type],
+    value: type
+  }))
+}
+
+export function getMentionActNumber(
+  type: (typeof availableMentionTypes)[number]
+): SerializedFormField {
+  const fieldName = `${camelCase(type)}ActNumber`
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'TEXT',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    // @ts-ignore
+    label: mentionMessageDescriptors.actNumber,
+    required: false,
+    custom: true,
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: [
+      {
+        action: 'hide',
+        expression: `values.typeOfMention !== '${type}'`
+      }
+    ]
   }
 }

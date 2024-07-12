@@ -1215,6 +1215,7 @@ form.field.label.fatherFamilyName,,Last Name(s) in default character set other t
 form.field.label.fatherFamilyNameEng,,,,Anarana
 form.field.label.fatherFirstNames,,First Name(s) in default character set other than English,Prénom(s) dans un jeu de caractères par défaut autre que l'anglais,Anarana
 form.field.label.fatherFirstNamesEng,,,,Fanampin'anarana
+form.field.label.fatherHasFormallyRecognisedChild,,Father has formally recognised child,Le père a reconnu officiellement l'enfant,Nahafantatra tamin’ny fomba ofisialy ilay zaza ilay raim-pianakaviana
 form.field.label.fatherIsDeceased,,Father has died,Le père est décédé,Ilay ray dia maty
 form.field.label.fatherPlaceOfBirth,,What is his village of origin?,Quel est son village d'origine ?,Aiza ny toerana niaviany ?
 form.field.label.fatherPrimaryAddress,,Usual place of residence,Quelle est son adresse résidentielle ?,Firy ny aidresy ipetrahany amin'izao ?
@@ -1534,6 +1535,8 @@ form.section.information.name,,Information,Informations,
 form.section.marriageEvent.date,,Date of marriage,Date du mariage,
 form.section.marriageEvent.name,,Marriage event details,Détails de l'événement de mariage,
 form.section.marriageEvent.title,,Marriage details,Détails du mariage,
+form.section.mention.name,,Marginal notes,Marginal notes,Marginal notes
+form.section.mention.title,,Marginal notes,Marginal notes,Marginal notes
 form.section.mother.name,,Mother,Mère,Reny
 form.section.mother.title,,Mother's details,Coordonnées de la mère,Mombamomba ilay reny
 form.section.primaryCaregiver.nameOrTitle,,Parents details,Détails des parents,Mombamomba ireo ray aman-dreniny

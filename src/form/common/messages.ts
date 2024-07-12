@@ -948,3 +948,67 @@ export function getDateOfMarriageLabel(): MessageDescriptor {
     description: 'Option for form field: Date of marriage'
   }
 }
+
+export const mentionMessageDescriptors = {
+  sectionName: {
+    defaultMessage: 'Marginal notes',
+    description: 'Form section name for Mention',
+    id: 'form.section.mention.name'
+  },
+  sectionTitle: {
+    defaultMessage: 'Marginal notes',
+    description: 'Form section title for Mention',
+    id: 'form.section.mention.title'
+  },
+  typeOfMention: {
+    id: 'form.field.label.typeOfMention',
+    defaultMessage: 'Type of marginal note',
+    description: 'Label for Type of marginal note'
+  },
+  // TODO: add the following messages in client.csv
+  RECOGNITION: {
+    id: 'form.field.label.mentionType.recognition',
+    defaultMessage: 'Recognition',
+    description: 'Label for mention type Recognition'
+  },
+  SIMPLE_ADOPTION: {
+    id: 'form.field.label.mentionType.simpleAdoption',
+    defaultMessage: 'Simple adoption',
+    description: 'Label for mention type Simple adoption'
+  },
+  JUDICIAL_ADOPTION: {
+    id: 'form.field.label.mentionType.judicialAdoption',
+    defaultMessage: 'Judicial adoption',
+    description: 'Label for mention type Judicial adoption'
+  },
+  NAME_CHANGE: {
+    id: 'form.field.label.mentionType.nameChange',
+    defaultMessage: 'Name change',
+    description: 'Label for mention type Name change'
+  },
+  MARRIAGE: {
+    id: 'form.field.label.mentionType.marriage',
+    defaultMessage: 'Marriage',
+    description: 'Label for mention type Marriage'
+  },
+  DIVORCE: {
+    id: 'form.field.label.mentionType.divorce',
+    defaultMessage: 'Divorce',
+    description: 'Label for mention type Divorce'
+  },
+  REJECTION: {
+    id: 'form.field.label.mentionType.rejection',
+    defaultMessage: 'Rejection',
+    description: 'Label for mention type Rejection'
+  },
+  DEATH: {
+    id: 'form.field.label.mentionType.death',
+    defaultMessage: 'Death',
+    description: 'Label for mention type Death'
+  },
+  actNumber: {
+    id: 'form.field.label.mention.actNumber',
+    defaultMessage:
+      '{type, select, RECONGITION{Recognition} other{Other}} act number'
+  }
+}

@@ -10,7 +10,10 @@
  */
 
 import { Event, ISerializedForm } from '../types/types'
-import { formMessageDescriptors } from '../common/messages'
+import {
+  formMessageDescriptors,
+  mentionMessageDescriptors
+} from '../common/messages'
 import { informantType } from './required-fields'
 import {
   getBirthDate,
@@ -76,7 +79,10 @@ import {
   getTimeOfBirth,
   getYearOfBirth,
   getNUI,
-  getFatherHasFormallyRecognisedChild
+  getFatherHasFormallyRecognisedChild,
+  typeOfMention,
+  availableMentionTypes,
+  getMentionActNumber
 } from './custom-fields'
 import { conditionals as birthCustomConditionals } from './custom-conditionals'
 import { conditionals as customConditionals } from '../common/custom-validation-conditionals/custom-conditionals'
@@ -517,6 +523,21 @@ export const birthForm: ISerializedForm = {
         }
       ],
       mapping: getSectionMapping('father')
+    },
+    {
+      id: 'mention',
+      viewType: 'form',
+      name: mentionMessageDescriptors.sectionName,
+      title: mentionMessageDescriptors.sectionTitle,
+      groups: [
+        {
+          id: 'mention-view-group',
+          fields: [
+            typeOfMention,
+            ...availableMentionTypes.map(getMentionActNumber)
+          ]
+        }
+      ]
     },
     documentsSection // REQUIRED SECTION FOR DOCUMENT ATTACHMENTS
   ]
