@@ -78,6 +78,7 @@ import {
 } from './custom-fields'
 import { conditionals as birthCustomConditionals } from './custom-conditionals'
 import { conditionals as customConditionals } from '../common/custom-validation-conditionals/custom-conditionals'
+import { subYears } from 'date-fns'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -226,7 +227,9 @@ export const birthForm: ISerializedForm = {
                   operation: 'duplicateIDNumber',
                   parameters: ['father.iD']
                 }
-              ]
+              ],
+              true,
+              certificateHandlebars.childNID
             ),
             getLegacyBirthRegistrationNumber('child'),
             getLegacyBirthRegistrationDate(),
@@ -251,19 +254,19 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            getNationality(
-              certificateHandlebars.informantNationality,
-              hideIfInformantMotherOrFather
+            getFamilyNameField(
+              'informantNameInEnglish',
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
+              certificateHandlebars.informantFamilyName
             ), // Required field.
-            getNationalID(
-              'informantID',
-              hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
-              getNationalIDValidators('informant'),
-              certificateHandlebars.informantNID
-            ),
-            getCustomizedExactDateOfBirthUnknown(
-              'informant',
-              hideIfInformantMotherOrFather
+            getFirstNameField(
+              'informantNameInEnglish',
+              informantFirstNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
+              certificateHandlebars.informantFirstName
             ),
             getBirthDate(
               'informantBirthDate',
@@ -278,33 +281,36 @@ export const birthForm: ISerializedForm = {
                 {
                   operation: 'dateInPast',
                   parameters: []
+                },
+                {
+                  operation: 'dateLessThan',
+                  parameters: [
+                    subYears(new Date(), 18).toISOString().split('T')[0]
+                  ]
                 }
               ],
               certificateHandlebars.informantBirthDate
             ), // Required field.
+            getCustomizedExactDateOfBirthUnknown(
+              'informant',
+              hideIfInformantMotherOrFather
+            ),
             getYearOfBirth(
               'informant',
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantMotherOrFather
               )
             ),
-            getFamilyNameField(
-              'informantNameInEnglish',
-              informantFamilyNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
-              certificateHandlebars.informantFamilyName
+            getNationality(
+              certificateHandlebars.informantNationality,
+              hideIfInformantMotherOrFather
             ), // Required field.
-            getFirstNameField(
-              'informantNameInEnglish',
-              informantFirstNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
-              certificateHandlebars.informantFirstName
-            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
-            // getCustomAddress('informant', hideIfInformantMotherOrFather),
-            registrationPhone, // If you wish to enable automated SMS notifications to informants, include this
-            // registrationEmail, // If you wish to enable automated Email notifications to informants, include this
+            getNUI(
+              hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
+              getNationalIDValidators('informant'),
+              false,
+              certificateHandlebars.informantNID
+            ),
             // preceding field of address fields
             divider('informant-nid-seperator', [
               {
@@ -323,7 +329,8 @@ export const birthForm: ISerializedForm = {
                   'A form field that asks for informent current address',
                 defaultMessage: 'Address'
               }
-            )
+            ),
+            registrationPhone // If you wish to enable automated SMS notifications to informants, include this
           ],
           previewGroups: [informantNameInEnglish]
         }

@@ -238,13 +238,15 @@ export function getFokontanyCustomAdress(
 
 export function getNUI(
   conditionals: Conditional[],
-  fieldSpecificValidators: Validator[] = []
+  fieldSpecificValidators: Validator[] = [],
+  required: boolean = true,
+  certificateHandlebar: string
 ): SerializedFormField {
   return {
     name: 'iD',
     type: 'TEXT',
     label: formMessageDescriptors.nui,
-    required: true,
+    required,
     custom: true,
     initialValue: '',
     maxLength: 10,
@@ -258,7 +260,7 @@ export function getNUI(
     ],
     mapping: {
       template: {
-        fieldName: 'childNID',
+        fieldName: certificateHandlebar,
         operation: 'identityToFieldTransformer',
         parameters: ['id', 'NATIONAL_ID']
       },
