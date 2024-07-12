@@ -74,7 +74,8 @@ export const getAgeOfIndividualInYears = (
 
 export const getMaritalStatus = (
   certificateHandlebar: string,
-  conditionals: Conditional[]
+  conditionals: Conditional[],
+  required: boolean = true
 ): SerializedFormField => ({
   name: 'maritalStatus',
   type: 'SELECT_WITH_OPTIONS',
@@ -83,7 +84,7 @@ export const getMaritalStatus = (
     description: 'Label for form field: Marital status',
     id: 'form.field.label.maritalStatus'
   },
-  required: true,
+  required,
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,

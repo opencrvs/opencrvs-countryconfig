@@ -355,31 +355,6 @@ export const birthForm: ISerializedForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getNationality(
-              certificateHandlebars.motherNationality,
-              detailsExist
-            ), // Required field.
-            getNationalID(
-              'iD',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              getNationalIDValidators('mother'),
-              certificateHandlebars.motherNID
-            ),
-            getCustomizedExactDateOfBirthUnknown(
-              'mother',
-              detailsExistConditional
-            ),
-            getBirthDate(
-              'motherBirthDate',
-              mothersBirthDateConditionals,
-              parentsBirthDateValidators,
-              certificateHandlebars.motherBirthDate
-            ), // Required field.
-            getYearOfBirth(
-              'mother',
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
-            ),
-            getPlaceOfBirth('mother', detailsExistConditional),
             getFamilyNameField(
               'motherNameInEnglish',
               motherFamilyNameConditionals,
@@ -389,14 +364,32 @@ export const birthForm: ISerializedForm = {
               'motherNameInEnglish',
               motherFirstNameConditionals,
               certificateHandlebars.motherFirstName
+            ),
+            getBirthDate(
+              'motherBirthDate',
+              mothersBirthDateConditionals,
+              parentsBirthDateValidators,
+              certificateHandlebars.motherBirthDate
             ), // Required field.
-            getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            getOccupation(certificateHandlebars.motherOccupation),
+            getCustomizedExactDateOfBirthUnknown(
+              'mother',
+              detailsExistConditional
+            ),
+            getYearOfBirth(
+              'mother',
+              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
+            ),
+            getNationality(
+              certificateHandlebars.motherNationality,
+              detailsExist
+            ), // Required field.
+            getNUI(
+              hideIfNidIntegrationEnabled.concat(detailsExist),
+              getNationalIDValidators('mother'),
+              false,
+              certificateHandlebars.motherNID
+            ),
+            getPlaceOfBirth('mother', detailsExistConditional),
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -404,7 +397,18 @@ export const birthForm: ISerializedForm = {
               id: 'form.field.label.customAddress',
               description: 'A form field that asks for mother current address',
               defaultMessage: 'Address'
-            })
+            }),
+            getMaritalStatus(
+              certificateHandlebars.motherMaritalStatus,
+              [
+                {
+                  action: 'hide',
+                  expression: '!values.detailsExist'
+                }
+              ],
+              false
+            ),
+            getOccupation(certificateHandlebars.motherOccupation)
           ],
           previewGroups: [motherNameInEnglish]
         }
