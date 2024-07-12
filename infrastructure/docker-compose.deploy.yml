@@ -283,7 +283,6 @@ services:
       - path.repo=/data/backups/elasticsearch
       - cluster.name=docker-cluster
       - network.host=0.0.0.0
-      - discovery.zen.minimum_master_nodes=1
       - discovery.type=single-node
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true
