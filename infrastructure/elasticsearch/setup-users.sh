@@ -25,6 +25,7 @@ users_passwords=(
   [beats_system]="${METRICBEAT_ELASTIC_PASSWORD:-}"
   [apm_system]="${APM_ELASTIC_PASSWORD:-}"
   [$KIBANA_USERNAME]="${KIBANA_PASSWORD:-}"
+  [kibana_system]="${KIBANA_ELASTIC_PASSWORD:-}"
 )
 
 # -------------------------------------
