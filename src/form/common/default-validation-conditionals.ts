@@ -8,6 +8,7 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+import { subYears } from 'date-fns'
 import { Conditional } from '../types/types'
 import { IntegratingSystemType } from '../types/types'
 import { Validator } from '../types/validators'
@@ -520,5 +521,30 @@ export const brideOrGroomAgeValidators = [
   {
     operation: 'maxLength',
     parameters: [3]
+  }
+] satisfies Validator[]
+
+export const yearOfBirthValidtors = [
+  {
+    operation: 'range',
+    parameters: [1883, Number.parseInt(new Date().getFullYear().toString())]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [4]
+  }
+] satisfies Validator[]
+
+export const motherYearOfBirthValidators = [
+  {
+    operation: 'range',
+    parameters: [
+      1883,
+      Number.parseInt(subYears(new Date(), 7).getFullYear().toString())
+    ]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [4]
   }
 ] satisfies Validator[]

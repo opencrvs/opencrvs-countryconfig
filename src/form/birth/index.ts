@@ -19,7 +19,6 @@ import {
   getFirstNameField,
   getNationality,
   otherInformantType,
-  getNationalID,
   getDetailsExist,
   getReasonNotExisting
 } from '../common/common-required-fields'
@@ -51,7 +50,9 @@ import {
   fatherFamilyNameConditionals,
   informantNotMotherOrFather,
   detailsExistConditional,
-  primaryAddressSameAsOtherPrimary
+  primaryAddressSameAsOtherPrimary,
+  yearOfBirthValidtors,
+  motherYearOfBirthValidators
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -300,7 +301,8 @@ export const birthForm: ISerializedForm = {
               'informant',
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantMotherOrFather
-              )
+              ),
+              yearOfBirthValidtors
             ),
             getNationality(
               certificateHandlebars.informantNationality,
@@ -378,7 +380,10 @@ export const birthForm: ISerializedForm = {
             ),
             getYearOfBirth(
               'mother',
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
+              exactDateOfBirthUnknownConditional.concat(
+                detailsExistConditional
+              ),
+              motherYearOfBirthValidators
             ),
             getNationality(
               certificateHandlebars.motherNationality,
@@ -465,7 +470,10 @@ export const birthForm: ISerializedForm = {
             ),
             getYearOfBirth(
               'father',
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
+              exactDateOfBirthUnknownConditional.concat(
+                detailsExistConditional
+              ),
+              yearOfBirthValidtors
             ),
             getNationality(
               certificateHandlebars.fatherNationality,

@@ -173,7 +173,8 @@ export function getCustomizedExactDateOfBirthUnknown(
  */
 export function getYearOfBirth(
   subject: 'mother' | 'father' | 'informant',
-  conditionals: Conditional[] = []
+  conditionals: Conditional[] = [],
+  validators: Validator[]
 ): SerializedFormField {
   const fieldName: string = 'yearOfBirth'
   const fieldId: string = `birth.${subject}.${subject}-view-group.${fieldName}`
@@ -186,20 +187,7 @@ export function getYearOfBirth(
     type: 'NUMBER', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
     label: formMessageDescriptors.yearOfBirth,
     initialValue: '',
-    validator: [
-      {
-        operation: 'range',
-        parameters: [1883, Number.parseInt(new Date().getFullYear().toString())]
-      },
-      {
-        operation: 'maxLength',
-        parameters: [4]
-      },
-      {
-        operation: 'isValidParentsBirthDate',
-        parameters: [10, true]
-      }
-    ], // EDIT VALIDATORS AS YOU SEE FIT
+    validator: validators, // EDIT VALIDATORS AS YOU SEE FIT
     mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
     conditionals, // EDIT VALIDATORS AS YOU SEE FIT
     prefix: 'vers', //formMessageDescriptors.prefixAround,
