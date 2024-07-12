@@ -74,7 +74,8 @@ import {
   getPlaceOfBirth,
   getTimeOfBirth,
   getYearOfBirth,
-  getNUI
+  getNUI,
+  getFatherHasFormallyRecognisedChild
 } from './custom-fields'
 import { conditionals as birthCustomConditionals } from './custom-conditionals'
 import { conditionals as customConditionals } from '../common/custom-validation-conditionals/custom-conditionals'
@@ -441,31 +442,7 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getNationality(
-              certificateHandlebars.fatherNationality,
-              detailsExist
-            ), // Required field.
-            getNationalID(
-              'iD',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              getNationalIDValidators('father'),
-              certificateHandlebars.fatherNID
-            ),
-            getCustomizedExactDateOfBirthUnknown(
-              'father',
-              detailsExistConditional
-            ),
-            getBirthDate(
-              'fatherBirthDate',
-              fathersBirthDateConditionals,
-              parentsBirthDateValidators,
-              certificateHandlebars.fatherBirthDate
-            ), // Required field.
-            getYearOfBirth(
-              'father',
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
-            ),
-            getPlaceOfBirth('father', detailsExistConditional),
+            getFatherHasFormallyRecognisedChild(detailsExist),
             getFamilyNameField(
               'fatherNameInEnglish',
               fatherFamilyNameConditionals,
@@ -475,14 +452,32 @@ export const birthForm: ISerializedForm = {
               'fatherNameInEnglish',
               fatherFirstNameConditionals,
               certificateHandlebars.fatherFirstName
+            ),
+            getBirthDate(
+              'fatherBirthDate',
+              fathersBirthDateConditionals,
+              parentsBirthDateValidators,
+              certificateHandlebars.fatherBirthDate
             ), // Required field.
-            getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            getOccupation(certificateHandlebars.fatherOccupation),
+            getCustomizedExactDateOfBirthUnknown(
+              'father',
+              detailsExistConditional
+            ),
+            getYearOfBirth(
+              'father',
+              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
+            ),
+            getNationality(
+              certificateHandlebars.fatherNationality,
+              detailsExist
+            ), // Required field.
+            getNUI(
+              hideIfNidIntegrationEnabled.concat(detailsExist),
+              getNationalIDValidators('father'),
+              false,
+              certificateHandlebars.fatherNID
+            ),
+            getPlaceOfBirth('father', detailsExistConditional),
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -497,7 +492,18 @@ export const birthForm: ISerializedForm = {
                 defaultMessage: 'Address'
               }
             ),
-            divider('father-address-seperator', detailsExist)
+            divider('father-address-seperator', detailsExist),
+            getMaritalStatus(
+              certificateHandlebars.fatherMaritalStatus,
+              [
+                {
+                  action: 'hide',
+                  expression: '!values.detailsExist'
+                }
+              ],
+              false
+            ),
+            getOccupation(certificateHandlebars.fatherOccupation)
           ],
           previewGroups: [fatherNameInEnglish]
         }

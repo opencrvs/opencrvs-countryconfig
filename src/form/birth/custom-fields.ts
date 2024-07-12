@@ -275,3 +275,27 @@ export function getNUI(
     }
   }
 }
+
+export function getFatherHasFormallyRecognisedChild(
+  conditionals: Conditional[]
+): SerializedFormField {
+  const fieldName: string = 'fatherHasFormallyRecognisedChild'
+  const fieldId: string = `birth.father.father-view-group.${fieldName}`
+
+  return {
+    name: fieldName,
+    customQuestionMappingId: fieldId,
+    custom: true,
+    required: false,
+    type: 'CHECKBOX',
+    hideHeader: true,
+    label: {
+      id: 'form.field.label.fatherHasFormallyRecognisedChild',
+      defaultMessage: 'Father has formally recognised child'
+    },
+    initialValue: false,
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals
+  }
+}
