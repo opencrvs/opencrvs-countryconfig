@@ -77,7 +77,6 @@ services:
       - ELASTICSEARCH_HOST=elasticsearch:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
-      - KIBANA_ACCESS_TOKEN=${KIBANA_ACCESS_TOKEN}
       - KIBANA_HOST=kibana:5601
     command: ['--strict.perms=false']
     deploy:
@@ -128,8 +127,8 @@ services:
     entrypoint:
       [
         'curl',
-        '-H',
-        'Authorization: Bearer ${KIBANA_ACCESS_TOKEN}',
+        '-u',
+        'kibana_system:${ROTATING_KIBANA_ELASTIC_PASSWORD}',
         '-X',
         'POST',
         'http://kibana:5601/api/saved_objects/_import?overwrite=true',
@@ -174,9 +173,8 @@ services:
     networks:
       - overlay_net
     environment:
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
-      - KIBANA_ACCESS_TOKEN=${KIBANA_ACCESS_TOKEN}
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${ROTATING_KIBANA_ELASTIC_PASSWORD}
     configs:
       - source: kibana.{{ts}}
         target: /usr/share/kibana/config/kibana.yml
@@ -367,6 +365,7 @@ services:
       - APM_ELASTIC_PASSWORD=${ROTATING_APM_ELASTIC_PASSWORD}
       - SEARCH_ELASTIC_USERNAME=search-user
       - SEARCH_ELASTIC_PASSWORD=${ROTATING_SEARCH_ELASTIC_PASSWORD}
+      - KIBANA_ELASTIC_PASSWORD=${ROTATING_KIBANA_ELASTIC_PASSWORD}
       - KIBANA_USERNAME=${KIBANA_USERNAME}
       - KIBANA_PASSWORD=${KIBANA_PASSWORD}
     volumes:
