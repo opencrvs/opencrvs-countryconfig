@@ -60,7 +60,7 @@ services:
       - overlay_net
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.17.0
+    image: docker.elastic.co/beats/filebeat:8.14.3
     user: root
     networks:
       - overlay_net
@@ -85,7 +85,7 @@ services:
         - 'traefik.enable=false'
 
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:7.17.13
+    image: docker.elastic.co/beats/metricbeat:8.14.3
     user: root
     cap_add:
       - SYS_PTRACE
