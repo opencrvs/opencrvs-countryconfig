@@ -82,7 +82,10 @@ import {
   getFatherHasFormallyRecognisedChild,
   typeOfMention,
   availableMentionTypes,
-  getMentionActNumber
+  getRecognitionMentionFields,
+  getSimpleAdoptionMentionFields,
+  getJudicialAdoptionMentionFields,
+  getMarriageMentionFields
 } from './custom-fields'
 import { conditionals as birthCustomConditionals } from './custom-conditionals'
 import { conditionals as customConditionals } from '../common/custom-validation-conditionals/custom-conditionals'
@@ -534,7 +537,17 @@ export const birthForm: ISerializedForm = {
           id: 'mention-view-group',
           fields: [
             typeOfMention,
-            ...availableMentionTypes.map(getMentionActNumber)
+            ...availableMentionTypes
+              .filter((type) => type !== 'REJECTION')
+              .flatMap((type) => {
+                if (type === 'RECOGNITION') return getRecognitionMentionFields()
+                else if (type === 'SIMPLE_ADOPTION')
+                  return getSimpleAdoptionMentionFields()
+                else if (type === 'JUDICIAL_ADOPTION')
+                  return getJudicialAdoptionMentionFields()
+                else if (type === 'MARRIAGE') return getMarriageMentionFields()
+                else return []
+              })
           ]
         }
       ]

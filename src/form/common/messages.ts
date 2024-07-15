@@ -1009,6 +1009,44 @@ export const mentionMessageDescriptors = {
   actNumber: {
     id: 'form.field.label.mention.actNumber',
     defaultMessage:
-      '{type, select, RECONGITION{Recognition} other{Other}} act number'
+      '{type, select, RECOGNITION{Recognition} SIMPLE_ADOPTION{Simple adoption} JUDICIAL_ADOPTION{Adoption} NAME_CHANGE{Name change} MARRIAGE{Marriage} DIVORCE{Divorce} REJECTION{Rejection} DEATH{Death} other{Other}} Act number',
+    description: 'Label for mention act number'
+  },
+  dateOfMention: {
+    id: 'form.field.label.mention.dateOfMention',
+    defaultMessage:
+      'Date of {type, select, RECOGNITION{recognition} SIMPLE_ADOPTION{adoption} JUDICIAL_ADOPTION{registration of the judicial act at the commune} NAME_CHANGE{registration of the judicial act at the commune} MARRIAGE{marriage} DIVORCE{registration of the judicial act at the commune} REJECTION{Rejection} DEATH{registration of the death at the municipality} other{Other}}',
+    description: 'Label for mention date'
+  },
+  placeOfMention: {
+    id: 'form.field.label.mention.placeOfMention',
+    defaultMessage:
+      'Name of the commune where {type, select, RECOGNITION{recognition} MARRIAGE{marriage} DEATH{death} other{other}} was done',
+    description: 'Label for mention place'
+  },
+  adoptiveParent: {
+    id: 'form.field.label.mention.adoptiveParent',
+    defaultMessage: 'Adoptive parent {number}',
+    description: 'Label for adoptive parent header'
+  },
+  judgementDecisionNumber: {
+    id: 'form.field.label.mention.judgmentDecisionNumber',
+    defaultMessage: 'Judgement decision number',
+    description: 'Label for Judgement decision number'
+  },
+  judgementDecisionDate: {
+    id: 'form.field.label.mention.judgmentDecisionDate',
+    defaultMessage: 'Judgement decision date',
+    description: 'Label for Judgement decision date'
+  },
+  tribunalOfFirstInstanceAct: {
+    id: 'form.field.label.mention.tribunalOfFirstInstanceAct',
+    defaultMessage: 'Tribunal of first instance act',
+    description: 'Label for Tribunal of first instance act'
+  },
+  brideOrGroom: {
+    id: 'form.field.label.mention.brideOrGroom',
+    defaultMessage: 'Bride/Groom',
+    description: 'Label for Bride/Groom'
   }
 }

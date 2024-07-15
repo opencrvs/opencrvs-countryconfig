@@ -1,4 +1,7 @@
-import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import {
+  getCustomFieldMapping,
+  getFieldMapping
+} from '@countryconfig/utils/mapping/field-mapping-utils'
 import { Conditional, SerializedFormField } from '../types/types'
 import { MessageDescriptor } from 'react-intl'
 import {
@@ -303,6 +306,16 @@ export const availableMentionTypes = [
   'DEATH'
 ] as const
 
+type MentionType = (typeof availableMentionTypes)[number]
+function hideFieldIfNotMentionType(type: MentionType): Conditional[] {
+  return [
+    {
+      action: 'hide',
+      expression: `values.typeOfMention !== '${type}'`
+    }
+  ]
+}
+
 export const typeOfMention: SerializedFormField = {
   name: 'typeOfMention',
   type: 'SELECT_WITH_OPTIONS',
@@ -318,9 +331,7 @@ export const typeOfMention: SerializedFormField = {
   }))
 }
 
-export function getMentionActNumber(
-  type: (typeof availableMentionTypes)[number]
-): SerializedFormField {
+function getMentionActNumber(type: MentionType): SerializedFormField {
   const fieldName = `${camelCase(type)}ActNumber`
   const fieldId = `birth.mention.mention-view-group.${fieldName}`
   return {
@@ -328,17 +339,390 @@ export function getMentionActNumber(
     type: 'TEXT',
     customQuestionMappingId: fieldId,
     initialValue: '',
-    // @ts-ignore
     label: mentionMessageDescriptors.actNumber,
-    required: false,
+    labelParam: {
+      type
+    },
+    required: true,
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: [
-      {
-        action: 'hide',
-        expression: `values.typeOfMention !== '${type}'`
-      }
-    ]
+    conditionals: hideFieldIfNotMentionType(type)
   }
+}
+
+function getMentionDate(type: MentionType): SerializedFormField {
+  const fieldName = `${camelCase(type)}Date`
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'DATE',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: mentionMessageDescriptors.dateOfMention,
+    labelParam: {
+      type
+    },
+    required: true,
+    custom: true,
+    validator: [
+      {
+        operation: 'dateNotInFuture',
+        parameters: []
+      }
+    ],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: hideFieldIfNotMentionType(type)
+  }
+}
+
+function getMentionPlace(type: MentionType): SerializedFormField {
+  const fieldName = `${camelCase(type)}Place`
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'SELECT_WITH_DYNAMIC_OPTIONS',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: mentionMessageDescriptors.placeOfMention,
+    labelParam: {
+      type
+    },
+    dynamicOptions: {
+      dependency: ' ',
+      resource: 'locations',
+      jurisdictionType: 'DISTRICT'
+    },
+    required: true,
+    custom: true,
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: hideFieldIfNotMentionType(type)
+  }
+}
+
+function getSubsectionHeader(
+  fieldName: string,
+  label: MessageDescriptor,
+  conditionals: Conditional[],
+  labelParam?: Record<string, string>
+): SerializedFormField {
+  return {
+    name: fieldName,
+    type: 'HEADING3',
+    label,
+    initialValue: '',
+    validator: [],
+    conditionals,
+    labelParam
+  }
+}
+
+export const getFamilyNameField = (
+  fieldName: string,
+  previewGroup: string,
+  conditionals: Conditional[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: fieldName, // A field with this name MUST exist
+    previewGroup,
+    conditionals,
+    type: 'TEXT',
+    label: formMessageDescriptors.familyName,
+    maxLength: 255,
+    required: true,
+    initialValue: '',
+    validator: [
+      {
+        operation: 'englishOnlyNameFormat'
+      }
+    ],
+    mapping: getFieldMapping('familyName', certificateHandlebar)
+  } satisfies SerializedFormField)
+
+export const getFirstNameField = (
+  fieldName: string,
+  previewGroup: string,
+  conditionals: Conditional[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: fieldName, // A field with this name MUST exist
+    previewGroup,
+    type: 'TEXT',
+    label: {
+      defaultMessage: 'First name(s)',
+      description: 'Label for form field: First names',
+      id: 'form.field.label.firstNames'
+    },
+    conditionals,
+    maxLength: 255,
+    required: false,
+    initialValue: '',
+    validator: [
+      {
+        operation: 'englishOnlyNameFormat'
+      }
+    ],
+    mapping: getFieldMapping('firstNames', certificateHandlebar)
+  } satisfies SerializedFormField)
+
+function getNUIWithCustomFieldName(
+  fieldName: string,
+  conditionals: Conditional[],
+  fieldSpecificValidators: Validator[] = [],
+  required: boolean = true,
+  certificateHandlebar: string
+) {
+  return {
+    ...getNUI(
+      conditionals,
+      fieldSpecificValidators,
+      required,
+      certificateHandlebar
+    ),
+    name: fieldName
+  }
+}
+
+function getJudgementDecisionNumber(type: MentionType): SerializedFormField {
+  const fieldName = `${camelCase(type)}JudgementDecisionNumber`
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'TEXT',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: mentionMessageDescriptors.judgementDecisionNumber,
+    required: true,
+    custom: true,
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: hideFieldIfNotMentionType(type)
+  }
+}
+
+function getJudgementDecisionDate(type: MentionType): SerializedFormField {
+  const fieldName = `${camelCase(type)}JudgementDecisionDate`
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'DATE',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: mentionMessageDescriptors.judgementDecisionDate,
+    required: true,
+    custom: true,
+    validator: [
+      {
+        operation: 'dateNotInFuture',
+        parameters: []
+      }
+    ],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: hideFieldIfNotMentionType(type)
+  }
+}
+
+function getTribunalOfFirstInstanceAct(type: MentionType): SerializedFormField {
+  const fieldName = `${camelCase(type)}TribunalOfFirstInstanceAct`
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'SELECT_WITH_OPTIONS',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: mentionMessageDescriptors.judgementDecisionDate,
+    required: true,
+    options: [],
+    custom: true,
+    validator: [
+      {
+        operation: 'dateNotInFuture',
+        parameters: []
+      }
+    ],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: hideFieldIfNotMentionType(type)
+  }
+}
+export function getRecognitionMentionFields() {
+  const type = 'RECOGNITION'
+  return [
+    getMentionActNumber(type),
+    getMentionDate(type),
+    getMentionPlace(type),
+    getFamilyNameField(
+      'childFamilyName',
+      'name',
+      hideFieldIfNotMentionType(type),
+      'mentionChildFamilyName'
+    ),
+    getFirstNameField(
+      'childFirstName',
+      'name',
+      hideFieldIfNotMentionType(type),
+      'mentionChildFirstName'
+    ),
+    getNUIWithCustomFieldName(
+      'mentionChildNID',
+      hideFieldIfNotMentionType(type),
+      [],
+      false,
+      'mentionChildNID'
+    )
+  ]
+}
+
+export function getSimpleAdoptionMentionFields() {
+  const type = 'SIMPLE_ADOPTION'
+  return [
+    getMentionActNumber(type),
+    getMentionDate(type),
+    getSubsectionHeader(
+      'adoptionParent1Header',
+      mentionMessageDescriptors.adoptiveParent,
+      hideFieldIfNotMentionType(type),
+      { number: '1' }
+    ),
+    getFamilyNameField(
+      'adoptionParent1FamilyName',
+      'adoptionParent1Name',
+      hideFieldIfNotMentionType(type),
+      'mentionAdoptionParent1FamilyName'
+    ),
+    getFirstNameField(
+      'adoptionParent1FirstName',
+      'adoptionParent1Name',
+      hideFieldIfNotMentionType(type),
+      'mentionAdoptionParent1FirstName'
+    ),
+    getNUIWithCustomFieldName(
+      'adoptionParent1NID',
+      hideFieldIfNotMentionType(type),
+      [],
+      false,
+      'mentionAdoptionParent1NID'
+    ),
+    getSubsectionHeader(
+      'adoptionParent2Header',
+      mentionMessageDescriptors.adoptiveParent,
+      hideFieldIfNotMentionType(type),
+      { number: '2' }
+    ),
+    getFamilyNameField(
+      'adoptionParent2FamilyName',
+      'adoptionParent2Name',
+      hideFieldIfNotMentionType(type),
+      'mentionAdoptionParent2FamilyName'
+    ),
+    getFirstNameField(
+      'adoptionParent2FirstName',
+      'adoptionParent2Name',
+      hideFieldIfNotMentionType(type),
+      'mentionAdoptionParent2FirstName'
+    ),
+    getNUIWithCustomFieldName(
+      'adoptionParent2NID',
+      hideFieldIfNotMentionType(type),
+      [],
+      false,
+      'mentionAdoptionParent2NID'
+    )
+  ]
+}
+
+export function getJudicialAdoptionMentionFields() {
+  const type = 'JUDICIAL_ADOPTION'
+  return [
+    getMentionActNumber(type),
+    getMentionDate(type),
+    getJudgementDecisionNumber(type),
+    getJudgementDecisionDate(type),
+    getTribunalOfFirstInstanceAct(type),
+    getSubsectionHeader(
+      'judicialAdoptionParent1Header',
+      mentionMessageDescriptors.adoptiveParent,
+      hideFieldIfNotMentionType(type),
+      { number: '1' }
+    ),
+    getFamilyNameField(
+      'judicialAdoptionParent1FamilyName',
+      'judicialAdoptionParent1Name',
+      hideFieldIfNotMentionType(type),
+      'mentionJudicialAdoptionParent1FamilyName'
+    ),
+    getFirstNameField(
+      'judicialAdoptionParent1FirstName',
+      'judicialAdoptionParent1Name',
+      hideFieldIfNotMentionType(type),
+      'mentionJudicialAdoptionParent1FirstName'
+    ),
+    getNUIWithCustomFieldName(
+      'judicialAdoptionParent1NID',
+      hideFieldIfNotMentionType(type),
+      [],
+      false,
+      'mentionJudicialAdoptionParent1NID'
+    ),
+    getSubsectionHeader(
+      'judicialAdoptionParent2Header',
+      mentionMessageDescriptors.adoptiveParent,
+      hideFieldIfNotMentionType(type),
+      { number: '2' }
+    ),
+    getFamilyNameField(
+      'judicialAdoptionParent2FamilyName',
+      'judicialAdoptionParent2Name',
+      hideFieldIfNotMentionType(type),
+      'mentionJudicialAdoptionParent2FamilyName'
+    ),
+    getFirstNameField(
+      'judicialAdoptionParent2FirstName',
+      'judicialAdoptionParent2Name',
+      hideFieldIfNotMentionType(type),
+      'mentionJudicialAdoptionParent2FirstName'
+    ),
+    getNUIWithCustomFieldName(
+      'judicialAdoptionParent2NID',
+      hideFieldIfNotMentionType(type),
+      [],
+      false,
+      'mentionJudicialAdoptionParent2NID'
+    )
+  ]
+}
+
+export function getMarriageMentionFields() {
+  const type = 'MARRIAGE'
+  return [
+    getMentionActNumber(type),
+    getMentionDate(type),
+    getMentionPlace(type),
+    getSubsectionHeader(
+      'brideOrGroomHeader',
+      mentionMessageDescriptors.brideOrGroom,
+      hideFieldIfNotMentionType(type)
+    ),
+    getFamilyNameField(
+      'brideOrGroomFamilyName',
+      'brideOrGroomName',
+      hideFieldIfNotMentionType(type),
+      'mentionMarriageBrideOrGroomFamilyName'
+    ),
+    getFirstNameField(
+      'brideOrGroomFirstName',
+      'brideOrGroomName',
+      hideFieldIfNotMentionType(type),
+      'mentionMarriageBrideOrGroomFirstName'
+    ),
+    getNUIWithCustomFieldName(
+      'brideOrGroomNID',
+      hideFieldIfNotMentionType(type),
+      [],
+      false,
+      'mentionMarriageBrideOrGroomNID'
+    )
+  ]
 }

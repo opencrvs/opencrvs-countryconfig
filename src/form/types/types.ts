@@ -540,6 +540,7 @@ export interface IFormFieldBase {
   name: string
   type: IFormField['type']
   label: MessageDescriptor
+  labelParam?: Record<string, string>
   helperText?: MessageDescriptor
   tooltip?: MessageDescriptor
   validator: Validator[]
