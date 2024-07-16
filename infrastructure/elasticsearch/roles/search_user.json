@@ -1,5 +1,5 @@
 {
-  "cluster": ["manage"],
+  "cluster": ["monitoring"],
   "indices": [
     {
       "names": ["ocrvs", "ocrvs-*"],
@@ -9,8 +9,7 @@
         "create_index",
         "delete",
         "delete_index",
-        "read",
-        "manage"
+        "read"
       ]
     }
   ]
