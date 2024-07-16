@@ -307,7 +307,7 @@ export const availableMentionTypes = [
 ] as const
 
 type MentionType = (typeof availableMentionTypes)[number]
-function hideFieldIfNotMentionType(type: MentionType): Conditional[] {
+function notMentionType(type: MentionType): Conditional[] {
   return [
     {
       action: 'hide',
@@ -347,7 +347,7 @@ function getMentionActNumber(type: MentionType): SerializedFormField {
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: hideFieldIfNotMentionType(type)
+    conditionals: notMentionType(type)
   }
 }
 
@@ -372,7 +372,7 @@ function getMentionDate(type: MentionType): SerializedFormField {
       }
     ],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: hideFieldIfNotMentionType(type)
+    conditionals: notMentionType(type)
   }
 }
 
@@ -397,7 +397,7 @@ function getMentionPlace(type: MentionType): SerializedFormField {
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: hideFieldIfNotMentionType(type)
+    conditionals: notMentionType(type)
   }
 }
 
@@ -499,7 +499,7 @@ function getJudgementDecisionNumber(type: MentionType): SerializedFormField {
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: hideFieldIfNotMentionType(type)
+    conditionals: notMentionType(type)
   }
 }
 
@@ -521,7 +521,7 @@ function getJudgementDecisionDate(type: MentionType): SerializedFormField {
       }
     ],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: hideFieldIfNotMentionType(type)
+    conditionals: notMentionType(type)
   }
 }
 
@@ -533,18 +533,13 @@ function getTribunalOfFirstInstanceAct(type: MentionType): SerializedFormField {
     type: 'SELECT_WITH_OPTIONS',
     customQuestionMappingId: fieldId,
     initialValue: '',
-    label: mentionMessageDescriptors.judgementDecisionDate,
-    required: true,
+    label: mentionMessageDescriptors.tribunalOfFirstInstanceAct,
+    required: false,
     options: [],
     custom: true,
-    validator: [
-      {
-        operation: 'dateNotInFuture',
-        parameters: []
-      }
-    ],
+    validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: hideFieldIfNotMentionType(type)
+    conditionals: notMentionType(type)
   }
 }
 export function getRecognitionMentionFields() {
@@ -556,18 +551,18 @@ export function getRecognitionMentionFields() {
     getFamilyNameField(
       'childFamilyName',
       'name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionChildFamilyName'
     ),
     getFirstNameField(
       'childFirstName',
       'name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionChildFirstName'
     ),
     getNUIWithCustomFieldName(
       'mentionChildNID',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       [],
       false,
       'mentionChildNID'
@@ -583,24 +578,24 @@ export function getSimpleAdoptionMentionFields() {
     getSubsectionHeader(
       'adoptionParent1Header',
       mentionMessageDescriptors.adoptiveParent,
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       { number: '1' }
     ),
     getFamilyNameField(
       'adoptionParent1FamilyName',
       'adoptionParent1Name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionAdoptionParent1FamilyName'
     ),
     getFirstNameField(
       'adoptionParent1FirstName',
       'adoptionParent1Name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionAdoptionParent1FirstName'
     ),
     getNUIWithCustomFieldName(
       'adoptionParent1NID',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       [],
       false,
       'mentionAdoptionParent1NID'
@@ -608,24 +603,24 @@ export function getSimpleAdoptionMentionFields() {
     getSubsectionHeader(
       'adoptionParent2Header',
       mentionMessageDescriptors.adoptiveParent,
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       { number: '2' }
     ),
     getFamilyNameField(
       'adoptionParent2FamilyName',
       'adoptionParent2Name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionAdoptionParent2FamilyName'
     ),
     getFirstNameField(
       'adoptionParent2FirstName',
       'adoptionParent2Name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionAdoptionParent2FirstName'
     ),
     getNUIWithCustomFieldName(
       'adoptionParent2NID',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       [],
       false,
       'mentionAdoptionParent2NID'
@@ -644,24 +639,24 @@ export function getJudicialAdoptionMentionFields() {
     getSubsectionHeader(
       'judicialAdoptionParent1Header',
       mentionMessageDescriptors.adoptiveParent,
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       { number: '1' }
     ),
     getFamilyNameField(
       'judicialAdoptionParent1FamilyName',
       'judicialAdoptionParent1Name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionJudicialAdoptionParent1FamilyName'
     ),
     getFirstNameField(
       'judicialAdoptionParent1FirstName',
       'judicialAdoptionParent1Name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionJudicialAdoptionParent1FirstName'
     ),
     getNUIWithCustomFieldName(
       'judicialAdoptionParent1NID',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       [],
       false,
       'mentionJudicialAdoptionParent1NID'
@@ -669,24 +664,24 @@ export function getJudicialAdoptionMentionFields() {
     getSubsectionHeader(
       'judicialAdoptionParent2Header',
       mentionMessageDescriptors.adoptiveParent,
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       { number: '2' }
     ),
     getFamilyNameField(
       'judicialAdoptionParent2FamilyName',
       'judicialAdoptionParent2Name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionJudicialAdoptionParent2FamilyName'
     ),
     getFirstNameField(
       'judicialAdoptionParent2FirstName',
       'judicialAdoptionParent2Name',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionJudicialAdoptionParent2FirstName'
     ),
     getNUIWithCustomFieldName(
       'judicialAdoptionParent2NID',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       [],
       false,
       'mentionJudicialAdoptionParent2NID'
@@ -703,23 +698,23 @@ export function getMarriageMentionFields() {
     getSubsectionHeader(
       'brideOrGroomHeader',
       mentionMessageDescriptors.brideOrGroom,
-      hideFieldIfNotMentionType(type)
+      notMentionType(type)
     ),
     getFamilyNameField(
       'brideOrGroomFamilyName',
       'brideOrGroomName',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionMarriageBrideOrGroomFamilyName'
     ),
     getFirstNameField(
       'brideOrGroomFirstName',
       'brideOrGroomName',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       'mentionMarriageBrideOrGroomFirstName'
     ),
     getNUIWithCustomFieldName(
       'brideOrGroomNID',
-      hideFieldIfNotMentionType(type),
+      notMentionType(type),
       [],
       false,
       'mentionMarriageBrideOrGroomNID'
