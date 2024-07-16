@@ -1048,5 +1048,26 @@ export const mentionMessageDescriptors = {
     id: 'form.field.label.mention.brideOrGroom',
     defaultMessage: 'Bride/Groom',
     description: 'Label for Bride/Groom'
+  },
+  wifeOrHusband: {
+    id: 'form.field.label.mention.wifeOrHusband',
+    defaultMessage: 'Wife/Husband',
+    description: 'Label for Wife/Husband'
+  },
+  modification: {
+    id: 'form.field.label.mention.modification',
+    defaultMessage:
+      'Any modification : name of the child/name of father/name of mother',
+    description: 'Label for modification'
+  },
+  placeOfDeath: {
+    id: 'form.field.label.mention.placeOfDeath',
+    defaultMessage: 'Commune of death',
+    description: 'Label for place of death'
+  },
+  notes: {
+    id: 'form.field.label.mention.notes',
+    defaultMessage: 'Notes',
+    description: 'Label for notes'
   }
 }

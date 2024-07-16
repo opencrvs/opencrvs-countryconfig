@@ -542,6 +542,93 @@ function getTribunalOfFirstInstanceAct(type: MentionType): SerializedFormField {
     conditionals: notMentionType(type)
   }
 }
+
+function getModification(type: MentionType): SerializedFormField {
+  const fieldName = 'modification'
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'TEXT',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: mentionMessageDescriptors.modification,
+    required: true,
+    custom: true,
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: notMentionType(type)
+  }
+}
+
+function getDateOfDeath(type: MentionType): SerializedFormField {
+  const fieldName = `${camelCase(type)}dateOfDeath`
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'DATE',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: formMessageDescriptors.deathEventDate,
+    required: true,
+    custom: true,
+    validator: [
+      {
+        operation: 'dateNotInFuture',
+        parameters: []
+      }
+    ],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: notMentionType(type)
+  }
+}
+
+function getDeathPlace(type: MentionType): SerializedFormField {
+  const fieldName = `${camelCase(type)}DeathPlace`
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'SELECT_WITH_DYNAMIC_OPTIONS',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: mentionMessageDescriptors.placeOfDeath,
+    labelParam: {
+      type
+    },
+    dynamicOptions: {
+      dependency: ' ',
+      resource: 'locations',
+      jurisdictionType: 'DISTRICT'
+    },
+    required: true,
+    custom: true,
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: notMentionType(type)
+  }
+}
+
+export function getNotes(): SerializedFormField {
+  const fieldName = 'notes'
+  const fieldId = `birth.mention.mention-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'TEXTAREA',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: mentionMessageDescriptors.notes,
+    required: false,
+    custom: true,
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: [
+      {
+        action: 'hide',
+        expression: '!values.typeOfMention'
+      }
+    ]
+  }
+}
+
 export function getRecognitionMentionFields() {
   const type = 'RECOGNITION'
   return [
@@ -694,7 +781,9 @@ export function getMarriageMentionFields() {
   return [
     getMentionActNumber(type),
     getMentionDate(type),
-    getMentionPlace(type),
+    getJudgementDecisionNumber(type),
+    getJudgementDecisionDate(type),
+    getTribunalOfFirstInstanceAct(type),
     getSubsectionHeader(
       'brideOrGroomHeader',
       mentionMessageDescriptors.brideOrGroom,
@@ -719,5 +808,61 @@ export function getMarriageMentionFields() {
       false,
       'mentionMarriageBrideOrGroomNID'
     )
+  ]
+}
+
+export function getDivorceMentionFields() {
+  const type = 'DIVORCE'
+  return [
+    getMentionActNumber(type),
+    getMentionDate(type),
+    getMentionPlace(type),
+    getSubsectionHeader(
+      'wifeOrHusbandHeader',
+      mentionMessageDescriptors.wifeOrHusband,
+      notMentionType(type)
+    ),
+    getFamilyNameField(
+      'wifeOrHusbandFamilyName',
+      'wifeOrHusbandName',
+      notMentionType(type),
+      'mentionDivorceWifeOrHusbandFamilyName'
+    ),
+    getFirstNameField(
+      'wifeOrHusbandFirstName',
+      'wifeOrHusbandName',
+      notMentionType(type),
+      'mentionDivorceWifeOrHusbandFirstName'
+    ),
+    getNUIWithCustomFieldName(
+      'wifeOrHusbandNID',
+      notMentionType(type),
+      [],
+      false,
+      'mentionDivorceWifeOrHusbandNID'
+    )
+  ]
+}
+
+export function getNameChangeMentionFields() {
+  const type = 'NAME_CHANGE'
+  return [
+    getMentionActNumber(type),
+    getMentionDate(type),
+    getJudgementDecisionNumber(type),
+    getJudgementDecisionDate(type),
+    getTribunalOfFirstInstanceAct(type),
+    getModification(type)
+  ]
+}
+
+export function getDeathMentionFields() {
+  const type = 'DEATH'
+  return [
+    getMentionActNumber(type),
+    getMentionDate(type),
+    getMentionPlace(type),
+    getDateOfDeath(type),
+    getDeathPlace(type)
   ]
 }

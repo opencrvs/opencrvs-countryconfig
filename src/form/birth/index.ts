@@ -85,7 +85,11 @@ import {
   getRecognitionMentionFields,
   getSimpleAdoptionMentionFields,
   getJudicialAdoptionMentionFields,
-  getMarriageMentionFields
+  getMarriageMentionFields,
+  getDivorceMentionFields,
+  getNameChangeMentionFields,
+  getDeathMentionFields,
+  getNotes
 } from './custom-fields'
 import { conditionals as birthCustomConditionals } from './custom-conditionals'
 import { conditionals as customConditionals } from '../common/custom-validation-conditionals/custom-conditionals'
@@ -535,6 +539,13 @@ export const birthForm: ISerializedForm = {
       groups: [
         {
           id: 'mention-view-group',
+          conditionals: [
+            {
+              action: 'hide',
+              expression:
+                '!Boolean(draftData?.registration?.registrationNumber)'
+            }
+          ],
           fields: [
             typeOfMention,
             ...availableMentionTypes
@@ -546,8 +557,13 @@ export const birthForm: ISerializedForm = {
                 else if (type === 'JUDICIAL_ADOPTION')
                   return getJudicialAdoptionMentionFields()
                 else if (type === 'MARRIAGE') return getMarriageMentionFields()
+                else if (type === 'DIVORCE') return getDivorceMentionFields()
+                else if (type === 'NAME_CHANGE')
+                  return getNameChangeMentionFields()
+                else if (type === 'DEATH') return getDeathMentionFields()
                 else return []
-              })
+              }),
+            getNotes()
           ]
         }
       ]
