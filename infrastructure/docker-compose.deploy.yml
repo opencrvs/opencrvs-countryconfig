@@ -384,7 +384,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'setup-elasticsearch-users'
   elastalert:
-    image: jertel/elastalert2:2.3.0
+    image: jertel/elastalert2:2.19.0
     restart: unless-stopped
     environment:
       - ES_USERNAME=elastic
