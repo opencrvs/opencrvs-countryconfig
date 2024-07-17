@@ -63,6 +63,7 @@ xpack.actions.preconfiguredAlertHistoryEsIndex: true
 # Kibana can also authenticate to Elasticsearch via "service account tokens".
 # Service account tokens are Bearer style tokens that replace the traditional username/password based configuration.
 # Use this token instead of a username/password.
+# elasticsearch.serviceAccountToken: "my_token"
 
 # Time in milliseconds to wait for Elasticsearch to respond to pings. Defaults to the value of
 # the elasticsearch.requestTimeout setting.
