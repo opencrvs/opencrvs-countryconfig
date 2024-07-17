@@ -30,9 +30,9 @@ filter:
         - term:
             rule.name.keyword:
               value: 'CPU under heavy load'
-        # - term:
-        #     rule.name.keyword:
-        #       value: 'Low on available disk space'
+        - term:
+            rule.name.keyword:
+              value: 'Low on available disk space'
       minimum_should_match: 1
 
 alert: post2
