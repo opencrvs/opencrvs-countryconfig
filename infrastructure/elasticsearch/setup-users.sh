@@ -24,6 +24,7 @@ users_passwords=(
   [$SEARCH_ELASTIC_USERNAME]="${SEARCH_ELASTIC_PASSWORD:-}"
   [beats_system]="${METRICBEAT_ELASTIC_PASSWORD:-}"
   [apm_system]="${APM_ELASTIC_PASSWORD:-}"
+  [kibana_system]="${KIBANA_SYSTEM_PASSWORD:-}"
   [$KIBANA_USERNAME]="${KIBANA_PASSWORD:-}"
 )
 
