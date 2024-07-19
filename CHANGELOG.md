@@ -6,14 +6,36 @@
 
 *   **Removed dependency on OpenHIM.**&#x20;
 
-    The performance of OpenHIM added an unexpected burden to every interaction. Cumulatively, this was negatively affecting user experience and therefore we decided to deprecate it.&#x20;
+    The performance of OpenHIM added an unexpected burden of 200 m/s to every interaction. Cumulatively, this was negatively affecting user experience and therefore we decided to deprecate it.&#x20;
 
     &#x20;Interested implementers are free to re-introduce OpenHIM should they wish to use it as an interoperability layer without affecting the performance of OpenCRVS now that our architecture no longer depends on it.
 
     The OpenHIM database is kept for backwards compatibility reasons and will be removed in v1.6. [OpenHIM](https://openhim.org/) is an Open Source middleware component designed for managing FHIR interoperability between disparate systems as part of the OpenHIE architectural specification.  We had been using this component in a much more fundamental way to monitor microservice comms in a similar fashion to Amazon SQS. &#x20;
 *   **Upgrade node version to 18**
 
-- #### Infrastructure
+    This version enforces environment to have Node 18 installed (supported until April 2025) and removes support for Node 16
+
+    * Use nvm to upgrade your local development environment to use node version `18.19.x.`
+    * Specified operating systems in js modules as `darwin, linux`
+    * Dev scripts and Vite run with an environment variable `NODE_OPTIONS=--dns-result-order=ipv4first` to resolve ipv4 addresses for `localhost` to support systems that resolves ipv6 addresses by default in Node versions >=17
+*   **Update the certificate preview mechanism** In effort of minimizing JavaScript-bundle size, we have streamlined the way how review certificate -page renders certificates. In case the images in your certificates are previewing blurry, you need to update your SVG-certificates to print QR-codes and other images directly with `<image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>` instead of the more complicated `<rect fill="url(#pattern)"></rect>` -paradigm. This doesn't affect printed certificates as they are still created as previously.
+*   **Generate default address according to logged-in user's location** We have dropped support for the 'agentDefault'  prop which was used as initial value for SELECT\_WITH\_DYNAMIC\_OPTIONS fields. If you have not made any changes to address generation, then this should not affect you.  If you have, you can refer to this PR to see how agentDefault has been deprecated in an example country: [https://github.com/opencrvs/opencrvs-farajaland/pull/978](https://github.com/opencrvs/opencrvs-farajaland/pull/978)
+*   **Remove system admin UI items: Application, Certificates, User roles, Informant notifications** We have now moved to configuring these items away from the UI in favour of directly editing these from country configuration repository in code - specifically in application-config-default.ts.
+* **Set Metabase default credentials.** These must be configured via countryconfig repository environment variables and secrets otherwise the dashboard service won't start
+* **Check your Metabase map file.**  For Metabase configuration, we renamed `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming conventions.
+* **Feature flags** In order to make application config settings more readable, we re-organised `src/api/application/application-config-default.ts` with a clear feature flag block like so.  These are then used across the front and back end of the application to control configurable functionality.  New feature flags DEATH_REGISTRATION allow you to optionally run off death registration if your country doesnt want to run its first pilot including death and PRINT_DECLARATION (see New Features) have been added.
+`
+FEATURES: {
+  DEATH_REGISTRATION: true, 
+  MARRIAGE_REGISTRATION: false,
+  ...
+} 
+`
+* **Improve rendering of addresses in review page where addresses match** When entering father's address details, some countries make use of a checkbox which says "Address is the same as the mothers. " which, when selected, makes the mother's address and fathers address the same.  The checkbox has a programatic value of "Yes" or "No".  As a result on the review page, the value "Yes" was displayed which didn't make grammatical sense as a response.  We decided to use a custom label: "Same as mother's", which is what was asked on the form. This requires some code changes in the src/form/addresses/index.ts file to pull in the `hideInPreview` prop which will hide the value "Yes" on the review page and replace with a content managed label.  Associated bug [#5086](https://github.com/opencrvs/opencrvs-core/issues/5086)
+
+### Infrastructure breaking changes
+
+More improvements have been made to the infrastructure provisioning and Github environment creation scripts and documentation.  The complexity is somewhat reduced.
 
 * **We removed the example Wireguard VPN set up as it was confusing.**  Our intention was to ensure that all implementers were aware that OpenCRVS should be installed behind a VPN and used Wireguard as an example.  But the configuration requirements for Wireguard confused implementers who are not using it.  Therefore we decided to remove Wireguard as an example. &#x20;
 * **We now have a "backup" Github environment and the backup server is automatically provisioned.** We moved the inventory file location to an explicit directory and removed parameters to scripts that can be automated. To migrate, move all inventory files (qa.yml, production.yml, staging.yml from `infrastructure/server-setup` to `infrastructure/server-setup/inventory` and configure `infrastructure/server-setup/inventory/backup.yml`.  Run environment creator for your backup server `yarn environment:init --environment=backup`
@@ -40,6 +62,9 @@ Follow the descriptions in the migration notes to re-provision all servers safel
   * `maxSizeMB`: An optional validation prop to prevent input of a file bigger than a defined value.
 * If a country doesnt wish to use Sentry for logging errors, the SENTRY\_DSN variable is now optional and the LogRocket option has been deprecated due to lack of demand.
 * Given that upon an upgrade between versions of OpenCRVS, that users cache is cleared, it is important to inform staff to submit any draft applications before the upgrade date.  We introduced an "Email all users" feature so that National System Admins can send all staff messages.  This feature can be used for any other all staff comms that are deemed required.
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-06-25 at 17.12.54.png" alt=""><figcaption></figcaption></figure>
+
 * Included an endpoint for serving individual certificates in development mode.  This improves the developer experience when configuring certificates.
 * Removed logrocket refrences.
 * Enable gzip compression in client & login
@@ -117,29 +142,6 @@ user.profile.auditList.requestedCorrectionAuditAction,Description for record cor
 validations.invalidDate,The error message that appears when a date field is invalid,Invalid date field
 verifyCertificate.certifiedAt,Label for date of certification,Date of certification
 ```
-
-- #### Infrastructure
-
-- Allow using staging to both period restore of production backup and also for backing up its own data to a different location using `backup_server_remote_target_directory` and `backup_server_remote_source_directory` ansible variables. This use case is mostly meant for OpenCRVS team internal use.
-
-- Automate SSH key exchange between application and backup server. For staging servers, automatically fetch production backup encryption key if periodic restore is enabled
-
-- Improved support for non-22 SSH port
-- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
-- In the certificate, the 'Place of Certification' now accurately reflects the correct location.
-
-**Infrastructure**
-
-- Treat backup host identically to other hosts. To migrate:
-
-  1. Move all inventory files (qa.yml, production.yml...) from `infrastructure/server-setup` to `infrastructure/server-setup/inventory`
-  2. Run environment creator for your backup server `yarn environment:init --environment=backup`
-
-- Allow using staging to both period restore of production backup and also for backing up its own data to a different location using `backup_server_remote_target_directory` and `backup_server_remote_source_directory` ansible variables. This use case is mostly meant for OpenCRVS team internal use.
-
-- Automate SSH key exchange between application and backup server. For staging servers, automatically fetch production backup encryption key if periodic restore is enabled
-
-- Improved support for non-22 SSH port
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 
