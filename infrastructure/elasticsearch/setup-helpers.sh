@@ -231,37 +231,3 @@ function ensure_settings {
   return $result
 }
 
-
-function create_elastic_index {
-  local index_name=$1
-  local elasticsearch_host="${ELASTICSEARCH_HOST:-elasticsearch}"
-
-  local -a args=( '-s' '-D-' '-m15' '-w' '%{http_code}'
-    "http://${elasticsearch_host}:9200/${index_name}"
-    '-X' 'PUT'
-    '-H' 'Content-Type: application/json'
-  )
-
-  if [[ -n "${ELASTIC_PASSWORD:-}" ]]; then
-    args+=( '-u' "elastic:${ELASTIC_PASSWORD}" )
-  fi
-
-  local -i result=1
-  local output
-
-  output="$(curl "${args[@]}")"
-
-  echo "${output}"
-
-  # @TODO: Preferably check whether the index already exists before creating it.
-  # Error message might change in the future so we should not depend on it.
-  if [[ "${output: -3}" -eq 200 || $output == *"already exists as alias"* ]]; then
-    result=0
-  fi
-
-  if ((result)); then
-    echo -e "\n${output::-3}\n"
-  fi
-
-  return $result
-}
