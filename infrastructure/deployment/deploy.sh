@@ -163,7 +163,7 @@ validate_environment_variables() {
 }
 
 configured_rsync() {
-  rsync -e "ssh -p $SSH_PORT $SSH_ARGS" "$@"
+  rsync --timeout=5000 -e "ssh -p $SSH_PORT $SSH_ARGS" "$@"
 }
 
 get_environment_variables() {
