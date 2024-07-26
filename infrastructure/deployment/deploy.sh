@@ -163,7 +163,7 @@ validate_environment_variables() {
 }
 
 configured_rsync() {
-  rsync --timeout=5000 -e "ssh -p $SSH_PORT $SSH_ARGS" "$@"
+  rsync -v -e "ssh -p $SSH_PORT" "$@"
 }
 
 get_environment_variables() {
@@ -190,7 +190,7 @@ get_environment_variables() {
 }
 
 configured_ssh() {
-  ssh $SSH_USER@$SSH_HOST -p $SSH_PORT $SSH_ARGS "export $(get_environment_variables); $@"
+  ssh -v $SSH_USER@$SSH_HOST -p $SSH_PORT "export $(get_environment_variables); $@"
 }
 
 # Rotate MongoDB credentials
