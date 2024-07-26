@@ -21,6 +21,7 @@ docker-manager-first:
   hosts:
     siecm-dev-app-1: # @todo set this to be the hostname of your target server
       ansible_host: '102.16.127.249' # @todo set this to be the IP address of your server
+      ansible_port: 10203 # @todo set this to be the SSH port of your server if not 22
       data_label: data1 # for manager machines, this should always be "data1"
 
 # QA and staging servers are not configured to use workers.
