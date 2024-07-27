@@ -55,7 +55,8 @@ import {
   detailsExistConditional,
   primaryAddressSameAsOtherPrimary,
   yearOfBirthValidtors,
-  motherYearOfBirthValidators
+  motherYearOfBirthValidators,
+  hideIfDistrictPrimaryAddressNotSelected
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -337,7 +338,9 @@ export const birthForm: ISerializedForm = {
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAdress(
               'informant',
-              hideIfInformantMotherOrFather,
+              hideIfInformantMotherOrFather.concat(
+                hideIfDistrictPrimaryAddressNotSelected('informant')
+              ),
               true,
               {
                 id: 'form.field.label.customAddress',
@@ -412,11 +415,19 @@ export const birthForm: ISerializedForm = {
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress('mother', detailsExistConditional, true, {
-              id: 'form.field.label.customAddress',
-              description: 'A form field that asks for mother current address',
-              defaultMessage: 'Address'
-            }),
+            getFokontanyCustomAdress(
+              'mother',
+              detailsExistConditional.concat(
+                hideIfDistrictPrimaryAddressNotSelected('mother')
+              ),
+              true,
+              {
+                id: 'form.field.label.customAddress',
+                description:
+                  'A form field that asks for mother current address',
+                defaultMessage: 'Address'
+              }
+            ),
             getMaritalStatus(
               certificateHandlebars.motherMaritalStatus,
               [
@@ -504,7 +515,9 @@ export const birthForm: ISerializedForm = {
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAdress(
               'father',
-              primaryAddressSameAsOtherPrimary.concat(detailsExistConditional),
+              primaryAddressSameAsOtherPrimary
+                .concat(detailsExistConditional)
+                .concat(hideIfDistrictPrimaryAddressNotSelected('father')),
               true,
               {
                 id: 'form.field.label.customAddress',

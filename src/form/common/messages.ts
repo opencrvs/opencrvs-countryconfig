@@ -471,6 +471,11 @@ export const formMessageDescriptors = {
     description: 'Label for select option radio option Livret de Famille',
     id: 'form.field.label.docTypeLivretDeFamille'
   },
+  proofOfRecognition: {
+    defaultMessage: 'Proof of recognition',
+    description: 'Label for list item Recognition Proof',
+    id: 'form.field.label.proofOfRecognition'
+  },
   proofOfMothersID: {
     defaultMessage: "Mother's identity",
     description: 'Label for list item Mother ID Proof',
@@ -490,6 +495,11 @@ export const formMessageDescriptors = {
     defaultMessage: 'Birth certificate',
     description: 'Label for select option birth certificate',
     id: 'form.field.label.docTypeBirthCert'
+  },
+  docTypeRecognitionAct: {
+    defaultMessage: 'Recognition act',
+    description: 'Label for select option Recognition act',
+    id: 'form.field.label.docTypeRecognitionAct'
   },
   docTypeOther: {
     defaultMessage: 'Other',

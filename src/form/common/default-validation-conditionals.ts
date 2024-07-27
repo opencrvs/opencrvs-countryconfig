@@ -12,6 +12,7 @@ import { subYears } from 'date-fns'
 import { Conditional } from '../types/types'
 import { IntegratingSystemType } from '../types/types'
 import { Validator } from '../types/validators'
+import { capitalize } from 'lodash'
 
 /**
  * Turns a string expression into a Conditional object
@@ -467,6 +468,15 @@ export const primaryAddressSameAsOtherPrimary: Conditional[] = [
   {
     action: 'hide',
     expression: primaryAddressSameAsOtherPrimaryAddress
+  }
+]
+
+export const hideIfDistrictPrimaryAddressNotSelected = (
+  section: string
+): Conditional[] => [
+  {
+    action: 'hide',
+    expression: `!values.districtPrimary${capitalize(section)}`
   }
 ]
 
