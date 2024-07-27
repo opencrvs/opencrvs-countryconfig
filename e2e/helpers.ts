@@ -45,10 +45,20 @@ export async function getToken(username: string, password: string) {
   return verifyBody.token
 }
 
-export const goToSection = async (
-  page: Page,
-  section: 'child' | 'informant' | 'father' | 'mother' | 'documents' | 'preview'
-) => {
+type DeclarationSection =
+  | 'child'
+  | 'informant'
+  | 'father'
+  | 'mother'
+  | 'documents'
+  | 'preview'
+  | 'groom'
+  | 'bride'
+  | 'marriageEvent'
+  | 'witnessOne'
+  | 'witnessTwo'
+
+export const goToSection = async (page: Page, section: DeclarationSection) => {
   while (!page.url().includes(section)) {
     await page.getByRole('button', { name: 'Continue' }).click()
   }
