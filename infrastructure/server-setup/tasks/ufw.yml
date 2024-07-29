@@ -10,7 +10,7 @@
 - name: Allow OpenSSH for IPv4 from specific addresses
   ufw:
     rule: allow
-    port: 22
+    port: '{{ ssh_port }}'
     proto: tcp
     src: '{{ item }}'
   loop: '{{ only_allow_access_from_addresses }}'
