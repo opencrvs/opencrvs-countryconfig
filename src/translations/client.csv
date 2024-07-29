@@ -1,13 +1,11 @@
 id,description,en,fr,mg
-//register.eventInfo.event.title,,,,"Fanehoana ireo dingana rehetra harahina mandritra ny fitahirizana an-tsoratra ny tranga {eventType, select, birth{birth} death{death}  judgement{judgement} other{birth}} amin'ilay mpanambara."
-//review.modal.title.registerConfirmation,,,,Hotahirizina ve io {event} io?
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher,Afenina
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Spectacle,Aseho
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,Détails de l'enfant,Mahakasika ilay zaza
 advancedSearch.form.dateOfRegistration,Label for input date of registration,Date of registration,Date d'enregistrement,Daty nanaovana ny fanambarana
 advancedSearch.form.deceasedDetails,The title of Deceased details accordion,Deceased details,Détails du défunt,Mahakasika ilay olona maty
 advancedSearch.form.eventDetails,The title of event details accordion,Event details,Détails de l'évènement,Mahakasika ilay trangam-pahaterahana
-advancedSearch.form.fatherDetails,The title of Father details accordion,Father details,Détails du père ,Mahakasika ilay rainy
+advancedSearch.form.fatherDetails,The title of Father details accordion,Father details,Détails du père,Mahakasika ilay rainy
 advancedSearch.form.informantDetails,The title informant details form,Informant details,Détails de l'informateur,Mahakasika ilay mpanao fanambarana
 advancedSearch.form.motherDetails,The title of Mother details accordion,Mother details,Détails de la mère,Mahakasika ilay reniny
 advancedSearch.form.placeOfRegistration,Label for input Place of registration,Place of registration,Lieu d'enregistrement,Toerana nanaovana ilay fanambarana
@@ -293,7 +291,7 @@ config.form.navigation.documents,,,,Fampidirana ny taratasy porofo
 config.form.navigation.father,,,,Mikasika ny Ray
 config.form.navigation.informant,,,,Mikasika ny mpanambara
 config.form.navigation.introduction,,,,Tari-dresaka
-config.form.navigation.mother,,,, Mikasika ny Reny
+config.form.navigation.mother,,,,Mikasika ny Reny
 config.form.navigation.pages,,,,Pejy
 config.form.navigation.primaryCaregiver,,,,Aidant principal
 config.form.navigation.registration,,,,Inscription
@@ -389,7 +387,7 @@ config.informantNotification.subtitle,Subtile for informant sms notification,Sel
 config.informantNotification.success,Notification for informant update success,Informant notifications updated,Mise à jour des notifications des informateurs,
 config.informantNotification.title,The title for Informant notifications,Informant notifications,Notifications d'informateurs,
 config.integrations,,Integrations,Intégrations,
-config.listDetails,Details for certificates templates list,To learn how to edit an SVG and upload a certificate to suite your country requirements please refer to this detailed guide. ,"Pour savoir comment modifier un SVG et télécharger un certificat en fonction des exigences de votre pays, veuillez consulter ce guide détaillé.","Mba afahanao mahafantatra ny fomba fanovana SVG sy ny fomba fampidirana kopia araka ny filana misy ao amin'ny firenena misy anao, jerevo ity torolalana ity azafady."
+config.listDetails,Details for certificates templates list,To learn how to edit an SVG and upload a certificate to suite your country requirements please refer to this detailed guide.,"Pour savoir comment modifier un SVG et télécharger un certificat en fonction des exigences de votre pays, veuillez consulter ce guide détaillé.","Mba afahanao mahafantatra ny fomba fanovana SVG sy ny fomba fampidirana kopia araka ny filana misy ao amin'ny firenena misy anao, jerevo ity torolalana ity azafady."
 config.listDetailsQsn,Details question for certificates templates list,How to configure a certificate?,Comment configurer un certificat ?,Ahoana ny fomba hikirakirana io kopia io ?
 config.listTitle,Title for certificates templates list,Certification,La certification,Modelin'ireo kopia
 config.marriageDefaultTempDesc,Label for default marriage certificate template,Default marriage certificate template,Modèle de certificat de mariage par défaut,
@@ -493,7 +491,7 @@ constants.history,History heading,History,Histoire,Tahiry an'ireo zavatra natao
 constants.id,ID Label,ID,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?,
 constants.inReview.status,A label for In Review,In review,En cours de révision,Andalana fanaovana fanamarinana
-constants.incomplete.status,A label for Incomplete,Incomplete ,Incomplet ,Tsy feno 
+constants.incomplete.status,A label for Incomplete,Incomplete,Incomplet,Tsy feno
 constants.informant,Informant Label,Informant,Informateur,Mpanambara
 constants.informantContactNumber,The title of contact number label,Informant contact number,Numéro de contact de l'informateur,Laharana afahana mahazo an'ilay mpanambara
 constants.integrations,Integration title,Integrations,Intégrations,
@@ -1759,7 +1757,7 @@ performance.registrationsListTable.locationColumn,Title for location column in t
 performance.registrationsListTable.monthColumn,Title for month column in the table,Month,Mois,
 performance.registrationsListTable.registrarColumn,Title for registrar column in the table,Registrar,Registrar,
 performance.registrationsListTable.totalRegistrationsColumn,Title for total registrations column in the table,Total Registrations,Total des inscriptions,
-performance.reports.appStart.desc,Description for declarations started in performance reports,Total and percentage breakdown of the declarations started by source from ,Répartition totale et en pourcentage des déclarations entamées par source à partir de,Répartition totale et en pourcentage des déclarations entamées par source à partir de
+performance.reports.appStart.desc,Description for declarations started in performance reports,Total and percentage breakdown of the declarations started by source from,Répartition totale et en pourcentage des déclarations entamées par source à partir de,Répartition totale et en pourcentage des déclarations entamées par source à partir de
 performance.reports.appStart.fieldAgents,Field agent declarations started title,Field agents,Agents de terrain,FKT/Mpiasan'ny fahasalamana
 performance.reports.corrections.other.label,"Label ""Other"" category in corrections",Other,Autre,Hafa
 performance.reports.declarationsStarted.hospitals,Hospitals declarations started title,Hospitals (DHIS2),Hôpitaux (DHIS2),Ireo tombim-pahasalamana (DHIS2)
@@ -1830,7 +1828,7 @@ print.certificate.form.name,The title of review button in list expansion actions
 print.certificate.form.title,The title of review button in list expansion actions,Print certificate,Imprimer le certificat,Atontao ilay kopia
 print.certificate.manualPaymentMethod,The label for select option for manual payment method,Manual,Manuel,Natao tanana
 print.certificate.next,,Next,Suivant,Manaraka
-print.certificate.noLabel,, ,,
+print.certificate.noLabel,,,,
 print.certificate.noPayment,The title for no payment section,No payment required,Aucun paiement requis,
 print.certificate.payment,The title for payment section,Collect payment,Le paiement est requis,Ny fandoavana vola dia tsy maintsy atao
 print.certificate.paymentAmount,The label for payment amount subsection,৳ {paymentAmount},৳ {paymentAmount},৳ {paymentAmount}
@@ -1996,7 +1994,7 @@ register.eventInfo.death.listItem2,,Make sure you collect the certificate. A dea
 register.eventInfo.death.listItem3,,,"Assurez-vous d'aller chercher le certificat. Un certificat de décès est essentiel pour soutenir les demandes d'héritage et pour régler les affaires du défunt, par exemple la clôture des comptes bancaires et le règlement des prêts.","Assurez-vous d'aller chercher le certificat. Un certificat de décès est essentiel pour soutenir les demandes d'héritage et pour régler les affaires du défunt, par exemple la clôture des comptes bancaires et le règlement des prêts."
 register.eventInfo.death.title,,Introduce the death registration process to the informant,Présenter la procédure d'enregistrement des décès à l'informateur,Ny tsara ho fantatr'ilay mpanao fanambarana raha hanao fanambarana fahafatesana izy
 register.eventInfo.event.title,,"Introduce the {eventType, select, birth{birth} death{death} other{marriage}} registration process to the informant","Présentez le processus d'enregistrement des {eventType, select, birth{naissance} death{décès} other{mariage}} à l'informateur.",Ny tsara ho fantatr'ilay mpanao fanambarana raha hanao fanambarana trangam-piarahamonina izy
-register.eventInfo.marriage.listItem0,,I am here to complete the marriage registration declaration for you. ,Je suis ici pour remplir la déclaration d'enregistrement du mariage pour vous. ,
+register.eventInfo.marriage.listItem0,,I am here to complete the marriage registration declaration for you.,Je suis ici pour remplir la déclaration d'enregistrement du mariage pour vous.,
 register.eventInfo.marriage.listItem1,,"Once I complete the declaration, it will be sent to the registration office for review.","Une fois que j'aurai complété la déclaration, elle sera envoyée au bureau d'enregistrement pour examen.",
 register.eventInfo.marriage.listItem2,,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,Attendez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Prenez votre pièce d'identité avec vous,
 register.eventInfo.marriage.title,,Introduce the marriage registration process to the informant,Présenter la procédure d'enregistrement des mariages à l'informateur,Ny tsara ho fantatr'ilay mpanao fanambarana raha hanao fanambarana fanambadiana izy
@@ -2025,7 +2023,7 @@ register.form.saveAsDraft,,Save as draft,Enregistrer comme brouillon,Tahirizina 
 register.form.section.preview.name,Form section name for Preview,Preview,Prévisualiser,Jerena mialoha
 register.form.section.preview.title,Form section title for Preview,Preview,Prévisualiser,Jerena mialoha
 register.form.section.review.title,,Review,Réviser,Fanaraha-maso farany
-register.primaryInformant.description,,This person is responsible for providing accurate information in this declaration. ,Cette personne est chargée de fournir des informations exactes dans cette déclaration.,Cette personne est chargée de fournir des informations exactes dans cette déclaration.
+register.primaryInformant.description,,This person is responsible for providing accurate information in this declaration.,Cette personne est chargée de fournir des informations exactes dans cette déclaration.,Cette personne est chargée de fournir des informations exactes dans cette déclaration.
 register.primaryInformant.errorMessage,,Please select who is the primary informant,Veuillez sélectionner qui est l'informateur principal,Azafady safidio iza ilay mpanambara voalohany
 register.primaryInformant.registerNewEventHeading,,Primary informant,Qui est l'informateur principal de cette déclaration ?,Iza no mpanambara voalohany an'io fanambarana io ?
 register.registerForm.queryError,The error message shown when a search query fails,"The page cannot be loaded at this time due to low connectivity or a network error. Please click refresh to try again, or try again later.","La page ne peut être chargée pour le moment en raison d'une faible connectivité ou d'une erreur de réseau. Veuillez cliquer sur actualiser pour réessayer, ou réessayer plus tard.","La page ne peut être chargée pour le moment en raison d'une faible connectivité ou d'une erreur de réseau. Veuillez cliquer sur actualiser pour réessayer, ou réessayer plus tard."
@@ -2165,7 +2163,7 @@ sysAdHome.sendUsernameReminderInviteError,The label for error notification of se
 sysAdHome.sendUsernameReminderInviteModalMessage,Message for send username reminder,The user will receive a username reminder via an {deliveryMethod} sent to {recipient},L'utilisateur recevra un rappel de son nom d'utilisateur par un {deliveryMethod} envoyé à {recipient}.,
 sysAdHome.sendUsernameReminderInviteModalTitle,Title for send username reminder,Send username reminder?,Envoyer un rappel de nom d'utilisateur ?,
 sysAdHome.sendUsernameReminderInviteSuccess,The label for success notification of send username reminder,Username reminder sent to {name},Rappel de l'identifiant envoyé à {name},
-sysAdHome.user.audit.comments,The label for form field deactivate comments,Comments: ,Commentaires :,Fanehoan-kevitra :
+sysAdHome.user.audit.comments,The label for form field deactivate comments,Comments:,Commentaires :,Fanehoan-kevitra :
 sysAdHome.user.audit.deactiv.reasonInv,The label for radio option being investigated,Being investigated due to suspicious activity on their account,Fait l'objet d'une enquête en raison d'une activité suspecte sur son compte,Fait l'objet d'une enquête en raison d'une activité suspecte sur son compte
 sysAdHome.user.audit.deactiv.reasonNotEmp,The label for radio option not employee,No longer an employee,N'est plus un employé,Tsy mpiasa intsony
 sysAdHome.user.audit.deactivation.subtitle,The subtitle of user deactivation confirmation modal,This will revoke {name}'s ability to login and access the system. The account can be reactivated at a later date.,Cette mesure aura pour effet de retirer à {name} la possibilité de se connecter et d'accéder au système. Le compte peut être réactivé à une date ultérieure.,Cette mesure aura pour effet de retirer à {name} la possibilité de se connecter et d'accéder au système. Le compte peut être réactivé à une date ultérieure.
@@ -2175,7 +2173,7 @@ sysAdHome.user.audit.reactiv.noLongerInv,The label for radio option no longer in
 sysAdHome.user.audit.reactiv.returned,The label for radio option Returned to role,Returned to their role,Repris dans leur rôle,Niverina amin'ny andraikiny
 sysAdHome.user.audit.reactivation.subtitle,The subtitle of user reactivation confirmation modal,This will reactivate {name}'s ability to login and access the system.,Cela réactivera la capacité de {name} à se connecter et à accéder au système.,Cela réactivera la capacité de {name} à se connecter et à accéder au système.
 sysAdHome.user.audit.reactivation.title,The title of user reactivation confirmation modal,Reactivate {name}?,Réactiver {name}?,Réactiver {name}?
-sysAdHome.user.audit.reason,The label for form field deactivate reason,Please provide a reason: ,Veuillez fournir une raison :,Azafady omeo ny antony :
+sysAdHome.user.audit.reason,The label for form field deactivate reason,Please provide a reason:,Veuillez fournir une raison :,Azafady omeo ny antony :
 sysAdHome.user.audit.reasonOther,The label for radio option other,Other (please provide a reason in the comments),Autre (veuillez fournir une raison dans les commentaires),Hafa (Azafady omeo ny antony ao amin'ny toerana fanaposahana hevitra)
 sysAdHome.user.deactivate,Label for toggle menu option deactivate,Deactivate,Désactiver,Désactiver
 sysAdHome.user.edit.commonGroupTitle,Common title of form view groups when edit user,Edit user,Modifier l'utilisateur,Hanova ny momba ilay mpiasa
@@ -2321,7 +2319,7 @@ validations.phoneNumberFormat,The error message that appears on phone numbers wh
 validations.range,The error message that appears when an out of range value is used,Must be within {min} and {max},Doit être compris entre {min} et {max}.,Tsy maintsy anelanelan'ny {min} sy {max}.
 validations.required,The error message that appears on required fields,Required for registration,Requis pour l'enregistrement,Tsy maintsy ilaina
 validations.requiredBasic,The error message that appears on required fields,Required,Requis,Ilaina
-validations.requiredSymbo,,,,validations.requiredSymbol : 
+validations.requiredSymbo,,,,validations.requiredSymbol :
 validations.requiredSymbol,A blank error message. Used for highlighting a required field without showing an error,,,
 validations.userform.required,The error message that appears on required fields on new user form,Required to register a new user,Requis pour l'enregistrement d'un nouvel utilisateur,Tsy maintsy ilaina alohan'ny hitahirizana io mpikirakira vaovao io
 validations.validBirthRegistrationNumber,The error message that appears when an invalid value is used as brn,The Birth Registration Number can only be numeric and must be {validLength} characters long,Le numéro d'enregistrement de la naissance ne peut être que numérique et doit comporter {validLength} caractères.,Ny laharana firaketana fahatarehana dia tsy ahitana afa-tsy tarehimarika ary tsy maintsy ahitana litera {validLength}.
