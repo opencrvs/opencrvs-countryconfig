@@ -231,3 +231,34 @@ function ensure_settings {
   return $result
 }
 
+# Upgrading from 7 to 8 requires deleting elastalert indices. https://elastalert2.readthedocs.io/en/latest/recipes/faq.html#does-elastalert-2-support-elasticsearch-8
+# Elastalert depends on kibana/beat indices, so we delete can elastalert indices during each deployment.
+function delete_elastalert_indices {
+  # Opt for explicity over wildcard since we are deleting indices
+  local indices='elastalert_status,elastalert_status_error,elastalert_status_past,elastalert_status_silence,elastalert_status_status'
+
+  local elasticsearch_host="${ELASTICSEARCH_HOST:-elasticsearch}"
+
+  local -a args=( '-s' '-D-' '-m15' '-w' '%{http_code}'
+    "http://${elasticsearch_host}:9200/${indices}"
+    '-X' 'DELETE'
+  )
+
+  if [[ -n "${ELASTIC_PASSWORD:-}" ]]; then
+    args+=( '-u' "elastic:${ELASTIC_PASSWORD}" )
+  fi
+
+  local -i result=1
+  local output
+
+  output="$(curl "${args[@]}")"
+  if [[ "${output: -3}" -eq 200 ]]; then
+    result=0
+  fi
+
+  if ((result)); then
+    echo -e "\n${output::-3}\n"
+  fi
+
+  return $result
+}
