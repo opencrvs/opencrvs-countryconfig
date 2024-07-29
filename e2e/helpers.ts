@@ -65,8 +65,8 @@ export const goToSection = async (page: Page, section: DeclarationSection) => {
 }
 
 /*
-  Generates a random past date 
-  at least 'minAge' years ago 
+  Generates a random past date
+  at least 'minAge' years ago
   and up to an additional 'range' days earlier
 */
 export const getRandomDate = (minAge: number, range: number) => {
