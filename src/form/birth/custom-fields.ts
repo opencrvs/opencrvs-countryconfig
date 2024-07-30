@@ -316,19 +316,23 @@ function notMentionType(type: MentionType): Conditional[] {
   ]
 }
 
-export const typeOfMention: SerializedFormField = {
-  name: 'typeOfMention',
-  type: 'SELECT_WITH_OPTIONS',
-  customQuestionMappingId: 'birth.mention.mention-view-group.typeOfMention',
-  initialValue: '',
-  label: mentionMessageDescriptors.typeOfMention,
-  required: false,
-  custom: true,
-  validator: [],
-  options: availableMentionTypes.map((type) => ({
-    label: mentionMessageDescriptors[type],
-    value: type
-  }))
+export function typeOfMention(): SerializedFormField {
+  const fieldId = 'birth.mention.mention-view-group.typeOfMention'
+  return {
+    name: 'typeOfMention',
+    type: 'SELECT_WITH_OPTIONS',
+    customQuestionMappingId: fieldId,
+    initialValue: '',
+    label: mentionMessageDescriptors.typeOfMention,
+    required: false,
+    custom: true,
+    validator: [],
+    options: availableMentionTypes.map((type) => ({
+      label: mentionMessageDescriptors[type],
+      value: type
+    })),
+    mapping: getCustomFieldMapping(fieldId)
+  }
 }
 
 function getMentionActNumber(type: MentionType): SerializedFormField {

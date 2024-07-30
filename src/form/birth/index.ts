@@ -560,7 +560,7 @@ export const birthForm: ISerializedForm = {
             }
           ],
           fields: [
-            typeOfMention,
+            typeOfMention(),
             ...availableMentionTypes
               .filter((type) => type !== 'REJECTION')
               .flatMap((type) => {
