@@ -91,7 +91,7 @@ export const mothersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.customizedExactDateOfBirthUnknown'
+    expression: 'values.customizedExactDateOfBirthUnknown === true'
   },
   {
     action: 'disable',
@@ -180,7 +180,7 @@ export const fathersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.customizedExactDateOfBirthUnknown'
+    expression: 'values.customizedExactDateOfBirthUnknown === true'
   },
   {
     action: 'disable',
@@ -264,7 +264,8 @@ export const brideOrGroomBirthDateValidators = (spouseType: string) => [
 export const exactDateOfBirthUnknownConditional = [
   {
     action: 'hide',
-    expression: '!values.customizedExactDateOfBirthUnknown'
+    expression:
+      '!values.customizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown === "false"'
   }
 ]
 
@@ -387,7 +388,7 @@ export const informantBirthDateConditionals = [
   {
     action: 'hide',
     expression:
-      'values.exactDateOfBirthUnknown || values.birthInformantCustomizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown'
+      'values.exactDateOfBirthUnknown || values.birthInformantCustomizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown === true'
   },
   {
     action: 'disable',
