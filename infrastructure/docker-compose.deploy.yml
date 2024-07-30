@@ -60,7 +60,7 @@ services:
       - overlay_net
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.17.0
+    image: docker.elastic.co/beats/filebeat:8.14.3
     user: root
     networks:
       - overlay_net
@@ -85,7 +85,7 @@ services:
         - 'traefik.enable=false'
 
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:7.17.13
+    image: docker.elastic.co/beats/metricbeat:8.14.3
     user: root
     cap_add:
       - SYS_PTRACE
@@ -128,7 +128,7 @@ services:
       [
         'curl',
         '-u',
-        'elastic:${ELASTICSEARCH_SUPERUSER_PASSWORD}',
+        'kibana_system:${KIBANA_SYSTEM_PASSWORD}',
         '-X',
         'POST',
         'http://kibana:5601/api/saved_objects/_import?overwrite=true',
@@ -156,7 +156,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'setup-kibana-config'
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.0
+    image: docker.elastic.co/kibana/kibana:8.14.3
     restart: always
     deploy:
       labels:
@@ -173,8 +173,8 @@ services:
     networks:
       - overlay_net
     environment:
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
     configs:
       - source: kibana.{{ts}}
         target: /usr/share/kibana/config/kibana.yml
@@ -282,7 +282,6 @@ services:
       - path.repo=/data/backups/elasticsearch
       - cluster.name=docker-cluster
       - network.host=0.0.0.0
-      - discovery.zen.minimum_master_nodes=1
       - discovery.type=single-node
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true
@@ -365,6 +364,7 @@ services:
       - APM_ELASTIC_PASSWORD=${ROTATING_APM_ELASTIC_PASSWORD}
       - SEARCH_ELASTIC_USERNAME=search-user
       - SEARCH_ELASTIC_PASSWORD=${ROTATING_SEARCH_ELASTIC_PASSWORD}
+      - KIBANA_SYSTEM_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
       - KIBANA_USERNAME=${KIBANA_USERNAME}
       - KIBANA_PASSWORD=${KIBANA_PASSWORD}
     volumes:
@@ -384,7 +384,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'setup-elasticsearch-users'
   elastalert:
-    image: jertel/elastalert2:2.3.0
+    image: jertel/elastalert2:2.19.0
     restart: unless-stopped
     environment:
       - ES_USERNAME=elastic
@@ -408,7 +408,7 @@ services:
         tag: 'elastalert'
 
   logstash:
-    image: logstash:7.17.0
+    image: logstash:8.14.3
     command: logstash -f /etc/logstash/logstash.conf --verbose
     ports:
       - '12201:12201'
@@ -431,7 +431,7 @@ services:
         - 'traefik.enable=false'
       replicas: 1
   apm-server:
-    image: docker.elastic.co/apm/apm-server:7.15.2
+    image: docker.elastic.co/apm/apm-server:7.17.22
     cap_add: ['CHOWN', 'DAC_OVERRIDE', 'SETGID', 'SETUID']
     cap_drop: ['ALL']
     restart: always
