@@ -9,21 +9,36 @@
 #
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
 
-set -eu
-set -o pipefail
+# Upgrading from 7 to 8 requires deleting elastalert indices. https://elastalert2.readthedocs.io/en/latest/recipes/faq.html#does-elastalert-2-support-elasticsearch-8
 
-source "$(dirname "${BASH_SOURCE[0]}")/setup-helpers.sh"
+set -e
 
-echo "-------- $(date) --------"
+docker_command="docker run --rm --network=opencrvs_overlay_net curlimages/curl"
 
-log 'Waiting for availability of Elasticsearch'
-wait_for_elasticsearch
+echo 'Waiting for availability of Elasticsearch'
+ping_status_code=$($docker_command --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD -o /dev/null -w '%{http_code}' "http://elasticsearch:9200")
+
+if [ "$ping_status_code" -ne 200 ]; then
+  echo "Elasticsearch is not ready. API returned status code: $ping_status_code"
+  exit 1
+fi
 
 
-log 'Scaling down Elastalert'
+
+echo 'Scaling down Elastalert'
+
 docker service scale opencrvs_elastalert=0
-log 'Deleting Elastalert indices'
-delete_elastalert_indices
-log 'Scaling up Elastalert'
+
+echo 'Deleting Elastalert indices'
+indices='elastalert_status,elastalert_status_error,elastalert_status_past,elastalert_status_silence,elastalert_status_status'
+
+delete_status_code=$($docker_command --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD -o /dev/null -w '%{http_code}' "http://elasticsearch:9200/${indices}" -X DELETE)
+
+if [ "$delete_status_code" -ne 200 ]; then
+  echo "Could not delete indices. API returned status code: $delete_status_code"
+  exit 1
+fi
+
+echo 'Scaling up Elastalert'
 docker service scale opencrvs_elastalert=1
 
