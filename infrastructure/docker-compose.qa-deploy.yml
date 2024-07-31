@@ -14,6 +14,7 @@ services:
       - --certificatesresolvers.certResolver.acme.dnschallenge=true
       - --certificatesresolvers.certResolver.acme.dnschallenge.provider=route53
       - --certificatesresolvers.certResolver.acme.dnschallenge.delayBeforeCheck=60
+      - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=8.8.8.8
       # - --certificatesresolvers.certResolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
       # - --certificatesresolvers.certResolver.acme.domains=*.example.com,example.com
       - --certificatesresolvers.certResolver.acme.email=sd-identity@digital.gov.mg
