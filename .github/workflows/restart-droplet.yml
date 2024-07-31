@@ -37,14 +37,6 @@ jobs:
       - name: Restart Droplet
         run: doctl compute droplet-action reboot $(doctl compute droplet list ${{ vars.DIGITAL_OCEAN_DROPLET_NAME }} --format ID --no-header) --wait
 
-      - name: Wait for SSH to become available
-        run: |
-          until nc -z -v -w30 ${{ secrets.SSH_HOST }} 22
-          do
-            echo "Waiting for SSH..."
-            sleep 5
-          done
-
       - name: Read known hosts
         run: |
           cd ${{ github.event.repository.name }}
@@ -58,6 +50,18 @@ jobs:
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ env.KNOWN_HOSTS }}
+
+      - name: Wait for SSH connection
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_ARGS: ${{ vars.SSH_ARGS }}
+        run: |
+          while ! ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 $SSH_USER@$SSH_HOST $SSH_ARGS exit 2>/dev/null; do
+            echo "Waiting for SSH connection..."
+            sleep 5
+          done
+          echo "SSH connection established."
 
       - name: Reset data
         env:
