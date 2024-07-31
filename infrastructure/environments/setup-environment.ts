@@ -655,6 +655,13 @@ const derivedVariables = [
     scope: 'ENVIRONMENT'
   },
   {
+    name: 'KIBANA_SYSTEM_PASSWORD',
+    valueLabel: 'KIBANA_SYSTEM_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
     name: 'MINIO_ROOT_USER',
     valueLabel: 'MINIO_ROOT_USER',
     valueType: 'SECRET',
@@ -1098,6 +1105,23 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       ),
       value: findExistingOrDefine(
         'ELASTICSEARCH_SUPERUSER_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'KIBANA_SYSTEM_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'KIBANA_SYSTEM_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'KIBANA_SYSTEM_PASSWORD',
         'SECRET',
         'ENVIRONMENT',
         generateLongPassword()

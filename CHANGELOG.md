@@ -51,6 +51,37 @@
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
+### Other changes
+
+- Upgrade Node.js to 18
+- Remove dependency OpenHIM. The OpenHIM database is kept for backwards compatibility reasons and will be removed in v1.6
+- Change auth URLs to access them via gateway
+- Add hearth URL to search service
+- Include an endpoint for serving individual certificates in development mode
+- Include compositionId in confirm registration payload
+- Remove logrocket refrences
+- Enable gzip compression in client & login
+- Make SENTRY_DSN variable optional
+- Use docker compose v2 in github workflows
+- Mass email from national system admin
+- Add SMTP environment variables in qa compose file
+- Use image tag instead of patterns in certificate SVGs
+- Generate default address according to logged-in user's location
+- Remove authentication from dashboard queries route
+- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
+- In the certificate, the 'Place of Certification' now accurately reflects the correct location.
+- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
+- Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
+- Add query mapper for International Postal Code field
+- Add support for image compression configuration
+- Provide env variables for metabase admin credentials
+- Improved formatting of informant name for inProgress declaration emails
+- Rename `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming
+- Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field [#114](https://github.com/opencrvs/opencrvs-countryconfig/pull/114)
+- Enable authentication for certificates endpoint [#188](https://github.com/opencrvs/opencrvs-countryconfig/pull/188)
+
+## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
+
 - Improved logging for emails being sent
 - Updated default Metabase init file so that it's compatible with the current Metabase version
 - Deployment: Verifies Kibana is ready before setting up alert configuration
