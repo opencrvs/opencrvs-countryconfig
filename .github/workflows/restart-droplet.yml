@@ -63,7 +63,7 @@ jobs:
           done
           echo "SSH connection established."
 
-      - name: Reset data
+      - name: Decrypt and restart docker
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
