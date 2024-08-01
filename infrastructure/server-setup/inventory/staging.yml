@@ -75,7 +75,7 @@ docker-manager-first:
 docker-workers: {}
 backups:
   hosts:
-    farajaland-qa:
+    farajaland-staging:
       ansible_host: '64.226.95.104'
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
