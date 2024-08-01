@@ -90,10 +90,9 @@ import {
   getDivorceMentionFields,
   getNameChangeMentionFields,
   getDeathMentionFields,
-  getNotes
+  getNotes,
+  getDetailsMentionExist
 } from './custom-fields'
-import { conditionals as birthCustomConditionals } from './custom-conditionals'
-import { conditionals as customConditionals } from '../common/custom-validation-conditionals/custom-conditionals'
 import { subYears } from 'date-fns'
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -229,11 +228,7 @@ export const birthForm: ISerializedForm = {
               }
             ),
             getNUI(
-              [
-                birthCustomConditionals.childHasNUI,
-                customConditionals.isOnline,
-                customConditionals.isUserRegistrarOrRegistrationAgent
-              ],
+              [],
               [
                 {
                   operation: 'duplicateIDNumber',
@@ -548,38 +543,64 @@ export const birthForm: ISerializedForm = {
       id: 'mention',
       viewType: 'form',
       name: mentionMessageDescriptors.sectionName,
-      title: mentionMessageDescriptors.sectionTitle,
-      groups: [
-        {
-          id: 'mention-view-group',
-          conditionals: [
-            {
-              action: 'hide',
-              expression:
-                '!Boolean(draftData?.registration?.registrationNumber)'
+      groups: Array.from({ length: 10 }, (_, i) => ({
+        id: 'mention-view-group-' + i,
+        conditionals:
+          i === 0
+            ? [
+                {
+                  action: 'hide',
+                  expression:
+                    '!Boolean(draftData?.registration?.registrationNumber)'
+                }
+              ]
+            : [
+                {
+                  action: 'hide',
+                  expression:
+                    '!Boolean(draftData?.registration?.registrationNumber)'
+                },
+                {
+                  action: 'hide',
+                  expression: `!values['detailsMentionExist__${i - 1}']`
+                }
+              ],
+        title: {
+          id: 'mention-view-group-' + i,
+          defaultMessage: 'Mention ' + (i + 1),
+          description: 'Form section title for mention'
+        },
+        fields: [
+          getDetailsMentionExist(i),
+          typeOfMention(i),
+          ...availableMentionTypes
+            .filter((type) => type !== 'REJECTION')
+            .flatMap((type) => {
+              if (type === 'RECOGNITION') return getRecognitionMentionFields(i)
+              else if (type === 'SIMPLE_ADOPTION')
+                return getSimpleAdoptionMentionFields(i)
+              else if (type === 'JUDICIAL_ADOPTION')
+                return getJudicialAdoptionMentionFields(i)
+              else if (type === 'MARRIAGE') return getMarriageMentionFields(i)
+              else if (type === 'DIVORCE') return getDivorceMentionFields(i)
+              else if (type === 'NAME_CHANGE')
+                return getNameChangeMentionFields(i)
+              else if (type === 'DEATH') return getDeathMentionFields(i)
+              else return []
+            }),
+          getNotes(i)
+        ],
+        previewGroups: [
+          {
+            id: 'mention' + i,
+            label: {
+              description: 'Label for details preview group title',
+              defaultMessage: 'Details of the mention ' + (i + 1),
+              id: 'form.preview.group.label.typeMention' + i
             }
-          ],
-          fields: [
-            typeOfMention(),
-            ...availableMentionTypes
-              .filter((type) => type !== 'REJECTION')
-              .flatMap((type) => {
-                if (type === 'RECOGNITION') return getRecognitionMentionFields()
-                else if (type === 'SIMPLE_ADOPTION')
-                  return getSimpleAdoptionMentionFields()
-                else if (type === 'JUDICIAL_ADOPTION')
-                  return getJudicialAdoptionMentionFields()
-                else if (type === 'MARRIAGE') return getMarriageMentionFields()
-                else if (type === 'DIVORCE') return getDivorceMentionFields()
-                else if (type === 'NAME_CHANGE')
-                  return getNameChangeMentionFields()
-                else if (type === 'DEATH') return getDeathMentionFields()
-                else return []
-              }),
-            getNotes()
-          ]
-        }
-      ]
+          }
+        ]
+      }))
     },
     documentsSection // REQUIRED SECTION FOR DOCUMENT ATTACHMENTS
   ]

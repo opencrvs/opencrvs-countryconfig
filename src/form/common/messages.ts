@@ -1079,5 +1079,10 @@ export const mentionMessageDescriptors = {
     id: 'form.field.label.mention.notes',
     defaultMessage: 'Notes',
     description: 'Label for notes'
+  },
+  mentionDetailsExist: {
+    id: 'form.field.label.mentionDetailsExist',
+    defaultMessage: 'Mention details exist',
+    description: 'Label for Mention details exist checkbox'
   }
 }
