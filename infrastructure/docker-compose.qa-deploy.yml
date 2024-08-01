@@ -17,6 +17,7 @@ services:
       - --certificatesresolvers.certResolver.acme.email=sd-identity@digital.gov.mg
       - --certificatesresolvers.certResolver.acme.storage=acme.json
       - --certificatesresolvers.certResolver.acme.dnschallenge.delayBeforeCheck=600
+      - --certificatesresolvers.certResolver.acme.dnschallenge.disablePropagationCheck=true
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
       - --providers.docker
