@@ -16,7 +16,7 @@ services:
       - --certificatesresolvers.certResolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.certResolver.acme.email=sd-identity@digital.gov.mg
       - --certificatesresolvers.certResolver.acme.storage=acme.json
-
+      - --certificatesresolvers.certResolver.acme.dnschallenge.delayBeforeCheck=600
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
       - --providers.docker
