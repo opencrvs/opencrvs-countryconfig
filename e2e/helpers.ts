@@ -111,3 +111,13 @@ export const uploadImage = async (
   const fileChooser = await fileChooserPromise
   await fileChooser.setFiles(image)
 }
+
+export async function continueForm(page: Page) {
+  /*
+   * This timeout is to ensure that all previous actions have been completed
+   * including filling inputs and that the changed values have been reflected
+   * also to the Redux state. 500ms is selected as a safe value.
+   */
+  await page.waitForTimeout(500)
+  return page.getByText('Continue', { exact: true }).click()
+}
