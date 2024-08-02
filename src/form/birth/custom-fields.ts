@@ -315,6 +315,15 @@ function notMentionType(type: MentionType, index: number): Conditional[] {
   ]
 }
 
+function detailsMentionExist(index: number): Conditional[] {
+  return [
+    {
+      action: 'hide',
+      expression: `values['detailsMentionExist__${index}'] === 'false'`
+    }
+  ]
+}
+
 export function typeOfMention(index: number): SerializedFormField {
   const fieldName = 'typeOfMention__' + index
   const fieldId = 'birth.mention.mention-view-group.' + fieldName
@@ -331,6 +340,7 @@ export function typeOfMention(index: number): SerializedFormField {
       label: mentionMessageDescriptors[type],
       value: type
     })),
+    conditionals: detailsMentionExist(index),
     previewGroup: 'mention' + index,
     mapping: getCustomFieldMapping(fieldId)
   }
@@ -355,7 +365,9 @@ function getMentionActNumber(
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: notMentionType(type, index),
+    conditionals: notMentionType(type, index).concat(
+      detailsMentionExist(index)
+    ),
     previewGroup: 'mention' + index
   }
 }
@@ -381,7 +393,9 @@ function getMentionDate(type: MentionType, index: number): SerializedFormField {
       }
     ],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: notMentionType(type, index),
+    conditionals: notMentionType(type, index).concat(
+      detailsMentionExist(index)
+    ),
     previewGroup: 'mention' + index
   }
 }
@@ -410,7 +424,9 @@ function getMentionPlace(
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: notMentionType(type, index),
+    conditionals: notMentionType(type, index).concat(
+      detailsMentionExist(index)
+    ),
     previewGroup: 'mention' + index
   }
 }
@@ -528,7 +544,9 @@ function getJudgementDecisionNumber(
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: notMentionType(type, index),
+    conditionals: notMentionType(type, index).concat(
+      detailsMentionExist(index)
+    ),
     previewGroup: 'mention' + index
   }
 }
@@ -554,7 +572,9 @@ function getJudgementDecisionDate(
       }
     ],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: notMentionType(type, index),
+    conditionals: notMentionType(type, index).concat(
+      detailsMentionExist(index)
+    ),
     previewGroup: 'mention' + index
   }
 }
@@ -576,7 +596,9 @@ function getTribunalOfFirstInstanceAct(
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: notMentionType(type, index),
+    conditionals: notMentionType(type, index).concat(
+      detailsMentionExist(index)
+    ),
     previewGroup: 'mention' + index
   }
 }
@@ -597,7 +619,9 @@ function getModification(
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: notMentionType(type, index),
+    conditionals: notMentionType(type, index).concat(
+      detailsMentionExist(index)
+    ),
     previewGroup: 'mention' + index
   }
 }
@@ -620,7 +644,9 @@ function getDateOfDeath(type: MentionType, index: number): SerializedFormField {
       }
     ],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: notMentionType(type, index),
+    conditionals: notMentionType(type, index).concat(
+      detailsMentionExist(index)
+    ),
     previewGroup: 'mention' + index
   }
 }
@@ -646,7 +672,9 @@ function getDeathPlace(type: MentionType, index: number): SerializedFormField {
     custom: true,
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: notMentionType(type, index),
+    conditionals: notMentionType(type, index).concat(
+      detailsMentionExist(index)
+    ),
     previewGroup: 'mention' + index
   }
 }
@@ -668,13 +696,13 @@ export function getNotes(index: number): SerializedFormField {
     conditionals: [
       {
         action: 'hide',
-        expression: '!values.typeOfMention'
+        expression: `!values['typeOfMention__${index}']`
       }
-    ]
+    ].concat(detailsMentionExist(index))
   }
 }
 
-export function getRecognitionMentionFields(i: number) {
+export function getRecognitionMentionFields(i: number): SerializedFormField[] {
   const type = 'RECOGNITION'
   return [
     getMentionActNumber(type, i),
@@ -683,16 +711,16 @@ export function getRecognitionMentionFields(i: number) {
     getFamilyNameField(
       'childFamilyName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getFirstNameField(
       'childFirstName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getNUIWithCustomFieldName(
       'mentionChildNID__' + i,
-      notMentionType(type, i),
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       [],
       false,
       'mention' + i,
@@ -701,54 +729,56 @@ export function getRecognitionMentionFields(i: number) {
   ]
 }
 
-export function getSimpleAdoptionMentionFields(i: number) {
+export function getSimpleAdoptionMentionFields(
+  i: number
+): SerializedFormField[] {
   const type = 'SIMPLE_ADOPTION'
   return [
     getMentionActNumber(type, i),
     getMentionDate(type, i),
     getSubsectionHeader(
-      'adoptionParent1Header__' + i,
+      'simpleAdoptionParent1Header__' + i,
       mentionMessageDescriptors.adoptiveParent,
-      notMentionType(type, i),
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       { number: '1' }
     ),
     getFamilyNameField(
-      'adoptionParent1FamilyName__' + i,
+      'simpleAdoptionParent1FamilyName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getFirstNameField(
-      'adoptionParent1FirstName__' + i,
+      'simpleAdoptionParent1FirstName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getNUIWithCustomFieldName(
-      'adoptionParent1NID__' + i,
-      notMentionType(type, i),
+      'simpleAdoptionParent1NID__' + i,
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       [],
       false,
       'mention' + i,
       'mentionAdoptionParent1NID__' + i
     ),
     getSubsectionHeader(
-      'adoptionParent2Header__' + i,
+      'simpleAdoptionParent2Header__' + i,
       mentionMessageDescriptors.adoptiveParent,
-      notMentionType(type, i),
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       { number: '2' }
     ),
     getFamilyNameField(
-      'adoptionParent2FamilyName__' + i,
-      'adoptionParent2Name__' + i,
-      notMentionType(type, i)
+      'simpleAdoptionParent2FamilyName__' + i,
+      'mention' + i,
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getFirstNameField(
-      'adoptionParent2FirstName__' + i,
-      'adoptionParent2Name__' + i,
-      notMentionType(type, i)
+      'simpleAdoptionParent2FirstName__' + i,
+      'mention' + i,
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getNUIWithCustomFieldName(
-      'adoptionParent2NID__' + i,
-      notMentionType(type, i),
+      'simpleAdoptionParent2NID__' + i,
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       [],
       false,
       'mention' + i,
@@ -757,7 +787,9 @@ export function getSimpleAdoptionMentionFields(i: number) {
   ]
 }
 
-export function getJudicialAdoptionMentionFields(i: number) {
+export function getJudicialAdoptionMentionFields(
+  i: number
+): SerializedFormField[] {
   const type = 'JUDICIAL_ADOPTION'
   return [
     getMentionActNumber(type, i),
@@ -768,22 +800,22 @@ export function getJudicialAdoptionMentionFields(i: number) {
     getSubsectionHeader(
       'judicialAdoptionParent1Header__' + i,
       mentionMessageDescriptors.adoptiveParent,
-      notMentionType(type, i),
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       { number: '1' }
     ),
     getFamilyNameField(
       'judicialAdoptionParent1FamilyName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getFirstNameField(
       'judicialAdoptionParent1FirstName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getNUIWithCustomFieldName(
       'judicialAdoptionParent1NID__' + i,
-      notMentionType(type, i),
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       [],
       false,
       'mention' + i,
@@ -792,22 +824,22 @@ export function getJudicialAdoptionMentionFields(i: number) {
     getSubsectionHeader(
       'judicialAdoptionParent2Header__' + i,
       mentionMessageDescriptors.adoptiveParent,
-      notMentionType(type, i),
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       { number: '2' }
     ),
     getFamilyNameField(
       'judicialAdoptionParent2FamilyName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getFirstNameField(
       'judicialAdoptionParent2FirstName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getNUIWithCustomFieldName(
       'judicialAdoptionParent2NID__' + i,
-      notMentionType(type, i),
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       [],
       false,
       'mention' + i,
@@ -816,7 +848,7 @@ export function getJudicialAdoptionMentionFields(i: number) {
   ]
 }
 
-export function getMarriageMentionFields(i: number) {
+export function getMarriageMentionFields(i: number): SerializedFormField[] {
   const type = 'MARRIAGE'
   return [
     getMentionActNumber(type, i),
@@ -827,21 +859,21 @@ export function getMarriageMentionFields(i: number) {
     getSubsectionHeader(
       'brideOrGroomHeader__' + i,
       mentionMessageDescriptors.brideOrGroom,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getFamilyNameField(
       'brideOrGroomFamilyName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getFirstNameField(
       'brideOrGroomFirstName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getNUIWithCustomFieldName(
       'brideOrGroomNID__' + i,
-      notMentionType(type, i),
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       [],
       false,
       'mention' + i,
@@ -850,7 +882,7 @@ export function getMarriageMentionFields(i: number) {
   ]
 }
 
-export function getDivorceMentionFields(i: number) {
+export function getDivorceMentionFields(i: number): SerializedFormField[] {
   const type = 'DIVORCE'
   return [
     getMentionActNumber(type, i),
@@ -859,21 +891,21 @@ export function getDivorceMentionFields(i: number) {
     getSubsectionHeader(
       'wifeOrHusbandHeader__' + i,
       mentionMessageDescriptors.wifeOrHusband,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getFamilyNameField(
       'wifeOrHusbandFamilyName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getFirstNameField(
       'wifeOrHusbandFirstName__' + i,
       'mention' + i,
-      notMentionType(type, i)
+      notMentionType(type, i).concat(detailsMentionExist(i))
     ),
     getNUIWithCustomFieldName(
       'wifeOrHusbandNID__' + i,
-      notMentionType(type, i),
+      notMentionType(type, i).concat(detailsMentionExist(i)),
       [],
       false,
       'mention' + i,
@@ -882,7 +914,7 @@ export function getDivorceMentionFields(i: number) {
   ]
 }
 
-export function getNameChangeMentionFields(i: number) {
+export function getNameChangeMentionFields(i: number): SerializedFormField[] {
   const type = 'NAME_CHANGE'
   return [
     getMentionActNumber(type, i),
@@ -894,7 +926,7 @@ export function getNameChangeMentionFields(i: number) {
   ]
 }
 
-export function getDeathMentionFields(i: number) {
+export function getDeathMentionFields(i: number): SerializedFormField[] {
   const type = 'DEATH'
   return [
     getMentionActNumber(type, i),

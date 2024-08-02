@@ -82,7 +82,7 @@ export const documentsSection = {
         {
           name: 'uploadDocForRecognition',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
-          label: formMessageDescriptors.proofOfMothersID,
+          label: formMessageDescriptors.proofOfRecognition,
           initialValue: '',
           extraValue: birthDocumentExtraValue.CHILD,
           hideAsterisk: true,
@@ -98,7 +98,7 @@ export const documentsSection = {
               description: 'Hidden unless marginal mention is Recognition',
               action: 'hide',
               expression:
-                '!draftData || !draftData.mention || !draftData.mention.typeOfMention || draftData.mention.typeOfMention !== "RECOGNITION"'
+                '!draftData || !draftData.mention || !Array.from({ length: 10 }, (_,i) => "typeOfMention__" + i).some(key => draftData.mention[key])'
             }
           ],
           mapping: getFieldMapping('documents')
