@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.5.1
+
 ## 1.5.0
 
 ### Breaking changes
