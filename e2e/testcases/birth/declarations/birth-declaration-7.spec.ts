@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test'
-import { createPIN, goToSection, login } from '../../../helpers'
+import { createPIN, goToSection, login, uploadImage } from '../../../helpers'
 import faker from '@faker-js/faker'
 
 test.describe.serial('7. Birth declaration case - 7', () => {
@@ -82,8 +82,32 @@ test.describe.serial('7. Birth declaration case - 7', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
-    test.skip('7.1.5 Add supporting documents', async () => {
+    test('7.1.5 Add supporting documents', async () => {
       goToSection(page, 'documents')
+      await uploadImage(
+        page,
+        page.locator('button[name="uploadDocForChildDOB"]')
+      )
+      await page
+        .locator('#uploadDocForInformant')
+        .getByText('Select...')
+        .click()
+      await page.getByText('Birth certificate', { exact: true }).click()
+      await uploadImage(
+        page,
+        page.locator('button[name="uploadDocForInformant"]')
+      )
+      await page
+        .locator('#uploadDocForProofOfLegalGuardian')
+        .getByText('Select...')
+        .click()
+      await page
+        .getByText('Proof of legal guardianship', { exact: true })
+        .click()
+      await uploadImage(
+        page,
+        page.locator('button[name="uploadDocForProofOfLegalGuardian"]')
+      )
     })
 
     test('7.1.6 Go to preview', async () => {

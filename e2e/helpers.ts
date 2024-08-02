@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test'
+import { Locator, Page, expect } from '@playwright/test'
 import { AUTH_URL, CLIENT_URL } from './constants'
 
 export async function login(page: Page, username: string, password: string) {
@@ -97,4 +97,15 @@ export async function validateSectionButtons(page: Page) {
   await expect(page.getByText('Exit', { exact: true })).toBeVisible()
   await expect(page.getByText('Save & Exit', { exact: true })).toBeVisible()
   await expect(page.locator('#eventToggleMenuToggleButton')).toBeVisible()
+}
+
+export const uploadImage = async (
+  page: Page,
+  locator: Locator,
+  image = './e2e/assets/528KB-random.png'
+) => {
+  const fileChooserPromise = page.waitForEvent('filechooser')
+  await locator.click()
+  const fileChooser = await fileChooserPromise
+  await fileChooser.setFiles(image)
 }
