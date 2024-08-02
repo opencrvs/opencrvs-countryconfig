@@ -1,4 +1,3 @@
-import { getRecognitionMentionFields } from '@countryconfig/form/birth/custom-fields'
 import * as Handlebars from 'handlebars'
 import { type IntlShape } from 'react-intl'
 
@@ -576,6 +575,132 @@ export function getPlaceOfBirth(): Handlebars.HelperDelegate {
   }
 }
 
+function getRecognitionMentionValues(this: Record<string, string>, i: number) {
+  return [
+    this['birthMentionRecognitionActNumber__' + i],
+    this['birthMentionRecognitionDate__' + i],
+    this['birthMentionRecognitionPlace__' + i],
+    [
+      this['birthMentionChildFamilyName__' + i],
+      this['birthMentionChildFirstName__' + i]
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .trim(),
+    this['birthMentionMentionChildNID__' + i]
+  ]
+}
+
+function getJudicialAdoptionMentionValues(
+  this: Record<string, string>,
+  i: number
+) {
+  return [
+    this['birthMentionJudicialAdoptionActNumber__' + i],
+    this['birthMentionJudicialAdoptionDate__' + i],
+    this['birthMentionJudicialAdoptionJudgementDecisionNumber__' + i],
+    this['birthMentionJudicialAdoptionJudgementDecisionDate__' + i],
+    [
+      this['birthMentionJudicialAdoptionParent1FamilyName__' + i],
+      this['birthMentionJudicialAdoptionParent1FirstName__' + i]
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .trim(),
+    this['birthMentionJudicialAdoptionParent1NID__' + i],
+    [
+      this['birthMentionJudicialAdoptionParent2FamilyName__' + i],
+      this['birthMentionJudicialAdoptionParent2FirstName__' + i]
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .trim(),
+    this['birthMentionJudicialAdoptionParent2NID__' + i]
+  ]
+}
+
+function getSimpleAdoptionMentionValues(
+  this: Record<string, string>,
+  i: number
+) {
+  return [
+    this['birthMentionSimpleAdoptionActNumber__' + i],
+    this['birthMentionSimpleAdoptionDate__' + i],
+    this['birthMentionSimpleAdoptionJudgementDecisionNumber__' + i],
+    this['birthMentionSimpleAdoptionJudgementDecisionDate__' + i],
+    [
+      this['birthMentionSimpleAdoptionParent1FamilyName__' + i],
+      this['birthMentionSimpleAdoptionParent1FirstName__' + i]
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .trim(),
+    this['birthMentionSimpleAdoptionParent1NID__' + i],
+    [
+      this['birthMentionSimpleAdoptionParent2FamilyName__' + i],
+      this['birthMentionSimpleAdoptionParent2FirstName__' + i]
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .trim(),
+    this['birthMentionSimpleAdoptionParent2NID__' + i]
+  ]
+}
+
+function getMarriageMentionValues(this: Record<string, string>, i: number) {
+  return [
+    this['birthMentionMarriageActNumber__' + i],
+    this['birthMentionMarriageDate__' + i],
+    this['birthMentionMarriageJudgementDecisionNumber__' + i],
+    this['birthMentionMarriageJudgementDecisionDate__' + i],
+    this['birthMentionMarriageTribunalOfFirstInstanceAct__' + i],
+    [
+      this['birthMentionBrideOrGroomFamilyName__' + i],
+      this['birthMentionBrideOrGroomFirstName__' + i]
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .trim(),
+    this['birthMentionBrideOrGroomNID__' + i]
+  ]
+}
+
+function getDivorceMentionValues(this: Record<string, string>, i: number) {
+  return [
+    this['birthMentionDivorceActNumber__' + i],
+    this['birthMentionDivorceDate__' + i],
+    this['birthMentionDivorcePlace__' + i],
+    [
+      this['birthMentionWifeOrHusbandFamilyName__' + i],
+      this['birthMentionWifeOrHusbandFirstName__' + i]
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .trim(),
+    this['birthMentionWifeOrHusbandNID__' + i]
+  ]
+}
+
+function getNameChangeMentionValues(this: Record<string, string>, i: number) {
+  return [
+    this['birthMentionNameChangeActNumber__' + i],
+    this['birthMentionNameChangeDate__' + i],
+    this['birthMentionNameChangeJudgementDecisionNumber__' + i],
+    this['birthMentionNameChangeJudgementDecisionDate__' + i],
+    this['birthMentionNameChangeTribunalOfFirstInstanceAct__' + i],
+    this['birthMentionModification__' + i]
+  ]
+}
+
+function getDeathMentionValues(this: Record<string, string>, i: number) {
+  return [
+    this['birthMentionDeathActNumber__' + i],
+    this['birthMentionDeathDate__' + i],
+    this['birthMentionDeathPlace__' + i],
+    this['birthMentionDeathdateOfDeath__' + i],
+    this['birthMentionDeathDeathPlace__' + i]
+  ]
+}
 export function mentions(): Handlebars.HelperDelegate {
   return function (this: any) {
     let output = ''
@@ -583,52 +708,18 @@ export function mentions(): Handlebars.HelperDelegate {
       if (!this['birthMentionDetailsMentionExist__' + i]) {
         break
       }
-      if (this['birthMentionTypeOfMention__' + i] === 'Recognition') {
-        output += [
-          this['birthMentionTypeOfMention__' + i],
-          this['birthMentionRecognitionActNumber__' + i],
-          this['birthMentionRecognitionDate__' + i],
-          this['birthMentionRecognitionPlace__' + i],
-          [
-            this['birthMentionChildFamilyName__' + i],
-            this['birthMentionChildFirstName__' + i]
-          ]
-            .filter(Boolean)
-            .join(' ')
-            .trim(),
-          this['birthMentionMentionChildNID__' + i]
-        ]
-          .filter(Boolean)
-          .join(', ')
-      } else if (
-        this['birthMentionTypeOfMention__' + i] === 'Judicial adoption'
-      ) {
-        output += [
-          this['birthMentionTypeOfMention__' + i],
-          this['birthMentionJudicialAdoptionActNumber__' + i],
-          this['birthMentionJudicialAdoptionDate__' + i],
-          this['birthMentionJudicialAdoptionJudgementDecisionNumber__' + i],
-          this['birthMentionJudicialAdoptionJudgementDecisionDate__' + i],
-          [
-            this['birthMentionJudicialAdoptionParent1FamilyName__' + i],
-            this['birthMentionJudicialAdoptionParent1FirstName__' + i]
-          ]
-            .filter(Boolean)
-            .join(' ')
-            .trim(),
-          this['mentionJudicialAdoptionParent1NID__' + i],
-          [
-            this['birthMentionJudicialAdoptionParent2FamilyName__' + i],
-            this['birthMentionJudicialAdoptionParent2FirstName__' + i]
-          ]
-            .filter(Boolean)
-            .join(' ')
-            .trim(),
-          this['mentionJudicialAdoptionParent2NID__' + i]
-        ]
-          .filter(Boolean)
-          .join(', ')
-      }
+      output += [
+        this['birthMentionTypeOfMention__' + i],
+        ...getRecognitionMentionValues.apply(this, [i]),
+        ...getJudicialAdoptionMentionValues.apply(this, [i]),
+        ...getSimpleAdoptionMentionValues.apply(this, [i]),
+        ...getMarriageMentionValues.apply(this, [i]),
+        ...getDivorceMentionValues.apply(this, [i]),
+        ...getNameChangeMentionValues.apply(this, [i]),
+        ...getDeathMentionValues.apply(this, [i])
+      ]
+        .filter(Boolean)
+        .join(', ')
       output += '\n'
     }
     return output
