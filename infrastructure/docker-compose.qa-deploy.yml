@@ -13,7 +13,7 @@ services:
     command:
       - --certificatesresolvers.certResolver.acme.dnschallenge=true
       - --certificatesresolvers.certResolver.acme.dnschallenge.provider=route53
-      - --certificatesresolvers.certResolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      # - --certificatesresolvers.certResolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.certResolver.acme.email=sd-identity@digital.gov.mg
       - --certificatesresolvers.certResolver.acme.storage=acme.json
       - --certificatesresolvers.certResolver.acme.dnschallenge.delayBeforeCheck=600
