@@ -150,19 +150,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Get Previous Workflow Run
-        id: get-previous-run
-        run: |
-          previous_run_id=$(gh run list --limit 2 --json databaseId -q '.[1].databaseId')
-          echo "PREVIOUS_RUN_ID=$previous_run_id" >> $GITHUB_ENV
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          fetch-depth: 0
 
       - name: Get Previous Run Conclusion
         id: get-previous-conclusion
         run: |
-          previous_conclusion=$(gh run view $PREVIOUS_RUN_ID --json conclusion -q '.conclusion')
+          previous_conclusion=$(gh run list --limit 1 --status=completed --workflow="Deploy & run E2E" --json conclusion -q '.[0].conclusion')
           echo "PREVIOUS_CONCLUSION=$previous_conclusion" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}

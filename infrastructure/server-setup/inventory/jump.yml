@@ -16,6 +16,7 @@
 all:
   vars:
     users:
+      # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
       - name: pyry
         ssh_keys:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBcrSLLdrkLrhqNQi7Uo/ZIWXb1y4kc0vGb16e2s0Jq pyry@opencrvs.org
@@ -66,5 +67,5 @@ all:
 
 jump-host:
   hosts:
-    backup:
+    farajaland-bastion:
       ansible_host: '159.89.14.13'
