@@ -15,7 +15,7 @@ import { readFileSync } from 'fs'
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
   if (request.params.event) {
     const res = readFileSync(
-      `./src/data-seeding/certificates/source/Farajaland-${request.params.event}-certificate-v2.svg`
+      `./src/data-seeding/certificates/source/Madagascar-${request.params.event}-certificate.svg`
     ).toString()
     return h.response(res).code(200)
   }
@@ -23,9 +23,9 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
   const Certificates = [
     {
       event: 'birth',
-      fileName: 'Farajaland-birth-certificate-v2.svg',
+      fileName: 'Madagascar-birth-certificate-v2.svg',
       svgCode: readFileSync(
-        './src/data-seeding/certificates/source/BirthCertificate.svg'
+        './src/data-seeding/certificates/source/Madagascar-birth-certificate.svg'
       ).toString()
     },
     {

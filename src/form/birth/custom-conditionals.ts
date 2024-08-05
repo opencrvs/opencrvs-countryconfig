@@ -8,19 +8,10 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+
 export const conditionals = {
-  // This is an example how you can override the conditionals found from opencrvs-core
-  isDefaultCountry: {
+  childHasNUI: {
     action: 'hide',
-    expression: 'isDefaultCountry(values.country)'
-  },
-  isUserRegistrarOrRegistrationAgent: {
-    action: 'hide',
-    expression:
-      'userDetails?.systemRole === "REGISTRATION_AGENT" || userDetails?.systemRole === "LOCAL_REGISTRAR" || userDetails?.systemRole === "NATIONAL_REGISTRAR"'
-  },
-  isOnline: {
-    action: 'hide',
-    expression: 'window.navigator.onLine'
+    expression: 'draftData?.template?.childNID'
   }
 }
