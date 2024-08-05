@@ -122,6 +122,7 @@ test.describe('1. Marriage event validation', () => {
     await test.step('1.11.3. Confirm "Save & Exit" button', async () => {
       await page.getByText('Save & Exit', { exact: true }).click()
       await page.getByText('Confirm', { exact: true }).click()
+      await page.waitForTimeout(500) // because the page is shown twice
       await expect(
         page.getByRole('button', { name: 'In progress' })
       ).toBeVisible()
@@ -157,6 +158,7 @@ test.describe('1. Marriage event validation', () => {
       await page.getByText('Exit', { exact: true }).click()
 
       await page.getByText('Confirm', { exact: true }).click()
+      await page.waitForTimeout(500) // because the page is shown twice
       await expect(
         page.getByRole('button', { name: 'In progress' })
       ).toBeVisible()

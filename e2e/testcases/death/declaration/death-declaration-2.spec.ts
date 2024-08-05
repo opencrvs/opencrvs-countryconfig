@@ -1,5 +1,11 @@
 import { test, expect, type Page } from '@playwright/test'
-import { createPIN, getRandomDate, goToSection, login } from '../../../helpers'
+import {
+  createPIN,
+  getRandomDate,
+  goToSection,
+  login,
+  uploadImage
+} from '../../../helpers'
 import faker from '@faker-js/faker'
 import { format } from 'date-fns'
 
@@ -272,11 +278,51 @@ test.describe.serial('2. Death declaration case - 2', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
-    test('2.1.5 Go to preview', async () => {
-      goToSection(page, 'preview')
+    test('2.1.5 Upload supporting document', async () => {
+      goToSection(page, 'documents')
+
+      await page.locator('#uploadDocForDeceased').getByText('Select...').click()
+      await page.getByText('National ID', { exact: true }).click()
+      await uploadImage(
+        page,
+        page.locator('button[name="uploadDocForDeceased"]')
+      )
+
+      await page
+        .locator('#uploadDocForInformant')
+        .getByText('Select...')
+        .click()
+      await page.getByText('Passport', { exact: true }).click()
+      await uploadImage(
+        page,
+        page.locator('button[name="uploadDocForInformant"]')
+      )
+
+      await page
+        .locator('#uploadDocForDeceasedDeath')
+        .getByText('Select...')
+        .click()
+      await page.getByText('Attested letter of death', { exact: true }).click()
+      await uploadImage(
+        page,
+        page.locator('button[name="uploadDocForDeceasedDeath"]')
+      )
+
+      await page
+        .locator('#uploadDocForCauseOfDeath')
+        .getByText('Select...')
+        .click()
+      await page
+        .getByText('Medically Certified Cause of Death', { exact: true })
+        .click()
+      await uploadImage(
+        page,
+        page.locator('button[name="uploadDocForCauseOfDeath"]')
+      )
     })
 
     test('2.1.6 Verify informations in preview page', async () => {
+      goToSection(page, 'preview')
       /*
        * Expected result: should include
        * - Deceased's First Name
