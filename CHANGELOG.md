@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.0 (TBD)
+
+### Bug fixes
+
+- Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
+
 ## 1.6.0 (TBD)
 
 ### Breaking changes
