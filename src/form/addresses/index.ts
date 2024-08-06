@@ -93,7 +93,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },
   {
     // MOTHER ADDRESS FIELDS
-    precedingFieldId: 'birth.mother.mother-view-group.mother-nid-seperator',
+    precedingFieldId:
+      'birth.mother.mother-view-group.motherBirthRegistrationNumber',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
