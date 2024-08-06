@@ -47,6 +47,7 @@ jobs:
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
       - name: Reset data
+        id: reset-data
         env:
           HOST: ${{ vars.DOMAIN }}
           ENV: ${{ vars.ENVIRONMENT_TYPE }}
