@@ -141,6 +141,8 @@ export const TIME = 'TIME'
 export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
+export const SIGNATURE = 'SIGNATURE'
+
 export enum RadioSize {
   LARGE = 'large',
   NORMAL = 'normal'
@@ -346,7 +348,6 @@ export interface INumberFormField extends IFormFieldBase {
   type: typeof NUMBER
   step?: number
   max?: number
-  inputFieldWidth?: string
   inputWidth?: number
 }
 export interface IBigNumberFormField extends IFormFieldBase {
@@ -482,6 +483,12 @@ export interface IHeading3Field extends IFormFieldBase {
   type: typeof HEADING3
 }
 
+export interface ISignatureFormField extends IFormFieldBase {
+  type: typeof SIGNATURE
+  maxSizeMb?: number
+  allowedFileFormats?: ('png' | 'jpg' | 'jpeg' | 'svg')[]
+}
+
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -514,6 +521,7 @@ export type IFormField =
   | INidVerificationButton
   | IDividerField
   | IHeading3Field
+  | ISignatureFormField
 
 export interface SelectComponentOption {
   value: string
@@ -927,7 +935,7 @@ export type AllowedAddressConfigurations = {
   label?: MessageDescriptor
   xComparisonSection?: string
   yComparisonSection?: string
-  conditionalCase?: string
+  conditionalCase?: string | Conditional[]
 }
 
 export type AdministrativeLevel = 1 | 2 | 3 | 4 | 5

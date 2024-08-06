@@ -509,6 +509,8 @@ correction.certificate.corrector.idCheck,The title for id check component,Verify
 correction.certificate.corrector.idCheckVerify,The label for id check component action when verify details,Verified,Vérifié
 correction.certificate.corrector.idCheckWithoutVerify,The label for id check component action when does not verify details,Identity does not match,L'identité ne correspond pas
 correction.certificate.corrector.otherIdCheck,The title for other id check component,Check proof of ID,Avez-vous vérifié leur preuve d'identification ?
+correction.correctRecordDialog.description,The description for the dialog when record correction sent by a registrar,The informant will be notified of this correction and a record of this decision will be recorded,L'informateur sera informé de cette correction et une trace de cette décision sera enregistrée.
+correction.correctRecordDialog.title,The title for the dialog when record correction sent by a registrar,Correct record ?,enregistrement correct ?
 correction.correctionForApprovalDialog.actions.cancel,The cancel button for the dialog when record correction sent by registration agent for approval,Cancel,Annuler
 correction.correctionForApprovalDialog.actions.send,The send button for the dialog when record correction sent by registration agent for approval,Confirm,Confirmer
 correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,The Registrar will be notified of this correction request and a record of this request will be recorded,Le greffier sera informé de cette demande de correction et un enregistrement de cette demande sera effectué
@@ -1343,11 +1345,11 @@ form.section.informant.name,,Informant,Informateur
 form.section.informant.title,,Informant's details,information de l'informateur
 form.section.information.birth.bullet1,,I am going to help you make a declaration of birth.,Je vais vous aider à faire une déclaration de naissance.
 form.section.information.birth.bullet2,,As the legal Informant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes."
-form.section.information.birth.bullet3,,Once the declaration is processed you will receive you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
+form.section.information.birth.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
 form.section.information.birth.bullet4,,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.","Veillez à récupérer le certificat. Un certificat de naissance est essentiel pour cet enfant, notamment pour lui faciliter la vie plus tard. Il l'aidera à accéder aux services de santé, aux examens scolaires et aux prestations de l'État."
 form.section.information.death.bullet1,,I am going to help you make a declaration of death.,Je vais vous aider à faire une déclaration de décès.
 form.section.information.death.bullet2,,As the legal Informant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes."
-form.section.information.death.bullet3,,Once the declaration is processed you will receive you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
+form.section.information.death.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts."
 form.section.information.name,,Information,Informations
 form.section.marriageEvent.date,,Date of marriage,Date du mariage
@@ -1361,8 +1363,9 @@ form.section.upload.documentsTitle,,Upload supporting documents,Joindre des docu
 form.section.user.preview.title,,Confirm details,Confirmer les détails
 form.section.user.title,,Create new user,Créer un nouvel utilisateur
 form.section.userDetails,,User details,information utilisateur
-form.section.witness.name,,Witness,Témoin
+form.section.witnessOne.name,Form section name for Witness one,Witness 1,Témoin 1
 form.section.witnessOne.title,,Witness 1 details,Détails du témoin 1
+form.section.witnessTwo.name,Form section name for Witness two,Witness 2,Témoin 2
 form.section.witnessTwo.title,,Witness 2 details,Détails du témoin 2
 home.header.advancedSearch,Search menu advanced search type,Advanced Search,Recherche avancée
 home.header.email,Search email type,Email,E-mail
@@ -2101,6 +2104,7 @@ validations.englishOnlyNameFormat,"The error message that appears when a non Eng
 validations.facilityMustBeSelected,The error message appears when no valid facility is selected,No facility selected,Aucun établissement sélectionné
 validations.greaterThanZero,The error message appears when input is less than or equal to 0,Must be a greater than zero,Doit être supérieur à zéro
 validations.illegalMarriageAge,The error message appears when the birth date is not old enough to register for marriage,Illegal age of marriage,Age illègale pour mariage
+validations.invalidDate,The error message that appears when a date field is invalid,Invalid date field,Champ de date invalide
 validations.isDateNotAfterDeath,The error message appears when the given date of death is not valid,Date of birth must be before date of death,La date doit être antérieure à la date de décès
 validations.isDateNotBeforeBirth,The error message appears when the given date of death is not valid,Date of death must be after deceased date of birth,La date doit être postérieure à la date de naissance du défunt
 validations.isInformantOfLegalAge,The error message appears when the informant is not old enough to register an event,Informant is not of legal age,L'informateur n'est pas majeur
@@ -2142,7 +2146,7 @@ verifyCertificate.registrationCenter,Label for registration center,Registration 
 verifyCertificate.sex,Label for sex,Sex,Sexe
 verifyCertificate.sexFemale,Option for form field: Sex name,Female,Femme
 verifyCertificate.sexMale,Option for form field: Sex name,Male,Homme
-verifyCertificate.successMessage,message for success alert,Compare the partial details of the record below against those against those recorded on the certificate,Comparez les données partielles de l'enregistrement ci-dessous avec celles qui figurent sur le certificat.
+verifyCertificate.successMessage,message for success alert,Compare the partial details of the record below against those recorded on the certificate,Comparez les données partielles de l'enregistrement ci-dessous avec celles qui figurent sur le certificat.
 verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR valide
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée

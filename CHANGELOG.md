@@ -2,23 +2,51 @@
 
 ## 1.6.0 (TBD)
 
+### Breaking changes
+
 - Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
+- New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
+- Remove `inputFieldWidth` from Number type form field
 
-## [1.5.0]
+## 1.5.0
 
+### Breaking changes
+
+- #### Update the certificate preview mechanism
+
+  In effort of minimizing JavaScript-bundle size, we have streamlined the way how review certificate -page renders certificates. In case the images in your certificates are previewing blurry, you need to update your SVG-certificates to print QR-codes and other images directly with `<image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>` instead of the more complicated `<rect fill="url(#pattern)"></rect>` -paradigm. This doesn't affect printed certificates as they are still created as previously.
+
+- #### Application config items `DATE_OF_BIRTH_UNKNOWN` and `INFORMANT_SIGNATURE_REQUIRED` moved under `FEATURES`
+
+  See https://github.com/opencrvs/opencrvs-farajaland/pull/1005 for details
+
+### Infrastructure
+
+- Allow using staging to both period restore of production backup and also for backing up its own data to a different location using `backup_server_remote_target_directory` and `backup_server_remote_source_directory` ansible variables. This use case is mostly meant for OpenCRVS team internal use.
+
+- Automate SSH key exchange between application and backup server. For staging servers, automatically fetch production backup encryption key if periodic restore is enabled
+
+- Improved support for non-22 SSH port
+
+- Treat backup host identically to other hosts. To migrate:
+
+  1. Move all inventory files (qa.yml, production.yml...) from `infrastructure/server-setup` to `infrastructure/server-setup/inventory`
+  2. Run environment creator for your backup server `yarn environment:init --environment=backup`
+
+### Other changes
+
+- Upgrade Node.js to 18
+- Remove dependency OpenHIM. The OpenHIM database is kept for backwards compatibility reasons and will be removed in v1.6
 - Change auth URLs to access them via gateway
 - Add hearth URL to search service
 - Include an endpoint for serving individual certificates in development mode
 - Include compositionId in confirm registration payload
-- Move individual configuration options to feature flags
 - Remove logrocket refrences
-- Upgrade to node 18
 - Enable gzip compression in client & login
 - Make SENTRY_DSN variable optional
 - Use docker compose v2 in github workflows
 - Mass email from national system admin
-- Remove dependency on openhim. The openhim db is kept for backwards compatibility reasons and will be removed in v1.6
-- Add smtp environment variables in qa compose file
+- Add SMTP environment variables in qa compose file
 - Use image tag instead of patterns in certificate SVGs
 - Generate default address according to logged-in user's location
 - Remove authentication from dashboard queries route
@@ -29,19 +57,10 @@
 - Add query mapper for International Postal Code field
 - Add support for image compression configuration
 - Provide env variables for metabase admin credentials
-
-**Infrastructure**
-
-- Treat backup host identically to other hosts. To migrate:
-
-  1. Move all inventory files (qa.yml, production.yml...) from `infrastructure/server-setup` to `infrastructure/server-setup/inventory`
-  2. Run environment creator for your backup server `yarn environment:init --environment=backup`
-
-- Allow using staging to both period restore of production backup and also for backing up its own data to a different location using `backup_server_remote_target_directory` and `backup_server_remote_source_directory` ansible variables. This use case is mostly meant for OpenCRVS team internal use.
-
-- Automate SSH key exchange between application and backup server. For staging servers, automatically fetch production backup encryption key if periodic restore is enabled
-
-- Improved support for non-22 SSH port
+- Improved formatting of informant name for inProgress declaration emails
+- Rename `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming
+- Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field [#114](https://github.com/opencrvs/opencrvs-countryconfig/pull/114)
+- Enable authentication for certificates endpoint [#188](https://github.com/opencrvs/opencrvs-countryconfig/pull/188)
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
 

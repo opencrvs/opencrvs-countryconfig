@@ -14,7 +14,6 @@
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" font-weight="600" letter-spacing="0px"><tspan x="357.752" y="687.343">Registrar / L&#39;Officier de l&#39;&#xc9;tat Civil</tspan></text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" letter-spacing="0px"><tspan x="398.064" y="699.954">{{registrar.name}}</tspan></text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px"><tspan x="81.3999" y="563.615">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in pursuance </tspan><tspan x="81.3999" y="576.615">of civil registration law / Je certifie que le pr&#xe9;sent certificat est une copie conforme du registre d&#39;&#xe9;tat civil et qu&#39;il </tspan><tspan x="81.3999" y="589.615">est d&#xe9;livr&#xe9; par l&#39;autorit&#xe9; mandat&#xe9;e conform&#xe9;ment &#xe0; la loi sur l&#39;&#xe9;tat civil.</tspan></text>
-<rect x="62.97" y="202.93" width="470.45" height="349.2" fill="url(#pattern2)" fill-opacity="0.12"/>
 <g clip-path="url(#clip2_1157_5058)">
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px"><tspan x="88.6029" y="222.083">1.</tspan></text>
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px"><tspan x="104.68" y="222.083">Deceased full name /&#x2028;</tspan><tspan x="104.68" y="237.083">Nom complet du d&#xe9;funt</tspan></text>
@@ -114,9 +113,6 @@
 <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="7.76" font-weight="bold" letter-spacing="0px"><tspan x="186.255" y="126.364">REPUBLIC OF FARAJALAND / REPUBLIQUE DE FARAJALAND</tspan></text>
 <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="11.64" font-weight="bold" letter-spacing="0px"><tspan x="182.782" y="145.364">CERTIFICATE OF DEATH / ACTE DE DEATH</tspan></text>
 <defs>
-<pattern id="pattern2" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image2_1143_4237" transform="matrix(0.000400862 0 0 0.00053697 -0.0550657 -0.000554468)"/>
-</pattern>
 <clipPath id="clip0_1157_5058">
 <path d="M62 761.59H533.42V805.24H62V761.59Z" fill="white"/>
 </clipPath>

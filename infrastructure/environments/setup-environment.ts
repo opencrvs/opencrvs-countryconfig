@@ -221,8 +221,7 @@ async function promptAndStoreAnswer(
 }
 
 function generateLongPassword() {
-  const chars =
-    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'
+  const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let result = ''
   for (let i = 16; i > 0; --i)
     result += chars[Math.floor(Math.random() * chars.length)]
@@ -330,7 +329,7 @@ const sshQuestions = [
     name: 'sshHost',
     type: 'text' as const,
     message:
-      'What is the target server IP address? Note: For "production" environment server clusters of (2, 3 or 5 replicas) this is always the IP address for just 1 manager server',
+      'What is the target server IP address? (Note: For "production" environment with 2, 3 or 5 servers, this is the IP address of the manager server',
     valueType: 'VARIABLE' as const,
     validate: notEmpty,
     valueLabel: 'SSH_HOST',
@@ -401,7 +400,7 @@ const infrastructureQuestions = [
     name: 'replicas',
     type: 'number' as const,
     message:
-      'What is the number of replicas? EDIT: This should be 1 for qa, staging and backup environments.  For "production" environment server clusters of (2, 3 or 5 replicas), set to 2, 3 or 5 as appropriate.',
+      'What is the number of servers? Note: This should be 1 for qa, staging and backup environments. For "production" environment server cluster should consists of 2, 3 or 5 servers.',
     valueType: 'VARIABLE' as const,
     validate: notEmpty,
     valueLabel: 'REPLICAS',
@@ -650,6 +649,13 @@ const derivedVariables = [
   {
     name: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
     valueLabel: 'ELASTICSEARCH_SUPERUSER_PASSWORD',
+    valueType: 'SECRET',
+    type: 'disabled',
+    scope: 'ENVIRONMENT'
+  },
+  {
+    name: 'KIBANA_SYSTEM_PASSWORD',
+    valueLabel: 'KIBANA_SYSTEM_PASSWORD',
     valueType: 'SECRET',
     type: 'disabled',
     scope: 'ENVIRONMENT'
@@ -1098,6 +1104,23 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
       ),
       value: findExistingOrDefine(
         'ELASTICSEARCH_SUPERUSER_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        generateLongPassword()
+      ),
+      scope: 'ENVIRONMENT' as const
+    },
+    {
+      name: 'KIBANA_SYSTEM_PASSWORD',
+      type: 'SECRET' as const,
+      didExist: findExistingValue(
+        'KIBANA_SYSTEM_PASSWORD',
+        'SECRET',
+        'ENVIRONMENT',
+        existingValues
+      ),
+      value: findExistingOrDefine(
+        'KIBANA_SYSTEM_PASSWORD',
         'SECRET',
         'ENVIRONMENT',
         generateLongPassword()

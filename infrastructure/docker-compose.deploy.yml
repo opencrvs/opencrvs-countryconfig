@@ -6,8 +6,6 @@
 # & Healthcare Disclaimer located at http://opencrvs.org/license.
 #
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
-version: '3.3'
-
 services:
   # Configure reverse proxy for public endpoints
   # Note: these published port will override UFW rules as Docker manages it's own iptables
@@ -62,7 +60,7 @@ services:
       - overlay_net
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.17.0
+    image: docker.elastic.co/beats/filebeat:8.14.3
     user: root
     networks:
       - overlay_net
@@ -87,7 +85,7 @@ services:
         - 'traefik.enable=false'
 
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:7.17.13
+    image: docker.elastic.co/beats/metricbeat:8.14.3
     user: root
     cap_add:
       - SYS_PTRACE
@@ -130,7 +128,7 @@ services:
       [
         'curl',
         '-u',
-        'elastic:${ELASTICSEARCH_SUPERUSER_PASSWORD}',
+        'kibana_system:${KIBANA_SYSTEM_PASSWORD}',
         '-X',
         'POST',
         'http://kibana:5601/api/saved_objects/_import?overwrite=true',
@@ -158,7 +156,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'setup-kibana-config'
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.0
+    image: docker.elastic.co/kibana/kibana:8.14.3
     restart: always
     deploy:
       labels:
@@ -175,8 +173,8 @@ services:
     networks:
       - overlay_net
     environment:
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
     configs:
       - source: kibana.{{ts}}
         target: /usr/share/kibana/config/kibana.yml
@@ -284,7 +282,6 @@ services:
       - path.repo=/data/backups/elasticsearch
       - cluster.name=docker-cluster
       - network.host=0.0.0.0
-      - discovery.zen.minimum_master_nodes=1
       - discovery.type=single-node
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true
@@ -367,6 +364,7 @@ services:
       - APM_ELASTIC_PASSWORD=${ROTATING_APM_ELASTIC_PASSWORD}
       - SEARCH_ELASTIC_USERNAME=search-user
       - SEARCH_ELASTIC_PASSWORD=${ROTATING_SEARCH_ELASTIC_PASSWORD}
+      - KIBANA_SYSTEM_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
       - KIBANA_USERNAME=${KIBANA_USERNAME}
       - KIBANA_PASSWORD=${KIBANA_PASSWORD}
     volumes:
@@ -386,7 +384,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'setup-elasticsearch-users'
   elastalert:
-    image: jertel/elastalert2:2.3.0
+    image: jertel/elastalert2:2.19.0
     restart: unless-stopped
     environment:
       - ES_USERNAME=elastic
@@ -410,7 +408,7 @@ services:
         tag: 'elastalert'
 
   logstash:
-    image: logstash:7.17.0
+    image: logstash:8.14.3
     command: logstash -f /etc/logstash/logstash.conf --verbose
     ports:
       - '12201:12201'
@@ -433,7 +431,7 @@ services:
         - 'traefik.enable=false'
       replicas: 1
   apm-server:
-    image: docker.elastic.co/apm/apm-server:7.15.2
+    image: docker.elastic.co/apm/apm-server:7.17.22
     cap_add: ['CHOWN', 'DAC_OVERRIDE', 'SETGID', 'SETUID']
     cap_drop: ['ALL']
     restart: always
@@ -491,6 +489,7 @@ services:
   # Configure webapps and add traefik config
   client:
     environment:
+      - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
       - MINIO_URL=https://minio.{{hostname}}
@@ -578,6 +577,11 @@ services:
         - 'traefik.http.routers.block-dashboard-queries.middlewares=block-internal-routes'
       replicas: 1
     environment:
+      - NODE_ENV=production
+      - FHIR_URL=http://hearth:3447/fhir
+      - AUTH_URL=http://auth:4040
+      - APPLICATION_CONFIG_URL=http://config:2021
+      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - CONFIG_MONGO_URL=mongodb://mongo1/application-config?replicaSet=rs0
       - APN_SERVICE_URL=http://apm-server:8200
@@ -639,6 +643,8 @@ services:
       - jwt-public-key.{{ts}}
       - jwt-private-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PRIVATE_KEY_PATH=/run/secrets/jwt-private-key.{{ts}}
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -673,6 +679,8 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - RECORD_SEARCH_QUOTA=2000
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -692,6 +700,9 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
@@ -710,6 +721,9 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - LOGIN_URL=https://login.{{hostname}}
@@ -743,6 +757,9 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
     deploy:
@@ -760,6 +777,8 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -781,6 +800,8 @@ services:
     volumes:
       - /data/vsexport:/usr/src/app/packages/metrics/src/scripts
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://metrics:${METRICS_MONGODB_PASSWORD}@mongo1/metrics?replicaSet=rs0
@@ -802,6 +823,7 @@ services:
         tag: 'metrics'
   scheduler:
     environment:
+      - NODE_ENV=production
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
     deploy:
       replicas: 1
@@ -822,6 +844,7 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
@@ -841,6 +864,8 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
@@ -925,6 +950,8 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -969,7 +996,7 @@ services:
       - OPENCRVS_METABASE_SITE_NAME=OpenCRVS Dashboards
       - OPENCRVS_METABASE_SITE_URL=http://metabase.{{hostname}}
       - OPENCRVS_METABASE_MAP_NAME=Farajaland
-      - OPENCRVS_METABASE_MAP_URL=http://countryconfig:3040/content/farajaland-map.geojson
+      - OPENCRVS_METABASE_MAP_URL=http://countryconfig:3040/content/map.geojson
       - OPENCRVS_METABASE_MAP_REGION_KEY=State
       - OPENCRVS_METABASE_MAP_REGION_NAME=State
       - OPENCRVS_METABASE_ADMIN_EMAIL=${OPENCRVS_METABASE_ADMIN_EMAIL}

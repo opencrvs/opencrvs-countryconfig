@@ -48,7 +48,12 @@ import {
   hideIfInformantBrideOrGroom,
   brideOrGroomBirthDateValidators
 } from '../common/default-validation-conditionals'
-import { documentsSection, registrationSection } from './required-sections'
+import {
+  documentsSection,
+  previewSection,
+  registrationSection,
+  reviewSection
+} from './required-sections'
 import {
   brideNameInEnglish,
   groomNameInEnglish,
@@ -269,7 +274,7 @@ export const marriageForm: ISerializedForm = {
     {
       id: 'witnessOne',
       viewType: 'form',
-      name: formMessageDescriptors.witnessName,
+      name: formMessageDescriptors.witnessOneName,
       title: formMessageDescriptors.witnessOneTitle,
       groups: [
         {
@@ -296,7 +301,7 @@ export const marriageForm: ISerializedForm = {
     {
       id: 'witnessTwo',
       viewType: 'form',
-      name: formMessageDescriptors.witnessName,
+      name: formMessageDescriptors.witnessTwoName,
       title: formMessageDescriptors.witnessTwoTitle,
       groups: [
         {
@@ -320,6 +325,8 @@ export const marriageForm: ISerializedForm = {
       ],
       mapping: getCommonSectionMapping('informant')
     },
-    documentsSection
+    documentsSection,
+    previewSection,
+    reviewSection
   ]
 }

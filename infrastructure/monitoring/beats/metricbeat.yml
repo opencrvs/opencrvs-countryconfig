@@ -85,7 +85,7 @@ setup.kibana:
   password: ${KIBANA_PASSWORD}
 
 #============================== Xpack Monitoring ===============================
-xpack.monitoring:
+monitoring:
   enabled: true
   elasticsearch:
     username: ${BEATS_USERNAME}
