@@ -2,6 +2,10 @@
 
 ## 1.5.1
 
+### Bug fixes
+
+- Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
+
 ## 1.5.0
 
 ### Breaking changes
