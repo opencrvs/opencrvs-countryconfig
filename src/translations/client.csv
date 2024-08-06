@@ -1331,6 +1331,27 @@ form.field.label.maritalStatusSingle,,Single,Célibataire,Mpitovo
 form.field.label.maritalStatusWidowed,,Widowed,Veuf(ve),Maty vady
 form.field.label.marriedLastName,,Married last name (if different),Marié Nom de famille (si différent),
 form.field.label.medicallyCertified,,Medically Certified Cause of Death,Cause du décès médicalement certifiée,Antony ilay fahafatesahana araky ny voalazan'ny tobim-pahasalamana
+form.field.label.mention.actNumber,Label for mention act number,"{type, select, RECOGNITION{Recognition} SIMPLE_ADOPTION{Simple adoption} JUDICIAL_ADOPTION{Adoption} NAME_CHANGE{Name change} MARRIAGE{Marriage} DIVORCE{Divorce} REJECTION{Rejection} DEATH{Death} other{Other}} Act number","{type, select, RECOGNITION{Recognition} SIMPLE_ADOPTION{Simple adoption} JUDICIAL_ADOPTION{Adoption} NAME_CHANGE{Name change} MARRIAGE{Marriage} DIVORCE{Divorce} REJECTION{Rejection} DEATH{Death} other{Other}} Act number","{type, select, RECOGNITION{Recognition} SIMPLE_ADOPTION{Simple adoption} JUDICIAL_ADOPTION{Adoption} NAME_CHANGE{Name change} MARRIAGE{Marriage} DIVORCE{Divorce} REJECTION{Rejection} DEATH{Death} other{Other}} Act number"
+form.field.label.mention.adoptiveParent,Label for adoptive parent header,Adoptive parent {number},Adoptive parent {number},Adoptive parent {number}
+form.field.label.mention.brideOrGroom,Label for Bride/Groom,Bride/Groom,Bride/Groom,Bride/Groom
+form.field.label.mention.dateOfMention,Label for mention date,"Date of {type, select, RECOGNITION{recognition} SIMPLE_ADOPTION{adoption} JUDICIAL_ADOPTION{registration of the judicial act at the commune} NAME_CHANGE{registration of the judicial act at the commune} MARRIAGE{marriage} DIVORCE{registration of the judicial act at the commune} REJECTION{Rejection} DEATH{registration of the death at the municipality} other{Other}}","Date of {type, select, RECOGNITION{recognition} SIMPLE_ADOPTION{adoption} JUDICIAL_ADOPTION{registration of the judicial act at the commune} NAME_CHANGE{registration of the judicial act at the commune} MARRIAGE{marriage} DIVORCE{registration of the judicial act at the commune} REJECTION{Rejection} DEATH{registration of the death at the municipality} other{Other}}","Date of {type, select, RECOGNITION{recognition} SIMPLE_ADOPTION{adoption} JUDICIAL_ADOPTION{registration of the judicial act at the commune} NAME_CHANGE{registration of the judicial act at the commune} MARRIAGE{marriage} DIVORCE{registration of the judicial act at the commune} REJECTION{Rejection} DEATH{registration of the death at the municipality} other{Other}}"
+form.field.label.mention.judgmentDecisionDate,Label for Judgement decision date,Judgement decision date,Judgement decision date,Judgement decision date
+form.field.label.mention.judgmentDecisionNumber,Label for Judgement decision number,Judgement decision number,Judgement decision number,Judgement decision number
+form.field.label.mention.modification,Label for modification,Any modification : name of the child/name of father/name of mother,Any modification : name of the child/name of father/name of mother,Any modification : name of the child/name of father/name of mother
+form.field.label.mention.notes,Label for notes,Notes,Notes,Notes
+form.field.label.mention.placeOfDeath,Label for place of death,Commune of death,Commune of death,Commune of death
+form.field.label.mention.placeOfMention,Label for mention place,"Name of the commune where {type, select, RECOGNITION{recognition} MARRIAGE{marriage} DEATH{death} other{other}} was done","Name of the commune where {type, select, RECOGNITION{recognition} MARRIAGE{marriage} DEATH{death} other{other}} was done","Name of the commune where {type, select, RECOGNITION{recognition} MARRIAGE{marriage} DEATH{death} other{other}} was done"
+form.field.label.mention.tribunalOfFirstInstanceAct,Label for Tribunal of first instance act,Tribunal of first instance act,Tribunal of first instance act,Tribunal of first instance act
+form.field.label.mention.wifeOrHusband,Label for Wife/Husband,Wife/Husband,Wife/Husband,Wife/Husband
+form.field.label.mentionDetailsExist,Label for Mention details exist checkbox,Mention details exist,Mention details exist,Mention details exist
+form.field.label.mentionType.death,Label for mention type Death,Death,Death,Death
+form.field.label.mentionType.divorce,Label for mention type Divorce,Divorce,Divorce,Divorce
+form.field.label.mentionType.judicialAdoption,Label for mention type Judicial adoption,Judicial adoption,Judicial adoption,Judicial adoption
+form.field.label.mentionType.marriage,Label for mention type Marriage,Marriage,Marriage,Marriage
+form.field.label.mentionType.nameChange,Label for mention type Name change,Name change,Name change,Name change
+form.field.label.mentionType.recognition,Label for mention type Recognition,Recognition,Recognition,Recognition
+form.field.label.mentionType.rejection,Label for mention type Rejection,Rejection,Rejection,Rejection
+form.field.label.mentionType.simpleAdoption,Label for mention type Simple adoption,Simple adoption,Simple adoption,Simple adoption
 form.field.label.methodOfCauseOfDeath,,Method of Cause of Death,Méthode de détermination de la cause du décès,Fomba nahafantarana ny anton'ny ilay fahafatesana
 form.field.label.monogamy,,Monogamous,Monogame,
 form.field.label.mother.nationality,,Nationality,Nationalité,Zom-pirenena
