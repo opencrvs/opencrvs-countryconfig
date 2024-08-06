@@ -49,8 +49,6 @@
 
 - Improved support for non-22 SSH port
 
-## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
-
 ### Other changes
 
 - Upgrade Node.js to 18
