@@ -33,7 +33,7 @@ jobs:
         id: get_pr_details_dispatch
         run: |
           PR_NUMBER=${{ github.event.inputs.pr_number }}
-          PR_DATA=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/opencrvs/opencrvs-core/pulls/$PR_NUMBER)
+          PR_DATA=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/opencrvs/opencrvs-countryconfig/pulls/$PR_NUMBER)
           # printf escapes the newlines in the JSON, so we can use jq to parse output such as:
           # "body": "![image](https://github.com/user-attachments/assets/8eee5bcf-7692-490f-a19f-576623e09961)\r\n",
           echo "PR_ID=$(printf '%s' $PR_DATA | jq -r '.number')" >> $GITHUB_ENV
