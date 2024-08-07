@@ -1,6 +1,6 @@
 import { countryLogo } from '@countryconfig/api/application/country-logo'
 
-export const defaultApplicationConfig = {
+export const applicationConfig = {
   APPLICATION_NAME: 'Farajaland CRS',
   BIRTH: {
     REGISTRATION_TARGET: 30,
