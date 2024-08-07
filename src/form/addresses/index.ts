@@ -118,7 +118,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },
   {
     // FATHER ADDRESS FIELDS
-    precedingFieldId: 'birth.father.father-view-group.father-nid-seperator',
+    precedingFieldId:
+      'birth.father.father-view-group.fatherBirthRegistrationNumber',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
