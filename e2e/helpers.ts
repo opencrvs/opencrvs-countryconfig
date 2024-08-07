@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test'
-import { AUTH_URL, CLIENT_URL } from './constants'
+import { AUTH_URL, CLIENT_URL, GATEWAY_HOST } from './constants'
 
 export async function login(page: Page, username: string, password: string) {
   const token = await getToken(username, password)
@@ -110,6 +110,12 @@ export const uploadImage = async (
   await locator.click()
   const fileChooser = await fileChooserPromise
   await fileChooser.setFiles(image)
+}
+
+export const getLocationNameFromFhirId = async (fhirId: string) => {
+  const res = await fetch(`${GATEWAY_HOST}/location/${fhirId}`)
+  const location = (await res.json()) as fhir.Location
+  return location.name
 }
 
 export async function continueForm(page: Page) {

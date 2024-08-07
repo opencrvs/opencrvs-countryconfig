@@ -1,5 +1,3 @@
-import gql from 'graphql-tag'
-import { print } from 'graphql/language/printer'
 import { GATEWAY_HOST } from '../../constants'
 import { DeathRegistrationInput } from '../../gateway'
 import faker from '@faker-js/faker'
@@ -9,17 +7,10 @@ import uuid from 'uuid'
 import { format } from 'date-fns'
 import { join } from 'path'
 import { getRandomDate } from '../../helpers'
-
-export const CREATE_DEATH_REGISTRATION = print(gql`
-  mutation createDeathRegistration($details: DeathRegistrationInput!) {
-    createDeathRegistration(details: $details) {
-      trackingId
-      compositionId
-      isPotentiallyDuplicate
-      __typename
-    }
-  }
-`)
+import {
+  CREATE_DEATH_REGISTRATION,
+  GET_DEATH_REGISTRATION_FOR_REVIEW
+} from './queries'
 
 const declaration = {
   deceased: {
@@ -279,6 +270,27 @@ export async function createDeathDeclaration(token: string) {
     })
   })
   return res.json().then((r) => r.data.createDeathRegistration)
+}
+
+export const fetchDeclaration = async (
+  token: string,
+  compositionId: string
+) => {
+  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      query: GET_DEATH_REGISTRATION_FOR_REVIEW,
+      variables: {
+        id: compositionId
+      }
+    })
+  })
+
+  return await res.json()
 }
 
 type ConvertEnumsToStrings<T> = T extends (infer U)[]

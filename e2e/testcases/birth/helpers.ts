@@ -1,30 +1,20 @@
-import gql from 'graphql-tag'
-import { print } from 'graphql/language/printer'
 import { GATEWAY_HOST } from '../../constants'
 import { BirthRegistrationInput } from '../../gateway'
 import faker from '@faker-js/faker'
 
-import type testData from './data/1-both-mother-and-father.json'
 import { readFileSync } from 'fs'
 import uuid from 'uuid'
 import { format, subDays, subYears } from 'date-fns'
-import { Bundle } from 'typescript'
 import { join } from 'path'
-
-export const CREATE_BIRTH_REGISTRATION = print(gql`
-  mutation createBirthRegistration($details: BirthRegistrationInput!) {
-    createBirthRegistration(details: $details) {
-      trackingId
-      compositionId
-      isPotentiallyDuplicate
-      __typename
-    }
-  }
-`)
+import {
+  CREATE_BIRTH_REGISTRATION,
+  GET_BIRTH_REGISTRATION_FOR_REVIEW,
+  REGISTER_BIRTH_DECLARATION
+} from './queries'
 
 type Details = {
   informant: {
-    type: 'MOTHER' | 'FATHER'
+    type: 'MOTHER' | 'FATHER' | 'BROTHER'
   }
   child: {
     firstNames: string
@@ -94,7 +84,7 @@ export async function createDeclaration(token: string, details: Details) {
                 join(__dirname, './data/assets/528KB-random.png')
               ).toString('base64'),
             informantType: details.informant.type,
-            contactPhoneNumber: '+260' + faker.random.numeric(9),
+            contactPhoneNumber: '0' + faker.random.numeric(9),
             contactEmail: faker.internet.email(),
             draftId: uuid.v4()
           },
@@ -184,6 +174,10 @@ export async function createDeclaration(token: string, details: Details) {
             {
               fieldId: 'birth.father.father-view-group.fatherIdType',
               value: 'NATIONAL_ID'
+            },
+            {
+              fieldId: 'birth.informant.informant-view-group.informantIdType',
+              value: 'NATIONAL_ID'
             }
           ],
           father: {
@@ -238,6 +232,54 @@ export async function createDeclaration(token: string, details: Details) {
             ],
             maritalStatus: 'SINGLE',
             educationalAttainment: 'NO_SCHOOLING'
+          },
+          informant: {
+            name: [
+              {
+                use: 'en',
+                firstNames: faker.name.findName(),
+                familyName: faker.name.lastName()
+              }
+            ],
+            birthDate: format(
+              subYears(new Date(), 16 + Math.ceil(10 * Math.random())),
+              'yyyy-MM-dd'
+            ),
+            nationality: ['FAR'],
+            identifier: [
+              {
+                id: faker.random.numeric(10),
+                type: 'NATIONAL_ID'
+              }
+            ],
+            address: [
+              {
+                type: 'PRIMARY_ADDRESS',
+                line: [
+                  '343',
+                  'Example Street',
+                  'Example Residential Area',
+                  '',
+                  '',
+                  'URBAN',
+                  '',
+                  '',
+                  '',
+                  '',
+                  '',
+                  '',
+                  '',
+                  '',
+                  ''
+                ],
+                country: 'FAR',
+                state: getLocationIdByName(locations, 'Central'),
+                partOf: getLocationIdByName(locations, 'Ibombo'),
+                district: getLocationIdByName(locations, 'Ibombo'),
+                city: 'Example Town',
+                postalCode: '534534'
+              }
+            ]
           }
         } satisfies ConvertEnumsToStrings<BirthRegistrationInput>
       }
@@ -246,7 +288,53 @@ export async function createDeclaration(token: string, details: Details) {
   return res.json().then((r) => r.data.createBirthRegistration)
 }
 
-type ConvertEnumsToStrings<T> = T extends (infer U)[]
+export const fetchDeclaration = async (
+  token: string,
+  compositionId: string
+) => {
+  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      query: GET_BIRTH_REGISTRATION_FOR_REVIEW,
+      variables: {
+        id: compositionId
+      }
+    })
+  })
+  return await res.json()
+}
+
+export const registerDeclaration = async (
+  token: string,
+  compositionId: string
+) => {
+  await fetchDeclaration(token, compositionId)
+  const res = await fetch(`${GATEWAY_HOST}/graphql`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      query: REGISTER_BIRTH_DECLARATION,
+      variables: {
+        id: compositionId,
+        details: {
+          createdAt: new Date().toISOString()
+        } satisfies ConvertEnumsToStrings<BirthRegistrationInput>
+      }
+    })
+  })
+  const t = await res.json()
+
+  return await t
+}
+
+export type ConvertEnumsToStrings<T> = T extends (infer U)[]
   ? ConvertEnumsToStrings<U>[]
   : T extends string
   ? `${T}`
