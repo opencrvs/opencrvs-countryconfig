@@ -268,7 +268,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },*/
   {
     // SPOUSE ADDRESS FIELDS
-    precedingFieldId: 'death.spouse.spouse-view-group.spouse-nid-seperator',
+    precedingFieldId:
+      'death.spouse.spouse-view-group.spouseBirthRegistrationNumber',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
