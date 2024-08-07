@@ -13,6 +13,15 @@
 - Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
 - New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
 - Remove `inputFieldWidth` from Number type form field
+- Application config file is renamed to `application-config.ts`
+- Allow configuring the default search criteria for record search which can be done by adding or modifying a property named `SEARCH_DEFAULT_CRITERIA` in `application-config.ts`
+  Value of `SEARCH_DEFAULT_CRITERIA` can be one of the following
+  1. 'TRACKING_ID',
+  2. 'REGISTRATION_NUMBER',
+  3. 'NATIONAL_ID',
+  4. 'NAME',
+  5. 'PHONE_NUMBER',
+  6. 'EMAIL'
 
 ## 1.5.0
 
