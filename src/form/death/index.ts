@@ -364,8 +364,6 @@ export const deathForm = {
             ),
             getIDType('death', 'spouse', detailsExist, true),
             ...getIDNumberFields('spouse', detailsExist, true),
-            // preceding field of address fields
-            divider('spouse-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('spouse-address-separator')
           ],
