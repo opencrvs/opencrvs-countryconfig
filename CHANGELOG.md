@@ -8,6 +8,10 @@
 - New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
 - Remove `inputFieldWidth` from Number type form field
 
+### Bug fixes
+
+- Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
+
 ## 1.5.0
 
 ### Breaking changes
