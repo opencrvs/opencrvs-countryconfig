@@ -5,7 +5,7 @@
 
 - name: Set default SSH port
   set_fact:
-    ssh_port: '{{ internal_ssh_port | ansible_port | default(22) }}'
+    ssh_port: '{{ internal_ssh_port | default(ansible_port) | default(22) }}'
 
 - name: Allow OpenSSH for IPv4 from specific addresses
   ufw:
