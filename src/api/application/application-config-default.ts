@@ -47,7 +47,7 @@ export const defaultApplicationConfig = {
     PRINT_IN_ADVANCE: true
   },
   FEATURES: {
-    DEATH_REGISTRATION: false,
+    DEATH_REGISTRATION: true,
     MARRIAGE_REGISTRATION: false,
     EXTERNAL_VALIDATION_WORKQUEUE: false,
     INFORMANT_SIGNATURE: true,
