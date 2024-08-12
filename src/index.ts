@@ -186,7 +186,7 @@ export async function createServer() {
     host: COUNTRY_CONFIG_HOST,
     port: COUNTRY_CONFIG_PORT,
     routes: {
-      cors: { origin: whitelist },
+      cors: { origin: whitelist, additionalHeaders: ['X-Version'] },
       payload: { maxBytes: 52428800, timeout: DEFAULT_TIMEOUT }
     }
   })
@@ -533,6 +533,21 @@ export async function createServer() {
     type: 'onRequest',
     method(request: Hapi.Request & { sentryScope?: any }, h) {
       request.sentryScope?.setExtra('payload', request.payload)
+      const coreVersion = request.headers['x-version']?.split('.')
+      const countryConfigVersion = process.env.npm_package_version?.split('.')
+      if (
+        !(coreVersion && coreVersion.length === 3) ||
+        !(countryConfigVersion && countryConfigVersion.length === 3)
+      )
+        return h.continue
+      if (
+        coreVersion[0] != countryConfigVersion[0] ||
+        coreVersion[1] != countryConfigVersion[1]
+      ) {
+        const errorMessage = `Version mismatch!! Core is running on: ${request.headers['x-version']}, countryconfig is running on: ${process.env.npm_package_version}`
+        console.error(errorMessage)
+        return h.response(errorMessage).code(426).takeover()
+      }
       return h.continue
     }
   })
