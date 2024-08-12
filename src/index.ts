@@ -533,18 +533,14 @@ export async function createServer() {
     type: 'onRequest',
     method(request: Hapi.Request & { sentryScope?: any }, h) {
       request.sentryScope?.setExtra('payload', request.payload)
-      const coreVersion = request.headers['x-version']?.split('.')
-      const countryConfigVersion = process.env.npm_package_version?.split('.')
+      const coreVersion = request.headers['x-version']
+      const countryConfigVersion = process.env.npm_package_version
       if (
-        !(coreVersion && coreVersion.length === 3) ||
-        !(countryConfigVersion && countryConfigVersion.length === 3)
-      )
-        return h.continue
-      if (
-        coreVersion[0] != countryConfigVersion[0] ||
-        coreVersion[1] != countryConfigVersion[1]
+        coreVersion &&
+        countryConfigVersion &&
+        coreVersion !== countryConfigVersion
       ) {
-        const errorMessage = `Version mismatch!! Core is running on: ${request.headers['x-version']}, countryconfig is running on: ${process.env.npm_package_version}`
+        const errorMessage = `Version mismatch!! Opencrvs-Core is running on: ${request.headers['x-version']}, Opencrvs-Countryconfig is running on: ${process.env.npm_package_version}`
         console.error(errorMessage)
         return h.response(errorMessage).code(426).takeover()
       }
