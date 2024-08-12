@@ -79,7 +79,6 @@ import {
   getPlaceOfBirth,
   getTimeOfBirth,
   getYearOfBirth,
-  getNUI,
   getFatherHasFormallyRecognisedChild,
   typeOfMention,
   availableMentionTypes,
@@ -94,6 +93,7 @@ import {
   getDetailsMentionExist
 } from './custom-fields'
 import { subYears } from 'date-fns'
+import { getNUI } from '../common/common-custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -324,12 +324,7 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantNID
             ),
             // preceding field of address fields
-            divider('informant-nid-seperator', [
-              {
-                action: 'hide',
-                expression: informantNotMotherOrFather
-              }
-            ]),
+            divider('informant-nid-seperator', hideIfInformantMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAdress(
               'informant',
@@ -343,6 +338,10 @@ export const birthForm: ISerializedForm = {
                   'A form field that asks for informent current address',
                 defaultMessage: 'Address'
               }
+            ),
+            getOccupation(
+              hideIfInformantMotherOrFather,
+              certificateHandlebars.informantOccupation
             ),
             registrationPhone // If you wish to enable automated SMS notifications to informants, include this
           ],
@@ -433,7 +432,7 @@ export const birthForm: ISerializedForm = {
               ],
               false
             ),
-            getOccupation(certificateHandlebars.motherOccupation)
+            getOccupation(detailsExist, certificateHandlebars.motherOccupation)
           ],
           previewGroups: [motherNameInEnglish]
         }
@@ -532,7 +531,7 @@ export const birthForm: ISerializedForm = {
               ],
               false
             ),
-            getOccupation(certificateHandlebars.fatherOccupation)
+            getOccupation(detailsExist, certificateHandlebars.fatherOccupation)
           ],
           previewGroups: [fatherNameInEnglish]
         }
