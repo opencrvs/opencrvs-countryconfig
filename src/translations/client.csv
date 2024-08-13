@@ -1,7 +1,7 @@
 id,description,en,fr
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
-advancedSearch.form.childDetails,The title of Child details accordion,Child details,information de l'enfant
+advancedSearch.form.childDetails,The title of Child details accordion,Child details,Information de l'enfant
 advancedSearch.form.dateOfRegistration,Label for input date of registration,Date of registration,Date d'enregistrement
 advancedSearch.form.deceasedDetails,The title of Deceased details accordion,Deceased details,information du défunt
 advancedSearch.form.eventDetails,The title of event details accordion,Event details,Détails de l'évènement
