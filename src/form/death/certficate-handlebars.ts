@@ -95,6 +95,7 @@ export const certificateHandlebars = {
   informantNationalId: 'informantNationalId',
   informantPassport: 'informantPassport',
   informantAlienId: 'informantAlienId',
+  informantOccupation: 'informantOccupation',
   informantRefugeeId: 'informantRefugeeId',
   countryPrimaryInformant: 'countryPrimaryInformant',
   statePrimaryInformant: 'statePrimaryInformant', // @deprecated use statePrimaryInformantId instead

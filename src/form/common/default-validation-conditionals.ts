@@ -530,13 +530,13 @@ export const ageOfDeceasedConditionals = [
   }
 ] satisfies Validator[]
 
-export const isInformantSpouse =
-  '!values.informantType || values.informantType==="SPOUSE"'
+export const isInformantSpouseOrMotherOrFather =
+  '!values.informantType || values.informantType==="SPOUSE" || values.informantType==="MOTHER" ||  values.informantType==="FATHER"'
 
-export const hideIfInformantSpouse = [
+export const hideIfInformantSpouseOrMotherOrFather = [
   {
     action: 'hide',
-    expression: isInformantSpouse
+    expression: isInformantSpouseOrMotherOrFather
   }
 ]
 

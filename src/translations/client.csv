@@ -1288,6 +1288,7 @@ form.field.label.informantRelation.whoIsDeathInformant,Label for option death in
 form.field.label.informantSecondaryAddress,,Secondary Address,Adresse secondaire,Adiresy fanampiny
 form.field.label.informantSecondaryAddressSameAsPrimary,,Is their secondary address the same as their primary address?,Leur adresse secondaire est-elle la même que leur adresse principale ?,Leur adresse secondaire est-elle la même que leur adresse principale ?
 form.field.label.informantTitle,,Informant's details,Coordonnées de l'informateur,
+form.field.label.informantWasPresentAtDeath,Label for form field was informant present at death,Was informant present at death?,Was informant present at death?,Was informant present at death?
 form.field.label.informantYearOfBirthAround,,,,Tamin'ny taona
 form.field.label.informants.nationality,,Nationality,Nationalité,Zom-pirenena
 form.field.label.informantsDateOfBirth,,Date of Birth,Date de naissance,Daty nahaterahana

@@ -16,9 +16,8 @@ import {
   detailsDontExist,
   expressionToConditional,
   hideIfInformantBrideOrGroom,
-  hideIfInformantSpouse,
+  hideIfInformantSpouseOrMotherOrFather,
   informantNotMotherOrFather,
-  isInformantSpouse,
   mothersDetailsDontExistOnOtherPage,
   primaryAddressSameAsOtherPrimaryAddress /*,
   SPOUSE_DETAILS_DONT_EXIST*/
@@ -162,7 +161,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },
   {
     // PLACE OF DEATH ADDRESS FIELDS
-    precedingFieldId: 'death.deathEvent.death-event-details.deathDescription',
+    precedingFieldId:
+      'death.deathEvent.death-event-view-group.deathDescription',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_DEATH }]
   },
   {
@@ -187,37 +187,20 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   {
     // INFORMANT ADDRESS FIELDS
     precedingFieldId:
-      'death.informant.informant-view-group.informantBirthRegistrationNumber',
+      'death.informant.informant-view-group.informantWasPresentAtDeath',
     configurations: [
-      {
-        config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
-        label: formMessageDescriptors.primaryAddressSameAsDeceasedsPrimary,
-        conditionalCase: [
-          expressionToConditional(isInformantSpouse),
-          expressionToConditional(
-            `${isInformantSpouse} || !${primaryAddressSameAsOtherPrimaryAddress}`,
-            'hideInPreview'
-          )
-        ],
-        xComparisonSection: 'informant',
-        yComparisonSection: 'deceased'
-      },
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.informantPrimaryAddress,
         conditionalCase: [
           expressionToConditional(
-            `${primaryAddressSameAsOtherPrimaryAddress} || ${hideIfInformantSpouse[0].expression}`
-          ),
-          expressionToConditional(
-            `${primaryAddressSameAsOtherPrimaryAddress} || ${hideIfInformantSpouse[0].expression} || ${primaryAddressSameAsOtherPrimaryAddress}`,
-            'hideInPreview'
+            `${hideIfInformantSpouseOrMotherOrFather[0].expression}`
           )
         ]
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        conditionalCase: `${primaryAddressSameAsOtherPrimaryAddress} || ${hideIfInformantSpouse[0].expression}`
+        conditionalCase: `${hideIfInformantSpouseOrMotherOrFather[0].expression}`
       } /*,
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,

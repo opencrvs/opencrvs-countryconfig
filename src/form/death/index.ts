@@ -13,7 +13,6 @@ import {
   exactDateOfBirthUnknown,
   getAgeOfIndividualInYears,
   getMaritalStatus,
-  registrationEmail,
   registrationPhone,
   divider,
   getOccupation
@@ -61,10 +60,11 @@ import {
   spouseBirthDateConditionals,
   spouseFamilyNameConditionals,
   spouseFirstNameConditionals,
-  hideIfInformantSpouse,
-  hideIfNidIntegrationEnabled,
+  hideIfInformantSpouseOrMotherOrFather,
   hideIfDistrictPlaceOfBirthAddressNotSelected,
-  hideIfDistrictPlaceOfDeathNotSelected
+  hideIfDistrictPlaceOfDeathNotSelected,
+  yearOfBirthValidtors,
+  hideIfDistrictPrimaryAddressNotSelected
 } from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import {
@@ -80,10 +80,18 @@ import { getIDNumberFields, getIDType } from '@countryconfig/form/custom-fields'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 //import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
-import { getNUI } from '../common/common-custom-fields'
+import {
+  getCustomizedExactDateOfBirthUnknown,
+  getFokontanyCustomAdress,
+  getNUI,
+  getYearOfBirth
+} from '../common/common-custom-fields'
 import { getAddressFields } from '../addresses/address-fields'
-import { getFokontanyCustomAdress } from '../birth/custom-fields'
-import { getOtherMannerOfDeath, getTimeOfDeath } from './custom-fields'
+import {
+  getInformantPresenceAtDeath,
+  getOtherMannerOfDeath,
+  getTimeOfDeath
+} from './custom-fields'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -270,7 +278,7 @@ export const deathForm = {
       title: formMessageDescriptors.deathEventTitle,
       groups: [
         {
-          id: 'death-event-details',
+          id: 'death-event-view-group',
           fields: [
             getDeathDate(
               'deathDate',
@@ -315,19 +323,25 @@ export const deathForm = {
           fields: [
             deathInformantType,
             otherInformantType(Event.Death),
-            getFirstNameField(
-              'informantNameInEnglish',
-              informantFirstNameConditionals.concat(hideIfInformantSpouse),
-              certificateHandlebars.informantFirstName
-            ), // Required field.
             getFamilyNameField(
               'informantNameInEnglish',
-              informantFamilyNameConditionals.concat(hideIfInformantSpouse),
+              informantFamilyNameConditionals.concat(
+                hideIfInformantSpouseOrMotherOrFather
+              ),
               certificateHandlebars.informantFamilyName
             ), // Required field.
+            getFirstNameField(
+              'informantNameInEnglish',
+              informantFirstNameConditionals.concat(
+                hideIfInformantSpouseOrMotherOrFather
+              ),
+              certificateHandlebars.informantFirstName
+            ),
             getBirthDate(
               'informantBirthDate',
-              informantBirthDateConditionals.concat(hideIfInformantSpouse),
+              informantBirthDateConditionals.concat(
+                hideIfInformantSpouseOrMotherOrFather
+              ),
               [
                 {
                   operation: 'dateFormatIsCorrect',
@@ -340,31 +354,47 @@ export const deathForm = {
               ],
               certificateHandlebars.informantBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown(hideIfInformantSpouse),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfInformant,
-              exactDateOfBirthUnknownConditional.concat(hideIfInformantSpouse),
-              ageOfIndividualValidators
+            getCustomizedExactDateOfBirthUnknown(
+              'informant',
+              hideIfInformantSpouseOrMotherOrFather
             ),
-            getNationality(
-              certificateHandlebars.informantNationality,
-              hideIfInformantSpouse
+            getYearOfBirth(
+              'informant',
+              exactDateOfBirthUnknownConditional.concat(
+                hideIfInformantSpouseOrMotherOrFather
+              ),
+              yearOfBirthValidtors
             ),
-            getIDType(
+            getNUI(
+              hideIfInformantSpouseOrMotherOrFather,
+              [],
+              false,
+              certificateHandlebars.informantNationalId
+            ),
+            getInformantPresenceAtDeath(hideIfInformantSpouseOrMotherOrFather),
+            // ADDRESS FIELDS WILL RENDER HERE,
+            getFokontanyCustomAdress(
               'death',
               'informant',
-              hideIfNidIntegrationEnabled.concat(hideIfInformantSpouse),
-              true
+              hideIfInformantSpouseOrMotherOrFather.concat(
+                hideIfDistrictPrimaryAddressNotSelected('informant')
+              ),
+              true,
+              {
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
+              }
             ),
-            ...getIDNumberFields(
-              'informant',
-              hideIfNidIntegrationEnabled.concat(hideIfInformantSpouse),
-              true
+            divider(
+              'informant-address-separator',
+              hideIfInformantSpouseOrMotherOrFather
             ),
-            // ADDRESS FIELDS WILL RENDER HERE
-            divider('informant-address-separator', hideIfInformantSpouse),
-            registrationPhone,
-            registrationEmail
+            getOccupation(
+              hideIfInformantSpouseOrMotherOrFather,
+              certificateHandlebars.informantOccupation
+            ),
+            registrationPhone
           ],
           previewGroups: [informantNameInEnglish]
         }

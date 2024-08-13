@@ -141,103 +141,6 @@ export function getLegacyBirthRegistrationTime(): SerializedFormField {
   }
 }
 
-/**
- *  Handlebar fields:
- *  birthMotherCustomizedExactDateOfBirthUnknown / birthFatherCustomizedExactDateOfBirthUnknown / birthInformantCustomizedExactDateOfBirthUnknown
- */
-export function getCustomizedExactDateOfBirthUnknown(
-  subject: 'mother' | 'father' | 'informant',
-  conditionals: Conditional[] = []
-): SerializedFormField {
-  const fieldName: string = 'customizedExactDateOfBirthUnknown'
-  const fieldId: string = `birth.${subject}.${subject}-view-group.${fieldName}`
-
-  return {
-    name: fieldName,
-    customQuestionMappingId: fieldId,
-    custom: true,
-    required: false,
-    hideHeader: true,
-    hideInPreview: true,
-    type: 'CHECKBOX', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
-    label: {
-      defaultMessage: 'Exact date of birth unknown',
-      description: 'Checkbox for exact date of birth unknown',
-      id: 'form.field.label.exactDateOfBirthUnknown'
-    },
-    checkedValue: 'true',
-    uncheckedValue: 'false',
-    initialValue: 'false',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals // EDIT VALIDATORS AS YOU SEE FIT
-  }
-}
-
-/**
- *  Handlebar fields:
- *  birthMotherYearOfBirth / birthFatherYearOfBirth / birthInformantYearOfBirth
- */
-export function getYearOfBirth(
-  subject: 'mother' | 'father' | 'informant',
-  conditionals: Conditional[] = [],
-  validators: Validator[]
-): SerializedFormField {
-  const fieldName: string = 'yearOfBirth'
-  const fieldId: string = `birth.${subject}.${subject}-view-group.${fieldName}`
-
-  return {
-    name: fieldName,
-    customQuestionMappingId: fieldId,
-    custom: true,
-    required: true,
-    type: 'NUMBER', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
-    label: formMessageDescriptors.yearOfBirth,
-    initialValue: '',
-    validator: validators, // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals, // EDIT VALIDATORS AS YOU SEE FIT
-    prefix: 'vers', //formMessageDescriptors.prefixAround,
-    inputFieldWidth: '78px'
-  }
-}
-
-/**
- *  Handlebar fields:
- *  birthChildFokontanyCustomAddress / birthMotherFokontanyCustomAddress
- *  birthFatherFokontanyCustomAddress / birthInformantFokontanyCustomAddress
- */
-export function getFokontanyCustomAdress(
-  event: 'birth' | 'death',
-  section:
-    | 'child'
-    | 'mother'
-    | 'father'
-    | 'informant'
-    | 'deceased'
-    | 'deathEvent',
-  conditionals: Conditional[] = [],
-  required: boolean,
-  labelOfFokontanyCustomAddress: MessageDescriptor
-): SerializedFormField {
-  const fieldName: string = 'fokontanyCustomAddress'
-  const fieldId: string = `${event}.${section}.${section}-view-group.${fieldName}`
-
-  return {
-    name: fieldName,
-    customQuestionMappingId: fieldId,
-    custom: true,
-    required: required,
-    type: 'TEXT', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
-    label: labelOfFokontanyCustomAddress,
-    initialValue: '',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals, // EDIT VALIDATORS AS YOU SEE FIT
-    maxLength: 255
-  }
-}
-
 export function getFatherHasFormallyRecognisedChild(
   conditionals: Conditional[]
 ): SerializedFormField {
@@ -248,6 +151,8 @@ export function getFatherHasFormallyRecognisedChild(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
+    checkedValue: 'true',
+    uncheckedValue: 'false',
     required: false,
     type: 'CHECKBOX',
     hideHeader: true,
@@ -255,7 +160,7 @@ export function getFatherHasFormallyRecognisedChild(
       id: 'form.field.label.fatherHasFormallyRecognisedChild',
       defaultMessage: 'Father has formally recognised child'
     },
-    initialValue: false,
+    initialValue: 'false',
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
     conditionals

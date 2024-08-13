@@ -70,14 +70,11 @@ import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import {
-  getCustomizedExactDateOfBirthUnknown,
-  getFokontanyCustomAdress,
   getLegacyBirthRegistrationDate,
   getLegacyBirthRegistrationNumber,
   getLegacyBirthRegistrationTime,
   getPlaceOfBirth,
   getTimeOfBirth,
-  getYearOfBirth,
   getFatherHasFormallyRecognisedChild,
   typeOfMention,
   availableMentionTypes,
@@ -92,7 +89,12 @@ import {
   getDetailsMentionExist
 } from './custom-fields'
 import { subYears } from 'date-fns'
-import { getNUI } from '../common/common-custom-fields'
+import {
+  getCustomizedExactDateOfBirthUnknown,
+  getFokontanyCustomAdress,
+  getNUI,
+  getYearOfBirth
+} from '../common/common-custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================

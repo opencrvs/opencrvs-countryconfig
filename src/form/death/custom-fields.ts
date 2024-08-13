@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { SerializedFormField } from '../types/types'
+import { Conditional, SerializedFormField } from '../types/types'
 import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 
 export function getNumberOfDependants(): SerializedFormField {
@@ -38,7 +38,7 @@ export function getNumberOfDependants(): SerializedFormField {
 
 export function getTimeOfDeath(): SerializedFormField {
   const fieldName: string = 'deathTime'
-  const fieldId: string = `death.deathEvent.death-event-details.${fieldName}`
+  const fieldId: string = `death.deathEvent.death-event-view-group.${fieldName}`
 
   return {
     name: fieldName,
@@ -60,7 +60,7 @@ export function getTimeOfDeath(): SerializedFormField {
 
 export function getOtherMannerOfDeath(): SerializedFormField {
   const fieldName: string = 'otherMannerOfDeath'
-  const fieldId: string = `death.deathEvent.death-event-details.${fieldName}`
+  const fieldId: string = `death.deathEvent.death-event-view-group.${fieldName}`
 
   return {
     name: fieldName,
@@ -82,5 +82,31 @@ export function getOtherMannerOfDeath(): SerializedFormField {
         expression: 'values.mannerOfDeath !== "OTHER"'
       }
     ]
+  }
+}
+
+export function getInformantPresenceAtDeath(
+  conditionals: Conditional[]
+): SerializedFormField {
+  const fieldName: string = 'informantWasPresentAtDeath'
+  const fieldId: string = `death.informant.informant-view-group.${fieldName}`
+
+  return {
+    name: fieldName,
+    customQuestionMappingId: fieldId,
+    custom: true,
+    checkedValue: 'true',
+    uncheckedValue: 'false',
+    required: false,
+    type: 'CHECKBOX',
+    hideHeader: true,
+    label: {
+      id: 'form.field.label.informantWasPresentAtDeath',
+      defaultMessage: 'Was informant present at death?'
+    },
+    initialValue: 'false',
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals
   }
 }
