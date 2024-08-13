@@ -15,8 +15,8 @@ import {
   getMaritalStatus,
   registrationEmail,
   registrationPhone,
-  divider
-  // getOccupation
+  divider,
+  getOccupation
 } from '../common/common-optional-fields'
 import {
   getGender,
@@ -37,7 +37,7 @@ import {
   getMannerOfDeath
 } from './required-fields'
 import { formMessageDescriptors } from '../common/messages'
-import { Event, ISerializedForm } from '../types/types'
+import { AddressCases, Event, ISerializedForm } from '../types/types'
 import {
   informantBirthDateConditionals,
   informantFamilyNameConditionals,
@@ -62,7 +62,8 @@ import {
   spouseFamilyNameConditionals,
   spouseFirstNameConditionals,
   hideIfInformantSpouse,
-  hideIfNidIntegrationEnabled
+  hideIfNidIntegrationEnabled,
+  hideIfDistrictOtherPlaceOfBirthAddressNotSelected
 } from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import {
@@ -74,11 +75,13 @@ import {
 } from '../common/preview-groups'
 import { certificateHandlebars } from './certficate-handlebars'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { getNumberOfDependants } from '@countryconfig/form/death/custom-fields'
 import { getIDNumberFields, getIDType } from '@countryconfig/form/custom-fields'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 //import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
+import { getNUI } from '../common/common-custom-fields'
+import { getAddressFields } from '../addresses/address-fields'
+import { getFokontanyCustomAdress } from '../birth/custom-fields'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -173,15 +176,15 @@ export const deathForm = {
         {
           id: 'deceased-view-group',
           fields: [
-            getFirstNameField(
-              'deceasedNameInEnglish',
-              [],
-              certificateHandlebars.deceasedFirstName
-            ), // Required field.  Names in Latin characters must be provided for international passport
             getFamilyNameField(
               'deceasedNameInEnglish',
               [],
               certificateHandlebars.deceasedFamilyName
+            ), // Required field.  Names in Latin characters must be provided for international passport
+            getFirstNameField(
+              'deceasedNameInEnglish',
+              [],
+              certificateHandlebars.deceasedFirstName
             ), // Required field.  Names in Latin characters must be provided for international passport
             getGender(certificateHandlebars.deceasedGender), // Required field.
             getBirthDate(
@@ -203,12 +206,58 @@ export const deathForm = {
               certificateHandlebars.ageOfDeceasedInYears
             ),
             getNationality(certificateHandlebars.deceasedNationality, []),
-            getIDType('death', 'deceased', [], true),
-            ...getIDNumberFields('deceased', [], true),
+            getNUI([], [], false, certificateHandlebars.deceasedNationalId),
             getMaritalStatus(certificateHandlebars.deceasedMaritalStatus, []),
-            getNumberOfDependants()
+            {
+              name: 'addressPlaceOfBirthAddress',
+              type: 'HEADING3',
+              label: {
+                id: 'form.field.label.birthPlace',
+                description:
+                  'A form field that asks for the persons birthPlace',
+                defaultMessage: 'Place of birth'
+              },
+              previewGroup: 'addressPlaceOfBirthAddress',
+              initialValue: '',
+              validator: []
+            },
+            ...getAddressFields(
+              'deceased',
+              AddressCases.PLACE_OF_BIRTH_ADDRESS
+            ).map((field) => {
+              const fieldId = `deceased.deceased.view-group.${field.name}`
+              return {
+                ...field,
+                custom: true,
+                customQuestionMappingId: fieldId
+              }
+            }),
+            getFokontanyCustomAdress(
+              'death',
+              'deceased',
+              hideIfDistrictOtherPlaceOfBirthAddressNotSelected('deceased'),
+              true,
+              {
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
+              }
+            ),
+            // Primary address fields,
+            getOccupation([], certificateHandlebars.deceasedOccupation)
           ],
-          previewGroups: [deceasedNameInEnglish]
+          previewGroups: [
+            deceasedNameInEnglish,
+            {
+              id: 'addressPlaceOfBirthAddress',
+              label: {
+                defaultMessage: 'Place of delivery',
+                description: 'Title for place of birth sub section',
+                id: 'form.field.label.placeOfBirthPreview'
+              },
+              fieldToRedirect: 'countryAddressplaceofbirthDeceased'
+            }
+          ]
         }
       ]
     },

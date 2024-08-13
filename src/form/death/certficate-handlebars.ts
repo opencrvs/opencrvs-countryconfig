@@ -35,6 +35,7 @@ export const certificateHandlebars = {
   deceasedAlienId: 'deceasedAlienId',
   deceasedRefugeeId: 'deceasedRefugeeId',
   deceasedMaritalStatus: 'deceasedMaritalStatus',
+  deceasedOccupation: 'deceasedOccupation',
   countryPrimaryDeceased: 'countryPrimaryDeceased',
   statePrimaryDeceased: 'statePrimaryDeceased', // @deprecated use statePrimaryDeceasedId instead
   statePrimaryDeceasedId: 'statePrimaryDeceasedId',
