@@ -63,7 +63,8 @@ import {
   spouseFirstNameConditionals,
   hideIfInformantSpouse,
   hideIfNidIntegrationEnabled,
-  hideIfDistrictOtherPlaceOfBirthAddressNotSelected
+  hideIfDistrictPlaceOfBirthAddressNotSelected,
+  hideIfDistrictPlaceOfDeathNotSelected
 } from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import {
@@ -82,6 +83,7 @@ import { getReasonForLateRegistration } from '../custom-fields'
 import { getNUI } from '../common/common-custom-fields'
 import { getAddressFields } from '../addresses/address-fields'
 import { getFokontanyCustomAdress } from '../birth/custom-fields'
+import { getOtherMannerOfDeath, getTimeOfDeath } from './custom-fields'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -235,7 +237,7 @@ export const deathForm = {
             getFokontanyCustomAdress(
               'death',
               'deceased',
-              hideIfDistrictOtherPlaceOfBirthAddressNotSelected('deceased'),
+              hideIfDistrictPlaceOfBirthAddressNotSelected('deceased'),
               true,
               {
                 id: 'form.field.label.fokontanyCustomAddress',
@@ -279,12 +281,25 @@ export const deathForm = {
                 }
               ]
             ),
+            getTimeOfDeath(),
             getReasonForLateRegistration('death'),
             getMannerOfDeath,
+            getOtherMannerOfDeath(),
             getCauseOfDeath,
             getCauseOfDeathMethod,
-            getDeathDescription
-            // PLACE OF DEATH FIELDS WILL RENDER HERE
+            getDeathDescription,
+            // PLACE OF DEATH FIELDS WILL RENDER HERE,
+            getFokontanyCustomAdress(
+              'death',
+              'deathEvent',
+              hideIfDistrictPlaceOfDeathNotSelected,
+              true,
+              {
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
+              }
+            )
           ]
         }
       ]

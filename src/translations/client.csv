@@ -1454,8 +1454,10 @@ form.field.label.sexUnknown,,Unknown,Inconnu,Tsy fantatra
 form.field.label.socialSecurityNumber,,Social security no./NAPSA,N° de sécurité sociale /NAPSA,N° de sécurité sociale /NAPSA
 form.field.label.someoneElse,Other Label,Someone else,Quelqu'un d'autre,Olona hafa anatin'ny fianakaviana
 form.field.label.someoneElseCollector,,Print and issue to someone else,Imprimer et remettre à quelqu'un d'autre,Hatonta ary homena olona hafa
+form.field.label.specifyOther,Label for field specify other,Please specify,Please specify,Please specify
 form.field.label.spouseDetailsExist,,Spouse's details are not available,Les coordonnées du conjoint ne sont pas disponibles,
 form.field.label.state,Label for State,District,District,Distrika
+form.field.label.timeOfDeath,Label for field time of death,Time of death,Time of death,Time of death
 form.field.label.typeOfDocument,,Choose type of supporting document,Choisissez le type de document,Safidio ny karazan'io taratasy io
 form.field.label.typeOfId,,Type of ID,Type d'identification,Karazana taratasy fanamarinana
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage,

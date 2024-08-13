@@ -35,3 +35,52 @@ export function getNumberOfDependants(): SerializedFormField {
     inputFieldWidth: '64px'
   }
 }
+
+export function getTimeOfDeath(): SerializedFormField {
+  const fieldName: string = 'deathTime'
+  const fieldId: string = `death.deathEvent.death-event-details.${fieldName}`
+
+  return {
+    name: fieldName,
+    customQuestionMappingId: fieldId,
+    custom: true,
+    required: true,
+    type: 'TIME', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    label: {
+      id: 'form.field.label.timeOfDeath',
+      description: 'Label for field time of death',
+      defaultMessage: 'Time of death'
+    },
+    initialValue: '',
+    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
+    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
+    conditionals: [] // EDIT VALIDATORS AS YOU SEE FIT
+  }
+}
+
+export function getOtherMannerOfDeath(): SerializedFormField {
+  const fieldName: string = 'otherMannerOfDeath'
+  const fieldId: string = `death.deathEvent.death-event-details.${fieldName}`
+
+  return {
+    name: fieldName,
+    customQuestionMappingId: fieldId,
+    custom: true,
+    required: false,
+    type: 'TEXT',
+    label: {
+      id: 'form.field.label.specifyOther',
+      description: 'Label for field specify other',
+      defaultMessage: 'Please specify'
+    },
+    initialValue: '',
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: [
+      {
+        action: 'hide',
+        expression: 'values.mannerOfDeath !== "OTHER"'
+      }
+    ]
+  }
+}

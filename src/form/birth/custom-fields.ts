@@ -209,7 +209,13 @@ export function getYearOfBirth(
  */
 export function getFokontanyCustomAdress(
   event: 'birth' | 'death',
-  section: 'child' | 'mother' | 'father' | 'informant' | 'deceased',
+  section:
+    | 'child'
+    | 'mother'
+    | 'father'
+    | 'informant'
+    | 'deceased'
+    | 'deathEvent',
   conditionals: Conditional[] = [],
   required: boolean,
   labelOfFokontanyCustomAddress: MessageDescriptor

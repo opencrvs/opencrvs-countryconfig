@@ -481,12 +481,19 @@ export const hideIfDistrictPrimaryAddressNotSelected = (
   }
 ]
 
-export const hideIfDistrictOtherPlaceOfBirthAddressNotSelected = (
+export const hideIfDistrictPlaceOfBirthAddressNotSelected = (
   section: string
 ): Conditional[] => [
   {
     action: 'hide',
     expression: `!values.districtAddressplaceofbirth${capitalize(section)}`
+  }
+]
+
+export const hideIfDistrictPlaceOfDeathNotSelected = [
+  {
+    action: 'hide',
+    expression: '!values.districtPlaceofdeath'
   }
 ]
 
