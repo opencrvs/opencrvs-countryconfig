@@ -243,7 +243,12 @@ export function getAddressFields(
   let useCase = addressCase as string
   let placeOfEventFields: SerializedFormField[] = []
   if (addressCase in AddressCases) {
-    useCase = useCase === AddressCases.PRIMARY_ADDRESS ? 'primary' : 'secondary'
+    useCase =
+      useCase === AddressCases.PRIMARY_ADDRESS
+        ? 'primary'
+        : AddressCases.PLACE_OF_BIRTH_ADDRESS
+        ? 'addressPlaceOfBirth'
+        : 'secondary'
   } else {
     placeOfEventFields = getPlaceOfEventFields(
       useCase as EventLocationAddressCases

@@ -208,13 +208,14 @@ export function getYearOfBirth(
  *  birthFatherFokontanyCustomAddress / birthInformantFokontanyCustomAddress
  */
 export function getFokontanyCustomAdress(
-  subject: 'child' | 'mother' | 'father' | 'informant',
+  event: 'birth' | 'death',
+  section: 'child' | 'mother' | 'father' | 'informant' | 'deceased',
   conditionals: Conditional[] = [],
   required: boolean,
   labelOfFokontanyCustomAddress: MessageDescriptor
 ): SerializedFormField {
   const fieldName: string = 'fokontanyCustomAddress'
-  const fieldId: string = `birth.${subject}.${subject}-view-group.${fieldName}`
+  const fieldId: string = `${event}.${section}.${section}-view-group.${fieldName}`
 
   return {
     name: fieldName,

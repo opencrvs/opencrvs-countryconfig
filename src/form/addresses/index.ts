@@ -167,7 +167,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },
   {
     // DECEASED ADDRESS FIELDS
-    precedingFieldId: 'death.deceased.deceased-view-group.numberOfDependants',
+    precedingFieldId:
+      'death.deceased.deceased-view-group.fokontanyCustomAddress',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,

@@ -51,7 +51,6 @@ import {
   fathersBirthDateConditionals,
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
-  informantNotMotherOrFather,
   detailsExistConditional,
   primaryAddressSameAsOtherPrimary,
   yearOfBirthValidtors,
@@ -211,6 +210,7 @@ export const birthForm: ISerializedForm = {
             weightAtBirth,
             // PLACE OF BIRTH FIELDS WILL RENDER HERE
             getFokontanyCustomAdress(
+              'birth',
               'child',
               [
                 {
@@ -327,6 +327,7 @@ export const birthForm: ISerializedForm = {
             divider('informant-nid-seperator', hideIfInformantMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAdress(
+              'birth',
               'informant',
               hideIfInformantMotherOrFather.concat(
                 hideIfDistrictPrimaryAddressNotSelected('informant')
@@ -410,6 +411,7 @@ export const birthForm: ISerializedForm = {
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAdress(
+              'birth',
               'mother',
               detailsExistConditional.concat(
                 hideIfDistrictPrimaryAddressNotSelected('mother')
@@ -508,6 +510,7 @@ export const birthForm: ISerializedForm = {
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAdress(
+              'birth',
               'father',
               primaryAddressSameAsOtherPrimary
                 .concat(detailsExistConditional)
