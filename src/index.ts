@@ -540,9 +540,9 @@ export async function createServer() {
         countryConfigVersion &&
         coreVersion !== countryConfigVersion
       ) {
-        const errorMessage = `Version mismatch!! Opencrvs-Core is running on: ${request.headers['x-version']}, Opencrvs-Countryconfig is running on: ${process.env.npm_package_version}`
+        const errorMessage = `Version mismatch!! Opencrvs-Core is running on: ${coreVersion}, Opencrvs-Countryconfig is running on: ${countryConfigVersion}`
         console.error(errorMessage)
-        return h.response(errorMessage).code(426).takeover()
+        return h.response({ message: errorMessage }).code(426).takeover()
       }
       return h.continue
     }
