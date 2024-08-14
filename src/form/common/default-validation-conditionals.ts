@@ -406,6 +406,10 @@ export const spouseBirthDateConditionals = [
     expression: 'values.exactDateOfBirthUnknown'
   },
   {
+    action: 'hide',
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
+  },
+  {
     action: 'disable',
     expression: `draftData?.spouse?.fieldsModifiedByNidUserInfo?.includes('spouseBirthDate')`
   }

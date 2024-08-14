@@ -40,21 +40,10 @@ import { AddressCases, Event, ISerializedForm } from '../types/types'
 import {
   informantBirthDateConditionals,
   informantFamilyNameConditionals,
-  ageOfIndividualValidators,
   ageOfDeceasedConditionals,
   informantFirstNameConditionals,
   exactDateOfBirthUnknownConditional,
-  isValidBirthDate /*,
-  fathersDetailsExistConditionals,
-  fatherFirstNameConditionals,
-  fatherFamilyNameConditionals,
-  fathersBirthDateConditionals,
-  parentsBirthDateValidators,
-  detailsExistConditional,
-  motherFirstNameConditionals,
-  motherFamilyNameConditionals,
-  mothersBirthDateConditionals,
-  mothersDetailsExistConditionals,*/,
+  isValidBirthDate,
   spouseDetailsExistConditionals,
   detailsExist,
   spouseBirthDateConditionals,
@@ -64,24 +53,32 @@ import {
   hideIfDistrictPlaceOfBirthAddressNotSelected,
   hideIfDistrictPlaceOfDeathNotSelected,
   yearOfBirthValidtors,
-  hideIfDistrictPrimaryAddressNotSelected
+  hideIfDistrictPrimaryAddressNotSelected,
+  fatherFamilyNameConditionals,
+  fatherFirstNameConditionals,
+  fathersBirthDateConditionals,
+  fathersDetailsExistConditionals,
+  motherFamilyNameConditionals,
+  motherFirstNameConditionals,
+  mothersBirthDateConditionals,
+  mothersDetailsExistConditionals,
+  parentsBirthDateValidators
 } from '../common/default-validation-conditionals'
 import { documentsSection, registrationSection } from './required-sections'
 import {
   deceasedNameInEnglish,
-  informantNameInEnglish /*,
   fatherNameInEnglish,
-  motherNameInEnglish,*/,
+  informantNameInEnglish,
+  motherNameInEnglish,
   spouseNameInEnglish
 } from '../common/preview-groups'
 import { certificateHandlebars } from './certficate-handlebars'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { getIDNumberFields, getIDType } from '@countryconfig/form/custom-fields'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
-//import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import {
   getCustomizedExactDateOfBirthUnknown,
+  getFatherIsDeceased,
   getFokontanyCustomAdress,
   getNUI,
   getYearOfBirth
@@ -251,9 +248,21 @@ export const deathForm = {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
-              }
+              },
+              'placeOfBirth'
             ),
             // Primary address fields,
+            getFokontanyCustomAdress(
+              'death',
+              'deceased',
+              hideIfDistrictPrimaryAddressNotSelected('deceased'),
+              true,
+              {
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
+              }
+            ),
             getOccupation([], certificateHandlebars.deceasedOccupation)
           ],
           previewGroups: [
@@ -402,135 +411,6 @@ export const deathForm = {
       mapping: getCommonSectionMapping('informant')
     },
     {
-      id: 'spouse',
-      viewType: 'form',
-      name: formMessageDescriptors.spouseSectionName,
-      title: formMessageDescriptors.spouseSectionName,
-      groups: [
-        {
-          id: 'spouse-view-group',
-          fields: [
-            getDetailsExist(
-              formMessageDescriptors.spouseDetailsExist,
-              spouseDetailsExistConditionals
-            ),
-            divider('spouse-details-seperator', spouseDetailsExistConditionals),
-            getReasonNotExisting(certificateHandlebars.spouseReasonNotApplying),
-            getFirstNameField(
-              'spouseNameInEnglish',
-              spouseFirstNameConditionals,
-              certificateHandlebars.spouseFirstName
-            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
-            getFamilyNameField(
-              'spouseNameInEnglish',
-              spouseFamilyNameConditionals,
-              certificateHandlebars.spouseFamilyName
-            ), // Required field.
-            getBirthDate(
-              'spouseBirthDate',
-              spouseBirthDateConditionals,
-              [
-                {
-                  operation: 'dateFormatIsCorrect',
-                  parameters: []
-                },
-                {
-                  operation: 'dateInPast',
-                  parameters: []
-                }
-              ],
-              certificateHandlebars.spouseBirthDate
-            ), // Required field.
-            exactDateOfBirthUnknown(detailsExist),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfSpouse,
-              exactDateOfBirthUnknownConditional.concat(detailsExist),
-              ageOfIndividualValidators
-            ),
-            getNationality(
-              certificateHandlebars.spouseNationality,
-              detailsExist
-            ),
-            getIDType('death', 'spouse', detailsExist, true),
-            ...getIDNumberFields('spouse', detailsExist, true),
-            // preceding field of address fields
-            divider('spouse-nid-seperator', detailsExist),
-            // ADDRESS FIELDS WILL RENDER HERE
-            divider('spouse-address-separator')
-          ],
-          previewGroups: [spouseNameInEnglish]
-        }
-      ],
-      mapping: getSectionMapping('spouse')
-    },
-    /*
-    OTHER POSSIBLE SECTIONS FOR DEATH INCLUDE:
-    {
-      id: 'mother',
-      viewType: 'form',
-      name: formMessageDescriptors.motherName,
-      title: formMessageDescriptors.motherTitle,
-      groups: [
-        {
-          id: 'mother-view-group',
-          fields: [
-            getDetailsExist(
-              formMessageDescriptors.mothersDetailsExist,
-              mothersDetailsExistConditionals
-            ),
-            divider(
-              'mother-details-seperator',
-              mothersDetailsExistConditionals
-            ),
-            getReasonNotExisting(certificateHandlebars.motherReasonNotApplying),
-            getFirstNameField(
-              'motherNameInEnglish',
-              motherFirstNameConditionals,
-              certificateHandlebars.motherFirstName
-            ), // Required field.
-            getFamilyNameField(
-              'motherNameInEnglish',
-              motherFamilyNameConditionals,
-              certificateHandlebars.motherFamilyName
-            ), // Required field.
-            getBirthDate(
-              'motherBirthDate',
-              mothersBirthDateConditionals,
-              parentsBirthDateValidators,
-              certificateHandlebars.motherBirthDate
-            ), // Required field.
-            exactDateOfBirthUnknown(detailsExistConditional),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfMother,
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
-            ),
-            getNationality(
-              certificateHandlebars.motherNationality,
-              detailsExist
-            ), // Required field.
-            getNationalID(
-              'iD',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              getNationalIDValidators('mother'),
-              certificateHandlebars.motherNID
-            ),
-            // preceding field of address fields
-            divider('mother-nid-seperator', detailsExist),
-            // ADDRESS FIELDS WILL RENDER HERE
-            divider('mother-address-seperator', detailsExist),
-            getOccupation(certificateHandlebars.motherOccupation, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ])
-          ],
-          previewGroups: [motherNameInEnglish]
-        }
-      ],
-      mapping: getSectionMapping('mother')
-    },
-    {
       id: 'father',
       viewType: 'form',
       name: {
@@ -556,15 +436,16 @@ export const deathForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getFirstNameField(
-              'fatherNameInEnglish',
-              fatherFirstNameConditionals,
-              certificateHandlebars.fatherFirstName
-            ), // Required field.
+            getFatherIsDeceased('death', detailsExist),
             getFamilyNameField(
               'fatherNameInEnglish',
               fatherFamilyNameConditionals,
               certificateHandlebars.fatherFamilyName
+            ), // Required field.
+            getFirstNameField(
+              'fatherNameInEnglish',
+              fatherFirstNameConditionals,
+              certificateHandlebars.fatherFirstName
             ), // Required field.
             getBirthDate(
               'fatherBirthDate',
@@ -572,37 +453,196 @@ export const deathForm = {
               parentsBirthDateValidators,
               certificateHandlebars.fatherBirthDate
             ), // Required field.
-            exactDateOfBirthUnknown(detailsExistConditional),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfFather,
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
+            getCustomizedExactDateOfBirthUnknown('father', detailsExist),
+            getYearOfBirth(
+              'father',
+              exactDateOfBirthUnknownConditional.concat(detailsExist),
+              yearOfBirthValidtors
             ),
             getNationality(
               certificateHandlebars.fatherNationality,
               detailsExist
             ), // Required field.
-            getNationalID(
-              'iD',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              getNationalIDValidators('father'),
-              certificateHandlebars.fatherNID
+            getNUI(
+              detailsExist,
+              [],
+              false,
+              certificateHandlebars.fatherNationalId
+            ),
+            getOccupation(
+              [
+                {
+                  action: 'hide',
+                  expression: '!values.detailsExist'
+                }
+              ],
+              certificateHandlebars.fatherOccupation
             ),
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            divider('father-address-seperator', detailsExist),
-            getOccupation(certificateHandlebars.fatherOccupation, [
+            getFokontanyCustomAdress(
+              'death',
+              'father',
+              detailsExist.concat(
+                hideIfDistrictPrimaryAddressNotSelected('father')
+              ),
+              true,
               {
-                action: 'hide',
-                expression: '!values.detailsExist'
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
               }
-            ])
+            )
           ],
           previewGroups: [fatherNameInEnglish]
         }
       ],
       mapping: getSectionMapping('father')
-    },*/
+    },
+    {
+      id: 'mother',
+      viewType: 'form',
+      name: formMessageDescriptors.motherName,
+      title: formMessageDescriptors.motherTitle,
+      groups: [
+        {
+          id: 'mother-view-group',
+          fields: [
+            getDetailsExist(
+              formMessageDescriptors.mothersDetailsExist,
+              mothersDetailsExistConditionals
+            ),
+            divider(
+              'mother-details-seperator',
+              mothersDetailsExistConditionals
+            ),
+            getReasonNotExisting(certificateHandlebars.motherReasonNotApplying),
+            getFamilyNameField(
+              'motherNameInEnglish',
+              motherFamilyNameConditionals,
+              certificateHandlebars.motherFamilyName
+            ), // Required field.
+            getFirstNameField(
+              'motherNameInEnglish',
+              motherFirstNameConditionals,
+              certificateHandlebars.motherFirstName
+            ),
+            getBirthDate(
+              'motherBirthDate',
+              mothersBirthDateConditionals,
+              parentsBirthDateValidators,
+              certificateHandlebars.motherBirthDate
+            ), // Required field.
+            getCustomizedExactDateOfBirthUnknown('mother', detailsExist),
+            getYearOfBirth(
+              'mother',
+              exactDateOfBirthUnknownConditional.concat(detailsExist),
+              yearOfBirthValidtors
+            ),
+            getNationality(
+              certificateHandlebars.motherNationality,
+              detailsExist
+            ), // Required field.
+            getNUI(
+              detailsExist,
+              [],
+              false,
+              certificateHandlebars.motherNationalId
+            ),
+            getOccupation(
+              [
+                {
+                  action: 'hide',
+                  expression: '!values.detailsExist'
+                }
+              ],
+              certificateHandlebars.motherOccupation
+            ),
+            // preceding field of address fields
+            divider('mother-nid-seperator', detailsExist),
+            // ADDRESS FIELDS WILL RENDER HERE
+            getFokontanyCustomAdress(
+              'death',
+              'mother',
+              detailsExist.concat(
+                hideIfDistrictPrimaryAddressNotSelected('mother')
+              ),
+              true,
+              {
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
+              }
+            )
+          ],
+          previewGroups: [motherNameInEnglish]
+        }
+      ],
+      mapping: getSectionMapping('mother')
+    },
+    {
+      id: 'spouse',
+      viewType: 'form',
+      name: formMessageDescriptors.spouseSectionName,
+      title: formMessageDescriptors.spouseSectionName,
+      groups: [
+        {
+          id: 'spouse-view-group',
+          fields: [
+            getDetailsExist(
+              formMessageDescriptors.spouseDetailsExist,
+              spouseDetailsExistConditionals
+            ),
+            divider('spouse-details-seperator', spouseDetailsExistConditionals),
+            getReasonNotExisting(certificateHandlebars.spouseReasonNotApplying),
+            getFamilyNameField(
+              'spouseNameInEnglish',
+              spouseFamilyNameConditionals,
+              certificateHandlebars.spouseFamilyName
+            ), // Required field.
+            getFirstNameField(
+              'spouseNameInEnglish',
+              spouseFirstNameConditionals,
+              certificateHandlebars.spouseFirstName
+            ),
+            getBirthDate(
+              'spouseBirthDate',
+              spouseBirthDateConditionals,
+              [
+                {
+                  operation: 'dateFormatIsCorrect',
+                  parameters: []
+                },
+                {
+                  operation: 'dateInPast',
+                  parameters: []
+                }
+              ],
+              certificateHandlebars.spouseBirthDate
+            ), // Required field.
+            getCustomizedExactDateOfBirthUnknown('spouse', detailsExist),
+            getYearOfBirth(
+              'spouse',
+              exactDateOfBirthUnknownConditional.concat(detailsExist),
+              yearOfBirthValidtors
+            ),
+            getNationality(
+              certificateHandlebars.spouseNationality,
+              detailsExist
+            ),
+            getNUI(
+              detailsExist,
+              [],
+              false,
+              certificateHandlebars.spouseNationalId
+            )
+          ],
+          previewGroups: [spouseNameInEnglish]
+        }
+      ],
+      mapping: getSectionMapping('spouse')
+    },
     documentsSection
   ]
 } satisfies ISerializedForm
