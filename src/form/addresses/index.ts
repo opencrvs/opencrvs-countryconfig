@@ -12,7 +12,6 @@
 import {
   FATHER_DETAILS_DONT_EXIST,
   MOTHER_DETAILS_DONT_EXIST,
-  SPOUSE_DETAILS_DONT_EXIST,
   detailsDontExist,
   expressionToConditional,
   hideIfInformantBrideOrGroom,

@@ -111,7 +111,7 @@ export function getYearOfBirth(
  *  birthChildFokontanyCustomAddress / birthMotherFokontanyCustomAddress
  *  birthFatherFokontanyCustomAddress / birthInformantFokontanyCustomAddress
  */
-export function getFokontanyCustomAdress(
+export function getFokontanyCustomAddress(
   event: 'birth' | 'death',
   section:
     | 'child'
@@ -123,6 +123,7 @@ export function getFokontanyCustomAdress(
   conditionals: Conditional[] = [],
   required: boolean,
   labelOfFokontanyCustomAddress: MessageDescriptor,
+  previewGroup: string,
   useCase?: string
 ): SerializedFormField {
   const fieldName: string = useCase
@@ -135,12 +136,13 @@ export function getFokontanyCustomAdress(
     customQuestionMappingId: fieldId,
     custom: true,
     required: required,
-    type: 'TEXT', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    type: 'TEXT',
     label: labelOfFokontanyCustomAddress,
     initialValue: '',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals, // EDIT VALIDATORS AS YOU SEE FIT
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals,
+    previewGroup,
     maxLength: 255
   }
 }

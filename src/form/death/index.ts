@@ -79,7 +79,7 @@ import { getReasonForLateRegistration } from '../custom-fields'
 import {
   getCustomizedExactDateOfBirthUnknown,
   getFatherIsDeceased,
-  getFokontanyCustomAdress,
+  getFokontanyCustomAddress,
   getNUI,
   getYearOfBirth
 } from '../common/common-custom-fields'
@@ -239,7 +239,7 @@ export const deathForm = {
                 customQuestionMappingId: fieldId
               }
             }),
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'death',
               'deceased',
               hideIfDistrictPlaceOfBirthAddressNotSelected('deceased'),
@@ -249,10 +249,11 @@ export const deathForm = {
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
               },
+              'addressPlaceOfBirthAddress',
               'placeOfBirth'
             ),
             // Primary address fields,
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'death',
               'deceased',
               hideIfDistrictPrimaryAddressNotSelected('deceased'),
@@ -261,7 +262,8 @@ export const deathForm = {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
-              }
+              },
+              'primaryAddress'
             ),
             getOccupation([], certificateHandlebars.deceasedOccupation)
           ],
@@ -306,7 +308,7 @@ export const deathForm = {
             getCauseOfDeathMethod,
             getDeathDescription,
             // PLACE OF DEATH FIELDS WILL RENDER HERE,
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'death',
               'deathEvent',
               hideIfDistrictPlaceOfDeathNotSelected,
@@ -315,7 +317,8 @@ export const deathForm = {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
-              }
+              },
+              'placeOfDeath'
             )
           ]
         }
@@ -382,7 +385,7 @@ export const deathForm = {
             ),
             getInformantPresenceAtDeath(hideIfInformantSpouseOrMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE,
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'death',
               'informant',
               hideIfInformantSpouseOrMotherOrFather.concat(
@@ -393,7 +396,8 @@ export const deathForm = {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
-              }
+              },
+              'primaryAddress'
             ),
             divider(
               'informant-address-separator',
@@ -481,7 +485,7 @@ export const deathForm = {
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'death',
               'father',
               detailsExist.concat(
@@ -492,7 +496,8 @@ export const deathForm = {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
-              }
+              },
+              'primaryAddress'
             )
           ],
           previewGroups: [fatherNameInEnglish]
@@ -562,7 +567,7 @@ export const deathForm = {
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'death',
               'mother',
               detailsExist.concat(
@@ -573,7 +578,8 @@ export const deathForm = {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
-              }
+              },
+              'primaryAddress'
             )
           ],
           previewGroups: [motherNameInEnglish]

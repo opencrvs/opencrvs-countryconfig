@@ -92,7 +92,7 @@ import { subYears } from 'date-fns'
 import {
   getCustomizedExactDateOfBirthUnknown,
   getFatherIsDeceased,
-  getFokontanyCustomAdress,
+  getFokontanyCustomAddress,
   getMotherIsDeceased,
   getNUI,
   getYearOfBirth
@@ -213,7 +213,7 @@ export const birthForm: ISerializedForm = {
             getTimeOfBirth(),
             weightAtBirth,
             // PLACE OF BIRTH FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'birth',
               'child',
               [
@@ -229,7 +229,8 @@ export const birthForm: ISerializedForm = {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
-              }
+              },
+              'placeOfBirth'
             ),
             getNUI(
               [],
@@ -330,7 +331,7 @@ export const birthForm: ISerializedForm = {
             // preceding field of address fields
             divider('informant-nid-seperator', hideIfInformantMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'birth',
               'informant',
               hideIfInformantMotherOrFather.concat(
@@ -342,7 +343,8 @@ export const birthForm: ISerializedForm = {
                 description:
                   'A form field that asks for informent current address',
                 defaultMessage: 'Address'
-              }
+              },
+              'primaryAddress'
             ),
             getOccupation(
               hideIfInformantMotherOrFather,
@@ -415,7 +417,7 @@ export const birthForm: ISerializedForm = {
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'birth',
               'mother',
               detailsExistConditional.concat(
@@ -427,7 +429,8 @@ export const birthForm: ISerializedForm = {
                 description:
                   'A form field that asks for mother current address',
                 defaultMessage: 'Address'
-              }
+              },
+              'primaryAddress'
             ),
             getMaritalStatus(
               certificateHandlebars.motherMaritalStatus,
@@ -515,7 +518,7 @@ export const birthForm: ISerializedForm = {
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
               'birth',
               'father',
               primaryAddressSameAsOtherPrimary
@@ -527,7 +530,8 @@ export const birthForm: ISerializedForm = {
                 description:
                   'A form field that asks for father current address',
                 defaultMessage: 'Address'
-              }
+              },
+              'primaryAddress'
             ),
             divider('father-address-seperator', detailsExist),
             getMaritalStatus(
