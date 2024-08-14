@@ -1124,6 +1124,7 @@ form.field.label.deathAtPrivateHome,,What is the address of the private home?,Qu
 form.field.label.deathDate,,"Enter the date as: day, month, year e.g. 24 10 2020","Indiquez la date sous la forme : jour, mois, année, par exemple 24 10 2020","Apetraho ilay daty mifanaraka amin'ny endrika toy izao : andro, volana, taona, ohatra 24 10 2020"
 form.field.label.deathDescription,,Description,Description,Description
 form.field.label.deathPlace,,Place of Occurrence of Death,Lieu de survenance du décès,Toerana nisehoan'ny fahafatesana
+form.field.label.deathProofFromFokontany,Option for radio group field: Proof of death of from Fokontany,Proof of death from Fokontany,Proof of death from Fokontany,Proof of death from Fokontany
 form.field.label.deceased.nationality,,,,Zom-pirenena
 form.field.label.deceasedCurAddSamePerm,,Is deceased's current address the same as their permanent address?,L'adresse actuelle du défunt est-elle la même que son adresse permanente ?,Ny adiresin'ilay olona maty ve mitovy amin'ny adiresin'ny andavan'andro ihany ?
 form.field.label.deceasedDateOfBirth,,,,Daty nahaterahana
