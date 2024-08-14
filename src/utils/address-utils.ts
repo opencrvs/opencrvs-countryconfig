@@ -971,8 +971,7 @@ export const getAddressSubsection = (
     label,
     previewGroup: previewGroup,
     initialValue: '',
-    validator: [],
-    hideValueInPreview: true
+    validator: []
   }
 
   if (conditionalCase) {
