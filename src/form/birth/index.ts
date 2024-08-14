@@ -91,7 +91,9 @@ import {
 import { subYears } from 'date-fns'
 import {
   getCustomizedExactDateOfBirthUnknown,
+  getFatherIsDeceased,
   getFokontanyCustomAdress,
+  getMotherIsDeceased,
   getNUI,
   getYearOfBirth
 } from '../common/common-custom-fields'
@@ -371,6 +373,7 @@ export const birthForm: ISerializedForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getMotherIsDeceased('birth', detailsExistConditional),
             getFamilyNameField(
               'motherNameInEnglish',
               motherFamilyNameConditionals,
@@ -469,6 +472,7 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getFatherIsDeceased('birth', detailsExist),
             getFatherHasFormallyRecognisedChild(detailsExist),
             getFamilyNameField(
               'fatherNameInEnglish',

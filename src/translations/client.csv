@@ -1216,6 +1216,7 @@ form.field.label.fatherFirstNames,,First Name(s) in default character set other 
 form.field.label.fatherFirstNamesEng,,,,Fanampin'anarana
 form.field.label.fatherHasFormallyRecognisedChild,,Father has formally recognised child,Le père a reconnu officiellement l'enfant,Nahafantatra tamin’ny fomba ofisialy ilay zaza ilay raim-pianakaviana
 form.field.label.fatherIsDeceased,,Father has died,Le père est décédé,Ilay ray dia maty
+form.field.label.fatherIsDeceased,Label for form field Father is deceased,Father is deceased,Father is deceased,Father is deceased
 form.field.label.fatherPlaceOfBirth,,What is his village of origin?,Quel est son village d'origine ?,Aiza ny toerana niaviany ?
 form.field.label.fatherPrimaryAddress,,Usual place of residence,Quelle est son adresse résidentielle ?,Firy ny aidresy ipetrahany amin'izao ?
 form.field.label.fatherYearOfBirthAround,,Around the year,Vers l'année,Tamin'ny taona
@@ -1364,6 +1365,7 @@ form.field.label.motherFamilyNameEng,,,,Anarana
 form.field.label.motherFirstNames,,First name(s),Prénom(s) dans un jeu de caractères par défaut autre que l'anglais,Prénom(s) dans un jeu de caractères par défaut autre que l'anglais
 form.field.label.motherFirstNamesEng,,,,Fanampin'anarana
 form.field.label.motherIsDeceased,,Mother has died,La mère est décédée,ILay reny dia maty
+form.field.label.motherIsDeceased,Label for form field Mother is deceased,Mother is deceased,Mother is deceased,Mother is deceased
 form.field.label.motherPlaceOfBirth,,What is her village of origin?,Quel est son village d'origine ?,Aiza ny toerana iaviany ?
 form.field.label.motherPlaceOfHeritage,,What is her place of origin (heritage)?,Quel est son lieu d'origine (patrimoine) ?,Aiza ny toerana iaviany(patrimoine) ?
 form.field.label.motherPrimaryAddress,,Usual place of residence,Quelle est l'adresse de son domicile ?,AIza ny adiresy ipetrahany ?
