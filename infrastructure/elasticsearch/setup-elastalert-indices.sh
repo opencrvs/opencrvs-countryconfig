@@ -32,8 +32,9 @@ docker service scale opencrvs_elastalert=0
 echo 'Deleting Elastalert indices'
 indices='elastalert_status,elastalert_status_error,elastalert_status_past,elastalert_status_silence,elastalert_status_status'
 
-delete_status_code=$($docker_command --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD -o /dev/null -w '%{http_code}' "http://elasticsearch:9200/${indices}" -X DELETE)
+bulk_delete_status_code=$($docker_command --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD -o /dev/null -w '%{http_code}' "http://elasticsearch:9200/${indices}" -X DELETE)
 
+<<<<<<< HEAD
 if [ "$delete_status_code" -ne 200 ]; then
   echo "Could not delete indices. API returned status code: $delete_status_code"
   exit 1
@@ -42,3 +43,36 @@ fi
 echo 'Scaling up Elastalert'
 docker service scale opencrvs_elastalert=1
 
+=======
+if [ "$bulk_delete_status_code" -ne 200 ]; then
+  echo "Could not delete indices. API returned status code: $bulk_delete_status_code" 
+fi
+
+if [ "$bulk_delete_status_code" -eq 404 ]; then
+  echo "Some of the indices do not exist. Attempting to delete them one by one."
+  
+  # Convert the comma-separated indices into an array
+  IFS=',' read -r -a indices_array <<< "$indices"
+
+  for index in "${indices_array[@]}"; do
+    echo "Deleting index: $index"
+    individual_delete_status_code=$($docker_command --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD -o /dev/null -w '%{http_code}' "http://elasticsearch:9200/${index}" -X DELETE)
+
+    if [ "$individual_delete_status_code" -eq 200 ]; then
+      echo "Successfully deleted index: $index"
+    elif [ "$individual_delete_status_code" -eq 404 ]; then
+      echo "Index $index does not exist."
+    else
+      echo "Failed to delete index: $index. API returned status code: $individual_delete_status_code"
+    fi
+  done
+fi
+
+echo 'Scaling up Elastalert'
+docker service scale opencrvs_elastalert=1
+
+if [ "$bulk_delete_status_code" -ne 200 ]; then
+  exit 1
+fi
+
+>>>>>>> 6d9ac5a4 (delete indices one by one if they are not all present)
