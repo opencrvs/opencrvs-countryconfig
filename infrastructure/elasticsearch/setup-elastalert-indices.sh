@@ -54,6 +54,10 @@ if [ "$bulk_delete_status_code" -eq 404 ]; then
   # Convert the comma-separated indices into an array
   IFS=',' read -r -a indices_array <<< "$indices"
 
+
+
+  non_404_error_when_deleting_one_by_one=0
+
   for index in "${indices_array[@]}"; do
     echo "Deleting index: $index"
     individual_delete_status_code=$($docker_command --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD -o /dev/null -w '%{http_code}' "http://elasticsearch:9200/${index}" -X DELETE)
@@ -64,15 +68,18 @@ if [ "$bulk_delete_status_code" -eq 404 ]; then
       echo "Index $index does not exist."
     else
       echo "Failed to delete index: $index. API returned status code: $individual_delete_status_code"
+      non_404_error_when_deleting_one_by_one=1
     fi
   done
 fi
 
+
 echo 'Scaling up Elastalert'
 docker service scale opencrvs_elastalert=1
 
-if [ "$bulk_delete_status_code" -ne 200 ]; then
-  exit 1
+if [ "$non_404_error_when_deleting_one_by_one" -eq 0 ] && { [ "$bulk_delete_status_code" -eq 200 ] || [ "$bulk_delete_status_code" -eq 404 ]; }; then
+  exit 0
 fi
 
->>>>>>> 6d9ac5a4 (delete indices one by one if they are not all present)
+exit 1
+
