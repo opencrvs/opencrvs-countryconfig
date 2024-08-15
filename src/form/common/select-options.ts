@@ -512,3 +512,65 @@ export const yesNoRadioOptions: IRadioOption[] = [
     }
   }
 ]
+
+const courtNames = [
+  'TPI Antananarivo',
+  'TPI Antananarivo Avaradrano',
+  'TPI Ankazobe',
+  'TPI Tsiroanomandidy',
+  'TPI Miarinarivo',
+  'TPI Arivonimamo',
+  'TPI Antsirabe',
+  'TPI Ambatolampy',
+  'TPI Toamasina',
+  'TPI Vatomandry',
+  'TPI Mahanoro',
+  'TPI Ambatondrazaka',
+  'TPI Moramanga',
+  'TPI Fenoarivo Atsinanana',
+  'TPI Maroantsetra',
+  'TPI Sainte Marie',
+  'TPI Fianarantsoa',
+  'TPI Ambositra',
+  'TPI Ambatofinandrahana',
+  'TPI Manakara',
+  'TPI Ikongo',
+  'TPI Mananjary',
+  'TPI Farafangana',
+  'TPI Vangaindrano',
+  'TPI Ihosy',
+  'TPI Toliara',
+  'TPI Morombe',
+  'TPI Ankazoabo Sud',
+  'TPI Beroroha',
+  'TPI Ampanihy',
+  'TPI Ambovombe',
+  'TPI Tolagnaro',
+  'TPI Betroka',
+  'TPI Mahajanga',
+  'TPI Maevatanana',
+  'TPI Antsohihy',
+  'TPI Analalava',
+  'TPI Bealanana',
+  'TPI Befandriana Avaratra',
+  'TPI Mampikony',
+  'TPI Mandritsara',
+  'TPI Boriziny',
+  'TPI Maintirano',
+  'TPI Besalampy',
+  'TPI Antsiranana',
+  'TPI Ambanja',
+  'TPI Ambilobe',
+  'TPI Nosy Be',
+  'TPI Sambava',
+  'TPI Antalaha'
+]
+
+export const tribunalOfFirstInstanceActOptions: ISelectOption[] =
+  courtNames.map((name) => ({
+    value: name,
+    label: {
+      id: 'form.field.label.courtName.' + name.replace(/\s/, ''),
+      defaultMessage: name
+    }
+  }))
