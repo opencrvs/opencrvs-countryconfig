@@ -98,7 +98,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
     await page.close()
   })
 
-  test.describe('4.1 Declaratin started by RA', async () => {
+  test.describe('4.1 Declaration started by RA', async () => {
     test.beforeAll(async () => {
       await login(page, 'f.katongo', 'test')
       await createPIN(page)
@@ -347,7 +347,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
         page.locator('button[name="uploadDocForCauseOfDeath"]')
       )
     })
-    test('4.1.6 Verify informations in preview page', async () => {
+    test('4.1.6 Verify information on preview page', async () => {
       goToSection(page, 'preview')
       /*
        * Expected result: should include
@@ -759,7 +759,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
       await page.getByRole('button', { name: 'Review', exact: true }).click()
     })
 
-    test('4.2.2 Verify informations in review page', async () => {
+    test('4.2.2 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Deceased's First Name

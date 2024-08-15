@@ -86,7 +86,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       goToSection(page, 'preview')
     })
 
-    test('8.1.6 Verify informations in preview page', async () => {
+    test('8.1.6 Verify information on preview page', async () => {
       /*
        * Expected result: should require
        * - Child's First Name
@@ -274,7 +274,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       await page.getByRole('button', { name: 'Update', exact: true }).click()
     })
 
-    test('8.2.2 Verify informations in preview page', async () => {
+    test('8.2.2 Verify information on preview page', async () => {
       /*
        * Expected result: should require
        * - Child's First Name

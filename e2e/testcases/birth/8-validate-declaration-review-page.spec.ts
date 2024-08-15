@@ -197,7 +197,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
 
     test.describe('8.1.1 Navigate to declaration preview page', async () => {
-      test('8.1.1.1 Verify informations added in previous pages', async () => {
+      test('8.1.1.1 Verify information added on previous pages', async () => {
         goToSection(page, 'preview')
 
         /*
@@ -975,7 +975,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
       await page.getByRole('button', { name: 'Review', exact: true }).click()
     })
-    test('8.2.1.1 Verify informations added in previous pages', async () => {
+    test('8.2.1.1 Verify information added on previous pages', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
@@ -1304,7 +1304,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
       await page.getByRole('button', { name: 'Review', exact: true }).click()
     })
-    test('8.3.1.1 Verify informations added in previous pages', async () => {
+    test('8.3.1.1 Verify information added on previous pages', async () => {
       /*
        * Expected result: should include
        * - Child's First Name

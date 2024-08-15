@@ -72,7 +72,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
     await page.close()
   })
 
-  test.describe('1.1 Declaratin started by FA', async () => {
+  test.describe('1.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
       await login(page, 'k.bwalya', 'test')
       await createPIN(page)
@@ -254,7 +254,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       goToSection(page, 'preview')
     })
 
-    test('1.1.6 Verify informations in preview page', async () => {
+    test('1.1.6 Verify information on preview page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
@@ -549,7 +549,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await page.getByRole('button', { name: 'Review', exact: true }).click()
     })
 
-    test('1.2.2 Verify informations in review page', async () => {
+    test('1.2.2 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name

@@ -110,7 +110,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
     await page.close()
   })
 
-  test.describe('3.1 Declaratin started by RA', async () => {
+  test.describe('3.1 Declaration started by RA', async () => {
     test.beforeAll(async () => {
       await login(page, 'f.katongo', 'test')
       await createPIN(page)
@@ -407,7 +407,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       goToSection(page, 'preview')
     })
 
-    test('3.1.7 Verify informations in preview page', async () => {
+    test('3.1.7 Verify information on preview page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
@@ -778,7 +778,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       await page.getByRole('button', { name: 'Review', exact: true }).click()
     })
 
-    test('3.2.2 Verify informations in review page', async () => {
+    test('3.2.2 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name

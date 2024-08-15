@@ -85,7 +85,7 @@ test.describe.serial('5. Death declaration case - 5', () => {
     await page.close()
   })
 
-  test.describe('5.1 Declaratin started by RA', async () => {
+  test.describe('5.1 Declaration started by RA', async () => {
     test.beforeAll(async () => {
       await login(page, 'f.katongo', 'test')
       await createPIN(page)
@@ -272,7 +272,7 @@ test.describe.serial('5. Death declaration case - 5', () => {
       goToSection(page, 'preview')
     })
 
-    test('5.1.6 Verify informations in preview page', async () => {
+    test('5.1.6 Verify information on preview page', async () => {
       /*
        * Expected result: should include
        * - Deceased's First Name
@@ -630,7 +630,7 @@ test.describe.serial('5. Death declaration case - 5', () => {
       await page.getByRole('button', { name: 'Review', exact: true }).click()
     })
 
-    test('5.2.2 Verify informations in review page', async () => {
+    test('5.2.2 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Deceased's First Name
