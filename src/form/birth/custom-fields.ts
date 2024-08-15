@@ -8,6 +8,7 @@ import {
 import { Validator } from '../types/validators'
 import { camelCase } from 'lodash'
 import { getNUI } from '../common/common-custom-fields'
+import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
 
 /**
  *  Handlebar field: birthChildBirthTime
@@ -59,7 +60,7 @@ export function getPlaceOfBirth(
     validator: [], // EDIT VALIDATORS AS YOU SEE FIT
     mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
     conditionals, // EDIT VALIDATORS AS YOU SEE FIT
-    maxLength: 255
+    maxLength: REGULAR_TEXT_MAX_LENGTH
   }
 }
 
@@ -335,7 +336,7 @@ export const getFamilyNameField = (
     conditionals,
     type: 'TEXT',
     label: formMessageDescriptors.familyName,
-    maxLength: 255,
+    maxLength: REGULAR_TEXT_MAX_LENGTH,
     required: true,
     initialValue: '',
     validator: [
@@ -365,7 +366,7 @@ export const getFirstNameField = (
       id: 'form.field.label.firstNames'
     },
     conditionals,
-    maxLength: 255,
+    maxLength: REGULAR_TEXT_MAX_LENGTH,
     required: false,
     initialValue: '',
     validator: [

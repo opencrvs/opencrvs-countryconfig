@@ -4,6 +4,7 @@ import { Validator } from '../types/validators'
 import { formMessageDescriptors } from './messages'
 import { MessageDescriptor } from 'react-intl'
 import { sentenceCase } from '@countryconfig/utils/address-utils'
+import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
 
 export function getNUI(
   conditionals: Conditional[],
@@ -143,7 +144,7 @@ export function getFokontanyCustomAddress(
     mapping: getCustomFieldMapping(fieldId),
     conditionals,
     previewGroup,
-    maxLength: 255
+    maxLength: REGULAR_TEXT_MAX_LENGTH
   }
 }
 

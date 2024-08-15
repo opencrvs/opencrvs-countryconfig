@@ -15,6 +15,7 @@ import { genderOptions } from './select-options'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { Validator } from '../types/validators'
 import { MessageDescriptor } from 'react-intl'
+import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
 
 export const getBirthDate = (
   fieldName: string,
@@ -56,7 +57,7 @@ export const getFamilyNameField = (
     conditionals,
     type: 'TEXT',
     label: formMessageDescriptors.familyName,
-    maxLength: 255,
+    maxLength: REGULAR_TEXT_MAX_LENGTH,
     required: true,
     initialValue: '',
     validator: [
@@ -82,7 +83,7 @@ export const getFirstNameField = (
       id: 'form.field.label.firstNames'
     },
     conditionals,
-    maxLength: 255,
+    maxLength: REGULAR_TEXT_MAX_LENGTH,
     required: false,
     initialValue: '',
     validator: [
