@@ -80,6 +80,7 @@ import {
   getCustomizedExactDateOfBirthUnknown,
   getFatherIsDeceased,
   getFokontanyCustomAddress,
+  getMotherIsDeceased,
   getNUI,
   getYearOfBirth
 } from '../common/common-custom-fields'
@@ -213,8 +214,12 @@ export const deathForm = {
               certificateHandlebars.ageOfDeceasedInYears
             ),
             getNationality(certificateHandlebars.deceasedNationality, []),
-            getNUI([], [], false, certificateHandlebars.deceasedNationalId),
-            getMaritalStatus(certificateHandlebars.deceasedMaritalStatus, []),
+            getNUI([], [], true, certificateHandlebars.deceasedNationalId),
+            getMaritalStatus(
+              certificateHandlebars.deceasedMaritalStatus,
+              [],
+              false
+            ),
             {
               name: 'addressPlaceOfBirthAddress',
               type: 'HEADING3',
@@ -377,6 +382,10 @@ export const deathForm = {
               ),
               yearOfBirthValidtors
             ),
+            getNationality(
+              certificateHandlebars.informantNationality,
+              hideIfInformantSpouseOrMotherOrFather
+            ),
             getNUI(
               hideIfInformantSpouseOrMotherOrFather,
               [],
@@ -523,6 +532,7 @@ export const deathForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying),
+            getMotherIsDeceased('death', detailsExist),
             getFamilyNameField(
               'motherNameInEnglish',
               motherFamilyNameConditionals,
