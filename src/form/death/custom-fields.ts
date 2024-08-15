@@ -45,16 +45,16 @@ export function getTimeOfDeath(): SerializedFormField {
     customQuestionMappingId: fieldId,
     custom: true,
     required: true,
-    type: 'TIME', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    type: 'TIME',
     label: {
       id: 'form.field.label.timeOfDeath',
       description: 'Label for field time of death',
       defaultMessage: 'Time of death'
     },
     initialValue: '',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals: [] // EDIT VALIDATORS AS YOU SEE FIT
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: []
   }
 }
 

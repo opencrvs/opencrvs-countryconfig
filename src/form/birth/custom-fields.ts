@@ -11,9 +11,6 @@ import { getNUI } from '../common/common-custom-fields'
 import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
 import { tribunalOfFirstInstanceActOptions } from '../common/select-options'
 
-/**
- *  Handlebar field: birthChildBirthTime
- */
 export function getTimeOfBirth(): SerializedFormField {
   const fieldName: string = 'birthTime'
   const fieldId: string = `birth.child.child-view-group.${fieldName}`
@@ -23,22 +20,19 @@ export function getTimeOfBirth(): SerializedFormField {
     customQuestionMappingId: fieldId,
     custom: true,
     required: true,
-    type: 'TIME', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    type: 'TIME',
     label: {
       id: 'form.field.label.childTimeOfBirth',
       description: 'A form field that asks for child birth time',
       defaultMessage: 'Birth Time'
     },
     initialValue: '',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals: [] // EDIT VALIDATORS AS YOU SEE FIT
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: []
   }
 }
 
-/**
- *  Handlebar fields: birthMotherBirthPlace / birthFatherBirthPlace
- */
 export function getPlaceOfBirth(
   subject: 'mother' | 'father',
   conditionals: Conditional[] = []
@@ -51,23 +45,20 @@ export function getPlaceOfBirth(
     customQuestionMappingId: fieldId,
     custom: true,
     required: true,
-    type: 'TEXT', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    type: 'TEXT',
     label: {
       id: 'form.field.label.birthPlace',
       description: 'A form field that asks for the persons birthPlace',
       defaultMessage: 'Place of birth'
     },
     initialValue: '',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals, // EDIT VALIDATORS AS YOU SEE FIT
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals,
     maxLength: REGULAR_TEXT_MAX_LENGTH
   }
 }
 
-/**
- *  Handlebar fields: birthChildLegacyBirthRegistrationNumber
- */
 export function getLegacyBirthRegistrationNumber(
   subject: 'child'
 ): SerializedFormField {
@@ -79,7 +70,7 @@ export function getLegacyBirthRegistrationNumber(
     customQuestionMappingId: fieldId,
     custom: true,
     required: true,
-    type: 'TEXT', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    type: 'TEXT',
     label: {
       id: 'form.field.label.legacyBirthRegistrationNumber',
       description:
@@ -87,15 +78,12 @@ export function getLegacyBirthRegistrationNumber(
       defaultMessage: 'Legacy birth registration number'
     },
     initialValue: '',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
     maxLength: 6
   }
 }
 
-/**
- *  Handlebar field: birthChildLegacyBirthRegistrationDate
- */
 export function getLegacyBirthRegistrationDate(): SerializedFormField {
   const fieldName: string = 'legacyBirthRegistrationDate'
   const fieldId: string = `birth.child.child-view-group.${fieldName}`
@@ -105,22 +93,19 @@ export function getLegacyBirthRegistrationDate(): SerializedFormField {
     customQuestionMappingId: fieldId,
     custom: true,
     required: false,
-    type: 'DATE', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    type: 'DATE',
     label: {
       id: 'form.field.label.legacyBirthRegistrationDate',
       description: 'A form field that asks for legacy birth registration date',
       defaultMessage: 'Legacy birth registration date'
     },
     initialValue: '',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals: [] // EDIT VALIDATORS AS YOU SEE FIT
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: []
   }
 }
 
-/**
- *  Handlebar field: birthChildLegacyBirthRegistrationTime
- */
 export function getLegacyBirthRegistrationTime(): SerializedFormField {
   const fieldName: string = 'legacyBirthRegistrationTime'
   const fieldId: string = `birth.child.child-view-group.${fieldName}`
@@ -130,16 +115,16 @@ export function getLegacyBirthRegistrationTime(): SerializedFormField {
     customQuestionMappingId: fieldId,
     custom: true,
     required: false,
-    type: 'TIME', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    type: 'TIME',
     label: {
       id: 'form.field.label.legacyBirthRegistrationTime',
       description: 'A form field that asks for legacy birth registration time',
       defaultMessage: 'Legacy birth registration time'
     },
     initialValue: '',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals: [] // EDIT VALIDATORS AS YOU SEE FIT
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals: []
   }
 }
 
@@ -331,7 +316,7 @@ export const getFamilyNameField = (
 ) => {
   const fieldId = `birth.mention.mention-view-group.${fieldName}`
   return {
-    name: fieldName, // A field with this name MUST exist
+    name: fieldName,
     previewGroup,
     customQuestionMappingId: fieldId,
     conditionals,
@@ -356,7 +341,7 @@ export const getFirstNameField = (
 ) => {
   const fieldId = `birth.mention.mention-view-group.${fieldName}`
   return {
-    name: fieldName, // A field with this name MUST exist
+    name: fieldName,
     previewGroup,
     custom: true,
     customQuestionMappingId: fieldId,

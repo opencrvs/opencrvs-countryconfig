@@ -46,10 +46,6 @@ export function getNUI(
   }
 }
 
-/**
- *  Handlebar fields:
- *  birthMotherCustomizedExactDateOfBirthUnknown / birthFatherCustomizedExactDateOfBirthUnknown / birthInformantCustomizedExactDateOfBirthUnknown
- */
 export function getCustomizedExactDateOfBirthUnknown(
   subject: 'mother' | 'father' | 'informant' | 'spouse',
   conditionals: Conditional[] = []
@@ -64,7 +60,7 @@ export function getCustomizedExactDateOfBirthUnknown(
     required: false,
     hideHeader: true,
     hideInPreview: true,
-    type: 'CHECKBOX', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    type: 'CHECKBOX',
     label: {
       defaultMessage: 'Exact date of birth unknown',
       description: 'Checkbox for exact date of birth unknown',
@@ -73,16 +69,12 @@ export function getCustomizedExactDateOfBirthUnknown(
     checkedValue: 'true',
     uncheckedValue: 'false',
     initialValue: 'false',
-    validator: [], // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals // EDIT VALIDATORS AS YOU SEE FIT
+    validator: [],
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals
   }
 }
 
-/**
- *  Handlebar fields:
- *  birthMotherYearOfBirth / birthFatherYearOfBirth / birthInformantYearOfBirth
- */
 export function getYearOfBirth(
   subject: 'mother' | 'father' | 'informant' | 'spouse',
   conditionals: Conditional[] = [],
@@ -96,22 +88,17 @@ export function getYearOfBirth(
     customQuestionMappingId: fieldId,
     custom: true,
     required: true,
-    type: 'NUMBER', // ANY FORM FIELD TYPE IS POSSIBLE. ADD ADDITIONAL PROPS AS REQUIRED.  REFER TO THE form/README.md FILE
+    type: 'NUMBER',
     label: formMessageDescriptors.yearOfBirth,
     initialValue: '',
-    validator: validators, // EDIT VALIDATORS AS YOU SEE FIT
-    mapping: getCustomFieldMapping(fieldId), // ALL CUSTOM FIELDS MUST USE THIS MAPPING FUNCTION
-    conditionals, // EDIT VALIDATORS AS YOU SEE FIT
-    prefix: 'vers', //formMessageDescriptors.prefixAround,
+    validator: validators,
+    mapping: getCustomFieldMapping(fieldId),
+    conditionals,
+    prefix: 'vers',
     inputFieldWidth: '78px'
   }
 }
 
-/**
- *  Handlebar fields:
- *  birthChildFokontanyCustomAddress / birthMotherFokontanyCustomAddress
- *  birthFatherFokontanyCustomAddress / birthInformantFokontanyCustomAddress
- */
 export function getFokontanyCustomAddress(
   event: 'birth' | 'death',
   section:
