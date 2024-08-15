@@ -123,7 +123,7 @@ export function getFokontanyCustomAddress(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: required,
+    required,
     type: 'TEXT',
     label: labelOfFokontanyCustomAddress,
     initialValue: '',
