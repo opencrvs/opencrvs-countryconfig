@@ -51,7 +51,6 @@ import {
   fathersBirthDateConditionals,
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
-  informantNotMotherOrFather,
   detailsExistConditional,
   primaryAddressSameAsOtherPrimary,
   yearOfBirthValidtors,
@@ -71,15 +70,11 @@ import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import {
-  getCustomizedExactDateOfBirthUnknown,
-  getFokontanyCustomAdress,
   getLegacyBirthRegistrationDate,
   getLegacyBirthRegistrationNumber,
   getLegacyBirthRegistrationTime,
   getPlaceOfBirth,
   getTimeOfBirth,
-  getYearOfBirth,
-  getNUI,
   getFatherHasFormallyRecognisedChild,
   typeOfMention,
   availableMentionTypes,
@@ -94,6 +89,14 @@ import {
   getDetailsMentionExist
 } from './custom-fields'
 import { subYears } from 'date-fns'
+import {
+  getCustomizedExactDateOfBirthUnknown,
+  getFatherIsDeceased,
+  getFokontanyCustomAddress,
+  getMotherIsDeceased,
+  getNUI,
+  getYearOfBirth
+} from '../common/common-custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -210,7 +213,8 @@ export const birthForm: ISerializedForm = {
             getTimeOfBirth(),
             weightAtBirth,
             // PLACE OF BIRTH FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
+              'birth',
               'child',
               [
                 {
@@ -225,7 +229,8 @@ export const birthForm: ISerializedForm = {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
-              }
+              },
+              'placeOfBirth'
             ),
             getNUI(
               [],
@@ -324,14 +329,10 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantNID
             ),
             // preceding field of address fields
-            divider('informant-nid-seperator', [
-              {
-                action: 'hide',
-                expression: informantNotMotherOrFather
-              }
-            ]),
+            divider('informant-nid-seperator', hideIfInformantMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
+              'birth',
               'informant',
               hideIfInformantMotherOrFather.concat(
                 hideIfDistrictPrimaryAddressNotSelected('informant')
@@ -342,7 +343,12 @@ export const birthForm: ISerializedForm = {
                 description:
                   'A form field that asks for informent current address',
                 defaultMessage: 'Address'
-              }
+              },
+              'primaryAddress'
+            ),
+            getOccupation(
+              hideIfInformantMotherOrFather,
+              certificateHandlebars.informantOccupation
             ),
             registrationPhone // If you wish to enable automated SMS notifications to informants, include this
           ],
@@ -369,6 +375,7 @@ export const birthForm: ISerializedForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getMotherIsDeceased('birth', detailsExistConditional),
             getFamilyNameField(
               'motherNameInEnglish',
               motherFamilyNameConditionals,
@@ -410,7 +417,8 @@ export const birthForm: ISerializedForm = {
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
+              'birth',
               'mother',
               detailsExistConditional.concat(
                 hideIfDistrictPrimaryAddressNotSelected('mother')
@@ -421,7 +429,8 @@ export const birthForm: ISerializedForm = {
                 description:
                   'A form field that asks for mother current address',
                 defaultMessage: 'Address'
-              }
+              },
+              'primaryAddress'
             ),
             getMaritalStatus(
               certificateHandlebars.motherMaritalStatus,
@@ -433,7 +442,7 @@ export const birthForm: ISerializedForm = {
               ],
               false
             ),
-            getOccupation(certificateHandlebars.motherOccupation)
+            getOccupation(detailsExist, certificateHandlebars.motherOccupation)
           ],
           previewGroups: [motherNameInEnglish]
         }
@@ -466,6 +475,7 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getFatherIsDeceased('birth', detailsExist),
             getFatherHasFormallyRecognisedChild(detailsExist),
             getFamilyNameField(
               'fatherNameInEnglish',
@@ -508,7 +518,8 @@ export const birthForm: ISerializedForm = {
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
+              'birth',
               'father',
               primaryAddressSameAsOtherPrimary
                 .concat(detailsExistConditional)
@@ -519,7 +530,8 @@ export const birthForm: ISerializedForm = {
                 description:
                   'A form field that asks for father current address',
                 defaultMessage: 'Address'
-              }
+              },
+              'primaryAddress'
             ),
             divider('father-address-seperator', detailsExist),
             getMaritalStatus(
@@ -532,7 +544,7 @@ export const birthForm: ISerializedForm = {
               ],
               false
             ),
-            getOccupation(certificateHandlebars.fatherOccupation)
+            getOccupation(detailsExist, certificateHandlebars.fatherOccupation)
           ],
           previewGroups: [fatherNameInEnglish]
         }

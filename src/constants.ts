@@ -32,3 +32,5 @@ export const CONFIRM_REGISTRATION_URL =
 export const DEFAULT_TIMEOUT = 600000
 export const PRODUCTION = process.env.NODE_ENV === 'production'
 export const QA_ENV = process.env.QA_ENV || false
+
+export const REGULAR_TEXT_MAX_LENGTH = 255

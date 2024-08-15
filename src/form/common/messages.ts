@@ -691,6 +691,12 @@ export const formMessageDescriptors = {
     description: 'Documents Paragraph text',
     id: 'form.field.label.deceasedDocumentParagraph'
   },
+  deathProofFromFokontany: {
+    defaultMessage: 'Proof of death of from Fokontany',
+    description:
+      'Option for radio group field: Proof of death of from Fokontany',
+    id: 'form.field.label.deathProofFromFokontany'
+  },
   deceasedIDProof: {
     defaultMessage: "Proof of deceased's ID",
     description: 'Option for radio group field: Type of Document To Upload',

@@ -91,7 +91,7 @@ export const mothersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.customizedExactDateOfBirthUnknown === true'
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -180,7 +180,7 @@ export const fathersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.customizedExactDateOfBirthUnknown === true'
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -388,7 +388,7 @@ export const informantBirthDateConditionals = [
   {
     action: 'hide',
     expression:
-      'values.exactDateOfBirthUnknown || values.birthInformantCustomizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown === true'
+      'values.exactDateOfBirthUnknown || values.birthInformantCustomizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -404,6 +404,10 @@ export const spouseBirthDateConditionals = [
   {
     action: 'hide',
     expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -481,6 +485,22 @@ export const hideIfDistrictPrimaryAddressNotSelected = (
   }
 ]
 
+export const hideIfDistrictPlaceOfBirthAddressNotSelected = (
+  section: string
+): Conditional[] => [
+  {
+    action: 'hide',
+    expression: `!values.districtAddressplaceofbirth${capitalize(section)}`
+  }
+]
+
+export const hideIfDistrictPlaceOfDeathNotSelected = [
+  {
+    action: 'hide',
+    expression: '!values.districtPlaceofdeath'
+  }
+]
+
 export const locationOfBirthIsNotHealthFacility: Conditional[] = [
   {
     action: 'hide',
@@ -514,13 +534,13 @@ export const ageOfDeceasedConditionals = [
   }
 ] satisfies Validator[]
 
-export const isInformantSpouse =
-  '!values.informantType || values.informantType==="SPOUSE"'
+export const isInformantSpouseOrMotherOrFather =
+  '!values.informantType || values.informantType==="SPOUSE" || values.informantType==="MOTHER" ||  values.informantType==="FATHER"'
 
-export const hideIfInformantSpouse = [
+export const hideIfInformantSpouseOrMotherOrFather = [
   {
     action: 'hide',
-    expression: isInformantSpouse
+    expression: isInformantSpouseOrMotherOrFather
   }
 ]
 

@@ -904,7 +904,8 @@ export enum AddressSubsections {
 
 export enum AddressCases {
   PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
-  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
+  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS',
+  PLACE_OF_BIRTH_ADDRESS = 'PLACE_OF_BIRTH_ADDRESS'
 }
 export enum EventLocationAddressCases {
   PLACE_OF_BIRTH = 'placeOfBirth',

@@ -1124,6 +1124,7 @@ form.field.label.deathAtPrivateHome,,What is the address of the private home?,Qu
 form.field.label.deathDate,,"Enter the date as: day, month, year e.g. 24 10 2020","Indiquez la date sous la forme : jour, mois, année, par exemple 24 10 2020","Apetraho ilay daty mifanaraka amin'ny endrika toy izao : andro, volana, taona, ohatra 24 10 2020"
 form.field.label.deathDescription,,Description,Description,Description
 form.field.label.deathPlace,,Place of Occurrence of Death,Lieu de survenance du décès,Toerana nisehoan'ny fahafatesana
+form.field.label.deathProofFromFokontany,Option for radio group field: Proof of death of from Fokontany,Proof of death from Fokontany,Proof of death from Fokontany,Proof of death from Fokontany
 form.field.label.deceased.nationality,,,,Zom-pirenena
 form.field.label.deceasedCurAddSamePerm,,Is deceased's current address the same as their permanent address?,L'adresse actuelle du défunt est-elle la même que son adresse permanente ?,Ny adiresin'ilay olona maty ve mitovy amin'ny adiresin'ny andavan'andro ihany ?
 form.field.label.deceasedDateOfBirth,,,,Daty nahaterahana
@@ -1216,6 +1217,7 @@ form.field.label.fatherFirstNames,,First Name(s) in default character set other 
 form.field.label.fatherFirstNamesEng,,,,Fanampin'anarana
 form.field.label.fatherHasFormallyRecognisedChild,,Father has formally recognised child,Le père a reconnu officiellement l'enfant,Nahafantatra tamin’ny fomba ofisialy ilay zaza ilay raim-pianakaviana
 form.field.label.fatherIsDeceased,,Father has died,Le père est décédé,Ilay ray dia maty
+form.field.label.fatherIsDeceased,Label for form field Father is deceased,Father is deceased,Father is deceased,Father is deceased
 form.field.label.fatherPlaceOfBirth,,What is his village of origin?,Quel est son village d'origine ?,Aiza ny toerana niaviany ?
 form.field.label.fatherPrimaryAddress,,Usual place of residence,Quelle est son adresse résidentielle ?,Firy ny aidresy ipetrahany amin'izao ?
 form.field.label.fatherYearOfBirthAround,,Around the year,Vers l'année,Tamin'ny taona
@@ -1288,6 +1290,7 @@ form.field.label.informantRelation.whoIsDeathInformant,Label for option death in
 form.field.label.informantSecondaryAddress,,Secondary Address,Adresse secondaire,Adiresy fanampiny
 form.field.label.informantSecondaryAddressSameAsPrimary,,Is their secondary address the same as their primary address?,Leur adresse secondaire est-elle la même que leur adresse principale ?,Leur adresse secondaire est-elle la même que leur adresse principale ?
 form.field.label.informantTitle,,Informant's details,Coordonnées de l'informateur,
+form.field.label.informantWasPresentAtDeath,Label for form field was informant present at death,Was informant present at death?,Was informant present at death?,Was informant present at death?
 form.field.label.informantYearOfBirthAround,,,,Tamin'ny taona
 form.field.label.informants.nationality,,Nationality,Nationalité,Zom-pirenena
 form.field.label.informantsDateOfBirth,,Date of Birth,Date de naissance,Daty nahaterahana
@@ -1363,6 +1366,7 @@ form.field.label.motherFamilyNameEng,,,,Anarana
 form.field.label.motherFirstNames,,First name(s),Prénom(s) dans un jeu de caractères par défaut autre que l'anglais,Prénom(s) dans un jeu de caractères par défaut autre que l'anglais
 form.field.label.motherFirstNamesEng,,,,Fanampin'anarana
 form.field.label.motherIsDeceased,,Mother has died,La mère est décédée,ILay reny dia maty
+form.field.label.motherIsDeceased,Label for form field Mother is deceased,Mother is deceased,Mother is deceased,Mother is deceased
 form.field.label.motherPlaceOfBirth,,What is her village of origin?,Quel est son village d'origine ?,Aiza ny toerana iaviany ?
 form.field.label.motherPlaceOfHeritage,,What is her place of origin (heritage)?,Quel est son lieu d'origine (patrimoine) ?,Aiza ny toerana iaviany(patrimoine) ?
 form.field.label.motherPrimaryAddress,,Usual place of residence,Quelle est l'adresse de son domicile ?,AIza ny adiresy ipetrahany ?
@@ -1454,8 +1458,10 @@ form.field.label.sexUnknown,,Unknown,Inconnu,Tsy fantatra
 form.field.label.socialSecurityNumber,,Social security no./NAPSA,N° de sécurité sociale /NAPSA,N° de sécurité sociale /NAPSA
 form.field.label.someoneElse,Other Label,Someone else,Quelqu'un d'autre,Olona hafa anatin'ny fianakaviana
 form.field.label.someoneElseCollector,,Print and issue to someone else,Imprimer et remettre à quelqu'un d'autre,Hatonta ary homena olona hafa
+form.field.label.specifyOther,Label for field specify other,Please specify,Please specify,Please specify
 form.field.label.spouseDetailsExist,,Spouse's details are not available,Les coordonnées du conjoint ne sont pas disponibles,
 form.field.label.state,Label for State,District,District,Distrika
+form.field.label.timeOfDeath,Label for field time of death,Time of death,Time of death,Time of death
 form.field.label.typeOfDocument,,Choose type of supporting document,Choisissez le type de document,Safidio ny karazan'io taratasy io
 form.field.label.typeOfId,,Type of ID,Type d'identification,Karazana taratasy fanamarinana
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage,
@@ -1549,7 +1555,7 @@ form.section.information.birth.bullet2,,As the legal Declarant it is important t
 form.section.information.birth.bullet3,,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité.","Raha vantany vao vita ny fanambarana, dia alefa any amin'ny firaisana ilay izy mba ho hamarinina, hahavoaray sms ianao mahakasika izany rehetra izany"
 form.section.information.birth.bullet4,,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.","Veillez à récupérer le certificat. Un certificat de naissance est essentiel pour cet enfant, notamment pour lui faciliter la vie plus tard. Il l'aidera à accéder aux services de santé, aux examens scolaires et aux prestations de l'État.","Raha vantany mahavoaray sms ianao milaza fa efa azo alaina ilay kopia dia manantona ny biraon'ny firaisana. Ny kopia fahaterahana dia tena ilain'ny zaza, indrindra rehefa lehibe izy."
 form.section.information.death.bullet1,,I am going to help you make a declaration of death.,Je vais vous aider à faire une déclaration de décès.,"Salama, eto izaho hanampy anao amin'ny fanaovana ity fanambarana fahafatesana ity."
-form.section.information.death.bullet2,,As the legal Informant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes.",Amin'ny maha mpanao fanambarana ara-dalana anao dia tsara raha mitombona ary tsy misy diso ireo zavatra soratanao
+form.section.information.death.bullet2,,As the legal Declarant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes.",Amin'ny maha mpanao fanambarana ara-dalana anao dia tsara raha mitombona ary tsy misy diso ireo zavatra soratanao
 form.section.information.death.bullet3,,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité.","Raha vantany vao vita ny fanambarana, dia alefa any amin'ny firaisana ilay izy mba ho hamarinina, hahavoaray sms ianao mahakasika izany rehetra izany"
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts.",Raha vantany mahavoaray sms ianao milaza fa efa azo alaina ilay kopia dia manantona ny biraon'ny firaisana. Ny kopia fahafatesana dia tena ilaina raha misy afera mikasika ilay olona maty.
 form.section.information.name,,Information,Informations,
