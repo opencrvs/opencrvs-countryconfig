@@ -12,6 +12,7 @@ require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
 import fetch from 'node-fetch'
+import path from 'path'
 import * as Hapi from '@hapi/hapi'
 import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
@@ -526,6 +527,23 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Provides a tracking id'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/static/{param*}',
+    handler: {
+      directory: {
+        path: path.join(__dirname, 'client-static'),
+        redirectToSlash: true,
+        index: false
+      }
+    },
+    options: {
+      auth: false,
+      tags: ['api', 'static'],
+      description: 'Server static files for client'
     }
   })
 
