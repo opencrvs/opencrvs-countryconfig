@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.7.0 (TBD)
+## 1.7.0 Release candidate
 
 ### Breaking changes
 
@@ -25,7 +25,7 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 - TBC
 
-## 1.6.0 (TBD)
+## 1.6.0 Release candidate
 
 ### Breaking changes
 
@@ -109,7 +109,7 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 - **Update the certificate preview mechanism** In effort of minimizing JavaScript-bundle size, we have streamlined the way how review certificate -page renders certificates. In case the images in your certificates are previewing blurry, you need to update your SVG-certificates to print QR-codes and other images directly with `<image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>` instead of the more complicated `<rect fill="url(#pattern)"></rect>` -paradigm. This doesn't affect printed certificates as they are still created as previously.
 - **Generate default address according to logged-in user's location** We have dropped support for the 'agentDefault' prop which was used as initial value for SELECT_WITH_DYNAMIC_OPTIONS fields. If you have not made any changes to address generation, then this should not affect you. If you have, you can refer to this PR to see how agentDefault has been deprecated in an example country: [https://github.com/opencrvs/opencrvs-farajaland/pull/978](https://github.com/opencrvs/opencrvs-farajaland/pull/978)
-- **Remove system admin UI items: Application, Certificates, User roles, Informant notifications** We have now moved to configuring these items away from the UI in favour of directly editing these from country configuration repository in code - specifically in application-config-default.ts.
+- **Remove system admin UI items: Application, User roles** We have now moved to configuring these items away from the UI in favour of directly editing these from country configuration repository in code - specifically in application-config-default.ts.
 - **Set Metabase default credentials.** These must be configured via countryconfig repository environment variables and secrets otherwise the dashboard service won't start
 - **Check your Metabase map file.** For Metabase configuration, we renamed `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming conventions.
 - **Feature flags** In order to make application config settings more readable, we re-organised `src/api/application/application-config-default.ts` with a clear feature flag block like so. These are then used across the front and back end of the application to control configurable functionality. New feature flags DEATH_REGISTRATION allow you to optionally run off death registration if your country doesnt want to run its first pilot including death and PRINT_DECLARATION (see New Features) have been added.
@@ -160,7 +160,6 @@ Follow the descriptions in the migration notes to re-provision all servers safel
 - In the certificate, the 'Place of Certification' now accurately reflects the correct location.
 - Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
 - Add query mapper for International Postal Code field
-- Add support for image compression configuration
 - Provide env variables for metabase admin credentials
 - Improved formatting of informant name for inProgress declaration emails
 - There is now an option to print the review page of an event declaration form. The PRINT_DECLARATION feature flag in application config settings can enable this on or off.
