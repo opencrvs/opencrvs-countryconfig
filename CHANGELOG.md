@@ -1,6 +1,11 @@
 # Changelog
 
+
 ## 1.7.0 Release candidate
+
+### Bug fixes
+
+- Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
 
 ### Breaking changes
 
@@ -58,11 +63,15 @@ INSERT CSV ROWS IN ENGLISH ONLY
 - Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
 - New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
 - Remove `inputFieldWidth` from Number type form field
-- **Title** Description
-
-### Infrastructure breaking changes
-
-- **Title** Description
+- Application config file is renamed to `application-config.ts`
+- Allow configuring the default search criteria for record search which can be done by adding or modifying a property named `SEARCH_DEFAULT_CRITERIA` in `application-config.ts`
+  Value of `SEARCH_DEFAULT_CRITERIA` can be one of the following
+  1. 'TRACKING_ID',
+  2. 'REGISTRATION_NUMBER',
+  3. 'NATIONAL_ID',
+  4. 'NAME',
+  5. 'PHONE_NUMBER',
+  6. 'EMAIL'
 
 ### New features
 

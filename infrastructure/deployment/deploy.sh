@@ -386,6 +386,15 @@ echo
 echo "Waiting 2 mins for mongo to deploy before working with data. Please note it can take up to 10 minutes for the entire stack to deploy in some scenarios."
 echo
 
+echo 'Setting up elastalert indices'
+
+while true; do
+  if configured_ssh "/opt/opencrvs/infrastructure/elasticsearch/setup-elastalert-indices.sh"; then
+    break
+  fi
+  sleep 5
+done
+
 echo "Setting up Kibana config & alerts"
 
 while true; do

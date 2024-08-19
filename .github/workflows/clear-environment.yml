@@ -22,6 +22,8 @@ jobs:
     name: 'Reset data'
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-22.04
+    outputs:
+      outcome: ${{ steps.reset-data.outcome }}
     timeout-minutes: 60
     steps:
       - name: Clone country config resource package
@@ -45,6 +47,7 @@ jobs:
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
       - name: Reset data
+        id: reset-data
         env:
           HOST: ${{ vars.DOMAIN }}
           ENV: ${{ vars.ENVIRONMENT_TYPE }}
