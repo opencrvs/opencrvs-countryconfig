@@ -1641,16 +1641,18 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
       ).toBeVisible()
 
-      const element = page
-        .locator('div')
-        .filter({
-          has: page.getByRole('button', {
-            name: `${declaration.child.name.firstNames} ${newFamilyNameForChild}`
+      expect(
+        page
+          .locator('div')
+          .filter({
+            has: page.getByRole('button', {
+              name: `${declaration.child.name.firstNames} ${newFamilyNameForChild}`
+            })
           })
-        })
-        .filter({
-          hasText: /seconds ago/ // should match the registration time
-        })
+          .filter({
+            hasText: /seconds ago/ // should match the registration time
+          })
+      ).toHaveCount(1)
     })
   })
 })
