@@ -7,6 +7,7 @@
 - Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
 - New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
 - Remove `inputFieldWidth` from Number type form field
+- You can now configure the home screen application’s name and icons in your country configuration package as manifest.json and app icon files are moved from core to country config (check `src/client-static` folder)
 
 ### Bug fixes
 
