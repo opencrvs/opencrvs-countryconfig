@@ -263,4 +263,55 @@ test.describe("4. Validate the groom's details page", () => {
       )
     })
   })
+  test.describe('4 Validate the Residence section', async () => {
+    test('4.1. Select any country from the "Country" dropdown field, Default value is Farajaland ', async ({
+      page
+    }) => {
+      await expect(page.locator('#countryPrimaryGroom')).toHaveText(
+        'Farajaland'
+      )
+      await page.locator('#countryPrimaryGroom').click()
+      await page.getByText('Estonia', { exact: true }).click()
+      await page.getByText("Groom's details").click()
+      await expect(page.locator('#countryPrimaryGroom')).toHaveText('Estonia')
+      // countryPrimaryGroom
+      // statePrimaryGroom
+      // districtPrimaryGroom
+      // ruralOrUrbanPrimaryGroom_URBAN click text Urban
+      // cityPrimaryGroom addressLine1UrbanOptionPrimaryGroom addressLine2UrbanOptionPrimaryGroom
+      // addressLine3UrbanOptionPrimaryGroom addressLine3UrbanOptionPrimaryGroom
+      // postalCodePrimaryGroom
+    })
+
+    test('4.2. Select any Province from "Province" dropdown field, Default value is Central', async ({
+      page
+    }) => {
+      await page.locator('#statePrimaryGroom').click()
+      await page.getByText('Sulaka', { exact: true }).click()
+      await page.getByText("Groom's details").click()
+      await expect(page.locator('#statePrimaryGroom')).toHaveText('Sulaka')
+    })
+
+    test('4.3 Select any district from "District" dropdown field, Default value is Ibombo', async ({
+      page
+    }) => {
+      await page.locator('#districtPrimaryGroom').click()
+      await page.getByText('Ilanga', { exact: true }).click()
+      await page.getByText("Groom's details").click()
+      await expect(page.locator('#districtPrimaryGroom')).toHaveText('Ilanga')
+    })
+
+    test('4.4. Select Urban address', async ({ page }) => {
+      await page.getByText('Urban', { exact: true }).click()
+      await page.getByText("Groom's details").click()
+    })
+    test('4.5. Select Rural address', async ({ page }) => {
+      await page.getByText('Rural', { exact: true }).click()
+      await page.getByText("Groom's details").click()
+    })
+    test('4.6. Click the continue button', async ({ page }) => {
+      await page.getByRole('button', { name: 'Continue' }).click()
+      await expect(page.getByText("Bride's details")).toBeVisible()
+    })
+  })
 })
