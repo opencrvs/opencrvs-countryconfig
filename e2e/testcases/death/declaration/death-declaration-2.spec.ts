@@ -93,7 +93,7 @@ test.describe.serial('2. Death declaration case - 2', () => {
     await page.close()
   })
 
-  test.describe('2.1 Declaratin started by FA', async () => {
+  test.describe('2.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
       await login(page, 'k.bwalya', 'test')
       await createPIN(page)
@@ -321,7 +321,7 @@ test.describe.serial('2. Death declaration case - 2', () => {
       )
     })
 
-    test('2.1.6 Verify informations in preview page', async () => {
+    test('2.1.6 Verify information on preview page', async () => {
       goToSection(page, 'preview')
       /*
        * Expected result: should include
@@ -737,7 +737,7 @@ test.describe.serial('2. Death declaration case - 2', () => {
       await page.getByRole('button', { name: 'Review', exact: true }).click()
     })
 
-    test('2.2.2 Verify informations in review page', async () => {
+    test('2.2.2 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Deceased's First Name

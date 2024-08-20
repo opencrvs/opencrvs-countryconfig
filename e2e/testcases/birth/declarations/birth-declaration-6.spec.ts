@@ -86,7 +86,7 @@ test.describe.serial('6. Birth declaration case - 6', () => {
     await page.close()
   })
 
-  test.describe('6.1 Declaratin started by National Registrar', async () => {
+  test.describe('6.1 Declaration started by National Registrar', async () => {
     test.beforeAll(async () => {
       await login(page, 'j.musonda', 'test')
       await createPIN(page)
@@ -309,7 +309,7 @@ test.describe.serial('6. Birth declaration case - 6', () => {
       goToSection(page, 'preview')
     })
 
-    test('6.1.6 Verify informations in preview page', async () => {
+    test('6.1.6 Verify information on preview page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name

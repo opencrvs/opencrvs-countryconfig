@@ -197,7 +197,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
 
     test.describe('8.1.1 Navigate to declaration preview page', async () => {
-      test('8.1.1.1 Verify informations added in previous pages', async () => {
+      test('8.1.1.1 Verify information added on previous pages', async () => {
         goToSection(page, 'preview')
 
         /*
@@ -975,7 +975,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
       await page.getByRole('button', { name: 'Review', exact: true }).click()
     })
-    test('8.2.1.1 Verify informations added in previous pages', async () => {
+    test('8.2.1.1 Verify information added on previous pages', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
@@ -1304,7 +1304,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
       await page.getByRole('button', { name: 'Review', exact: true }).click()
     })
-    test('8.3.1.1 Verify informations added in previous pages', async () => {
+    test('8.3.1.1 Verify information added on previous pages', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
@@ -1576,9 +1576,33 @@ test.describe.serial('8. Validate declaration review page', () => {
       )
     })
 
-    test.describe('8.3.2 Click any "Change" link', async () => {
-      test.skip('Skipped for now', async () => {})
+    const newFamilyNameForChild = faker.name.lastName('male')
+
+    test("8.3.2.1 Update child's family name", async () => {
+      await page
+        .locator('#child-content #Full')
+        .getByRole('button', { name: 'Change' })
+        .click()
+
+      await page.getByRole('button', { name: 'Continue' }).click()
+
+      await page.locator('#familyNameEng').fill(newFamilyNameForChild)
+
+      await page.getByRole('button', { name: 'Back to review' }).click()
     })
+
+    test("8.3.2.2 Review child's changed family name", async () => {
+      await expect(
+        page.locator('#child-content #Full [data-test-id="row-value-Full"]')
+      ).toContainText(
+        `${declaration.child.name.firstNames} ${declaration.child.name.familyName}
+            ${declaration.child.name.firstNames} ${newFamilyNameForChild}`,
+        {
+          useInnerText: true // makes line break intentional
+        }
+      )
+    })
+
     test.describe('8.3.3 Validate supporting document', async () => {
       test.skip('Skipped for now', async () => {})
     })
@@ -1613,9 +1637,22 @@ test.describe.serial('8. Validate declaration review page', () => {
        */
       await expect(
         page.getByRole('button', {
-          name: `${declaration.child.name.firstNames} ${declaration.child.name.familyName}`
+          name: `${declaration.child.name.firstNames} ${newFamilyNameForChild}`
         })
       ).toBeVisible()
+
+      expect(
+        page
+          .locator('div')
+          .filter({
+            has: page.getByRole('button', {
+              name: `${declaration.child.name.firstNames} ${newFamilyNameForChild}`
+            })
+          })
+          .filter({
+            hasText: /seconds ago/ // should match the registration time
+          })
+      ).toHaveCount(1)
     })
   })
 })

@@ -84,7 +84,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
     await page.close()
   })
 
-  test.describe('5.1 Declaratin started by Local Registrar', async () => {
+  test.describe('5.1 Declaration started by Local Registrar', async () => {
     test.beforeAll(async () => {
       await login(page, 'k.mweene', 'test')
       await createPIN(page)
@@ -299,7 +299,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       goToSection(page, 'preview')
     })
 
-    test('5.1.6 Verify informations in preview page', async () => {
+    test('5.1.6 Verify information on preview page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name

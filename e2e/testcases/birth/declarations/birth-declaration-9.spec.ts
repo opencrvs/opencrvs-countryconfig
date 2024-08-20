@@ -72,7 +72,7 @@ test.describe.serial('9. Birth declaration case - 9', () => {
       goToSection(page, 'preview')
     })
 
-    test('9.1.6 Verify informations in preview page', async () => {
+    test('9.1.6 Verify information on preview page', async () => {
       /*
        * Expected result: should include
        * - Child's Family Name
@@ -205,7 +205,7 @@ test.describe.serial('9. Birth declaration case - 9', () => {
       await page.getByRole('button', { name: 'Update', exact: true }).click()
     })
 
-    test('9.2.2 Verify informations in preview page', async () => {
+    test('9.2.2 Verify information on preview page', async () => {
       /*
        * Expected result: should include
        * - Child's Family Name
