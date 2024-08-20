@@ -24,7 +24,9 @@ test.describe("4. Validate the groom's details page", () => {
     test('1. Select any drop-down value from the drop-down', async ({
       page
     }) => {
-      await expect(page.getByText('Farajaland', { exact: true })).toBeVisible()
+      await expect(page.locator('#countryPrimaryGroom')).toHaveText(
+        'Farajaland'
+      )
       await page.locator('#countryPrimaryGroom').click()
       await page.getByText('Estonia', { exact: true }).click()
       await expect(
@@ -274,13 +276,6 @@ test.describe("4. Validate the groom's details page", () => {
       await page.getByText('Estonia', { exact: true }).click()
       await page.getByText("Groom's details").click()
       await expect(page.locator('#countryPrimaryGroom')).toHaveText('Estonia')
-      // countryPrimaryGroom
-      // statePrimaryGroom
-      // districtPrimaryGroom
-      // ruralOrUrbanPrimaryGroom_URBAN click text Urban
-      // cityPrimaryGroom addressLine1UrbanOptionPrimaryGroom addressLine2UrbanOptionPrimaryGroom
-      // addressLine3UrbanOptionPrimaryGroom addressLine3UrbanOptionPrimaryGroom
-      // postalCodePrimaryGroom
     })
 
     test('4.2. Select any Province from "Province" dropdown field, Default value is Central', async ({
@@ -296,18 +291,20 @@ test.describe("4. Validate the groom's details page", () => {
       page
     }) => {
       await page.locator('#districtPrimaryGroom').click()
-      await page.getByText('Ilanga', { exact: true }).click()
+      await page.getByText('Isamba', { exact: true }).click()
       await page.getByText("Groom's details").click()
-      await expect(page.locator('#districtPrimaryGroom')).toHaveText('Ilanga')
+      await expect(page.locator('#districtPrimaryGroom')).toHaveText('Isamba')
     })
 
     test('4.4. Select Urban address', async ({ page }) => {
-      await page.getByText('Urban', { exact: true }).click()
+      await page.getByLabel('Urban').check()
       await page.getByText("Groom's details").click()
+      await expect(page.getByLabel('Urban')).toBeChecked()
     })
     test('4.5. Select Rural address', async ({ page }) => {
-      await page.getByText('Rural', { exact: true }).click()
+      await page.getByLabel('Rural').check()
       await page.getByText("Groom's details").click()
+      await expect(page.getByLabel('Rural')).toBeChecked()
     })
     test('4.6. Click the continue button', async ({ page }) => {
       await page.getByRole('button', { name: 'Continue' }).click()
