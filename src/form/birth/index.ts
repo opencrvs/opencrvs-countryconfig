@@ -308,10 +308,12 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
+              'birth',
               'informant',
               hideIfInformantMotherOrFather
             ),
             getYearOfBirth(
+              'birth',
               'informant',
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantMotherOrFather
@@ -393,10 +395,12 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.motherBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
+              'birth',
               'mother',
               detailsExistConditional
             ),
             getYearOfBirth(
+              'birth',
               'mother',
               exactDateOfBirthUnknownConditional.concat(
                 detailsExistConditional
@@ -494,10 +498,12 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.fatherBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
+              'birth',
               'father',
               detailsExistConditional
             ),
             getYearOfBirth(
+              'birth',
               'father',
               exactDateOfBirthUnknownConditional.concat(
                 detailsExistConditional

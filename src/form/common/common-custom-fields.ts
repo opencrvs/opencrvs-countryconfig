@@ -6,6 +6,9 @@ import { MessageDescriptor } from 'react-intl'
 import { sentenceCase } from '@countryconfig/utils/address-utils'
 import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
 
+type Event = 'birth' | 'death'
+type EventSubject = 'child' | 'deceased'
+
 export function getNUI(
   conditionals: Conditional[],
   fieldSpecificValidators: Validator[] = [],
@@ -47,11 +50,12 @@ export function getNUI(
 }
 
 export function getCustomizedExactDateOfBirthUnknown(
-  subject: 'mother' | 'father' | 'informant' | 'spouse',
+  event: Event,
+  subject: 'mother' | 'father' | 'informant' | 'spouse' | 'deceased',
   conditionals: Conditional[] = []
 ): SerializedFormField {
   const fieldName: string = 'customizedExactDateOfBirthUnknown'
-  const fieldId: string = `birth.${subject}.${subject}-view-group.${fieldName}`
+  const fieldId: string = `${event}.${subject}.${subject}-view-group.${fieldName}`
 
   return {
     name: fieldName,
@@ -76,12 +80,13 @@ export function getCustomizedExactDateOfBirthUnknown(
 }
 
 export function getYearOfBirth(
-  subject: 'mother' | 'father' | 'informant' | 'spouse',
+  event: Event,
+  subject: 'mother' | 'father' | 'informant' | 'spouse' | 'deceased',
   conditionals: Conditional[] = [],
   validators: Validator[]
 ): SerializedFormField {
   const fieldName: string = 'yearOfBirth'
-  const fieldId: string = `birth.${subject}.${subject}-view-group.${fieldName}`
+  const fieldId: string = `${event}.${subject}.${subject}-view-group.${fieldName}`
 
   return {
     name: fieldName,
@@ -100,7 +105,7 @@ export function getYearOfBirth(
 }
 
 export function getFokontanyCustomAddress(
-  event: 'birth' | 'death',
+  event: Event,
   section:
     | 'child'
     | 'mother'
@@ -136,7 +141,7 @@ export function getFokontanyCustomAddress(
 }
 
 export function getFatherIsDeceased(
-  event: 'birth' | 'death',
+  event: Event,
   conditionals: Conditional[]
 ): SerializedFormField {
   const fieldName: string = 'fatherIsDeceased'
@@ -165,7 +170,7 @@ export function getFatherIsDeceased(
 }
 
 export function getMotherIsDeceased(
-  event: 'birth' | 'death',
+  event: Event,
   conditionals: Conditional[]
 ): SerializedFormField {
   const fieldName: string = 'motherIsDeceased'
