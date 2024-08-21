@@ -72,6 +72,7 @@ jobs:
           type: now
           from_branch: ${{ github.event.inputs.branch_name }}
           target_branch: master
+          message: Merge ${{ github.event.inputs.branch_name }} to master
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge master -> develop
@@ -80,4 +81,5 @@ jobs:
           type: now
           from_branch: master
           target_branch: develop
+          message: Merge master back to develop
           github_token: ${{ secrets.GITHUB_TOKEN }}
