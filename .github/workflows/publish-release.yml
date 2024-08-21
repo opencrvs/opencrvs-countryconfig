@@ -9,7 +9,7 @@ on:
         required: true
 
       release_version:
-        description: Release tag. It will be prepended by your repository name (e.g. 1.5.3 or 20240501)
+        description: Release tag. It will be prepended by your repository name (e.g. v1.5.3 or 20240501)
         required: true
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
         run: sudo apt-get install jq -y
 
       - name: Set TAG environment variable
-        run: echo "TAG=v${{ github.event.inputs.release_version }}" >> $GITHUB_ENV
+        run: echo "TAG=${{ github.event.inputs.release_version }}" >> $GITHUB_ENV
 
       - uses: trstringer/manual-approval@v1
         with:
