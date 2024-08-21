@@ -7,6 +7,7 @@ on:
         description: Branch to build from
         default: master
         required: true
+
       release_version:
         description: Release tag. It will be prepended by your repository name
         required: true
@@ -45,6 +46,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tag_prefix: ${{ github.event.repository.name }}-
           custom_tag: ${{ env.TAG }}
+          release_branches: ${{ github.event.inputs.branch_name }}
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
