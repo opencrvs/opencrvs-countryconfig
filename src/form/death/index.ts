@@ -10,8 +10,6 @@
  */
 
 import {
-  exactDateOfBirthUnknown,
-  getAgeOfIndividualInYears,
   getMaritalStatus,
   registrationPhone,
   divider,
@@ -197,22 +195,10 @@ export const deathForm = {
             getGender(certificateHandlebars.deceasedGender), // Required field.
             getBirthDate(
               'deceasedBirthDate',
-              [
-                {
-                  action: 'hide',
-                  expression: 'values.exactDateOfBirthUnknown'
-                }
-              ],
+              [],
               isValidBirthDate,
               certificateHandlebars.deceasedBirthDate
             ), // Required field.,
-            exactDateOfBirthUnknown([]),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfDeceased,
-              exactDateOfBirthUnknownConditional,
-              ageOfDeceasedConditionals,
-              certificateHandlebars.ageOfDeceasedInYears
-            ),
             getNationality(certificateHandlebars.deceasedNationality, []),
             getNUI([], [], true, certificateHandlebars.deceasedNationalId),
             getMaritalStatus(
@@ -372,10 +358,12 @@ export const deathForm = {
               certificateHandlebars.informantBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
+              'death',
               'informant',
               hideIfInformantSpouseOrMotherOrFather
             ),
             getYearOfBirth(
+              'death',
               'informant',
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantSpouseOrMotherOrFather
@@ -466,8 +454,13 @@ export const deathForm = {
               parentsBirthDateValidators,
               certificateHandlebars.fatherBirthDate
             ), // Required field.
-            getCustomizedExactDateOfBirthUnknown('father', detailsExist),
+            getCustomizedExactDateOfBirthUnknown(
+              'death',
+              'father',
+              detailsExist
+            ),
             getYearOfBirth(
+              'death',
               'father',
               exactDateOfBirthUnknownConditional.concat(detailsExist),
               yearOfBirthValidtors
@@ -549,8 +542,13 @@ export const deathForm = {
               parentsBirthDateValidators,
               certificateHandlebars.motherBirthDate
             ), // Required field.
-            getCustomizedExactDateOfBirthUnknown('mother', detailsExist),
+            getCustomizedExactDateOfBirthUnknown(
+              'death',
+              'mother',
+              detailsExist
+            ),
             getYearOfBirth(
+              'death',
               'mother',
               exactDateOfBirthUnknownConditional.concat(detailsExist),
               yearOfBirthValidtors
@@ -637,8 +635,13 @@ export const deathForm = {
               ],
               certificateHandlebars.spouseBirthDate
             ), // Required field.
-            getCustomizedExactDateOfBirthUnknown('spouse', detailsExist),
+            getCustomizedExactDateOfBirthUnknown(
+              'death',
+              'spouse',
+              detailsExist
+            ),
             getYearOfBirth(
+              'death',
               'spouse',
               exactDateOfBirthUnknownConditional.concat(detailsExist),
               yearOfBirthValidtors
