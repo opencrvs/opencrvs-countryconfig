@@ -11,6 +11,10 @@
 
 - **Title** Description
 
+### Improvements
+
+- Auth token, ip address, remote address, mobile number, email redacted/masked from server log
+
 ### Infrastructure breaking changes
 
 - **Title** Description

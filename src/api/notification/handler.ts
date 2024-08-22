@@ -8,7 +8,7 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { logger } from '@countryconfig/logger'
+import { logger, maskEmail, maskSms } from '@countryconfig/logger'
 import * as Hapi from '@hapi/hapi'
 import * as Joi from 'joi'
 import { IApplicationConfig, getApplicationConfig } from '../../utils'
@@ -88,6 +88,14 @@ export async function notificationHandler(
 
   if (process.env.NODE_ENV !== 'production') {
     const { templateName, recipient, convertUnicode, type } = payload
+    if ('sms' in recipient) {
+      recipient.sms = maskSms(recipient.sms)
+    } else {
+      recipient.email = maskEmail(recipient.email)
+      recipient.bcc = Array.isArray(recipient.bcc)
+        ? recipient.bcc.map(maskEmail)
+        : undefined
+    }
     logger.info(
       `Ignoring notification due to NODE_ENV not being 'production'. Params: ${JSON.stringify(
         {
@@ -103,7 +111,9 @@ export async function notificationHandler(
 
   if (isEmailPayload(applicationConfig, payload)) {
     const { templateName, variables, recipient } = payload
-    logger.info(`Notification method is email and recipient ${recipient.email}`)
+    logger.info(
+      `Notification method is email and recipient ${maskEmail(recipient.email)}`
+    )
 
     const template = getTemplate(templateName.email)
     const emailSubject =
@@ -161,7 +171,7 @@ export async function emailHandler(
   if (process.env.NODE_ENV !== 'production') {
     logger.info(
       `Ignoring email due to NODE_ENV not being 'production'. Params: ${JSON.stringify(
-        payload
+        { ...payload, from: maskEmail(payload.from), to: maskEmail(payload.to) }
       )}`
     )
     return h.response().code(200)
