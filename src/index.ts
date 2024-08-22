@@ -244,7 +244,6 @@ export async function createServer() {
       path: '/certificates/{event}.svg',
       handler: certificateHandler,
       options: {
-        auth: false,
         tags: ['api', 'certificates'],
         description: 'Returns only one certificate metadata'
       }
