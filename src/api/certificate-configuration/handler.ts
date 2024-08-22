@@ -25,11 +25,11 @@ type Configuration = Partial<{
 export function certificateConfigurationHandler(): Configuration {
   return {
     fonts: {
-      ['Noto Sans']: {
-        normal: `${COUNTRY_CONFIG_URL}/fonts/NotoSans-Regular.ttf`,
-        bold: `${COUNTRY_CONFIG_URL}/fonts/NotoSans-Bold.ttf`,
-        italics: `${COUNTRY_CONFIG_URL}/fonts/NotoSans-Regular.ttf`,
-        bolditalics: `${COUNTRY_CONFIG_URL}/fonts/NotoSans-Regular.ttf`
+      ['Montserrat']: {
+        normal: `${COUNTRY_CONFIG_URL}/fonts/Montserrat-Regular.ttf`,
+        bold: `${COUNTRY_CONFIG_URL}/fonts/Montserrat-Bold.ttf`,
+        italics: `${COUNTRY_CONFIG_URL}/fonts/Montserrat-Regular.ttf`,
+        bolditalics: `${COUNTRY_CONFIG_URL}/fonts/Montserrat-Regular.ttf`
       }
     }
   }
