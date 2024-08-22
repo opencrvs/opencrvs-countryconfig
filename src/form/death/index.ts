@@ -230,7 +230,7 @@ export const deathForm = {
               }
             }),
             getFokontanyCustomAddress(
-              'death',
+              Event.Death,
               'deceased',
               hideIfDistrictPlaceOfBirthAddressNotSelected('deceased'),
               true,
@@ -244,7 +244,7 @@ export const deathForm = {
             ),
             // Primary address fields,
             getFokontanyCustomAddress(
-              'death',
+              Event.Death,
               'deceased',
               hideIfDistrictPrimaryAddressNotSelected('deceased'),
               true,
@@ -299,7 +299,7 @@ export const deathForm = {
             getDeathDescription,
             // PLACE OF DEATH FIELDS WILL RENDER HERE,
             getFokontanyCustomAddress(
-              'death',
+              Event.Death,
               'deathEvent',
               hideIfDistrictPlaceOfDeathNotSelected.concat([
                 {
@@ -363,12 +363,12 @@ export const deathForm = {
               certificateHandlebars.informantBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
-              'death',
+              Event.Death,
               'informant',
               hideIfInformantSpouseOrMotherOrFather
             ),
             getYearOfBirth(
-              'death',
+              Event.Death,
               'informant',
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantSpouseOrMotherOrFather
@@ -388,7 +388,7 @@ export const deathForm = {
             getInformantPresenceAtDeath(hideIfInformantSpouseOrMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE,
             getFokontanyCustomAddress(
-              'death',
+              Event.Death,
               'informant',
               hideIfInformantSpouseOrMotherOrFather.concat(
                 hideIfDistrictPrimaryAddressNotSelected('informant')
@@ -442,7 +442,7 @@ export const deathForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getFatherIsDeceased('death', detailsExist),
+            getFatherIsDeceased(Event.Death, detailsExist),
             getFamilyNameField(
               'fatherNameInEnglish',
               fatherFamilyNameConditionals,
@@ -460,12 +460,12 @@ export const deathForm = {
               certificateHandlebars.fatherBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
-              'death',
+              Event.Death,
               'father',
               detailsExist
             ),
             getYearOfBirth(
-              'death',
+              Event.Death,
               'father',
               exactDateOfBirthUnknownConditional.concat(detailsExist),
               yearOfBirthValidtors
@@ -493,7 +493,7 @@ export const deathForm = {
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAddress(
-              'death',
+              Event.Death,
               'father',
               detailsExist.concat(
                 hideIfDistrictPrimaryAddressNotSelected('father')
@@ -530,7 +530,7 @@ export const deathForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying),
-            getMotherIsDeceased('death', detailsExist),
+            getMotherIsDeceased(Event.Death, detailsExist),
             getFamilyNameField(
               'motherNameInEnglish',
               motherFamilyNameConditionals,
@@ -548,12 +548,12 @@ export const deathForm = {
               certificateHandlebars.motherBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
-              'death',
+              Event.Death,
               'mother',
               detailsExist
             ),
             getYearOfBirth(
-              'death',
+              Event.Death,
               'mother',
               exactDateOfBirthUnknownConditional.concat(detailsExist),
               yearOfBirthValidtors
@@ -581,7 +581,7 @@ export const deathForm = {
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAddress(
-              'death',
+              Event.Death,
               'mother',
               detailsExist.concat(
                 hideIfDistrictPrimaryAddressNotSelected('mother')
@@ -641,12 +641,12 @@ export const deathForm = {
               certificateHandlebars.spouseBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
-              'death',
+              Event.Death,
               'spouse',
               detailsExist
             ),
             getYearOfBirth(
-              'death',
+              Event.Death,
               'spouse',
               exactDateOfBirthUnknownConditional.concat(detailsExist),
               yearOfBirthValidtors

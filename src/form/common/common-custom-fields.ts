@@ -1,13 +1,10 @@
 import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { Conditional, SerializedFormField } from '../types/types'
+import { Conditional, Event, SerializedFormField } from '../types/types'
 import { Validator } from '../types/validators'
 import { formMessageDescriptors } from './messages'
 import { MessageDescriptor } from 'react-intl'
 import { sentenceCase } from '@countryconfig/utils/address-utils'
 import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
-
-type Event = 'birth' | 'death'
-type EventSubject = 'child' | 'deceased'
 
 export function getNUI(
   conditionals: Conditional[],
