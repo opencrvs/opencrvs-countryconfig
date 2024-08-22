@@ -38,7 +38,6 @@ import { AddressCases, Event, ISerializedForm } from '../types/types'
 import {
   informantBirthDateConditionals,
   informantFamilyNameConditionals,
-  ageOfDeceasedConditionals,
   informantFirstNameConditionals,
   exactDateOfBirthUnknownConditional,
   isValidBirthDate,
@@ -198,7 +197,7 @@ export const deathForm = {
               [],
               isValidBirthDate,
               certificateHandlebars.deceasedBirthDate
-            ), // Required field.,
+            ), // Required field.
             getNationality(certificateHandlebars.deceasedNationality, []),
             getNUI([], [], true, certificateHandlebars.deceasedNationalId),
             getMaritalStatus(
@@ -302,7 +301,13 @@ export const deathForm = {
             getFokontanyCustomAddress(
               'death',
               'deathEvent',
-              hideIfDistrictPlaceOfDeathNotSelected,
+              hideIfDistrictPlaceOfDeathNotSelected.concat([
+                {
+                  action: 'hide',
+                  expression:
+                    '["DECEASED_USUAL_RESIDENCE", "HEALTH_FACILITY"].includes(values.placeOfDeath)'
+                }
+              ]),
               true,
               {
                 id: 'form.field.label.fokontanyCustomAddress',
