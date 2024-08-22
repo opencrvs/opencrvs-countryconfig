@@ -40,11 +40,15 @@ export type Validation = (
   offlineCountryConfig?: any
 ) => ValidationResult | undefined
 
-export enum Event {
-  Birth = 'birth',
-  Death = 'death',
-  Marriage = 'marriage'
-}
+export const Event = {
+  Birth: 'birth',
+  Death: 'death',
+  Marriage: 'marriage'
+} as const
+
+const events = Object.values(Event)
+
+export type Event = (typeof events)[number]
 
 export type ValidationInitializer = (...value: any[]) => Validation
 

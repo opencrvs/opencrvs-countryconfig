@@ -214,7 +214,7 @@ export const birthForm: ISerializedForm = {
             weightAtBirth,
             // PLACE OF BIRTH FIELDS WILL RENDER HERE
             getFokontanyCustomAddress(
-              'birth',
+              Event.Birth,
               'child',
               [
                 {
@@ -308,10 +308,12 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
+              Event.Birth,
               'informant',
               hideIfInformantMotherOrFather
             ),
             getYearOfBirth(
+              Event.Birth,
               'informant',
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantMotherOrFather
@@ -332,7 +334,7 @@ export const birthForm: ISerializedForm = {
             divider('informant-nid-seperator', hideIfInformantMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAddress(
-              'birth',
+              Event.Birth,
               'informant',
               hideIfInformantMotherOrFather.concat(
                 hideIfDistrictPrimaryAddressNotSelected('informant')
@@ -375,7 +377,7 @@ export const birthForm: ISerializedForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getMotherIsDeceased('birth', detailsExistConditional),
+            getMotherIsDeceased(Event.Birth, detailsExistConditional),
             getFamilyNameField(
               'motherNameInEnglish',
               motherFamilyNameConditionals,
@@ -393,10 +395,12 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.motherBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
+              Event.Birth,
               'mother',
               detailsExistConditional
             ),
             getYearOfBirth(
+              Event.Birth,
               'mother',
               exactDateOfBirthUnknownConditional.concat(
                 detailsExistConditional
@@ -418,7 +422,7 @@ export const birthForm: ISerializedForm = {
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAddress(
-              'birth',
+              Event.Birth,
               'mother',
               detailsExistConditional.concat(
                 hideIfDistrictPrimaryAddressNotSelected('mother')
@@ -475,7 +479,7 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getFatherIsDeceased('birth', detailsExist),
+            getFatherIsDeceased(Event.Birth, detailsExist),
             getFatherHasFormallyRecognisedChild(detailsExist),
             getFamilyNameField(
               'fatherNameInEnglish',
@@ -494,10 +498,12 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.fatherBirthDate
             ), // Required field.
             getCustomizedExactDateOfBirthUnknown(
+              Event.Birth,
               'father',
               detailsExistConditional
             ),
             getYearOfBirth(
+              Event.Birth,
               'father',
               exactDateOfBirthUnknownConditional.concat(
                 detailsExistConditional
@@ -519,7 +525,7 @@ export const birthForm: ISerializedForm = {
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAddress(
-              'birth',
+              Event.Birth,
               'father',
               primaryAddressSameAsOtherPrimary
                 .concat(detailsExistConditional)
