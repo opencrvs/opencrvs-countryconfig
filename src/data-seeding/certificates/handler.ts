@@ -13,36 +13,8 @@ import { Request, ResponseToolkit } from '@hapi/hapi'
 import { readFileSync } from 'fs'
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
-  if (request.params.event) {
-    const res = readFileSync(
-      `./src/data-seeding/certificates/source/Farajaland-${request.params.event}-certificate-v2.svg`
-    ).toString()
-    return h.response(res).code(200)
-  }
-
-  const Certificates = [
-    {
-      event: 'birth',
-      fileName: 'Farajaland-birth-certificate-v2.svg',
-      svgCode: readFileSync(
-        './src/data-seeding/certificates/source/Farajaland-birth-certificate-v2.svg'
-      ).toString()
-    },
-    {
-      event: 'death',
-      fileName: 'Farajaland-death-certificate-v2.svg',
-      svgCode: readFileSync(
-        './src/data-seeding/certificates/source/Farajaland-death-certificate-v2.svg'
-      ).toString()
-    },
-    {
-      event: 'marriage',
-      fileName: 'Farajaland-marriage-certificate-v2.svg',
-      svgCode: readFileSync(
-        './src/data-seeding/certificates/source/Farajaland-marriage-certificate-v2.svg'
-      ).toString()
-    }
-  ]
-  const res = JSON.stringify(Certificates)
-  return h.response(res)
+  const res = readFileSync(
+    `./src/data-seeding/certificates/source/Farajaland-${request.params.event}-certificate-v2.svg`
+  ).toString()
+  return h.response(res).code(200)
 }

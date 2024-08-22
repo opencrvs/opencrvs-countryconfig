@@ -489,16 +489,6 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/certificates',
-    handler: certificateHandler,
-    options: {
-      tags: ['api', 'certificates'],
-      description: 'Returns certificate metadata'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/roles',
     handler: rolesHandler,
     options: {
