@@ -25,106 +25,76 @@
             id="No. {{registrationNo}} {{dateOfRegistration}} FAHATERAHANA &#38; RECOGNITION {{childFamilyName}} {{childFirstName}} Teraka ny: {dateOfBirth}} NUI : {{NUI}} &#226;&#128;&#168;&#60;&#60;Show if first: First certificate&#62;&#62; Fanamarihana an-tsisiny Recognition, 1231232, 2024-07-19, AMBATO, Doe John, 1233333333 Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother &#226;&#128;&#168;&#226;&#128;&#168;">
             <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="8"
                 letter-spacing="0em">
-                <tspan x="48" y="141.868">{{dateOfRegistration}}&#10;</tspan>
+                <tspan x="48" y="141.868">{{ translateDateToMDGFormat registrar.date }}&#10;</tspan>
                 <tspan x="48" y="155.868">&#10;</tspan>
                 <tspan x="48" y="239.868">&#x2028;</tspan>
             </text>
             <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="8"
                 letter-spacing="0em">
-                <tspan x="48" y="127.868">No. {{registrationNo}}&#10;</tspan>
+                <tspan x="48" y="127.868">No. {{registrationNumber}}&#10;</tspan>
                 <tspan x="48" y="183.868">{{childFamilyName}} &#10;</tspan>
                 <tspan x="48" y="197.868">{{childFirstName}}&#10;</tspan>
-                <tspan x="48" y="211.868">Teraka ny: {dateOfBirth}}&#10;</tspan>
-                <tspan x="48" y="225.868">NUI : {{NUI}}&#10;</tspan>
+                <tspan x="48" y="211.868">Teraka ny: {{translateDateToMDGFormat (plainDateString eventDate)}}&#10;
+                </tspan>
+                <tspan x="48" y="225.868">NUI : {{childNID}}&#10;</tspan>
                 <tspan x="48" y="594.868">&#x2028;</tspan>
                 <tspan x="48" y="608.868">&#x2028;</tspan>
             </text>
             <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="7"
                 letter-spacing="0em">
-                <tspan x="48" y="272.868">Recognition, 1231232, 2024-07-19, AMBATO, Doe </tspan>
-                <tspan x="48" y="283.868">John, 1233333333&#10;</tspan>
-                <tspan x="48" y="294.868">&#10;</tspan>
-                <tspan x="48" y="305.868">Judicial adoption, 1123123122, 2024-07-30, 123122, </tspan>
-                <tspan x="48" y="316.868">2024-07-28, Name Father, Name Mother&#10;</tspan>
-                <tspan x="48" y="327.868">&#10;</tspan>
-                <tspan x="48" y="338.868">Judicial adoption, 1123123122, 2024-07-30, 123122, </tspan>
-                <tspan x="48" y="349.868">2024-07-28, Name Father, Name Mother&#10;</tspan>
-                <tspan x="48" y="360.868">&#10;</tspan>
-                <tspan x="48" y="371.868">Judicial adoption, 1123123122, 2024-07-30, 123122, </tspan>
-                <tspan x="48" y="382.868">2024-07-28, Name Father, Name Mother&#10;</tspan>
-                <tspan x="48" y="393.868">&#10;</tspan>
-                <tspan x="48" y="404.868">Judicial adoption, 1123123122, 2024-07-30, 123122, </tspan>
-                <tspan x="48" y="415.868">2024-07-28, Name Father, Name Mother&#10;</tspan>
-                <tspan x="48" y="426.868">&#10;</tspan>
-                <tspan x="48" y="437.868">Judicial adoption, 1123123122, 2024-07-30, 123122, </tspan>
-                <tspan x="48" y="448.868">2024-07-28, Name Father, Name Mother&#10;</tspan>
-                <tspan x="48" y="459.868">&#10;</tspan>
-                <tspan x="48" y="470.868">Judicial adoption, 1123123122, 2024-07-30, 123122, </tspan>
-                <tspan x="48" y="481.868">2024-07-28, Name Father, Name Mother&#10;</tspan>
-                <tspan x="48" y="492.868">&#10;</tspan>
-                <tspan x="48" y="503.868">Judicial adoption, 1123123122, 2024-07-30, 123122, </tspan>
-                <tspan x="48" y="514.868">2024-07-28, Name Father, Name Mother&#10;</tspan>
-                <tspan x="48" y="525.868">&#10;</tspan>
-                <tspan x="48" y="536.868">Judicial adoption, 1123123122, 2024-07-30, 123122, </tspan>
-                <tspan x="48" y="547.868">2024-07-28, Name Father, Name Mother&#10;</tspan>
-                <tspan x="48" y="558.868">&#10;</tspan>
-                <tspan x="48" y="569.868">Judicial adoption, 1123123122, 2024-07-30, 123122, </tspan>
-                <tspan x="48" y="580.868">2024-07-28, Name Father, Name Mother&#10;</tspan>
+                {{{ wrap 30 48 272.868 (mentions)}}}
             </text>
-            <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="7"
-                font-weight="bold" letter-spacing="0em">
-                <tspan x="48" y="250.868">&#60;&#60;Show if first: First certificate&#62;&#62; </tspan>
-                <tspan x="48" y="261.868">Fanamarihana an-tsisiny&#10;</tspan>
+            <text fill="black" xml:space="default" font-family="Montserrat" font-size="7" font-weight="bold"
+                letter-spacing="0em">
+                <tspan x="48" y="250.868">
+                    {{#ifCond (isFirstCertificate) '===' true}}
+                    Kopia Voalohany
+                    {{else}}
+                    Fanamarihana an-tsisiny&#10;
+                    {{/ifCond}}
+                </tspan>
             </text>
-            <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="8"
-                font-weight="bold" letter-spacing="0em">
-                <tspan x="48" y="169.868">FAHATERAHANA &#38; RECOGNITION&#10;</tspan>
+            <text fill="black" xml:space="default" font-family="Montserrat" font-size="8" font-weight="bold"
+                letter-spacing="0em">
+                <tspan x="48" y="169.868">
+                    {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
+                    FAHATERAHANA &#38; FANJANAHANA
+                    {{ else }}
+                    FAHATERAHANA
+                    {{/ifCond}}
+                </tspan>
             </text>
         </g>
         <g id="Frame 3" clip-path="url(#clip0_1_2)">
             <g
                 id="Nalaina tamin&#226;&#128;&#153;ny bokim-piankohonan&#39;ny {{Commune}}, foibe misahana ny fiankohonana, ny iraika {{dateOfCertification}}, izao sora-pahaterahana manaraka izao :&#226;&#128;&#168;&#226;&#128;&#168;Tamin&#39;ny {{dateOfBirth}}, tamin&#226;&#128;&#153;ny {{timeOfBirth}}, no teraka tao {{placeOfBirth}}, {{childFamilyName}} {{childFirstName}}, {{childSex}}, zanak&#226;&#128;&#153;i {{fatherFamilyName}}{{fatherFirstName}}, {{fathersOccupation}}, teraka {{fatherBirthPlace}} tamin&#39;ny {{fatherBirthDate}}, monina ao {{fatherCustomAddress}}, sy {{motherFamilyName}}{{motherFirstName}}, {{mothersOccupation}}, teraka {{motherBirthPlace}} tamin&#39;ny {{motherBirthDate}}, monina ao {{motherCustomAddress}}. &#226;&#128;&#168;&#226;&#128;&#168;Nosoratana androany {{dateOfRegistration}}, araka ny fanambarana nataon&#39;ny {{informantFamilyName}} {{informantFirstNames}} nanatrika ny fahaterahana, izay miara-manao sonia aminay, {{registrarName}}, Lefitra Voalohan&#39;ny {{Commune}}, Officier de l&#39;Ordre National anatrika ny fahaterahana, izay miara-manao sonia aminay, {{registrarName}}, Lefitra Voalohan&#39;ny {{Commune}}, Officier de l&#39;Ordre National Malagasy, mpiandraikitra ny sora-piankohonana.&#226;&#128;&#168;&#226;&#128;&#168;MANARAKA NY SONIA&#226;&#128;&#168;Kopia manontolo nadika mitovy amin&#226;&#128;&#153;ny bokim-piankohonana, androany iraika amby telopolo Jolay, taona efatra {{dateOfCertification}}">
-                <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="9"
-                    letter-spacing="0em">
-                    <tspan x="239" y="168.226">Nalaina tamin&#x2019;ny bokim-piankohonan&#39;ny {{Commune}}, foibe
-                    </tspan>
-                    <tspan x="239" y="184.226">misahana ny fiankohonana, ny iraika {{dateOfCertification}}, izao
-                    </tspan>
-                    <tspan x="239" y="200.227">sora-pahaterahana manaraka izao :&#x2028;</tspan>
-                    <tspan x="239" y="216.227">&#x2028;</tspan>
-                    <tspan x="239" y="232.227">Tamin&#39;ny {{dateOfBirth}}, tamin&#x2019;ny {{timeOfBirth}}, no teraka
-                        tao
-                    </tspan>
-                    <tspan x="239" y="248.227">{{placeOfBirth}}, {{childFamilyName}} {{childFirstName}}, </tspan>
-                    <tspan x="239" y="264.227">{{childSex}}, zanak&#x2019;i {{fatherFamilyName}}{{fatherFirstName}},
-                    </tspan>
-                    <tspan x="239" y="280.227">{{fathersOccupation}}, teraka {{fatherBirthPlace}} tamin&#39;ny </tspan>
-                    <tspan x="239" y="296.227">{{fatherBirthDate}}, monina ao {{fatherCustomAddress}}, sy </tspan>
-                    <tspan x="239" y="312.227">{{motherFamilyName}}{{motherFirstName}}, </tspan>
-                    <tspan x="239" y="328.227">{{mothersOccupation}}, teraka {{motherBirthPlace}} tamin&#39;ny </tspan>
-                    <tspan x="239" y="344.227">{{motherBirthDate}}, monina ao {{motherCustomAddress}}. &#x2028;</tspan>
-                    <tspan x="239" y="360.227">&#x2028;</tspan>
-                    <tspan x="239" y="376.227">Nosoratana androany {{dateOfRegistration}}, araka ny fanambarana </tspan>
-                    <tspan x="239" y="392.227">nataon&#39;ny {{informantFamilyName}} {{informantFirstNames}} </tspan>
-                    <tspan x="239" y="408.227">nanatrika ny fahaterahana, izay miara-manao sonia aminay, </tspan>
-                    <tspan x="239" y="424.227">{{registrarName}}, Lefitra Voalohan&#39;ny {{Commune}}, Officier de
-                    </tspan>
-                    <tspan x="239" y="440.227">l&#39;Ordre National anatrika ny fahaterahana, izay miara-manao sonia
-                    </tspan>
-                    <tspan x="239" y="456.227">aminay, {{registrarName}}, Lefitra Voalohan&#39;ny {{Commune}}, </tspan>
-                    <tspan x="239" y="472.227">Officier de l&#39;Ordre National Malagasy, mpiandraikitra ny sora-
-                    </tspan>
-                    <tspan x="239" y="488.227">piankohonana.&#x2028;</tspan>
-                    <tspan x="239" y="504.227">&#x2028;</tspan>
-                    <tspan x="337.42" y="520.227">&#x2028;</tspan>
-                    <tspan x="239" y="536.227">Kopia manontolo nadika mitovy amin&#x2019;ny bokim-piankohonana, </tspan>
-                    <tspan x="239" y="552.227">androany iraika amby telopolo Jolay, taona efatra </tspan>
-                    <tspan x="239" y="568.227">{{dateOfCertification}}</tspan>
+                <text fill="black" xml:space="default" font-family="Montserrat" font-size="9" letter-spacing="0em">
+                    {{{wrap 60 239 168.226 "Nalaina tamin’ny bokim-piankohonan'ny Kaominina" (location
+                    districtPlaceofbirthId "name") ", Foibe misahana ny fiankohonana, taona "
+                    (translateDateYear registrar.date) ", izao sora-pahaterahana manaraka izao :"}}}
+
+                    {{{wrap 60 239 232.227 "--Tamin'ny " (translateDate dateOfBirth) ", tamin'ny " (translateTime
+                    birthChildBirthTime) " no teraka tao amin'ny " (getPlaceOfBirth birthLocation
+                    birthChildFokontanyCustomAddress) ", Kaominina " (location districtPlaceofbirthId "name") " : "
+                    childFamilyName childFirstName "," childGender ", zanak’i " (handleParentInformation
+                    (translateDate fatherBirthDate) (translateDate motherBirthDate)) "--"}}}
+
+                    {{{wrap 60 239 376.227 "--Nosoratana androany " dateOfRegistration ", araka ny fanambarana nataon'ny
+                    " informantFamilyName informantFirstName ", " informantType ", teraka tamin'ny "
+                    (translateDate informantBirthDate) " tao " informantBirthPlace ", monina ao " informantCustomAddress
+                    ", " informantOccupation ", izay miara-manao sonia aminay, " registrar.name ", Mpiandraikitra ny
+                    fiankohonana eto amin’ny Kaominina " registrar.district.name ", rehefa novakiana taminy ity soratra
+                    ity."}}}
+
+                    {{{wrap 60 239 536.227 "Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany "
+                    (translateDate currentDate) "."}}}
                 </text>
+
                 <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="9"
                     font-weight="bold" letter-spacing="0em">
                     <tspan x="239" y="520.227">MANARAKA NY SONIA</tspan>
                 </text>
+
             </g>
             <g id="Group 2">
                 <g id="Group 1">

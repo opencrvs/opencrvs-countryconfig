@@ -1,5 +1,5 @@
 import * as Handlebars from 'handlebars'
-import { type IntlShape } from 'react-intl'
+import { type IntlShape, type MessageDescriptor } from 'react-intl'
 
 function wordWrap(text: string, boundary: number) {
   return text
@@ -200,7 +200,7 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
 }
 
 function convertTimeToMdgCustomWords(timeString: string) {
-  const [hour, minute, seconde] = timeString.split(':')
+  const [hour, minute] = timeString.split(':')
   let newHour = parseInt(hour)
   const mdgHours = THE_UNITS_MDG_WORDS.concat(
     FROM_10_TO_19_MDG_WORDS.slice(0, 3)
@@ -313,9 +313,18 @@ const customizeDateInCertificateContent = (_date: string) => {
   return convertDateToMdgCustomWords(formattedDate)
 }
 
-export function translateEventDate(): Handlebars.HelperDelegate {
-  return function (this: any, eventDate: string) {
-    return customizeDateInCertificateContent(eventDate)
+export function translateDate(): Handlebars.HelperDelegate {
+  return function (this: any, dateString: string) {
+    return customizeDateInCertificateContent(dateString)
+  }
+}
+
+export function translateDateYear(): Handlebars.HelperDelegate {
+  return function (this: any, dateString: string) {
+    const year = Number(dateString.split('-')[0])
+    return Number.isNaN(year)
+      ? ''
+      : convertNumberToLetterForMalagasySpecificLanguage(year)
   }
 }
 
@@ -355,17 +364,17 @@ function removeOrdinalIndicator(dateString: string) {
   return dateString && dateString?.replace(/\b(\d+)(th|st|nd|rd)\b/g, '$1')
 }
 
-export function translateEventTime(): Handlebars.HelperDelegate {
-  return function (this: any, eventTime: string) {
-    const rawEventTime = eventTime?.toLowerCase().includes('h')
-      ? eventTime.replace('h', ':')
-      : eventTime
+export function translateTime(): Handlebars.HelperDelegate {
+  return function (this: any, timeString: string) {
+    const rawEventTime = timeString?.toLowerCase().includes('h')
+      ? timeString.replace('h', ':')
+      : timeString
 
     return rawEventTime ? convertTimeToMdgCustomWords(rawEventTime) : ''
   }
 }
 
-export function translateEventDateToMDGFormat(): Handlebars.HelperDelegate {
+export function translateDateToMDGFormat(): Handlebars.HelperDelegate {
   return function (this: any, eventDate: string) {
     const dateWithoutOrdinal = removeOrdinalIndicator(eventDate)
     const date = new Date(dateWithoutOrdinal)
@@ -386,46 +395,41 @@ export function translateChildGenderToMDGWord(): Handlebars.HelperDelegate {
   }
 }
 
-export function handleFatherInformation(): Handlebars.HelperDelegate {
-  return function (this: any, fatherFamilyName: string = '') {
-    let fatherDetail = ''
-    if (
-      fatherFamilyName &&
-      fatherFamilyName != '' &&
-      fatherFamilyName !== ' ' &&
-      ![null, 'null', null, undefined, 'undefined'].includes(fatherFamilyName)
-    ) {
-      const legalMaritalStatus = ['marié(e)', 'married', 'manambady']
-      const fatherHasMaritalStatusWidowed = [
-        'veuf(ve)',
-        'widowed',
-        'maty vady'
-      ].includes(this.motherMaritalStatus.toLowerCase())
-        ? 'efa maty,'
-        : ''
-      const parentHaveNotMaritalStatusLegal =
-        !legalMaritalStatus.includes(this.motherMaritalStatus.toLowerCase()) &&
-        !legalMaritalStatus.includes(this.fatherMaritalStatus.toLowerCase())
-          ? 'izay manambara fa manjanaka azy, sy'
-          : ', sy'
-      const fatherAdditionnalInfo =
-        fatherHasMaritalStatusWidowed === 'efa maty,'
-          ? ''
-          : `${this.fatherOccupation}, teraka tao ${
-              this.birthFatherBirthPlace
-            } tamin’ny ${
-              this.birthFatherCustomizedExactDateOfBirthUnknown
-                ? convertNumberToLetterForMalagasySpecificLanguage(
-                    parseInt(this.birthFatherYearOfBirth)
-                  )
-                : customizeDateInCertificateContent(this.fatherBirthDate)
-            }, monina ao ${
-              this.birthFatherFokontanyCustomAddress ??
-              this.birthMotherFokontanyCustomAddress
-            }, ${parentHaveNotMaritalStatusLegal}`
-      fatherDetail = `${fatherFamilyName} ${this.fatherFirstName}, ${fatherAdditionnalInfo}`
+export function handleParentInformation(): Handlebars.HelperDelegate {
+  return function (
+    this: any,
+    formattedFatherBirthDate: string = '',
+    formattedMotherBirthDate: string = ''
+  ) {
+    let parentDetail = ''
+    if (this.fatherFamilyName?.trim()) {
+      const name = [this.fatherFamilyName, this.fatherFirstName]
+        .filter(Boolean)
+        .join(' ')
+      parentDetail += `${name}, teraka tamin’ny ${formattedFatherBirthDate} tao ${this.birthFatherBirthPlace},`
+      if (this.birthFatherFatherIsDeceased) {
+        parentDetail += 'efa maty.'
+      } else {
+        parentDetail += `monina ao ${this.birthFatherFokontanyCustomAddress}, ${this.fatherOccupation},`
+      }
+      if (this.birthFatherFatherHasFormallyRecognisedChild) {
+        parentDetail += 'izay manambara fa manjanaka azy'
+      }
     }
-    return fatherDetail
+
+    parentDetail += ',sy'
+    if (this.motherFamilyName?.trim()) {
+      const name = [this.motherFamilyName, this.motherFirstName]
+        .filter(Boolean)
+        .join(' ')
+      parentDetail += `${name}, teraka tamin’ny ${formattedMotherBirthDate} tao ${this.birthMotherBirthPlace}`
+      if (this.birthMotherMotherIsDeceased) {
+        parentDetail += 'efa maty.'
+      } else {
+        parentDetail += `monina ao ${this.birthMotherFokontanyCustomAddress}, ${this.motherOccupation},`
+      }
+    }
+    return parentDetail
   }
 }
 
@@ -723,5 +727,40 @@ export function mentions(): Handlebars.HelperDelegate {
       output += '\n'
     }
     return output
+  }
+}
+
+function parseDate(date: string): Date {
+  const [day, month, year] = date.split(' ')
+  return new Date(
+    `${day.substring(0, day.length - 2)} ${month.substring(0, 3)} ${year}`
+  )
+}
+
+export function plainDateString(): Handlebars.HelperDelegate {
+  return function (this: Record<string, string>, dateValue: string) {
+    const date = parseDate(dateValue)
+    return (
+      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+    )
+  }
+}
+
+export function isFirstCertificate(): Handlebars.HelperDelegate {
+  return function (this: Record<string, string>) {
+    return !this.certifier
+  }
+}
+
+export function currentDate(): Handlebars.HelperDelegate {
+  return function (this: Record<string, string>) {
+    const current = new Date()
+    return (
+      current.getFullYear() +
+      '-' +
+      (current.getMonth() + 1).toString().padStart(2, '0') +
+      '-' +
+      current.getDay().toString().padStart(2, '0')
+    )
   }
 }

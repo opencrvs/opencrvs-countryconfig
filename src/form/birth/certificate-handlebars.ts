@@ -16,6 +16,7 @@ export const certificateHandlebars = {
   qrCode: 'qrCode',
   certificateDate: 'certificateDate',
   registrar: 'registrar',
+  certifier: 'certifier',
   registrationAgent: 'registrationAgent',
   registrarName: 'registrarName', // @deprecated use registrar.name instead
   role: 'role', // @deprecated use registrar.role instead
