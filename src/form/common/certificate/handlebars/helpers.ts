@@ -730,22 +730,6 @@ export function mentions(): Handlebars.HelperDelegate {
   }
 }
 
-function parseDate(date: string): Date {
-  const [day, month, year] = date.split(' ')
-  return new Date(
-    `${day.substring(0, day.length - 2)} ${month.substring(0, 3)} ${year}`
-  )
-}
-
-export function plainDateString(): Handlebars.HelperDelegate {
-  return function (this: Record<string, string>, dateValue: string) {
-    const date = parseDate(dateValue)
-    return (
-      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-    )
-  }
-}
-
 export function isFirstCertificate(): Handlebars.HelperDelegate {
   return function (this: Record<string, string>) {
     return !this.certifier

@@ -113,7 +113,7 @@
                 <tspan x="48" y="127.868">No. {{registrationNumber}}&#10;</tspan>
                 <tspan x="48" y="183.868">{{childFamilyName}} &#10;</tspan>
                 <tspan x="48" y="197.868">{{childFirstName}}&#10;</tspan>
-                <tspan x="48" y="211.868">Teraka ny: {{translateDateToMDGFormat (plainDateString eventDate)}}&#10;
+                <tspan x="48" y="211.868">Teraka ny: {{translateDateToMDGFormat eventDate}}&#10;
                 </tspan>
                 <tspan x="48" y="225.868">NUI : {{childNID}}&#10;</tspan>
                 <tspan x="48" y="594.868">&#x2028;</tspan>
