@@ -12,12 +12,6 @@
 
 - Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
 - Environment creator script now requires countries to provide a Github token with no expiry date. This is to reduce effort in keeping the token up to date.
-- Certificate handlebar for registration fees `registrationFees` [#6817](https://github.com/opencrvs/opencrvs-core/issues/6817)
-- Logged in user details handlebar `loggedInUser` [#6529](https://github.com/opencrvs/opencrvs-core/issues/6529)
-- Supporting document fields can now be made required
-- If there is only one option in the document uploader select, then it stays hidden and only the upload button is showed with the only option being selected by default
-
-## 1.5.0
 
 ### Breaking changes
 
