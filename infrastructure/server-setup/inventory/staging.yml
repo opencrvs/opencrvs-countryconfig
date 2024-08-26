@@ -33,9 +33,9 @@ all:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
 
-      - name: solo
+      - name: provision
         ssh_keys:
-          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIET4ZrgJvwtWBZkY0aKgz/p8RhtUfPvWRGEBfo99msyX bastion_default_key
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDZ3fR4+SLushEwJ03h4HwxQzCKt45mpJa3esaOXJYeSgePvxeBzX1902sAIJw8fZGIZzNmxUrtssk64KzyFBr6xpFGvAwjPgo2nsYbVMF8O6TzxNceunLNn0As+f2DPaxgYzkI4WP8EEpYC29egXN/GKsxlNyGT/iY5k2qs855rHxVd3O7zy9G9cM9Ram9t8oMuEB+GOIFFy/4wbpx3cvUelHaX7koCL2A9KduWCD/07OSrcaUCDFN2m8U4+ysTZhkHxdpvRlAJ6e3MtGlu0K3esDBCvjo+dAzjALJZ8y9k/3W+mmz+l5/J9JH2CNWMbEAzV+yF5w9fZ1twPiSflJ6/XtcBkqi89Jkx6ubUMgtOjCKL4YlvVZhFzklVgPzbY8QVKXxjC+bfrcLZX9krp6e34RH4k97AalB331HUbExhto9rAeM3NNIKK1CX+14Cn0aRJY0MO2etGqihiBWB1DKM6qcO9poEC1uOmBwe4Qq1LIksgDF2ARx3jA7pwUoCdZ1bnh131xWVuuE/6j6ITZJgPeydW2APJweWrsf92DF4AKhpX5tROxVq2j93DrDxEnrnVjLN7+ST11dVDHCyX7fq78eF/R6afjpp2FMOkuw8UbPXFf6zDHZkGhDUZrAnsYfprPpFtOqA8x4rpFljCjGLHvCQvMLjEYlfABMT+sr5Q== siecm-provision
         state: present
         sudoer: true
 
@@ -45,7 +45,7 @@ docker-manager-first:
       ansible_host: '10.10.2.14' # @todo set this to be the hostname of your target server
       data_label: data1
 #       # If you are using a jump server to access this environment, enter other SSH args here.
-      ansible_ssh_common_args: '-J jump@102.16.127.249:10022 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
+      ansible_ssh_common_args: '-J solo@102.16.127.249:10022 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
 
 # # This staging servers is configured to only use one server
  docker-workers: {}
