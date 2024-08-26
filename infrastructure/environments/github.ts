@@ -43,6 +43,15 @@ export async function updateVariable(
   )
 }
 
+export async function getTokenExpiry(octokit: Octokit) {
+  const res = await octokit.request('GET /user')
+  const expiry = res.headers['github-authentication-token-expiration']
+  if (!expiry) {
+    return null
+  }
+  return new Date(expiry)
+}
+
 export async function getRepositoryId(
   octokit: Octokit,
   owner: string,
