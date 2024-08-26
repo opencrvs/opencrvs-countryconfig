@@ -75,7 +75,6 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 ### New features
 
-- Environment creator script now requires countries to provide a Github token with no expiry date. This is to reduce effort in keeping the token up to date.
 - Certificate handlebar for registration fees `registrationFees` [#6817](https://github.com/opencrvs/opencrvs-core/issues/6817)
 - Logged in user details handlebar `loggedInUser` [#6529](https://github.com/opencrvs/opencrvs-core/issues/6529)
 - Supporting document fields can now be made required
@@ -95,7 +94,7 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 ## Bug fixes
 
-- TBC
+- Github pipeline dedicated for reading secrets and variables from other environments now checks if GH_TOKEN is still valid before attempting other operations
 
 ## 1.5.0 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.1...v1.5.0)
 

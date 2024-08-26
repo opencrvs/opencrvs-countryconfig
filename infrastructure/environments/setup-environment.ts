@@ -11,7 +11,6 @@ import {
   createRepositorySecret,
   createVariable,
   getRepositoryId,
-  getTokenExpiry,
   listEnvironmentSecrets,
   listEnvironmentVariables,
   listRepositorySecrets,
@@ -823,13 +822,6 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
   const octokit = new Octokit({
     auth: githubToken
   })
-
-  const expiry = await getTokenExpiry(octokit)
-  if (expiry) {
-    error('Your Github token expires at:', expiry.toLocaleString())
-    error('Please create a new token with "No expiration" and try again.')
-    process.exit(1)
-  }
 
   await createEnvironment(
     octokit,
