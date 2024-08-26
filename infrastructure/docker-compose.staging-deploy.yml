@@ -12,7 +12,7 @@ services:
   gateway:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en,fr,mg
       - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
@@ -20,7 +20,7 @@ services:
   workflow:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en,fr,mg
       - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
       replicas: 1
@@ -58,7 +58,7 @@ services:
   notification:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en,fr,mg
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
     deploy:
@@ -182,13 +182,20 @@ services:
     #   - --tls.certificates.stores=default
     #   - --tls.stores.default.defaultcertificate.certfile=/certs/crvs.cm.crt
     #   - --tls.stores.default.defaultcertificate.keyfile=/certs/crvs.cm.key
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
+      - AWS_REGION=af-south-1 # https://docs.aws.amazon.com/general/latest/gr/r53.html
 
     command:
-      - --certificatesresolvers.certResolver.acme.email=riku@opencrvs.org
+      - --certificatesresolvers.certResolver.acme.dnschallenge=true
+      - --certificatesresolvers.certResolver.acme.dnschallenge.provider=route53
+      - --certificatesresolvers.certResolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.certResolver.acme.email=sd-identity@digital.gov.mg
       - --certificatesresolvers.certResolver.acme.storage=acme.json
-      - --certificatesresolvers.certResolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
-      - --certificatesresolvers.certResolver.acme.httpchallenge.entrypoint=web
-      - --certificatesresolvers.certResolver.acme.httpchallenge=true
+      - --certificatesresolvers.certResolver.acme.dnschallenge.delayBeforeCheck=600
+      - --certificatesresolvers.certResolver.acme.dnschallenge.disablePropagationCheck=true
 
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
