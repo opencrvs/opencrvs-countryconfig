@@ -11,8 +11,7 @@
 ### Bug fixes
 
 - Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
-
-## 1.5.0
+- Environment creator script now requires countries to provide a Github token with no expiry date. This is to reduce effort in keeping the token up to date.
 
 ### Breaking changes
 
