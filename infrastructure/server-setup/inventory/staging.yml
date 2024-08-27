@@ -48,7 +48,7 @@ all:
 docker-manager-first:
   hosts:
     siecm-staging-app-1: # @todo set this to be the hostname of your target server
-      ansible_host: '10.10.2.14' # @todo set this to be the hostname of your target server
+      ansible_host: '102.16.127.249' # @todo set this to be the hostname of your target server
       ansible_port: 10014
       internal_ssh_port: 22
       data_label: data1
