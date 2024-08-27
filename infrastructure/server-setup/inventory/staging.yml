@@ -33,9 +33,15 @@ all:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
 
-      - name: provision
+      - name: solo
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDZ3fR4+SLushEwJ03h4HwxQzCKt45mpJa3esaOXJYeSgePvxeBzX1902sAIJw8fZGIZzNmxUrtssk64KzyFBr6xpFGvAwjPgo2nsYbVMF8O6TzxNceunLNn0As+f2DPaxgYzkI4WP8EEpYC29egXN/GKsxlNyGT/iY5k2qs855rHxVd3O7zy9G9cM9Ram9t8oMuEB+GOIFFy/4wbpx3cvUelHaX7koCL2A9KduWCD/07OSrcaUCDFN2m8U4+ysTZhkHxdpvRlAJ6e3MtGlu0K3esDBCvjo+dAzjALJZ8y9k/3W+mmz+l5/J9JH2CNWMbEAzV+yF5w9fZ1twPiSflJ6/XtcBkqi89Jkx6ubUMgtOjCKL4YlvVZhFzklVgPzbY8QVKXxjC+bfrcLZX9krp6e34RH4k97AalB331HUbExhto9rAeM3NNIKK1CX+14Cn0aRJY0MO2etGqihiBWB1DKM6qcO9poEC1uOmBwe4Qq1LIksgDF2ARx3jA7pwUoCdZ1bnh131xWVuuE/6j6ITZJgPeydW2APJweWrsf92DF4AKhpX5tROxVq2j93DrDxEnrnVjLN7+ST11dVDHCyX7fq78eF/R6afjpp2FMOkuw8UbPXFf6zDHZkGhDUZrAnsYfprPpFtOqA8x4rpFljCjGLHvCQvMLjEYlfABMT+sr5Q== siecm-provision
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIET4ZrgJvwtWBZkY0aKgz/p8RhtUfPvWRGEBfo99msyX bastion_default_key
+        state: present
+        sudoer: true
+
+      - name: rochel
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3NSCi6xSkPMl21e9TEAudav4pOO2EGguP4Djy4X8WLp6jO+GHDRo4gceInimCOdA9mqzb4yJgNoVFlEG6J9X5Axj4TfZ1fg9NdsJcLcEd3N7V0g51vbv7StCqdgr5m7TrjRXfSinDd9R41KHTzbfQNh3uYbp+cAm0vDoNgtXCzBkpqnsEo2rTNmnqgKAiWmu2vybT/A0i4PsaIeeSlsMZ9zLH7AdRxvrWlmXJA7ye9noQVyW8b2zOpE3LFiMEk93ZItDqzhFgOyLN3NNFGhhCvmcqYrLqIO9hpHOrDeio+ykG8g+3s42AG7AdyuW7BVcbr99mpd02NZW9RmY5va6+j156GVRf54KrM4yXxLeZjVj/h4uaLEGIulZh1mECDWiQc2L7/sWW6l3LoAL1k3b11shhpvXz4PA/22YTHsfcWObMQ7Uiy6bbfQO3hswaLyfJVMJ9QT3LymxZGvReGb2lpMATwWo8YH7dzIsBAaPugFAZdjskuJe6Y6BhdFgjdjOlcjxhi94Ui7PGS0XQHESQl7lwUeAxz0yEJ0arVwCOyq/hMKmmVS6PhezP2iYw9azvqwu+UqEFPUaBkdbphWQ2WmouK2xEazqsjSnyHA0rWxHAv43uCqvq+BXpBagEJHLfZ0uEeHkuerFWwpUOVKnJQn34NDL6v12l3/Xonwt9+Q== rochel@rochel
         state: present
         sudoer: true
 
@@ -45,7 +51,7 @@ docker-manager-first:
       ansible_host: '10.10.2.14' # @todo set this to be the hostname of your target server
       data_label: data1
 #       # If you are using a jump server to access this environment, enter other SSH args here.
-      ansible_ssh_common_args: '-J solo@102.16.127.249:10022 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
+      ansible_ssh_common_args: '-J provision@102.16.127.249:10022 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
 
 # # This staging servers is configured to only use one server
  docker-workers: {}
@@ -60,9 +66,9 @@ docker-manager-first:
 #       # exists in Github environments
 #       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
 # # If you are using a jump server to access this environment
-jump:
-  hosts:
-    '102.16.127.249': # @todo set this to be the hostname of your backup server
-      ansible_ssh_private_key_file: /tmp/jump_ssh_private_key # Written by provision pipeline. Assumes "jump" environment exists in Github environments
-      ansible_host: '10.10.2.14'
+# jump:
+#   hosts:
+#     '102.16.127.249': # @todo set this to be the hostname of your backup server
+#       ansible_ssh_private_key_file: /tmp/jump_ssh_private_key # Written by provision pipeline. Assumes "jump" environment exists in Github environments
+#       ansible_host: '10.10.2.14'
      

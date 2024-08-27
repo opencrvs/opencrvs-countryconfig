@@ -1,4 +1,3 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #
@@ -18,14 +17,13 @@ all:
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: provision
+      - name: my-user
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDZ3fR4+SLushEwJ03h4HwxQzCKt45mpJa3esaOXJYeSgePvxeBzX1902sAIJw8fZGIZzNmxUrtssk64KzyFBr6xpFGvAwjPgo2nsYbVMF8O6TzxNceunLNn0As+f2DPaxgYzkI4WP8EEpYC29egXN/GKsxlNyGT/iY5k2qs855rHxVd3O7zy9G9cM9Ram9t8oMuEB+GOIFFy/4wbpx3cvUelHaX7koCL2A9KduWCD/07OSrcaUCDFN2m8U4+ysTZhkHxdpvRlAJ6e3MtGlu0K3esDBCvjo+dAzjALJZ8y9k/3W+mmz+l5/J9JH2CNWMbEAzV+yF5w9fZ1twPiSflJ6/XtcBkqi89Jkx6ubUMgtOjCKL4YlvVZhFzklVgPzbY8QVKXxjC+bfrcLZX9krp6e34RH4k97AalB331HUbExhto9rAeM3NNIKK1CX+14Cn0aRJY0MO2etGqihiBWB1DKM6qcO9poEC1uOmBwe4Qq1LIksgDF2ARx3jA7pwUoCdZ1bnh131xWVuuE/6j6ITZJgPeydW2APJweWrsf92DF4AKhpX5tROxVq2j93DrDxEnrnVjLN7+ST11dVDHCyX7fq78eF/R6afjpp2FMOkuw8UbPXFf6zDHZkGhDUZrAnsYfprPpFtOqA8x4rpFljCjGLHvCQvMLjEYlfABMT+sr5Q== siecm-provision
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
         state: present
         sudoer: true
 
 jump-host:
   hosts:
-    jump-machine: # @todo set this to be the hostname of your jump server
-      ansible_host: '102.16.127.249'
-      ansible_port: 10022
+    backup: # @todo set this to be the hostname of your backup server
+      ansible_host: '55.55.55.55'
