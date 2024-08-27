@@ -49,9 +49,7 @@ docker-manager-first:
   hosts:
     siecm-staging-app-1: # @todo set this to be the hostname of your target server
       ansible_host: '10.10.2.14' # @todo set this to be the hostname of your target server
-      data_label: data1
-# If you are using a jump server to access this environment, enter other SSH args here.
       ansible_ssh_common_args: '-J provision@102.16.127.249:10022 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
-
-# This staging servers is configured to only use one server
- docker-workers: {}
+      data_label: data1
+      # If you are using a jump server to access this environment, enter other SSH args here.
+docker-workers: {}
