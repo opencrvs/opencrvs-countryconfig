@@ -100,8 +100,7 @@
         <g id="QR">
             <image id="qr 4" x="509" y="37" width="34.7131" height="35" xlink:href="{{qrCode}}" />
         </g>
-        <g
-            id="No. {{registrationNo}} {{dateOfRegistration}} FAHATERAHANA &#38; RECOGNITION {{childFamilyName}} {{childFirstName}} Teraka ny: {dateOfBirth}} NUI : {{NUI}} &#226;&#128;&#168;&#60;&#60;Show if first: First certificate&#62;&#62; Fanamarihana an-tsisiny Recognition, 1231232, 2024-07-19, AMBATO, Doe John, 1233333333 Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother Judicial adoption, 1123123122, 2024-07-30, 123122, 2024-07-28, Name Father, Name Mother &#226;&#128;&#168;&#226;&#128;&#168;">
+        <g id="left-column">
             <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="8"
                 letter-spacing="0em">
                 <tspan x="48" y="141.868">{{ translateDateToMDGFormat registrar.date }}&#10;</tspan>
@@ -144,36 +143,13 @@
                 </tspan>
             </text>
         </g>
-        <g id="Frame 3" clip-path="url(#clip0_1_2)">
-            <g
-                id="Nalaina tamin&#226;&#128;&#153;ny bokim-piankohonan&#39;ny {{Commune}}, foibe misahana ny fiankohonana, ny iraika {{dateOfCertification}}, izao sora-pahaterahana manaraka izao :&#226;&#128;&#168;&#226;&#128;&#168;Tamin&#39;ny {{dateOfBirth}}, tamin&#226;&#128;&#153;ny {{timeOfBirth}}, no teraka tao {{placeOfBirth}}, {{childFamilyName}} {{childFirstName}}, {{childSex}}, zanak&#226;&#128;&#153;i {{fatherFamilyName}}{{fatherFirstName}}, {{fathersOccupation}}, teraka {{fatherBirthPlace}} tamin&#39;ny {{fatherBirthDate}}, monina ao {{fatherCustomAddress}}, sy {{motherFamilyName}}{{motherFirstName}}, {{mothersOccupation}}, teraka {{motherBirthPlace}} tamin&#39;ny {{motherBirthDate}}, monina ao {{motherCustomAddress}}. &#226;&#128;&#168;&#226;&#128;&#168;Nosoratana androany {{dateOfRegistration}}, araka ny fanambarana nataon&#39;ny {{informantFamilyName}} {{informantFirstNames}} nanatrika ny fahaterahana, izay miara-manao sonia aminay, {{registrarName}}, Lefitra Voalohan&#39;ny {{Commune}}, Officier de l&#39;Ordre National anatrika ny fahaterahana, izay miara-manao sonia aminay, {{registrarName}}, Lefitra Voalohan&#39;ny {{Commune}}, Officier de l&#39;Ordre National Malagasy, mpiandraikitra ny sora-piankohonana.&#226;&#128;&#168;&#226;&#128;&#168;MANARAKA NY SONIA&#226;&#128;&#168;Kopia manontolo nadika mitovy amin&#226;&#128;&#153;ny bokim-piankohonana, androany iraika amby telopolo Jolay, taona efatra {{dateOfCertification}}">
-                <text fill="black" xml:space="default" font-family="Montserrat" font-size="9" letter-spacing="0em">
-                    {{{wrap 60 239 168.226 "Nalaina tamin’ny bokim-piankohonan'ny Kaominina" (location
-                    districtPlaceofbirthId "name") ", Foibe misahana ny fiankohonana, taona "
-                    (translateDateYear registrar.date) ", izao sora-pahaterahana manaraka izao :"}}}
-
-                    {{{wrap 60 239 232.227 "--Tamin'ny " (translateDate dateOfBirth) ", tamin'ny " (translateTime
-                    birthChildBirthTime) " no teraka tao amin'ny " (getPlaceOfBirth birthLocation
-                    birthChildFokontanyCustomAddress) ", Kaominina " (location districtPlaceofbirthId "name") " : "
-                    childFamilyName childFirstName "," childGender ", zanak’i " (handleParentInformation
-                    (translateDate fatherBirthDate) (translateDate motherBirthDate)) "--"}}}
-
-                    {{{wrap 60 239 376.227 "--Nosoratana androany " dateOfRegistration ", araka ny fanambarana nataon'ny
-                    " informantFamilyName informantFirstName ", " informantType ", teraka tamin'ny "
-                    (translateDate informantBirthDate) " tao " informantBirthPlace ", monina ao " informantCustomAddress
-                    ", " informantOccupation ", izay miara-manao sonia aminay, " registrar.name ", Mpiandraikitra ny
-                    fiankohonana eto amin’ny Kaominina " registrar.district.name ", rehefa novakiana taminy ity soratra
-                    ity."}}}
-
-                    {{{wrap 60 239 536.227 "Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany "
-                    (translateDate currentDate) "."}}}
-                </text>
-
-                <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="9"
-                    font-weight="bold" letter-spacing="0em">
-                    <tspan x="239" y="520.227">MANARAKA NY SONIA</tspan>
-                </text>
-
+        <g id="Frame 3">
+            <g id="right-column">
+                {{{wrapGroup 54 239 168.226
+                text2=(join "Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany "
+                (translateDate currentDate) ".")
+                bold1="MANARAKA NY SONIA"
+                text1=(mainContent (location districtPlaceofbirthId "name"))}}}
             </g>
             <g id="Group 2">
                 <g id="Group 1">
