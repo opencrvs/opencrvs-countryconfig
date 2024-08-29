@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs'
 import { COUNTRY_CONFIG_URL } from '@countryconfig/constants'
 
 export const NOTIFICATION_TRANSPORT =
@@ -35,3 +36,29 @@ export const LOGIN_URL = process.env.LOGIN_URL as string
 export const SENDER_EMAIL_ADDRESS = process.env.SENDER_EMAIL_ADDRESS
   ? process.env.SENDER_EMAIL_ADDRESS
   : ''
+
+export const SMS_PROVIDER = process.env.SMS_PROVIDER ?? 'aws-sns'
+
+export const AWS_SNS_ACCESS_KEY_ID =
+  ((process.env.AWS_SNS_ACCESS_KEY_ID_PATH &&
+    readFileSync(process.env.AWS_SNS_ACCESS_KEY_ID_PATH).toString()) ||
+    process.env.AWS_SNS_ACCESS_KEY_ID) ??
+  ''
+
+export const AWS_SNS_SECRET_ACCESS_KEY =
+  ((process.env.AWS_SNS_SECRET_ACCESS_KEY_PATH &&
+    readFileSync(process.env.AWS_SNS_SECRET_ACCESS_KEY_PATH).toString()) ||
+    process.env.AWS_SNS_SECRET_ACCESS_KEY) ??
+  ''
+
+export const AWS_SNS_REGION_NAME =
+  ((process.env.AWS_SNS_REGION_NAME_PATH &&
+    readFileSync(process.env.AWS_SNS_REGION_NAME_PATH).toString()) ||
+    process.env.AWS_SNS_REGION_NAME) ??
+  ''
+
+export const AWS_SNS_SENDER_ID =
+  ((process.env.AWS_SNS_SENDER_ID_PATH &&
+    readFileSync(process.env.AWS_SNS_SENDER_ID_PATH).toString()) ||
+    process.env.AWS_SNS_SENDER_ID) ??
+  ''
