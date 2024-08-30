@@ -18,6 +18,8 @@
 set -e
 
 sudo su root
+whoami
+pwd
 
 WORKING_DIR=$(pwd)
 
@@ -129,6 +131,9 @@ for BACKUP_DIR in $ROOT_PATH/backups/*; do
   fi
 done
 
+# This enables root-created directory to be writable by the docker user
+chown -R 1000:1000 $ROOT_PATH/backups
+
 mkdir -p $ROOT_PATH/backups/elasticsearch
 mkdir -p $ROOT_PATH/backups/elasticsearch/indices
 mkdir -p $ROOT_PATH/backups/influxdb
@@ -136,9 +141,7 @@ mkdir -p $ROOT_PATH/backups/mongo
 mkdir -p $ROOT_PATH/backups/minio
 mkdir -p $ROOT_PATH/backups/metabase
 mkdir -p $ROOT_PATH/backups/vsexport
-mkdir -p $ROOT_PATH/backups/metabase
 
-# This enables root-created directory to be writable by the docker user
 chown -R 1000:1000 $ROOT_PATH/backups
 
 # This might not exist if project is empty
