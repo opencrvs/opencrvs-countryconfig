@@ -17,9 +17,11 @@
 #------------------------------------------------------------------------------------------------------------------
 set -e
 
+sudo su root
+
 WORKING_DIR=$(pwd)
 
-if docker service ls > /dev/null 2>&1; then
+if docker service ls >/dev/null 2>&1; then
   IS_LOCAL=false
 else
   IS_LOCAL=true
@@ -52,10 +54,10 @@ for i in "$@"; do
     LABEL="${i#*=}"
     shift
     ;;
-  --passphrase=*)
-    PASSPHRASE="${i#*=}"
-    shift
-    ;;
+  # --passphrase=*)
+  #   PASSPHRASE="${i#*=}"
+  #   shift
+  #   ;;
   *) ;;
   esac
 done
@@ -102,10 +104,10 @@ if [ "$IS_LOCAL" = false ]; then
     echo "Error: Argument for the --replicas is required."
     print_usage_and_exit
   fi
-  if [ -z "$PASSPHRASE" ]; then
-    echo "Error: Argument for the --passphrase is required."
-    print_usage_and_exit
-  fi
+  # if [ -z "$PASSPHRASE" ]; then
+  #   echo "Error: Argument for the --passphrase is required."
+  #   print_usage_and_exit
+  # fi
   # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
   # We recommend that the secrets are served via a secure API from a Hardware Security Module
   source /data/secrets/opencrvs.secrets
@@ -123,7 +125,7 @@ fi
 # Find and remove all empty subdirectories under the top-level directories
 for BACKUP_DIR in $ROOT_PATH/backups/*; do
   if [ -d "$BACKUP_DIR" ]; then
-    rm -rf $BACKUP_DIR/*
+    echo $BACKUP_DIR
   fi
 done
 
@@ -143,7 +145,6 @@ chown -R 1000:1000 $ROOT_PATH/backups
 mkdir -p $ROOT_PATH/metabase
 chown -R 1000:1000 $ROOT_PATH/metabase
 
-
 # Select docker network and replica set in production
 #----------------------------------------------------
 if [ "$IS_LOCAL" = true ]; then
@@ -158,7 +159,7 @@ else
   NETWORK=opencrvs_overlay_net
   # Construct the HOST string rs0/mongo1,mongo2... based on the number of replicas
   HOST="rs0/"
-  for (( i=1; i<=REPLICAS; i++ )); do
+  for ((i = 1; i <= REPLICAS; i++)); do
     if [ $i -gt 1 ]; then
       HOST="${HOST},"
     fi
@@ -213,7 +214,6 @@ docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWO
 docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d performance --gzip --archive=/data/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz"
 
-
 #-------------------------------------------------------------------------------------
 
 echo ""
@@ -246,7 +246,7 @@ echo ""
 create_elasticsearch_backup() {
   OUTPUT=""
   OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
-  if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
+  if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' >/dev/null; then
     echo "Snapshot state is SUCCESS"
   else
     echo $OUTPUT
@@ -257,13 +257,14 @@ create_elasticsearch_backup() {
 
 create_elasticsearch_backup
 
+# Check this, this should not be relevant / manual process not needed at this stage.
 # If required, SSH into the node running the opencrvs_metrics container and backup the metrics data into an influxdb subfolder
+
 #-----------------------------------------------------------------------------------------------------------------------------
 
 if [ "$IS_LOCAL" = true ]; then
   INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
   echo "Backing up Influx locally $INFLUXDB_CONTAINER_ID"
-  docker exec $INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}
   docker cp $INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}
 else
   echo "Backing up Influx in remote environment"
@@ -302,7 +303,6 @@ mkdir -p $BACKUP_RAW_FILES_DIR
 cp -r $ROOT_PATH/backups/elasticsearch/ $BACKUP_RAW_FILES_DIR/elasticsearch/
 cp -r $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE} $BACKUP_RAW_FILES_DIR/influxdb/
 
-
 mkdir -p $BACKUP_RAW_FILES_DIR/minio/ && cp $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/minio/
 mkdir -p $BACKUP_RAW_FILES_DIR/metabase/ && cp $ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/metabase/
 mkdir -p $BACKUP_RAW_FILES_DIR/vsexport/ && cp $ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/vsexport/
@@ -316,18 +316,19 @@ mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/performance
 
 tar -czf /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -C "$BACKUP_RAW_FILES_DIR" .
 
-openssl enc -aes-256-cbc -salt -pbkdf2 -in /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -out /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc -pass pass:$PASSPHRASE
+# openssl enc -aes-256-cbc -salt -pbkdf2 -in /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -out /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc -pass pass:$PASSPHRASE
+
+sudo su $SSH_USER
 
 if [ "$IS_LOCAL" = false ]; then
   set +e
-  rsync -a -r --rsync-path="mkdir -p $REMOTE_DIR/ && rsync" --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc $SSH_USER@$SSH_HOST:$REMOTE_DIR/
+  rsync -a -r --rsync-path="sudo su root && mkdir -p $REMOTE_DIR/ && rsync" --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" /tmp/${LABEL:-$BACKUP_DATE}.tar.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/
   if [ $? -eq 0 ]; then
     echo "Copied backup files to remote server."
   fi
   set -e
 fi
 
-rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
-rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
-rm -r $BACKUP_RAW_FILES_DIR
-
+# rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
+# rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
+# rm -r $BACKUP_RAW_FILES_DIR
