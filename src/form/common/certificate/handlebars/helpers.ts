@@ -518,14 +518,7 @@ function translateChildGenderToMDGWord(childGender: string) {
 
 function handleFatherInformation(this: Record<string, any>) {
   let fatherDetail = ''
-  if (
-    this.fatherFamilyName &&
-    this.fatherFamilyName != '' &&
-    this.fatherFamilyName !== ' ' &&
-    ![null, 'null', null, undefined, 'undefined'].includes(
-      this.fatherFamilyName
-    )
-  ) {
+  if (this.fatherFamilyName?.trim()) {
     const fatherIsDeceased = this.birthFatherFatherIsDeceased ? 'efa maty,' : ''
     const parentHaveNotMaritalStatusLegal = this
       .birthFatherFatherHasFormallyRecognisedChild
@@ -557,14 +550,7 @@ function handleMotherDeceasedInformation(this: Record<string, any>) {
 
 function handleInformantInfo(this: Record<string, any>) {
   let informantInfo = "araka ny fanambarana nataon'"
-  if (
-    this.informantFamilyName &&
-    this.informantFamilyName != '' &&
-    this.informantFamilyName !== ' ' &&
-    ![null, 'null', null, undefined, 'undefined'].includes(
-      this.informantFamilyName
-    )
-  ) {
+  if (this.informantFamilyName?.trim()) {
     informantInfo +=
       this.motherFamilyName === this.informantFamilyName &&
       this.motherFirstName === this.informantFirstName
@@ -591,14 +577,7 @@ function handleInformantInfo(this: Record<string, any>) {
 export function birthCertificateRelatedPerson(): Handlebars.HelperDelegate {
   return function (this: any, informantFamilyName: string = '') {
     let informantInfo = ''
-    if (
-      informantFamilyName &&
-      informantFamilyName != '' &&
-      informantFamilyName !== ' ' &&
-      ![null, 'null', null, undefined, 'undefined'].includes(
-        informantFamilyName
-      )
-    ) {
+    if (informantFamilyName?.trim()) {
       informantInfo +=
         this.motherFamilyName === informantFamilyName &&
         this.motherFirstName === this.informantFirstName
