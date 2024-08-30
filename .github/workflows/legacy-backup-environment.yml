@@ -79,9 +79,8 @@ jobs:
           BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
         run: |
           cd ${{ github.event.repository.name }}
-          scp -P $BACKUP_SOURCE_SSH_PORT infrastructure/backup.sh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST:/tmp/
           ssh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST -p $BACKUP_SOURCE_SSH_PORT "\
-          bash /tmp/backup.sh \
+          bash infrastructure/backups/backup.sh \
           --ssh_host=$BACKUP_DESTINATION_SSH_HOST \
           --ssh_port=$BACKUP_DESTINATION_SSH_PORT \
           --ssh_user=$BACKUP_DESTINATION_SSH_USER \
