@@ -78,4 +78,5 @@ jobs:
           --ssh_port=$BACKUP_DESTINATION_SSH_PORT
           --ssh_user=$BACKUP_DESTINATION_SSH_USER \
           --remote_dir=/data/backup \
-          --replicas=1 >> /var/log/opencrvs-backup.log 2>&1"
+          --replicas=1 \
+          --label=${{ github.event.inputs.version_label }} >> /var/log/opencrvs-backup.log 2>&1"
