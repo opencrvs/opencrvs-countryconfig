@@ -65,14 +65,17 @@ jobs:
 
       - name: Create backup data in given environment and copy it over to the backup environment
         env:
+          BACKUP_SOURCE_SSH_HOST: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
+          BACKUP_SOURCE_SSH_PORT: ${{ vars.SSH_PORT || secrets.SSH_PORT }}
+          BACKUP_SOURCE_SSH_USER: ${{ secrets.SSH_USER }}
           BACKUP_DESTINATION_SSH_HOST: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_HOST }}
           BACKUP_DESTINATION_SSH_PORT: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_PORT }}
           BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
         run: |
-          ssh $BACKUP_DESTINATION_SSH_USER@$BACKUP_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
+          ssh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST -p $BACKUP_SOURCE_SSH_PORT "\
           bash infrastructure/backup.sh \
-          --ssh_host=${{ vars.SSH_HOST || secrets.SSH_HOST }} \
-          --ssh_port=${{ vars.SSH_PORT || secrets.SSH_PORT }} \
-          --ssh_user=${{ secrets.SSH_USER }} \
+          --ssh_host=$BACKUP_DESTINATION_SSH_HOST
+          --ssh_port=$BACKUP_DESTINATION_SSH_PORT
+          --ssh_user=$BACKUP_DESTINATION_SSH_USER \
           --remote_dir=/data/backup \
           --replicas=1 >> /var/log/opencrvs-backup.log 2>&1"
