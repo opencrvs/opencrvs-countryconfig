@@ -78,11 +78,12 @@ jobs:
           BACKUP_DESTINATION_SSH_PORT: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_PORT }}
           BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
         run: |
+          cd ${{ github.event.repository.name }}
           ssh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST -p $BACKUP_SOURCE_SSH_PORT "\
           bash infrastructure/backup.sh \
-          --ssh_host=$BACKUP_DESTINATION_SSH_HOST
-          --ssh_port=$BACKUP_DESTINATION_SSH_PORT
+          --ssh_host=$BACKUP_DESTINATION_SSH_HOST \
+          --ssh_port=$BACKUP_DESTINATION_SSH_PORT \
           --ssh_user=$BACKUP_DESTINATION_SSH_USER \
-          --remote_dir=/data/backup \
+          --remote_dir=/data/backups \
           --replicas=1 \
           --label=${{ github.event.inputs.version_label }} >> /var/log/opencrvs-backup.log 2>&1"
