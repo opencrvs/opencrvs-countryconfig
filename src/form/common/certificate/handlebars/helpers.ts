@@ -552,21 +552,7 @@ function handleFatherInformation(this: Record<string, any>) {
 }
 
 function handleMotherDeceasedInformation(this: Record<string, any>) {
-  let motherIsDeceased = ''
-  if (
-    this.fatherFamilyName &&
-    this.fatherFamilyName != '' &&
-    this.fatherFamilyName !== ' ' &&
-    ![null, 'null', null, undefined, 'undefined'].includes(
-      this.fatherFamilyName
-    ) &&
-    !['', null, 'null', null, undefined, 'undefined'].includes(
-      this.fatherMaritalStatus
-    )
-  ) {
-    motherIsDeceased = this.birthMotherMotherIsDeceased ? ' ,efa maty,' : ''
-  }
-  return motherIsDeceased
+  return this.birthMotherMotherIsDeceased ? ' ,efa maty,' : ''
 }
 
 function handleInformantInfo(this: Record<string, any>) {
