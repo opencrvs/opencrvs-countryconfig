@@ -40,7 +40,8 @@
 
 - name: Set backup SSH port
   set_fact:
-    backup_ssh_port: '{{ backup_ssh_port }}'
+    # Ensures fact is always defined but don't expose port unnecessary
+    backup_ssh_port: '{{ backup_ssh_port |  ssh_port }}'
 
 - name: 'Allow secure docker client communication for backup server'
   ufw:
