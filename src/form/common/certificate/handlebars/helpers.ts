@@ -129,7 +129,7 @@ export function mainContent(): Handlebars.HelperDelegate {
         "--Tamin'ny",
         customizeDateInCertificateContent(this.eventDate),
         ", tamin'ny",
-        customizeTimeInCertificateContent(this.birthChildBirthTime),
+        convertTimeToMdgCustomWords(this.birthChildBirthTime),
         "no teraka tao amin'ny",
         getPlaceOfBirth(
           this.birthLocation,
@@ -497,17 +497,9 @@ function removeOrdinalIndicator(dateString: string) {
   return dateString && dateString?.replace(/\b(\d+)(th|st|nd|rd)\b/g, '$1')
 }
 
-function customizeTimeInCertificateContent(timeString: string) {
-  const rawEventTime = timeString?.toLowerCase().includes('h')
-    ? timeString.replace('h', ':')
-    : timeString
-
-  return rawEventTime ? convertTimeToMdgCustomWords(rawEventTime) : ''
-}
-
 export function translateTime(): Handlebars.HelperDelegate {
   return function (this: any, timeString: string) {
-    return customizeTimeInCertificateContent(timeString)
+    return convertTimeToMdgCustomWords(timeString)
   }
 }
 
