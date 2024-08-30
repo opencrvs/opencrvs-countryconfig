@@ -65,32 +65,26 @@ export function wrapGroup(): Handlebars.HelperDelegate {
       return svgString
     }
 
-    for (const key in options.hash) {
-      const lines = wordWrap(options.hash[key], lineLength)
-      if (key.startsWith('text')) {
-        content += `
+    function createTextElement(textType: 'normal' | 'bold', lines: string[]) {
+      return `
         <text 
           fill="black" 
           xml:space="default" 
           font-family="Montserrat" 
-          font-size="9" 
+          font-size="9"
+          font-weight="${textType}" 
           letter-spacing="0em">
-            ${insertTspansIntoText(lines)}        
-        </text>
-        `
-        y += LINE_HEIGHT
-      } else if (key.startsWith('bold')) {
-        content += `
-        <text 
-        fill="black" 
-        xml:space="default" 
-        font-family="Montserrat" 
-        font-size="9"
-        font-weight="bold" 
-        letter-spacing="0em">
             ${insertTspansIntoText(lines)}
-         </text>
-        `
+        </text>
+      `
+    }
+
+    for (const key in options.hash) {
+      const lines = wordWrap(options.hash[key], lineLength)
+      const textType = key.startsWith('text') ? 'normal' : 'bold'
+      content += createTextElement(textType, lines)
+      if (textType === 'normal') {
+        y += LINE_HEIGHT
       }
     }
 

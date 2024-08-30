@@ -145,7 +145,7 @@
         </g>
         <g id="Frame 3">
             <g id="right-column">
-                {{{wrapGroup 54 239 168.226
+                {{{wrapGroup 50 239 168.226
                 text2=(join "Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany "
                 (translateDate currentDate) ".")
                 bold1="MANARAKA NY SONIA"
