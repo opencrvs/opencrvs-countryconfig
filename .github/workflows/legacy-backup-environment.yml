@@ -83,8 +83,8 @@ jobs:
           ssh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST -p $BACKUP_SOURCE_SSH_PORT "\
           bash /tmp/backup.sh \
           --ssh_host=$BACKUP_DESTINATION_SSH_HOST \
+          --ssh_user=provision \
           --ssh_port=$BACKUP_DESTINATION_SSH_PORT \
-          --ssh_user=$BACKUP_DESTINATION_SSH_USER \
           --remote_dir=/data/backups \
           --replicas=1 \
           --label=${{ github.event.inputs.version_label }} >> /var/log/opencrvs-backup.log 2>&1"
