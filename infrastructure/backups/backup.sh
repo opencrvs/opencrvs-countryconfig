@@ -273,18 +273,9 @@ INFLUXDB_HOSTNAME=$(echo $(docker service ps -f "desired-state=running" opencrvs
 INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
 INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
 
-if [ "$IS_LOCAL" = true ]; then
-  echo "Backing up Influx on own node"
-  docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}
-  docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} /data/backups/influxdb/${LABEL:-$BACKUP_DATE}
-else
-  echo "Backing up Influx on other node $INFLUXDB_HOST"
-  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" /data/backups/influxdb $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb
-  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}"
-  ssh $INFLUXDB_SSH_USER@$INFLUXDB_HOST "docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} /data/backups/influxdb/${LABEL:-$BACKUP_DATE}"
-  echo "Replacing backup for influxdb on manager node with new backup"
-  rsync -a -r --ignore-existing --progress --rsh="ssh -p$SSH_PORT" $INFLUXDB_SSH_USER@$INFLUXDB_HOST:/data/backups/influxdb /data/backups/influxdb
-fi
+echo "Backing up Influx on own node"
+docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}
+docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} /data/backups/influxdb/${LABEL:-$BACKUP_DATE}
 
 # if [ "$IS_LOCAL" = true ]; then
 #   INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
