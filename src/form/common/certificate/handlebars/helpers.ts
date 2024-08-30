@@ -160,11 +160,7 @@ export function mainContent(): Handlebars.HelperDelegate {
     const paragraph3 = joinValuesWith(
       [
         'Nosoratana androany',
-        customizeDateInCertificateContent(this.registrationDate),
-        'tamin’ny',
-        customizeTimeInCertificateContent(
-          new Date().toISOString().split('T')[0]
-        ) + ',',
+        customizeDateInCertificateContent(this.registrationDate) + ',',
         handleInformantInfo.apply(this),
         ', izay miara-manao sonia aminay',
         this.registrar.name,
@@ -821,18 +817,5 @@ export function mentions(): Handlebars.HelperDelegate {
 export function isFirstCertificate(): Handlebars.HelperDelegate {
   return function (this: Record<string, string>) {
     return !this.certifier
-  }
-}
-
-export function currentDate(): Handlebars.HelperDelegate {
-  return function (this: Record<string, string>) {
-    const current = new Date()
-    return (
-      current.getFullYear() +
-      '-' +
-      (current.getMonth() + 1).toString().padStart(2, '0') +
-      '-' +
-      current.getDay().toString().padStart(2, '0')
-    )
   }
 }
