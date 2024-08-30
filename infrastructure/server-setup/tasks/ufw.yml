@@ -38,6 +38,17 @@
     port: 2376
     proto: tcp
 
+- name: Set backup SSH port
+  set_fact:
+    backup_ssh_port: '{{ backup_ssh_port }}'
+
+- name: 'Allow secure docker client communication for backup server'
+  ufw:
+    rule: allow
+    port: '{{ backup_ssh_port }}'
+    proto: tcp
+  when: backup_ssh_port is defined
+
 - name: 'Allow docker swarm communication among nodes - TCP'
   ufw:
     rule: allow
