@@ -16,19 +16,6 @@ export const SMTP_USERNAME = process.env.SMTP_USERNAME
 export const SMTP_PASSWORD = process.env.SMTP_PASSWORD
 export const SMTP_SECURE = process.env.SMTP_SECURE === 'true'
 
-/* Infobip */
-export const INFOBIP_GATEWAY_ENDPOINT = process.env.INFOBIP_GATEWAY_ENDPOINT
-  ? process.env.INFOBIP_GATEWAY_ENDPOINT
-  : ''
-
-export const INFOBIP_API_KEY = process.env.INFOBIP_API_KEY
-  ? process.env.INFOBIP_API_KEY
-  : ''
-
-export const INFOBIP_SENDER_ID = process.env.INFOBIP_SENDER_ID
-  ? process.env.INFOBIP_SENDER_ID
-  : ''
-
 export const COUNTRY_LOGO_URL = `${COUNTRY_CONFIG_URL}/content/country-logo`
 
 export const LOGIN_URL = process.env.LOGIN_URL as string
@@ -39,26 +26,11 @@ export const SENDER_EMAIL_ADDRESS = process.env.SENDER_EMAIL_ADDRESS
 
 export const SMS_PROVIDER = process.env.SMS_PROVIDER ?? 'aws-sns'
 
-export const AWS_SNS_ACCESS_KEY_ID =
-  ((process.env.AWS_SNS_ACCESS_KEY_ID_PATH &&
-    readFileSync(process.env.AWS_SNS_ACCESS_KEY_ID_PATH).toString()) ||
-    process.env.AWS_SNS_ACCESS_KEY_ID) ??
-  ''
+export const AWS_SNS_ACCESS_KEY_ID = process.env.AWS_SNS_ACCESS_KEY_ID ?? ''
 
 export const AWS_SNS_SECRET_ACCESS_KEY =
-  ((process.env.AWS_SNS_SECRET_ACCESS_KEY_PATH &&
-    readFileSync(process.env.AWS_SNS_SECRET_ACCESS_KEY_PATH).toString()) ||
-    process.env.AWS_SNS_SECRET_ACCESS_KEY) ??
-  ''
+  process.env.AWS_SNS_SECRET_ACCESS_KEY_PATH ?? ''
 
-export const AWS_SNS_REGION_NAME =
-  ((process.env.AWS_SNS_REGION_NAME_PATH &&
-    readFileSync(process.env.AWS_SNS_REGION_NAME_PATH).toString()) ||
-    process.env.AWS_SNS_REGION_NAME) ??
-  ''
+export const AWS_SNS_REGION_NAME = process.env.AWS_SNS_REGION_NAME_PATH ?? ''
 
-export const AWS_SNS_SENDER_ID =
-  ((process.env.AWS_SNS_SENDER_ID_PATH &&
-    readFileSync(process.env.AWS_SNS_SENDER_ID_PATH).toString()) ||
-    process.env.AWS_SNS_SENDER_ID) ??
-  ''
+export const AWS_SNS_SENDER_ID = process.env.AWS_SNS_SENDER_ID_PATH ?? ''
