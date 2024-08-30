@@ -92,70 +92,88 @@ export function wrapGroup(): Handlebars.HelperDelegate {
   } as unknown as Handlebars.HelperDelegate
 }
 
+function joinValuesWith(
+  values: (string | null | undefined)[],
+  separator = ' '
+) {
+  return values.filter(Boolean).join(separator)
+}
+
 export function join(): Handlebars.HelperDelegate {
   return function (
     this: any,
     ...values: [...string[], Handlebars.HelperOptions]
   ) {
-    return values.slice(0, -1).join('')
+    return joinValuesWith(values.slice(0, -1) as string[], '')
   } as unknown as Handlebars.HelperDelegate
 }
 
 function name(familyName: string, firstName: string) {
-  return [familyName, firstName].filter(Boolean).join(' ')
+  return joinValuesWith([familyName, firstName], ' ')
 }
 export function mainContent(): Handlebars.HelperDelegate {
   return function (this: any, placeOfBirthDistrict: string = '') {
-    const paragraph1 =
-      "Nalaina tamin’ny bokim-piankohonan'ny Kaominina " +
-      placeOfBirthDistrict +
-      ', Foibe misahana ny fiankohonana, taona ' +
-      customizeDateYearInCertificateContent(this.registrar.date) +
-      ', izao sora-pahaterahana manaraka izao :'
+    const paragraph1 = joinValuesWith(
+      [
+        "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
+        placeOfBirthDistrict,
+        ', Foibe misahana ny fiankohonana, taona',
+        customizeDateYearInCertificateContent(this.registrar.date),
+        ', izao sora-pahaterahana manaraka izao :'
+      ],
+      ' '
+    )
 
-    const paragraph2 =
-      "--Tamin'ny " +
-      customizeDateInCertificateContent(this.eventDate) +
-      ", tamin'ny " +
-      customizeTimeInCertificateContent(this.birthChildBirthTime) +
-      " no teraka tao amin'ny " +
-      getPlaceOfBirth(
-        this.birthLocation,
-        this.birthChildFokontanyCustomAddress
-      ) +
-      ', Kaominina ' +
-      placeOfBirthDistrict +
-      ' : ' +
-      name(this.childFamilyName, this.childFirstName) +
-      ', ' +
-      translateChildGenderToMDGWord(this.childGender) +
-      ', zanak’i ' +
-      handleFatherInformation.apply(this) +
-      ' ' +
-      name(this.motherFamilyName, this.motherFirstName) +
-      handleMotherDeceasedInformation.apply(this) +
-      ` ${this.motherOccupation} ` +
-      ', teraka tao ' +
-      this.birthMotherBirthPlace +
-      ' tamin’ny ' +
-      customizeDateInCertificateContent(this.motherBirthDate) +
-      ', monina ao ' +
-      this.birthMotherFokontanyCustomAddress +
-      '--'
-    const paragraph3 =
-      'Nosoratana androany ' +
-      customizeDateInCertificateContent(this.registrationDate) +
-      ' tamin’ny ' +
-      customizeTimeInCertificateContent(
-        new Date().toISOString().split('T')[0]
-      ) +
-      ', ' +
-      handleInformantInfo.apply(this) +
-      ', izay miara-manao sonia aminay ' +
-      this.registrar.name +
-      ", mpiandraikitra ny sora-piankohonana eto amin'ny " +
-      customizeOfficeName(this.registrationLocation) +
-      ', rehefa novakiana taminy ity soratra ity.'
+    const paragraph2 = joinValuesWith(
+      [
+        "--Tamin'ny",
+        customizeDateInCertificateContent(this.eventDate),
+        ", tamin'ny",
+        customizeTimeInCertificateContent(this.birthChildBirthTime),
+        "no teraka tao amin'ny",
+        getPlaceOfBirth(
+          this.birthLocation,
+          this.birthChildFokontanyCustomAddress
+        ),
+        ', Kaominina',
+        placeOfBirthDistrict,
+        ':',
+        name(this.childFamilyName, this.childFirstName) + ',',
+
+        translateChildGenderToMDGWord(this.childGender),
+        ', zanak’i',
+        handleFatherInformation.apply(this),
+
+        name(this.motherFamilyName, this.motherFirstName),
+        handleMotherDeceasedInformation.apply(this),
+        this.motherOccupation,
+        ', teraka tao',
+        this.birthMotherBirthPlace,
+        'tamin’ny',
+        customizeDateInCertificateContent(this.motherBirthDate),
+        ', monina ao',
+        this.birthMotherFokontanyCustomAddress,
+        '--'
+      ],
+      ' '
+    )
+    const paragraph3 = joinValuesWith(
+      [
+        'Nosoratana androany',
+        customizeDateInCertificateContent(this.registrationDate),
+        'tamin’ny',
+        customizeTimeInCertificateContent(
+          new Date().toISOString().split('T')[0]
+        ) + ',',
+        handleInformantInfo.apply(this),
+        ', izay miara-manao sonia aminay',
+        this.registrar.name,
+        ", mpiandraikitra ny sora-piankohonana eto amin'ny",
+        customizeOfficeName(this.registrationLocation),
+        ', rehefa novakiana taminy ity soratra ity.'
+      ],
+      ' '
+    )
 
     return paragraph1 + '\n\n' + paragraph2 + '\n\n' + paragraph3
   } as unknown as Handlebars.HelperDelegate
