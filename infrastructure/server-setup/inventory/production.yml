@@ -68,9 +68,8 @@ docker-workers:
 backups:
   hosts:
     siecm-backup-app-1: # @todo set this to be the hostname of your backup server
-      ansible_host: '102.16.127.249'
-      ansible_port: 10015
-      internal_ssh_port: 22
+      ansible_host: '10.10.2.15'
+      ansible_port: 22
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
 # If you are using a jump server to access this environment
 # jump:
