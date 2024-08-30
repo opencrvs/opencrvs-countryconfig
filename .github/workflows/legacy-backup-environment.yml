@@ -11,14 +11,14 @@ name: Backup from legacy environment
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      backup-source-environment:
         type: choice
         description: Environment to create backup from
         required: true
         default: legacy-preprod
         options:
           - legacy-preprod
-      environment_to_backup:
+      backup-destination-environment:
         type: choice
         description: Environment to create backups to
         required: true
@@ -33,32 +33,44 @@ on:
         description: The version label for the backups
         required: true
 jobs:
-  server-to-backup-vars:
-    environment: ${{ github.event.inputs.environment_to_backup }}
+  destination-environment-vars:
+    environment: ${{ github.event.inputs.backup-destination-environment }}
     runs-on: ubuntu-22.04
     outputs:
-      BACKUP_SSH_HOST: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
-      BACKUP_SSH_PORT: ${{ vars.SSH_PORT || secrets.SSH_PORT }}
-      BACKUP_SSH_USER: ${{ secrets.SSH_USER }}
+      BACKUP_DESTINATION_SSH_HOST: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
+      BACKUP_DESTINATION_SSH_PORT: ${{ vars.SSH_PORT || secrets.SSH_PORT }}
+      BACKUP_DESTINATION_SSH_USER: ${{ secrets.SSH_USER }}
+    steps:
+      - name: Echo
+        run: echo ${{ github.events.inputs.environment }}
 
   run-backup:
-    environment: ${{ github.event.inputs.environment }}
-    needs: server-to-backup-vars
+    environment: ${{ github.event.inputs.backup-source-environment }}
+    needs: destination-environment-vars
     runs-on: ubuntu-22.04
     steps:
+      - name: Read known hosts
+        run: |
+          cd ${{ github.event.repository.name }}
+          echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
+          sed -i -e '$a\' ./infrastructure/known-hosts
+          cat ./infrastructure/known-hosts >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+
       - name: Create backup data in given environment and copy it over to the backup environment
-        - env:
-          BACKUP_SSH_HOST: ${{ needs.server-to-backup-vars.outputs.BACKUP_SSH_HOST }}
-          BACKUP_SSH_PORT: ${{ needs.server-to-backup-vars.outputs.BACKUP_SSH_PORT }}
-          BACKUP_SSH_USER: ${{ needs.server-to-backup-vars.outputs.BACKUP_SSH_USER }}
+        env:
+          BACKUP_DESTINATION_SSH_HOST: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_HOST }}
+          BACKUP_DESTINATION_SSH_PORT: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_PORT }}
+          BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
         run: |
-  ssh $BACKUP_SSH_USER@$BACKUP_SSH_HOST -p $BACKUP_SSH_PORT "\
-        bash infrastructure/backup.sh \
+          ssh $BACKUP_DESTINATION_SSH_USER@$BACKUP_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
+          bash infrastructure/backup.sh \
           --ssh_host=${{ vars.SSH_HOST || secrets.SSH_HOST }} \
           --ssh_port=${{ vars.SSH_PORT || secrets.SSH_PORT }} \
           --ssh_user=${{ secrets.SSH_USER }} \
