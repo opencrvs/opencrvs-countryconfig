@@ -32,6 +32,11 @@ export function getSectionMapping(mappingId: string): ISectionMapping {
             parameters: ['en', 'dd MMMM yyyy']
           },
           {
+            fieldName: certificateHandlebars.certifier,
+            operation: 'userTransformer',
+            parameters: ['CERTIFIED']
+          },
+          {
             fieldName: certificateHandlebars.registrar,
             operation: 'userTransformer',
             parameters: ['REGISTERED']

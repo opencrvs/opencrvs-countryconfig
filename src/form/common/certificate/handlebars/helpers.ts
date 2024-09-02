@@ -1,5 +1,5 @@
 import * as Handlebars from 'handlebars'
-import { type IntlShape } from 'react-intl'
+import { type IntlShape, type MessageDescriptor } from 'react-intl'
 
 function wordWrap(text: string, boundary: number) {
   return text
@@ -43,6 +43,135 @@ export function wrap(): Handlebars.HelperDelegate {
   ) {
     const lines = wordWrap(values.slice(0, -1).join(' '), lineLength)
     return insertTspansIntoText(lines, x, y)
+  } as unknown as Handlebars.HelperDelegate
+}
+
+export function wrapGroup(): Handlebars.HelperDelegate {
+  return function (
+    this: any,
+    lineLength: number,
+    initX: number,
+    initY: number,
+    options: Handlebars.HelperOptions
+  ) {
+    let content = ''
+    let y = initY
+    function insertTspansIntoText(textLines: string[]) {
+      let svgString = ''
+      for (const line of textLines) {
+        svgString += `<tspan x="${initX}" y="${y}">${line}</tspan>`
+        y += LINE_HEIGHT
+      }
+      return svgString
+    }
+
+    function createTextElement(textType: 'normal' | 'bold', lines: string[]) {
+      return `
+        <text 
+          fill="black" 
+          xml:space="default" 
+          font-family="Montserrat" 
+          font-size="9"
+          font-weight="${textType}" 
+          letter-spacing="0em">
+            ${insertTspansIntoText(lines)}
+        </text>
+      `
+    }
+
+    for (const key in options.hash) {
+      const lines = wordWrap(options.hash[key], lineLength)
+      const textType = key.startsWith('text') ? 'normal' : 'bold'
+      content += createTextElement(textType, lines)
+      if (textType === 'normal') {
+        y += LINE_HEIGHT
+      }
+    }
+
+    return content
+  } as unknown as Handlebars.HelperDelegate
+}
+
+function joinValuesWith(
+  values: (string | null | undefined)[],
+  separator = ' '
+) {
+  return values.filter(Boolean).join(separator)
+}
+
+export function join(): Handlebars.HelperDelegate {
+  return function (
+    this: any,
+    ...values: [...string[], Handlebars.HelperOptions]
+  ) {
+    return joinValuesWith(values.slice(0, -1) as string[], '')
+  } as unknown as Handlebars.HelperDelegate
+}
+
+function name(familyName: string, firstName: string) {
+  return joinValuesWith([familyName, firstName], ' ')
+}
+export function mainContent(): Handlebars.HelperDelegate {
+  return function (this: any, placeOfBirthDistrict: string = '') {
+    const paragraph1 = joinValuesWith(
+      [
+        "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
+        placeOfBirthDistrict,
+        ', Foibe misahana ny fiankohonana, taona',
+        customizeDateYearInCertificateContent(this.registrar.date),
+        ', izao sora-pahaterahana manaraka izao :'
+      ],
+      ' '
+    )
+
+    const paragraph2 = joinValuesWith(
+      [
+        "--Tamin'ny",
+        customizeDateInCertificateContent(this.eventDate),
+        ", tamin'ny",
+        convertTimeToMdgCustomWords(this.birthChildBirthTime),
+        "no teraka tao amin'ny",
+        getPlaceOfBirth(
+          this.birthLocation,
+          this.birthChildFokontanyCustomAddress
+        ),
+        ', Kaominina',
+        placeOfBirthDistrict,
+        ':',
+        name(this.childFamilyName, this.childFirstName) + ',',
+
+        translateChildGenderToMDGWord(this.childGender),
+        ', zanak’i',
+        handleFatherInformation.apply(this),
+
+        name(this.motherFamilyName, this.motherFirstName),
+        handleMotherDeceasedInformation.apply(this),
+        this.motherOccupation,
+        ', teraka tao',
+        this.birthMotherBirthPlace,
+        'tamin’ny',
+        customizeDateInCertificateContent(this.motherBirthDate),
+        ', monina ao',
+        this.birthMotherFokontanyCustomAddress,
+        '--'
+      ],
+      ' '
+    )
+    const paragraph3 = joinValuesWith(
+      [
+        'Nosoratana androany',
+        customizeDateInCertificateContent(this.registrationDate) + ',',
+        handleInformantInfo.apply(this),
+        ', izay miara-manao sonia aminay',
+        this.registrar.name,
+        ", mpiandraikitra ny sora-piankohonana eto amin'ny",
+        customizeOfficeName(this.registrationLocation),
+        ', rehefa novakiana taminy ity soratra ity.'
+      ],
+      ' '
+    )
+
+    return paragraph1 + '\n\n' + paragraph2 + '\n\n' + paragraph3
   } as unknown as Handlebars.HelperDelegate
 }
 
@@ -200,7 +329,7 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
 }
 
 function convertTimeToMdgCustomWords(timeString: string) {
-  const [hour, minute, seconde] = timeString.split(':')
+  const [hour, minute] = timeString.split(':')
   let newHour = parseInt(hour)
   const mdgHours = THE_UNITS_MDG_WORDS.concat(
     FROM_10_TO_19_MDG_WORDS.slice(0, 3)
@@ -313,9 +442,22 @@ const customizeDateInCertificateContent = (_date: string) => {
   return convertDateToMdgCustomWords(formattedDate)
 }
 
-export function translateEventDate(): Handlebars.HelperDelegate {
-  return function (this: any, eventDate: string) {
-    return customizeDateInCertificateContent(eventDate)
+export function translateDate(): Handlebars.HelperDelegate {
+  return function (this: any, dateString: string) {
+    return customizeDateInCertificateContent(dateString)
+  }
+}
+
+function customizeDateYearInCertificateContent(dateString: string) {
+  const year = Number(dateString.split('-')[0])
+  return Number.isNaN(year)
+    ? ''
+    : convertNumberToLetterForMalagasySpecificLanguage(year)
+}
+
+export function translateDateYear(): Handlebars.HelperDelegate {
+  return function (this: any, dateString: string) {
+    return customizeDateYearInCertificateContent(dateString)
   }
 }
 
@@ -355,17 +497,13 @@ function removeOrdinalIndicator(dateString: string) {
   return dateString && dateString?.replace(/\b(\d+)(th|st|nd|rd)\b/g, '$1')
 }
 
-export function translateEventTime(): Handlebars.HelperDelegate {
-  return function (this: any, eventTime: string) {
-    const rawEventTime = eventTime?.toLowerCase().includes('h')
-      ? eventTime.replace('h', ':')
-      : eventTime
-
-    return rawEventTime ? convertTimeToMdgCustomWords(rawEventTime) : ''
+export function translateTime(): Handlebars.HelperDelegate {
+  return function (this: any, timeString: string) {
+    return convertTimeToMdgCustomWords(timeString)
   }
 }
 
-export function translateEventDateToMDGFormat(): Handlebars.HelperDelegate {
+export function translateDateToMDGFormat(): Handlebars.HelperDelegate {
   return function (this: any, eventDate: string) {
     const dateWithoutOrdinal = removeOrdinalIndicator(eventDate)
     const date = new Date(dateWithoutOrdinal)
@@ -375,132 +513,77 @@ export function translateEventDateToMDGFormat(): Handlebars.HelperDelegate {
   }
 }
 
-export function translateChildGenderToMDGWord(): Handlebars.HelperDelegate {
-  return function (this: any, childGender: string) {
-    return childGender &&
-      ['male', 'homme', 'lehilahy', 'zazalahy'].includes(
-        childGender.toLowerCase()
-      )
-      ? 'zazalahy'
-      : 'zazavavy'
-  }
+function translateChildGenderToMDGWord(childGender: string) {
+  return childGender &&
+    ['male', 'homme', 'lehilahy', 'zazalahy'].includes(
+      childGender.toLowerCase()
+    )
+    ? 'zazalahy'
+    : 'zazavavy'
 }
 
-export function handleFatherInformation(): Handlebars.HelperDelegate {
-  return function (this: any, fatherFamilyName: string = '') {
-    let fatherDetail = ''
-    if (
-      fatherFamilyName &&
-      fatherFamilyName != '' &&
-      fatherFamilyName !== ' ' &&
-      ![null, 'null', null, undefined, 'undefined'].includes(fatherFamilyName)
-    ) {
-      const legalMaritalStatus = ['marié(e)', 'married', 'manambady']
-      const fatherHasMaritalStatusWidowed = [
-        'veuf(ve)',
-        'widowed',
-        'maty vady'
-      ].includes(this.motherMaritalStatus.toLowerCase())
-        ? 'efa maty,'
-        : ''
-      const parentHaveNotMaritalStatusLegal =
-        !legalMaritalStatus.includes(this.motherMaritalStatus.toLowerCase()) &&
-        !legalMaritalStatus.includes(this.fatherMaritalStatus.toLowerCase())
-          ? 'izay manambara fa manjanaka azy, sy'
-          : ', sy'
-      const fatherAdditionnalInfo =
-        fatherHasMaritalStatusWidowed === 'efa maty,'
-          ? ''
-          : `${this.fatherOccupation}, teraka tao ${
-              this.birthFatherBirthPlace
-            } tamin’ny ${
-              this.birthFatherCustomizedExactDateOfBirthUnknown
-                ? convertNumberToLetterForMalagasySpecificLanguage(
-                    parseInt(this.birthFatherYearOfBirth)
-                  )
-                : customizeDateInCertificateContent(this.fatherBirthDate)
-            }, monina ao ${
-              this.birthFatherFokontanyCustomAddress ??
-              this.birthMotherFokontanyCustomAddress
-            }, ${parentHaveNotMaritalStatusLegal}`
-      fatherDetail = `${fatherFamilyName} ${this.fatherFirstName}, ${fatherAdditionnalInfo}`
-    }
-    return fatherDetail
+function handleFatherInformation(this: Record<string, any>) {
+  let fatherDetail = ''
+  if (this.fatherFamilyName?.trim()) {
+    const fatherIsDeceased = this.birthFatherFatherIsDeceased ? 'efa maty,' : ''
+    const parentHaveNotMaritalStatusLegal = this
+      .birthFatherFatherHasFormallyRecognisedChild
+      ? 'izay manambara fa manjanaka azy, sy'
+      : ', sy'
+    const fatherAdditionnalInfo =
+      fatherIsDeceased === 'efa maty,'
+        ? ''
+        : `${this.fatherOccupation}, teraka tao ${
+            this.birthFatherBirthPlace
+          } tamin’ny ${
+            this.birthFatherCustomizedExactDateOfBirthUnknown
+              ? convertNumberToLetterForMalagasySpecificLanguage(
+                  parseInt(this.birthFatherYearOfBirth)
+                )
+              : customizeDateInCertificateContent(this.fatherBirthDate)
+          }, monina ao ${
+            this.birthFatherFokontanyCustomAddress ??
+            this.birthMotherFokontanyCustomAddress
+          }, ${parentHaveNotMaritalStatusLegal}`
+    fatherDetail = `${this.fatherFamilyName} ${this.fatherFirstName}, ${fatherAdditionnalInfo}`
   }
+  return fatherDetail
 }
 
-export function handleMotherMaritalStatusWidowedInformation(): Handlebars.HelperDelegate {
-  return function (this: any, fatherFamilyName: string = '') {
-    let motherMaritalStatusWidowedInformation = ''
-    if (
-      fatherFamilyName &&
-      fatherFamilyName != '' &&
-      fatherFamilyName !== ' ' &&
-      ![null, 'null', null, undefined, 'undefined'].includes(
-        fatherFamilyName
-      ) &&
-      !['', null, 'null', null, undefined, 'undefined'].includes(
-        this.fatherMaritalStatus
-      )
-    ) {
-      motherMaritalStatusWidowedInformation = [
-        'veuf(ve)',
-        'widowed',
-        'maty vady'
-      ].includes(this.fatherMaritalStatus.toLowerCase())
-        ? ' ,efa maty,'
-        : ''
-    }
-    return motherMaritalStatusWidowedInformation
-  }
+function handleMotherDeceasedInformation(this: Record<string, any>) {
+  return this.birthMotherMotherIsDeceased ? ' ,efa maty,' : ''
 }
 
-export function handleInformantInfo(): Handlebars.HelperDelegate {
-  return function (this: any, informantFamilyName: string = '') {
-    let informantInfo = "araka ny fanambarana nataon'"
-    if (
-      informantFamilyName &&
-      informantFamilyName != '' &&
-      informantFamilyName !== ' ' &&
-      ![null, 'null', null, undefined, 'undefined'].includes(
-        informantFamilyName
-      )
-    ) {
-      informantInfo +=
-        this.motherFamilyName === informantFamilyName &&
-        this.motherFirstName === this.informantFirstName
-          ? 'ny reniny,'
-          : this.fatherFamilyName === informantFamilyName &&
-            this.fatherFirstName === this.informantFirstName
-          ? 'ny rainy,'
-          : `i ${informantFamilyName} ${
-              this.informantFirstName
-            }, teraka tamin'ny ${
-              this.birthInformantCustomizedExactDateOfBirthUnknown
-                ? convertNumberToLetterForMalagasySpecificLanguage(
-                    parseInt(this.birthInformantYearOfBirth)
-                  )
-                : customizeDateInCertificateContent(this.informantBirthDate)
-            }, monina ao ${
-              this.informantCustomAddress ??
-              this.birthInformantFokontanyCustomAddress
-            }, nanatrika ny fahaterahana,`
-    }
-    return informantInfo
+function handleInformantInfo(this: Record<string, any>) {
+  let informantInfo = "araka ny fanambarana nataon'"
+  if (this.informantFamilyName?.trim()) {
+    informantInfo +=
+      this.motherFamilyName === this.informantFamilyName &&
+      this.motherFirstName === this.informantFirstName
+        ? 'ny reniny,'
+        : this.fatherFamilyName === this.informantFamilyName &&
+          this.fatherFirstName === this.informantFirstName
+        ? 'ny rainy,'
+        : `i ${this.informantFamilyName} ${
+            this.informantFirstName
+          }, teraka tamin'ny ${
+            this.birthInformantCustomizedExactDateOfBirthUnknown
+              ? convertNumberToLetterForMalagasySpecificLanguage(
+                  parseInt(this.birthInformantYearOfBirth)
+                )
+              : customizeDateInCertificateContent(this.informantBirthDate)
+          }, monina ao ${
+            this.informantCustomAddress ??
+            this.birthInformantFokontanyCustomAddress
+          }, nanatrika ny fahaterahana,`
   }
+  return informantInfo
 }
 
 export function birthCertificateRelatedPerson(): Handlebars.HelperDelegate {
   return function (this: any, informantFamilyName: string = '') {
     let informantInfo = ''
-    if (
-      informantFamilyName &&
-      informantFamilyName != '' &&
-      informantFamilyName !== ' ' &&
-      ![null, 'null', null, undefined, 'undefined'].includes(
-        informantFamilyName
-      )
-    ) {
+    if (informantFamilyName?.trim()) {
       informantInfo +=
         this.motherFamilyName === informantFamilyName &&
         this.motherFirstName === this.informantFirstName
@@ -561,18 +644,15 @@ export function customizeDistrictNameLocation(): Handlebars.HelperDelegate {
   }
 }
 
-export function getPlaceOfBirth(): Handlebars.HelperDelegate {
-  return function (
-    this: any,
-    placeOfBirthFacility: string = '',
-    fokontanyCustomAddress: string = ''
-  ) {
-    return !['', ' ', null, 'null', 'undefined', undefined].includes(
-      fokontanyCustomAddress
-    )
-      ? fokontanyCustomAddress
-      : placeOfBirthFacility
-  }
+export function getPlaceOfBirth(
+  placeOfBirthFacility: string = '',
+  fokontanyCustomAddress: string = ''
+) {
+  return !['', ' ', null, 'null', 'undefined', undefined].includes(
+    fokontanyCustomAddress
+  )
+    ? fokontanyCustomAddress
+    : placeOfBirthFacility
 }
 
 function getRecognitionMentionValues(this: Record<string, string>, i: number) {
@@ -723,5 +803,11 @@ export function mentions(): Handlebars.HelperDelegate {
       output += '\n'
     }
     return output
+  }
+}
+
+export function isFirstCertificate(): Handlebars.HelperDelegate {
+  return function (this: Record<string, string>) {
+    return !this.certifier
   }
 }
