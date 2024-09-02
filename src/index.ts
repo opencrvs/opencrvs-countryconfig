@@ -48,7 +48,7 @@ import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
 import { formHandler } from '@countryconfig/form'
 import { locationsHandler } from './data-seeding/locations/handler'
-import { certificateHandler } from './data-seeding/certificates/handler'
+import { certificateHandler } from './api/certificates/handler'
 import { rolesHandler } from './data-seeding/roles/handler'
 import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
@@ -237,18 +237,15 @@ export async function createServer() {
 
   server.auth.default('jwt')
 
-  if (process.env.NODE_ENV !== 'production') {
-    server.route({
-      method: 'GET',
-      path: '/certificates/{event}.svg',
-      handler: certificateHandler,
-      options: {
-        auth: false,
-        tags: ['api', 'certificates'],
-        description: 'Returns only one certificate metadata'
-      }
-    })
-  }
+  server.route({
+    method: 'GET',
+    path: '/certificates/{event}.svg',
+    handler: certificateHandler,
+    options: {
+      tags: ['api', 'certificates'],
+      description: 'Returns only one certificate metadata'
+    }
+  })
   // add ping route by default for health check
   server.route({
     method: 'GET',
@@ -486,16 +483,6 @@ export async function createServer() {
       auth: false,
       tags: ['api', 'locations'],
       description: 'Returns the locations metadata'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/certificates',
-    handler: certificateHandler,
-    options: {
-      tags: ['api', 'certificates'],
-      description: 'Returns certificate metadata'
     }
   })
 
