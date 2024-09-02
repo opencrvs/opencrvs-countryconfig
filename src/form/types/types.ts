@@ -413,6 +413,7 @@ export interface IImageUploaderWithOptionsFormField extends IFormFieldBase {
 export interface IDocumentUploaderWithOptionsFormField extends IFormFieldBase {
   type: typeof DOCUMENT_UPLOADER_WITH_OPTION
   options: ISelectOption[]
+  optionCondition?: string
   hideOnEmptyOption?: boolean
   compressImagesToSizeMB?: number
   maxSizeMB?: number
