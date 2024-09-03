@@ -95,7 +95,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },
   {
     // MOTHER ADDRESS FIELDS
-    precedingFieldId: 'birth.mother.mother-view-group.mother-nid-seperator',
+    precedingFieldId:
+      'birth.mother.mother-view-group.motherBirthRegistrationNumber',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -119,7 +120,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },
   {
     // FATHER ADDRESS FIELDS
-    precedingFieldId: 'birth.father.father-view-group.father-nid-seperator',
+    precedingFieldId:
+      'birth.father.father-view-group.fatherBirthRegistrationNumber',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -272,7 +274,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },*/
   {
     // SPOUSE ADDRESS FIELDS
-    precedingFieldId: 'death.spouse.spouse-view-group.spouse-nid-seperator',
+    precedingFieldId:
+      'death.spouse.spouse-view-group.spouseBirthRegistrationNumber',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -311,7 +314,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   {
     // PLACE OF MARRIAGE ADDRESS FIELDS
     precedingFieldId:
-      'marriage.marriageEvent.marriage-event-details.place-of-marriage-seperator',
+      'marriage.marriageEvent.marriage-event-details.placeOfMarriageTitle',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_MARRIAGE }]
   },
   {

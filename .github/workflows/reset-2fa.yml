@@ -16,6 +16,7 @@ on:
           - staging
           - qa
           - production
+          - backup
 
 jobs:
   reset:

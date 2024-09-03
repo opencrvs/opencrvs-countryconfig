@@ -18,8 +18,11 @@ advancedSearch.form.recordStatusInReview,Option for form field: status of record
 advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress,En cours
 advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
 advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
+advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé
 advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'inscription
 advancedSearch.form.statusOfRecordLabel,Label for input Status of record,Status of record,Etat d'avancement du dossier
+advancedSearch.form.timePeriodHelperText,Helper text for input Time period,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement
+advancedSearch.form.timePeriodLabel,Label for input Time period,Time period,Période de temps
 advancedSearchResult.pill.childDoB,The label for child d.o.b in active advancedSearchParams,Child d.o.b,Date de naissance enfant
 advancedSearchResult.pill.childFirstName,The label for child firstname in active advancedSearchParams,Child firstname,Prénom de l'enfant
 advancedSearchResult.pill.childLastName,The label for child lastname in active advancedSearchParams,Child lastname,Nom de l'enfant
@@ -43,6 +46,7 @@ advancedSearchResult.pill.regDate,The label for  registration date in active adv
 advancedSearchResult.pill.regLocation,The label for event location in active advancedSearchParams,Location,Emplacement
 advancedSearchResult.pill.regNumber,The label for registration number in active advancedSearchParams,Registration number,Numéro d'enregistrement
 advancedSearchResult.pill.registationStatus,The label for registration Status param in active advancedSearchParams,Registration status,Statut d'enregistrement
+advancedSearchResult.pill.timePeriod,The label for time period in active advancedSearchParams,Time period,Période de temps
 advancedSearchResult.pill.trackingId,The label for tracking id in active advancedSearchParams,Tracking ID,Identifiant de suivi
 advancedSearchResult.table.noResult,The label for no result in advancedSearchResult page,No result,Pas de résultat
 advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultat de la recherche
@@ -156,134 +160,23 @@ changeEmail.validation.msg,Phone number validation message,Must be a valid email
 changePhone.validation.msg,Phone number validation message,Must be a valid 10 digit number that starts with 0,Doit être un numéro valide à {num} chiffres qui commence par {start}.
 config.advanced.search,This is used for the advanced search,Advanced Search,Recherche avancée
 config.advanced.search.instruction,This is used for the advanced search,Select the options to build an advanced search. A minimum of two search parameters is required.,Sélectionnez les options pour construire une recherche avancée. Un minimum de deux paramètres de recherche est requis.
-config.application.applicationNameChangeNotification,Message for application name change notification,Name of application updated,Nom de l'application mise à jour
-config.application.applicationNameLabel,Application name config label,Name of application,Nom de l'application
-config.application.backgroundImageChangeNotification,Message for background image change notification,Background image updated,Mise à jour de l'image de fond
-config.application.backgroundImageError,Error message for background image change,Unable to change image. Please try again.,Impossible de modifier l'image. Veuillez réessayer.
-config.application.backgroundImageFileLimitError,Error message for large Background file,Background image file must be less than 2mb,Le fichier de l'image d'arrière-plan doit être inférieur à 2 Mo
-config.application.birthDelayedDialogTitle,Delayed dialog title for brith,Delayed registration time period for birth registration,Délai d'enregistrement retardé pour l'enregistrement des naissances
-config.application.birthDelayedFeeChangeNotification,Message for application birth delayed fee change notification,Birth delayed fee updated,Mise à jour de la pénalité de déclaration tardive des naissances
-config.application.birthLateFeeChangeNotification,Message for application birth late fee change notification,Birth late fee updated,Mise à jour de la pénalité de déclaration tardive des naissances
-config.application.birthLateRegTargetChangeNotification,Message for application birth late registration target change notification,Birth late registration target days updated,Mise à jour des jours cibles d'enregistrement tardif des naissances
-config.application.birthLegallySpecifiedDialogTitle,Legally specified dialog title for brith,Legally specified time period for birth registration,Délai légal pour déclaration des naissances
-config.application.birthOnTimeFeeChangeNotification,Message for application birth on time fee change notification,Birth on time fee updated,Mise à jour des frais de naissance à temps
-config.application.birthRegTargetChangeNotification,Message for application birth registration target change notification,Birth registration target days updated,Mise à jour des jours cibles pour l'enregistrement des naissances
 config.application.birthTabTitle,The title for birth tab,Birth,Naissance
 config.application.birthTabTitleExport,The title for birth tab for VSExport,Births,Naissances
-config.application.colourTabText,The title for colour tab text,Hex code,Code hexadécimal
-config.application.colourTabTitle,The title for colour tab,Colour,Couleur
-config.application.configChangeError,Error message for application config change,Unable to make change. Please try again,Impossible d'effectuer la modification. Veuillez réessayer
-config.application.currencyChangeMessage,Message for application currency change modal,Select your currency for your CRVS system,Selectionnez la devise
-config.application.currencyChangeNotification,Message for application currency change notification,Currency updated,Devise mise à jour
-config.application.currencyLabel,Currency config label,Currency,Devise
-config.application.deathDelayedFeeChangeNotification,Message for application death delayed fee change notification,Death delayed fee updated,Mise à jour de la pénalité de retard déclaration du décès
-config.application.deathLegallySpecifiedDialogTitle,Legally specified dialog title for death,Legally specified time period for death registration,Délais légal de déclaration du décès
-config.application.deathOnTimeFeeChangeNotification,Message for application death on time fee change notification,Death on time fee updated,Mise à jour des frais de déclaration de décès dans le délais legal
-config.application.deathRegTargetChangeNotification,Message for application death registration target change notification,Death registration target days updated,Mise à jour des jours cibles de déclaration des décès
 config.application.deathTabTitle,The title for death tab,Death,Décès
 config.application.deathTabTitleExport,The title for death tab for VSExport,Deaths,Décès
-config.application.delayedFeeDialogTitle,Delayed fee dialog title,Registration fees for delayed registrations,Frais pour les declarations tardives
-config.application.delayedRegistrationLabel,Delayed registration config label,Delayed registration,Enregistrement retardé
-config.application.delayedRegistrationValue,Delayed registration config value,After {lateTime} days,Après {lateTime} jours
 config.application.emptystate,Vital Statistics Export Empty State Text,The previous month's vital statistics data (based on vital event registrations occurring within that month) will become available for you to export as of the 1st of every month. Large CSV files cannot be opened in Excel and should therefore be opened in a statistical program such as {posit}.,Les données statistiques vitales du mois précédent (basées sur les enregistrements d'événements vitaux survenus au cours de ce mois) seront disponibles pour l'exportation à partir du 1er de chaque mois. Les grands fichiers CSV ne peuvent pas être ouverts dans Excel et doivent donc être ouverts dans un programme statistique tel que {posit}.
-config.application.eventTargetInputLabel,The label for event target label,days,jours
-config.application.example,Label for Example,Example,Exemple
 config.application.export,Download Export CSV,Export,Export
-config.application.generalTabTitle,The title for general tab,General,Général
-config.application.govermentLogoLabel,Government logo config label,Goverment logo,Logo du gouvernement
-config.application.govtLogoChangeError,Error message for country logo change,Unable to change logo. Please try again.,Impossible de modifier le logo. Veuillez réessayer.
-config.application.govtLogoChangeMessage,Message for government logo change modal,Upload a logo to be used on the login and declaration review screens,Téléchargez le logo du gouvernement qui sera utilisé sur le login et la décalcomanie du formulaire. Notez que le logo du certificat est téléchargé dans le cadre du modèle de certificat.
-config.application.govtLogoChangeNotification,Message for government logo change notification,Government logo updated,Mise à jour du logo du gouvernement
-config.application.govtLogoFileLimitError,Error message for large country logo file,Logo image file must be less than 2mb,Le fichier image du logo doit être inférieur à 2 Mo
-config.application.imageTabTitle,The title for image tab,Image,Image
-config.application.invalidExample,Label for Invalid example,Invalid,Invalide
-config.application.lateFeeDialogTitle,Date fee dialog title,Registration fees for late registrations,Frais d'inscription pour les inscriptions tardives
-config.application.lateRegistrationLabel,Late registration config label,Late registration,Déclaration tardive
-config.application.lateRegistrationValue,Late registration config value,Between {onTime} days and {lateTime} days,Entre {onTime} jours et {lateTime} jours
-config.application.legallySpecifiedLabel,Legally specified config label,Legally specified,Mention légale
-config.application.legallySpecifiedValue,Legally specified config value,Within {onTime} days,Dans (ontime) jours
-config.application.loginBackgroundLabel,Login Background config label,Login Background,Historique de la connexion
-config.application.loginImageText,Login Image config label,Upload an image and set how you would like it to display in the background,Téléchargez une image et définissez comment vous souhaitez qu'elle s'affiche en arrière-plan.
-config.application.marriageDelayedFeeChangeNotification,Message for application marriage delayed fee change notification,Marriage delayed fee updated,Mise à jour de la pénalité de retard déclaration du marriage
-config.application.marriageLegallySpecifiedDialogTitle,Legally specified dialog title for marriage,Legally specified time period for marriage registration,Délais légal de déclaration du marriage
-config.application.marriageOnTimeFeeChangeNotification,Message for application marriage on time fee change notification,Marriage on time fee updated,Mise à jour des frais de déclaration de marriage dans le délais legal
-config.application.marriageRegTargetChangeNotification,Message for application marriage registration target change notification,Marriage registration target days updated,Mise à jour des jours cibles de déclaration des marriages
-config.application.marriageTabTitle,The title for marriage tab,Marriage,Mariage
-config.application.nameChangeMessage,Message for application name change modal,Choose a name for your CRVS system,Choisissez un nom pour votre système CRVS
-config.application.nidPatternChangeError,Error message for invalid regular expression for NID number,Invalid regular expression for a National ID,Expression régulière invalide pour un identifiant national
-config.application.nidPatternChangeMessage,Unique Identification Number (UIN) config message,Set the regex pattern for your national ID. For guidance please refer to www.regex101.com,Expression régulière invalide pour un identifiant national
-config.application.nidPatternChangeNotification,Message for NID Pattern change modal,Unique Identification Number (UIN) regex pattern updated,Mise à jour du modèle regex pour le numéro d'identification unique (UIN)
-config.application.nidPatternTitle,Unique Identification Number (UIN) config title,Unique Identification Number (UIN) e.g. National ID,"Numéro d'identification unique (UIN), par exemple la carte d'identité nationale."
-config.application.onTimeFeeDialogTitle,On time fee dialog title,Registration fees within legally specified time,Droits d'inscription dans le délai légal
-config.application.pattern,Label for Pattern,Pattern,Modèle
-config.application.phoneNumberChangeError,Error message for invalid regular expression for phone number number,Invalid regular expression for a phone number,Expression régulière invalide pour un numéro de téléphone
-config.application.phoneNumberChangeMessage,phone number config config message,Set the regex pattern for your country phone number. For guidance please refer to www.regex101.com,"Définissez le modèle regex pour le numéro de téléphone de votre pays. Pour obtenir des conseils, veuillez consulter le site www.regex101.com"
-config.application.phoneNumberChangeNotification,Message for phone number  Pattern change modal,Phone regex pattern updated,Mise à jour du modèle de regex téléphonique
-config.application.phoneNumberExampleLabel,,example: {example},exemple: {example}
-config.application.phoneNumberLabel,Phone number config label,Phone number,Numéro de téléphone
-config.application.phoneNumberPatternLabel,,pattern: {pattern},motif: {pattern}
-config.application.phoneNumberPatternTitle,Phone number config title,Phone number regex,Regex du numéro de téléphone
-config.application.registrationFeesGroupTitle,The title for registration fee group,Registration fees,Droits d'inscription
-config.application.registrationTimePeriodsGroupTitle,The title for registration time periods group,Registration time periods,Périodes d'enregistrement
-config.application.settings,Link Text for Config Application Settings,Application,Application
-config.application.testNumber,Label for test number,Test number,Numéro de test
-config.application.updatingeMessage,Message for application config updated modal,Updating...,Mise à jour en cours
-config.application.validExample,Label for valid example,Valid,Valable
 config.application.vitalStatistics,Vital Statistics Export,"Month-{month}-Farajaland-{event, select, birth{birth} death{death} other{birth}}-event-statistics.csv {fileSize}","Mois-{month}-Farajaland-{event, select, birth{birth} death{death} other{birth}}-événement-statistiques.csv {fileSize}"
 config.application.vsExportDownloadFailed,Vital Statistics Export Empty State Text,Sorry! Something went wrong,Désolé ! Quelque chose s'est mal passé
 config.application.vsexport,VS Export tab,Vital statistics,Statistiques vitales
-config.application.withinLegallySpecifiedTimeLabel,Within legally specified time config label,Within legally specified time,Dans les délais prévus par la loi
-config.birthDefaultTempDesc,Label for default birth certificate template,Default birth certificate template,Modèle d'acte de naissance par défaut
-config.birthTemplate,Label for birth certificate template,Birth certificate,Certificat de naissance
-config.birthUpdatedTempDesc,,Updated {birthLongDate},Mise à jour de {birthLongDate}
 config.certTemplate,Label for certificate templates,Certificate Template,Modèle de certificat
-config.certificate.allowPrinting,To allow printing in advanced of issuance,Allow printing in advanced of issuance,Permettre l'impression à l'avance de l'émission
-config.certificate.allowPrintingNotification,Message for allowing printing notification,Allow printing in advance of issuance updated,Permettre l'impression avant la mise à jour de l'émission
-config.certificate.certificateUpdated,Certificate template change message on success,{eventName} certificate has been updated,Le certificat {eventName} a été mis à jour.
-config.certificate.certificateUploading,Certificate template message when uploading SVG,Uploading and validating {eventName} certificate.,Téléchargement et validation du certificat {eventName}.
-config.certificate.certificateValidationError,Certificate template error message on failed,Unable to read SVG. Please check,Impossible de lire le SVG. Veuillez vérifier
 config.certificate.options,Show options,Options,Options
-config.certificate.printDescription,Allowing printing,Records printed off in advance of collections will be added to the ready to issue work-queue,Les documents imprimés avant les collectes seront ajoutés à la liste des documents prêts à être délivrés
-config.certificate.template,Template for certificates,Template,Gabarit
-config.certificate.uploadCertificateDialogCancel,Cancel new certificate template upload button,Cancel,Annuler
-config.certificate.uploadCertificateDialogConfirm,Confirm new certificate template upload button,Upload,Télécharger
-config.certificate.uploadCertificateDialogDescription,The description for the dialog when upload new certificate template,This will replace the current certificate template. We recommend downloading the existing certificate template as a reference.,Ceci remplacera le modèle de certificat actuel. Nous vous recommandons de télécharger le modèle de certificat existant comme référence.
-config.certificate.uploadCertificateDialogTitle,Upload certificate template modal title,Upload new certificate?,Télécharger un nouveau certificat ?
-config.certificateConfiguration,Link Text for Config Declaration Settings,Certificate configuration,Configuration du certificat
-config.deathDefaultTempDesc,Label for default death certificate template,Default death certificate template,Modèle de certificat de décès par défaut
-config.deathTemplate,Label for death certificate template,Death certificate,Acte de mariage
-config.deathUpdatedTempDesc,,Updated {deathLongDate},Mise à jour de {deathLongDate}
-config.downloadTemplate,Download action in certificate config action menu,Download,Télécharger
 config.emailAllUsers.modal.supportingCopy,Label for send email all users confirmation supporting copy,User will receive emails over the next 24 hours,L'utilisateur recevra des courriels au cours des prochaines 24 heures
 config.emailAllUsers.modal.title,Label for send email all users confirmation title,Send email to all users?,Envoyer un e-mail à tous les utilisateurs ?
 config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users you are active. Emails will be sent over the next 24 hours. Only one email can be sent per day,Cet e-mail sera envoyé à tous les utilisateurs que vous activez. Les courriels seront envoyés au cours des prochaines 24 heures. Un seul courriel peut être envoyé par jour
 config.emailAllUsers.title,Title for email all users,Email all users,Envoyer un e-mail à tous les utilisateurs
-config.eventUpdatedTempDesc,Label for updated birth certificate template,"Updated {lastModified, date, ::dd MMMM yyyy}","Mis à jour {lastModified, date, ::dd MMMM yyyy}"
-config.form.settings.time,,Time input,Saisie de l'heure
-config.form.tools.input.customSelectWithDynamicOptions,,Custom select with dynamic options,Sélection personnalisée avec options dynamiques
-config.informantNotification.declarationSMS,Title for informant declarationSMS notification,Declaration sent for review,Déclaration envoyée pour examen
-config.informantNotification.inProgressSMS,Title for informant inProgressSMS notification,Notification sent to Office,Notification envoyée au bureau
-config.informantNotification.registrationSMS,Title for informant registrationSMS notification,Declaration registered,Déclaration enregistrée
-config.informantNotification.rejectionSMS,Title for informant rejectionSMS notification,Declaration rejected,Déclaration rejetée
-config.informantNotification.subtitle,Subtile for informant sms notification,Select the notifications to send to the informant to keep them informed of the progress to their declaration. Your system is configured to send {communicationType}.,Sélectionnez les notifications à envoyer à l'informateur pour le tenir informé de l'avancement de sa déclaration. Votre système est configuré pour envoyer {communicationType}
-config.informantNotification.success,Notification for informant update success,Informant notifications updated,Mise à jour des notifications des informateurs
-config.informantNotification.title,The title for Informant notifications,Informant notifications,Notifications d'informateurs
-config.integrations,,Integrations,Intégrations
-config.listDetails,Details for certificates templates list,To learn how to edit an SVG and upload a certificate to suite your country requirements please refer to this detailed guide. ,"Pour savoir comment modifier un SVG et télécharger un certificat en fonction des exigences de votre pays, veuillez consulter ce guide détaillé."
-config.listDetailsQsn,Details question for certificates templates list,How to configure a certificate?,Comment configurer un certificat ?
-config.listTitle,Title for certificates templates list,Certification,La certification
-config.marriageDefaultTempDesc,Label for default marriage certificate template,Default marriage certificate template,Modèle de certificat de mariage par défaut
-config.marriageTemplate,Label for marriage certificate template,Marriage certificate,Certificat de mariage
-config.previewTemplate,,Preview,Prévisualiser
-config.printTemplate,Print action in certificate config action menu,Print,Imprimer
-config.uploadTemplate,Upload action in certificate config action menu,Upload,Télécharger
 config.userRoles.language,Language name,"{language, select, en {English} fr {French} other {{language}}}","{language, select, en {Anglais} fr {Français} other {{language}}}"
-config.userRoles.role,ListViewSimplified header for role,ROLE,RÔLE
 config.userRoles.roleUpdateInstruction,Instruction for adding/updating role in role management modal,Add the roles to be assigned the system role of {systemRole},Ajoutez les rôles auxquels attribuer le rôle système de {systemRole}
-config.userRoles.subtitle,Subtile for informant sms notification,Map user roles to each system role so that specific permissions and privileges are correctly assigned. To learn more about the different system roles see ... {link},"Associez les rôles d'utilisateur à chaque rôle système afin que les autorisations et les privilèges spécifiques soient correctement attribués. Pour en savoir plus sur les différents rôles système, voir ... {link}"
-config.userRoles.systemRoleSuccessMsg,Label for System role updated success message,System role updated successfully,Rôle système mis à jour avec succès
-config.userRoles.systemRoles,ListViewSimplified header for system roles,SYSTEM ROLES,RÔLES SYSTÈME
-config.userRoles.title,The title for user roles,User roles,Rôles des utilisateurs
 conflicts.modal.assign.description,Description for modal when assign,Please note you will have sole access to this record. Please make any updates promptly otherwise unassign the record.,"Veuillez noter que vous aurez un accès exclusif à cet enregistrement. Veuillez effectuer rapidement les mises à jour éventuelles, sinon vous désassignez l'enregistrement."
 conflicts.modal.assign.title,Title for modal when assign,Assign record?,Attribuer un enregistrement ?
 conflicts.modal.assigned.description,Description for modal when record already assigned,{name} at {officeName} has sole editable access to this record,{name} à {officeName} a un accès unique et modifiable à cet enregistrement.
@@ -1351,6 +1244,10 @@ form.section.information.death.bullet2,,As the legal Informant it is important t
 form.section.information.death.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts."
 form.section.information.name,,Information,Informations
+form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,last 30 days,les 30 derniers jours
+form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,last 7 days,les 7 derniers jours
+form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,last 90 days,les 90 derniers jours
+form.section.label.timePeriodLastYear,Label for option of time period select: last year,last year,l'année dernière
 form.section.marriageEvent.date,,Date of marriage,Date du mariage
 form.section.marriageEvent.name,,Marriage event details,Détails de l'événement de mariage
 form.section.marriageEvent.title,,Marriage details,Détails du mariage
@@ -1852,6 +1749,9 @@ register.selectVitalEvent.registerNewEventHeading,The section heading on the pag
 register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration
 register.selectinformant.legalGuardian,,Legal guardian,Tuteur légal
 register.workQueue.declarations.banner,,Declarations to register in your area,Déclarations à enregistrer dans votre région
+reloadmodal.body,Body of reload modal,There’s a new version of {app_name} available. Please update to continue.,Une nouvelle version de {app_name} est disponible. Veuillez effectuer la mise à jour pour continuer.
+reloadmodal.button.update,Label of update button,Update,Mise à jour
+reloadmodal.title,Title when update is available,Update available,Mise à jour disponible
 review.actions.desc.regConfComp,,"By clicking register, you confirm that the information entered is correct and the vital event can be registered.","En cliquant sur Enregistrer, vous confirmez que les informations sont correctes et ont été vérifiées par l'informateur. L'informateur comprend qu'elles seront utilisées pour enregistrer la naissance et à des fins de planification. En enregistrant cette naissance, un certificat de naissance sera généré avec votre signature pour être délivré."
 review.actions.desc.regConfInComp,,Please add mandatory information before registering.,Des informations obligatoires sont manquantes. Veuillez ajouter ces informations afin de pouvoir terminer le processus d'enregistrement.
 review.actions.description,,"By clicking register, you confirm that the information entered is correct and the vital event can be registered. ","En vous enregistrant, vous confirmez que vous avez examiné cette déclaration et que vous êtes convaincu qu'elle remplit les conditions requises pour l'enregistrement."
