@@ -27,7 +27,7 @@ all:
     enable_backups: false
     # "periodic_restore_from_backup" restores daily production backups to your staging server.
     # For this you need to first setup a backup environment
-    periodic_restore_from_backup: false
+    periodic_restore_from_backup: true
     # backup_server_remote_source_directory: /home/backup/backups-test
     users:
       # @todo this is where you define which development team members have access to the server.
@@ -54,3 +54,10 @@ docker-manager-first:
       data_label: data1
       # If you are using a jump server to access this environment, enter other SSH args here.
 docker-workers: {}
+
+backups-host:
+  hosts:
+    siecm-backup-app-2: # @todo set this to be the hostname of your backup server
+      ansible_host: '102.16.127.245'
+      ansible_port: 10015
+      internal_ssh_port: 22

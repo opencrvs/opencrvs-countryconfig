@@ -29,7 +29,7 @@ all:
 
 backups-host:
   hosts:
-    siecm-backup-app-1: # @todo set this to be the hostname of your backup server
-      ansible_host: '102.16.127.249'
+    siecm-backup-app-2: # @todo set this to be the hostname of your backup server
+      ansible_host: '102.16.127.245'
       ansible_port: 10015
       internal_ssh_port: 22
