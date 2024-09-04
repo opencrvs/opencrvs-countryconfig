@@ -55,7 +55,7 @@ docker-manager-first:
       # If you are using a jump server to access this environment, enter other SSH args here.
 docker-workers: {}
 
-backups-host:
+backups:
   hosts:
     siecm-backup-app-2: # @todo set this to be the hostname of your backup server
       ansible_host: '102.16.127.245'
