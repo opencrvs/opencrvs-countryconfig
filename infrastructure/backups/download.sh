@@ -55,19 +55,19 @@ if [ -z "$LABEL" ]; then
   LABEL=$(date +%Y-%m-%d)
 fi
 
-if [ -z "$SSH_USER" ] ; then
+if [ -z "$SSH_USER" ]; then
   echo 'Error: Missing environment variable SSH_USER.'
   exit 1
 fi
 
-if [ -z "$SSH_HOST" ] ; then
-    echo 'Error: Missing environment variable SSH_HOST.'
-    exit 1
+if [ -z "$SSH_HOST" ]; then
+  echo 'Error: Missing environment variable SSH_HOST.'
+  exit 1
 fi
 
-if [ -z "$SSH_PORT" ] ; then
-    echo 'Error: Missing environment variable SSH_PORT.'
-    exit 1
+if [ -z "$SSH_PORT" ]; then
+  echo 'Error: Missing environment variable SSH_PORT.'
+  exit 1
 fi
 
 if [ -z "$REMOTE_DIR" ]; then
@@ -86,8 +86,7 @@ mkdir -p $BACKUP_RAW_FILES_DIR
 
 # Copy backup from backup server
 rsync -a -r --delete --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" \
-  $SSH_USER@$SSH_HOST:$REMOTE_DIR_WITH_DATE/${LABEL}.tar.gz.enc\
-  $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc
+  $SSH_USER@$SSH_HOST:$REMOTE_DIR_WITH_DATE/${LABEL}.tar.gz.enc $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc
 
 echo "Copied backup files from server to $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc."
 
@@ -99,20 +98,19 @@ mkdir -p $BACKUP_RAW_FILES_DIR/extract
 tar -xvf $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz -C $BACKUP_RAW_FILES_DIR/extract
 
 # Delete previous days restore(s) and move the newly downloaded one in place
-for BACKUP_DIR in /data/backups/*; do
+for BACKUP_DIR in data/backups/*; do
   if [ -d "$BACKUP_DIR" ]; then
     rm -rf $BACKUP_DIR/*
   fi
 done
 
+mv extract/elasticsearch/* data/backups/elasticsearch/
 
-mv $BACKUP_RAW_FILES_DIR/extract/elasticsearch/* /data/backups/elasticsearch/
-
-mv $BACKUP_RAW_FILES_DIR/extract/influxdb /data/backups/influxdb/${LABEL}
-mv $BACKUP_RAW_FILES_DIR/extract/minio/ocrvs-${LABEL}.tar.gz /data/backups/minio/
-mv $BACKUP_RAW_FILES_DIR/extract/metabase/ocrvs-${LABEL}.tar.gz /data/backups/metabase/
-mv $BACKUP_RAW_FILES_DIR/extract/vsexport/ocrvs-${LABEL}.tar.gz /data/backups/vsexport/
-mv $BACKUP_RAW_FILES_DIR/extract/mongo/* /data/backups/mongo/
+mv extract/influxdb data/backups/influxdb/gh-action-test-20
+mv extract/minio/ocrvs-gh-action-test-20.tar.gz data/backups/minio/
+mv extract/metabase/ocrvs-gh-action-test-20.tar.gz data/backups/metabase/
+mv extract/vsexport/ocrvs-gh-action-test-20.tar.gz data/backups/vsexport/
+mv extract/mongo/* data/backups/mongo/
 
 # Clean up
 rm $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc

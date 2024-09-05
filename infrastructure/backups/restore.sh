@@ -14,7 +14,7 @@
 
 set -e
 
-if docker service ls > /dev/null 2>&1; then
+if docker service ls >/dev/null 2>&1; then
   IS_LOCAL=false
 else
   IS_LOCAL=true
@@ -96,15 +96,13 @@ else
   NETWORK=opencrvs_overlay_net
   # Construct the HOST string rs0/mongo1,mongo2... based on the number of replicas
   HOST="rs0/"
-  for (( i=1; i<=REPLICAS; i++ )); do
+  for ((i = 1; i <= REPLICAS; i++)); do
     if [ $i -gt 1 ]; then
       HOST="${HOST},"
     fi
     HOST="${HOST}mongo${i}"
   done
 fi
-
-
 
 mongo_credentials() {
   if [ ! -z ${MONGODB_ADMIN_USER+x} ] || [ ! -z ${MONGODB_ADMIN_PASSWORD+x} ]; then
@@ -132,7 +130,6 @@ elasticsearch_host() {
 #
 #####
 
-
 ##
 # ------ ELASTICSEARCH -----
 ##
@@ -142,7 +139,7 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(ela
 docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/*" -v
 
 echo "Waiting for elasticsearch to restart so that the restore script can find the updated volume."
-docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_elasticsearch
+# docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_elasticsearch
 docker run --rm --network=$NETWORK toschneck/wait-for-it -t 120 elasticsearch:9200 -- echo "Elasticsearch is up"
 
 ##
@@ -158,14 +155,12 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 # ------ MINIO -------
 ##
 
-
 rm -rf $ROOT_PATH/minio/ocrvs
 mkdir -p $ROOT_PATH/minio/ocrvs
 
 ##
 # ------ METABASE -------
 ##
-
 
 rm -rf $ROOT_PATH/metabase/*
 
@@ -209,10 +204,9 @@ db.getSiblingDB('webhooks').dropDatabase();"
 # Restore all data from a backup into Hearth, OpenHIM, User, Application-config and any other service related Mongo databases
 #--------------------------------------------------------------------------------------------------
 docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
--c "for db in hearth-dev openhim-dev user-mgnt application-config metrics webhooks performance; \
+  -c "for db in hearth-dev openhim-dev user-mgnt application-config metrics webhooks performance; \
       do mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/\${db}-$LABEL.gz; \
     done"
-
 
 ##
 # ------ ELASTICSEARCH -----
@@ -229,11 +223,9 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST -H "Content-Typ
 sleep 10
 echo "Waiting 1 minute to rotate elasticsearch passwords"
 echo
-docker service update --force opencrvs_setup-elasticsearch-users
+# docker service update --force opencrvs_setup-elasticsearch-users
 echo
 sleep 60
-
-
 
 ##
 # ------ INFLUXDB -----
@@ -242,6 +234,7 @@ sleep 60
 if [ "$IS_LOCAL" = true ]; then
   INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
   docker exec $INFLUXDB_CONTAINER_ID mkdir -p /home/user
+  # // @todo: Why the influxdb/label was not created?
   docker cp $ROOT_PATH/backups/influxdb/$LABEL/ $INFLUXDB_CONTAINER_ID:/home/user/$LABEL
   docker exec $INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /home/user/$LABEL
 else
@@ -254,13 +247,12 @@ fi
 tar -xzvf $ROOT_PATH/backups/minio/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/minio
 
 # Restart minio again so it picks up the updated files
-docker service update --force opencrvs_minio
+# docker service update --force opencrvs_minio
 
 ##
 # ------ METABASE -----
 ##
 tar -xzvf $ROOT_PATH/backups/metabase/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/metabase
-
 
 ##
 # ------ VSEXPORT -----
