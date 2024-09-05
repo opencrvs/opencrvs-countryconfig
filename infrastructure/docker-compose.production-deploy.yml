@@ -62,7 +62,6 @@ services:
       - AWS_REGION=af-south-1 # https://docs.aws.amazon.com/general/latest/gr/r53.html
 
     command:
-      - --certificatesresolvers.certResolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.certResolver.acme.dnschallenge=true
       - --certificatesresolvers.certResolver.acme.dnschallenge.provider=route53
       - --certificatesresolvers.certResolver.acme.email=sd-identity@digital.gov.mg
