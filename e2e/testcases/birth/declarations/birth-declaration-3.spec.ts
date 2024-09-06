@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
   createPIN,
+  drawSignature,
   getRandomDate,
   goToSection,
   login,
@@ -735,7 +736,16 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       )
     })
 
-    test('3.1.8 Send for approval', async () => {
+    test('3.1.8 Fill up informant signature', async () => {
+      await page.getByRole('button', { name: 'Sign' }).click()
+      await drawSignature(page)
+      await page
+        .locator('#informantSignature_modal')
+        .getByRole('button', { name: 'Apply' })
+        .click()
+    })
+
+    test('3.1.9 Send for approval', async () => {
       await page.getByRole('button', { name: 'Send for approval' }).click()
       await expect(page.getByText('Send for approval?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()

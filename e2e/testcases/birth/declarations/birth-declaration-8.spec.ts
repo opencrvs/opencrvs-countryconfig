@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test'
-import { createPIN, goToSection, login } from '../../../helpers'
+import { createPIN, drawSignature, goToSection, login } from '../../../helpers'
 
 test.describe.serial('8. Birth declaration case - 8', () => {
   let page: Page
@@ -237,7 +237,16 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       )
     })
 
-    test('8.1.7 Send for review', async () => {
+    test('8.1.7 Fill up informant signature', async () => {
+      await page.getByRole('button', { name: 'Sign' }).click()
+      await drawSignature(page)
+      await page
+        .locator('#informantSignature_modal')
+        .getByRole('button', { name: 'Apply' })
+        .click()
+    })
+
+    test('8.1.8 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()

@@ -1,5 +1,11 @@
 import { test, expect, type Page } from '@playwright/test'
-import { createPIN, getRandomDate, goToSection, login } from '../../helpers'
+import {
+  createPIN,
+  drawSignature,
+  getRandomDate,
+  goToSection,
+  login
+} from '../../helpers'
 import faker from '@faker-js/faker'
 import { format } from 'date-fns'
 
@@ -932,12 +938,21 @@ test.describe.serial('8. Validate declaration review page', () => {
       test.skip('Skipped for now', async () => {})
     })
 
-    test('8.1.6 Click send button', async () => {
+    test('8.1.6 Fill up informant signature', async () => {
+      await page.getByRole('button', { name: 'Sign' }).click()
+      await drawSignature(page)
+      await page
+        .locator('#informantSignature_modal')
+        .getByRole('button', { name: 'Apply' })
+        .click()
+    })
+
+    test('8.1.7 Click send button', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
     })
 
-    test('8.1.7 Confirm the declaration to send for review', async () => {
+    test('8.1.8 Confirm the declaration to send for review', async () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 

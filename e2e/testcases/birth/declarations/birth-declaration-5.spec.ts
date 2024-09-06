@@ -1,5 +1,11 @@
 import { test, expect, type Page } from '@playwright/test'
-import { createPIN, getRandomDate, goToSection, login } from '../../../helpers'
+import {
+  createPIN,
+  drawSignature,
+  getRandomDate,
+  goToSection,
+  login
+} from '../../../helpers'
 import faker from '@faker-js/faker'
 import { format } from 'date-fns'
 
@@ -548,7 +554,16 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       )
     })
 
-    test('5.1.7 Register', async () => {
+    test('5.1.7 Fill up informant signature', async () => {
+      await page.getByRole('button', { name: 'Sign' }).click()
+      await drawSignature(page)
+      await page
+        .locator('#informantSignature_modal')
+        .getByRole('button', { name: 'Apply' })
+        .click()
+    })
+
+    test('5.1.8 Register', async () => {
       await page.getByRole('button', { name: 'Register' }).click()
       await expect(page.getByText('Register the birth?')).toBeVisible()
       await page.locator('#submit_confirm').click()

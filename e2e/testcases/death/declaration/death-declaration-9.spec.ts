@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test'
-import { createPIN, goToSection, login } from '../../../helpers'
+import { createPIN, drawSignature, goToSection, login } from '../../../helpers'
 import faker from '@faker-js/faker'
 
 test.describe.serial('9. Death declaration case - 9', () => {
@@ -270,7 +270,16 @@ test.describe.serial('9. Death declaration case - 9', () => {
       await expect(page.locator('#spouse-content #Same')).toContainText('Yes')
     })
 
-    test('9.1.6 Send for review', async () => {
+    test('9.1.6 Fill up informant signature', async () => {
+      await page.getByRole('button', { name: 'Sign' }).click()
+      await drawSignature(page)
+      await page
+        .locator('#informantSignature_modal')
+        .getByRole('button', { name: 'Apply' })
+        .click()
+    })
+
+    test('9.1.7 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
