@@ -18,7 +18,7 @@ import {
 } from '../../utils/hearth-helpers'
 
 const CHILD_CUSTOM_ADDRESS_FIELD_ID =
-  'birth.mother.mother-view-group.fokontanyCustomAddress'
+  'birth.child.child-view-group.fokontanyCustomAddress'
 const MOTHER_CUSTOM_ADDRESS_FIELD_ID =
   'birth.mother.mother-view-group.fokontanyCustomAddress'
 const FATHER_CUSTOM_ADDRESS_FIELD_ID =
@@ -57,7 +57,7 @@ export const up = async (db: Db, client: MongoClient) => {
                   1
                 ]
               },
-              informantRelation: '$relatedPersion.relationship.coding.code'
+              informantRelation: '$relatedPerson.relationship.coding.code'
             }
           },
           {
@@ -73,7 +73,10 @@ export const up = async (db: Db, client: MongoClient) => {
                 {
                   $match: {
                     $expr: {
-                      $in: ['$id', ['$$informant', '$$mother', '$$father']]
+                      $in: [
+                        '$id',
+                        ['$$informant', '$$mother', '$$father', '$$child']
+                      ]
                     }
                   }
                 }
@@ -298,6 +301,7 @@ export const up = async (db: Db, client: MongoClient) => {
           }
         ])
         .toArray()
+
       await db.collection('Patient').updateMany(
         {
           'extension.url': `http://opencrvs.org/specs/extension/${PATIENT_CUSTOM_ADDRESS_EXTENSION_CODE}`
