@@ -9,7 +9,6 @@
  * Copyright (C) The OpenCRVS Authors. OpenCRVS and the OpenCRVS
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
-
 import { Db, MongoClient } from 'mongodb'
 import {
   convertFhirExtensionArrayToObject,
@@ -143,7 +142,7 @@ export const up = async (db: Db, client: MongoClient) => {
               questions: {
                 item: {
                   $cond: {
-                    if: `$child.patient-birthRegistrationNbr`,
+                    if: `$childExtension.patient-birthRegistrationNbr`,
                     then: {
                       $concatArrays: [
                         '$questions.item',
@@ -153,7 +152,7 @@ export const up = async (db: Db, client: MongoClient) => {
                             linkId: '',
                             answer: [
                               {
-                                valueString: `$child.patient-birthRegistrationNbr`
+                                valueString: `$childExtension.patient-birthRegistrationNbr`
                               }
                             ]
                           }
@@ -165,6 +164,15 @@ export const up = async (db: Db, client: MongoClient) => {
                 }
               }
             }
+          },
+          { $replaceRoot: { newRoot: '$questions' } },
+          {
+            $merge: {
+              into: 'QuestionnaireResponse',
+              on: '_id',
+              whenMatched: 'replace',
+              whenNotMatched: 'insert'
+            }
           }
         ])
         .toArray()
@@ -173,3 +181,5 @@ export const up = async (db: Db, client: MongoClient) => {
     session.endSession()
   }
 }
+
+export const down = async (db: Db, client: MongoClient) => {}
