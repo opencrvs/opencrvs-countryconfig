@@ -124,10 +124,6 @@ services:
     deploy:
       replicas: 1
 
-  components:
-    deploy:
-      replicas: 1
-
   login:
     deploy:
       replicas: 1
