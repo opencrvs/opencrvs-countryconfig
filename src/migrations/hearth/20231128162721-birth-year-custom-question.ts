@@ -21,12 +21,20 @@ const MOTHER_YEAR_OF_BIRTH_FIELD_ID =
   'birth.mother.mother-view-group.yearOfBirth'
 const FATHER_YEAR_OF_BIRTH_FIELD_ID =
   'birth.father.father-view-group.yearOfBirth'
+const INFORMANT_YEAR_OF_BIRTH_FIELD_ID =
+  'birth.informant.informant-view-group.yearOfBirth'
 
-// const INFORMANT_YEAR_OF_BIRTH_FIELD_ID =
-//   'birth.informant.informant-view-group.yearOfBirth'
+const MOTHER_EXACT_DATE_OF_BIRTH_UNKNOWN_FIELD_ID =
+  'birth.mother.mother-view-group.customizedExactDateOfBirthUnknown'
+
+const FATHER_EXACT_DATE_OF_BIRTH_UNKNOWN_FIELD_ID =
+  'birth.father.father-view-group.customizedExactDateOfBirthUnknown'
+const INFORMANT_EXACT_DATE_OF_BIRTH_UNKNOWN_FIELD_ID =
+  'birth.infromant.infromant-view-group.customizedExactDateOfBirthUnknown'
 
 const MOTHER_YEAR_OF_BIRTH_EXTENSION_CODE = 'mother-year-of-birth-around'
 const FATHER_YEAR_OF_BIRTH_EXTENSION_CODE = 'father-year-of-birth-around'
+const INFORMANT_YEAR_OF_BIRTH_EXTENSION_CODE = 'informant-year-of-birth-around'
 
 export const up = async (db: Db, client: MongoClient) => {
   const session = client.startSession()
@@ -46,13 +54,14 @@ export const up = async (db: Db, client: MongoClient) => {
               from: 'Patient',
               let: {
                 mother: '$extensions.mother-details',
-                father: '$extensions.father-details'
+                father: '$extensions.father-details',
+                informant: '$extensions.informant-details'
               },
               pipeline: [
                 {
                   $match: {
                     $expr: {
-                      $in: ['$id', ['$$mother', '$$father']]
+                      $in: ['$id', ['$$mother', '$$father', '$$informant']]
                     }
                   }
                 }
@@ -92,6 +101,24 @@ export const up = async (db: Db, client: MongoClient) => {
               }
             }
           },
+          {
+            $addFields: {
+              informant: {
+                $arrayElemAt: [
+                  {
+                    $filter: {
+                      input: '$patients',
+                      as: 'ptn',
+                      cond: {
+                        $eq: ['$$ptn.id', '$extensions.informant-details']
+                      }
+                    }
+                  },
+                  0
+                ]
+              }
+            }
+          },
           ...convertFhirExtensionArrayToObject(
             'mother.extension',
             'motherExtension'
@@ -99,6 +126,10 @@ export const up = async (db: Db, client: MongoClient) => {
           ...convertFhirExtensionArrayToObject(
             'father.extension',
             'fatherExtension'
+          ),
+          ...convertFhirExtensionArrayToObject(
+            'informant.extension',
+            'informantExtension'
           ),
           {
             $addFields: {
@@ -132,6 +163,15 @@ export const up = async (db: Db, client: MongoClient) => {
                                 valueString: `$motherExtension.${MOTHER_YEAR_OF_BIRTH_EXTENSION_CODE}`
                               }
                             ]
+                          },
+                          {
+                            text: MOTHER_EXACT_DATE_OF_BIRTH_UNKNOWN_FIELD_ID,
+                            linkId: '',
+                            answer: [
+                              {
+                                valueString: true
+                              }
+                            ]
                           }
                         ]
                       ]
@@ -160,6 +200,52 @@ export const up = async (db: Db, client: MongoClient) => {
                                 valueString: `$fatherExtension.${FATHER_YEAR_OF_BIRTH_EXTENSION_CODE}`
                               }
                             ]
+                          },
+                          {
+                            text: FATHER_EXACT_DATE_OF_BIRTH_UNKNOWN_FIELD_ID,
+                            linkId: '',
+                            answer: [
+                              {
+                                valueString: true
+                              }
+                            ]
+                          }
+                        ]
+                      ]
+                    },
+                    else: '$questions.item'
+                  }
+                }
+              }
+            }
+          },
+          {
+            $addFields: {
+              questions: {
+                item: {
+                  $cond: {
+                    if: `$informantExtension.${INFORMANT_YEAR_OF_BIRTH_EXTENSION_CODE}`,
+                    then: {
+                      $concatArrays: [
+                        '$questions.item',
+                        [
+                          {
+                            text: INFORMANT_YEAR_OF_BIRTH_FIELD_ID,
+                            linkId: '',
+                            answer: [
+                              {
+                                valueString: `$informantExtension.${INFORMANT_YEAR_OF_BIRTH_EXTENSION_CODE}`
+                              }
+                            ]
+                          },
+                          {
+                            text: INFORMANT_EXACT_DATE_OF_BIRTH_UNKNOWN_FIELD_ID,
+                            linkId: '',
+                            answer: [
+                              {
+                                valueString: true
+                              }
+                            ]
                           }
                         ]
                       ]
@@ -181,6 +267,7 @@ export const up = async (db: Db, client: MongoClient) => {
           }
         ])
         .toArray()
+
       await db.collection('Patient').updateMany(
         {
           $or: [
@@ -189,6 +276,9 @@ export const up = async (db: Db, client: MongoClient) => {
             },
             {
               'extension.url': `http://opencrvs.org/specs/extension/${FATHER_YEAR_OF_BIRTH_EXTENSION_CODE}`
+            },
+            {
+              'extension.url': `http://opencrvs.org/specs/extension/${INFORMANT_YEAR_OF_BIRTH_EXTENSION_CODE}`
             }
           ]
         },
@@ -211,6 +301,12 @@ export const up = async (db: Db, client: MongoClient) => {
                         $ne: [
                           '$$ext.url',
                           `http://opencrvs.org/specs/extension/${FATHER_YEAR_OF_BIRTH_EXTENSION_CODE}`
+                        ]
+                      },
+                      {
+                        $ne: [
+                          '$$ext.url',
+                          `http://opencrvs.org/specs/extension/${INFORMANT_YEAR_OF_BIRTH_EXTENSION_CODE}`
                         ]
                       }
                     ]
