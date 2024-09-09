@@ -70,6 +70,7 @@ async function downloadRecords({ startDate, endDate }) {
                   use
                 }
               }
+              __typename
             }
           }
         }
@@ -121,6 +122,7 @@ window.printAll = async function renderPrintout() {
   })
   const results = data.data.searchEvents.results
   const pages = results
+    .filter((event) => event.__typename === 'BirthEventSearchSet')
     .map((event) => {
       /*
        * Replace this with what ever you want to render for each page
@@ -147,6 +149,7 @@ window.printAll = async function renderPrintout() {
 }
 function renderTable(results) {
   const rows = results
+    .filter((event) => event.__typename === 'BirthEventSearchSet')
     .map((event) => {
       const row = `
       <tr>
