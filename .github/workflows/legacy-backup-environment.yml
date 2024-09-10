@@ -99,7 +99,7 @@ jobs:
           --ssh_port=$BACKUP_DESTINATION_SSH_PORT \
           --remote_dir=$BACKUP_RAW_FILES_DIR \
           --replicas=1 \
-          --label=${{ github.event.inputs.version_label }} >> /var/log/opencrvs-backup.log 2>&1"
+          --label=${{ github.event.inputs.version_label }} >> /var/log/opencrvs-backup-${{ github.event.inputs.version_label }}.log 2>&1"
       - name: Extract backup data in backup environment
         run: |
           cd ${{ github.event.repository.name }}
