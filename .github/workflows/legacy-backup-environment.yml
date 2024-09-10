@@ -49,6 +49,14 @@ jobs:
     environment: ${{ github.event.inputs.backup-source-environment }}
     needs: destination-environment-vars
     runs-on: ubuntu-22.04
+    env:
+      BACKUP_SOURCE_SSH_HOST: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
+      BACKUP_SOURCE_SSH_PORT: ${{ vars.SSH_PORT || secrets.SSH_PORT }}
+      BACKUP_SOURCE_SSH_USER: ${{ secrets.SSH_USER }}
+      BACKUP_DESTINATION_SSH_HOST: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_HOST }}
+      BACKUP_DESTINATION_SSH_PORT: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_PORT }}
+      BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
+      BACKUP_RAW_FILES_DIR: /tmp/backup-${{ github.event.inputs.version_label }}
     steps:
       - name: Clone country config resource package
         uses: actions/checkout@v3
@@ -81,14 +89,6 @@ jobs:
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
       - name: Create backup data in given environment and copy it over to the backup environment
-        env:
-          BACKUP_SOURCE_SSH_HOST: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
-          BACKUP_SOURCE_SSH_PORT: ${{ vars.SSH_PORT || secrets.SSH_PORT }}
-          BACKUP_SOURCE_SSH_USER: ${{ secrets.SSH_USER }}
-          BACKUP_DESTINATION_SSH_HOST: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_HOST }}
-          BACKUP_DESTINATION_SSH_PORT: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_PORT }}
-          BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
-          BACKUP_RAW_FILES_DIR: /tmp/backup-${{ github.event.inputs.version_label }}
         run: |
           cd ${{ github.event.repository.name }}
           scp -i ~/.ssh/id_rsa-source -P $BACKUP_SOURCE_SSH_PORT infrastructure/backups/legacy-backup.sh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST:/tmp/
@@ -104,7 +104,7 @@ jobs:
         run: |
           cd ${{ github.event.repository.name }}
           scp -i ~/.ssh/id_rsa-destination -P $BACKUP_DESTINATION_SSH_PORT infrastructure/backups/extract-backup.sh $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST:/tmp/
-          ssh -i ~/.ssh/id_rsa-destination BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
+          ssh -i ~/.ssh/id_rsa-destination $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
           sudo bash /tmp/extract-backup.sh \
           --label=${{ github.event.inputs.version_label }} \
           --backup_raw_files_dir=$BACKUP_RAW_FILES_DIR"
