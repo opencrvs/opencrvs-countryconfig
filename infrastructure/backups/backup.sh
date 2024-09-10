@@ -19,7 +19,7 @@ set -e
 
 WORKING_DIR=$(pwd)
 
-if docker service ls >/dev/null 2>&1; then
+if docker service ls > /dev/null 2>&1; then
   IS_LOCAL=false
 else
   IS_LOCAL=true
@@ -143,6 +143,7 @@ chown -R 1000:1000 $ROOT_PATH/backups
 mkdir -p $ROOT_PATH/metabase
 chown -R 1000:1000 $ROOT_PATH/metabase
 
+
 # Select docker network and replica set in production
 #----------------------------------------------------
 if [ "$IS_LOCAL" = true ]; then
@@ -157,7 +158,7 @@ else
   NETWORK=opencrvs_overlay_net
   # Construct the HOST string rs0/mongo1,mongo2... based on the number of replicas
   HOST="rs0/"
-  for ((i = 1; i <= REPLICAS; i++)); do
+  for (( i=1; i<=REPLICAS; i++ )); do
     if [ $i -gt 1 ]; then
       HOST="${HOST},"
     fi
@@ -212,6 +213,7 @@ docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWO
 docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
   -c "mongodump $(mongo_credentials) --host $HOST -d performance --gzip --archive=/data/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz"
 
+
 #-------------------------------------------------------------------------------------
 
 echo ""
@@ -244,7 +246,7 @@ echo ""
 create_elasticsearch_backup() {
   OUTPUT=""
   OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
-  if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' >/dev/null; then
+  if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
     echo "Snapshot state is SUCCESS"
   else
     echo $OUTPUT
@@ -299,6 +301,7 @@ mkdir -p $BACKUP_RAW_FILES_DIR
 # Copy full directories to the temporary directory
 cp -r $ROOT_PATH/backups/elasticsearch/ $BACKUP_RAW_FILES_DIR/elasticsearch/
 cp -r $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE} $BACKUP_RAW_FILES_DIR/influxdb/
+
 
 mkdir -p $BACKUP_RAW_FILES_DIR/minio/ && cp $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/minio/
 mkdir -p $BACKUP_RAW_FILES_DIR/metabase/ && cp $ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/metabase/

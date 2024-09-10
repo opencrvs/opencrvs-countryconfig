@@ -55,19 +55,19 @@ if [ -z "$LABEL" ]; then
   LABEL=$(date +%Y-%m-%d)
 fi
 
-if [ -z "$SSH_USER" ]; then
+if [ -z "$SSH_USER" ] ; then
   echo 'Error: Missing environment variable SSH_USER.'
   exit 1
 fi
 
-if [ -z "$SSH_HOST" ]; then
-  echo 'Error: Missing environment variable SSH_HOST.'
-  exit 1
+if [ -z "$SSH_HOST" ] ; then
+    echo 'Error: Missing environment variable SSH_HOST.'
+    exit 1
 fi
 
-if [ -z "$SSH_PORT" ]; then
-  echo 'Error: Missing environment variable SSH_PORT.'
-  exit 1
+if [ -z "$SSH_PORT" ] ; then
+    echo 'Error: Missing environment variable SSH_PORT.'
+    exit 1
 fi
 
 if [ -z "$REMOTE_DIR" ]; then
@@ -86,7 +86,8 @@ mkdir -p $BACKUP_RAW_FILES_DIR
 
 # Copy backup from backup server
 rsync -a -r --delete --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" \
-  $SSH_USER@$SSH_HOST:$REMOTE_DIR_WITH_DATE/${LABEL}.tar.gz.enc $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc
+  $SSH_USER@$SSH_HOST:$REMOTE_DIR_WITH_DATE/${LABEL}.tar.gz.enc\
+  $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc
 
 echo "Copied backup files from server to $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc."
 
@@ -103,6 +104,7 @@ for BACKUP_DIR in /data/backups/*; do
     rm -rf $BACKUP_DIR/*
   fi
 done
+
 
 mv $BACKUP_RAW_FILES_DIR/extract/elasticsearch/* /data/backups/elasticsearch/
 
