@@ -126,7 +126,7 @@ fi
 # Find and remove all empty subdirectories under the top-level directories
 for BACKUP_DIR in $ROOT_PATH/backups/*; do
     if [ -d "$BACKUP_DIR" ]; then
-        echo $BACKUP_DIR
+        echo $BACKUP_DIR # this has been changed
     fi
 done
 

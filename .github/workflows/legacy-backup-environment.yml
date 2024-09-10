@@ -40,6 +40,7 @@ jobs:
       BACKUP_DESTINATION_SSH_HOST: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
       BACKUP_DESTINATION_SSH_PORT: ${{ vars.SSH_PORT || secrets.SSH_PORT }}
       BACKUP_DESTINATION_SSH_USER: ${{ secrets.SSH_USER }}
+      BACKUP_DESTINATION_SSH_KEY: ${{ secrets.SSH_KEY }}
     steps:
       - name: Echo
         run: echo ${{ github.events.inputs.environment }}
@@ -63,10 +64,18 @@ jobs:
           cat ./infrastructure/known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Install SSH Key
+      - name: Install SSH Key for source environment
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+
+      - name: Install SSH Key for destination environment
+        uses: shimataro/ssh-key-action@v2
+        env:
+          SSH_KEY: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_KEY }}
+        with:
+          key: $SSH_KEY
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
       - name: Create backup data in given environment and copy it over to the backup environment
@@ -77,6 +86,7 @@ jobs:
           BACKUP_DESTINATION_SSH_HOST: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_HOST }}
           BACKUP_DESTINATION_SSH_PORT: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_PORT }}
           BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
+          BACKUP_RAW_FILES_DIR: /tmp/backup-${{ github.event.inputs.version_label }}
         run: |
           cd ${{ github.event.repository.name }}
           scp -P $BACKUP_SOURCE_SSH_PORT infrastructure/backups/legacy-backup.sh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST:/tmp/
@@ -85,6 +95,14 @@ jobs:
           --ssh_host=$BACKUP_DESTINATION_SSH_HOST \
           --ssh_user=provision \
           --ssh_port=$BACKUP_DESTINATION_SSH_PORT \
-          --remote_dir=/data/backups \
+          --remote_dir=$BACKUP_RAW_FILES_DIR \
           --replicas=1 \
           --label=${{ github.event.inputs.version_label }} >> /var/log/opencrvs-backup.log 2>&1"
+      - name: Extract backup data in backup environment
+        run: |
+          cd ${{ github.event.repository.name }}
+          scp -P $BACKUP_DESTINATION_SSH_PORT infrastructure/backups/extract-backup.sh $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST:/tmp/
+          ssh BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
+          sudo bash /tmp/extract-backup.sh \
+          --label=${{ github.event.inputs.version_label }} \
+          --backup_raw_files_dir=$BACKUP_RAW_FILES_DIR"
