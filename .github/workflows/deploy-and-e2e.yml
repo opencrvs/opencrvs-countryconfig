@@ -173,7 +173,6 @@ jobs:
     if: failure()
     steps:
       - name: Send Slack notification
-        if: needs.get-previous-run.outputs.previous_run_result == 'success'
         uses: slackapi/slack-github-action@v1.26.0
         with:
           channel-id: 'C02LU432JGK'
