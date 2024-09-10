@@ -30,7 +30,7 @@ jobs:
       BACKUP_DESTINATION_SSH_PORT: ${{ vars.SSH_PORT || secrets.SSH_PORT }}
       BACKUP_DESTINATION_SSH_USER: ${{ secrets.SSH_USER }}
       BACKUP_DESTINATION_SSH_KEY: ${{ secrets.SSH_KEY }}
-      BACKUP_RAW_FILES_DIR: /tmp/backup-${{ github.event.inputs.version_label }}
+      BACKUP_DESTINATION_DIR: /tmp/backup-${{ github.event.inputs.version_label }}/${{ github.event.inputs.version_label }}
     steps:
       - name: Clone country config resource package
         uses: actions/checkout@v3
@@ -58,4 +58,4 @@ jobs:
           ssh $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
           sudo bash /tmp/extract-backup.sh \
           --label=${{ github.event.inputs.version_label }} \
-          --backup_raw_files_dir=$BACKUP_RAW_FILES_DIR"
+          --backup_raw_files_dir=$BACKUP_DESTINATION_DIR"
