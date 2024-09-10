@@ -67,6 +67,7 @@ jobs:
       - name: Install SSH Key for source environment
         uses: shimataro/ssh-key-action@v2
         with:
+          name: id_rsa-source
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
@@ -75,6 +76,7 @@ jobs:
         env:
           SSH_KEY: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_KEY }}
         with:
+          name: id_rsa-destination
           key: $SSH_KEY
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
@@ -89,8 +91,8 @@ jobs:
           BACKUP_RAW_FILES_DIR: /tmp/backup-${{ github.event.inputs.version_label }}
         run: |
           cd ${{ github.event.repository.name }}
-          scp -P $BACKUP_SOURCE_SSH_PORT infrastructure/backups/legacy-backup.sh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST:/tmp/
-          ssh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST -p $BACKUP_SOURCE_SSH_PORT "\
+          scp -i ~/.ssh/id_rsa-source -P $BACKUP_SOURCE_SSH_PORT infrastructure/backups/legacy-backup.sh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST:/tmp/
+          ssh -i ~/.ssh/id_rsa-source $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST -p $BACKUP_SOURCE_SSH_PORT "\
           sudo bash /tmp/legacy-backup.sh \
           --ssh_host=$BACKUP_DESTINATION_SSH_HOST \
           --ssh_user=provision \
@@ -101,8 +103,8 @@ jobs:
       - name: Extract backup data in backup environment
         run: |
           cd ${{ github.event.repository.name }}
-          scp -P $BACKUP_DESTINATION_SSH_PORT infrastructure/backups/extract-backup.sh $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST:/tmp/
-          ssh BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
+          scp -i ~/.ssh/id_rsa-destination -P $BACKUP_DESTINATION_SSH_PORT infrastructure/backups/extract-backup.sh $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST:/tmp/
+          ssh -i ~/.ssh/id_rsa-destination BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
           sudo bash /tmp/extract-backup.sh \
           --label=${{ github.event.inputs.version_label }} \
           --backup_raw_files_dir=$BACKUP_RAW_FILES_DIR"
