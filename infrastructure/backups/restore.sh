@@ -138,8 +138,10 @@ echo "delete any previously created snapshot if any.  This may error on a fresh 
 docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/_snapshot/ocrvs"
 docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/*" -v
 
-echo "Waiting for elasticsearch to restart so that the restore script can find the updated volume."
-# docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_elasticsearch
+if [ "$IS_LOCAL" = false ]; then
+  echo "Waiting for elasticsearch to restart so that the restore script can find the updated volume."
+  docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_elasticsearch
+fi
 docker run --rm --network=$NETWORK toschneck/wait-for-it -t 120 elasticsearch:9200 -- echo "Elasticsearch is up"
 
 ##
@@ -221,11 +223,14 @@ sleep 10
 #-------------------------------------------
 docker run --rm --network=$NETWORK appropriate/curl curl -X POST -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_$LABEL/_restore?pretty" -d '{ "indices": "ocrvs" }'
 sleep 10
-echo "Waiting 1 minute to rotate elasticsearch passwords"
-echo
-# docker service update --force opencrvs_setup-elasticsearch-users
-echo
-sleep 60
+
+if [ "$IS_LOCAL" = false ]; then
+  echo "Waiting 1 minute to rotate elasticsearch passwords"
+  echo
+  docker service update --force opencrvs_setup-elasticsearch-users
+  echo
+  sleep 60
+fi
 
 ##
 # ------ INFLUXDB -----
@@ -234,7 +239,7 @@ sleep 60
 if [ "$IS_LOCAL" = true ]; then
   INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
   docker exec $INFLUXDB_CONTAINER_ID mkdir -p /home/user
-  # // @todo: Why the influxdb/label was not created?
+
   docker cp $ROOT_PATH/backups/influxdb/$LABEL/ $INFLUXDB_CONTAINER_ID:/home/user/$LABEL
   docker exec $INFLUXDB_CONTAINER_ID influxd restore -portable -db ocrvs /home/user/$LABEL
 else
@@ -247,7 +252,9 @@ fi
 tar -xzvf $ROOT_PATH/backups/minio/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/minio
 
 # Restart minio again so it picks up the updated files
-# docker service update --force opencrvs_minio
+if [ "$IS_LOCAL" = false ]; then
+  docker service update --force opencrvs_minio
+fi
 
 ##
 # ------ METABASE -----
