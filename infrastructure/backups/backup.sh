@@ -17,9 +17,6 @@
 #------------------------------------------------------------------------------------------------------------------
 set -e
 
-whoami
-pwd
-
 WORKING_DIR=$(pwd)
 
 if docker service ls >/dev/null 2>&1; then
@@ -55,10 +52,10 @@ for i in "$@"; do
     LABEL="${i#*=}"
     shift
     ;;
-  # --passphrase=*)
-  #   PASSPHRASE="${i#*=}"
-  #   shift
-  #   ;;
+  --passphrase=*)
+    PASSPHRASE="${i#*=}"
+    shift
+    ;;
   *) ;;
   esac
 done
@@ -105,10 +102,10 @@ if [ "$IS_LOCAL" = false ]; then
     echo "Error: Argument for the --replicas is required."
     print_usage_and_exit
   fi
-  # if [ -z "$PASSPHRASE" ]; then
-  #   echo "Error: Argument for the --passphrase is required."
-  #   print_usage_and_exit
-  # fi
+  if [ -z "$PASSPHRASE" ]; then
+    echo "Error: Argument for the --passphrase is required."
+    print_usage_and_exit
+  fi
   # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
   # We recommend that the secrets are served via a secure API from a Hardware Security Module
   source /data/secrets/opencrvs.secrets
@@ -126,12 +123,9 @@ fi
 # Find and remove all empty subdirectories under the top-level directories
 for BACKUP_DIR in $ROOT_PATH/backups/*; do
   if [ -d "$BACKUP_DIR" ]; then
-    echo $BACKUP_DIR
+    rm -rf $BACKUP_DIR/*
   fi
 done
-
-# This enables root-created directory to be writable by the docker user
-chown -R 1000:1000 $ROOT_PATH/backups
 
 mkdir -p $ROOT_PATH/backups/elasticsearch
 mkdir -p $ROOT_PATH/backups/elasticsearch/indices
@@ -140,7 +134,9 @@ mkdir -p $ROOT_PATH/backups/mongo
 mkdir -p $ROOT_PATH/backups/minio
 mkdir -p $ROOT_PATH/backups/metabase
 mkdir -p $ROOT_PATH/backups/vsexport
+mkdir -p $ROOT_PATH/backups/metabase
 
+# This enables root-created directory to be writable by the docker user
 chown -R 1000:1000 $ROOT_PATH/backups
 
 # This might not exist if project is empty
@@ -259,34 +255,18 @@ create_elasticsearch_backup() {
 
 create_elasticsearch_backup
 
-# Check this, this should not be relevant / manual process not needed at this stage.
 # If required, SSH into the node running the opencrvs_metrics container and backup the metrics data into an influxdb subfolder
-
 #-----------------------------------------------------------------------------------------------------------------------------
 
-# LEGACY INFLUXDB START
-# Get the container ID and host details of any running InfluxDB container, as the only way to backup is by using the Influxd CLI inside a running opencrvs_metrics container
-#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-INFLUXDB_CONTAINER_ID=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $11}')
-INFLUXDB_CONTAINER_NAME=$(echo $(docker service ps --no-trunc -f "desired-state=running" opencrvs_influxdb) | awk '{print $12}')
-INFLUXDB_HOSTNAME=$(echo $(docker service ps -f "desired-state=running" opencrvs_influxdb) | awk '{print $14}')
-INFLUXDB_HOST=$(docker node inspect --format '{{.Status.Addr}}' "$HOSTNAME")
-INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
-
-echo "Backing up Influx on own node"
-docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}
-docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} /data/backups/influxdb/${LABEL:-$BACKUP_DATE}
-
-# if [ "$IS_LOCAL" = true ]; then
-#   INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
-#   echo "Backing up Influx locally $INFLUXDB_CONTAINER_ID"
-#   docker cp $INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}
-# else
-#   echo "Backing up Influx in remote environment"
-#   docker run --rm -v $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}:/backup --network=$NETWORK influxdb:1.8.0 influxd backup -portable -host influxdb:8088 /backup
-# fi
-
-# LEGACY INFLUXDB END
+if [ "$IS_LOCAL" = true ]; then
+  INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
+  echo "Backing up Influx locally $INFLUXDB_CONTAINER_ID"
+  docker exec $INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}
+  docker cp $INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}
+else
+  echo "Backing up Influx in remote environment"
+  docker run --rm -v $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}:/backup --network=$NETWORK influxdb:1.8.0 influxd backup -portable -host influxdb:8088 /backup
+fi
 
 echo "Creating a backup for Minio"
 
@@ -333,18 +313,17 @@ mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/performance
 
 tar -czf /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -C "$BACKUP_RAW_FILES_DIR" .
 
-# openssl enc -aes-256-cbc -salt -pbkdf2 -in /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -out /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc -pass pass:$PASSPHRASE
+openssl enc -aes-256-cbc -salt -pbkdf2 -in /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -out /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc -pass pass:$PASSPHRASE
 
 if [ "$IS_LOCAL" = false ]; then
-  echo "Copying backup files to remote server"
   set +e
-  rsync -a -r --rsync-path="mkdir -p $REMOTE_DIR/ && rsync" --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" /tmp/${LABEL:-$BACKUP_DATE}.tar.gz $SSH_USER@$SSH_HOST:$REMOTE_DIR/
+  rsync -a -r --rsync-path="mkdir -p $REMOTE_DIR/ && rsync" --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc $SSH_USER@$SSH_HOST:$REMOTE_DIR/
   if [ $? -eq 0 ]; then
     echo "Copied backup files to remote server."
   fi
   set -e
 fi
 
-# rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
-# rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
-# rm -r $BACKUP_RAW_FILES_DIR
+rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
+rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
+rm -r $BACKUP_RAW_FILES_DIR
