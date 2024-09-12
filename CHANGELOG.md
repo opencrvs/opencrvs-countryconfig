@@ -15,6 +15,12 @@
 - Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
 - Environment creator script now requires countries to provide a Github token with no expiry date. This is to reduce effort in keeping the token up to date.
 
+### New features
+
+- The select options in DOCUMENT_UPLOADER_WITH_OPTION field can now be hidden using the new `optionCondition` property. It works similarly to the same property available in SELECT_WITH_OPTIONS field
+
+## 1.5.0
+
 ### Breaking changes
 
 - #### Update the certificate preview mechanism
