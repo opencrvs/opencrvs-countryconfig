@@ -228,9 +228,10 @@ if [ "$IS_LOCAL" = false ]; then
   echo "Waiting 1 minute to rotate elasticsearch passwords"
   echo
   docker service update --force opencrvs_setup-elasticsearch-users
-  echo
-  sleep 60
 fi
+
+# This still seems to be necessary part to get the data to show up in the search locally
+sleep 60
 
 ##
 # ------ INFLUXDB -----
