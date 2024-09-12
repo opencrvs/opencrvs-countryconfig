@@ -1,4 +1,3 @@
-import { readFileSync } from 'fs'
 import { COUNTRY_CONFIG_URL } from '@countryconfig/constants'
 
 export const NOTIFICATION_TRANSPORT =
