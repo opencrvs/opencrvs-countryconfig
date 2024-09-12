@@ -270,4 +270,5 @@ tar -xzvf $ROOT_PATH/backups/vsexport/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/vsexport
 # Run migrations by restarting migration service
 if [ "$IS_LOCAL" = false ]; then
   docker service update --force --update-parallelism 1 opencrvs_migration
+  docker service update --force --update-parallelism 1 opencrvs_countryconfig
 fi
