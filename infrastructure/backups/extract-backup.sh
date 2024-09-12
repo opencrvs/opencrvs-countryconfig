@@ -44,7 +44,9 @@ if [ -z "$BACKUP_RAW_FILES_DIR" ]; then
     print_usage_and_exit
 fi
 
+mkdir -p $BACKUP_RAW_FILES_DIR/extract
 tar -xvf $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz -C $BACKUP_RAW_FILES_DIR/extract
+
 mv $BACKUP_RAW_FILES_DIR/extract/elasticsearch/* /data/backups/elasticsearch/
 mv $BACKUP_RAW_FILES_DIR/extract/influxdb /data/backups/influxdb/${LABEL}
 mv $BACKUP_RAW_FILES_DIR/extract/minio/ocrvs-${LABEL}.tar.gz /data/backups/minio/
