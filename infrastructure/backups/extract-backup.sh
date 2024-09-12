@@ -47,6 +47,13 @@ fi
 mkdir -p $BACKUP_RAW_FILES_DIR/extract
 tar -xvf $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz -C $BACKUP_RAW_FILES_DIR/extract
 
+# Delete previous restore(s) and replace with the extracted backup
+for BACKUP_DIR in /data/backups/*; do
+    if [ -d "$BACKUP_DIR" ]; then
+        rm -rf $BACKUP_DIR/*
+    fi
+done
+
 mv $BACKUP_RAW_FILES_DIR/extract/elasticsearch/* /data/backups/elasticsearch/
 mv $BACKUP_RAW_FILES_DIR/extract/influxdb /data/backups/influxdb/${LABEL}
 mv $BACKUP_RAW_FILES_DIR/extract/minio/ocrvs-${LABEL}.tar.gz /data/backups/minio/
