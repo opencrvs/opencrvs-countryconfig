@@ -30,11 +30,12 @@ const MOTHER_EXACT_DATE_OF_BIRTH_UNKNOWN_FIELD_ID =
 const FATHER_EXACT_DATE_OF_BIRTH_UNKNOWN_FIELD_ID =
   'birth.father.father-view-group.customizedExactDateOfBirthUnknown'
 const INFORMANT_EXACT_DATE_OF_BIRTH_UNKNOWN_FIELD_ID =
-  'birth.infromant.infromant-view-group.customizedExactDateOfBirthUnknown'
+  'birth.informant.informant-view-group.customizedExactDateOfBirthUnknown'
 
 const MOTHER_YEAR_OF_BIRTH_EXTENSION_CODE = 'mother-year-of-birth-around'
 const FATHER_YEAR_OF_BIRTH_EXTENSION_CODE = 'father-year-of-birth-around'
-const INFORMANT_YEAR_OF_BIRTH_EXTENSION_CODE = 'informant-year-of-birth-around'
+const INFORMANT_YEAR_OF_BIRTH_EXTENSION_CODE =
+  'patient-informant-year-of-birth-around'
 
 export const up = async (db: Db, client: MongoClient) => {
   const session = client.startSession()
@@ -49,19 +50,39 @@ export const up = async (db: Db, client: MongoClient) => {
             }
           },
           ...convertFhirSectionArrayToObject('section', 'extensions'),
+          ...join(
+            'RelatedPerson',
+            'extensions.informant-details',
+            'id',
+            'relatedPerson'
+          ),
+          {
+            $addFields: {
+              informantReference: {
+                $arrayElemAt: [
+                  {
+                    $split: ['$relatedPerson.patient.reference', 'Patient/']
+                  },
+                  1
+                ]
+              },
+              informantRelation: '$relatedPerson.relationship.coding.code'
+            }
+          },
           {
             $lookup: {
               from: 'Patient',
               let: {
+                informant: '$informantReference',
                 mother: '$extensions.mother-details',
                 father: '$extensions.father-details',
-                informant: '$extensions.informant-details'
+                child: '$extensions.child-details'
               },
               pipeline: [
                 {
                   $match: {
                     $expr: {
-                      $in: ['$id', ['$$mother', '$$father', '$$informant']]
+                      $in: ['$id', ['$$informant', '$$mother', '$$father']]
                     }
                   }
                 }
@@ -109,9 +130,7 @@ export const up = async (db: Db, client: MongoClient) => {
                     $filter: {
                       input: '$patients',
                       as: 'ptn',
-                      cond: {
-                        $eq: ['$$ptn.id', '$extensions.informant-details']
-                      }
+                      cond: { $eq: ['$$ptn.id', '$informantReference'] }
                     }
                   },
                   0
