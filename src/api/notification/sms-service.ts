@@ -71,16 +71,9 @@ export async function sendSMS(
   recipient: string,
   locale: string
 ) {
-  //const client = getOrCreateAwsSnsClient()
+  const client = getOrCreateAwsSnsClient()
   const message = await compileMessages(type, variables, locale)
 
-  const awsSnsClient = new SNSClient({
-    region: AWS_SNS_REGION_NAME,
-    credentials: {
-      accessKeyId: AWS_SNS_ACCESS_KEY_ID,
-      secretAccessKey: AWS_SNS_SECRET_ACCESS_KEY
-    }
-  })
   const publishParams = {
     PhoneNumber: recipient,
     Message: message,
@@ -100,7 +93,7 @@ export async function sendSMS(
 
   let response: PublishCommandOutput
   try {
-    response = await awsSnsClient.send(publishSms)
+    response = await client.send(publishSms)
   } catch (error) {
     logger.error(error)
     throw error
