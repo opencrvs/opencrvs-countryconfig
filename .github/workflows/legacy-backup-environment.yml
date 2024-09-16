@@ -82,9 +82,11 @@ jobs:
 
       - name: Install SSH Key for destination environment
         uses: shimataro/ssh-key-action@v2
+        env:
+          SSH_KEY: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_KEY }}
         with:
           name: id_rsa-destination
-          key: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_KEY }}
+          key: $SSH_KEY
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
       - name: Create backup data in given environment and copy it over to the backup environment
