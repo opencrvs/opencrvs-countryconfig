@@ -6,7 +6,7 @@
 # & Healthcare Disclaimer located at http://opencrvs.org/license.
 #
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
-name: Restore environment to backup
+name: Restore environment from backup
 
 on:
   workflow_dispatch:
@@ -60,4 +60,4 @@ jobs:
           ssh $SSH_USER@$SSH_HOST -p $SSH_PORT "\
           sudo bash /tmp/restore.sh \
           --label=${{ github.event.inputs.version_label }} \
-          --replicas=${{ github.event.inputs.replicas }}"
+          --replicas=${{ github.event.inputs.replicas }} >> /var/log/opencrvs-backup-restore-${{ github.event.inputs.version_label }}.log 2>&1"

@@ -17,9 +17,6 @@
 #------------------------------------------------------------------------------------------------------------------
 set -e
 
-whoami
-pwd
-
 WORKING_DIR=$(pwd)
 
 if docker service ls >/dev/null 2>&1; then
@@ -109,6 +106,7 @@ if [ "$IS_LOCAL" = false ]; then
     #   echo "Error: Argument for the --passphrase is required."
     #   print_usage_and_exit
     # fi
+
     # In this example, we load the MONGODB_ADMIN_USER, MONGODB_ADMIN_PASSWORD, ELASTICSEARCH_ADMIN_USER & ELASTICSEARCH_ADMIN_PASSWORD database access secrets from a file.
     # We recommend that the secrets are served via a secure API from a Hardware Security Module
     source /data/secrets/opencrvs.secrets
@@ -276,17 +274,6 @@ INFLUXDB_SSH_USER=${INFLUXDB_SSH_USER:-root}
 echo "Backing up Influx on own node"
 docker exec $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID influxd backup -portable -database ocrvs /home/user/${LABEL:-$BACKUP_DATE}
 docker cp $INFLUXDB_CONTAINER_NAME.$INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} /data/backups/influxdb/${LABEL:-$BACKUP_DATE}
-
-# if [ "$IS_LOCAL" = true ]; then
-#   INFLUXDB_CONTAINER_ID=$(docker ps -aqf "name=influxdb")
-#   echo "Backing up Influx locally $INFLUXDB_CONTAINER_ID"
-#   docker cp $INFLUXDB_CONTAINER_ID:/home/user/${LABEL:-$BACKUP_DATE} $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}
-# else
-#   echo "Backing up Influx in remote environment"
-#   docker run --rm -v $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE}:/backup --network=$NETWORK influxdb:1.8.0 influxd backup -portable -host influxdb:8088 /backup
-# fi
-
-# LEGACY INFLUXDB END
 
 echo "Creating a backup for Minio"
 

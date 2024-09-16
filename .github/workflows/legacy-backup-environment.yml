@@ -6,21 +6,21 @@
 # & Healthcare Disclaimer located at http://opencrvs.org/license.
 #
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
-name: Backup from legacy environment
+name: Take backup from legacy environment
 
 on:
   workflow_dispatch:
     inputs:
       backup-source-environment:
         type: choice
-        description: Environment to create backup from
+        description: Environment to export backup from
         required: true
         default: legacy-preprod
         options:
           - legacy-preprod
       backup-destination-environment:
         type: choice
-        description: Environment to create backups to
+        description: Environment to import backups to
         required: true
         default: qa
         options:
@@ -57,6 +57,7 @@ jobs:
       BACKUP_DESTINATION_SSH_PORT: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_PORT }}
       BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
       BACKUP_RAW_FILES_DIR: /tmp/backup-${{ github.event.inputs.version_label }}
+
     steps:
       - name: Clone country config resource package
         uses: actions/checkout@v3
@@ -95,7 +96,7 @@ jobs:
           ssh -i ~/.ssh/id_rsa-source $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST -p $BACKUP_SOURCE_SSH_PORT "\
           sudo bash /tmp/legacy-backup.sh \
           --ssh_host=$BACKUP_DESTINATION_SSH_HOST \
-          --ssh_user=provision \
+          --ssh_user=$BACKUP_DESTINATION_SSH_USER \
           --ssh_port=$BACKUP_DESTINATION_SSH_PORT \
           --remote_dir=$BACKUP_RAW_FILES_DIR \
           --replicas=${{ github.event.inputs.replicas }}" \
@@ -107,4 +108,4 @@ jobs:
           ssh -i ~/.ssh/id_rsa-destination $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
           sudo bash /tmp/extract-backup.sh \
           --label=${{ github.event.inputs.version_label }} \
-          --backup_raw_files_dir=$BACKUP_RAW_FILES_DIR/${{ github.event.inputs.version_label }}"
+          --backup_raw_files_dir=$BACKUP_RAW_FILES_DIR/${{ github.event.inputs.version_label }} >> /var/log/opencrvs-backup-${{ github.event.inputs.version_label }}.log 2>&1"
