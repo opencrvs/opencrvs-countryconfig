@@ -55,7 +55,6 @@ jobs:
       BACKUP_SOURCE_SSH_USER: ${{ secrets.SSH_USER }}
       BACKUP_DESTINATION_SSH_HOST: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_HOST }}
       BACKUP_DESTINATION_SSH_PORT: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_PORT }}
-      BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
       BACKUP_RAW_FILES_DIR: /tmp/backup-${{ github.event.inputs.version_label }}
 
     steps:
@@ -90,6 +89,9 @@ jobs:
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
       - name: Create backup data in given environment and copy it over to the backup environment
+        env:
+          # Secrets behave differently from vars. They need to referenced through locally scoped env in order to be used in the run command
+          BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
         run: |
           cd ${{ github.event.repository.name }}
           scp -i ~/.ssh/id_rsa-source -P $BACKUP_SOURCE_SSH_PORT infrastructure/backups/legacy-backup.sh $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST:/tmp/
@@ -102,6 +104,9 @@ jobs:
           --replicas=${{ github.event.inputs.replicas }} \
           --label=${{ github.event.inputs.version_label }} >> /var/log/opencrvs-backup-${{ github.event.inputs.version_label }}.log 2>&1"
       - name: Extract backup data in backup environment
+        env:
+          # Secrets behave differently from vars. They need to referenced through locally scoped env in order to be used in the run command
+          BACKUP_DESTINATION_SSH_USER: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_USER }}
         run: |
           cd ${{ github.event.repository.name }}
           scp -i ~/.ssh/id_rsa-destination -P $BACKUP_DESTINATION_SSH_PORT infrastructure/backups/extract-backup.sh $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST:/tmp/
