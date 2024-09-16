@@ -32,14 +32,36 @@ on:
       version_label:
         description: The version label for the backups
         required: true
+
 jobs:
+  destination-ssh-key:
+    name: Get destination SSH key
+    uses: ./.github/workflows/get-secret-from-environment.yml
+    with:
+      secret_name: 'SSH_KEY'
+      env_name: ${{ github.event.inputs.backup-destination-environment }}
+    secrets:
+      gh_token: ${{ secrets.GH_TOKEN }}
+      encryption_key: ${{ secrets.GH_ENCRYPTION_PASSWORD }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+
+  destination-ssh-user:
+    name: Get destination SSH user
+    uses: ./.github/workflows/get-secret-from-environment.yml
+    with:
+      secret_name: 'SSH_USER'
+      env_name: ${{ github.event.inputs.backup-destination-environment }}
+    secrets:
+      gh_token: ${{ secrets.GH_TOKEN }}
+      encryption_key: ${{ secrets.GH_ENCRYPTION_PASSWORD }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+
   destination-environment-vars:
     environment: ${{ github.event.inputs.backup-destination-environment }}
     runs-on: ubuntu-22.04
     outputs:
       BACKUP_DESTINATION_SSH_HOST: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
       BACKUP_DESTINATION_SSH_PORT: ${{ vars.SSH_PORT || secrets.SSH_PORT }}
-      BACKUP_DESTINATION_SSH_USER: ${{ secrets.SSH_USER }} # Check how secrets could be passed to different step.
       BACKUP_DESTINATION_SSH_KEY: ${{ secrets.SSH_KEY }}
     steps:
       - name: Echo
@@ -47,7 +69,8 @@ jobs:
 
   run-backup:
     environment: ${{ github.event.inputs.backup-source-environment }}
-    needs: destination-environment-vars
+    needs:
+      [destination-ssh-key, destination-ssh-user, destination-environment-vars]
     runs-on: ubuntu-22.04
     env:
       BACKUP_SOURCE_SSH_HOST: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
@@ -56,8 +79,23 @@ jobs:
       BACKUP_DESTINATION_SSH_HOST: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_HOST }}
       BACKUP_DESTINATION_SSH_PORT: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_PORT }}
       BACKUP_RAW_FILES_DIR: /tmp/backup-${{ github.event.inputs.version_label }}
-
     steps:
+      - name: Insert destination SSH user to environment variables
+        run: |
+          echo "${{ needs.destination-ssh-user.outputs.secret_value }}" | base64 --decode | \
+          openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}" -out /tmp/backup_destination_ssh_user
+          BACKUP_DESTINATION_SSH_USER=$(cat /tmp/backup_destination_ssh_user)
+          echo "BACKUP_DESTINATION_SSH_USER=$BACKUP_DESTINATION_SSH_USER" >> $GITHUB_ENV
+          echo "::add-mask::$BACKUP_DESTINATION_SSH_USER"
+
+      - name: Insert destination SSH key to environment variables
+        run: |
+          echo "${{ needs.destination-ssh-key.outputs.secret_value }}" | base64 --decode | \
+          openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}" -out /tmp/backup_destination_ssh_key
+          BACKUP_DESTINATION_SSH_KEY=$(cat /tmp/backup_destination_ssh_key)
+          echo "BACKUP_DESTINATION_SSH_KEY=$BACKUP_DESTINATION_SSH_KEY" >> $GITHUB_ENV
+          echo "::add-mask::$BACKUP_DESTINATION_SSH_KEY"
+
       - name: Clone country config resource package
         uses: actions/checkout@v3
         with:
@@ -81,11 +119,9 @@ jobs:
 
       - name: Install SSH Key for destination environment
         uses: shimataro/ssh-key-action@v2
-        env:
-          SSH_KEY: ${{ needs.destination-environment-vars.outputs.BACKUP_DESTINATION_SSH_KEY }}
         with:
           name: id_rsa-destination
-          key: $SSH_KEY
+          key: $BACKUP_DESTINATION_SSH_KEY
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
       - name: Create backup data in given environment and copy it over to the backup environment
@@ -95,7 +131,7 @@ jobs:
           ssh -i ~/.ssh/id_rsa-source $BACKUP_SOURCE_SSH_USER@$BACKUP_SOURCE_SSH_HOST -p $BACKUP_SOURCE_SSH_PORT "\
           sudo bash /tmp/legacy-backup.sh \
           --ssh_host=$BACKUP_DESTINATION_SSH_HOST \
-          --ssh_user=provision \
+          --ssh_user=$BACKUP_DESTINATION_SSH_USER \
           --ssh_port=$BACKUP_DESTINATION_SSH_PORT \
           --remote_dir=$BACKUP_RAW_FILES_DIR \
           --replicas=${{ github.event.inputs.replicas }} \
@@ -103,8 +139,8 @@ jobs:
       - name: Extract backup data in backup environment
         run: |
           cd ${{ github.event.repository.name }}
-          scp -i ~/.ssh/id_rsa-destination -P $BACKUP_DESTINATION_SSH_PORT infrastructure/backups/extract-backup.sh provision@$BACKUP_DESTINATION_SSH_HOST:/tmp/
-          ssh -i ~/.ssh/id_rsa-destination provision@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
+          scp -i ~/.ssh/id_rsa-destination -P $BACKUP_DESTINATION_SSH_PORT infrastructure/backups/extract-backup.sh $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST:/tmp/
+          ssh -i ~/.ssh/id_rsa-destination $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
           sudo bash /tmp/extract-backup.sh \
           --label=${{ github.event.inputs.version_label }} \
           --backup_raw_files_dir=$BACKUP_RAW_FILES_DIR/${{ github.event.inputs.version_label }} >> /var/log/opencrvs-backup-${{ github.event.inputs.version_label }}.log 2>&1"
