@@ -10,7 +10,6 @@
  * graphic logo are (registered/a) trademark(s) of Plan International.
  */
 
-import crypto from 'crypto'
 import { Db, MongoClient } from 'mongodb'
 import {
   convertFhirSectionArrayToObject,
@@ -54,9 +53,15 @@ export const up = async (db: Db, client: MongoClient) => {
                 status: 'completed',
                 id: {
                   $function: {
-                    body: function () {
-                      return crypto.randomUUID()
-                    },
+                    // Generate a plain string UUID
+                    body: `function () {
+                      const template = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+                      return template.replace(/[xy]/g, function (c) {
+                        const r = (Math.random() * 16) | 0
+                        const v = c === 'x' ? r : (r & 0x3) | 0x8
+                        return v.toString(16)
+                      })
+                    }`,
                     args: [],
                     lang: 'js'
                   }
