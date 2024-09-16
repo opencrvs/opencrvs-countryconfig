@@ -60,4 +60,4 @@ jobs:
           ssh $SSH_USER@$SSH_HOST -p $SSH_PORT "\
           sudo bash /tmp/restore.sh \
           --label=${{ github.event.inputs.version_label }} \
-          --replicas=${{ github.event.inputs.replicas }} >> /var/log/opencrvs-backup-restore-${{ github.event.inputs.version_label }}.log 2>&1"
+          --replicas=${{ github.event.inputs.replicas }} >> /tmp/opencrvs-backup-restore-${{ github.event.inputs.version_label }}.log 2>&1"
