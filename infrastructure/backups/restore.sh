@@ -267,8 +267,26 @@ tar -xzvf $ROOT_PATH/backups/metabase/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/metabase
 ##
 tar -xzvf $ROOT_PATH/backups/vsexport/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/vsexport
 
+wait_for_core_migrations() {
+  OUTPUT=$(docker service ls --filter "name=opencrvs_migration" --format "{{.Replicas}}")
+
+  while [ "$OUTPUT" != "0/1" ]; do
+    echo "Migration service is still running. Trying again in 10 seconds"
+    sleep 10
+
+    OUTPUT=$(docker service ls --filter "name=opencrvs_migration" --format "{{.Replicas}}")
+  done
+
+  echo "Migration service has finished running"
+}
+
 # Run migrations by restarting migration service and countryconfig
 if [ "$IS_LOCAL" = false ]; then
+  echo "Running core migrations"
   docker service update --force --update-parallelism 1 opencrvs_migration
+
+  echo "Waiting for migration service to finish"
+  wait_for_core_migrations
+
   docker service update --force --update-parallelism 1 opencrvs_countryconfig
 fi
