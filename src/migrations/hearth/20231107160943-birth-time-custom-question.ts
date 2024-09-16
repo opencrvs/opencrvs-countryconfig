@@ -52,7 +52,15 @@ export const up = async (db: Db, client: MongoClient) => {
               questions: {
                 resourceType: 'QuestionnaireResponse',
                 status: 'completed',
-                id: crypto.randomUUID(),
+                id: {
+                  $function: {
+                    body: function () {
+                      return crypto.randomUUID()
+                    },
+                    args: [],
+                    lang: 'js'
+                  }
+                },
                 subject: {
                   reference: {
                     $concat: ['Encounter/', '$extensions.birth-encounter']
