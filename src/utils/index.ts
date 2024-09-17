@@ -180,9 +180,9 @@ export async function writeJSONToCSV(
   filename: string,
   data: Array<Record<string, any>>
 ) {
-  const csv = await csvStringify(data, {
+  const csv = (await csvStringify(data, {
     header: true
-  })
+  })) as any
   return fs.promises.writeFile(filename, csv, 'utf8')
 }
 

@@ -33,7 +33,8 @@
   "include": [
     "src/**/*.ts",
     "infrastructure/environments/**/*.ts",
-    "typings"
+    "typings",
+    "migrate-mongo-config.ts"
   ],
   "exclude": [
     "node_modules",

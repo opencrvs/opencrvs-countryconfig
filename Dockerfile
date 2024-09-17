@@ -10,6 +10,7 @@ COPY tsconfig.json tsconfig.json
 COPY yarn.lock yarn.lock
 COPY src src
 COPY public public
+COPY migrate-mongo-config.ts migrate-mongo-config.ts
 RUN yarn install --production
 
 EXPOSE 3040
