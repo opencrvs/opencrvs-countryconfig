@@ -209,6 +209,7 @@ export const informantsSignature = {
   },
   validator: [],
   type: 'SIGNATURE',
+  allowedFileFormats: ['image/png', 'image/svg'],
   mapping: {
     mutation: {
       operation: 'fieldValueSectionExchangeTransformer',

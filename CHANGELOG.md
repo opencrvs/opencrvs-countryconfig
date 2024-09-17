@@ -8,6 +8,7 @@
 - New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
 - Remove `inputFieldWidth` from Number type form field
 - You can now configure the home screen application’s name and icons in your country configuration package as manifest.json and app icon files are moved from core to country config (check `src/client-static` folder)
+- Updated `allowedFileFormats` in signature fields to use MIME types (`image/png`, `image/jpg`, `image/jpeg`, `image/svg`) instead of simple file extensions. If you are already using the `allowedFileFormats` field in your implementation, please ensure to update the format accordingly.
 
 ### Bug fixes
 
