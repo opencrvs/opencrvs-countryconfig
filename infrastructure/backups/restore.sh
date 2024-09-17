@@ -1,3 +1,4 @@
+#!/bin/bash
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -288,5 +289,9 @@ if [ "$IS_LOCAL" = false ]; then
   echo "Waiting for migration service to finish"
   wait_for_core_migrations
 
+  echo "Restarting countryconfig service to run migrations"
   docker service update --force --update-parallelism 1 opencrvs_countryconfig
+
+  echo "countryconfig service is running. Exiting."
+  exit 0
 fi
