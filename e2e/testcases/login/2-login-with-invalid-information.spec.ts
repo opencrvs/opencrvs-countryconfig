@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { LOGIN_URL } from '../../constants'
+import { CREDENTIALS, LOGIN_URL } from '../../constants'
 import { ensureLoginPageReady } from '../../helpers'
 
 test.describe('2. Login with invalid information', () => {
@@ -15,7 +15,7 @@ test.describe('2. Login with invalid information', () => {
 
   test('2.2. Enter invalid username and valid password', async ({ page }) => {
     await page.fill('#username', 'j.kimmich')
-    await page.fill('#password', 'test')
+    await page.fill('#password', CREDENTIALS.FIELD_AGENT.PASSWORD)
     await page.getByText('Login', { exact: true }).click()
 
     // Expected result: Should show toast saying: Incorrect username or password
@@ -23,7 +23,7 @@ test.describe('2. Login with invalid information', () => {
   })
 
   test('2.3. Enter valid username and invalid password', async ({ page }) => {
-    await page.fill('#username', 'k.bwalya')
+    await page.fill('#username', CREDENTIALS.FIELD_AGENT.USERNAME)
     await page.fill('#password', 'tests')
     await page.getByText('Login', { exact: true }).click()
 
@@ -32,8 +32,8 @@ test.describe('2. Login with invalid information', () => {
   })
 
   test('2.4. Enter expired 2fa code', async ({ page }) => {
-    await page.fill('#username', 'k.bwalya')
-    await page.fill('#password', 'test')
+    await page.fill('#username', CREDENTIALS.FIELD_AGENT.USERNAME)
+    await page.fill('#password', CREDENTIALS.FIELD_AGENT.PASSWORD)
     await page.getByText('Login', { exact: true }).click()
 
     // Expected result: User should be redirected to the next page to verify through mobile number or email address

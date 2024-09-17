@@ -12,7 +12,7 @@ import {
   REGISTER_BIRTH_DECLARATION
 } from './queries'
 
-type Details = {
+export type BirthDetails = {
   informant: {
     type: 'MOTHER' | 'FATHER' | 'BROTHER'
   }
@@ -23,6 +23,12 @@ type Details = {
     gender: 'male' | 'female'
     birthType?: 'SINGLE' | 'MULTIPLE'
     weightAtBirth?: number
+    placeOfBirth?: 'Health Institution' | 'Residential address' | 'Other'
+    birthFacility?: string
+    birthLocation?: {
+      state: string
+      district: string
+    }
   }
   mother: {
     firstNames: string
@@ -42,9 +48,9 @@ type Details = {
 async function getAllLocations(
   type: 'ADMIN_STRUCTURE' | 'HEALTH_FACILITY' | 'CRVS_OFFICE'
 ) {
-  const locations = (await fetch(`${GATEWAY_HOST}/location?type=${type}`).then(
-    (res) => res.json()
-  )) as fhir.Bundle
+  const locations = (await fetch(
+    `${GATEWAY_HOST}/location?type=${type}&_count=0`
+  ).then((res) => res.json())) as fhir.Bundle
 
   return locations.entry!.map((entry) => entry.resource as fhir.Location)
 }
@@ -56,7 +62,7 @@ function getLocationIdByName(locations: fhir.Location[], name: string) {
   }
   return location.id
 }
-export async function createDeclaration(token: string, details: Details) {
+export async function createDeclaration(token: string, details: BirthDetails) {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
   const facilities = await getAllLocations('HEALTH_FACILITY')
 
@@ -105,12 +111,44 @@ export async function createDeclaration(token: string, details: Details) {
               ),
             identifier: []
           },
-          eventLocation: {
-            _fhirID: getLocationIdByName(
-              facilities,
-              'Chikobo Rural Health Centre'
-            )
-          },
+          eventLocation:
+            details.child.placeOfBirth &&
+            details.child.placeOfBirth !== 'Health Institution'
+              ? {
+                  type: 'PRIVATE_HOME',
+                  address: {
+                    line: [
+                      faker.address.buildingNumber(),
+                      faker.address.streetName(),
+                      faker.address.cityName(),
+                      '',
+                      '',
+                      'URBAN',
+                      ...new Array(9).fill('')
+                    ],
+                    country: 'FAR',
+                    state: getLocationIdByName(
+                      locations,
+                      details.child.birthLocation?.state || 'Central'
+                    ),
+                    partOf: getLocationIdByName(
+                      locations,
+                      details.child.birthLocation?.district || 'Ibombo'
+                    ),
+                    district: getLocationIdByName(
+                      locations,
+                      details.child.birthLocation?.district || 'Ibombo'
+                    ),
+                    city: faker.address.cityName(),
+                    postalCode: faker.address.zipCode()
+                  }
+                }
+              : {
+                  _fhirID: getLocationIdByName(
+                    facilities,
+                    details.child.birthFacility || 'Ibombo Rural Health Centre'
+                  )
+                },
           attendantAtBirth: details.attendant.type || 'PHYSICIAN',
           birthType: details.child.birthType || 'SINGLE',
           weightAtBirth: details.child.weightAtBirth || 2,

@@ -3,6 +3,7 @@ import { createPIN, getToken, login } from '../../helpers'
 import faker from '@faker-js/faker'
 import { createDeclaration } from '../birth/helpers'
 import TEST_DATA_1 from '../birth/data/1-both-mother-and-father.json'
+import { CREDENTIALS } from '../../constants'
 
 test.describe
   .serial('17. Validate user can correct a record from audit record page', () => {
@@ -50,7 +51,11 @@ test.describe
   })
 
   test('17.1 Go to ready to print tab > search for a certified record > click any application not downloaded', async () => {
-    await login(page, 'f.katongo', 'test')
+    await login(
+      page,
+      CREDENTIALS.REGISTRATION_AGENT.USERNAME,
+      CREDENTIALS.REGISTRATION_AGENT.PASSWORD
+    )
     await createPIN(page)
 
     await page.getByRole('button', { name: 'Ready to print' }).click()

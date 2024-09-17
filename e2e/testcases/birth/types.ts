@@ -192,7 +192,15 @@ export type BirthDeclaration = {
   eventLocation: {
     id: string
     type: string
-    address: string | null
+    address: {
+      type: string
+      line: string[]
+      district: string
+      state: string
+      city: string
+      postalCode: string
+      country: string
+    }
   }
   questionnaire: {
     fieldId: string

@@ -1,10 +1,15 @@
 import { expect, test } from '@playwright/test'
 import { createPIN, login } from '../../helpers'
 import { validateSectionButtons } from '../../helpers'
+import { CREDENTIALS } from '../../constants'
 
 test.describe('1. Marriage event validation', () => {
   test.beforeEach(async ({ page }) => {
-    await login(page, 'k.mweene', 'test')
+    await login(
+      page,
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
     await createPIN(page)
   })
 

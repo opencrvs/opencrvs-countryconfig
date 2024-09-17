@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createPIN, getToken, login } from '../../helpers'
 import { createDeathDeclaration } from './helpers'
+import { CREDENTIALS } from '../../constants'
 
 test.describe('1. Death event declaration', () => {
   test.describe.serial('Fill all form sections. Save & Exit', () => {
@@ -14,7 +15,11 @@ test.describe('1. Death event declaration', () => {
     })
 
     test('1.1. Navigate to the death event declaration page', async () => {
-      await login(page, 'k.mweene', 'test')
+      await login(
+        page,
+        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      )
       await createPIN(page)
       await page.click('#header_new_event')
       await expect(page.getByText('New Declaration')).toBeVisible()
@@ -393,7 +398,11 @@ test.describe('1. Death event declaration', () => {
   })
   test.describe('1.10 Validate "Exit" Button', async () => {
     test.beforeEach(async ({ page }) => {
-      await login(page, 'k.mweene', 'test')
+      await login(
+        page,
+        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      )
       await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Death').click()
@@ -445,7 +454,11 @@ test.describe('1. Death event declaration', () => {
 
   test.describe('1.11 Validate "Delete Declaration" Button  ', async () => {
     test.beforeEach(async ({ page }) => {
-      await login(page, 'k.mweene', 'test')
+      await login(
+        page,
+        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+      )
       await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Death').click()

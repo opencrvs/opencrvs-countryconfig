@@ -1,6 +1,13 @@
 import { Locator, Page, expect } from '@playwright/test'
-import { AUTH_URL, CLIENT_URL, GATEWAY_HOST } from './constants'
-import { random } from 'lodash'
+import {
+  AUTH_URL,
+  CLIENT_URL,
+  GATEWAY_HOST,
+  SAFE_INPUT_CHANGE_TIMEOUT_MS,
+  SAFE_OUTBOX_TIMEOUT_MS
+} from './constants'
+import { format, parseISO } from 'date-fns'
+import { isArray, random } from 'lodash'
 
 export async function login(page: Page, username: string, password: string) {
   const token = await getToken(username, password)
@@ -60,8 +67,12 @@ type DeclarationSection =
   | 'marriageEvent'
   | 'witnessOne'
   | 'witnessTwo'
+type CorrectionSection = 'summary'
 
-export const goToSection = async (page: Page, section: DeclarationSection) => {
+export const goToSection = async (
+  page: Page,
+  section: DeclarationSection | CorrectionSection
+) => {
   while (!page.url().includes(section)) {
     await page.getByRole('button', { name: 'Continue' }).click()
   }
@@ -113,20 +124,173 @@ export const uploadImage = async (
   await fileChooser.setFiles(image)
 }
 
+/**
+ * @page - page object
+ * @sectionLocator - locator for the section e.g. mother / father
+ * @sectionTitle - title of the section to  e.g. National ID / Passport
+ * @buttonLocator - locator for the button to upload the image
+ */
+export const uploadImageToSection = async ({
+  page,
+  sectionLocator,
+  sectionTitle,
+  buttonLocator
+}: {
+  page: Page
+  sectionLocator: Locator
+  buttonLocator: Locator
+  sectionTitle: string
+}) => {
+  await sectionLocator.getByText('Select...').click()
+  await sectionLocator.getByText(sectionTitle, { exact: true }).click()
+
+  await uploadImage(page, buttonLocator)
+}
+
+export const expectAddress = async (
+  locator: Locator,
+  address: { [key: string]: any },
+  isDeletion?: boolean
+) => {
+  const addressKeys = [
+    'country',
+
+    'state',
+    'province',
+
+    'district',
+
+    'village',
+    'town',
+    'city',
+
+    'residentialArea',
+    'addressLine1',
+
+    'street',
+    'addressLine2',
+
+    'number',
+    'addressLine3',
+
+    'postcodeOrZip',
+    'postalCode',
+    'zipCode'
+  ]
+
+  if (isArray(address.line)) {
+    address.addressLine1 = address.line[2]
+    address.addressLine2 = address.line[1]
+    address.addressLine3 = address.line[0]
+  }
+
+  const texts = addressKeys
+    .map((key) => address[key])
+    .filter((value) => Boolean(value))
+
+  if (isDeletion) {
+    const deletionLocators = await locator.getByRole('deletion').all()
+    for (let i = 0; i < texts.length; i++) {
+      await expect(deletionLocators[getDeletionPosition(i)]).toContainText(
+        texts[i]
+      )
+    }
+  } else await expectTexts(locator, texts)
+}
+
+/*
+  The deletion section is formatted like bellow:
+  	'-'
+    'Farajaland'
+    'Central'
+    'Ibombo'
+    ''
+    'Example Town' / 'Example village'
+    'Mitali Residential Area'
+    '4/A'
+    '1324'
+
+*/
+const getDeletionPosition = (i: number) => i + (i < 3 ? 1 : 2)
+
+export const expectTexts = async (locator: Locator, texts: string[]) => {
+  for (const text of texts) {
+    await expect(locator).toContainText(text)
+  }
+}
+
+export const expectTextWithChangeLink = async (
+  locator: Locator,
+  texts: string[]
+) => {
+  await expectTexts(locator, texts)
+  await expect(locator).toContainText('Change')
+}
+
 export const getLocationNameFromFhirId = async (fhirId: string) => {
   const res = await fetch(`${GATEWAY_HOST}/location/${fhirId}`)
   const location = (await res.json()) as fhir.Location
   return location.name
 }
 
-export async function continueForm(page: Page) {
-  /*
-   * This timeout is to ensure that all previous actions have been completed
-   * including filling inputs and that the changed values have been reflected
-   * also to the Redux state. 500ms is selected as a safe value.
-   */
-  await page.waitForTimeout(500)
-  return page.getByText('Continue', { exact: true }).click()
+export async function continueForm(page: Page, label: string = 'Continue') {
+  await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
+  return page.getByText(label, { exact: true }).click()
+}
+
+export async function goBackToReview(page: Page) {
+  await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
+  await page.getByRole('button', { name: 'Back to review' }).click()
+}
+
+export const formatDateTo_yyyyMMdd = (date: string) =>
+  format(parseISO(date), 'yyyy-MM-dd')
+
+export const formatDateTo_ddMMMMyyyy = (date: string) =>
+  format(parseISO(date), 'dd MMMM yyyy')
+
+/*
+  Date() object takes 0-indexed month,
+  but month coming to the method is 1-indexed
+*/
+export const formatDateObjectTo_ddMMMMyyyy = ({
+  yyyy,
+  mm,
+  dd
+}: {
+  yyyy: string
+  mm: string
+  dd: string
+}) => format(new Date(Number(yyyy), Number(mm) - 1, Number(dd)), 'dd MMMM yyyy')
+
+/*
+  Date() object takes 0-indexed month,
+  but month coming to the method is 1-indexed
+*/
+export const formatDateObjectTo_yyyyMMdd = ({
+  yyyy,
+  mm,
+  dd
+}: {
+  yyyy: string
+  mm: string
+  dd: string
+}) => format(new Date(Number(yyyy), Number(mm) - 1, Number(dd)), 'yyyy-MM-dd')
+
+export const joinValuesWith = (
+  values: (string | number | null | undefined)[],
+  separator = ' '
+) => {
+  return values.filter(Boolean).join(separator)
+}
+
+type PersonOrName = {
+  firstNames: string
+  familyName: string
+  [key: string]: any
+}
+export const formatName = (name: PersonOrName) => {
+  return joinValuesWith([name.firstNames, name.familyName])
 }
 
 export const drawSignature = async (page: Page) => {
@@ -158,3 +322,8 @@ export const drawSignature = async (page: Page) => {
     await page.mouse.up()
   }
 }
+
+export const expectOutboxToBeEmpty = async (page: Page) =>
+  await expect(page.locator('#navigation_outbox')).not.toContainText('1', {
+    timeout: SAFE_OUTBOX_TIMEOUT_MS
+  })
