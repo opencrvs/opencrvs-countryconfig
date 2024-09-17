@@ -8,12 +8,19 @@
 - New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
 - Remove `inputFieldWidth` from Number type form field
 - You can now configure the home screen application’s name and icons in your country configuration package as manifest.json and app icon files are moved from core to country config (check `src/client-static` folder)
+- Updated `allowedFileFormats` in signature fields to use MIME types (`image/png`, `image/jpg`, `image/jpeg`, `image/svg`) instead of simple file extensions. If you are already using the `allowedFileFormats` field in your implementation, please ensure to update the format accordingly.
 
 ### Bug fixes
 
 - Protect individual certificate endpoint with token
 - Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
 - Environment creator script now requires countries to provide a Github token with no expiry date. This is to reduce effort in keeping the token up to date.
+
+### New features
+
+- The select options in DOCUMENT_UPLOADER_WITH_OPTION field can now be hidden using the new `optionCondition` property. It works similarly to the same property available in SELECT_WITH_OPTIONS field
+
+## 1.5.0
 
 ### Breaking changes
 
