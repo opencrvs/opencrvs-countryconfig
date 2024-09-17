@@ -6,11 +6,7 @@
 # & Healthcare Disclaimer located at http://opencrvs.org/license.
 #
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
-<<<<<<< HEAD
 name: Restore environment from backup
-=======
-name: Restore environment to backup
->>>>>>> develop
 
 on:
   workflow_dispatch:
@@ -30,7 +26,6 @@ on:
         default: '1'
         required: true
 jobs:
-<<<<<<< HEAD
   restore-environment:
     environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-22.04
@@ -66,10 +61,3 @@ jobs:
           sudo bash /tmp/restore.sh \
           --label=${{ github.event.inputs.version_label }} \
           --replicas=${{ github.event.inputs.replicas }} >> /tmp/opencrvs-backup-restore-${{ github.event.inputs.version_label }}.log 2>&1"
-=======
-  test:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Echo
-        run: echo workflow must be in main branch
->>>>>>> develop
