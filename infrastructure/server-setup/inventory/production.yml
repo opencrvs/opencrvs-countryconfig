@@ -30,16 +30,18 @@ all:
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+      - name: rochel
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3NSCi6xSkPMl21e9TEAudav4pOO2EGguP4Djy4X8WLp6jO+GHDRo4gceInimCOdA9mqzb4yJgNoVFlEG6J9X5Axj4TfZ1fg9NdsJcLcEd3N7V0g51vbv7StCqdgr5m7TrjRXfSinDd9R41KHTzbfQNh3uYbp+cAm0vDoNgtXCzBkpqnsEo2rTNmnqgKAiWmu2vybT/A0i4PsaIeeSlsMZ9zLH7AdRxvrWlmXJA7ye9noQVyW8b2zOpE3LFiMEk93ZItDqzhFgOyLN3NNFGhhCvmcqYrLqIO9hpHOrDeio+ykG8g+3s42AG7AdyuW7BVcbr99mpd02NZW9RmY5va6+j156GVRf54KrM4yXxLeZjVj/h4uaLEGIulZh1mECDWiQc2L7/sWW6l3LoAL1k3b11shhpvXz4PA/22YTHsfcWObMQ7Uiy6bbfQO3hswaLyfJVMJ9QT3LymxZGvReGb2lpMATwWo8YH7dzIsBAaPugFAZdjskuJe6Y6BhdFgjdjOlcjxhi94Ui7PGS0XQHESQl7lwUeAxz0yEJ0arVwCOyq/hMKmmVS6PhezP2iYw9azvqwu+UqEFPUaBkdbphWQ2WmouK2xEazqsjSnyHA0rWxHAv43uCqvq+BXpBagEJHLfZ0uEeHkuerFWwpUOVKnJQn34NDL6v12l3/Xonwt9+Q== rochel@rochel
         state: present
         sudoer: true
 
 docker-manager-first:
   hosts:
-    prod-01: # @todo set this to be the hostname of your target server
-      ansible_host: '22.22.22.22' # @todo set this to be the hostname of your target server
+    siecm-prod-app-1: # @todo set this to be the hostname of your target server
+      ansible_host: '102.16.127.249' # @todo set this to be the hostname of your target server
+      ansible_port: 10010
+      internal_ssh_port: 22
       data_label: data1
       # If you are using a jump server to access this environment, enter other SSH args here.
       # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
@@ -49,17 +51,26 @@ docker-manager-first:
 # If you are only using one production worker for very small countries or small pilot projects, replace with an empty block like so: docker-workers: {}
 docker-workers:
   hosts:
-    prod-02: # @todo set this to be the hostname of your target server
-      ansible_host: '33.33.33.33'
+    siecm-prod-app-2: # @todo set this to be the hostname of your target server
+      ansible_host: '102.16.127.249'
+      ansible_port: 10011
+      internal_ssh_port: 22
+      data_label: data2
+
+    siecm-prod-app-3: # @todo set this to be the hostname of your target server
+      ansible_host: '102.16.127.249'
+      ansible_port: 10012
+      internal_ssh_port: 22
+      data_label: data3
       # If you are using a jump server to access this environment, enter other SSH args here.
       # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
 
 backups:
   hosts:
-    backup: # @todo set this to be the hostname of your backup server
-      ansible_host: '66.66.66.66'
-      # Written by provision pipeline. Assumes "backup" environment
-      # exists in Github environments
+    siecm-backup-app-2: # @todo set this to be the hostname of your backup server
+      ansible_host: '102.16.127.245'
+      ansible_port: 10015
+      internal_ssh_port: 22
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
 # If you are using a jump server to access this environment
 # jump:

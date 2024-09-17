@@ -35,7 +35,8 @@ export const birthDocumentType = {
   PROOF_OF_LEGAL_GUARDIANSHIP: 'PROOF_OF_LEGAL_GUARDIANSHIP',
   PROOF_OF_ASSIGNED_RESPONSIBILITY: 'PROOF_OF_ASSIGNED_RESPONSIBILITY',
   ADOPTION_LETTER: 'ADOPTION_LETTER',
-  LIVRET_DE_FAMILLE: 'LIVRET_DE_FAMILLE'
+  LIVRET_DE_FAMILLE: 'LIVRET_DE_FAMILLE',
+  RECOGNITION_ACT: 'RECOGNITION_ACT'
 }
 
 export const documentsSection = {
@@ -74,6 +75,30 @@ export const documentsSection = {
             {
               value: birthDocumentType.NOTIFICATION_OF_BIRTH_VERSO,
               label: formMessageDescriptors.docTypeChildBirthProofVerso
+            }
+          ],
+          mapping: getFieldMapping('documents')
+        },
+        {
+          name: 'uploadDocForRecognition',
+          type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          label: formMessageDescriptors.proofOfRecognition,
+          initialValue: '',
+          extraValue: birthDocumentExtraValue.CHILD,
+          hideAsterisk: true,
+          validator: [],
+          options: [
+            {
+              value: birthDocumentType.RECOGNITION_ACT,
+              label: formMessageDescriptors.docTypeRecognitionAct
+            }
+          ],
+          conditionals: [
+            {
+              description: 'Hidden unless marginal mention is Recognition',
+              action: 'hide',
+              expression:
+                '!draftData || !draftData.mention || !Array.from({ length: 10 }, (_,i) => "typeOfMention__" + i).some(key => draftData.mention[key])'
             }
           ],
           mapping: getFieldMapping('documents')
@@ -140,8 +165,8 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeOther
             },
             {
-              value: birthDocumentType.ADOPTION_LETTER,
-              label: formMessageDescriptors.docTypeAdoption
+              value: birthDocumentType.RECOGNITION_ACT,
+              label: formMessageDescriptors.docTypeRecognitionAct
             },
             {
               value: birthDocumentType.LIVRET_DE_FAMILLE,

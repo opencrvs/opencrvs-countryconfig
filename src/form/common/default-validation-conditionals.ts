@@ -8,9 +8,11 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+import { subYears } from 'date-fns'
 import { Conditional } from '../types/types'
 import { IntegratingSystemType } from '../types/types'
 import { Validator } from '../types/validators'
+import { capitalize } from 'lodash'
 
 /**
  * Turns a string expression into a Conditional object
@@ -89,7 +91,7 @@ export const mothersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.customizedExactDateOfBirthUnknown'
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -178,7 +180,7 @@ export const fathersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.customizedExactDateOfBirthUnknown'
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -262,7 +264,8 @@ export const brideOrGroomBirthDateValidators = (spouseType: string) => [
 export const exactDateOfBirthUnknownConditional = [
   {
     action: 'hide',
-    expression: '!values.customizedExactDateOfBirthUnknown'
+    expression:
+      '!values.customizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown === "false"'
   }
 ]
 
@@ -385,7 +388,7 @@ export const informantBirthDateConditionals = [
   {
     action: 'hide',
     expression:
-      'values.exactDateOfBirthUnknown || values.birthInformantCustomizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown'
+      'values.exactDateOfBirthUnknown || values.birthInformantCustomizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -401,6 +404,10 @@ export const spouseBirthDateConditionals = [
   {
     action: 'hide',
     expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -469,6 +476,31 @@ export const primaryAddressSameAsOtherPrimary: Conditional[] = [
   }
 ]
 
+export const hideIfDistrictPrimaryAddressNotSelected = (
+  section: string
+): Conditional[] => [
+  {
+    action: 'hide',
+    expression: `!values.districtPrimary${capitalize(section)}`
+  }
+]
+
+export const hideIfDistrictPlaceOfBirthAddressNotSelected = (
+  section: string
+): Conditional[] => [
+  {
+    action: 'hide',
+    expression: `!values.districtAddressplaceofbirth${capitalize(section)}`
+  }
+]
+
+export const hideIfDistrictPlaceOfDeathNotSelected = [
+  {
+    action: 'hide',
+    expression: '!values.districtPlaceofdeath'
+  }
+]
+
 export const locationOfBirthIsNotHealthFacility: Conditional[] = [
   {
     action: 'hide',
@@ -502,13 +534,13 @@ export const ageOfDeceasedConditionals = [
   }
 ] satisfies Validator[]
 
-export const isInformantSpouse =
-  '!values.informantType || values.informantType==="SPOUSE"'
+export const isInformantSpouseOrMotherOrFather =
+  '!values.informantType || values.informantType==="SPOUSE" || values.informantType==="MOTHER" ||  values.informantType==="FATHER"'
 
-export const hideIfInformantSpouse = [
+export const hideIfInformantSpouseOrMotherOrFather = [
   {
     action: 'hide',
-    expression: isInformantSpouse
+    expression: isInformantSpouseOrMotherOrFather
   }
 ]
 
@@ -520,5 +552,30 @@ export const brideOrGroomAgeValidators = [
   {
     operation: 'maxLength',
     parameters: [3]
+  }
+] satisfies Validator[]
+
+export const yearOfBirthValidtors = [
+  {
+    operation: 'range',
+    parameters: [1883, Number.parseInt(new Date().getFullYear().toString())]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [4]
+  }
+] satisfies Validator[]
+
+export const motherYearOfBirthValidators = [
+  {
+    operation: 'range',
+    parameters: [
+      1883,
+      Number.parseInt(subYears(new Date(), 7).getFullYear().toString())
+    ]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [4]
   }
 ] satisfies Validator[]

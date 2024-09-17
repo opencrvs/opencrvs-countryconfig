@@ -555,7 +555,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
+        - 'traefik.http.routers.countryconfig.rule=(Host(`countryconfig.{{hostname}}`) || Host(`registry.{{hostname}}`)) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -584,7 +584,9 @@ services:
       - AUTH_URL=http://auth:4040
       - APPLICATION_CONFIG_URL=http://config:2021
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
+      - GATEWAY_URL=http://gateway:7070
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - CONFIG_MONGO_URL=mongodb://mongo1/application-config?replicaSet=rs0
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
@@ -597,9 +599,10 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME:-}
       - SMTP_PASSWORD=${SMTP_PASSWORD:-}
       - SMTP_SECURE=${SMTP_SECURE:-}
-      - INFOBIP_GATEWAY_ENDPOINT=${INFOBIP_GATEWAY_ENDPOINT:-}
-      - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
-      - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
+      - AWS_SNS_REGION_NAME=${AWS_SNS_REGION_NAME:-}
+      - AWS_SNS_ACCESS_KEY_ID=${AWS_SNS_ACCESS_KEY_ID:-}
+      - AWS_SNS_SECRET_ACCESS_KEY=${AWS_SNS_SECRET_ACCESS_KEY:-}
+      - AWS_SNS_SENDER_ID=${AWS_SNS_SENDER_ID:-}
       - DOMAIN={{hostname}}
     networks:
       - overlay_net

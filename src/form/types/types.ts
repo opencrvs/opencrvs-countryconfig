@@ -40,11 +40,15 @@ export type Validation = (
   offlineCountryConfig?: any
 ) => ValidationResult | undefined
 
-export enum Event {
-  Birth = 'birth',
-  Death = 'death',
-  Marriage = 'marriage'
-}
+export const Event = {
+  Birth: 'birth',
+  Death: 'death',
+  Marriage: 'marriage'
+} as const
+
+const events = Object.values(Event)
+
+export type Event = (typeof events)[number]
 
 export type ValidationInitializer = (...value: any[]) => Validation
 
@@ -540,6 +544,7 @@ export interface IFormFieldBase {
   name: string
   type: IFormField['type']
   label: MessageDescriptor
+  labelParam?: Record<string, string>
   helperText?: MessageDescriptor
   tooltip?: MessageDescriptor
   validator: Validator[]
@@ -903,7 +908,8 @@ export enum AddressSubsections {
 
 export enum AddressCases {
   PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
-  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
+  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS',
+  PLACE_OF_BIRTH_ADDRESS = 'PLACE_OF_BIRTH_ADDRESS'
 }
 export enum EventLocationAddressCases {
   PLACE_OF_BIRTH = 'placeOfBirth',

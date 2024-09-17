@@ -24,3 +24,58 @@ export function isNumberLessThan21(value: IFormFieldValue) {
 
   return {}
 }
+
+function isValidUIN(input: string): boolean {
+  const sanitizedInput = input.replace(/\D/g, '')
+  let sum = 0
+  let isOdd = false
+
+  for (let i = sanitizedInput.length - 1; i >= 0; i--) {
+    let digit = parseInt(sanitizedInput[i], 10)
+
+    if (isOdd) {
+      digit *= 2
+      if (digit > 9) {
+        digit -= 9
+      }
+    }
+
+    sum += digit
+    isOdd = !isOdd
+  }
+
+  return sum % 10 === 0
+}
+
+function isAValidNIDNumberFormat(value: string): boolean {
+  // pattern should be same as defaultApplicationConfig.NID_NUMBER_PATTERN
+  // in src/api/application/application-config-default.ts
+  const pattern = '^[0-9]{10}$'
+  return new RegExp(pattern).test(value)
+}
+
+export function validIDNumberCustom(typeOfID: string) {
+  return function (value: any) {
+    value = (value && value.toString()) || ''
+
+    const cast = value as string
+    const trimmedValue = cast === undefined || cast === null ? '' : cast.trim()
+    if (typeOfID === 'NATIONAL_ID') {
+      if (
+        (isAValidNIDNumberFormat(trimmedValue) && isValidUIN(trimmedValue)) ||
+        !trimmedValue
+      ) {
+        return undefined
+      }
+
+      return {
+        message: {
+          defaultMessage:
+            'The National ID can only be numeric and must be 10 digits long',
+          id: 'validations.validNationalId'
+        }
+      } satisfies ValidationResult
+    }
+    return undefined
+  }
+}

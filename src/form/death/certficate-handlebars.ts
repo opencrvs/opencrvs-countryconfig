@@ -35,6 +35,7 @@ export const certificateHandlebars = {
   deceasedAlienId: 'deceasedAlienId',
   deceasedRefugeeId: 'deceasedRefugeeId',
   deceasedMaritalStatus: 'deceasedMaritalStatus',
+  deceasedOccupation: 'deceasedOccupation',
   countryPrimaryDeceased: 'countryPrimaryDeceased',
   statePrimaryDeceased: 'statePrimaryDeceased', // @deprecated use statePrimaryDeceasedId instead
   statePrimaryDeceasedId: 'statePrimaryDeceasedId',
@@ -94,6 +95,7 @@ export const certificateHandlebars = {
   informantNationalId: 'informantNationalId',
   informantPassport: 'informantPassport',
   informantAlienId: 'informantAlienId',
+  informantOccupation: 'informantOccupation',
   informantRefugeeId: 'informantRefugeeId',
   countryPrimaryInformant: 'countryPrimaryInformant',
   statePrimaryInformant: 'statePrimaryInformant', // @deprecated use statePrimaryInformantId instead

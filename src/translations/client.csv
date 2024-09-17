@@ -1,13 +1,11 @@
 id,description,en,fr,mg
-//register.eventInfo.event.title,,,,"Fanehoana ireo dingana rehetra harahina mandritra ny fitahirizana an-tsoratra ny tranga {eventType, select, birth{birth} death{death}  judgement{judgement} other{birth}} amin'ilay mpanambara."
-//review.modal.title.registerConfirmation,,,,Hotahirizina ve io {event} io?
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher,Afenina
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Spectacle,Aseho
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,Détails de l'enfant,Mahakasika ilay zaza
 advancedSearch.form.dateOfRegistration,Label for input date of registration,Date of registration,Date d'enregistrement,Daty nanaovana ny fanambarana
 advancedSearch.form.deceasedDetails,The title of Deceased details accordion,Deceased details,Détails du défunt,Mahakasika ilay olona maty
 advancedSearch.form.eventDetails,The title of event details accordion,Event details,Détails de l'évènement,Mahakasika ilay trangam-pahaterahana
-advancedSearch.form.fatherDetails,The title of Father details accordion,Father details,Détails du père ,Mahakasika ilay rainy
+advancedSearch.form.fatherDetails,The title of Father details accordion,Father details,Détails du père,Mahakasika ilay rainy
 advancedSearch.form.informantDetails,The title informant details form,Informant details,Détails de l'informateur,Mahakasika ilay mpanao fanambarana
 advancedSearch.form.motherDetails,The title of Mother details accordion,Mother details,Détails de la mère,Mahakasika ilay reniny
 advancedSearch.form.placeOfRegistration,Label for input Place of registration,Place of registration,Lieu d'enregistrement,Toerana nanaovana ilay fanambarana
@@ -293,7 +291,7 @@ config.form.navigation.documents,,,,Fampidirana ny taratasy porofo
 config.form.navigation.father,,,,Mikasika ny Ray
 config.form.navigation.informant,,,,Mikasika ny mpanambara
 config.form.navigation.introduction,,,,Tari-dresaka
-config.form.navigation.mother,,,, Mikasika ny Reny
+config.form.navigation.mother,,,,Mikasika ny Reny
 config.form.navigation.pages,,,,Pejy
 config.form.navigation.primaryCaregiver,,,,Aidant principal
 config.form.navigation.registration,,,,Inscription
@@ -389,7 +387,7 @@ config.informantNotification.subtitle,Subtile for informant sms notification,Sel
 config.informantNotification.success,Notification for informant update success,Informant notifications updated,Mise à jour des notifications des informateurs,
 config.informantNotification.title,The title for Informant notifications,Informant notifications,Notifications d'informateurs,
 config.integrations,,Integrations,Intégrations,
-config.listDetails,Details for certificates templates list,To learn how to edit an SVG and upload a certificate to suite your country requirements please refer to this detailed guide. ,"Pour savoir comment modifier un SVG et télécharger un certificat en fonction des exigences de votre pays, veuillez consulter ce guide détaillé.","Mba afahanao mahafantatra ny fomba fanovana SVG sy ny fomba fampidirana kopia araka ny filana misy ao amin'ny firenena misy anao, jerevo ity torolalana ity azafady."
+config.listDetails,Details for certificates templates list,To learn how to edit an SVG and upload a certificate to suite your country requirements please refer to this detailed guide.,"Pour savoir comment modifier un SVG et télécharger un certificat en fonction des exigences de votre pays, veuillez consulter ce guide détaillé.","Mba afahanao mahafantatra ny fomba fanovana SVG sy ny fomba fampidirana kopia araka ny filana misy ao amin'ny firenena misy anao, jerevo ity torolalana ity azafady."
 config.listDetailsQsn,Details question for certificates templates list,How to configure a certificate?,Comment configurer un certificat ?,Ahoana ny fomba hikirakirana io kopia io ?
 config.listTitle,Title for certificates templates list,Certification,La certification,Modelin'ireo kopia
 config.marriageDefaultTempDesc,Label for default marriage certificate template,Default marriage certificate template,Modèle de certificat de mariage par défaut,
@@ -493,7 +491,7 @@ constants.history,History heading,History,Histoire,Tahiry an'ireo zavatra natao
 constants.id,ID Label,ID,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?,
 constants.inReview.status,A label for In Review,In review,En cours de révision,Andalana fanaovana fanamarinana
-constants.incomplete.status,A label for Incomplete,Incomplete ,Incomplet ,Tsy feno 
+constants.incomplete.status,A label for Incomplete,Incomplete,Incomplet,Tsy feno
 constants.informant,Informant Label,Informant,Informateur,Mpanambara
 constants.informantContactNumber,The title of contact number label,Informant contact number,Numéro de contact de l'informateur,Laharana afahana mahazo an'ilay mpanambara
 constants.integrations,Integration title,Integrations,Intégrations,
@@ -1035,6 +1033,7 @@ form.field.dateRangepicker.checkbox.dateLabel,,{rangeStart} to {rangeEnd},{range
 form.field.hideLabel,Button to hide section,Hide,Cacher,Afenina
 form.field.label.NID,,NID,NID,NID
 form.field.label.NIDNetErr,,The request to the NID system was unsuccessful. Please try again with a better connection.,La demande au système NID n'a pas abouti. Veuillez réessayer avec une meilleure connexion.,Tsy nahomby ny fangatahana NUI nataonao. Hamarino tsara fa mandeha ilay internet anao dia avereno indray mandeha .
+form.field.label.NUI,,NUI,NUI,NUI
 form.field.label.ReasonNotApplying,,,,Antony nahatonga an'ireo tsy nanao fangatahana
 form.field.label.addFile,,Upload,Téléverser,Hikaroka
 form.field.label.addressLine1RuralOption,,Village,Village,
@@ -1125,6 +1124,7 @@ form.field.label.deathAtPrivateHome,,What is the address of the private home?,Qu
 form.field.label.deathDate,,"Enter the date as: day, month, year e.g. 24 10 2020","Indiquez la date sous la forme : jour, mois, année, par exemple 24 10 2020","Apetraho ilay daty mifanaraka amin'ny endrika toy izao : andro, volana, taona, ohatra 24 10 2020"
 form.field.label.deathDescription,,Description,Description,Description
 form.field.label.deathPlace,,Place of Occurrence of Death,Lieu de survenance du décès,Toerana nisehoan'ny fahafatesana
+form.field.label.deathProofFromFokontany,Option for radio group field: Proof of death of from Fokontany,Proof of death from Fokontany,Proof of death from Fokontany,Proof of death from Fokontany
 form.field.label.deceased.nationality,,,,Zom-pirenena
 form.field.label.deceasedCurAddSamePerm,,Is deceased's current address the same as their permanent address?,L'adresse actuelle du défunt est-elle la même que son adresse permanente ?,Ny adiresin'ilay olona maty ve mitovy amin'ny adiresin'ny andavan'andro ihany ?
 form.field.label.deceasedDateOfBirth,,,,Daty nahaterahana
@@ -1190,6 +1190,7 @@ form.field.label.docTypeOther,,CIN Verso,CIN Verso,CIN Verso
 form.field.label.docTypePassport,,Passport,Passeport,Pasipaoro
 form.field.label.docTypePoliceCertificate,,Police certificate of death,Certificat de décès de la police,Certificat de décès de la police
 form.field.label.docTypePostMortemReport,,Certified post mortem report,Rapport d'autopsie certifié,Rapport d'autopsie certifié
+form.field.label.docTypeRecognitionAct,Label for select option Recognition act,Recognition act,Recognition act,Recognition act
 form.field.label.docTypeSC,,School certificate,Certificat de scolarité,Kopia fanamarinana maha mpianatra
 form.field.label.docTypeSignedAffidavit,,Signed affidavit,Affidavit signé,Affidavit signé
 form.field.label.docTypeTaxReceipt,,Receipt of tax payment,Récépissé de paiement des impôts,Récépissé de paiement des impôts
@@ -1214,7 +1215,9 @@ form.field.label.fatherFamilyName,,Last Name(s) in default character set other t
 form.field.label.fatherFamilyNameEng,,,,Anarana
 form.field.label.fatherFirstNames,,First Name(s) in default character set other than English,Prénom(s) dans un jeu de caractères par défaut autre que l'anglais,Anarana
 form.field.label.fatherFirstNamesEng,,,,Fanampin'anarana
+form.field.label.fatherHasFormallyRecognisedChild,,Father has formally recognised child,Le père a reconnu officiellement l'enfant,Nahafantatra tamin’ny fomba ofisialy ilay zaza ilay raim-pianakaviana
 form.field.label.fatherIsDeceased,,Father has died,Le père est décédé,Ilay ray dia maty
+form.field.label.fatherIsDeceased,Label for form field Father is deceased,Father is deceased,Father is deceased,Father is deceased
 form.field.label.fatherPlaceOfBirth,,What is his village of origin?,Quel est son village d'origine ?,Aiza ny toerana niaviany ?
 form.field.label.fatherPrimaryAddress,,Usual place of residence,Quelle est son adresse résidentielle ?,Firy ny aidresy ipetrahany amin'izao ?
 form.field.label.fatherYearOfBirthAround,,Around the year,Vers l'année,Tamin'ny taona
@@ -1287,6 +1290,7 @@ form.field.label.informantRelation.whoIsDeathInformant,Label for option death in
 form.field.label.informantSecondaryAddress,,Secondary Address,Adresse secondaire,Adiresy fanampiny
 form.field.label.informantSecondaryAddressSameAsPrimary,,Is their secondary address the same as their primary address?,Leur adresse secondaire est-elle la même que leur adresse principale ?,Leur adresse secondaire est-elle la même que leur adresse principale ?
 form.field.label.informantTitle,,Informant's details,Coordonnées de l'informateur,
+form.field.label.informantWasPresentAtDeath,Label for form field was informant present at death,Was informant present at death?,Was informant present at death?,Was informant present at death?
 form.field.label.informantYearOfBirthAround,,,,Tamin'ny taona
 form.field.label.informants.nationality,,Nationality,Nationalité,Zom-pirenena
 form.field.label.informantsDateOfBirth,,Date of Birth,Date de naissance,Daty nahaterahana
@@ -1330,6 +1334,27 @@ form.field.label.maritalStatusSingle,,Single,Célibataire,Mpitovo
 form.field.label.maritalStatusWidowed,,Widowed,Veuf(ve),Maty vady
 form.field.label.marriedLastName,,Married last name (if different),Marié Nom de famille (si différent),
 form.field.label.medicallyCertified,,Medically Certified Cause of Death,Cause du décès médicalement certifiée,Antony ilay fahafatesahana araky ny voalazan'ny tobim-pahasalamana
+form.field.label.mention.actNumber,Label for mention act number,"{type, select, RECOGNITION{Recognition} SIMPLE_ADOPTION{Simple adoption} JUDICIAL_ADOPTION{Adoption} NAME_CHANGE{Name change} MARRIAGE{Marriage} DIVORCE{Divorce} REJECTION{Rejection} DEATH{Death} other{Other}} Act number","{type, select, RECOGNITION{Recognition} SIMPLE_ADOPTION{Simple adoption} JUDICIAL_ADOPTION{Adoption} NAME_CHANGE{Name change} MARRIAGE{Marriage} DIVORCE{Divorce} REJECTION{Rejection} DEATH{Death} other{Other}} Act number","{type, select, RECOGNITION{Recognition} SIMPLE_ADOPTION{Simple adoption} JUDICIAL_ADOPTION{Adoption} NAME_CHANGE{Name change} MARRIAGE{Marriage} DIVORCE{Divorce} REJECTION{Rejection} DEATH{Death} other{Other}} Act number"
+form.field.label.mention.adoptiveParent,Label for adoptive parent header,Adoptive parent {number},Adoptive parent {number},Adoptive parent {number}
+form.field.label.mention.brideOrGroom,Label for Bride/Groom,Bride/Groom,Bride/Groom,Bride/Groom
+form.field.label.mention.dateOfMention,Label for mention date,"Date of {type, select, RECOGNITION{recognition} SIMPLE_ADOPTION{adoption} JUDICIAL_ADOPTION{registration of the judicial act at the commune} NAME_CHANGE{registration of the judicial act at the commune} MARRIAGE{marriage} DIVORCE{registration of the judicial act at the commune} REJECTION{Rejection} DEATH{registration of the death at the municipality} other{Other}}","Date of {type, select, RECOGNITION{recognition} SIMPLE_ADOPTION{adoption} JUDICIAL_ADOPTION{registration of the judicial act at the commune} NAME_CHANGE{registration of the judicial act at the commune} MARRIAGE{marriage} DIVORCE{registration of the judicial act at the commune} REJECTION{Rejection} DEATH{registration of the death at the municipality} other{Other}}","Date of {type, select, RECOGNITION{recognition} SIMPLE_ADOPTION{adoption} JUDICIAL_ADOPTION{registration of the judicial act at the commune} NAME_CHANGE{registration of the judicial act at the commune} MARRIAGE{marriage} DIVORCE{registration of the judicial act at the commune} REJECTION{Rejection} DEATH{registration of the death at the municipality} other{Other}}"
+form.field.label.mention.judgmentDecisionDate,Label for Judgement decision date,Judgement decision date,Judgement decision date,Judgement decision date
+form.field.label.mention.judgmentDecisionNumber,Label for Judgement decision number,Judgement decision number,Judgement decision number,Judgement decision number
+form.field.label.mention.modification,Label for modification,Any modification : name of the child/name of father/name of mother,Any modification : name of the child/name of father/name of mother,Any modification : name of the child/name of father/name of mother
+form.field.label.mention.notes,Label for notes,Notes,Notes,Notes
+form.field.label.mention.placeOfDeath,Label for place of death,Commune of death,Commune of death,Commune of death
+form.field.label.mention.placeOfMention,Label for mention place,"Name of the commune where {type, select, RECOGNITION{recognition} MARRIAGE{marriage} DEATH{death} other{other}} was done","Name of the commune where {type, select, RECOGNITION{recognition} MARRIAGE{marriage} DEATH{death} other{other}} was done","Name of the commune where {type, select, RECOGNITION{recognition} MARRIAGE{marriage} DEATH{death} other{other}} was done"
+form.field.label.mention.tribunalOfFirstInstanceAct,Label for Tribunal of first instance act,Tribunal of first instance act,Tribunal of first instance act,Tribunal of first instance act
+form.field.label.mention.wifeOrHusband,Label for Wife/Husband,Wife/Husband,Wife/Husband,Wife/Husband
+form.field.label.mentionDetailsExist,Label for Mention details exist checkbox,Mention details exist,Mention details exist,Mention details exist
+form.field.label.mentionType.death,Label for mention type Death,Death,Death,Death
+form.field.label.mentionType.divorce,Label for mention type Divorce,Divorce,Divorce,Divorce
+form.field.label.mentionType.judicialAdoption,Label for mention type Judicial adoption,Judicial adoption,Judicial adoption,Judicial adoption
+form.field.label.mentionType.marriage,Label for mention type Marriage,Marriage,Marriage,Marriage
+form.field.label.mentionType.nameChange,Label for mention type Name change,Name change,Name change,Name change
+form.field.label.mentionType.recognition,Label for mention type Recognition,Recognition,Recognition,Recognition
+form.field.label.mentionType.rejection,Label for mention type Rejection,Rejection,Rejection,Rejection
+form.field.label.mentionType.simpleAdoption,Label for mention type Simple adoption,Simple adoption,Simple adoption,Simple adoption
 form.field.label.methodOfCauseOfDeath,,Method of Cause of Death,Méthode de détermination de la cause du décès,Fomba nahafantarana ny anton'ny ilay fahafatesana
 form.field.label.monogamy,,Monogamous,Monogame,
 form.field.label.mother.nationality,,Nationality,Nationalité,Zom-pirenena
@@ -1341,6 +1366,7 @@ form.field.label.motherFamilyNameEng,,,,Anarana
 form.field.label.motherFirstNames,,First name(s),Prénom(s) dans un jeu de caractères par défaut autre que l'anglais,Prénom(s) dans un jeu de caractères par défaut autre que l'anglais
 form.field.label.motherFirstNamesEng,,,,Fanampin'anarana
 form.field.label.motherIsDeceased,,Mother has died,La mère est décédée,ILay reny dia maty
+form.field.label.motherIsDeceased,Label for form field Mother is deceased,Mother is deceased,Mother is deceased,Mother is deceased
 form.field.label.motherPlaceOfBirth,,What is her village of origin?,Quel est son village d'origine ?,Aiza ny toerana iaviany ?
 form.field.label.motherPlaceOfHeritage,,What is her place of origin (heritage)?,Quel est son lieu d'origine (patrimoine) ?,Aiza ny toerana iaviany(patrimoine) ?
 form.field.label.motherPrimaryAddress,,Usual place of residence,Quelle est l'adresse de son domicile ?,AIza ny adiresy ipetrahany ?
@@ -1394,6 +1420,7 @@ form.field.label.proofOfInformantsID,,Proof of informant's ID,Identité de l'inf
 form.field.label.proofOfMarriageNotice,,Notice of intention to marriage,Déclaration d'intention de mariage,
 form.field.label.proofOfMothersID,,Proof of mother's ID,Identité de la mère,Taratasy famantarana an'ilay Reny
 form.field.label.proofOfParentPrimaryAddress,,Proof of Permanent Address of Parent,Preuve de l'adresse permanente du parent,Porofo manamarina ny adiresin'ilay ray aman-dreny
+form.field.label.proofOfRecognition,Label for list item Recognition Proof,Proof of recognition,Proof of recognition,Proof of recognition
 form.field.label.radio.father,,Only the father's,Seulement du père,Ny rainy ihany
 form.field.label.radio.mother,,Only the mother's,Seulement celles de la mère,Ny reny ihany
 form.field.label.reasonFatherNotApplying,,Reason of not describing the child to his father,Motif pour ne pas inscrire le nom du père,Antony tsy hanoratana ilay zaza amin'ny Rainy
@@ -1431,8 +1458,10 @@ form.field.label.sexUnknown,,Unknown,Inconnu,Tsy fantatra
 form.field.label.socialSecurityNumber,,Social security no./NAPSA,N° de sécurité sociale /NAPSA,N° de sécurité sociale /NAPSA
 form.field.label.someoneElse,Other Label,Someone else,Quelqu'un d'autre,Olona hafa anatin'ny fianakaviana
 form.field.label.someoneElseCollector,,Print and issue to someone else,Imprimer et remettre à quelqu'un d'autre,Hatonta ary homena olona hafa
+form.field.label.specifyOther,Label for field specify other,Please specify,Please specify,Please specify
 form.field.label.spouseDetailsExist,,Spouse's details are not available,Les coordonnées du conjoint ne sont pas disponibles,
 form.field.label.state,Label for State,District,District,Distrika
+form.field.label.timeOfDeath,Label for field time of death,Time of death,Time of death,Time of death
 form.field.label.typeOfDocument,,Choose type of supporting document,Choisissez le type de document,Safidio ny karazan'io taratasy io
 form.field.label.typeOfId,,Type of ID,Type d'identification,Karazana taratasy fanamarinana
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage,
@@ -1522,17 +1551,19 @@ form.section.groom.title,,Groom's details,Détails du marié,
 form.section.informant.name,,Informant,Informateur,Mpanambara
 form.section.informant.title,,Informant's details,Coordonnées de l'informateur,mombamoma ilay mpanao fanambarana
 form.section.information.birth.bullet1,,I am going to help you make a declaration of birth.,Je vais vous aider à faire une déclaration de naissance.,"Salama, eto izaho hanampy anao amin'ny fanaovana ity fanambarana fahaterahana ity."
-form.section.information.birth.bullet2,,As the legal Informant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes.",Amin'ny maha mpanao fanambarana ara-dalana anao dia tsara raha mitombona ary tsy misy diso ireo zavatra soratanao
-form.section.information.birth.bullet3,,Once the declaration is processed you will receive you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité.","Raha vantany vao vita ny fanambarana, dia alefa any amin'ny firaisana ilay izy mba ho hamarinina, hahavoaray sms ianao mahakasika izany rehetra izany"
+form.section.information.birth.bullet2,,As the legal Declarant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes.",Amin'ny maha mpanao fanambarana ara-dalana anao dia tsara raha mitombona ary tsy misy diso ireo zavatra soratanao
+form.section.information.birth.bullet3,,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité.","Raha vantany vao vita ny fanambarana, dia alefa any amin'ny firaisana ilay izy mba ho hamarinina, hahavoaray sms ianao mahakasika izany rehetra izany"
 form.section.information.birth.bullet4,,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.","Veillez à récupérer le certificat. Un certificat de naissance est essentiel pour cet enfant, notamment pour lui faciliter la vie plus tard. Il l'aidera à accéder aux services de santé, aux examens scolaires et aux prestations de l'État.","Raha vantany mahavoaray sms ianao milaza fa efa azo alaina ilay kopia dia manantona ny biraon'ny firaisana. Ny kopia fahaterahana dia tena ilain'ny zaza, indrindra rehefa lehibe izy."
 form.section.information.death.bullet1,,I am going to help you make a declaration of death.,Je vais vous aider à faire une déclaration de décès.,"Salama, eto izaho hanampy anao amin'ny fanaovana ity fanambarana fahafatesana ity."
-form.section.information.death.bullet2,,As the legal Informant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes.",Amin'ny maha mpanao fanambarana ara-dalana anao dia tsara raha mitombona ary tsy misy diso ireo zavatra soratanao
-form.section.information.death.bullet3,,Once the declaration is processed you will receive you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité.","Raha vantany vao vita ny fanambarana, dia alefa any amin'ny firaisana ilay izy mba ho hamarinina, hahavoaray sms ianao mahakasika izany rehetra izany"
+form.section.information.death.bullet2,,As the legal Declarant it is important that all the information provided by you is accurate.,"En tant qu'informateur légal, il est important que toutes les informations que vous fournissez soient exactes.",Amin'ny maha mpanao fanambarana ara-dalana anao dia tsara raha mitombona ary tsy misy diso ireo zavatra soratanao
+form.section.information.death.bullet3,,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité.","Raha vantany vao vita ny fanambarana, dia alefa any amin'ny firaisana ilay izy mba ho hamarinina, hahavoaray sms ianao mahakasika izany rehetra izany"
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts.",Raha vantany mahavoaray sms ianao milaza fa efa azo alaina ilay kopia dia manantona ny biraon'ny firaisana. Ny kopia fahafatesana dia tena ilaina raha misy afera mikasika ilay olona maty.
 form.section.information.name,,Information,Informations,
 form.section.marriageEvent.date,,Date of marriage,Date du mariage,
 form.section.marriageEvent.name,,Marriage event details,Détails de l'événement de mariage,
 form.section.marriageEvent.title,,Marriage details,Détails du mariage,
+form.section.mention.name,,Marginal notes,Marginal notes,Marginal notes
+form.section.mention.title,,Marginal notes,Marginal notes,Marginal notes
 form.section.mother.name,,Mother,Mère,Reny
 form.section.mother.title,,Mother's details,Coordonnées de la mère,Mombamomba ilay reny
 form.section.primaryCaregiver.nameOrTitle,,Parents details,Détails des parents,Mombamomba ireo ray aman-dreniny
@@ -1753,7 +1784,7 @@ performance.registrationsListTable.locationColumn,Title for location column in t
 performance.registrationsListTable.monthColumn,Title for month column in the table,Month,Mois,
 performance.registrationsListTable.registrarColumn,Title for registrar column in the table,Registrar,Registrar,
 performance.registrationsListTable.totalRegistrationsColumn,Title for total registrations column in the table,Total Registrations,Total des inscriptions,
-performance.reports.appStart.desc,Description for declarations started in performance reports,Total and percentage breakdown of the declarations started by source from ,Répartition totale et en pourcentage des déclarations entamées par source à partir de,Répartition totale et en pourcentage des déclarations entamées par source à partir de
+performance.reports.appStart.desc,Description for declarations started in performance reports,Total and percentage breakdown of the declarations started by source from,Répartition totale et en pourcentage des déclarations entamées par source à partir de,Répartition totale et en pourcentage des déclarations entamées par source à partir de
 performance.reports.appStart.fieldAgents,Field agent declarations started title,Field agents,Agents de terrain,FKT/Mpiasan'ny fahasalamana
 performance.reports.corrections.other.label,"Label ""Other"" category in corrections",Other,Autre,Hafa
 performance.reports.declarationsStarted.hospitals,Hospitals declarations started title,Hospitals (DHIS2),Hôpitaux (DHIS2),Ireo tombim-pahasalamana (DHIS2)
@@ -1824,7 +1855,7 @@ print.certificate.form.name,The title of review button in list expansion actions
 print.certificate.form.title,The title of review button in list expansion actions,Print certificate,Imprimer le certificat,Atontao ilay kopia
 print.certificate.manualPaymentMethod,The label for select option for manual payment method,Manual,Manuel,Natao tanana
 print.certificate.next,,Next,Suivant,Manaraka
-print.certificate.noLabel,, ,,
+print.certificate.noLabel,,,,
 print.certificate.noPayment,The title for no payment section,No payment required,Aucun paiement requis,
 print.certificate.payment,The title for payment section,Collect payment,Le paiement est requis,Ny fandoavana vola dia tsy maintsy atao
 print.certificate.paymentAmount,The label for payment amount subsection,৳ {paymentAmount},৳ {paymentAmount},৳ {paymentAmount}
@@ -1990,7 +2021,7 @@ register.eventInfo.death.listItem2,,Make sure you collect the certificate. A dea
 register.eventInfo.death.listItem3,,,"Assurez-vous d'aller chercher le certificat. Un certificat de décès est essentiel pour soutenir les demandes d'héritage et pour régler les affaires du défunt, par exemple la clôture des comptes bancaires et le règlement des prêts.","Assurez-vous d'aller chercher le certificat. Un certificat de décès est essentiel pour soutenir les demandes d'héritage et pour régler les affaires du défunt, par exemple la clôture des comptes bancaires et le règlement des prêts."
 register.eventInfo.death.title,,Introduce the death registration process to the informant,Présenter la procédure d'enregistrement des décès à l'informateur,Ny tsara ho fantatr'ilay mpanao fanambarana raha hanao fanambarana fahafatesana izy
 register.eventInfo.event.title,,"Introduce the {eventType, select, birth{birth} death{death} other{marriage}} registration process to the informant","Présentez le processus d'enregistrement des {eventType, select, birth{naissance} death{décès} other{mariage}} à l'informateur.",Ny tsara ho fantatr'ilay mpanao fanambarana raha hanao fanambarana trangam-piarahamonina izy
-register.eventInfo.marriage.listItem0,,I am here to complete the marriage registration declaration for you. ,Je suis ici pour remplir la déclaration d'enregistrement du mariage pour vous. ,
+register.eventInfo.marriage.listItem0,,I am here to complete the marriage registration declaration for you.,Je suis ici pour remplir la déclaration d'enregistrement du mariage pour vous.,
 register.eventInfo.marriage.listItem1,,"Once I complete the declaration, it will be sent to the registration office for review.","Une fois que j'aurai complété la déclaration, elle sera envoyée au bureau d'enregistrement pour examen.",
 register.eventInfo.marriage.listItem2,,Wait for an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,Attendez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Prenez votre pièce d'identité avec vous,
 register.eventInfo.marriage.title,,Introduce the marriage registration process to the informant,Présenter la procédure d'enregistrement des mariages à l'informateur,Ny tsara ho fantatr'ilay mpanao fanambarana raha hanao fanambarana fanambadiana izy
@@ -2019,7 +2050,7 @@ register.form.saveAsDraft,,Save as draft,Enregistrer comme brouillon,Tahirizina 
 register.form.section.preview.name,Form section name for Preview,Preview,Prévisualiser,Jerena mialoha
 register.form.section.preview.title,Form section title for Preview,Preview,Prévisualiser,Jerena mialoha
 register.form.section.review.title,,Review,Réviser,Fanaraha-maso farany
-register.primaryInformant.description,,This person is responsible for providing accurate information in this declaration. ,Cette personne est chargée de fournir des informations exactes dans cette déclaration.,Cette personne est chargée de fournir des informations exactes dans cette déclaration.
+register.primaryInformant.description,,This person is responsible for providing accurate information in this declaration.,Cette personne est chargée de fournir des informations exactes dans cette déclaration.,Cette personne est chargée de fournir des informations exactes dans cette déclaration.
 register.primaryInformant.errorMessage,,Please select who is the primary informant,Veuillez sélectionner qui est l'informateur principal,Azafady safidio iza ilay mpanambara voalohany
 register.primaryInformant.registerNewEventHeading,,Primary informant,Qui est l'informateur principal de cette déclaration ?,Iza no mpanambara voalohany an'io fanambarana io ?
 register.registerForm.queryError,The error message shown when a search query fails,"The page cannot be loaded at this time due to low connectivity or a network error. Please click refresh to try again, or try again later.","La page ne peut être chargée pour le moment en raison d'une faible connectivité ou d'une erreur de réseau. Veuillez cliquer sur actualiser pour réessayer, ou réessayer plus tard.","La page ne peut être chargée pour le moment en raison d'une faible connectivité ou d'une erreur de réseau. Veuillez cliquer sur actualiser pour réessayer, ou réessayer plus tard."
@@ -2071,7 +2102,7 @@ review.form.section.review.title,Form section title for Review,Review,Critique d
 review.formData.header,,"{isDraft, select, true {Check responses with the informant before sending for review} other {Review the answers with the supporting documents}}","{isDraft, select, true {Vérifiez les réponses auprès de l'informateur avant de les envoyer pour examen.} other {Examinez les réponses avec les documents justificatifs}}","{isDraft, select, true {Vérifiez les réponses auprès de l'informateur avant de les envoyer pour examen.} other {Examinez les réponses avec les documents justificatifs}}"
 review.header.subject.subjectWitName,Header subject that shows which declaration type to review with informant name,"{eventType, select, birth {Birth} death {Death} other {Marriage} } declaration for {name}","{eventType, select, birth {Naissance} death {Décès} other {Mariage}} declaration for {name}","Fanambarana {eventType, select, birth {fahaterahana} other {fahafatesana}} an'i {name}"
 review.header.subject.subjectWithoutName,Header subject that shows which declaration type to review,"{eventType, select, birth {Birth} death {Death} other {Marriage}} Declaration","{eventType, select, birth {Naissance} death {Décès} other {Marriage}} Déclaration","Fanambarana {eventType, select, birth {fahaterahana} other {fahafatesana}}"
-review.header.title.govtName,Header title that shows bgd govt name,Republic of Farajaland,République du Farajaland,Repoblikan'i Madagasikara
+review.header.title.govtName,Header title that shows bgd govt name,Republic of Madagascar,République de Madagascar,Repoblikan'i Madagasikara
 review.inputs.additionalComments,Label for input Additional comments,Comments,Des commentaires supplémentaires ?,Mbola misy hevitra aposaka hafa ve ?
 review.inputs.brideSignature,Label for informants signature input,Signature of Bride,Signature de la mariée,Sonian'ny vehivavy vao nampakarina
 review.inputs.groomSignature,Label for informants signature input,Signature of Groom,Signature du marié,Sonian'ny lehilahy vao nanambady
@@ -2159,7 +2190,7 @@ sysAdHome.sendUsernameReminderInviteError,The label for error notification of se
 sysAdHome.sendUsernameReminderInviteModalMessage,Message for send username reminder,The user will receive a username reminder via an {deliveryMethod} sent to {recipient},L'utilisateur recevra un rappel de son nom d'utilisateur par un {deliveryMethod} envoyé à {recipient}.,
 sysAdHome.sendUsernameReminderInviteModalTitle,Title for send username reminder,Send username reminder?,Envoyer un rappel de nom d'utilisateur ?,
 sysAdHome.sendUsernameReminderInviteSuccess,The label for success notification of send username reminder,Username reminder sent to {name},Rappel de l'identifiant envoyé à {name},
-sysAdHome.user.audit.comments,The label for form field deactivate comments,Comments: ,Commentaires :,Fanehoan-kevitra :
+sysAdHome.user.audit.comments,The label for form field deactivate comments,Comments:,Commentaires :,Fanehoan-kevitra :
 sysAdHome.user.audit.deactiv.reasonInv,The label for radio option being investigated,Being investigated due to suspicious activity on their account,Fait l'objet d'une enquête en raison d'une activité suspecte sur son compte,Fait l'objet d'une enquête en raison d'une activité suspecte sur son compte
 sysAdHome.user.audit.deactiv.reasonNotEmp,The label for radio option not employee,No longer an employee,N'est plus un employé,Tsy mpiasa intsony
 sysAdHome.user.audit.deactivation.subtitle,The subtitle of user deactivation confirmation modal,This will revoke {name}'s ability to login and access the system. The account can be reactivated at a later date.,Cette mesure aura pour effet de retirer à {name} la possibilité de se connecter et d'accéder au système. Le compte peut être réactivé à une date ultérieure.,Cette mesure aura pour effet de retirer à {name} la possibilité de se connecter et d'accéder au système. Le compte peut être réactivé à une date ultérieure.
@@ -2169,7 +2200,7 @@ sysAdHome.user.audit.reactiv.noLongerInv,The label for radio option no longer in
 sysAdHome.user.audit.reactiv.returned,The label for radio option Returned to role,Returned to their role,Repris dans leur rôle,Niverina amin'ny andraikiny
 sysAdHome.user.audit.reactivation.subtitle,The subtitle of user reactivation confirmation modal,This will reactivate {name}'s ability to login and access the system.,Cela réactivera la capacité de {name} à se connecter et à accéder au système.,Cela réactivera la capacité de {name} à se connecter et à accéder au système.
 sysAdHome.user.audit.reactivation.title,The title of user reactivation confirmation modal,Reactivate {name}?,Réactiver {name}?,Réactiver {name}?
-sysAdHome.user.audit.reason,The label for form field deactivate reason,Please provide a reason: ,Veuillez fournir une raison :,Azafady omeo ny antony :
+sysAdHome.user.audit.reason,The label for form field deactivate reason,Please provide a reason:,Veuillez fournir une raison :,Azafady omeo ny antony :
 sysAdHome.user.audit.reasonOther,The label for radio option other,Other (please provide a reason in the comments),Autre (veuillez fournir une raison dans les commentaires),Hafa (Azafady omeo ny antony ao amin'ny toerana fanaposahana hevitra)
 sysAdHome.user.deactivate,Label for toggle menu option deactivate,Deactivate,Désactiver,Désactiver
 sysAdHome.user.edit.commonGroupTitle,Common title of form view groups when edit user,Edit user,Modifier l'utilisateur,Hanova ny momba ilay mpiasa
@@ -2315,7 +2346,7 @@ validations.phoneNumberFormat,The error message that appears on phone numbers wh
 validations.range,The error message that appears when an out of range value is used,Must be within {min} and {max},Doit être compris entre {min} et {max}.,Tsy maintsy anelanelan'ny {min} sy {max}.
 validations.required,The error message that appears on required fields,Required for registration,Requis pour l'enregistrement,Tsy maintsy ilaina
 validations.requiredBasic,The error message that appears on required fields,Required,Requis,Ilaina
-validations.requiredSymbo,,,,validations.requiredSymbol : 
+validations.requiredSymbo,,,,validations.requiredSymbol :
 validations.requiredSymbol,A blank error message. Used for highlighting a required field without showing an error,,,
 validations.userform.required,The error message that appears on required fields on new user form,Required to register a new user,Requis pour l'enregistrement d'un nouvel utilisateur,Tsy maintsy ilaina alohan'ny hitahirizana io mpikirakira vaovao io
 validations.validBirthRegistrationNumber,The error message that appears when an invalid value is used as brn,The Birth Registration Number can only be numeric and must be {validLength} characters long,Le numéro d'enregistrement de la naissance ne peut être que numérique et doit comporter {validLength} caractères.,Ny laharana firaketana fahatarehana dia tsy ahitana afa-tsy tarehimarika ary tsy maintsy ahitana litera {validLength}.

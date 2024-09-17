@@ -10,7 +10,10 @@
  */
 
 import { Event, ISerializedForm } from '../types/types'
-import { formMessageDescriptors } from '../common/messages'
+import {
+  formMessageDescriptors,
+  mentionMessageDescriptors
+} from '../common/messages'
 import { informantType } from './required-fields'
 import {
   getBirthDate,
@@ -19,7 +22,6 @@ import {
   getFirstNameField,
   getNationality,
   otherInformantType,
-  getNationalID,
   getDetailsExist,
   getReasonNotExisting
 } from '../common/common-required-fields'
@@ -49,9 +51,11 @@ import {
   fathersBirthDateConditionals,
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
-  informantNotMotherOrFather,
   detailsExistConditional,
-  primaryAddressSameAsOtherPrimary
+  primaryAddressSameAsOtherPrimary,
+  yearOfBirthValidtors,
+  motherYearOfBirthValidators,
+  hideIfDistrictPrimaryAddressNotSelected
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -66,15 +70,33 @@ import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import {
-  getCustomizedExactDateOfBirthUnknown,
-  getFokontanyCustomAdress,
   getLegacyBirthRegistrationDate,
   getLegacyBirthRegistrationNumber,
   getLegacyBirthRegistrationTime,
   getPlaceOfBirth,
   getTimeOfBirth,
-  getYearOfBirth
+  getFatherHasFormallyRecognisedChild,
+  typeOfMention,
+  availableMentionTypes,
+  getRecognitionMentionFields,
+  getSimpleAdoptionMentionFields,
+  getJudicialAdoptionMentionFields,
+  getMarriageMentionFields,
+  getDivorceMentionFields,
+  getNameChangeMentionFields,
+  getDeathMentionFields,
+  getNotes,
+  getDetailsMentionExist
 } from './custom-fields'
+import { subYears } from 'date-fns'
+import {
+  getCustomizedExactDateOfBirthUnknown,
+  getFatherIsDeceased,
+  getFokontanyCustomAddress,
+  getMotherIsDeceased,
+  getNUI,
+  getYearOfBirth
+} from '../common/common-custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -170,15 +192,6 @@ export const birthForm: ISerializedForm = {
         {
           id: 'child-view-group',
           fields: [
-            getBirthDate(
-              'childBirthDate',
-              [],
-              isValidChildBirthDate,
-              certificateHandlebars.eventDate
-            ), // Required field.
-            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
-            // createCustomFieldExample(),
-            getTimeOfBirth(),
             getFamilyNameField(
               'childNameInEnglish',
               [],
@@ -188,10 +201,20 @@ export const birthForm: ISerializedForm = {
               'childNameInEnglish',
               [],
               certificateHandlebars.childFirstName
-            ), // Required field.  Names in Latin characters must be provided for international passport
+            ),
             getGender(certificateHandlebars.childGender), // Required field.
+            getBirthDate(
+              'childBirthDate',
+              [],
+              isValidChildBirthDate,
+              certificateHandlebars.eventDate
+            ), // Required field.
+            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
+            getTimeOfBirth(),
             weightAtBirth,
-            getFokontanyCustomAdress(
+            // PLACE OF BIRTH FIELDS WILL RENDER HERE
+            getFokontanyCustomAddress(
+              Event.Birth,
               'child',
               [
                 {
@@ -206,9 +229,24 @@ export const birthForm: ISerializedForm = {
                 id: 'form.field.label.fokontanyCustomAddress',
                 description: 'A form field that asks for name of fokontany',
                 defaultMessage: 'Fokontany'
-              }
+              },
+              'placeOfBirth'
             ),
-            // PLACE OF BIRTH FIELDS WILL RENDER HERE
+            getNUI(
+              [],
+              [
+                {
+                  operation: 'duplicateIDNumber',
+                  parameters: ['mother.iD']
+                },
+                {
+                  operation: 'duplicateIDNumber',
+                  parameters: ['father.iD']
+                }
+              ],
+              true,
+              certificateHandlebars.childNID
+            ),
             getLegacyBirthRegistrationNumber('child'),
             getLegacyBirthRegistrationDate(),
             getLegacyBirthRegistrationTime()
@@ -232,19 +270,19 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            getNationality(
-              certificateHandlebars.informantNationality,
-              hideIfInformantMotherOrFather
+            getFamilyNameField(
+              'informantNameInEnglish',
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
+              certificateHandlebars.informantFamilyName
             ), // Required field.
-            getNationalID(
-              'informantID',
-              hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
-              getNationalIDValidators('informant'),
-              certificateHandlebars.informantNID
-            ),
-            getCustomizedExactDateOfBirthUnknown(
-              'informant',
-              hideIfInformantMotherOrFather
+            getFirstNameField(
+              'informantNameInEnglish',
+              informantFirstNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
+              certificateHandlebars.informantFirstName
             ),
             getBirthDate(
               'informantBirthDate',
@@ -259,52 +297,62 @@ export const birthForm: ISerializedForm = {
                 {
                   operation: 'dateInPast',
                   parameters: []
+                },
+                {
+                  operation: 'dateLessThan',
+                  parameters: [
+                    subYears(new Date(), 18).toISOString().split('T')[0]
+                  ]
                 }
               ],
               certificateHandlebars.informantBirthDate
             ), // Required field.
+            getCustomizedExactDateOfBirthUnknown(
+              Event.Birth,
+              'informant',
+              hideIfInformantMotherOrFather
+            ),
             getYearOfBirth(
+              Event.Birth,
               'informant',
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantMotherOrFather
-              )
+              ),
+              yearOfBirthValidtors
             ),
-            getFamilyNameField(
-              'informantNameInEnglish',
-              informantFamilyNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
-              certificateHandlebars.informantFamilyName
+            getNationality(
+              certificateHandlebars.informantNationality,
+              hideIfInformantMotherOrFather
             ), // Required field.
-            getFirstNameField(
-              'informantNameInEnglish',
-              informantFirstNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
-              certificateHandlebars.informantFirstName
-            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
-            // getCustomAddress('informant', hideIfInformantMotherOrFather),
-            registrationPhone, // If you wish to enable automated SMS notifications to informants, include this
-            // registrationEmail, // If you wish to enable automated Email notifications to informants, include this
+            getNUI(
+              hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
+              getNationalIDValidators('informant'),
+              false,
+              certificateHandlebars.informantNID
+            ),
             // preceding field of address fields
-            divider('informant-nid-seperator', [
-              {
-                action: 'hide',
-                expression: informantNotMotherOrFather
-              }
-            ]),
+            divider('informant-nid-seperator', hideIfInformantMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
+              Event.Birth,
               'informant',
-              hideIfInformantMotherOrFather,
+              hideIfInformantMotherOrFather.concat(
+                hideIfDistrictPrimaryAddressNotSelected('informant')
+              ),
               true,
               {
                 id: 'form.field.label.customAddress',
                 description:
                   'A form field that asks for informent current address',
                 defaultMessage: 'Address'
-              }
-            )
+              },
+              'primaryAddress'
+            ),
+            getOccupation(
+              hideIfInformantMotherOrFather,
+              certificateHandlebars.informantOccupation
+            ),
+            registrationPhone // If you wish to enable automated SMS notifications to informants, include this
           ],
           previewGroups: [informantNameInEnglish]
         }
@@ -329,31 +377,7 @@ export const birthForm: ISerializedForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getNationality(
-              certificateHandlebars.motherNationality,
-              detailsExist
-            ), // Required field.
-            getNationalID(
-              'iD',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              getNationalIDValidators('mother'),
-              certificateHandlebars.motherNID
-            ),
-            getCustomizedExactDateOfBirthUnknown(
-              'mother',
-              detailsExistConditional
-            ),
-            getBirthDate(
-              'motherBirthDate',
-              mothersBirthDateConditionals,
-              parentsBirthDateValidators,
-              certificateHandlebars.motherBirthDate
-            ), // Required field.
-            getYearOfBirth(
-              'mother',
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
-            ),
-            getPlaceOfBirth('mother', detailsExistConditional),
+            getMotherIsDeceased(Event.Birth, detailsExistConditional),
             getFamilyNameField(
               'motherNameInEnglish',
               motherFamilyNameConditionals,
@@ -363,22 +387,66 @@ export const birthForm: ISerializedForm = {
               'motherNameInEnglish',
               motherFirstNameConditionals,
               certificateHandlebars.motherFirstName
+            ),
+            getBirthDate(
+              'motherBirthDate',
+              mothersBirthDateConditionals,
+              parentsBirthDateValidators,
+              certificateHandlebars.motherBirthDate
             ), // Required field.
-            getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            getOccupation(certificateHandlebars.motherOccupation),
+            getCustomizedExactDateOfBirthUnknown(
+              Event.Birth,
+              'mother',
+              detailsExistConditional
+            ),
+            getYearOfBirth(
+              Event.Birth,
+              'mother',
+              exactDateOfBirthUnknownConditional.concat(
+                detailsExistConditional
+              ),
+              motherYearOfBirthValidators
+            ),
+            getNationality(
+              certificateHandlebars.motherNationality,
+              detailsExist
+            ), // Required field.
+            getNUI(
+              hideIfNidIntegrationEnabled.concat(detailsExist),
+              getNationalIDValidators('mother'),
+              false,
+              certificateHandlebars.motherNID
+            ),
+            getPlaceOfBirth('mother', detailsExistConditional),
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress('mother', detailsExistConditional, true, {
-              id: 'form.field.label.customAddress',
-              description: 'A form field that asks for mother current address',
-              defaultMessage: 'Address'
-            })
+            getFokontanyCustomAddress(
+              Event.Birth,
+              'mother',
+              detailsExistConditional.concat(
+                hideIfDistrictPrimaryAddressNotSelected('mother')
+              ),
+              true,
+              {
+                id: 'form.field.label.customAddress',
+                description:
+                  'A form field that asks for mother current address',
+                defaultMessage: 'Address'
+              },
+              'primaryAddress'
+            ),
+            getMaritalStatus(
+              certificateHandlebars.motherMaritalStatus,
+              [
+                {
+                  action: 'hide',
+                  expression: '!values.detailsExist'
+                }
+              ],
+              false
+            ),
+            getOccupation(detailsExist, certificateHandlebars.motherOccupation)
           ],
           previewGroups: [motherNameInEnglish]
         }
@@ -411,31 +479,8 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            getNationality(
-              certificateHandlebars.fatherNationality,
-              detailsExist
-            ), // Required field.
-            getNationalID(
-              'iD',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              getNationalIDValidators('father'),
-              certificateHandlebars.fatherNID
-            ),
-            getCustomizedExactDateOfBirthUnknown(
-              'father',
-              detailsExistConditional
-            ),
-            getBirthDate(
-              'fatherBirthDate',
-              fathersBirthDateConditionals,
-              parentsBirthDateValidators,
-              certificateHandlebars.fatherBirthDate
-            ), // Required field.
-            getYearOfBirth(
-              'father',
-              exactDateOfBirthUnknownConditional.concat(detailsExistConditional)
-            ),
-            getPlaceOfBirth('father', detailsExistConditional),
+            getFatherIsDeceased(Event.Birth, detailsExist),
+            getFatherHasFormallyRecognisedChild(detailsExist),
             getFamilyNameField(
               'fatherNameInEnglish',
               fatherFamilyNameConditionals,
@@ -445,34 +490,135 @@ export const birthForm: ISerializedForm = {
               'fatherNameInEnglish',
               fatherFirstNameConditionals,
               certificateHandlebars.fatherFirstName
+            ),
+            getBirthDate(
+              'fatherBirthDate',
+              fathersBirthDateConditionals,
+              parentsBirthDateValidators,
+              certificateHandlebars.fatherBirthDate
             ), // Required field.
-            getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            getOccupation(certificateHandlebars.fatherOccupation),
+            getCustomizedExactDateOfBirthUnknown(
+              Event.Birth,
+              'father',
+              detailsExistConditional
+            ),
+            getYearOfBirth(
+              Event.Birth,
+              'father',
+              exactDateOfBirthUnknownConditional.concat(
+                detailsExistConditional
+              ),
+              yearOfBirthValidtors
+            ),
+            getNationality(
+              certificateHandlebars.fatherNationality,
+              detailsExist
+            ), // Required field.
+            getNUI(
+              hideIfNidIntegrationEnabled.concat(detailsExist),
+              getNationalIDValidators('father'),
+              false,
+              certificateHandlebars.fatherNID
+            ),
+            getPlaceOfBirth('father', detailsExistConditional),
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            getFokontanyCustomAdress(
+            getFokontanyCustomAddress(
+              Event.Birth,
               'father',
-              primaryAddressSameAsOtherPrimary.concat(detailsExistConditional),
+              primaryAddressSameAsOtherPrimary
+                .concat(detailsExistConditional)
+                .concat(hideIfDistrictPrimaryAddressNotSelected('father')),
               true,
               {
                 id: 'form.field.label.customAddress',
                 description:
                   'A form field that asks for father current address',
                 defaultMessage: 'Address'
-              }
+              },
+              'primaryAddress'
             ),
-            divider('father-address-seperator', detailsExist)
+            divider('father-address-seperator', detailsExist),
+            getMaritalStatus(
+              certificateHandlebars.fatherMaritalStatus,
+              [
+                {
+                  action: 'hide',
+                  expression: '!values.detailsExist'
+                }
+              ],
+              false
+            ),
+            getOccupation(detailsExist, certificateHandlebars.fatherOccupation)
           ],
           previewGroups: [fatherNameInEnglish]
         }
       ],
       mapping: getSectionMapping('father')
+    },
+    {
+      id: 'mention',
+      viewType: 'form',
+      name: mentionMessageDescriptors.sectionName,
+      groups: Array.from({ length: 10 }, (_, i) => ({
+        id: 'mention-view-group-' + i,
+        conditionals:
+          i === 0
+            ? [
+                {
+                  action: 'hide',
+                  expression:
+                    '!Boolean(draftData?.registration?.registrationNumber)'
+                }
+              ]
+            : [
+                {
+                  action: 'hide',
+                  expression:
+                    '!Boolean(draftData?.registration?.registrationNumber)'
+                },
+                {
+                  action: 'hide',
+                  expression: `!values['detailsMentionExist__${i - 1}']`
+                }
+              ],
+        title: {
+          id: 'mention-view-group-' + i,
+          defaultMessage: 'Mention ' + (i + 1),
+          description: 'Form section title for mention'
+        },
+        fields: [
+          getDetailsMentionExist(i),
+          typeOfMention(i),
+          ...availableMentionTypes
+            .filter((type) => type !== 'REJECTION')
+            .flatMap((type) => {
+              if (type === 'RECOGNITION') return getRecognitionMentionFields(i)
+              else if (type === 'SIMPLE_ADOPTION')
+                return getSimpleAdoptionMentionFields(i)
+              else if (type === 'JUDICIAL_ADOPTION')
+                return getJudicialAdoptionMentionFields(i)
+              else if (type === 'MARRIAGE') return getMarriageMentionFields(i)
+              else if (type === 'DIVORCE') return getDivorceMentionFields(i)
+              else if (type === 'NAME_CHANGE')
+                return getNameChangeMentionFields(i)
+              else if (type === 'DEATH') return getDeathMentionFields(i)
+              else return []
+            }),
+          getNotes(i)
+        ],
+        previewGroups: [
+          {
+            id: 'mention' + i,
+            label: {
+              description: 'Label for details preview group title',
+              defaultMessage: 'Details of the mention ' + (i + 1),
+              id: 'form.preview.group.label.typeMention' + i
+            }
+          }
+        ]
+      }))
     },
     documentsSection // REQUIRED SECTION FOR DOCUMENT ATTACHMENTS
   ]

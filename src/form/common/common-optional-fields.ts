@@ -19,13 +19,6 @@ import { certificateHandlebars } from '../birth/certificate-handlebars'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { Validator } from '../types/validators'
 
-const exactDobConditional: Conditional[] = [
-  {
-    action: 'hide',
-    expression: '!window.config.DATE_OF_BIRTH_UNKNOWN'
-  }
-]
-
 export const exactDateOfBirthUnknown = (
   conditionalCase: Conditional[]
 ): SerializedFormField => ({
@@ -74,7 +67,8 @@ export const getAgeOfIndividualInYears = (
 
 export const getMaritalStatus = (
   certificateHandlebar: string,
-  conditionals: Conditional[]
+  conditionals: Conditional[],
+  required: boolean = true
 ): SerializedFormField => ({
   name: 'maritalStatus',
   type: 'SELECT_WITH_OPTIONS',
@@ -83,7 +77,7 @@ export const getMaritalStatus = (
     description: 'Label for form field: Marital status',
     id: 'form.field.label.maritalStatus'
   },
-  required: true,
+  required,
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
@@ -164,6 +158,7 @@ export const getNIDVerificationButton = (
   labelForOffline: formMessageDescriptors.nidOffline
 })
 export const getOccupation = (
+  conditionals: Conditional[],
   certificateHandlebar: string
 ): SerializedFormField => ({
   name: 'occupation',
@@ -176,12 +171,7 @@ export const getOccupation = (
   required: true,
   initialValue: '',
   validator: [],
-  conditionals: [
-    {
-      action: 'hide',
-      expression: '!values.detailsExist'
-    }
-  ],
+  conditionals,
   mapping: getFieldMapping('occupation', certificateHandlebar)
 })
 

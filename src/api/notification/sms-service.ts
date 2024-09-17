@@ -8,16 +8,21 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import {
-  INFOBIP_API_KEY,
-  INFOBIP_GATEWAY_ENDPOINT,
-  INFOBIP_SENDER_ID
-} from './constant'
 import { logger } from '@countryconfig/logger'
-import fetch from 'node-fetch'
 import * as Handlebars from 'handlebars'
 import { internal } from '@hapi/boom'
 import { getLanguages } from '../content/service'
+import {
+  AWS_SNS_REGION_NAME,
+  AWS_SNS_ACCESS_KEY_ID,
+  AWS_SNS_SECRET_ACCESS_KEY,
+  AWS_SNS_SENDER_ID
+} from './constant'
+import {
+  SNSClient,
+  PublishCommand,
+  PublishCommandOutput
+} from '@aws-sdk/client-sns'
 
 export const informantTemplates = {
   birthInProgressNotification: 'birthInProgressNotification',
@@ -42,51 +47,63 @@ export type SMSTemplateType =
   | keyof typeof otherTemplates
   | keyof typeof informantTemplates
 
+let awsSnsClient: SNSClient
+
+const getOrCreateAwsSnsClient = () => {
+  if (awsSnsClient) {
+    return awsSnsClient
+  }
+
+  awsSnsClient = new SNSClient({
+    region: AWS_SNS_REGION_NAME,
+    credentials: {
+      accessKeyId: AWS_SNS_ACCESS_KEY_ID,
+      secretAccessKey: AWS_SNS_SECRET_ACCESS_KEY
+    }
+  })
+
+  return awsSnsClient
+}
+
 export async function sendSMS(
   type: SMSTemplateType,
   variables: Record<string, string>,
   recipient: string,
   locale: string
 ) {
+  const client = getOrCreateAwsSnsClient()
   const message = await compileMessages(type, variables, locale)
-  const body = JSON.stringify({
-    messages: [
-      {
-        destinations: [
-          {
-            recipient
-          }
-        ],
-        from: INFOBIP_SENDER_ID,
-        text: message
+
+  const publishParams = {
+    PhoneNumber: recipient,
+    Message: message,
+    MessageAttributes: {
+      'AWS.SNS.SMS.SenderID': {
+        DataType: 'String',
+        StringValue: AWS_SNS_SENDER_ID
+      },
+      'AWS.SNS.SMS.SMSType': {
+        DataType: 'String',
+        StringValue: 'Transactional'
       }
-    ]
-  })
-  const headers = {
-    Authorization: `App ${INFOBIP_API_KEY}`,
-    'Content-Type': 'application/json'
+    }
   }
 
-  let response
+  const publishSms = new PublishCommand(publishParams)
+
+  let response: PublishCommandOutput
   try {
-    response = await fetch(INFOBIP_GATEWAY_ENDPOINT, {
-      method: 'POST',
-      body,
-      headers
-    })
+    response = await client.send(publishSms)
   } catch (error) {
     logger.error(error)
     throw error
   }
 
-  const responseBody = await response.text()
-  if (!response.ok) {
-    logger.error(`Failed to send sms to ${recipient}. Reason: ${responseBody}`)
-    throw internal(
-      `Failed to send notification to ${recipient}. Reason: ${responseBody}`
-    )
+  if (response.$metadata.httpStatusCode !== 200) {
+    logger.error(`Failed to send sms to ${recipient}`)
+    throw internal(`Failed to send notification to ${recipient}.`)
   }
-  logger.info(`Response from Infobip: ${JSON.stringify(responseBody)}`)
+  logger.info(`Response from AWS SNS: ${JSON.stringify(response)}`)
 }
 
 const compileMessages = async (
@@ -104,5 +121,6 @@ const compileMessages = async (
   }
 
   const template = Handlebars.compile(language.messages[templateName])
+
   return template(variables)
 }

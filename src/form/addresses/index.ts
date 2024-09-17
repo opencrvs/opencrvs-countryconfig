@@ -12,13 +12,11 @@
 import {
   FATHER_DETAILS_DONT_EXIST,
   MOTHER_DETAILS_DONT_EXIST,
-  SPOUSE_DETAILS_DONT_EXIST,
   detailsDontExist,
   expressionToConditional,
   hideIfInformantBrideOrGroom,
-  hideIfInformantSpouse,
+  hideIfInformantSpouseOrMotherOrFather,
   informantNotMotherOrFather,
-  isInformantSpouse,
   mothersDetailsDontExistOnOtherPage,
   primaryAddressSameAsOtherPrimaryAddress /*,
   SPOUSE_DETAILS_DONT_EXIST*/
@@ -162,12 +160,14 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },
   {
     // PLACE OF DEATH ADDRESS FIELDS
-    precedingFieldId: 'death.deathEvent.death-event-details.deathDescription',
+    precedingFieldId:
+      'death.deathEvent.death-event-view-group.deathDescription',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_DEATH }]
   },
   {
     // DECEASED ADDRESS FIELDS
-    precedingFieldId: 'death.deceased.deceased-view-group.numberOfDependants',
+    precedingFieldId:
+      'death.deceased.deceased-view-group.fokontanyCustomAddressPlaceofbirth',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -186,37 +186,20 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   {
     // INFORMANT ADDRESS FIELDS
     precedingFieldId:
-      'death.informant.informant-view-group.informantBirthRegistrationNumber',
+      'death.informant.informant-view-group.informantWasPresentAtDeath',
     configurations: [
-      {
-        config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
-        label: formMessageDescriptors.primaryAddressSameAsDeceasedsPrimary,
-        conditionalCase: [
-          expressionToConditional(isInformantSpouse),
-          expressionToConditional(
-            `${isInformantSpouse} || !${primaryAddressSameAsOtherPrimaryAddress}`,
-            'hideInPreview'
-          )
-        ],
-        xComparisonSection: 'informant',
-        yComparisonSection: 'deceased'
-      },
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.informantPrimaryAddress,
         conditionalCase: [
           expressionToConditional(
-            `${primaryAddressSameAsOtherPrimaryAddress} || ${hideIfInformantSpouse[0].expression}`
-          ),
-          expressionToConditional(
-            `${primaryAddressSameAsOtherPrimaryAddress} || ${hideIfInformantSpouse[0].expression} || ${primaryAddressSameAsOtherPrimaryAddress}`,
-            'hideInPreview'
+            `${hideIfInformantSpouseOrMotherOrFather[0].expression}`
           )
         ]
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        conditionalCase: `${primaryAddressSameAsOtherPrimaryAddress} || ${hideIfInformantSpouse[0].expression}`
+        conditionalCase: `${hideIfInformantSpouseOrMotherOrFather[0].expression}`
       } /*,
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
@@ -227,7 +210,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       }*/
     ]
   },
-  /*{
+  {
     // MOTHER ADDRESS FIELDS
     precedingFieldId: 'death.mother.mother-view-group.mother-nid-seperator',
     configurations: [
@@ -249,21 +232,14 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.primaryAddress,
-        conditionalCase: `${FATHER_DETAILS_DONT_EXIST}`
-      },
-      {
-        config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
-        label: formMessageDescriptors.primaryAddressSameAsOtherPrimary,
-        xComparisonSection: 'father',
-        yComparisonSection: 'mother',
-        conditionalCase: `(${detailsDontExist} || ${mothersDetailsDontExistOnOtherPage})`
+        conditionalCase: FATHER_DETAILS_DONT_EXIST
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        conditionalCase: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
+        conditionalCase: FATHER_DETAILS_DONT_EXIST
       }
     ]
-  },*/
+  },
   {
     // SPOUSE ADDRESS FIELDS
     precedingFieldId: 'death.spouse.spouse-view-group.spouse-nid-seperator',
@@ -271,30 +247,11 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.primaryAddress,
-        conditionalCase: [
-          expressionToConditional(SPOUSE_DETAILS_DONT_EXIST),
-          expressionToConditional(
-            `${SPOUSE_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}`,
-            'hideInPreview'
-          )
-        ]
-      },
-      {
-        config: AddressCopyConfigCases.PRIMARY_ADDRESS_SAME_AS_OTHER_PRIMARY,
-        label: formMessageDescriptors.primaryAddressSameAsDeceasedsPrimary,
-        xComparisonSection: 'spouse',
-        yComparisonSection: 'deceased',
-        conditionalCase: [
-          expressionToConditional(detailsDontExist),
-          expressionToConditional(
-            `${detailsDontExist} || !${primaryAddressSameAsOtherPrimaryAddress}`,
-            'hideInPreview'
-          )
-        ]
+        conditionalCase: 'true'
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        conditionalCase: `((${SPOUSE_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) || (${detailsDontExist}))`
+        conditionalCase: 'true'
       }
     ]
   },

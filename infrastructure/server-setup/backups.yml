@@ -156,11 +156,12 @@
       when: "'backups' in groups and groups['backups'] | length > 0"
       set_fact:
         destination_server: "{{ hostvars[groups['backups'][0]].ansible_host }}"
+        destination_port: "{{ hostvars[groups['backups'][0]].ansible_port | default('22') }}"
       tags:
         - backups
 
     - name: Check SSH connection to destination server
-      shell: ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 {{ backup_server_user }}@{{ destination_server }} 'echo Connection successful'
+      shell: ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 -p {{ destination_port }} {{ backup_server_user }}@{{ destination_server }} 'echo Connection successful'
       remote_user: '{{ crontab_user }}'
       register: ssh_test
       when: "'backups' in groups and groups['backups'] | length > 0"

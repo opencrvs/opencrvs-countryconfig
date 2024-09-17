@@ -16,6 +16,7 @@ export const certificateHandlebars = {
   qrCode: 'qrCode',
   certificateDate: 'certificateDate',
   registrar: 'registrar',
+  certifier: 'certifier',
   registrationAgent: 'registrationAgent',
   registrarName: 'registrarName', // @deprecated use registrar.name instead
   role: 'role', // @deprecated use registrar.role instead
@@ -44,6 +45,7 @@ export const certificateHandlebars = {
   informantBirthDate: 'informantBirthDate',
   informantNationality: 'informantNationality',
   informantNID: 'informantNID',
+  informantOccupation: 'informantOccupation',
   motherReasonNotApplying: 'motherReasonNotApplying',
   motherBirthDate: 'motherBirthDate',
   motherFirstName: 'motherFirstName',

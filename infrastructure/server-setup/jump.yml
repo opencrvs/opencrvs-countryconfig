@@ -80,12 +80,13 @@
       when: 'application_server_using_jump'
       set_fact:
         destination_server: "{{ hostvars[groups['jump'][0]].ansible_host }}"
+        destination_port: "{{ hostvars[groups['jump'][0]].ansible_port | default('22') }}"
       tags:
         - jump
 
     # This would use the CI runner machine and the currently installed SSH key which should be provision user's key
     - name: Check SSH connection to destination server
-      shell: ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=5 jump@{{ destination_server }} 'echo Connection successful'
+      shell: ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o ConnectTimeout=5 -p {{ destination_port }} jump@{{ destination_server }} 'echo Connection successful'
       when: 'application_server_using_jump'
       register: ssh_test
       ignore_errors: yes
