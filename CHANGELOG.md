@@ -12,6 +12,10 @@
 
 - **Title** Description
 
+### Improvements
+
+- Auth token, ip address, remote address, mobile number, email redacted/masked from server log
+
 ### Infrastructure breaking changes
 
 - **Title** Description
@@ -73,6 +77,7 @@ INSERT CSV ROWS IN ENGLISH ONLY
   4. 'NAME',
   5. 'PHONE_NUMBER',
   6. 'EMAIL'
+- Updated `allowedFileFormats` in signature fields to use MIME types (`image/png`, `image/jpg`, `image/jpeg`, `image/svg`) instead of simple file extensions. If you are already using the `allowedFileFormats` field in your implementation, please ensure to update the format accordingly.
 
 ### New features
 
@@ -80,6 +85,7 @@ INSERT CSV ROWS IN ENGLISH ONLY
 - Logged in user details handlebar `loggedInUser` [#6529](https://github.com/opencrvs/opencrvs-core/issues/6529)
 - Supporting document fields can now be made required
 - If there is only one option in the document uploader select, then it stays hidden and only the upload button is showed with the only option being selected by default
+- The select options in DOCUMENT_UPLOADER_WITH_OPTION field can now be hidden using the new `optionCondition` property. It works similarly to the same property available in SELECT_WITH_OPTIONS field
 
 * **ElasticSearch reindexing**
 
@@ -94,7 +100,6 @@ INSERT CSV ROWS IN ENGLISH ONLY
 ```
 
 ## Bug fixes
-
 
 - Github pipeline dedicated for reading secrets and variables from other environments now checks if GH_TOKEN is still valid before attempting other operations
 - Remove unnecessary UI dividers that add in various sections of the declaration forms(e.g the Death, Birth and Marriage forms) [#244](https://github.com/opencrvs/opencrvs-countryconfig/pull/244)

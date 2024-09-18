@@ -410,6 +410,7 @@ export interface IImageUploaderWithOptionsFormField extends IFormFieldBase {
 export interface IDocumentUploaderWithOptionsFormField extends IFormFieldBase {
   type: typeof DOCUMENT_UPLOADER_WITH_OPTION
   options: ISelectOption[]
+  optionCondition?: string
   hideOnEmptyOption?: boolean
   compressImagesToSizeMB?: number
   maxSizeMB?: number
@@ -483,7 +484,12 @@ export interface IHeading3Field extends IFormFieldBase {
 export interface ISignatureFormField extends IFormFieldBase {
   type: typeof SIGNATURE
   maxSizeMb?: number
-  allowedFileFormats?: ('png' | 'jpg' | 'jpeg' | 'svg')[]
+  allowedFileFormats?: (
+    | 'image/png'
+    | 'image/jpg'
+    | 'image/jpeg'
+    | 'image/svg'
+  )[]
 }
 
 export type IFormField =

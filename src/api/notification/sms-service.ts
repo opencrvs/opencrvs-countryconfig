@@ -13,7 +13,7 @@ import {
   INFOBIP_GATEWAY_ENDPOINT,
   INFOBIP_SENDER_ID
 } from './constant'
-import { logger } from '@countryconfig/logger'
+import { logger, maskSms } from '@countryconfig/logger'
 import fetch from 'node-fetch'
 import * as Handlebars from 'handlebars'
 import { internal } from '@hapi/boom'
@@ -81,9 +81,13 @@ export async function sendSMS(
 
   const responseBody = await response.text()
   if (!response.ok) {
-    logger.error(`Failed to send sms to ${recipient}. Reason: ${responseBody}`)
+    logger.error(
+      `Failed to send sms to ${maskSms(recipient)}. Reason: ${responseBody}`
+    )
     throw internal(
-      `Failed to send notification to ${recipient}. Reason: ${responseBody}`
+      `Failed to send notification to ${maskSms(
+        recipient
+      )}. Reason: ${responseBody}`
     )
   }
   logger.info(`Response from Infobip: ${JSON.stringify(responseBody)}`)
