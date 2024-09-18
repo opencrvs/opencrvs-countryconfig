@@ -65,3 +65,27 @@ export const applicationConfig = {
 }
 
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE = 10
+
+export const notificationForRecord = {
+  birth: {
+    'sent-notification': true,
+    'sent-notification-for-review': true,
+    'sent-for-approval': true,
+    registered: true,
+    'sent-for-updates': true
+  },
+  death: {
+    'sent-notification': true,
+    'sent-notification-for-review': true,
+    'sent-for-approval': true,
+    registered: true,
+    'sent-for-updates': true
+  },
+  marriage: {
+    'sent-notification': null,
+    'sent-notification-for-review': null,
+    'sent-for-approval': null,
+    registered: null,
+    'sent-for-updates': null
+  }
+}
