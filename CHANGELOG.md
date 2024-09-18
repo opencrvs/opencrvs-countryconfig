@@ -39,6 +39,16 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 ### Breaking changes
 
+- Addition of the check of informant notification being enabled in the `application-config.ts` file. Maintain the type of `NotificationFlags` for proper setup of the notification. For an event, the notification flags can be the following -
+
+```
+  'sent-notification',
+  'sent-notification-for-review',
+  'sent-for-approval',
+  'registered',
+  'sent-for-updates'
+```
+
 - **Gateways searchEvents API updated** `operationHistories` only returns `operationType` & `operatedOn` due to the other fields being unused in OpenCRVS
 - **Config changes to review/preview and signatures** Core used to provide review/preview section by default which are now removed and need to be provided from countryconfig. The signature field definitions (e.g. informant signature, bride signature etc.) were hard coded in core which also have now been removed. The signatures can now be added through the review/preview sections defined in countryconfig just like any other field. You can use the following section definition as the default which is without any additional fields. We highly recommend checking out our reference country repository which has the signature fields in it's review/preview sections
 
