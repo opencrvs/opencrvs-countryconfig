@@ -4,6 +4,16 @@
 
 ### Breaking changes
 
+- Addition of the check of informant notification being enabled in the `application-config.ts` file. Maintain the type of `NotificationFlags` for proper setup of the notification. For an event, the notification flags can be the following -
+
+```
+  'sent-notification',
+  'sent-notification-for-review',
+  'sent-for-approval',
+  'registered',
+  'sent-for-updates'
+```
+
 - Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
 - New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
 - Remove `inputFieldWidth` from Number type form field

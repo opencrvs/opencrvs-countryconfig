@@ -58,11 +58,11 @@ export const applicationConfig = {
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE = 10
 
 type EventNotificationFlags = {
-  'sent-notification': boolean
-  'sent-notification-for-review': boolean
-  'sent-for-approval': boolean
-  registered: boolean
-  'sent-for-updates': boolean
+  'sent-notification'?: boolean
+  'sent-notification-for-review'?: boolean
+  'sent-for-approval'?: boolean
+  registered?: boolean
+  'sent-for-updates'?: boolean
 }
 
 type NotificationFlags = {
