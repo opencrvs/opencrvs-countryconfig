@@ -269,6 +269,34 @@ split_and_join() {
    echo $SPLIT
 }
 
+pull_images_from_file() {
+    local file="$1"  # The file containing the Docker images
+    # Check if the file exists
+    if [[ ! -f "$file" ]]; then
+        echo "File not found: $file"
+        exit 1
+    fi
+    # Read each line (image name) from the file
+    while IFS= read -r image; do
+    {
+        image=$(echo "$image" | xargs)
+        # Skip empty lines and comments (lines starting with #)
+        if [[ -z "$image" || "$image" =~ ^# ]]; then
+            continue
+        fi
+        echo "Pulling $image..."
+        if docker pull "$image"; then
+            echo "Successfully pulled $image"
+        else
+            echo "Failed to pull $image"
+        fi
+    } &
+    done < "$file"
+    # Wait for all background jobs to complete
+    wait
+    echo "All images have been pulled."
+}
+
 docker_stack_deploy() {
   echo "Deploying this environment: $ENVIRONMENT_COMPOSE"
 
@@ -284,14 +312,13 @@ docker_stack_deploy() {
     fi
 
     echo "Downloading $tag"
-
-    until configured_ssh "cd /opt/opencrvs && docker pull $tag"
-    do
-      echo "Server failed to download $tag. Retrying..."
-      sleep 5
-    done
+    echo -e "$tag \n" >> docker_images.txt
   done
-
+  echo "-----"
+  cat docker_images.txt
+  echo "-----"
+  #configured_ssh "cd /opt/opencrvs && docker pull $tag"
+  pull_images_from_file "docker_images.txt"
   echo "Updating docker swarm stack with new compose files"
 
   configured_ssh 'cd /opt/opencrvs && \
