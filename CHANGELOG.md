@@ -4,15 +4,24 @@
 
 ### Breaking changes
 
-- Addition of the check of informant notification being enabled in the `application-config.ts` file. Maintain the type of `NotificationFlags` for proper setup of the notification. For an event, the notification flags can be the following -
+### Added Notification Flags and API Endpoint
 
-```
-  'sent-notification',
-  'sent-notification-for-review',
-  'sent-for-approval',
-  'registered',
-  'sent-for-updates'
-```
+- **Notification Flags**: The configuration of various notifications is now controlled from `countryconfig` instead of being handled in the UI, as notification settings are not something that should be changed on the fly. To simplify this process, we have moved the settings to the `application-config.ts` file. From now on, the notifications can be managed in the `notificationForRecord` object defined in the mentioned file. Any changes will take effect after a new deployment.
+
+  **_Country implementors must define the `notificationForRecord` object in the `application-config.ts` file to enable the notifications they want. Not doing so will keep notifications disabled by default._**
+
+- **Feature**: Added notification flags for `BIRTH`, `DEATH`, and `MARRIAGE` events, including:
+
+  - `sent-notification`
+  - `sent-notification-for-review`
+  - `sent-for-approval`
+  - `registered`
+  - `sent-for-updates`
+
+- **API**: Added `/record-notification` endpoint to check enabled notifications for records.
+
+  - The API returns the `notificationForRecord` object for `BIRTH` and `DEATH` events, listing their respective flags.
+  - Route configuration includes description and tags for API documentation.
 
 - Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field
 - New required sections preview & review added. Signature field definitions are now part of these two sections same as normal form fields.
