@@ -39,15 +39,24 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 ### Breaking changes
 
-- Addition of the check of informant notification being enabled in the `application-config.ts` file. Maintain the type of `NotificationFlags` for proper setup of the notification. For an event, the notification flags can be the following -
+### Added Notification Flags and API Endpoint
 
-```
-  'sent-notification',
-  'sent-notification-for-review',
-  'sent-for-approval',
-  'registered',
-  'sent-for-updates'
-```
+- **Notification Flags**: The configuration of various notifications is now controlled from `countryconfig` instead of being handled in the UI, as notification settings are not something that should be changed on the fly. To simplify this process, we have moved the settings to the `application-config.ts` file. From now on, the notifications can be managed in the `notificationForRecord` object defined in the mentioned file. Any changes will take effect after a new deployment.
+
+  **_Country implementors must define the `notificationForRecord` object in the `application-config.ts` file to enable the notifications they want. Not doing so will keep notifications disabled by default._**
+
+- **Feature**: Added notification flags for `BIRTH`, `DEATH`, and `MARRIAGE` events, including:
+
+  - `sent-notification`
+  - `sent-notification-for-review`
+  - `sent-for-approval`
+  - `registered`
+  - `sent-for-updates`
+
+- **API**: Added `/record-notification` endpoint to check enabled notifications for records.
+
+  - The API returns the `notificationForRecord` object for `BIRTH` and `DEATH` events, listing their respective flags.
+  - Route configuration includes description and tags for API documentation.
 
 - **Gateways searchEvents API updated** `operationHistories` only returns `operationType` & `operatedOn` due to the other fields being unused in OpenCRVS
 - **Config changes to review/preview and signatures** Core used to provide review/preview section by default which are now removed and need to be provided from countryconfig. The signature field definitions (e.g. informant signature, bride signature etc.) were hard coded in core which also have now been removed. The signatures can now be added through the review/preview sections defined in countryconfig just like any other field. You can use the following section definition as the default which is without any additional fields. We highly recommend checking out our reference country repository which has the signature fields in it's review/preview sections
