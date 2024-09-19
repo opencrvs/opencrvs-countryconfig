@@ -10,6 +10,7 @@
  */
 export const TEST_SOURCE = `${process.cwd()}/src/tests/`
 export const DOMAIN = process.env.DOMAIN || '*'
+export const GATEWAY_URL = process.env.GATEWAY_URL || 'http://localhost:7070'
 export const LOGIN_URL = process.env.LOGIN_URL || 'http://localhost:3020/'
 export const CLIENT_APP_URL =
   process.env.CLIENT_APP_URL || 'http://localhost:3000/'
@@ -22,7 +23,6 @@ export const COUNTRY_CONFIG_URL =
   process.env.COUNTRY_CONFIG_URL || 'http://localhost:3040'
 export const APPLICATION_CONFIG_URL =
   process.env.APPLICATION_CONFIG_URL || 'http://localhost:2021/'
-export const GATEWAY_URL = process.env.GATEWAY_URL || 'http://localhost:7070'
 
 export const SENTRY_DSN = process.env.SENTRY_DSN
 // Check if the token has been invalided in the auth service before it has expired

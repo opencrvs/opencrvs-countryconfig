@@ -31,8 +31,7 @@ export function getNumberOfDependants(): SerializedFormField {
     initialValue: '',
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: [],
-    inputFieldWidth: '64px'
+    conditionals: []
   }
 }
 

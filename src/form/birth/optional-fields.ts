@@ -62,11 +62,7 @@ export const weightAtBirth: SerializedFormField = {
     }
   ],
   postfix: 'Grammes',
-  mapping: getFieldMapping(
-    'weightAtBirth',
-    certificateHandlebars.weightAtBirth
-  ),
-  inputFieldWidth: '78px'
+  mapping: getFieldMapping('weightAtBirth', certificateHandlebars.weightAtBirth)
 }
 
 export const multipleBirth: SerializedFormField = {
@@ -94,9 +90,5 @@ export const multipleBirth: SerializedFormField = {
       parameters: [2]
     }
   ],
-  mapping: getFieldMapping(
-    'multipleBirth',
-    certificateHandlebars.multipleBirth
-  ),
-  inputFieldWidth: '64px'
+  mapping: getFieldMapping('multipleBirth', certificateHandlebars.multipleBirth)
 }

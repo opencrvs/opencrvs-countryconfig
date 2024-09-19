@@ -1,5 +1,3 @@
-version: '3.3'
-
 #
 # Production deployments of OpenCRVS should never be exposed to the internet.
 # Instead, they should be deployed on a private network and exposed to the internet via a VPN.

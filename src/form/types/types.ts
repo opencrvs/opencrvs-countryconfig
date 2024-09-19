@@ -145,6 +145,8 @@ export const TIME = 'TIME'
 export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
+export const SIGNATURE = 'SIGNATURE'
+
 export enum RadioSize {
   LARGE = 'large',
   NORMAL = 'normal'
@@ -350,7 +352,6 @@ export interface INumberFormField extends IFormFieldBase {
   type: typeof NUMBER
   step?: number
   max?: number
-  inputFieldWidth?: string
   inputWidth?: number
 }
 export interface IBigNumberFormField extends IFormFieldBase {
@@ -416,6 +417,7 @@ export interface IImageUploaderWithOptionsFormField extends IFormFieldBase {
 export interface IDocumentUploaderWithOptionsFormField extends IFormFieldBase {
   type: typeof DOCUMENT_UPLOADER_WITH_OPTION
   options: ISelectOption[]
+  optionCondition?: string
   hideOnEmptyOption?: boolean
   compressImagesToSizeMB?: number
   maxSizeMB?: number
@@ -486,6 +488,17 @@ export interface IHeading3Field extends IFormFieldBase {
   type: typeof HEADING3
 }
 
+export interface ISignatureFormField extends IFormFieldBase {
+  type: typeof SIGNATURE
+  maxSizeMb?: number
+  allowedFileFormats?: (
+    | 'image/png'
+    | 'image/jpg'
+    | 'image/jpeg'
+    | 'image/svg'
+  )[]
+}
+
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -518,6 +531,7 @@ export type IFormField =
   | INidVerificationButton
   | IDividerField
   | IHeading3Field
+  | ISignatureFormField
 
 export interface SelectComponentOption {
   value: string
@@ -533,7 +547,6 @@ export interface IDynamicOptions {
   jurisdictionType?: string
   resource?: string
   options?: { [key: string]: ISelectOption[] }
-  initialValue?: string
 }
 
 export type IFormFieldTemplateMapOperation =

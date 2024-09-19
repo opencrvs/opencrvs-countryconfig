@@ -71,11 +71,13 @@ export function getAddressLocationSelect({
   location,
   useCase,
   fhirLineArrayPosition,
-  isLowestAdministrativeLevel
+  isLowestAdministrativeLevel,
+  initialValue
 }: {
   section: string
   location: string
   useCase: string
+  initialValue: string
   /** Position where the location gets mapped into within a fhir.Address line-array */
   fhirLineArrayPosition?: number
   /** If the structure the smallest possible level. Allows saving fhir.Address.partOf */
@@ -96,7 +98,7 @@ export function getAddressLocationSelect({
       ? useCase
       : `${useCase}Address`,
     required: true,
-    initialValue: '',
+    initialValue,
     validator: [],
     placeholder: {
       defaultMessage: 'Select',
@@ -105,8 +107,7 @@ export function getAddressLocationSelect({
     },
     dynamicOptions: {
       resource: 'locations',
-      dependency: getDependency(location, useCase, section),
-      initialValue: 'agentDefault'
+      dependency: getDependency(location, useCase, section)
     },
     conditionals: isUseCaseForPlaceOfEvent(useCase)
       ? getPlaceOfEventConditionals(
@@ -131,7 +132,8 @@ export function getAddressLocationSelect({
 // We recommend that you do not edit this function
 function getAdminLevelSelects(
   section: string,
-  useCase: string
+  useCase: string,
+  addressHierarchy: string[]
 ): SerializedFormField[] {
   switch (ADMIN_LEVELS) {
     case 1:
@@ -140,71 +142,114 @@ function getAdminLevelSelects(
           section,
           location: 'state',
           useCase,
-          isLowestAdministrativeLevel: true
+          isLowestAdministrativeLevel: true,
+          initialValue: addressHierarchy[0]
         })
       ]
     case 2:
       return [
-        getAddressLocationSelect({ section, location: 'state', useCase }),
+        getAddressLocationSelect({
+          section,
+          location: 'state',
+          useCase,
+          initialValue: addressHierarchy[0]
+        }),
         getAddressLocationSelect({
           section,
           location: 'district',
           useCase,
-          isLowestAdministrativeLevel: true
+          isLowestAdministrativeLevel: true,
+          initialValue: addressHierarchy[1]
         })
       ]
     case 3:
       return [
-        getAddressLocationSelect({ section, location: 'state', useCase }),
-        getAddressLocationSelect({ section, location: 'district', useCase }),
+        getAddressLocationSelect({
+          section,
+          location: 'state',
+          useCase,
+          initialValue: addressHierarchy[0]
+        }),
+        getAddressLocationSelect({
+          section,
+          location: 'district',
+          useCase,
+          initialValue: addressHierarchy[1]
+        }),
         getAddressLocationSelect({
           section,
           location: 'locationLevel3',
           useCase,
           fhirLineArrayPosition: 10,
-          isLowestAdministrativeLevel: true
+          isLowestAdministrativeLevel: true,
+          initialValue: addressHierarchy[2]
         })
       ]
     case 4:
       return [
-        getAddressLocationSelect({ section, location: 'state', useCase }),
-        getAddressLocationSelect({ section, location: 'district', useCase }),
+        getAddressLocationSelect({
+          section,
+          location: 'state',
+          useCase,
+          initialValue: addressHierarchy[0]
+        }),
+        getAddressLocationSelect({
+          section,
+          location: 'district',
+          useCase,
+          initialValue: addressHierarchy[1]
+        }),
         getAddressLocationSelect({
           section,
           location: 'locationLevel3',
           useCase,
-          fhirLineArrayPosition: 10
+          fhirLineArrayPosition: 10,
+          initialValue: addressHierarchy[2]
         }),
         getAddressLocationSelect({
           section,
           location: 'locationLevel4',
           useCase,
           fhirLineArrayPosition: 11,
-          isLowestAdministrativeLevel: true
+          isLowestAdministrativeLevel: true,
+          initialValue: addressHierarchy[3]
         })
       ]
     case 5:
       return [
-        getAddressLocationSelect({ section, location: 'state', useCase }),
-        getAddressLocationSelect({ section, location: 'district', useCase }),
+        getAddressLocationSelect({
+          section,
+          location: 'state',
+          useCase,
+          initialValue: addressHierarchy[0]
+        }),
+        getAddressLocationSelect({
+          section,
+          location: 'district',
+          useCase,
+          initialValue: addressHierarchy[1]
+        }),
         getAddressLocationSelect({
           section,
           location: 'locationLevel3',
           useCase,
-          fhirLineArrayPosition: 10
+          fhirLineArrayPosition: 10,
+          initialValue: addressHierarchy[2]
         }),
         getAddressLocationSelect({
           section,
           location: 'locationLevel4',
           useCase,
-          fhirLineArrayPosition: 11
+          fhirLineArrayPosition: 11,
+          initialValue: addressHierarchy[3]
         }),
         getAddressLocationSelect({
           section,
           location: 'locationLevel5',
           useCase,
           fhirLineArrayPosition: 12,
-          isLowestAdministrativeLevel: true
+          isLowestAdministrativeLevel: true,
+          initialValue: addressHierarchy[4]
         })
       ]
   }
@@ -238,7 +283,8 @@ function getPlaceOfEventFields(useCase: EventLocationAddressCases) {
 // ==================================== END WARNING ====================================
 export function getAddressFields(
   section: string,
-  addressCase: EventLocationAddressCases | AddressCases
+  addressCase: EventLocationAddressCases | AddressCases,
+  addressHierarchy: string[]
 ): SerializedFormField[] {
   let useCase = addressCase as string
   let placeOfEventFields: SerializedFormField[] = []
@@ -291,7 +337,7 @@ export function getAddressFields(
       })
     }, // Required
     // Select fields are added for each administrative location level from Humdata
-    ...getAdminLevelSelects(section, useCase), // Required
+    ...getAdminLevelSelects(section, useCase, addressHierarchy), // Required
     // INTERNATIONAL ADDRESSES ARE SUPPLIED BECAUSE INFORMANTS & CITIZENS MAY LIVE ABROAD & REGISTER AN EVENT AT ONE OF YOUR FOREIGN EMBASSIES
     // SOMETIMES THIS IS ALSO REQUIRED FOR DIPLOMATIC REASONS OR FOR MILITARY FORCES
     {

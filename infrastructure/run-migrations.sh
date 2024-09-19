@@ -25,13 +25,5 @@ elasticsearch_host() {
   fi
 }
 
-create_elastic_index () {
-  local index_name=$1
-  echo "Creating ElasticSearch Index: ${index_name}"
-  docker run --rm --network=opencrvs_overlay_net appropriate/curl curl -XPUT "http://$(elasticsearch_host)/$index_name" -v
-}
-
-create_elastic_index "ocrvs"
-
 # run migration by restarting migration service
 docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_migration

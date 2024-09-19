@@ -96,8 +96,7 @@ export function getYearOfBirth(
     validator: validators,
     mapping: getCustomFieldMapping(fieldId),
     conditionals,
-    prefix: 'vers',
-    inputFieldWidth: '78px'
+    prefix: 'vers'
   }
 }
 
