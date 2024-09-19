@@ -1,8 +1,9 @@
+import { translateDate } from '../src/form/common/certificate/handlebars/helpers.ts'
 /*
  * Check user has an authorization token. If not, redirect to login page.
  */
 const token = new URLSearchParams(window.location.search).get('token')
-
+console.log('BONJOUR========')
 if (!token) {
   window.location.href =
     window.config.LOGIN_URL +
@@ -126,11 +127,53 @@ window.printAll = async function renderPrintout() {
       /*
        * Replace this with what ever you want to render for each page
        */
+      const formattedDate = 'hhhh' //translateDate(event.dateOfBirth) // Appel de la fonction translateDate
+
       const page = `
       <div class="page">
-        <div class="p-8">
-          <h1>${event.childName[0].firstNames} ${event.childName[0].middleName} ${event.childName[0].familyName}</h1>
-          <h1>${event.dateOfBirth}</h1>
+        <style>
+          .container {
+              display: flex;
+          }
+          .col1 {
+              flex: 1;
+              padding: 10px;
+          }
+          .col2 {
+              flex: 3;
+              padding: 10px;
+          }
+          .fahaterahana {
+              margin-top: 0px;
+              font-weight: bold;
+          }
+          .nom {
+              
+              word-break: break-word;
+          }
+          .nui {
+              margin-top: 80px;
+          }
+          .align {
+              text-align: justify;
+          }
+          .section {
+              margin-top: 80px;
+          }
+        </style>
+        <div class="container">
+          <div class="col1">
+            <p class="section">10 jolay 2024</p>
+            <p>Faha: 101945</p>
+            <p class="fahaterahana">FAHATERAHANA</p>
+            <p class="nom">${event.childName[0].firstNames} ${event.childName[0].middleName} ${event.childName[0].familyName}</p>
+            <p >NUI: 200323232323</p>
+            <p>${event.dateOfBirth}</p>
+          </div>
+          <div class="col2">
+            <p class="section align">Tamin'ny ${formattedDate}, taona efatra amby roapolo sy roa arivo, tamin'ny folo ora sy efatra ambin'ny folo monitra atoandro, no teraka tao amin'ny CHU GYNECO OBSTETRIQUE (MAternité Befelatanana), RAKOTO Henri, zazalahy, zanak'i RAVELOSON Charles, Mpamboly, teraka tao Anosy tamin'ny folo Aprily, taona roa arivo, monina ao Anosy ------</p>
+            <p class="align">Nosoratana androany folo Jolay, taona efatra amby roapolo sy roa arivo tamin'ny enina ora sy fito amby roapolo minitra maraina, araka ny fanambarana nataon'ny reniny, izay miara-manao sonia aminay LANDRY Fitahiantsoa, mpiandraikitra ny sora-piankohonana ao amin'ny CEC CU TANA I, rehefa novakiana tamin'ity soratra ity---</p>
+          </div>
         </div>
       </div>
     `
