@@ -318,7 +318,7 @@ test.describe.serial('11. Death declaration case - 11', () => {
     })
 
     test('11.1.5 Go to preview', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
     })
 
     test('11.1.6 Verify informations in preview page', async () => {

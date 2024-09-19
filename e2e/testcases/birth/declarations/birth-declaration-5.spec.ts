@@ -305,7 +305,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
     })
 
     test('5.1.5 Go to preview', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
     })
 
     test('5.1.6 Verify information on preview page', async () => {

@@ -323,7 +323,27 @@ export const drawSignature = async (page: Page) => {
   }
 }
 
-export const expectOutboxToBeEmpty = async (page: Page) =>
+export const expectOutboxToBeEmpty = async (page: Page) => {
+  /*
+   * This is to ensure the following condition is asserted
+   * after the outbox has the declaration
+   */
+  await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
+
   await expect(page.locator('#navigation_outbox')).not.toContainText('1', {
     timeout: SAFE_OUTBOX_TIMEOUT_MS
   })
+}
+
+// This suffix increases randomness of a name
+export const generateRandomSuffix = () => {
+  const vowels = 'aeiou'
+  const consonants = 'bcdfghjklmnpqrstvwxyz'
+
+  const randomVowel = vowels.charAt(Math.floor(Math.random() * vowels.length))
+  const randomConsonant = consonants.charAt(
+    Math.floor(Math.random() * consonants.length)
+  )
+
+  return randomConsonant + randomVowel
+}

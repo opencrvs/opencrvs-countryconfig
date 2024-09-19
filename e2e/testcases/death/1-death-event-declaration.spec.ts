@@ -447,7 +447,12 @@ test.describe('1. Death event declaration', () => {
       /*
        * Expected result: should be navigated to "in-progress" tab but no draft will be saved
        */
-      expect(page.locator('#content-name', { hasText: 'In progress' }))
+
+      await page.waitForTimeout(500) // This page renders twice at first
+
+      await expect(
+        page.locator('#content-name', { hasText: 'In progress' })
+      ).toBeVisible()
       await expect(page.getByText('0 seconds ago')).toBeHidden()
     })
   })
@@ -509,7 +514,12 @@ test.describe('1. Death event declaration', () => {
       /*
        * Expected result: should be navigated to "in-progress" tab but no draft will be saved
        */
-      expect(page.locator('#content-name', { hasText: 'In progress' }))
+
+      await page.waitForTimeout(500) // This page renders twice at first
+
+      await expect(
+        page.locator('#content-name', { hasText: 'In progress' })
+      ).toBeVisible()
       await expect(page.getByText('0 seconds ago')).toBeHidden()
     })
   })

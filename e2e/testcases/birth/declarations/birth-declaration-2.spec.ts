@@ -309,7 +309,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
     })
     test('2.1.5 Go To Preview', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
     })
 
     test('2.1.6 Verify information on preview page', async () => {

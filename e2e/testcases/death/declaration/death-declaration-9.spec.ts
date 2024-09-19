@@ -75,7 +75,7 @@ test.describe.serial('9. Death declaration case - 9', () => {
     })
 
     test('9.1.4 Go to preview', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
     })
 
     test('9.1.5 Verify information on preview page', async () => {

@@ -374,7 +374,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
 
     test.describe('3.1.5 Add supporting documents', async () => {
       test('3.1.5.0 Go to supporting documents page', async () => {
-        goToSection(page, 'documents')
+        await goToSection(page, 'documents')
       })
 
       test('3.1.5.1 Upload proof of birth', async () => {
@@ -458,7 +458,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
     })
 
     test('3.1.6 Go to preview', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
     })
 
     test('3.1.7 Verify information on preview page', async () => {

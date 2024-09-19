@@ -3,10 +3,10 @@ import {
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
-  formatDateTo_ddMMMMyyyy,
   formatName,
   getToken,
   goBackToReview,
+  joinValuesWith,
   login,
   uploadImage,
   uploadImageToSection
@@ -18,8 +18,8 @@ import {
   fetchDeclaration
 } from '../birth/helpers'
 import { BirthDeclaration, BirthInputDetails } from '../birth/types'
-import { format, subDays } from 'date-fns'
 import { CREDENTIALS } from '../../constants'
+import { random } from 'lodash'
 
 test.describe.serial(' Correct record - 7', () => {
   let declaration: BirthDeclaration
@@ -30,10 +30,7 @@ test.describe.serial(' Correct record - 7', () => {
   const updatedMotherDetails = {
     firstNames: faker.name.firstName('male'),
     familyName: faker.name.firstName('male'),
-    birthDate: format(
-      subDays(new Date(), Math.ceil(50 * Math.random() + 365 * 25)),
-      'yyyy-MM-dd'
-    ),
+    age: random(20, 100),
     email: faker.internet.email(),
     nationality: 'Nauru',
     id: faker.random.numeric(10),
@@ -175,11 +172,9 @@ test.describe.serial(' Correct record - 7', () => {
       await page.locator('#firstNamesEng').fill(updatedMotherDetails.firstNames)
       await page.locator('#familyNameEng').fill(updatedMotherDetails.familyName)
 
-      const birthDay = updatedMotherDetails.birthDate.split('-')
-
-      await page.getByPlaceholder('dd').fill(birthDay[2])
-      await page.getByPlaceholder('mm').fill(birthDay[1])
-      await page.getByPlaceholder('yyyy').fill(birthDay[0])
+      await page
+        .locator('#ageOfIndividualInYears')
+        .fill(updatedMotherDetails.age.toString())
 
       await page.locator('#nationality').click()
       await page.getByText(updatedMotherDetails.nationality).click()
@@ -261,13 +256,18 @@ test.describe.serial(' Correct record - 7', () => {
        */
 
       await expect(
-        page.locator('#mother-content #Date').getByRole('deletion')
-      ).toHaveText(formatDateTo_ddMMMMyyyy(declaration.mother.birthDate))
+        page.locator('#mother-content #Age').getByRole('deletion')
+      ).toHaveText(
+        joinValuesWith(
+          [declaration.mother.ageOfIndividualInYears, 'years'],
+          ' '
+        )
+      )
 
       await expect(
         page
-          .locator('#mother-content #Date')
-          .getByText(formatDateTo_ddMMMMyyyy(updatedMotherDetails.birthDate))
+          .locator('#mother-content #Age')
+          .getByText(joinValuesWith([updatedMotherDetails.age, 'years'], ' '))
       ).toBeVisible()
 
       /*
@@ -461,9 +461,14 @@ test.describe.serial(' Correct record - 7', () => {
 
     await expect(
       page.getByText(
-        'Date of birth (mother)' +
-          formatDateTo_ddMMMMyyyy(declaration.mother.birthDate) +
-          formatDateTo_ddMMMMyyyy(updatedMotherDetails.birthDate)
+        joinValuesWith(
+          [
+            'Age of mother (mother)',
+            declaration.mother.ageOfIndividualInYears,
+            updatedMotherDetails.age
+          ],
+          ''
+        )
       )
     ).toBeVisible()
 

@@ -211,7 +211,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
     test.describe('8.1.1 Navigate to declaration preview page', async () => {
       test('8.1.1.1 Verify information added on previous pages', async () => {
-        goToSection(page, 'preview')
+        await goToSection(page, 'preview')
 
         /*
          * Expected result: should include

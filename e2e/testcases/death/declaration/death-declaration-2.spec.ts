@@ -285,7 +285,7 @@ test.describe.serial('2. Death declaration case - 2', () => {
 
     test.describe('2.1.5 Upload supporting document', async () => {
       test('2.1.5.0 Go To upload supporting document page', async () => {
-        goToSection(page, 'documents')
+        await goToSection(page, 'documents')
       })
 
       test('2.1.5.1 Upload proof for deceased', async () => {
@@ -367,7 +367,7 @@ test.describe.serial('2. Death declaration case - 2', () => {
     })
 
     test('2.1.6 Verify information on preview page', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
       /*
        * Expected result: should include
        * - Deceased's First Name

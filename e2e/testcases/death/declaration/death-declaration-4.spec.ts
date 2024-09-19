@@ -311,7 +311,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
     })
 
     test('4.1.5 Upload supporting document', async () => {
-      goToSection(page, 'documents')
+      await goToSection(page, 'documents')
 
       const imageUploadSections = [
         ['uploadDocForDeceased', 'Birth certificate'],
@@ -330,7 +330,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
       }
     })
     test('4.1.6 Verify information on preview page', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
       /*
        * Expected result: should include
        * - Deceased's First Name

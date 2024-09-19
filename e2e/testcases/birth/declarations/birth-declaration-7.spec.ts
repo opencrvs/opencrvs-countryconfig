@@ -93,7 +93,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
     })
 
     test('7.1.5 Add supporting documents', async () => {
-      goToSection(page, 'documents')
+      await goToSection(page, 'documents')
       await uploadImage(
         page,
         page.locator('button[name="uploadDocForChildDOB"]')
@@ -124,7 +124,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
     })
 
     test('7.1.6 Go to preview', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
     })
 
     test('7.1.7 Verify information on preview page', async () => {

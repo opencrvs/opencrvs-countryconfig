@@ -7,13 +7,14 @@ import {
   formatName,
   getToken,
   goBackToReview,
+  joinValuesWith,
   login
 } from '../../helpers'
 import faker from '@faker-js/faker'
-import { format, subDays } from 'date-fns'
 import { DeathDeclaration } from '../death/types'
 import { createDeathDeclaration, fetchDeclaration } from '../death/helpers'
 import { CREDENTIALS } from '../../constants'
+import { random } from 'lodash'
 
 test.describe.serial(' Correct record - 18', () => {
   let declaration: DeathDeclaration
@@ -24,10 +25,7 @@ test.describe.serial(' Correct record - 18', () => {
     firstNames: faker.name.firstName('female'),
     familyName: faker.name.firstName('female'),
     gender: 'Female',
-    birthDate: format(
-      subDays(new Date(), Math.ceil(50 * Math.random()) + 365 * 25),
-      'yyyy-MM-dd'
-    ),
+    age: random(20, 100),
     nationality: 'Canada',
     id: faker.random.numeric(10),
     idType: 'Passport',
@@ -262,26 +260,24 @@ test.describe.serial(' Correct record - 18', () => {
       ).toBeVisible()
     })
 
-    test('10.2.2.3 Change date of birth', async () => {
+    test('10.2.2.3 Change age', async () => {
       await page
-        .locator('#deceased-content #Date')
+        .locator('#deceased-content #Age')
         .getByRole('button', { name: 'Change', exact: true })
         .click()
 
       /*
        * Expected result: should
        * - redirect to deceased's details page
-       * - focus on deceased's date of birth
+       * - focus on deceased's age
        */
       expect(page.url().includes('correction')).toBeTruthy()
       expect(page.url().includes('deceased-view-group')).toBeTruthy()
-      expect(page.url().includes('#deceasedBirthDate')).toBeTruthy()
+      expect(page.url().includes('#ageOfIndividualInYears')).toBeTruthy()
 
-      const birthDay = updatedDeceasedDetails.birthDate.split('-')
-
-      await page.getByPlaceholder('dd').fill(birthDay[2])
-      await page.getByPlaceholder('mm').fill(birthDay[1])
-      await page.getByPlaceholder('yyyy').fill(birthDay[0])
+      await page
+        .locator('#ageOfIndividualInYears')
+        .fill(updatedDeceasedDetails.age.toString())
 
       await page.getByRole('button', { name: 'Back to review' }).click()
 
@@ -296,13 +292,18 @@ test.describe.serial(' Correct record - 18', () => {
       expect(page.url().includes('review')).toBeTruthy()
 
       await expect(
-        page.locator('#deceased-content #Date').getByRole('deletion')
-      ).toHaveText(formatDateTo_ddMMMMyyyy(declaration.deceased.birthDate))
+        page.locator('#deceased-content #Age').getByRole('deletion')
+      ).toHaveText(
+        joinValuesWith(
+          [declaration.deceased.ageOfIndividualInYears, 'years'],
+          ' '
+        )
+      )
 
       await expect(
         page
-          .locator('#deceased-content #Date')
-          .getByText(formatDateTo_ddMMMMyyyy(updatedDeceasedDetails.birthDate))
+          .locator('#deceased-content #Age')
+          .getByText(joinValuesWith([updatedDeceasedDetails.age, 'years'], ' '))
       ).toBeVisible()
     })
 
@@ -668,9 +669,14 @@ test.describe.serial(' Correct record - 18', () => {
 
     await expect(
       page.getByText(
-        'Date of birth (Deceased)' +
-          formatDateTo_ddMMMMyyyy(declaration.deceased.birthDate) +
-          formatDateTo_ddMMMMyyyy(updatedDeceasedDetails.birthDate)
+        joinValuesWith(
+          [
+            'Age of deceased (Deceased)',
+            declaration.deceased.ageOfIndividualInYears,
+            updatedDeceasedDetails.age
+          ],
+          ''
+        )
       )
     ).toBeVisible()
 

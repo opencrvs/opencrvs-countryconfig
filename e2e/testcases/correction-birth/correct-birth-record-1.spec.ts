@@ -202,8 +202,8 @@ test.describe('1. Correct record - 1', () => {
       ).toBeVisible()
       await expect(
         page.getByText(
-          `Date of Birth:
-        ${formatDateTo_ddMMMMyyyy(declaration.mother.birthDate)}
+          `Age:
+        ${declaration.mother.ageOfIndividualInYears}
         `
         )
       ).toBeVisible()

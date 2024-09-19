@@ -6,6 +6,7 @@ import {
   formatDateTo_yyyyMMdd,
   formatName,
   getToken,
+  goBackToReview,
   login
 } from '../../helpers'
 import { format, parseISO, subDays } from 'date-fns'
@@ -121,8 +122,7 @@ test.describe.serial(' Correct record - 11', () => {
       await page.getByPlaceholder('mm').fill(date[1])
       await page.getByPlaceholder('yyyy').fill(date[0])
 
-      await page.getByRole('button', { name: 'Back to review' }).click()
-
+      await goBackToReview(page)
       /*
        * Expected result: should
        * - redirect to review page
