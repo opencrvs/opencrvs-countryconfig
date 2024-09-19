@@ -10,9 +10,11 @@
  */
 
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { applicationConfig } from './application-config'
+import { readFileSync } from 'fs'
 
-export async function applicationConfigHandler(_: Request, h: ResponseToolkit) {
-  const res = JSON.stringify(applicationConfig)
-  return h.response(res)
+export async function certificateHandler(request: Request, h: ResponseToolkit) {
+  const res = readFileSync(
+    `./src/api/certificates/source/Farajaland-${request.params.event}-certificate-v2.svg`
+  ).toString()
+  return h.response(res).code(200)
 }
