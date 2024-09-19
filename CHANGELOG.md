@@ -16,7 +16,6 @@
 ### Improvements
 
 - Auth token, ip address, remote address, mobile number, email redacted/masked from server log
-- Improved deployment time by images download faster.
 
 ### Infrastructure breaking changes
 
