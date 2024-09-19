@@ -15,6 +15,7 @@
 ### Improvements
 
 - Auth token, ip address, remote address, mobile number, email redacted/masked from server log
+- Country alpha3 ISO code now is derived from variables to the Docker Compose files and don't need to be hard coded
 
 ### Infrastructure breaking changes
 
@@ -104,7 +105,6 @@ INSERT CSV ROWS IN ENGLISH ONLY
   - `sent-for-updates`
 
 - **`/record-notification` API**: Endpoint to check enabled notifications for records. The API returns the `notificationForRecord` object for `BIRTH` and `DEATH` events, listing their respective flags. Route configuration includes description and tags for API documentation.
-
 
 ### New content keys requiring translation
 
