@@ -15,6 +15,7 @@
 
 - Protect individual certificate endpoint with token
 - Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
+- "Publish release" pipeline now correctly uses the "Branch to build from" value as the branch to be tagged. Previously it tried tagging "master". "Release tag" is also now used as the release version as is instead of it being read from `package.json`.
 - Environment creator script now requires countries to provide a Github token with no expiry date. This is to reduce effort in keeping the token up to date.
 
 ### New features
