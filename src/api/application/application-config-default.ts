@@ -50,7 +50,7 @@ export const defaultApplicationConfig = {
     DEATH_REGISTRATION: true,
     MARRIAGE_REGISTRATION: false,
     EXTERNAL_VALIDATION_WORKQUEUE: false,
-    INFORMANT_SIGNATURE: true,
+    INFORMANT_SIGNATURE: false,
     PRINT_DECLARATION: false,
     DATE_OF_BIRTH_UNKNOWN: false,
     INFORMANT_SIGNATURE_REQUIRED: false
