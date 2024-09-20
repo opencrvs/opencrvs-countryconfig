@@ -354,8 +354,6 @@ export const birthForm: ISerializedForm = {
               hideIfNidIntegrationEnabled.concat(detailsExist),
               true
             ),
-            // preceding field of address fields
-            divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('mother-address-seperator', detailsExist),
             getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
@@ -443,8 +441,6 @@ export const birthForm: ISerializedForm = {
               hideIfNidIntegrationEnabled.concat(detailsExist),
               true
             ),
-            // preceding field of address fields
-            divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('father-address-seperator', [
               ...detailsExist,
