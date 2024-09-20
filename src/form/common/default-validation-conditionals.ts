@@ -30,6 +30,10 @@ export const expressionToConditional = (
 export const isValidChildBirthDate = [
   {
     operation: 'isValidChildBirthDate'
+  },
+  {
+    operation: 'isDateNotOlderThanDays',
+    parameters: [30]
   }
 ] satisfies Validator[]
 

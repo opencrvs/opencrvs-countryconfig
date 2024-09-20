@@ -79,3 +79,26 @@ export function validIDNumberCustom(typeOfID: string) {
     return undefined
   }
 }
+
+export function isDateNotOlderThanDays(limit: number) {
+  return (value: string) => {
+    const inputDate = new Date(value)
+    const currentDate = new Date()
+    const timeDifference = currentDate.getTime() - inputDate.getTime()
+    const dayDifference = timeDifference / (1000 * 3600 * 24)
+
+    if (dayDifference > limit) {
+      return {
+        message: {
+          id: 'validations.isDateNotOlderThanDays',
+          defaultMessage: 'Over {limit} days. Unable to register',
+          description:
+            'The error message appears when the given date is older than the limit days'
+        },
+        props: { limit: 30 }
+      } satisfies ValidationResult
+    }
+
+    return undefined
+  }
+}
