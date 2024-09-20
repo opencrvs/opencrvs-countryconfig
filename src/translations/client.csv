@@ -1171,8 +1171,8 @@ form.field.label.district,Label for District,Commune,Commune,Firaisana
 form.field.label.docTypeAdoption,,Adoption letter,Lettre de reconnaissance,Taratasy fanjanahana
 form.field.label.docTypeBirthCert,,Birth certificate,Certificat de la naissance,Kopia fahaterahana
 form.field.label.docTypeChildAgeProof,,Proof of child's age,Preuve de l'âge de l'enfant,Porofo manamarina ny taonan'ilay zaza
-form.field.label.docTypeChildBirthProof,,Notification of birth (Recto),Notification de la naissance (Recto),Filazana fahaterahana
-form.field.label.docTypeChildBirthVersoProof,,Notification of birth (Verso),Notification de la naissance (Verso),Filazana fahaterahana (Ambadika)
+form.field.label.docTypeChildBirthProof,,Notification of birth (Front),Notification de la naissance (Recto),Filazana fahaterahana
+form.field.label.docTypeChildBirthVersoProof,,Notification of birth (Back),Notification de la naissance (Verso),Filazana fahaterahana (Ambadika)
 form.field.label.docTypeCopyOfBurialReceipt,,Certified copy of burial receipt,Copie certifiée du reçu d'enterrement,Copie certifiée du reçu d'enterrement
 form.field.label.docTypeCoronersReport,,Coroner's report,Rapport du coroner,Rapport du coroner
 form.field.label.docTypeDeathCertificate,,Attested certificate of death,Certificat de décès attesté,Certificat de décès attesté
@@ -1185,8 +1185,8 @@ form.field.label.docTypeLetterOfDeath,,Attested letter of death,Lettre de décè
 form.field.label.docTypeLivretDeFamille,,Family record book,Livret de famille,Bokim-pianakaviana
 form.field.label.docTypeMarriageNotice,,Notice of marriage,Avis de mariage,
 form.field.label.docTypeMedicalInstitution,,Proof of birth from medical institution,Preuve de naissance provenant d'un établissement médical,Porofo nahaterahana avy any amin'ny tobim-pahasalamana
-form.field.label.docTypeNID,,CIN Recto,CIN Recto,CIN Recto
-form.field.label.docTypeOther,,CIN Verso,CIN Verso,CIN Verso
+form.field.label.docTypeNID,,CIN Front,CIN Recto,CIN Recto
+form.field.label.docTypeOther,,CIN Back,CIN Verso,CIN Verso
 form.field.label.docTypePassport,,Passport,Passeport,Pasipaoro
 form.field.label.docTypePoliceCertificate,,Police certificate of death,Certificat de décès de la police,Certificat de décès de la police
 form.field.label.docTypePostMortemReport,,Certified post mortem report,Rapport d'autopsie certifié,Rapport d'autopsie certifié

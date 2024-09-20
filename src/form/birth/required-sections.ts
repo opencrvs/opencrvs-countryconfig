@@ -118,16 +118,16 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeNID
             },
             {
+              value: birthDocumentType.OTHER,
+              label: formMessageDescriptors.docTypeOther
+            },
+            {
               value: birthDocumentType.PASSPORT,
               label: formMessageDescriptors.docTypePassport
             },
             {
               value: birthDocumentType.BIRTH_CERTIFICATE,
               label: formMessageDescriptors.docTypeBirthCert
-            },
-            {
-              value: birthDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
             }
           ],
           conditionals: [
@@ -154,16 +154,16 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeNID
             },
             {
+              value: birthDocumentType.OTHER,
+              label: formMessageDescriptors.docTypeOther
+            },
+            {
               value: birthDocumentType.PASSPORT,
               label: formMessageDescriptors.docTypePassport
             },
             {
               value: birthDocumentType.BIRTH_CERTIFICATE,
               label: formMessageDescriptors.docTypeBirthCert
-            },
-            {
-              value: birthDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
             },
             {
               value: birthDocumentType.RECOGNITION_ACT,
@@ -198,16 +198,16 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeNID
             },
             {
+              value: birthDocumentType.OTHER,
+              label: formMessageDescriptors.docTypeOther
+            },
+            {
               value: birthDocumentType.PASSPORT,
               label: formMessageDescriptors.docTypePassport
             },
             {
               value: birthDocumentType.BIRTH_CERTIFICATE,
               label: formMessageDescriptors.docTypeBirthCert
-            },
-            {
-              value: birthDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
             }
           ],
           conditionals: [
