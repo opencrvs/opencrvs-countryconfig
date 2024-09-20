@@ -451,7 +451,7 @@ export const birthForm: ISerializedForm = {
                   expression: '!values.detailsExist'
                 }
               ],
-              false
+              true
             ),
             getOccupation(detailsExist, certificateHandlebars.motherOccupation)
           ],
@@ -554,7 +554,7 @@ export const birthForm: ISerializedForm = {
                   expression: '!values.detailsExist'
                 }
               ],
-              false
+              true
             ),
             getOccupation(detailsExist, certificateHandlebars.fatherOccupation)
           ],
