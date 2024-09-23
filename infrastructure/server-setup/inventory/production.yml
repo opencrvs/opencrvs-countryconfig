@@ -36,11 +36,6 @@ all:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGy93egakrVxXHb9LafRQ7T0Cl+p+gCTuymLyofTLK2ncwKhOZ/uV5SuzaKb4lJbBnpmxNdvAxsYXff5srvJfrV0ZZXFQdAAg0mmWuXxrhNfaE52S4s6WVKknTqDE5PhMxzVxzynBnaTdW9Cno7mO+rnS/VybjZIadpOuv5Bek1PztBmrUi4h0Qg1PxXNmFqzyc1dsil1T0nFeu5cH59G5fF1/oSUlC6CYBNoHdQ62IBoydBwMumk/trFoTlxPNK1wXgcUvsr8Sa5A4lN2Rrc6Y22CEGwomtyjHb2kDVbI+7B1Zq+S89yyyvkPFezEsCdK/Ehaj8HzfcsR/bassSn0/Xv3bL20eh7wv7cnut40kFizYifNGfpEqPvSzjfJbB4iG2WSKkW8F9t0/cvd0AdY/3jB0vXhvnRvCqHm1X6JVdGamF3GJeHUMk9JDg3rQdT47BZUtSJer4MGWWcNiALjeWPNLXK9cAvrI/6GbHbPyTzACfR6nhs03Z/eebuvpp0=
         state: present
         sudoer: true
-      - name: ashwin
-        ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDD+XVbhu1otffgnbMQzi+qwRhIjRdj9F2Sc7hxS/LzTiMhvj+0CrAw+Uw3dgvv+yDHaKPN1JJfsDpxtMqEldmv3DoEdfGHvfsRf+Q7kIycOBv31q2PLtMNH3/Jx6377SttB/g06zLWotHhpfw4rDZeBrJaCY+ZUXaFa8c7C723Rt8kUeS8wuiNNS17dijYNa/PxG2v3Clfp3suW/IWe8iPFkPY/6/BnGHlZ1mOgzoxCHshWureBlLWXyIEX/484vf6Q/N7nVpFpDjiCJeKGoDNVlbDuh/E/HPyx3tmv5GJceAzA3nVoifwp2x147Me1yGp5mm6SqZPCIroKeyJKbFOrnxX6hVGcZH9Kta8a1aPhk7Up9xJMvtrsS0TscHHL50IFKs3xu9Y1PvB2qu8G/T9q+Z7B+15qz9oW9ohhE6K06awWFpt8jqHiAUSn6T7rY1G/77c0lR0WngcgQxd3jQ0GtoPNPLCAfHZ6rHAer8ulGPwdGmDmSOjS0dyOliRABY+GA6VCEnOlpE51XjHTw/dPtQeDm8Pgg9tH4Q5DeXxHEto7PAk68SdlC7CcpzEBBD4zGzmptToppjrww37AsjnX/vkkRW2Yoaclk56iz7zEuK5AwIsZODucOVKoVwRH1A9DZrtB4yf+FpBuwKcFVup4Jauu2fLoeMGhviApRxvFQ== ashwin@opencrvs.org
-        state: present
-        sudoer: true  
 
 docker-manager-first:
   hosts:
