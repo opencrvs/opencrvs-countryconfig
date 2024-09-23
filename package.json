@@ -29,7 +29,8 @@
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
     "sort-translations": "ts-node -r tsconfig-paths/register src/sort-translations.ts",
-    "migrate": "ts-node node_modules/.bin/migrate-mongo up -f migrate-mongo-config.ts"
+    "migrate": "ts-node node_modules/.bin/migrate-mongo up -f migrate-mongo-config.ts",
+    "migrate:create": "sh create-migration.sh hearth"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
