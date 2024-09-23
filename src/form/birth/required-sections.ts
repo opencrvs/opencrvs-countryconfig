@@ -2,7 +2,6 @@ import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/ma
 import { formMessageDescriptors } from '../common/messages'
 import { ISerializedFormSection } from '../types/types'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { informantsSignature } from '../common/common-optional-fields'
 
 export const registrationSection = {
   id: 'registration', // A hidden 'registration' section must be included to store identifiers in a form draft that are used in certificates
@@ -265,7 +264,7 @@ export const previewSection = {
   groups: [
     {
       id: 'preview-view-group',
-      fields: [informantsSignature]
+      fields: []
     }
   ]
 } satisfies ISerializedFormSection
@@ -278,7 +277,7 @@ export const reviewSection = {
   groups: [
     {
       id: 'review-view-group',
-      fields: [informantsSignature]
+      fields: []
     }
   ]
 } satisfies ISerializedFormSection
