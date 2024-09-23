@@ -499,11 +499,12 @@ window.handlePrint = async function handlePrint(id) {
   try {
     const data = await getPerson(id) // Récupérer les détails de la personne
     const event = data.data.fetchBirthRegistration // Supposons que data contient déjà l'objet de l'événement
-
+    console.log(event)
     const dateFormatter = window.translateDate()
     const timeFormatter = window.translateTime()
     const officeNameFormatter = window.customizeOfficeNameLocation()
-
+    const createdDate = new Date().toISOString()
+    console.log('created ', createdDate)
     // child info
     const childLastName = `${event.child.name[0].familyName}  ${event.child.name[0].middleName}`
     const childFirstName = `${event.child.name[0].firstNames}`
@@ -538,8 +539,14 @@ window.handlePrint = async function handlePrint(id) {
         (q) => q.fieldId === 'birth.father.father-view-group.birthPlace'
       ) || { value: '' }
     ).value
-    const fatherOccupation = `${event?.father?.occupation ?? ''}`
+    const fatherOccupation = event?.father?.occupation + ' sy ' ?? ''
     const fatherResidencyLocation = 'Anosy'
+
+    const fatherInfo =
+      Array.isArray(event.father.name) && event.father.name.length > 0
+        ? `${fatherFullName}, teraka tamin'ny ${fatherDateOfBirth} tao amin'ny ${fatherPlaceOfBirth}, 
+                monina ao amin'ny fokontany fkt, kaominina cm, distrikta dstr,  ${fatherOccupation}, sy `
+        : ''
 
     // mother info
     const motherFullName =
@@ -557,6 +564,8 @@ window.handlePrint = async function handlePrint(id) {
         (q) => q.fieldId === 'birth.mother.mother-view-group.birthPlace'
       ) || { value: '' }
     ).value
+
+    const motherInfo = `${motherFullName}, teraka tamin'ny ${motherDateOfBirth}, tao amin'ny ${motherPlaceOfBirth} monina ao amin'ny fokontany fkt, kaominina cm, distrikta drtr, ${motherOccupation}`
 
     // informant info
     const relationMap = {
@@ -595,8 +604,6 @@ window.handlePrint = async function handlePrint(id) {
       ) || { value: '' }
     ).value
 
-    const createdDate = new Date().toISOString()
-    console.log('created ', createdDate)
     const page = `
         <div class="page">
           <style>
@@ -627,14 +634,17 @@ window.handlePrint = async function handlePrint(id) {
             .align {
                 text-align: justify;
             }
+            .head {
+              margin-top: 30px;
+            }
             .section {
-                margin-top: 80px;
+                margin-top: 10px;
             }
           </style>
           <div class="container">
             <div class="col1">
-              <p class="section">10 jolay 2024</p>
-              <p>Faha: ${birthRegistrationNumber}</p>
+              <p class="head">Soratra n°: ${birthRegistrationNumber}</p>
+              <p>Natao ny: ${createdDate.split('T')[0]}</p>
               <p class="section align"/>
               <p class="birth">FAHATERAHANA</p>
               <p class="section align"/>
@@ -646,13 +656,10 @@ window.handlePrint = async function handlePrint(id) {
               <p class="section align">
             </div>
             <div class="col2">
-              <p class="section align">
+              <p class="head align">
               ${`
-                ---Tamin'ny ${childDob}, tamin'ny ${childHourOfBirth}, no teraka tao amin'ny ${childBirthLocation}, ${childLastName} ${childFirstName},
-                ${childGender}, zanak'i ${fatherFullName}, ${fatherOccupation},  teraka tao ${fatherPlaceOfBirth} tamin'ny ${fatherDateOfBirth}, 
-                monina ao ${fatherResidencyLocation}, sy ${motherFullName}, ${motherOccupation}, teraka tao ${motherPlaceOfBirth} tamin'ny ${motherDateOfBirth}, 
-                monina ao ${motherResidencyLocation}
-                ---
+                ---Tamin'ny ${childDob}, tamin'ny ${childHourOfBirth}, no teraka tao amin'ny ${childBirthLocation}, ${childLastName} ${childFirstName}, ${childGender}
+                , zanak'i ${fatherInfo} ${motherInfo} ---
               `}
               </p>
               <p class="align"></p>
@@ -661,7 +668,7 @@ window.handlePrint = async function handlePrint(id) {
                 ---
                 Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'
                 i ${birthInformantFullName}, ${informantOccupation}, ${birthInformantType}, teraka tamin'ny ${birthInformantDob},
-                monina ao ${birthInformantResidency}, nanatrika ny fahaterhana, izay miara-manao sonia aminay  ${registrarName}, 
+                monina ao ${birthInformantResidency}, nanatrika ny fahaterahana, izay miara-manao sonia aminay  ${registrarName}, 
                 mpiandraikitra ny sora-piankohonana ao amin'ny ${civilRegistrationCenterNname}, rehefa novakiana taminy ity soratra ity...
               ---
               `}
