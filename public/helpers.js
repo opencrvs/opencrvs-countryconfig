@@ -1,11 +1,40 @@
-import * as Handlebars from 'handlebars'
-import { type IntlShape, type MessageDescriptor } from 'react-intl'
-
-function wordWrap(text: string, boundary: number) {
+'use strict'
+var __spreadArray =
+  (this && this.__spreadArray) ||
+  function (to, from, pack) {
+    if (pack || arguments.length === 2)
+      for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+          if (!ar) ar = Array.prototype.slice.call(from, 0, i)
+          ar[i] = from[i]
+        }
+      }
+    return to.concat(ar || Array.prototype.slice.call(from))
+  }
+Object.defineProperty(window, '__esModule', { value: true })
+window.isFirstCertificate =
+  window.mentions =
+  window.getPlaceOfBirth =
+  window.customizeDistrictNameLocation =
+  window.customizeOfficeNameLocationHeader =
+  window.customizeOfficeNameLocation =
+  window.birthCertificateRelatedPerson =
+  window.translateDateToMDGFormat =
+  window.translateTime =
+  window.customizeChildBirthRegistrationNumber =
+  window.translateDateYear =
+  window.translateDate =
+  window.noop =
+  window.mainContent =
+  window.join =
+  window.wrapGroup =
+  window.wrap =
+    void 0
+function wordWrap(text, boundary) {
   return text
     .split('\n')
     .map(function (line) {
-      let pos = 0
+      var pos = 0
       return line
         .split(/\b/)
         .map(function (word) {
@@ -21,99 +50,89 @@ function wordWrap(text: string, boundary: number) {
     .join('\n')
     .split('\n')
 }
-const LINE_HEIGHT = 14
-
-function insertTspansIntoText(textLines: string[], xi: number, yi: number) {
-  let svgString = ''
-  let y = yi
-  for (const line of textLines) {
-    svgString += `<tspan x="${xi}" y="${y}">${line}</tspan>`
+var LINE_HEIGHT = 14
+function insertTspansIntoText(textLines, xi, yi) {
+  var svgString = ''
+  var y = yi
+  for (var _i = 0, textLines_1 = textLines; _i < textLines_1.length; _i++) {
+    var line = textLines_1[_i]
+    svgString += '<tspan x="'
+      .concat(xi, '" y="')
+      .concat(y, '">')
+      .concat(line, '</tspan>')
     y += LINE_HEIGHT
   }
   return svgString
 }
-
-export function wrap(): Handlebars.HelperDelegate {
-  return function (
-    this: any,
-    lineLength: number,
-    x: number,
-    y: number,
-    ...values: [...string[], Handlebars.HelperOptions]
-  ) {
-    const lines = wordWrap(values.slice(0, -1).join(' '), lineLength)
+function wrap() {
+  return function (lineLength, x, y) {
+    var values = []
+    for (var _i = 3; _i < arguments.length; _i++) {
+      values[_i - 3] = arguments[_i]
+    }
+    var lines = wordWrap(values.slice(0, -1).join(' '), lineLength)
     return insertTspansIntoText(lines, x, y)
-  } as unknown as Handlebars.HelperDelegate
+  }
 }
-
-export function wrapGroup(): Handlebars.HelperDelegate {
-  return function (
-    this: any,
-    lineLength: number,
-    initX: number,
-    initY: number,
-    options: Handlebars.HelperOptions
-  ) {
-    let content = ''
-    let y = initY
-    function insertTspansIntoText(textLines: string[]) {
-      let svgString = ''
-      for (const line of textLines) {
-        svgString += `<tspan x="${initX}" y="${y}">${line}</tspan>`
+window.wrap = wrap
+function wrapGroup() {
+  return function (lineLength, initX, initY, options) {
+    var content = ''
+    var y = initY
+    function insertTspansIntoText(textLines) {
+      var svgString = ''
+      for (var _i = 0, textLines_2 = textLines; _i < textLines_2.length; _i++) {
+        var line = textLines_2[_i]
+        svgString += '<tspan x="'
+          .concat(initX, '" y="')
+          .concat(y, '">')
+          .concat(line, '</tspan>')
         y += LINE_HEIGHT
       }
       return svgString
     }
-
-    function createTextElement(textType: 'normal' | 'bold', lines: string[]) {
-      return `
-        <text 
-          fill="black" 
-          xml:space="default" 
-          font-family="Montserrat" 
-          font-size="9"
-          font-weight="${textType}" 
-          letter-spacing="0em">
-            ${insertTspansIntoText(lines)}
-        </text>
-      `
+    function createTextElement(textType, lines) {
+      return '\n        <text \n          fill="black" \n          xml:space="default" \n          font-family="Montserrat" \n          font-size="9"\n          font-weight="'
+        .concat(textType, '" \n          letter-spacing="0em">\n            ')
+        .concat(insertTspansIntoText(lines), '\n        </text>\n      ')
     }
-
-    for (const key in options.hash) {
-      const lines = wordWrap(options.hash[key], lineLength)
-      const textType = key.startsWith('text') ? 'normal' : 'bold'
+    for (var key in options.hash) {
+      var lines = wordWrap(options.hash[key], lineLength)
+      var textType = key.startsWith('text') ? 'normal' : 'bold'
       content += createTextElement(textType, lines)
       if (textType === 'normal') {
         y += LINE_HEIGHT
       }
     }
-
     return content
-  } as unknown as Handlebars.HelperDelegate
+  }
 }
-
-function joinValuesWith(
-  values: (string | null | undefined)[],
-  separator = ' '
-) {
+window.wrapGroup = wrapGroup
+function joinValuesWith(values, separator) {
+  if (separator === void 0) {
+    separator = ' '
+  }
   return values.filter(Boolean).join(separator)
 }
-
-export function join(): Handlebars.HelperDelegate {
-  return function (
-    this: any,
-    ...values: [...string[], Handlebars.HelperOptions]
-  ) {
-    return joinValuesWith(values.slice(0, -1) as string[], '')
-  } as unknown as Handlebars.HelperDelegate
+function join() {
+  return function () {
+    var values = []
+    for (var _i = 0; _i < arguments.length; _i++) {
+      values[_i] = arguments[_i]
+    }
+    return joinValuesWith(values.slice(0, -1), '')
+  }
 }
-
-function name(familyName: string, firstName: string) {
+window.join = join
+function name(familyName, firstName) {
   return joinValuesWith([familyName, firstName], ' ')
 }
-export function mainContent(): Handlebars.HelperDelegate {
-  return function (this: any, placeOfBirthDistrict: string = '') {
-    const paragraph1 = joinValuesWith(
+function mainContent() {
+  return function (placeOfBirthDistrict) {
+    if (placeOfBirthDistrict === void 0) {
+      placeOfBirthDistrict = ''
+    }
+    var paragraph1 = joinValuesWith(
       [
         "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
         placeOfBirthDistrict,
@@ -123,8 +142,7 @@ export function mainContent(): Handlebars.HelperDelegate {
       ],
       ' '
     )
-
-    const paragraph2 = joinValuesWith(
+    var paragraph2 = joinValuesWith(
       [
         "--Tamin'ny",
         customizeDateInCertificateContent(this.eventDate),
@@ -139,11 +157,9 @@ export function mainContent(): Handlebars.HelperDelegate {
         placeOfBirthDistrict,
         ':',
         name(this.childFamilyName, this.childFirstName) + ',',
-
         translateChildGenderToMDGWord(this.childGender),
         ', zanak’i',
         handleFatherInformation.apply(this),
-
         name(this.motherFamilyName, this.motherFirstName),
         handleMotherDeceasedInformation.apply(this),
         this.motherOccupation,
@@ -157,7 +173,7 @@ export function mainContent(): Handlebars.HelperDelegate {
       ],
       ' '
     )
-    const paragraph3 = joinValuesWith(
+    var paragraph3 = joinValuesWith(
       [
         'Nosoratana androany',
         customizeDateInCertificateContent(this.registrationDate) + ',',
@@ -170,24 +186,19 @@ export function mainContent(): Handlebars.HelperDelegate {
       ],
       ' '
     )
-
     return paragraph1 + '\n\n' + paragraph2 + '\n\n' + paragraph3
-  } as unknown as Handlebars.HelperDelegate
+  }
 }
-
-type FactoryProps = {
-  intl: IntlShape
-}
-export function noop(props: FactoryProps): Handlebars.HelperDelegate {
-  return function (this: any, value: string) {
+window.mainContent = mainContent
+function noop(props) {
+  return function (value) {
     // eslint-disable-next-line no-console
     console.log(props)
-
     return value
   }
 }
-
-const THE_UNITS_MDG_WORDS: string[] = [
+window.noop = noop
+var THE_UNITS_MDG_WORDS = [
   '',
   'iraika ',
   'roa ',
@@ -199,8 +210,7 @@ const THE_UNITS_MDG_WORDS: string[] = [
   'valo ',
   'sivy '
 ]
-
-const FROM_10_TO_19_MDG_WORDS: string[] = [
+var FROM_10_TO_19_MDG_WORDS = [
   'folo ',
   "iraika ambin'ny folo ",
   "roa ambin'ny folo ",
@@ -212,8 +222,7 @@ const FROM_10_TO_19_MDG_WORDS: string[] = [
   "valo ambin'ny folo ",
   "sivy ambin'ny folo "
 ]
-
-const DOZENS_MDG_WORDS: string[] = [
+var DOZENS_MDG_WORDS = [
   '',
   '',
   'roapolo ',
@@ -225,8 +234,7 @@ const DOZENS_MDG_WORDS: string[] = [
   'valopolo ',
   'sivifolo '
 ]
-
-const THE_HUNDREDS_MDG_WORDS: string[] = [
+var THE_HUNDREDS_MDG_WORDS = [
   '',
   'zato ',
   'roanjato ',
@@ -238,10 +246,8 @@ const THE_HUNDREDS_MDG_WORDS: string[] = [
   'valonjato ',
   'sivinjato '
 ]
-
-const MDG_IRAY_WORD = 'iray'
-
-const THE_MONTH_MDG_WORDS: string[] = [
+var MDG_IRAY_WORD = 'iray'
+var THE_MONTH_MDG_WORDS = [
   '',
   'Janoary',
   'Febroary',
@@ -256,8 +262,7 @@ const THE_MONTH_MDG_WORDS: string[] = [
   'Novambra',
   'Desambra'
 ]
-
-const THE_MONTH_EN_WORDS: string[] = [
+var THE_MONTH_EN_WORDS = [
   '',
   'January',
   'February',
@@ -272,35 +277,32 @@ const THE_MONTH_EN_WORDS: string[] = [
   'November',
   'December'
 ]
-
-const DEFAULT_MESSAGE = 'defaultMessage'
-const MDG_FEMALE_WORD = 'zazavavy'
-const MDG_MALE_WORD = 'zazalahy'
-const ID = 'id'
-
-const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
-  const digitLength = num.toString()
+var DEFAULT_MESSAGE = 'defaultMessage'
+var MDG_FEMALE_WORD = 'zazavavy'
+var MDG_MALE_WORD = 'zazalahy'
+var ID = 'id'
+var convertNumberToLetterForMalagasySpecificLanguage = function (num) {
+  var digitLength = num.toString()
   console.log(digitLength)
   if (digitLength.length > 9) return 'mihoatra lavitra'
-  const digits = ('000000000' + digitLength)
+  var digits = ('000000000' + digitLength)
     .substr(-9)
     .match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/)
-  const unit = THE_UNITS_MDG_WORDS.concat(FROM_10_TO_19_MDG_WORDS)
-
+  var unit = THE_UNITS_MDG_WORDS.concat(FROM_10_TO_19_MDG_WORDS)
   if (!digits) return
-  let numberToLetter = ''
+  var numberToLetter = ''
   numberToLetter +=
     digits[3] != '0'
       ? (parseInt(digits[3]) != 1
-          ? `${
+          ? ''.concat(
               unit[Number(digits[3])] ||
-              DOZENS_MDG_WORDS[parseInt(digits[3][0])]
-            }`
+                DOZENS_MDG_WORDS[parseInt(digits[3][0])]
+            )
           : '') + ' arivo '
       : ''
   console.log('1', numberToLetter)
   if (digits[3] != '0' && digits[4] != '0')
-    numberToLetter = ` sy ${numberToLetter}`
+    numberToLetter = ' sy '.concat(numberToLetter)
   if (digits[3] != '0' && digits[4] == '0') numberToLetter = '' + numberToLetter
   numberToLetter =
     digits[4] != ''
@@ -314,9 +316,9 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
     digits[5] != '00'
       ? (unit[Number(digits[5])] ||
           (unit[parseInt(digits[5][1])] != ''
-            ? `${unit[parseInt(digits[5][1])]} amby  ${
-                DOZENS_MDG_WORDS[parseInt(digits[5][0])]
-              }`
+            ? ''
+                .concat(unit[parseInt(digits[5][1])], ' amby  ')
+                .concat(DOZENS_MDG_WORDS[parseInt(digits[5][0])])
             : ' ' + DOZENS_MDG_WORDS[parseInt(digits[5][0])])) +
         (numberToLetter != ''
           ? numberToLetter != 'zato '
@@ -327,19 +329,18 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
       : numberToLetter != ''
       ? numberToLetter
       : ' aotra'
-  console.log('3', numberToLetter)
+
   return numberToLetter
 }
-
-function convertTimeToMdgCustomWords(timeString: string) {
-  const [hour, minute] = timeString.split(':')
-  let newHour = parseInt(hour)
-  const mdgHours = THE_UNITS_MDG_WORDS.concat(
-    FROM_10_TO_19_MDG_WORDS.slice(0, 3)
-  )
+function convertTimeToMdgCustomWords(timeString) {
+  var _a = timeString.split(':'),
+    hour = _a[0],
+    minute = _a[1]
+  var newHour = parseInt(hour)
+  var mdgHours = THE_UNITS_MDG_WORDS.concat(FROM_10_TO_19_MDG_WORDS.slice(0, 3))
   mdgHours[1] = MDG_IRAY_WORD
-  const newMinute = parseInt(minute)
-  let timePeriod = 'maraina'
+  var newMinute = parseInt(minute)
+  var timePeriod = 'maraina'
   if (newHour <= 12 && newHour >= 10) timePeriod = 'antoandro'
   else if (newHour > 12) {
     if (newHour <= 16 && newHour >= 13) timePeriod = 'tolakandro'
@@ -347,38 +348,48 @@ function convertTimeToMdgCustomWords(timeString: string) {
     if (newHour < 24 && newHour >= 20) timePeriod = 'alina'
     newHour = newHour - 12
   } else if (newHour === 0 && newMinute > 0) {
-    return `roa ambin'ny folo ora sy ${convertNumberToLetterForMalagasySpecificLanguage(
-      newMinute
-    )} minitra alina`
+    return "roa ambin'ny folo ora sy ".concat(
+      convertNumberToLetterForMalagasySpecificLanguage(newMinute),
+      ' minitra alina'
+    )
   } else if (newHour === 0 && newMinute === 0) {
-    return `roa ambin'ny folo ora alina`
+    return "roa ambin'ny folo ora alina"
   }
-
-  return `${
-    mdgHours[newHour]
-  }ora sy ${convertNumberToLetterForMalagasySpecificLanguage(
-    newMinute
-  )} minitra ${timePeriod}`
+  return ''
+    .concat(mdgHours[newHour], 'ora sy ')
+    .concat(
+      convertNumberToLetterForMalagasySpecificLanguage(newMinute),
+      ' minitra '
+    )
+    .concat(timePeriod)
 }
-
-function convertDateToMdgCustomWords(dateString: string) {
-  const [year, month, day] = dateString.split('-')
-  const dateValue =
+function convertDateToMdgCustomWords(dateString) {
+  var _a = dateString.split('-'),
+    year = _a[0],
+    month = _a[1],
+    day = _a[2]
+  var dateValue =
     parseInt(day) === 1
       ? "voalohan'ny volana"
-      : `${convertNumberToLetterForMalagasySpecificLanguage(parseInt(day))}`
-
-  return `${dateValue} ${
-    THE_MONTH_MDG_WORDS[parseInt(month)]
-  }, taona ${convertNumberToLetterForMalagasySpecificLanguage(parseInt(year))}`
+      : ''.concat(
+          convertNumberToLetterForMalagasySpecificLanguage(parseInt(day))
+        )
+  return ''
+    .concat(dateValue, ' ')
+    .concat(THE_MONTH_MDG_WORDS[parseInt(month)], ', taona ')
+    .concat(convertNumberToLetterForMalagasySpecificLanguage(parseInt(year)))
 }
-
-function convertLocaleDateToMdgCustomWords(dateString: string) {
-  const [month, day, year] = dateString.split('/')
-  return `${day} ${THE_MONTH_MDG_WORDS[parseInt(month)]} ${year}`
+function convertLocaleDateToMdgCustomWords(dateString) {
+  var _a = dateString.split('/'),
+    month = _a[0],
+    day = _a[1],
+    year = _a[2]
+  return ''
+    .concat(day, ' ')
+    .concat(THE_MONTH_MDG_WORDS[parseInt(month)], ' ')
+    .concat(year)
 }
-
-const ROMAN_NUMBERS_MDG_WORDS = {
+var ROMAN_NUMBERS_MDG_WORDS = {
   I: 'Voalohany',
   II: 'Faharoa',
   III: 'Fahatelo',
@@ -390,17 +401,15 @@ const ROMAN_NUMBERS_MDG_WORDS = {
   IX: 'Fahasivy',
   X: 'Fahafolo'
 }
-
-const CITY_TRANSFORMER = {
+var CITY_TRANSFORMER = {
   Tana: 'Antananarivo',
   Majunga: 'Mahajanga',
   Tulear: 'Toliary',
   Diego: 'Antsiranana',
   Tamatave: 'Toamasina'
 }
-
-const customizeMdgOfficeName = (officeName: string) =>
-  officeName
+var customizeMdgOfficeName = function (officeName) {
+  return officeName
     .replace('Cu', '')
     .replace('CU', '')
     .replace('cu', '')
@@ -424,8 +433,8 @@ const customizeMdgOfficeName = (officeName: string) =>
     .replace('IX', ROMAN_NUMBERS_MDG_WORDS.IX)
     .replace('X', ROMAN_NUMBERS_MDG_WORDS.X)
     .replace('I', ROMAN_NUMBERS_MDG_WORDS.I)
-
-const getChildGenderMdgWords = (childGender: any) => {
+}
+var getChildGenderMdgWords = function (childGender) {
   if (childGender[DEFAULT_MESSAGE] === 'Female') {
     childGender[DEFAULT_MESSAGE] = MDG_FEMALE_WORD
     childGender[ID] = MDG_FEMALE_WORD
@@ -433,43 +442,40 @@ const getChildGenderMdgWords = (childGender: any) => {
     childGender[DEFAULT_MESSAGE] = MDG_MALE_WORD
     childGender[ID] = MDG_MALE_WORD
   }
-
   return childGender
 }
-
-const customizeDateInCertificateContent = (_date: string) => {
-  const dateWithoutOrdinal = removeOrdinalIndicator(_date)
-  const date = new Date(dateWithoutOrdinal)
-  const formattedDate = date.toISOString().split('T')[0]
-
+var customizeDateInCertificateContent = function (_date) {
+  var dateWithoutOrdinal = removeOrdinalIndicator(_date)
+  var date = new Date(dateWithoutOrdinal)
+  var formattedDate = date.toISOString().split('T')[0]
   return convertDateToMdgCustomWords(formattedDate)
 }
-
-export function translateDate(): Handlebars.HelperDelegate {
-  return function (this: any, dateString: string) {
+function translateDate() {
+  return function (dateString) {
     return customizeDateInCertificateContent(dateString)
   }
 }
-
-function customizeDateYearInCertificateContent(dateString: string) {
-  const year = Number(dateString.split('-')[0])
+window.translateDate = translateDate
+function customizeDateYearInCertificateContent(dateString) {
+  var year = Number(dateString.split('-')[0])
   return Number.isNaN(year)
     ? ''
     : convertNumberToLetterForMalagasySpecificLanguage(year)
 }
-
-export function translateDateYear(): Handlebars.HelperDelegate {
-  return function (this: any, dateString: string) {
+function translateDateYear() {
+  return function (dateString) {
     return customizeDateYearInCertificateContent(dateString)
   }
 }
-
-export function customizeChildBirthRegistrationNumber(): Handlebars.HelperDelegate {
+window.translateDateYear = translateDateYear
+function customizeChildBirthRegistrationNumber() {
   return function (
-    this: any,
-    rawChildBirthRegistrationNumber: string,
-    manualChildBirthRegistrationNumber: string = ''
+    rawChildBirthRegistrationNumber,
+    manualChildBirthRegistrationNumber
   ) {
+    if (manualChildBirthRegistrationNumber === void 0) {
+      manualChildBirthRegistrationNumber = ''
+    }
     if (
       manualChildBirthRegistrationNumber &&
       !['', undefined, 'undefined', null, 'null'].includes(
@@ -477,46 +483,47 @@ export function customizeChildBirthRegistrationNumber(): Handlebars.HelperDelega
       )
     )
       return manualChildBirthRegistrationNumber.toString().padStart(6, '0')
-
-    let currentRegisterNumber = ''
-
+    var currentRegisterNumber = ''
     if (
       rawChildBirthRegistrationNumber &&
       rawChildBirthRegistrationNumber.includes('_')
     ) {
-      const rawRegisterNumber = rawChildBirthRegistrationNumber.split('_')
+      var rawRegisterNumber = rawChildBirthRegistrationNumber.split('_')
       currentRegisterNumber =
         rawRegisterNumber.length === 3
           ? rawRegisterNumber[2]
           : rawRegisterNumber[1]
     }
-
     return currentRegisterNumber.toString().padStart(6, '0')
   }
 }
-
-function removeOrdinalIndicator(dateString: string) {
+window.customizeChildBirthRegistrationNumber =
+  customizeChildBirthRegistrationNumber
+function removeOrdinalIndicator(dateString) {
   if (!dateString) return new Date() // TODO: Handle it later
-  return dateString && dateString?.replace(/\b(\d+)(th|st|nd|rd)\b/g, '$1')
+  return (
+    dateString &&
+    (dateString === null || dateString === void 0
+      ? void 0
+      : dateString.replace(/\b(\d+)(th|st|nd|rd)\b/g, '$1'))
+  )
 }
-
-export function translateTime(): Handlebars.HelperDelegate {
-  return function (this: any, timeString: string) {
+function translateTime() {
+  return function (timeString) {
     return convertTimeToMdgCustomWords(timeString)
   }
 }
-
-export function translateDateToMDGFormat(): Handlebars.HelperDelegate {
-  return function (this: any, eventDate: string) {
-    const dateWithoutOrdinal = removeOrdinalIndicator(eventDate)
-    const date = new Date(dateWithoutOrdinal)
-    const formattedDate = date.toLocaleString().split(', ')[0]
-
+window.translateTime = translateTime
+function translateDateToMDGFormat() {
+  return function (eventDate) {
+    var dateWithoutOrdinal = removeOrdinalIndicator(eventDate)
+    var date = new Date(dateWithoutOrdinal)
+    var formattedDate = date.toLocaleString().split(', ')[0]
     return convertLocaleDateToMdgCustomWords(formattedDate)
   }
 }
-
-function translateChildGenderToMDGWord(childGender: string) {
+window.translateDateToMDGFormat = translateDateToMDGFormat
+function translateChildGenderToMDGWord(childGender) {
   return childGender &&
     ['male', 'homme', 'lehilahy', 'zazalahy'].includes(
       childGender.toLowerCase()
@@ -524,42 +531,57 @@ function translateChildGenderToMDGWord(childGender: string) {
     ? 'zazalahy'
     : 'zazavavy'
 }
-
-function handleFatherInformation(this: Record<string, any>) {
-  let fatherDetail = ''
-  if (this.fatherFamilyName?.trim()) {
-    const fatherIsDeceased = this.birthFatherFatherIsDeceased ? 'efa maty,' : ''
-    const parentHaveNotMaritalStatusLegal = this
+function handleFatherInformation() {
+  var _a, _b
+  var fatherDetail = ''
+  if (
+    (_a = this.fatherFamilyName) === null || _a === void 0 ? void 0 : _a.trim()
+  ) {
+    var fatherIsDeceased = this.birthFatherFatherIsDeceased ? 'efa maty,' : ''
+    var parentHaveNotMaritalStatusLegal = this
       .birthFatherFatherHasFormallyRecognisedChild
       ? 'izay manambara fa manjanaka azy, sy'
       : ', sy'
-    const fatherAdditionnalInfo =
+    var fatherAdditionnalInfo =
       fatherIsDeceased === 'efa maty,'
         ? ''
-        : `${this.fatherOccupation}, teraka tao ${
-            this.birthFatherBirthPlace
-          } tamin’ny ${
-            this.birthFatherCustomizedExactDateOfBirthUnknown
-              ? convertNumberToLetterForMalagasySpecificLanguage(
-                  parseInt(this.birthFatherYearOfBirth)
-                )
-              : customizeDateInCertificateContent(this.fatherBirthDate)
-          }, monina ao ${
-            this.birthFatherFokontanyCustomAddress ??
-            this.birthMotherFokontanyCustomAddress
-          }, ${parentHaveNotMaritalStatusLegal}`
-    fatherDetail = `${this.fatherFamilyName} ${this.fatherFirstName}, ${fatherAdditionnalInfo}`
+        : ''
+            .concat(this.fatherOccupation, ', teraka tao ')
+            .concat(this.birthFatherBirthPlace, ' tamin\u2019ny ')
+            .concat(
+              this.birthFatherCustomizedExactDateOfBirthUnknown
+                ? convertNumberToLetterForMalagasySpecificLanguage(
+                    parseInt(this.birthFatherYearOfBirth)
+                  )
+                : customizeDateInCertificateContent(this.fatherBirthDate),
+              ', monina ao '
+            )
+            .concat(
+              (_b = this.birthFatherFokontanyCustomAddress) !== null &&
+                _b !== void 0
+                ? _b
+                : this.birthMotherFokontanyCustomAddress,
+              ', '
+            )
+            .concat(parentHaveNotMaritalStatusLegal)
+    fatherDetail = ''
+      .concat(this.fatherFamilyName, ' ')
+      .concat(this.fatherFirstName, ', ')
+      .concat(fatherAdditionnalInfo)
   }
   return fatherDetail
 }
-
-function handleMotherDeceasedInformation(this: Record<string, any>) {
+function handleMotherDeceasedInformation() {
   return this.birthMotherMotherIsDeceased ? ' ,efa maty,' : ''
 }
-
-function handleInformantInfo(this: Record<string, any>) {
-  let informantInfo = "araka ny fanambarana nataon'"
-  if (this.informantFamilyName?.trim()) {
+function handleInformantInfo() {
+  var _a, _b
+  var informantInfo = "araka ny fanambarana nataon'"
+  if (
+    (_a = this.informantFamilyName) === null || _a === void 0
+      ? void 0
+      : _a.trim()
+  ) {
     informantInfo +=
       this.motherFamilyName === this.informantFamilyName &&
       this.motherFirstName === this.informantFirstName
@@ -567,26 +589,37 @@ function handleInformantInfo(this: Record<string, any>) {
         : this.fatherFamilyName === this.informantFamilyName &&
           this.fatherFirstName === this.informantFirstName
         ? 'ny rainy,'
-        : `i ${this.informantFamilyName} ${
-            this.informantFirstName
-          }, teraka tamin'ny ${
-            this.birthInformantCustomizedExactDateOfBirthUnknown
-              ? convertNumberToLetterForMalagasySpecificLanguage(
-                  parseInt(this.birthInformantYearOfBirth)
-                )
-              : customizeDateInCertificateContent(this.informantBirthDate)
-          }, monina ao ${
-            this.informantCustomAddress ??
-            this.birthInformantFokontanyCustomAddress
-          }, nanatrika ny fahaterahana,`
+        : 'i '
+            .concat(this.informantFamilyName, ' ')
+            .concat(this.informantFirstName, ", teraka tamin'ny ")
+            .concat(
+              this.birthInformantCustomizedExactDateOfBirthUnknown
+                ? convertNumberToLetterForMalagasySpecificLanguage(
+                    parseInt(this.birthInformantYearOfBirth)
+                  )
+                : customizeDateInCertificateContent(this.informantBirthDate),
+              ', monina ao '
+            )
+            .concat(
+              (_b = this.informantCustomAddress) !== null && _b !== void 0
+                ? _b
+                : this.birthInformantFokontanyCustomAddress,
+              ', nanatrika ny fahaterahana,'
+            )
   }
   return informantInfo
 }
-
-export function birthCertificateRelatedPerson(): Handlebars.HelperDelegate {
-  return function (this: any, informantFamilyName: string = '') {
-    let informantInfo = ''
-    if (informantFamilyName?.trim()) {
+function birthCertificateRelatedPerson() {
+  return function (informantFamilyName) {
+    if (informantFamilyName === void 0) {
+      informantFamilyName = ''
+    }
+    var informantInfo = ''
+    if (
+      informantFamilyName === null || informantFamilyName === void 0
+        ? void 0
+        : informantFamilyName.trim()
+    ) {
       informantInfo +=
         this.motherFamilyName === informantFamilyName &&
         this.motherFirstName === this.informantFirstName
@@ -594,14 +627,19 @@ export function birthCertificateRelatedPerson(): Handlebars.HelperDelegate {
           : this.fatherFamilyName === informantFamilyName &&
             this.fatherFirstName === this.informantFirstName
           ? 'ny rainy'
-          : `i ${informantFamilyName} ${this.informantFirstName}`
+          : 'i '
+              .concat(informantFamilyName, ' ')
+              .concat(this.informantFirstName)
     }
     return informantInfo
   }
 }
-
-function customizeOfficeName(registrationLocation: string = '') {
-  const locationMappings: { [key: string]: string } = {
+window.birthCertificateRelatedPerson = birthCertificateRelatedPerson
+function customizeOfficeName(registrationLocation) {
+  if (registrationLocation === void 0) {
+    registrationLocation = ''
+  }
+  var locationMappings = {
     'tana iv': "Commune Urbaine d'Antananarivo - Boriboritany Fahaefatra",
     'tana i': "Commune Urbaine d'Antananarivo - Boriboritany Voalohany",
     'toamasina suburbaine': 'Kaominina, Suburbaine Toamasina',
@@ -615,50 +653,58 @@ function customizeOfficeName(registrationLocation: string = '') {
     'cec ambohitrimanjaka': 'Kaominina, Ambohitrimanjaka',
     'cec anosiala': 'Kaominina, Anosiala'
   }
-
-  const lowerCaseRegistrationLocation = registrationLocation.toLowerCase()
-
-  for (const key in locationMappings) {
+  var lowerCaseRegistrationLocation = registrationLocation.toLowerCase()
+  for (var key in locationMappings) {
     if (lowerCaseRegistrationLocation.includes(key)) {
       return locationMappings[key]
     }
   }
-
   return ''
 }
-
-export function customizeOfficeNameLocation(): Handlebars.HelperDelegate {
-  return function (this: any, registrationLocation: string = '') {
+function customizeOfficeNameLocation() {
+  return function (registrationLocation) {
+    if (registrationLocation === void 0) {
+      registrationLocation = ''
+    }
     return customizeOfficeName(registrationLocation)
   }
 }
-
-export function customizeOfficeNameLocationHeader(): Handlebars.HelperDelegate {
-  return function (this: any, registrationLocation: string = '') {
+window.customizeOfficeNameLocation = customizeOfficeNameLocation
+function customizeOfficeNameLocationHeader() {
+  return function (registrationLocation) {
+    if (registrationLocation === void 0) {
+      registrationLocation = ''
+    }
     return customizeOfficeName(registrationLocation)
       .replace(',', '')
       .replace(' - ', '\n')
   }
 }
-
-export function customizeDistrictNameLocation(): Handlebars.HelperDelegate {
-  return function (this: any, placeOfBirthDistrict: string = '') {
+window.customizeOfficeNameLocationHeader = customizeOfficeNameLocationHeader
+function customizeDistrictNameLocation() {
+  return function (placeOfBirthDistrict) {
+    if (placeOfBirthDistrict === void 0) {
+      placeOfBirthDistrict = ''
+    }
     return placeOfBirthDistrict
   }
 }
-
-export function getPlaceOfBirth(
-  placeOfBirthFacility: string = '',
-  fokontanyCustomAddress: string = ''
-) {
+window.customizeDistrictNameLocation = customizeDistrictNameLocation
+function getPlaceOfBirth(placeOfBirthFacility, fokontanyCustomAddress) {
+  if (placeOfBirthFacility === void 0) {
+    placeOfBirthFacility = ''
+  }
+  if (fokontanyCustomAddress === void 0) {
+    fokontanyCustomAddress = ''
+  }
   return !['', ' ', null, 'null', 'undefined', undefined].includes(
     fokontanyCustomAddress
   )
     ? fokontanyCustomAddress
     : placeOfBirthFacility
 }
-
-function getRecognitionMentionValues(this: Record<string, string>, i: number) {
+window.getPlaceOfBirth = getPlaceOfBirth
+function getRecognitionMentionValues(i) {
   return [
     this['birthMentionRecognitionActNumber__' + i],
     this['birthMentionRecognitionDate__' + i],
@@ -673,11 +719,7 @@ function getRecognitionMentionValues(this: Record<string, string>, i: number) {
     this['birthMentionMentionChildNID__' + i]
   ]
 }
-
-function getJudicialAdoptionMentionValues(
-  this: Record<string, string>,
-  i: number
-) {
+function getJudicialAdoptionMentionValues(i) {
   return [
     this['birthMentionJudicialAdoptionActNumber__' + i],
     this['birthMentionJudicialAdoptionDate__' + i],
@@ -701,11 +743,7 @@ function getJudicialAdoptionMentionValues(
     this['birthMentionJudicialAdoptionParent2NID__' + i]
   ]
 }
-
-function getSimpleAdoptionMentionValues(
-  this: Record<string, string>,
-  i: number
-) {
+function getSimpleAdoptionMentionValues(i) {
   return [
     this['birthMentionSimpleAdoptionActNumber__' + i],
     this['birthMentionSimpleAdoptionDate__' + i],
@@ -729,8 +767,7 @@ function getSimpleAdoptionMentionValues(
     this['birthMentionSimpleAdoptionParent2NID__' + i]
   ]
 }
-
-function getMarriageMentionValues(this: Record<string, string>, i: number) {
+function getMarriageMentionValues(i) {
   return [
     this['birthMentionMarriageActNumber__' + i],
     this['birthMentionMarriageDate__' + i],
@@ -747,8 +784,7 @@ function getMarriageMentionValues(this: Record<string, string>, i: number) {
     this['birthMentionBrideOrGroomNID__' + i]
   ]
 }
-
-function getDivorceMentionValues(this: Record<string, string>, i: number) {
+function getDivorceMentionValues(i) {
   return [
     this['birthMentionDivorceActNumber__' + i],
     this['birthMentionDivorceDate__' + i],
@@ -763,8 +799,7 @@ function getDivorceMentionValues(this: Record<string, string>, i: number) {
     this['birthMentionWifeOrHusbandNID__' + i]
   ]
 }
-
-function getNameChangeMentionValues(this: Record<string, string>, i: number) {
+function getNameChangeMentionValues(i) {
   return [
     this['birthMentionNameChangeActNumber__' + i],
     this['birthMentionNameChangeDate__' + i],
@@ -774,8 +809,7 @@ function getNameChangeMentionValues(this: Record<string, string>, i: number) {
     this['birthMentionModification__' + i]
   ]
 }
-
-function getDeathMentionValues(this: Record<string, string>, i: number) {
+function getDeathMentionValues(i) {
   return [
     this['birthMentionDeathActNumber__' + i],
     this['birthMentionDeathDate__' + i],
@@ -784,23 +818,42 @@ function getDeathMentionValues(this: Record<string, string>, i: number) {
     this['birthMentionDeathDeathPlace__' + i]
   ]
 }
-export function mentions(): Handlebars.HelperDelegate {
-  return function (this: any) {
-    let output = ''
-    for (let i = 0; i < 10; i++) {
+function mentions() {
+  return function () {
+    var output = ''
+    for (var i = 0; i < 10; i++) {
       if (!this['birthMentionDetailsMentionExist__' + i]) {
         break
       }
-      output += [
-        this['birthMentionTypeOfMention__' + i],
-        ...getRecognitionMentionValues.apply(this, [i]),
-        ...getJudicialAdoptionMentionValues.apply(this, [i]),
-        ...getSimpleAdoptionMentionValues.apply(this, [i]),
-        ...getMarriageMentionValues.apply(this, [i]),
-        ...getDivorceMentionValues.apply(this, [i]),
-        ...getNameChangeMentionValues.apply(this, [i]),
-        ...getDeathMentionValues.apply(this, [i])
-      ]
+      output += __spreadArray(
+        __spreadArray(
+          __spreadArray(
+            __spreadArray(
+              __spreadArray(
+                __spreadArray(
+                  __spreadArray(
+                    [this['birthMentionTypeOfMention__' + i]],
+                    getRecognitionMentionValues.apply(this, [i]),
+                    true
+                  ),
+                  getJudicialAdoptionMentionValues.apply(this, [i]),
+                  true
+                ),
+                getSimpleAdoptionMentionValues.apply(this, [i]),
+                true
+              ),
+              getMarriageMentionValues.apply(this, [i]),
+              true
+            ),
+            getDivorceMentionValues.apply(this, [i]),
+            true
+          ),
+          getNameChangeMentionValues.apply(this, [i]),
+          true
+        ),
+        getDeathMentionValues.apply(this, [i]),
+        true
+      )
         .filter(Boolean)
         .join(', ')
       output += '\n'
@@ -808,9 +861,10 @@ export function mentions(): Handlebars.HelperDelegate {
     return output
   }
 }
-
-export function isFirstCertificate(): Handlebars.HelperDelegate {
-  return function (this: Record<string, string>) {
+window.mentions = mentions
+function isFirstCertificate() {
+  return function () {
     return !this.certifier
   }
 }
+window.isFirstCertificate = isFirstCertificate
