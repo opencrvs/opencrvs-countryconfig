@@ -2,7 +2,6 @@ import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/ma
 import { formMessageDescriptors } from '../common/messages'
 import { ISerializedFormSection } from '../types/types'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { informantsSignature } from '../common/common-optional-fields'
 
 export const registrationSection = {
   id: 'registration', // A hidden 'registration' section must be included to store identifiers in a form draft that are used in certificates
@@ -67,6 +66,7 @@ export const documentsSection = {
           initialValue: '',
           extraValue: birthDocumentExtraValue.CHILD,
           hideAsterisk: true,
+          maxSizeMB: 10,
           validator: [],
           options: [
             {
@@ -85,6 +85,7 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.proofOfRecognition,
           initialValue: '',
+          maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.CHILD,
           hideAsterisk: true,
           validator: [],
@@ -109,6 +110,7 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.proofOfMothersID,
           initialValue: '',
+          maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.MOTHER,
           hideAsterisk: true,
           validator: [],
@@ -118,16 +120,16 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeNID
             },
             {
+              value: birthDocumentType.OTHER,
+              label: formMessageDescriptors.docTypeOther
+            },
+            {
               value: birthDocumentType.PASSPORT,
               label: formMessageDescriptors.docTypePassport
             },
             {
               value: birthDocumentType.BIRTH_CERTIFICATE,
               label: formMessageDescriptors.docTypeBirthCert
-            },
-            {
-              value: birthDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
             }
           ],
           conditionals: [
@@ -145,6 +147,7 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.proofOfFathersID,
           initialValue: '',
+          maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.FATHER,
           hideAsterisk: true,
           validator: [],
@@ -154,16 +157,16 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeNID
             },
             {
+              value: birthDocumentType.OTHER,
+              label: formMessageDescriptors.docTypeOther
+            },
+            {
               value: birthDocumentType.PASSPORT,
               label: formMessageDescriptors.docTypePassport
             },
             {
               value: birthDocumentType.BIRTH_CERTIFICATE,
               label: formMessageDescriptors.docTypeBirthCert
-            },
-            {
-              value: birthDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
             },
             {
               value: birthDocumentType.RECOGNITION_ACT,
@@ -189,6 +192,7 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.proofOfInformantsID,
           initialValue: '',
+          maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.INFORMANT_ID_PROOF,
           hideAsterisk: true,
           validator: [],
@@ -198,16 +202,16 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeNID
             },
             {
+              value: birthDocumentType.OTHER,
+              label: formMessageDescriptors.docTypeOther
+            },
+            {
               value: birthDocumentType.PASSPORT,
               label: formMessageDescriptors.docTypePassport
             },
             {
               value: birthDocumentType.BIRTH_CERTIFICATE,
               label: formMessageDescriptors.docTypeBirthCert
-            },
-            {
-              value: birthDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
             }
           ],
           conditionals: [
@@ -224,6 +228,7 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.otherBirthSupportingDocuments,
           initialValue: '',
+          maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.LEGAL_GUARDIAN_PROOF,
           hideAsterisk: true,
           validator: [],
@@ -259,7 +264,7 @@ export const previewSection = {
   groups: [
     {
       id: 'preview-view-group',
-      fields: [informantsSignature]
+      fields: []
     }
   ]
 } satisfies ISerializedFormSection
@@ -272,7 +277,7 @@ export const reviewSection = {
   groups: [
     {
       id: 'review-view-group',
-      fields: [informantsSignature]
+      fields: []
     }
   ]
 } satisfies ISerializedFormSection

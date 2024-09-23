@@ -226,6 +226,10 @@ export const birthForm: ISerializedForm = {
                   action: 'hide',
                   expression:
                     'values.placeOfBirth!="PRIVATE_HOME" && values.placeOfBirth!="OTHER"'
+                },
+                {
+                  action: 'hide',
+                  expression: ' !values.districtPlaceofbirth'
                 }
               ],
               true,
@@ -346,10 +350,9 @@ export const birthForm: ISerializedForm = {
               ),
               true,
               {
-                id: 'form.field.label.customAddress',
-                description:
-                  'A form field that asks for informent current address',
-                defaultMessage: 'Address'
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
               },
               'primaryAddress'
             ),
@@ -434,10 +437,9 @@ export const birthForm: ISerializedForm = {
               ),
               true,
               {
-                id: 'form.field.label.customAddress',
-                description:
-                  'A form field that asks for mother current address',
-                defaultMessage: 'Address'
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
               },
               'primaryAddress'
             ),
@@ -449,7 +451,7 @@ export const birthForm: ISerializedForm = {
                   expression: '!values.detailsExist'
                 }
               ],
-              false
+              true
             ),
             getOccupation(detailsExist, certificateHandlebars.motherOccupation)
           ],
@@ -537,10 +539,9 @@ export const birthForm: ISerializedForm = {
                 .concat(hideIfDistrictPrimaryAddressNotSelected('father')),
               true,
               {
-                id: 'form.field.label.customAddress',
-                description:
-                  'A form field that asks for father current address',
-                defaultMessage: 'Address'
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
               },
               'primaryAddress'
             ),
@@ -553,7 +554,7 @@ export const birthForm: ISerializedForm = {
                   expression: '!values.detailsExist'
                 }
               ],
-              false
+              true
             ),
             getOccupation(detailsExist, certificateHandlebars.fatherOccupation)
           ],
