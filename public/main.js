@@ -644,7 +644,9 @@ window.handlePrint = async function handlePrint(id) {
           <div class="container">
             <div class="col1">
               <p class="head">Soratra n°: ${birthRegistrationNumber}</p>
-              <p>Natao ny: ${createdDate.split('T')[0]}</p>
+              <p>Natao ny: ${window.setLocaleDateCustomString(
+                createdDate.split('T')[0]
+              )}</p>
               <p class="section align"/>
               <p class="birth">FAHATERAHANA</p>
               <p class="section align"/>

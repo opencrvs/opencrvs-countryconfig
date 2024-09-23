@@ -300,7 +300,7 @@ var convertNumberToLetterForMalagasySpecificLanguage = function (num) {
             )
           : '') + ' arivo '
       : ''
-  console.log('1', numberToLetter)
+
   if (digits[3] != '0' && digits[4] != '0')
     numberToLetter = ' sy '.concat(numberToLetter)
   if (digits[3] != '0' && digits[4] == '0') numberToLetter = '' + numberToLetter
@@ -311,7 +311,7 @@ var convertNumberToLetterForMalagasySpecificLanguage = function (num) {
           ? numberToLetter
           : '')
       : ''
-  console.log('2', numberToLetter)
+
   numberToLetter =
     digits[5] != '00'
       ? (unit[Number(digits[5])] ||
@@ -363,6 +363,11 @@ function convertTimeToMdgCustomWords(timeString) {
     )
     .concat(timePeriod)
 }
+function setLocaleDateCustomString(dateString) {
+  const [year, month, day] = dateString.split('-')
+  return `${day} ${THE_MONTH_MDG_WORDS[parseInt(month)]} ${year}` // return `${day}/${month}/${year}`
+}
+window.setLocaleDateCustomString = setLocaleDateCustomString
 function convertDateToMdgCustomWords(dateString) {
   var _a = dateString.split('-'),
     year = _a[0],
