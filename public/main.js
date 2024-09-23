@@ -499,38 +499,104 @@ window.handlePrint = async function handlePrint(id) {
   try {
     const data = await getPerson(id) // Récupérer les détails de la personne
     const event = data.data.fetchBirthRegistration // Supposons que data contient déjà l'objet de l'événement
-    console.log(event)
 
     const dateFormatter = window.translateDate()
+    const timeFormatter = window.translateTime()
+    const officeNameFormatter = window.customizeOfficeNameLocation()
 
-    const formattedDate = dateFormatter(event.child.birthDate)
-    const formatHour = 'folo ora ' //dateFormatter(event.createdAt)
-    const brithLocation = ''
-    const childName = `${event.child.name[0].familyName} ${event.child.name[0].middleName} ${event.child.name[0].firstNames} `
-    const gender =
+    // child info
+    const childLastName = `${event.child.name[0].familyName}  ${event.child.name[0].middleName}`
+    const childFirstName = `${event.child.name[0].firstNames}`
+    const childGender =
       event.child.gender.toLowerCase() === 'female' ? 'zazavavy' : 'zazalahy'
-    const fatherInfo =
-      Array.isArray(event.father.name) && event.father.name.length > 0
-        ? `${event.father.name[0].familyName} ${
-            event.father.name[0].middleName
-          } ${event.father.name[0].firstNames} teraka tamin'ny ${dateFormatter(
-            event.father.birthDate
-          )} tao amin'ny toerana, ${event.father.occupation} sy `
-        : ''
+    const childDob = dateFormatter(event.child.birthDate)
+    const childBirthTime = (
+      event?.questionnaire?.find(
+        (q) => q.fieldId === 'birth.child.child-view-group.birthTime'
+      ) || { value: '' }
+    ).value
+    const childHourOfBirth = childBirthTime ? timeFormatter(childBirthTime) : ''
+    const childBirthLocation =
+      'CHU GYNECO  OBSTETRIQUE (Maternité Befelatanana)'
+    const childNUI = (
+      event?.child?.identifier?.find((q) => q.type === 'NATIONAL_ID') || {
+        id: ''
+      }
+    ).id
 
-    const motherInfo =
-      Array.isArray(event.mother.name) && event.mother.name.length > 0
-        ? `${event.mother.name[0].familyName} ${
-            event.mother.name[0].middleName
-          } ${event.mother.name[0].firstNames} teraka tamin'ny ${dateFormatter(
-            event.mother.birthDate
-          )} tao amin'ny toerana, ${event.mother.occupation} `
+    // father info
+    const fatherFullName =
+      Array.isArray(event.father.name) && event.father.name.length > 0
+        ? `${event.father.name[0].familyName} ${event.father.name[0].middleName} ${event.father.name[0].firstNames}`
         : ''
-    const textSection1 = `---Tamin'ny ${formattedDate} tamin'ny ${formatHour} no teraka tao amin'ny ${brithLocation} ${childName}, ${gender}, zanak'i ${fatherInfo} ${motherInfo} ---`
+    const fatherDateOfBirth =
+      Array.isArray(event.father.name) && event.father.name.length > 0
+        ? `${dateFormatter(event.father.birthDate)}`
+        : ''
+    const fatherPlaceOfBirth = (
+      event?.questionnaire?.find(
+        (q) => q.fieldId === 'birth.father.father-view-group.birthPlace'
+      ) || { value: '' }
+    ).value
+    const fatherOccupation = `${event?.father?.occupation ?? ''}`
+    const fatherResidencyLocation = 'Anosy'
+
+    // mother info
+    const motherFullName =
+      Array.isArray(event.mother.name) && event.mother.name.length > 0
+        ? `${event.mother.name[0].familyName} ${event.mother.name[0].middleName} ${event.mother.name[0].firstNames}`
+        : ''
+    const motherDateOfBirth =
+      Array.isArray(event.mother.name) && event.mother.name.length > 0
+        ? `${dateFormatter(event.mother.birthDate)}`
+        : ''
+    const motherOccupation = `${event?.mother?.occupation ?? ''}`
+    const motherResidencyLocation = 'Anosy'
+    const motherPlaceOfBirth = (
+      event?.questionnaire?.find(
+        (q) => q.fieldId === 'birth.mother.mother-view-group.birthPlace'
+      ) || { value: '' }
+    ).value
+
+    // informant info
+    const relationMap = {
+      mother: 'Ny reniny',
+      father: 'Ny rainy',
+      brother: 'Ny zokiny lahy',
+      sister: 'Ny zokiny vavy',
+      auncle: 'Ny dadatoany',
+      aunt: 'Ny nenitoany',
+      grandfather: 'Ny dadabeny',
+      grandmother: 'Ny renibeny'
+    }
+    const birthInformantLastName = `${event?.informant?.name[0]?.familyName}`
+    const birthInformanFirstNames = `${event?.informant?.name[0]?.firstNames}`
+    const birthInformantFullName = `${birthInformantLastName} ${birthInformanFirstNames}`
+    const birthInformantDob = `${dateFormatter(event.informant.birthDate)}`
+    const birthInformantResidency = 'Anosy'
+    const informantOccupation = `${event?.informant?.occupation ?? ''}`
+    const birthInformantType =
+      relationMap[event.informant?.relationship?.toLowerCase()] || ''
+
+    // registration info
+    const birthRegistrationDate = `${childDob}`
+    const birthRegistrationTime = `${childHourOfBirth}`
+    const registrarName = 'RANALIMALALA Voahangy'
+    const civilRegistrationCenterNname = officeNameFormatter(
+      event?.registration?.status?.find(
+        (item) => item.office && item.office.name
+      )?.office.name || ''
+    )
+    const birthRegistrationNumber = (
+      event?.questionnaire?.find(
+        (q) =>
+          q.fieldId ===
+          'birth.child.child-view-group.legacyBirthRegistrationNumber'
+      ) || { value: '' }
+    ).value
 
     const createdDate = new Date().toISOString()
     console.log('created ', createdDate)
-    const section2 = `---Nosoratana androany  tamin'ity soratra ity---`
     const page = `
         <div class="page">
           <style>
@@ -545,11 +611,14 @@ window.handlePrint = async function handlePrint(id) {
                 flex: 3;
                 padding: 10px;
             }
-            .fahaterahana {
+            .birth {
                 margin-top: 0px;
                 font-weight: bold;
             }
-            .nom {
+            .lastname {
+                word-break: break-word;
+            }
+            .firstname {
                 word-break: break-word;
             }
             .nui {
@@ -565,15 +634,39 @@ window.handlePrint = async function handlePrint(id) {
           <div class="container">
             <div class="col1">
               <p class="section">10 jolay 2024</p>
-              <p>Faha: 101945</p>
-              <p class="fahaterahana">FAHATERAHANA</p>
-              <p class="nom">${event.child.name[0].familyName} ${event.child.name[0].middleName} ${event.child.name[0].firstNames}</p>
-              <p>NUI: 200323232323</p>
+              <p>Faha: ${birthRegistrationNumber}</p>
+              <p class="section align"/>
+              <p class="birth">FAHATERAHANA</p>
+              <p class="section align"/>
+              <p class="lastname">${childLastName}</p>
+              <p class="firstname">${childFirstName}</p>
+              <p class="section align"/>
+              <p>NUI: ${childNUI}</p>
               <p>${event.child.birthDate}</p>
+              <p class="section align">
             </div>
             <div class="col2">
-              <p class="section align">${textSection1}</p>
+              <p class="section align">
+              ${`
+                ---Tamin'ny ${childDob}, tamin'ny ${childHourOfBirth}, no teraka tao amin'ny ${childBirthLocation}, ${childLastName} ${childFirstName},
+                ${childGender}, zanak'i ${fatherFullName}, ${fatherOccupation},  teraka tao ${fatherPlaceOfBirth} tamin'ny ${fatherDateOfBirth}, 
+                monina ao ${fatherResidencyLocation}, sy ${motherFullName}, ${motherOccupation}, teraka tao ${motherPlaceOfBirth} tamin'ny ${motherDateOfBirth}, 
+                monina ao ${motherResidencyLocation}
+                ---
+              `}
+              </p>
               <p class="align"></p>
+              <p class="section align">
+              ${`
+                ---
+                Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'
+                i ${birthInformantFullName}, ${informantOccupation}, ${birthInformantType}, teraka tamin'ny ${birthInformantDob},
+                monina ao ${birthInformantResidency}, nanatrika ny fahaterhana, izay miara-manao sonia aminay  ${registrarName}, 
+                mpiandraikitra ny sora-piankohonana ao amin'ny ${civilRegistrationCenterNname}, rehefa novakiana taminy ity soratra ity...
+              ---
+              `}
+              </p>
+               <p class="align"></p>
             </div>
           </div>
         </div>
