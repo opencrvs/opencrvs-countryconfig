@@ -358,7 +358,8 @@ export const birthForm: ISerializedForm = {
             ),
             getOccupation(
               hideIfInformantMotherOrFather,
-              certificateHandlebars.informantOccupation
+              certificateHandlebars.informantOccupation,
+              false
             ),
             registrationPhone // If you wish to enable automated SMS notifications to informants, include this
           ],

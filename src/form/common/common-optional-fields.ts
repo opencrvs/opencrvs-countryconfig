@@ -158,7 +158,8 @@ export const getNIDVerificationButton = (
 })
 export const getOccupation = (
   conditionals: Conditional[],
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  required: boolean = true
 ): SerializedFormField => ({
   name: 'occupation',
   type: 'TEXT',
@@ -167,7 +168,7 @@ export const getOccupation = (
     description: 'text for occupation form field',
     id: 'form.field.label.occupation'
   },
-  required: true,
+  required,
   initialValue: '',
   validator: [],
   conditionals,
