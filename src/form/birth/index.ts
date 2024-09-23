@@ -102,6 +102,7 @@ import {
   getNUI,
   getYearOfBirth
 } from '../common/common-custom-fields'
+
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -308,10 +309,7 @@ export const birthForm: ISerializedForm = {
                   parameters: []
                 },
                 {
-                  operation: 'dateLessThan',
-                  parameters: [
-                    subYears(new Date(), 18).toISOString().split('T')[0]
-                  ]
+                  operation: 'isInformantOfLegalAgeCustom'
                 }
               ],
               certificateHandlebars.informantBirthDate

@@ -11,6 +11,8 @@
 
 import { IFormFieldValue, ValidationResult } from '../../types/types'
 
+const INFORMANT_MININUM_AGE = 18
+
 export function isNumberLessThan21(value: IFormFieldValue) {
   if (Number(value) < 21) {
     return {
@@ -77,6 +79,44 @@ export function validIDNumberCustom(typeOfID: string) {
       } satisfies ValidationResult
     }
     return undefined
+  }
+}
+
+export const minAgeGapExist = (
+  first: string,
+  second: string,
+  minAgeGap: number
+): boolean => {
+  const diff =
+    (new Date(first).getTime() - new Date(second).getTime()) /
+    (1000 * 60 * 60 * 24) /
+    365
+  return diff >= minAgeGap
+}
+
+export function isInformantOfLegalAgeCustom(value: IFormFieldValue) {
+  console.log('value', value)
+
+  const isInformantOldEnough =
+    typeof value === 'string'
+      ? minAgeGapExist(
+          new Date().toISOString().split('T')[0],
+          value,
+          INFORMANT_MININUM_AGE
+        )
+      : true
+
+  if (!value || isInformantOldEnough) {
+    return undefined
+  } else {
+    return {
+      message: {
+        id: 'validations.isInformantOfLegalAge',
+        defaultMessage: 'Informant is not of legal age',
+        description:
+          'The error message appears when the informant is not of legal age'
+      }
+    }
   }
 }
 
