@@ -95,8 +95,6 @@ export const minAgeGapExist = (
 }
 
 export function isInformantOfLegalAgeCustom(value: IFormFieldValue) {
-  console.log('value', value)
-
   const isInformantOldEnough =
     typeof value === 'string'
       ? minAgeGapExist(

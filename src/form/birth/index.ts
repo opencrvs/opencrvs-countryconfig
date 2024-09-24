@@ -93,7 +93,6 @@ import {
   getNotes,
   getDetailsMentionExist
 } from './custom-fields'
-import { subYears } from 'date-fns'
 import {
   getCustomizedExactDateOfBirthUnknown,
   getFatherIsDeceased,
@@ -102,8 +101,6 @@ import {
   getNUI,
   getYearOfBirth
 } from '../common/common-custom-fields'
-
-// import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
 
