@@ -25,6 +25,8 @@ on:
         default: qa
         options:
           - qa
+          - staging
+          - production
       replicas:
         description: No of replicas deployed in the environment
         default: '1'
