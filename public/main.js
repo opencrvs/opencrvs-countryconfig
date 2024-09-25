@@ -567,8 +567,14 @@ window.handlePrint = async function handlePrint(id) {
         (q) => q.fieldId === 'birth.mother.mother-view-group.birthPlace'
       ) || { value: '' }
     ).value
+    const motherFkt = (
+      event?.questionnaire?.find(
+        (q) =>
+          q.fieldId === 'birth.mother.mother-view-group.fokontanyCustomAddress'
+      ) || { value: '' }
+    ).value
 
-    const motherInfo = `${motherFullName}, teraka tamin'ny ${motherDateOfBirth}, tao amin'ny ${motherPlaceOfBirth} monina ao amin'ny fokontany fkt, kaominina cm, distrikta drtr, ${motherOccupation}`
+    const motherInfo = `${motherFullName}, teraka tamin'ny ${motherDateOfBirth}, tao amin'ny ${motherPlaceOfBirth} monina ao amin'ny fokontany ${motherFkt}, kaominina cm, distrikta drtr, ${motherOccupation}`
 
     // informant info
     const relationMap = {
@@ -578,7 +584,7 @@ window.handlePrint = async function handlePrint(id) {
       sister: 'zokiny vavy',
       auncle: 'dadatoany',
       aunt: 'nenitoany',
-      grandfather: 'dadabeny',
+      grandfather: 'raibeny',
       grandmother: 'renibeny'
     }
     const birthInformantLastName = `${event?.informant?.name[0]?.familyName}`
