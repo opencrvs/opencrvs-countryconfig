@@ -503,8 +503,11 @@ window.handlePrint = async function handlePrint(id) {
     const dateFormatter = window.translateDate()
     const timeFormatter = window.translateTime()
     const officeNameFormatter = window.customizeOfficeNameLocation()
-    const createdDate = new Date().toISOString()
-    console.log('created ', createdDate)
+
+    const now = new Date()
+    const offset = now.getTimezoneOffset() * 60000 // Décalage horaire en millisecondes
+    const createdDate = new Date(now - offset).toISOString().slice(0, -1) // Retirer le 'Z' à la fin
+
     // child info
     const childLastName = `${event.child.name[0].familyName}  ${event.child.name[0].middleName}`
     const childFirstName = `${event.child.name[0].firstNames}`
@@ -569,27 +572,34 @@ window.handlePrint = async function handlePrint(id) {
 
     // informant info
     const relationMap = {
-      mother: 'Ny reniny',
-      father: 'Ny rainy',
-      brother: 'Ny zokiny lahy',
-      sister: 'Ny zokiny vavy',
-      auncle: 'Ny dadatoany',
-      aunt: 'Ny nenitoany',
-      grandfather: 'Ny dadabeny',
-      grandmother: 'Ny renibeny'
+      mother: 'reniny',
+      father: 'rainy',
+      brother: 'zokiny lahy',
+      sister: 'zokiny vavy',
+      auncle: 'dadatoany',
+      aunt: 'nenitoany',
+      grandfather: 'dadabeny',
+      grandmother: 'renibeny'
     }
     const birthInformantLastName = `${event?.informant?.name[0]?.familyName}`
     const birthInformanFirstNames = `${event?.informant?.name[0]?.firstNames}`
     const birthInformantFullName = `${birthInformantLastName} ${birthInformanFirstNames}`
-    const birthInformantDob = `${dateFormatter(event.informant.birthDate)}`
-    const birthInformantResidency = 'Anosy'
-    const informantOccupation = `${event?.informant?.occupation ?? ''}`
     const birthInformantType =
       relationMap[event.informant?.relationship?.toLowerCase()] || ''
 
+    const birthInformantDob = `${dateFormatter(event.informant.birthDate)}`
+    const birthInformantoRelationship = `${event?.informant?.relationship}`
+    const birthInformantInfo =
+      birthInformantoRelationship.toLowerCase() === 'mother' || 'father'
+        ? `${birthInformantType} `
+        : `${birthInformantFullName}, ${birthInformantType}`
+    const birthInformantResidency = 'Anosy'
+    const informantOccupation = `${event?.informant?.occupation ?? ''}`
+
     // registration info
-    const birthRegistrationDate = `${childDob}`
-    const birthRegistrationTime = `${childHourOfBirth}`
+    const birthRegistrationDate = dateFormatter(createdDate.split('T')[0])
+    const birthRegistrationTime = timeFormatter(createdDate.split('T')[1])
+
     const registrarName = 'RANALIMALALA Voahangy'
     const civilRegistrationCenterNname = officeNameFormatter(
       event?.registration?.status?.find(
@@ -669,7 +679,7 @@ window.handlePrint = async function handlePrint(id) {
               ${`
                 ---
                 Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'
-                i ${birthInformantFullName}, ${informantOccupation}, ${birthInformantType}, teraka tamin'ny ${birthInformantDob},
+                i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob},
                 monina ao ${birthInformantResidency}, nanatrika ny fahaterahana, izay miara-manao sonia aminay  ${registrarName}, 
                 mpiandraikitra ny sora-piankohonana ao amin'ny ${civilRegistrationCenterNname}, rehefa novakiana taminy ity soratra ity...
               ---

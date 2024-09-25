@@ -363,6 +363,7 @@ function convertTimeToMdgCustomWords(timeString) {
     )
     .concat(timePeriod)
 }
+window.convertTimeToMdgCustomWords = convertTimeToMdgCustomWords
 function setLocaleDateCustomString(dateString) {
   const [year, month, day] = dateString.split('-')
   return `${day} ${THE_MONTH_MDG_WORDS[parseInt(month)]} ${year}` // return `${day}/${month}/${year}`
