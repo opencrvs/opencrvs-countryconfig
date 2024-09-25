@@ -1072,13 +1072,14 @@ form.field.label.app.whoContDet.spouse,,Spouse,Conjoint,Vady
 form.field.label.appCurrAddSameAsPerm,,Is informant's permanent address the same as their current address?,L'adresse permanente du déclarant est-elle la même que son adresse actuelle ?,Ny adiresy fototra an'ilay mpanambara ve mitovy amin'ilay adiresiny isan'anandro?
 form.field.label.assignedResponsibilityProof,,Proof of assigned responsibility,Preuve de l'attribution de la responsabilité,Taratasy manamarina ny fanendrena andraikitra
 form.field.label.attBirthOtherParaPers,,Other paramedical personnel,Autre personnel paramédical,Mpiasan'ny fahasalamana hafa
-form.field.label.attendantAtBirth,,Attendant at birth,Accoucheur,Mpampiteraka
+form.field.label.attendantAtBirth,,Helped by,Assisté par,Manampy ny
+form.field.label.attendantAtBirthHealthWorker,,Health workers,Personnels de santé,Mpiasan'ny fahasalamana
 form.field.label.attendantAtBirthLayperson,,Layperson,Laïque,Laika
 form.field.label.attendantAtBirthMidwife,,Midwife,Sage-femme,Mpitsabo mpanampy vehivavy
-form.field.label.attendantAtBirthNone,,None,Aucun,Tsisy
+form.field.label.attendantAtBirthNone,,None,Non,Tsisy
 form.field.label.attendantAtBirthNurse,,Nurse,Infirmière,Mpitsabo mpanampy lehilahy
 form.field.label.attendantAtBirthOther,,Other,Autre,Hafa
-form.field.label.attendantAtBirthTraditionalBirthAttendant,,Traditional birth attendant,Accoucheur traditionnel,Mpampivelona
+form.field.label.attendantAtBirthTraditionalBirthAttendant,,Traditional birth attendant,Matrone,Mpampivelona
 form.field.label.birthFktLocation,,Fokontany,Fokontany,Fokontany
 form.field.label.birthLocation,,Hospital / Clinic,Hôpital / Clinique,Tombim-pahasalama / Klinika
 form.field.label.birthPlace,,Place of birth,Lieu de naissance,Toerana nahaterahana

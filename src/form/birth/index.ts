@@ -31,7 +31,7 @@ import {
   getOccupation,
   divider
 } from '../common/common-optional-fields'
-import { weightAtBirth } from './optional-fields'
+import { attendantAtBirth, weightAtBirth } from './optional-fields'
 import {
   childNameInEnglish,
   fatherNameInEnglish,
@@ -241,6 +241,7 @@ export const birthForm: ISerializedForm = {
               },
               'placeOfBirth'
             ),
+            attendantAtBirth,
             getNUI(
               [],
               [

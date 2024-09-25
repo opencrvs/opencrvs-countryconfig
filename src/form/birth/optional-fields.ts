@@ -22,6 +22,12 @@ export const attendantAtBirth: SerializedFormField = {
   type: 'SELECT_WITH_OPTIONS',
   label: formMessageDescriptors.attendantAtBirth,
   required: false,
+  conditionals: [
+    {
+      action: 'hide',
+      expression: 'values.placeOfBirth !== "PRIVATE_HOME"'
+    }
+  ],
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,

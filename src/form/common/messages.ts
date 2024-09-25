@@ -188,6 +188,11 @@ export const formMessageDescriptors = {
     description: 'Label for form field: physician',
     id: 'form.field.label.physician'
   },
+  attendantAtBirthHealthWorker: {
+    defaultMessage: 'Health worker',
+    description: 'Label for form field: Attendant at birth',
+    id: 'form.field.label.attendantAtBirthHealthWorker'
+  },
   attendantAtBirthNurse: {
     defaultMessage: 'Nurse',
     description: 'Label for form field: Attendant at birth',
