@@ -2162,7 +2162,7 @@ settings.changeAvatar,Avatar change modal header,Change profile image,Modifier l
 settings.changeAvatar.changeImage,Change image label,Change,Modifier l'image,Hanova sary
 settings.changeAvatar.resizeAvatar,Avatar resize and position message,Resize and position the chosen image.,Redimensionnez et positionnez l'image choisie.,Apetraho sady arafeto tsara ilay sary voafidy.
 settings.changeLanguage,Change language title,Change language,Changer de langue,Hanova fiteny
-settings.changeLanguage.success,Change language success,Language updated to {language},Langue mise à jour en {language},Fiteny niova ho {language}
+settings.changeLanguage.success,Change language success,Language updated to English,Langue mise à jour en Français,Fiteny niova ho Malagasy
 settings.changePassword,Password change modal header,Change password,Modifier le mot de passe,Ovao ilay teny miafina
 settings.changePhone,Change phone number title,Change phone number,Changer de numéro de téléphone,Hanova laharana finday
 settings.message.changeLanguage,Change language message,Your prefered language that you want to use on OpenCRVS,Votre langue préférée que vous souhaitez utiliser sur OpenCRVS,Safidio ny fiteny tianao hampiasaina ato amin'ny tranokala SIECM ity
