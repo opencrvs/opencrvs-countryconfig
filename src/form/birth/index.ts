@@ -213,15 +213,21 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.eventDate
             ), // Required field.
             {
-              name: 'fetchNUI',
+              name: 'createNUI',
               type: 'HTTP',
               hideInPreview: true,
               custom: true,
               label: { id: 'form.label.empty', defaultMessage: ' ' },
               validator: [],
               options: {
+                headers: {
+                  'Content-Type': 'application/json'
+                },
                 url: '/api/countryconfig/nui',
-                method: 'GET'
+                method: 'POST',
+                body: {
+                  office: '$user.primaryOffice.name'
+                }
               }
             },
             {
@@ -231,19 +237,19 @@ export const birthForm: ISerializedForm = {
               required: true,
               custom: true,
               initialValue: {
-                expression: '$form.fetchNUI?.data',
-                dependsOn: ['fetchNUI']
+                expression: '$form.createNUI?.data',
+                dependsOn: ['createNUI']
               },
               maxLength: 10,
               conditionals: [
                 {
                   action: 'hide',
                   expression:
-                    '!$form.fetchNUI?.data || !window.navigator.onLine'
+                    '!$form.createNUI?.data || !window.navigator.onLine'
                 },
                 {
                   action: 'disable',
-                  expression: '$form.fetchNUI?.data'
+                  expression: '$form.createNUI?.data'
                 }
               ],
               validator: [
@@ -279,17 +285,17 @@ export const birthForm: ISerializedForm = {
               hideInPreview: true,
               validator: [],
               options: {
-                trigger: 'fetchNUI',
+                trigger: 'createNUI',
                 shouldHandleLoadingState: true
               },
               conditionals: [
                 {
                   action: 'hide',
-                  expression: '$form.fetchNUI?.data'
+                  expression: '$form.createNUI?.data'
                 },
                 {
                   action: 'disable',
-                  expression: '$form.fetchNUI?.loading'
+                  expression: '$form.createNUI?.loading'
                 },
                 {
                   action: 'disable',

@@ -9,15 +9,20 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { Request, ResponseToolkit } from '@hapi/hapi'
+import { Request } from '@hapi/hapi'
 import { z } from 'zod'
+import * as Joi from 'joi'
 import { NUI_GENERATOR_URL, NUI_API_KEY } from './constants'
-import { internal, boomify } from '@hapi/boom'
+import { internal } from '@hapi/boom'
 
 if (!NUI_GENERATOR_URL || !NUI_API_KEY) {
   throw new Error('NUI_GENERATOR_URL and NUI_API_KEY must be set')
 }
 const NUI_BATCH_SIZE = 1
+
+export const nuiRequestBodySchema = Joi.object({
+  office: Joi.string()
+})
 
 const generateNUIResponseSchema = z.object({
   theNuis: z.array(z.string()).min(NUI_BATCH_SIZE).max(NUI_BATCH_SIZE),
@@ -29,7 +34,7 @@ const affectNUIResponseSchema = z.object({
   status: z.string()
 })
 
-const generateNUI = async (destinator: string): Promise<string> => {
+const generateNUI = async ({ office }: { office: string }): Promise<string> => {
   try {
     const response = await fetch(`${NUI_GENERATOR_URL}/generate`, {
       method: 'POST',
@@ -39,7 +44,7 @@ const generateNUI = async (destinator: string): Promise<string> => {
       },
       body: JSON.stringify({
         batchSize: NUI_BATCH_SIZE,
-        destinator
+        destinator: office
       })
     })
 
@@ -76,9 +81,10 @@ const affectNUI = async (nui: string) => {
   }
 }
 
-export async function NUIHandler(request: Request, h: ResponseToolkit) {
+export async function NUIHandler(req: Request) {
+  const body = req.payload as { office: string }
   try {
-    const nui = await generateNUI('CEC Tana IV')
+    const nui = await generateNUI(body)
     await affectNUI(nui)
 
     return nui

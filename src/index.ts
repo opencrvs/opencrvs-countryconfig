@@ -63,7 +63,7 @@ import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
-import { NUIHandler } from './api/nui/handler'
+import { NUIHandler, nuiRequestBodySchema } from './api/nui/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -337,12 +337,15 @@ export async function createServer() {
   })
 
   server.route({
-    method: 'GET',
+    method: 'POST',
     path: '/nui',
     handler: NUIHandler,
     options: {
       tags: ['api'],
-      description: 'Serves a unique id'
+      description: 'Generates and reserves NUI',
+      validate: {
+        payload: nuiRequestBodySchema
+      }
     }
   })
 
