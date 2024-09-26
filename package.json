@@ -31,11 +31,6 @@
     "sort-translations": "ts-node -r tsconfig-paths/register src/sort-translations.ts"
   },
   "devDependencies": {
-    "@graphql-codegen/add": "^3.1.1",
-    "@graphql-codegen/cli": "^3.3.1",
-    "@graphql-codegen/introspection": "^3.0.1",
-    "@graphql-codegen/typescript-operations": "^3.0.4",
-    "@graphql-codegen/typescript": "^3.0.4",
     "@inquirer/editor": "^1.2.13",
     "@octokit/core": "4.2.1",
     "@types/google-libphonenumber": "^7.4.23",
@@ -89,8 +84,6 @@
     "dotenv": "^16.4.5",
     "esbuild": "^0.18.9",
     "google-libphonenumber": "^3.2.32",
-    "graphql-tag": "^2.12.6",
-    "graphql": "^16.3.0",
     "handlebars": "^4.7.7",
     "hapi-auth-jwt2": "10.4.0",
     "hapi-pino": "^9.0.0",

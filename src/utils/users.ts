@@ -1,7 +1,5 @@
 import { GATEWAY_URL } from '@countryconfig/constants'
 import fetch from 'node-fetch'
-import gql from 'graphql-tag'
-import { print } from 'graphql/language/printer'
 import { URL } from 'url'
 
 type GetUser = {
@@ -27,7 +25,7 @@ export async function fetchUserLocationHierarchy(
       variables: {
         userId: userId
       },
-      query: print(gql`
+      query: `
         query fetchUser($userId: String!) {
           getUser(userId: $userId) {
             primaryOffice {
@@ -37,7 +35,7 @@ export async function fetchUserLocationHierarchy(
             }
           }
         }
-      `)
+      `
     })
   })
 
