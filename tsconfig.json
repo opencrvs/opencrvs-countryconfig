@@ -34,7 +34,8 @@
     "src/**/*.ts",
     "infrastructure/environments/**/*.ts",
     "typings",
-    "migrate-mongo-config.ts"
+    "migrate-mongo-config-hearth.ts",
+    "migrate-mongo-config-user-mgnt.ts"
   ],
   "exclude": [
     "node_modules",
