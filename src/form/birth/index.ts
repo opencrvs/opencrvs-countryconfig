@@ -340,6 +340,7 @@ export const birthForm: ISerializedForm = {
               false,
               certificateHandlebars.informantNID
             ),
+            getPlaceOfBirth('informant', hideIfInformantMotherOrFather, true),
             // preceding field of address fields
             divider('informant-nid-seperator', hideIfInformantMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -426,7 +427,7 @@ export const birthForm: ISerializedForm = {
               false,
               certificateHandlebars.motherNID
             ),
-            getPlaceOfBirth('mother', detailsExistConditional),
+            getPlaceOfBirth('mother', detailsExistConditional, true),
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -528,7 +529,7 @@ export const birthForm: ISerializedForm = {
               false,
               certificateHandlebars.fatherNID
             ),
-            getPlaceOfBirth('father', detailsExistConditional),
+            getPlaceOfBirth('father', detailsExistConditional, true),
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
