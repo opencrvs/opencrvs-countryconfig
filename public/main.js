@@ -402,6 +402,7 @@ function update() {
   downloadRecords({ startDate: $startDate.value, endDate: $endDate.value })
     .then((data) => {
       // get Person
+      console.log('===> data', data.data.searchEvents.results)
       renderTable(data.data.searchEvents.results)
       // getPerson(data.data.searchEvents.results[0].id)
       //   .then((data) => {
@@ -495,9 +496,9 @@ window.printAll = async function renderPrintout() {
     .from(pages)
     .save()
 }
-window.handlePrint = async function handlePrint(id) {
+window.handlePrint = async function handlePrint(result) {
   try {
-    const data = await getPerson(id) // Récupérer les détails de la personne
+    const data = await getPerson(result.id) // Récupérer les détails de la personne
     const event = data.data.fetchBirthRegistration // Supposons que data contient déjà l'objet de l'événement
     console.log(event)
     const dateFormatter = window.translateDate()
@@ -596,17 +597,20 @@ window.handlePrint = async function handlePrint(id) {
     const birthInformantDob = `${dateFormatter(event.informant.birthDate)}`
     const birthInformantoRelationship = `${event?.informant?.relationship}`
     const birthInformantInfo =
-      birthInformantoRelationship.toLowerCase() === 'mother' || 'father'
+      birthInformantoRelationship.toLowerCase() === 'mother' ||
+      birthInformantoRelationship.toLowerCase() === 'father'
         ? `${birthInformantType} `
         : `${birthInformantFullName}, ${birthInformantType}`
     const birthInformantResidency = 'Anosy'
-    const informantOccupation = `${event?.informant?.occupation ?? ''}`
+    const informantOccupation = `${event?.informant?.occupation ?? ''}${
+      event?.informant?.occupation ? ', ' : ''
+    }`
 
     // registration info
     const birthRegistrationDate = dateFormatter(createdDate.split('T')[0])
     const birthRegistrationTime = timeFormatter(createdDate.split('T')[1])
 
-    const registrarName = 'RANALIMALALA Voahangy'
+    const registrarName = `${result.registration.assinment.lastName} ${result.registration.assinment.firstName}`
     const civilRegistrationCenterNname = officeNameFormatter(
       event?.registration?.status?.find(
         (item) => item.office && item.office.name
@@ -685,8 +689,8 @@ window.handlePrint = async function handlePrint(id) {
               ${`
                 ---
                 Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'
-                i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob},
-                monina ao ${birthInformantResidency}, nanatrika ny fahaterahana, izay miara-manao sonia aminay  ${registrarName}, 
+                i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob} tao amin'ny toerana, kaominina com,
+                monina ao amin'ny fkt, kaominina com, distrikta dskt, ${informantOccupation} izay miara-manao sonia aminay ${registrarName}, 
                 mpiandraikitra ny sora-piankohonana ao amin'ny ${civilRegistrationCenterNname}, rehefa novakiana taminy ity soratra ity...
               ---
               `}
@@ -732,9 +736,7 @@ function renderTable(results) {
           event.childName[0].firstNames
         } ${event.childName[0].middleName} ${event.childName[0].familyName}</td>
          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          <button onclick="window.handlePrint('${
-            event.id
-          }')" class="btn-print bg-blue-500 text-white hover:bg-blue-700 font-bold py-2 px-4 rounded">Imprimer</button>
+          <button onclick="window.handlePrint('${event}')" class="btn-print bg-blue-500 text-white hover:bg-blue-700 font-bold py-2 px-4 rounded">Imprimer</button>
         </td>
       </tr>
     `
