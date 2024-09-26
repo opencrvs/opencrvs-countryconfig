@@ -1240,6 +1240,8 @@ form.field.label.firstName,,First name(s),Prénom,Fanampin'anarana
 form.field.label.firstNameEN,,First name,Prénom,Fanampin'anarana
 form.field.label.firstNames,,First name(s),Prénom(s),Fanampin'anarana
 form.field.label.fokontanyCustomAddress,,Fokontany,Fokontany,Fokontany
+form.field.label.generateNUI,,Generate NUI,Générer NUI,
+form.field.label.generatingNUI,,Generating...,Génératrice...,
 form.field.label.healthInstitution,,Health Institution,Institution de santé,Toeram-pitsaboana
 form.field.label.hospital,,Hospital,Hôpital,Tobim-pahasalama
 form.field.label.iD,,ID Number,Numéro d'identification,Laharana famantarana
@@ -1254,6 +1256,7 @@ form.field.label.iDTypeOther,,Other,Autre,Hafa
 form.field.label.iDTypeOtherLabel,,Other type of ID,Autre type de carte d'identité,Karazana taratasy fampahafantarana hafa
 form.field.label.iDTypePassport,,Passport,Passeport,Pasipaoro
 form.field.label.iDTypeRefugeeNumber,,Refugee Number,Numéro de réfugié,Laharan'ilay mpitsoam-ponenana
+form.field.label.idManual,,Enter NUI manually,Saisir le NUI manuellement,
 form.field.label.imageUpload.uploadedList,,Uploaded:,Téléchargé :,Voatahiry anaty solosaina :
 form.field.label.informant,Informant Label,Informant,Informateur,Mpanambara
 form.field.label.informantAthorityToApplyProof,,Proof of informant's authority to apply,Preuve de l'autorité de l'informateur pour faire la demande,Preuve de l'autorité de l'informateur pour faire la demande
