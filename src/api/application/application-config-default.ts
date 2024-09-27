@@ -51,7 +51,7 @@ export const defaultApplicationConfig = {
     MARRIAGE_REGISTRATION: false,
     EXTERNAL_VALIDATION_WORKQUEUE: false,
     INFORMANT_SIGNATURE: false,
-    PRINT_DECLARATION: false,
+    PRINT_DECLARATION: true,
     DATE_OF_BIRTH_UNKNOWN: false,
     INFORMANT_SIGNATURE_REQUIRED: false
   },
