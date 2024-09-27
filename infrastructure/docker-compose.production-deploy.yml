@@ -23,6 +23,8 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_SECURE=${SMTP_SECURE}
+      - NUI_GENERATOR_URL={NUI_GENERATOR_URL}
+      - NUI_API_KEY={NUI_API_KEY}
 
   traefik:
     # These templates use an Automatic Certificate Management Environment (Let's Encrypt).

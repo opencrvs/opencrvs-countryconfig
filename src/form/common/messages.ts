@@ -956,8 +956,18 @@ export const formMessageDescriptors = {
   },
   nui: {
     defaultMessage: 'NUI',
-    description: 'text for nuiOffline form field',
+    description: 'text for generated NUI form field',
     id: 'form.field.label.NUI'
+  },
+  generateNUI: {
+    defaultMessage: 'Generate NUI',
+    description: 'text for NUI button form field',
+    id: 'form.field.label.generateNUI'
+  },
+  generatingNUI: {
+    defaultMessage: 'Generating...',
+    description: 'Label for form field: Generating NUI',
+    id: 'form.field.label.generatingNUI'
   }
 }
 

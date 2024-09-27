@@ -212,6 +212,152 @@ export const birthForm: ISerializedForm = {
               isValidChildBirthDate,
               certificateHandlebars.eventDate
             ), // Required field.
+            {
+              name: 'createNUI',
+              type: 'HTTP',
+              hideInPreview: true,
+              custom: true,
+              label: { id: 'form.label.empty', defaultMessage: ' ' },
+              validator: [],
+              options: {
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                url: '/api/countryconfig/nui',
+                method: 'POST',
+                body: {
+                  office: '$user.primaryOffice.name'
+                }
+              }
+            },
+            {
+              name: 'iD',
+              type: 'TEXT',
+              label: formMessageDescriptors.nui,
+              required: true,
+              custom: true,
+              initialValue: {
+                expression: '$form.createNUI?.data',
+                dependsOn: ['createNUI']
+              },
+              maxLength: 10,
+              conditionals: [
+                {
+                  action: 'hide',
+                  expression:
+                    '!$form.createNUI?.data || !window.navigator.onLine'
+                },
+                {
+                  action: 'disable',
+                  expression: '$form.createNUI?.data'
+                }
+              ],
+              validator: [
+                {
+                  operation: 'validIDNumberCustom' as const,
+                  parameters: ['NATIONAL_ID']
+                },
+                {
+                  operation: 'duplicateIDNumber',
+                  parameters: ['mother.iD']
+                },
+                {
+                  operation: 'duplicateIDNumber',
+                  parameters: ['father.iD']
+                }
+              ],
+              mapping: {
+                template: {
+                  fieldName: 'childNID',
+                  operation: 'identityToFieldTransformer',
+                  parameters: ['id', 'NATIONAL_ID']
+                },
+                mutation: {
+                  operation: 'fieldToIdentityTransformer',
+                  parameters: ['id', 'NATIONAL_ID']
+                },
+                query: {
+                  operation: 'identityToFieldTransformer',
+                  parameters: ['id', 'NATIONAL_ID']
+                }
+              }
+            },
+            {
+              name: 'nuiGenerator',
+              type: 'BUTTON',
+              custom: true,
+              hideInPreview: true,
+              validator: [],
+              options: {
+                trigger: 'createNUI',
+                shouldHandleLoadingState: true
+              },
+              conditionals: [
+                {
+                  action: 'hide',
+                  expression: '$form.createNUI?.data'
+                },
+                {
+                  action: 'disable',
+                  expression: '$form.createNUI?.loading'
+                },
+                {
+                  action: 'disable',
+                  expression: '!window.navigator.onLine'
+                }
+              ],
+              label: formMessageDescriptors.nui,
+              buttonLabel: formMessageDescriptors.generateNUI,
+              icon: 'UserCircle',
+              loadingLabel: formMessageDescriptors.generatingNUI
+            },
+            {
+              name: 'iDManual',
+              type: 'TEXT',
+              label: {
+                id: 'form.field.label.idManual',
+                defaultMessage: 'Enter NUI manually'
+              },
+              required: true,
+              custom: true,
+              initialValue: '',
+              maxLength: 10,
+              conditionals: [
+                {
+                  action: 'hide',
+                  expression: 'window.navigator.onLine'
+                }
+              ],
+              validator: [
+                {
+                  operation: 'validIDNumberCustom' as const,
+                  parameters: ['NATIONAL_ID']
+                },
+                {
+                  operation: 'duplicateIDNumber',
+                  parameters: ['mother.iD']
+                },
+                {
+                  operation: 'duplicateIDNumber',
+                  parameters: ['father.iD']
+                }
+              ],
+              mapping: {
+                template: {
+                  fieldName: 'childNIDManual',
+                  operation: 'identityToFieldTransformer',
+                  parameters: ['id', 'NATIONAL_ID']
+                },
+                mutation: {
+                  operation: 'fieldToIdentityTransformer',
+                  parameters: ['id', 'NATIONAL_ID']
+                },
+                query: {
+                  operation: 'identityToFieldTransformer',
+                  parameters: ['id', 'NATIONAL_ID']
+                }
+              }
+            },
             // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
             getTimeOfBirth(),
             weightAtBirth,
@@ -238,21 +384,6 @@ export const birthForm: ISerializedForm = {
                 defaultMessage: 'Fokontany'
               },
               'placeOfBirth'
-            ),
-            getNUI(
-              [],
-              [
-                {
-                  operation: 'duplicateIDNumber',
-                  parameters: ['mother.iD']
-                },
-                {
-                  operation: 'duplicateIDNumber',
-                  parameters: ['father.iD']
-                }
-              ],
-              true,
-              certificateHandlebars.childNID
             ),
             getLegacyBirthRegistrationNumber('child'),
             getLegacyBirthRegistrationDate(),
