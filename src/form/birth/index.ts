@@ -358,12 +358,6 @@ export const birthForm: ISerializedForm = {
                 }
               }
             },
-
-            /**
-             *
-             *
-             *
-             */
             // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
             getTimeOfBirth(),
             weightAtBirth,
