@@ -57,13 +57,14 @@ import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
 import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
 import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
-import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config-default'
+import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config'
 import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
 import { NUIHandler, nuiRequestBodySchema } from './api/nui/handler'
+import { recordNotificationHandler } from './api/record-notification/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -578,6 +579,16 @@ export async function createServer() {
       auth: false,
       tags: ['api', 'static'],
       description: 'Server static files for client'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/record-notification',
+    handler: recordNotificationHandler,
+    options: {
+      tags: ['api'],
+      description: 'Checks for enabled notification for record'
     }
   })
 

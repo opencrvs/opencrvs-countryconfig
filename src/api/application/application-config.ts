@@ -2,7 +2,7 @@ import { countryLogo } from '@countryconfig/api/application/country-logo'
 import * as fs from 'fs'
 import { join } from 'path'
 
-export const defaultApplicationConfig = {
+export const applicationConfig = {
   APPLICATION_NAME: 'SIECM',
   FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
   DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
@@ -47,7 +47,7 @@ export const defaultApplicationConfig = {
     PRINT_IN_ADVANCE: true
   },
   FEATURES: {
-    DEATH_REGISTRATION: true,
+    DEATH_REGISTRATION: false,
     MARRIAGE_REGISTRATION: false,
     EXTERNAL_VALIDATION_WORKQUEUE: false,
     INFORMANT_SIGNATURE: false,
@@ -61,3 +61,34 @@ export const defaultApplicationConfig = {
 }
 
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE = 10
+
+type EventNotificationFlags = {
+  'sent-notification'?: boolean
+  'sent-notification-for-review'?: boolean
+  'sent-for-approval'?: boolean
+  registered?: boolean
+  'sent-for-updates'?: boolean
+}
+
+type NotificationFlags = {
+  BIRTH?: EventNotificationFlags
+  DEATH?: EventNotificationFlags
+  MARRIAGE?: EventNotificationFlags
+}
+
+export const notificationForRecord: NotificationFlags = {
+  BIRTH: {
+    'sent-notification': false,
+    'sent-notification-for-review': false,
+    'sent-for-approval': false,
+    registered: false,
+    'sent-for-updates': false
+  },
+  DEATH: {
+    'sent-notification': false,
+    'sent-notification-for-review': false,
+    'sent-for-approval': false,
+    registered: false,
+    'sent-for-updates': false
+  }
+}
