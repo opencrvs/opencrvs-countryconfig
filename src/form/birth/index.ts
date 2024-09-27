@@ -212,6 +212,34 @@ export const birthForm: ISerializedForm = {
               isValidChildBirthDate,
               certificateHandlebars.eventDate
             ), // Required field.
+            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
+            getTimeOfBirth(),
+            weightAtBirth,
+            // PLACE OF BIRTH FIELDS WILL RENDER HERE
+            getFokontanyCustomAddress(
+              Event.Birth,
+              'child',
+              [
+                {
+                  action: 'hide',
+                  expression:
+                    'values.placeOfBirth!="PRIVATE_HOME" && values.placeOfBirth!="OTHER"'
+                },
+                {
+                  action: 'hide',
+                  expression: ' !values.districtPlaceofbirth'
+                }
+              ],
+              true,
+              // locationOfBirthIsNotHealthFacility, // this display the field fktCustomAddress at the first opening of child section
+              {
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
+              },
+              'placeOfBirth'
+            ),
+            attendantAtBirth,
             {
               name: 'createNUI',
               type: 'HTTP',
@@ -227,6 +255,11 @@ export const birthForm: ISerializedForm = {
                 method: 'POST',
                 body: {
                   office: '$user.primaryOffice.name'
+                }
+              },
+              mapping: {
+                mutation: {
+                  operation: 'ignoreFieldTransformer'
                 }
               }
             },
@@ -358,33 +391,6 @@ export const birthForm: ISerializedForm = {
                 }
               }
             },
-            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
-            getTimeOfBirth(),
-            weightAtBirth,
-            // PLACE OF BIRTH FIELDS WILL RENDER HERE
-            getFokontanyCustomAddress(
-              Event.Birth,
-              'child',
-              [
-                {
-                  action: 'hide',
-                  expression:
-                    'values.placeOfBirth!="PRIVATE_HOME" && values.placeOfBirth!="OTHER"'
-                },
-                {
-                  action: 'hide',
-                  expression: ' !values.districtPlaceofbirth'
-                }
-              ],
-              true,
-              // locationOfBirthIsNotHealthFacility, // this display the field fktCustomAddress at the first opening of child section
-              {
-                id: 'form.field.label.fokontanyCustomAddress',
-                description: 'A form field that asks for name of fokontany',
-                defaultMessage: 'Fokontany'
-              },
-              'placeOfBirth'
-            ),
             getLegacyBirthRegistrationNumber('child'),
             getLegacyBirthRegistrationDate(),
             getLegacyBirthRegistrationTime()
