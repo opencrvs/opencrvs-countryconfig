@@ -18,6 +18,8 @@ on:
         default: qa
         options:
           - qa
+          - staging
+          - production
       version_label:
         description: The version label for the backups
         required: true
