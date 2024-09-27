@@ -31,7 +31,7 @@ import {
   getOccupation,
   divider
 } from '../common/common-optional-fields'
-import { weightAtBirth } from './optional-fields'
+import { attendantAtBirth, weightAtBirth } from './optional-fields'
 import {
   childNameInEnglish,
   fatherNameInEnglish,
@@ -212,6 +212,34 @@ export const birthForm: ISerializedForm = {
               isValidChildBirthDate,
               certificateHandlebars.eventDate
             ), // Required field.
+            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
+            getTimeOfBirth(),
+            weightAtBirth,
+            // PLACE OF BIRTH FIELDS WILL RENDER HERE
+            getFokontanyCustomAddress(
+              Event.Birth,
+              'child',
+              [
+                {
+                  action: 'hide',
+                  expression:
+                    'values.placeOfBirth!="PRIVATE_HOME" && values.placeOfBirth!="OTHER"'
+                },
+                {
+                  action: 'hide',
+                  expression: ' !values.districtPlaceofbirth'
+                }
+              ],
+              true,
+              // locationOfBirthIsNotHealthFacility, // this display the field fktCustomAddress at the first opening of child section
+              {
+                id: 'form.field.label.fokontanyCustomAddress',
+                description: 'A form field that asks for name of fokontany',
+                defaultMessage: 'Fokontany'
+              },
+              'placeOfBirth'
+            ),
+            attendantAtBirth,
             {
               name: 'createNUI',
               type: 'HTTP',
@@ -227,6 +255,11 @@ export const birthForm: ISerializedForm = {
                 method: 'POST',
                 body: {
                   office: '$user.primaryOffice.name'
+                }
+              },
+              mapping: {
+                mutation: {
+                  operation: 'ignoreFieldTransformer'
                 }
               }
             },
@@ -358,33 +391,6 @@ export const birthForm: ISerializedForm = {
                 }
               }
             },
-            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
-            getTimeOfBirth(),
-            weightAtBirth,
-            // PLACE OF BIRTH FIELDS WILL RENDER HERE
-            getFokontanyCustomAddress(
-              Event.Birth,
-              'child',
-              [
-                {
-                  action: 'hide',
-                  expression:
-                    'values.placeOfBirth!="PRIVATE_HOME" && values.placeOfBirth!="OTHER"'
-                },
-                {
-                  action: 'hide',
-                  expression: ' !values.districtPlaceofbirth'
-                }
-              ],
-              true,
-              // locationOfBirthIsNotHealthFacility, // this display the field fktCustomAddress at the first opening of child section
-              {
-                id: 'form.field.label.fokontanyCustomAddress',
-                description: 'A form field that asks for name of fokontany',
-                defaultMessage: 'Fokontany'
-              },
-              'placeOfBirth'
-            ),
             getLegacyBirthRegistrationNumber('child'),
             getLegacyBirthRegistrationDate(),
             getLegacyBirthRegistrationTime()
@@ -465,6 +471,7 @@ export const birthForm: ISerializedForm = {
               false,
               certificateHandlebars.informantNID
             ),
+            getPlaceOfBirth('informant', hideIfInformantMotherOrFather, false),
             // preceding field of address fields
             divider('informant-nid-seperator', hideIfInformantMotherOrFather),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -552,7 +559,7 @@ export const birthForm: ISerializedForm = {
               false,
               certificateHandlebars.motherNID
             ),
-            getPlaceOfBirth('mother', detailsExistConditional),
+            getPlaceOfBirth('mother', detailsExistConditional, true),
             // preceding field of address fields
             divider('mother-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -654,7 +661,7 @@ export const birthForm: ISerializedForm = {
               false,
               certificateHandlebars.fatherNID
             ),
-            getPlaceOfBirth('father', detailsExistConditional),
+            getPlaceOfBirth('father', detailsExistConditional, true),
             // preceding field of address fields
             divider('father-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE

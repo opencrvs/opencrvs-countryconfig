@@ -12,7 +12,7 @@ error.required.password,New password required,Invalid password,Le nouveau mot de
 label.error,Generic error message for invalid form nput,Invalid input,Entrée invalide,Tsy mety io nampidirinao io
 login.clearForm,,Clear form,Effacer le formulaire,Fafao io formilera io
 login.codeSubmissionError,The error that appears when the user entered sms code is unauthorised,Incorrect verification code. Please try again,"Désolé, ce code n'a pas fonctionné.","Azafady, tsy mandeha io kaody io."
-login.fieldMissing,The error if user doesn't fill all the field,Enter your username and password,Nom d'utilisateur/mot de passe requis,Anarana sy teny miafina dia tsy maintsy ampidirina
+login.fieldMissing,The error if user doesn't fill all the field,Enter your username and password,Nom d'utilisateur et mot de passe requis,Anarana sy teny miafina dia tsy maintsy ampidirina
 login.forbiddenCredentialError,The error that appears when the user entered details are forbidden,User is currently deactivated,L'utilisateur est actuellement désactivé.,Io mpiasa io dia najanona ato amin'ny OPENCRVS amin'izao.
 login.forgotPassword,The label that appears on the Forgot password button,Can't login?,Vous ne pouvez pas vous connecter ?,Tsy tafiditra ve ianao ?
 login.language,Language name,"{language, select, en {English} fr {Français} mg {Malagasy} other {{language}}}","{language, select, en {English} fr {Français} mg {Malagasy} other {{language}}}","{language, select, en {English} fr {Français} mg {Malagasy} other {{language}}}"
@@ -21,7 +21,7 @@ login.manager.performanceAppTitle,,Performance Management,Gestion des performanc
 login.manager.registerAppDescription,,"Manage declarations, registrations and certifications here.","Gérez ici vos déclarations, enregistrements et certifications.","Ataovy eto ny fanambaranao, ny firaketanao ary ny certificat anao."
 login.manager.registerAppTitle,,OpenCRVS,Page d'accueil OpenCRVS,Fafana OpenCRVS
 login.mobileLabel,,Mobile number,Numéro de téléphone mobile,Laharana finday
-login.mobilePlaceholder,,07123456789,7123456789,0324065687
+login.mobilePlaceholder,,7123456789,7123456789,324065687
 login.optionalLabel,Optional label,Optional,Optionnel,Afaka tsy atao
 login.passwordLabel,The label that appears on the password input,Password,Mot de passe,Teny miafina
 login.resend,Text for button that resends SMS or email verification code,"Resend {notificationMethod, select, sms {SMS} email {Email} other {}}","Renvoyer le {notificationMethod, select, sms {SMS} email {Email} other {}}","Alefaso indray mandeha ny {notificationMethod, select, sms {SMS} email {Email} other {}}"
@@ -80,7 +80,7 @@ userSetup.securityQuestions.hightSchool,,What is the name of your high school?,Q
 userSetup.securityQuestions.motherName,,What is your mother's name?,Quel est le nom de votre mère ?,Iza ny anaran'ny mamanao ?
 validations.emailAddressFormat,The error message that appears on email address,Must be a valid email address,Doit être une adresse e-mail valide,Tsy maintsy adiresy mailaka manan-kery
 validations.minLength,The error message that appears on fields with a minimum length,Must be {min} characters or more,Doit comporter {min} caractères ou plus,Tsy maintsy ahitana litera {min} na mihoatra
-validations.mobileNumberFormat,The format of the mobile number that appears in an error message,07123456789,7123456789,7123456789
+validations.mobileNumberFormat,The format of the mobile number that appears in an error message,7123456789,7123456789,7123456789
 validations.mobilePhoneRegex,The regular expression to use when validating a local mobile phone number,"0[0-9]{9,10}","0[0-9]{9,10}","0[0-9]{9,10}"
 validations.numberRequired,The error message that appears on fields where the value must be number,Must be number,Doit être un numéro,Tsy maintsy laharana
 validations.phoneNumberFormat,The error message that appears on phone numbers where the first character must be a 0,Enter a valid mobile phone number,"Doit être un numéro de téléphone mobile valide. Commençant par 0. Par exemple, {example}","Tsy maintsy laharana finday marina. Manomboka amin'ny 0. Ohatra, {example}"

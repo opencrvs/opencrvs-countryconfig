@@ -34,8 +34,9 @@ export function getTimeOfBirth(): SerializedFormField {
 }
 
 export function getPlaceOfBirth(
-  subject: 'mother' | 'father',
-  conditionals: Conditional[] = []
+  subject: 'mother' | 'father' | 'informant',
+  conditionals: Conditional[] = [],
+  required: boolean
 ): SerializedFormField {
   const fieldName: string = 'birthPlace'
   const fieldId: string = `birth.${subject}.${subject}-view-group.${fieldName}`
@@ -44,7 +45,7 @@ export function getPlaceOfBirth(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: true,
+    required,
     type: 'TEXT',
     label: {
       id: 'form.field.label.birthPlace',

@@ -86,7 +86,7 @@ export const documentsSection = {
           label: formMessageDescriptors.proofOfRecognition,
           initialValue: '',
           maxSizeMB: 10,
-          extraValue: birthDocumentExtraValue.CHILD,
+          extraValue: birthDocumentExtraValue.OTHER,
           hideAsterisk: true,
           validator: [],
           options: [

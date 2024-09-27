@@ -442,24 +442,8 @@ export const typeOfBirthOptions: ISelectOption[] = [
 
 export const attendantAtBirthOptions: ISelectOption[] = [
   {
-    value: 'PHYSICIAN',
-    label: formMessageDescriptors.physician
-  },
-  {
-    value: 'NURSE',
-    label: formMessageDescriptors.attendantAtBirthNurse
-  },
-  {
-    value: 'MIDWIFE',
-    label: formMessageDescriptors.attendantAtBirthMidwife
-  },
-  {
-    value: 'OTHER_PARAMEDICAL_PERSONNEL',
-    label: formMessageDescriptors.attendantAtBirthOtherParamedicalPersonnel
-  },
-  {
-    value: 'LAYPERSON',
-    label: formMessageDescriptors.attendantAtBirthLayperson
+    value: 'HEALTH_WORKER',
+    label: formMessageDescriptors.attendantAtBirthHealthWorker
   },
   {
     value: 'TRADITIONAL_BIRTH_ATTENDANT',
