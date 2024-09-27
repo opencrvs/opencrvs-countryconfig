@@ -1,4 +1,15 @@
 id,description,en,fr
+action.action,Label for action button,Action,Action
+action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
+action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
+action.correct,Label for correct record button in dropdown menu,Correct record,Enregistrement correct
+action.issue,Label for reinstate issue button in dropdown menu,Issue certificate,Délivrer un certificat
+action.print,Label for reinstate print button in dropdown menu,Print certified copy,Imprimer une copie certifiée
+action.reinstate,Label for reinstate record button in dropdown menu,Reisntate declaration,Déclaration de rétablissement
+action.review.correction,Label for review correction in dropdown menu,Review correction request,Vérifier la demande de correction
+action.review.declaration,Label for review declaration button in dropdown menu,"Review {isDuplicate, select, true{potential duplicate} other{declaration}}","Review {isDuplicate, select, true{doublon potentiel} other{déclaration}}"
+action.update,Label for reinstate update button in dropdown menu,Update declaration,Mettre à jour la déclaration
+action.view,Label for view button in dropdown menu,View {recordOrDeclaration},"voir {recordOrDeclaration, select, record{enregistrer} other{déclaration}}"
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,information de l'enfant
@@ -1820,6 +1831,7 @@ search.locationNotFound,Label for location not found,Location Not Found,Emplacem
 search.noDeclarations,The text when there is no declaration to review,No declarations to review,Aucune déclaration à examiner
 search.noResultFor,The no result text,No results for ”{param}”,Aucun résultat pour “{param}”
 search.noResults,Text to display if the search return no results for the current filters,No result to display,Aucun résultat à afficher
+search.placeholder,Placeholder text of search input,Name of query,Nom de la requête
 search.removeBbookmarkAdvancedSearchModalBody,Modal body for remove bookmark advacnced search,This advanced search bookmark will be removed from the side bar shortcut,Ce signet de recherche avancée sera supprimé du raccourci de la barre latérale
 search.removeBookmarkAdvancedSearchModalTitle,Modal title for remove bookmark advacnced search,Remove search query?,Supprimer la requête de recherche ?
 search.results,Results label at the top of the data table component,Results,Résultats
@@ -2061,3 +2073,4 @@ wq.noRecords.readyToPrint,No records messages for ready to print tab,No records 
 wq.noRecords.requiresUpdate,No records messages for require updates tab,No records require updates,Aucun document ne nécessite de mise à jour
 wq.noRecords.sentForApproval,No records messages for sent for approval tab,No records sent for approval,Aucun document envoyé pour approbation
 wq.noRecords.sentForReview,No records messages for sent for review tab,No records sent for review,Aucun document envoyé pour examen
+,,,
