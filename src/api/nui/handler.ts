@@ -89,8 +89,7 @@ export async function NUIHandler(req: Request) {
 
     return nui
   } catch (err) {
-    err.output.payload.message =
-      'Error in NUI generation. Please try again later.'
+    err.output.payload.message = 'httpError'
     throw err
   }
 }

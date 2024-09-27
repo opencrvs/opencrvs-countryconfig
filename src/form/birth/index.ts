@@ -254,6 +254,10 @@ export const birthForm: ISerializedForm = {
               ],
               validator: [
                 {
+                  operation: 'validIDNumberCustom' as const,
+                  parameters: ['NATIONAL_ID']
+                },
+                {
                   operation: 'duplicateIDNumber',
                   parameters: ['mother.iD']
                 },
@@ -325,6 +329,10 @@ export const birthForm: ISerializedForm = {
                 }
               ],
               validator: [
+                {
+                  operation: 'validIDNumberCustom' as const,
+                  parameters: ['NATIONAL_ID']
+                },
                 {
                   operation: 'duplicateIDNumber',
                   parameters: ['mother.iD']
