@@ -108,8 +108,8 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_SECURE=${SMTP_SECURE}
-      - NUI_GENERATOR_URL={NUI_GENERATOR_URL}
-      - NUI_API_KEY={NUI_API_KEY}
+      - NUI_GENERATOR_URL=${NUI_GENERATOR_URL}
+      - NUI_API_KEY=${NUI_API_KEY}
     deploy:
       replicas: 1
 
