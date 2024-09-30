@@ -11,7 +11,6 @@
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { URL } from 'url'
 import fetch from 'node-fetch'
-import gql from 'noop-tag'
 
 const GRAPHQL_GATEWAY_URL = new URL('graphql', GATEWAY_URL)
 
@@ -54,7 +53,7 @@ export const confirmRegistration = (
   { headers }: { headers: Record<string, any> }
 ) =>
   post({
-    query: gql`
+    query: `#graphql
       mutation confirmRegistration(
         $id: ID!
         $details: ConfirmRegistrationInput!
@@ -79,7 +78,7 @@ export const rejectRegistration = (
   { headers }: { headers: Record<string, any> }
 ) =>
   post({
-    query: gql`
+    query: /* GraphQL */ `
       mutation rejectRegistration(
         $id: ID!
         $details: RejectRegistrationInput!
@@ -112,7 +111,7 @@ export const fetchUserLocationHierarchy = async (
   { headers }: { headers: Record<string, any> }
 ) => {
   const res = await post<GetUser>({
-    query: gql`
+    query: /* GraphQL */ `
       query fetchUser($userId: String!) {
         getUser(userId: $userId) {
           primaryOffice {

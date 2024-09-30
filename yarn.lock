@@ -3427,11 +3427,6 @@ nodemon@^2.0.22:
     touch "^3.1.0"
     undefsafe "^2.0.5"
 
-noop-tag@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/noop-tag/-/noop-tag-2.0.0.tgz#e3d1a97262010137b2fb5f578dfcb9a83c421c72"
-  integrity sha512-ZZo06UN1mz2GjdElyKiSj5z+1MOhWPSZrV//nK4EfQ/uZrv2dde264P/mJ6d7Jr1M7PFhnN8rbw1rH5b0Qm6cA==
-
 nopt@~1.0.10:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-1.0.10.tgz#6ddd21bd2a31417b92727dd585f8a6f37608ebee"
