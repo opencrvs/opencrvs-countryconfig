@@ -53,7 +53,7 @@ export const confirmRegistration = (
   { headers }: { headers: Record<string, any> }
 ) =>
   post({
-    query: `#graphql
+    query: /* GraphQL */ `
       mutation confirmRegistration(
         $id: ID!
         $details: ConfirmRegistrationInput!
