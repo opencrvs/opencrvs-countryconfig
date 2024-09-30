@@ -19,12 +19,11 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "types": ["fhir", "geojson"]
+    "types": ["jest", "fhir", "geojson"]
   },
   "include": ["src/**/*.ts", "infrastructure/environments/**/*.ts", "typings"],
   "exclude": [
     "node_modules",
-    "cypress",
     "build",
     "scripts",
     "acceptance-tests",

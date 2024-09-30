@@ -1,11 +1,10 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'cypress'],
+  plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:prettier/recommended',
-    'plugin:cypress/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'prettier'
   ],
