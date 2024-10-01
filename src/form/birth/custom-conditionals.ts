@@ -17,11 +17,11 @@ export const conditionals = {
   hide: {
     whenFieldAgent: {
       action: 'hide',
-      expression: '$user.systemRole === "FIELD_AGENT"'
+      expression: '$user?.systemRole === "FIELD_AGENT"'
     },
     whenNotFieldAgent: {
       action: 'hide',
-      expression: '$user.systemRole !== "FIELD_AGENT"'
+      expression: '$user?.systemRole !== "FIELD_AGENT"'
     },
     whenNUIUnavailable: {
       action: 'hide',
