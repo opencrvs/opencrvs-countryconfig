@@ -404,7 +404,7 @@ test.describe.serial('9. Death declaration case - 9', () => {
        * - Change button
        */
       await expect(page.locator('#informant-content #Email')).toContainText(
-        REQUIRED
+        'Must be a valid email address'
       )
       await expect(page.locator('#informant-content #Email')).toContainText(
         'Change'

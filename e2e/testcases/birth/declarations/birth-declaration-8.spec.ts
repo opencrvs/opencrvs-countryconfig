@@ -341,7 +341,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
        * - Informant's Email
        */
       await expect(page.locator('#informant-content #Email')).toContainText(
-        required
+        'Must be a valid email address'
       )
       /*
        * Expected result: should require
