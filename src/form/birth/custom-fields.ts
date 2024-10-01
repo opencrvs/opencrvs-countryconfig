@@ -10,6 +10,7 @@ import { camelCase } from 'lodash'
 import { getNUI } from '../common/common-custom-fields'
 import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
 import { tribunalOfFirstInstanceActOptions } from '../common/select-options'
+import { conditionals } from './custom-conditionals'
 
 export function getTimeOfBirth(): SerializedFormField {
   const fieldName: string = 'birthTime'
@@ -60,9 +61,13 @@ export function getPlaceOfBirth(
   }
 }
 
-export function getLegacyBirthRegistrationNumber(
+export function getLegacyBirthRegistrationNumber({
+  subject = 'child',
+  conditionals = []
+}: {
   subject: 'child'
-): SerializedFormField {
+  conditionals: Conditional[]
+}): SerializedFormField {
   const fieldName: string = 'legacyBirthRegistrationNumber'
   const fieldId: string = `birth.${subject}.${subject}-view-group.${fieldName}`
 
@@ -81,11 +86,16 @@ export function getLegacyBirthRegistrationNumber(
     initialValue: '',
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    maxLength: 6
+    maxLength: 6,
+    conditionals
   }
 }
 
-export function getLegacyBirthRegistrationDate(): SerializedFormField {
+export function getLegacyBirthRegistrationDate({
+  conditionals = []
+}: {
+  conditionals: Conditional[]
+}): SerializedFormField {
   const fieldName: string = 'legacyBirthRegistrationDate'
   const fieldId: string = `birth.child.child-view-group.${fieldName}`
 
@@ -103,11 +113,15 @@ export function getLegacyBirthRegistrationDate(): SerializedFormField {
     initialValue: '',
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: []
+    conditionals
   }
 }
 
-export function getLegacyBirthRegistrationTime(): SerializedFormField {
+export function getLegacyBirthRegistrationTime({
+  conditionals = []
+}: {
+  conditionals: Conditional[]
+}): SerializedFormField {
   const fieldName: string = 'legacyBirthRegistrationTime'
   const fieldId: string = `birth.child.child-view-group.${fieldName}`
 
@@ -125,7 +139,7 @@ export function getLegacyBirthRegistrationTime(): SerializedFormField {
     initialValue: '',
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: []
+    conditionals
   }
 }
 
