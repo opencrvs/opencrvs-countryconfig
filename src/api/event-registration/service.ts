@@ -34,11 +34,18 @@ export function createUniqueRegistrationNumberFromBundle(bundle: fhir.Bundle) {
   }
 
   const trackingId = getTrackingIdFromTaskResource(taskResource)
+  const compositionId = getCompositionId(bundle)
+
+  if (!compositionId) {
+    throw new Error(
+      'Failed to validate registration: could not find composition id in bundle'
+    )
+  }
 
   return {
     trackingId,
+    compositionId,
     registrationNumber: generateRegistrationNumber(trackingId),
-    compositionId: getCompositionId(bundle)!,
     ...(taskResource.code?.coding?.[0].code === 'BIRTH' && {
       // Some countries desire to create multiple identifiers for citizens at the point of birth registration using external systems.
       // OpenCRVS supports up to 3 additional, custom identifiers that can be created
