@@ -247,6 +247,7 @@ export const birthForm: ISerializedForm = {
               hideInPreview: true,
               custom: true,
               label: { id: 'form.label.empty', defaultMessage: ' ' },
+              conditionals: [conditionals.hide.whenFieldAgent],
               validator: [],
               options: {
                 headers: {
@@ -276,6 +277,7 @@ export const birthForm: ISerializedForm = {
               },
               maxLength: 10,
               conditionals: [
+                conditionals.hide.whenFieldAgent,
                 {
                   action: 'hide',
                   expression:
@@ -327,6 +329,7 @@ export const birthForm: ISerializedForm = {
                 shouldHandleLoadingState: true
               },
               conditionals: [
+                conditionals.hide.whenFieldAgent,
                 {
                   action: 'hide',
                   expression: '$form.createNUI?.data'
@@ -357,6 +360,7 @@ export const birthForm: ISerializedForm = {
               initialValue: '',
               maxLength: 10,
               conditionals: [
+                conditionals.hide.whenFieldAgent,
                 {
                   action: 'hide',
                   expression: 'window.navigator.onLine'
