@@ -771,9 +771,9 @@ test.describe.serial('Correct record - 2', () => {
       page.getByText(
         'Place of delivery (Child)' +
           'Health Institution' +
-          'Farajaland' +
-          'Central' +
-          'Ibombo' +
+          '-' +
+          '-' +
+          '-' +
           '-' +
           '-' +
           '-' +
