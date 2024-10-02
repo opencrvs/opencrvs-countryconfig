@@ -1146,17 +1146,13 @@ test.describe.serial('Correct record - 2', () => {
 
         await expect(
           page.getByText(
-            'Province (Child)' +
-              'Central' +
-              updatedChildDetails.birthLocation.province
+            'Province (Child)' + updatedChildDetails.birthLocation.province
           )
         ).toBeVisible()
 
         await expect(
           page.getByText(
-            'District (Child)' +
-              'Ibombo' +
-              updatedChildDetails.birthLocation.district
+            'District (Child)' + updatedChildDetails.birthLocation.district
           )
         ).toBeVisible()
 
