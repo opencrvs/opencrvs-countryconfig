@@ -36,12 +36,6 @@ export function createUniqueRegistrationNumberFromBundle(bundle: fhir.Bundle) {
   const trackingId = getTrackingIdFromTaskResource(taskResource)
   const compositionId = getCompositionId(bundle)
 
-  if (!compositionId) {
-    throw new Error(
-      'Failed to validate registration: could not find composition id in bundle'
-    )
-  }
-
   return {
     trackingId,
     compositionId,
