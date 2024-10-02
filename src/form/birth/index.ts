@@ -101,6 +101,7 @@ import {
   getNUI,
   getYearOfBirth
 } from '../common/common-custom-fields'
+import { conditionals } from './custom-conditionals'
 
 // ======================= FORM CONFIGURATION =======================
 
@@ -391,9 +392,16 @@ export const birthForm: ISerializedForm = {
                 }
               }
             },
-            getLegacyBirthRegistrationNumber('child'),
-            getLegacyBirthRegistrationDate(),
-            getLegacyBirthRegistrationTime()
+            getLegacyBirthRegistrationNumber({
+              conditionals: [conditionals.hide.whenFieldAgent],
+              subject: 'child'
+            }),
+            getLegacyBirthRegistrationDate({
+              conditionals: [conditionals.hide.whenFieldAgent]
+            }),
+            getLegacyBirthRegistrationTime({
+              conditionals: [conditionals.hide.whenFieldAgent]
+            })
           ],
           previewGroups: [childNameInEnglish] // Preview groups are used to structure data nicely in Review Page UI
         }

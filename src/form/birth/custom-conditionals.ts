@@ -13,5 +13,25 @@ export const conditionals = {
   childHasNUI: {
     action: 'hide',
     expression: 'draftData?.template?.childNID'
+  },
+  hide: {
+    whenFieldAgent: {
+      action: 'hide',
+      expression: '$user?.systemRole === "FIELD_AGENT"'
+    },
+    whenNotFieldAgent: {
+      action: 'hide',
+      expression: '$user?.systemRole !== "FIELD_AGENT"'
+    },
+    whenNUIUnavailable: {
+      action: 'hide',
+      expression: '!$form.createNUI?.data || !window.navigator.onLine'
+    }
+  },
+  disable: {
+    whenNUIDataMissing: {
+      action: 'disable',
+      expression: '$form.createNUI?.data'
+    }
   }
 }
