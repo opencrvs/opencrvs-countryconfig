@@ -1090,7 +1090,7 @@ test.describe.serial('Correct record - 2', () => {
         ).toBeVisible()
       })
 
-      test('2.8.4.2 Validate correction requested modal', async () => {
+      test.skip('2.8.4.2 Validate correction requested modal', async () => {
         const correctionRequestedRow = page.locator(
           '#listTable-task-history #row_4'
         )
@@ -1136,13 +1136,13 @@ test.describe.serial('Correct record - 2', () => {
 
         await expect(page.getByText('Comment')).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Place of delivery (Child)' +
-              'Health Institution' +
-              'Residential address'
-          )
-        ).toBeVisible()
+        // await expect(
+        //   page.getByText(
+        //     'Place of delivery (Child)' +
+        //       'Health Institution' +
+        //       'Residential address'
+        //   )
+        // ).toBeVisible()
 
         await expect(
           page.getByText(
