@@ -451,7 +451,10 @@ export const deathForm = (addressHierarchy: string[]) =>
                 'father-details-seperator',
                 fathersDetailsExistConditionals
               ),
-              getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
+              getReasonNotExisting(
+                'fatherReasonNotApplying',
+                formMessageDescriptors.reasonNA
+              ), // Strongly recommend is required if you want to register abandoned / orphaned children!
               getFatherIsDeceased(Event.Death, detailsExist),
               getFamilyNameField(
                 'fatherNameInEnglish',
@@ -540,7 +543,8 @@ export const deathForm = (addressHierarchy: string[]) =>
                 mothersDetailsExistConditionals
               ),
               getReasonNotExisting(
-                certificateHandlebars.motherReasonNotApplying
+                certificateHandlebars.motherReasonNotApplying,
+                formMessageDescriptors.reasonNA
               ),
               getMotherIsDeceased(Event.Death, detailsExist),
               getFamilyNameField(
@@ -630,7 +634,8 @@ export const deathForm = (addressHierarchy: string[]) =>
                 spouseDetailsExistConditionals
               ),
               getReasonNotExisting(
-                certificateHandlebars.spouseReasonNotApplying
+                certificateHandlebars.spouseReasonNotApplying,
+                formMessageDescriptors.reasonNA
               ),
               getFamilyNameField(
                 'spouseNameInEnglish',

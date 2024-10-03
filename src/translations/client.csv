@@ -1427,9 +1427,9 @@ form.field.label.proofOfParentPrimaryAddress,,Proof of Permanent Address of Pare
 form.field.label.proofOfRecognition,Label for list item Recognition Proof,Proof of recognition,Proof of recognition,Proof of recognition
 form.field.label.radio.father,,Only the father's,Seulement du père,Ny rainy ihany
 form.field.label.radio.mother,,Only the mother's,Seulement celles de la mère,Ny reny ihany
-form.field.label.reasonFatherNotApplying,,Reason of not describing the child to his father,Motif pour ne pas inscrire le nom du père,Antony tsy hanoratana ilay zaza amin'ny Rainy
+form.field.label.reasonFatherNotApplying,,Reason for not providing father’s details,Motif pour ne pas inscrire le nom du père,Antony tsy hanoratana ilay zaza amin'ny Rainy
 form.field.label.reasonFatherNotApplyingPreview,,Reason,Raison pour laquelle le père ne fait pas de demande,Antony nahatonga an'ny rainy tsy nanao fangatahana
-form.field.label.reasonMotherNotApplying,,Reason of not describing mother's name,Motif pour ne pas inscrire le nom de la mère,Antony tsy nanoratana ny mombamomba ilay reny
+form.field.label.reasonMotherNotApplying,,Reason for not providing mother’s details,Motif pour ne pas inscrire le nom de la mère,Antony tsy nanoratana ny mombamomba ilay reny
 form.field.label.reasonMotherNotApplyingPreview,,Reason,Raison pour laquelle la mère ne s'est pas présentée,Antony nahatonga ny reniny tsy tonga
 form.field.label.reasonNotApplying,,Reason,Motif,
 form.field.label.registrationName,,Registration Name,nom d'enregistrement,

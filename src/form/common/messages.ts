@@ -391,6 +391,16 @@ export const formMessageDescriptors = {
     description: 'Label for form field: reasonNotApplying',
     id: 'form.field.label.reasonNotApplying'
   },
+  reasonMotherNotApplying: {
+    defaultMessage: 'Reason',
+    description: 'Label for form field: reasonMotherNotApplying',
+    id: 'form.field.label.reasonMotherNotApplying'
+  },
+  reasonFatherNotApplying: {
+    defaultMessage: 'Reason',
+    description: 'Label for form field: reasonFatherNotApplying',
+    id: 'form.field.label.reasonFatherNotApplying'
+  },
   childTab: {
     defaultMessage: 'Child',
     description: 'Form section name for Child',

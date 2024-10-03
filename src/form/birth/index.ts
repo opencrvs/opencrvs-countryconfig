@@ -530,7 +530,10 @@ export const birthForm: ISerializedForm = {
               'mother-details-seperator',
               mothersDetailsExistConditionals
             ),
-            getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getReasonNotExisting(
+              certificateHandlebars.motherReasonNotApplying,
+              formMessageDescriptors.reasonMotherNotApplying
+            ), // Strongly recommend is required if you want to register abandoned / orphaned children!
             getMotherIsDeceased(Event.Birth, detailsExistConditional),
             getFamilyNameField(
               'motherNameInEnglish',
@@ -631,7 +634,10 @@ export const birthForm: ISerializedForm = {
               'father-details-seperator',
               fathersDetailsExistConditionals
             ),
-            getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getReasonNotExisting(
+              'fatherReasonNotApplying',
+              formMessageDescriptors.reasonFatherNotApplying
+            ), // Strongly recommend is required if you want to register abandoned / orphaned children!
             getFatherIsDeceased(Event.Birth, detailsExist),
             getFatherHasFormallyRecognisedChild(detailsExist),
             getFamilyNameField(
