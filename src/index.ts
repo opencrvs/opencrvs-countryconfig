@@ -60,7 +60,6 @@ import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
-import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
 
 export interface ITokenPayload {
@@ -241,6 +240,17 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
+    path: '/certificates',
+    handler: certificateHandler,
+    options: {
+      auth: false,
+      tags: ['api', 'certificates'],
+      description: 'Returns certificate metadata'
+    }
+  })
+
+  server.route({
+    method: 'GET',
     path: '/certificates/{event}.svg',
     handler: certificateHandler,
     options: {
@@ -273,17 +283,6 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Serves available fonts'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/certificate-configuration',
-    handler: certificateConfigurationHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves certificate configurations'
     }
   })
 
