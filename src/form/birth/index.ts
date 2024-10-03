@@ -52,10 +52,10 @@ import {
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
   detailsExistConditional,
-  primaryAddressSameAsOtherPrimary,
   yearOfBirthValidtors,
   motherYearOfBirthValidators,
-  hideIfDistrictPrimaryAddressNotSelected
+  hideIfDistrictPrimaryAddressNotSelected,
+  hideIfFatherPrimaryAddressConditionsDontMeet
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -686,9 +686,9 @@ export const birthForm: ISerializedForm = {
             getFokontanyCustomAddress(
               Event.Birth,
               'father',
-              primaryAddressSameAsOtherPrimary
-                .concat(detailsExistConditional)
-                .concat(hideIfDistrictPrimaryAddressNotSelected('father')),
+              hideIfFatherPrimaryAddressConditionsDontMeet.concat(
+                hideIfDistrictPrimaryAddressNotSelected('father')
+              ),
               true,
               {
                 id: 'form.field.label.fokontanyCustomAddress',

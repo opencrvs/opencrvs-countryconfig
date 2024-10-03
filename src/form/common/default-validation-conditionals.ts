@@ -473,6 +473,12 @@ export const detailsDontExist = '!values.detailsExist'
 export const primaryAddressSameAsOtherPrimaryAddress =
   'values.primaryAddressSameAsOtherPrimary'
 
+export const hideIfFatherPrimaryAddressConditionsDontMeet = [
+  {
+    action: 'hide',
+    expression: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
+  }
+]
 export const primaryAddressSameAsOtherPrimary: Conditional[] = [
   {
     action: 'hide',
