@@ -69,6 +69,15 @@ export const motherNationalIDVerfication = [
   }
 ]
 
+export const hideIfNotDefaultCountry = (
+  countryFieldName: string
+): Conditional[] => [
+  {
+    action: 'hide',
+    expression: `!isDefaultCountry($form.${countryFieldName})`
+  }
+]
+
 export const fatherNationalIDVerfication = [
   {
     action: 'hide',

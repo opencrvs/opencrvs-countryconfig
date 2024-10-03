@@ -55,7 +55,8 @@ import {
   yearOfBirthValidtors,
   motherYearOfBirthValidators,
   hideIfDistrictPrimaryAddressNotSelected,
-  hideIfFatherPrimaryAddressConditionsDontMeet
+  hideIfFatherPrimaryAddressConditionsDontMeet,
+  hideIfNotDefaultCountry
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -229,7 +230,8 @@ export const birthForm: ISerializedForm = {
                 {
                   action: 'hide',
                   expression: ' !values.districtPlaceofbirth'
-                }
+                },
+                ...hideIfNotDefaultCountry('countryPlaceofbirth')
               ],
               true,
               // locationOfBirthIsNotHealthFacility, // this display the field fktCustomAddress at the first opening of child section
@@ -490,9 +492,9 @@ export const birthForm: ISerializedForm = {
             getFokontanyCustomAddress(
               Event.Birth,
               'informant',
-              hideIfInformantMotherOrFather.concat(
-                hideIfDistrictPrimaryAddressNotSelected('informant')
-              ),
+              hideIfInformantMotherOrFather
+                .concat(hideIfDistrictPrimaryAddressNotSelected('informant'))
+                .concat(hideIfNotDefaultCountry('countryPrimaryInformant')),
               true,
               {
                 id: 'form.field.label.fokontanyCustomAddress',
@@ -581,9 +583,9 @@ export const birthForm: ISerializedForm = {
             getFokontanyCustomAddress(
               Event.Birth,
               'mother',
-              detailsExistConditional.concat(
-                hideIfDistrictPrimaryAddressNotSelected('mother')
-              ),
+              detailsExistConditional
+                .concat(hideIfDistrictPrimaryAddressNotSelected('mother'))
+                .concat(hideIfNotDefaultCountry('countryPrimaryMother')),
               true,
               {
                 id: 'form.field.label.fokontanyCustomAddress',
@@ -686,9 +688,9 @@ export const birthForm: ISerializedForm = {
             getFokontanyCustomAddress(
               Event.Birth,
               'father',
-              hideIfFatherPrimaryAddressConditionsDontMeet.concat(
-                hideIfDistrictPrimaryAddressNotSelected('father')
-              ),
+              hideIfFatherPrimaryAddressConditionsDontMeet
+                .concat(hideIfDistrictPrimaryAddressNotSelected('father'))
+                .concat(hideIfNotDefaultCountry('countryPrimaryFather')),
               true,
               {
                 id: 'form.field.label.fokontanyCustomAddress',
