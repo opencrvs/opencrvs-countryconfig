@@ -105,38 +105,20 @@
         <g id="left-column">
             <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="8"
                 letter-spacing="0em">
-                <tspan x="48" y="141.868">{{ translateDateToMDGFormat registrar.date }}&#10;</tspan>
-                <tspan x="48" y="155.868">&#10;</tspan>
-                <tspan x="48" y="239.868">&#x2028;</tspan>
-            </text>
-            <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="8"
-                letter-spacing="0em">
-                <tspan x="48" y="127.868">No. {{registrationNumber}}&#10;</tspan>
-                <tspan x="48" y="183.868">{{childFamilyName}} &#10;</tspan>
-                <tspan x="48" y="197.868">{{childFirstName}}&#10;</tspan>
-                <tspan x="48" y="211.868">Teraka ny: {{translateDateToMDGFormat eventDate}}&#10;
-                </tspan>
-                <tspan x="48" y="225.868">NUI : {{childNID}}&#10;</tspan>
-                <tspan x="48" y="594.868">&#x2028;</tspan>
-                <tspan x="48" y="608.868">&#x2028;</tspan>
-            </text>
-            <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="7"
-                letter-spacing="0em">
-                {{{ wrap 30 48 272.868 (mentions)}}}
-            </text>
-            <text fill="black" xml:space="default" font-family="Montserrat" font-size="7" font-weight="bold"
-                letter-spacing="0em">
-                <tspan x="48" y="250.868">
-                    {{#ifCond (isFirstCertificate) '===' true}}
-                    Kopia Voalohany
-                    {{else}}
-                    Fanamarihana an-tsisiny&#10;
-                    {{/ifCond}}
-                </tspan>
+                <tspan x="48" y="127.868">Faritra :</tspan>
+                <tspan x="100" y="127.868" font-weight="bold">{{location registrar.stateId "name"}}&#10;</tspan>
+                <tspan x="48" y="141.868">Distrika :</tspan>
+                <tspan x="100" y="141.868" font-weight="bold">{{location registrar.districtId "name"}}&#10;</tspan>
+                <tspan x="48" y="155.868">Kaominina :</tspan>
+                <tspan x="100" y="155.868" font-weight="bold">{{location registrar.officeId "name"}}&#10;</tspan>
+                <tspan x="48" y="183.868">Soratra n° :</tspan>
+                <tspan x="100" y="183.868" font-weight="bold">{{registrationNumber}}</tspan>
+                <tspan x="48" y="197.868">Natao ny :</tspan>
+                <tspan x="100" y="197.868" font-weight="bold">{{translateDateToMDGFormat registrar.date}}</tspan>
             </text>
             <text fill="black" xml:space="default" font-family="Montserrat" font-size="8" font-weight="bold"
                 letter-spacing="0em">
-                <tspan x="48" y="169.868">
+                <tspan x="48" y="239.868">
                     {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
                     FAHATERAHANA &#38; FANJANAHANA
                     {{ else }}
@@ -144,6 +126,33 @@
                     {{/ifCond}}
                 </tspan>
             </text>
+            <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="8"
+                letter-spacing="0em">
+                <tspan x="48" y="267.868">{{childFamilyName}} &#10;</tspan>
+                <tspan x="48" y="281.868">{{childFirstName}}&#10;</tspan>
+                <tspan x="48" y="295.868">NUI : {{#if childNIDManual}}{{childNIDManual}}{{else}}{{childNID}}{{/if}}
+                    &#10;</tspan>
+                <tspan x="48" y="309.868">Teraka ny: {{translateDateToMDGFormat eventDate}}&#10;
+                </tspan>
+                <tspan x="48" y="594.868">&#x2028;</tspan>
+                <tspan x="48" y="608.868">&#x2028;</tspan>
+            </text>
+            <text fill="black" xml:space="default" font-family="Montserrat" font-size="7" font-weight="bold"
+                letter-spacing="0em">
+                <tspan x="48" y="337.868">
+                    {{#ifCond (isFirstCertificate) '===' true}}
+                    Kopia Voalohany
+                    {{else}}
+                    Fanamarihana an-tsisiny&#10;
+                    {{/ifCond}}
+                </tspan>
+            </text>
+            <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Montserrat" font-size="7"
+                letter-spacing="0em">
+                {{{ wrap 30 48 365.868 (mentions)}}}
+            </text>
+
+
         </g>
         <g id="Frame 3">
             <g id="right-column">
