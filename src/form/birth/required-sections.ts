@@ -100,7 +100,7 @@ export const documentsSection = {
               description: 'Hidden unless marginal mention is Recognition',
               action: 'hide',
               expression:
-                '!draftData || !draftData.mention || !Array.from({ length: 10 }, (_,i) => "typeOfMention__" + i).some(key => draftData.mention[key])'
+                '!draftData || !draftData.mention || !Array.from({ length: 10 }, (_,i) => "typeOfMention__" + i).some(key => draftData.mention[key] === "RECOGNITION")'
             }
           ],
           mapping: getFieldMapping('documents')

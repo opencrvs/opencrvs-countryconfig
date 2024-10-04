@@ -176,7 +176,10 @@ export const getDetailsExist = (
     ignoreBottomMargin: true
   } satisfies SerializedFormField)
 
-export const getReasonNotExisting = (certificateHandlebar: string) =>
+export const getReasonNotExisting = (
+  certificateHandlebar: string,
+  label: MessageDescriptor
+) =>
   ({
     name: 'reasonNotApplying',
     conditionals: [
@@ -186,7 +189,7 @@ export const getReasonNotExisting = (certificateHandlebar: string) =>
       }
     ],
     type: 'TEXT',
-    label: formMessageDescriptors.reasonNA,
+    label,
     validator: [],
     initialValue: '',
     required: true,

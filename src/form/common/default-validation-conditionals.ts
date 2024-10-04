@@ -69,6 +69,15 @@ export const motherNationalIDVerfication = [
   }
 ]
 
+export const hideIfNotDefaultCountry = (
+  countryFieldName: string
+): Conditional[] => [
+  {
+    action: 'hide',
+    expression: `!isDefaultCountry($form.${countryFieldName})`
+  }
+]
+
 export const fatherNationalIDVerfication = [
   {
     action: 'hide',
@@ -473,6 +482,12 @@ export const detailsDontExist = '!values.detailsExist'
 export const primaryAddressSameAsOtherPrimaryAddress =
   'values.primaryAddressSameAsOtherPrimary'
 
+export const hideIfFatherPrimaryAddressConditionsDontMeet = [
+  {
+    action: 'hide',
+    expression: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
+  }
+]
 export const primaryAddressSameAsOtherPrimary: Conditional[] = [
   {
     action: 'hide',
