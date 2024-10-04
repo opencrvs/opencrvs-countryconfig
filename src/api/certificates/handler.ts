@@ -15,116 +15,119 @@ import { readFileSync } from 'fs'
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
   if (request.params.event) {
     const res = readFileSync(
-      `./src/api/certificates/source/Farajaland-${request.params.event}-certificate-v2.svg`
+      `./src/api/certificates/source/${request.params.event}.svg`
     ).toString()
     return h.response(res).code(200)
   }
   return [
     {
-      id: 'birth.certificate',
+      id: 'birth-certificate',
       event: 'birth',
       label: {
         id: 'certificates.birth.certificate',
         defaultMessage: 'Birth Certificate',
         description: 'The label for a birth certificate'
       },
-      svgUrl: '/certificates/birth-certificate.svg',
+      svgUrl: '/api/countryconfig/certificates/birth-certificate.svg',
       fonts: {
         'Noto Sans': {
-          normal: '/fonts/NotoSans-Regular.ttf',
-          bold: '/fonts/NotoSans-Bold.ttf',
-          italics: '/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/fonts/NotoSans-Regular.ttf'
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
       }
     },
     {
-      id: 'birth.certificate.copy',
+      id: 'certified-birth-certificate',
       event: 'birth',
       label: {
         id: 'certificates.birth.certificate.copy',
         defaultMessage: 'Birth Certificate certified copy',
         description: 'The label for a birth certificate'
       },
-      svgUrl: '/certificates/birth-certificate-certified-copy.svg',
+      svgUrl:
+        '/api/countryconfig/certificates/birth-certificate-certified-copy.svg',
       fonts: {
         'Noto Sans': {
-          normal: '/fonts/NotoSans-Regular.ttf',
-          bold: '/fonts/NotoSans-Bold.ttf',
-          italics: '/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/fonts/NotoSans-Regular.ttf'
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
       }
     },
     {
-      id: 'death.certificate',
+      id: 'death-certificate',
       event: 'death',
       label: {
         id: 'certificates.death.certificate',
         defaultMessage: 'Death Certificate',
         description: 'The label for a death certificate'
       },
-      svgUrl: '/certificates/death-certificate.svg',
+      svgUrl: '/api/countryconfig/certificates/death-certificate.svg',
       fonts: {
         'Noto Sans': {
-          normal: '/fonts/NotoSans-Regular.ttf',
-          bold: '/fonts/NotoSans-Bold.ttf',
-          italics: '/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/fonts/NotoSans-Regular.ttf'
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
       }
     },
     {
-      id: 'death.certificate.copy',
+      id: 'certified-death-certificate',
       event: 'death',
       label: {
         id: 'certificates.death.certificate.copy',
         defaultMessage: 'Death Certificate certified copy',
         description: 'The label for a death certificate'
       },
-      svgUrl: '/certificates/death-certificate-certified-copy.svg',
+      svgUrl:
+        '/api/countryconfig/certificates/death-certificate-certified-copy.svg',
       fonts: {
         'Noto Sans': {
-          normal: '/fonts/NotoSans-Regular.ttf',
-          bold: '/fonts/NotoSans-Bold.ttf',
-          italics: '/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/fonts/NotoSans-Regular.ttf'
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
       }
     },
     {
-      id: 'marriage.certificate',
+      id: 'marriage-certificate',
       event: 'marriage',
       label: {
         id: 'certificates.marriage.certificate',
         defaultMessage: 'Marriage Certificate',
         description: 'The label for a marriage certificate'
       },
-      svgUrl: '/certificates/marriage-certificate.svg',
+      svgUrl: '/api/countryconfig/certificates/marriage-certificate.svg',
       fonts: {
         'Noto Sans': {
-          normal: '/fonts/NotoSans-Regular.ttf',
-          bold: '/fonts/NotoSans-Bold.ttf',
-          italics: '/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/fonts/NotoSans-Regular.ttf'
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
       }
     },
     {
-      id: 'marriage.certificate.copy',
+      id: 'certified-marriage-certificate',
       event: 'marriage',
       label: {
         id: 'certificates.marriage.certificate.copy',
         defaultMessage: 'Marriage Certificate certified copy',
         description: 'The label for a marriage certificate'
       },
-      svgUrl: '/certificates/marriage-certificate-certified-copy.svg',
+      svgUrl:
+        '/api/countryconfig/certificates/marriage-certificate-certified-copy.svg',
       fonts: {
         'Noto Sans': {
-          normal: '/fonts/NotoSans-Regular.ttf',
-          bold: '/fonts/NotoSans-Bold.ttf',
-          italics: '/fonts/NotoSans-Regular.ttf',
-          bolditalics: '/fonts/NotoSans-Regular.ttf'
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
       }
     }
