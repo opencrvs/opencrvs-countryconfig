@@ -157,8 +157,8 @@
         <g id="Frame 3">
             <g id="right-column">
                 {{{wrapGroup 50 239 168.226
-                text2=(join "Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany "
-                (translateDate currentDate) ".")
+                text2=(join "---Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany "
+                (translateDate currentDate) ".---")
                 bold1="MANARAKA NY SONIA"
                 text1=(mainContent (location districtPlaceofbirthId "name"))}}}
             </g>

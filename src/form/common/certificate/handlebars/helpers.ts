@@ -112,21 +112,21 @@ function name(familyName: string, firstName: string) {
   return joinValuesWith([familyName, firstName], ' ')
 }
 export function mainContent(): Handlebars.HelperDelegate {
-  return function (this: any, placeOfBirthDistrict: string = '') {
+  return function (this: any, placeOfBirthCommune: string = '') {
     const paragraph1 = joinValuesWith(
       [
         "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
-        placeOfBirthDistrict,
+        placeOfBirthCommune,
         ', Foibe misahana ny fiankohonana, taona',
         customizeDateYearInCertificateContent(this.registrar.date),
-        ', izao sora-pahaterahana manaraka izao :'
+        ', izao sora-pahaterahana manaraka izao :--'
       ],
       ' '
     )
 
     const paragraph2 = joinValuesWith(
       [
-        "--Tamin'ny",
+        "---Tamin'ny",
         customizeDateInCertificateContent(this.eventDate),
         ", tamin'ny",
         convertTimeToMdgCustomWords(this.birthChildBirthTime),
@@ -136,7 +136,7 @@ export function mainContent(): Handlebars.HelperDelegate {
           this.birthChildFokontanyCustomAddress
         ),
         ', Kaominina',
-        placeOfBirthDistrict,
+        placeOfBirthCommune,
         ':',
         name(this.childFamilyName, this.childFirstName) + ',',
 
@@ -153,20 +153,20 @@ export function mainContent(): Handlebars.HelperDelegate {
         customizeDateInCertificateContent(this.motherBirthDate),
         ', monina ao',
         this.birthMotherFokontanyCustomAddress,
-        '--'
+        '---'
       ],
       ' '
     )
     const paragraph3 = joinValuesWith(
       [
-        'Nosoratana androany',
+        '---Nosoratana androany',
         customizeDateInCertificateContent(this.registrationDate) + ',',
         handleInformantInfo.apply(this),
         ', izay miara-manao sonia aminay',
         this.registrar.name,
         ", mpiandraikitra ny sora-piankohonana eto amin'ny",
         customizeOfficeName(this.registrationLocation),
-        ', rehefa novakiana taminy ity soratra ity.'
+        ', rehefa novakiana taminy ity soratra ity.---'
       ],
       ' '
     )
