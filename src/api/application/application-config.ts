@@ -76,13 +76,15 @@ type NotificationFlags = {
   MARRIAGE?: EventNotificationFlags
 }
 
+const isNotificationEnabled = process.env.QA_ENV === 'true'
+
 export const notificationForRecord: NotificationFlags = {
   BIRTH: {
-    'sent-notification': false,
-    'sent-notification-for-review': false,
-    'sent-for-approval': false,
-    registered: false,
-    'sent-for-updates': false
+    'sent-notification': isNotificationEnabled,
+    'sent-notification-for-review': isNotificationEnabled,
+    'sent-for-approval': isNotificationEnabled,
+    registered: isNotificationEnabled,
+    'sent-for-updates': isNotificationEnabled
   },
   DEATH: {
     'sent-notification': false,
