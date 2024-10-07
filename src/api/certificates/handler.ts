@@ -11,12 +11,23 @@
 
 import { Request, ResponseToolkit } from '@hapi/hapi'
 import { readFileSync } from 'fs'
+import { join } from 'path'
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
   if (request.params.event) {
     const res = readFileSync(
       `./src/api/certificates/source/Madagascar-${request.params.event}-certificate.svg`
-    ).toString()
+    )
+      .toString()
+      .replace(
+        '{{certificateLogo}}',
+        `data:image/png;base64,${readFileSync(
+          join(__dirname, './source/Madagascar-logo.png'),
+          {
+            encoding: 'base64'
+          }
+        )}`
+      )
 
     return h.response(res).code(200)
   }
@@ -27,7 +38,17 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       fileName: 'Madagascar-birth-certificate.svg',
       svgCode: readFileSync(
         './src/api/certificates/source/Madagascar-birth-certificate.svg'
-      ).toString()
+      )
+        .toString()
+        .replace(
+          '{{certificateLogo}}',
+          `data:image/png;base64,${readFileSync(
+            join(__dirname, './source/Madagascar-logo.png'),
+            {
+              encoding: 'base64'
+            }
+          )}`
+        )
     },
     {
       event: 'death',

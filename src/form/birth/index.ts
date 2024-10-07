@@ -324,7 +324,7 @@ export const birthForm: ISerializedForm = {
               name: 'nuiGenerator',
               type: 'BUTTON',
               custom: true,
-              hideInPreview: true,
+              required: true,
               validator: [],
               options: {
                 trigger: 'createNUI',

@@ -2348,7 +2348,7 @@ validations.nonDecimalPointNumber,The error message that appeards when any decim
 validations.notGreaterThan,The error message that appears on numeric fields that exceed a limit,Must not be more than {maxValue},Ne doit pas être supérieur à {maxValue}.,Tsy tokony mihoatra ny {maxValue}.
 validations.numberRequired,The error message that appears on fields where the value must be a number,Must be a number,Doit être un nombre,Tsy maintsy tarehimarika
 validations.officeMustBeSelected,The error message appears when no valid office is selected,No office selected,Aucun bureau sélectionné,Tsy nisafidy birao ianao
-validations.phoneNumberFormat,The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de  {num} chiffres qui commence par  {start},Tsy maintsy isa ara-dalàna izay misy tarehimarika 12 sady manomboka amin'ny (101|201|301|401|501|601)
+validations.phoneNumberFormat,The error message that appears on phone numbers when it does not pass the phone number pattern defined in country config,Number invalid. Must start with 03 and be 10 digits long,Doit être un nombre valide de 10 chiffres qui commence par 03,Doit être un nombre valide de 10 chiffres qui commence par 03
 validations.range,The error message that appears when an out of range value is used,Must be within {min} and {max},Doit être compris entre {min} et {max}.,Tsy maintsy anelanelan'ny {min} sy {max}.
 validations.required,The error message that appears on required fields,Required for registration,Requis pour l'enregistrement,Tsy maintsy ilaina
 validations.requiredBasic,The error message that appears on required fields,Required,Requis,Ilaina
