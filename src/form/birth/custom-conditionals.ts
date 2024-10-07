@@ -19,6 +19,10 @@ export const conditionals = {
       action: 'hide',
       expression: '$user?.systemRole === "FIELD_AGENT"'
     },
+    whenRegistrationAgent: {
+      action: 'hide',
+      expression: '$user?.systemRole === "REGISTRATION_AGENT"'
+    },
     whenNotFieldAgent: {
       action: 'hide',
       expression: '$user?.systemRole !== "FIELD_AGENT"'
