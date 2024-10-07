@@ -30,7 +30,7 @@ export const applicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
-  PHONE_NUMBER_PATTERN: '^[1-9]{1}[0-9]{8}|0[0-9]{9}|[0-9]{13}$',
+  PHONE_NUMBER_PATTERN: '^(0?3[0-9]{8})$',
   NID_NUMBER_PATTERN: '^[0-9]{10}$',
   LOGIN_BACKGROUND: {
     backgroundImage: `data:image/jpg;base64,${fs
