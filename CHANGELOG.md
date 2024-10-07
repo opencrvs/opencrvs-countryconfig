@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.5.2 Release candidate
+
 ## 1.5.1
 
 ### Bug fixes
