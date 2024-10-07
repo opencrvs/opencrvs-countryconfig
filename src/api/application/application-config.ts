@@ -78,11 +78,11 @@ type NotificationFlags = {
 
 export const notificationForRecord: NotificationFlags = {
   BIRTH: {
-    'sent-notification': true,
-    'sent-notification-for-review': true,
-    'sent-for-approval': true,
-    registered: true,
-    'sent-for-updates': true
+    'sent-notification': false,
+    'sent-notification-for-review': false,
+    'sent-for-approval': false,
+    registered: false,
+    'sent-for-updates': false
   },
   DEATH: {
     'sent-notification': false,
