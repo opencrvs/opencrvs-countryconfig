@@ -2,6 +2,10 @@
 
 ## 1.5.2 Release candidate
 
+## Bug fixes
+
+- Broken email alerts from low disk space are now fixed [293](https://github.com/opencrvs/opencrvs-countryconfig/pull/293)
+
 ## 1.5.1
 
 ### Bug fixes
