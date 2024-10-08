@@ -287,7 +287,7 @@ export const birthForm: ISerializedForm = {
                 {
                   action: 'hide',
                   expression:
-                    '!$form.createNUI?.data || !window.navigator.onLine'
+                    '(!$form.createNUI?.data && !$form.iD) || !window.navigator.onLine'
                 },
                 {
                   action: 'disable',
@@ -339,7 +339,7 @@ export const birthForm: ISerializedForm = {
                 conditionals.hide.whenRegistrationAgent,
                 {
                   action: 'hide',
-                  expression: '$form.createNUI?.data'
+                  expression: '$form.createNUI?.data || $form.iD'
                 },
                 {
                   action: 'disable',
