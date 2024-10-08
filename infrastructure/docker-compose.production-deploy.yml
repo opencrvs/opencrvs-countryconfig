@@ -184,7 +184,8 @@ services:
 
   mongo-on-update:
     environment:
-      - REPLICAS=2
+      - REPLICAS=3
+
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION}
     restart: unless-stopped
