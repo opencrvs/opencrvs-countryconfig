@@ -86,6 +86,7 @@ services:
   documents:
     environment:
       - NODE_ENV=production
+
   client:
     environment:
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
@@ -111,7 +112,6 @@ services:
   hearth:
     environment:
       - mongodb__url=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1,mongo2,mongo3/hearth-dev?replicaSet=rs0
-
     deploy:
       replicas: 3
 
@@ -152,6 +152,11 @@ services:
           - node.labels.data2 == true
     networks:
       - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'mongo2'
 
   mongo3:
     image: mongo:4.4
@@ -181,6 +186,11 @@ services:
           - node.labels.data3 == true
     networks:
       - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'mongo3'
 
   mongo-on-update:
     environment:
