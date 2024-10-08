@@ -249,7 +249,10 @@ export const birthForm: ISerializedForm = {
               hideInPreview: true,
               custom: true,
               label: { id: 'form.label.empty', defaultMessage: ' ' },
-              conditionals: [conditionals.hide.whenFieldAgent],
+              conditionals: [
+                conditionals.hide.whenFieldAgent,
+                conditionals.hide.whenRegistrationAgent
+              ],
               validator: [],
               options: {
                 headers: {
@@ -280,10 +283,11 @@ export const birthForm: ISerializedForm = {
               maxLength: 10,
               conditionals: [
                 conditionals.hide.whenFieldAgent,
+                conditionals.hide.whenRegistrationAgent,
                 {
                   action: 'hide',
                   expression:
-                    '!$form.createNUI?.data || !window.navigator.onLine'
+                    '(!$form.createNUI?.data && !$form.iD) || !window.navigator.onLine'
                 },
                 {
                   action: 'disable',
@@ -332,9 +336,10 @@ export const birthForm: ISerializedForm = {
               },
               conditionals: [
                 conditionals.hide.whenFieldAgent,
+                conditionals.hide.whenRegistrationAgent,
                 {
                   action: 'hide',
-                  expression: '$form.createNUI?.data'
+                  expression: '$form.createNUI?.data || $form.iD'
                 },
                 {
                   action: 'disable',
@@ -363,6 +368,7 @@ export const birthForm: ISerializedForm = {
               maxLength: 10,
               conditionals: [
                 conditionals.hide.whenFieldAgent,
+                conditionals.hide.whenRegistrationAgent,
                 {
                   action: 'hide',
                   expression: 'window.navigator.onLine'
