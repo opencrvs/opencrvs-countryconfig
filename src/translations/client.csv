@@ -791,6 +791,7 @@ form.field.SearchField.placeHolderText,,Search,Recherche
 form.field.dateRangepicker.checkbox.dateLabel,,{rangeStart} to {rangeEnd},{rangeStart} à {rangeEnd}
 form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,Le numéro d'identification national doit être uniquement numérique et comporter 10 chiffres
 form.field.hideLabel,Button to hide section,Hide,Cacher
+form.field.label.NID,,NID,NID
 form.field.label.NIDNetErr,,The request to the NID system was unsuccessful. Please try again with a better connection.,La demande au système NID n'a pas abouti. Veuillez réessayer avec une meilleure connexion.
 form.field.label.addFile,,Upload,Télécharger
 form.field.label.addressLine1RuralOption,,Village,Village
