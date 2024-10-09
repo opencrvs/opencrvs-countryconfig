@@ -723,24 +723,86 @@
         const paginationNumbers = document.getElementById('pagination-numbers')
         paginationNumbers.innerHTML = ''
 
-        for (let i = 1; i <= totalPages; i++) {
-          const pageNumber = document.createElement('button')
-          pageNumber.classList.add(
+        if (totalPages <= 3) {
+          for (let i = 1; i <= totalPages; i++) {
+            const pageNumber = document.createElement('button')
+            pageNumber.classList.add(
+              'hover:bg-gray-300',
+              'px-3',
+              'py-1',
+              'rounded'
+            )
+            if (i === currentPage)
+              pageNumber.classList.add('bg-blue-500', 'text-white')
+
+            pageNumber.innerText = i
+            pageNumber.onclick = () => {
+              currentPage = i
+              renderTable()
+            }
+
+            paginationNumbers.appendChild(pageNumber)
+          }
+        } else {
+          const firstPage = 1
+          const lastPage = totalPages
+
+          const firstPageButton = document.createElement('button')
+          firstPageButton.classList.add(
             'hover:bg-gray-300',
             'px-3',
             'py-1',
             'rounded'
           )
-          if (i === currentPage)
-            pageNumber.classList.add('bg-blue-500', 'text-white')
-
-          pageNumber.innerText = i
-          pageNumber.onclick = () => {
-            currentPage = i
+          if (currentPage === firstPage)
+            firstPageButton.classList.add('bg-blue-500', 'text-white')
+          firstPageButton.innerText = firstPage
+          firstPageButton.onclick = () => {
+            currentPage = firstPage
             renderTable()
           }
+          paginationNumbers.appendChild(firstPageButton)
 
-          paginationNumbers.appendChild(pageNumber)
+          if (currentPage > 2) {
+            const ellipsis = document.createElement('span')
+            ellipsis.innerText = '...'
+            paginationNumbers.appendChild(ellipsis)
+          }
+
+          if (currentPage > firstPage && currentPage < lastPage) {
+            const currentPageButton = document.createElement('button')
+            currentPageButton.classList.add(
+              'hover:bg-gray-300',
+              'px-3',
+              'py-1',
+              'rounded'
+            )
+            currentPageButton.classList.add('bg-blue-500', 'text-white')
+            currentPageButton.innerText = currentPage
+            paginationNumbers.appendChild(currentPageButton)
+          }
+
+          if (currentPage < totalPages - 1) {
+            const ellipsis = document.createElement('span')
+            ellipsis.innerText = '...'
+            paginationNumbers.appendChild(ellipsis)
+          }
+
+          const lastPageButton = document.createElement('button')
+          lastPageButton.classList.add(
+            'hover:bg-gray-300',
+            'px-3',
+            'py-1',
+            'rounded'
+          )
+          if (currentPage === lastPage)
+            lastPageButton.classList.add('bg-blue-500', 'text-white')
+          lastPageButton.innerText = lastPage
+          lastPageButton.onclick = () => {
+            currentPage = lastPage
+            renderTable()
+          }
+          paginationNumbers.appendChild(lastPageButton)
         }
       }
 
