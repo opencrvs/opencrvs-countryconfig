@@ -50,7 +50,7 @@ tar -xvf $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz -C $BACKUP_RAW_FILES_DIR/extract
 # Delete previous restore(s) and replace with the extracted backup
 for BACKUP_DIR in /data/backups/*; do
     if [ -d "$BACKUP_DIR" ]; then
-        rm -rf $BACKUP_DIR/*
+        sudo rm -rf $BACKUP_DIR/*
     fi
 done
 

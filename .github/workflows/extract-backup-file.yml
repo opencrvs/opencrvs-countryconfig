@@ -60,4 +60,4 @@ jobs:
           ssh $BACKUP_DESTINATION_SSH_USER@$BACKUP_DESTINATION_SSH_HOST -p $BACKUP_DESTINATION_SSH_PORT "\
           sudo bash /tmp/extract-backup.sh \
           --label=${{ github.event.inputs.version_label }} \
-          --backup_raw_files_dir=$BACKUP_DESTINATION_DIR"
+          --backup_raw_files_dir=$BACKUP_DESTINATION_DIR >> /tmp/opencrvs-backup-extract-${{ github.event.inputs.version_label }}.log 2>&1"
