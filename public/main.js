@@ -1,503 +1,486 @@
-/*
- * Check user has an authorization token. If not, redirect to login page.
- */
-const token = new URLSearchParams(window.location.search).get('token')
-if (!token) {
-  window.location.href =
-    window.config.LOGIN_URL +
-    '?redirectTo=' +
-    encodeURIComponent(window.location.href)
+let currentPage = 1
+let rowsPerPage = 10
+let totalPages = 1
+let sortDirection = 'asc'
+let sortColumn = '' // 'desc' by default
+
+function timeAgo(date) {
+  const seconds = Math.floor((new Date() - new Date(date)) / 1000)
+  let interval = Math.floor(seconds / 31536000) // years
+  if (interval > 1) return 'il y a ' + interval + ' ans'
+  interval = Math.floor(seconds / 2592000) // months
+  if (interval > 1) return 'il y a ' + interval + ' mois'
+  interval = Math.floor(seconds / 86400) // days
+  if (interval > 1) return 'il y a ' + interval + ' jours'
+  interval = Math.floor(seconds / 3600) // hours
+  if (interval > 1) return 'il y a ' + interval + ' heures'
+  interval = Math.floor(seconds / 60) // minutes
+  if (interval > 1) return 'il y a ' + interval + ' minutes'
+  return seconds < 5 ? "a l'instant" : seconds + ' secondes'
 }
-async function getPerson(id) {
-  const res = await fetch('/graphql', {
+
+const fetchEvents = async (variables) => {
+  const query = `
+    query(
+      $userId: String
+      $advancedSearchParameters: AdvancedSearchParametersInput!
+      $count: Int
+      $skip: Int
+      $sort: String
+      $sortColumn: String
+      $sortBy: [SortBy!]
+    ) {
+      searchEvents(
+        userId: $userId
+        advancedSearchParameters: $advancedSearchParameters
+        count: $count
+        skip: $skip
+        sort: $sort
+        sortColumn: $sortColumn
+        sortBy: $sortBy
+      ) {
+        totalItems
+        results {
+          id
+          type
+          registration {
+            createdAt
+            status
+            registrationNumber
+            assignment {
+              firstName
+              lastName
+              officeName
+            }
+          }
+          ... on BirthEventSearchSet {
+            dateOfBirth
+            childName {
+              firstNames
+              middleName
+              familyName
+              use
+            }
+          }
+          __typename
+        }
+      }
+    }`
+
+  const response = await fetch('/graphql', {
+    method: 'POST',
+    mode: 'cors',
     headers: {
-      authorization: 'Bearer ' + token,
-      'content-type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify({
-      operationName: 'fetchBirthRegistrationForCertificate',
-      variables: {
-        id: id
-      },
-      query: `query fetchBirthRegistrationForCertificate($id: ID!) {
-    fetchBirthRegistration(id: $id) {
-      _fhirIDMap
-      id
-      child {
-        id
-        multipleBirth
-        identifier {
+    body: JSON.stringify({ query, variables })
+  })
+
+  if (!response.ok) {
+    throw new Error('Something went wrong with the graphql request')
+  }
+
+  const data = await response.json()
+  return data
+}
+
+const fetchBirthRegistrationForCertificate = async (variables) => {
+  const query = `
+      query fetchBirthRegistrationForCertificate($id: ID!) {
+        fetchBirthRegistration(id: $id) {
+          _fhirIDMap
           id
-          type
-          otherType
-        }
-        name {
-          use
-          firstNames
-          middleName
-          familyName
-        }
-        birthDate
-        gender
-      }
-      mother {
-        id
-        name {
-          use
-          firstNames
-          middleName
-          familyName
-        }
-        birthDate
-        maritalStatus
-        dateOfMarriage
-        educationalAttainment
-        nationality
-        occupation
-        detailsExist
-        reasonNotApplying
-        ageOfIndividualInYears
-        exactDateOfBirthUnknown
-        identifier {
-          id
-          type
-          otherType
-        }
-        address {
-          type
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-        telecom {
-          system
-          value
-        }
-      }
-      father {
-        id
-        name {
-          use
-          firstNames
-          middleName
-          familyName
-        }
-        birthDate
-        maritalStatus
-        dateOfMarriage
-        educationalAttainment
-        nationality
-        occupation
-        detailsExist
-        reasonNotApplying
-        ageOfIndividualInYears
-        exactDateOfBirthUnknown
-        identifier {
-          id
-          type
-          otherType
-        }
-        address {
-          type
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-        telecom {
-          system
-          value
-        }
-      }
-      informant {
-        id
-        relationship
-        otherRelationship
-        _fhirIDPatient
-        identifier {
-          id
-          type
-          otherType
-        }
-        name {
-          use
-          firstNames
-          middleName
-          familyName
-        }
-        nationality
-        occupation
-        birthDate
-        ageOfIndividualInYears
-        exactDateOfBirthUnknown
-        address {
-          type
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-      }
-      registration {
-        id
-        informantType
-        otherInformantType
-        contact
-        contactPhoneNumber
-        contactEmail
-        informantsSignature
-        informantsSignatureURI
-        status {
-          comments {
-            comment
-          }
-          type
-          timestamp
-          location {
-            name
-            alias
-          }
-          office {
-            name
-            alias
-            address {
-              district
-              state
-            }
-            partOf
-          }
-        }
-        trackingId
-        registrationNumber
-        mosipAid
-      }
-      attendantAtBirth
-      weightAtBirth
-      birthType
-      questionnaire {
-        fieldId
-        value
-      }
-      eventLocation {
-        id
-        type
-        address {
-          line
-          district
-          state
-          city
-          postalCode
-          country
-        }
-      }
-      history {
-        date
-        action
-        regStatus
-        dhis2Notification
-        ipAddress
-        statusReason {
-          text
-        }
-        reason
-        otherReason
-        location {
-          id
-          name
-        }
-        office {
-          id
-          name
-          alias
-          address {
-            state
-            district
-          }
-        }
-        system {
-          name
-          type
-        }
-        user {
-          id
-          role {
-            _id
-            labels {
-              lang
-              label
-            }
-          }
-          systemRole
-          name {
-            firstNames
-            familyName
-            use
-          }
-          avatar {
-            data
-            type
-          }
-        }
-        signature {
-          data
-          type
-        }
-        comments {
-          user {
+          child {
             id
-            username
-            avatar {
-              data
+            multipleBirth
+            identifier {
+              id
               type
+              otherType
             }
-          }
-          comment
-          createdAt
-        }
-        input {
-          valueCode
-          valueId
-          value
-        }
-        output {
-          valueCode
-          valueId
-          value
-        }
-        certificates {
-          hasShowedVerifiedDocument
-          collector {
-            relationship
-            otherRelationship
             name {
               use
               firstNames
+              middleName
               familyName
+            }
+            birthDate
+            gender
+          }
+          mother {
+            id
+            name {
+              use
+              firstNames
+              middleName
+              familyName
+            }
+            birthDate
+            maritalStatus
+            dateOfMarriage
+            educationalAttainment
+            nationality
+            occupation
+            detailsExist
+            reasonNotApplying
+            ageOfIndividualInYears
+            exactDateOfBirthUnknown
+            identifier {
+              id
+              type
+              otherType
+            }
+            address {
+              type
+              line
+              lineName
+              district
+              districtName
+              state
+              stateName
+              city
+              postalCode
+              country
             }
             telecom {
               system
               value
-              use
             }
           }
-        }
-        duplicateOf
-        potentialDuplicates
-      }
-    }
-  }`
-    }),
-    method: 'POST',
-    mode: 'cors',
-    credentials: 'include'
-  })
-  return res.json()
-}
-
-async function downloadRecords({ startDate, endDate }) {
-  const res = await fetch('/graphql', {
-    headers: {
-      authorization: 'Bearer ' + token,
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify({
-      operationName: 'searchEvents',
-      variables: {
-        advancedSearchParameters: {
-          registrationStatuses: ['REGISTERED', 'CERTIFIED', 'ISSUED'],
-          dateOfRegistrationStart: startDate,
-          dateOfRegistrationEnd: endDate
-        },
-        count: 10,
-        skip: 0
-      },
-      query: `
-        query searchEvents($advancedSearchParameters: AdvancedSearchParametersInput!, $sort: String, $count: Int, $skip: Int) {
-          searchEvents(
-            advancedSearchParameters: $advancedSearchParameters
-            sort: $sort
-            count: $count
-            skip: $skip
-          ) {
-            totalItems
-            results {
+          father {
+            id
+            name {
+              use
+              firstNames
+              middleName
+              familyName
+            }
+            birthDate
+            maritalStatus
+            dateOfMarriage
+            educationalAttainment
+            nationality
+            occupation
+            detailsExist
+            reasonNotApplying
+            ageOfIndividualInYears
+            exactDateOfBirthUnknown
+            identifier {
               id
               type
-              registration {
-                status
-                contactNumber
-                contactEmail
-                trackingId
-                registrationNumber
-                registeredLocationId
-                duplicates
-                assignment {
-                  firstName
-                  lastName
-                  officeName
-                  avatarURL
+              otherType
+            }
+            address {
+              type
+              line
+              lineName
+              district
+              districtName
+              state
+              stateName
+              city
+              postalCode
+              country
+            }
+            telecom {
+              system
+              value
+            }
+          }
+          informant {
+            id
+            relationship
+            otherRelationship
+            _fhirIDPatient
+            identifier {
+              id
+              type
+              otherType
+            }
+            name {
+              use
+              firstNames
+              middleName
+              familyName
+            }
+            nationality
+            occupation
+            birthDate
+            ageOfIndividualInYears
+            exactDateOfBirthUnknown
+            address {
+              type
+              line
+              lineName
+              district
+              districtName
+              state
+              stateName
+              city
+              postalCode
+              country
+            }
+          }
+          createdAt
+          registration {
+            id
+            informantType
+            otherInformantType
+            contact
+            contactPhoneNumber
+            contactEmail
+            status {
+              comments {
+                comment
+              }
+              type
+              timestamp
+              location {
+                name
+                alias
+              }
+              office {
+                name
+                alias
+                address {
+                  district
+                  state
                 }
-                createdAt
-                modifiedAt
+                partOf
               }
-              operationHistories {
-                operationType
-                operatedOn
+            }
+            trackingId
+            registrationNumber
+            mosipAid
+          }
+          attendantAtBirth
+          weightAtBirth
+          birthType
+          questionnaire {
+            fieldId
+            value
+          }
+          eventLocation {
+            id
+            type
+            address {
+              type
+              line
+              lineName
+              district
+              districtName
+              state
+              stateName
+              city
+              postalCode
+              country
+            }
+          }
+          history {
+            date
+            action
+            regStatus
+            dhis2Notification
+            ipAddress
+            statusReason {
+              text
+            }
+            reason
+            otherReason
+            location {
+              id
+              name
+            }
+            office {
+              id
+              name
+              alias
+              address {
+                state
+                district
               }
-              ... on BirthEventSearchSet {
-                dateOfBirth
-                childName {
+            }
+            system {
+              name
+              type
+            }
+            user {
+              id
+              role {
+                _id
+                labels {
+                  lang
+                  label
+                }
+              }
+              systemRole
+              name {
+                firstNames
+                familyName
+                use
+              }
+              avatar {
+                data
+                type
+              }
+            }
+            signature {
+              data
+              type
+            }
+            comments {
+              user {
+                id
+                username
+                avatar {
+                  data
+                  type
+                }
+              }
+              comment
+              createdAt
+            }
+            input {
+              valueCode
+              valueId
+              value
+            }
+            output {
+              valueCode
+              valueId
+              value
+            }
+            certificates {
+              hasShowedVerifiedDocument
+              collector {
+                relationship
+                otherRelationship
+                name {
+                  use
                   firstNames
-                  middleName
                   familyName
+                }
+                telecom {
+                  system
+                  value
                   use
                 }
               }
-              __typename
             }
+            duplicateOf
+            potentialDuplicates
           }
         }
-        `
-    }),
+      }`
+
+  const response = await fetch('/graphql', {
     method: 'POST',
     mode: 'cors',
-    credentials: 'include'
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      query,
+      variables
+    })
   })
 
-  return res.json()
+  if (!response.ok) {
+    throw new Error('Something went wrong with the graphql request')
+  }
+
+  const data = await response.json()
+  return data
 }
 
-/*
- * Initialise date inputs
- */
-const $startDate = document.getElementById('start-date')
-const $endDate = document.getElementById('end-date')
-$startDate.value = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
-  .toISOString()
-  .split('T')[0]
-$endDate.value = new Date(
-  new Date().getFullYear(),
-  new Date().getMonth() + 1,
-  0
-)
-  .toISOString()
-  .split('T')[0]
+// Function to render table rows with pagination
+const renderTable = async () => {
+  const startDate = document.getElementById('startDate').value
+  const endDate = document.getElementById('endDate').value
+  const variables = {
+    advancedSearchParameters: {
+      registrationStatuses: ['REGISTERED', 'CERTIFIED', 'ISSUED'],
+      dateOfRegistrationStart: startDate,
+      dateOfRegistrationEnd: endDate
+    },
+    count: rowsPerPage,
+    skip: (currentPage - 1) * rowsPerPage,
+    sort: sortDirection
+  }
 
-$startDate.addEventListener('change', update)
-$endDate.addEventListener('change', update)
+  const events = await fetchEvents(variables)
 
-/*
- * Views
- */
+  totalPages = Math.ceil(events.data.searchEvents.totalItems / rowsPerPage)
 
-function update() {
-  downloadRecords({ startDate: $startDate.value, endDate: $endDate.value })
-    .then((data) => {
-      // get Person
-      renderTable(data.data.searchEvents.results)
-      // getPerson(data.data.searchEvents.results[0].id)
-      //   .then((data) => {
-      //     console.log('===> data', data)
-      //   })
-      //   .catch((err) => console.error(err))
-    })
-    .catch((err) => console.error(err))
-}
+  const tableBody = document.getElementById('data-table')
+  tableBody.innerHTML = ''
 
-const $results = document.getElementById('results')
+  const start = (currentPage - 1) * rowsPerPage
+  const end = start + rowsPerPage
 
-window.printAll = async function renderPrintout() {
-  const data = await downloadRecords({
-    startDate: $startDate.value,
-    endDate: $endDate.value
+  events.data.searchEvents.results.forEach((item) => {
+    const row = document.createElement('tr')
+    row.classList.add('bg-white', 'hover:bg-gray-50')
+
+    row.innerHTML = `
+    <td class="px-4 py-2 border-b border-gray-300 text-blue-600"> ${[
+      item.childName[0].familyName,
+      item.childName[0].firstNames,
+      item.childName[0].middleName
+    ]
+      .join(' ')
+      .trim()}</td>
+    <td class="px-4 py-2 border-b border-gray-300">${item.type}</td>
+    <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
+      item.dateOfBirth
+    )}</td>
+    <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
+      new Date(Number(item.registration.createdAt)).toISOString().split('T')[0]
+    )}</td>
+    <td  class="px-4 py-2 border-b border-gray-300"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded" onclick="openPrintModal('${
+      item.id
+    }', '${[
+      item.registration.assignment.firstName,
+      item.registration.assignment.lastName
+    ]
+      .join(' ')
+      .trim()}', '${
+      item.registration.assignment.officeName
+    }')">Imprimer</button></td>
+  `
+    tableBody.appendChild(row)
   })
-  const results = data.data.searchEvents.results
-  const pages = results
-    .filter((event) => event.__typename === 'BirthEventSearchSet')
-    .map((event) => {
-      /*
-       * Replace this with what ever you want to render for each page
-       */
-      const dateFormatter = window.translateDate()
-
-      const formattedDate = dateFormatter(event.dateOfBirth) // Appel de la fonction translateDate
-      const formatHour = dateFormatter(event.createdAt)
-      const brithLocation = ''
-      const childName = `${event.childName[0].familyName} ${event.childName[0].middleName}  ${event.childName[0].firstNames} `
-      const textSection1 = `Tamin'ny ${formattedDate} tamin'ny ${formatHour} no teraka tao amin'ny ${childName} zazalahy, zanak'i RAVELOSON Charles, Mpamboly, teraka tao Anosy tamin'ny folo Aprily, taona roa arivo, monina ao Anosy ------`
-      const page = `
-      <div class="page">
-        <style>
-          .container {
-              display: flex;
-          }
-          .col1 {
-              flex: 1;
-              padding: 10px;
-          }
-          .col2 {
-              flex: 3;
-              padding: 10px;
-          }
-          .fahaterahana {
-              margin-top: 15px;
-              font-weight: bold;
-              margin-bottom: 15px;
-          }
-          .nom {
-              
-              word-break: break-word;
-          }
-          .nui {
-              margin-top: 80px;
-          }
-          .align {
-              text-align: justify;
-          }
-          .section {
-              margin-top: 80px;
-          }
-        </style>
-        <div class="container">
-          <div class="col1">
-            <p class="section">10 jolay 2024</p>
-            <p>Faha: 101945</p>
-            <p class="fahaterahana">FAHATERAHANA</p>
-            <p class="nom">${event.childName[0].firstNames} ${event.childName[0].middleName} ${event.childName[0].familyName}</p>
-            <p >NUI: 200323232323</p>
-            <p>${event.dateOfBirth}</p>
-          </div>
-          <div class="col2">
-            <p class="section align">${textSection1}</p>
-            <p class="align">Nosoratana androany folo Jolay, taona efatra amby roapolo sy roa arivo tamin'ny enina ora sy fito amby roapolo minitra maraina, araka ny fanambarana nataon'ny reniny, izay miara-manao sonia aminay LANDRY Fitahiantsoa, mpiandraikitra ny sora-piankohonana ao amin'ny CEC CU TANA I, rehefa novakiana tamin'ity soratra ity---</p>
-          </div>
-        </div>
-      </div>
-    `
-
-      return page
-    })
-    .join('')
-
-  html2pdf()
-    .set({
-      pagebreak: { after: '.page' }
-    })
-    .from(pages)
-    .save()
+  renderPagination()
 }
-window.handlePrint = async function handlePrint(result) {
-  try {
-    const data = await getPerson(result.id) // Récupérer les détails de la personne
-    const event = data.data.fetchBirthRegistration // Supposons que data contient déjà l'objet de l'événement
-    console.log(event)
+
+window.nextPage = function nextPage() {
+  if (currentPage < totalPages) {
+    currentPage++
+    renderTable()
+  }
+}
+
+window.prevPage = function prevPage() {
+  if (currentPage > 1) {
+    currentPage--
+    renderTable()
+  }
+}
+
+window.openPrintModal = async function openPrintModal(
+  id,
+  registrarFullName,
+  officeName
+) {
+  const person = await fetchBirthRegistrationForCertificate({ id })
+  if (person.data.fetchBirthRegistration) {
+    const modal = document.getElementById('printModal')
+    modal.classList.remove('hidden')
+
+    const event = person.data.fetchBirthRegistration
+
     const dateFormatter = window.translateDate()
     const timeFormatter = window.translateTime()
     const officeNameFormatter = window.customizeOfficeNameLocation()
@@ -507,8 +490,13 @@ window.handlePrint = async function handlePrint(result) {
     const createdDate = new Date(now - offset).toISOString().slice(0, -1) // Retirer le 'Z' à la fin
 
     // child info
-    const childLastName = `${event.child.name[0].familyName}  ${event.child.name[0].middleName}`
-    const childFirstName = `${event.child.name[0].firstNames}`
+    const childFirstName = event.child.name[0].familyName
+    const childLastName = [
+      event.child.name[0].middleName,
+      event.child.name[0].firstNames
+    ]
+      .join(' ')
+      .trim()
     const childGender =
       event.child.gender.toLowerCase() === 'female' ? 'zazavavy' : 'zazalahy'
     const childDob = dateFormatter(event.child.birthDate)
@@ -518,8 +506,9 @@ window.handlePrint = async function handlePrint(result) {
       ) || { value: '' }
     ).value
     const childHourOfBirth = childBirthTime ? timeFormatter(childBirthTime) : ''
-    const childBirthLocation =
-      'CHU GYNECO  OBSTETRIQUE (Maternité Befelatanana)'
+    const childBirthLocation = event.questionnaire.find(
+      (q) => q.fieldId === 'birth.child.child-view-group.fokontanyCustomAddress'
+    )?.value
     const childNUI = (
       event?.child?.identifier?.find((q) => q.type === 'NATIONAL_ID') || {
         id: ''
@@ -529,7 +518,13 @@ window.handlePrint = async function handlePrint(result) {
     // father info
     const fatherFullName =
       Array.isArray(event.father.name) && event.father.name.length > 0
-        ? `${event.father.name[0].familyName} ${event.father.name[0].middleName} ${event.father.name[0].firstNames}`
+        ? `${[
+            event.father.name[0].familyName,
+            event.father.name[0].middleName,
+            event.father.name[0].firstNames
+          ]
+            .join(' ')
+            .trim()}`
         : ''
     const fatherDateOfBirth =
       Array.isArray(event.father.name) && event.father.name.length > 0
@@ -540,14 +535,19 @@ window.handlePrint = async function handlePrint(result) {
         (q) => q.fieldId === 'birth.father.father-view-group.birthPlace'
       ) || { value: '' }
     ).value
-    const fatherOccupation = event?.father?.occupation + ' sy ' ?? ''
-    const fatherResidencyLocation = 'Anosy'
+    const fatherFkt = (
+      event?.questionnaire?.find(
+        (q) =>
+          q.fieldId === 'birth.mother.mother-view-group.fokontanyCustomAddress'
+      ) || { value: '' }
+    ).value
 
-    const fatherInfo =
-      Array.isArray(event.father.name) && event.father.name.length > 0
-        ? `${fatherFullName}, teraka tamin'ny ${fatherDateOfBirth} tao amin'ny ${fatherPlaceOfBirth}, 
-                monina ao amin'ny fokontany fkt, kaominina cm, distrikta dstr,  ${fatherOccupation}, sy `
-        : ''
+    const fatherAddress = `fokontany ${fatherFkt}, kaominina ${
+      event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName
+    }, distrika ${
+      event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+        ?.districtName
+    }`
 
     // mother info
     const motherFullName =
@@ -558,8 +558,7 @@ window.handlePrint = async function handlePrint(result) {
       Array.isArray(event.mother.name) && event.mother.name.length > 0
         ? `${dateFormatter(event.mother.birthDate)}`
         : ''
-    const motherOccupation = `${event?.mother?.occupation ?? ''}`
-    const motherResidencyLocation = 'Anosy'
+    const motherOccupation = event?.mother?.occupation
     const motherPlaceOfBirth = (
       event?.questionnaire?.find(
         (q) => q.fieldId === 'birth.mother.mother-view-group.birthPlace'
@@ -572,7 +571,12 @@ window.handlePrint = async function handlePrint(result) {
       ) || { value: '' }
     ).value
 
-    const motherInfo = `${motherFullName}, teraka tamin'ny ${motherDateOfBirth}, tao amin'ny ${motherPlaceOfBirth} monina ao amin'ny fokontany ${motherFkt}, kaominina cm, distrikta drtr, ${motherOccupation}`
+    const motherAddress = `fokontany ${motherFkt}, kaominina ${
+      event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName
+    }, distrika ${
+      event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')
+        ?.districtName
+    }`
 
     // informant info
     const relationMap = {
@@ -598,154 +602,192 @@ window.handlePrint = async function handlePrint(result) {
       birthInformantoRelationship.toLowerCase() === 'father'
         ? `${birthInformantType} `
         : `${birthInformantFullName}, ${birthInformantType}`
-    const birthInformantResidency = 'Anosy'
-    const informantOccupation = `${event?.informant?.occupation ?? ''}${
-      event?.informant?.occupation ? ', ' : ''
-    }`
+    const informantOccupation = `${event?.informant?.occupation ?? ''}`
 
     // registration info
     const birthRegistrationDate = dateFormatter(createdDate.split('T')[0])
     const birthRegistrationTime = timeFormatter(createdDate.split('T')[1])
+    const registrarName = registrarFullName
+    const civilRegistrationCenterNname = officeNameFormatter(officeName || '')
 
-    const registrarName = `${result.registration.assinment.lastName} ${result.registration.assinment.firstName}`
-    const civilRegistrationCenterNname = officeNameFormatter(
-      event?.registration?.status?.find(
-        (item) => item.office && item.office.name
-      )?.office.name || ''
-    )
-    const birthRegistrationNumber = (
-      event?.questionnaire?.find(
-        (q) =>
-          q.fieldId ===
-          'birth.child.child-view-group.legacyBirthRegistrationNumber'
-      ) || { value: '' }
-    ).value
+    const printableData = {
+      soratra: event.registration.registrationNumber,
+      nataoNy: window.setLocaleDateCustomString(createdDate.split('T')[0]),
+      anarana: childFirstName,
+      fanampinAnarana: childLastName,
+      lft: childNUI,
+      dateOfBirth: window.setLocaleDateCustomString(event.child.birthDate),
+      firstParagraph: `---Tamin'ny ${childDob} tamin'ny ${childHourOfBirth}, no teraka tao ${childBirthLocation}, i ${[
+        childFirstName,
+        childLastName
+      ]
+        .join(' ')
+        .trim()}, ${childGender}, zanak'i ${fatherFullName}, teraka tamin'ny ${fatherDateOfBirth} tao ${fatherPlaceOfBirth}, monina ao amin'ny ${fatherAddress}, ${
+        event.father.occupation
+      }, sy ${motherFullName}, teraka tamin'ny ${motherDateOfBirth} tao ${motherPlaceOfBirth}, monina ao amin'ny ${motherAddress}, ${motherOccupation}. ---`,
+      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob} tao amin'ny "toerana nahaterahana", monina ao "Fokontany", Kaominina "Kaominina", distrika "Distrika", ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
+    }
 
-    const page = `
-        <div class="page">
-          <style>
-            .container {
-                display: flex;
-            }
-            .col1 {
-                flex: 1;
-                padding: 10px;
-            }
-            .col2 {
-                flex: 3;
-                padding: 10px;
-            }
-            .birth {
-                margin-top: 0px;
-                font-weight: bold;
-            }
-            .lastname {
-                word-break: break-word;
-            }
-            .firstname {
-                word-break: break-word;
-            }
-            .nui {
-                margin-top: 80px;
-            }
-            .align {
-                text-align: justify;
-            }
-            .head {
-              margin-top: 30px;
-            }
-            .section {
-                margin-top: 10px;
-            }
-          </style>
-          <div class="container">
-            <div class="col1">
-              <p class="head">Soratra n°: ${birthRegistrationNumber}</p>
-              <p>Natao ny: ${window.setLocaleDateCustomString(
-                createdDate.split('T')[0]
-              )}</p>
-              <p class="section align"/>
-              <p class="birth">FAHATERAHANA</p>
-              <p class="section align"/>
-              <p class="lastname">${childLastName}</p>
-              <p class="firstname">${childFirstName}</p>
-              <p class="section align"/>
-              <p>NUI: ${childNUI}</p>
-              <p>${event.child.birthDate}</p>
-              <p class="section align">
-            </div>
-            <div class="col2">
-              <p class="head align">
-              ${`
-                ---Tamin'ny ${childDob}, tamin'ny ${childHourOfBirth}, no teraka tao amin'ny ${childBirthLocation}, ${childLastName} ${childFirstName}, ${childGender}
-                , zanak'i ${fatherInfo} ${motherInfo} ---
-              `}
-              </p>
-              <p class="align"></p>
-              <p class="section align">
-              ${`
-                ---
-                Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'
-                i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob} tao amin'ny toerana, kaominina com,
-                monina ao amin'ny fkt, kaominina com, distrikta dskt, ${informantOccupation} izay miara-manao sonia aminay ${registrarName}, 
-                mpiandraikitra ny sora-piankohonana ao amin'ny ${civilRegistrationCenterNname}, rehefa novakiana taminy ity soratra ity...
-              ---
-              `}
-              </p>
-               <p class="align"></p>
-            </div>
-          </div>
-        </div>
-      `
-
-    // Utiliser html2pdf pour imprimer
-    html2pdf()
-      .set({
-        pagebreak: { after: '.page' }
-      })
-      .from(page)
-      .save()
-  } catch (error) {
-    console.error("Erreur lors de l'impression de l'élément:", error)
+    document.getElementById('soratra').textContent = printableData.soratra
+    document.getElementById('nataoNy').textContent = printableData.nataoNy
+    document.getElementById('anarana').textContent = printableData.anarana
+    document.getElementById('lft').textContent = printableData.lft
+    document.getElementById('dateOfBirth').textContent =
+      printableData.dateOfBirth
+    document.getElementById('fanampinAnarana').textContent =
+      printableData.fanampinAnarana
+    document.getElementById('firstParagraph').textContent =
+      printableData.firstParagraph
+    document.getElementById('secondParagraph').textContent =
+      printableData.secondParagraph
   }
 }
-function renderTable(results) {
-  const rows = results
-    .filter((event) => event.__typename === 'BirthEventSearchSet')
-    .map((event) => {
-      const row = `
-      <tr>
-        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">${
-          event.registration.trackingId
-        }</td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${
-          event.registration.registrationNumber
-        }</td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${
-          new Date(parseInt(event.registration.createdAt, 10))
-            .toISOString()
-            .split('T')[0]
-        }</td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${
-          event.dateOfBirth
-        }</td>
-        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${
-          event.childName[0].firstNames
-        } ${event.childName[0].middleName} ${event.childName[0].familyName}</td>
-         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          <button onclick="window.handlePrint('${event}')" class="btn-print bg-blue-500 text-white hover:bg-blue-700 font-bold py-2 px-4 rounded">Imprimer</button>
-        </td>
-      </tr>
-    `
 
-      return row
-    })
-    .join('')
-
-  $results.innerHTML = rows
+window.closePrintModal = function closePrintModal() {
+  const modal = document.getElementById('printModal')
+  modal.classList.add('hidden')
 }
 
-/*
- * First render
- */
-update()
+const renderPagination = () => {
+  const paginationNumbers = document.getElementById('pagination-numbers')
+  paginationNumbers.innerHTML = ''
+
+  if (totalPages <= 3) {
+    for (let i = 1; i <= totalPages; i++) {
+      const pageNumber = document.createElement('button')
+      pageNumber.classList.add('hover:bg-gray-300', 'px-3', 'py-1', 'rounded')
+      if (i === currentPage)
+        pageNumber.classList.add('bg-blue-500', 'text-white')
+
+      pageNumber.innerText = i
+      pageNumber.onclick = () => {
+        currentPage = i
+        renderTable()
+      }
+
+      paginationNumbers.appendChild(pageNumber)
+    }
+  } else {
+    const firstPage = 1
+    const lastPage = totalPages
+
+    const firstPageButton = document.createElement('button')
+    firstPageButton.classList.add(
+      'hover:bg-gray-300',
+      'px-3',
+      'py-1',
+      'rounded'
+    )
+    if (currentPage === firstPage)
+      firstPageButton.classList.add('bg-blue-500', 'text-white')
+    firstPageButton.innerText = firstPage
+    firstPageButton.onclick = () => {
+      currentPage = firstPage
+      renderTable()
+    }
+    paginationNumbers.appendChild(firstPageButton)
+
+    if (currentPage > 2) {
+      const ellipsis = document.createElement('span')
+      ellipsis.innerText = '...'
+      paginationNumbers.appendChild(ellipsis)
+    }
+
+    if (currentPage > firstPage && currentPage < lastPage) {
+      const currentPageButton = document.createElement('button')
+      currentPageButton.classList.add(
+        'hover:bg-gray-300',
+        'px-3',
+        'py-1',
+        'rounded'
+      )
+      currentPageButton.classList.add('bg-blue-500', 'text-white')
+      currentPageButton.innerText = currentPage
+      paginationNumbers.appendChild(currentPageButton)
+    }
+
+    if (currentPage < totalPages - 1) {
+      const ellipsis = document.createElement('span')
+      ellipsis.innerText = '...'
+      paginationNumbers.appendChild(ellipsis)
+    }
+
+    const lastPageButton = document.createElement('button')
+    lastPageButton.classList.add('hover:bg-gray-300', 'px-3', 'py-1', 'rounded')
+    if (currentPage === lastPage)
+      lastPageButton.classList.add('bg-blue-500', 'text-white')
+    lastPageButton.innerText = lastPage
+    lastPageButton.onclick = () => {
+      currentPage = lastPage
+      renderTable()
+    }
+    paginationNumbers.appendChild(lastPageButton)
+  }
+}
+
+window.changePageSize = function changePageSize() {
+  const pageSizeSelect = document.getElementById('pageSize')
+  rowsPerPage = parseInt(pageSizeSelect.value)
+  currentPage = 1
+  renderTable()
+}
+
+window.sortTable = function sortTable(column) {
+  sortColumn = column
+  sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'
+  updateSortIcons()
+  renderTable()
+}
+
+const updateSortIcons = () => {
+  document.getElementById('sort-nom').textContent =
+    sortColumn === 'nom' ? (sortDirection === 'asc' ? '▲' : '▼') : ''
+  document.getElementById('sort-event').textContent =
+    sortColumn === 'event' ? (sortDirection === 'asc' ? '▲' : '▼') : ''
+  document.getElementById('sort-dateEvent').textContent =
+    sortColumn === 'dateEvent' ? (sortDirection === 'asc' ? '▲' : '▼') : ''
+  document.getElementById('sort-registered').textContent =
+    sortColumn === 'registered' ? (sortDirection === 'asc' ? '▲' : '▼') : ''
+}
+
+window.filterByDate = function filterByDate() {
+  currentPage = 1
+  renderTable()
+}
+
+window.resetDateFilter = function resetDateFilter() {
+  document.getElementById('startDate').value = ''
+  document.getElementById('endDate').value = ''
+  currentPage = 1
+  renderTable()
+}
+
+window.generatePDF = function generatePDF(filename) {
+  const { jsPDF } = window.jspdf
+  const element = document.getElementById('document')
+
+  element.style.background = 'white'
+  element.style.boxShadow = 'none'
+  element.style.border = 'none'
+
+  html2canvas(element).then((canvas) => {
+    const imgData = canvas.toDataURL('image/png')
+    const pdf = new jsPDF('p', 'pt', 'a4')
+
+    // Add the image to the PDF with consistent margins
+    const margin = 20 // 20 points margin on left and right
+    const imgWidth = 595.28 - 2 * margin // A4 width (595.28 points) minus left and right margins
+    const imgHeight = (canvas.height * imgWidth) / canvas.width
+
+    // Add image with margin
+    pdf.addImage(imgData, 'PNG', margin, 20, imgWidth, imgHeight) // 20 points top margin
+    pdf.save(filename ?? 'registre.pdf')
+
+    element.style.background = ''
+    element.style.boxShadow = ''
+    closePrintModal()
+  })
+}
+
+//Initial render
+renderTable()
