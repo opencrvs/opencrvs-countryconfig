@@ -341,7 +341,7 @@ function convertTimeToMdgCustomWords(timeString) {
   mdgHours[1] = MDG_IRAY_WORD
   var newMinute = parseInt(minute)
   var timePeriod = 'maraina'
-  if (newHour <= 12 && newHour >= 10) timePeriod = 'antoandro'
+  if (newHour <= 12 && newHour >= 10) timePeriod = 'atoandro'
   else if (newHour > 12) {
     if (newHour <= 16 && newHour >= 13) timePeriod = 'tolakandro'
     if (newHour <= 19 && newHour >= 17) timePeriod = 'hariva'

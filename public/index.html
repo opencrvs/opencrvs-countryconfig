@@ -86,20 +86,16 @@
                         <h1 class="text-xl font-bold">FAHATERAHANA</h1>
                       </div>
                       <div>
-                        <p class="font-bold">Anarana</p>
                         <p id="anarana" class="font-normal"></p>
-                      </div>
-                      <div>
-                        <p class="font-bold">Fanampin'anarana</p>
                         <p id="fanampinAnarana" class="font-normal"></p>
-                      </div>
-                      <div>
-                        <p class="font-bold">LFT</p>
-                        <p id="lft" class="font-normal">----</p>
-                      </div>
-                      <div>
-                        <p class="font-bold">Teraka ny</p>
-                        <p id="dateOfBirth" class="font-normal">----</p>
+                        <p class="font-normal">
+                          NUI:
+                          <span id="lft" class="font-normal">----</span>
+                        </p>
+                        <p>
+                          Teraka ny:
+                          <span id="dateOfBirth" class="font-normal">----</span>
+                        </p>
                       </div>
                     </div>
 
@@ -228,6 +224,7 @@
       </div>
     </div>
 
+    <script type="module" src="./helpers.js"></script>
     <script>
       let currentPage = 1
       let rowsPerPage = 10
@@ -437,6 +434,7 @@
                     country
                   }
                 }
+                createdAt
                 registration {
                   id
                   informantType
@@ -638,9 +636,9 @@
 
           row.innerHTML = `
           <td class="px-4 py-2 border-b border-gray-300 text-blue-600"> ${[
+            item.childName[0].familyName,
             item.childName[0].firstNames,
-            item.childName[0].middleName,
-            item.childName[0].familyName
+            item.childName[0].middleName
           ]
             .join(' ')
             .trim()}</td>
@@ -684,8 +682,10 @@
 
           const safePerson = person.data.fetchBirthRegistration
 
+          console.log({ safePerson })
+
           const printableData = {
-            soratra: safePerson.registration.registrationNumber,
+            soratra: safePerson.registration.registrationNumber ?? '---',
             nataoNy: '07 Desambra 2024',
             anarana: safePerson.child.name[0].familyName,
             fanampinAnarana: [
@@ -694,15 +694,48 @@
             ]
               .join(' ')
               .trim(),
-            lft: '----',
+            lft:
+              safePerson.child.identifier.find(
+                (id) => id.type === 'NATIONAL_ID'
+              ).id ?? '---',
             dateOfBirth: safePerson.child.birthDate,
-            firstParagraph: `---Tamin'ny "andro" "volana" "taona" tamin'ny "ora" ora sy "minitra" minitra "Maraina/Tolakan-dro/Hariva/Alina", no teraka tao amin'ny "toerana nahaterahana", fokontany "fokontany", kaominina "Kaominina", distrika "Distrika" : "ANARANA" "Fanampin'anarana", "zazalahy/zazavavy", zanaki' "ANARAN'NY RAY" "Fanampin'anaran'ny Ray", teraka tamin'ny "andro" "volana" "taona" tao amin'ny "toerana nahaterahana", kaominina "Kaominina", monina ao amin'ny fokontany "Fokontany", kaominina "Kaominina", distrika "Distrika", "anton'asa", sy "ANARAN'NY RENY" "Fanampin'anaran'ny Reny", teraka tamin'ny "andro" "volana" "taona" tao amin'ny "toerana nahaterahana", Kaominina "Kaominina", monina ao amin'ny fokontany "fokontany", kaominina "Kaominina", distrika "Distrika", "anton'asa". ---`,
+            firstParagraph: `---Tamin'ny ${new Date(
+              safePerson.child.birthDate
+            ).getDate()} ${new Date(
+              safePerson.child.birthDate
+            ).getMonth()} ${new Date(
+              safePerson.child.birthDate
+            ).getFullYear()} tamin'ny "ora" ora sy "minitra" minitra "Maraina/Tolakan-dro/Hariva/Alina", no teraka tao amin'ny "toerana nahaterahana", fokontany "fokontany", kaominina "Kaominina", distrika "Distrika" : ${
+              safePerson.child.name[0].familyName
+            } ${[
+              safePerson.child.name[0].firstNames,
+              safePerson.child.name[0].middleName
+            ]
+              .join(' ')
+              .trim()}, ${
+              safePerson.child.gender == 'male' ? 'zazalahy' : 'zazavavy'
+            }, zanak'i ${safePerson.father.name[0].familyName} ${[
+              safePerson.father.name[0].firstNames,
+              safePerson.father.name[0].middleName
+            ]
+              .join(' ')
+              .trim()}, teraka tamin'ny "andro" "volana" "taona" tao amin'ny "toerana nahaterahana", kaominina "Kaominina", monina ao amin'ny fokontany "Fokontany", kaominina "Kaominina", distrika "Distrika", ${
+              safePerson.father.occupation
+            }, sy ${safePerson.mother.name[0].familyName} ${[
+              safePerson.mother.name[0].firstNames,
+              safePerson.mother.name[0].middleName
+            ]
+              .join(' ')
+              .trim()}, teraka tamin'ny "andro" "volana" "taona" tao amin'ny "toerana nahaterahana", Kaominina "Kaominina", monina ao amin'ny fokontany "fokontany", kaominina "Kaominina", distrika "Distrika", ${
+              safePerson.mother.occupation
+            }. ---`,
             secondParagraph: `---Nosoratana androany "andro" "volana" "taona" tamin'ny "ora" ora sy "minitra" minitra "maraina/tolakadro/hariva/alina", araka ny fanambarana nataon'i "ANARAN'NY MPANAO FANAMBARANA" "Fanampin'anaran'ny mpanao fanambarana", "momba ny mpanao fanambarana", teraka tamin'ny "andro" "volana" "taona" tao amin'ny "toerana nahaterahana", kaominina "Kaominina", monina ao amin'ny Fokontany", Kaominina "Kaominina", distrika "Distrika", "anton'asa", izay miara-manao sonia aminay "ANARANAN'NY MPIANDRAIKITRA FIAINKOHONANA" "Fanampin'anarana", Mpandraikitra ny fankohonana eto amin'ny Kaominina "Kaominina", rehefa novakiana tamin'ity soratra ity.---`
           }
 
           document.getElementById('soratra').textContent = printableData.soratra
           document.getElementById('nataoNy').textContent = printableData.nataoNy
           document.getElementById('anarana').textContent = printableData.anarana
+          document.getElementById('lft').textContent = printableData.lft
           document.getElementById('dateOfBirth').textContent =
             printableData.dateOfBirth
           document.getElementById('fanampinAnarana').textContent =
