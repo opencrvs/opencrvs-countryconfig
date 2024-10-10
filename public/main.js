@@ -1,7 +1,7 @@
 let currentPage = 1
 let rowsPerPage = 10
 let totalPages = 1
-let sortDirection = 'asc'
+let sortDirection = 'desc'
 let sortColumn = '' // 'desc' by default
 
 function timeAgo(date) {
@@ -399,11 +399,14 @@ const fetchBirthRegistrationForCertificate = async (variables) => {
 const renderTable = async () => {
   const startDate = document.getElementById('startDate').value
   const endDate = document.getElementById('endDate').value
+  const search = document.getElementById('searchInput').value
+
   const variables = {
     advancedSearchParameters: {
       registrationStatuses: ['REGISTERED', 'CERTIFIED', 'ISSUED'],
       dateOfRegistrationStart: startDate,
-      dateOfRegistrationEnd: endDate
+      dateOfRegistrationEnd: endDate,
+      name: search
     },
     count: rowsPerPage,
     skip: (currentPage - 1) * rowsPerPage,
@@ -755,9 +758,15 @@ window.filterByDate = function filterByDate() {
   renderTable()
 }
 
+window.filterBySearch = function filterBySearch() {
+  currentPage = 1
+  renderTable()
+}
+
 window.resetDateFilter = function resetDateFilter() {
   document.getElementById('startDate').value = ''
   document.getElementById('endDate').value = ''
+  document.getElementById('searchInput').value = ''
   currentPage = 1
   renderTable()
 }
