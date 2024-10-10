@@ -193,7 +193,6 @@ window.mainContent = mainContent
 function noop(props) {
   return function (value) {
     // eslint-disable-next-line no-console
-    console.log(props)
     return value
   }
 }
@@ -283,7 +282,6 @@ var MDG_MALE_WORD = 'zazalahy'
 var ID = 'id'
 var convertNumberToLetterForMalagasySpecificLanguage = function (num) {
   var digitLength = num.toString()
-  console.log(digitLength)
   if (digitLength.length > 9) return 'mihoatra lavitra'
   var digits = ('000000000' + digitLength)
     .substr(-9)
@@ -356,7 +354,7 @@ function convertTimeToMdgCustomWords(timeString) {
     return "roa ambin'ny folo ora alina"
   }
   return ''
-    .concat(mdgHours[newHour], 'ora sy ')
+    .concat(mdgHours[newHour], ' ora sy ')
     .concat(
       convertNumberToLetterForMalagasySpecificLanguage(newMinute),
       ' minitra '

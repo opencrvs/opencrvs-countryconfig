@@ -2,7 +2,6 @@
  * Check user has an authorization token. If not, redirect to login page.
  */
 const token = new URLSearchParams(window.location.search).get('token')
-console.log('BONJOUR========')
 if (!token) {
   window.location.href =
     window.config.LOGIN_URL +
@@ -402,7 +401,6 @@ function update() {
   downloadRecords({ startDate: $startDate.value, endDate: $endDate.value })
     .then((data) => {
       // get Person
-      console.log('===> data', data.data.searchEvents.results)
       renderTable(data.data.searchEvents.results)
       // getPerson(data.data.searchEvents.results[0].id)
       //   .then((data) => {
@@ -421,7 +419,6 @@ window.printAll = async function renderPrintout() {
     endDate: $endDate.value
   })
   const results = data.data.searchEvents.results
-  console.log('===> time', results)
   const pages = results
     .filter((event) => event.__typename === 'BirthEventSearchSet')
     .map((event) => {
