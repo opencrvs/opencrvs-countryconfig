@@ -28,17 +28,22 @@ jobs:
       - name: Get tags
         run: git fetch --tags origin
 
+      - name: Set GitHub account and container registry repo variables
+        run: |
+          echo "GITHUB_ACCOUNT=${GITHUB_REPOSITORY%%/*}" >> $GITHUB_ENV
+          echo "GH_CONTAINER_REGISTRY_REPO=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ secrets.GH_USERNAME }}
+          username: ${{ env.GITHUB_ACCOUNT }}
           password: ${{ secrets.GH_PAT}}
 
       - name: Push image
         env:
-          GITHUB_ACCOUNT: ${{ secrets.GITHUB_ACCOUNT }}
-          GH_CONTAINER_REGISTRY_REPO: ${{ secrets.GH_CONTAINER_REGISTRY_REPO }}
+          GITHUB_ACCOUNT: ${{ env.GITHUB_ACCOUNT }}
+          GH_CONTAINER_REGISTRY_REPO: ${{ env.GH_CONTAINER_REGISTRY_REPO }}
         run: |
           # Check if the current commit has a tag and use it; otherwise, use the short SHA of the HEAD commit
           export COUNTRY_CONFIG_VERSION=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short=7 HEAD)
