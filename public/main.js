@@ -449,7 +449,7 @@ const renderTable = async () => {
     <td  class="px-4 py-2 border-b border-gray-300"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded" onclick="openPrintModal('${
       item.id
     }', '${[
-      item.registration?.assignment?.firstName || 'Nom par défaut',
+      item.registration?.assignment?.firstName || '',
       item.registration?.assignment?.lastName || ''
     ]
       .join(' ')
