@@ -7,16 +7,20 @@ let sortColumn = '' // 'desc' by default
 function timeAgo(date) {
   const seconds = Math.floor((new Date() - new Date(date)) / 1000)
   let interval = Math.floor(seconds / 31536000) // years
-  if (interval > 1) return 'il y a ' + interval + ' ans'
+  if (interval > 1)
+    return 'il y a ' + interval + ` an${interval > 1 ? 's' : ''}`
   interval = Math.floor(seconds / 2592000) // months
   if (interval > 1) return 'il y a ' + interval + ' mois'
   interval = Math.floor(seconds / 86400) // days
-  if (interval > 1) return 'il y a ' + interval + ' jours'
+  if (interval >= 1)
+    return 'il y a ' + interval + ` jour${interval > 1 ? 's' : ''}`
   interval = Math.floor(seconds / 3600) // hours
-  if (interval > 1) return 'il y a ' + interval + ' heures'
+  if (interval >= 1)
+    return 'il y a ' + interval + ` heure${interval > 1 ? 's' : ''}`
   interval = Math.floor(seconds / 60) // minutes
-  if (interval > 1) return 'il y a ' + interval + ' minutes'
-  return seconds < 5 ? "a l'instant" : seconds + ' secondes'
+  if (interval >= 1)
+    return 'il y a ' + interval + ` minute${interval > 1 ? 's' : ''}`
+  return seconds < 5 ? "à l'instant" : 'il y a ' + seconds + ' secondes'
 }
 
 const fetchEvents = async (variables) => {
