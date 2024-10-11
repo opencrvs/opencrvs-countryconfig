@@ -70,7 +70,7 @@
                 id="searchInput"
                 placeholder="Rechercher..."
                 class="border border-gray-300 rounded px-4 py-2 w-full md:w-64"
-                oninput="filterBySearch()"
+                onkeydown="if (event.key === 'Enter' || this.value === '') filterBySearch()"
               />
             </div>
             <button
