@@ -759,7 +759,16 @@ const updateSortIcons = () => {
 
 window.filterByDate = function filterByDate() {
   currentPage = 1
-  renderTable()
+  const startDateInput = document.getElementById('startDate')
+  const endDateInput = document.getElementById('endDate')
+  const startDateValue = startDateInput.value
+  const endDateValue = endDateInput.value
+  startDateValue
+    ? (endDateInput.min = startDateValue)
+    : endDateInput.removeAttribute('min')
+  endDateValue
+    ? (startDateInput.max = endDateValue)
+    : startDateInput.removeAttribute('max')
 }
 
 window.filterBySearch = function filterBySearch() {
