@@ -28,6 +28,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Birth Certificate',
         description: 'The label for a birth certificate'
       },
+      registrationTarget: 30,
+      lateRegistrationTarget: 365,
+      printInAdvance: true,
+      fee: {
+        onTime: 0,
+        late: 5.5,
+        delayed: 15
+      },
       svgUrl: '/api/countryconfig/certificates/birth-certificate.svg',
       fonts: {
         'Noto Sans': {
@@ -45,6 +53,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         id: 'certificates.birth.certificate.copy',
         defaultMessage: 'Birth Certificate certified copy',
         description: 'The label for a birth certificate'
+      },
+      registrationTarget: 30,
+      lateRegistrationTarget: 365,
+      printInAdvance: true,
+      fee: {
+        onTime: 0,
+        late: 5.5,
+        delayed: 15
       },
       svgUrl:
         '/api/countryconfig/certificates/birth-certificate-certified-copy.svg',
@@ -65,6 +81,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Death Certificate',
         description: 'The label for a death certificate'
       },
+      registrationTarget: 30,
+      lateRegistrationTarget: 365,
+      printInAdvance: true,
+      fee: {
+        onTime: 0,
+        late: 5.5,
+        delayed: 15
+      },
       svgUrl: '/api/countryconfig/certificates/death-certificate.svg',
       fonts: {
         'Noto Sans': {
@@ -82,6 +106,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         id: 'certificates.death.certificate.copy',
         defaultMessage: 'Death Certificate certified copy',
         description: 'The label for a death certificate'
+      },
+      registrationTarget: 30,
+      lateRegistrationTarget: 365,
+      printInAdvance: true,
+      fee: {
+        onTime: 0,
+        late: 5.5,
+        delayed: 15
       },
       svgUrl:
         '/api/countryconfig/certificates/death-certificate-certified-copy.svg',
@@ -102,6 +134,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Marriage Certificate',
         description: 'The label for a marriage certificate'
       },
+      registrationTarget: 30,
+      lateRegistrationTarget: 365,
+      printInAdvance: true,
+      fee: {
+        onTime: 0,
+        late: 5.5,
+        delayed: 15
+      },
       svgUrl: '/api/countryconfig/certificates/marriage-certificate.svg',
       fonts: {
         'Noto Sans': {
@@ -119,6 +159,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         id: 'certificates.marriage.certificate.copy',
         defaultMessage: 'Marriage Certificate certified copy',
         description: 'The label for a marriage certificate'
+      },
+      registrationTarget: 30,
+      lateRegistrationTarget: 365,
+      printInAdvance: true,
+      fee: {
+        onTime: 0,
+        late: 5.5,
+        delayed: 15
       },
       svgUrl:
         '/api/countryconfig/certificates/marriage-certificate-certified-copy.svg',
