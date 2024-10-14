@@ -204,14 +204,13 @@ export const expectAddress = async (
     'Farajaland'
     'Central'
     'Ibombo'
-    ''
     'Example Town' / 'Example village'
     'Mitali Residential Area'
     '4/A'
     '1324'
 
 */
-const getDeletionPosition = (i: number) => i + (i < 3 ? 1 : 2)
+const getDeletionPosition = (i: number) => i + 1 // for the extra '-' at the beginning
 
 export const expectTexts = async (locator: Locator, texts: string[]) => {
   for (const text of texts) {
