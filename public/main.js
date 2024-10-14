@@ -482,7 +482,7 @@ window.openPrintModal = async function openPrintModal(
   officeName
 ) {
   const person = await fetchBirthRegistrationForCertificate({ id })
-  console.log('===>', person)
+
   if (person.data.fetchBirthRegistration) {
     const modal = document.getElementById('printModal')
     modal.classList.remove('hidden')
@@ -664,7 +664,7 @@ window.openPrintModal = async function openPrintModal(
         .trim()}, ${childGender}, ${outputFather} ${outputMother}. ---`,
       secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob} tao amin'ny "toerana nahaterahana", monina ao "Fokontany", Kaominina "Kaominina", distrika "Distrika", ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
     }
-    console.log(printableData)
+
     document.getElementById('soratra').textContent = printableData.soratra
     document.getElementById('nataoNy').textContent = printableData.nataoNy
     document.getElementById('anarana').textContent = printableData.anarana
