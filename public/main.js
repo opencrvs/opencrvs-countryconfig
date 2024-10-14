@@ -482,6 +482,7 @@ window.openPrintModal = async function openPrintModal(
   officeName
 ) {
   const person = await fetchBirthRegistrationForCertificate({ id })
+  console.log('===>', person)
   if (person.data.fetchBirthRegistration) {
     const modal = document.getElementById('printModal')
     modal.classList.remove('hidden')
@@ -523,6 +524,8 @@ window.openPrintModal = async function openPrintModal(
     ).id
 
     // father info
+    const fatherInfoNotIsAvailable = event.father.reasonNotApplying != null
+
     const fatherFullName =
       Array.isArray(event.father.name) && event.father.name.length > 0
         ? `${[
@@ -556,6 +559,22 @@ window.openPrintModal = async function openPrintModal(
         ?.districtName
     }`
 
+    const outputFather = `${
+      fatherInfoNotIsAvailable
+        ? "zanak'i "
+        : "zanak'i " +
+          fatherFullName +
+          ", teraka tamin'ny " +
+          fatherDateOfBirth +
+          ' tao ' +
+          fatherPlaceOfBirth +
+          " , monina ao amin'ny " +
+          fatherAddress +
+          ' , ' +
+          event.father.occupation +
+          ' , sy '
+    }`
+
     // mother info
     const motherFullName =
       Array.isArray(event.mother.name) && event.mother.name.length > 0
@@ -584,7 +603,20 @@ window.openPrintModal = async function openPrintModal(
       event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')
         ?.districtName
     }`
-
+    const motherInfoNotIsAvailable = event.mother.reasonNotApplying != null
+    const outputMother = `${
+      motherInfoNotIsAvailable
+        ? ''
+        : motherFullName +
+          ", teraka tamin'ny " +
+          motherDateOfBirth +
+          'tao ' +
+          motherPlaceOfBirth +
+          ", monina ao amin'ny " +
+          motherAddress +
+          ', ' +
+          motherOccupation
+    }`
     // informant info
     const relationMap = {
       mother: 'reniny',
@@ -629,12 +661,10 @@ window.openPrintModal = async function openPrintModal(
         childLastName
       ]
         .join(' ')
-        .trim()}, ${childGender}, zanak'i ${fatherFullName}, teraka tamin'ny ${fatherDateOfBirth} tao ${fatherPlaceOfBirth}, monina ao amin'ny ${fatherAddress}, ${
-        event.father.occupation
-      }, sy ${motherFullName}, teraka tamin'ny ${motherDateOfBirth} tao ${motherPlaceOfBirth}, monina ao amin'ny ${motherAddress}, ${motherOccupation}. ---`,
+        .trim()}, ${childGender}, ${outputFather} ${outputMother}. ---`,
       secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob} tao amin'ny "toerana nahaterahana", monina ao "Fokontany", Kaominina "Kaominina", distrika "Distrika", ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
     }
-
+    console.log(printableData)
     document.getElementById('soratra').textContent = printableData.soratra
     document.getElementById('nataoNy').textContent = printableData.nataoNy
     document.getElementById('anarana').textContent = printableData.anarana
