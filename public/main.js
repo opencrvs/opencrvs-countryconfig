@@ -628,13 +628,17 @@ window.openPrintModal = async function openPrintModal(
       grandfather: 'raibeny',
       grandmother: 'renibeny'
     }
-    const birthInformantLastName = `${event?.informant?.name[0]?.familyName}`
-    const birthInformanFirstNames = `${event?.informant?.name[0]?.firstNames}`
+    const birthInformantLastName = `${
+      event?.informant?.name ? event?.informant?.name[0]?.familyName : ''
+    }`
+    const birthInformanFirstNames = `${
+      event?.informant?.name ? event?.informant?.name[0]?.firstNames : ''
+    }`
     const birthInformantFullName = `${birthInformantLastName} ${birthInformanFirstNames}`
     const birthInformantType =
       relationMap[event.informant?.relationship?.toLowerCase()] || ''
 
-    const birthInformantDob = `${dateFormatter(event.informant.birthDate)}`
+    const birthInformantDob = `${dateFormatter(event.informant?.birthDate)}`
     const birthInformantoRelationship = `${event?.informant?.relationship}`
     const birthInformantInfo =
       birthInformantoRelationship.toLowerCase() === 'mother' ||
@@ -642,11 +646,25 @@ window.openPrintModal = async function openPrintModal(
         ? `${birthInformantType} `
         : `${birthInformantFullName}, ${birthInformantType}`
     const informantOccupation = `${event?.informant?.occupation ?? ''}`
-    const informantFkt = event?.questionnaire?.find(
-      (q) =>
-        q.fieldId ===
-        'birth.informant.informant-view-group.fokontanyCustomAddress'
-    ) || { value: '' }
+    const informantFkt = (
+      event?.questionnaire?.find(
+        (q) =>
+          q.fieldId ===
+          (event.informant?.relationship.toLowerCase() === 'mother'
+            ? 'birth.mother.mother-view-group.fokontanyCustomAddress'
+            : event.informant?.relationship.toLowerCase() === 'father'
+            ? 'birth.father.father-view-group.fokontanyCustomAddress'
+            : 'birth.informant.informant-view-group.fokontanyCustomAddress')
+      ) || { value: '' }
+    ).value
+
+    const informantAddress = `fokontany ${informantFkt}, kaominina ${
+      event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+        ?.stateName
+    }, distrikta ${
+      event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+        ?.districtName
+    }`
 
     // registration info
     const birthRegistrationDate = dateFormatter(createdDate.split('T')[0])
@@ -667,7 +685,7 @@ window.openPrintModal = async function openPrintModal(
       ]
         .join(' ')
         .trim()}, ${childGender}, ${outputFather} ${outputMother}. ---`,
-      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob}, monina ao ${informantFkt}, ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
+      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
     }
     console.log(printableData)
     document.getElementById('soratra').textContent = printableData.soratra
