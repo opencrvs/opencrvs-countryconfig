@@ -70,10 +70,16 @@ export function wrapGroup(): Handlebars.HelperDelegate {
         <text 
           fill="black" 
           xml:space="default" 
-          font-family="Montserrat" 
-          font-size="9"
-          font-weight="${textType}" 
-          letter-spacing="0em">
+          font-family="Plus Jakarta Sans" 
+          font-size="11"
+          font-weight="${textType}"
+          letter-spacing="0em"
+           ${
+             textType === 'bold'
+               ? `transform="translate(${initX * 0.5},0)"`
+               : ''
+           }
+          >
             ${insertTspansIntoText(lines)}
         </text>
       `
@@ -83,9 +89,7 @@ export function wrapGroup(): Handlebars.HelperDelegate {
       const lines = wordWrap(options.hash[key], lineLength)
       const textType = key.startsWith('text') ? 'normal' : 'bold'
       content += createTextElement(textType, lines)
-      if (textType === 'normal') {
-        y += LINE_HEIGHT
-      }
+      y += LINE_HEIGHT
     }
 
     return content
