@@ -346,8 +346,36 @@ export const birthForm: ISerializedForm = {
                   expression: '$form.createNUI?.loading'
                 },
                 {
+                  action: 'hide',
+                  expression: '!window.navigator.onLine'
+                }
+              ],
+              label: formMessageDescriptors.nui,
+              buttonLabel: formMessageDescriptors.generateNUI,
+              icon: 'UserCircle',
+              loadingLabel: formMessageDescriptors.generatingNUI
+            },
+            {
+              name: 'nuiGeneratorOffline',
+              type: 'BUTTON',
+              custom: true,
+              hideInPreview: true,
+              required: false,
+              validator: [],
+              options: {
+                trigger: 'createNUI',
+                shouldHandleLoadingState: true
+              },
+              conditionals: [
+                conditionals.hide.whenFieldAgent,
+                conditionals.hide.whenRegistrationAgent,
+                {
                   action: 'disable',
                   expression: '!window.navigator.onLine'
+                },
+                {
+                  action: 'hide',
+                  expression: 'window.navigator.onLine'
                 }
               ],
               label: formMessageDescriptors.nui,
@@ -362,6 +390,7 @@ export const birthForm: ISerializedForm = {
                 id: 'form.field.label.idManual',
                 defaultMessage: 'Enter NUI manually'
               },
+              previewGroup: 'iDManual',
               required: true,
               custom: true,
               initialValue: '',
@@ -415,7 +444,15 @@ export const birthForm: ISerializedForm = {
               conditionals: [conditionals.hide.whenFieldAgent]
             })
           ],
-          previewGroups: [childNameInEnglish] // Preview groups are used to structure data nicely in Review Page UI
+          previewGroups: [
+            childNameInEnglish,
+            {
+              id: 'iDManual',
+              label: formMessageDescriptors.nui,
+              fieldToRedirect: 'iDManual',
+              delimiter: ' '
+            }
+          ] // Preview groups are used to structure data nicely in Review Page UI
         }
       ]
     },

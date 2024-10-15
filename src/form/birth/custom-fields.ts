@@ -111,7 +111,12 @@ export function getLegacyBirthRegistrationDate({
       defaultMessage: 'Legacy birth registration date'
     },
     initialValue: '',
-    validator: [],
+    validator: [
+      {
+        operation: 'dateNotInFuture',
+        parameters: []
+      }
+    ],
     mapping: getCustomFieldMapping(fieldId),
     conditionals
   }
