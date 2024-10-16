@@ -1,9 +1,9 @@
+import GlobalLoader from './globalLoader.js'
 let currentPage = 1
 let rowsPerPage = 10
 let totalPages = 1
 let sortDirection = 'desc'
 let sortColumn = '' // 'desc' by default
-
 function timeAgo(date) {
   const seconds = Math.floor((new Date() - new Date(date)) / 1000)
   let interval = Math.floor(seconds / 31536000) // years
@@ -24,6 +24,8 @@ function timeAgo(date) {
 }
 
 const fetchEvents = async (variables) => {
+  GlobalLoader.showLoader()
+
   const query = `
     query(
       $userId: String
@@ -80,6 +82,9 @@ const fetchEvents = async (variables) => {
     },
     body: JSON.stringify({ query, variables })
   })
+  .finally(() => {
+    GlobalLoader.hideLoader()
+  })
 
   if (!response.ok) {
     throw new Error('Something went wrong with the graphql request')
@@ -90,6 +95,7 @@ const fetchEvents = async (variables) => {
 }
 
 const fetchBirthRegistrationForCertificate = async (variables) => {
+  GlobalLoader.showLoader()
   const query = `
       query fetchBirthRegistrationForCertificate($id: ID!) {
         fetchBirthRegistration(id: $id) {
@@ -390,6 +396,9 @@ const fetchBirthRegistrationForCertificate = async (variables) => {
       variables
     })
   })
+  .finally(() => {
+    GlobalLoader.hideLoader()
+  })
 
   if (!response.ok) {
     throw new Error('Something went wrong with the graphql request')
@@ -482,7 +491,6 @@ window.openPrintModal = async function openPrintModal(
   officeName
 ) {
   const person = await fetchBirthRegistrationForCertificate({ id })
-  console.log('===>', person)
   if (person.data.fetchBirthRegistration) {
     const modal = document.getElementById('printModal')
     modal.classList.remove('hidden')
@@ -687,7 +695,6 @@ window.openPrintModal = async function openPrintModal(
         .trim()}, ${childGender}, ${outputFather} ${outputMother}. ---`,
       secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
     }
-    console.log(printableData)
     document.getElementById('soratra').textContent = printableData.soratra
     document.getElementById('nataoNy').textContent = printableData.nataoNy
     document.getElementById('anarana').textContent = printableData.anarana
