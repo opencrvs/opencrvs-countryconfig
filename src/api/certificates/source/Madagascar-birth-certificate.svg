@@ -84,8 +84,8 @@
     bold1="---MANARAKA NY SONIA---"
     text1=(mainContent (location districtPlaceofbirthId "name"))}}}
 
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="12"
-        font-weight="600" letter-spacing="0em">
+    <text fill="black" xml:space="default" font-family="Plus Jakarta Sans" font-size="12" font-weight="600"
+        letter-spacing="0em">
         <tspan x="262.152" y="637.396">Ny Mpiandraikitra ny sora-piankohonana</tspan>
     </text>
     <image x="231" y="14" width="132" height="72" xlink:href="{{certificateLogo}}"
