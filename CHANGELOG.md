@@ -2,6 +2,10 @@
 
 ## 1.7.0 Release candidate
 
+### New features
+
+- Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
 ### Bug fixes
 
 - Protect individual certificate endpoint with token
