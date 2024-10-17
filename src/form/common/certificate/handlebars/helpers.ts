@@ -53,44 +53,13 @@ export function wrapGroup(): Handlebars.HelperDelegate {
     initY: number,
     options: Handlebars.HelperOptions
   ) {
-    let content = ''
-    let y = initY
-    function insertTspansIntoText(textLines: string[]) {
-      let svgString = ''
-      for (const line of textLines) {
-        svgString += `<tspan x="${initX}" y="${y}">${line}</tspan>`
-        y += LINE_HEIGHT
-      }
-      return svgString
-    }
-
-    function createTextElement(textType: 'normal' | 'bold', lines: string[]) {
-      return `
-        <text 
-          fill="black" 
-          xml:space="default" 
-          font-family="Plus Jakarta Sans" 
-          font-size="11"
-          font-weight="${textType}"
-          letter-spacing="0em"
-           ${
-             textType === 'bold'
-               ? `transform="translate(${initX * 0.5},0)"`
-               : ''
-           }
-          >
-            ${insertTspansIntoText(lines)}
-        </text>
-      `
-    }
-
-    for (const key of Object.keys(options.hash).reverse()) {
-      const lines = wordWrap(options.hash[key], lineLength)
-      const textType = key.startsWith('text') ? 'normal' : 'bold'
-      content += createTextElement(textType, lines)
-      y += LINE_HEIGHT
-    }
-
+    this.x = initX
+    this.y = initY
+    this.lineLength = lineLength
+    const content = options.fn(this)
+    delete this.x
+    delete this.y
+    delete this.lineLength
     return content
   } as unknown as Handlebars.HelperDelegate
 }
@@ -111,6 +80,49 @@ export function join(): Handlebars.HelperDelegate {
   } as unknown as Handlebars.HelperDelegate
 }
 
+export function text(): Handlebars.HelperDelegate {
+  return function (
+    this: Record<string, any>,
+    options: Handlebars.HelperOptions
+  ) {
+    function insertTspansIntoText(this: any, textLines: string[]) {
+      let svgString = ''
+      for (const line of textLines) {
+        svgString += `<tspan x="${this.x}" y="${this.y}">${line}</tspan>`
+        this.y += LINE_HEIGHT
+      }
+      return svgString
+    }
+    const fontWeight = options.hash.fontWeight || 'normal'
+    const align = options.hash.align || 'start'
+    const fontSize = options.hash.fontSize || 11
+    const content = options.fn(this)
+    const lines = wordWrap(content, this.lineLength)
+
+    this.y += LINE_HEIGHT
+
+    return `<text 
+          fill="black" 
+          xml:space="default" 
+          font-family="Plus Jakarta Sans" 
+          font-size="${fontSize}"
+          font-weight="${fontWeight}"
+          letter-spacing="0em"
+           ${
+             align === 'middle'
+               ? `
+                  x="50%"
+                  dx="${this.x}"
+                  dominant-baseline="middle"
+                  text-anchor="middle"
+               `
+               : ''
+           }
+          >
+            ${insertTspansIntoText.call(this, lines)}
+        </text>`
+  }
+}
 export function introduction(): Handlebars.HelperDelegate {
   return function (this: any, placeOfBirthCommune: string) {
     return joinValuesWith(

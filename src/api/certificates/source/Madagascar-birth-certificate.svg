@@ -82,18 +82,20 @@
     <text fill="black" xml:space="default" font-family="Kapakana" font-size="36" letter-spacing="0em">
         <tspan x="217.896" y="122.48">Kopian&#x2019;i Sora-Piankohonana</tspan>
     </text>
-    {{{wrapGroup 60 187 178.488
-    text1=(introduction (location registrar.officeId "name"))
-    text2=(eventStatement (location districtPrimaryFatherId "name") (location districtPrimaryMotherId "name"))
-    text3=(registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId "name"))
-    bold1="---MANARAKA NY SONIA---"
-    text4=(signatureDescription)
-    }}}
 
-    <text fill="black" xml:space="default" font-family="Plus Jakarta Sans" font-size="12" font-weight="600"
-        letter-spacing="0em">
-        <tspan x="262.152" y="637.396">Ny Mpiandraikitra ny sora-piankohonana</tspan>
-    </text>
+    {{#wrapGroup 60 187 178.488}}
+    {{#text}}{{introduction (location registrar.officeId "name")}}{{/text}}
+    {{#text}}{{eventStatement (location districtPrimaryFatherId "name") (location districtPrimaryMotherId
+    "name")}}{{/text}}
+    {{#text}}{{registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId
+    "name")}}{{/text}}
+    {{#text fontWeight="bold" align="middle"}}---MANARAKA NY SONIA---{{/text}}
+    {{#text}}{{signatureDescription}}{{/text}}
+    {{#text}}{{/text}}
+    {{#text fontWeight="bold" align="middle" fontSize=12}}Ny Mpiandraikitra ny sora-piankohonana{{/text}}
+    {{/wrapGroup}}
+
+
     <image x="231" y="14" width="132" height="72" xlink:href="{{certificateLogo}}"
         preserveAspectRatio="xMaxYMid meet" />
 </svg>
