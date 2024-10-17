@@ -84,7 +84,7 @@ export function wrapGroup(): Handlebars.HelperDelegate {
       `
     }
 
-    for (const key in options.hash) {
+    for (const key of Object.keys(options.hash).reverse()) {
       const lines = wordWrap(options.hash[key], lineLength)
       const textType = key.startsWith('text') ? 'normal' : 'bold'
       content += createTextElement(textType, lines)

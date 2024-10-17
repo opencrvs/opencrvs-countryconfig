@@ -83,11 +83,12 @@
         <tspan x="217.896" y="122.48">Kopian&#x2019;i Sora-Piankohonana</tspan>
     </text>
     {{{wrapGroup 60 187 178.488
-    text4=(signatureDescription)
-    bold1="---MANARAKA NY SONIA---"
-    text3=(registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId "name"))
+    text1=(introduction (location registrar.officeId "name"))
     text2=(eventStatement (location districtPrimaryFatherId "name") (location districtPrimaryMotherId "name"))
-    text1=(introduction (location registrar.officeId "name"))}}}
+    text3=(registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId "name"))
+    bold1="---MANARAKA NY SONIA---"
+    text4=(signatureDescription)
+    }}}
 
     <text fill="black" xml:space="default" font-family="Plus Jakarta Sans" font-size="12" font-weight="600"
         letter-spacing="0em">
