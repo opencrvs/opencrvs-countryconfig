@@ -1819,6 +1819,7 @@ search.locationNotFound,Label for location not found,Location Not Found,Emplacem
 search.noDeclarations,The text when there is no declaration to review,No declarations to review,Aucune déclaration à examiner
 search.noResultFor,The no result text,No results for ”{param}”,Aucun résultat pour “{param}”
 search.noResults,Text to display if the search return no results for the current filters,No result to display,Aucun résultat à afficher
+search.placeholder,Placeholder text of search input,Name of query,Nom de la requête
 search.removeBbookmarkAdvancedSearchModalBody,Modal body for remove bookmark advacnced search,This advanced search bookmark will be removed from the side bar shortcut,Ce signet de recherche avancée sera supprimé du raccourci de la barre latérale
 search.removeBookmarkAdvancedSearchModalTitle,Modal title for remove bookmark advacnced search,Remove search query?,Supprimer la requête de recherche ?
 search.results,Results label at the top of the data table component,Results,Résultats

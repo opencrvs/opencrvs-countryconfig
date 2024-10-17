@@ -64,7 +64,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   {
     // INFORMANT ADDRESS FIELDS
     precedingFieldId:
-      'birth.informant.informant-view-group.informant-nid-seperator',
+      'birth.informant.informant-view-group.informantBirthRegistrationNumber',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,

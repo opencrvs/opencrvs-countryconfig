@@ -37,7 +37,7 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - COUNTRY=FAR
+      - COUNTRY=${COUNTRY}
       - QA_ENV=true
       - NODE_ENV=production
       - DISABLE_RATE_LIMIT=true

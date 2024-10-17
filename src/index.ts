@@ -64,6 +64,7 @@ import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
+import { recordNotificationHandler } from './api/record-notification/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -576,6 +577,16 @@ export async function createServer() {
       auth: false,
       tags: ['api', 'static'],
       description: 'Server static files for client'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/record-notification',
+    handler: recordNotificationHandler,
+    options: {
+      tags: ['api'],
+      description: 'Checks for enabled notification for record'
     }
   })
 

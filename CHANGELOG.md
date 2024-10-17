@@ -15,6 +15,7 @@
 ### Improvements
 
 - Auth token, ip address, remote address, mobile number, email redacted/masked from server log
+- Country alpha3 ISO code now is derived from variables to the Docker Compose files and don't need to be hard coded
 
 ### Infrastructure breaking changes
 
@@ -38,6 +39,10 @@ INSERT CSV ROWS IN ENGLISH ONLY
 ## 1.6.0 Release candidate
 
 ### Breaking changes
+
+- **Notification Flags** The configuration of various notifications is now controlled from `countryconfig` instead of being handled in the UI, as notification settings are not something that should be changed on the fly. To simplify this process, we have moved the settings to the `application-config.ts` file. From now on, the notifications can be managed in the `notificationForRecord` object defined in the mentioned file. Any changes will take effect after a new deployment.
+
+  **_Country implementors must define the `notificationForRecord` object in the `application-config.ts` file to enable the notifications they want. Not doing so will keep notifications disabled by default._**
 
 - **Gateways searchEvents API updated** `operationHistories` only returns `operationType` & `operatedOn` due to the other fields being unused in OpenCRVS
 - **Config changes to review/preview and signatures** Core used to provide review/preview section by default which are now removed and need to be provided from countryconfig. The signature field definitions (e.g. informant signature, bride signature etc.) were hard coded in core which also have now been removed. The signatures can now be added through the review/preview sections defined in countryconfig just like any other field. You can use the following section definition as the default which is without any additional fields. We highly recommend checking out our reference country repository which has the signature fields in it's review/preview sections
@@ -87,11 +92,19 @@ INSERT CSV ROWS IN ENGLISH ONLY
 - If there is only one option in the document uploader select, then it stays hidden and only the upload button is showed with the only option being selected by default
 - The select options in DOCUMENT_UPLOADER_WITH_OPTION field can now be hidden using the new `optionCondition` property. It works similarly to the same property available in SELECT_WITH_OPTIONS field
 
-* **ElasticSearch reindexing**
-
-Allows reindexing ElasticSearch via a new search-service endpoint `reindex`. We're replacing the original `ocrvs` index with timestamped ones. This is done automatically when upgrading and migrating, but this is an important architectural change that should be noted. More details in [#7033](https://github.com/opencrvs/opencrvs-core/pull/7033).
+* **ElasticSearch reindexing** Allows reindexing ElasticSearch via a new search-service endpoint `reindex`. We're replacing the original `ocrvs` index with timestamped ones. This is done automatically when upgrading and migrating, but this is an important architectural change that should be noted. More details in [#7033](https://github.com/opencrvs/opencrvs-core/pull/7033).
 
 - Introduce a new certificate handlebar "preview" which can be used to conditionally render some svg element when previewing the certificate e.g. background image similar to security paper
+
+- **Notification flags**: Added notification flags for `BIRTH`, `DEATH`, and `MARRIAGE` events, including:
+
+  - `sent-notification`
+  - `sent-notification-for-review`
+  - `sent-for-approval`
+  - `registered`
+  - `sent-for-updates`
+
+- **`/record-notification` API**: Endpoint to check enabled notifications for records. The API returns the `notificationForRecord` object for `BIRTH` and `DEATH` events, listing their respective flags. Route configuration includes description and tags for API documentation.
 
 ### New content keys requiring translation
 
@@ -103,6 +116,12 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 - Github pipeline dedicated for reading secrets and variables from other environments now checks if GH_TOKEN is still valid before attempting other operations
 - Remove unnecessary UI dividers that add in various sections of the declaration forms(e.g the Death, Birth and Marriage forms) [#244](https://github.com/opencrvs/opencrvs-countryconfig/pull/244)
+
+## 1.5.2 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.5.1...v1.5.2)
+
+## Bug fixes
+
+- Broken email alerts from low disk space are now fixed [293](https://github.com/opencrvs/opencrvs-countryconfig/pull/293)
 
 ## 1.5.0 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.1...v1.5.0)
 

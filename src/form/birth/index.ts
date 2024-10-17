@@ -275,13 +275,6 @@ export const birthForm: ISerializedForm = {
               hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
               true
             ),
-            // preceding field of address fields
-            divider('informant-nid-seperator', [
-              {
-                action: 'hide',
-                expression: informantNotMotherOrFather
-              }
-            ]),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('informant-address-seperator', [
               {

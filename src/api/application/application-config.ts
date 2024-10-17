@@ -65,3 +65,34 @@ export const applicationConfig = {
 }
 
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE = 10
+
+type EventNotificationFlags = {
+  'sent-notification'?: boolean
+  'sent-notification-for-review'?: boolean
+  'sent-for-approval'?: boolean
+  registered?: boolean
+  'sent-for-updates'?: boolean
+}
+
+type NotificationFlags = {
+  BIRTH?: EventNotificationFlags
+  DEATH?: EventNotificationFlags
+  MARRIAGE?: EventNotificationFlags
+}
+
+export const notificationForRecord: NotificationFlags = {
+  BIRTH: {
+    'sent-notification': true,
+    'sent-notification-for-review': true,
+    'sent-for-approval': true,
+    registered: true,
+    'sent-for-updates': true
+  },
+  DEATH: {
+    'sent-notification': true,
+    'sent-notification-for-review': true,
+    'sent-for-approval': true,
+    registered: true,
+    'sent-for-updates': true
+  }
+}
