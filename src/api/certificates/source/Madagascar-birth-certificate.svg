@@ -44,7 +44,7 @@
     <text fill="black" xml:space="default" font-family="Plus Jakarta Sans" font-size="14" font-weight="bold"
         letter-spacing="0em">
         <tspan x="24" y="233.712">{{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
-            FAHATERAHANA &#38; FANJANAHANA
+            FAHATERAHANA SY FANJANAHANA
             {{ else }}
             FAHATERAHANA
             {{/ifCond}}</tspan>
@@ -59,7 +59,7 @@
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
-        <tspan x="24" y="301.58">NUI : {{#if childNIDManual}}{{childNIDManual}}{{else}}{{childNID}}{{/if}}</tspan>
+        <tspan x="24" y="301.58">NUI : {{getChildNID}}</tspan>
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
@@ -79,10 +79,11 @@
         <tspan x="217.896" y="122.48">Kopian&#x2019;i Sora-Piankohonana</tspan>
     </text>
     {{{wrapGroup 60 187 178.488
-    text2=(join "---Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany "
-    (translateDate currentDate) ".---")
+    text4=(signatureDescription)
     bold1="---MANARAKA NY SONIA---"
-    text1=(mainContent (location districtPlaceofbirthId "name"))}}}
+    text3=(registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId "name"))
+    text2=(eventStatement (location districtPrimaryFatherId "name") (location districtPrimaryMotherId "name"))
+    text1=(introduction (location registrar.officeId "name"))}}}
 
     <text fill="black" xml:space="default" font-family="Plus Jakarta Sans" font-size="12" font-weight="600"
         letter-spacing="0em">
