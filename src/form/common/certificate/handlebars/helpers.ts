@@ -358,11 +358,11 @@ function convertTimeToMdgCustomWords(timeString: string) {
     return `roa ambin'ny folo ora alina`
   }
 
-  return `${
-    mdgHours[newHour]
-  }ora sy ${convertNumberToLetterForMalagasySpecificLanguage(
-    newMinute
-  )} minitra ${timePeriod}`
+  return `${mdgHours[newHour]}${
+    newMinute > 0
+      ? `ora sy ${convertNumberToLetterForMalagasySpecificLanguage(newMinute)} `
+      : ''
+  }minitra ${timePeriod}`
 }
 
 function convertDateToMdgCustomWords(dateString: string) {
