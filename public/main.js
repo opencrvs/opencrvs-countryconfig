@@ -81,8 +81,7 @@ const fetchEvents = async (variables) => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ query, variables })
-  })
-  .finally(() => {
+  }).finally(() => {
     GlobalLoader.hideLoader()
   })
 
@@ -395,8 +394,7 @@ const fetchBirthRegistrationForCertificate = async (variables) => {
       query,
       variables
     })
-  })
-  .finally(() => {
+  }).finally(() => {
     GlobalLoader.hideLoader()
   })
 
@@ -491,6 +489,7 @@ window.openPrintModal = async function openPrintModal(
   officeName
 ) {
   const person = await fetchBirthRegistrationForCertificate({ id })
+  console.log('==>', person)
   if (person.data.fetchBirthRegistration) {
     const modal = document.getElementById('printModal')
     modal.classList.remove('hidden')
@@ -524,6 +523,11 @@ window.openPrintModal = async function openPrintModal(
     const childHourOfBirth = childBirthTime ? timeFormatter(childBirthTime) : ''
     const childBirthLocation = event.questionnaire.find(
       (q) => q.fieldId === 'birth.child.child-view-group.fokontanyCustomAddress'
+    )?.value
+    const childLegacyBirthRegistrationNumber = event.questionnaire?.find(
+      (q) =>
+        q.fieldId ===
+        'birth.child.child-view-group.legacyBirthRegistrationNumber'
     )?.value
     const childNUI = (
       event?.child?.identifier?.find((q) => q.type === 'NATIONAL_ID') || {
@@ -681,7 +685,7 @@ window.openPrintModal = async function openPrintModal(
     const civilRegistrationCenterNname = officeNameFormatter(officeName || '')
 
     const printableData = {
-      soratra: event.registration.registrationNumber,
+      soratra: childLegacyBirthRegistrationNumber,
       nataoNy: window.setLocaleDateCustomString(createdDate.split('T')[0]),
       anarana: childFirstName,
       fanampinAnarana: childLastName,
