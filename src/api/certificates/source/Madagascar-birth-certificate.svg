@@ -75,6 +75,10 @@
             {{/ifCond}}
         </tspan>
     </text>
+    <text fill="black" xml:space="default" font-family="Plus Jakarta Sans" font-size="8" letter-spacing="0em">
+        {{{wrap 20 24 383.58 (mentions)}}}
+    </text>
+
     <text fill="black" xml:space="default" font-family="Kapakana" font-size="36" letter-spacing="0em">
         <tspan x="217.896" y="122.48">Kopian&#x2019;i Sora-Piankohonana</tspan>
     </text>
