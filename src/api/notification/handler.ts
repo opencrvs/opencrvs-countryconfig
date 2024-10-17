@@ -81,6 +81,7 @@ export async function notificationHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
+  console.log('========= notificationHandler is invoked now ==============')
   const payload = request.payload as NotificationPayload
 
   const applicationConfig = await getApplicationConfig()
