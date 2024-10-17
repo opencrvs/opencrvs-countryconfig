@@ -99,11 +99,7 @@ export function text(): Handlebars.HelperDelegate {
     const content = options.fn(this)
     const lines = wordWrap(content, this.lineLength)
 
-    if (options.hash.trailingNewline !== false) {
-      this.y += LINE_HEIGHT
-    }
-
-    return `<text 
+    const element = `<text 
           fill="black" 
           xml:space="default" 
           font-family="Plus Jakarta Sans" 
@@ -123,6 +119,10 @@ export function text(): Handlebars.HelperDelegate {
           >
             ${insertTspansIntoText.call(this, lines)}
         </text>`
+    if (options.hash.trailingNewline !== false) {
+      this.y += LINE_HEIGHT
+    }
+    return element
   }
 }
 export function introduction(): Handlebars.HelperDelegate {

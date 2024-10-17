@@ -42,7 +42,7 @@
         <tspan x="86" y="192.58">{{translateDateToMDGFormat registrar.date}}</tspan>
     </text>
 
-    {{#wrapGroup 25 24 233.712}}
+    {{#wrapGroup 20 24 233.712}}
     {{#text fontSize=14 fontWeight="bold"}}
     {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
     FAHATERAHANA SY FANJANAHANA
