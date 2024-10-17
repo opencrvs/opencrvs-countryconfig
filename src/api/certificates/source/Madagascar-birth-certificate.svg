@@ -42,7 +42,7 @@
         <tspan x="86" y="192.58">{{translateDateToMDGFormat registrar.date}}</tspan>
     </text>
 
-    {{#wrapGroup 20 24 233.712}}
+    {{#wrapGroup 30 24 233.712}}
     {{#text fontSize=14 fontWeight="bold"}}
     {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
     FAHATERAHANA SY FANJANAHANA
@@ -52,7 +52,7 @@
     {{/text}}
     {{#text fontSize=10 trailingNewline=false}}{{childFamilyName}}{{/text}}
     {{#text fontSize=10 trailingNewline=false}}{{childFirstName}}{{/text}}
-    {{#text fontSize=10 trailingNewline=false}}NUI : {{getChildNID}}{{/text}}
+    {{#text fontSize=10 trailingNewline=false}}LFT: {{birthChildLegacyBirthRegistrationNumber}}{{/text}}
     {{#text fontSize=10 trailingNewline=false}}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
     {{#text fontSize=10 fontWeight="bold"}}{{#ifCond (isFirstCertificate) '===' true}}
     KOPIA VOALOHANY
