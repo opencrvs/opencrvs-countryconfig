@@ -20,7 +20,7 @@ function wordWrap(text: string, boundary: number) {
     .join('\n')
     .split('\n')
 }
-const LINE_HEIGHT = 14
+const LINE_HEIGHT = 15
 
 function insertTspansIntoText(textLines: string[], xi: number, yi: number) {
   let svgString = ''
@@ -99,7 +99,9 @@ export function text(): Handlebars.HelperDelegate {
     const content = options.fn(this)
     const lines = wordWrap(content, this.lineLength)
 
-    this.y += LINE_HEIGHT
+    if (options.hash.trailingNewline !== false) {
+      this.y += LINE_HEIGHT
+    }
 
     return `<text 
           fill="black" 

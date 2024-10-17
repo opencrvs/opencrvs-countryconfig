@@ -41,43 +41,27 @@
         font-weight="bold" letter-spacing="0em">
         <tspan x="86" y="192.58">{{translateDateToMDGFormat registrar.date}}</tspan>
     </text>
-    <text fill="black" xml:space="default" font-family="Plus Jakarta Sans" font-size="14" font-weight="bold"
-        letter-spacing="0em">
-        <tspan x="24" y="233.712">{{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
-            FAHATERAHANA SY FANJANAHANA
-            {{ else }}
-            FAHATERAHANA
-            {{/ifCond}}</tspan>
-    </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
-        letter-spacing="0em">
-        <tspan x="24" y="271.58">{{childFamilyName}}</tspan>
-    </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
-        letter-spacing="0em">
-        <tspan x="24" y="286.58">{{childFirstName}}</tspan>
-    </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
-        letter-spacing="0em">
-        <tspan x="24" y="301.58">NUI : {{getChildNID}}</tspan>
-    </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
-        letter-spacing="0em">
-        <tspan x="24" y="316.58">Teraka ny : {{translateDateToMDGFormat eventDate}}</tspan>
-    </text>
-    <text fill="black" xml:space="default" font-family="Plus Jakarta Sans" font-size="10" font-weight="bold"
-        letter-spacing="0em">
-        <tspan x="24" y="353.58">
-            {{#ifCond (isFirstCertificate) '===' true}}
-            KOPIA VOALOHANY
-            {{else}}
-            FANAMARIHANA AN-TSISINY&#10;
-            {{/ifCond}}
-        </tspan>
-    </text>
-    <text fill="black" xml:space="default" font-family="Plus Jakarta Sans" font-size="8" letter-spacing="0em">
-        {{{wrap 20 24 383.58 (mentions)}}}
-    </text>
+
+    {{#wrapGroup 25 24 233.712}}
+    {{#text fontSize=14 fontWeight="bold"}}
+    {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
+    FAHATERAHANA SY FANJANAHANA
+    {{ else }}
+    FAHATERAHANA
+    {{/ifCond}}
+    {{/text}}
+    {{#text fontSize=10 trailingNewline=false}}{{childFamilyName}}{{/text}}
+    {{#text fontSize=10 trailingNewline=false}}{{childFirstName}}{{/text}}
+    {{#text fontSize=10 trailingNewline=false}}NUI : {{getChildNID}}{{/text}}
+    {{#text fontSize=10 trailingNewline=false}}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
+    {{#text fontSize=10 fontWeight="bold"}}{{#ifCond (isFirstCertificate) '===' true}}
+    KOPIA VOALOHANY
+    {{else}}
+    FANAMARIHANA AN-TSISINY&#10;
+    {{/ifCond}}{{/text}}
+    {{#text}}{{mentions}}{{/text}}
+    {{/wrapGroup}}
+
 
     <text fill="black" xml:space="default" font-family="Kapakana" font-size="36" letter-spacing="0em">
         <tspan x="217.896" y="122.48">Kopian&#x2019;i Sora-Piankohonana</tspan>
