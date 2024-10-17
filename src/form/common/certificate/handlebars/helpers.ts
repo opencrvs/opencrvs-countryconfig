@@ -1,5 +1,4 @@
 import * as Handlebars from 'handlebars'
-import { type IntlShape } from 'react-intl'
 
 function wordWrap(text: string, boundary: number) {
   return text
@@ -112,9 +111,6 @@ export function join(): Handlebars.HelperDelegate {
   } as unknown as Handlebars.HelperDelegate
 }
 
-function name(familyName: string, firstName: string) {
-  return joinValuesWith([familyName, firstName], ' ')
-}
 export function introduction(): Handlebars.HelperDelegate {
   return function (this: any, placeOfBirthCommune: string) {
     return joinValuesWith(
@@ -296,16 +292,6 @@ export function signatureDescription(): Handlebars.HelperDelegate {
 function isInformantMotherOrFather(informantType: string) {
   return informantType === 'MOTHER' || informantType === 'FATHER'
 }
-type FactoryProps = {
-  intl: IntlShape
-}
-export function noop(props: FactoryProps): Handlebars.HelperDelegate {
-  return function (this: any, value: string) {
-    // eslint-disable-next-line no-console
-
-    return value
-  }
-}
 
 const THE_UNITS_MDG_WORDS: string[] = [
   '',
@@ -376,27 +362,6 @@ const THE_MONTH_MDG_WORDS: string[] = [
   'Novambra',
   'Desambra'
 ]
-
-const THE_MONTH_EN_WORDS: string[] = [
-  '',
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
-
-const DEFAULT_MESSAGE = 'defaultMessage'
-const MDG_FEMALE_WORD = 'zazavavy'
-const MDG_MALE_WORD = 'zazalahy'
-const ID = 'id'
 
 const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
   const digitLength = num.toString()
@@ -492,65 +457,6 @@ function convertDateToMdgCustomWords(dateString: string) {
 function convertLocaleDateToMdgCustomWords(dateString: string) {
   const [month, day, year] = dateString.split('/')
   return `${day} ${THE_MONTH_MDG_WORDS[parseInt(month)]} ${year}`
-}
-
-const ROMAN_NUMBERS_MDG_WORDS = {
-  I: 'Voalohany',
-  II: 'Faharoa',
-  III: 'Fahatelo',
-  IV: 'Fahaefatra',
-  V: 'Fahadimy',
-  VI: 'Fahaenina',
-  VII: 'Fahafito',
-  VIII: 'Fahavalo',
-  IX: 'Fahasivy',
-  X: 'Fahafolo'
-}
-
-const CITY_TRANSFORMER = {
-  Tana: 'Antananarivo',
-  Majunga: 'Mahajanga',
-  Tulear: 'Toliary',
-  Diego: 'Antsiranana',
-  Tamatave: 'Toamasina'
-}
-
-const customizeMdgOfficeName = (officeName: string) =>
-  officeName
-    .replace('Cu', '')
-    .replace('CU', '')
-    .replace('cu', '')
-    .replace('Tana', CITY_TRANSFORMER.Tana)
-    .replace('TANA', CITY_TRANSFORMER.Tana)
-    .replace('Majunga', CITY_TRANSFORMER.Majunga)
-    .replace('MAJUNGA', CITY_TRANSFORMER.Majunga)
-    .replace('Diego', CITY_TRANSFORMER.Diego)
-    .replace('DIEGO', CITY_TRANSFORMER.Diego)
-    .replace('Tamatave', CITY_TRANSFORMER.Tamatave)
-    .replace('TAMATAVE', CITY_TRANSFORMER.Tamatave)
-    .replace('Tulear', CITY_TRANSFORMER.Tulear)
-    .replace('TULAER', CITY_TRANSFORMER.Tulear)
-    .replace('VIII', ROMAN_NUMBERS_MDG_WORDS.VIII)
-    .replace('VII', ROMAN_NUMBERS_MDG_WORDS.VII)
-    .replace('VI', ROMAN_NUMBERS_MDG_WORDS.VI)
-    .replace('IV', ROMAN_NUMBERS_MDG_WORDS.IV)
-    .replace('V', ROMAN_NUMBERS_MDG_WORDS.V)
-    .replace('III', ROMAN_NUMBERS_MDG_WORDS.III)
-    .replace('II', ROMAN_NUMBERS_MDG_WORDS.II)
-    .replace('IX', ROMAN_NUMBERS_MDG_WORDS.IX)
-    .replace('X', ROMAN_NUMBERS_MDG_WORDS.X)
-    .replace('I', ROMAN_NUMBERS_MDG_WORDS.I)
-
-const getChildGenderMdgWords = (childGender: any) => {
-  if (childGender[DEFAULT_MESSAGE] === 'Female') {
-    childGender[DEFAULT_MESSAGE] = MDG_FEMALE_WORD
-    childGender[ID] = MDG_FEMALE_WORD
-  } else if (childGender[DEFAULT_MESSAGE] === 'Male') {
-    childGender[DEFAULT_MESSAGE] = MDG_MALE_WORD
-    childGender[ID] = MDG_MALE_WORD
-  }
-
-  return childGender
 }
 
 const customizeDateInCertificateContent = (_date: string) => {
