@@ -23,6 +23,14 @@ function timeAgo(date) {
   return seconds < 5 ? "à l'instant" : 'il y a ' + seconds + ' secondes'
 }
 
+const fetchLocationById = async (eventLocationId) => {
+  const response = await fetch(
+    `${window.config.API_GATEWAY_URL}/location/${eventLocationId}`
+  )
+  const locationData = await response.json()
+  return locationData
+}
+
 const fetchEvents = async (variables) => {
   GlobalLoader.showLoader()
 
@@ -489,8 +497,20 @@ window.openPrintModal = async function openPrintModal(
   officeName
 ) {
   const person = await fetchBirthRegistrationForCertificate({ id })
-  console.log('==>', person)
+  let healthFacilityName = ''
   if (person.data.fetchBirthRegistration) {
+    const eventLocationId =
+      person.data.fetchBirthRegistration.eventLocation.id ?? ''
+
+    if (
+      person.data.fetchBirthRegistration.eventLocation.type ===
+        'HEALTH_FACILITY' &&
+      eventLocationId
+    ) {
+      const birthLocation = await fetchLocationById(eventLocationId)
+      healthFacilityName = birthLocation.name
+    }
+
     const modal = document.getElementById('printModal')
     modal.classList.remove('hidden')
 
@@ -521,9 +541,15 @@ window.openPrintModal = async function openPrintModal(
       ) || { value: '' }
     ).value
     const childHourOfBirth = childBirthTime ? timeFormatter(childBirthTime) : ''
-    const childBirthLocation = event.questionnaire.find(
-      (q) => q.fieldId === 'birth.child.child-view-group.fokontanyCustomAddress'
-    )?.value
+    const childBirthLocation =
+      person.data.fetchBirthRegistration.eventLocation.type ===
+      'HEALTH_FACILITY'
+        ? `amin'ny ${healthFacilityName}`
+        : event.questionnaire.find(
+            (q) =>
+              q.fieldId ===
+              'birth.child.child-view-group.fokontanyCustomAddress'
+          )?.value
     const childLegacyBirthRegistrationNumber = event.questionnaire?.find(
       (q) =>
         q.fieldId ===
@@ -691,7 +717,7 @@ window.openPrintModal = async function openPrintModal(
       fanampinAnarana: childLastName,
       lft: childNUI,
       dateOfBirth: window.setLocaleDateCustomString(event.child.birthDate),
-      firstParagraph: `---Tamin'ny ${childDob} tamin'ny ${childHourOfBirth}, no teraka tao ${childBirthLocation}, i ${[
+      firstParagraph: `---Tamin'ny ${childDob} tamin'ny ${childHourOfBirth}, no teraka tao  ${childBirthLocation}, i ${[
         childFirstName,
         childLastName
       ]
