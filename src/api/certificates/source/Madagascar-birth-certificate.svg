@@ -112,7 +112,7 @@
                 <tspan x="48" y="155.868">Kaominina :</tspan>
                 <tspan x="100" y="155.868" font-weight="bold">{{location registrar.officeId "name"}}&#10;</tspan>
                 <tspan x="48" y="183.868">Soratra n° :</tspan>
-                <tspan x="100" y="183.868" font-weight="bold">{{registrationNumber}}</tspan>
+                <tspan x="100" y="183.868" font-weight="bold">{{childBirthRegistrationNumber}}</tspan>
                 <tspan x="48" y="197.868">Natao ny :</tspan>
                 <tspan x="100" y="197.868" font-weight="bold">{{translateDateToMDGFormat registrar.date}}</tspan>
             </text>
