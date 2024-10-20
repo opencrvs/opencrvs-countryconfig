@@ -119,12 +119,34 @@ export function text(): Handlebars.HelperDelegate {
           >
             ${insertTspansIntoText.call(this, lines)}
         </text>`
-    if (options.hash.trailingNewline !== false) {
-      this.y += LINE_HEIGHT
-    }
     return element
   }
 }
+
+export function linebreak(): Handlebars.HelperDelegate {
+  return function (
+    this: Record<string, any>,
+    options: Handlebars.HelperOptions
+  ) {
+    if (this.y) {
+      this.y += LINE_HEIGHT
+    }
+  }
+}
+
+export function numberOfTimesCertificatePrinted(): Handlebars.HelperDelegate {
+  return function (
+    this: Record<string, any>,
+    options: Handlebars.HelperOptions
+  ) {
+    if (!this.certifier) {
+      return 'KOPIA VOALOHANY'
+    } else {
+      return 'SORATRA AN-TSISINY :'
+    }
+  }
+}
+
 export function introduction(): Handlebars.HelperDelegate {
   return function (this: any, placeOfBirthCommune: string) {
     return joinValuesWith(

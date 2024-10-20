@@ -50,16 +50,13 @@
     FAHATERAHANA
     {{/ifCond}}
     {{/text}}
-    {{#text fontSize=10 trailingNewline=false}}{{childFamilyName}}{{/text}}
-    {{#text fontSize=10 trailingNewline=false}}{{childFirstName}}{{/text}}
-    {{#text fontSize=10 trailingNewline=false}}LFT: {{birthChildLegacyBirthRegistrationNumber}}{{/text}}
-    {{#text fontSize=10 trailingNewline=false}}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
-    {{#text fontSize=10 fontWeight="bold"}}{{#ifCond (isFirstCertificate) '===' true}}
-    KOPIA VOALOHANY
-    {{else}}
-    FANAMARIHANA AN-TSISINY&#10;
-    {{/ifCond}}{{/text}}
-    {{#text}}{{mentions}}{{/text}}
+    {{#text fontSize=10 }}{{childFamilyName}}{{/text}}
+    {{#text fontSize=10 }}{{childFirstName}}{{/text}}
+    {{#text fontSize=10 }}LFT: {{birthChildLegacyBirthRegistrationNumber}}{{/text}}
+    {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
+    {{linebreak}}
+    {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
+    {{#text}}{{#if mentions}}{{mentions}}{{else}}Tsy misy{{/if}}{{/text}}
     {{/wrapGroup}}
 
 
@@ -69,13 +66,18 @@
 
     {{#wrapGroup 60 187 178.488}}
     {{#text}}{{introduction (location registrar.officeId "name")}}{{/text}}
+    {{linebreak}}
     {{#text}}{{eventStatement (location districtPrimaryFatherId "name") (location districtPrimaryMotherId
     "name")}}{{/text}}
+    {{linebreak}}
     {{#text}}{{registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId
     "name")}}{{/text}}
+    {{linebreak}}
     {{#text fontWeight="bold" align="middle"}}---MANARAKA NY SONIA---{{/text}}
+    {{linebreak}}
     {{#text}}{{signatureDescription}}{{/text}}
-    {{#text}}{{/text}}
+    {{linebreak}}
+    {{linebreak}}
     {{#text fontWeight="bold" align="middle" fontSize=12}}Ny Mpiandraikitra ny sora-piankohonana{{/text}}
     {{/wrapGroup}}
 
