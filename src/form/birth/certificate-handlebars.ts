@@ -29,6 +29,8 @@ export const certificateHandlebars = {
   birthConfigurableIdentifier2: 'birthConfigurableIdentifier2',
   birthConfigurableIdentifier3: 'birthConfigurableIdentifier3',
   childNID: 'childNID',
+  birthChildLegacyBirthRegistrationNumber:
+    'birthChildLegacyBirthRegistrationNumber',
   childBirthRegistrationNumber: 'childBirthRegistrationNumber',
   placeOfBirth: 'placeOfBirth',
   informantType: 'informantType',

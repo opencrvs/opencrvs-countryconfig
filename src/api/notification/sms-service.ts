@@ -16,7 +16,8 @@ import {
   AWS_SNS_REGION_NAME,
   AWS_SNS_ACCESS_KEY_ID,
   AWS_SNS_SECRET_ACCESS_KEY,
-  AWS_SNS_SENDER_ID
+  AWS_SNS_SENDER_ID,
+  SMS_PROVIDER
 } from './constant'
 import {
   SNSClient,
@@ -71,39 +72,51 @@ export async function sendSMS(
   recipient: string,
   locale: string
 ) {
-  const client = getOrCreateAwsSnsClient()
-  const message = await compileMessages(type, variables, locale)
+  console.log(`========= sendSMS function is invoked now =============`)
+  if (SMS_PROVIDER === 'aws-sns') {
+    const client = getOrCreateAwsSnsClient()
+    const message = await compileMessages(type, variables, locale)
 
-  const publishParams = {
-    PhoneNumber: recipient,
-    Message: message,
-    MessageAttributes: {
-      'AWS.SNS.SMS.SenderID': {
-        DataType: 'String',
-        StringValue: AWS_SNS_SENDER_ID
-      },
-      'AWS.SNS.SMS.SMSType': {
-        DataType: 'String',
-        StringValue: 'Transactional'
+    const publishParams = {
+      PhoneNumber: recipient,
+      Message: message,
+      MessageAttributes: {
+        'AWS.SNS.SMS.SenderID': {
+          DataType: 'String',
+          StringValue: AWS_SNS_SENDER_ID
+        },
+        'AWS.SNS.SMS.SMSType': {
+          DataType: 'String',
+          StringValue: 'Transactional'
+        }
       }
     }
-  }
 
-  const publishSms = new PublishCommand(publishParams)
+    const publishSms = new PublishCommand(publishParams)
 
-  let response: PublishCommandOutput
-  try {
-    response = await client.send(publishSms)
-  } catch (error) {
-    logger.error(error)
-    throw error
-  }
+    let response: PublishCommandOutput
+    try {
+      response = await client.send(publishSms)
+    } catch (error) {
+      logger.error(error)
+      throw error
+    }
 
-  if (response.$metadata.httpStatusCode !== 200) {
-    logger.error(`Failed to send sms to ${recipient}`)
-    throw internal(`Failed to send notification to ${recipient}.`)
+    if (response.$metadata.httpStatusCode !== 200) {
+      console.log(`======== Failed to send sms to ${recipient} ===========`)
+      logger.error(`======= Failed to send sms to ${recipient}============`)
+      throw internal(`Failed to send notification to ${recipient}.`)
+    }
+    console.log(`=== Response from AWS SNS: ${JSON.stringify(response)} =====`)
+    logger.info(`Response from AWS SNS: ${JSON.stringify(response)}`)
+  } else {
+    // Logic for other SMS providers can be added here
+    console.log(`=== SMS provider "${SMS_PROVIDER}" is not supported yet.===`)
+    logger.error(`SMS provider "${SMS_PROVIDER}" is not supported yet.`)
+    throw internal(
+      `Failed to send SMS: Unsupported provider "${SMS_PROVIDER}".`
+    )
   }
-  logger.info(`Response from AWS SNS: ${JSON.stringify(response)}`)
 }
 
 const compileMessages = async (

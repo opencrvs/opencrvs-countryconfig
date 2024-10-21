@@ -1,9 +1,9 @@
+import GlobalLoader from './globalLoader.js'
 let currentPage = 1
 let rowsPerPage = 10
 let totalPages = 1
 let sortDirection = 'desc'
 let sortColumn = '' // 'desc' by default
-
 function timeAgo(date) {
   const seconds = Math.floor((new Date() - new Date(date)) / 1000)
   let interval = Math.floor(seconds / 31536000) // years
@@ -23,7 +23,17 @@ function timeAgo(date) {
   return seconds < 5 ? "à l'instant" : 'il y a ' + seconds + ' secondes'
 }
 
+const fetchLocationById = async (eventLocationId) => {
+  const response = await fetch(
+    `${window.config.API_GATEWAY_URL}/location/${eventLocationId}`
+  )
+  const locationData = await response.json()
+  return locationData
+}
+
 const fetchEvents = async (variables) => {
+  GlobalLoader.showLoader()
+
   const query = `
     query(
       $userId: String
@@ -79,6 +89,8 @@ const fetchEvents = async (variables) => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ query, variables })
+  }).finally(() => {
+    GlobalLoader.hideLoader()
   })
 
   if (!response.ok) {
@@ -86,10 +98,19 @@ const fetchEvents = async (variables) => {
   }
 
   const data = await response.json()
+
+  if (data?.errors?.[0].extensions.code === 'UNAUTHENTICATED') {
+    window.location.href =
+      window.config.LOGIN_URL +
+      '?redirectTo=' +
+      encodeURIComponent(window.config.COUNTRY_CONFIG_URL)
+  }
+
   return data
 }
 
 const fetchBirthRegistrationForCertificate = async (variables) => {
+  GlobalLoader.showLoader()
   const query = `
       query fetchBirthRegistrationForCertificate($id: ID!) {
         fetchBirthRegistration(id: $id) {
@@ -389,6 +410,8 @@ const fetchBirthRegistrationForCertificate = async (variables) => {
       query,
       variables
     })
+  }).finally(() => {
+    GlobalLoader.hideLoader()
   })
 
   if (!response.ok) {
@@ -419,7 +442,7 @@ const renderTable = async () => {
 
   const events = await fetchEvents(variables)
 
-  totalPages = Math.ceil(events.data.searchEvents.totalItems / rowsPerPage)
+  totalPages = Math.ceil(events.data.searchEvents?.totalItems / rowsPerPage)
 
   const tableBody = document.getElementById('data-table')
   tableBody.innerHTML = ''
@@ -427,7 +450,7 @@ const renderTable = async () => {
   const start = (currentPage - 1) * rowsPerPage
   const end = start + rowsPerPage
 
-  events.data.searchEvents.results.forEach((item) => {
+  events.data.searchEvents?.results.forEach((item) => {
     const row = document.createElement('tr')
     row.classList.add('bg-white', 'hover:bg-gray-50')
 
@@ -482,8 +505,20 @@ window.openPrintModal = async function openPrintModal(
   officeName
 ) {
   const person = await fetchBirthRegistrationForCertificate({ id })
-  console.log('===>', person)
+  let healthFacilityName = ''
   if (person.data.fetchBirthRegistration) {
+    const eventLocationId =
+      person.data.fetchBirthRegistration.eventLocation.id ?? ''
+
+    if (
+      person.data.fetchBirthRegistration.eventLocation.type ===
+        'HEALTH_FACILITY' &&
+      eventLocationId
+    ) {
+      const birthLocation = await fetchLocationById(eventLocationId)
+      healthFacilityName = birthLocation.name
+    }
+
     const modal = document.getElementById('printModal')
     modal.classList.remove('hidden')
 
@@ -514,8 +549,19 @@ window.openPrintModal = async function openPrintModal(
       ) || { value: '' }
     ).value
     const childHourOfBirth = childBirthTime ? timeFormatter(childBirthTime) : ''
-    const childBirthLocation = event.questionnaire.find(
-      (q) => q.fieldId === 'birth.child.child-view-group.fokontanyCustomAddress'
+    const childBirthLocation =
+      person.data.fetchBirthRegistration.eventLocation.type ===
+      'HEALTH_FACILITY'
+        ? `amin'ny ${healthFacilityName}`
+        : event.questionnaire.find(
+            (q) =>
+              q.fieldId ===
+              'birth.child.child-view-group.fokontanyCustomAddress'
+          )?.value
+    const childLegacyBirthRegistrationNumber = event.questionnaire?.find(
+      (q) =>
+        q.fieldId ===
+        'birth.child.child-view-group.legacyBirthRegistrationNumber'
     )?.value
     const childNUI = (
       event?.child?.identifier?.find((q) => q.type === 'NATIONAL_ID') || {
@@ -673,13 +719,13 @@ window.openPrintModal = async function openPrintModal(
     const civilRegistrationCenterNname = officeNameFormatter(officeName || '')
 
     const printableData = {
-      soratra: event.registration.registrationNumber,
+      soratra: childLegacyBirthRegistrationNumber,
       nataoNy: window.setLocaleDateCustomString(createdDate.split('T')[0]),
       anarana: childFirstName,
       fanampinAnarana: childLastName,
       lft: childNUI,
       dateOfBirth: window.setLocaleDateCustomString(event.child.birthDate),
-      firstParagraph: `---Tamin'ny ${childDob} tamin'ny ${childHourOfBirth}, no teraka tao ${childBirthLocation}, i ${[
+      firstParagraph: `---Tamin'ny ${childDob} tamin'ny ${childHourOfBirth}, no teraka tao  ${childBirthLocation}, i ${[
         childFirstName,
         childLastName
       ]
@@ -687,7 +733,6 @@ window.openPrintModal = async function openPrintModal(
         .trim()}, ${childGender}, ${outputFather} ${outputMother}. ---`,
       secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
     }
-    console.log(printableData)
     document.getElementById('soratra').textContent = printableData.soratra
     document.getElementById('nataoNy').textContent = printableData.nataoNy
     document.getElementById('anarana').textContent = printableData.anarana
