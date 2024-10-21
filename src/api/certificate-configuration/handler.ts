@@ -25,11 +25,17 @@ type Configuration = Partial<{
 export function certificateConfigurationHandler(): Configuration {
   return {
     fonts: {
-      ['Montserrat']: {
-        normal: `${COUNTRY_CONFIG_URL}/fonts/Montserrat-Regular.ttf`,
-        bold: `${COUNTRY_CONFIG_URL}/fonts/Montserrat-Bold.ttf`,
-        italics: `${COUNTRY_CONFIG_URL}/fonts/Montserrat-Regular.ttf`,
-        bolditalics: `${COUNTRY_CONFIG_URL}/fonts/Montserrat-Regular.ttf`
+      ['Plus Jakarta Sans']: {
+        normal: `${COUNTRY_CONFIG_URL}/fonts/PlusJakartaSans-Regular.ttf`,
+        bold: `${COUNTRY_CONFIG_URL}/fonts/PlusJakartaSans-Bold.ttf`,
+        italics: `${COUNTRY_CONFIG_URL}/fonts/PlusJakartaSans-Regular.ttf`,
+        bolditalics: `${COUNTRY_CONFIG_URL}/fonts/PlusJakartaSans-Regular.ttf`
+      },
+      ['Kapakana']: {
+        normal: `${COUNTRY_CONFIG_URL}/fonts/Kapakana.ttf`,
+        bold: `${COUNTRY_CONFIG_URL}/fonts/Kapakana.ttf`,
+        italics: `${COUNTRY_CONFIG_URL}/fonts/Kapakana.ttf`,
+        bolditalics: `${COUNTRY_CONFIG_URL}/fonts/Kapakana.ttf`
       }
     }
   }

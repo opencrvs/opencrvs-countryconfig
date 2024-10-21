@@ -1,5 +1,4 @@
 import * as Handlebars from 'handlebars'
-import { type IntlShape, type MessageDescriptor } from 'react-intl'
 
 function wordWrap(text: string, boundary: number) {
   return text
@@ -21,7 +20,7 @@ function wordWrap(text: string, boundary: number) {
     .join('\n')
     .split('\n')
 }
-const LINE_HEIGHT = 14
+const LINE_HEIGHT = 15
 
 function insertTspansIntoText(textLines: string[], xi: number, yi: number) {
   let svgString = ''
@@ -54,40 +53,13 @@ export function wrapGroup(): Handlebars.HelperDelegate {
     initY: number,
     options: Handlebars.HelperOptions
   ) {
-    let content = ''
-    let y = initY
-    function insertTspansIntoText(textLines: string[]) {
-      let svgString = ''
-      for (const line of textLines) {
-        svgString += `<tspan x="${initX}" y="${y}">${line}</tspan>`
-        y += LINE_HEIGHT
-      }
-      return svgString
-    }
-
-    function createTextElement(textType: 'normal' | 'bold', lines: string[]) {
-      return `
-        <text 
-          fill="black" 
-          xml:space="default" 
-          font-family="Montserrat" 
-          font-size="9"
-          font-weight="${textType}" 
-          letter-spacing="0em">
-            ${insertTspansIntoText(lines)}
-        </text>
-      `
-    }
-
-    for (const key in options.hash) {
-      const lines = wordWrap(options.hash[key], lineLength)
-      const textType = key.startsWith('text') ? 'normal' : 'bold'
-      content += createTextElement(textType, lines)
-      if (textType === 'normal') {
-        y += LINE_HEIGHT
-      }
-    }
-
+    this.x = initX
+    this.y = initY
+    this.lineLength = lineLength
+    const content = options.fn(this)
+    delete this.x
+    delete this.y
+    delete this.lineLength
     return content
   } as unknown as Handlebars.HelperDelegate
 }
@@ -108,83 +80,253 @@ export function join(): Handlebars.HelperDelegate {
   } as unknown as Handlebars.HelperDelegate
 }
 
-function name(familyName: string, firstName: string) {
-  return joinValuesWith([familyName, firstName], ' ')
+export function text(): Handlebars.HelperDelegate {
+  return function (
+    this: Record<string, any>,
+    options: Handlebars.HelperOptions
+  ) {
+    function insertTspansIntoText(this: any, textLines: string[]) {
+      let svgString = ''
+      for (const line of textLines) {
+        svgString += `<tspan x="${this.x}" y="${this.y}">${line}</tspan>`
+        this.y += LINE_HEIGHT
+      }
+      return svgString
+    }
+    const fontWeight = options.hash.fontWeight || 'normal'
+    const align = options.hash.align || 'start'
+    const fontSize = options.hash.fontSize || 11
+    const content = options.fn(this)
+    const lines = wordWrap(content, this.lineLength)
+
+    const element = `<text 
+          fill="black" 
+          xml:space="default" 
+          font-family="Plus Jakarta Sans" 
+          font-size="${fontSize}"
+          font-weight="${fontWeight}"
+          letter-spacing="0em"
+           ${
+             align === 'middle'
+               ? `
+                  x="50%"
+                  dx="${this.x}"
+                  dominant-baseline="middle"
+                  text-anchor="middle"
+               `
+               : ''
+           }
+          >
+            ${insertTspansIntoText.call(this, lines)}
+        </text>`
+    return element
+  }
 }
-export function mainContent(): Handlebars.HelperDelegate {
-  return function (this: any, placeOfBirthCommune: string = '') {
-    const paragraph1 = joinValuesWith(
+
+export function linebreak(): Handlebars.HelperDelegate {
+  return function (
+    this: Record<string, any>,
+    options: Handlebars.HelperOptions
+  ) {
+    if (this.y) {
+      this.y += LINE_HEIGHT
+    }
+  }
+}
+
+export function numberOfTimesCertificatePrinted(): Handlebars.HelperDelegate {
+  return function (
+    this: Record<string, any>,
+    options: Handlebars.HelperOptions
+  ) {
+    if (!this.certifier) {
+      return 'KOPIA VOALOHANY'
+    } else {
+      return 'SORATRA AN-TSISINY :'
+    }
+  }
+}
+
+export function introduction(): Handlebars.HelperDelegate {
+  return function (this: any, placeOfBirthCommune: string) {
+    return joinValuesWith(
       [
         "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
         placeOfBirthCommune,
-        ', Foibe misahana ny fiankohonana, taona',
-        customizeDateYearInCertificateContent(this.registrar.date),
-        ', izao sora-pahaterahana manaraka izao :--'
+        'Foibe misahana ny fiankohonana, taona',
+        `${customizeDateYearInCertificateContent(this.registrar.date)},`,
+        'izao sora-pahaterahana manaraka izao :'
       ],
       ' '
     )
+  }
+}
 
-    const paragraph2 = joinValuesWith(
+export function eventStatement(): Handlebars.HelperDelegate {
+  return function (
+    this: any,
+    fatherPrimaryDistrict: string,
+    motherPrimaryDistrict: string
+  ) {
+    return joinValuesWith(
       [
-        "---Tamin'ny",
-        customizeDateInCertificateContent(this.eventDate),
-        ", tamin'ny",
-        convertTimeToMdgCustomWords(this.birthChildBirthTime),
-        "no teraka tao amin'ny",
-        getPlaceOfBirth(
-          this.birthLocation,
-          this.birthChildFokontanyCustomAddress
-        ),
-        ', Kaominina',
-        placeOfBirthCommune,
-        ':',
-        name(this.childFamilyName, this.childFirstName) + ',',
-
-        translateChildGenderToMDGWord(this.childGender),
-        ', zanak’i',
-        handleFatherInformation.apply(this),
-
-        name(this.motherFamilyName, this.motherFirstName),
-        handleMotherDeceasedInformation.apply(this),
-        this.motherOccupation,
-        ', teraka tao',
-        this.birthMotherBirthPlace,
+        "--Tamin'ny",
+        `${customizeDateInCertificateContent(this.eventDate)},`,
         'tamin’ny',
-        customizeDateInCertificateContent(this.motherBirthDate),
-        ', monina ao',
-        this.birthMotherFokontanyCustomAddress,
-        '---'
+        convertTimeToMdgCustomWords(this.birthChildBirthTime),
+        'no teraka tao amin’ny',
+        this.placeOfBirthFacility ? `${this.placeOfBirthFacility},` : '',
+        'fokontany',
+        this.birthChildFokontanyCustomAddress
+          ? `${this.birthChildFokontanyCustomAddress},`
+          : '',
+        'kaominina',
+        `${this.placeOfBirthDistrict},`,
+        'district',
+        this.placeOfBirthState,
+        ':',
+        `${joinValuesWith([this.childFamilyName, this.childFirstName], ' ')},`,
+        `${getChildGeneratedOrManualNID.call(this)},`,
+        `${translateChildGenderToMDGWord(this.childGender)},`,
+        'zanak’i',
+        fatherDetails.call(this, fatherPrimaryDistrict),
+        motherDetails.call(this, motherPrimaryDistrict)
       ],
       ' '
     )
-    const paragraph3 = joinValuesWith(
+  }
+}
+
+function fatherDetails(
+  this: Record<string, string>,
+  fatherPrimaryDistrict: string
+) {
+  if ('fatherReasonNotApplying' in this) {
+    return ''
+  }
+  return joinValuesWith(
+    [
+      `${joinValuesWith([this.fatherFamilyName, this.fatherFirstName], ' ')},`,
+      'teraka tamin’ny',
+      this.birthFatherCustomizedExactDateOfBirthUnknown
+        ? convertNumberToLetterForMalagasySpecificLanguage(
+            parseInt(this.birthFatherYearOfBirth)
+          )
+        : customizeDateInCertificateContent(this.fatherBirthDate),
+      'tao amin’ny',
+      `${this.birthFatherBirthPlace},`,
+      'kaominina',
+      fatherPrimaryDistrict,
+      this.birthFatherFatherIsDeceased ? 'nonina tao' : 'monina ao',
+      'amin’ny',
+      `${
+        this.birthFatherFokontanyCustomAddress ||
+        this.birthMotherFokontanyCustomAddress
+      },`,
+      `${this.fatherOccupation},`,
+      this.birthFatherFatherHasFormallyRecognisedChild
+        ? 'izay manambara fa manjanaka azy'
+        : '',
+      ', sy'
+    ],
+    ' '
+  )
+}
+
+function motherDetails(
+  this: Record<string, string>,
+  motherPrimaryDistrict: string
+) {
+  if ('motherReasonNotApplying' in this) {
+    return ''
+  }
+  return joinValuesWith(
+    [
+      `${joinValuesWith([this.motherFamilyName, this.motherFirstName], ' ')},`,
+      "teraka tamin'ny",
+      this.birthMotherCustomizedExactDateOfBirthUnknown
+        ? convertNumberToLetterForMalagasySpecificLanguage(
+            parseInt(this.birthMotherYearOfBirth)
+          )
+        : customizeDateInCertificateContent(this.motherBirthDate),
+      `${this.birthMotherBirthPlace},`,
+      'kaominina',
+      motherPrimaryDistrict,
+      this.birthMotherMotherIsDeceased ? 'nonina tao' : 'monina ao',
+      'amin’ny',
+      `${this.birthMotherFokontanyCustomAddress},`,
+      `${this.motherOccupation}--`
+    ],
+    ' '
+  )
+}
+
+export function registrationStatement(): Handlebars.HelperDelegate {
+  return function (
+    this: Record<string, any>,
+    informantPrimaryDistrict: string,
+    registrationDistrict: string
+  ) {
+    return joinValuesWith(
       [
         '---Nosoratana androany',
-        customizeDateInCertificateContent(this.registrationDate) + ',',
-        handleInformantInfo.apply(this),
-        ', izay miara-manao sonia aminay',
-        this.registrar.name,
-        ", mpiandraikitra ny sora-piankohonana eto amin'ny",
-        customizeOfficeName(this.registrationLocation),
-        ', rehefa novakiana taminy ity soratra ity.---'
+        `${customizeDateInCertificateContent(
+          this.registrar.date.split('T')[0]
+        )},`,
+        'tamin’ny',
+        convertTimeToMdgCustomWords(this.registrar.date.split('T')[1]),
+        isInformantMotherOrFather(this.informantType)
+          ? 'nataon’ny'
+          : joinValuesWith(
+              ["nataon'i", this.informantFamilyName, this.informantFirstName],
+              ' '
+            ),
+        `${this.informantType},`,
+        "teraka tamin'ny",
+        this.birthInformantCustomizedExactDateOfBirthUnknown
+          ? convertNumberToLetterForMalagasySpecificLanguage(
+              parseInt(this.birthInformantYearOfBirth)
+            )
+          : customizeDateInCertificateContent(this.informantBirthDate),
+        'tao',
+        this.birthInformantBirthPlace
+          ? `${this.birthInformantBirthPlace},`
+          : '',
+        'kaominina',
+        `${informantPrimaryDistrict},`,
+        'monina ao',
+        `${this.birthInformantFokontanyCustomAddress},`,
+        `${this.informantOccupation},`,
+        'izay miara-manao sonia aminay,',
+        `${this.registrar.name},`,
+        'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
+        `${registrationDistrict},`,
+        'rehefa novakiana taminy ity soratra ity.---'
       ],
       ' '
     )
-
-    return paragraph1 + '\n\n' + paragraph2 + '\n\n' + paragraph3
-  } as unknown as Handlebars.HelperDelegate
-}
-
-type FactoryProps = {
-  intl: IntlShape
-}
-export function noop(props: FactoryProps): Handlebars.HelperDelegate {
-  return function (this: any, value: string) {
-    // eslint-disable-next-line no-console
-    console.log(props)
-
-    return value
   }
+}
+
+export function signatureDescription(): Handlebars.HelperDelegate {
+  return function (this: Record<string, any>) {
+    return joinValuesWith(
+      [
+        'Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany',
+        `${customizeDateInCertificateContent(
+          new Date().toISOString().split('T')[0]
+        )},`,
+        `${joinValuesWith(
+          [this.informantFamilyName, this.informantFirstName],
+          ' '
+        )}--`
+      ],
+      ' '
+    )
+  }
+}
+function isInformantMotherOrFather(informantType: string) {
+  return informantType === 'MOTHER' || informantType === 'FATHER'
 }
 
 const THE_UNITS_MDG_WORDS: string[] = [
@@ -257,30 +399,8 @@ const THE_MONTH_MDG_WORDS: string[] = [
   'Desambra'
 ]
 
-const THE_MONTH_EN_WORDS: string[] = [
-  '',
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
-
-const DEFAULT_MESSAGE = 'defaultMessage'
-const MDG_FEMALE_WORD = 'zazavavy'
-const MDG_MALE_WORD = 'zazalahy'
-const ID = 'id'
-
 const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
   const digitLength = num.toString()
-  console.log(digitLength)
   if (digitLength.length > 9) return 'mihoatra lavitra'
   const digits = ('000000000' + digitLength)
     .substr(-9)
@@ -298,7 +418,6 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
             }`
           : '') + ' arivo '
       : ''
-  console.log('1', numberToLetter)
   if (digits[3] != '0' && digits[4] != '0')
     numberToLetter = ` sy ${numberToLetter}`
   if (digits[3] != '0' && digits[4] == '0') numberToLetter = '' + numberToLetter
@@ -309,7 +428,6 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
           ? numberToLetter
           : '')
       : ''
-  console.log('2', numberToLetter)
   numberToLetter =
     digits[5] != '00'
       ? (unit[Number(digits[5])] ||
@@ -327,7 +445,6 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
       : numberToLetter != ''
       ? numberToLetter
       : ' aotra'
-  console.log('3', numberToLetter)
   return numberToLetter
 }
 
@@ -354,11 +471,11 @@ function convertTimeToMdgCustomWords(timeString: string) {
     return `roa ambin'ny folo ora alina`
   }
 
-  return `${
-    mdgHours[newHour]
-  }ora sy ${convertNumberToLetterForMalagasySpecificLanguage(
-    newMinute
-  )} minitra ${timePeriod}`
+  return `${mdgHours[newHour]}${
+    newMinute > 0
+      ? `ora sy ${convertNumberToLetterForMalagasySpecificLanguage(newMinute)} `
+      : ''
+  }minitra ${timePeriod}`
 }
 
 function convertDateToMdgCustomWords(dateString: string) {
@@ -376,65 +493,6 @@ function convertDateToMdgCustomWords(dateString: string) {
 function convertLocaleDateToMdgCustomWords(dateString: string) {
   const [month, day, year] = dateString.split('/')
   return `${day} ${THE_MONTH_MDG_WORDS[parseInt(month)]} ${year}`
-}
-
-const ROMAN_NUMBERS_MDG_WORDS = {
-  I: 'Voalohany',
-  II: 'Faharoa',
-  III: 'Fahatelo',
-  IV: 'Fahaefatra',
-  V: 'Fahadimy',
-  VI: 'Fahaenina',
-  VII: 'Fahafito',
-  VIII: 'Fahavalo',
-  IX: 'Fahasivy',
-  X: 'Fahafolo'
-}
-
-const CITY_TRANSFORMER = {
-  Tana: 'Antananarivo',
-  Majunga: 'Mahajanga',
-  Tulear: 'Toliary',
-  Diego: 'Antsiranana',
-  Tamatave: 'Toamasina'
-}
-
-const customizeMdgOfficeName = (officeName: string) =>
-  officeName
-    .replace('Cu', '')
-    .replace('CU', '')
-    .replace('cu', '')
-    .replace('Tana', CITY_TRANSFORMER.Tana)
-    .replace('TANA', CITY_TRANSFORMER.Tana)
-    .replace('Majunga', CITY_TRANSFORMER.Majunga)
-    .replace('MAJUNGA', CITY_TRANSFORMER.Majunga)
-    .replace('Diego', CITY_TRANSFORMER.Diego)
-    .replace('DIEGO', CITY_TRANSFORMER.Diego)
-    .replace('Tamatave', CITY_TRANSFORMER.Tamatave)
-    .replace('TAMATAVE', CITY_TRANSFORMER.Tamatave)
-    .replace('Tulear', CITY_TRANSFORMER.Tulear)
-    .replace('TULAER', CITY_TRANSFORMER.Tulear)
-    .replace('VIII', ROMAN_NUMBERS_MDG_WORDS.VIII)
-    .replace('VII', ROMAN_NUMBERS_MDG_WORDS.VII)
-    .replace('VI', ROMAN_NUMBERS_MDG_WORDS.VI)
-    .replace('IV', ROMAN_NUMBERS_MDG_WORDS.IV)
-    .replace('V', ROMAN_NUMBERS_MDG_WORDS.V)
-    .replace('III', ROMAN_NUMBERS_MDG_WORDS.III)
-    .replace('II', ROMAN_NUMBERS_MDG_WORDS.II)
-    .replace('IX', ROMAN_NUMBERS_MDG_WORDS.IX)
-    .replace('X', ROMAN_NUMBERS_MDG_WORDS.X)
-    .replace('I', ROMAN_NUMBERS_MDG_WORDS.I)
-
-const getChildGenderMdgWords = (childGender: any) => {
-  if (childGender[DEFAULT_MESSAGE] === 'Female') {
-    childGender[DEFAULT_MESSAGE] = MDG_FEMALE_WORD
-    childGender[ID] = MDG_FEMALE_WORD
-  } else if (childGender[DEFAULT_MESSAGE] === 'Male') {
-    childGender[DEFAULT_MESSAGE] = MDG_MALE_WORD
-    childGender[ID] = MDG_MALE_WORD
-  }
-
-  return childGender
 }
 
 const customizeDateInCertificateContent = (_date: string) => {
@@ -523,64 +581,6 @@ function translateChildGenderToMDGWord(childGender: string) {
     )
     ? 'zazalahy'
     : 'zazavavy'
-}
-
-function handleFatherInformation(this: Record<string, any>) {
-  let fatherDetail = ''
-  if (this.fatherFamilyName?.trim()) {
-    const fatherIsDeceased = this.birthFatherFatherIsDeceased ? 'efa maty,' : ''
-    const parentHaveNotMaritalStatusLegal = this
-      .birthFatherFatherHasFormallyRecognisedChild
-      ? 'izay manambara fa manjanaka azy, sy'
-      : ', sy'
-    const fatherAdditionnalInfo =
-      fatherIsDeceased === 'efa maty,'
-        ? ''
-        : `${this.fatherOccupation}, teraka tao ${
-            this.birthFatherBirthPlace
-          } tamin’ny ${
-            this.birthFatherCustomizedExactDateOfBirthUnknown
-              ? convertNumberToLetterForMalagasySpecificLanguage(
-                  parseInt(this.birthFatherYearOfBirth)
-                )
-              : customizeDateInCertificateContent(this.fatherBirthDate)
-          }, monina ao ${
-            this.birthFatherFokontanyCustomAddress ??
-            this.birthMotherFokontanyCustomAddress
-          }, ${parentHaveNotMaritalStatusLegal}`
-    fatherDetail = `${this.fatherFamilyName} ${this.fatherFirstName}, ${fatherAdditionnalInfo}`
-  }
-  return fatherDetail
-}
-
-function handleMotherDeceasedInformation(this: Record<string, any>) {
-  return this.birthMotherMotherIsDeceased ? ' ,efa maty,' : ''
-}
-
-function handleInformantInfo(this: Record<string, any>) {
-  let informantInfo = "araka ny fanambarana nataon'"
-  if (this.informantFamilyName?.trim()) {
-    informantInfo +=
-      this.motherFamilyName === this.informantFamilyName &&
-      this.motherFirstName === this.informantFirstName
-        ? 'ny reniny,'
-        : this.fatherFamilyName === this.informantFamilyName &&
-          this.fatherFirstName === this.informantFirstName
-        ? 'ny rainy,'
-        : `i ${this.informantFamilyName} ${
-            this.informantFirstName
-          }, teraka tamin'ny ${
-            this.birthInformantCustomizedExactDateOfBirthUnknown
-              ? convertNumberToLetterForMalagasySpecificLanguage(
-                  parseInt(this.birthInformantYearOfBirth)
-                )
-              : customizeDateInCertificateContent(this.informantBirthDate)
-          }, monina ao ${
-            this.informantCustomAddress ??
-            this.birthInformantFokontanyCustomAddress
-          }, nanatrika ny fahaterahana,`
-  }
-  return informantInfo
 }
 
 export function birthCertificateRelatedPerson(): Handlebars.HelperDelegate {
@@ -812,5 +812,15 @@ export function mentions(): Handlebars.HelperDelegate {
 export function isFirstCertificate(): Handlebars.HelperDelegate {
   return function (this: Record<string, string>) {
     return !this.certifier
+  }
+}
+
+function getChildGeneratedOrManualNID(this: any) {
+  return this.childNIDManual ? this.childNIDManual : this.childNID
+}
+
+export function getChildNID(): Handlebars.HelperDelegate {
+  return function (this: Record<string, string>) {
+    return getChildGeneratedOrManualNID.call(this)
   }
 }
