@@ -72,7 +72,6 @@ export async function sendSMS(
   recipient: string,
   locale: string
 ) {
-  console.log(`========= sendSMS function is invoked now =============`)
   if (SMS_PROVIDER === 'aws-sns') {
     const client = getOrCreateAwsSnsClient()
     const message = await compileMessages(type, variables, locale)
@@ -103,15 +102,12 @@ export async function sendSMS(
     }
 
     if (response.$metadata.httpStatusCode !== 200) {
-      console.log(`======== Failed to send sms to ${recipient} ===========`)
-      logger.error(`======= Failed to send sms to ${recipient}============`)
+      logger.error(`Failed to send sms to ${recipient}`)
       throw internal(`Failed to send notification to ${recipient}.`)
     }
-    console.log(`=== Response from AWS SNS: ${JSON.stringify(response)} =====`)
     logger.info(`Response from AWS SNS: ${JSON.stringify(response)}`)
   } else {
     // Logic for other SMS providers can be added here
-    console.log(`=== SMS provider "${SMS_PROVIDER}" is not supported yet.===`)
     logger.error(`SMS provider "${SMS_PROVIDER}" is not supported yet.`)
     throw internal(
       `Failed to send SMS: Unsupported provider "${SMS_PROVIDER}".`
