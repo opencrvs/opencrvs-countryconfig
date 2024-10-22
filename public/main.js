@@ -24,9 +24,9 @@ function timeAgo(date) {
 }
 
 const fetchLocationById = async (eventLocationId) => {
-  const response = await fetch(
-    `${window.config.API_GATEWAY_URL}/location/${eventLocationId}`
-  )
+  const apiUrl = window.config.API_GATEWAY_URL
+  const formattedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
+  const response = await fetch(`${formattedApiUrl}/location/${eventLocationId}`)
   const locationData = await response.json()
   return locationData
 }
