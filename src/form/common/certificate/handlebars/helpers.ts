@@ -124,10 +124,7 @@ export function text(): Handlebars.HelperDelegate {
 }
 
 export function linebreak(): Handlebars.HelperDelegate {
-  return function (
-    this: Record<string, any>,
-    options: Handlebars.HelperOptions
-  ) {
+  return function (this: Record<string, any>) {
     if (this.y) {
       this.y += LINE_HEIGHT
     }
@@ -135,10 +132,7 @@ export function linebreak(): Handlebars.HelperDelegate {
 }
 
 export function numberOfTimesCertificatePrinted(): Handlebars.HelperDelegate {
-  return function (
-    this: Record<string, any>,
-    options: Handlebars.HelperOptions
-  ) {
+  return function (this: Record<string, any>) {
     if (!this.certifier) {
       return 'KOPIA VOALOHANY'
     } else {
@@ -154,7 +148,7 @@ export function introduction(): Handlebars.HelperDelegate {
         "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
         placeOfBirthCommune,
         'Foibe misahana ny fiankohonana, taona',
-        `${customizeDateYearInCertificateContent(this.registrar.date)},`,
+        customizeDateYearInCertificateContent(this.registrar.date) + ',',
         'izao sora-pahaterahana manaraka izao :'
       ],
       ' '
@@ -171,23 +165,23 @@ export function eventStatement(): Handlebars.HelperDelegate {
     return joinValuesWith(
       [
         "--Tamin'ny",
-        `${customizeDateInCertificateContent(this.eventDate)},`,
+        customizeDateInCertificateContent(this.eventDate) + ',',
         'tamin’ny',
         convertTimeToMdgCustomWords(this.birthChildBirthTime),
         'no teraka tao amin’ny',
-        this.placeOfBirthFacility ? `${this.placeOfBirthFacility},` : '',
+        this.placeOfBirthFacility ? this.placeOfBirthFacility + ',' : '',
         'fokontany',
         this.birthChildFokontanyCustomAddress
-          ? `${this.birthChildFokontanyCustomAddress},`
+          ? this.birthChildFokontanyCustomAddress + ','
           : '',
         'kaominina',
-        `${this.placeOfBirthDistrict},`,
+        this.placeOfBirthDistrict + ',',
         'district',
         this.placeOfBirthState,
         ':',
-        `${joinValuesWith([this.childFamilyName, this.childFirstName], ' ')},`,
-        `${getChildGeneratedOrManualNID.call(this)},`,
-        `${translateChildGenderToMDGWord(this.childGender)},`,
+        joinValuesWith([this.childFamilyName, this.childFirstName], ' ') + ',',
+        getChildGeneratedOrManualNID.call(this) + ',',
+        translateChildGenderToMDGWord(this.childGender) + ',',
         'zanak’i',
         fatherDetails.call(this, fatherPrimaryDistrict),
         motherDetails.call(this, motherPrimaryDistrict)
@@ -206,7 +200,7 @@ function fatherDetails(
   }
   return joinValuesWith(
     [
-      `${joinValuesWith([this.fatherFamilyName, this.fatherFirstName], ' ')},`,
+      joinValuesWith([this.fatherFamilyName, this.fatherFirstName], ' ') + ',',
       'teraka tamin’ny',
       this.birthFatherCustomizedExactDateOfBirthUnknown
         ? convertNumberToLetterForMalagasySpecificLanguage(
@@ -214,16 +208,14 @@ function fatherDetails(
           )
         : customizeDateInCertificateContent(this.fatherBirthDate),
       'tao amin’ny',
-      `${this.birthFatherBirthPlace},`,
+      this.birthFatherBirthPlace + ',',
       'kaominina',
       fatherPrimaryDistrict,
       this.birthFatherFatherIsDeceased ? 'nonina tao' : 'monina ao',
       'amin’ny',
-      `${
-        this.birthFatherFokontanyCustomAddress ||
-        this.birthMotherFokontanyCustomAddress
-      },`,
-      `${this.fatherOccupation},`,
+      (this.birthFatherFokontanyCustomAddress ||
+        this.birthMotherFokontanyCustomAddress) + ',',
+      this.fatherOccupation + ',',
       this.birthFatherFatherHasFormallyRecognisedChild
         ? 'izay manambara fa manjanaka azy'
         : '',
@@ -242,20 +234,20 @@ function motherDetails(
   }
   return joinValuesWith(
     [
-      `${joinValuesWith([this.motherFamilyName, this.motherFirstName], ' ')},`,
+      joinValuesWith([this.motherFamilyName, this.motherFirstName], ' ') + ',',
       "teraka tamin'ny",
       this.birthMotherCustomizedExactDateOfBirthUnknown
         ? convertNumberToLetterForMalagasySpecificLanguage(
             parseInt(this.birthMotherYearOfBirth)
           )
         : customizeDateInCertificateContent(this.motherBirthDate),
-      `${this.birthMotherBirthPlace},`,
+      this.birthMotherBirthPlace + ',',
       'kaominina',
       motherPrimaryDistrict,
       this.birthMotherMotherIsDeceased ? 'nonina tao' : 'monina ao',
       'amin’ny',
-      `${this.birthMotherFokontanyCustomAddress},`,
-      `${this.motherOccupation}--`
+      this.birthMotherFokontanyCustomAddress + ',',
+      this.motherOccupation + '--'
     ],
     ' '
   )
@@ -270,9 +262,8 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     return joinValuesWith(
       [
         '---Nosoratana androany',
-        `${customizeDateInCertificateContent(
-          this.registrar.date.split('T')[0]
-        )},`,
+        customizeDateInCertificateContent(this.registrar.date.split('T')[0]) +
+          ',',
         'tamin’ny',
         convertTimeToMdgCustomWords(this.registrar.date.split('T')[1]),
         isInformantMotherOrFather(this.informantType)
@@ -281,7 +272,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
               ["nataon'i", this.informantFamilyName, this.informantFirstName],
               ' '
             ),
-        `${this.informantType},`,
+        this.informantType + ',',
         "teraka tamin'ny",
         this.birthInformantCustomizedExactDateOfBirthUnknown
           ? convertNumberToLetterForMalagasySpecificLanguage(
@@ -293,14 +284,14 @@ export function registrationStatement(): Handlebars.HelperDelegate {
           ? `${this.birthInformantBirthPlace},`
           : '',
         'kaominina',
-        `${informantPrimaryDistrict},`,
+        informantPrimaryDistrict + ',',
         'monina ao',
-        `${this.birthInformantFokontanyCustomAddress},`,
-        `${this.informantOccupation},`,
+        this.birthInformantFokontanyCustomAddress + ',',
+        this.informantOccupation + ',',
         'izay miara-manao sonia aminay,',
-        `${this.registrar.name},`,
+        this.registrar.name + ',',
         'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
-        `${registrationDistrict},`,
+        registrationDistrict + ',',
         'rehefa novakiana taminy ity soratra ity.---'
       ],
       ' '
@@ -313,13 +304,13 @@ export function signatureDescription(): Handlebars.HelperDelegate {
     return joinValuesWith(
       [
         'Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany',
-        `${customizeDateInCertificateContent(
+        customizeDateInCertificateContent(
           new Date().toISOString().split('T')[0]
-        )},`,
-        `${joinValuesWith(
+        ) + ',',
+        joinValuesWith(
           [this.informantFamilyName, this.informantFirstName],
           ' '
-        )}--`
+        ) + '--'
       ],
       ' '
     )
