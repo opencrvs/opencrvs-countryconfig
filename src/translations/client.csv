@@ -168,6 +168,7 @@ certificate.receipt.service.targetDay,,{event} registration after 45 days of eve
 certificate.receipt.service.targetDay.amount,,৳ 25.00,৳ 25.00
 certificate.receipt.subheader,Subheader for receipt on payment on certificate,{event} Registration after {DOBDiff} of {DOE},{event} Déclaration après {DOBDiff} de {DOE}
 certificate.selectTemplate,Select certificate template,Select certificate template,Sélectionnez un modèle de certificat
+certificate.selectedTemplate,Selected certificate template,Selected certificate template,Modèle de certificat sélectionné
 certificates.birth.certificate,Birth Certificate,Birth Certificate,Acte de naissance
 certificates.birth.certificate.copy,Birth Certificate Certified Copy,Birth Certificate Certified Copy,Copie certifiée conforme de l'acte de naissance
 certificates.death.certificate,Death Certificate,Death Certificate,Certificat de décès
