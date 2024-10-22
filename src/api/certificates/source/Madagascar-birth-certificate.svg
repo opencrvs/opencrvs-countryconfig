@@ -15,7 +15,7 @@
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="11"
         font-weight="bold" letter-spacing="0em">
-        <tspan x="88" y="120.488">{{location registrar.districtId "name"}}</tspan>
+        <tspan x="88" y="120.488">{{location registrar.stateId "name"}}</tspan>
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="11"
         letter-spacing="0em">
@@ -23,7 +23,7 @@
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="11"
         font-weight="bold" letter-spacing="0em">
-        <tspan x="88" y="136.488">{{location registrar.officeId "name"}}</tspan>
+        <tspan x="88" y="136.488">{{location registrar.districtId "name"}}</tspan>
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
@@ -65,17 +65,17 @@
     </text>
 
     {{#wrapGroup 60 187 178.488}}
-    {{#text}}{{introduction (location registrar.officeId "name")}}{{/text}}
+    {{#text}}{{{introduction (location registrar.districtId "name")}}}{{/text}}
     {{linebreak}}
-    {{#text}}{{eventStatement (location districtPrimaryFatherId "name") (location districtPrimaryMotherId
-    "name")}}{{/text}}
+    {{#text}}{{{eventStatement (location districtPrimaryFatherId "name") (location districtPrimaryMotherId
+    "name")}}}{{/text}}
     {{linebreak}}
-    {{#text}}{{registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId
-    "name")}}{{/text}}
+    {{#text}}{{{registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId
+    "name")}}}{{/text}}
     {{linebreak}}
     {{#text fontWeight="bold" align="middle"}}---MANARAKA NY SONIA---{{/text}}
     {{linebreak}}
-    {{#text}}{{signatureDescription}}{{/text}}
+    {{#text}}{{{signatureDescription}}}{{/text}}
     {{linebreak}}
     {{linebreak}}
     {{#text fontWeight="bold" align="middle" fontSize=12}}Ny Mpiandraikitra ny sora-piankohonana{{/text}}
