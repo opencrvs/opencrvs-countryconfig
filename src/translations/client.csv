@@ -1584,7 +1584,7 @@ home.header.email,Search email type,Email Address,E-mail,Adiresy mailaka
 home.header.helpTitle,Help title,Help,Aide,Fanampiana
 home.header.localSystemAdmin,The description for Sysadmin role,Local System Admin,Admin système local,Mpandrindra (Admin systeme) ifotony
 home.header.nationalId,Search menu national ID type,National ID,Carte d'identité nationale,NUI
-home.header.placeHolderBrnDrn,Search menu brn drn place holder,Search for a BRN/DRN,Recherche un BRN/DRN,Hikaroka amin'ny alalan'ny BRN/DRN
+home.header.placeHolderBrnDrn,Search menu brn drn place holder,Search for a BRN,Recherche un BRN,Hikaroka amin'ny alalan'ny BRN
 home.header.placeHolderEmail,Search menu email place holder,Search for an email.,Recherchez un e-mail.,Hikaroka amin'ny alalan'ny adiresy mailaka
 home.header.placeHolderNationalId,Search menu national ID place holder,Search for a national ID.,Recherche un NUI,Hikaroka amin'ny alalan'ny NUI
 home.header.placeHolderPhone,Search menu phone no place holder,Search for a phone no.,Recherche d'un numéro de téléphone,Hikaroka amin'ny alalan'ny laharana finday
