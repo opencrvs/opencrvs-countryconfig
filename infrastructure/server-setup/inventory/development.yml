@@ -42,7 +42,7 @@ all:
         sudoer: true
       - name: jamil
         ssh_keys:
-          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOyAGCqgAJ98+lYS2RBxxYgbMlIDZF1VqexG+WHIznbe jamil31415926@gmail.com
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMSNTIIsM0C3uJg3V/Fqh2gi4lvl2y6nenrb2Ft1JlX jamil31415926@gmail.com
         state: present
         sudoer: true
       - name: ashwin
