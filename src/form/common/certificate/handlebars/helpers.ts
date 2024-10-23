@@ -491,6 +491,7 @@ function convertDateToMdgCustomWords(dateString: string) {
 }
 
 function convertLocaleDateToMdgCustomWords(dateString: string) {
+  console.log('>>>>', dateString)
   const dateStringStr = dateString.split(' ')
   const [day, month, year] = dateStringStr[0].split('/')
   return `${day} ${THE_MONTH_MDG_WORDS[parseInt(month)]} ${year}`
