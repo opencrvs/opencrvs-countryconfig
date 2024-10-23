@@ -31,7 +31,7 @@
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         font-weight="bold" letter-spacing="0em">
-        <tspan x="86" y="177.58">{{registrationNumber}}</tspan>
+        <tspan x="86" y="177.58">{{birthChildLegacyBirthRegistrationNumber}}</tspan>
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
@@ -52,7 +52,7 @@
     {{/text}}
     {{#text fontSize=10 }}{{childFamilyName}}{{/text}}
     {{#text fontSize=10 }}{{childFirstName}}{{/text}}
-    {{#text fontSize=10 }}LFT: {{birthChildLegacyBirthRegistrationNumber}}{{/text}}
+    {{#text fontSize=10 }}NUI: {{childNID}}{{/text}}
     {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
     {{linebreak}}
     {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
