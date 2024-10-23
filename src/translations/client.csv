@@ -1050,9 +1050,9 @@ form.field.label.ageOfGroom,,Age of groom,Âge du marié,
 form.field.label.ageOfInformant,,Age of informant,Âge du déclarant,
 form.field.label.ageOfMother,,Age of mother,Âge de la mère,
 form.field.label.ageOfSpouse,,Age of spouse,Âge du conjoint,
-form.field.label.app.certifyRecordTo.father,,Print and issue to father,Imprimer et remettre au père,Hatonta ary homena an'ilay olona nanao fanambarana (Ray)
-form.field.label.app.certifyRecordTo.informant,,Print and issue to informant ({informant}),Imprimer et remettre au déclarant ({informant}),
-form.field.label.app.certifyRecordTo.mother,,Print and issue to mother,Imprimer et remettre à la mère,Hatonta ary homena an'ilay olona nanao fanambarana (Reny)
+form.field.label.app.certifyRecordTo.father,,Print and issue to father,Imprimer et remettre au père,Hatonta ary homena ny Rainy
+form.field.label.app.certifyRecordTo.informant,,"Print and issue to informant ({informant, select, FATHER {Father} MOTHER {Mother} GRANDFATHER {Grandfather} GRANDMOTHER {Grandmother} BROTHER {Brother} SISTER {Sister} LEGAL_GUARDIAN {Legal guardian} other {Other}})","Imprimer et remettre au déclarant ({informant, select, FATHER {Père} MOTHER {Mère} GRANDFATHER {Grand-père} GRANDMOTHER {Grand-mère} BROTHER {Frère} SISTER {Sœur} LEGAL_GUARDIAN {Tuteur légal} other {Autre}})","Hatonta ary homena an'ilay nanao fanambarana ({informant, select, FATHER {Ray} MOTHER {Reny} GRANDFATHER {Ray be} GRANDMOTHER {Reny be} BROTHER {Anadahy/Rahalahy} SISTER {Anabavy/Rahavavy} LEGAL_GUARDIAN {Mpiantoka} other {Hafa}})"
+form.field.label.app.certifyRecordTo.mother,,Print and issue to mother,Imprimer et remettre à la mère,Hatonta ary homena ny Reniny
 form.field.label.app.phoneVerWarn,,Check with the informant that the mobile phone number you have entered is correct,Vérifiez auprès du déclarant que le numéro de téléphone mobile que vous avez indiqué est correct.,Vérifiez auprès du déclarant que le numéro de téléphone mobile que vous avez indiqué est correct.
 form.field.label.app.whoContDet.app,,Informant,déclarant,déclarant
 form.field.label.app.whoContDet.both,,Both Parents,Les deux parents,Ireo ray aman-dreny roa tonta
