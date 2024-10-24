@@ -347,7 +347,8 @@ export const birthForm: ISerializedForm = {
                 },
                 {
                   action: 'hide',
-                  expression: '!window.navigator.onLine'
+                  expression:
+                    '$form.createNUI?.error || !window.navigator.onLine'
                 }
               ],
               label: formMessageDescriptors.nui,
@@ -356,7 +357,7 @@ export const birthForm: ISerializedForm = {
               loadingLabel: formMessageDescriptors.generatingNUI
             },
             {
-              name: 'nuiGeneratorOffline',
+              name: 'nuiGeneratorError',
               type: 'BUTTON',
               custom: true,
               hideInPreview: true,
@@ -371,11 +372,13 @@ export const birthForm: ISerializedForm = {
                 conditionals.hide.whenRegistrationAgent,
                 {
                   action: 'disable',
-                  expression: '!window.navigator.onLine'
+                  expression:
+                    '!window.navigator.onLine || $form.createNUI?.error'
                 },
                 {
                   action: 'hide',
-                  expression: 'window.navigator.onLine'
+                  expression:
+                    '!$form.createNUI?.error && window.navigator.onLine'
                 }
               ],
               label: formMessageDescriptors.nui,
@@ -400,7 +403,8 @@ export const birthForm: ISerializedForm = {
                 conditionals.hide.whenRegistrationAgent,
                 {
                   action: 'hide',
-                  expression: 'window.navigator.onLine'
+                  expression:
+                    'window.navigator.onLine && !$form.createNUI?.error'
                 }
               ],
               validator: [
