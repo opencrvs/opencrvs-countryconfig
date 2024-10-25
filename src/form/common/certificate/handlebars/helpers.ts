@@ -170,9 +170,9 @@ export function eventStatement(): Handlebars.HelperDelegate {
         convertTimeToMdgCustomWords(this.birthChildBirthTime),
         'no teraka tao amin’ny',
         this.placeOfBirthFacility ? this.placeOfBirthFacility + ',' : '',
-        'fokontany',
+        //'fokontany',
         this.birthChildFokontanyCustomAddress
-          ? this.birthChildFokontanyCustomAddress + ','
+          ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
           : '',
         'kaominina',
         this.placeOfBirthDistrict + ',',
@@ -212,7 +212,7 @@ function fatherDetails(
       'kaominina',
       fatherPrimaryDistrict,
       this.birthFatherFatherIsDeceased ? 'nonina tao' : 'monina ao',
-      'amin’ny',
+      'amin’ny fokontany ',
       (this.birthFatherFokontanyCustomAddress ||
         this.birthMotherFokontanyCustomAddress) + ',',
       this.fatherOccupation + ',',
@@ -245,7 +245,7 @@ function motherDetails(
       'kaominina',
       motherPrimaryDistrict,
       this.birthMotherMotherIsDeceased ? 'nonina tao' : 'monina ao',
-      'amin’ny',
+      'amin’ny fokontany ',
       this.birthMotherFokontanyCustomAddress + ',',
       this.motherOccupation + '--'
     ],
@@ -259,6 +259,8 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
+    console.log('record == ', this.parentInformantLabel)
+    console.log('record == ', this)
     return joinValuesWith(
       [
         '---Nosoratana androany',
@@ -272,7 +274,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
               ["nataon'i", this.informantFamilyName, this.informantFirstName],
               ' '
             ),
-        this.informantType + ',',
+        this.parentInformantLabel + ',',
         "teraka tamin'ny",
         this.birthInformantCustomizedExactDateOfBirthUnknown
           ? convertNumberToLetterForMalagasySpecificLanguage(
@@ -285,7 +287,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
           : '',
         'kaominina',
         informantPrimaryDistrict + ',',
-        'monina ao',
+        "monina ao amin'ny fokontany ",
         this.birthInformantFokontanyCustomAddress + ',',
         this.informantOccupation + ',',
         'izay miara-manao sonia aminay,',
@@ -306,7 +308,7 @@ export function signatureDescription(): Handlebars.HelperDelegate {
         'Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany',
         customizeDateInCertificateContent(
           new Date().toISOString().split('T')[0]
-        ) + ',',
+        ) + ", ary nomena an'i ",
         joinValuesWith(
           [this.informantFamilyName, this.informantFirstName],
           ' '
@@ -461,12 +463,15 @@ function convertTimeToMdgCustomWords(timeString: string) {
   } else if (newHour === 0 && newMinute === 0) {
     return `roa ambin'ny folo ora alina`
   }
-
-  return `${mdgHours[newHour]}${
+  const res = `${mdgHours[newHour]}${
     newMinute > 0
-      ? `ora sy ${convertNumberToLetterForMalagasySpecificLanguage(newMinute)} `
-      : ''
-  }minitra ${timePeriod}`
+      ? ` ora sy ${convertNumberToLetterForMalagasySpecificLanguage(
+          newMinute
+        )} `
+      : 'ora'
+  }${newMinute > 0 ? `minitra ` : ''} ${timePeriod}`
+
+  return res
 }
 
 function convertDateToMdgCustomWords(dateString: string) {
@@ -482,7 +487,6 @@ function convertDateToMdgCustomWords(dateString: string) {
 }
 
 function convertLocaleDateToMdgCustomWords(dateString: string) {
-  console.log('>>>>', dateString)
   const dateStringStr = dateString.split(' ')
   const [day, month, year] = dateStringStr[0].split('/')
   return `${day} ${THE_MONTH_MDG_WORDS[parseInt(month)]} ${year}`
