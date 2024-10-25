@@ -259,8 +259,6 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
-    console.log('record == ', this.parentInformantLabel)
-    console.log('record == ', this)
     return joinValuesWith(
       [
         '---Nosoratana androany',
@@ -274,7 +272,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
               ["nataon'i", this.informantFamilyName, this.informantFirstName],
               ' '
             ),
-        this.parentInformantLabel + ',',
+        ' mpanolotra,',
         "teraka tamin'ny",
         this.birthInformantCustomizedExactDateOfBirthUnknown
           ? convertNumberToLetterForMalagasySpecificLanguage(
@@ -287,8 +285,8 @@ export function registrationStatement(): Handlebars.HelperDelegate {
           : '',
         'kaominina',
         informantPrimaryDistrict + ',',
-        "monina ao amin'ny fokontany ",
-        this.birthInformantFokontanyCustomAddress + ',',
+        //"monina ao amin'ny fokontany ",
+        //this.birthInformantFokontanyCustomAddress + ',',
         this.informantOccupation + ',',
         'izay miara-manao sonia aminay,',
         this.registrar.name + ',',
