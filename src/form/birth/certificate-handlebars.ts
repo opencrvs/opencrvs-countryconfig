@@ -46,7 +46,6 @@ export const certificateHandlebars = {
   eventDate: 'eventDate',
   informantFirstName: 'informantFirstName',
   informantFamilyName: 'informantFamilyName',
-  parentInformantLabel: 'parentInformantLabel',
   informantBirthDate: 'informantBirthDate',
   informantNationality: 'informantNationality',
   informantNID: 'informantNID',
