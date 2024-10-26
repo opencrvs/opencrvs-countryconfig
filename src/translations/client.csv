@@ -1597,7 +1597,7 @@ home.header.typeBrnDrn,,,,BRN/DRN
 home.header.typeName,Search menu name type,Name,Nom,Anarana
 home.header.typePhone,Search menu phone no type,Phone no.,N° de téléphone,Laharana finday
 home.header.typeRN,Search menu brn drn type,Registration no.,N ° d'enregistrement.,
-httpError,,Error in NUI generation. Please try again later.,Erreur dans la génération de la NUI. Veuillez réessayer plus tard.,
+httpError,,Error in NUI generation. Please try again later.,"Générateur indisponible, veuillez le saisir manuellement en vous référant à l’étiquette NUI que vous avez à disposition",
 imageUploadOption.upload.documentType,Show error message if the document type is not selected,Please select the type of document first,Veuillez d'abord sélectionner le type de document,"Azafady, safidio aloha ny karazan'ilay taratasy"
 imageUploadOption.upload.error,Show error messages while uploading,File format not supported. Please upload a .png or .jpg (max 5mb),"Format de fichier non pris en charge. Veuillez joindre un png, jpg (max 5mb)","Karazana fisy tsy zakan'ny solosaina. Azafady mampidira png, jpg (tsy mihoatra ny 5mb)"
 imageUploadOption.upload.imageFormat,Show error message if the selected image type is not supported,File format not supported. Please upload a .png or .jpg (max 5mb),Le format d'image n'est pas supporté. Veuillez joindre un png ou un jpg (max 5mb),Ny karazan'io sary io dia tsy zakan'ilay tranokala. Azafady mampidira= png na jpg (tsy mihoatra ny 5mb)
