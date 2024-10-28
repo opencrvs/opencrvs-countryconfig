@@ -1540,7 +1540,6 @@ const districts = [
 
 export function getRegionName(): Handlebars.HelperDelegate {
   return function (this: any, districtName: string) {
-    console.log('===> ', districtName)
     return districts.find((d) => d.name === districtName.toUpperCase())
       ?.region_name
   }
