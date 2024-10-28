@@ -818,11 +818,15 @@ export const birthForm: ISerializedForm = {
         previewGroups: [
           {
             id: 'mention' + i,
-            label: {
-              description: 'Label for details preview group title',
-              defaultMessage: 'Details of the mention ' + (i + 1),
-              id: 'form.preview.group.label.typeMention' + i
+            label: mentionMessageDescriptors.typeMention,
+            labelParam: {
+              i
             }
+            // label: {
+            //   description: 'Label for details preview group title',
+            //   defaultMessage: 'Details of the mention ' + (i + 1),
+            //   id: 'form.preview.group.label.typeMention' + i
+            // }
           }
         ]
       }))
