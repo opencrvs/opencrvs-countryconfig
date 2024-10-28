@@ -919,37 +919,38 @@ const districts = [
   },
   {
     id: 1108,
-    name: 'CU TANA I',
+    name: 'TANA I',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
+
   {
     id: 1109,
-    name: 'CU TANA II',
+    name: 'TANA II',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1110,
-    name: 'CU TANA III',
+    name: 'TANA III',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1111,
-    name: 'CU TANA IV',
+    name: 'TANA IV',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1112,
-    name: 'CU TANA V',
+    name: 'TANA V',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1113,
-    name: 'CU TANA VI',
+    name: 'TANA VI',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
@@ -1539,6 +1540,7 @@ const districts = [
 
 export function getRegionName(): Handlebars.HelperDelegate {
   return function (this: any, districtName: string) {
+    console.log('===> ', districtName)
     return districts.find((d) => d.name === districtName.toUpperCase())
       ?.region_name
   }
