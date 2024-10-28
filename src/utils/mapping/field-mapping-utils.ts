@@ -135,11 +135,17 @@ export function getFieldMapping(
         },
         template: {
           fieldName: certificateHandlebar,
-          operation: 'selectTransformer'
+          operation: 'fieldValueTransformer',
+          parameters: ['relationship']
         }
       }
     case 'otherInformantType':
       return {
+        template: {
+          fieldName: certificateHandlebar,
+          operation: 'fieldValueTransformer',
+          parameters: ['otherRelationship']
+        },
         mutation: {
           operation: 'fieldValueSectionExchangeTransformer',
           parameters: ['registration', 'otherInformantType']
