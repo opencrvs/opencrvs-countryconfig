@@ -633,6 +633,8 @@ correction.certificate.corrector.idCheckWithoutVerify,The label for id check com
 correction.certificate.corrector.otherIdCheck,The title for other id check component,Check proof of ID,Avez-vous vérifié leur preuve d'identification ?,Efa nojerevanao ve ilay porofo fanamarinana an'ilay olona ?
 correction.correctRecordDialog.description,,The informant will be notified of this correction and a record of this decision will be recorded,"Le declarant sera notifié de cette correction, toute modification sera historisé et enregistré",
 correction.correctRecordDialog.title,,Correct record ?,Corriger l'enregistrement ?,Ahitsio ilay fanambarana voarakitra
+correction.correctionForApprovalDialog.actions.cancel,,Cancel,Annuler,Ajanona
+correction.correctionForApprovalDialog.title,,Confirm,Confirmer,Ekena
 correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent,Un autre agent d'enregistrement ou un agent de terrain,Mpitahiry sora-piankohonana hafa na mpiasa ifotony
 correction.corrector.birth.note,Birth correction note,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.,"Note : Si l'enfant a atteint l'âge légal (18 ans), il est le seul à pouvoir demander une modification de son acte de naissance.",Fanamarihana: Raha toa ka efa ampy taona ilay zaza (18 taona araka ny lalana velona eto amin'ny firenena) dia izy irery ihany no afaka manao fangatahana  ny  fanovana ny kopiany.
 correction.corrector.bride,Label for bride option in certificate correction form,Bride,Mariée,
