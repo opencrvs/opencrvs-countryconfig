@@ -1135,5 +1135,10 @@ export const mentionMessageDescriptors = {
     id: 'form.field.label.mentionDetailsExist',
     defaultMessage: 'Mention details exist',
     description: 'Label for Mention details exist checkbox'
+  },
+  typeMention: {
+    id: 'form.preview.group.label.typeMention',
+    defaultMessage: 'Details of the mention {i}',
+    description: 'Label for details preview group title'
   }
 }
