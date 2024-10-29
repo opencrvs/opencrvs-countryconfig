@@ -1358,11 +1358,11 @@ form.field.label.mentionDetailsExist,Label for Mention details exist checkbox,Me
 form.field.label.mentionType.death,Label for mention type Death,Death,Decés,Fahafatesana
 form.field.label.mentionType.divorce,Label for mention type Divorce,Divorce,Divorce,Fisarahana
 form.field.label.mentionType.judicialAdoption,Label for mention type Judicial adoption,Judicial adoption, Adoption juridique,Fanjanahana araka ny lalàna
-form.field.label.mentionType.marriage,Label for mention type Marriage,Marriage,Marriage,Fanambadiana
+form.field.label.mentionType.marriage,Label for mention type Marriage,Marriage,Mariage,Fanambadiana
 form.field.label.mentionType.nameChange,Label for mention type Name change,Name change,Changement de nom,Fanovana anarana
 form.field.label.mentionType.recognition,Label for mention type Recognition,Recognition,Reconnaissance,Fanjanahana
 form.field.label.mentionType.rejection,Label for mention type Rejection,Rejection,Rejet,Fandavana
-form.field.label.mentionType.simpleAdoption,Label for mention type Simple adoption,Simple Adoption,Simple adoption,Fanjanahana tsotra
+form.field.label.mentionType.simpleAdoption,Label for mention type Simple adoption,Simple Adoption,Adoption simple,Fanjanahana tsotra
 form.field.label.methodOfCauseOfDeath,,Method of Cause of Death,Méthode de détermination de la cause du décès,Fomba nahafantarana ny anton'ny ilay fahafatesana
 form.field.label.monogamy,,Monogamous,Monogame,
 form.field.label.mother.nationality,,Nationality,Nationalité,Zom-pirenena
