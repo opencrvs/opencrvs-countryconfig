@@ -540,8 +540,14 @@ test.describe.serial('7. Death declaration case - 7', () => {
         })
         .click()
 
-      await page.getByRole('button', { name: 'View', exact: true }).click()
-
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /View record/
+        })
+        .click()
       /*
        * Expected result: should include
        * - Deceased's First Name

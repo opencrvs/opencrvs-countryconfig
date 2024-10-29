@@ -110,7 +110,7 @@ export async function validateSectionButtons(page: Page) {
   await expect(page.getByText('Continue', { exact: true })).toBeVisible()
   await expect(page.getByText('Exit', { exact: true })).toBeVisible()
   await expect(page.getByText('Save & Exit', { exact: true })).toBeVisible()
-  await expect(page.locator('#eventToggleMenuToggleButton')).toBeVisible()
+  await expect(page.locator('#eventToggleMenu-dropdownMenu')).toBeVisible()
 }
 
 export const uploadImage = async (

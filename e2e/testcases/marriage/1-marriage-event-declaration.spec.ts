@@ -179,8 +179,12 @@ test.describe('1. Marriage event validation', () => {
     await page.getByText('Continue', { exact: true }).click()
 
     await test.step('1.13.3. Delete declaration from the 3 dot menu', async () => {
-      await page.click('#eventToggleMenuToggleButton')
-      await page.getByText('Delete declaration', { exact: true }).click()
+      await page.click('#eventToggleMenu-dropdownMenu')
+      await page
+        .locator('#eventToggleMenu-dropdownMenu')
+        .getByRole('listitem')
+        .filter({ hasText: 'Delete declaration' })
+        .click()
       await page.getByText('Confirm', { exact: true }).click()
       await expect(
         page.getByText('No records in progress', { exact: true })

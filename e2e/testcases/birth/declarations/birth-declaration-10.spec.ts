@@ -201,7 +201,8 @@ test.describe.serial('10. Birth declaration case - 10', () => {
        */
       await expect(
         page.getByRole('button', {
-          name: `${declaration.child.name.firstNames}`
+          name: `${declaration.child.name.firstNames}`,
+          exact: true
         })
       ).toBeVisible()
     })
@@ -219,12 +220,21 @@ test.describe.serial('10. Birth declaration case - 10', () => {
       await page.getByRole('button', { name: 'Field Agents' }).click()
       await page
         .getByRole('button', {
-          name: `${declaration.child.name.firstNames}`
+          name: `${declaration.child.name.firstNames}`,
+          exact: true
         })
         .click()
       await page.getByLabel('Assign record').click()
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await page.getByRole('button', { name: 'Update', exact: true }).click()
+
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Update declaration/
+        })
+        .click()
     })
 
     test('10.2.2 Verify information on preview page', async () => {

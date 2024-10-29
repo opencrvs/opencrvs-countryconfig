@@ -570,7 +570,15 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         .click()
       await page.getByLabel('Assign record').click()
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await page.getByRole('button', { name: 'Review', exact: true }).click()
+
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Review declaration/
+        })
+        .click()
     })
 
     test('2.2.2 Verify information on review page', async () => {

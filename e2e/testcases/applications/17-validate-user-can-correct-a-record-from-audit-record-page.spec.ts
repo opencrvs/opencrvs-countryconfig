@@ -64,15 +64,29 @@ test.describe
     /*
      * Expected result: should
      * - Navigate to record audit page
-     * - Not show correct recort optoin
-     * - Print button should be disabled
+     * - Correct record option should be disabled
+     * - Print option should be disabled
      */
+    await page.getByRole('button', { name: 'Action' }).first().click()
+
     await expect(
-      page.getByRole('button', { name: 'Correct record' })
-    ).not.toBeVisible()
+      page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Correct Record/
+        })
+    ).toHaveAttribute('disabled')
+
     await expect(
-      page.getByRole('button', { name: 'Print', exact: true })
-    ).toBeDisabled()
+      page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Print certified copy/
+        })
+    ).toHaveAttribute('disabled')
+
     expect(page.url().includes('record-audit'))
   })
 
@@ -80,21 +94,40 @@ test.describe
     await page.getByLabel('Assign record').click()
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
+    await page.getByRole('button', { name: 'Action' }).first().click()
+
     /*
      * Expected result: should
-     * - Show correct recort optoin
-     * - Print button should not be disabled
+     * - Correct record option should not be disabled
+     * - Print option should not be disabled
      */
     await expect(
-      page.getByRole('button', { name: 'Correct record' })
-    ).toBeVisible()
+      page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Correct Record/
+        })
+    ).not.toHaveAttribute('disabled')
+
     await expect(
-      page.getByRole('button', { name: 'Print', exact: true })
-    ).not.toBeDisabled()
+      page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Print certified copy/
+        })
+    ).not.toHaveAttribute('disabled')
   })
 
   test('17.3 Click "Correct record"', async () => {
-    await page.getByRole('button', { name: 'Correct record' }).click()
+    await page
+      .locator('#action-dropdownMenu')
+      .getByRole('listitem')
+      .filter({
+        hasText: /Correct Record/
+      })
+      .click()
 
     /*
      * Expected result: should show correct record page

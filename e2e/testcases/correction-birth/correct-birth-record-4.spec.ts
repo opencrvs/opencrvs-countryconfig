@@ -123,8 +123,13 @@ test.describe.serial(' Correct record - 4', () => {
     await page.locator('#ListItemAction-0-icon').click()
     await page.locator('#name_0').click()
 
+    await page.getByRole('button', { name: 'Action' }).first().click()
     await page
-      .getByRole('button', { name: 'Correct record', exact: true })
+      .locator('#action-dropdownMenu')
+      .getByRole('listitem')
+      .filter({
+        hasText: /Correct Record/
+      })
       .click()
   })
 
@@ -753,6 +758,7 @@ test.describe.serial(' Correct record - 4', () => {
      */
     await page.getByRole('button', { name: 'Make correction' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
+    await expectOutboxToBeEmpty(page)
 
     await page.getByRole('button', { name: 'Ready to print' }).click()
 
@@ -761,14 +767,13 @@ test.describe.serial(' Correct record - 4', () => {
      * - be navigated to ready to print tab
      * - include the declaration in this tab
      */
-    await expectOutboxToBeEmpty(page)
 
     await expect(
-      page.getByText(formatName(declaration.child.name[0]))
+      page.getByText(formatName(declaration.child.name[0])).first()
     ).toBeVisible()
   })
   test('4.8 Validate history in record audit', async () => {
-    await page.getByText(formatName(declaration.child.name[0])).click()
+    await page.getByText(formatName(declaration.child.name[0])).first().click()
 
     await page.getByLabel('Assign record').click()
     if (

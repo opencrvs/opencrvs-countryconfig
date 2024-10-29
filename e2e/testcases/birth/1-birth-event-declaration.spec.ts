@@ -93,9 +93,12 @@ test.describe('1. Birth event declaration', () => {
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
 
-        await page.locator('#eventToggleMenuToggleButton').click()
+        await page.locator('#eventToggleMenu-dropdownMenu').click()
         await expect(
-          page.getByRole('button', { name: 'Delete declaration' })
+          page
+            .locator('#eventToggleMenu-dropdownMenu')
+            .getByRole('listitem')
+            .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
       })
 
@@ -157,9 +160,12 @@ test.describe('1. Birth event declaration', () => {
             page.getByRole('button', { name: 'Save & Exit' })
           ).toBeVisible()
 
-          await page.locator('#eventToggleMenuToggleButton').click()
+          await page.locator('#eventToggleMenu-dropdownMenu').click()
           await expect(
-            page.getByRole('button', { name: 'Delete declaration' })
+            page
+              .locator('#eventToggleMenu-dropdownMenu')
+              .getByRole('listitem')
+              .filter({ hasText: 'Delete declaration' })
           ).toBeVisible()
         })
 
@@ -199,9 +205,12 @@ test.describe('1. Birth event declaration', () => {
           await expect(
             page.getByRole('button', { name: 'Save & Exit' })
           ).toBeVisible()
-          await page.locator('#eventToggleMenuToggleButton').click()
+          await page.locator('#eventToggleMenu-dropdownMenu').click()
           await expect(
-            page.getByRole('button', { name: 'Delete declaration' })
+            page
+              .locator('#eventToggleMenu-dropdownMenu')
+              .getByRole('listitem')
+              .filter({ hasText: 'Delete declaration' })
           ).toBeVisible()
         })
 
@@ -257,9 +266,12 @@ test.describe('1. Birth event declaration', () => {
         await expect(
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
-        await page.locator('#eventToggleMenuToggleButton').click()
+        await page.locator('#eventToggleMenu-dropdownMenu').click()
         await expect(
-          page.getByRole('button', { name: 'Delete declaration' })
+          page
+            .locator('#eventToggleMenu-dropdownMenu')
+            .getByRole('listitem')
+            .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
       })
 
@@ -300,9 +312,12 @@ test.describe('1. Birth event declaration', () => {
         await expect(
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
-        await page.locator('#eventToggleMenuToggleButton').click()
+        await page.locator('#eventToggleMenu-dropdownMenu').click()
         await expect(
-          page.getByRole('button', { name: 'Delete declaration' })
+          page
+            .locator('#eventToggleMenu-dropdownMenu')
+            .getByRole('listitem')
+            .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
       })
 
@@ -343,9 +358,12 @@ test.describe('1. Birth event declaration', () => {
         await expect(
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
-        await page.locator('#eventToggleMenuToggleButton').click()
+        await page.locator('#eventToggleMenu-dropdownMenu').click()
         await expect(
-          page.getByRole('button', { name: 'Delete declaration' })
+          page
+            .locator('#eventToggleMenu-dropdownMenu')
+            .getByRole('listitem')
+            .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
       })
 
@@ -489,9 +507,11 @@ test.describe('1. Birth event declaration', () => {
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
 
-      await page.locator('#eventToggleMenuToggleButton').click()
+      await page.locator('#eventToggleMenu-dropdownMenu').click()
       await page
-        .getByRole('button', { name: 'Delete declaration', exact: true })
+        .locator('#eventToggleMenu-dropdownMenu')
+        .getByRole('listitem')
+        .filter({ hasText: 'Delete declaration' })
         .click()
     })
 

@@ -83,7 +83,14 @@ test.describe.serial(' Correct record - 17', () => {
     await page.locator('#ListItemAction-0-icon').click()
     await page.locator('#name_0').click()
 
-    await page.getByRole('button', { name: 'Print', exact: true }).click()
+    await page.getByRole('button', { name: 'Action' }).first().click()
+    await page
+      .locator('#action-dropdownMenu')
+      .getByRole('listitem')
+      .filter({
+        hasText: /Print certified copy/
+      })
+      .click()
 
     await page.getByLabel('Print in advance').check()
     await page.getByRole('button', { name: 'Continue' }).click()
@@ -549,6 +556,7 @@ test.describe.serial(' Correct record - 17', () => {
     await page.getByRole('button', { name: 'Make correction' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
+    await expectOutboxToBeEmpty(page)
     await page.getByRole('button', { name: 'Ready to print' }).click()
     /*
      * Expected result: should
@@ -556,14 +564,15 @@ test.describe.serial(' Correct record - 17', () => {
      * - include the declaration in this tab
      */
 
-    await expectOutboxToBeEmpty(page)
-
     await expect(
-      page.getByText(formatName(declaration.deceased.name[0]))
+      page.getByText(formatName(declaration.deceased.name[0])).first()
     ).toBeVisible()
   })
   test('17.8 Validate history in record audit', async () => {
-    await page.getByText(formatName(declaration.deceased.name[0])).click()
+    await page
+      .getByText(formatName(declaration.deceased.name[0]))
+      .first()
+      .click()
 
     await page.getByLabel('Assign record').click()
 

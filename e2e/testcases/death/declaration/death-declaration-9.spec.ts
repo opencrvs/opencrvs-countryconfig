@@ -268,7 +268,8 @@ test.describe.serial('9. Death declaration case - 9', () => {
        */
       await expect(
         page.getByRole('button', {
-          name: `${declaration.deceased.name.firstNames}`
+          name: `${declaration.deceased.name.firstNames}`,
+          exact: true
         })
       ).toBeVisible()
     })
@@ -287,12 +288,21 @@ test.describe.serial('9. Death declaration case - 9', () => {
 
       await page
         .getByRole('button', {
-          name: `${declaration.deceased.name.firstNames}`
+          name: `${declaration.deceased.name.firstNames}`,
+          exact: true
         })
         .click()
       await page.getByLabel('Assign record').click()
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await page.getByRole('button', { name: 'Update', exact: true }).click()
+
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Update declaration/
+        })
+        .click()
     })
 
     test('9.2.2 Verify information on review page', async () => {

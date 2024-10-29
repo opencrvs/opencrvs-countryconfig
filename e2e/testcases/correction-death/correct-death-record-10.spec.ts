@@ -82,15 +82,15 @@ test.describe('10. Correct record - 10', () => {
     test('10.1.1 Validate record audit page', async ({ page }) => {
       /*
        * Expected result: should
-       * - See in header deceased's name and correct record option
+       * - See in header deceased's name and action button
        * - Navigate to record audit page
-       * - See status, event, trackingId, BRN, DOB, Place of birth, Informant contact
+       * - See status, event, trackingId, BRN, DOB, Place of death, Informant contact
        */
       await expect(
         page.getByText(formatName(declaration.deceased.name[0]))
       ).toBeVisible()
       await expect(
-        page.getByRole('button', { name: 'Correct record' })
+        page.getByRole('button', { name: 'Action' }).first()
       ).toBeVisible()
 
       expect(page.url().includes('record-audit')).toBeTruthy()
@@ -114,14 +114,25 @@ test.describe('10. Correct record - 10', () => {
         )}
     `)
       ).toBeVisible()
-      // await expect(page.getByText(`Place of birth${}`)).toBeVisible()
+      await expect(
+        page.getByText(
+          'Place of deathKalela Health Post, Afue, Sulaka, Farajaland'
+        )
+      ).toBeVisible()
       await expect(
         page.getByText(declaration.registration.contactEmail)
       ).toBeVisible()
     })
 
     test('10.1.2 Validate correction requester page', async ({ page }) => {
-      await page.getByRole('button', { name: 'Correct record' }).click()
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Correct Record/
+        })
+        .click()
 
       /*
        * Expected result: should
@@ -135,7 +146,14 @@ test.describe('10. Correct record - 10', () => {
     test('10.1.3 Validate identity verification page for Informant (SPOUSE)', async ({
       page
     }) => {
-      await page.getByRole('button', { name: 'Correct record' }).click()
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Correct Record/
+        })
+        .click()
 
       await page.getByLabel('Informant (SPOUSE)').check()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -204,7 +222,14 @@ test.describe('10. Correct record - 10', () => {
       await page.locator('#ListItemAction-0-icon').click()
       await page.locator('#name_0').click()
 
-      await page.getByRole('button', { name: 'Correct record' }).click()
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Correct Record/
+        })
+        .click()
 
       await page.getByLabel('Informant (SPOUSE)').check()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -895,10 +920,11 @@ test.describe('10. Correct record - 10', () => {
          * - include the declaration in this tab
          */
         expect(page.url().includes('registration-home/approvals')).toBeTruthy()
+        await page.getByRole('button', { name: 'Outbox' }).click()
         await expectOutboxToBeEmpty(page)
-
+        await page.getByRole('button', { name: 'Sent for approval' }).click()
         await expect(
-          page.getByText(formatName(declaration.deceased.name[0]))
+          page.getByText(formatName(declaration.deceased.name[0])).first()
         ).toBeVisible()
       })
     })
@@ -926,8 +952,14 @@ test.describe('10. Correct record - 10', () => {
       })
 
       test('10.2.6.2 Correction review', async () => {
-        await page.getByRole('button', { name: 'Review', exact: true }).click()
-
+        await page.getByRole('button', { name: 'Action' }).first().click()
+        await page
+          .locator('#action-dropdownMenu')
+          .getByRole('listitem')
+          .filter({
+            hasText: /Review correction request/
+          })
+          .click()
         /*
          * Expected result: should show
          * - Submitter
@@ -1047,7 +1079,9 @@ test.describe('10. Correct record - 10', () => {
          * - include the updated declaration in this tab
          */
         expect(page.url().includes('registration-home/print')).toBeTruthy()
+        await page.getByRole('button', { name: 'Outbox' }).click()
         await expectOutboxToBeEmpty(page)
+        await page.getByRole('button', { name: 'Ready to print' }).click()
         await expect(
           page.getByText(formatName(updatedDeceasedDetails))
         ).toBeVisible()

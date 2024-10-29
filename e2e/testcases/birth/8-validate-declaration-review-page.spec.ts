@@ -867,8 +867,8 @@ test.describe.serial('8. Validate declaration review page', () => {
        */
       expect(page.url().includes('registration-home')).toBeTruthy()
 
-      await page.getByRole('button', { name: 'Sent for review' }).click()
       await expectOutboxToBeEmpty(page)
+      await page.getByRole('button', { name: 'Sent for review' }).click()
       /*
        * Expected result: The declaration should be in sent for review
        */
@@ -896,7 +896,15 @@ test.describe.serial('8. Validate declaration review page', () => {
         .click()
       await page.getByLabel('Assign record').click()
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await page.getByRole('button', { name: 'Review', exact: true }).click()
+
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Review declaration/
+        })
+        .click()
     })
     test('8.2.1.1 Verify information added on previous pages', async () => {
       /*
@@ -1120,8 +1128,8 @@ test.describe.serial('8. Validate declaration review page', () => {
        */
       expect(page.url().includes('registration-home')).toBeTruthy()
 
-      await page.getByRole('button', { name: 'Sent for approval' }).click()
       await expectOutboxToBeEmpty(page)
+      await page.getByRole('button', { name: 'Sent for approval' }).click()
 
       /*
        * Expected result: The declaration should be in sent for approval
@@ -1150,7 +1158,15 @@ test.describe.serial('8. Validate declaration review page', () => {
         .click()
       await page.getByLabel('Assign record').click()
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await page.getByRole('button', { name: 'Review', exact: true }).click()
+
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Review declaration/
+        })
+        .click()
     })
     test('8.3.1.1 Verify information added on previous pages', async () => {
       /*
@@ -1398,8 +1414,8 @@ test.describe.serial('8. Validate declaration review page', () => {
        */
       expect(page.url().includes('registration-home')).toBeTruthy()
 
-      await page.getByRole('button', { name: 'Ready to print' }).click()
       await expectOutboxToBeEmpty(page)
+      await page.getByRole('button', { name: 'Ready to print' }).click()
 
       /*
        * Expected result: The declaration should be in Ready to print

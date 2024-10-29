@@ -275,7 +275,15 @@ test.describe.serial('7. Birth declaration case - 7', () => {
         .click()
       await page.getByLabel('Assign record').click()
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await page.getByRole('button', { name: 'Update', exact: true }).click()
+
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await page
+        .locator('#action-dropdownMenu')
+        .getByRole('listitem')
+        .filter({
+          hasText: /Update declaration/
+        })
+        .click()
     })
 
     test('7.2.2 Verify information on preview page', async () => {
