@@ -917,40 +917,45 @@ const districts = [
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
+  /** Districts are named as "CU TANA" instead of TANA because the existing
+   * locations are named as "CU TANA". The ids are different than adminPCode
+   * in this file: src/data-seeding/locations/source/locations.csv
+   * So, there is no other way than name to name mapping. If the names do not
+   * match exactly, the region name will not be resolved */
   {
     id: 1108,
-    name: 'TANA I',
+    name: 'CU TANA I',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
 
   {
     id: 1109,
-    name: 'TANA II',
+    name: 'CU TANA II',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1110,
-    name: 'TANA III',
+    name: 'CU TANA III',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1111,
-    name: 'TANA IV',
+    name: 'CU TANA IV',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1112,
-    name: 'TANA V',
+    name: 'CU TANA V',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1113,
-    name: 'TANA VI',
+    name: 'CU TANA VI',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
