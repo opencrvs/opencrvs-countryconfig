@@ -790,7 +790,7 @@ export type IDeclarationCertificate = {
   corrector?: Partial<{ type: RelationForCertificateCorrection }>
   hasShowedVerifiedDocument?: boolean
   payments?: Payment
-  certTemplateId?: string
+  certificateTemplateId?: string
 }
 
 export interface IFileValue {
