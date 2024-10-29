@@ -1,11 +1,16 @@
 import * as Handlebars from 'handlebars'
 
+const DOUBLE_LINE_BREAk_SEPARATION = ' _DLBS_ '
+function generateDoubleLineBreak() {
+  return '\n' + DOUBLE_LINE_BREAk_SEPARATION + '\n'
+}
 function wordWrap(text: string, boundary: number) {
   return text
     .split('\n')
     .map(function (line) {
       let pos = 0
       return line
+        .trim()
         .split(/\b/)
         .map(function (word) {
           pos += word.length
@@ -88,8 +93,13 @@ export function text(): Handlebars.HelperDelegate {
     function insertTspansIntoText(this: any, textLines: string[]) {
       let svgString = ''
       for (const line of textLines) {
-        svgString += `<tspan x="${this.x}" y="${this.y}">${line}</tspan>`
-        this.y += LINE_HEIGHT
+        const lineTrimed = line.trim()
+        if (lineTrimed !== '') {
+          svgString += `<tspan x="${this.x}" y="${this.y}">${
+            lineTrimed == DOUBLE_LINE_BREAk_SEPARATION.trim() ? '' : lineTrimed
+          }</tspan>`
+          this.y += LINE_HEIGHT
+        }
       }
       return svgString
     }
@@ -133,11 +143,12 @@ export function linebreak(): Handlebars.HelperDelegate {
 
 export function numberOfTimesCertificatePrinted(): Handlebars.HelperDelegate {
   return function (this: Record<string, any>) {
-    if (!this.certifier) {
-      return 'KOPIA VOALOHANY'
-    } else {
-      return 'SORATRA AN-TSISINY :'
-    }
+    // if (!this.certifier) {
+    //   return 'KOPIA VOALOHANY'
+    // } else {
+    //   return 'SORATRA AN-TSISINY :'
+    // }
+    return !this.certifier ? 'KOPIA VOALOHANY' + generateDoubleLineBreak() : ''
   }
 }
 
@@ -653,132 +664,162 @@ export function getPlaceOfBirth(
     : placeOfBirthFacility
 }
 
+function addMentionTitle(elements: any[], title: string) {
+  const truthyElements = elements.filter(Boolean)
+  if (truthyElements.length > 0) {
+    elements.unshift(title)
+  }
+  return elements
+}
+
 function getRecognitionMentionValues(this: Record<string, string>, i: number) {
-  return [
-    this['birthMentionRecognitionActNumber__' + i],
-    this['birthMentionRecognitionDate__' + i],
-    this['birthMentionRecognitionPlace__' + i],
+  return addMentionTitle(
     [
-      this['birthMentionChildFamilyName__' + i],
-      this['birthMentionChildFirstName__' + i]
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .trim(),
-    this['birthMentionMentionChildNID__' + i]
-  ]
+      this['birthMentionRecognitionActNumber__' + i],
+      this['birthMentionRecognitionDate__' + i],
+      this['birthMentionRecognitionPlace__' + i],
+      [
+        this['birthMentionChildFamilyName__' + i],
+        this['birthMentionChildFirstName__' + i]
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .trim(),
+      this['birthMentionMentionChildNID__' + i]
+    ],
+    'Fanjanahana'
+  )
 }
 
 function getJudicialAdoptionMentionValues(
   this: Record<string, string>,
   i: number
 ) {
-  return [
-    this['birthMentionJudicialAdoptionActNumber__' + i],
-    this['birthMentionJudicialAdoptionDate__' + i],
-    this['birthMentionJudicialAdoptionJudgementDecisionNumber__' + i],
-    this['birthMentionJudicialAdoptionJudgementDecisionDate__' + i],
+  return addMentionTitle(
     [
-      this['birthMentionJudicialAdoptionParent1FamilyName__' + i],
-      this['birthMentionJudicialAdoptionParent1FirstName__' + i]
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .trim(),
-    this['birthMentionJudicialAdoptionParent1NID__' + i],
-    [
-      this['birthMentionJudicialAdoptionParent2FamilyName__' + i],
-      this['birthMentionJudicialAdoptionParent2FirstName__' + i]
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .trim(),
-    this['birthMentionJudicialAdoptionParent2NID__' + i]
-  ]
+      this['birthMentionJudicialAdoptionActNumber__' + i],
+      this['birthMentionJudicialAdoptionDate__' + i],
+      this['birthMentionJudicialAdoptionJudgementDecisionNumber__' + i],
+      this['birthMentionJudicialAdoptionJudgementDecisionDate__' + i],
+      [
+        this['birthMentionJudicialAdoptionParent1FamilyName__' + i],
+        this['birthMentionJudicialAdoptionParent1FirstName__' + i]
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .trim(),
+      this['birthMentionJudicialAdoptionParent1NID__' + i],
+      [
+        this['birthMentionJudicialAdoptionParent2FamilyName__' + i],
+        this['birthMentionJudicialAdoptionParent2FirstName__' + i]
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .trim(),
+      this['birthMentionJudicialAdoptionParent2NID__' + i]
+    ],
+    'Fanjanahana araka ny lalàna'
+  )
 }
 
 function getSimpleAdoptionMentionValues(
   this: Record<string, string>,
   i: number
 ) {
-  return [
-    this['birthMentionSimpleAdoptionActNumber__' + i],
-    this['birthMentionSimpleAdoptionDate__' + i],
-    this['birthMentionSimpleAdoptionJudgementDecisionNumber__' + i],
-    this['birthMentionSimpleAdoptionJudgementDecisionDate__' + i],
+  return addMentionTitle(
     [
-      this['birthMentionSimpleAdoptionParent1FamilyName__' + i],
-      this['birthMentionSimpleAdoptionParent1FirstName__' + i]
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .trim(),
-    this['birthMentionSimpleAdoptionParent1NID__' + i],
-    [
-      this['birthMentionSimpleAdoptionParent2FamilyName__' + i],
-      this['birthMentionSimpleAdoptionParent2FirstName__' + i]
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .trim(),
-    this['birthMentionSimpleAdoptionParent2NID__' + i]
-  ]
+      this['birthMentionSimpleAdoptionActNumber__' + i],
+      this['birthMentionSimpleAdoptionDate__' + i],
+      this['birthMentionSimpleAdoptionJudgementDecisionNumber__' + i],
+      this['birthMentionSimpleAdoptionJudgementDecisionDate__' + i],
+      [
+        this['birthMentionSimpleAdoptionParent1FamilyName__' + i],
+        this['birthMentionSimpleAdoptionParent1FirstName__' + i]
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .trim(),
+      this['birthMentionSimpleAdoptionParent1NID__' + i],
+      [
+        this['birthMentionSimpleAdoptionParent2FamilyName__' + i],
+        this['birthMentionSimpleAdoptionParent2FirstName__' + i]
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .trim(),
+      this['birthMentionSimpleAdoptionParent2NID__' + i]
+    ],
+    'Fanjanahana tsotra'
+  )
 }
 
 function getMarriageMentionValues(this: Record<string, string>, i: number) {
-  return [
-    this['birthMentionMarriageActNumber__' + i],
-    this['birthMentionMarriageDate__' + i],
-    this['birthMentionMarriageJudgementDecisionNumber__' + i],
-    this['birthMentionMarriageJudgementDecisionDate__' + i],
-    this['birthMentionMarriageTribunalOfFirstInstanceAct__' + i],
+  return addMentionTitle(
     [
-      this['birthMentionBrideOrGroomFamilyName__' + i],
-      this['birthMentionBrideOrGroomFirstName__' + i]
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .trim(),
-    this['birthMentionBrideOrGroomNID__' + i]
-  ]
+      this['birthMentionMarriageActNumber__' + i],
+      this['birthMentionMarriageDate__' + i],
+      this['birthMentionMarriageJudgementDecisionNumber__' + i],
+      this['birthMentionMarriageJudgementDecisionDate__' + i],
+      this['birthMentionMarriageTribunalOfFirstInstanceAct__' + i],
+      [
+        this['birthMentionBrideOrGroomFamilyName__' + i],
+        this['birthMentionBrideOrGroomFirstName__' + i]
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .trim(),
+      this['birthMentionBrideOrGroomNID__' + i]
+    ],
+    'Fanambadiana'
+  )
 }
 
 function getDivorceMentionValues(this: Record<string, string>, i: number) {
-  return [
-    this['birthMentionDivorceActNumber__' + i],
-    this['birthMentionDivorceDate__' + i],
-    this['birthMentionDivorcePlace__' + i],
+  return addMentionTitle(
     [
-      this['birthMentionWifeOrHusbandFamilyName__' + i],
-      this['birthMentionWifeOrHusbandFirstName__' + i]
-    ]
-      .filter(Boolean)
-      .join(' ')
-      .trim(),
-    this['birthMentionWifeOrHusbandNID__' + i]
-  ]
+      this['birthMentionDivorceActNumber__' + i],
+      this['birthMentionDivorceDate__' + i],
+      this['birthMentionDivorcePlace__' + i],
+      [
+        this['birthMentionWifeOrHusbandFamilyName__' + i],
+        this['birthMentionWifeOrHusbandFirstName__' + i]
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .trim(),
+      this['birthMentionWifeOrHusbandNID__' + i]
+    ],
+    'Fisarahana'
+  )
 }
 
 function getNameChangeMentionValues(this: Record<string, string>, i: number) {
-  return [
-    this['birthMentionNameChangeActNumber__' + i],
-    this['birthMentionNameChangeDate__' + i],
-    this['birthMentionNameChangeJudgementDecisionNumber__' + i],
-    this['birthMentionNameChangeJudgementDecisionDate__' + i],
-    this['birthMentionNameChangeTribunalOfFirstInstanceAct__' + i],
-    this['birthMentionModification__' + i]
-  ]
+  return addMentionTitle(
+    [
+      this['birthMentionNameChangeActNumber__' + i],
+      this['birthMentionNameChangeDate__' + i],
+      this['birthMentionNameChangeJudgementDecisionNumber__' + i],
+      this['birthMentionNameChangeJudgementDecisionDate__' + i],
+      this['birthMentionNameChangeTribunalOfFirstInstanceAct__' + i],
+      this['birthMentionModification__' + i]
+    ],
+    'Fanovana anarana'
+  )
 }
 
 function getDeathMentionValues(this: Record<string, string>, i: number) {
-  return [
-    this['birthMentionDeathActNumber__' + i],
-    this['birthMentionDeathDate__' + i],
-    this['birthMentionDeathPlace__' + i],
-    this['birthMentionDeathdateOfDeath__' + i],
-    this['birthMentionDeathDeathPlace__' + i]
-  ]
+  return addMentionTitle(
+    [
+      this['birthMentionDeathActNumber__' + i],
+      this['birthMentionDeathDate__' + i],
+      this['birthMentionDeathPlace__' + i],
+      this['birthMentionDeathdateOfDeath__' + i],
+      this['birthMentionDeathDeathPlace__' + i]
+    ],
+    'Fahafatesana'
+  )
 }
+
 export function mentions(): Handlebars.HelperDelegate {
   return function (this: any) {
     let output = ''
@@ -786,8 +827,13 @@ export function mentions(): Handlebars.HelperDelegate {
       if (!this['birthMentionDetailsMentionExist__' + i]) {
         break
       }
-      output += [
-        this['birthMentionTypeOfMention__' + i],
+      const temp = [
+        /**
+         * @TODO
+         * - handle rejection mention
+         * - to optimize if needed: Mention titles handled in each function with addMentionTitle
+         *  */
+        // this['birthMentionTypeOfMention__' + i],
         ...getRecognitionMentionValues.apply(this, [i]),
         ...getJudicialAdoptionMentionValues.apply(this, [i]),
         ...getSimpleAdoptionMentionValues.apply(this, [i]),
@@ -797,10 +843,12 @@ export function mentions(): Handlebars.HelperDelegate {
         ...getDeathMentionValues.apply(this, [i])
       ]
         .filter(Boolean)
-        .join(', ')
-      output += '\n'
+        .join('\n- ')
+      output += temp
+      // Check if have anything to show before adding line break
+      output += temp.length ? generateDoubleLineBreak() : ''
     }
-    return output
+    return { text: output, hasMention: Boolean(output) }
   }
 }
 
