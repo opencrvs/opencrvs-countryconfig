@@ -12,6 +12,30 @@
 import { Request, ResponseToolkit } from '@hapi/hapi'
 import { readFileSync } from 'fs'
 
+type FontFamilyTypes = {
+  normal: string
+  bold: string
+  italics: string
+  bolditalics: string
+}
+export interface ICertificateConfigData {
+  id: string
+  event: Event
+  label: {
+    id: string
+    defaultMessage: string
+    description: string
+  }
+  isDefault: boolean
+  fee: {
+    onTime: number
+    late: number
+    delayed: number
+  }
+  svgUrl: string
+  fonts?: Record<string, FontFamilyTypes>
+}
+
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
   if (request.params.event) {
     const res = readFileSync(
@@ -19,7 +43,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     ).toString()
     return h.response(res).code(200)
   }
-  return [
+  const certificateConfigs: ICertificateConfigData[] = [
     {
       id: 'birth-certificate',
       event: 'birth',
@@ -28,9 +52,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Birth Certificate',
         description: 'The label for a birth certificate'
       },
-      registrationTarget: 30,
-      lateRegistrationTarget: 365,
-      printInAdvance: true,
+      isDefault: true,
       fee: {
         onTime: 0,
         late: 5.5,
@@ -54,9 +76,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Birth Certificate certified copy',
         description: 'The label for a birth certificate'
       },
-      registrationTarget: 30,
-      lateRegistrationTarget: 365,
-      printInAdvance: true,
+      isDefault: false,
       fee: {
         onTime: 0,
         late: 5.5,
@@ -81,9 +101,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Death Certificate',
         description: 'The label for a death certificate'
       },
-      registrationTarget: 30,
-      lateRegistrationTarget: 365,
-      printInAdvance: true,
+      isDefault: true,
       fee: {
         onTime: 0,
         late: 5.5,
@@ -107,9 +125,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Death Certificate certified copy',
         description: 'The label for a death certificate'
       },
-      registrationTarget: 30,
-      lateRegistrationTarget: 365,
-      printInAdvance: true,
+      isDefault: false,
       fee: {
         onTime: 0,
         late: 5.5,
@@ -134,9 +150,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Marriage Certificate',
         description: 'The label for a marriage certificate'
       },
-      registrationTarget: 30,
-      lateRegistrationTarget: 365,
-      printInAdvance: true,
+      isDefault: true,
       fee: {
         onTime: 0,
         late: 5.5,
@@ -160,9 +174,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Marriage Certificate certified copy',
         description: 'The label for a marriage certificate'
       },
-      registrationTarget: 30,
-      lateRegistrationTarget: 365,
-      printInAdvance: true,
+      isDefault: false,
       fee: {
         onTime: 0,
         late: 5.5,
@@ -180,4 +192,5 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     }
   ]
+  return certificateConfigs
 }
