@@ -784,7 +784,7 @@ export function mentions(): Handlebars.HelperDelegate {
     let output = ''
     for (let i = 0; i < 10; i++) {
       if (!this['birthMentionDetailsMentionExist__' + i]) {
-        break
+        continue
       }
       output += [
         this['birthMentionTypeOfMention__' + i],
@@ -798,7 +798,7 @@ export function mentions(): Handlebars.HelperDelegate {
       ]
         .filter(Boolean)
         .join(', ')
-      output += '\n'
+      output += '\n\n'
     }
     return output
   }
