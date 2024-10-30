@@ -78,7 +78,8 @@
     {{#wrapGroup 70 187 178.488}}
     {{#text}}{{{introduction (location registrar.districtId "name")}}}{{/text}}
     {{linebreak}}
-    {{#text}}{{{eventStatement (location districtPrimaryFatherId "name") (location districtPrimaryMotherId
+    {{#text}}{{{eventStatement (location statePlaceofbirthId "name") (location districtPlaceofbirthId "name") (location
+    districtPrimaryFatherId "name") (location districtPrimaryMotherId
     "name")}}}{{/text}}
     {{linebreak}}
     {{#text}}{{{registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId

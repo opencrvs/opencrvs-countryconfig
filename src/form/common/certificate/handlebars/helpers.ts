@@ -180,6 +180,8 @@ export function introduction(): Handlebars.HelperDelegate {
 export function eventStatement(): Handlebars.HelperDelegate {
   return function (
     this: any,
+    placeOfBirthState: string,
+    placeOfBirthDistrict: string,
     fatherPrimaryDistrict: string,
     motherPrimaryDistrict: string
   ) {
@@ -196,9 +198,9 @@ export function eventStatement(): Handlebars.HelperDelegate {
           ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
           : '',
         'kaominina',
-        this.placeOfBirthDistrict + ',',
+        placeOfBirthDistrict + ',',
         'district',
-        this.placeOfBirthState,
+        placeOfBirthState,
         ':',
         joinValuesWith([this.childFamilyName, this.childFirstName], ' ') + ',',
         getChildGeneratedOrManualNID.call(this) + ',',
