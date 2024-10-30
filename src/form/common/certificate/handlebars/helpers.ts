@@ -1,10 +1,21 @@
 import * as Handlebars from 'handlebars'
 
+const LINE_HEIGHT = 15
+const DEFAULT_FONTSIZE = 11
 const DOUBLE_LINE_BREAk_SEPARATION = ' _DLBS_ '
 function generateDoubleLineBreak() {
   return '\n' + DOUBLE_LINE_BREAk_SEPARATION + '\n'
 }
-function wordWrap(text: string, boundary: number) {
+function wordWrap(
+  text: string,
+  boundary: number,
+  fontSize?: number,
+  fontWeight?: string
+) {
+  const letterSizeFactor =
+    (fontSize != null ? (fontSize + 1.13) / DEFAULT_FONTSIZE : 1) +
+    (fontWeight && fontWeight == 'bold' ? 0.1 : 0)
+
   return text
     .split('\n')
     .map(function (line) {
@@ -13,7 +24,7 @@ function wordWrap(text: string, boundary: number) {
         .trim()
         .split(/\b/)
         .map(function (word) {
-          pos += word.length
+          pos += word.length * letterSizeFactor
           if (pos > boundary) {
             pos = 0
             return '\n' + word.trimLeft()
@@ -25,7 +36,6 @@ function wordWrap(text: string, boundary: number) {
     .join('\n')
     .split('\n')
 }
-const LINE_HEIGHT = 15
 
 function insertTspansIntoText(textLines: string[], xi: number, yi: number) {
   let svgString = ''
@@ -105,9 +115,9 @@ export function text(): Handlebars.HelperDelegate {
     }
     const fontWeight = options.hash.fontWeight || 'normal'
     const align = options.hash.align || 'start'
-    const fontSize = options.hash.fontSize || 11
+    const fontSize = options.hash.fontSize || DEFAULT_FONTSIZE
     const content = options.fn(this)
-    const lines = wordWrap(content, this.lineLength)
+    const lines = wordWrap(content, this.lineLength, fontSize, fontWeight)
 
     const element = `<text 
           fill="black" 
