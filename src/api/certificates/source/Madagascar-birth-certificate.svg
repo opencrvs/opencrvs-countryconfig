@@ -75,7 +75,7 @@
         <tspan x="217.896" y="122.48">Kopian&#x2019;i Sora-Piankohonana</tspan>
     </text>
 
-    {{#wrapGroup 64 187 178.488}}
+    {{#wrapGroup 70 187 178.488}}
     {{#text}}{{{introduction (location registrar.districtId "name")}}}{{/text}}
     {{linebreak}}
     {{#text}}{{{eventStatement (location districtPrimaryFatherId "name") (location districtPrimaryMotherId
