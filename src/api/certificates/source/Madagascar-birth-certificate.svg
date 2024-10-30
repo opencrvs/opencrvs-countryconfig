@@ -42,7 +42,7 @@
         <tspan x="86" y="192.58">{{translateDateToMDGFormat registrar.date}}</tspan>
     </text>
 
-    {{#wrapGroup 26 24 233.712}}
+    {{#wrapGroup 30 24 233.712}}
     {{#text fontSize=14 fontWeight="bold"}}
     {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
     FAHATERAHANA SY FANJANAHANA
@@ -56,7 +56,7 @@
     {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
     {{linebreak}}
     {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
-    {{#text}}{{#if (mentions)}}{{mentions}}{{else}}Tsy misy{{/if}}{{/text}}
+    {{#text}}{{#if mentions}}{{mentions}}{{else}}Tsy misy{{/if}}{{/text}}
     {{/wrapGroup}}
 
 
