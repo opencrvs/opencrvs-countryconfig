@@ -12,7 +12,7 @@ services:
       - NODE_ENV=production
       - LANGUAGES=en,fr,mg
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -21,7 +21,7 @@ services:
       - NODE_ENV=production
       - LANGUAGES=en,fr,mg
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -29,7 +29,7 @@ services:
     environment:
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -40,14 +40,14 @@ services:
       - MONGO_URL=mongodb://metrics:${METRICS_MONGODB_PASSWORD}@mongo1/metrics?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
 
   auth:
     environment:
       - NODE_ENV=production
       - QA_ENV=true
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -56,7 +56,7 @@ services:
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -66,7 +66,7 @@ services:
       - LANGUAGES=en,fr,mg
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -75,7 +75,7 @@ services:
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -84,7 +84,7 @@ services:
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -92,12 +92,12 @@ services:
     environment:
       - NODE_ENV=production
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
 
   documents:
     environment:
       - NODE_ENV=production
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
 
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION}
@@ -122,14 +122,14 @@ services:
       - SMTP_SECURE=${SMTP_SECURE}
       - NUI_GENERATOR_URL=${NUI_GENERATOR_URL}
       - NUI_API_KEY=${NUI_API_KEY}
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
   client:
     environment:
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -163,7 +163,7 @@ services:
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
       - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
 
   mongo-on-update:
     environment:
@@ -203,7 +203,7 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
       - AWS_REGION=af-south-1 # https://docs.aws.amazon.com/general/latest/gr/r53.html
-      - DISABLE_RATE_LIMIT = true
+      - DISABLE_RATE_LIMIT=true
 
     command:
       - --certificatesresolvers.certResolver.acme.dnschallenge=true
