@@ -183,6 +183,7 @@ export function eventStatement(): Handlebars.HelperDelegate {
     fatherPrimaryDistrict: string,
     motherPrimaryDistrict: string
   ) {
+    console.log(this)
     return joinValuesWith(
       [
         "--Tamin'ny",
