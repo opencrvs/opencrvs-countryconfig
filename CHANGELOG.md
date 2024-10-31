@@ -19,6 +19,7 @@
 ### Improvements
 
 - Auth token, ip address, remote address, mobile number, email redacted/masked from server log
+- Optimised deployment times by making docker images download in parallel.
 - Country alpha3 ISO code now is derived from variables to the Docker Compose files and don't need to be hard coded
 
 ### Infrastructure breaking changes
