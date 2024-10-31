@@ -704,6 +704,7 @@ services:
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
+      - COUNTRY=${COUNTRY:-FAR}
     deploy:
       labels:
         - 'traefik.enable=true'
