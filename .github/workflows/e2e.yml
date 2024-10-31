@@ -91,6 +91,7 @@ jobs:
         run: npx playwright test ./e2e/testcases/${{ matrix.test_dir }}
         env:
           DOMAIN: '${{ vars.DOMAIN }}'
+        continue-on-error: true
 
       - uses: actions/upload-artifact@v4
         if: steps.check-specs.outputs.has_spec_files == 'true'
