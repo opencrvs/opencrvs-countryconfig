@@ -291,7 +291,6 @@ docker_stack_deploy() {
       sleep 5
     done &
   done
-  echo "Images are getting downloaded"
   wait
   echo "Images are successfully downloaded"
   echo "Updating docker swarm stack with new compose files"
