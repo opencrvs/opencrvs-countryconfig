@@ -15,7 +15,7 @@
 ### Improvements
 
 - Auth token, ip address, remote address, mobile number, email redacted/masked from server log
-- Improved deployment time by images download faster.
+- Optimised deployment times by making docker images download in parallel.
 
 ### Infrastructure breaking changes
 
