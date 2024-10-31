@@ -51,7 +51,7 @@ const declaration = {
       district: 'Zobwe',
       urbanOrRural: 'Urban',
       town: faker.address.city(),
-      residentialArea: faker.address.county(),
+      residentialArea: faker.address.county() + generateRandomSuffix(),
       street: faker.address.streetName(),
       number: faker.address.buildingNumber(),
       postcodeOrZip: faker.address.zipCode()
