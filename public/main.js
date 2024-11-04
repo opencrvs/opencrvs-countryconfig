@@ -23,7 +23,21 @@ function timeAgo(date) {
   return seconds < 5 ? "à l'instant" : 'il y a ' + seconds + ' secondes'
 }
 
-const fetchLocationById = async (eventLocationId) => {
+/** HOF for async function with global loader */
+const handleAsyncFunction = async (asyncFunc) => {
+  try {
+    GlobalLoader.showLoader();
+    return await asyncFunc();
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  } finally {
+    GlobalLoader.hideLoader();
+  }
+}
+
+/** Event Location by event id */
+const fetchLocationById = (eventLocationId) => handleAsyncFunction(async () => {
   if (eventLocationId) {
     const apiUrl = window.config.API_GATEWAY_URL
     const formattedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
@@ -33,11 +47,63 @@ const fetchLocationById = async (eventLocationId) => {
     const locationData = await response.json()
     return locationData
   }
-}
+  return undefined;
+})
 
-const fetchEvents = async (variables) => {
-  GlobalLoader.showLoader()
+/** Birth location by id */
+const fetchOtherBirthLocation = (id) => handleAsyncFunction(async () => {
+  const query = `
+  query fetchBirthRegistrationEventLocationForCertificate($id: ID!) {
+    fetchBirthRegistration(id: $id) {
+        _fhirIDMap
+        id
+        eventLocation {
+          id
+          type
+          address {
+              type
+              line
+              lineName
+              district
+              districtName
+              state
+              stateName
+              city
+              postalCode
+              country
+          }
+        }
+        questionnaire {
+          fieldId
+          value
+        }
+      }
+    }
+  `
 
+  const response = await fetch('/graphql', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      query,
+      variables: { id }
+    })
+  })
+
+  if (!response.ok) {
+    throw new Error('Something went wrong with the graphql request: fetchOtherBirthLocation')
+  }
+
+  const data = await response.json()
+  return data
+})
+
+/** Fetch Events list */
+const fetchEvents = (variables) => handleAsyncFunction(async () => {
   const query = `
     query(
       $userId: String
@@ -93,8 +159,6 @@ const fetchEvents = async (variables) => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ query, variables })
-  }).finally(() => {
-    GlobalLoader.hideLoader()
   })
 
   if (!response.ok) {
@@ -109,12 +173,44 @@ const fetchEvents = async (variables) => {
       '?redirectTo=' +
       encodeURIComponent(window.config.COUNTRY_CONFIG_URL)
   }
-
   return data
-}
+})
 
-const fetchBirthRegistrationForCertificate = async (variables) => {
-  GlobalLoader.showLoader()
+/** Get & Generate child birth location by id and type */
+const getChildBirthLocation = (eventLocationId, type, id) => handleAsyncFunction(async () => {
+  if (
+    eventLocationId && type
+  ) {
+    if (type === 'HEALTH_FACILITY') {
+      const birthLocation = await fetchLocationById(eventLocationId)
+      if(birthLocation) return `tao amin'ny ${birthLocation?.name || '-'}`
+    }
+    else {
+      const birthLocation = await fetchOtherBirthLocation(id)
+      return `tao amin'ny${(() => {
+        const _fokotany = birthLocation?.data?.fetchBirthRegistration?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.child.child-view-group.fokontanyCustomAddress'
+        )?.value;
+        return _fokotany ? ' fokotany ' + _fokotany : ' - '
+      }
+      )()}${(() => {
+        const _commune = birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address?.districtName;
+        return _commune ? ', kaominina ' + _commune : ' - '
+      })()
+        }${(() => {
+          const _district = birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address?.districtName;
+          return _district ? ', distrikta ' + _district : ' - '
+        })()
+        },`
+    }
+  }
+  return '';
+})
+
+/** Main fetch for birth registration information */
+const fetchBirthRegistrationForCertificate = (variables) => handleAsyncFunction(async () => {
   const query = `
       query fetchBirthRegistrationForCertificate($id: ID!) {
         fetchBirthRegistration(id: $id) {
@@ -414,8 +510,6 @@ const fetchBirthRegistrationForCertificate = async (variables) => {
       query,
       variables
     })
-  }).finally(() => {
-    GlobalLoader.hideLoader()
   })
 
   if (!response.ok) {
@@ -424,7 +518,7 @@ const fetchBirthRegistrationForCertificate = async (variables) => {
 
   const data = await response.json()
   return data
-}
+})
 
 // Function to render table rows with pagination
 const renderTable = async () => {
@@ -480,8 +574,9 @@ const renderTable = async () => {
       item.registration?.assignment?.lastName || ''
     ]
       .join(' ')
-      .trim()}', '${
-      item.registration?.assignment?.officeName
+      //// escape '
+      .trim().replace(/'/g, "\\'")}', '${
+      item.registration?.assignment?.officeName.replace(/'/g, "\\'")
     }')">Imprimer</button></td>
   `
     tableBody.appendChild(row)
@@ -509,19 +604,11 @@ window.openPrintModal = async function openPrintModal(
   officeName
 ) {
   const person = await fetchBirthRegistrationForCertificate({ id })
-  let healthFacilityName = ''
-  if (person.data.fetchBirthRegistration) {
-    const eventLocationId =
-      person.data.fetchBirthRegistration.eventLocation.id ?? ''
 
-    if (
-      person.data.fetchBirthRegistration.eventLocation.type ===
-        'HEALTH_FACILITY' &&
-      eventLocationId
-    ) {
-      const birthLocation = await fetchLocationById(eventLocationId)
-      healthFacilityName = birthLocation.name
-    }
+  if (person.data.fetchBirthRegistration) {
+    const eventLocationId = person.data.fetchBirthRegistration.eventLocation.id ?? '';
+    const eventLocationType = person.data.fetchBirthRegistration.eventLocation.type ?? '';
+    const childBirthLocation = await getChildBirthLocation(eventLocationId, eventLocationType, id);
 
     const modal = document.getElementById('printModal')
     modal.classList.remove('hidden')
@@ -553,15 +640,6 @@ window.openPrintModal = async function openPrintModal(
       ) || { value: '' }
     ).value
     const childHourOfBirth = childBirthTime ? timeFormatter(childBirthTime) : ''
-    const childBirthLocation =
-      person.data.fetchBirthRegistration.eventLocation.type ===
-      'HEALTH_FACILITY'
-        ? `amin'ny ${healthFacilityName}`
-        : event.questionnaire.find(
-            (q) =>
-              q.fieldId ===
-              'birth.child.child-view-group.fokontanyCustomAddress'
-          )?.value
     const childLegacyBirthRegistrationNumber = event.questionnaire?.find(
       (q) =>
         q.fieldId ===
@@ -693,8 +771,8 @@ window.openPrintModal = async function openPrintModal(
     const birthInformantInfo =
       birthInformantoRelationship.toLowerCase() === 'mother' ||
       birthInformantoRelationship.toLowerCase() === 'father'
-        ? `${birthInformantType} `
-        : `${birthInformantFullName}, ${birthInformantType}`
+        ? `ny ${birthInformantType} `
+        : `i ${birthInformantFullName}, ${birthInformantType}`
     const informantOccupation = `${event?.informant?.occupation ?? ''}`
     const informantFkt = (
       event?.questionnaire?.find(
@@ -729,13 +807,13 @@ window.openPrintModal = async function openPrintModal(
       fanampinAnarana: childLastName,
       lft: childNUI,
       dateOfBirth: window.setLocaleDateCustomString(event.child.birthDate),
-      firstParagraph: `---Tamin'ny ${childDob} tamin'ny ${childHourOfBirth}, no teraka tao  ${childBirthLocation}, i ${[
+      firstParagraph: `---Tamin'ny ${childDob} tamin'ny ${childHourOfBirth}, no teraka ${childBirthLocation} i ${[
         childFirstName,
         childLastName
       ]
         .join(' ')
         .trim()}, ${childGender}, ${outputFather} ${outputMother}. ---`,
-      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon'i ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
+      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon' ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
     }
     document.getElementById('soratra').textContent = printableData.soratra
     document.getElementById('nataoNy').textContent = printableData.nataoNy
