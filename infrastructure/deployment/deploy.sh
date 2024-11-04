@@ -289,9 +289,10 @@ docker_stack_deploy() {
     do
       echo "Server failed to download $tag. Retrying..."
       sleep 5
-    done
+    done &
   done
-
+  wait
+  echo "Images are successfully downloaded"
   echo "Updating docker swarm stack with new compose files"
 
   configured_ssh 'cd /opt/opencrvs && \

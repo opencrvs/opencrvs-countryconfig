@@ -1,4 +1,15 @@
 id,description,en,fr
+action.action,Label for action button,Action,Action
+action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
+action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
+action.correct,Label for correct record button in dropdown menu,Correct record,Enregistrement correct
+action.issue,Label for reinstate issue button in dropdown menu,Issue certificate,Délivrer un certificat
+action.print,Label for reinstate print button in dropdown menu,Print certified copy,Imprimer une copie certifiée
+action.reinstate,Label for reinstate record button in dropdown menu,Reisntate declaration,Déclaration de rétablissement
+action.review.correction,Label for review correction in dropdown menu,Review correction request,Vérifier la demande de correction
+action.review.declaration,Label for review declaration button in dropdown menu,"Review {isDuplicate, select, true{potential duplicate} other{declaration}}","Review {isDuplicate, select, true{doublon potentiel} other{déclaration}}"
+action.update,Label for reinstate update button in dropdown menu,Update declaration,Mettre à jour la déclaration
+action.view,Label for view button in dropdown menu,View {recordOrDeclaration},"voir {recordOrDeclaration, select, record{enregistrer} other{déclaration}}"
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,information de l'enfant
@@ -963,7 +974,6 @@ form.field.label.fetchRegistrationModalInfo,,Birth Registration Number,Numéro d
 form.field.label.fileSizeError,,File size must be less than 2MB,La taille du fichier doit être inférieure à 2 Mo
 form.field.label.fileUploadError,,{type} supported image only,{type} format d'images accepté
 form.field.label.firstName,,First name(s),Prénom(s)
-form.field.label.firstNameEN,,First name(s),Prénom(s)
 form.field.label.firstNames,,First name(s),Prénom(s)
 form.field.label.healthInstitution,,Health Institution,Institution de santé
 form.field.label.hospital,,Hospital,Hôpital
@@ -1160,9 +1170,11 @@ form.field.label.uploadFile,,Upload,Télécharger
 form.field.label.urban,,Urban,Urbain
 form.field.label.userAttachmentSection,,Signature,Signature
 form.field.label.userDevice,,Device,Dispositif
+form.field.label.userFirstName,,User's first name,Prénom de l'utilisateur
 form.field.label.userSignatureAttachment,,User's signature,Signature de l'utilisateur
 form.field.label.userSignatureAttachmentDesc,,Ask the user to sign a piece of paper and then scan or take a photo,"Demandez à l'utilisateur de signer une feuille de papier, puis scannez ou prenez une photo."
 form.field.label.userSignatureAttachmentTitle,,Upload signature,Joindre la signature
+form.field.label.userSurname,,User's surname,Nom de famille de l'utilisateur
 form.field.label.verbalAutopsy,,Verbal autopsy,Autopsie verbale
 form.field.label.verbalAutopsyReport,,Verbal autopsy report,Rapport d'autopsie verbal
 form.field.label.weightAtBirth,,Weight at birth,Poids à la naissance

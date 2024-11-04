@@ -2,6 +2,10 @@
 
 ## 1.7.0 Release candidate
 
+### New features
+
+- Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
 ### Bug fixes
 
 - Protect individual certificate endpoint with token
@@ -15,6 +19,7 @@
 ### Improvements
 
 - Auth token, ip address, remote address, mobile number, email redacted/masked from server log
+- Optimised deployment times by making docker images download in parallel.
 - Country alpha3 ISO code now is derived from variables to the Docker Compose files and don't need to be hard coded
 
 ### Infrastructure breaking changes
@@ -116,6 +121,7 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 - Github pipeline dedicated for reading secrets and variables from other environments now checks if GH_TOKEN is still valid before attempting other operations
 - Remove unnecessary UI dividers that add in various sections of the declaration forms(e.g the Death, Birth and Marriage forms) [#244](https://github.com/opencrvs/opencrvs-countryconfig/pull/244)
+- Update template transformer for fields `informantType` and `otherInformantType` that fixes the bug of unavailability of these template fields [#5952](https://github.com/opencrvs/opencrvs-countryconfig/pull/5952)
 
 ## 1.5.2 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.5.1...v1.5.2)
 
