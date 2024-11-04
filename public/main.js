@@ -396,18 +396,6 @@ const fetchBirthRegistrationForCertificate = (variables) => handleAsyncFunction(
           eventLocation {
             id
             type
-            address {
-              type
-              line
-              lineName
-              district
-              districtName
-              state
-              stateName
-              city
-              postalCode
-              country
-            }
           }
           history {
             date
