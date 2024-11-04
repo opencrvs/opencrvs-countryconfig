@@ -291,7 +291,6 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
-    console.log(this)
     return joinValuesWith(
       [
         '---Nosoratana androany',
