@@ -42,7 +42,14 @@ const fetchLocationById = (eventLocationId) => handleAsyncFunction(async () => {
     const apiUrl = window.config.API_GATEWAY_URL
     const formattedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
     const response = await fetch(
-      `${formattedApiUrl}/location/${eventLocationId}`
+      `${formattedApiUrl}/location/${eventLocationId}`,
+      {
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      }
     )
     const locationData = await response.json()
     return locationData
