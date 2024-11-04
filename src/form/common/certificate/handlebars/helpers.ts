@@ -185,7 +185,6 @@ export function eventStatement(): Handlebars.HelperDelegate {
     fatherPrimaryDistrict: string,
     motherPrimaryDistrict: string
   ) {
-    console.log(this)
     return joinValuesWith(
       [
         "--Tamin'ny",
@@ -204,7 +203,7 @@ export function eventStatement(): Handlebars.HelperDelegate {
         placeOfBirthState,
         ':',
         joinValuesWith([this.childFamilyName, this.childFirstName], ' ') + ',',
-        getChildGeneratedOrManualNID.call(this) + ',',
+        //getChildGeneratedOrManualNID.call(this) + ',',
         translateChildGenderToMDGWord(this.childGender) + ',',
         'zanak’i',
         fatherDetails.call(this, fatherPrimaryDistrict),
@@ -276,13 +275,23 @@ function motherDetails(
     ' '
   )
 }
-
+const relationMap = {
+  mother: 'reniny',
+  father: 'rainy',
+  brother: 'zokiny lahy',
+  sister: 'zokiny vavy',
+  uncle: 'dadatoany',
+  aunt: 'nenitoany',
+  grandfather: 'raibeny',
+  grandmother: 'renibeny'
+}
 export function registrationStatement(): Handlebars.HelperDelegate {
   return function (
     this: Record<string, any>,
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
+    console.log(this)
     return joinValuesWith(
       [
         '---Nosoratana androany',
@@ -296,7 +305,9 @@ export function registrationStatement(): Handlebars.HelperDelegate {
               ["nataon'i", this.informantFamilyName, this.informantFirstName],
               ' '
             ),
-        ' mpanolotra,',
+        relationMap[
+          this.informantType.toLowerCase() as keyof typeof relationMap
+        ] || '' + ',',
         "teraka tamin'ny",
         this.birthInformantCustomizedExactDateOfBirthUnknown
           ? convertNumberToLetterForMalagasySpecificLanguage(
