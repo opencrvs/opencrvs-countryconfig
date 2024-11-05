@@ -103,6 +103,7 @@ import {
   getYearOfBirth
 } from '../common/common-custom-fields'
 import { conditionals } from './custom-conditionals'
+import { isFirstCertificate } from '../common/certificate/handlebars/helpers'
 
 // ======================= FORM CONFIGURATION =======================
 
@@ -211,7 +212,7 @@ export const birthForm: ISerializedForm = {
             getBirthDate(
               'childBirthDate',
               [],
-              isValidChildBirthDate,
+              isFirstCertificate() ? isValidChildBirthDate : [],
               certificateHandlebars.eventDate
             ), // Required field.
             // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
