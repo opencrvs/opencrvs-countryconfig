@@ -10,7 +10,8 @@ import {
   formatDateObjectTo_ddMMMMyyyy,
   continueForm,
   expectOutboxToBeEmpty,
-  getAction
+  getAction,
+  assignRecord
 } from '../../helpers'
 import faker from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
@@ -742,9 +743,7 @@ test.describe.serial('8. Validate declaration review page', () => {
           name: `${declaration.deceased.name.firstNames} ${declaration.deceased.name.familyName}`
         })
         .click()
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+      await assignRecord(page)
       await page.getByRole('button', { name: 'Action' }).first().click()
       await getAction(page, 'Review declaration').click()
     })
@@ -1217,9 +1216,7 @@ test.describe.serial('8. Validate declaration review page', () => {
           name: `${declaration.deceased.name.firstNames} ${declaration.deceased.name.familyName}`
         })
         .click()
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+      await assignRecord(page)
       await page.getByRole('button', { name: 'Action' }).first().click()
       await getAction(page, 'Review declaration').click()
     })

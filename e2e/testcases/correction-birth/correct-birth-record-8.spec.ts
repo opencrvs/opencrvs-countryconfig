@@ -521,16 +521,7 @@ test.describe.serial(' Correct record - 8', () => {
   test('8.8 Validate history in record audit', async () => {
     await page.getByText(formatName(declaration.child.name[0])).first().click()
 
-    await page.getByLabel('Assign record').click()
-
-    if (await page.getByText('Unassign record?', { exact: true }).isVisible())
-      await page.getByRole('button', { name: 'Cancel', exact: true }).click()
-    else if (
-      await page
-        .getByRole('button', { name: 'Assign', exact: true })
-        .isVisible()
-    )
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
+    await assignRecord(page)
 
     /*
      * Expected result: should show in task history

@@ -363,3 +363,11 @@ export const getAction = (page: Page, option: ActionMenuOptions) => {
       hasText: new RegExp(option)
     })
 }
+
+export const assignRecord = async (page: Page) => {
+  await page.getByLabel('Assign record').click()
+  if (
+    await page.getByRole('button', { name: 'Assign', exact: true }).isVisible()
+  )
+    await page.getByRole('button', { name: 'Assign', exact: true }).click()
+}

@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
   createPIN,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
@@ -942,10 +943,7 @@ test.describe('1. Correct record - 1', () => {
         test('1.2.6.4.1 Validate entries in record audit', async () => {
           await page.getByText(formatName(updatedChildDetails)).click()
 
-          await page.getByLabel('Assign record').click()
-          await page
-            .getByRole('button', { name: 'Assign', exact: true })
-            .click()
+          await assignRecord(page)
 
           /*
            * Expected result: should show in task history

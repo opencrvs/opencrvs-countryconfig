@@ -1,10 +1,13 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
+  // assignRecord,
   createPIN,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
   formatDateTo_yyyyMMdd,
   formatName,
+  getAction,
   getToken,
   goBackToReview,
   login
@@ -565,13 +568,7 @@ test.describe.serial(' Correct record - 11', () => {
         .first()
         .click()
 
-      await page.getByLabel('Assign record').click()
-      if (
-        await page
-          .getByRole('button', { name: 'Assign', exact: true })
-          .isVisible()
-      )
-        await page.getByRole('button', { name: 'Assign', exact: true }).click()
+      await assignRecord(page)
 
       /*
        * Expected result: should show in task history

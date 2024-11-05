@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
   createPIN,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
@@ -108,9 +109,7 @@ test.describe.serial(' Correct record - 15', () => {
         .click()
     })
     test('15.1.3 Record audit', async () => {
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+      await assignRecord(page)
       /*
        * Expected result: should show correct record button
        */
@@ -528,13 +527,7 @@ test.describe.serial(' Correct record - 15', () => {
       .first()
       .click()
 
-    await page.getByLabel('Assign record').click()
-    if (
-      await page
-        .getByRole('button', { name: 'Assign', exact: true })
-        .isVisible()
-    )
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
+    await assignRecord(page)
 
     /*
      * Expected result: should show in task history

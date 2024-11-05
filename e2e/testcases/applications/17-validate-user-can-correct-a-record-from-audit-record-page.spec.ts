@@ -1,5 +1,11 @@
 import { expect, test, type Page } from '@playwright/test'
-import { createPIN, getAction, getToken, login } from '../../helpers'
+import {
+  assignRecord,
+  createPIN,
+  getAction,
+  getToken,
+  login
+} from '../../helpers'
 import faker from '@faker-js/faker'
 import { createDeclaration } from '../birth/helpers'
 import TEST_DATA_1 from '../birth/data/1-both-mother-and-father.json'
@@ -79,9 +85,7 @@ test.describe
   })
 
   test('17.2 Click download > click assign', async () => {
-    await page.getByLabel('Assign record').click()
-    await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+    await assignRecord(page)
     await page.getByRole('button', { name: 'Action' }).first().click()
 
     /*

@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
@@ -153,10 +154,7 @@ test.describe.serial(' Correct record - 3', () => {
         .getByText(formatName(declaration.child.name[0]))
         .first()
         .click()
-
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+      await assignRecord(page)
       await page
         .getByRole('button', { name: 'Action', exact: true })
         .first()
@@ -1051,13 +1049,7 @@ test.describe.serial(' Correct record - 3', () => {
         .first()
         .click()
 
-      await page.getByLabel('Assign record').click()
-      if (
-        await page
-          .getByRole('button', { name: 'Assign', exact: true })
-          .isVisible()
-      )
-        await page.getByRole('button', { name: 'Assign', exact: true }).click()
+      await assignRecord(page)
 
       /*
        * Expected result: should show in task history

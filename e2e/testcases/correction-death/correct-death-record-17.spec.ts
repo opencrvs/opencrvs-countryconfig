@@ -568,16 +568,7 @@ test.describe.serial(' Correct record - 17', () => {
       .first()
       .click()
 
-    await page.getByLabel('Assign record').click()
-
-    if (await page.getByText('Unassign record?', { exact: true }).isVisible())
-      await page.getByRole('button', { name: 'Cancel', exact: true }).click()
-    else if (
-      await page
-        .getByRole('button', { name: 'Assign', exact: true })
-        .isVisible()
-    )
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
+    await assignRecord(page)
 
     /*
      * Expected result: should show in task history
