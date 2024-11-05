@@ -291,6 +291,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
+    console.log(this.informantType)
     return joinValuesWith(
       [
         '---Nosoratana androany',
@@ -304,7 +305,9 @@ export function registrationStatement(): Handlebars.HelperDelegate {
               ["nataon'i", this.informantFamilyName, this.informantFirstName],
               ' '
             ),
-        this.informantType + ',',
+        relationMap[
+          this.informantType?.toLowerCase() as keyof typeof relationMap
+        ] || 'mpanolotra' + ',',
         "teraka tamin'ny",
         this.birthInformantCustomizedExactDateOfBirthUnknown
           ? convertNumberToLetterForMalagasySpecificLanguage(
