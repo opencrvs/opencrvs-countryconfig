@@ -43,31 +43,31 @@
     </text>
 
     {{#wrapGroup 30 24 233.712}}
-    {{#text fontSize=14 fontWeight="bold"}}
-    {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
-    FAHATERAHANA SY FANJANAHANA
-    {{ else }}
-    FAHATERAHANA
-    {{/ifCond}}
-    {{/text}}
-    {{#text fontSize=10 }}{{childFamilyName}}{{/text}}
-    {{#text fontSize=10 }}{{childFirstName}}{{/text}}
-    {{#text fontSize=10 }}NUI: {{childNID}}{{/text}}
-    {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
-    {{linebreak}}
-    {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
-    {{#text fontSize=10 fontWeight="bold"}}
-        SORATRA AN-TSISINY :
-    {{/text}}
-    {{#text fontSize=10}}
-        {{#with (mentions) as |mentionsValue|}}
-            {{#if mentionsValue.hasMention}}
-                {{mentionsValue.text}}
-                {{else}}
-                Tsy misy
-            {{/if}}
-        {{/with}}
-    {{/text}}
+        {{#text fontSize=14 fontWeight="bold"}}
+            {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
+            FAHATERAHANA SY FANJANAHANA
+            {{ else }}
+            FAHATERAHANA
+            {{/ifCond}}
+        {{/text}}
+        {{#text fontSize=10 }}{{childFamilyName}}{{/text}}
+        {{#text fontSize=10 }}{{childFirstName}}{{/text}}
+        {{#text fontSize=10 }}NUI: {{childNID}}{{/text}}
+        {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
+        {{linebreak}}
+        {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
+        {{#text fontSize=10 fontWeight="bold"}}
+            SORATRA AN-TSISINY :
+        {{/text}}
+        {{#text fontSize=10}}
+            {{#with (mentions) as |mentionsValue|}}
+                {{#if mentionsValue.hasMention}}
+                    {{mentionsValue.text}}
+                    {{else}}
+                    Tsy misy
+                {{/if}}
+            {{/with}}
+        {{/text}}
     {{/wrapGroup}}
 
 
@@ -75,22 +75,22 @@
         <tspan x="217.896" y="122.48">Kopian&#x2019;i Sora-Piankohonana</tspan>
     </text>
 
-    {{#wrapGroup 70 187 178.488}}
-    {{#text}}{{{introduction (location registrar.districtId "name")}}}{{/text}}
-    {{linebreak}}
-    {{#text}}{{{eventStatement (location statePlaceofbirthId "name") (location districtPlaceofbirthId "name") (location
-    districtPrimaryFatherId "name") (location districtPrimaryMotherId
-    "name")}}}{{/text}}
-    {{linebreak}}
-    {{#text}}{{{registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId
-    "name")}}}{{/text}}
-    {{linebreak}}
-    {{#text fontWeight="bold" align="middle"}}---MANARAKA NY SONIA---{{/text}}
-    {{linebreak}}
-    {{#text}}{{{signatureDescription}}}{{/text}}
-    {{linebreak}}
-    {{linebreak}}
-    {{#text fontWeight="bold" align="middle" fontSize=12}}Ny Mpiandraikitra ny sora-piankohonana{{/text}}
+    {{#wrapGroup 75 192 178.488}}
+        {{#text}}{{{introduction (location registrar.districtId "name")}}}{{/text}}
+        {{linebreak}}
+        {{#text}}{{{eventStatement (location statePlaceofbirthId "name") (location districtPlaceofbirthId "name") (location
+        districtPrimaryFatherId "name") (location districtPrimaryMotherId
+        "name")}}}{{/text}}
+        {{linebreak}}
+        {{#text}}{{{registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId
+        "name")}}}{{/text}}
+        {{linebreak}}
+        {{#text fontWeight="bold" align="middle"}}---MANARAKA NY SONIA---{{/text}}
+        {{linebreak}}
+        {{#text}}{{{signatureDescription}}}{{/text}}
+        {{linebreak}}
+        {{linebreak}}
+        {{#text fontWeight="bold" align="middle" fontSize=12}}Ny Mpiandraikitra ny sora-piankohonana{{/text}}
     {{/wrapGroup}}
 
 
