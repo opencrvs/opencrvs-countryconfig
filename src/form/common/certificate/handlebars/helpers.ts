@@ -24,9 +24,10 @@ function wordWrap(
         .trim()
         .split(/\b/)
         .map(function (word) {
+          const isPonctuation = /[.,;:!']$/.test(word.trim())
           pos += word.length * letterSizeFactor
-          if (pos > boundary) {
-            pos = 0
+          if (!isPonctuation && pos > boundary) {
+            pos = word.length
             return '\n' + word.trimLeft()
           }
           return word
@@ -471,7 +472,7 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
       : numberToLetter != ''
       ? numberToLetter
       : ' aotra'
-  return numberToLetter
+  return numberToLetter.trim()
 }
 
 function convertTimeToMdgCustomWords(timeString: string) {
@@ -857,14 +858,15 @@ export function mentions(): Handlebars.HelperDelegate {
          * - handle rejection mention
          * - to optimize if needed: Mention titles handled in each function with addMentionTitle
          *  */
-        // this['birthMentionTypeOfMention__' + i],
-        ...getRecognitionMentionValues.apply(this, [i]),
-        ...getJudicialAdoptionMentionValues.apply(this, [i]),
-        ...getSimpleAdoptionMentionValues.apply(this, [i]),
-        ...getMarriageMentionValues.apply(this, [i]),
-        ...getDivorceMentionValues.apply(this, [i]),
-        ...getNameChangeMentionValues.apply(this, [i]),
-        ...getDeathMentionValues.apply(this, [i])
+        // // this['birthMentionTypeOfMention__' + i],
+        // ...getRecognitionMentionValues.apply(this, [i]),
+        // ...getJudicialAdoptionMentionValues.apply(this, [i]),
+        // ...getSimpleAdoptionMentionValues.apply(this, [i]),
+        // ...getMarriageMentionValues.apply(this, [i]),
+        // ...getDivorceMentionValues.apply(this, [i]),
+        // ...getNameChangeMentionValues.apply(this, [i]),
+        // ...getDeathMentionValues.apply(this, [i])
+        this['birthMentionNotes__' + i]
       ]
         .filter(Boolean)
         .join('\n- ')
@@ -872,7 +874,11 @@ export function mentions(): Handlebars.HelperDelegate {
       // Check if have anything to show before adding line break
       output += temp.length ? generateDoubleLineBreak() : ''
     }
-    return { text: output, hasMention: Boolean(output) }
+
+    return {
+      text: output.replace(/'/g, '’'),
+      hasMention: Boolean(output)
+    }
   }
 }
 
