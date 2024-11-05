@@ -44,10 +44,10 @@ const fetchLocationById = (eventLocationId) => handleAsyncFunction(async () => {
     const response = await fetch(
       `${formattedApiUrl}/location/${eventLocationId}`,
       {
-        mode: 'no-cors',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          // Authorization: `Bearer ${token}`
         },
       }
     )
