@@ -304,9 +304,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
               ["nataon'i", this.informantFamilyName, this.informantFirstName],
               ' '
             ),
-        relationMap[
-          this.informantType.toLowerCase() as keyof typeof relationMap
-        ] || '' + ',',
+        this.informantType + ',',
         "teraka tamin'ny",
         this.birthInformantCustomizedExactDateOfBirthUnknown
           ? convertNumberToLetterForMalagasySpecificLanguage(
