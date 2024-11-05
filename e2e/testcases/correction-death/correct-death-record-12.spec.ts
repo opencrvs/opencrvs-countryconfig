@@ -5,6 +5,7 @@ import {
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
   formatName,
+  getAction,
   getToken,
   goBackToReview,
   login
@@ -117,13 +118,7 @@ test.describe.serial(' Correct record - 12', () => {
       await page.locator('#name_0').click()
 
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Print certified copy/
-        })
-        .click()
+      await getAction(page, 'Print certified copy').click()
       await page.getByLabel('Print in advance').check()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Yes, print certificate' }).click()
@@ -160,22 +155,9 @@ test.describe.serial(' Correct record - 12', () => {
         .getByRole('button', { name: 'Action', exact: true })
         .first()
         .click()
-      await expect(
-        page
-          .locator('#action-dropdownMenu')
-          .getByRole('listitem')
-          .filter({
-            hasText: /Correct Record/
-          })
-      ).toBeVisible()
+      await expect(getAction(page, 'Correct record')).toBeVisible()
 
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-        .click()
+      await getAction(page, 'Correct record').click()
     })
   })
 
@@ -888,13 +870,7 @@ test.describe.serial(' Correct record - 12', () => {
 
     test('12.8.2 Correction review', async () => {
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Review correction request/
-        })
-        .click()
+      await getAction(page, 'Review correction request').click()
       /*
        * Expected result: should show
        * - Submitter

@@ -104,13 +104,7 @@ test.describe.serial(' Correct record - 13', () => {
     await page.locator('#name_0').click()
 
     await page.getByRole('button', { name: 'Action' }).first().click()
-    await page
-      .locator('#action-dropdownMenu')
-      .getByRole('listitem')
-      .filter({
-        hasText: /Correct Record/
-      })
-      .click()
+    await getAction(page, 'Correct record').click()
   })
 
   test('13.2 Correction requester: Someone Else (Cousin)', async () => {

@@ -352,6 +352,8 @@ type ActionMenuOptions =
   | 'Print certified copy'
   | 'Review declaration'
   | 'Update declaration'
+  | 'Review correction request'
+  | 'View record'
 
 export const getAction = (page: Page, option: ActionMenuOptions) => {
   return page

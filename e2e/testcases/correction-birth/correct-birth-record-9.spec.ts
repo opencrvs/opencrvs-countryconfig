@@ -5,6 +5,7 @@ import {
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
   formatName,
+  getAction,
   getToken,
   goBackToReview,
   login
@@ -109,13 +110,7 @@ test.describe.serial(' Correct record - 9', () => {
       await page.locator('#name_0').click()
 
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Print certified copy/
-        })
-        .click()
+      await getAction(page, 'Print certified copy').click()
       await page.getByLabel('Print in advance').check()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Yes, print certificate' }).click()
@@ -150,13 +145,7 @@ test.describe.serial(' Correct record - 9', () => {
        * Expected result: should show correct record button
        */
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-        .click()
+      await getAction(page, 'Correct record').click()
     })
   })
 

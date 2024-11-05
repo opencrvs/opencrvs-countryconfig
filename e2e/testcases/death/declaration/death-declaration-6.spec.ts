@@ -7,6 +7,7 @@ import {
   expectOutboxToBeEmpty,
   expectTextWithChangeLink,
   formatDateObjectTo_ddMMMMyyyy,
+  getAction,
   getRandomDate,
   goToSection,
   joinValuesWith,
@@ -539,13 +540,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /View record/
-        })
-        .click()
+      await getAction(page, 'View record').click()
     })
 
     test('6.2.2 Verify information on review page', async () => {

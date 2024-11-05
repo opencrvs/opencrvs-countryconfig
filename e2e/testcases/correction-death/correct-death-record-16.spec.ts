@@ -88,13 +88,7 @@ test.describe.serial(' Correct record - 16', () => {
     await page.locator('#name_0').click()
 
     await page.getByRole('button', { name: 'Action' }).first().click()
-    await page
-      .locator('#action-dropdownMenu')
-      .getByRole('listitem')
-      .filter({
-        hasText: /Correct Record/
-      })
-      .click()
+    await getAction(page, 'Correct record').click()
   })
 
   test('16.2 Correction requester: Another registration agent or field agent', async () => {

@@ -79,13 +79,7 @@ test.describe.serial(' Correct record - 11', () => {
     await page.locator('#name_0').click()
 
     await page.getByRole('button', { name: 'Action' }).first().click()
-    await page
-      .locator('#action-dropdownMenu')
-      .getByRole('listitem')
-      .filter({
-        hasText: /Print certified copy/
-      })
-      .click()
+    await getAction(page, 'Print certified copy').click()
     await page.getByLabel('Print in advance').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'No, make correction' }).click()
@@ -473,13 +467,7 @@ test.describe.serial(' Correct record - 11', () => {
 
     test('11.8.2 Correction review', async () => {
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Review correction request/
-        })
-        .click()
+      await getAction(page, 'Review correction request').click()
       /*
        * Expected result: should show
        * - Submitter

@@ -6,6 +6,7 @@ import {
   formatDateTo_ddMMMMyyyy,
   formatDateTo_yyyyMMdd,
   formatName,
+  getAction,
   getToken,
   goBackToReview,
   login,
@@ -124,13 +125,7 @@ test.describe.serial(' Correct record - 4', () => {
     await page.locator('#name_0').click()
 
     await page.getByRole('button', { name: 'Action' }).first().click()
-    await page
-      .locator('#action-dropdownMenu')
-      .getByRole('listitem')
-      .filter({
-        hasText: /Correct Record/
-      })
-      .click()
+    await getAction(page, 'Correct record').click()
   })
 
   test('4.2 Correction requester: legal guardian', async () => {
