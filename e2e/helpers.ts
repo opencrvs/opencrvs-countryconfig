@@ -347,7 +347,10 @@ export const generateRandomSuffix = () => {
   return randomConsonant + randomVowel
 }
 
-type ActionMenuOptions = 'Correct record' | 'Print certified copy'
+type ActionMenuOptions =
+  | 'Correct record'
+  | 'Print certified copy'
+  | 'Review declaration'
 
 export const getAction = (page: Page, option: ActionMenuOptions) => {
   return page

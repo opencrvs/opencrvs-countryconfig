@@ -71,14 +71,9 @@ test.describe
 
     await expect(getAction(page, 'Correct record')).toHaveAttribute('disabled')
 
-    await expect(
-      page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Print certified copy/
-        })
-    ).toHaveAttribute('disabled')
+    await expect(getAction(page, 'Print certified copy')).toHaveAttribute(
+      'disabled'
+    )
 
     expect(page.url().includes('record-audit'))
   })
