@@ -184,9 +184,10 @@ async function getPublicKey(): Promise<string> {
 }
 
 export async function createServer() {
+  logger.info(`-- Creating Server --`)
   let whitelist: string[] = [DOMAIN]
   if (DOMAIN[0] !== '*') {
-    whitelist = [COUNTRY_CONFIG_URL, REGISTRY_URL, LOGIN_URL, CLIENT_APP_URL]
+    whitelist = [COUNTRY_CONFIG_URL, REGISTRY_URL, CLIENT_APP_URL, LOGIN_URL]
   }
   logger.info(`Whitelist: ${JSON.stringify(whitelist)}`)
   const server = new Hapi.Server({
