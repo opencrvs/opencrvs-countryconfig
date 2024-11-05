@@ -346,3 +346,14 @@ export const generateRandomSuffix = () => {
 
   return randomConsonant + randomVowel
 }
+
+type ActionMenuOptions = 'Correct record' | 'Print certified copy'
+
+export const getAction = (page: Page, option: ActionMenuOptions) => {
+  return page
+    .locator('#action-dropdownMenu')
+    .getByRole('listitem')
+    .filter({
+      hasText: new RegExp(option)
+    })
+}
