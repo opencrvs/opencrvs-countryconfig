@@ -1,10 +1,12 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
+  assignRecord,
   continueForm,
   createPIN,
   drawSignature,
   expectOutboxToBeEmpty,
   expectTextWithChangeLink,
+  getAction,
   goToSection,
   login
 } from '../../../helpers'
