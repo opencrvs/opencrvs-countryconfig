@@ -4,6 +4,7 @@ import {
   createPIN,
   drawSignature,
   expectOutboxToBeEmpty,
+  getAction,
   goToSection,
   login,
   uploadImage,
@@ -277,13 +278,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Update declaration/
-        })
-        .click()
+      await getAction(page, 'Update declaration').click()
     })
 
     test('7.2.2 Verify information on preview page', async () => {

@@ -5,6 +5,7 @@ import {
   drawSignature,
   expectOutboxToBeEmpty,
   expectTextWithChangeLink,
+  getAction,
   goToSection,
   login
 } from '../../../helpers'
@@ -296,13 +297,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Update declaration/
-        })
-        .click()
+      await getAction(page, 'Update declaration').click()
     })
 
     test('8.2.2 Verify information on review page', async () => {

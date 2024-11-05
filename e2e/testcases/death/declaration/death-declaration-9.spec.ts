@@ -296,13 +296,7 @@ test.describe.serial('9. Death declaration case - 9', () => {
       await page.getByRole('button', { name: 'Assign', exact: true }).click()
 
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Update declaration/
-        })
-        .click()
+      await getAction(page, 'Update declaration').click()
     })
 
     test('9.2.2 Verify information on review page', async () => {
