@@ -1140,5 +1140,15 @@ export const mentionMessageDescriptors = {
     id: 'form.preview.group.label.typeMention',
     defaultMessage: 'Details of the mention {i}',
     description: 'Label for details preview group title'
+  },
+  recognitionFatherFirstName: {
+    id: 'form.field.label.mention.fatherFirstName',
+    defaultMessage: 'Father first name',
+    description: 'Label for father first name field'
+  },
+  recognitionFatherLastName: {
+    id: 'form.field.label.mention.fatherLastName',
+    defaultMessage: 'Father last name',
+    description: 'Label for father last name field'
   }
 }
