@@ -332,7 +332,8 @@ function getSubsectionHeader(
 export const getFamilyNameField = (
   fieldName: string,
   previewGroup: string,
-  conditionals: Conditional[]
+  conditionals: Conditional[],
+  messageLabel?: MessageDescriptor
 ) => {
   const fieldId = `birth.mention.mention-view-group.${fieldName}`
   return {
@@ -341,7 +342,7 @@ export const getFamilyNameField = (
     customQuestionMappingId: fieldId,
     conditionals,
     type: 'TEXT',
-    label: formMessageDescriptors.familyName,
+    label: messageLabel ?? formMessageDescriptors.familyName,
     maxLength: REGULAR_TEXT_MAX_LENGTH,
     required: true,
     initialValue: '',
@@ -357,7 +358,8 @@ export const getFamilyNameField = (
 export const getFirstNameField = (
   fieldName: string,
   previewGroup: string,
-  conditionals: Conditional[]
+  conditionals: Conditional[],
+  messageLabel?: MessageDescriptor
 ) => {
   const fieldId = `birth.mention.mention-view-group.${fieldName}`
   return {
@@ -366,7 +368,7 @@ export const getFirstNameField = (
     custom: true,
     customQuestionMappingId: fieldId,
     type: 'TEXT',
-    label: {
+    label: messageLabel ?? {
       defaultMessage: 'First name(s)',
       description: 'Label for form field: First names',
       id: 'form.field.label.firstNames'
@@ -591,12 +593,14 @@ export function getRecognitionMentionFields(i: number): SerializedFormField[] {
     getFamilyNameField(
       'childFamilyName__' + i,
       'mention' + i,
-      notMentionType(type, i).concat(detailsMentionExist(i))
+      notMentionType(type, i).concat(detailsMentionExist(i)),
+      mentionMessageDescriptors.recognitionFatherLastName
     ),
     getFirstNameField(
       'childFirstName__' + i,
       'mention' + i,
-      notMentionType(type, i).concat(detailsMentionExist(i))
+      notMentionType(type, i).concat(detailsMentionExist(i)),
+      mentionMessageDescriptors.recognitionFatherFirstName
     ),
     getNUIWithCustomFieldName(
       'mentionChildNID__' + i,
