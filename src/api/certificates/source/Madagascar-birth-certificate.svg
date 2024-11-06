@@ -75,25 +75,78 @@
         <tspan x="217.896" y="122.48">Kopian&#x2019;i Sora-Piankohonana</tspan>
     </text>
 
-    {{#wrapGroup 75 192 178.488}}
-        {{#text}}{{{introduction (location registrar.districtId "name")}}}{{/text}}
-        {{linebreak}}
-        {{#text}}{{{eventStatement (location statePlaceofbirthId "name") (location districtPlaceofbirthId "name") (location
-        districtPrimaryFatherId "name") (location districtPrimaryMotherId
-        "name")}}}{{/text}}
-        {{linebreak}}
-        {{#text}}{{{registrationStatement (location districtPrimaryInformantId "name") (location registrar.districtId
-        "name")}}}{{/text}}
-        {{linebreak}}
-        {{#text fontWeight="bold" align="middle"}}---MANARAKA NY SONIA---{{/text}}
-        {{linebreak}}
-        {{#text}}{{{signatureDescription}}}{{/text}}
-        {{linebreak}}
-        {{linebreak}}
-        {{#text fontWeight="bold" align="middle" fontSize=12}}Ny Mpiandraikitra ny sora-piankohonana{{/text}}
-    {{/wrapGroup}}
+    <foreignObject x="187" y="178.488" width="384" height="473">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="margin-top: 0">
+            <p style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                font-size: 14px;
+                letter-spacing: 0em;
+                margin-top: 0;">
+                {{{introduction (location
+                registrar.districtId "name")}}}
+            </p>
+            <p style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                font-size: 14px;
+                letter-spacing: 0em;
+                margin-top: 0;">
+                {{{eventStatement
+                (location statePlaceofbirthId "name") (location districtPlaceofbirthId "name")
+                (location
+                districtPrimaryFatherId "name") (location districtPrimaryMotherId
+                "name")}}}
+            </p>
+            <p style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                font-size: 14px;
+                letter-spacing: 0em;
+                margin-top: 0;">
+                {{{registrationStatement (location
+                districtPrimaryInformantId "name") (location registrar.districtId
+                "name")}}}
+            </p>
+            <br />
+            <p style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                font-size: 14px;
+                margin-top: 0;
+                text-align: center;
+                letter-spacing: 0em;
+                font-weight: bold">
+                ---MANARAKA NY SONIA---
+            </p>
+            <p style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                font-size: 14px;
+                letter-spacing: 0em;
+                margin-top: 0">
+                {{{signatureDescription}}}
+            </p>
+            <br />
+            <br />
+            <p class="large" style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                margin-top: 0;
+                text-align: center;
+                font-weight: bold;
+                letter-spacing: 0em;
+                font-size: 16px;">
+                Ny
+                Mpiandraikitra ny sora-piankohonana
+            </p>
+        </div>
+    </foreignObject>
 
+    <style>
+        p {
+            font-size: 11px !important;
+            letter-spacing: 0em;
+        }
 
-    <image x="231" y="14" width="132" height="72" xlink:href="{{certificateLogo}}"
+        .large {
+            font-size: 12px !important;
+        }
+    </style>
+    <image x=" 231" y="14" width="132" height="72" xlink:href="{{certificateLogo}}"
         preserveAspectRatio="xMaxYMid meet" />
 </svg>
