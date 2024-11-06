@@ -26,13 +26,13 @@ filter:
       should:
         - term:
             rule.name.keyword:
-              value: 'Available disk space in data partition'
+              value: 'Available disk space in root file system'
         - term:
             rule.name.keyword:
               value: 'CPU under heavy load'
         - term:
             rule.name.keyword:
-              value: 'Low on available disk space'
+              value: 'Low on available disk space in data partition'
       minimum_should_match: 1
 
 alert: post2
