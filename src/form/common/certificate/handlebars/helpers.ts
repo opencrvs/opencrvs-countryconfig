@@ -24,9 +24,10 @@ function wordWrap(
         .trim()
         .split(/\b/)
         .map(function (word) {
+          const isPonctuation = /[.,;:!']$/.test(word.trim())
           pos += word.length * letterSizeFactor
-          if (pos > boundary) {
-            pos = 0
+          if (!isPonctuation && pos > boundary) {
+            pos = word.length
             return '\n' + word.trimLeft()
           }
           return word
@@ -471,7 +472,7 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
       : numberToLetter != ''
       ? numberToLetter
       : ' aotra'
-  return numberToLetter
+  return numberToLetter.trim()
 }
 
 function convertTimeToMdgCustomWords(timeString: string) {
@@ -857,14 +858,15 @@ export function mentions(): Handlebars.HelperDelegate {
          * - handle rejection mention
          * - to optimize if needed: Mention titles handled in each function with addMentionTitle
          *  */
-        // this['birthMentionTypeOfMention__' + i],
-        ...getRecognitionMentionValues.apply(this, [i]),
-        ...getJudicialAdoptionMentionValues.apply(this, [i]),
-        ...getSimpleAdoptionMentionValues.apply(this, [i]),
-        ...getMarriageMentionValues.apply(this, [i]),
-        ...getDivorceMentionValues.apply(this, [i]),
-        ...getNameChangeMentionValues.apply(this, [i]),
-        ...getDeathMentionValues.apply(this, [i])
+        // // this['birthMentionTypeOfMention__' + i],
+        // ...getRecognitionMentionValues.apply(this, [i]),
+        // ...getJudicialAdoptionMentionValues.apply(this, [i]),
+        // ...getSimpleAdoptionMentionValues.apply(this, [i]),
+        // ...getMarriageMentionValues.apply(this, [i]),
+        // ...getDivorceMentionValues.apply(this, [i]),
+        // ...getNameChangeMentionValues.apply(this, [i]),
+        // ...getDeathMentionValues.apply(this, [i])
+        this['birthMentionNotes__' + i]
       ]
         .filter(Boolean)
         .join('\n- ')
@@ -872,7 +874,11 @@ export function mentions(): Handlebars.HelperDelegate {
       // Check if have anything to show before adding line break
       output += temp.length ? generateDoubleLineBreak() : ''
     }
-    return { text: output, hasMention: Boolean(output) }
+
+    return {
+      text: output.replace(/'/g, '’'),
+      hasMention: Boolean(output)
+    }
   }
 }
 
@@ -989,45 +995,40 @@ const districts = [
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
-  /** Districts are named as "CU TANA" instead of TANA because the existing
-   * locations are named as "CU TANA". The ids are different than adminPCode
-   * in this file: src/data-seeding/locations/source/locations.csv
-   * So, there is no other way than name to name mapping. If the names do not
-   * match exactly, the region name will not be resolved */
   {
     id: 1108,
-    name: 'CU TANA I',
+    name: 'TANA I',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
 
   {
     id: 1109,
-    name: 'CU TANA II',
+    name: 'TANA II',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1110,
-    name: 'CU TANA III',
+    name: 'TANA III',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1111,
-    name: 'CU TANA IV',
+    name: 'TANA IV',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1112,
-    name: 'CU TANA V',
+    name: 'TANA V',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },
   {
     id: 1113,
-    name: 'CU TANA VI',
+    name: 'TANA VI',
     region_id: 11,
     region_name: 'ANALAMANGA'
   },

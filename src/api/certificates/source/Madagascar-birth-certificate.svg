@@ -43,31 +43,31 @@
     </text>
 
     {{#wrapGroup 30 24 233.712}}
-    {{#text fontSize=14 fontWeight="bold"}}
-    {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
-    FAHATERAHANA SY FANJANAHANA
-    {{ else }}
-    FAHATERAHANA
-    {{/ifCond}}
-    {{/text}}
-    {{#text fontSize=10 }}{{childFamilyName}}{{/text}}
-    {{#text fontSize=10 }}{{childFirstName}}{{/text}}
-    {{#text fontSize=10 }}NUI: {{childNID}}{{/text}}
-    {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
-    {{linebreak}}
-    {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
-    {{#text fontSize=10 fontWeight="bold"}}
-        SORATRA AN-TSISINY :
-    {{/text}}
-    {{#text fontSize=10}}
-        {{#with (mentions) as |mentionsValue|}}
-            {{#if mentionsValue.hasMention}}
-                {{mentionsValue.text}}
-                {{else}}
-                Tsy misy
-            {{/if}}
-        {{/with}}
-    {{/text}}
+        {{#text fontSize=14 fontWeight="bold"}}
+            {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
+            FAHATERAHANA SY FANJANAHANA
+            {{ else }}
+            FAHATERAHANA
+            {{/ifCond}}
+        {{/text}}
+        {{#text fontSize=10 }}{{childFamilyName}}{{/text}}
+        {{#text fontSize=10 }}{{childFirstName}}{{/text}}
+        {{#text fontSize=10 }}NUI: {{childNID}}{{/text}}
+        {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
+        {{linebreak}}
+        {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
+        {{#text fontSize=10 fontWeight="bold"}}
+            SORATRA AN-TSISINY :
+        {{/text}}
+        {{#text fontSize=10}}
+            {{#with (mentions) as |mentionsValue|}}
+                {{#if mentionsValue.hasMention}}
+                    {{mentionsValue.text}}
+                    {{else}}
+                    Tsy misy
+                {{/if}}
+            {{/with}}
+        {{/text}}
     {{/wrapGroup}}
 
 
