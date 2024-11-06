@@ -753,11 +753,11 @@ services:
         - 'traefik.http.middlewares.gateway.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.gateway.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.gateway.headers.stspreload=true'
-        - "traefik.http.middlewares.cors-gateway.headers.accesscontrolallowmethods=GET,POST,PUT,DELETE,OPTIONS"
-        - "traefik.http.middlewares.cors-gateway.headers.accesscontrolallowheaders=*"
-        - "traefik.http.middlewares.cors-gateway.headers.accesscontrolalloworiginlist=*"
-        - "traefik.http.middlewares.cors-gateway.headers.accesscontrolmaxage=100"
-        - "traefik.http.middlewares.cors-gateway.headers.addvaryheader=true"
+        - 'traefik.http.middlewares.cors-gateway.headers.accesscontrolallowmethods=GET,POST,PUT,DELETE,OPTIONS'
+        - 'traefik.http.middlewares.cors-gateway.headers.accesscontrolallowheaders=*'
+        - 'traefik.http.middlewares.cors-gateway.headers.accesscontrolalloworiginlist=https://registry.{{hostname}},https://login.{{hostname}},https://countryconfig.{{hostname}},https://register.{{hostname}}'
+        - 'traefik.http.middlewares.cors-gateway.headers.accesscontrolmaxage=100'
+        - 'traefik.http.middlewares.cors-gateway.headers.addvaryheader=true'
         - 'traefik.http.routers.gateway.middlewares=cors-gateway,gzip-compression'
       replicas: 1
     networks:
