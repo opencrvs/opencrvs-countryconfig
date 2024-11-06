@@ -260,7 +260,7 @@
     font-size="7.76"
     letter-spacing="0px"
   >
-    <tspan x="391.819" y="740.694">Jude Hopper</tspan>
+    <tspan x="391.819" y="740.694">{{ registrar.name }}</tspan>
   </text>
   <text
     fill="#222222"
@@ -361,7 +361,7 @@
         font-size="9.7"
         letter-spacing="0px"
       >
-        <tspan x="289.95" y="229.634">childFirstName childFamilyName</tspan>
+        <tspan x="289.95" y="229.634">{{ childFirstName }} {{ childFamilyName }}</tspan>
       </text>
     </g>
     <line
@@ -415,7 +415,7 @@
         font-size="9.7"
         letter-spacing="0px"
       >
-        <tspan x="289.95" y="271.274">Male</tspan>
+        <tspan x="289.95" y="271.274">{{ childGender }}</tspan>
       </text>
     </g>
     <line
@@ -469,7 +469,7 @@
         font-size="9.7"
         letter-spacing="0px"
       >
-        <tspan x="289.95" y="312.914">22 March 2012</tspan>
+        <tspan x="289.95" y="312.914">{{ eventDate }}</tspan>
       </text>
     </g>
     <line
@@ -523,8 +523,8 @@
         font-size="9.7"
         letter-spacing="0px"
       >
-        <tspan x="289.95" y="347.054">District or Hospital &#10;</tspan>
-        <tspan x="289.95" y="362.054">State , Country</tspan>
+        <tspan x="289.95" y="347.054">{{ placeOfBirthFacility }}, {{ placeOfBirthDistrict }}</tspan>
+        <tspan x="289.95" y="362.054">{{ placeOfBirthState }}, {{ placeOfBirthCountry }}</tspan>
       </text>
     </g>
     <line
@@ -578,7 +578,7 @@
         font-size="9.7"
         letter-spacing="0px"
       >
-        <tspan x="289.95" y="396.194">Nicky Smith</tspan>
+        <tspan x="289.95" y="396.194">{{ motherFirstName }} {{ motherFamilyName }}</tspan>
       </text>
     </g>
     <line
@@ -633,7 +633,7 @@
         font-size="9.7"
         letter-spacing="0px"
       >
-        <tspan x="289.95" y="437.834">Nicky Smith</tspan>
+        <tspan x="289.95" y="437.834">{{ fatherFirstName }} {{ fatherFamilyName }}</tspan>
       </text>
     </g>
     <line
@@ -705,8 +705,8 @@
         font-size="9.7"
         letter-spacing="0px"
       >
-        <tspan x="289.95" y="471.974">Imbobo District Office&#x2028;</tspan>
-        <tspan x="289.95" y="486.974">Chiwala , Kabwe , Farajaland</tspan>
+        <tspan x="289.95" y="471.974">{{ registrar.office.name }}</tspan>
+        <tspan x="289.95" y="486.974">{{ registrar.district.name }}, {{ registrar.state.name }}, {{ registrar.country }}</tspan>
       </text>
     </g>
     <line
@@ -770,7 +770,7 @@
         font-size="9.7"
         letter-spacing="0px"
       >
-        <tspan x="289.95" y="521.114">30 March 2012</tspan>
+        <tspan x="289.95" y="521.114">{{{ ordinalFormatDate registrar.date }}}</tspan>
       </text>
     </g>
     <line
@@ -824,7 +824,7 @@
         font-size="9.7"
         letter-spacing="0px"
       >
-        <tspan x="289.95" y="562.754">Jude Hopper</tspan>
+        <tspan x="289.95" y="562.754">{{ registrar.name }}</tspan>
       </text>
     </g>
   </g>
