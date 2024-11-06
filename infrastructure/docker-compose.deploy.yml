@@ -746,7 +746,6 @@ services:
         - 'traefik.http.routers.gateway.tls=true'
         - 'traefik.http.routers.gateway.tls.certresolver=certResolver'
         - 'traefik.http.routers.gateway.entrypoints=web,websecure'
-        - 'traefik.http.routers.gateway.middlewares=gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
         - 'traefik.http.middlewares.gateway.headers.customresponseheaders.Pragma=no-cache'
         - 'traefik.http.middlewares.gateway.headers.customresponseheaders.Cache-control=no-store'
@@ -759,6 +758,7 @@ services:
         - "traefik.http.middlewares.cors-gateway.headers.accesscontrolalloworiginlist=*"
         - "traefik.http.middlewares.cors-gateway.headers.accesscontrolmaxage=100"
         - "traefik.http.middlewares.cors-gateway.headers.addvaryheader=true"
+        - 'traefik.http.routers.gateway.middlewares=cors-gateway,gzip-compression'
       replicas: 1
     networks:
       - overlay_net
