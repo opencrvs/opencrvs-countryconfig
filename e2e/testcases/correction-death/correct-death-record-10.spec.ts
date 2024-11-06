@@ -1,10 +1,12 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
   formatName,
+  getAction,
   getToken,
   goBackToReview,
   goToSection,
@@ -126,13 +128,7 @@ test.describe('10. Correct record - 10', () => {
 
     test('10.1.2 Validate correction requester page', async ({ page }) => {
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-        .click()
+      await getAction(page, 'Correct record').click()
 
       /*
        * Expected result: should
@@ -147,13 +143,7 @@ test.describe('10. Correct record - 10', () => {
       page
     }) => {
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-        .click()
+      await getAction(page, 'Correct record').click()
 
       await page.getByLabel('Informant (SPOUSE)').check()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -223,13 +213,7 @@ test.describe('10. Correct record - 10', () => {
       await page.locator('#name_0').click()
 
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-        .click()
+      await getAction(page, 'Correct record').click()
 
       await page.getByLabel('Informant (SPOUSE)').check()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -953,13 +937,7 @@ test.describe('10. Correct record - 10', () => {
 
       test('10.2.6.2 Correction review', async () => {
         await page.getByRole('button', { name: 'Action' }).first().click()
-        await page
-          .locator('#action-dropdownMenu')
-          .getByRole('listitem')
-          .filter({
-            hasText: /Review correction request/
-          })
-          .click()
+        await getAction(page, 'Review correction request').click()
         /*
          * Expected result: should show
          * - Submitter
@@ -1088,10 +1066,7 @@ test.describe('10. Correct record - 10', () => {
       })
       test('10.2.6.4 Validate history in record audit', async () => {
         await page.getByText(formatName(updatedDeceasedDetails)).click()
-
-        await page.getByLabel('Assign record').click()
-        await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+        await assignRecord(page)
         /*
          * Expected result: should show in task history
          * - Correction requested

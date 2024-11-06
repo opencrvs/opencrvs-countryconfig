@@ -1,10 +1,12 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
   formatName,
+  getAction,
   getToken,
   goBackToReview,
   login,
@@ -104,13 +106,7 @@ test.describe.serial(' Correct record - 13', () => {
     await page.locator('#name_0').click()
 
     await page.getByRole('button', { name: 'Action' }).first().click()
-    await page
-      .locator('#action-dropdownMenu')
-      .getByRole('listitem')
-      .filter({
-        hasText: /Correct Record/
-      })
-      .click()
+    await getAction(page, 'Correct record').click()
   })
 
   test('13.2 Correction requester: Someone Else (Cousin)', async () => {
@@ -688,13 +684,7 @@ test.describe.serial(' Correct record - 13', () => {
       .first()
       .click()
 
-    await page.getByLabel('Assign record').click()
-    if (
-      await page
-        .getByRole('button', { name: 'Assign', exact: true })
-        .isVisible()
-    )
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
+    await assignRecord(page)
 
     /*
      * Expected result: should show in task history

@@ -1,11 +1,13 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
+  assignRecord,
   continueForm,
   createPIN,
   drawSignature,
   expectOutboxToBeEmpty,
   expectTextWithChangeLink,
   formatDateObjectTo_ddMMMMyyyy,
+  getAction,
   getRandomDate,
   goToSection,
   joinValuesWith,
@@ -687,17 +689,9 @@ test.describe.serial('2. Death declaration case - 2', () => {
           name: `${declaration.deceased.name.firstNames} ${declaration.deceased.name.familyName}`
         })
         .click()
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+      await assignRecord(page)
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Review declaration/
-        })
-        .click()
+      await getAction(page, 'Review declaration').click()
     })
 
     test('2.2.2 Verify information on review page', async () => {

@@ -1,10 +1,13 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
+  // assignRecord,
   createPIN,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
   formatDateTo_yyyyMMdd,
   formatName,
+  getAction,
   getToken,
   goBackToReview,
   login
@@ -79,13 +82,7 @@ test.describe.serial(' Correct record - 11', () => {
     await page.locator('#name_0').click()
 
     await page.getByRole('button', { name: 'Action' }).first().click()
-    await page
-      .locator('#action-dropdownMenu')
-      .getByRole('listitem')
-      .filter({
-        hasText: /Print certified copy/
-      })
-      .click()
+    await getAction(page, 'Print certified copy').click()
     await page.getByLabel('Print in advance').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'No, make correction' }).click()
@@ -473,13 +470,7 @@ test.describe.serial(' Correct record - 11', () => {
 
     test('11.8.2 Correction review', async () => {
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Review correction request/
-        })
-        .click()
+      await getAction(page, 'Review correction request').click()
       /*
        * Expected result: should show
        * - Submitter
@@ -577,13 +568,7 @@ test.describe.serial(' Correct record - 11', () => {
         .first()
         .click()
 
-      await page.getByLabel('Assign record').click()
-      if (
-        await page
-          .getByRole('button', { name: 'Assign', exact: true })
-          .isVisible()
-      )
-        await page.getByRole('button', { name: 'Assign', exact: true }).click()
+      await assignRecord(page)
 
       /*
        * Expected result: should show in task history

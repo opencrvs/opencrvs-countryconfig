@@ -346,3 +346,28 @@ export const generateRandomSuffix = () => {
 
   return randomConsonant + randomVowel
 }
+
+type ActionMenuOptions =
+  | 'Correct record'
+  | 'Print certified copy'
+  | 'Review declaration'
+  | 'Update declaration'
+  | 'Review correction request'
+  | 'View record'
+
+export const getAction = (page: Page, option: ActionMenuOptions) => {
+  return page
+    .locator('#action-dropdownMenu')
+    .getByRole('listitem')
+    .filter({
+      hasText: new RegExp(option)
+    })
+}
+
+export const assignRecord = async (page: Page) => {
+  await page.getByLabel('Assign record').click()
+  if (
+    await page.getByRole('button', { name: 'Assign', exact: true }).isVisible()
+  )
+    await page.getByRole('button', { name: 'Assign', exact: true }).click()
+}

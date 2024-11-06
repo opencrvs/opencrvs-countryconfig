@@ -1,9 +1,11 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
+  assignRecord,
   createPIN,
   drawSignature,
   expectOutboxToBeEmpty,
   expectTextWithChangeLink,
+  getAction,
   goToSection,
   login
 } from '../../../helpers'
@@ -270,18 +272,9 @@ test.describe.serial('10. Death declaration case - 10', () => {
         })
         .all()
       await firstButton.click()
-
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+      await assignRecord(page)
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Update declaration/
-        })
-        .click()
+      await getAction(page, 'Update declaration').click()
     })
 
     test('10.2.2 Verify information on review page', async () => {

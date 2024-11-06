@@ -8,7 +8,9 @@ import {
   login,
   expectTextWithChangeLink,
   formatDateObjectTo_ddMMMMyyyy,
-  expectOutboxToBeEmpty
+  expectOutboxToBeEmpty,
+  getAction,
+  assignRecord
 } from '../../helpers'
 import faker from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
@@ -894,17 +896,9 @@ test.describe.serial('8. Validate declaration review page', () => {
           name: `${declaration.child.name.firstNames} ${declaration.child.name.familyName}`
         })
         .click()
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+      await assignRecord(page)
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Review declaration/
-        })
-        .click()
+      await getAction(page, 'Review declaration').click()
     })
     test('8.2.1.1 Verify information added on previous pages', async () => {
       /*
@@ -1156,17 +1150,9 @@ test.describe.serial('8. Validate declaration review page', () => {
           name: `${declaration.child.name.firstNames} ${declaration.child.name.familyName}`
         })
         .click()
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+      await assignRecord(page)
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Review declaration/
-        })
-        .click()
+      await getAction(page, 'Review declaration').click()
     })
     test('8.3.1.1 Verify information added on previous pages', async () => {
       /*

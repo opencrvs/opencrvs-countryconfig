@@ -1,10 +1,12 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
   createPIN,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
   formatDateTo_yyyyMMdd,
   formatName,
+  getAction,
   getLocationNameFromFhirId,
   getToken,
   goBackToReview,
@@ -150,25 +152,12 @@ test.describe('1. Correct record - 1', () => {
       await expect(
         page.locator('#action-dropdownMenu').getByRole('list')
       ).toBeVisible()
-      await expect(
-        page
-          .locator('#action-dropdownMenu')
-          .getByRole('listitem')
-          .filter({
-            hasText: /Correct Record/
-          })
-      ).toBeVisible()
+      await expect(getAction(page, 'Correct record')).toBeVisible()
     })
 
     test('1.1.2 Validate correction requester page', async ({ page }) => {
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-        .click()
+      await getAction(page, 'Correct record').click()
 
       /*
        * Expected result: should
@@ -193,13 +182,7 @@ test.describe('1. Correct record - 1', () => {
       page
     }) => {
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-        .click()
+      await getAction(page, 'Correct record').click()
 
       await page.getByLabel('Mother').check()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -271,13 +254,7 @@ test.describe('1. Correct record - 1', () => {
       await page.locator('#name_0').click()
 
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-        .click()
+      await getAction(page, 'Correct record').click()
 
       await page.getByLabel('Mother').check()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -854,13 +831,7 @@ test.describe('1. Correct record - 1', () => {
 
       test('1.2.6.2 Correction review', async () => {
         await page.getByRole('button', { name: 'Action' }).first().click()
-        await page
-          .locator('#action-dropdownMenu')
-          .getByRole('listitem')
-          .filter({
-            hasText: /Review correction request/
-          })
-          .click()
+        await getAction(page, 'Review correction request').click()
         /*
          * Expected result: should show
          * - Submitter
@@ -972,10 +943,7 @@ test.describe('1. Correct record - 1', () => {
         test('1.2.6.4.1 Validate entries in record audit', async () => {
           await page.getByText(formatName(updatedChildDetails)).click()
 
-          await page.getByLabel('Assign record').click()
-          await page
-            .getByRole('button', { name: 'Assign', exact: true })
-            .click()
+          await assignRecord(page)
 
           /*
            * Expected result: should show in task history

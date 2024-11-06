@@ -1,10 +1,12 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
   formatName,
+  getAction,
   getToken,
   goBackToReview,
   login
@@ -109,13 +111,7 @@ test.describe.serial(' Correct record - 9', () => {
       await page.locator('#name_0').click()
 
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Print certified copy/
-        })
-        .click()
+      await getAction(page, 'Print certified copy').click()
       await page.getByLabel('Print in advance').check()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Yes, print certificate' }).click()
@@ -143,20 +139,12 @@ test.describe.serial(' Correct record - 9', () => {
         .click()
     })
     test('9.1.3 Record audit', async () => {
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+      await assignRecord(page)
       /*
        * Expected result: should show correct record button
        */
       await page.getByRole('button', { name: 'Action' }).first().click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-        .click()
+      await getAction(page, 'Correct record').click()
     })
   })
 
@@ -726,13 +714,7 @@ test.describe.serial(' Correct record - 9', () => {
   test('9.8 Validate history in record audit', async () => {
     await page.getByText(formatName(declaration.child.name[0])).first().click()
 
-    await page.getByLabel('Assign record').click()
-    if (
-      await page
-        .getByRole('button', { name: 'Assign', exact: true })
-        .isVisible()
-    )
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
+    await assignRecord(page)
 
     /*
      * Expected result: should show in task history

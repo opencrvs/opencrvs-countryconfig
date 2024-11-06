@@ -1,5 +1,11 @@
 import { expect, test, type Page } from '@playwright/test'
-import { createPIN, getToken, login } from '../../helpers'
+import {
+  assignRecord,
+  createPIN,
+  getAction,
+  getToken,
+  login
+} from '../../helpers'
 import faker from '@faker-js/faker'
 import { createDeclaration } from '../birth/helpers'
 import TEST_DATA_1 from '../birth/data/1-both-mother-and-father.json'
@@ -69,31 +75,17 @@ test.describe
      */
     await page.getByRole('button', { name: 'Action' }).first().click()
 
-    await expect(
-      page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-    ).toHaveAttribute('disabled')
+    await expect(getAction(page, 'Correct record')).toHaveAttribute('disabled')
 
-    await expect(
-      page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Print certified copy/
-        })
-    ).toHaveAttribute('disabled')
+    await expect(getAction(page, 'Print certified copy')).toHaveAttribute(
+      'disabled'
+    )
 
     expect(page.url().includes('record-audit'))
   })
 
   test('17.2 Click download > click assign', async () => {
-    await page.getByLabel('Assign record').click()
-    await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
+    await assignRecord(page)
     await page.getByRole('button', { name: 'Action' }).first().click()
 
     /*
@@ -101,33 +93,17 @@ test.describe
      * - Correct record option should not be disabled
      * - Print option should not be disabled
      */
-    await expect(
-      page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Correct Record/
-        })
-    ).not.toHaveAttribute('disabled')
+    await expect(getAction(page, 'Correct record')).not.toHaveAttribute(
+      'disabled'
+    )
 
-    await expect(
-      page
-        .locator('#action-dropdownMenu')
-        .getByRole('listitem')
-        .filter({
-          hasText: /Print certified copy/
-        })
-    ).not.toHaveAttribute('disabled')
+    await expect(getAction(page, 'Print certified copy')).not.toHaveAttribute(
+      'disabled'
+    )
   })
 
   test('17.3 Click "Correct record"', async () => {
-    await page
-      .locator('#action-dropdownMenu')
-      .getByRole('listitem')
-      .filter({
-        hasText: /Correct Record/
-      })
-      .click()
+    await getAction(page, 'Correct record').click()
 
     /*
      * Expected result: should show correct record page

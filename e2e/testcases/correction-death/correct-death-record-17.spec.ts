@@ -1,10 +1,12 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
+  assignRecord,
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
   formatName,
+  getAction,
   getToken,
   goBackToReview,
   login
@@ -84,13 +86,7 @@ test.describe.serial(' Correct record - 17', () => {
     await page.locator('#name_0').click()
 
     await page.getByRole('button', { name: 'Action' }).first().click()
-    await page
-      .locator('#action-dropdownMenu')
-      .getByRole('listitem')
-      .filter({
-        hasText: /Print certified copy/
-      })
-      .click()
+    await getAction(page, 'Print certified copy').click()
 
     await page.getByLabel('Print in advance').check()
     await page.getByRole('button', { name: 'Continue' }).click()
@@ -574,16 +570,7 @@ test.describe.serial(' Correct record - 17', () => {
       .first()
       .click()
 
-    await page.getByLabel('Assign record').click()
-
-    if (await page.getByText('Unassign record?', { exact: true }).isVisible())
-      await page.getByRole('button', { name: 'Cancel', exact: true }).click()
-    else if (
-      await page
-        .getByRole('button', { name: 'Assign', exact: true })
-        .isVisible()
-    )
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
+    await assignRecord(page)
 
     /*
      * Expected result: should show in task history
