@@ -27,7 +27,7 @@ export const env = cleanEnv(process.env, {
     desc: 'Check if the token has been invalidated in the auth service before it has expired'
   }),
   CONFIRM_REGISTRATION_URL: url({
-    devDefault: 'http://localhost:5050/confirm/registration'
+    devDefault: 'http://localhost:5050/records/{id}/confirm'
   }),
   QA_ENV: bool({ default: false })
 })
