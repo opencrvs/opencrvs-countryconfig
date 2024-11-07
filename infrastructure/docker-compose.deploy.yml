@@ -588,7 +588,6 @@ services:
       - CONFIG_MONGO_URL=mongodb://mongo1/application-config?replicaSet=rs0
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
-      - REGISTRY_URL=https://registry.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
       # This needs to be the internal swarm url
       # as containers cannot connect to the web
@@ -656,7 +655,6 @@ services:
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - LOGIN_URL=https://login.{{hostname}}
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
-      - REGISTRY_URL=https://registry.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
     deploy:
@@ -734,8 +732,6 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - LOGIN_URL=https://login.{{hostname}}
-      - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
-      - REGISTRY_URL=https://registry.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
     deploy:
@@ -885,8 +881,6 @@ services:
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
-      - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
-      - REGISTRY_URL=https://registry.{{hostname}}
       - DOMAIN={{hostname}}
     deploy:
       labels:
