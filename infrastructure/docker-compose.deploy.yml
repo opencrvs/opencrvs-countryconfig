@@ -588,7 +588,6 @@ services:
       - CONFIG_MONGO_URL=mongodb://mongo1/application-config?replicaSet=rs0
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
-      - REGISTRY_URL=https://registry.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
       # This needs to be the internal swarm url
       # as containers cannot connect to the web

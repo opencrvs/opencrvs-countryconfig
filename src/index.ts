@@ -24,9 +24,7 @@ import {
   DOMAIN,
   GATEWAY_URL,
   LOGIN_URL,
-  SENTRY_DSN,
-  COUNTRY_CONFIG_URL,
-  REGISTRY_URL
+  SENTRY_DSN
 } from '@countryconfig/constants'
 import {
   COUNTRY_CONFIG_HOST,
@@ -186,7 +184,7 @@ async function getPublicKey(): Promise<string> {
 export async function createServer() {
   let whitelist: string[] = [DOMAIN]
   if (DOMAIN[0] !== '*') {
-    whitelist = [COUNTRY_CONFIG_URL, REGISTRY_URL, LOGIN_URL, CLIENT_APP_URL]
+    whitelist = [LOGIN_URL, CLIENT_APP_URL]
   }
   logger.info(`Whitelist: ${JSON.stringify(whitelist)}`)
   const server = new Hapi.Server({
