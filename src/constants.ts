@@ -29,7 +29,7 @@ export const SENTRY_DSN = process.env.SENTRY_DSN
 export const CHECK_INVALID_TOKEN = process.env.CHECK_INVALID_TOKEN || 'false'
 export const CONFIRM_REGISTRATION_URL =
   process.env.CONFIRM_REGISTRATION_URL ||
-  'http://localhost:5050/confirm/registration'
+  'http://localhost:5050/records/{id}/confirm'
 export const DEFAULT_TIMEOUT = 600000
 export const PRODUCTION = process.env.NODE_ENV === 'production'
 export const QA_ENV = process.env.QA_ENV || false
