@@ -231,7 +231,7 @@ function fatherDetails(
             parseInt(this.birthFatherYearOfBirth)
           )
         : customizeDateInCertificateContent(this.fatherBirthDate),
-      'tao amin’ny',
+      'tao ',
       this.birthFatherBirthPlace + ',',
       'kaominina',
       fatherPrimaryDistrict,
@@ -265,7 +265,7 @@ function motherDetails(
             parseInt(this.birthMotherYearOfBirth)
           )
         : customizeDateInCertificateContent(this.motherBirthDate),
-      this.birthMotherBirthPlace + ',',
+      'tao ' + this.birthMotherBirthPlace + ',',
       'kaominina',
       motherPrimaryDistrict,
       this.birthMotherMotherIsDeceased ? 'nonina tao' : 'monina ao',
