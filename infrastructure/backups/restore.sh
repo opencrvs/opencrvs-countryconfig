@@ -139,7 +139,9 @@ elasticsearch_host() {
 
 echo "delete any previously created snapshot if any.  This may error on a fresh install with a repository_missing_exception error.  Just ignore it."
 docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/_snapshot/ocrvs"
+docker run --rm --network=$NETWORK appropriate/curl curl -X PUT "http://$(elasticsearch_host)/_cluster/settings" -v -d '{ "transient": { "action.destructive_requires_name":false } }' -H 'Content-Type: application/json'
 docker run --rm --network=$NETWORK appropriate/curl curl -X DELETE "http://$(elasticsearch_host)/*" -v
+docker run --rm --network=$NETWORK appropriate/curl curl -X PUT "http://$(elasticsearch_host)/_cluster/settings" -v -d '{ "transient": { "action.destructive_requires_name":true } }' -H 'Content-Type: application/json'
 
 echo "Waiting for elasticsearch to restart so that the restore script can find the updated volume."
 docker service update --force --update-parallelism 1 --update-delay 30s opencrvs_elasticsearch
