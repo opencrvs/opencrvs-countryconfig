@@ -144,6 +144,22 @@ export function text(): Handlebars.HelperDelegate {
   }
 }
 
+export function foreignObject(): Handlebars.HelperDelegate {
+  return function (
+    this: any,
+    width: number,
+    height: number,
+    options: Handlebars.HelperOptions
+  ) {
+    const content = options.fn(this)
+    const res = `<foreignObject x="${this.x}" y="${
+      this.y - 10
+    }" width="${width}" height="${height}">${content}</foreignObject>`
+    this.y += height
+    return res
+  } as unknown as Handlebars.HelperDelegate
+}
+
 export function linebreak(): Handlebars.HelperDelegate {
   return function (this: Record<string, any>) {
     if (this.y) {
@@ -172,8 +188,8 @@ export function introduction(): Handlebars.HelperDelegate {
         'Foibe misahana ny fiankohonana, taona',
         customizeDateYearInCertificateContent(this.registrar.date) + ',',
         'izao sora-pahaterahana manaraka izao :'
-      ],
-      ' '
+      ]
+      // ' '
     )
   }
 }
@@ -209,8 +225,8 @@ export function eventStatement(): Handlebars.HelperDelegate {
         'zanak’i',
         fatherDetails.call(this, fatherPrimaryDistrict),
         motherDetails.call(this, motherPrimaryDistrict)
-      ],
-      ' '
+      ]
+      // ' '
     )
   }
 }
@@ -292,7 +308,6 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
-    console.log(this.informantType)
     return joinValuesWith(
       [
         '---Nosoratana androany',
@@ -329,8 +344,8 @@ export function registrationStatement(): Handlebars.HelperDelegate {
         'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
         registrationDistrict + ',',
         'rehefa novakiana taminy ity soratra ity.---'
-      ],
-      ' '
+      ]
+      // ' '
     )
   }
 }
@@ -698,22 +713,32 @@ function addMentionTitle(elements: any[], title: string) {
 }
 
 function getRecognitionMentionValues(this: Record<string, string>, i: number) {
-  return addMentionTitle(
-    [
-      this['birthMentionRecognitionActNumber__' + i],
-      this['birthMentionRecognitionDate__' + i],
-      this['birthMentionRecognitionPlace__' + i],
-      [
-        this['birthMentionChildFamilyName__' + i],
-        this['birthMentionChildFirstName__' + i]
-      ]
-        .filter(Boolean)
-        .join(' ')
-        .trim(),
-      this['birthMentionMentionChildNID__' + i]
-    ],
-    'Fanjanahana'
-  )
+  return [
+    `Nozanahan'i ${this['birthMentionChildFamilyName__' + i]} ${
+      this['birthMentionChildFirstName__' + i]
+    } tamin'ny ${this['birthMentionRecognitionDate__' + i]
+      .split('-')
+      .reverse()
+      .join('/')} tao amin'ny ${
+      this['birthMentionRecognitionPlace__' + i]
+    } soratra faha ${this['birthMentionRecognitionActNumber__' + i]}.`
+  ]
+  // return addMentionTitle(
+  //   [
+  //     this['birthMentionRecognitionActNumber__' + i],
+  //     this['birthMentionRecognitionDate__' + i],
+  //     this['birthMentionRecognitionPlace__' + i],
+  //     [
+  //       this['birthMentionChildFamilyName__' + i],
+  //       this['birthMentionChildFirstName__' + i]
+  //     ]
+  //       .filter(Boolean)
+  //       .join(' ')
+  //       .trim(),
+  //     this['birthMentionMentionChildNID__' + i]
+  //   ],
+  //   'Fanjanahana'
+  // )
 }
 
 function getJudicialAdoptionMentionValues(
@@ -859,7 +884,7 @@ export function mentions(): Handlebars.HelperDelegate {
          * - to optimize if needed: Mention titles handled in each function with addMentionTitle
          *  */
         // // this['birthMentionTypeOfMention__' + i],
-        // ...getRecognitionMentionValues.apply(this, [i]),
+        ...getRecognitionMentionValues.apply(this, [i]),
         // ...getJudicialAdoptionMentionValues.apply(this, [i]),
         // ...getSimpleAdoptionMentionValues.apply(this, [i]),
         // ...getMarriageMentionValues.apply(this, [i]),
@@ -871,8 +896,8 @@ export function mentions(): Handlebars.HelperDelegate {
         .filter(Boolean)
         .join('\n- ')
       output += temp
-      // Check if have anything to show before adding line break
-      output += temp.length ? generateDoubleLineBreak() : ''
+      /** Check if have anything to show before adding line break */
+      // output += temp.length ? generateDoubleLineBreak() : ''
     }
 
     return {
