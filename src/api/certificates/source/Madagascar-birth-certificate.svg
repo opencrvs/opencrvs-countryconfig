@@ -59,14 +59,14 @@
         {{#text fontSize=10 fontWeight="bold"}}
             SORATRA AN-TSISINY :
         {{/text}}
-        {{#foreignObject 152 500}}<p class="mentions" style="font-family: 'Plus Jakarta Sans';
+        {{#foreignObject 154 500}}<pre class="mentions" style="font-family: 'Plus Jakarta Sans'; width: 100%; white-space: pre-wrap; overflow-wrap: break-word; max-width: 100%;
                 text-align: justify;
                 font-size: 13px;
                 line-height: 1.1;
                 letter-spacing: 0em;
                 margin-top: 0;">{{#with (mentions) as |mentionsValue|}}{{#if mentionsValue.hasMention}}{{mentionsValue.text}}{{else}}Tsy misy{{/if}}
                 {{/with}}
-            </p>
+            </pre>
         {{/foreignObject}}
     {{/wrapGroup}}
 
@@ -140,6 +140,7 @@
         .mentions {
             font-size: 10px !important;
             letter-spacing: 0em;
+            line-height: 1.45 !important;
         }
     </style>
     <image x=" 231" y="14" width="132" height="72" xlink:href="{{certificateLogo}}"

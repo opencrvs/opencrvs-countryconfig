@@ -713,15 +713,25 @@ function addMentionTitle(elements: any[], title: string) {
 }
 
 function getRecognitionMentionValues(this: Record<string, string>, i: number) {
+  if (
+    !this['birthMentionTypeOfMention__' + i]
+      ?.toString()
+      ?.toLowerCase()
+      ?.includes('recognition')
+  ) {
+    return []
+  }
   return [
-    `Nozanahan'i ${this['birthMentionChildFamilyName__' + i]} ${
-      this['birthMentionChildFirstName__' + i]
-    } tamin'ny ${this['birthMentionRecognitionDate__' + i]
-      .split('-')
-      .reverse()
-      .join('/')} tao amin'ny ${
-      this['birthMentionRecognitionPlace__' + i]
-    } soratra faha ${this['birthMentionRecognitionActNumber__' + i]}.`
+    `Nozanahan'i ${this['birthMentionChildFamilyName__' + i] || '-'} ${
+      this['birthMentionChildFirstName__' + i] || '-'
+    } tamin'ny ${
+      this['birthMentionRecognitionDate__' + i]
+        ?.split('-')
+        ?.reverse()
+        ?.join('/') || '-'
+    } tao amin'ny kaominina ${
+      this['birthMentionRecognitionPlace__' + i] || '-'
+    } soratra faha ${this['birthMentionRecognitionActNumber__' + i] || '-'}.`
   ]
   // return addMentionTitle(
   //   [
@@ -894,10 +904,11 @@ export function mentions(): Handlebars.HelperDelegate {
         this['birthMentionNotes__' + i]
       ]
         .filter(Boolean)
-        .join('\n- ')
+        .join('\n')
       output += temp
       /** Check if have anything to show before adding line break */
       // output += temp.length ? generateDoubleLineBreak() : ''
+      output += '\n\n'
     }
 
     return {
