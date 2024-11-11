@@ -26,40 +26,44 @@ function timeAgo(date) {
 /** HOF for async function with global loader */
 const handleAsyncFunction = async (asyncFunc) => {
   try {
-    GlobalLoader.showLoader();
-    return await asyncFunc();
+    GlobalLoader.showLoader()
+    return await asyncFunc()
   } catch (error) {
-    console.error("Error:", error);
-    throw error;
+    console.error('Error:', error)
+    throw error
   } finally {
-    GlobalLoader.hideLoader();
+    GlobalLoader.hideLoader()
   }
 }
 
 /** Event Location by event id */
-const fetchLocationById = (eventLocationId) => handleAsyncFunction(async () => {
-  if (eventLocationId) {
-    const apiUrl = window.config.API_GATEWAY_URL
-    const formattedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
-    const response = await fetch(
-      `${formattedApiUrl}/location/${eventLocationId}`,
-      {
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-          // Authorization: `Bearer ${token}`
-        },
-      }
-    )
-    const locationData = await response.json()
-    return locationData
-  }
-  return undefined;
-})
+const fetchLocationById = (eventLocationId) =>
+  handleAsyncFunction(async () => {
+    if (eventLocationId) {
+      const apiUrl = window.config.API_GATEWAY_URL
+      const formattedApiUrl = apiUrl.endsWith('/')
+        ? apiUrl.slice(0, -1)
+        : apiUrl
+      const response = await fetch(
+        `${formattedApiUrl}/location/${eventLocationId}`,
+        {
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+            // Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      const locationData = await response.json()
+      return locationData
+    }
+    return undefined
+  })
 
 /** Birth location by id */
-const fetchOtherBirthLocation = (id) => handleAsyncFunction(async () => {
-  const query = `
+const fetchOtherBirthLocation = (id) =>
+  handleAsyncFunction(async () => {
+    const query = `
   query fetchBirthRegistrationEventLocationForCertificate($id: ID!) {
     fetchBirthRegistration(id: $id) {
         _fhirIDMap
@@ -88,30 +92,33 @@ const fetchOtherBirthLocation = (id) => handleAsyncFunction(async () => {
     }
   `
 
-  const response = await fetch('/graphql', {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      query,
-      variables: { id }
+    const response = await fetch('/graphql', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        query,
+        variables: { id }
+      })
     })
+
+    if (!response.ok) {
+      throw new Error(
+        'Something went wrong with the graphql request: fetchOtherBirthLocation'
+      )
+    }
+
+    const data = await response.json()
+    return data
   })
 
-  if (!response.ok) {
-    throw new Error('Something went wrong with the graphql request: fetchOtherBirthLocation')
-  }
-
-  const data = await response.json()
-  return data
-})
-
 /** Fetch Events list */
-const fetchEvents = (variables) => handleAsyncFunction(async () => {
-  const query = `
+const fetchEvents = (variables) =>
+  handleAsyncFunction(async () => {
+    const query = `
     query(
       $userId: String
       $advancedSearchParameters: AdvancedSearchParametersInput!
@@ -158,67 +165,68 @@ const fetchEvents = (variables) => handleAsyncFunction(async () => {
       }
     }`
 
-  const response = await fetch('/graphql', {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({ query, variables })
+    const response = await fetch('/graphql', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ query, variables })
+    })
+
+    if (!response.ok) {
+      throw new Error('Something went wrong with the graphql request')
+    }
+
+    const data = await response.json()
+
+    if (data?.errors?.[0].extensions.code === 'UNAUTHENTICATED') {
+      window.location.href =
+        window.config.LOGIN_URL +
+        '?redirectTo=' +
+        encodeURIComponent(window.config.COUNTRY_CONFIG_URL)
+    }
+    return data
   })
 
-  if (!response.ok) {
-    throw new Error('Something went wrong with the graphql request')
-  }
-
-  const data = await response.json()
-
-  if (data?.errors?.[0].extensions.code === 'UNAUTHENTICATED') {
-    window.location.href =
-      window.config.LOGIN_URL +
-      '?redirectTo=' +
-      encodeURIComponent(window.config.COUNTRY_CONFIG_URL)
-  }
-  return data
-})
-
 /** Get & Generate child birth location by id and type */
-const getChildBirthLocation = (eventLocationId, type, id) => handleAsyncFunction(async () => {
-  if (
-    eventLocationId && type
-  ) {
-    if (type === 'HEALTH_FACILITY') {
-      const birthLocation = await fetchLocationById(eventLocationId)
-      if(birthLocation) return `tao amin'ny ${birthLocation?.name || '-'}`
-    }
-    else {
-      const birthLocation = await fetchOtherBirthLocation(id)
-      return `tao amin'ny${(() => {
-        const _fokotany = birthLocation?.data?.fetchBirthRegistration?.questionnaire?.find(
-          (q) =>
-            q.fieldId ===
-            'birth.child.child-view-group.fokontanyCustomAddress'
-        )?.value;
-        return _fokotany ? ' fokotany ' + _fokotany : ' - '
-      }
-      )()}${(() => {
-        const _commune = birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address?.districtName;
-        return _commune ? ', kaominina ' + _commune : ' - '
-      })()
-        }${(() => {
-          const _district = birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address?.districtName;
+const getChildBirthLocation = (eventLocationId, type, id) =>
+  handleAsyncFunction(async () => {
+    if (eventLocationId && type) {
+      if (type === 'HEALTH_FACILITY') {
+        const birthLocation = await fetchLocationById(eventLocationId)
+        if (birthLocation) return `tao amin'ny ${birthLocation?.name || '-'}`
+      } else {
+        const birthLocation = await fetchOtherBirthLocation(id)
+        return `tao amin'ny${(() => {
+          const _fokotany =
+            birthLocation?.data?.fetchBirthRegistration?.questionnaire?.find(
+              (q) =>
+                q.fieldId ===
+                'birth.child.child-view-group.fokontanyCustomAddress'
+            )?.value
+          return _fokotany ? ' fokotany ' + _fokotany : ' - '
+        })()}${(() => {
+          const _commune =
+            birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
+              ?.districtName
+          return _commune ? ', kaominina ' + _commune : ' - '
+        })()}${(() => {
+          const _district =
+            birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
+              ?.districtName
           return _district ? ', distrikta ' + _district : ' - '
-        })()
-        },`
+        })()},`
+      }
     }
-  }
-  return '';
-})
+    return ''
+  })
 
 /** Main fetch for birth registration information */
-const fetchBirthRegistrationForCertificate = (variables) => handleAsyncFunction(async () => {
-  const query = `
+const fetchBirthRegistrationForCertificate = (variables) =>
+  handleAsyncFunction(async () => {
+    const query = `
       query fetchBirthRegistrationForCertificate($id: ID!) {
         fetchBirthRegistration(id: $id) {
           _fhirIDMap
@@ -494,26 +502,26 @@ const fetchBirthRegistrationForCertificate = (variables) => handleAsyncFunction(
         }
       }`
 
-  const response = await fetch('/graphql', {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      query,
-      variables
+    const response = await fetch('/graphql', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        query,
+        variables
+      })
     })
+
+    if (!response.ok) {
+      throw new Error('Something went wrong with the graphql request')
+    }
+
+    const data = await response.json()
+    return data
   })
-
-  if (!response.ok) {
-    throw new Error('Something went wrong with the graphql request')
-  }
-
-  const data = await response.json()
-  return data
-})
 
 // Function to render table rows with pagination
 const renderTable = async () => {
@@ -570,9 +578,14 @@ const renderTable = async () => {
     ]
       .join(' ')
       //// escape '
-      .trim().replace(/'/g, "\\'")}', '${
-      item.registration?.assignment?.officeName.replace(/'/g, "\\'")
-    }')">Imprimer</button></td>
+      .trim()
+      .replace(
+        /'/g,
+        "\\'"
+      )}', '${item.registration?.assignment?.officeName.replace(
+      /'/g,
+      "\\'"
+    )}')">Imprimer</button></td>
   `
     tableBody.appendChild(row)
   })
@@ -601,15 +614,21 @@ window.openPrintModal = async function openPrintModal(
   const person = await fetchBirthRegistrationForCertificate({ id })
 
   if (person.data.fetchBirthRegistration) {
-    const eventLocationId = person.data.fetchBirthRegistration.eventLocation.id ?? '';
-    const eventLocationType = person.data.fetchBirthRegistration.eventLocation.type ?? '';
-    const childBirthLocation = await getChildBirthLocation(eventLocationId, eventLocationType, id);
+    const eventLocationId =
+      person.data.fetchBirthRegistration.eventLocation.id ?? ''
+    const eventLocationType =
+      person.data.fetchBirthRegistration.eventLocation.type ?? ''
+    const childBirthLocation = await getChildBirthLocation(
+      eventLocationId,
+      eventLocationType,
+      id
+    )
 
     const modal = document.getElementById('printModal')
     modal.classList.remove('hidden')
 
     const event = person.data.fetchBirthRegistration
-
+    console.log(event)
     const dateFormatter = window.translateDate()
     const timeFormatter = window.translateTime()
     const officeNameFormatter = window.customizeOfficeNameLocation()
@@ -647,7 +666,10 @@ window.openPrintModal = async function openPrintModal(
     ).id
 
     // father info
-    const fatherInfoNotIsAvailable = event.father.reasonNotApplying != null
+    const fatherInfoNotIsAvailable =
+      event.father.reasonNotApplying != null &&
+      Array.isArray(event.father.name) &&
+      event.father.name.length == 0
 
     const fatherFullName =
       Array.isArray(event.father.name) && event.father.name.length > 0

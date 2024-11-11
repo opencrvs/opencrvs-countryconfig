@@ -235,7 +235,7 @@ function fatherDetails(
   this: Record<string, string>,
   fatherPrimaryDistrict: string
 ) {
-  if ('fatherReasonNotApplying' in this) {
+  if ('fatherReasonNotApplying' in this && !('fatherFamilyName' in this)) {
     return ''
   }
   return joinValuesWith(
@@ -257,9 +257,9 @@ function fatherDetails(
         this.birthMotherFokontanyCustomAddress) + ',',
       this.fatherOccupation + ',',
       this.birthFatherFatherHasFormallyRecognisedChild
-        ? 'izay manambara fa manjanaka azy'
-        : '',
-      ', sy'
+        ? 'izay manambara fa manjanaka azy,'
+        : ',',
+      ' sy'
     ],
     ' '
   )
