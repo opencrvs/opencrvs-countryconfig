@@ -30,6 +30,7 @@
 
 - **Major new feature** Description
 - Misc new feature
+- Add constant.humanName to allow coutries to have custom ordering on thier full name e.g start with `lastName` or `firstName` [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
 ### New content keys requiring translation
 
