@@ -788,7 +788,9 @@ export const birthForm: ISerializedForm = {
                 },
                 {
                   action: 'hide',
-                  expression: `!values['detailsMentionExist__${i - 1}']`
+                  expression: `!values['detailsMentionExist__${
+                    i - 1
+                  }'] || values['detailsMentionExist__${i - 1}'] === "false"`
                 }
               ],
         title: {
