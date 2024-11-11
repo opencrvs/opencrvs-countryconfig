@@ -60,7 +60,7 @@
             SORATRA AN-TSISINY :
         {{/text}}
         {{#foreignObject 154 500}}<pre class="mentions" style="font-family: 'Plus Jakarta Sans'; width: 100%; white-space: pre-wrap; overflow-wrap: break-word; max-width: 100%;
-                text-align: justify;
+                text-align: left;
                 font-size: 13px;
                 line-height: 1.1;
                 letter-spacing: 0em;
