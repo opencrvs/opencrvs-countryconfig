@@ -41,14 +41,6 @@
     username: '{{dockerhub_username}}'
     password: '{{dockerhub_password}}'
 
-- name: 'Setup crontab to clean up docker images'
-  cron:
-    user: '{{ crontab_user }}'
-    name: 'cleanup docker images'
-    minute: '0'
-    hour: '0'
-    job: '/usr/bin/docker system prune -af >> /var/log/docker-prune.log'
-
 - name: Check if Docker group exists
   command: getent group docker
   register: docker_group
