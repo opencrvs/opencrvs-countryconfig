@@ -9,7 +9,7 @@
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="220.727" y="712.552">&#x2028;</tspan>
-    <tspan x="61" y="725.352">Imbobo District Office, Chiwala State, Farajaland</tspan>
+    <tspan x="61" y="725.352">{{location registrar.officeId 'name'}}, {{location registrar.districtId 'name'}}, {{location registrar.stateId 'name'}}, Farajaland</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="61" y="712.552">Place of certification / Lieu de certification</tspan>
@@ -40,7 +40,7 @@
   <path d="M56 610H541" stroke="#038E86" stroke-width="2" stroke-linecap="round" />
   <path d="M56 85H540" stroke="#038E86" stroke-width="2" stroke-linecap="round" />
   <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="4px">
-    <tspan x="221.483" y="99.88">No. 2023HSND234S</tspan>
+    <tspan x="221.483" y="99.88">No. {{registrationNumber}}</tspan>
   </text>
   <path d="M56 107H540" stroke="#038E86" stroke-width="2" stroke-linecap="round" />
   <path d="M56 25H541" stroke="#DDDDDD" stroke-linecap="round" />
@@ -169,7 +169,7 @@
   </text>
   <g clip-path="url(#clip9_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="307" y="326.104">{{motherNationality}}</tspan>
+      <tspan x="307" y="326.104">{{intl 'nationality' motherNationality}}</tspan>
     </text>
   </g>
   <line x1="65" y1="332.5" x2="533" y2="332.5" stroke="#ECECEC" />
@@ -181,7 +181,7 @@
   </text>
   <g clip-path="url(#clip10_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="307" y="346.104">Doctor</tspan>
+      <tspan x="307" y="346.104">{{motherOccupation}}</tspan>
     </text>
   </g>
   <line x1="65" y1="358.5" x2="533" y2="358.5" stroke="#222222" />
@@ -232,7 +232,7 @@
   </text>
   <g clip-path="url(#clip14_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="307" y="452.104">{{fatherNationality}}</tspan>
+      <tspan x="307" y="452.104">{{intl 'nationality' fatherNationality}}</tspan>
     </text>
   </g>
   <line x1="65" y1="458.5" x2="533" y2="458.5" stroke="#ECECEC" />
@@ -244,7 +244,7 @@
   </text>
   <g clip-path="url(#clip15_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="307" y="472.104">Doctor</tspan>
+      <tspan x="307" y="472.104">{{fatherOccupation}}</tspan>
     </text>
   </g>
   <line x1="65" y1="484.5" x2="533" y2="484.5" stroke="#222222" />
@@ -259,8 +259,7 @@
   </text>
   <g clip-path="url(#clip16_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="307" y="518.104">{{informantFirstName}} {{informantNationality}}</tspan>
-      <tspan x="307" y="530.104">{{countryPrimaryInformant}}</tspan>
+      <tspan x="307" y="518.104">{{informantFirstName}} {{informantFamilyName}}</tspan>
     </text>
   </g>
   <line x1="65" y1="536.5" x2="533" y2="536.5" stroke="#ECECEC" />

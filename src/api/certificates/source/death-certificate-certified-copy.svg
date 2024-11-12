@@ -2,14 +2,14 @@
   <rect width="583" height="842" fill="white" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="228.625" y="677.552">&#x2028;</tspan>
-    <tspan x="69" y="690.352">01 April 2012</tspan>
+    <tspan x="69" y="690.352">{{certificateDate}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="69" y="677.552">Date of certification / Date de certification</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="228.727" y="711.552">&#x2028;</tspan>
-    <tspan x="69" y="724.352">Imbobo District Office, Chiwala State, Farajaland</tspan>
+    <tspan x="69" y="724.352">{{location registrar.officeId 'name'}}, {{location registrar.districtId 'name'}}, {{location registrar.stateId 'name'}}, Farajaland</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="69" y="711.552">Place of certification / Lieu de certification</tspan>
@@ -33,7 +33,7 @@
   <path d="M50 601H535" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
   <path d="M50 85H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
   <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="4px">
-    <tspan x="215.483" y="99.88">No. 2023HSND234S</tspan>
+    <tspan x="215.483" y="99.88">No. {{registrationNumber}}</tspan>
   </text>
   <path d="M50 107H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
   <path d="M50 25H535" stroke="#DDDDDD" stroke-linecap="round" />
@@ -111,7 +111,7 @@
   </text>
   <g clip-path="url(#clip5_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="260.104">{{deceasedNationality}}</tspan>
+      <tspan x="312" y="260.104">{{intl 'nationality' deceasedNationality}}</tspan>
     </text>
   </g>
   <line x1="70" y1="272.5" x2="514" y2="272.5" stroke="#222222" />
@@ -167,7 +167,7 @@
   <g clip-path="url(#clip9_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
       <tspan x="312" y="404.104">{{informantFirstName}} {{informantFamilyName}}</tspan>
-      <tspan x="312" y="416.104">Spouse</tspan>
+      <tspan x="312" y="416.104">{{informantRelation}}</tspan>
     </text>
   </g>
   <line x1="70" y1="422.5" x2="514" y2="422.5" stroke="#ECECEC" />
