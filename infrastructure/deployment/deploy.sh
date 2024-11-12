@@ -270,6 +270,7 @@ split_and_join() {
 }
 cleanup_docker_images()
 {
+   echo "Cleaning up the docker images"
    /usr/bin/docker system prune -af | sudo tee -a /var/log/docker-prune.log > /dev/null
 }
 
