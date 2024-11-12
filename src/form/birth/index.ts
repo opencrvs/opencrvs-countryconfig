@@ -66,8 +66,7 @@ import {
   informantFirstNameConditionals,
   informantFamilyNameConditionals,
   informantBirthDateConditionals,
-  exactDateOfBirthUnknownConditional,
-  hideIfNidIntegrationEnabled
+  exactDateOfBirthUnknownConditional
 } from '../common/default-validation-conditionals'
 import {
   documentsSection,
@@ -266,12 +265,12 @@ export const birthForm: ISerializedForm = {
             getIDType(
               'birth',
               'informant',
-              hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
+              hideIfInformantMotherOrFather,
               true
             ),
             ...getIDNumberFields(
               'informant',
-              hideIfNidIntegrationEnabled.concat(hideIfInformantMotherOrFather),
+              hideIfInformantMotherOrFather,
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -335,17 +334,8 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.motherNationality,
               detailsExist
             ), // Required field.
-            getIDType(
-              'birth',
-              'mother',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              true
-            ),
-            ...getIDNumberFields(
-              'mother',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              true
-            ),
+            getIDType('birth', 'mother', detailsExist, true),
+            ...getIDNumberFields('mother', detailsExist, true),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('mother-address-seperator', detailsExist),
             getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
@@ -422,17 +412,8 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.fatherNationality,
               detailsExist
             ), // Required field.
-            getIDType(
-              'birth',
-              'father',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              true
-            ),
-            ...getIDNumberFields(
-              'father',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
-              true
-            ),
+            getIDType('birth', 'father', detailsExist, true),
+            ...getIDNumberFields('father', detailsExist, true),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('father-address-seperator', detailsExist),
             getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
