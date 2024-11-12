@@ -19,7 +19,6 @@ data
 
 .history
 
-graphql.schema.json
 *.tar.gz
 .secrets
 .env*

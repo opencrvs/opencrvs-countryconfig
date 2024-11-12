@@ -16,13 +16,14 @@ export const env = cleanEnv(process.env, {
   LOGIN_URL: url({ devDefault: 'http://localhost:3020/' }),
   CLIENT_APP_URL: url({ devDefault: 'http://localhost:3000/' }),
   FHIR_URL: url({ devDefault: 'http://localhost:3447/fhir' }),
-  COUNTRY_CONFIG_HOST: str({ devDefault: '0.0.0.0' }),
+  COUNTRY_CONFIG_HOST: str({ default: '0.0.0.0' }),
   COUNTRY_CONFIG_PORT: port({ default: 3040 }),
   AUTH_URL: url({ devDefault: 'http://localhost:4040' }),
   COUNTRY_CONFIG_URL: url({ devDefault: 'http://localhost:3040' }),
   APPLICATION_CONFIG_URL: url({ devDefault: 'http://localhost:2021/' }),
   SENTRY_DSN: str({ default: undefined }),
   CHECK_INVALID_TOKEN: bool({
+    default: true,
     devDefault: false,
     desc: 'Check if the token has been invalidated in the auth service before it has expired'
   }),
