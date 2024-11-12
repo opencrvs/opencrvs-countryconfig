@@ -1,6 +1,8 @@
 # Changelog
 
-## 1.6.0 (TBD)
+## 1.6.1 (TBD)
+
+## 1.6.0
 
 ### Breaking changes
 
