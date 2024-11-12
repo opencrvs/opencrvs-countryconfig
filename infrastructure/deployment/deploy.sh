@@ -270,8 +270,7 @@ split_and_join() {
 }
 cleanup_docker_images()
 {
-   stat /var/log/docker-prune.log
-   /usr/bin/docker system prune -af >> /var/log/docker-prune.log
+   sudo /usr/bin/docker system prune -af | sudo tee -a /var/log/docker-prune.log > /dev/null
 }
 
 docker_stack_deploy() {
