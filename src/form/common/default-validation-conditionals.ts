@@ -31,20 +31,6 @@ export const isValidChildBirthDate = [
   }
 ] satisfies Validator[]
 
-export const hideIfNidIntegrationDisabled = [
-  {
-    action: 'hide',
-    expression: `const nationalIdSystem =
-    offlineCountryConfig &&
-    offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
-    !nationalIdSystem ||
-    !nationalIdSystem.settings.openIdProviderBaseUrl ||
-    !nationalIdSystem.settings.openIdProviderClientId ||
-    !nationalIdSystem.settings.openIdProviderClaims;
-  `
-  }
-]
-
 export const detailsExistConditional: Conditional[] = [
   {
     action: 'hide',
@@ -407,20 +393,6 @@ export function getNationalIDValidators(configCase: string): Validator[] {
     ]
   }
 }
-
-export const hideIfNidIntegrationEnabled = [
-  {
-    action: 'hide',
-    expression: `const nationalIdSystem =
-          offlineCountryConfig &&
-          offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
-          nationalIdSystem &&
-          nationalIdSystem.settings.openIdProviderBaseUrl &&
-          nationalIdSystem.settings.openIdProhideIfNidIntegrationDisabledviderClientId &&
-          nationalIdSystem.settings.openIdProviderClaims;
-      `
-  }
-]
 
 export const informantBirthDateConditionals = [
   {

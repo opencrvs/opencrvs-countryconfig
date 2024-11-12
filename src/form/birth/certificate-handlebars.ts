@@ -24,8 +24,6 @@ export const certificateHandlebars = {
   registrationLocation: 'registrationLocation',
   contactEmail: 'contactEmail',
   contactPhoneNumber: 'contactPhoneNumber',
-  mosipAid: 'mosipAid',
-  mosipAIDLabel: 'mosipAIDLabel',
   birthConfigurableIdentifier1: 'birthConfigurableIdentifier1',
   birthConfigurableIdentifier2: 'birthConfigurableIdentifier2',
   birthConfigurableIdentifier3: 'birthConfigurableIdentifier3',

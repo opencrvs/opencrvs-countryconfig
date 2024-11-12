@@ -184,7 +184,6 @@ export type BirthDeclaration = {
     type: string
     trackingId: string
     registrationNumber: string
-    mosipAid: string | null
   }
   attendantAtBirth: string
   weightAtBirth: number

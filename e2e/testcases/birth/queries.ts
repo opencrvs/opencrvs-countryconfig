@@ -181,7 +181,6 @@ export const GET_BIRTH_REGISTRATION_FOR_REVIEW = print(gql`
         type
         trackingId
         registrationNumber
-        mosipAid
       }
       attendantAtBirth
       weightAtBirth
