@@ -48,7 +48,6 @@ export const confirmRegistration = (
   variables: {
     childIdentifiers?: Array<{ type: string; value: string }>
     registrationNumber: string
-    trackingId: string
   },
   { headers }: { headers: Record<string, any> }
 ) =>
@@ -65,8 +64,7 @@ export const confirmRegistration = (
       id,
       details: {
         identifiers: variables.childIdentifiers,
-        registrationNumber: variables.registrationNumber,
-        trackingId: variables.trackingId
+        registrationNumber: variables.registrationNumber
       }
     },
     headers
