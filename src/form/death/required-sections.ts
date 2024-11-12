@@ -48,6 +48,8 @@ export const documentsSection = {
         {
           name: 'uploadDocForDeceased',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          maxSizeMB: 10,
+          compressImagesToSizeMB: 1,
           label: formMessageDescriptors.deceasedIDProof,
           initialValue: '',
           extraValue: deathDocumentExtraValue.DECEASED_ID_PROOF,
@@ -76,6 +78,8 @@ export const documentsSection = {
         {
           name: 'uploadDocForInformant',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          maxSizeMB: 10,
+          compressImagesToSizeMB: 1,
           label: formMessageDescriptors.proofOfInformantsID,
           initialValue: '',
           extraValue: deathDocumentExtraValue.INFORMANT_ID_PROOF,
@@ -104,6 +108,8 @@ export const documentsSection = {
         {
           name: 'uploadDocForDeceasedDeath',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          maxSizeMB: 10,
+          compressImagesToSizeMB: 1,
           label: formMessageDescriptors.deceasedDeathProof,
           initialValue: '',
           extraValue: deathDocumentExtraValue.DECEASED_DEATH_PROOF,
@@ -140,6 +146,8 @@ export const documentsSection = {
         {
           name: 'uploadDocForCauseOfDeath',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          maxSizeMB: 10,
+          compressImagesToSizeMB: 1,
           label: formMessageDescriptors.causeOfDeathProof,
           initialValue: '',
           extraValue: deathDocumentExtraValue.DECEASED_DEATH_CAUSE_PROOF,

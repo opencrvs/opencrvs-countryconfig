@@ -52,6 +52,8 @@ export const documentsSection = {
         {
           name: 'uploadDocForChildDOB',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          maxSizeMB: 10,
+          compressImagesToSizeMB: 1,
           label: formMessageDescriptors.proofOfBirth,
           initialValue: '',
           extraValue: birthDocumentExtraValue.CHILD,
@@ -68,6 +70,8 @@ export const documentsSection = {
         {
           name: 'uploadDocForMother',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          maxSizeMB: 10,
+          compressImagesToSizeMB: 1,
           label: formMessageDescriptors.proofOfMothersID,
           initialValue: '',
           extraValue: birthDocumentExtraValue.MOTHER,
@@ -104,6 +108,8 @@ export const documentsSection = {
         {
           name: 'uploadDocForFather',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          maxSizeMB: 10,
+          compressImagesToSizeMB: 1,
           label: formMessageDescriptors.proofOfFathersID,
           initialValue: '',
           extraValue: birthDocumentExtraValue.FATHER,
@@ -140,6 +146,8 @@ export const documentsSection = {
         {
           name: 'uploadDocForInformant',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          maxSizeMB: 10,
+          compressImagesToSizeMB: 1,
           label: formMessageDescriptors.proofOfInformantsID,
           initialValue: '',
           extraValue: birthDocumentExtraValue.INFORMANT_ID_PROOF,
@@ -175,6 +183,8 @@ export const documentsSection = {
         {
           name: 'uploadDocForProofOfLegalGuardian',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          maxSizeMB: 10,
+          compressImagesToSizeMB: 1,
           label: formMessageDescriptors.otherBirthSupportingDocuments,
           initialValue: '',
           extraValue: birthDocumentExtraValue.LEGAL_GUARDIAN_PROOF,

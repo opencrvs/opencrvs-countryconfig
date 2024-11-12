@@ -102,6 +102,8 @@ export const getDocUploaderForMarriage = (
 ): SerializedFormField => ({
   name,
   type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+  maxSizeMB: 10,
+  compressImagesToSizeMB: 1,
   label: formMessageDescriptors[label],
   required: false,
   initialValue: '',
