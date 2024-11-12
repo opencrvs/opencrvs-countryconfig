@@ -64,7 +64,7 @@ export const confirmRegistration = (
     variables: {
       id,
       details: {
-        childIdentifiers: variables.childIdentifiers,
+        identifiers: variables.childIdentifiers,
         registrationNumber: variables.registrationNumber,
         trackingId: variables.trackingId
       }
