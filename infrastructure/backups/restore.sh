@@ -285,15 +285,15 @@ wait_for_core_migrations() {
 
 # Run migrations by restarting migration service and countryconfig
 if [ "$IS_LOCAL" = false ]; then
-  echo "Running core migrations"
+  echo "Running core migrations ( it will take around 03 hours so follow logs of opencrvs-migration)"
   docker service update --force --update-parallelism 1 opencrvs_migration
 
   echo "Waiting for migration service to finish"
   wait_for_core_migrations
 
-  echo "Restarting countryconfig service to run migrations"
+  echo "Restarting countryconfig service to run migrations (It will take arround 03 hours so follow logs of opencrvs-countryconfig)."
   docker service update --force --update-parallelism 1 opencrvs_countryconfig
 
-  echo "countryconfig service is running. Exiting."
+  echo "countryconfig service is running. (Please, do not deploy before it's finished)."
   exit 0
 fi

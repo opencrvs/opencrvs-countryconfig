@@ -60,3 +60,5 @@ mv $BACKUP_RAW_FILES_DIR/extract/minio/ocrvs-${LABEL}.tar.gz /data/backups/minio
 mv $BACKUP_RAW_FILES_DIR/extract/metabase/ocrvs-${LABEL}.tar.gz /data/backups/metabase/
 mv $BACKUP_RAW_FILES_DIR/extract/vsexport/ocrvs-${LABEL}.tar.gz /data/backups/vsexport/
 mv $BACKUP_RAW_FILES_DIR/extract/mongo/* /data/backups/mongo/
+
+echo "Data extracted successfully!"
