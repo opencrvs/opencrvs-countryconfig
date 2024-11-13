@@ -268,6 +268,11 @@ split_and_join() {
    SPLIT=$(echo $text | sed -e "s/$separator_for_splitting/$separator_for_joining/g")
    echo $SPLIT
 }
+cleanup_docker_images()
+{
+   echo "Cleaning up the docker images"
+   /usr/bin/docker system prune -af | sudo tee -a /var/log/docker-prune.log > /dev/null
+}
 
 docker_stack_deploy() {
   echo "Deploying this environment: $ENVIRONMENT_COMPOSE"
@@ -378,6 +383,8 @@ configured_ssh "docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN"
 configured_ssh "/opt/opencrvs/infrastructure/setup-deploy-config.sh $HOST"
 
 rotate_secrets
+
+cleanup_docker_images
 
 docker_stack_deploy
 
