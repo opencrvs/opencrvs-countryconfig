@@ -72,7 +72,8 @@
             <tspan x="289.95" y="347.054">{{location districtPlaceofbirthId 'name'}}{{internationalDistrictPlaceofbirth}},&#10;</tspan>
             <tspan x="289.95" y="362.054">{{location statePlaceofbirthId 'name'}}{{internationalStatePlaceofbirth}}, {{countryPlaceofbirth}}</tspan>
         {{else}}
-            <tspan x="289.95" y="347.054">{{placeOfBirthFacility}}&#10;</tspan><tspan x="289.95" y="362.054">{{placeOfBirthState}}, {{placeOfBirthCountry}}</tspan>
+            <tspan x="289.95" y="347.054">{{placeOfBirthFacility}}&#10;</tspan>
+            <tspan x="289.95" y="362.054">{{placeOfBirthState}}, {{placeOfBirthCountry}}</tspan>
         {{/ifCond}}
     </text>
 </g>

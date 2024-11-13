@@ -66,7 +66,11 @@
   </text>
   <g clip-path="url(#clip3_948_3199)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      {{#ifCond ageOfGroomInYears '===' undefined }}
       <tspan x="312" y="188.104">{{groomBirthDate}}</tspan>
+      {{else}}
+      <tspan x="312" y="188.104">{{ageOfGroomInYears}} years old</tspan>
+      {{/ifCond}}
     </text>
   </g>
   <line x1="70" y1="194.5" x2="514" y2="194.5" stroke="#ECECEC" />
@@ -133,7 +137,11 @@
   </text>
   <g clip-path="url(#clip8_948_3199)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      {{#ifCond ageOfGroomInYears '===' undefined }}
       <tspan x="312" y="314.104">{{brideBirthDate}}</tspan>
+      {{else}}
+      <tspan x="312" y="314.104">{{ageOfBrideInYears}} years old</tspan>
+      {{/ifCond}}
     </text>
   </g>
   <line x1="70" y1="320.5" x2="514" y2="320.5" stroke="#ECECEC" />
@@ -185,7 +193,7 @@
   </text>
   <g clip-path="url(#clip12_948_3199)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="420.104">{{districtPlaceofmarriage}}, {{statePlaceofmarriage}}, {{countryPlaceofmarriage}}</tspan>
+      <tspan x="312" y="420.104">{{location districtPlaceofmarriageId 'name'}}{{internationalDistrictPlaceofmarriage}}, {{location statePlaceofmarriageId 'name'}}{{internationalStatePlaceofmarriage}}, {{countryPlaceofmarriage}}</tspan>
     </text>
   </g>
   <line x1="70" y1="426.5" x2="514" y2="426.5" stroke="#ECECEC" />
