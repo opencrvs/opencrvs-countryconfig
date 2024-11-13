@@ -184,7 +184,7 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.childFirstName,
               {
                 dependsOn: ['qrCode'],
-                expression: '$form.qrCode.firstName[0].value'
+                expression: '$form.qrCode?.firstName?.[0].value'
               }
             ), // Required field.  Names in Latin characters must be provided for international passport
             getFamilyNameField(
@@ -193,7 +193,7 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.childFamilyName,
               {
                 dependsOn: ['qrCode'],
-                expression: '$form.qrCode.familyName[0].value'
+                expression: '$form.qrCode?.familyName?.[0].value'
               }
             ), // Required field.  Names in Latin characters must be provided for international passport
             getGender(certificateHandlebars.childGender), // Required field.
