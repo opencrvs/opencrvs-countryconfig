@@ -11,6 +11,7 @@
 - Protect individual certificate endpoint with token
 - Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
 - "Publish release" pipeline now correctly uses the "Branch to build from" value as the branch to be tagged. Previously it tried tagging "master". "Release tag" is also now used as the release version as is instead of it being read from `package.json`.
+- We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
 
 ### Breaking changes
 
