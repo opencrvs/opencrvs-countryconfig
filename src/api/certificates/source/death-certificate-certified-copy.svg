@@ -61,7 +61,11 @@
   </text>
   <g clip-path="url(#clip1_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+    {{#ifCond ageOfDeceasedInYears '===' undefined }}
       <tspan x="312" y="168.104">{{deceasedBirthDate}}</tspan>
+      {{else}}
+      <tspan x="312" y="168.104">{{ageOfDeceasedInYears}} years old</tspan>
+      {{/ifCond}}
     </text>
   </g>
   <line x1="70" y1="174.5" x2="514" y2="174.5" stroke="#ECECEC" />
@@ -126,7 +130,11 @@
   </text>
   <g clip-path="url(#clip6_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="306.104">{{eventDate}}</tspan>
+       {{#ifCond ageOfDeceasedInYears '===' undefined }}
+        <tspan x="312" y="306.104">{{deceasedBirthDate}}</tspan>
+        {{else}}
+        <tspan x="312" y="306.104">{{ageOfDeceasedInYears}} years old</tspan>
+        {{/ifCond}}
     </text>
   </g>
   <line x1="70" y1="312.5" x2="514" y2="312.5" stroke="#ECECEC" />
@@ -138,8 +146,13 @@
   </text>
   <g clip-path="url(#clip7_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="326.104">{{placeOfDeathFacility}}</tspan>
-      <tspan x="312" y="338.104">{{placeOfDeathDistrict}}, {{placeOfDeathState}}, {{placeOfDeathCountry}}</tspan>
+     {{#ifCond placeOfDeathFacility '===' undefined }}
+        <tspan x="312" y="326.104">{{location districtPlaceofdeathId 'name'}}{{internationalDistrictPlaceofdeath}},</tspan>
+        <tspan x="312" y="338.104">{{location statePlaceofdeathId 'name'}}{{internationalStatePlaceofdeath}}, {{countryPlaceofdeath}}</tspan>
+      {{else}}
+        <tspan x="312" y="326.104">{{placeOfDeathFacility}}</tspan>
+        <tspan x="312" y="338.104">{{placeOfDeathDistrict}}, {{placeOfDeathState}}, {{placeOfDeathCountry}}</tspan>
+      {{/ifCond}}
     </text>
   </g>
   <line x1="70" y1="344.5" x2="514" y2="344.5" stroke="#ECECEC" />

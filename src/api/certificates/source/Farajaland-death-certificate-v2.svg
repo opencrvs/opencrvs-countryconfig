@@ -56,7 +56,8 @@
         <tspan x="289.95" y="388.643">{{location districtPlaceofdeathId 'name'}}{{internationalDistrictPlaceofdeath}},&#10;</tspan>
         <tspan x="289.95" y="403.643">{{location statePlaceofdeathId 'name'}}{{internationalStatePlaceofdeath}}, {{countryPlaceofdeath}}</tspan>
     {{else}}
-        <tspan x="289.95" y="388.643">{{placeOfDeathFacility}}&#10;</tspan><tspan x="289.95" y="403.643">{{placeOfDeathState}}, {{placeOfDeathCountry}}</tspan>
+        <tspan x="289.95" y="388.643">{{placeOfDeathFacility}}&#10;</tspan>
+        <tspan x="289.95" y="403.643">{{placeOfDeathState}}, {{placeOfDeathCountry}}</tspan>
     {{/ifCond}}
     </text>
 </g>

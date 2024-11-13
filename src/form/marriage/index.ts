@@ -135,7 +135,8 @@ export const marriageForm: ISerializedForm = {
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantBrideOrGroom
               ),
-              ageOfIndividualValidators
+              ageOfIndividualValidators,
+              certificateHandlebars.ageOfInformantInYears
             ),
             getNationality(
               certificateHandlebars.informantNationality,
@@ -196,7 +197,8 @@ export const marriageForm: ISerializedForm = {
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfGroom,
               exactDateOfBirthUnknownConditional,
-              brideOrGroomAgeValidators
+              brideOrGroomAgeValidators,
+              certificateHandlebars.ageOfGroomInYears
             ),
             getNationality(certificateHandlebars.groomNationality, []), // Required field
             getIDType('marriage', 'groom', [], true),
@@ -242,7 +244,8 @@ export const marriageForm: ISerializedForm = {
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfBride,
               exactDateOfBirthUnknownConditional,
-              brideOrGroomAgeValidators
+              brideOrGroomAgeValidators,
+              certificateHandlebars.ageOfBrideInYears
             ),
             getNationality(certificateHandlebars.brideNationality, []), // Required field
             getIDType('marriage', 'bride', [], true),
