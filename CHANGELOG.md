@@ -2,6 +2,10 @@
 
 ## 1.6.1 (TBD)
 
+### Bug fixes
+
+- We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
+
 ## 1.6.0
 
 ### Breaking changes
