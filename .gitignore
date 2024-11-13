@@ -26,8 +26,8 @@ build
 src/features/employees/tmp/login-details.json
 src/tests/locations.json
 
-
 graphql.schema.json
+
 *.tar.gz
 .secrets
 .env*

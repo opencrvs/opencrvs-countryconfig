@@ -64,9 +64,15 @@ export interface IApplicationConfigResponse {
 }
 
 export function getCompositionId(resBody: fhir.Bundle) {
-  return resBody.entry
+  const id = resBody.entry
     ?.map((e) => e.resource)
     .find((res) => res?.resourceType === 'Composition')?.id
+
+  if (!id) {
+    throw new Error('Could not find composition id in FHIR Bundle')
+  }
+
+  return id
 }
 
 export function getTaskResource(
