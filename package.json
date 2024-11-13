@@ -31,8 +31,8 @@
     "restore-snapshot": "bash infrastructure/backups/restore-snapshot.sh",
     "snapshot": "bash infrastructure/backups/backup.sh",
     "port-forward": "bash infrastructure/port-forward.sh",
-    "sort-translations": "ts-node -r tsconfig-paths/register src/sort-translations.ts",
-    "environment:init": "ts-node infrastructure/environments/setup-environment.ts"
+    "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
+    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts"
   },
   "devDependencies": {
     "@graphql-codegen/add": "^3.1.1",
