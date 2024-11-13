@@ -48,7 +48,8 @@ export const getGender = (certificateHandlebar: string) =>
 export const getFamilyNameField = (
   previewGroup: string,
   conditionals: Conditional[],
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  initialValue: string | { dependsOn: string[]; expression: string } = ''
 ) =>
   ({
     name: 'familyNameEng', // A field with this name MUST exist
@@ -58,7 +59,7 @@ export const getFamilyNameField = (
     label: formMessageDescriptors.familyName,
     maxLength: 32,
     required: true,
-    initialValue: '',
+    initialValue,
     validator: [
       {
         operation: 'englishOnlyNameFormat'
@@ -70,7 +71,8 @@ export const getFamilyNameField = (
 export const getFirstNameField = (
   previewGroup: string,
   conditionals: Conditional[],
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  initialValue: string | { dependsOn: string[]; expression: string } = ''
 ) =>
   ({
     name: 'firstNamesEng', // A field with this name MUST exist
@@ -84,7 +86,7 @@ export const getFirstNameField = (
     conditionals,
     maxLength: 32,
     required: true,
-    initialValue: '',
+    initialValue,
     validator: [
       {
         operation: 'englishOnlyNameFormat'
