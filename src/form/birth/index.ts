@@ -79,6 +79,7 @@ import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/ma
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
+import { getQRCodeField } from './custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -176,15 +177,24 @@ export const birthForm: ISerializedForm = {
           fields: [
             // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
             // createCustomFieldExample(),
+            getQRCodeField('birth', 'child'),
             getFirstNameField(
               'childNameInEnglish',
               [],
-              certificateHandlebars.childFirstName
+              certificateHandlebars.childFirstName,
+              {
+                dependsOn: ['qrCode'],
+                expression: '$form.qrCode.firstName[0].value'
+              }
             ), // Required field.  Names in Latin characters must be provided for international passport
             getFamilyNameField(
               'childNameInEnglish',
               [],
-              certificateHandlebars.childFamilyName
+              certificateHandlebars.childFamilyName,
+              {
+                dependsOn: ['qrCode'],
+                expression: '$form.qrCode.familyName[0].value'
+              }
             ), // Required field.  Names in Latin characters must be provided for international passport
             getGender(certificateHandlebars.childGender), // Required field.
             getBirthDate(

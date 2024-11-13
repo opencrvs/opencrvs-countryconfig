@@ -115,6 +115,7 @@ export const TEL = 'TEL'
 export const NUMBER = 'NUMBER'
 export const BIG_NUMBER = 'BIG_NUMBER'
 export const RADIO_GROUP = 'RADIO_GROUP'
+export const HIDDEN = 'HIDDEN'
 export const INFORMATIVE_RADIO_GROUP = 'INFORMATIVE_RADIO_GROUP'
 export const CHECKBOX_GROUP = 'CHECKBOX_GROUP'
 export const CHECKBOX = 'CHECKBOX'
@@ -524,6 +525,7 @@ export type IFormField =
   | IDividerField
   | IHeading3Field
   | ISignatureFormField
+  | IHiddenFormField
 
 export interface SelectComponentOption {
   value: string
@@ -737,6 +739,10 @@ export type SerializedFormField = UnionOmit<
 > & {
   validator: Validator[]
   mapping?: IFormFieldMapping
+}
+
+interface IHiddenFormField extends IFormFieldBase {
+  type: typeof HIDDEN
 }
 
 export type IFormSectionQueryMapFunction = (
