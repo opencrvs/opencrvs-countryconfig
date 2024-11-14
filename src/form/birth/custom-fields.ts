@@ -1,6 +1,7 @@
 import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { formMessageDescriptors } from '../common/messages'
 import { SerializedFormField } from '../types/types'
+import { genderOptions } from '../common/select-options'
 
 /**
  *
@@ -19,7 +20,7 @@ export function getQRCodeField(
     customQuestionMappingId: fieldId,
     custom: true,
     required: false,
-    type: 'HIDDEN',
+    type: 'QR_SCANNER',
     label: {
       id: 'form.field.label.empty',
       description: 'empty string',
@@ -31,4 +32,27 @@ export function getQRCodeField(
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     conditionals: []
   }
+}
+
+/** To bypass config validation */
+export function getGenderCustom(
+  event: string,
+  sectionId: string,
+  initialValue: { dependsOn: string[]; expression: string } | string = ''
+) {
+  const fieldName: string = 'gender'
+  const fieldId: string = `${event}.${sectionId}.${sectionId}-view-group.${fieldName}`
+  return {
+    name: fieldName,
+    type: 'SELECT_WITH_OPTIONS',
+    customQuestionMappingId: fieldId,
+    custom: true,
+    label: formMessageDescriptors.sex,
+    required: false,
+    initialValue,
+    validator: [],
+    placeholder: formMessageDescriptors.formSelectPlaceholder,
+    mapping: getCustomFieldMapping(fieldId),
+    options: genderOptions
+  } satisfies SerializedFormField
 }
