@@ -119,13 +119,16 @@ export function isInformantOfLegalAgeCustom(value: IFormFieldValue) {
 }
 
 export function isDateNotOlderThanDays(limit: number) {
-  return (value: string) => {
+  return (value: string, $draft: Record<string, any>) => {
     const inputDate = new Date(value)
     const currentDate = new Date()
     const timeDifference = currentDate.getTime() - inputDate.getTime()
     const dayDifference = timeDifference / (1000 * 3600 * 24)
+    const isFirstCertificate =
+      !$draft?.history?.some((h: any) => h.regStatus === 'CERTIFIED') ||
+      !$draft?.history
 
-    if (dayDifference > limit) {
+    if (isFirstCertificate && dayDifference > limit) {
       return {
         message: {
           id: 'validations.isDateNotOlderThanDays',
