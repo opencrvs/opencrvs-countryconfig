@@ -143,6 +143,7 @@ export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
 export const SIGNATURE = 'SIGNATURE'
+export const QR_SCANNER = 'QR_SCANNER'
 
 export enum RadioSize {
   LARGE = 'large',
@@ -492,6 +493,9 @@ export interface ISignatureFormField extends IFormFieldBase {
   )[]
 }
 
+export interface IQRScannerFormField extends IFormFieldBase {
+  type: typeof QR_SCANNER
+}
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -526,6 +530,7 @@ export type IFormField =
   | IHeading3Field
   | ISignatureFormField
   | IHiddenFormField
+  | IQRScannerFormField
 
 export interface SelectComponentOption {
   value: string

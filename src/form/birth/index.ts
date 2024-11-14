@@ -79,7 +79,7 @@ import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/ma
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
-import { getQRCodeField } from './custom-fields'
+import { getGenderCustom, getQRCodeField } from './custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -177,24 +177,15 @@ export const birthForm: ISerializedForm = {
           fields: [
             // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
             // createCustomFieldExample(),
-            getQRCodeField('birth', 'child'),
             getFirstNameField(
               'childNameInEnglish',
               [],
-              certificateHandlebars.childFirstName,
-              {
-                dependsOn: ['qrCode'],
-                expression: '$form.qrCode?.firstName?.[0].value'
-              }
+              certificateHandlebars.childFirstName
             ), // Required field.  Names in Latin characters must be provided for international passport
             getFamilyNameField(
               'childNameInEnglish',
               [],
-              certificateHandlebars.childFamilyName,
-              {
-                dependsOn: ['qrCode'],
-                expression: '$form.qrCode?.familyName?.[0].value'
-              }
+              certificateHandlebars.childFamilyName
             ), // Required field.  Names in Latin characters must be provided for international passport
             getGender(certificateHandlebars.childGender), // Required field.
             getBirthDate(
@@ -229,20 +220,33 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
+            getQRCodeField('birth', 'informant'),
             getFirstNameField(
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(
                 hideIfInformantMotherOrFather
               ),
-              certificateHandlebars.informantFirstName
-            ), // Required field.
+              certificateHandlebars.informantFirstName,
+              {
+                dependsOn: ['qrCode'],
+                expression: '$form.qrCode?.firstName?.[0].value'
+              }
+            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
               informantFamilyNameConditionals.concat(
                 hideIfInformantMotherOrFather
               ),
-              certificateHandlebars.informantFamilyName
+              certificateHandlebars.informantFamilyName,
+              {
+                dependsOn: ['qrCode'],
+                expression: '$form.qrCode?.lastName?.[0].value'
+              }
             ), // Required field.
+            getGenderCustom('birth', 'informant', {
+              dependsOn: ['qrCode'],
+              expression: '$form.qrCode?.gender?.[0].value?.toUpperCase()'
+            }),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
