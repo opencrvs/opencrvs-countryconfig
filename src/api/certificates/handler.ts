@@ -37,11 +37,9 @@ export interface ICertificateConfigData {
 }
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
-  if (request.params.event) {
-    const res = readFileSync(
-      `./src/api/certificates/source/${request.params.event}.svg`
-    ).toString()
-    return h.response(res).code(200)
+  if (request.params.id) {
+    const filePath = `${__dirname}/source/${request.params.id}.svg`
+    return h.file(filePath)
   }
   const certificateConfigs: ICertificateConfigData[] = [
     {
@@ -69,7 +67,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     },
     {
-      id: 'certified-birth-certificate',
+      id: 'birth-certificate-certified-copy',
       event: 'birth',
       label: {
         id: 'certificates.birth.certificate.copy',
@@ -118,7 +116,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     },
     {
-      id: 'certified-death-certificate',
+      id: 'death-certificate-certified-copy',
       event: 'death',
       label: {
         id: 'certificates.death.certificate.copy',
@@ -167,7 +165,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     },
     {
-      id: 'certified-marriage-certificate',
+      id: 'marriage-certificate-certified-copy',
       event: 'marriage',
       label: {
         id: 'certificates.marriage.certificate.copy',

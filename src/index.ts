@@ -240,7 +240,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/certificates/{event}.svg',
+    path: '/certificates/{id}',
     handler: certificateHandler,
     options: {
       tags: ['api', 'certificates'],
