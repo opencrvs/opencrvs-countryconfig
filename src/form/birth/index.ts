@@ -221,7 +221,18 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            getQRCodeField('birth', 'informant'),
+            getQRCodeField(
+              'birth',
+              'informant',
+              informantFirstNameConditionals
+                .concat(hideIfInformantMotherOrFather)
+                .concat([
+                  {
+                    action: 'disable',
+                    expression: 'Boolean($form.qrCode)'
+                  }
+                ])
+            ),
             getFirstNameField(
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(
@@ -246,7 +257,7 @@ export const birthForm: ISerializedForm = {
             ), // Required field.
             getGenderCustom('birth', 'informant', {
               dependsOn: ['qrCode'],
-              expression: '$form.qrCode?.gender?.[0].value?.toUpperCase()'
+              expression: '$form.qrCode?.gender?.[0].value?.toLowerCase()'
             }),
             getBirthDate(
               'informantBirthDate',
