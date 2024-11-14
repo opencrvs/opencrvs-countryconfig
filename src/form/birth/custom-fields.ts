@@ -1,6 +1,6 @@
 import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { formMessageDescriptors } from '../common/messages'
-import { SerializedFormField } from '../types/types'
+import { Conditional, SerializedFormField } from '../types/types'
 import { genderOptions } from '../common/select-options'
 
 /**
@@ -11,7 +11,8 @@ import { genderOptions } from '../common/select-options'
  */
 export function getQRCodeField(
   event: string,
-  sectionId: string
+  sectionId: string,
+  conditionals: Conditional[]
 ): SerializedFormField {
   const fieldName: string = 'qrCode'
   const fieldId: string = `${event}.${sectionId}.${sectionId}-view-group.${fieldName}`
@@ -30,7 +31,7 @@ export function getQRCodeField(
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
     placeholder: formMessageDescriptors.formSelectPlaceholder,
-    conditionals: []
+    conditionals
   }
 }
 
