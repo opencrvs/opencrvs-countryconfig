@@ -253,47 +253,52 @@ function fatherDetails(
   if ('fatherReasonNotApplying' in this && !('fatherFamilyName' in this)) {
     return ''
   }
-  return joinValuesWith([
-    joinValuesWith([this.fatherFamilyName, this.fatherFirstName]) + ',',
-    // 'rainy,',
-    'teraka tamin’ny',
-    this.birthFatherCustomizedExactDateOfBirthUnknown
-      ? convertNumberToLetterForMalagasySpecificLanguage(
-          parseInt(this.birthFatherYearOfBirth)
-        )
-      : customizeDateInCertificateContent(this.fatherBirthDate),
-    'tao',
-    (this.birthFatherBirthPlace || '-') + ',',
-    this.birthFatherFatherIsDeceased ? 'nonina tao' : 'monina ao',
-    ...(this.countryPrimaryFather == 'Madagascar'
-      ? [
-          'amin’ny fokontany',
-          (this.birthFatherFokontanyCustomAddress ||
-            this.birthMotherFokontanyCustomAddress ||
-            '-') + ',',
-          'kaominina',
-          (fatherPrimaryDistrict || '- ') + ','
-        ]
-      : [
-          ([
-            this.countryPrimaryFather,
-            this.internationalStatePrimaryFather,
-            this.internationalDistrictPrimaryFather,
-            this.internationalCityPrimaryFather,
-            this.internationalAddressLine1PrimaryFather,
-            this.internationalAddressLine2PrimaryFather,
-            this.internationalAddressLine3PrimaryFather,
-            this.internationalPostalCodePrimaryFather
-          ]
-            .filter(Boolean)
-            .join(' ') || ' - ') + ','
-        ]),
-    this.fatherOccupation + ',',
-    this.birthFatherFatherHasFormallyRecognisedChild
-      ? 'izay manambara fa manjanaka azy,'
-      : '',
-    'sy'
-  ])
+  return joinValuesWith(
+    [
+      joinValuesWith([
+        joinValuesWith([this.fatherFamilyName, this.fatherFirstName]) + ',',
+        // 'rainy,',
+        'teraka tamin’ny',
+        this.birthFatherCustomizedExactDateOfBirthUnknown
+          ? convertNumberToLetterForMalagasySpecificLanguage(
+              parseInt(this.birthFatherYearOfBirth)
+            )
+          : customizeDateInCertificateContent(this.fatherBirthDate),
+        'tao',
+        (this.birthFatherBirthPlace || '-') + ',',
+        this.birthFatherFatherIsDeceased ? 'nonina tao' : 'monina ao',
+        ...(this.countryPrimaryFather == 'Madagascar'
+          ? [
+              'amin’ny fokontany',
+              (this.birthFatherFokontanyCustomAddress ||
+                this.birthMotherFokontanyCustomAddress ||
+                '-') + ',',
+              'kaominina',
+              (fatherPrimaryDistrict || '- ') + ','
+            ]
+          : [
+              ([
+                this.countryPrimaryFather,
+                this.internationalStatePrimaryFather,
+                this.internationalDistrictPrimaryFather,
+                this.internationalCityPrimaryFather,
+                this.internationalAddressLine1PrimaryFather,
+                this.internationalAddressLine2PrimaryFather,
+                this.internationalAddressLine3PrimaryFather,
+                this.internationalPostalCodePrimaryFather
+              ]
+                .filter(Boolean)
+                .join(' ') || ' - ') + ','
+            ]),
+        this.fatherOccupation
+      ]),
+      this.birthFatherFatherHasFormallyRecognisedChild
+        ? 'izay manambara fa manjanaka azy'
+        : '',
+      'motherReasonNotApplying' in this ? '' : 'sy'
+    ].filter(Boolean),
+    ', '
+  )
 }
 
 function motherDetails(
@@ -367,44 +372,48 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             "nataon'i",
             this.informantFamilyName,
             this.informantFirstName
-          ]),
-      relationMap[
+          ]) + ',',
+      (relationMap[
         this.informantType?.toLowerCase() as keyof typeof relationMap
-      ] || 'mpanolotra' + ',',
-      "teraka tamin'ny",
-      this.birthInformantCustomizedExactDateOfBirthUnknown
-        ? convertNumberToLetterForMalagasySpecificLanguage(
-            parseInt(this.birthInformantYearOfBirth)
-          )
-        : customizeDateInCertificateContent(this.informantBirthDate),
-      this.birthInformantBirthPlace
-        ? `tao ${this.birthInformantBirthPlace},`
-        : '',
-      'monina ao',
-      ...(this.countryPrimaryInformant == 'Madagascar'
-        ? [
-            `amin'ny`,
-            this.birthInformantFokontanyCustomAddress
-              ? `fokontany ${this.birthInformantFokontanyCustomAddress},`
-              : '',
-            'kaominina',
-            (informantPrimaryDistrict || '-') + ','
-          ]
+      ] || 'mpanolotra') + ',',
+      ...(isInformantMotherOrFather(this.informantType)
+        ? []
         : [
-            ([
-              this.countryPrimaryInformant,
-              this.internationalStatePrimaryInformant,
-              this.internationalDistrictPrimaryInformant,
-              this.internationalCityPrimaryInformant,
-              this.internationalAddressLine1PrimaryInformant,
-              this.internationalAddressLine2PrimaryInformant,
-              this.internationalAddressLine3PrimaryInformant,
-              this.internationalPostalCodePrimaryInformant
-            ]
-              .filter(Boolean)
-              .join(' ') || '- ') + ','
+            "teraka tamin'ny",
+            this.birthInformantCustomizedExactDateOfBirthUnknown
+              ? convertNumberToLetterForMalagasySpecificLanguage(
+                  parseInt(this.birthInformantYearOfBirth)
+                )
+              : customizeDateInCertificateContent(this.informantBirthDate),
+            this.birthInformantBirthPlace
+              ? `tao ${this.birthInformantBirthPlace},`
+              : '',
+            'monina ao',
+            ...(this.countryPrimaryInformant == 'Madagascar'
+              ? [
+                  `amin'ny`,
+                  this.birthInformantFokontanyCustomAddress
+                    ? `fokontany ${this.birthInformantFokontanyCustomAddress},`
+                    : '',
+                  'kaominina',
+                  (informantPrimaryDistrict || '-') + ','
+                ]
+              : [
+                  ([
+                    this.countryPrimaryInformant,
+                    this.internationalStatePrimaryInformant,
+                    this.internationalDistrictPrimaryInformant,
+                    this.internationalCityPrimaryInformant,
+                    this.internationalAddressLine1PrimaryInformant,
+                    this.internationalAddressLine2PrimaryInformant,
+                    this.internationalAddressLine3PrimaryInformant,
+                    this.internationalPostalCodePrimaryInformant
+                  ]
+                    .filter(Boolean)
+                    .join(' ') || '- ') + ','
+                ]),
+            this.informantOccupation + ','
           ]),
-      this.informantOccupation + ',',
       'izay miara-manao sonia aminay,',
       this.registrar.name + ',',
       'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
