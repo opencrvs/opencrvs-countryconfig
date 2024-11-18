@@ -528,12 +528,14 @@ const renderTable = async () => {
   const startDate = document.getElementById('startDate').value
   const endDate = document.getElementById('endDate').value
   const search = document.getElementById('searchInput').value
+  const location = document.getElementById('locationFilter').value
 
   const variables = {
     advancedSearchParameters: {
       registrationStatuses: ['CERTIFIED', 'ISSUED'],
       dateOfRegistrationStart: startDate,
       dateOfRegistrationEnd: endDate,
+      declarationJurisdictionId: location,
       name: search
     },
     count: rowsPerPage,
@@ -551,45 +553,58 @@ const renderTable = async () => {
   const start = (currentPage - 1) * rowsPerPage
   const end = start + rowsPerPage
 
-  events.data.searchEvents?.results.forEach((item) => {
-    const row = document.createElement('tr')
-    row.classList.add('bg-white', 'hover:bg-gray-50')
+  if (events.data.searchEvents?.results.length > 0) {
+    events.data.searchEvents?.results.forEach((item) => {
+      const row = document.createElement('tr')
+      row.classList.add('bg-white', 'hover:bg-gray-50')
 
-    row.innerHTML = `
-    <td class="px-4 py-2 border-b border-gray-300 text-blue-600"> ${[
-      item.childName[0].familyName,
-      item.childName[0].firstNames,
-      item.childName[0].middleName
-    ]
-      .join(' ')
-      .trim()}</td>
-    <td class="px-4 py-2 border-b border-gray-300">${item.type}</td>
-    <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
-      item.dateOfBirth
-    )}</td>
-    <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
-      new Date(Number(item.registration.createdAt)).toISOString().split('T')[0]
-    )}</td>
-    <td  class="px-4 py-2 border-b border-gray-300"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded" onclick="openPrintModal('${
-      item.id
-    }', '${[
-      item.registration?.assignment?.firstName || '',
-      item.registration?.assignment?.lastName || ''
-    ]
-      .join(' ')
-      //// escape '
-      .trim()
-      .replace(
+      row.innerHTML = `
+      <td class="px-4 py-2 border-b border-gray-300 text-blue-600"> ${[
+        item.childName[0].familyName,
+        item.childName[0].firstNames,
+        item.childName[0].middleName
+      ]
+        .join(' ')
+        .trim()}</td>
+      <td class="px-4 py-2 border-b border-gray-300">${item.type}</td>
+      <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
+        item.dateOfBirth
+      )}</td>
+      <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
+        new Date(Number(item.registration.createdAt))
+          .toISOString()
+          .split('T')[0]
+      )}</td>
+      <td  class="px-4 py-2 border-b border-gray-300"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded" onclick="openPrintModal('${
+        item.id
+      }', '${[
+        item.registration?.assignment?.firstName || '',
+        item.registration?.assignment?.lastName || ''
+      ]
+        .join(' ')
+        //// escape '
+        .trim()
+        .replace(
+          /'/g,
+          "\\'"
+        )}', '${item.registration?.assignment?.officeName.replace(
         /'/g,
         "\\'"
-      )}', '${item.registration?.assignment?.officeName.replace(
-      /'/g,
-      "\\'"
-    )}')">Imprimer</button></td>
+      )}')">Imprimer</button></td>
+    `
+      tableBody.appendChild(row)
+    })
+    renderPagination()
+  } else {
+    const noDataRow = document.createElement('tr')
+    noDataRow.classList.add('bg-white')
+    noDataRow.innerHTML = `
+    <td colspan="5" class="px-4 py-2 border-b border-gray-300 text-center text-gray-500">
+      Aucun enregistrement
+    </td>
   `
-    tableBody.appendChild(row)
-  })
-  renderPagination()
+    tableBody.appendChild(noDataRow)
+  }
 }
 
 window.nextPage = function nextPage() {
@@ -628,7 +643,6 @@ window.openPrintModal = async function openPrintModal(
     modal.classList.remove('hidden')
 
     const event = person.data.fetchBirthRegistration
-    console.log(event)
     const dateFormatter = window.translateDate()
     const timeFormatter = window.translateTime()
     const officeNameFormatter = window.customizeOfficeNameLocation()
@@ -973,10 +987,16 @@ window.filterBySearch = function filterBySearch() {
   renderTable()
 }
 
+window.filterByLocation = function filterByLocation() {
+  currentPage = 1
+  renderTable()
+}
+
 window.resetDateFilter = function resetDateFilter() {
   document.getElementById('startDate').value = ''
   document.getElementById('endDate').value = ''
   document.getElementById('searchInput').value = ''
+  document.getElementById('locationFilter').value = ''
   currentPage = 1
   renderTable()
 }
