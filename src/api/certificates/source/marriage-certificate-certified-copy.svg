@@ -221,7 +221,7 @@
   <g clip-path="url(#clip14_948_3199)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
       <tspan x="312" y="486.104">{{witnessOneFirstName}} {{witnessOneFamilyName}}</tspan>
-      <tspan x="312" y="498.104">Head of Groom&#x2019;s Family</tspan>
+      <tspan x="312" y="498.104">{{witnessOneRelationship}}{{witnessOneRelationshipForOther}}</tspan>
     </text>
   </g>
   <line x1="70" y1="504.5" x2="514" y2="504.5" stroke="#ECECEC" />
@@ -234,7 +234,7 @@
   <g clip-path="url(#clip15_948_3199)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
       <tspan x="312" y="518.104">{{witnessTwoFirstName}} {{witnessTwoFamilyName}}</tspan>
-      <tspan x="312" y="530.104">Head of Bride&#x2019;s Family</tspan>
+      <tspan x="312" y="530.104">{{witnessTwoRelationship}}{{witnessTwoRelationshipForOther}}</tspan>
     </text>
   </g>
   <line x1="70" y1="542.5" x2="514" y2="542.5" stroke="#222222" />

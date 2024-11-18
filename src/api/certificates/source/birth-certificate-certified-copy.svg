@@ -273,6 +273,7 @@
   <g clip-path="url(#clip16_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
       <tspan x="307" y="518.104">{{informantFirstName}} {{informantFamilyName}}</tspan>
+      <tspan x="307" y="528.104">{{informantType}}</tspan>
     </text>
   </g>
   <line x1="65" y1="536.5" x2="533" y2="536.5" stroke="#ECECEC" />
