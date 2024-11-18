@@ -528,14 +528,12 @@ const renderTable = async () => {
   const startDate = document.getElementById('startDate').value
   const endDate = document.getElementById('endDate').value
   const search = document.getElementById('searchInput').value
-  const location = document.getElementById('locationFilter').value
 
   const variables = {
     advancedSearchParameters: {
       registrationStatuses: ['CERTIFIED', 'ISSUED'],
       dateOfRegistrationStart: startDate,
       dateOfRegistrationEnd: endDate,
-      declarationJurisdictionId: location,
       name: search
     },
     count: rowsPerPage,
@@ -983,11 +981,6 @@ window.filterByDate = function filterByDate() {
 }
 
 window.filterBySearch = function filterBySearch() {
-  currentPage = 1
-  renderTable()
-}
-
-window.filterByLocation = function filterByLocation() {
   currentPage = 1
   renderTable()
 }

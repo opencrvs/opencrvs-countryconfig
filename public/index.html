@@ -8,9 +8,11 @@
     <script src="/client-config.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
 
     <script>
       const token = new URLSearchParams(window.location.search).get('token')
+      let userId
       function getURLParameter(name) {
         const urlParams = new URLSearchParams(window.location.search)
         return urlParams.get(name)
@@ -25,6 +27,13 @@
             encodeURIComponent(window.location.href)
         }
       }
+
+      try {
+        const decoded = jwt_decode(token) // Decode the JWT
+        userId = decoded?.sub
+      } catch (error) {
+        console.error('Error decoding JWT:', error.message)
+      }
     </script>
   </head>
   <body class="bg-gray-100">
@@ -38,16 +47,34 @@
           <div
             class="mb-4 flex flex-col md:flex-row items-center justify-between md:gap-6 gap-4 flex-wrap lg:flex-nowrap"
           >
-            <div class="flex flex-col md:flex-row flex-wrap items-center w-full xl:w-auto gap-4 justify-between md:justify-start">
-              <div class="w-full lg:w-auto lg:max-w-[350px] lg:max-w-none flex gap-1 flex-wrap items-center">
-                <label for="startDate" class="mr-2 min-w-[170px] xl:min-w-0">Date début Enregistré:</label>
-                <input type="date" id="startDate" class="border border-gray-300 rounded px-2 py-2 w-full mr-0 lg:w-auto min-w-[165px]"
-                  onchange="filterByDate()" />
+            <div
+              class="flex flex-col md:flex-row flex-wrap items-center w-full xl:w-auto gap-4 justify-between md:justify-start"
+            >
+              <div
+                class="w-full lg:w-auto lg:max-w-[350px] lg:max-w-none flex gap-1 flex-wrap items-center"
+              >
+                <label for="startDate" class="mr-2 min-w-[170px] xl:min-w-0"
+                  >Date début Enregistré:</label
+                >
+                <input
+                  type="date"
+                  id="startDate"
+                  class="border border-gray-300 rounded px-2 py-2 w-full mr-0 lg:w-auto min-w-[165px]"
+                  onchange="filterByDate()"
+                />
               </div>
-              <div class="w-full lg:w-auto lg:max-w-[350px] lg:max-w-none flex gap-1 flex-wrap items-center">
-                <label for="endDate" class="mr-2 min-w-[170px] xl:min-w-0">Date fin Enregistré:</label>
-                <input type="date" id="endDate" class="border border-gray-300 rounded px-2 py-2 w-full mr-0 lg:w-auto min-w-[165px]"
-                  onchange="filterByDate()" />
+              <div
+                class="w-full lg:w-auto lg:max-w-[350px] lg:max-w-none flex gap-1 flex-wrap items-center"
+              >
+                <label for="endDate" class="mr-2 min-w-[170px] xl:min-w-0"
+                  >Date fin Enregistré:</label
+                >
+                <input
+                  type="date"
+                  id="endDate"
+                  class="border border-gray-300 rounded px-2 py-2 w-full mr-0 lg:w-auto min-w-[165px]"
+                  onchange="filterByDate()"
+                />
               </div>
             </div>
 
@@ -64,22 +91,50 @@
                 class="border hover:bg-gray-200 font-bold py-2 px-2 rounded ml-2"
                 onclick="filterBySearch()"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               </button>
             </div>
-            <button class="border hover:bg-gray-200 font-bold py-2 px-3 rounded w-auto flex ml-auto md:ml-0"
-              onclick="resetDateFilter()">
-              <svg class="h-6 w-6 mr-2" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+            <button
+              class="border hover:bg-gray-200 font-bold py-2 px-3 rounded w-auto flex ml-auto md:ml-0"
+              onclick="resetDateFilter()"
+            >
+              <svg
+                class="h-6 w-6 mr-2"
+                viewBox="0 0 21 21"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#000000"
+              >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
                 <g id="SVGRepo_iconCarrier">
-                  <g fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"
-                    transform="matrix(0 1 1 0 2.5 2.5)">
+                  <g
+                    fill="none"
+                    fill-rule="evenodd"
+                    stroke="#000000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    transform="matrix(0 1 1 0 2.5 2.5)"
+                  >
                     <path
-                      d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8">
-                    </path>
+                      d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"
+                    ></path>
                     <path d="m4 1v4h-4" transform="matrix(1 0 0 -1 0 6)"></path>
                   </g>
                 </g>
@@ -253,11 +308,17 @@
     </div>
 
     <!-- Global loader -->
-    <div id="main-loader" class="fixed top-0 right-0 h-screen w-screen bg-gray-700 bg-opacity-50 z-50 !hidden flex items-center justify-center">
+    <div
+      id="main-loader"
+      class="fixed top-0 right-0 h-screen w-screen bg-gray-700 bg-opacity-50 z-50 !hidden flex items-center justify-center"
+    >
       <svg class="animate-spin h-10 w-10" viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" fill="#FFFFFF" />
-        <path class="opacity-75" fill="#FFFFFF"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+        <path
+          class="opacity-75"
+          fill="#FFFFFF"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        />
       </svg>
     </div>
 
