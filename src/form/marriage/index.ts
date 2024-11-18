@@ -292,8 +292,8 @@ export const marriageForm: ISerializedForm = {
               [],
               certificateHandlebars.witnessOneFamilyName
             ), // Required field
-            getRelationshipToSpousesForWitness, // Required field
-            witnessRelationshipForOthers // Required field
+            getRelationshipToSpousesForWitness('witnessOneRelationship'), // Required field
+            witnessRelationshipForOthers('witnessOneRelationshipForOther') // Required field
           ],
           previewGroups: [witnessOneNameInEnglish]
         }
@@ -319,8 +319,8 @@ export const marriageForm: ISerializedForm = {
               [],
               certificateHandlebars.witnessTwoFamilyName
             ), // Required field
-            getRelationshipToSpousesForWitness, // Required field
-            witnessRelationshipForOthers // Required field
+            getRelationshipToSpousesForWitness('witnessTwoRelationship'), // Required field
+            witnessRelationshipForOthers('witnessTwoRelationshipForOther') // Required field
           ],
           previewGroups: [witnessTwoNameInEnglish]
         }

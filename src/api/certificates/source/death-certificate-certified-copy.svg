@@ -180,7 +180,7 @@
   <g clip-path="url(#clip9_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
       <tspan x="312" y="404.104">{{informantFirstName}} {{informantFamilyName}}</tspan>
-      <tspan x="312" y="416.104">{{informantRelation}}</tspan>
+      <tspan x="312" y="416.104">{{informantType}}</tspan>
     </text>
   </g>
   <line x1="70" y1="422.5" x2="514" y2="422.5" stroke="#ECECEC" />
