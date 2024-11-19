@@ -20,7 +20,6 @@
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="69" y="746.104">MOSIP Application ID / MOSIP Application ID&#10;</tspan>
   </text>
-  <rect />
   <path d="M316.793 740L512.999 740.925" stroke="#CCCCCC" stroke-width="0.782258" stroke-dasharray="3.13 1.56" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="373.248" y="753.656">Registrar {{registrar.name}}</tspan>
@@ -61,154 +60,148 @@
   </text>
   <g clip-path="url(#clip1_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-    {{#ifCond ageOfDeceasedInYears '===' undefined }}
       <tspan x="312" y="168.104">{{deceasedBirthDate}}</tspan>
-      {{else}}
-      <tspan x="312" y="168.104">{{ageOfDeceasedInYears}} years old</tspan>
-      {{/ifCond}}
     </text>
   </g>
-  <line x1="70" y1="206.5" x2="514" y2="206.5" stroke="#ECECEC" />
+  <line x1="70" y1="174.5" x2="514" y2="174.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="220.104">3.</tspan>
+    <tspan x="70" y="188.104">3.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="219.604">Resident at / Domicili&#xe9; &#xe0;</tspan>
+    <tspan x="90" y="187.604">Resident at / Domicili&#xe9; &#xe0;</tspan>
+  </text>
+  <g clip-path="url(#clip2_948_2918)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="312" y="188.104">{{formattedAddress districtPrimaryDeceased statePrimaryDeceased countryPrimaryDeceased}}</tspan>
+    </text>
+  </g>
+  <line x1="70" y1="194.5" x2="514" y2="194.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="70" y="208.104">4.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="90" y="207.604">Marital status / Marital status</tspan>
   </text>
   <g clip-path="url(#clip3_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="220.104">{{formattedAddress districtPrimaryDeceased statePrimaryDeceased countryPrimaryDeceased}}</tspan>
+      <tspan x="312" y="208.104">{{deceasedMaritalStatus}}</tspan>
     </text>
   </g>
-  <line x1="70" y1="226.5" x2="514" y2="226.5" stroke="#ECECEC" />
+  <line x1="70" y1="214.5" x2="514" y2="214.5" stroke="#ECECEC" />
+  <line x1="70" y1="214.5" x2="514" y2="214.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="240.104">4.</tspan>
+    <tspan x="70" y="228.104">5.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="239.604">Marital status / Marital status</tspan>
+    <tspan x="90" y="227.604">Nationality / Nationalit&#xe9;</tspan>
   </text>
   <g clip-path="url(#clip4_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="240.104">{{deceasedMaritalStatus}}</tspan>
+      <tspan x="312" y="228.104">{{intl 'nationality' deceasedNationality}}</tspan>
     </text>
   </g>
-  <line x1="70" y1="246.5" x2="514" y2="246.5" stroke="#ECECEC" />
-  <line x1="70" y1="246.5" x2="514" y2="246.5" stroke="#ECECEC" />
+  <line x1="70" y1="240.5" x2="514" y2="240.5" stroke="#222222" />
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0px">
+    <tspan x="70" y="255.88">Event details / Dtails de l&#39;&#xe9;v&#xe9;nement</tspan>
+  </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="260.104">5.</tspan>
+    <tspan x="70" y="274.104">6.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="259.604">Nationality / Nationalit&#xe9;</tspan>
+    <tspan x="90" y="273.604">Date of death / Date de d&#xe9;c&#xe8;s</tspan>
   </text>
   <g clip-path="url(#clip5_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="260.104">{{intl 'nationality' deceasedNationality}}</tspan>
+      <tspan x="312" y="274.104">
+        <tspan x="312" y="273.604">{{eventDate}}</tspan>
+      </tspan>
     </text>
   </g>
-  <line x1="70" y1="272.5" x2="514" y2="272.5" stroke="#222222" />
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="287.88">Event details / Event details</tspan>
-  </text>
+  <line x1="70" y1="280.5" x2="514" y2="280.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="306.104">6.</tspan>
+    <tspan x="70" y="294.104">7.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="305.604">Date of death / Date de death</tspan>
+    <tspan x="90" y="293.604">Place of death / Lieu de d&#xe9;c&#xe8;s</tspan>
   </text>
   <g clip-path="url(#clip6_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-       {{#ifCond ageOfDeceasedInYears '===' undefined }}
-        <tspan x="312" y="306.104">{{deceasedBirthDate}}</tspan>
-        {{else}}
-        <tspan x="312" y="306.104">{{ageOfDeceasedInYears}} years old</tspan>
-        {{/ifCond}}
+      {{#ifCond placeOfDeathFacility '===' undefined }}
+      <tspan x="312" y="294.104">{{location districtPlaceofdeathId 'name'}}{{internationalDistrictPlaceofdeath}},</tspan>
+      <tspan x="312" y="306.104">{{location statePlaceofdeathId 'name'}}{{internationalStatePlaceofdeath}}, {{countryPlaceofdeath}}</tspan>
+      {{else}}
+      <tspan x="312" y="294.104">{{placeOfDeathFacility}}</tspan>
+      <tspan x="312" y="306.104">{{placeOfDeathDistrict}}, {{placeOfDeathState}}, {{placeOfDeathCountry}}</tspan>
+      {{/ifCond}}
     </text>
   </g>
   <line x1="70" y1="312.5" x2="514" y2="312.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="326.104">7.</tspan>
+    <tspan x="70" y="326.104">8.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="325.604">Place of death / Place of death</tspan>
+    <tspan x="90" y="325.604">Manner of death / Mode de d&#xe9;c&#xe8;s</tspan>
   </text>
   <g clip-path="url(#clip7_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-     {{#ifCond placeOfDeathFacility '===' undefined }}
-        <tspan x="312" y="326.104">{{location districtPlaceofdeathId 'name'}}{{internationalDistrictPlaceofdeath}},</tspan>
-        <tspan x="312" y="338.104">{{location statePlaceofdeathId 'name'}}{{internationalStatePlaceofdeath}}, {{countryPlaceofdeath}}</tspan>
-      {{else}}
-        <tspan x="312" y="326.104">{{placeOfDeathFacility}}</tspan>
-        <tspan x="312" y="338.104">{{placeOfDeathDistrict}}, {{placeOfDeathState}}, {{placeOfDeathCountry}}</tspan>
-      {{/ifCond}}
+      <tspan x="312" y="326.104">{{mannerOfDeath}}</tspan>
     </text>
   </g>
-  <line x1="70" y1="344.5" x2="514" y2="344.5" stroke="#ECECEC" />
+  <line x1="70" y1="338.5" x2="514" y2="338.5" stroke="#222222" />
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0px">
+    <tspan x="70" y="353.88">Registration details / D&#xe9;tails d&#39;inscription</tspan>
+  </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="358.104">8.</tspan>
+    <tspan x="70" y="372.104">9.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="357.604">Manner of death</tspan>
+    <tspan x="90" y="371.604">Informant full name / Nom complet de l&#x2019;informateur</tspan>
   </text>
   <g clip-path="url(#clip8_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="358.104">{{mannerOfDeath}}</tspan>
+      <tspan x="312" y="372.104">{{informantFirstName}} {{informantFamilyName}}</tspan>
+      <tspan x="312" y="384.104">{{informantType}}</tspan>
     </text>
   </g>
-  <line x1="70" y1="370.5" x2="514" y2="370.5" stroke="#222222" />
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="385.88"> Registration details / D&#xe9;tails d&#39;inscription </tspan>
-  </text>
+  <line x1="70" y1="390.5" x2="514" y2="390.5" stroke="#ECECEC" />
+  <line x1="70" y1="390.5" x2="514" y2="390.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="404.104">9.</tspan>
+    <tspan x="70" y="404.104">10.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="403.604">Informant full name / Informant full name</tspan>
+    <tspan x="90" y="403.604">Place of registration / Inscrit &#xe0;</tspan>
   </text>
   <g clip-path="url(#clip9_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="404.104">{{informantFirstName}} {{informantFamilyName}}</tspan>
-      <tspan x="312" y="416.104">{{informantType}}</tspan>
+      <tspan x="312" y="404.104">{{registrar.district.name}}, {{registrar.state.name}}, {{registrar.country}}</tspan>
     </text>
   </g>
-  <line x1="70" y1="422.5" x2="514" y2="422.5" stroke="#ECECEC" />
-  <line x1="70" y1="422.5" x2="514" y2="422.5" stroke="#ECECEC" />
+  <line x1="70" y1="410.5" x2="514" y2="410.5" stroke="#ECECEC" />
+  <line x1="70" y1="410.5" x2="514" y2="410.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="436.104">10.</tspan>
+    <tspan x="70" y="424.104">11.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="435.604">Place of registration / Inscrit &#xe0;</tspan>
+    <tspan x="90" y="423.604">Date of registration / Date d&#39;enregistrement</tspan>
   </text>
   <g clip-path="url(#clip10_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="436.104">{{registrar.district.name}}, {{registrar.state.name}}, {{registrar.country}}</tspan>
+      <tspan x="312" y="424.104">{{ ordinalFormatDate registrar.date }}</tspan>
     </text>
   </g>
-  <line x1="70" y1="442.5" x2="514" y2="442.5" stroke="#ECECEC" />
-  <line x1="70" y1="442.5" x2="514" y2="442.5" stroke="#ECECEC" />
+  <line x1="70" y1="430.5" x2="514" y2="430.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="456.104">11.</tspan>
+    <tspan x="70" y="444.104">12.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="455.604">Date of registration / Date d&#39;enregistrement</tspan>
+    <tspan x="90" y="443.604">Registered by / Enregistr&#xe9; par</tspan>
   </text>
   <g clip-path="url(#clip11_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="456.104">{{ ordinalFormatDate registrar.date }}</tspan>
+      <tspan x="312" y="444.104">{{ registrar.name }}</tspan>
     </text>
   </g>
-  <line x1="70" y1="462.5" x2="514" y2="462.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="476.104">12.</tspan>
-  </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="475.604">Registered by / Enregistr&#xe9; par</tspan>
-  </text>
   <g clip-path="url(#clip12_948_2918)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="476.104">{{ registrar.name }}</tspan>
-    </text>
-  </g>
-  <g clip-path="url(#clip13_948_2918)">
     <path d="M94.9952 43.5958C94.9975 50.8349 94.9881 58.0763 94.9998 65.3154C95.0045 65.6338 94.9061 65.9359 94.7422 66.1911C94.5899 66.4252 94.3791 66.6172 94.1284 66.7459L75.3116 77.6046C75.0516 77.7521 74.7752 77.8246 74.5058 77.8246C74.2294 77.8246 73.9506 77.7474 73.7023 77.6046L54.8948 66.7553C54.6371 66.6265 54.4193 66.4322 54.2647 66.1957C54.0984 65.9359 54 65.6338 54 65.3131L54.007 65.1679L54.0023 43.5115C53.9977 43.2212 54.0773 42.9473 54.2132 42.7108L54.2178 42.7062C54.3584 42.4627 54.5622 42.2613 54.8058 42.1185L73.6906 31.2201C73.9506 31.0726 74.2294 31 74.4964 31C74.7728 31 75.0539 31.0773 75.2999 31.2201L94.1917 42.1209C94.4564 42.273 94.6602 42.4931 94.7984 42.7436L94.8031 42.7483C94.9413 43.0058 95.0092 43.3008 94.9952 43.5958Z" fill="#EFCFA4" />
     <path fill-rule="evenodd" clip-rule="evenodd" d="M80.7976 72.5803H68.207L74.5011 76.2115L80.7976 72.5803Z" fill="#EFCFA4" />
     <path fill-rule="evenodd" clip-rule="evenodd" d="M68.207 72.5803H80.7976L87.094 68.9467H61.9104L68.207 72.5803Z" fill="#F1B162" />
@@ -233,7 +226,7 @@
       <tspan x="108" y="65.7921">CERTIFIED COPY OF DEATH RECORD / COPIE CERTIFI&#xc9;E DE L&#39;ACTE DE D&#xc9;C&#xc8;S</tspan>
     </text>
   </g>
-  <g clip-path="url(#clip14_948_2918)">
+  <g clip-path="url(#clip13_948_2918)">
     <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="6" font-weight="600" letter-spacing="0px">
       <tspan x="49" y="793.828">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE. A</tspan>
       <tspan x="49" y="803.828">CERTIFICATE IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES &#xc0; LA FALSIFIATION OU &#xc0; LA MODIFICATION</tspan>
@@ -249,42 +242,39 @@
       <rect width="202" height="12" fill="white" transform="translate(312 159)" />
     </clipPath>
     <clipPath id="clip2_948_2918">
-      <rect width="202" height="24" fill="white" transform="translate(312 179)" />
+      <rect width="202" height="12" fill="white" transform="translate(312 179)" />
     </clipPath>
     <clipPath id="clip3_948_2918">
-      <rect width="202" height="12" fill="white" transform="translate(312 211)" />
+      <rect width="202" height="12" fill="white" transform="translate(312 199)" />
     </clipPath>
     <clipPath id="clip4_948_2918">
-      <rect width="202" height="12" fill="white" transform="translate(312 231)" />
+      <rect width="202" height="12" fill="white" transform="translate(312 219)" />
     </clipPath>
     <clipPath id="clip5_948_2918">
-      <rect width="202" height="12" fill="white" transform="translate(312 251)" />
+      <rect width="202" height="12" fill="white" transform="translate(312 265)" />
     </clipPath>
     <clipPath id="clip6_948_2918">
-      <rect width="202" height="12" fill="white" transform="translate(312 297)" />
+      <rect width="202" height="24" fill="white" transform="translate(312 285)" />
     </clipPath>
     <clipPath id="clip7_948_2918">
-      <rect width="202" height="24" fill="white" transform="translate(312 317)" />
+      <rect width="202" height="12" fill="white" transform="translate(312 317)" />
     </clipPath>
     <clipPath id="clip8_948_2918">
-      <rect width="202" height="12" fill="white" transform="translate(312 349)" />
+      <rect width="202" height="24" fill="white" transform="translate(312 363)" />
     </clipPath>
     <clipPath id="clip9_948_2918">
-      <rect width="202" height="24" fill="white" transform="translate(312 395)" />
+      <rect width="202" height="12" fill="white" transform="translate(312 395)" />
     </clipPath>
     <clipPath id="clip10_948_2918">
-      <rect width="202" height="12" fill="white" transform="translate(312 427)" />
+      <rect width="202" height="12" fill="white" transform="translate(312 415)" />
     </clipPath>
     <clipPath id="clip11_948_2918">
-      <rect width="202" height="12" fill="white" transform="translate(312 447)" />
+      <rect width="202" height="12" fill="white" transform="translate(312 435)" />
     </clipPath>
     <clipPath id="clip12_948_2918">
-      <rect width="202" height="12" fill="white" transform="translate(312 467)" />
-    </clipPath>
-    <clipPath id="clip13_948_2918">
       <rect width="484" height="46.8246" fill="white" transform="translate(50 31)" />
     </clipPath>
-    <clipPath id="clip14_948_2918">
+    <clipPath id="clip13_948_2918">
       <path d="M49 780H533V819H49V780Z" fill="white" />
     </clipPath>
   </defs>

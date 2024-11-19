@@ -76,16 +76,10 @@
       <tspan x="104.68" y="320.363">Date de naissance</tspan>
     </text>
     <g clip-path="url(#clip5_1157_5058)">
-      {{#ifCond ageOfDeceasedInYears '===' undefined }}
         <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
           <tspan x="289.95" y="312.863">{{deceasedBirthDate}}</tspan>
           <tspan x="425.276" y="312.863"></tspan>
         </text>
-        {{else}}
-          <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
-            <tspan x="289.95" y="312.863">{{ageOfDeceasedInYears}} years old</tspan>
-          </text>
-      {{/ifCond}}
       <text fill="#999999" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
         <tspan x="362.046" y="312.863"></tspan>
       </text>
