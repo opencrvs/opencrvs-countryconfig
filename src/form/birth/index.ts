@@ -230,7 +230,29 @@ export const birthForm: ISerializedForm = {
                     action: 'disable',
                     expression: 'Boolean($form.qrCode)'
                   }
-                ])
+                ]),
+              {
+                id: 'form.field.label.qrScanner.0',
+                defaultMessage: 'Scan QR code with Scanner 1'
+              },
+              1
+            ),
+            getQRCodeField(
+              'birth',
+              'informant',
+              informantFirstNameConditionals
+                .concat(hideIfInformantMotherOrFather)
+                .concat([
+                  {
+                    action: 'disable',
+                    expression: 'Boolean($form.qrCode)'
+                  }
+                ]),
+              {
+                id: 'form.field.label.qrScanner.1',
+                defaultMessage: 'Scan QR code with Scanner 2'
+              },
+              2
             ),
             getFirstNameField(
               'informantNameInEnglish',
