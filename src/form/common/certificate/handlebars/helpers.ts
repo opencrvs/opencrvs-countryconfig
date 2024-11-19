@@ -63,3 +63,23 @@ export function ordinalFormatDate(): Handlebars.HelperDelegate {
     return formattedDate
   }
 }
+
+export function getCamelCasedInformantType(
+  props: FactoryProps
+): Handlebars.HelperDelegate {
+  return function (informantType: string) {
+    const camelCased = informantType
+      .toLowerCase()
+      .split('_')
+      .map((word, index) =>
+        index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+      )
+      .join('')
+
+    return props.intl.formatMessage({
+      id: `form.field.label.informantRelation.${camelCased}`,
+      description: 'Label for informant type',
+      defaultMessage: ''
+    })
+  }
+}
