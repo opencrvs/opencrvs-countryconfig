@@ -68,34 +68,21 @@
       {{/ifCond}}
     </text>
   </g>
-  <line x1="70" y1="174.5" x2="514" y2="174.5" stroke="#ECECEC" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="188.104">3.</tspan>
-  </text>
-  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="90" y="187.604">Place of birth / Lieu de naissance</tspan>
-  </text>
-  <g clip-path="url(#clip2_948_2918)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="188.104">Kabwe State Hospital&#x2028;</tspan>
-      <tspan x="312" y="200.104">Chiwala, Kabwe, Farajaland</tspan>
-    </text>
-  </g>
   <line x1="70" y1="206.5" x2="514" y2="206.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="220.104">4.</tspan>
+    <tspan x="70" y="220.104">3.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="219.604">Resident at / Domicili&#xe9; &#xe0;</tspan>
   </text>
   <g clip-path="url(#clip3_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="220.104">{{districtPrimaryDeceased}}, {{statePrimaryDeceased}}, {{countryPrimaryDeceased}}</tspan>
+      <tspan x="312" y="220.104">{{formattedAddress districtPrimaryDeceased statePrimaryDeceased countryPrimaryDeceased}}</tspan>
     </text>
   </g>
   <line x1="70" y1="226.5" x2="514" y2="226.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="240.104">5.</tspan>
+    <tspan x="70" y="240.104">4.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="239.604">Marital status / Marital status</tspan>
@@ -108,7 +95,7 @@
   <line x1="70" y1="246.5" x2="514" y2="246.5" stroke="#ECECEC" />
   <line x1="70" y1="246.5" x2="514" y2="246.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="260.104">6.</tspan>
+    <tspan x="70" y="260.104">5.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="259.604">Nationality / Nationalit&#xe9;</tspan>
@@ -123,7 +110,7 @@
     <tspan x="70" y="287.88">Event details / Event details</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="306.104">7.</tspan>
+    <tspan x="70" y="306.104">6.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="305.604">Date of death / Date de death</tspan>
@@ -139,7 +126,7 @@
   </g>
   <line x1="70" y1="312.5" x2="514" y2="312.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="326.104">8.</tspan>
+    <tspan x="70" y="326.104">7.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="325.604">Place of death / Place of death</tspan>
@@ -157,7 +144,7 @@
   </g>
   <line x1="70" y1="344.5" x2="514" y2="344.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="358.104">9.</tspan>
+    <tspan x="70" y="358.104">8.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="357.604">Manner of death</tspan>
@@ -172,7 +159,7 @@
     <tspan x="70" y="385.88"> Registration details / D&#xe9;tails d&#39;inscription </tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="404.104">10.</tspan>
+    <tspan x="70" y="404.104">9.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="403.604">Informant full name / Informant full name</tspan>
@@ -186,7 +173,7 @@
   <line x1="70" y1="422.5" x2="514" y2="422.5" stroke="#ECECEC" />
   <line x1="70" y1="422.5" x2="514" y2="422.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="436.104">12.</tspan>
+    <tspan x="70" y="436.104">10.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="435.604">Place of registration / Inscrit &#xe0;</tspan>
@@ -199,7 +186,7 @@
   <line x1="70" y1="442.5" x2="514" y2="442.5" stroke="#ECECEC" />
   <line x1="70" y1="442.5" x2="514" y2="442.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="456.104">13.</tspan>
+    <tspan x="70" y="456.104">11.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="455.604">Date of registration / Date d&#39;enregistrement</tspan>
@@ -211,7 +198,7 @@
   </g>
   <line x1="70" y1="462.5" x2="514" y2="462.5" stroke="#ECECEC" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="70" y="476.104">14.</tspan>
+    <tspan x="70" y="476.104">12.</tspan>
   </text>
   <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="90" y="475.604">Registered by / Enregistr&#xe9; par</tspan>

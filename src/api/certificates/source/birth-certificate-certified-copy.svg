@@ -166,7 +166,7 @@
   </text>
   <g clip-path="url(#clip8_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="307" y="306.104">{{districtPrimaryMother}}, {{statePrimaryMother}}, {{countryPrimaryMother}}</tspan>
+      <tspan x="307" y="306.104">{{formattedAddress districtPrimaryMother statePrimaryMother countryPrimaryMother}}</tspan>
     </text>
   </g>
   <line x1="65" y1="312.5" x2="533" y2="312.5" stroke="#ECECEC" />
@@ -233,7 +233,7 @@
   </text>
   <g clip-path="url(#clip13_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="307" y="432.104">{{districtPrimaryFather}}, {{statePrimaryFather}}, {{countryPrimaryFather}}</tspan>
+      <tspan x="307" y="432.104">{{formattedAddress districtPrimaryFather statePrimaryFather countryPrimaryFather}}</tspan>
     </text>
   </g>
   <line x1="65" y1="438.5" x2="533" y2="438.5" stroke="#ECECEC" />
