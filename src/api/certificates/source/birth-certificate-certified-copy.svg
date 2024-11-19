@@ -150,11 +150,7 @@
   </text>
   <g clip-path="url(#clip7_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      {{#ifCond ageOfMotherInYears '===' undefined }}
       <tspan x="307" y="286.104">{{motherBirthDate}}</tspan>
-      {{else}}
-      <tspan x="307" y="286.104">{{ageOfMotherInYears}} years old</tspan>
-      {{/ifCond}}
     </text>
   </g>
   <line x1="65" y1="292.5" x2="533" y2="292.5" stroke="#ECECEC" />
@@ -217,11 +213,7 @@
   </text>
   <g clip-path="url(#clip12_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      {{#ifCond ageOfFatherInYears '===' undefined }}
       <tspan x="307" y="412.104">{{fatherBirthDate}}</tspan>
-      {{else}}
-      <tspan x="307" y="412.104">{{ageOfFatherInYears}} years old</tspan>
-      {{/ifCond}}
     </text>
   </g>
   <line x1="65" y1="418.5" x2="533" y2="418.5" stroke="#ECECEC" />
