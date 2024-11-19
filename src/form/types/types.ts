@@ -496,6 +496,7 @@ export interface ISignatureFormField extends IFormFieldBase {
 
 export interface IQRScannerFormField extends IFormFieldBase {
   type: typeof QR_SCANNER
+  variant_Experimental: number
 }
 export type IFormField =
   | ITextFormField

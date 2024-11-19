@@ -2,6 +2,7 @@ import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mappin
 import { formMessageDescriptors } from '../common/messages'
 import { Conditional, SerializedFormField } from '../types/types'
 import { genderOptions } from '../common/select-options'
+import { MessageDescriptor } from 'react-intl'
 
 /**
  *
@@ -12,9 +13,11 @@ import { genderOptions } from '../common/select-options'
 export function getQRCodeField(
   event: string,
   sectionId: string,
-  conditionals: Conditional[]
+  conditionals: Conditional[],
+  label: MessageDescriptor,
+  variant_Experimental: number
 ): SerializedFormField {
-  const fieldName: string = 'qrCode'
+  const fieldName: string = `qrCode${variant_Experimental}`
   const fieldId: string = `${event}.${sectionId}.${sectionId}-view-group.${fieldName}`
   return {
     name: fieldName,
@@ -22,11 +25,8 @@ export function getQRCodeField(
     custom: true,
     required: false,
     type: 'QR_SCANNER',
-    label: {
-      id: 'form.field.label.empty',
-      description: 'empty string',
-      defaultMessage: ''
-    },
+    variant_Experimental,
+    label,
     initialValue: '',
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
