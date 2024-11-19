@@ -190,6 +190,51 @@ const fetchEvents = (variables) =>
     return data
   })
 
+/**Fetch connected user primary office */
+const fetchUser = (variables) =>
+  handleAsyncFunction(async () => {
+    const query = `
+    query(
+      $userId: String
+    ) {
+      getUser(
+        userId: $userId
+      ) {
+        primaryOffice {
+          id
+          _fhirID
+          status
+          name
+          alias
+        }
+      }
+    }`
+
+    const response = await fetch('/graphql', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ query, variables })
+    })
+
+    if (!response.ok) {
+      throw new Error('Something went wrong with the graphql request')
+    }
+
+    const data = await response.json()
+
+    if (data?.errors?.[0].extensions.code === 'UNAUTHENTICATED') {
+      window.location.href =
+        window.config.LOGIN_URL +
+        '?redirectTo=' +
+        encodeURIComponent(window.config.COUNTRY_CONFIG_URL)
+    }
+    return data
+  })
+
 /** Get & Generate child birth location by id and type */
 const getChildBirthLocation = (eventLocationId, type, id) =>
   handleAsyncFunction(async () => {
@@ -528,13 +573,23 @@ const renderTable = async () => {
   const startDate = document.getElementById('startDate').value
   const endDate = document.getElementById('endDate').value
   const search = document.getElementById('searchInput').value
+  const location = document.getElementById('locationFilter').value
+
+  const fetchUserVariables = {
+    userId: connectedUserIdFromJwt
+  }
+
+  const connectedRegistrar = await fetchUser(fetchUserVariables)
 
   const variables = {
     advancedSearchParameters: {
       registrationStatuses: ['CERTIFIED', 'ISSUED'],
       dateOfRegistrationStart: startDate,
       dateOfRegistrationEnd: endDate,
-      name: search
+      name: search,
+      declarationJurisdictionId: !!location
+        ? location
+        : connectedRegistrar?.data?.getUser?.primaryOffice?.id
     },
     count: rowsPerPage,
     skip: (currentPage - 1) * rowsPerPage,
@@ -547,9 +602,6 @@ const renderTable = async () => {
 
   const tableBody = document.getElementById('data-table')
   tableBody.innerHTML = ''
-
-  const start = (currentPage - 1) * rowsPerPage
-  const end = start + rowsPerPage
 
   if (events.data.searchEvents?.results.length > 0) {
     events.data.searchEvents?.results.forEach((item) => {
@@ -985,6 +1037,11 @@ window.filterBySearch = function filterBySearch() {
   renderTable()
 }
 
+window.filterByLocation = function filterByLocation() {
+  currentPage = 1
+  renderTable()
+}
+
 window.resetDateFilter = function resetDateFilter() {
   document.getElementById('startDate').value = ''
   document.getElementById('endDate').value = ''
@@ -992,6 +1049,14 @@ window.resetDateFilter = function resetDateFilter() {
   document.getElementById('locationFilter').value = ''
   currentPage = 1
   renderTable()
+}
+
+window.logout = function logout() {
+  resetDateFilter()
+  window.location.href =
+    window.config.LOGIN_URL +
+    '?redirectTo=' +
+    encodeURIComponent(window.config.COUNTRY_CONFIG_URL)
 }
 
 window.generatePDF = function generatePDF(filename) {
