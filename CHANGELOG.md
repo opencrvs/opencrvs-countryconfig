@@ -44,6 +44,12 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 - TBC
 
+## 1.6.1 Release candidate
+
+### Bug fixes
+
+- Fix a typo in the birth certificate svg code that was causing the birth certificate to fail to render in the `print certified copy` flow. [7886](https://github.com/opencrvs/opencrvs-core/issues/7886)
+
 ## 1.6.0 Release candidate
 
 ### Breaking changes
