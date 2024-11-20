@@ -66,7 +66,7 @@ const fetchLocations = () =>
     const apiUrl = window.config.API_GATEWAY_URL
     const formattedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
     const response = await fetch(
-      `${formattedApiUrl}/locations?type=ADMIN_STRUCTURE`,
+      `${formattedApiUrl}/locations?type=ADMIN_STRUCTURE&status=active`,
       {
         mode: 'cors',
         headers: {
