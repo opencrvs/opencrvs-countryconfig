@@ -11,16 +11,21 @@ all:
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+      - name: riku
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWIF63S4f3z9wQMvWibmvl7MPuJ6EVrkP0HuvgNhcs/4DZYMcR/GRBvV4ldOSYMlBevIXycgGzNDxKJgENUuwIWanjBu7uVAHyD6+cIRD1h63qq7Cjv/2HYTfBDKOrKzPOhA6zWvKO0ZGWsjRXk5LWMCbKOkvKJCxOpj/NVBxeE4FTK5YADYPV3OSsmBtqTHrVLm2sMmShU/2hMYYswWkobidjX65+nK/X+3C+yJbHwiydVvn+QCrFlFfCLPWKe8rUpOxyxofPqWVQh6CHhHfT8okaOc9sOE8Qeip9ljo84DftJh3Xm3ynOdWK1hH2BvRvxNadWqcE1qECbkg4tx2x riku.rouvila@gmail.com
+        state: present
+        sudoer: true
+      - name: shoumik
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRSRTqm3vOfjyTutISEtbVp7ZddoWa9NZDZLeWZGzLy dsi@dsi-Inspiron-15-3511
         state: present
         sudoer: true
 
 docker-manager-first:
   hosts:
-    qa: # @todo set this to be the hostname of your target server
-      ansible_host: '55.55.55.55' # @todo set this to be the IP address of your server
+    shoumikland-qa: # @todo set this to be the hostname of your target server
+      ansible_host: '5.223.51.253' # @todo set this to be the IP address of your server
       # ansible_port: '23' # @todo set this to be the SSH port if it's not 22
       # internal_ssh_port: '22' # @todo if you are port-forwarding and server SSH port is not the same as ansible_port, set it here
       data_label: data1 # for manager machines, this should always be "data1"
