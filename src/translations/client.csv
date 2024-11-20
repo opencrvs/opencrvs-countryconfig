@@ -996,7 +996,7 @@ duplicates.content.markAsDuplicate,Mark as duplicate content confirmation title 
 duplicates.content.markAsDuplicateReason,Review page header for duplicates declarations,Please describe your reason,Veuillez décrire votre raison,
 duplicates.content.notDuplicateConfirmationTitle,Not a duplicate content confirmation title message,Are you sure {name} ({trackingId}) is not duplicate?,Êtes-vous sûr que {name} ({trackingId}) n'est pas en double?,
 duplicates.content.subtitle,Duplicates content subtitle message,"This record was flagged as a potential duplicate of: {trackingIds}. Please review these by clicking on each tracking ID in the tab section to view a side-by-side comparison below, and confirm if this record is a duplicate",Cet enregistrement a été signalé comme un doublon potentiel de : {trackingIds}. Veuillez les examiner en cliquant sur chaque identifiant de suivi dans la section des onglets pour afficher une comparaison côte à côte ci-dessous et confirmer si cet enregistrement est un doublon,
-duplicates.content.title,Duplicates content title message,Is {name} ({trackingId}) a duplicate?,Est-ce que {nom} ({trackingId}) est un doublon ?,
+duplicates.content.title,Duplicates content title message,Is {name} ({trackingId}) a duplicate?,Est-ce que {name} ({trackingId}) est un doublon ?,
 duplicates.details.duplicate,,,,Duplicata
 duplicates.details.duplicateReview,,,,Examen en double
 duplicates.details.keep,,,,Gardez
@@ -1430,7 +1430,7 @@ form.field.label.proofOfInformantsID,,Proof of informant's ID,Identité du décl
 form.field.label.proofOfMarriageNotice,,Notice of intention to marriage,Déclaration d'intention de mariage,
 form.field.label.proofOfMothersID,,Proof of mother's ID,Identité de la mère,Taratasy famantarana an'ilay Reny
 form.field.label.proofOfParentPrimaryAddress,,Proof of Permanent Address of Parent,Preuve de l'adresse permanente du parent,Porofo manamarina ny adiresin'ilay ray aman-dreny
-form.field.label.proofOfRecognition,Label for list item Recognition Proof,Proof of recognition,Proof of recognition,Proof of recognition
+form.field.label.proofOfRecognition,Label for list item Recognition Proof,Proof of recognition,Preuve de reconnaissance,Porofo ny fanjanahana
 form.field.label.radio.father,,Only the father's,Seulement du père,Ny rainy ihany
 form.field.label.radio.mother,,Only the mother's,Seulement celles de la mère,Ny reny ihany
 form.field.label.reasonFatherNotApplying,,Reason for not providing father’s details,Motif pour ne pas inscrire le nom du père,Antony tsy hanoratana ilay zaza amin'ny Rainy
