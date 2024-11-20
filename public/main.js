@@ -66,7 +66,7 @@ const fetchLocations = () =>
     const apiUrl = window.config.API_GATEWAY_URL
     const formattedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
     const response = await fetch(
-      `${formattedApiUrl}/locations?type=ADMIN_STRUCTURE&status=active`,
+      `${formattedApiUrl}/locations?type=ADMIN_STRUCTURE&status=active&_count=0`,
       {
         mode: 'cors',
         headers: {
@@ -225,8 +225,9 @@ const fetchUser = (variables) =>
         userId: $userId
       ) {
         primaryOffice {
-          id
-          _fhirID
+          hierarchy {
+            id
+          }
           status
           name
           alias
@@ -592,13 +593,43 @@ const fetchBirthRegistrationForCertificate = (variables) =>
     return data
   })
 
+// Recursive function to build the hierarchical name structure
+function buildLocationHierarchy(locations) {
+  const result = []
+  const locationMap = {}
+  locations.forEach((location) => {
+    locationMap[location.id] = location
+  })
+  locations.forEach((location) => {
+    let locationName = location.name
+    let parentId = location.partOf.split('/')[1]
+
+    if (
+      parentId !== '0' &&
+      locationMap[parentId] &&
+      location.name !== locationMap[parentId].name
+    ) {
+      let parentLocation = locationMap[parentId]
+      locationName = `${location.name}, ${parentLocation.name}`
+    }
+
+    result.push({
+      id: location.id,
+      name: locationName
+    })
+  })
+
+  return result.sort((a, b) => a.name.localeCompare(b.name))
+}
+
 // Function to render location filters
-const renderLocatioFilter = async () => {
+const renderLocationFilter = async () => {
   const locations = await fetchLocations()
+  const deepest = buildLocationHierarchy(locations)
   const locationFilter = document.getElementById('locationFilter')
 
-  if (locations?.length && locationFilter) {
-    locations.forEach((location) => {
+  if (deepest?.length && locationFilter) {
+    deepest.forEach((location) => {
       const option = document.createElement('option')
       option.value = location.id
       option.textContent = location.name
@@ -619,6 +650,11 @@ const renderTable = async () => {
   }
 
   const connectedRegistrar = await fetchUser(fetchUserVariables)
+
+  if (connectedRegistrar && !document.getElementById('locationFilter').value) {
+    document.getElementById('locationFilter').value =
+      connectedRegistrar?.data?.getUser?.primaryOffice?.hierarchy?.[0]?.id
+  }
 
   const variables = {
     advancedSearchParameters: {
@@ -1128,4 +1164,4 @@ window.generatePDF = function generatePDF(filename) {
 
 //Initial render
 renderTable()
-renderLocatioFilter()
+renderLocationFilter()
