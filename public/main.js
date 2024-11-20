@@ -60,6 +60,30 @@ const fetchLocationById = (eventLocationId) =>
     return undefined
   })
 
+/** Locations */
+const fetchLocations = () =>
+  handleAsyncFunction(async () => {
+    const apiUrl = window.config.API_GATEWAY_URL
+    const formattedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
+    const response = await fetch(
+      `${formattedApiUrl}/locations?type=ADMIN_STRUCTURE`,
+      {
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    const locationData = await response.json()
+    return locationData.entry?.map((item) => ({
+      id: item.resource.id,
+      alias: item.resource.alias,
+      name: item.resource.name,
+      partOf: item.resource.partOf?.reference,
+      status: item.resource.status
+    }))
+  })
+
 /** Birth location by id */
 const fetchOtherBirthLocation = (id) =>
   handleAsyncFunction(async () => {
@@ -568,6 +592,21 @@ const fetchBirthRegistrationForCertificate = (variables) =>
     return data
   })
 
+// Function to render location filters
+const renderLocatioFilter = async () => {
+  const locations = await fetchLocations()
+  const locationFilter = document.getElementById('locationFilter')
+
+  if (locations?.length && locationFilter) {
+    locations.forEach((location) => {
+      const option = document.createElement('option')
+      option.value = location.id
+      option.textContent = location.name
+      locationFilter.appendChild(option)
+    })
+  }
+}
+
 // Function to render table rows with pagination
 const renderTable = async () => {
   const startDate = document.getElementById('startDate').value
@@ -602,9 +641,10 @@ const renderTable = async () => {
 
   const tableBody = document.getElementById('data-table')
   tableBody.innerHTML = ''
+  const searchResults = events.data.searchEvents?.results
 
-  if (events.data.searchEvents?.results.length > 0) {
-    events.data.searchEvents?.results.forEach((item) => {
+  if (searchResults.length > 0) {
+    searchResults.forEach((item) => {
       const row = document.createElement('tr')
       row.classList.add('bg-white', 'hover:bg-gray-50')
 
@@ -1088,3 +1128,4 @@ window.generatePDF = function generatePDF(filename) {
 
 //Initial render
 renderTable()
+renderLocatioFilter()
