@@ -10,7 +10,6 @@
  */
 
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { readFileSync } from 'fs'
 
 type FontFamilyTypes = {
   normal: string
@@ -52,8 +51,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: true,
       fee: {
-        onTime: 0,
-        late: 5.5,
+        onTime: 5,
+        late: 7,
         delayed: 15
       },
       svgUrl: '/api/countryconfig/certificates/birth-certificate.svg',
@@ -76,9 +75,9 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: false,
       fee: {
-        onTime: 0,
-        late: 5.5,
-        delayed: 15
+        onTime: 8,
+        late: 11.5,
+        delayed: 17
       },
       svgUrl:
         '/api/countryconfig/certificates/birth-certificate-certified-copy.svg',
@@ -101,9 +100,9 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: true,
       fee: {
-        onTime: 0,
-        late: 5.5,
-        delayed: 15
+        onTime: 3,
+        late: 5.7,
+        delayed: 12
       },
       svgUrl: '/api/countryconfig/certificates/death-certificate.svg',
       fonts: {
@@ -125,9 +124,9 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: false,
       fee: {
-        onTime: 0,
-        late: 5.5,
-        delayed: 15
+        onTime: 6,
+        late: 9,
+        delayed: 14.5
       },
       svgUrl:
         '/api/countryconfig/certificates/death-certificate-certified-copy.svg',
@@ -150,9 +149,9 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: true,
       fee: {
-        onTime: 0,
-        late: 5.5,
-        delayed: 15
+        onTime: 4.4,
+        late: 6,
+        delayed: 13.5
       },
       svgUrl: '/api/countryconfig/certificates/marriage-certificate.svg',
       fonts: {
@@ -174,9 +173,9 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: false,
       fee: {
-        onTime: 0,
-        late: 5.5,
-        delayed: 15
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
       },
       svgUrl:
         '/api/countryconfig/certificates/marriage-certificate-certified-copy.svg',
