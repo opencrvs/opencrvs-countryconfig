@@ -4,6 +4,10 @@ let rowsPerPage = 10
 let totalPages = 1
 let sortDirection = 'desc'
 let sortColumn = '' // 'desc' by default
+const eventType = {
+  Birth: 'Naissance'
+}
+let currentRegistrarOffice
 function timeAgo(date) {
   const seconds = Math.floor((new Date() - new Date(date)) / 1000)
   let interval = Math.floor(seconds / 31536000) // years
@@ -58,6 +62,30 @@ const fetchLocationById = (eventLocationId) =>
       return locationData
     }
     return undefined
+  })
+
+/** Locations */
+const fetchLocations = () =>
+  handleAsyncFunction(async () => {
+    const apiUrl = window.config.API_GATEWAY_URL
+    const formattedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
+    const response = await fetch(
+      `${formattedApiUrl}/locations?type=ADMIN_STRUCTURE&status=active&_count=0`,
+      {
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    const locationData = await response.json()
+    return locationData.entry?.map((item) => ({
+      id: item.resource.id,
+      alias: item.resource.alias,
+      name: item.resource.name,
+      partOf: item.resource.partOf?.reference,
+      status: item.resource.status
+    }))
   })
 
 /** Birth location by id */
@@ -161,6 +189,54 @@ const fetchEvents = (variables) =>
             }
           }
           __typename
+        }
+      }
+    }`
+
+    const response = await fetch('/graphql', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ query, variables })
+    })
+
+    if (!response.ok) {
+      throw new Error('Something went wrong with the graphql request')
+    }
+
+    const data = await response.json()
+
+    if (data?.errors?.[0].extensions.code === 'UNAUTHENTICATED') {
+      window.location.href =
+        window.config.LOGIN_URL +
+        '?redirectTo=' +
+        encodeURIComponent(window.config.COUNTRY_CONFIG_URL)
+    }
+    return data
+  })
+
+/**Fetch connected user primary office */
+const fetchUser = (variables) =>
+  handleAsyncFunction(async () => {
+    const query = `
+    query(
+      $userId: String
+    ) {
+      getUser(
+        userId: $userId
+      ) {
+        primaryOffice {
+          hierarchy {
+            id
+            name
+            type
+          }
+          status
+          name
+          alias
         }
       }
     }`
@@ -523,18 +599,64 @@ const fetchBirthRegistrationForCertificate = (variables) =>
     return data
   })
 
+// Recursive function to build the hierarchical name structure
+function buildLocationHierarchy(locations) {
+  const result = []
+  const locationMap = {}
+  locations.forEach((location) => {
+    locationMap[location.id] = location
+  })
+
+  locations.forEach((location) => {
+    let locationName = location.name
+    let parentId = location.partOf.split('/')[1]
+
+    if (parentId !== '0' && locationMap[parentId]) {
+      let parentLocation = locationMap[parentId]
+      locationName = `${location.name}, District ${parentLocation.name}`
+      result.push({
+        id: location.id,
+        name: locationName
+      })
+    }
+  })
+
+  return [
+    ...new Map(result.map((item) => [JSON.stringify(item), item])).values()
+  ]
+}
+
 // Function to render table rows with pagination
 const renderTable = async () => {
   const startDate = document.getElementById('startDate').value
   const endDate = document.getElementById('endDate').value
   const search = document.getElementById('searchInput').value
+  const location = document.getElementById('locationSearchInput')?.dataset.id
+
+  const fetchUserVariables = {
+    userId: connectedUserIdFromJwt
+  }
+
+  const connectedRegistrar = await fetchUser(fetchUserVariables)
+  const locationHierarchy =
+    connectedRegistrar?.data?.getUser?.primaryOffice?.hierarchy
+
+  currentRegistrarOffice = locationHierarchy
+
+  if (connectedRegistrar && !location) {
+    document.getElementById('locationSearchInput').value =
+      locationHierarchy?.[0]?.name ?? ''
+  }
 
   const variables = {
     advancedSearchParameters: {
       registrationStatuses: ['CERTIFIED', 'ISSUED'],
       dateOfRegistrationStart: startDate,
       dateOfRegistrationEnd: endDate,
-      name: search
+      name: search,
+      declarationJurisdictionId: !!location
+        ? location
+        : locationHierarchy?.[0]?.id
     },
     count: rowsPerPage,
     skip: (currentPage - 1) * rowsPerPage,
@@ -547,49 +669,62 @@ const renderTable = async () => {
 
   const tableBody = document.getElementById('data-table')
   tableBody.innerHTML = ''
+  const searchResults = events.data.searchEvents?.results
 
-  const start = (currentPage - 1) * rowsPerPage
-  const end = start + rowsPerPage
+  if (searchResults.length > 0) {
+    searchResults.forEach((item) => {
+      const row = document.createElement('tr')
+      row.classList.add('bg-white', 'hover:bg-gray-50')
 
-  events.data.searchEvents?.results.forEach((item) => {
-    const row = document.createElement('tr')
-    row.classList.add('bg-white', 'hover:bg-gray-50')
-
-    row.innerHTML = `
-    <td class="px-4 py-2 border-b border-gray-300 text-blue-600"> ${[
-      item.childName[0].familyName,
-      item.childName[0].firstNames,
-      item.childName[0].middleName
-    ]
-      .join(' ')
-      .trim()}</td>
-    <td class="px-4 py-2 border-b border-gray-300">${item.type}</td>
-    <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
-      item.dateOfBirth
-    )}</td>
-    <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
-      new Date(Number(item.registration.createdAt)).toISOString().split('T')[0]
-    )}</td>
-    <td  class="px-4 py-2 border-b border-gray-300"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded" onclick="openPrintModal('${
-      item.id
-    }', '${[
-      item.registration?.assignment?.firstName || '',
-      item.registration?.assignment?.lastName || ''
-    ]
-      .join(' ')
-      //// escape '
-      .trim()
-      .replace(
+      row.innerHTML = `
+      <td class="px-4 py-2 border-b border-gray-300 text-blue-600"> ${[
+        item.childName[0].familyName,
+        item.childName[0].firstNames,
+        item.childName[0].middleName
+      ]
+        .join(' ')
+        .trim()}</td>
+      <td class="px-4 py-2 border-b border-gray-300">${
+        eventType[item.type]
+      }</td>
+      <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
+        item.dateOfBirth
+      )}</td>
+      <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
+        new Date(Number(item.registration.createdAt))
+          .toISOString()
+          .split('T')[0]
+      )}</td>
+      <td  class="px-4 py-2 border-b border-gray-300"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded" onclick="openPrintModal('${
+        item.id
+      }', '${[
+        item.registration?.assignment?.firstName || '',
+        item.registration?.assignment?.lastName || ''
+      ]
+        .join(' ')
+        //// escape '
+        .trim()
+        .replace(
+          /'/g,
+          "\\'"
+        )}', '${item.registration?.assignment?.officeName.replace(
         /'/g,
         "\\'"
-      )}', '${item.registration?.assignment?.officeName.replace(
-      /'/g,
-      "\\'"
-    )}')">Imprimer</button></td>
+      )}')">Imprimer</button></td>
+    `
+      tableBody.appendChild(row)
+    })
+    renderPagination()
+  } else {
+    const noDataRow = document.createElement('tr')
+    noDataRow.classList.add('bg-white')
+    noDataRow.innerHTML = `
+    <td colspan="5" class="px-4 py-2 border-b border-gray-300 text-center text-gray-500">
+      Aucun enregistrement
+    </td>
   `
-    tableBody.appendChild(row)
-  })
-  renderPagination()
+    tableBody.appendChild(noDataRow)
+  }
 }
 
 window.nextPage = function nextPage() {
@@ -628,7 +763,6 @@ window.openPrintModal = async function openPrintModal(
     modal.classList.remove('hidden')
 
     const event = person.data.fetchBirthRegistration
-    console.log(event)
     const dateFormatter = window.translateDate()
     const timeFormatter = window.translateTime()
     const officeNameFormatter = window.customizeOfficeNameLocation()
@@ -973,12 +1107,27 @@ window.filterBySearch = function filterBySearch() {
   renderTable()
 }
 
+window.filterByLocation = function filterByLocation() {
+  currentPage = 1
+  renderTable()
+}
+
 window.resetDateFilter = function resetDateFilter() {
   document.getElementById('startDate').value = ''
   document.getElementById('endDate').value = ''
   document.getElementById('searchInput').value = ''
+  document.getElementById('locationSearchInput').value = ''
+  document.getElementById('locationSearchInput').dataset.id = ''
   currentPage = 1
   renderTable()
+}
+
+window.logout = function logout() {
+  resetDateFilter()
+  window.location.href =
+    window.config.LOGIN_URL +
+    '?redirectTo=' +
+    encodeURIComponent(window.config.COUNTRY_CONFIG_URL)
 }
 
 window.generatePDF = function generatePDF(filename) {
@@ -1008,5 +1157,72 @@ window.generatePDF = function generatePDF(filename) {
   })
 }
 
+const locationSearchInput = document.getElementById('locationSearchInput')
+const locationDropdownList = document.getElementById('locationDropdownList')
+async function initializeLocationsDropdown() {
+  try {
+    const locations = await fetchLocations()
+    const deepest = buildLocationHierarchy(locations)
+    populateDropdown(deepest)
+    setupSearchAndSelection(deepest)
+  } catch (error) {
+    console.error('Error initializing dropdown:', error)
+  }
+}
+
+function populateDropdown(locations) {
+  locationDropdownList.innerHTML = locations
+    .map(
+      (location) =>
+        `<li class="px-3 py-2 hover:bg-blue-100 cursor-pointer" data-id="${location.id}">
+          ${location.name}
+        </li>`
+    )
+    .join('')
+}
+
+function toggleDropdown(show) {
+  locationDropdownList.classList.toggle('hidden', !show)
+}
+
+locationSearchInput.addEventListener('blur', () => {
+  if (!locationSearchInput.value.toLowerCase().trim()) {
+    locationSearchInput.value = currentRegistrarOffice?.[0]?.name
+    locationSearchInput.dataset.id = currentRegistrarOffice?.[0]?.id
+  }
+})
+
+function setupSearchAndSelection(locations) {
+  locationSearchInput.addEventListener('input', () => {
+    const filteredLocations = locations.filter((location) =>
+      location.name
+        .toLowerCase()
+        .includes(locationSearchInput.value.toLowerCase().trim())
+    )
+
+    populateDropdown(filteredLocations)
+    toggleDropdown(filteredLocations.length > 0)
+  })
+
+  locationDropdownList.addEventListener('click', (event) => {
+    if (event.target.tagName === 'LI') {
+      const selectedId = event.target.getAttribute('data-id')
+      const selectedName = event.target.textContent
+      locationSearchInput.value = selectedName.trim()
+      locationSearchInput.dataset.id = selectedId
+      toggleDropdown(false)
+      currentPage = 1
+      renderTable()
+    }
+  })
+
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.relative')) {
+      toggleDropdown(false)
+    }
+  })
+}
+
 //Initial render
+initializeLocationsDropdown()
 renderTable()
