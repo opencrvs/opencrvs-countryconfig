@@ -4,6 +4,10 @@ let rowsPerPage = 10
 let totalPages = 1
 let sortDirection = 'desc'
 let sortColumn = '' // 'desc' by default
+const eventType = {
+  Birth: 'Naissance'
+}
+let currentRegistrarOffice
 function timeAgo(date) {
   const seconds = Math.floor((new Date() - new Date(date)) / 1000)
   let interval = Math.floor(seconds / 31536000) // years
@@ -227,6 +231,8 @@ const fetchUser = (variables) =>
         primaryOffice {
           hierarchy {
             id
+            name
+            type
           }
           status
           name
@@ -600,42 +606,24 @@ function buildLocationHierarchy(locations) {
   locations.forEach((location) => {
     locationMap[location.id] = location
   })
+
   locations.forEach((location) => {
     let locationName = location.name
     let parentId = location.partOf.split('/')[1]
 
-    if (
-      parentId !== '0' &&
-      locationMap[parentId] &&
-      location.name !== locationMap[parentId].name
-    ) {
+    if (parentId !== '0' && locationMap[parentId]) {
       let parentLocation = locationMap[parentId]
-      locationName = `${location.name}, ${parentLocation.name}`
+      locationName = `${location.name}, District ${parentLocation.name}`
+      result.push({
+        id: location.id,
+        name: locationName
+      })
     }
-
-    result.push({
-      id: location.id,
-      name: locationName
-    })
   })
 
-  return result.sort((a, b) => a.name.localeCompare(b.name))
-}
-
-// Function to render location filters
-const renderLocationFilter = async () => {
-  const locations = await fetchLocations()
-  const deepest = buildLocationHierarchy(locations)
-  const locationFilter = document.getElementById('locationFilter')
-
-  if (deepest?.length && locationFilter) {
-    deepest.forEach((location) => {
-      const option = document.createElement('option')
-      option.value = location.id
-      option.textContent = location.name
-      locationFilter.appendChild(option)
-    })
-  }
+  return [
+    ...new Map(result.map((item) => [JSON.stringify(item), item])).values()
+  ]
 }
 
 // Function to render table rows with pagination
@@ -643,17 +631,21 @@ const renderTable = async () => {
   const startDate = document.getElementById('startDate').value
   const endDate = document.getElementById('endDate').value
   const search = document.getElementById('searchInput').value
-  const location = document.getElementById('locationFilter').value
+  const location = document.getElementById('locationSearchInput')?.dataset.id
 
   const fetchUserVariables = {
     userId: connectedUserIdFromJwt
   }
 
   const connectedRegistrar = await fetchUser(fetchUserVariables)
+  const locationHierarchy =
+    connectedRegistrar?.data?.getUser?.primaryOffice?.hierarchy
 
-  if (connectedRegistrar && !document.getElementById('locationFilter').value) {
-    document.getElementById('locationFilter').value =
-      connectedRegistrar?.data?.getUser?.primaryOffice?.hierarchy?.[0]?.id
+  currentRegistrarOffice = locationHierarchy
+
+  if (connectedRegistrar && !location) {
+    document.getElementById('locationSearchInput').value =
+      locationHierarchy?.[0]?.name ?? ''
   }
 
   const variables = {
@@ -664,7 +656,7 @@ const renderTable = async () => {
       name: search,
       declarationJurisdictionId: !!location
         ? location
-        : connectedRegistrar?.data?.getUser?.primaryOffice?.id
+        : locationHierarchy?.[0]?.id
     },
     count: rowsPerPage,
     skip: (currentPage - 1) * rowsPerPage,
@@ -692,7 +684,9 @@ const renderTable = async () => {
       ]
         .join(' ')
         .trim()}</td>
-      <td class="px-4 py-2 border-b border-gray-300">${item.type}</td>
+      <td class="px-4 py-2 border-b border-gray-300">${
+        eventType[item.type]
+      }</td>
       <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
         item.dateOfBirth
       )}</td>
@@ -1122,7 +1116,8 @@ window.resetDateFilter = function resetDateFilter() {
   document.getElementById('startDate').value = ''
   document.getElementById('endDate').value = ''
   document.getElementById('searchInput').value = ''
-  document.getElementById('locationFilter').value = ''
+  document.getElementById('locationSearchInput').value = ''
+  document.getElementById('locationSearchInput').dataset.id = ''
   currentPage = 1
   renderTable()
 }
@@ -1162,6 +1157,72 @@ window.generatePDF = function generatePDF(filename) {
   })
 }
 
+const locationSearchInput = document.getElementById('locationSearchInput')
+const locationDropdownList = document.getElementById('locationDropdownList')
+async function initializeLocationsDropdown() {
+  try {
+    const locations = await fetchLocations()
+    const deepest = buildLocationHierarchy(locations)
+    populateDropdown(deepest)
+    setupSearchAndSelection(deepest)
+  } catch (error) {
+    console.error('Error initializing dropdown:', error)
+  }
+}
+
+function populateDropdown(locations) {
+  locationDropdownList.innerHTML = locations
+    .map(
+      (location) =>
+        `<li class="px-3 py-2 hover:bg-blue-100 cursor-pointer" data-id="${location.id}">
+          ${location.name}
+        </li>`
+    )
+    .join('')
+}
+
+function toggleDropdown(show) {
+  locationDropdownList.classList.toggle('hidden', !show)
+}
+
+locationSearchInput.addEventListener('blur', () => {
+  if (!locationSearchInput.value.toLowerCase().trim()) {
+    locationSearchInput.value = currentRegistrarOffice?.[0]?.name
+    locationSearchInput.dataset.id = currentRegistrarOffice?.[0]?.id
+  }
+})
+
+function setupSearchAndSelection(locations) {
+  locationSearchInput.addEventListener('input', () => {
+    const filteredLocations = locations.filter((location) =>
+      location.name
+        .toLowerCase()
+        .includes(locationSearchInput.value.toLowerCase().trim())
+    )
+
+    populateDropdown(filteredLocations)
+    toggleDropdown(filteredLocations.length > 0)
+  })
+
+  locationDropdownList.addEventListener('click', (event) => {
+    if (event.target.tagName === 'LI') {
+      const selectedId = event.target.getAttribute('data-id')
+      const selectedName = event.target.textContent
+      locationSearchInput.value = selectedName.trim()
+      locationSearchInput.dataset.id = selectedId
+      toggleDropdown(false)
+      currentPage = 1
+      renderTable()
+    }
+  })
+
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.relative')) {
+      toggleDropdown(false)
+    }
+  })
+}
+
 //Initial render
+initializeLocationsDropdown()
 renderTable()
-renderLocationFilter()
