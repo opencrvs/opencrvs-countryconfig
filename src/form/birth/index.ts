@@ -422,17 +422,8 @@ export const birthForm: ISerializedForm = {
                 }
               ],
               mapping: {
-                template: {
-                  fieldName: 'childNIDManual',
-                  operation: 'identityToFieldTransformer',
-                  parameters: ['id', 'NATIONAL_ID']
-                },
                 mutation: {
                   operation: 'fieldToIdentityTransformer',
-                  parameters: ['id', 'NATIONAL_ID']
-                },
-                query: {
-                  operation: 'identityToFieldTransformer',
                   parameters: ['id', 'NATIONAL_ID']
                 }
               }
