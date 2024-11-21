@@ -287,7 +287,7 @@ export const birthForm: ISerializedForm = {
                 {
                   action: 'hide',
                   expression:
-                    '(!$form.createNUI?.data && !$form.iD) || !window.navigator.onLine'
+                    '!$form.createNUI?.data && !$form.iD || !!$form.iDManual'
                 },
                 {
                   action: 'disable',
@@ -404,7 +404,7 @@ export const birthForm: ISerializedForm = {
                 {
                   action: 'hide',
                   expression:
-                    'window.navigator.onLine && !$form.createNUI?.error'
+                    '!$form.iDManual && ((window.navigator.onLine && !$form.createNUI?.error) || (!!$form.createNUI?.data || !!$form.iD))'
                 }
               ],
               validator: [

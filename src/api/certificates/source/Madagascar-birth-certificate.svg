@@ -52,7 +52,7 @@
         {{/text}}
         {{#text fontSize=10 }}{{childFamilyName}}{{/text}}
         {{#text fontSize=10 }}{{childFirstName}}{{/text}}
-        {{#text fontSize=10 }}NUI: {{childNID}}{{/text}}
+        {{#text fontSize=10 }}NUI: {{#if childNID}}{{childNID}}{{else}}{{childNIDManual}}{{/if}}{{/text}}
         {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
         {{linebreak}}
         {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
