@@ -1087,7 +1087,7 @@ test.describe('10. Correct record - 10', () => {
       })
       test('10.2.6.5 Validate correction requested modal', async () => {
         const correctionRequestedRow = page.locator(
-          '#listTable-task-history #row_4'
+          '#listTable-task-history div[id^="row_"]:has-text("Correction requested")'
         )
         await correctionRequestedRow.getByText('Correction requested').click()
 
@@ -1267,7 +1267,7 @@ test.describe('10. Correct record - 10', () => {
       })
       test('10.2.6.6 Validate correction approved modal', async () => {
         const correctionApprovedRow = page.locator(
-          '#listTable-task-history #row_6'
+          '#listTable-task-history div[id^="row_"]:has-text("Correction approved")'
         )
         await correctionApprovedRow.getByText('Correction approved').click()
 
