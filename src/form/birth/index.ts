@@ -271,6 +271,72 @@ export const birthForm: ISerializedForm = {
               }
             },
             {
+              name: 'nuiGeneratorError',
+              type: 'BUTTON',
+              custom: true,
+              hideInPreview: true,
+              required: false,
+              validator: [],
+              options: {
+                trigger: 'createNUI',
+                shouldHandleLoadingState: true
+              },
+              conditionals: [
+                conditionals.hide.whenFieldAgent,
+                conditionals.hide.whenRegistrationAgent,
+                {
+                  action: 'hide',
+                  expression: '!!$form.createNUI?.data || !!$form.iD'
+                },
+                {
+                  action: 'disable',
+                  expression:
+                    '!window.navigator.onLine || $form.createNUI?.error'
+                },
+                {
+                  action: 'hide',
+                  expression:
+                    '!$form.createNUI?.error && window.navigator.onLine'
+                }
+              ],
+              label: formMessageDescriptors.nui,
+              buttonLabel: formMessageDescriptors.generateNUI,
+              icon: 'UserCircle',
+              loadingLabel: formMessageDescriptors.generatingNUI
+            },
+            {
+              name: 'nuiGenerator',
+              type: 'BUTTON',
+              custom: true,
+              required: true,
+              validator: [],
+              options: {
+                trigger: 'createNUI',
+                shouldHandleLoadingState: true
+              },
+              conditionals: [
+                conditionals.hide.whenFieldAgent,
+                conditionals.hide.whenRegistrationAgent,
+                {
+                  action: 'hide',
+                  expression: '!!$form.createNUI?.data || !!$form.iD'
+                },
+                {
+                  action: 'disable',
+                  expression: '$form.createNUI?.loading'
+                },
+                {
+                  action: 'hide',
+                  expression:
+                    '$form.createNUI?.error || !window.navigator.onLine'
+                }
+              ],
+              label: formMessageDescriptors.nui,
+              buttonLabel: formMessageDescriptors.generateNUI,
+              icon: 'UserCircle',
+              loadingLabel: formMessageDescriptors.generatingNUI
+            },
+            {
               name: 'iD',
               type: 'TEXT',
               label: formMessageDescriptors.nui,
@@ -323,68 +389,6 @@ export const birthForm: ISerializedForm = {
                   parameters: ['id', 'NATIONAL_ID']
                 }
               }
-            },
-            {
-              name: 'nuiGenerator',
-              type: 'BUTTON',
-              custom: true,
-              required: true,
-              validator: [],
-              options: {
-                trigger: 'createNUI',
-                shouldHandleLoadingState: true
-              },
-              conditionals: [
-                conditionals.hide.whenFieldAgent,
-                conditionals.hide.whenRegistrationAgent,
-                {
-                  action: 'hide',
-                  expression: '$form.createNUI?.data || $form.iD'
-                },
-                {
-                  action: 'disable',
-                  expression: '$form.createNUI?.loading'
-                },
-                {
-                  action: 'hide',
-                  expression:
-                    '$form.createNUI?.error || !window.navigator.onLine'
-                }
-              ],
-              label: formMessageDescriptors.nui,
-              buttonLabel: formMessageDescriptors.generateNUI,
-              icon: 'UserCircle',
-              loadingLabel: formMessageDescriptors.generatingNUI
-            },
-            {
-              name: 'nuiGeneratorError',
-              type: 'BUTTON',
-              custom: true,
-              hideInPreview: true,
-              required: false,
-              validator: [],
-              options: {
-                trigger: 'createNUI',
-                shouldHandleLoadingState: true
-              },
-              conditionals: [
-                conditionals.hide.whenFieldAgent,
-                conditionals.hide.whenRegistrationAgent,
-                {
-                  action: 'disable',
-                  expression:
-                    '!window.navigator.onLine || $form.createNUI?.error'
-                },
-                {
-                  action: 'hide',
-                  expression:
-                    '!$form.createNUI?.error && window.navigator.onLine'
-                }
-              ],
-              label: formMessageDescriptors.nui,
-              buttonLabel: formMessageDescriptors.generateNUI,
-              icon: 'UserCircle',
-              loadingLabel: formMessageDescriptors.generatingNUI
             },
             {
               name: 'iDManual',
