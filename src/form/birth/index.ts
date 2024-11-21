@@ -192,6 +192,7 @@ export const birthForm: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.childTab,
       title: formMessageDescriptors.childTitle,
+      canContinue: '!$form.createNUI?.loading',
       mapping: getSectionMapping('child'), // These mappings support configurable identifiers in the event-registration API
       groups: [
         {
