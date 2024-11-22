@@ -89,7 +89,7 @@ export const witnessRelationshipForOthers = (
   ],
   mapping: {
     template: {
-      operation: 'selectTransformer',
+      operation: 'fieldValueTransformer',
       fieldName
     }
   }
