@@ -80,16 +80,21 @@ export const goToSection = async (
 
 /*
   Generates a random past date
-  at least 'minAge' years ago
+  at least 'minAge' years + 'offset' days ago
   and up to an additional 'range' days earlier
 */
-export const getRandomDate = (minAge: number, range: number) => {
+export const getRandomDate = (
+  minAge: number,
+  range: number,
+  offset: number = 0
+) => {
   const randomDate = new Date()
   randomDate.setDate(
     new Date().getDate() -
       Math.random() * range -
       minAge * 365 -
-      (minAge + 3) / 4
+      (minAge + 3) / 4 -
+      offset
   )
   const [yyyy, mm, dd] = randomDate.toISOString().split('T')[0].split('-')
   return { dd, mm, yyyy }
