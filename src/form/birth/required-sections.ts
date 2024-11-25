@@ -87,8 +87,8 @@ export const documentsSection = {
           initialValue: '',
           maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.OTHER,
-          hideAsterisk: true,
           validator: [],
+          required: true,
           options: [
             {
               value: birthDocumentType.RECOGNITION_ACT,
