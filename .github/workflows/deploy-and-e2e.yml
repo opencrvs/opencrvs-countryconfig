@@ -89,7 +89,7 @@ jobs:
           echo "test_matrix=$test_dirs"
 
   test:
-    needs: [deploy, discover-tests]
+    needs: [deploy, discover-tests, get-core-commit, get-country-config-commit]
     runs-on: ubuntu-22.04
     environment: ${{ github.event.inputs.environment || 'development' }}
     strategy:
@@ -136,9 +136,9 @@ jobs:
           DOMAIN: '${{ vars.DOMAIN }}'
 
       - uses: actions/upload-artifact@v4
-        if: steps.check-specs.outputs.has_spec_files == 'true'
+        if: always() && steps.check-specs.outputs.has_spec_files == 'true'
         with:
-          name: playwright-report-${{ matrix.test_dir }}
+          name: playwright-report-${{github.event.inputs.core-image-tag || needs.get-core-commit.outputs.latest_commit_sha}}-${{github.event.inputs.countryconfig-image-tag || needs.get-country-config-commit.outputs.short_sha}}-${{matrix.test_dir}}
           path: playwright-report/
           retention-days: 30
 
@@ -150,19 +150,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Get Previous Workflow Run
-        id: get-previous-run
-        run: |
-          previous_run_id=$(gh run list --limit 2 --json databaseId -q '.[1].databaseId')
-          echo "PREVIOUS_RUN_ID=$previous_run_id" >> $GITHUB_ENV
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          fetch-depth: 0
 
       - name: Get Previous Run Conclusion
         id: get-previous-conclusion
         run: |
-          previous_conclusion=$(gh run view $PREVIOUS_RUN_ID --json conclusion -q '.conclusion')
+          previous_conclusion=$(gh run list --limit 1 --status=completed --workflow="Deploy & run E2E" --json conclusion -q '.[0].conclusion')
           echo "PREVIOUS_CONCLUSION=$previous_conclusion" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -179,7 +173,6 @@ jobs:
     if: failure()
     steps:
       - name: Send Slack notification
-        if: needs.get-previous-run.outputs.previous_run_result == 'success'
         uses: slackapi/slack-github-action@v1.26.0
         with:
           channel-id: 'C02LU432JGK'

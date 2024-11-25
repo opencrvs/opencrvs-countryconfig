@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { LOGIN_URL } from '../../constants'
+import { CREDENTIALS, LOGIN_URL } from '../../constants'
 import { ensureLoginPageReady } from '../../helpers'
 
 test.describe('1. Login with valid information', () => {
@@ -14,8 +14,8 @@ test.describe('1. Login with valid information', () => {
   })
 
   test('1.2. Enter your username and password', async ({ page }) => {
-    await page.fill('#username', 'k.mweene')
-    await page.fill('#password', 'test')
+    await page.fill('#username', CREDENTIALS.LOCAL_REGISTRAR.USERNAME)
+    await page.fill('#password', CREDENTIALS.LOCAL_REGISTRAR.PASSWORD)
     await page.click('#login-mobile-submit')
 
     // Expected result: User should navigate to the next page to verify through mobile number or email address
@@ -28,8 +28,8 @@ test.describe('1. Login with valid information', () => {
   })
 
   test('1.4. Verify through by inputting the 2FA code', async ({ page }) => {
-    await page.fill('#username', 'k.mweene')
-    await page.fill('#password', 'test')
+    await page.fill('#username', CREDENTIALS.LOCAL_REGISTRAR.USERNAME)
+    await page.fill('#password', CREDENTIALS.LOCAL_REGISTRAR.PASSWORD)
     await page.click('#login-mobile-submit')
 
     await page.fill('#code', '000000')

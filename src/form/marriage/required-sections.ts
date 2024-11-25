@@ -116,6 +116,7 @@ const signatureFields = [
     required: true,
     validator: [],
     type: 'SIGNATURE',
+    allowedFileFormats: ['image/png'],
     mapping: {
       mutation: {
         operation: 'fieldValueSectionExchangeTransformer',
@@ -137,6 +138,7 @@ const signatureFields = [
     required: true,
     validator: [],
     type: 'SIGNATURE',
+    allowedFileFormats: ['image/png'],
     mapping: {
       mutation: {
         operation: 'fieldValueSectionExchangeTransformer',
@@ -158,6 +160,7 @@ const signatureFields = [
     required: true,
     validator: [],
     type: 'SIGNATURE',
+    allowedFileFormats: ['image/png'],
     mapping: {
       mutation: {
         operation: 'fieldValueSectionExchangeTransformer',
@@ -179,6 +182,7 @@ const signatureFields = [
     required: true,
     validator: [],
     type: 'SIGNATURE',
+    allowedFileFormats: ['image/png'],
     mapping: {
       mutation: {
         operation: 'fieldValueSectionExchangeTransformer',

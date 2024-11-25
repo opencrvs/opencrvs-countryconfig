@@ -36,7 +36,6 @@ all:
         state: present
         sudoer: true
       - name: jump
-        state: present
         ssh_keys:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDk15q1EI7FXqX9sgSpO7u89ZjcZV00k2yyq/9YNLk2XWHE54qPhOdaPPgJyuIhgDGQB20uDow/E8mIkPHNstX/Gp0GXn06L7fd/BfwFmFWi0YhLwvX5RaYjm1vIkCLDZrYQiH/GBP9GKMJv3DGORA1tWhFBKIerDwtDTBFC0ysT/nmHSEq1xYb5cSj55UaSyIQUjd1UgqO98OhzItXX4ZWeUil5gEC014dZxNMwM08F6X1XGsy5u6CP4CtpcMGk3fWQz+AdcL0nHZoLjXnIMBNLTyBjThQvupZFhLkKvqOxwQkzEBPjfaQQadnFg0N4rpMrUYqakkpAhgdwmemv13jZk41m5jofS+C4R2uBAb6dbPI0YiRgqaj1kSBGgEEPNhtT9Y0+nrJhmrypLxD0TnDl+hI/EfNpJd4TravCyjpsxUsLRpBp9A3rPAxkHrAt59r0rdCsp57KZ2dGPXJU0QPC30XJrVg05cOQdzPvfJn2Qsx+2JFW2cR4X+R2bWD6k9g8ItFq87DfN2LIeXArffkG735sCR12HCKkyyA8bS6HVr/nAxohb5UvN1HafLmL61gwbsv3OtVkpxT+SNqoXutDkqHW3+efu27dsGLdXsYyQxELZoKkJLJJW4ToU6jTvb3v9wqIEHjayBdGERH06SdXN38BFUMIa44MJVC61h/uw== runner@fv-az1386-243
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMiGYD2au1bsyZGfCCrOQUKkW1wIGbwHOef0u4BIvI30pXH6tL3rFM3lKa+7ejP6OBQznhRCPZCMIYMDLas9CGoAJxG4fv91iBcrk4i9J4Q+dhHm2PZv8Nq1d36jW5a4mwmDThR/ZRSFLKkaKl61k7iL8eCULakmYlVP618tk3f0mZ/jXsbUrBYt3YeVHvajPK2HVq0SpvoLQIHn2rtlEXzdAHEW1aD1dJLm2AtbHe1NWH7tJMjcWNjoiQGbuA/FYI4lVuJywmgYU/er7GcO2jnejLRWgXtBrpFSvPs4s34BpxNX/EnAvGyjM09f71LjZFtUT4EKz7x/Ct3CXgLGOe0UfTE68ZPVrySzIKZhrkXKEM7gvCrXroFRKY7S/2RcK/l4tFOgspRw9mXvhnDvv0SDdRzhQ5tSVmjk95C8vviDvypmZfBgtrAbBcQquDS/mrpu3CXgcj5Uhkpot7+fehIQo2qhq1I9wbTsD137JsOgZFYl93X1zE51G4eaHXtNNx7v9Sga/4dlOkQoxDkypw3fL2pR44xqJip+vE374aWYDrxa5NN64M1vt1bZqSvwyRyntbBL0P/oi2X30mO8I2pUDc0LZLzUeIqrVYiQc6CS+KB0kIHlAxQQdtPP4DC0AaRdyv5GTJ7+lF4urDjfj7YlZppX+t9n6qvQdqzjfvnQ== runner@fv-az982-41
@@ -56,6 +55,11 @@ all:
       - name: tareq
         ssh_keys:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCWQihdKkwxTItN+rwYAX1vBg+8sv59sFsjYoVaO2mzS01rARfh+M+UVqpEv3zFT/3v6Dr5Z5VhzYvvbH8akiGQxURqie9quEi1iBCqcq+LApkMZxNm7yyvexlFsbkKMHsSZyVCzjE2Wt+6fwR1NqkMQgJjZS+b4CB+CUTNP2i6ytUTmck9K5iAOp1Gpm+Xgyvz6ZEJPkAJ16gV7gzNJUt/DSCkCyV8G2BqYLWeR2QxAbKyuf3LzO5i4XZdiZi9o60QAt3A6KGGLazd0UuYdehQDqVwXzwimLeeuZbaPNmwoAy7DeatOdurrWbnL7ytaiPvAbwai6Grt3PhhM41qO+uojnqTdnFdSOEPVIYMR7+mYu9tuwHZcMJIbbvMPD6EvKumD5Ndn5OxiLY/zQF5PuG89pBdTkTzzREvbV1Dkh2hwAIvgavlZl3P64On+4+FAgjrAx5U55khoRAe2FbEvB+EUGwro0bRffiM2NmxkUBraEuT2Xt5K01ZoBU6F4feO0= tareq.aziz@dsinnovators.com
+        state: present
+        sudoer: true
+      - name: jamil
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMSNTIIsM0C3uJg3V/Fqh2gi4lvl2y6nenrb2Ft1JlX jamil31415926@gmail.com
         state: present
         sudoer: true
     # If the machine is repurposed to also be the backup host, we need to add more keys to the authorized_keys file so that

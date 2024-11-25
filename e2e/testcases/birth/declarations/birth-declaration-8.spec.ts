@@ -1,5 +1,15 @@
 import { test, expect, type Page } from '@playwright/test'
-import { createPIN, goToSection, login } from '../../../helpers'
+import {
+  assignRecord,
+  continueForm,
+  createPIN,
+  drawSignature,
+  expectOutboxToBeEmpty,
+  getAction,
+  goToSection,
+  login
+} from '../../../helpers'
+import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('8. Birth declaration case - 8', () => {
   let page: Page
@@ -26,7 +36,11 @@ test.describe.serial('8. Birth declaration case - 8', () => {
 
   test.describe('8.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, 'k.bwalya', 'test')
+      await login(
+        page,
+        CREDENTIALS.FIELD_AGENT.USERNAME,
+        CREDENTIALS.FIELD_AGENT.PASSWORD
+      )
       await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Birth').click()
@@ -39,7 +53,6 @@ test.describe.serial('8. Birth declaration case - 8', () => {
     })
 
     test('8.1.2 Fill informant details', async () => {
-      await page.waitForTimeout(500)
       await page.locator('#informantType').click()
       await page
         .getByText(declaration.informantType, {
@@ -57,9 +70,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         .locator('#otherInformantType')
         .fill(declaration.informant.relation)
 
-      await page.waitForTimeout(500)
-
-      await page.getByRole('button', { name: 'Continue' }).click()
+      await continueForm(page)
     })
 
     test("8.1.3 Fill mother's details", async () => {
@@ -68,9 +79,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         .getByText(declaration.mother.maritalStatus, { exact: true })
         .click()
 
-      await page.waitForTimeout(500)
-
-      await page.getByRole('button', { name: 'Continue' }).click()
+      await continueForm(page)
     })
 
     test("8.1.4 Fill father's details", async () => {
@@ -83,10 +92,10 @@ test.describe.serial('8. Birth declaration case - 8', () => {
     })
 
     test('8.1.5 Go to preview', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
     })
 
-    test('8.1.6 Verify informations in preview page', async () => {
+    test('8.1.6 Verify information on preview page', async () => {
       /*
        * Expected result: should require
        * - Child's First Name
@@ -237,7 +246,16 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       )
     })
 
-    test('8.1.7 Send for review', async () => {
+    test('8.1.7 Fill up informant signature', async () => {
+      await page.getByRole('button', { name: 'Sign' }).click()
+      await drawSignature(page)
+      await page
+        .locator('#informantSignature_modal')
+        .getByRole('button', { name: 'Apply' })
+        .click()
+    })
+
+    test('8.1.8 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
@@ -248,15 +266,17 @@ test.describe.serial('8. Birth declaration case - 8', () => {
        */
       expect(page.url().includes('registration-home')).toBeTruthy()
 
-      await expect(page.locator('#navigation_outbox')).not.toContainText('1', {
-        timeout: 1000 * 30
-      })
+      await expectOutboxToBeEmpty(page)
     })
   })
 
   test.describe('8.2 Declaration Review by RA', async () => {
     test('8.2.1 Navigate to the declaration review page', async () => {
-      await login(page, 'f.katongo', 'test')
+      await login(
+        page,
+        CREDENTIALS.REGISTRATION_AGENT.USERNAME,
+        CREDENTIALS.REGISTRATION_AGENT.PASSWORD
+      )
       await createPIN(page)
       await page.getByRole('button', { name: 'In Progress' }).click()
       await page.getByRole('button', { name: 'Field Agents' }).click()
@@ -268,13 +288,12 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         })
         .all()
       await firstButton.click()
-
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await page.getByRole('button', { name: 'Update', exact: true }).click()
+      await assignRecord(page)
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await getAction(page, 'Update declaration').click()
     })
 
-    test('8.2.2 Verify informations in preview page', async () => {
+    test('8.2.2 Verify information on preview page', async () => {
       /*
        * Expected result: should require
        * - Child's First Name

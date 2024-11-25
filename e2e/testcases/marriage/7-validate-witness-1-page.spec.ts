@@ -1,9 +1,14 @@
 import { expect, test } from '@playwright/test'
 import { createPIN, login, goToSection } from '../../helpers'
+import { CREDENTIALS } from '../../constants'
 
 test.describe('7. Validate Witness 1 details page', () => {
   test.beforeEach(async ({ page }) => {
-    await login(page, 'k.mweene', 'test')
+    await login(
+      page,
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
     await createPIN(page)
     await page.click('#header_new_event')
     await page.getByText('Marriage', { exact: true }).click()

@@ -32,7 +32,7 @@ docker service scale opencrvs_elastalert=0
 echo 'Deleting Elastalert indices'
 indices='elastalert_status,elastalert_status_error,elastalert_status_past,elastalert_status_silence,elastalert_status_status'
 
-delete_status_code=$($docker_command --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD -o /dev/null -w '%{http_code}' "http://elasticsearch:9200/${indices}" -X DELETE)
+delete_status_code=$($docker_command --connect-timeout 60 -u elastic:$ELASTICSEARCH_SUPERUSER_PASSWORD -o /dev/null -w '%{http_code}' "http://elasticsearch:9200/${indices}?ignore_unavailable=true" -X DELETE)
 
 if [ "$delete_status_code" -ne 200 ]; then
   echo "Could not delete indices. API returned status code: $delete_status_code"

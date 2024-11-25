@@ -123,10 +123,6 @@ services:
     deploy:
       replicas: 1
 
-  components:
-    deploy:
-      replicas: 1
-
   login:
     deploy:
       replicas: 1
@@ -147,7 +143,6 @@ services:
       - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200
     depends_on:
       - mongo1
-
 
   mongo-on-update:
     environment:

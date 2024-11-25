@@ -123,10 +123,6 @@ services:
     deploy:
       replicas: 2
 
-  components:
-    deploy:
-      replicas: 2
-
   login:
     deploy:
       replicas: 2

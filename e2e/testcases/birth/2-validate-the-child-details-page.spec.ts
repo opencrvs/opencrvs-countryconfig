@@ -1,9 +1,14 @@
 import { test, expect } from '@playwright/test'
 import { createPIN, goToSection, login } from '../../helpers'
+import { CREDENTIALS } from '../../constants'
 
 test.describe("2. Validate the child's details page", () => {
   test.beforeEach(async ({ page }) => {
-    await login(page, 'k.mweene', 'test')
+    await login(
+      page,
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
     await createPIN(page)
 
     await page.click('#header_new_event')
@@ -95,7 +100,7 @@ test.describe("2. Validate the child's details page", () => {
     })
 
     test('2.1.3 Enter Field as NULL', async ({ page }) => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
 
       /*
        * Expected result: should throw error in application review page:
@@ -132,7 +137,7 @@ test.describe("2. Validate the child's details page", () => {
     })
 
     test('2.3.2 Set the field as null', async ({ page }) => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
 
       /*
        * Expected result: should throw error in application review page:
@@ -198,7 +203,7 @@ test.describe("2. Validate the child's details page", () => {
     })
 
     test('2.4.4 Set the field as null', async ({ page }) => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
 
       /*
        * Expected result: should throw error in application review page:
@@ -267,7 +272,7 @@ test.describe("2. Validate the child's details page", () => {
     })
 
     test('2.5.4 Set the field as null', async ({ page }) => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
 
       /*
        * Expected result: should throw error in application review page:
@@ -283,7 +288,7 @@ test.describe("2. Validate the child's details page", () => {
 
   test.describe('2.6 Validate place of delivery field', async () => {
     test('2.6.1 Keep field as null', async ({ page }) => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
 
       /*
        * Expected result: should throw error in application review page:

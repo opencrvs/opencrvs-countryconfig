@@ -1,10 +1,15 @@
 import { expect, test } from '@playwright/test'
 import { createPIN, login } from '../../helpers'
 import { validateSectionButtons } from '../../helpers'
+import { CREDENTIALS } from '../../constants'
 
 test.describe('1. Marriage event validation', () => {
   test.beforeEach(async ({ page }) => {
-    await login(page, 'k.mweene', 'test')
+    await login(
+      page,
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
     await createPIN(page)
   })
 
@@ -122,6 +127,7 @@ test.describe('1. Marriage event validation', () => {
     await test.step('1.11.3. Confirm "Save & Exit" button', async () => {
       await page.getByText('Save & Exit', { exact: true }).click()
       await page.getByText('Confirm', { exact: true }).click()
+      await page.waitForTimeout(500) // because the page is shown twice
       await expect(
         page.getByRole('button', { name: 'In progress' })
       ).toBeVisible()
@@ -157,6 +163,7 @@ test.describe('1. Marriage event validation', () => {
       await page.getByText('Exit', { exact: true }).click()
 
       await page.getByText('Confirm', { exact: true }).click()
+      await page.waitForTimeout(500) // because the page is shown twice
       await expect(
         page.getByRole('button', { name: 'In progress' })
       ).toBeVisible()
@@ -172,8 +179,12 @@ test.describe('1. Marriage event validation', () => {
     await page.getByText('Continue', { exact: true }).click()
 
     await test.step('1.13.3. Delete declaration from the 3 dot menu', async () => {
-      await page.click('#eventToggleMenuToggleButton')
-      await page.getByText('Delete declaration', { exact: true }).click()
+      await page.click('#eventToggleMenu-dropdownMenu')
+      await page
+        .locator('#eventToggleMenu-dropdownMenu')
+        .getByRole('listitem')
+        .filter({ hasText: 'Delete declaration' })
+        .click()
       await page.getByText('Confirm', { exact: true }).click()
       await expect(
         page.getByText('No records in progress', { exact: true })
