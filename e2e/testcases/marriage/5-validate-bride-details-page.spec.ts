@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { createPIN, goToSection, login } from '../../helpers'
 
-test.describe("4. Validate the bride's details page", () => {
+test.describe("5. Validate the bride's details page", () => {
   test.beforeEach(async ({ page }) => {
     await login(page, 'k.mweene', 'test')
     await createPIN(page)
