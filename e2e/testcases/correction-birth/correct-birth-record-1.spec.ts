@@ -34,7 +34,7 @@ test.describe('1. Correct record - 1', () => {
     familyName: faker.name.firstName('female'),
     gender: 'Female',
     birthDate: format(
-      subDays(new Date(), Math.ceil(50 * Math.random())),
+      subDays(new Date(), Math.ceil(10 * Math.random())),
       'yyyy-MM-dd'
     ),
     birthLocation: 'Tembwe Rural Health Centre',

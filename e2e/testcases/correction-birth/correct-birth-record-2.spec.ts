@@ -20,7 +20,7 @@ import {
   fetchDeclaration
 } from '../birth/helpers'
 import { BirthDeclaration, BirthInputDetails } from '../birth/types'
-import { format, parseISO, subDays } from 'date-fns'
+import { format, parseISO, subYears } from 'date-fns'
 import { CREDENTIALS } from '../../constants'
 
 test.describe.serial('Correct record - 2', () => {
@@ -34,7 +34,7 @@ test.describe.serial('Correct record - 2', () => {
     firstNames: faker.name.firstName('female'),
     familyName: faker.name.firstName('female'),
     birthDate: format(
-      subDays(new Date(), Math.ceil(50 * Math.random() + 365 * 25)),
+      subYears(new Date(), 25 + Math.ceil(10 * Math.random())),
       'yyyy-MM-dd'
     ),
     email: faker.internet.email(),

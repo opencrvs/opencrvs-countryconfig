@@ -34,7 +34,7 @@ test.describe.serial(' Correct record - 5', () => {
     familyName: faker.name.firstName('female'),
     gender: 'Female',
     birthDate: format(
-      subDays(new Date(), Math.ceil(50 * Math.random())),
+      subDays(new Date(), Math.ceil(10 * Math.random())),
       'yyyy-MM-dd'
     ),
     placeOfBirth: 'Other',
