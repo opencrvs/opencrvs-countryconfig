@@ -173,7 +173,7 @@ test.describe("4. Validate the bride's details page", () => {
     })
 
     test('2.1.3 Enter Field as NULL', async ({ page }) => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
 
       /*
        * Expected result: should throw error in application review page:
