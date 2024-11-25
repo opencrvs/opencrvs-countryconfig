@@ -1,9 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    "monorepo:lerna"
-  ],
+  "extends": ["config:recommended", "monorepo:lerna", ":semanticCommits"],
   "lockFileMaintenance": {
     "enabled": true
   },
@@ -13,5 +10,16 @@
     "after 5pm every weekday",
     "before 3am every weekday",
     "every weekend"
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["Security"]
+  },
+  "osvVulnerabilityAlerts": true,
+  "packageRules": [
+    {
+      "updateTypes": ["patch"],
+      "enabled": false
+    }
   ]
 }

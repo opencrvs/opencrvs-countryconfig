@@ -45,9 +45,8 @@
   cron:
     user: '{{ crontab_user }}'
     name: 'cleanup docker images'
-    minute: '0'
-    hour: '0'
     job: '/usr/bin/docker system prune -af >> /var/log/docker-prune.log'
+    state: absent
 
 - name: Check if Docker group exists
   command: getent group docker

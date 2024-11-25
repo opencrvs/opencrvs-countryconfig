@@ -1856,7 +1856,6 @@ export type Registration = {
   informantType?: Maybe<Scalars['String']>
   informantsSignature?: Maybe<Scalars['String']>
   informantsSignatureURI?: Maybe<Scalars['String']>
-  mosipAid?: Maybe<Scalars['String']>
   otherInformantType?: Maybe<Scalars['String']>
   page?: Maybe<Scalars['String']>
   paperFormID?: Maybe<Scalars['String']>
@@ -1891,7 +1890,6 @@ export type RegistrationInput = {
   informantType?: InputMaybe<Scalars['String']>
   informantsSignature?: InputMaybe<Scalars['String']>
   location?: InputMaybe<LocationInput>
-  mosipAid?: InputMaybe<Scalars['String']>
   otherInformantType?: InputMaybe<Scalars['String']>
   page?: InputMaybe<Scalars['String']>
   paperFormID?: InputMaybe<Scalars['String']>

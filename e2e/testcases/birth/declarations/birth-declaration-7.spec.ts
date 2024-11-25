@@ -1,6 +1,18 @@
 import { test, expect, type Page } from '@playwright/test'
-import { createPIN, goToSection, login } from '../../../helpers'
+import {
+  assignRecord,
+  continueForm,
+  createPIN,
+  drawSignature,
+  expectOutboxToBeEmpty,
+  getAction,
+  goToSection,
+  login,
+  uploadImage,
+  uploadImageToSection
+} from '../../../helpers'
 import faker from '@faker-js/faker'
+import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('7. Birth declaration case - 7', () => {
   let page: Page
@@ -31,7 +43,11 @@ test.describe.serial('7. Birth declaration case - 7', () => {
 
   test.describe('7.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await login(page, 'k.bwalya', 'test')
+      await login(
+        page,
+        CREDENTIALS.FIELD_AGENT.USERNAME,
+        CREDENTIALS.FIELD_AGENT.PASSWORD
+      )
       await createPIN(page)
       await page.click('#header_new_event')
       await page.getByLabel('Birth').click()
@@ -53,12 +69,10 @@ test.describe.serial('7. Birth declaration case - 7', () => {
           exact: true
         })
         .click()
-
-      await page.getByRole('button', { name: 'Continue' }).click()
+      await continueForm(page)
     })
 
     test('7.1.2 Fill informant details', async () => {
-      await page.waitForTimeout(500)
       await page.locator('#informantType').click()
       await page
         .getByText(declaration.informantType, {
@@ -72,25 +86,50 @@ test.describe.serial('7. Birth declaration case - 7', () => {
 
     test("7.1.3 Fill mother's details", async () => {
       await page.getByLabel("Mother's details are not available").check()
-      await page.waitForTimeout(500)
-      await page.getByRole('button', { name: 'Continue' }).click()
+      await continueForm(page)
     })
 
     test("7.1.4 Fill father's details", async () => {
       await page.getByLabel("Father's details are not available").check()
-
-      await page.getByRole('button', { name: 'Continue' }).click()
+      await continueForm(page)
     })
 
-    test.skip('7.1.5 Add supporting documents', async () => {
-      goToSection(page, 'documents')
+    test('7.1.5 Add supporting documents', async () => {
+      await goToSection(page, 'documents')
+      await uploadImage(
+        page,
+        page.locator('button[name="uploadDocForChildDOB"]')
+      )
+
+      /*
+       * Expected result:
+       * As mother and father's details are not given, upload document for mother and father should not be visible
+       */
+      await expect(page.locator('#uploadDocForMother')).toBeHidden()
+      await expect(page.locator('#uploadDocForFather')).toBeHidden()
+
+      await uploadImageToSection({
+        page,
+        sectionLocator: page.locator('#uploadDocForInformant'),
+        sectionTitle: 'Birth certificate',
+        buttonLocator: page.locator('button[name="uploadDocForInformant"]')
+      })
+
+      await uploadImageToSection({
+        page,
+        sectionLocator: page.locator('#uploadDocForProofOfLegalGuardian'),
+        sectionTitle: 'Proof of legal guardianship',
+        buttonLocator: page.locator(
+          'button[name="uploadDocForProofOfLegalGuardian"]'
+        )
+      })
     })
 
     test('7.1.6 Go to preview', async () => {
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
     })
 
-    test('7.1.7 Verify informations in preview page', async () => {
+    test('7.1.7 Verify information on preview page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
@@ -139,7 +178,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        * - Informant's Email
        */
       await expect(page.locator('#informant-content #Email')).toContainText(
-        'Must be a valid email address'
+        required
       )
       /*
        * Expected result: should require
@@ -186,7 +225,16 @@ test.describe.serial('7. Birth declaration case - 7', () => {
       )
     })
 
-    test('7.1.8 Send for review', async () => {
+    test('7.1.8 Fill up informant signature', async () => {
+      await page.getByRole('button', { name: 'Sign' }).click()
+      await drawSignature(page)
+      await page
+        .locator('#informantSignature_modal')
+        .getByRole('button', { name: 'Apply' })
+        .click()
+    })
+
+    test('7.1.9 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
@@ -197,9 +245,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        */
       expect(page.url().includes('registration-home')).toBeTruthy()
 
-      await expect(page.locator('#navigation_outbox')).not.toContainText('1', {
-        timeout: 1000 * 30
-      })
+      await expectOutboxToBeEmpty(page)
 
       await page.getByRole('button', { name: 'Sent for review' }).click()
 
@@ -216,7 +262,11 @@ test.describe.serial('7. Birth declaration case - 7', () => {
 
   test.describe('7.2 Declaration Review by RA', async () => {
     test('7.2.1 Navigate to the declaration review page', async () => {
-      await login(page, 'f.katongo', 'test')
+      await login(
+        page,
+        CREDENTIALS.REGISTRATION_AGENT.USERNAME,
+        CREDENTIALS.REGISTRATION_AGENT.PASSWORD
+      )
       await createPIN(page)
       await page.getByRole('button', { name: 'In Progress' }).click()
       await page.getByRole('button', { name: 'Field Agents' }).click()
@@ -225,12 +275,12 @@ test.describe.serial('7. Birth declaration case - 7', () => {
           name: `${declaration.child.name.firstNames} ${declaration.child.name.familyName}`
         })
         .click()
-      await page.getByLabel('Assign record').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-      await page.getByRole('button', { name: 'Update', exact: true }).click()
+      await assignRecord(page)
+      await page.getByRole('button', { name: 'Action' }).first().click()
+      await getAction(page, 'Update declaration').click()
     })
 
-    test('7.2.2 Verify informations in preview page', async () => {
+    test('7.2.2 Verify information on preview page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name

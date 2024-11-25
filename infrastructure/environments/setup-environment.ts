@@ -221,8 +221,7 @@ async function promptAndStoreAnswer(
 }
 
 function generateLongPassword() {
-  const chars =
-    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_'
+  const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let result = ''
   for (let i = 16; i > 0; --i)
     result += chars[Math.floor(Math.random() * chars.length)]
@@ -330,7 +329,7 @@ const sshQuestions = [
     name: 'sshHost',
     type: 'text' as const,
     message:
-      'What is the target server IP address? (Note: For "production" environment with 2, 3 or 5 servers, this is the IP address of the manager server',
+      'What is the target server IP address? (Note: For "production" environment with 2, 3 or 5 servers, this is the IP address of the manager server)',
     valueType: 'VARIABLE' as const,
     validate: notEmpty,
     valueLabel: 'SSH_HOST',
@@ -371,6 +370,19 @@ const sshKeyQuestions = [
     valueLabel: 'SSH_KEY',
     initial: process.env.SSH_KEY,
     scope: 'ENVIRONMENT' as const
+  }
+]
+
+const countryQuestions = [
+  {
+    name: 'country',
+    type: 'text' as const,
+    message:
+      'What is the ISO 3166-1 alpha-3 country-code? (e.g. "NZL" for New Zealand) Reference: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3',
+    valueType: 'VARIABLE' as const,
+    valueLabel: 'COUNTRY',
+    initial: process.env.COUNTRY,
+    scope: 'REPOSITORY' as const
   }
 ]
 
@@ -755,6 +767,7 @@ ALL_QUESTIONS.push(
   ...sshQuestions,
   ...sshKeyQuestions,
   ...infrastructureQuestions,
+  ...countryQuestions,
   ...databaseAndMonitoringQuestions,
   ...notificationTransportQuestions,
   ...smsQuestions,
@@ -1027,6 +1040,7 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
   const answerOrExisting = (
     variable: string | undefined,
     existingValue: Variable | undefined,
+    // eslint-disable-next-line no-unused-vars
     fn: (value: string | undefined) => string
   ) => fn(variable || existingValue?.value) || ''
 

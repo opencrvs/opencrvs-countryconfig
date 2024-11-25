@@ -1,9 +1,14 @@
 import { expect, test } from '@playwright/test'
-import { createPIN, goToSection, login } from '../../helpers'
+import { continueForm, createPIN, goToSection, login } from '../../helpers'
+import { CREDENTIALS } from '../../constants'
 
 test.describe('6. Validate Marriage details page', () => {
   test.beforeEach(async ({ page }) => {
-    await login(page, 'k.mweene', 'test')
+    await login(
+      page,
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
     await createPIN(page)
     await page.click('#header_new_event')
     await page.getByText('Marriage', { exact: true }).click()
@@ -12,11 +17,11 @@ test.describe('6. Validate Marriage details page', () => {
     await page.getByPlaceholder('dd').fill('02')
     await page.getByPlaceholder('mm').fill('03')
     await page.getByPlaceholder('yyyy').fill('1995')
-    await page.getByText('Continue', { exact: true }).click()
+    await continueForm(page)
     await page.getByPlaceholder('dd').fill('01')
     await page.getByPlaceholder('mm').fill('05')
     await page.getByPlaceholder('yyyy').fill('1993')
-    await page.getByText('Continue', { exact: true }).click()
+    await continueForm(page)
   })
 
   test('1.1. Enter date Less than the current date But after Groom and Bride DOB', async ({
