@@ -137,7 +137,7 @@
   </text>
   <g clip-path="url(#clip8_948_3199)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      {{#ifCond ageOfGroomInYears '===' undefined }}
+      {{#ifCond ageOfBrideInYears '===' undefined }}
       <tspan x="312" y="314.104">{{brideBirthDate}}</tspan>
       {{else}}
       <tspan x="312" y="314.104">{{ageOfBrideInYears}} years old</tspan>

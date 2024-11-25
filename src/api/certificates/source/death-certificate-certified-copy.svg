@@ -72,7 +72,7 @@
   </text>
   <g clip-path="url(#clip2_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="188.104">{{formattedAddress districtPrimaryDeceased statePrimaryDeceased countryPrimaryDeceased}}</tspan>
+      <tspan x="312" y="188.104">{{ districtPrimaryDeceased }}{{ internationalDistrictPrimaryDeceased }}, {{ statePrimaryDeceased }}{{ internationalStatePrimaryDeceased }}, {{ countryPrimaryDeceased }}</tspan>
     </text>
   </g>
   <line x1="70" y1="194.5" x2="514" y2="194.5" stroke="#ECECEC" />

@@ -24,19 +24,6 @@ export function debug(): Handlebars.HelperDelegate {
   }
 }
 
-export function formattedAddress(): Handlebars.HelperDelegate {
-  return function (
-    this: any,
-    address1: string,
-    address2: string,
-    address3: string
-  ) {
-    let address = address1 ? `${address1}, ` : ''
-    address += address2 ? `${address2}, ` : ''
-    address += address3 ? address2 : ''
-    return address
-  }
-}
 export function ordinalFormatDate(): Handlebars.HelperDelegate {
   return function (dateString: string) {
     const date = new Date(dateString.trim())
