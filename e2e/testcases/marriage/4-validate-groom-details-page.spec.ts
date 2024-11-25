@@ -13,9 +13,7 @@ test.describe("4. Validate the groom's details page", () => {
     await expect(page.getByLabel('Marriage')).toBeVisible()
 
     await page.getByLabel('Marriage').click()
-    await page.getByRole('button', { name: 'Continue' }).click()
-
-    await page.getByRole('button', { name: 'Continue' }).click()
+    await goToSection(page, 'groom')
 
     await expect(page.getByText("Groom's details")).toBeVisible()
   })
