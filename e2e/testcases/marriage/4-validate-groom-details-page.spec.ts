@@ -56,7 +56,7 @@ test.describe("4. Validate the groom's details page", () => {
       await expect(page.locator('#groomNationalId_error')).toHaveText(
         'Required for registration'
       )
-      goToSection(page, 'preview')
+      await goToSection(page, 'preview')
 
       await expect(
         page.locator('#required_label_groom_groomNationalId')
