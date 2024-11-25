@@ -149,8 +149,12 @@ export const documentsSection = {
           initialValue: '',
           maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.FATHER,
-          hideAsterisk: true,
-          validator: [],
+          validator: [
+            {
+              operation: 'isFatherRecognitionDocNeeded',
+              parameters: []
+            }
+          ],
           options: [
             {
               value: birthDocumentType.NATIONAL_ID,
