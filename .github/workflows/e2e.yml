@@ -1,0 +1,101 @@
+name: E2E
+run-name: Deploy to ${{ github.event.inputs.environment }} and E2E
+on:
+  push:
+    branches:
+      - e2e/*
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Environment to deploy to
+        required: true
+        default: 'development'
+        options:
+          - development
+
+jobs:
+  discover-tests:
+    name: Discover test directories
+    runs-on: ubuntu-22.04
+    outputs:
+      test_matrix: ${{ steps.list-tests.outputs.test_matrix }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: List Test Directories
+        id: list-tests
+        run: |
+          test_dirs=$(find ./e2e/testcases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | jq -R -s -c 'split("\n")[:-1]')
+          echo "Test directories: $test_dirs"
+          echo "test_matrix=$test_dirs" >> $GITHUB_OUTPUT
+          echo "test_matrix=$test_dirs"
+
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/yarn/v6
+          key: node-${{ hashFiles('**/yarn.lock', format('{0}/{1}',matrix.package,'package.json')) }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: yarn
+
+  test:
+    needs: [discover-tests]
+    runs-on: ubuntu-22.04
+    environment: ${{ github.event.inputs.environment || 'development' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        test_dir: ${{ fromJson(needs.discover-tests.outputs.test_matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Check for Spec Files
+        id: check-specs
+        run: |
+          if ls ./e2e/testcases/${{ matrix.test_dir }}/*.spec.ts > /dev/null 2>&1; then
+            echo "::set-output name=has_spec_files::true"
+          else
+            echo "::set-output name=has_spec_files::false"
+          fi
+
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/yarn/v6
+          key: node-${{ hashFiles('**/yarn.lock', format('{0}/{1}',matrix.package,'package.json')) }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        if: steps.check-specs.outputs.has_spec_files == 'true'
+        run: yarn
+
+      - name: Install Playwright Browsers
+        if: steps.check-specs.outputs.has_spec_files == 'true'
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright Tests
+        if: steps.check-specs.outputs.has_spec_files == 'true'
+        run: npx playwright test ./e2e/testcases/${{ matrix.test_dir }}
+        env:
+          DOMAIN: '${{ vars.DOMAIN }}'
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v4
+        if: steps.check-specs.outputs.has_spec_files == 'true'
+        with:
+          name: playwright-report-${{ matrix.test_dir }}
+          path: playwright-report/
+          retention-days: 30
