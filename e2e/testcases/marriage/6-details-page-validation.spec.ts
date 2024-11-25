@@ -70,7 +70,7 @@ test.describe('6. Validate Marriage details page', () => {
     await page.getByPlaceholder('mm').fill('05')
     await page.getByPlaceholder('yyyy').fill('1960')
     await page.getByText('Marriage details').click()
-    await expect(page.locator('#marriageDate_error')).toContainText(
+    await expect(page.locator('#marriageDate_error')).toHaveText(
       'Must be a valid date of marriage'
     )
   })
