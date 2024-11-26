@@ -256,7 +256,7 @@ fi
 
 EVENTS_USER=$(echo $(checkIfUserExists "events"))
 if [[ $EVENTS_USER != "FOUND" ]]; then
-  echo "events user not found"
+  echo "events user not found --> creating"
   mongo $(mongo_credentials) --host $HOST <<EOF
   use events
   db.createUser({
@@ -266,7 +266,7 @@ if [[ $EVENTS_USER != "FOUND" ]]; then
   })
 EOF
 else
-  echo "events user exists"
+  echo "events user exists --> updating credentials"
   mongo $(mongo_credentials) --host $HOST <<EOF
   use events
   db.updateUser('events', {
