@@ -790,10 +790,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.4.tgz#d686a7f42b9a7787f55637cb80fdd025cd0b99b9"
-  integrity sha512-6DSbNcP6s05nF98eYY66WOd9NjSzSJsTqb2fcWtrPU0vUICVFDYR7gWB2GQotxYX/Hef+97hYaLQC4Dpe7HPrw==
+"@opencrvs/toolkit@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.5.tgz#dbd3395b561c1eb3527b8cfc28b6e1dd301671f3"
+  integrity sha512-Ex45aFUJ1iQwpYGMHhxVbhpuQFqVlmdSkNXz1phkM7KAzNtngL2KGIJCc6TFv4GKOHU/lLEfmGyrhIDCKlA7fQ==
 
 "@rollup/rollup-android-arm-eabi@4.24.0":
   version "4.24.0"
