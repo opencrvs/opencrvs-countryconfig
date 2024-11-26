@@ -10,6 +10,7 @@
  */
 window.config = {
   AUTH_API_URL: 'http://localhost:7070/auth/',
+  API_GATEWAY_URL: 'http://localhost:7070/',
   CONFIG_API_URL: 'http://localhost:2021',
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',

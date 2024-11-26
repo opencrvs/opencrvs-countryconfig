@@ -10,6 +10,7 @@
  */
 window.config = {
   AUTH_API_URL: 'https://gateway.{{hostname}}/auth/',
+  API_GATEWAY_URL: 'https://gateway.{{hostname}}/',
   CONFIG_API_URL: 'https://config.{{hostname}}',
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
