@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.6.0 (TBD)
+## 1.6.0 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.5.0...v1.6.0)
 
 ### Breaking changes
 
