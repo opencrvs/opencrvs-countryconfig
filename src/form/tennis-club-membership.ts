@@ -11,9 +11,9 @@
 
 import { EventConfig } from '@opencrvs/toolkit/events'
 
-const defineConfig = (config: EventConfig) => EventConfig.parse(config)
+const defineEvent = (config: EventConfig) => EventConfig.parse(config)
 
-export const tennisClubMembershipEvent = defineConfig({
+export const tennisClubMembershipEvent = defineEvent({
   id: 'TENNIS_CLUB_MEMBERSHIP',
   summary: {
     title: {
