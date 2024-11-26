@@ -306,8 +306,8 @@ docker_stack_deploy() {
 
 get_opencrvs_version() {
   PREVIOUS_VERSION=$(configured_ssh "docker service ls | grep opencrvs_base | cut -d ':' -f 2")
-  echo "Previous opencrvs version: $PREVIOUS_VERSION" 
-  echo "Current opencrvs version: $VERSION" 
+  echo "Previous opencrvs version: $PREVIOUS_VERSION"
+  echo "Current opencrvs version: $VERSION"
 }
 
 reset_metabase() {
@@ -335,6 +335,7 @@ export PERFORMANCE_MONGODB_PASSWORD=`generate_password`
 export OPENHIM_MONGODB_PASSWORD=`generate_password`
 export WEBHOOKS_MONGODB_PASSWORD=`generate_password`
 export NOTIFICATION_MONGODB_PASSWORD=`generate_password`
+export EVENTS_MONGODB_PASSWORD=`generate_password`
 
 #
 # Elasticsearch credentials
