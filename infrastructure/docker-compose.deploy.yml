@@ -633,18 +633,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.auth.rule=Host(`auth.{{hostname}}`)'
-        - 'traefik.http.services.auth.loadbalancer.server.port=4040'
-        - 'traefik.http.routers.auth.tls=true'
-        - 'traefik.http.routers.auth.tls.certresolver=certResolver'
-        - 'traefik.http.routers.auth.entrypoints=web,websecure'
         - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.auth.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.auth.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.auth.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.auth.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.auth.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.auth.headers.stspreload=true'
       replicas: 1
     networks:
       - overlay_net
