@@ -9,11 +9,9 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { EventConfig } from '@opencrvs/toolkit/events'
+import { defineConfig } from '@opencrvs/toolkit/events'
 
-const defineEvent = (config: EventConfig) => EventConfig.parse(config)
-
-export const tennisClubMembershipEvent = defineEvent({
+export const tennisClubMembershipEvent = defineConfig({
   id: 'TENNIS_CLUB_MEMBERSHIP',
   label: {
     defaultMessage: 'Tennis club membership application',
