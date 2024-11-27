@@ -1265,10 +1265,10 @@ form.section.information.death.bullet2,,As the legal Informant it is important t
 form.section.information.death.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts."
 form.section.information.name,,Information,Informations
-form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,last 30 days,les 30 derniers jours
-form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,last 7 days,les 7 derniers jours
-form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,last 90 days,les 90 derniers jours
-form.section.label.timePeriodLastYear,Label for option of time period select: last year,last year,l'année dernière
+form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,Last 30 days,les 30 derniers jours
+form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,Last 7 days,les 7 derniers jours
+form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,Last 90 days,les 90 derniers jours
+form.section.label.timePeriodLastYear,Label for option of time period select: last year,Last year,l'année dernière
 form.section.marriageEvent.date,,Date of marriage,Date du mariage
 form.section.marriageEvent.name,,Marriage event details,Détails de l'événement de mariage
 form.section.marriageEvent.title,,Marriage details,Détails du mariage
