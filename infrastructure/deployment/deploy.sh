@@ -271,7 +271,7 @@ split_and_join() {
 cleanup_docker_images()
 {
    echo "Cleaning up the docker images"
-   /usr/bin/docker system prune -af | sudo tee -a /var/log/docker-prune.log > /dev/null
+   configured_ssh "/usr/bin/docker system prune -af | sudo tee -a /var/log/docker-prune.log > /dev/null"
 }
 
 docker_stack_deploy() {
