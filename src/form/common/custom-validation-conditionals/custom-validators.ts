@@ -154,7 +154,7 @@ export function isFatherRecognitionDocNeeded() {
       return {
         message: {
           id: 'validations.isFatherRecognitionDocNeeded',
-          defaultMessage: 'Father CIN is required for recognition',
+          defaultMessage: 'Required for recognition',
           description:
             'The error message appears when father CIN is not provided on recognition'
         }
