@@ -143,3 +143,23 @@ export function isDateNotOlderThanDays(limit: number) {
     return undefined
   }
 }
+
+export function isFatherRecognitionDocNeeded() {
+  return (_: string, $draft: Record<string, any>) => {
+    if (
+      Array.from({ length: 10 }, (_, i) => 'typeOfMention__' + i).some(
+        (key) => $draft?.mention[key] === 'RECOGNITION'
+      )
+    ) {
+      return {
+        message: {
+          id: 'validations.isFatherRecognitionDocNeeded',
+          defaultMessage: 'Required for recognition',
+          description:
+            'The error message appears when father CIN is not provided on recognition'
+        }
+      } satisfies ValidationResult
+    }
+    return undefined
+  }
+}
