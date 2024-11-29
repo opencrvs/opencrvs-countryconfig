@@ -147,7 +147,7 @@ export function isDateNotOlderThanDays(limit: number) {
 export function isFatherRecognitionDocNeeded() {
   return (_: string, $draft: Record<string, any>) => {
     if (
-      Array.from({ length: 10 }, (_, i) => 'typeOfMention__' + i).some(
+      Array.from({ length: 10 }, (_, i) => 'typeOfMention__' + i)?.some(
         (key) => $draft?.mention[key] === 'RECOGNITION'
       )
     ) {
