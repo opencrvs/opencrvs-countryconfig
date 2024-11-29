@@ -1791,6 +1791,7 @@ print.certificate.certificatePreview,The title for certificate preview form,Cert
 print.certificate.collectPayment,The label for collect payment paragraph,"Please collect the payment, print the receipt and hand it over to the payee.","Veuillez encaisser le paiement, imprimer le reçu et le remettre au bénéficiaire."
 print.certificate.collector.father,The label for select value when father is the collector of certificate,Father is collecting,Père
 print.certificate.collector.form.error,Form level error for collector form,Please select who is collecting the certificate,Veuillez sélectionner la personne qui collecte le certificat
+print.certificate.collector.form.error.template,Form level error for collector form template type,Please select certificate type,Veuillez sélectionner le type de certificat
 print.certificate.collector.idCheck.title,The title for id check component,Verify their identity,Vérifier leur identité
 print.certificate.collector.idCheckDialog.title,The title for the dialog when details of the collector not verified,Print without proof of ID?,Continuer sans preuve d'identité ?
 print.certificate.collector.informant,The label for select value when informant is the collector of certificate,Informant is collecting,Informateur
