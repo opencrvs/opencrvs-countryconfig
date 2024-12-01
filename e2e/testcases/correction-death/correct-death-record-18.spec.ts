@@ -26,7 +26,7 @@ test.describe.serial(' Correct record - 18', () => {
     firstNames: faker.name.firstName('female'),
     familyName: faker.name.firstName('female'),
     gender: 'Female',
-    age: random(20, 100),
+    age: random(20, 45),
     nationality: 'Canada',
     id: faker.random.numeric(10),
     idType: 'Passport',

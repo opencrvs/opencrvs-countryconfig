@@ -39,7 +39,7 @@ const declaration = {
       familyName: faker.name.lastName('male') + generateRandomSuffix()
     },
     gender: 'male',
-    age: random(20, 100),
+    age: random(50, 100),
     nationality: 'FAR',
     identifier: {
       type: 'NATIONAL_ID',

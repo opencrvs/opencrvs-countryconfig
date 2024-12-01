@@ -32,7 +32,7 @@ test.describe.serial(' Correct record - 7', () => {
   const updatedMotherDetails = {
     firstNames: faker.name.firstName('male'),
     familyName: faker.name.firstName('male'),
-    age: random(20, 100),
+    age: random(20, 45),
     email: faker.internet.email(),
     nationality: 'Nauru',
     id: faker.random.numeric(10),

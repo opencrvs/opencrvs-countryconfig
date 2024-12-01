@@ -108,7 +108,7 @@ export async function createDeclaration(token: string, details: BirthDetails) {
             birthDate:
               details.child.birthDate ||
               format(
-                subDays(new Date(), Math.ceil(50 * Math.random())),
+                subDays(new Date(), 11 + Math.ceil(10 * Math.random())),
                 'yyyy-MM-dd'
               ),
             identifier: []
@@ -162,7 +162,7 @@ export async function createDeclaration(token: string, details: BirthDetails) {
                 familyName: details.mother.familyName
               }
             ],
-            ageOfIndividualInYears: details.mother.age || random(20, 100),
+            ageOfIndividualInYears: details.mother.age || random(50, 100),
             nationality: ['FAR'],
             identifier: [
               {
@@ -227,7 +227,7 @@ export async function createDeclaration(token: string, details: BirthDetails) {
             birthDate:
               details.father.birthDate ||
               format(
-                subYears(new Date(), 16 + Math.ceil(10 * Math.random())),
+                subYears(new Date(), 36 + Math.ceil(10 * Math.random())),
                 'yyyy-MM-dd'
               ),
             nationality: ['FAR'],
@@ -277,7 +277,7 @@ export async function createDeclaration(token: string, details: BirthDetails) {
               }
             ],
             birthDate: format(
-              subYears(new Date(), 16 + Math.ceil(10 * Math.random())),
+              subYears(new Date(), 36 + Math.ceil(10 * Math.random())),
               'yyyy-MM-dd'
             ),
             nationality: ['FAR'],

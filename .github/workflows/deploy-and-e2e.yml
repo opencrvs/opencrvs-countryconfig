@@ -138,11 +138,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always() && steps.check-specs.outputs.has_spec_files == 'true'
         with:
-          name: >-
-            playwright-report-
-            ${{ github.event.inputs.core-image-tag || needs.get-core-commit.outputs.latest_commit_sha }}-
-            ${{ github.event.inputs.countryconfig-image-tag || needs.get-country-config-commit.outputs.short_sha }}-
-            ${{ matrix.test_dir }}
+          name: playwright-report-${{github.event.inputs.core-image-tag || needs.get-core-commit.outputs.latest_commit_sha}}-${{github.event.inputs.countryconfig-image-tag || needs.get-country-config-commit.outputs.short_sha}}-${{matrix.test_dir}}
           path: playwright-report/
           retention-days: 30
 
