@@ -8,6 +8,7 @@
     "module": "commonjs",
     "outDir": "build/dist",
     "sourceMap": true,
+    "resolveJsonModule": true,
     "moduleResolution": "node",
     "rootDir": ".",
     "lib": ["esnext.asynciterable", "es6", "es2017", "es2019", "es2022"],
@@ -18,12 +19,11 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "types": ["fhir", "geojson"]
+    "types": ["jest", "fhir", "geojson"]
   },
   "include": ["src/**/*.ts", "infrastructure/environments/**/*.ts", "typings"],
   "exclude": [
     "node_modules",
-    "cypress",
     "build",
     "scripts",
     "acceptance-tests",

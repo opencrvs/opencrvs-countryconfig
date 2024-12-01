@@ -111,6 +111,20 @@ export const hideIfInformantMotherOrFather = [
 export const isInformantSpouse =
   '!values.informantType || values.informantType==="SPOUSE"'
 
+export const hideIfDeceasedAddressNotAvailable = [
+  {
+    action: 'hide',
+    expression: '!(draftData && draftData.deceased?.countryPrimaryDeceased)'
+  }
+]
+
+export const hideIfMotherAddressNotAvailable = [
+  {
+    action: 'hide',
+    expression: '!(draftData && draftData.mother?.countryPrimaryMother)'
+  }
+]
+
 export const hideIfInformantSpouse = [
   {
     action: 'hide',
@@ -302,7 +316,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['mother.iD']
+        parameters: ['mother.motherNationalId']
       }
     ]
   } else if (configCase === 'mother') {
@@ -313,7 +327,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['father.iD']
+        parameters: ['father.fatherNationalId']
       }
     ]
   } else if (configCase === 'deceased') {
@@ -324,7 +338,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['informant.informantID']
+        parameters: ['informant.informantNationalId']
       }
     ]
   } else if (configCase === 'groom') {
@@ -335,7 +349,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['bride.iD']
+        parameters: ['bride.brideNationalId']
       }
     ]
   } else if (configCase === 'bride') {
@@ -346,7 +360,7 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['groom.iD']
+        parameters: ['groom.groomNationalId']
       }
     ]
   } else {
@@ -358,23 +372,23 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['deceased.deceasedID']
+        parameters: ['deceased.deceasedNationalId']
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['mother.iD']
+        parameters: ['mother.motherNationalId']
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['father.iD']
+        parameters: ['father.fatherNationalId']
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['groom.iD']
+        parameters: ['groom.groomNationalId']
       },
       {
         operation: 'duplicateIDNumber',
-        parameters: ['bride.iD']
+        parameters: ['bride.brideNationalId']
       }
     ]
   }
