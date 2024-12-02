@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { createPIN, getAction, getToken, login } from '../../helpers'
 import faker from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
-import { format, subDays } from 'date-fns'
+import { format, parseISO, subDays } from 'date-fns'
 import {
   ConvertEnumsToStrings,
   createDeclaration,
@@ -137,11 +137,43 @@ test.describe
       .locator('#certificateTemplateId-form-input > span')
       .first()
       .click()
-    await page.getByText('Birth Certificate').click()
+
+    await page.getByText('Birth Certificate', { exact: true }).click()
 
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(
       page.getByText('Please select who is collecting the certificate')
+    ).toBeVisible()
+  })
+
+  test('2.0 Validate the following for "Certify record" page:', async () => {
+    await page.getByLabel('Print and issue to informant (Brother)').check()
+    await page.getByRole('button', { name: 'Continue' }).click()
+    await expect(
+      page.url().includes(`/print/check/${declaration.id}/birth/informant`)
+    ).toBeTruthy()
+  })
+
+  test('2.1 verify informant info:', async () => {
+    await expect(
+      page.url().includes(`/print/check/${declaration.id}/birth/informant`)
+    ).toBeTruthy()
+    await expect(page.locator('#content-name')).toContainText(
+      'Verify their identity'
+    )
+    await expect(
+      page.locator(`text="${declaration.informant.name[0].firstNames}"`)
+    ).toBeVisible()
+    await expect(
+      page.locator(`text="${declaration.informant.name[0].familyName}"`)
+    ).toBeVisible()
+    await expect(
+      page.locator(
+        `text="${format(
+          parseISO(declaration.informant.birthDate),
+          'dd MMMM yyyy'
+        )}"`
+      )
     ).toBeVisible()
   })
 })
