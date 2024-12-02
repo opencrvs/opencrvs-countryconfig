@@ -16,6 +16,7 @@ import {
   confirmRegistration
   // rejectRegistration
 } from '@countryconfig/utils/gateway-api'
+import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 
 export async function eventRegistrationHandler(
   request: Hapi.Request,
@@ -66,4 +67,11 @@ export async function eventRegistrationHandler(
   }
 
   return h.response().code(202)
+}
+
+export const tennisClubMembershipEventHandler = (
+  request: Hapi.Request,
+  h: Hapi.ResponseToolkit
+) => {
+  return h.response(tennisClubMembershipEvent).code(200)
 }

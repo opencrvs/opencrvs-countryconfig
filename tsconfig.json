@@ -5,10 +5,10 @@
       "@countryconfig/*": ["./*"]
     },
     "target": "es6",
-    "module": "commonjs",
+    "module": "Node16",
     "outDir": "build/dist",
     "sourceMap": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "rootDir": ".",
     "lib": ["esnext.asynciterable", "es6", "es2017", "es2019", "es2022"],
     "forceConsistentCasingInFileNames": true,
