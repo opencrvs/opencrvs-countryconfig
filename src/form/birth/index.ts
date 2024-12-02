@@ -176,6 +176,40 @@ export const birthForm: ISerializedForm = {
           fields: [
             // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
             // createCustomFieldExample(),
+            {
+              name: 'redirect',
+              type: 'REDIRECT',
+              custom: true,
+              label: {
+                id: 'form.field.label.redirect',
+                defaultMessage: 'Click here to authorize'
+              },
+              hideInPreview: true,
+              options: {
+                url: '/api/countryconfig/mock-authorizer-flow?opencrvsDraft=${window.location.pathname.split("/")[2]}',
+                callback: {
+                  params: {
+                    authorized: true
+                  },
+                  trigger: 'redirectCallbackFetch'
+                }
+              },
+              validator: []
+            },
+            {
+              name: 'redirectCallbackFetch',
+              type: 'HTTP',
+              custom: true,
+              label: {
+                id: 'form.field.label.empty',
+                defaultMessage: ' '
+              },
+              options: {
+                url: '/api/countryconfig/mock-mosip-server',
+                method: 'GET'
+              },
+              validator: []
+            },
             getFirstNameField(
               'childNameInEnglish',
               [],

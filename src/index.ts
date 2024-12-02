@@ -545,6 +545,17 @@ export async function createServer() {
     }
   })
 
+  server.route({
+    method: 'GET',
+    path: '/mock-authorizer-flow',
+    options: {
+      auth: false
+    },
+    handler: function (request, h) {
+      return h.file(path.join(__dirname, 'mock-authorizer', 'index.html'))
+    }
+  })
+
   server.ext({
     type: 'onRequest',
     method(request: Hapi.Request & { sentryScope?: any }, h) {

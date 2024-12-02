@@ -142,6 +142,9 @@ export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
 export const SIGNATURE = 'SIGNATURE'
+export const HTTP = 'HTTP'
+export const BUTTON = 'BUTTON'
+export const REDIRECT = 'REDIRECT'
 
 export enum RadioSize {
   LARGE = 'large',
@@ -491,6 +494,32 @@ export interface ISignatureFormField extends IFormFieldBase {
   )[]
 }
 
+export interface IHttpFormField extends IFormFieldBase {
+  type: typeof HTTP
+  options: any
+}
+export interface IButtonFormField extends IFormFieldBase {
+  type: typeof BUTTON
+  icon?: string
+  buttonLabel: MessageDescriptor
+  loadingLabel?: MessageDescriptor
+  options: {
+    trigger: string
+    shouldHandleLoadingState?: boolean
+  }
+}
+
+export interface IRedirectFormField extends IFormFieldBase {
+  type: typeof REDIRECT
+  options: {
+    url: string
+    callback?: {
+      trigger: string
+      params: Record<string, any>
+    }
+  }
+}
+
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -524,6 +553,9 @@ export type IFormField =
   | IDividerField
   | IHeading3Field
   | ISignatureFormField
+  | IHttpFormField
+  | IButtonFormField
+  | IRedirectFormField
 
 export interface SelectComponentOption {
   value: string
