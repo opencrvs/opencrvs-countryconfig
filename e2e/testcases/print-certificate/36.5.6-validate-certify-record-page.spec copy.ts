@@ -2,8 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { BirthDeclaration } from '../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
 
-test.describe
-  .serial('5.6.0 Validate the following for "Certify record" page', () => {
+test.describe.serial('7.0 Validate collect payment page', () => {
   let declaration: BirthDeclaration
   let page: Page
 
@@ -15,7 +14,7 @@ test.describe
     await page.close()
   })
 
-  test('5.1 continue with "Print and issue to someone else" redirect to Collector details page', async () => {
+  test('7.1 check collect payment page header', async () => {
     const response = await getDeclarationForPrintCertificate(page)
     declaration = response.declaration
     await page
@@ -30,6 +29,15 @@ test.describe
         .url()
         .includes(`/collector/${declaration.id}/birth/otherCertCollector`)
     ).toBeTruthy()
+
+    await page
+      .locator('#certificateTemplateId-form-input > span')
+      .first()
+      .click()
+
+    await page.getByText('Birth Certificate', { exact: true }).click()
+    await page.getByLabel('Print and issue to informant (Brother)').check()
+    await page.getByRole('button', { name: 'Continue' }).click()
   })
 
   test('5.2 should be able to select "No ID available" and no other ID field will be visible', async () => {

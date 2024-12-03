@@ -9,7 +9,10 @@ import {
 } from '../birth/helpers'
 import { BirthInputDetails, BirthDeclaration } from '../birth/types'
 
-export async function getDeclarationForPrintCertificate(page: Page): Promise<{
+export async function getDeclarationForPrintCertificate(
+  page: Page,
+  options?: Record<string, any>
+): Promise<{
   declaration
   trackingId
 }> {
@@ -21,7 +24,8 @@ export async function getDeclarationForPrintCertificate(page: Page): Promise<{
     child: {
       firstNames: faker.name.firstName(),
       familyName: faker.name.firstName(),
-      gender: 'male'
+      gender: 'male',
+      ...(options && { birthDate: options.child.birthDate })
     },
     informant: {
       type: 'BROTHER'
