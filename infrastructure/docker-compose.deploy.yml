@@ -1027,6 +1027,13 @@ services:
       replicas: 1
       labels:
         - 'traefik.enable=false'
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'mosip-api'
 
   mosip-mock:
     image: ghcr.io/opencrvs/mosip-mock:4de7d22
@@ -1037,6 +1044,13 @@ services:
       replicas: 1
       labels:
         - 'traefik.enable=false'
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'mosip-mock'
 
 secrets:
   jwt-public-key.{{ts}}:
