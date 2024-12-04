@@ -1016,6 +1016,28 @@ services:
       placement:
         constraints:
           - node.labels.data1 == true
+
+  mosip-api:
+    image: ghcr.io/opencrvs/mosip:4de7d22
+    environment:
+      - NODE_ENV=production
+      - MOSIP_WEBHOOK_URL=http://mosip-mock:20240
+      - OPENCRVS_GRAPHQL_GATEWAY_URL=http://gateway:7070
+    deploy:
+      replicas: 1
+      labels:
+        - 'traefik.enable=false'
+
+  mosip-mock:
+    image: ghcr.io/opencrvs/mosip-mock:4de7d22
+    environment:
+      - NODE_ENV=production
+      - OPENCRVS_MOSIP_SERVER_URL=http://mosip-api:2024
+    deploy:
+      replicas: 1
+      labels:
+        - 'traefik.enable=false'
+
 secrets:
   jwt-public-key.{{ts}}:
     external: true
