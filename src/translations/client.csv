@@ -1021,7 +1021,7 @@ form.field.label.informantRelation.headInst,,Head of the institution where the d
 form.field.label.informantRelation.legalGuardian,Label for option Legal Guardian,Legal guardian,Tuteur légal
 form.field.label.informantRelation.mother,Label for option mother,Mother,Mère
 form.field.label.informantRelation.officer,,Officer-in-charge of the road or public space where the death occurred,Officier responsable d'une route ou d'un espace public où le décès a eu lieu.
-form.field.label.informantRelation.other,,Other(Specify),Autre(Précisez)
+form.field.label.informantRelation.other,,Other ({otherInformantType}),Autre ({otherInformantType})
 form.field.label.informantRelation.others,Label for option someone else,Someone else,Autre
 form.field.label.informantRelation.owner,,Owner of the house or building where the death occurred,Propriétaire de la maison ou du bâtiment où le décès a eu lieu.
 form.field.label.informantRelation.sister,Label for option Sister,Sister,Soeur
