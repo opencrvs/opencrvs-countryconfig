@@ -1349,7 +1349,6 @@ integrations.name,Label for name input,Name,Nom
 integrations.nationalIDName,Label for name input for National ID,Name,Nom
 integrations.nationalidAlertDescription,,"A National ID client (eg. MOSIP) can react to birth or death webhooks to create or invalidate NID numbers, and respond to OpenCRVS to provide a temporary ID to children, and link vital events to each other. For more information, visit:","Un client d'identification nationale (par exemple MOSIP) peut réagir aux webhooks de naissance ou de décès pour créer ou invalider des numéros d'identification nationale, et répondre à OpenCRVS pour fournir une identification temporaire aux enfants, et relier les événements d'état civil entre eux. Pour plus d'informations, visitez le site :"
 integrations.newIntegrationDescription,Description to help user fill name and type of a new integration client,Add a unique name and select the type of client you would like to create,Ajoutez un nom unique et sélectionnez le type de client que vous souhaitez créer
-integrations.onlyOneNationalId,,Only one National ID integration is allowed.,Une seule intégration d'identité nationale est autorisée
 integrations.otherAlertDescription,,...Please visit,...Veuillez visiter
 integrations.pageIntroduction,Label for the text integration page intorduction,"For each new client that needs to integrate with OpenCRVS you can create unique client IDs. A number of integration use cases are currently supported, based on both API and webhook technologies.","Pour chaque nouveau client qui doit s'intégrer à OpenCRVS, vous pouvez créer des identifiants client uniques. Un certain nombre de cas d'utilisation de l'intégration sont actuellement pris en charge, sur la base des technologies API et webhook"
 integrations.pageTitle,Title for integrations page,Integrations,Intégrations
@@ -1360,7 +1359,6 @@ integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.supportingDescription,,Supporting description to help user make a decision and navigate the content,Description complémentaire pour aider l'utilisateur à prendre une décision et à naviguer dans le contenu.
 integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement
 integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé
-integrations.type.nationalID,Label for national ID system client,National ID,Carte d'identité nationale
 integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements
 integrations.type.webhook,Label for web hook,Webhook,Webhook
 integrations.uniqueKeyDescription,Label for the unique key description,These unique keys will be required by the client integrating...,Ces clés uniques seront requises par l'interface du système
