@@ -14,6 +14,13 @@
   tags:
     - swap.file.permissions
 
+- name: Ensure 'file' utility is installed
+  ansible.builtin.package:
+    name: file
+    state: present
+  tags:
+    - swap.file.mkswap
+
 - name: 'Check swap file type'
   command: file {{ swap_file_path }}
   register: swapfile
