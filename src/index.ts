@@ -61,6 +61,7 @@ import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
+import { customEventHandler } from '@countryconfig/api/custom-event/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -541,6 +542,16 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Checks for enabled notification for record'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/events',
+    handler: customEventHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Serves custom events'
     }
   })
 
