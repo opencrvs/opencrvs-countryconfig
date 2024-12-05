@@ -8,7 +8,7 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { Conditional } from '../types/types'
+import { Conditional, IntegratingSystemType } from '../types/types'
 import { Validator } from '../types/validators'
 
 /**
