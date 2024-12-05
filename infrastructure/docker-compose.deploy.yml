@@ -1022,8 +1022,8 @@ services:
     image: ghcr.io/opencrvs/mosip:20b6ca4
     environment:
       - NODE_ENV=production
-      - MOSIP_WEBHOOK_URL=http://mosip-mock:20240
-      - OPENCRVS_GRAPHQL_GATEWAY_URL=http://gateway:7070
+      - MOSIP_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs
+      - OPENCRVS_GRAPHQL_GATEWAY_URL=http://gateway:7070/graphql
     deploy:
       replicas: 1
       labels:
@@ -1040,7 +1040,7 @@ services:
     image: ghcr.io/opencrvs/mosip-mock:20b6ca4
     environment:
       - NODE_ENV=production
-      - OPENCRVS_MOSIP_SERVER_URL=http://mosip-api:2024
+      - OPENCRVS_MOSIP_SERVER_URL=http://mosip-api:2024/webhooks/mosip
     deploy:
       replicas: 1
       labels:
