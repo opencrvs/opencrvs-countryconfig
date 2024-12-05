@@ -679,7 +679,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
-      - MONGO_URL=mongodb://events:${METRICS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
+      - MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
     deploy:
       labels:
         - 'traefik.enable=false'
