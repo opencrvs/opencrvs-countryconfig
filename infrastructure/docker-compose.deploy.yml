@@ -1019,10 +1019,11 @@ services:
           - node.labels.data1 == true
 
   mosip-api:
-    image: ghcr.io/opencrvs/mosip:425945e
+    image: ghcr.io/opencrvs/mosip:bb07f85
     environment:
       - NODE_ENV=production
-      - MOSIP_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs
+      - MOSIP_BIRTH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/birth
+      - MOSIP_DEATH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/death
       - OPENCRVS_GRAPHQL_GATEWAY_URL=http://gateway:7070/graphql
     deploy:
       replicas: 1
@@ -1037,7 +1038,7 @@ services:
         tag: 'mosip-api'
 
   mosip-mock:
-    image: ghcr.io/opencrvs/mosip-mock:425945e
+    image: ghcr.io/opencrvs/mosip-mock:bb07f85
     environment:
       - NODE_ENV=production
       - OPENCRVS_MOSIP_SERVER_URL=http://mosip-api:2024/webhooks/mosip
