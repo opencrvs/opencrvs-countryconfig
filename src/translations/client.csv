@@ -791,6 +791,18 @@ error.title,Error title,Oops!,Oups !
 error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !
 error.userListError,Error message when user list loads fails,Failed to load users,Impossible de charger les utilisateurs
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
+event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
+event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Prénom du recommandeur
+event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,ID d'adhésion du recommandeur
+event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Nom de famille du recommandeur
+event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Qui recommande le demandeur?
+event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth,Date de naissance du demandeur
+event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name,Prénom du demandeur
+event.tennis-club-membership.action.declare.form.section.who.field.surname.label,This is the label for the field,Applicant's surname,Nom de famille du demandeur
+event.tennis-club-membership.action.declare.form.section.who.title,This is the title of the section,Who is applying for the membership?,Qui postule pour l'adhésion?
+event.tennis-club-membership.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
+event.tennis-club-membership.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Send an application,Envoyer une demande
+event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
 exitModal.cancel,The label for cancel button in exit modal,Cancel,Annuler
 exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?,Quitter sans enregistrer les modifications?
 exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Êtes-vous sûr de vouloir quitter sans enregistrer?
