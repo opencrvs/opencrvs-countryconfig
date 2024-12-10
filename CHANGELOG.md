@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.6.1 (TBD)
+## 1.6.1
 
 ### Bug fixes
 
