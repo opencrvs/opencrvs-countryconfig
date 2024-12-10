@@ -69,7 +69,6 @@ buttons.assign,Assign button label,Assign,Affecter
 buttons.back,Back button,Back,Retour
 buttons.cancel,Cancel button text in the modal,Cancel,Annuler
 buttons.change,Change action,Change,Modifier
-buttons.change,The label for the change button,Change,Changer
 buttons.changeLanguage,,Change language,Changer de langue
 buttons.closeDeclaration,Close declaration button text,Close declaration,Clôturer la déclaration
 buttons.configure,Configure button text,Configure,Paramétrer
