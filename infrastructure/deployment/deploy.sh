@@ -268,6 +268,11 @@ split_and_join() {
    SPLIT=$(echo $text | sed -e "s/$separator_for_splitting/$separator_for_joining/g")
    echo $SPLIT
 }
+cleanup_docker_images()
+{
+   echo "Cleaning up the docker images"
+   configured_ssh "/usr/bin/docker system prune -af | sudo tee -a /var/log/docker-prune.log > /dev/null"
+}
 
 docker_stack_deploy() {
   echo "Deploying this environment: $ENVIRONMENT_COMPOSE"
@@ -299,7 +304,22 @@ docker_stack_deploy() {
     docker stack deploy --prune -c '$(split_and_join " " " -c " "$(to_remote_paths $COMPOSE_FILES_USED)")' --with-registry-auth opencrvs'
 }
 
+get_opencrvs_version() {
+  PREVIOUS_VERSION=$(configured_ssh "docker service ls | grep opencrvs_base | cut -d ':' -f 2")
+  echo "Previous opencrvs version: $PREVIOUS_VERSION"
+  echo "Current opencrvs version: $VERSION"
+}
+
+reset_metabase() {
+  echo "Reseting metabase"
+  configured_ssh "docker exec \$(docker ps | grep opencrvs_dashboards | awk '{print \$1}' | head -n 1) /bin/sh -c \"rm /data/metabase/metabase.mv.db\" && \
+    docker service scale opencrvs_dashboards=0 && \
+    docker service scale opencrvs_dashboards=1"
+}
+
 validate_options
+
+get_opencrvs_version
 
 # Create new passwords for all MongoDB users created in
 # infrastructure/mongodb/docker-entrypoint-initdb.d/create-mongo-users.sh
@@ -315,6 +335,7 @@ export PERFORMANCE_MONGODB_PASSWORD=`generate_password`
 export OPENHIM_MONGODB_PASSWORD=`generate_password`
 export WEBHOOKS_MONGODB_PASSWORD=`generate_password`
 export NOTIFICATION_MONGODB_PASSWORD=`generate_password`
+export EVENTS_MONGODB_PASSWORD=`generate_password`
 
 #
 # Elasticsearch credentials
@@ -379,6 +400,8 @@ configured_ssh "/opt/opencrvs/infrastructure/setup-deploy-config.sh $HOST"
 
 rotate_secrets
 
+cleanup_docker_images
+
 docker_stack_deploy
 
 echo
@@ -412,6 +435,15 @@ EMAIL_PAYLOAD='{
   "from": "{{SENDER_EMAIL_ADDRESS}}",
   "to": "{{ALERT_EMAIL}}"
 }'
+
+VERSION=$(echo "$VERSION" | xargs)
+PREVIOUS_VERSION=$(echo "$PREVIOUS_VERSION" | xargs)
+
+if [[ "$VERSION" == "$PREVIOUS_VERSION" ]]; then
+  echo "No reset needed for Metabase."
+else
+  reset_metabase
+fi
 
 configured_ssh "docker run --rm --network=opencrvs_overlay_net appropriate/curl \
   -X POST 'http://countryconfig:3040/email' \

@@ -11,6 +11,10 @@
 - Protect individual certificate endpoint with token
 - Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
 - "Publish release" pipeline now correctly uses the "Branch to build from" value as the branch to be tagged. Previously it tried tagging "master". "Release tag" is also now used as the release version as is instead of it being read from `package.json`.
+- Backup process now doesn't require internet connection to download docker images thus working more reliably when internet connections are unreliable. Previously non-active images were cleaned nightly, now we only do it as part of deployment. [#7896](https://github.com/opencrvs/opencrvs-core/issues/7896)
+- We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
+- Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
+- On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
 
 ### Breaking changes
 
@@ -30,6 +34,7 @@
 
 - **Major new feature** Description
 - Misc new feature
+- Add constant.humanName to allow coutries to have custom ordering on thier full name e.g start with `lastName` or `firstName` [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
 ### New content keys requiring translation
 
@@ -41,7 +46,15 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 - TBC
 
-## 1.6.0 Release candidate
+## 1.6.1 (TBD)
+
+### Bug fixes
+
+- We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
+- Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
+- On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
+
+## 1.6.0
 
 ### Breaking changes
 
@@ -88,6 +101,7 @@ INSERT CSV ROWS IN ENGLISH ONLY
   5. 'PHONE_NUMBER',
   6. 'EMAIL'
 - Updated `allowedFileFormats` in signature fields to use MIME types (`image/png`, `image/jpg`, `image/jpeg`, `image/svg`) instead of simple file extensions. If you are already using the `allowedFileFormats` field in your implementation, please ensure to update the format accordingly.
+- The details exists conditionals for the various sections i.e. father, mother, spouse has to use the `values.detailsExist` property instead of accessing it from `draftData.[sectionName].detailsExists`. This is due to the fact that the draftData is not populated until any changes have been made to any of the fields in the current section.
 
 ### New features
 

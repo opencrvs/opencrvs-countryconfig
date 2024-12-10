@@ -276,6 +276,7 @@ constants.gender,Gender label,Gender,Sexe
 constants.healthDivision,The description for HEALTH_DIVISION type,Health Division,Division de la santé
 constants.healthcareWorker,The description for Healthcare Worker type,Healthcare Worker,Travailleur de la santé
 constants.history,History heading,History,Histoire
+constants.humanName,Formatted full name, {lastName} {middleName} {firstName},{lastName} {middleName} {firstName}
 constants.id,ID Label,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?
 constants.inReview.status,A label for In Review,In review,En cours de révision
@@ -1256,10 +1257,10 @@ form.section.information.death.bullet2,,As the legal Informant it is important t
 form.section.information.death.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts."
 form.section.information.name,,Information,Informations
-form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,last 30 days,les 30 derniers jours
-form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,last 7 days,les 7 derniers jours
-form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,last 90 days,les 90 derniers jours
-form.section.label.timePeriodLastYear,Label for option of time period select: last year,last year,l'année dernière
+form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,Last 30 days,les 30 derniers jours
+form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,Last 7 days,les 7 derniers jours
+form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,Last 90 days,les 90 derniers jours
+form.section.label.timePeriodLastYear,Label for option of time period select: last year,Last year,l'année dernière
 form.section.marriageEvent.date,,Date of marriage,Date du mariage
 form.section.marriageEvent.name,,Marriage event details,Détails de l'événement de mariage
 form.section.marriageEvent.title,,Marriage details,Détails du mariage
@@ -1347,7 +1348,6 @@ integrations.name,Label for name input,Name,Nom
 integrations.nationalIDName,Label for name input for National ID,Name,Nom
 integrations.nationalidAlertDescription,,"A National ID client (eg. MOSIP) can react to birth or death webhooks to create or invalidate NID numbers, and respond to OpenCRVS to provide a temporary ID to children, and link vital events to each other. For more information, visit:","Un client d'identification nationale (par exemple MOSIP) peut réagir aux webhooks de naissance ou de décès pour créer ou invalider des numéros d'identification nationale, et répondre à OpenCRVS pour fournir une identification temporaire aux enfants, et relier les événements d'état civil entre eux. Pour plus d'informations, visitez le site :"
 integrations.newIntegrationDescription,Description to help user fill name and type of a new integration client,Add a unique name and select the type of client you would like to create,Ajoutez un nom unique et sélectionnez le type de client que vous souhaitez créer
-integrations.onlyOneNationalId,,Only one National ID integration is allowed.,Une seule intégration d'identité nationale est autorisée
 integrations.otherAlertDescription,,...Please visit,...Veuillez visiter
 integrations.pageIntroduction,Label for the text integration page intorduction,"For each new client that needs to integrate with OpenCRVS you can create unique client IDs. A number of integration use cases are currently supported, based on both API and webhook technologies.","Pour chaque nouveau client qui doit s'intégrer à OpenCRVS, vous pouvez créer des identifiants client uniques. Un certain nombre de cas d'utilisation de l'intégration sont actuellement pris en charge, sur la base des technologies API et webhook"
 integrations.pageTitle,Title for integrations page,Integrations,Intégrations
@@ -1358,7 +1358,6 @@ integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.supportingDescription,,Supporting description to help user make a decision and navigate the content,Description complémentaire pour aider l'utilisateur à prendre une décision et à naviguer dans le contenu.
 integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement
 integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé
-integrations.type.nationalID,Label for national ID system client,National ID,Carte d'identité nationale
 integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements
 integrations.type.webhook,Label for web hook,Webhook,Webhook
 integrations.uniqueKeyDescription,Label for the unique key description,These unique keys will be required by the client integrating...,Ces clés uniques seront requises par l'interface du système

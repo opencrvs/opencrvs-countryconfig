@@ -10,9 +10,6 @@
  */
 
 import {
-  FATHER_DETAILS_DONT_EXIST,
-  MOTHER_DETAILS_DONT_EXIST,
-  SPOUSE_DETAILS_DONT_EXIST,
   detailsDontExist,
   expressionToConditional,
   hideIfInformantBrideOrGroom,
@@ -101,11 +98,11 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.primaryAddress,
-        conditionalCase: MOTHER_DETAILS_DONT_EXIST
+        conditionalCase: detailsDontExist
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        conditionalCase: MOTHER_DETAILS_DONT_EXIST
+        conditionalCase: detailsDontExist
       } /*,
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
@@ -127,11 +124,9 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.primaryAddress,
         conditionalCase: [
+          expressionToConditional(detailsDontExist),
           expressionToConditional(
-            `${FATHER_DETAILS_DONT_EXIST} || ${hideIfMotherAddressNotAvailable[0].expression}`
-          ),
-          expressionToConditional(
-            `${FATHER_DETAILS_DONT_EXIST} || ${hideIfMotherAddressNotAvailable[0].expression} || ${primaryAddressSameAsOtherPrimaryAddress}`,
+            `${detailsDontExist} || ${primaryAddressSameAsOtherPrimaryAddress}`,
             'hideInPreview'
           )
         ]
@@ -153,7 +148,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        conditionalCase: `((${FATHER_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
+        conditionalCase: `((${detailsDontExist} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
       } /*,
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
@@ -281,11 +276,9 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.primaryAddress,
         conditionalCase: [
+          expressionToConditional(detailsDontExist),
           expressionToConditional(
-            `${SPOUSE_DETAILS_DONT_EXIST} || ${hideIfDeceasedAddressNotAvailable[0].expression}`
-          ),
-          expressionToConditional(
-            `${SPOUSE_DETAILS_DONT_EXIST} || ${hideIfDeceasedAddressNotAvailable[0].expression} || ${primaryAddressSameAsOtherPrimaryAddress}`,
+            `${detailsDontExist} || ${primaryAddressSameAsOtherPrimaryAddress}`,
             'hideInPreview'
           )
         ]
@@ -307,7 +300,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       },
       {
         config: AddressCases.PRIMARY_ADDRESS,
-        conditionalCase: `((${SPOUSE_DETAILS_DONT_EXIST} || ${primaryAddressSameAsOtherPrimaryAddress}) || (${detailsDontExist}))`
+        conditionalCase: `(${detailsDontExist} || ${primaryAddressSameAsOtherPrimaryAddress})`
       }
     ]
   },

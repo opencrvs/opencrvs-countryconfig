@@ -65,6 +65,9 @@ import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
+import { customEventHandler } from '@countryconfig/api/custom-event/handler'
+import { mosipRegistrationHandler } from '@opencrvs/mosip'
+import { env } from './environment'
 
 export interface ITokenPayload {
   sub: string
@@ -142,18 +145,18 @@ export const verifyToken = async (token: string, authUrl: string) => {
 const validateFunc = async (
   payload: any,
   request: Hapi.Request,
-  checkInvalidToken: string,
+  checkInvalidToken: boolean,
   authUrl: string
 ) => {
   let valid
-  if (checkInvalidToken === 'true') {
+  if (checkInvalidToken) {
     valid = await verifyToken(
       request.headers.authorization.replace('Bearer ', ''),
       authUrl
     )
   }
 
-  if (valid === true || checkInvalidToken !== 'true') {
+  if (valid === true || !checkInvalidToken) {
     return {
       isValid: true,
       credentials: payload
@@ -416,7 +419,9 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/event-registration',
-    handler: eventRegistrationHandler,
+    handler: mosipRegistrationHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
     options: {
       tags: ['api'],
       description:
@@ -587,6 +592,16 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Checks for enabled notification for record'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/events',
+    handler: customEventHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Serves custom events'
     }
   })
 

@@ -8,4 +8,12 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-declare module 'country-data'
+import * as Hapi from '@hapi/hapi'
+import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
+
+export const customEventHandler = (
+  request: Hapi.Request,
+  h: Hapi.ResponseToolkit
+) => {
+  return h.response([tennisClubMembershipEvent]).code(200)
+}
