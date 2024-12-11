@@ -243,6 +243,7 @@ services:
       - OPENHIM_MONGODB_PASSWORD=${OPENHIM_MONGODB_PASSWORD}
       - WEBHOOKS_MONGODB_PASSWORD=${WEBHOOKS_MONGODB_PASSWORD}
       - NOTIFICATION_MONGODB_PASSWORD=${NOTIFICATION_MONGODB_PASSWORD}
+      - EVENTS_MONGODB_PASSWORD=${EVENTS_MONGODB_PASSWORD}
     networks:
       - overlay_net
     logging:
@@ -679,7 +680,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
-      - MONGO_URL=mongodb://${STACK}__events:${METRICS_MONGODB_PASSWORD}@mongo1/${STACK}__events?replicaSet=rs0
+      - MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
     deploy:
       labels:
         - 'traefik.enable=false'

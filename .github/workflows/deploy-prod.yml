@@ -28,7 +28,7 @@ jobs:
       - uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
-          approvers: euanmillar,rikukissa
+          approvers: euanmillar,rikukissa,alsmk
           minimum-approvals: 1
           issue-title: 'Deploy (${{ github.event.inputs.environment }}): core: ${{ github.event.inputs.core-image-tag }} country config: ${{ github.event.inputs.countryconfig-image-tag }}'
           issue-body: 'Please approve or deny the deployment of core: ${{ github.event.inputs.core-image-tag }} country config: ${{ github.event.inputs.countryconfig-image-tag }} to ${{ github.event.inputs.environment }}'

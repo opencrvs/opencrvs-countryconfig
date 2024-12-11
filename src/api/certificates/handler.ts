@@ -37,7 +37,7 @@ export interface ICertificateConfigData {
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
   if (request.params.id) {
-    const filePath = `${__dirname}/source/${request.params.id}.svg`
+    const filePath = `${__dirname}/source/${request.params.id}`
     return h.file(filePath)
   }
   const certificateConfigs: ICertificateConfigData[] = [
