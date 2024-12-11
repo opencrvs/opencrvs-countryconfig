@@ -131,6 +131,13 @@ export const tennisClubMembershipEvent = defineConfig({
             defaultMessage: 'Tennis club membership application',
             description: 'This is what this form is referred as in the system'
           },
+          review: {
+            title: {
+              id: 'event.tennis-club-membership.action.declare.form.review.title',
+              defaultMessage: 'Member declaration for {firstname} {surname}',
+              description: 'Title of the form to show in review page'
+            }
+          },
           active: true,
           version: {
             id: '1.0.0',
