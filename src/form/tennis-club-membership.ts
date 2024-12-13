@@ -10,6 +10,7 @@
  */
 
 import { defineConfig } from '@opencrvs/toolkit/events'
+import { defineConditional } from '@opencrvs/toolkit/conditionals'
 
 export const tennisClubMembershipEvent = defineConfig({
   id: 'TENNIS_CLUB_MEMBERSHIP',
@@ -240,6 +241,31 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.tennis-club-membership.action.declare.label'
       },
+      allowedWhen: defineConditional({
+        type: 'object',
+        allOf: [
+          {
+            properties: {
+              $event: {
+                properties: {
+                  actions: {
+                    contains: {
+                      type: 'object',
+                      properties: {
+                        type: {
+                          const: 'DECLARE'
+                        }
+                      },
+                      required: ['type']
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }),
+
       forms: [
         {
           label: {
