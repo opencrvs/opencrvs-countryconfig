@@ -63,7 +63,7 @@ services:
   notification:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr,mg
+      - LANGUAGES=mg,fr,en
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
       - DISABLE_RATE_LIMIT=true
