@@ -11,9 +11,6 @@ build
 .DS_Store
 .env
 *.log
-.secrets/*
-# But, keep the .gitignore so the folder is created
-!.secrets/.gitignore
 .idea
 data
 

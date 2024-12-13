@@ -1,0 +1,411 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+
+# dependency cycle detected: auth -> metrics -> config -> auth
+# dependency cycle detected: gateway -> config -> gateway
+
+
+services:
+  countryconfig:
+    restart: unless-stopped
+    env_file: ".env"
+    build: .
+    pull_policy: build
+    command: 'yarn start:ez'
+    ports:
+      - '3040:3040'
+    environment:
+      - MONGO_URL=mongodb://mongo1/user-mgnt
+      - FHIR_URL=http://hearth:3447/fhir
+      - AUTH_URL=http://auth:4040
+      - CHECK_INVALID_TOKEN=true
+    depends_on:
+    - mongo1
+    - hearth
+    - auth
+
+  client:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-client:${VERSION}
+    ports:
+      - '3000:80' # FIXME: 80?
+    environment:
+      - COUNTRY_CONFIG_URL_INTERNAL=http://countryconfig:3040
+      - GATEWAY_URL_INTERNAL=http://gateway:7070
+    depends_on:
+    - countryconfig
+    - gateway
+  #dashboards:
+   # image: opencrvs/ocrvs-dashboards:${VERSION}
+  #  restart: unless-stopped
+  #  env_file: ".env"
+  #login:
+  #  image: opencrvs/ocrvs-login:${VERSION}
+  #  ports:
+  #    - '3020:80' # FIXME: 80?
+  #  environment:
+  #    - COUNTRY_CONFIG_URL_INTERNAL=http://countryconfig:3040
+  #  depends_on:
+  #  - countryconfig
+  gateway:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-gateway:${VERSION}
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+    ports:
+      - '7070:7070'
+    environment:
+      - REDIS_HOST=redis
+      - CONFIG_SMS_CODE_EXPIRY_SECONDS=600
+      - CONFIG_TOKEN_EXPIRY_SECONDS=604800
+      - EVENTS_URL=http://events:5555/
+      - FHIR_URL=http://hearth:3447/fhir
+      - USER_MANAGEMENT_URL=http://user-mgnt:3030/
+      - SEARCH_URL=http://search:9090/
+      - METRICS_URL=http://metrics:1050
+      - AUTH_URL=http://auth:4040
+      - COUNTRY_CONFIG_URL=http://countryconfig:3040
+      - NOTIFICATION_URL=http://notification:2020/
+      - WORKFLOW_URL=http://workflow:5050/
+      - APPLICATION_CONFIG_URL=http://config:2021/
+      - WEBHOOKS_URL=http://webhooks:2525/
+      - CHECK_INVALID_TOKEN=true
+      - MINIO_BUCKET=ocrvs
+      - DOCUMENTS_URL=http://documents:9050
+    depends_on:
+    - redis
+    - events
+    - hearth
+    - auth
+    - countryconfig
+    - notification
+    - documents
+    - minio
+  events:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-events:develop #FIXME: no build versioned?
+    environment:
+      - MONGO_URL=mongodb://mongo1/events
+      - ES_HOST=elasticsearch:9200
+      - COUNTRY_CONFIG_URL=http://countryconfig:3040/
+    depends_on:
+    - mongo1
+    - elasticsearch
+    - countryconfig
+
+  # User facing services
+  workflow:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-workflow:${VERSION}
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+    ports:
+      - '5050:5050'
+    environment:
+      - SEARCH_URL=http://search:9090/
+      - METRICS_URL=http://metrics:1050
+      - DOCUMENTS_URL=http://documents:9050
+      - NOTIFICATION_SERVICE_URL=http://notification:2020/
+      - USER_MANAGEMENT_URL=http://user-mgnt:3030/
+      - COUNTRY_CONFIG_URL=http://countryconfig:3040
+      - FHIR_URL=http://hearth:3447/fhir
+      - WEBHOOKS_URL=http://webhooks:2525/
+      - APPLICATION_CONFIG_URL=http://config:2021/
+      - AUTH_URL=http://auth:4040
+      - COUNTRY=${COUNTRY:-bgd}
+    depends_on:
+    - search
+    - metrics
+    - documents
+    - notification
+    - user-mgnt
+    - countryconfig
+    - hearth
+    - webhooks
+    - config
+    - auth
+  search:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-search:${VERSION}
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+    environment:
+      - HEARTH_MONGO_URL=mongodb://mongo1/hearth-dev
+      - USER_MANAGEMENT_URL=http://user-mgnt:3030/
+      - ES_HOST=elasticsearch:9200
+      - FHIR_URL=http://hearth:3447/fhir
+      - APPLICATION_CONFIG_URL=http://config:2021/
+    depends_on:
+      - mongo1
+      - user-mgnt
+      - elasticsearch
+      - hearth
+      - config
+  metrics:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-metrics:${VERSION}
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+    ports:
+      - '1050:1050'
+    environment:
+      - INFLUX_HOST=influxdb
+      - INFLUX_PORT=8086
+      - INFLUX_DB=ocrvs
+      - COUNTRY_CONFIG_URL=http://countryconfig:3040/
+      - CONFIG_API_URL=http://config:2021
+      - MONGO_URL=mongodb://mongo1/metrics
+      - HEARTH_MONGO_URL=mongodb://mongo1/hearth-dev
+      - DASHBOARD_MONGO_URL=mongodb://mongo1/performance
+      - SEARCH_URL=http://search:9090/
+      - USER_MANAGEMENT_URL=http://user-mgnt:3030
+      - DOCUMENTS_URL=http://documents:9050
+      - FHIR_URL=http://hearth:3447/fhir
+    depends_on:
+      - influxdb
+      - countryconfig
+      - config
+      - mongo1
+      - search
+      - user-mgnt
+      - documents
+      - hearth
+  # END User facing services
+  scheduler:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-scheduler:${VERSION}
+    environment:
+      - METRICS_URL=http://metrics:1050
+      - OPENHIM_MONGO_URL=mongodb://mongo1/openhim-dev
+    depends_on:
+      - mongo1
+      - metrics
+  auth:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-auth:${VERSION}
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+      - '.secrets/private-key.pem:/secrets/private-key.pem'
+    ports:
+      - '4040:4040'
+    environment:
+      - REDIS_HOST=redis
+      - USER_MANAGEMENT_URL=http://user-mgnt:3030/
+      - CONFIG_TOKEN_EXPIRY_SECONDS=604800
+      - CONFIG_SMS_CODE_EXPIRY_SECONDS=600
+      - NOTIFICATION_SERVICE_URL=http://notification:2020/
+      - METRICS_URL=http://metrics:1050
+      - CERT_PRIVATE_KEY_PATH=/secrets/private-key.pem
+  user-mgnt:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-user-mgnt:${VERSION}
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+    ports:
+      - '3030:3030'
+    environment:
+      - MONGO_URL=mongodb://mongo1/user-mgnt
+      - NOTIFICATION_SERVICE_URL=http://notification:2020/
+      - METRICS_URL=http://metrics:1050
+      - FHIR_URL=http://hearth:3447/fhir
+      - APPLICATION_CONFIG_URL=http://config:2021/
+      - DOCUMENTS_URL=http://documents:9050
+    depends_on:
+      - mongo1
+      - notification
+      - hearth
+      - config
+      - documents
+  webhooks:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-webhooks:${VERSION}
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+    ports:
+      - '2525:2525'
+    environment:
+      - REDIS_HOST=redis
+      - MONGO_URL=mongodb://mongo1/webhooks
+      - AUTH_URL=http://auth:4040
+      - USER_MANAGEMENT_URL=http://user-mgnt:3030/
+      - CHECK_INVALID_TOKEN=true
+      - FHIR_URL=http://hearth:3447/fhir
+    depends_on:
+      - mongo1
+      - redis
+      - auth
+      - user-mgnt
+      - hearth
+  notification:
+    image: opencrvs/ocrvs-notification:${VERSION}
+    env_file: ".env"
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+    ports:
+      - '2020:2020'
+    environment:
+      - COUNTRY=${COUNTRY:-bgd} # FIXME: bgd:?
+      - COUNTRY_CONFIG_URL=http://countryconfig:3040
+      - MONGO_URL=mongodb://mongo1/notification
+    depends_on:
+      - countryconfig
+      - mongo1
+  config:
+    image: opencrvs/ocrvs-config:${VERSION}
+    env_file: ".env"
+    ports:
+      - '2021:2021'
+    environment:
+      - AUTH_URL=http://auth:4040
+      - COUNTRY_CONFIG_URL=http://countryconfig:3040
+      - PORT=2021
+      - MONGO_URL=mongodb://mongo1/application-config
+      - SEARCH_URL=http://search:9090/
+      - METRICS_URL=http://metrics:1050
+      - USER_MANAGEMENT_URL=http://user-mgnt:3030/
+      - FHIR_URL=http://hearth:3447/fhir
+      - GATEWAY_URL=http://gateway:7070/
+      - DOCUMENTS_URL=http://documents:9050
+      - CHECK_INVALID_TOKEN=true
+    depends_on:
+      - mongo1
+      - gateway
+      - hearth
+      - documents
+      - countryconfig
+      - auth
+  migration:
+    restart: unless-stopped
+    env_file: ".env"
+    image: opencrvs/ocrvs-migration:${VERSION}
+    environment:
+      - USER_MGNT_MONGO_URL=mongodb://mongo1/user-mgnt
+      - APPLICATION_CONFIG_MONGO_URL=mongodb://mongo1/application-config
+      - HEARTH_MONGO_URL=mongodb://mongo1/hearth-dev
+      - PERFORMANCE_MONGO_URL=mongodb://mongo1/performance
+      - OPENHIM_MONGO_URL=mongodb://mongo1/openhim-dev
+      - SEARCH_URL=http://search:9090/
+      - ES_HOST=elasticsearch:9200
+      - INFLUX_HOST=influxdb
+      - INFLUX_PORT=8086
+      - INFLUX_DB=ocrvs
+      - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:3535,elasticsearch:9200
+    depends_on:
+      - mongo1
+      - influxdb
+      - minio
+      - elasticsearch
+  documents:
+    restart: unless-stopped
+    env_file: ".env"
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+    image: opencrvs/ocrvs-documents:${VERSION}
+    environment:
+      - COUNTRY_CONFIG_URL=http://countryconfig:3040
+      - MINIO_HOST=minio
+    depends_on:
+      - countryconfig
+      - minio
+
+
+# Deps
+  mongo1:
+    image: mongo:4.4
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+        - source: ./data/mongo
+          target: /data/db
+          type: bind
+          bind:
+              create_host_path: true
+
+  redis:
+    image: redis:5
+    ports:
+      - '6379:6379'
+    restart: unless-stopped
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+    restart: unless-stopped
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    volumes:
+        - source: ./data/elasticsearch
+          target: /usr/share/elasticsearch/data
+          type: bind
+          bind:
+              create_host_path: true
+    environment:
+      - 'discovery.type=single-node'
+      - 'cluster.routing.allocation.disk.watermark.enable_for_single_data_node=true'
+      - 'cluster.routing.allocation.disk.threshold_enabled=false'
+      - 'ES_JAVA_OPTS=-Xms1024m -Xmx1024m'
+      - xpack.security.enabled=false # elasticsearch >8.x defaults to true
+
+  influxdb:
+    image: influxdb:1.8.10
+    restart: unless-stopped
+    ports:
+      - '8086:8086'
+    volumes:
+        - source: ./data/influxdb
+          target: /var/lib/influxdb
+          type: bind
+          bind:
+              create_host_path: true
+        - './data/backups/influxdb:/data/backups/influxdb'
+        - './infrastructure/influxdb.conf:/etc/influxdb/influxdb.conf'
+
+  hearth:
+    image: opencrvs/hearth:1.1.0
+    environment:
+      - mongodb__url=mongodb://mongo1/hearth-dev
+      - logger__level=warn
+      - authentication__type=disabled
+      - idGenerator=uuidv4
+      - server__fhirVersion=stu3
+    depends_on:
+      - mongo1
+    restart: unless-stopped
+    volumes:
+      - '.secrets/public-key.pem:/secrets/public-key.pem'
+      - './infrastructure/hearth-plugins/checkDuplicateTask.js:/src/hearth/lib/plugins/checkDuplicateTask.js'
+      - './infrastructure/hearth-queryparam-extensions.json:/src/hearth/config/queryparam-extensions.json'
+    ports:
+      - '3447:3447'
+
+
+  minio:
+    image: quay.io/minio/minio:RELEASE.2023-09-16T01-01-47Z.fips
+    restart: unless-stopped
+    ports:
+      - '3535:3535'
+      - '3536:3536'
+    volumes:
+        - source: ./data/minio
+          target: /data
+          type: bind
+          bind:
+              create_host_path: true
+    command: server --address ":3535" --console-address ":3536" /data
