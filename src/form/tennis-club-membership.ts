@@ -261,9 +261,12 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'event.tennis-club-membership.action.register.label'
       },
       allowedWhen: defineConditional(
-        or(
-          eventHasAction('VALIDATE'),
-          and(eventHasAction('DECLARE'), userHasScope('register'))
+        and(
+          or(
+            eventHasAction('VALIDATE'),
+            and(eventHasAction('DECLARE'), userHasScope('register'))
+          ),
+          not(eventHasAction('REGISTER'))
         )
       ),
       forms: [TENNIS_CLUB_FORM]
