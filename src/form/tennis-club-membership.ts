@@ -16,7 +16,8 @@ import {
   eventHasAction,
   userHasScope,
   and,
-  not
+  not,
+  field
 } from '@opencrvs/toolkit/conditionals'
 
 const TENNIS_CLUB_FORM = defineForm({
@@ -54,6 +55,7 @@ const TENNIS_CLUB_FORM = defineForm({
           id: 'applicant.firstname',
           type: 'TEXT',
           required: true,
+          conditionals: [],
           label: {
             defaultMessage: "Applicant's first name",
             description: 'This is the label for the field',
@@ -64,6 +66,7 @@ const TENNIS_CLUB_FORM = defineForm({
           id: 'applicant.surname',
           type: 'TEXT',
           required: true,
+          conditionals: [],
           label: {
             defaultMessage: "Applicant's surname",
             description: 'This is the label for the field',
@@ -74,10 +77,32 @@ const TENNIS_CLUB_FORM = defineForm({
           id: 'applicant.dob',
           type: 'DATE',
           required: true,
+          conditionals: [],
+          validation: [
+            {
+              message: {
+                defaultMessage: 'Please enter a valid date',
+                description: 'This is the error message for invalid date',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.error'
+              },
+              validator: field('applicant.dob').isBeforeNow()
+            }
+          ],
           label: {
             defaultMessage: "Applicant's date of birth",
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.label'
+          }
+        },
+        {
+          id: 'applicant.image',
+          type: 'FILE',
+          required: false,
+          conditionals: [],
+          label: {
+            defaultMessage: "Applicant's profile picture",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
           }
         }
       ]
@@ -94,6 +119,7 @@ const TENNIS_CLUB_FORM = defineForm({
           id: 'recommender.firstname',
           type: 'TEXT',
           required: true,
+          conditionals: [],
           label: {
             defaultMessage: "Recommender's first name",
             description: 'This is the label for the field',
@@ -104,6 +130,7 @@ const TENNIS_CLUB_FORM = defineForm({
           id: 'recommender.surname',
           type: 'TEXT',
           required: true,
+          conditionals: [],
           label: {
             defaultMessage: "Recommender's surname",
             description: 'This is the label for the field',
@@ -114,6 +141,7 @@ const TENNIS_CLUB_FORM = defineForm({
           id: 'recommender.id',
           type: 'TEXT',
           required: true,
+          conditionals: [],
           label: {
             defaultMessage: "Recommender's membership ID",
             description: 'This is the label for the field',
