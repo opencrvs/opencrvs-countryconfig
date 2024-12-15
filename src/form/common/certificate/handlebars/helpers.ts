@@ -367,9 +367,9 @@ export function registrationStatement(): Handlebars.HelperDelegate {
       'tamin’ny',
       convertTimeToMdgCustomWords(this.registrar.date.split('T')[1]),
       isInformantMotherOrFather(this.informantType)
-        ? 'nataon’ny'
+        ? 'araka ny fanambarana nataon’ny'
         : joinValuesWith([
-            "nataon'i",
+            "araka ny fanambarana nataon'i",
             this.informantFamilyName,
             this.informantFirstName
           ]) + ',',
