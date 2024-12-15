@@ -146,14 +146,17 @@ export function isDateNotOlderThanDays(limit: number) {
 
 export function isFatherRecognitionDocNeeded() {
   return (_: string, $draft: Record<string, any>) => {
-    if (
-      Array.from({ length: 10 }, (_, i) => 'typeOfMention__' + i)?.some(
-        (key) =>
-          $draft?.mention &&
-          $draft.mention[key] &&
-          $draft.mention[key] === 'RECOGNITION'
-      )
-    ) {
+    const isRecognition = Array.from(
+      { length: 10 },
+      (_, i) => 'typeOfMention__' + i
+    )?.some(
+      (key) =>
+        $draft?.mention &&
+        $draft.mention[key] &&
+        $draft.mention[key] === 'RECOGNITION'
+    )
+
+    if (isRecognition && !$draft?.documents?.uploadDocForFather?.length) {
       return {
         message: {
           id: 'validations.isFatherRecognitionDocNeeded',
