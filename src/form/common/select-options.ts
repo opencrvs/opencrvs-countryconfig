@@ -42,7 +42,9 @@ export const informantTypes = {
   OTHER_FAMILY_MEMBER: 'OTHER_FAMILY_MEMBER',
   LEGAL_GUARDIAN: 'LEGAL_GUARDIAN',
   HEAD_OF_GROOM_FAMILY: 'HEAD_OF_GROOM_FAMILY',
-  HEAD_OF_BRIDE_FAMILY: 'HEAD_OF_BRIDE_FAMILY'
+  HEAD_OF_BRIDE_FAMILY: 'HEAD_OF_BRIDE_FAMILY',
+  DOCTOR: 'DOCTOR',
+  MID_WIFE: 'MID_WIFE'
 }
 
 export const identityNumberMapping = {
@@ -177,6 +179,14 @@ export const birthInformantTypeOptions: ISelectOption[] = [
   {
     value: informantTypes.LEGAL_GUARDIAN,
     label: informantMessageDescriptors.LEGAL_GUARDIAN
+  },
+  {
+    value: informantTypes.DOCTOR,
+    label: informantMessageDescriptors.DOCTOR
+  },
+  {
+    value: informantTypes.MID_WIFE,
+    label: informantMessageDescriptors.MID_WIFE
   },
   {
     value: informantTypes.OTHER,
