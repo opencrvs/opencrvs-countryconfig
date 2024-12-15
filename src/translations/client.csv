@@ -1273,6 +1273,7 @@ form.field.label.informantRelation.brother,Label for option brother,Brother,Frè
 form.field.label.informantRelation.contactPoint,,Contact Point,point de contact,
 form.field.label.informantRelation.daughter,Label for option Daughter,Daughter,Fille,Zanaka vavy
 form.field.label.informantRelation.daughterInLaw,Label for option Daughter in law,Daughter in law,Fille par alliance,Zana-bady vehivavy
+form.field.label.informantRelation.doctor,Label for option Doctor,Doctor,Docteur,Mpitsabo
 form.field.label.informantRelation.driver,,Driver or operator of the land or water vehicle or aircraft where the death occurred,Conducteur ou opérateur du véhicule terrestre ou maritime ou de l'aéronef oÂπ le décès a eu lieu.,Conducteur ou opérateur du véhicule terrestre ou maritime ou de l'aéronef oÂπ le décès a eu lieu.
 form.field.label.informantRelation.extendedFamily,Label for option Extended Family,Extended Family,Famille élargie,Famille élargie
 form.field.label.informantRelation.father,Label for option father,Father,Père,Ray
@@ -1284,6 +1285,7 @@ form.field.label.informantRelation.groom,Label for option groom,Groom,Marié,
 form.field.label.informantRelation.groomAndBride,Label for option Groom & Bride,Groom & Bride,Le marié et la mariée,
 form.field.label.informantRelation.headInst,,Head of the institution where the death occurred,Chef de l'établissement oÂπ le décès a eu lieu,Chef de l'établissement oÂπ le décès a eu lieu
 form.field.label.informantRelation.legalGuardian,Label for option Legal Guardian,Legal guardian,Tuteur légal,Mpiantoka Voatondro
+form.field.label.informantRelation.midwife,Label for option Midwife,Midwife,Sage-femme,Mpampivelona
 form.field.label.informantRelation.mother,Label for option mother,Mother,Mère,Reny
 form.field.label.informantRelation.officer,,Officer-in-charge of the road or public space where the death occurred,Officier responsable d'une route ou d'un espace public oÂπ le décès a eu lieu.,Officier responsable d'une route ou d'un espace public oÂπ le décès a eu lieu.
 form.field.label.informantRelation.other,,Other(Specify),Autre(Précisez),Hafa(Tsindrio tsara)
@@ -1307,7 +1309,7 @@ form.field.label.informantsFamilyNameEng,,Last Name(s) in English,Nom(s) de fami
 form.field.label.informantsGivenNames,,First Name(s) in default character set other than English,Prénom(s) dans un jeu de caractères par défaut autre que l'anglais,Fanampin'anarana amin'ny teny Malagasy
 form.field.label.informantsGivenNamesEng,,First Name(s) in English,Prénom(s),Fanampin'anarana amin'ny teny Anglisy
 form.field.label.informantsIdType,,Existing ID,Identifiant existant,Identifiant existant
-form.field.label.informantsRelationWithChild,,Relationship to child,Lien de parenté avec l'enfant,Rohim-pianakviana amin'ilay zaza
+form.field.label.informantsRelationWithChild,,Relationship to child,Lien entre déclarant et l'enfant,Rohim-pianakaviana amin'ilay zaza
 form.field.label.informantsRelationWithDeceased,,Relationship to deceased,Lien de parenté avec le défunt,Rohim-pianakaviana amin'ilay maty
 form.field.label.internationalAddressLine1,,Address Line 1,Adresse ligne 1,Adiresy voalohany
 form.field.label.internationalAddressLine2,,Address Line 2,Ligne d'adresse 2,Adiresy faharoa
