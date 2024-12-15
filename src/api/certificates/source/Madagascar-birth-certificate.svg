@@ -57,14 +57,14 @@
         {{linebreak}}
         {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
         {{#text fontSize=10 fontWeight="bold"}}
-            SORATRA AN-TSISINY :
+            {{#with (mentions) as |mentionsValue|}}{{#if mentionsValue.hasMention}}SORATRA AN-TSISINY :{{else}}{{/if}} {{/with}}
         {{/text}}
         {{#foreignObject 154 500}}<pre class="mentions" style="font-family: 'Plus Jakarta Sans'; width: 100%; white-space: pre-wrap; overflow-wrap: break-word; max-width: 100%;
                 text-align: left;
                 font-size: 13px;
                 line-height: 1.1;
                 letter-spacing: 0em;
-                margin-top: 0;">{{#with (mentions) as |mentionsValue|}}{{#if mentionsValue.hasMention}}{{mentionsValue.text}}{{else}}Tsy misy{{/if}}
+                margin-top: 0;">{{#with (mentions) as |mentionsValue|}}{{#if mentionsValue.hasMention}}{{mentionsValue.text}}{{else}}{{/if}}
                 {{/with}}
             </pre>
         {{/foreignObject}}
