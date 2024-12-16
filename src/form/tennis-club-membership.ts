@@ -16,7 +16,8 @@ import {
   eventHasAction,
   userHasScope,
   and,
-  not
+  not,
+  field
 } from '@opencrvs/toolkit/conditionals'
 
 const TENNIS_CLUB_FORM = defineForm({
@@ -74,12 +75,32 @@ const TENNIS_CLUB_FORM = defineForm({
           id: 'applicant.dob',
           type: 'DATE',
           required: true,
+          validation: [
+            {
+              message: {
+                defaultMessage: 'Please enter a valid date',
+                description: 'This is the error message for invalid date',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.error'
+              },
+              validator: field('applicant.dob').isBeforeNow()
+            }
+          ],
           label: {
             defaultMessage: "Applicant's date of birth",
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.label'
           }
         }
+        // {
+        //   id: 'applicant.image',
+        //   type: 'FILE',
+        //   required: false,
+        //   label: {
+        //     defaultMessage: "Applicant's profile picture",
+        //     description: 'This is the label for the field',
+        //     id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
+        //   }
+        // }
       ]
     },
     {
