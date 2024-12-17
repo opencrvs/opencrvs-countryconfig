@@ -23,7 +23,7 @@
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="11"
         font-weight="bold" letter-spacing="0em">
-        <tspan x="88" y="136.488">{{location registrar.districtId "name"}}</tspan>
+        <tspan x="88" y="136.488">{{replaceByUppercaseLocation (location registrar.districtId "name")}}</tspan>
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">

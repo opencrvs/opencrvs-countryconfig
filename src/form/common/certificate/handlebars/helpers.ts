@@ -184,7 +184,7 @@ export function introduction(): Handlebars.HelperDelegate {
     return joinValuesWith(
       [
         "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
-        placeOfBirthCommune,
+        definitionOffice(replaceByUppercase(placeOfBirthCommune)),
         'Foibe misahana ny fiankohonana, taona',
         customizeDateYearInCertificateContent(this.registrar.date) + ',',
         'izao sora-pahaterahana manaraka izao :'
@@ -215,9 +215,10 @@ export function eventStatement(): Handlebars.HelperDelegate {
               ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
               : '',
             'kaominina',
-            (placeOfBirthDistrict || '-') + ',',
+            (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
+              '-') + ',',
             'district',
-            placeOfBirthState || '-'
+            definitionDistrict(placeOfBirthState) || '-'
           ]
         : [
             'no teraka tao',
@@ -274,7 +275,8 @@ function fatherDetails(
                 this.birthMotherFokontanyCustomAddress ||
                 '-') + ',',
               'kaominina',
-              (fatherPrimaryDistrict || '- ') + ','
+              (definitionOffice(replaceByUppercase(fatherPrimaryDistrict)) ||
+                '- ') + ','
             ]
           : [
               ([
@@ -325,7 +327,8 @@ function motherDetails(
           'amin’ny fokontany',
           (this.birthMotherFokontanyCustomAddress || '-') + ',',
           'kaominina',
-          (motherPrimaryDistrict || '-') + ','
+          (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) || '-') +
+            ','
         ]
       : [
           ([
@@ -396,7 +399,9 @@ export function registrationStatement(): Handlebars.HelperDelegate {
                     ? `fokontany ${this.birthInformantFokontanyCustomAddress},`
                     : '',
                   'kaominina',
-                  (informantPrimaryDistrict || '-') + ','
+                  (definitionOffice(
+                    replaceByUppercase(informantPrimaryDistrict)
+                  ) || '-') + ','
                 ]
               : [
                   ([
@@ -417,7 +422,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
       'izay miara-manao sonia aminay,',
       this.registrar.name + ',',
       'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
-      registrationDistrict + ',',
+      definitionOffice(registrationDistrict) + ',',
       'rehefa novakiana taminy ity soratra ity.---'
     ])
   }
@@ -733,6 +738,7 @@ function customizeOfficeName(registrationLocation: string = '') {
     'cec ambohidratrimo': 'Kaominina, Ambohidratrimo',
     'cec ambohitrimanjaka': 'Kaominina, Ambohitrimanjaka',
     'cec anosiala': 'Kaominina, Anosiala'
+    // nouveau
   }
 
   const lowerCaseRegistrationLocation = registrationLocation.toLowerCase()
@@ -749,6 +755,74 @@ function customizeOfficeName(registrationLocation: string = '') {
 export function customizeOfficeNameLocation(): Handlebars.HelperDelegate {
   return function (this: any, registrationLocation: string = '') {
     return customizeOfficeName(registrationLocation)
+  }
+}
+
+function definitionOffice(officeName: string = '') {
+  const locationMappings: { [key: string]: string } = {
+    'cu tana i': "ambonivohitr'Antananarivo - Boriboritany Voalohany",
+    'cu tana ii': "ambonivohitr'Antananarivo - Boriboritany Faharoa",
+    'cu tana iii': "ambonivohitr'Antananarivo - Boriboritany Fahatelo",
+    'cu tana iv': "ambonivohitr'Antananarivo - Boriboritany Fahaefatra",
+    'cu tana v': "ambonivohitr'Antananarivo - Boriboritany Fahadimy",
+    'cu tana vi': "ambonivohitr'Antananarivo - Boriboritany Fahaenina",
+    'cu toamasina arr. ambodimanga': 'ambonivohitra Toamasina arr. Ambodimanga',
+    'cu toamasina arr. anjoma': 'ambonivohitra Toamasina arr. Anjoma',
+    'cu toamasina arr. ankirihiry': 'ambonivohitra Toamasina arr. Ankirihiry',
+    'cu toamasina arr. morarano': 'ambonivohitra Toamasina arr. Morarano',
+    'cu toamasina arr. tanambao v': 'ambonivohitra Toamasina arr. Tanambao V'
+    // nouveau
+  }
+  const lowerCaseRegistrationLocation = officeName.toLowerCase()
+
+  for (const key in locationMappings) {
+    const regex = new RegExp(`\\b${key}\\b`) // Correspondance stricte avec limites de mots
+    if (regex.test(lowerCaseRegistrationLocation)) {
+      return locationMappings[key]
+    }
+  }
+
+  return officeName
+}
+function definitionDistrict(officeName: string = '') {
+  const locationMappings: { [key: string]: string } = {
+    'tana i': 'Antananarivo Renivohitra',
+    'tana ii': 'Antananarivo Renivohitra',
+    'tana iii': 'Antananarivo Renivohitra',
+    'tana iv': 'Antananarivo Renivohitra',
+    'tana v': 'Antananarivo Renivohitra',
+    'tana vi': 'Antananarivo Renivohitra',
+    'toamasina i': 'Toamasina voalohany',
+    'toamasina ii': 'Toamasina faharoa',
+    'antsirabe i': 'Antsirabe voalohany',
+    'antsirabe ii': 'Antsirabe faharoa',
+    'antsiranana i': 'Antsiranana voalohany',
+    'antsiranana ii': 'Antsiranana faharoa',
+    'mahajanga i': 'Mahajanga voalohany',
+    'mahajanga ii': 'Mahajanga faharoa',
+    'toliara i': 'Toliara voalohany',
+    'toliara ii': 'Toliara faharoa'
+    // nouveau
+  }
+  const lowerCaseRegistrationLocation = officeName.toLowerCase()
+
+  for (const key in locationMappings) {
+    const regex = new RegExp(`\\b${key}\\b`) // Correspondance stricte avec limites de mots
+    if (regex.test(lowerCaseRegistrationLocation)) {
+      return locationMappings[key]
+    }
+  }
+
+  return officeName
+}
+
+function replaceByUppercase(inputText: String) {
+  // Utilisation d'une expression régulière pour remplacer "Cu" exactement (sensible à la casse)
+  return inputText!.replace(/\bCu\b/g, 'CU')
+}
+export function replaceByUppercaseLocation(): Handlebars.HelperDelegate {
+  return function (this: any, dateString: string) {
+    return replaceByUppercase(dateString)
   }
 }
 
