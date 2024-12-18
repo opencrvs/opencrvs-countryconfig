@@ -1195,7 +1195,7 @@ form.field.label.docTypeOther,,CIN Back,CIN Verso,CIN Verso
 form.field.label.docTypePassport,,Passport,Passeport,Pasipaoro
 form.field.label.docTypePoliceCertificate,,Police certificate of death,Certificat de décès de la police,Certificat de décès de la police
 form.field.label.docTypePostMortemReport,,Certified post mortem report,Rapport d'autopsie certifié,Rapport d'autopsie certifié
-form.field.label.docTypeRecognitionAct,Label for select option Recognition act,Recognition act,Recognition act,Recognition act
+form.field.label.docTypeRecognitionAct,Label for select option Recognition act,Recognition act,Acte de reconnaissance,Taratasy fanjanahana
 form.field.label.docTypeSC,,School certificate,Certificat de scolarité,Kopia fanamarinana maha mpianatra
 form.field.label.docTypeSignedAffidavit,,Signed affidavit,Affidavit signé,Affidavit signé
 form.field.label.docTypeTaxReceipt,,Receipt of tax payment,Récépissé de paiement des impôts,Récépissé de paiement des impôts
