@@ -790,10 +790,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@0.0.7-scopes":
-  version "0.0.7-scopes"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.7-scopes.tgz#eb77ae9917252997ff9cfefaca6a4e0ed90631a1"
-  integrity sha512-vKXmsH2rDXEVdKo85USdmi9pnTACqcA2Ua89TVwlaXD1dToOcMc5YplmUTl2/ZUD7b6RVaYxuOF6YTvHq+dSZQ==
+"@opencrvs/toolkit@0.0.8-scopes":
+  version "0.0.8-scopes"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.8-scopes.tgz#011964a4193e58b0a92375406b1cf852112bc089"
+  integrity sha512-v1FiXeR56xf9mTGXR4/WJ3EhfgjMh8o20gfMXWRG5AMdvxmTc8wzFVz/RZ6+KUB8wVqLShMYZTdyuK1AO4CIgQ==
   dependencies:
     ajv "^8.17.1"
 
