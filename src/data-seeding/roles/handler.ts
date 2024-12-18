@@ -8,34 +8,24 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { readCSVToJSON } from '@countryconfig/utils'
+import { PRODUCTION, QA_ENV } from '@countryconfig/constants'
+import roles from './roles.json'
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { RoleSchema, Role } from './validator'
+import { readFile } from 'fs/promises'
+import { join } from 'path'
 
 export async function rolesHandler(_: Request, h: ResponseToolkit) {
-  const rawRoles: unknown[] = await readCSVToJSON(
-    './src/data-seeding/roles/source/roles.csv'
-  )
-  const roles = RoleSchema.parse(rawRoles)
-    .map(({ systemRole, ...rest }) => {
+  if (!PRODUCTION || QA_ENV) {
+    const modifiableRoles: typeof roles = JSON.parse(
+      (await readFile(join(__dirname, 'roles.json'))).toString()
+    )
+
+    return modifiableRoles.map((role) => {
       return {
-        systemRole,
-        labels: Object.entries(rest).map(
-          ([key, value]: [Exclude<keyof Role, 'systemRole'>, string]) => ({
-            lang: key.split('_')[1],
-            label: value
-          })
-        )
+        ...role,
+        scopes: role.scopes.concat('demo')
       }
     })
-    .reduce<
-      Record<string, Array<{ labels: Array<{ lang: string; label: string }> }>>
-    >((acc, role) => {
-      if (!acc[role.systemRole]) {
-        acc[role.systemRole] = []
-      }
-      acc[role.systemRole].push({ labels: role.labels })
-      return acc
-    }, {})
+  }
   return h.response(roles)
 }

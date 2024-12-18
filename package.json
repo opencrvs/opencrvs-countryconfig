@@ -28,7 +28,8 @@
     "snapshot": "bash infrastructure/backups/backup.sh",
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
-    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts"
+    "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts",
+    "upgrade:code": "ts-node -r tsconfig-paths/register src/upgrade-to-1_7.ts"
   },
   "devDependencies": {
     "@inquirer/editor": "^1.2.13",
@@ -64,7 +65,7 @@
     "@hapi/boom": "^9.1.1",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "0.0.6-events",
+    "@opencrvs/toolkit": "0.0.7-scopes",
     "@types/chalk": "^2.2.0",
     "@types/csv2json": "^1.4.0",
     "@types/fhir": "^0.0.30",
@@ -73,7 +74,7 @@
     "@types/hapi__hapi": "^20.0.0",
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.117",
-    "@types/node": "^10.12.5",
+    "@types/node": "^18.19.1",
     "@types/node-fetch": "^2.6.2",
     "@types/nodemailer": "^6.4.14",
     "app-module-path": "^2.2.0",
