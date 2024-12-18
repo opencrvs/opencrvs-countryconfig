@@ -5,6 +5,10 @@
 ### New features
 
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+- **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: *Link to scopes description file*
+  #### Migration notes
+  - Run `yarn upgrade:code` after pulling in the v1.7 changes. It will remove the `roles.csv` file and generate a `roles.json` file. It will also update the corresponding role column in the `default-employees.csv` file (If you have entries in the `prod-employees.csv`, which you should if you are running a live OpenCRVS instance, those need to be updated manually). These files are only used when seeding new environments, if you are already running v1.6.x of OpenCRVS, your data will automatically get migrated. The changes in these files are made to keep the roles in sync with your deployed environment.
+  - Stage the changes made by the command & commit them
 
 ### Bug fixes
 
@@ -19,6 +23,7 @@
 ### Breaking changes
 
 - Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
+- **Roles** The previous `roles.csv` file has been deprecated. It will get removed once you run `yarn upgrade:code` command after pulling in the v1.7 changes. The command automatically generates a `roles.json` file which can be used as a baseline to configure the roles as per your requirements.
 
 ### Improvements
 
