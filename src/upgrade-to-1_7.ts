@@ -8,11 +8,45 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { rmdirSync, writeFileSync } from 'fs'
+import { createReadStream, rmdirSync, writeFileSync } from 'fs'
 import { camelCase, snakeCase } from 'lodash'
 import { join } from 'path'
 import { logger } from './logger'
-import { readCSVToJSON, writeJSONToCSV } from './utils'
+import { stringify } from 'csv-stringify/sync'
+import fs from 'fs'
+import csv2json from 'csv2json'
+
+/*
+ * inlining these two functions to not
+ * trigger envalid when running the script
+ */
+async function writeJSONToCSV(
+  filename: string,
+  data: Array<Record<string, any>>
+) {
+  const csv = stringify(data, {
+    header: true
+  })
+  return fs.promises.writeFile(filename, csv, 'utf8')
+}
+
+async function readCSVToJSON<T>(filename: string) {
+  return new Promise<T>((resolve, reject) => {
+    const chunks: string[] = []
+    createReadStream(filename)
+      .on('error', reject)
+      .pipe(
+        csv2json({
+          separator: ','
+        })
+      )
+      .on('data', (chunk) => chunks.push(chunk))
+      .on('error', reject)
+      .on('end', () => {
+        resolve(JSON.parse(chunks.join('')))
+      })
+  })
+}
 
 const DEFAULT_ROLE_SCOPES_PRE_1_7 = {
   FIELD_AGENT: ['declare'],
