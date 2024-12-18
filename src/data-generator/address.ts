@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { Location } from './location'
 
 export function createAddressInput(location: Location, type: string) {

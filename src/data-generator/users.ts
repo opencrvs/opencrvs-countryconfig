@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { log } from './util'
 import { Facility, getFacilities, Location } from './location'
 import fetch from 'node-fetch'
