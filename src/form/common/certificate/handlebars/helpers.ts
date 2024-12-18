@@ -210,7 +210,9 @@ export function eventStatement(): Handlebars.HelperDelegate {
       ...(this.countryPlaceofbirth == 'Madagascar' || this.placeOfBirthFacility
         ? [
             'no teraka tao amin’ny',
-            this.placeOfBirthFacility ? this.placeOfBirthFacility + ',' : '',
+            this.placeOfBirthFacility
+              ? replaceAbbreviations(this.placeOfBirthFacility) + ','
+              : '',
             this.birthChildFokontanyCustomAddress
               ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
               : '',
@@ -820,9 +822,32 @@ function replaceByUppercase(inputText: String) {
   // Utilisation d'une expression régulière pour remplacer "Cu" exactement (sensible à la casse)
   return inputText!.replace(/\bCu\b/g, 'CU')
 }
+function replaceAbbreviations(inputText: string): string {
+  // Mapping des abréviations et leurs définitions
+  const abbreviationMap: { [key: string]: string } = {
+    CSB2: 'Centre de Santé de Base Niveau 2',
+    CHU: 'Centre Hospitalier Universitaire',
+    CSB1: 'Centre de Santé de Base Niveau 1',
+    CHRD2: 'Centre Hospitalier de Référence District Niveau 2',
+    CHRR: '',
+    CHRD1: 'Centre Hospitalier de Référence District Niveau 1'
+
+    // Ajouter d'autres abréviations si nécessaire
+  }
+
+  // Construire une expression régulière pour détecter les abréviations
+  const regex = new RegExp(
+    `\\b(${Object.keys(abbreviationMap).join('|')})\\b`,
+    'g'
+  )
+
+  // Remplacer les abréviations par leurs définitions
+  return inputText.replace(regex, (match) => abbreviationMap[match])
+}
+
 export function replaceByUppercaseLocation(): Handlebars.HelperDelegate {
   return function (this: any, dateString: string) {
-    return replaceByUppercase(dateString)
+    return replaceByUppercase('Toamsina frhshd shshkjh shjdshjdh')
   }
 }
 
