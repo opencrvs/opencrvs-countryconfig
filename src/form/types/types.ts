@@ -143,7 +143,9 @@ export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
 export const SIGNATURE = 'SIGNATURE'
-export const QR_SCANNER = 'QR_SCANNER'
+export const REDIRECT = 'REDIRECT'
+export const ID_READER = 'ID_READER'
+export const HTTP = 'HTTP'
 
 export enum RadioSize {
   LARGE = 'large',
@@ -493,10 +495,48 @@ export interface ISignatureFormField extends IFormFieldBase {
   )[]
 }
 
-export interface IQRScannerFormField extends IFormFieldBase {
-  type: typeof QR_SCANNER
-  variant_Experimental: number
+export interface IHttpFormField extends IFormFieldBase {
+  type: typeof HTTP
+  options: {
+    url: string
+    method?: string
+    headers: Record<string, string>
+    body?: Record<string, any>
+  }
 }
+
+export interface IRedirectFormField extends IFormFieldBase {
+  type: typeof REDIRECT
+  options: {
+    url: string
+    callback: {
+      trigger: string
+      params: Record<string, string>
+    }
+  }
+}
+
+export interface QRReaderType {
+  type: 'QR'
+  labels: {
+    button: MessageDescriptor
+    scannerDialogSupportingCopy: MessageDescriptor
+    tutorial: {
+      cameraCleanliness: MessageDescriptor
+      distance: MessageDescriptor
+      lightBalance: MessageDescriptor
+    }
+  }
+}
+
+type ReaderType = QRReaderType | IRedirectFormField
+export interface IIDReaderFormField extends IFormFieldBase {
+  type: typeof ID_READER
+  dividerLabel: MessageDescriptor
+  manualInputInstructionLabel: MessageDescriptor
+  readers: [ReaderType, ...ReaderType[]]
+}
+
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -531,7 +571,9 @@ export type IFormField =
   | IHeading3Field
   | ISignatureFormField
   | IHiddenFormField
-  | IQRScannerFormField
+  | IIDReaderFormField
+  | IRedirectFormField
+  | IHttpFormField
 
 export interface SelectComponentOption {
   value: string

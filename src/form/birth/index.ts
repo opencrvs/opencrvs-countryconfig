@@ -79,7 +79,7 @@ import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/ma
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
-import { getGenderCustom, getQRCodeField } from './custom-fields'
+import { getGenderCustom, getIDReaderField } from './custom-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -220,7 +220,7 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            getQRCodeField(
+            getIDReaderField(
               'birth',
               'informant',
               informantFirstNameConditionals
@@ -234,26 +234,25 @@ export const birthForm: ISerializedForm = {
               {
                 id: 'form.field.label.qrScanner.0',
                 defaultMessage: 'Scan QR code with Scanner 1'
-              },
-              1
+              }
             ),
-            getQRCodeField(
-              'birth',
-              'informant',
-              informantFirstNameConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat([
-                  {
-                    action: 'disable',
-                    expression: 'Boolean($form.qrCode2)'
-                  }
-                ]),
-              {
-                id: 'form.field.label.qrScanner.1',
-                defaultMessage: 'Scan QR code with Scanner 2'
+            {
+              name: 'someHTTPField',
+              type: 'HTTP',
+              custom: true,
+              label: {
+                id: 'messages.empty',
+                defaultMessage: ' '
               },
-              2
-            ),
+              validator: [],
+              options: {
+                url: 'someRoute',
+                headers: {
+                  'Content-type': 'application/json'
+                },
+                method: 'GET'
+              }
+            },
             getFirstNameField(
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(
