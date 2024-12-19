@@ -46,7 +46,15 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 - TBC
 
-## 1.6.0 Release candidate
+## 1.6.1 (TBD)
+
+### Bug fixes
+
+- We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
+- Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
+- On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
+
+## 1.6.0
 
 ### Breaking changes
 
@@ -93,6 +101,7 @@ INSERT CSV ROWS IN ENGLISH ONLY
   5. 'PHONE_NUMBER',
   6. 'EMAIL'
 - Updated `allowedFileFormats` in signature fields to use MIME types (`image/png`, `image/jpg`, `image/jpeg`, `image/svg`) instead of simple file extensions. If you are already using the `allowedFileFormats` field in your implementation, please ensure to update the format accordingly.
+- The details exists conditionals for the various sections i.e. father, mother, spouse has to use the `values.detailsExist` property instead of accessing it from `draftData.[sectionName].detailsExists`. This is due to the fact that the draftData is not populated until any changes have been made to any of the fields in the current section.
 
 ### New features
 
@@ -127,6 +136,7 @@ INSERT CSV ROWS IN ENGLISH ONLY
 - Github pipeline dedicated for reading secrets and variables from other environments now checks if GH_TOKEN is still valid before attempting other operations
 - Remove unnecessary UI dividers that add in various sections of the declaration forms(e.g the Death, Birth and Marriage forms) [#244](https://github.com/opencrvs/opencrvs-countryconfig/pull/244)
 - Update template transformer for fields `informantType` and `otherInformantType` that fixes the bug of unavailability of these template fields [#5952](https://github.com/opencrvs/opencrvs-countryconfig/pull/5952)
+- Fixed missing InitialValue property to set initial values based on an expression
 
 ## 1.5.2 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.5.1...v1.5.2)
 
