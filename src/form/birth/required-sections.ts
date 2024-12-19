@@ -137,7 +137,7 @@ export const documentsSection = {
               description: 'Hidden for Parent Details none or Mother only',
               action: 'hide',
               expression:
-                '(draftData && draftData.mother && !draftData.mother.detailsExist) || Array.from({ length: 10 }, (_,i) => "typeOfMention__" + i).some(key => draftData.mention[key] === "RECOGNITION")'
+                '(draftData && draftData.mother && !draftData.mother.detailsExist) || Array.from({ length: 10 }, (_,i) => "typeOfMention__" + i).some(key => draftData?.mention && draftData.mention[key] && draftData.mention[key] === "RECOGNITION")'
             }
           ],
           mapping: getFieldMapping('documents')
