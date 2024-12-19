@@ -846,8 +846,8 @@ function replaceAbbreviations(inputText: string): string {
 }
 
 export function replaceByUppercaseLocation(): Handlebars.HelperDelegate {
-  return function (this: any, dateString: string) {
-    return replaceByUppercase('Toamsina frhshd shshkjh shjdshjdh')
+  return function (this: any, name: string) {
+    return replaceByUppercase(name)
   }
 }
 
