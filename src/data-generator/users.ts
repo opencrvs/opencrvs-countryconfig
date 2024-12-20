@@ -81,8 +81,8 @@ export async function createUser(
   phoneNumberRegex: string,
   overrides: Record<string, string>
 ) {
-  const firstName = faker.name.firstName()
-  const familyName = faker.name.lastName()
+  const firstName = faker.person.firstName()
+  const familyName = faker.person.lastName()
   log('Creating user', firstName, familyName, overrides)
 
   const phoneNumberExpander = expand(phoneNumberRegex)
@@ -100,15 +100,15 @@ export async function createUser(
     identifier: [
       {
         system: 'NATIONAL_ID',
-        value: faker.datatype
-          .number({ min: 100000000, max: 999999999 })
+        value: faker.number
+          .bigInt({ min: 100000000, max: 999999999 })
           .toString()
       }
     ],
     username:
       firstName.toLocaleLowerCase() + '.' + familyName.toLocaleLowerCase(),
     mobile: convertToMSISDN(generatedPhoneNumber, countryAlpha3),
-    email: faker.internet.email(undefined, undefined, 'example.com'),
+    email: faker.internet.email({ provider: 'example.com' }),
     primaryOffice: primaryOfficeId,
     ...overrides
   }

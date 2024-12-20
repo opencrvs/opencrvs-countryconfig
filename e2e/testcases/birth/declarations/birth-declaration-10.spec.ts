@@ -9,7 +9,7 @@ import {
   goToSection,
   login
 } from '../../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('10. Birth declaration case - 10', () => {
@@ -18,7 +18,7 @@ test.describe.serial('10. Birth declaration case - 10', () => {
   const declaration = {
     child: {
       name: {
-        firstNames: faker.name.lastName()
+        firstNames: faker.person.lastName()
       }
     },
     informantType: 'Father',

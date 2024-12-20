@@ -14,7 +14,7 @@ import {
   uploadImage,
   uploadImageToSection
 } from '../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import {
   ConvertEnumsToStrings,
   createDeclaration,
@@ -31,24 +31,24 @@ test.describe.serial(' Correct record - 4', () => {
   let page: Page
 
   const updatedFatherDetails = {
-    firstNames: faker.name.firstName('male'),
-    familyName: faker.name.firstName('male'),
+    firstNames: faker.person.firstName('male'),
+    familyName: faker.person.firstName('male'),
     birthDate: format(
       subYears(new Date(), 25 + Math.ceil(10 * Math.random())),
       'yyyy-MM-dd'
     ),
     email: faker.internet.email(),
     nationality: 'Nauru',
-    id: faker.random.numeric(10),
+    id: faker.string.numeric(10),
     idType: 'Passport',
     address: {
       province: 'Sulaka',
       district: 'Irundu',
-      town: faker.address.city(),
-      residentialArea: faker.address.county(),
-      street: faker.address.streetName(),
-      number: faker.address.buildingNumber(),
-      zipCode: faker.address.zipCode()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      zipCode: faker.location.zipCode()
     },
     maritalStatus: 'Married',
     educationLevel: 'Primary'
@@ -71,8 +71,8 @@ test.describe.serial(' Correct record - 4', () => {
     let token = await getToken('j.musonda', 'test')
     const declarationInput = {
       child: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.firstName(),
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.firstName(),
         gender: 'male',
         placeOfBirth: 'Residential address',
         birthLocation: {
@@ -87,12 +87,12 @@ test.describe.serial(' Correct record - 4', () => {
         type: 'PHYSICIAN'
       },
       mother: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.firstName()
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.firstName()
       },
       father: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.firstName()
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.firstName()
       }
     } as ConvertEnumsToStrings<BirthInputDetails>
 

@@ -1,6 +1,6 @@
 import { GATEWAY_HOST } from '../../constants'
 import { BirthRegistrationInput } from '../../gateway'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 
 import { readFileSync } from 'fs'
 import uuid from 'uuid'
@@ -13,6 +13,7 @@ import {
 } from './queries'
 import { random } from 'lodash'
 import { generateRandomSuffix } from '../../helpers'
+import fetch from 'node-fetch'
 
 export type BirthDetails = {
   informant: {
@@ -92,7 +93,7 @@ export async function createDeclaration(token: string, details: BirthDetails) {
                 join(__dirname, './data/assets/528KB-random.png')
               ).toString('base64'),
             informantType: details.informant.type,
-            contactPhoneNumber: '0' + faker.random.numeric(9),
+            contactPhoneNumber: '0' + faker.string.numeric(9),
             contactEmail: faker.internet.email(),
             draftId: uuid.v4()
           },
@@ -120,9 +121,9 @@ export async function createDeclaration(token: string, details: BirthDetails) {
                   type: 'PRIVATE_HOME',
                   address: {
                     line: [
-                      faker.address.buildingNumber(),
-                      faker.address.streetName(),
-                      faker.address.cityName(),
+                      faker.location.buildingNumber(),
+                      faker.location.street(),
+                      faker.location.city(),
                       '',
                       '',
                       'URBAN',
@@ -141,8 +142,8 @@ export async function createDeclaration(token: string, details: BirthDetails) {
                       locations,
                       details.child.birthLocation?.district || 'Ibombo'
                     ),
-                    city: faker.address.cityName(),
-                    postalCode: faker.address.zipCode()
+                    city: faker.location.city(),
+                    postalCode: faker.location.zipCode()
                   }
                 }
               : {
@@ -166,7 +167,7 @@ export async function createDeclaration(token: string, details: BirthDetails) {
             nationality: ['FAR'],
             identifier: [
               {
-                id: faker.random.numeric(10),
+                id: faker.string.numeric(10),
                 type: 'NATIONAL_ID'
               }
             ],
@@ -174,9 +175,9 @@ export async function createDeclaration(token: string, details: BirthDetails) {
               {
                 type: 'PRIMARY_ADDRESS',
                 line: [
-                  faker.address.buildingNumber(),
-                  faker.address.streetName(),
-                  faker.address.cityName(),
+                  faker.location.buildingNumber(),
+                  faker.location.street(),
+                  faker.location.city(),
                   '',
                   '',
                   'URBAN',
@@ -220,8 +221,8 @@ export async function createDeclaration(token: string, details: BirthDetails) {
             name: [
               {
                 use: 'en',
-                firstNames: faker.name.findName(),
-                familyName: faker.name.lastName()
+                firstNames: faker.person.firstName(),
+                familyName: faker.person.lastName()
               }
             ],
             birthDate:
@@ -233,7 +234,7 @@ export async function createDeclaration(token: string, details: BirthDetails) {
             nationality: ['FAR'],
             identifier: [
               {
-                id: faker.random.numeric(10),
+                id: faker.string.numeric(10),
                 type: 'NATIONAL_ID'
               }
             ],
@@ -272,8 +273,8 @@ export async function createDeclaration(token: string, details: BirthDetails) {
             name: [
               {
                 use: 'en',
-                firstNames: faker.name.findName(),
-                familyName: faker.name.lastName()
+                firstNames: faker.person.firstName(),
+                familyName: faker.person.lastName()
               }
             ],
             birthDate: format(
@@ -283,7 +284,7 @@ export async function createDeclaration(token: string, details: BirthDetails) {
             nationality: ['FAR'],
             identifier: [
               {
-                id: faker.random.numeric(10),
+                id: faker.string.numeric(10),
                 type: 'NATIONAL_ID'
               }
             ],

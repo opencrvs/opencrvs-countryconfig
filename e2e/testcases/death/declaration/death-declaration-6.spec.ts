@@ -14,7 +14,7 @@ import {
   joinValuesWith,
   login
 } from '../../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('6. Death declaration case - 6', () => {
@@ -22,8 +22,8 @@ test.describe.serial('6. Death declaration case - 6', () => {
   const declaration = {
     deceased: {
       name: {
-        firstNames: faker.name.firstName('female') + " O'Nila",
-        familyName: faker.name.lastName('female')
+        firstNames: faker.person.firstName('female') + " O'Nila",
+        familyName: faker.person.lastName('female')
       },
       gender: 'Female',
       age: 45,
@@ -34,13 +34,13 @@ test.describe.serial('6. Death declaration case - 6', () => {
       maritalStatus: 'Not stated',
       address: {
         country: 'Guam',
-        state: faker.address.state(),
-        district: faker.address.county(),
-        town: faker.address.city(),
-        addressLine1: faker.address.county(),
-        addressLine2: faker.address.streetName(),
-        addressLine3: faker.address.buildingNumber(),
-        postcodeOrZip: faker.address.zipCode()
+        state: faker.location.state(),
+        district: faker.location.county(),
+        town: faker.location.city(),
+        addressLine1: faker.location.county(),
+        addressLine2: faker.location.street(),
+        addressLine3: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     },
     event: {
@@ -55,15 +55,15 @@ test.describe.serial('6. Death declaration case - 6', () => {
         province: 'Chuminga',
         district: 'Nsali',
         urbanOrRural: 'Rural',
-        village: faker.address.county()
+        village: faker.location.county()
       }
     },
     informantType: 'Mother',
     informantEmail: faker.internet.email(),
     informant: {
       name: {
-        firstNames: faker.name.firstName('male'),
-        familyName: faker.name.lastName('male')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
       age: 17,
       nationality: 'Malawi',
@@ -73,13 +73,13 @@ test.describe.serial('6. Death declaration case - 6', () => {
       address: {
         sameAsDeceased: false,
         country: 'Comoros',
-        state: faker.address.state(),
-        district: faker.address.county(),
-        town: faker.address.city(),
-        addressLine1: faker.address.county(),
-        addressLine2: faker.address.streetName(),
-        addressLine3: faker.address.buildingNumber(),
-        postcodeOrZip: faker.address.zipCode()
+        state: faker.location.state(),
+        district: faker.location.county(),
+        town: faker.location.city(),
+        addressLine1: faker.location.county(),
+        addressLine2: faker.location.street(),
+        addressLine3: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     },
     spouse: {

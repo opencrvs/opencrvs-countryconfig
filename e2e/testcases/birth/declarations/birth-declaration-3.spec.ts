@@ -14,7 +14,7 @@ import {
   uploadImage,
   uploadImageToSection
 } from '../../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('3. Birth declaration case - 3', () => {
@@ -22,8 +22,8 @@ test.describe.serial('3. Birth declaration case - 3', () => {
   const declaration = {
     child: {
       name: {
-        firstNames: faker.name.firstName() + '_Peter',
-        familyName: faker.name.lastName()
+        firstNames: faker.person.firstName() + '_Peter',
+        familyName: faker.person.lastName()
       },
       gender: 'Unknown',
       birthDate: getRandomDate(0, 200)
@@ -36,19 +36,19 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       province: 'Pualula',
       district: 'Funabuli',
       urbanOrRural: 'Rural',
-      village: faker.address.county()
+      village: faker.location.county()
     },
     informantType: 'Grandfather',
     informantEmail: faker.internet.email(),
     informant: {
       name: {
-        firstNames: faker.name.firstName('male'),
-        familyName: faker.name.lastName('male')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
       birthDate: getRandomDate(40, 200),
       nationality: 'Farajaland',
       identifier: {
-        id: faker.random.numeric(10),
+        id: faker.string.numeric(10),
         type: 'National ID'
       },
       address: {
@@ -56,46 +56,46 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         province: 'Chuminga',
         district: 'Ama',
         urbanOrRural: 'Urban',
-        town: faker.address.city(),
-        residentialArea: faker.address.county(),
-        street: faker.address.streetName(),
-        number: faker.address.buildingNumber(),
-        postcodeOrZip: faker.address.zipCode()
+        town: faker.location.city(),
+        residentialArea: faker.location.county(),
+        street: faker.location.street(),
+        number: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     },
     mother: {
       name: {
-        firstNames: faker.name.firstName('female'),
-        familyName: faker.name.lastName('female')
+        firstNames: faker.person.firstName('female'),
+        familyName: faker.person.lastName('female')
       },
       birthDate: getRandomDate(20, 200),
       nationality: 'Farajaland',
       identifier: {
-        id: faker.random.numeric(9),
+        id: faker.string.numeric(9),
         type: 'Birth Registration Number'
       },
       address: {
         country: 'Djibouti',
-        state: faker.address.state(),
-        district: faker.address.county(),
-        town: faker.address.city(),
-        addressLine1: faker.address.county(),
-        addressLine2: faker.address.streetName(),
-        addressLine3: faker.address.buildingNumber(),
-        postcodeOrZip: faker.address.zipCode()
+        state: faker.location.state(),
+        district: faker.location.county(),
+        town: faker.location.city(),
+        addressLine1: faker.location.county(),
+        addressLine2: faker.location.street(),
+        addressLine3: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       },
       maritalStatus: 'Widowed',
       levelOfEducation: 'Secondary'
     },
     father: {
       name: {
-        firstNames: faker.name.firstName('male'),
-        familyName: faker.name.lastName('male')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
       birthDate: getRandomDate(22, 200),
       nationality: 'Gabon',
       identifier: {
-        id: faker.random.numeric(11),
+        id: faker.string.numeric(11),
         type: 'Birth Registration Number'
       },
       maritalStatus: 'Widowed',
@@ -106,7 +106,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         province: 'Chuminga',
         district: 'Nsali',
         urbanOrRural: 'Rural',
-        village: faker.address.county()
+        village: faker.location.county()
       }
     }
   }

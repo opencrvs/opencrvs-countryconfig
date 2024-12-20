@@ -15,7 +15,7 @@ import {
   uploadImage,
   uploadImageToSection
 } from '../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import {
   ConvertEnumsToStrings,
   createDeclaration,
@@ -30,8 +30,8 @@ test.describe('1. Correct record - 1', () => {
   let trackingId = ''
 
   const updatedChildDetails = {
-    firstNames: faker.name.firstName('female'),
-    familyName: faker.name.firstName('female'),
+    firstNames: faker.person.firstName('female'),
+    familyName: faker.person.firstName('female'),
     gender: 'Female',
     birthDate: format(
       subDays(new Date(), Math.ceil(10 * Math.random())),
@@ -47,8 +47,8 @@ test.describe('1. Correct record - 1', () => {
     let token = await getToken('k.mweene', 'test')
     const declarationInput = {
       child: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.firstName(),
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.firstName(),
         gender: 'male'
       },
       informant: {
@@ -58,12 +58,12 @@ test.describe('1. Correct record - 1', () => {
         type: 'PHYSICIAN'
       },
       mother: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.firstName()
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.firstName()
       },
       father: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.firstName()
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.firstName()
       }
     } as ConvertEnumsToStrings<BirthInputDetails>
 

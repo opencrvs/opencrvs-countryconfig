@@ -13,7 +13,7 @@ import {
   joinValuesWith,
   login
 } from '../../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('4. Birth declaration case - 4', () => {
@@ -21,8 +21,8 @@ test.describe.serial('4. Birth declaration case - 4', () => {
   const declaration = {
     child: {
       name: {
-        firstNames: faker.name.firstName() + '-Peter',
-        familyName: faker.name.lastName()
+        firstNames: faker.person.firstName() + '-Peter',
+        familyName: faker.person.lastName()
       },
       gender: 'Unknown',
       birthDate: getRandomDate(0, 200)
@@ -35,23 +35,23 @@ test.describe.serial('4. Birth declaration case - 4', () => {
       province: 'Pualula',
       district: 'Funabuli',
       urbanOrRural: 'Urban',
-      town: faker.address.city(),
-      residentialArea: faker.address.county(),
-      street: faker.address.streetName(),
-      number: faker.address.buildingNumber(),
-      postcodeOrZip: faker.address.zipCode()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      postcodeOrZip: faker.location.zipCode()
     },
     informantType: 'Grandmother',
     informantEmail: faker.internet.email(),
     informant: {
       name: {
-        firstNames: faker.name.firstName('female'),
-        familyName: faker.name.lastName('female')
+        firstNames: faker.person.firstName('female'),
+        familyName: faker.person.lastName('female')
       },
       age: 60,
       nationality: 'Guernsey',
       identifier: {
-        id: faker.random.numeric(10),
+        id: faker.string.numeric(10),
         type: 'Passport'
       },
       address: {
@@ -59,13 +59,13 @@ test.describe.serial('4. Birth declaration case - 4', () => {
         province: 'Chuminga',
         district: 'Ama',
         urbanOrRural: 'Rural',
-        village: faker.address.county()
+        village: faker.location.county()
       }
     },
     mother: {
       name: {
-        firstNames: faker.name.firstName('female'),
-        familyName: faker.name.lastName('female')
+        firstNames: faker.person.firstName('female'),
+        familyName: faker.person.lastName('female')
       },
       age: 25,
       nationality: 'Farajaland',
@@ -74,21 +74,21 @@ test.describe.serial('4. Birth declaration case - 4', () => {
       },
       address: {
         country: 'Guam',
-        state: faker.address.state(),
-        district: faker.address.county(),
-        town: faker.address.city(),
-        addressLine1: faker.address.county(),
-        addressLine2: faker.address.streetName(),
-        addressLine3: faker.address.buildingNumber(),
-        postcodeOrZip: faker.address.zipCode()
+        state: faker.location.state(),
+        district: faker.location.county(),
+        town: faker.location.city(),
+        addressLine1: faker.location.county(),
+        addressLine2: faker.location.street(),
+        addressLine3: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       },
       maritalStatus: 'Divorced',
       levelOfEducation: 'Tertiary'
     },
     father: {
       name: {
-        firstNames: faker.name.firstName('male'),
-        familyName: faker.name.lastName('male')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
       birthDate: getRandomDate(22, 200),
       nationality: 'Farajaland',
@@ -100,13 +100,13 @@ test.describe.serial('4. Birth declaration case - 4', () => {
       address: {
         sameAsMother: false,
         country: 'Grenada',
-        state: faker.address.state(),
-        district: faker.address.county(),
-        town: faker.address.city(),
-        addressLine1: faker.address.county(),
-        addressLine2: faker.address.streetName(),
-        addressLine3: faker.address.buildingNumber(),
-        postcodeOrZip: faker.address.zipCode()
+        state: faker.location.state(),
+        district: faker.location.county(),
+        town: faker.location.city(),
+        addressLine1: faker.location.county(),
+        addressLine2: faker.location.street(),
+        addressLine3: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     }
   }

@@ -1,6 +1,6 @@
 import { GATEWAY_HOST } from '../../constants'
 import { DeathRegistrationInput } from '../../gateway'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 
 import { readFileSync } from 'fs'
 import uuid from 'uuid'
@@ -15,6 +15,7 @@ import {
   GET_DEATH_REGISTRATION_FOR_REVIEW
 } from './queries'
 import { random } from 'lodash'
+import fetch from 'node-fetch'
 
 export type DeathDeclarationInput = {
   deceased?: {
@@ -35,26 +36,26 @@ export type DeathDeclarationInput = {
 const declaration = {
   deceased: {
     name: {
-      firstNames: faker.name.firstName('male') + generateRandomSuffix(),
-      familyName: faker.name.lastName('male') + generateRandomSuffix()
+      firstNames: faker.person.firstName('male') + generateRandomSuffix(),
+      familyName: faker.person.lastName('male') + generateRandomSuffix()
     },
     gender: 'male',
     age: random(50, 100),
     nationality: 'FAR',
     identifier: {
       type: 'NATIONAL_ID',
-      id: faker.random.numeric(10)
+      id: faker.string.numeric(10)
     },
     address: {
       country: 'FAR',
       province: 'Sulaka',
       district: 'Zobwe',
       urbanOrRural: 'Urban',
-      town: faker.address.city(),
-      residentialArea: faker.address.county() + generateRandomSuffix(),
-      street: faker.address.streetName(),
-      number: faker.address.buildingNumber(),
-      postcodeOrZip: faker.address.zipCode()
+      town: faker.location.city(),
+      residentialArea: faker.location.county() + generateRandomSuffix(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      postcodeOrZip: faker.location.zipCode()
     }
   },
   event: {
@@ -70,13 +71,13 @@ const declaration = {
   informantEmail: faker.internet.email(),
   spouse: {
     name: {
-      firstNames: faker.name.firstName('female'),
-      familyName: faker.name.lastName('female')
+      firstNames: faker.person.firstName('female'),
+      familyName: faker.person.lastName('female')
     },
     birthDate: getRandomDate(50, 200, 200),
     nationality: 'Farajaland',
     identifier: {
-      id: faker.random.numeric(10),
+      id: faker.string.numeric(10),
       type: 'NATIONAL_ID'
     },
     address: {
