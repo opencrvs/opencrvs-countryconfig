@@ -44,7 +44,7 @@
     name: 'download opencrvs backup'
     minute: '30'
     hour: '0'
-    job: 'cd / && bash /opt/opencrvs/infrastructure/backups/download.sh --passphrase={{ backup_restore_encryption_passphrase }} --ssh_user={{ backup_server_user }} --ssh_host={{ backup_hostname }} --ssh_port={{ backup_port }} --remote_dir={{ backup_server_remote_source_directory }} >> /var/log/opencrvs-restore.log 2>&1'
+    job: 'bash /opt/opencrvs/infrastructure/backups/download.sh --passphrase={{ backup_restore_encryption_passphrase }} --ssh_user={{ backup_server_user }} --ssh_host={{ backup_hostname }} --ssh_port={{ backup_port }} --remote_dir={{ backup_server_remote_source_directory }} >> /var/log/opencrvs-restore.log 2>&1'
     state: "{{ 'present' if (backup_hostname is defined and backup_restore_encryption_passphrase and periodic_restore_from_backup) else 'absent' }}"
 
 - name: 'Setup crontab to restore the opencrvs data'
@@ -54,5 +54,5 @@
     name: 'restore opencrvs'
     minute: '0'
     hour: '1'
-    job: 'cd / && bash /opt/opencrvs/infrastructure/backups/restore.sh --replicas=1 >> /var/log/opencrvs-restore.log 2>&1'
+    job: 'bash /opt/opencrvs/infrastructure/backups/restore.sh --replicas=1 >> /var/log/opencrvs-restore.log 2>&1'
     state: "{{ 'present' if (backup_hostname is defined and backup_restore_encryption_passphrase and periodic_restore_from_backup) else 'absent' }}"
