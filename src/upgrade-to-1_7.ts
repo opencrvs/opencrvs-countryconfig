@@ -239,22 +239,30 @@ async function upgradeRolesDefinitions() {
     join(__dirname, './data-seeding/employees/source/default-employees.csv')
   )
 
-  const defaultEmployeesWithRoles = defaultEmployees.map((employee) => {
-    const role = rolesWithGeneratedIds.find(
-      (role) => role.oldLabels.en === employee.role
-    )
-    if (!role) {
-      logger.error(`Role with id ${employee.role} not found in roles.csv`)
-      process.exit(1)
+  const defaultEmployeesWithRoles = defaultEmployees.map(
+    ({ systemRole, ...employee }) => {
+      if (!systemRole) {
+        logger.warn(
+          `Skipping employee "${employee.givenNames} ${employee.familyName}" as it already seems to have been migrated`
+        )
+        return employee
+      }
+      const role = rolesWithGeneratedIds.find(
+        (role) => role.oldLabels.en === employee.role
+      )
+      if (!role) {
+        logger.error(`Role with id ${employee.role} not found in roles.csv`)
+        process.exit(1)
+      }
+      return {
+        ...employee,
+        role: role.id
+      }
     }
-    return {
-      ...employee,
-      role: role.id
-    }
-  })
+  )
 
   /*
-   * Create the new "roles.json" file with the updated roles and new format
+   * Create the new "roles.ts" file with the updated roles and new format
    */
 
   const rolesWithoutOldLabels = rolesWithGeneratedIds.map((role) => {
