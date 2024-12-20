@@ -15,7 +15,8 @@ import { logger } from './logger'
 import { stringify } from 'csv-stringify/sync'
 import fs from 'fs'
 import csv2json from 'csv2json'
-import { SCOPES } from '@opencrvs/toolkit/scopes'
+import { inspect } from 'util'
+import { format, resolveConfig } from 'prettier'
 
 /*
  * inlining these two functions to not
@@ -50,7 +51,7 @@ async function readCSVToJSON<T>(filename: string) {
 }
 
 const DEFAULT_ROLE_SCOPES_PRE_1_7 = {
-  FIELD_AGENT: [
+  FIELD_AGENT: `[
     SCOPES.RECORD_DECLARE_BIRTH,
     SCOPES.RECORD_DECLARE_DEATH,
     SCOPES.RECORD_DECLARE_MARRIAGE,
@@ -59,8 +60,8 @@ const DEFAULT_ROLE_SCOPES_PRE_1_7 = {
     SCOPES.SEARCH_BIRTH,
     SCOPES.SEARCH_DEATH,
     SCOPES.SEARCH_MARRIAGE
-  ],
-  REGISTRATION_AGENT: [
+  ]`,
+  REGISTRATION_AGENT: `[
     SCOPES.RECORD_DECLARE_BIRTH,
     SCOPES.RECORD_DECLARE_DEATH,
     SCOPES.RECORD_DECLARE_MARRIAGE,
@@ -79,8 +80,8 @@ const DEFAULT_ROLE_SCOPES_PRE_1_7 = {
     SCOPES.SEARCH_BIRTH,
     SCOPES.SEARCH_DEATH,
     SCOPES.SEARCH_MARRIAGE
-  ],
-  LOCAL_REGISTRAR: [
+  ]`,
+  LOCAL_REGISTRAR: `[
     SCOPES.RECORD_DECLARE_BIRTH,
     SCOPES.RECORD_DECLARE_DEATH,
     SCOPES.RECORD_DECLARE_MARRIAGE,
@@ -104,16 +105,16 @@ const DEFAULT_ROLE_SCOPES_PRE_1_7 = {
     SCOPES.SEARCH_BIRTH,
     SCOPES.SEARCH_DEATH,
     SCOPES.SEARCH_MARRIAGE
-  ],
-  LOCAL_SYSTEM_ADMIN: [
+  ]`,
+  LOCAL_SYSTEM_ADMIN: `[
     SCOPES.USER_READ_MY_OFFICE,
     SCOPES.USER_CREATE_MY_JURISDICTION,
     SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
     SCOPES.PERFORMANCE_READ,
     SCOPES.PERFORMANCE_READ_DASHBOARDS,
     SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS
-  ],
-  NATIONAL_SYSTEM_ADMIN: [
+  ]`,
+  NATIONAL_SYSTEM_ADMIN: `[
     SCOPES.USER_CREATE,
     SCOPES.USER_READ,
     SCOPES.USER_UPDATE,
@@ -122,13 +123,13 @@ const DEFAULT_ROLE_SCOPES_PRE_1_7 = {
     SCOPES.PERFORMANCE_READ_DASHBOARDS,
     SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
     SCOPES.CONFIG_UPDATE_ALL
-  ],
-  PERFORMANCE_MANAGEMENT: [
+  ]`,
+  PERFORMANCE_MANAGEMENT: `[
     SCOPES.PERFORMANCE_READ,
     SCOPES.PERFORMANCE_READ_DASHBOARDS,
     SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS
-  ],
-  NATIONAL_REGISTRAR: [
+  ]`,
+  NATIONAL_REGISTRAR: `[
     SCOPES.RECORD_DECLARE_BIRTH,
     SCOPES.RECORD_DECLARE_DEATH,
     SCOPES.RECORD_DECLARE_MARRIAGE,
@@ -154,8 +155,20 @@ const DEFAULT_ROLE_SCOPES_PRE_1_7 = {
     SCOPES.SEARCH_BIRTH,
     SCOPES.SEARCH_DEATH,
     SCOPES.SEARCH_MARRIAGE
-  ]
+  ]`
 } as const
+
+const customInspectSymbol = Symbol.for('nodejs.util.inspect.custom')
+
+class FormattedScopes {
+  scopes: string
+  constructor(scopes: string) {
+    this.scopes = scopes
+  }
+  [customInspectSymbol]() {
+    return this.scopes
+  }
+}
 
 async function main() {
   await upgradeRolesDefinitions()
@@ -249,13 +262,30 @@ async function upgradeRolesDefinitions() {
     return rest
   })
 
+  const formattedRoles = rolesWithoutOldLabels.map((role) => {
+    return {
+      ...role,
+      scopes: new FormattedScopes(role.scopes)
+    }
+  })
+
   /*
    * Persist changes
    */
   logger.info('Creating roles file')
   writeFileSync(
-    join(__dirname, './data-seeding/roles/roles.json'),
-    JSON.stringify(rolesWithoutOldLabels, null, 2)
+    join(__dirname, './data-seeding/roles/roles.ts'),
+    await format(
+      `
+      import { SCOPES } from '@opencrvs/toolkit/scopes'
+
+      export const roles = ${inspect(formattedRoles, { depth: null })}
+    `,
+      {
+        ...(await resolveConfig(__dirname)),
+        parser: 'babel-ts'
+      }
+    )
   )
 
   logger.info('Updating copy file')
