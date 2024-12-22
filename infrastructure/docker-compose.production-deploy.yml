@@ -41,7 +41,9 @@ services:
   auth:
     environment:
       - NODE_ENV=production
+      - QA_ENV=true
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 3
 
