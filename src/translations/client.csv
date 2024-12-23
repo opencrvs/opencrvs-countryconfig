@@ -168,6 +168,10 @@ certificate.receipt.service.targetDay,,{event} registration after 45 days of eve
 certificate.receipt.service.targetDay.amount,,৳ 25.00,৳ 25.00
 certificate.receipt.subheader,Subheader for receipt on payment on certificate,{event} Registration after {DOBDiff} of {DOE},{event} Déclaration après {DOBDiff} de {DOE}
 changeEmail.validation.msg,Phone number validation message,Must be a valid email address,Doit être une adresse e-mail valide
+changeModal.cancel,The label for cancel button of change modal,Cancel,Annuler
+changeModal.continue,The label for continue button of change modal,Continue,Continuer
+changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour chaque modification que vous apporterez.
+changeModal.title,The title for change modal,Edit declaration?,Modifier la déclaration?
 changePhone.validation.msg,Phone number validation message,Must be a valid 10 digit number that starts with 0,Doit être un numéro valide à {num} chiffres qui commence par {start}.
 config.advanced.search,This is used for the advanced search,Advanced Search,Recherche avancée
 config.advanced.search.instruction,This is used for the advanced search,Select the options to build an advanced search. A minimum of two search parameters is required.,Sélectionnez les options pour construire une recherche avancée. Un minimum de deux paramètres de recherche est requis.
@@ -786,6 +790,21 @@ error.title,Error title,Oops!,Oups !
 error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !
 error.userListError,Error message when user list loads fails,Failed to load users,Impossible de charger les utilisateurs
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
+event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
+event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Prénom du recommandeur
+event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,ID d'adhésion du recommandeur
+event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Nom de famille du recommandeur
+event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Qui recommande le demandeur?
+event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth,Date de naissance du demandeur
+event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name,Prénom du demandeur
+event.tennis-club-membership.action.declare.form.section.who.field.surname.label,This is the label for the field,Applicant's surname,Nom de famille du demandeur
+event.tennis-club-membership.action.declare.form.section.who.title,This is the title of the section,Who is applying for the membership?,Qui postule pour l'adhésion?
+event.tennis-club-membership.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
+event.tennis-club-membership.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Send an application,Envoyer une demande
+event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
+exitModal.cancel,The label for cancel button in exit modal,Cancel,Annuler
+exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?,Quitter sans enregistrer les modifications?
+exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Êtes-vous sûr de vouloir quitter sans enregistrer?
 fieldAgentHome.allUpdatesText,,Great job! You have updated all declarations,Bon travail ! Vous avez mis à jour toutes les déclarations
 fieldAgentHome.inProgressCount,,In progress ({total}),En cours ({total})
 fieldAgentHome.queryError,The text when error ocurred loading rejected declarations,An error occurred while loading declarations,Une erreur s'est produite lors du chargement des déclarations
@@ -1760,6 +1779,16 @@ register.selectVitalEvent.registerNewEventHeading,The section heading on the pag
 register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration
 register.selectinformant.legalGuardian,,Legal guardian,Tuteur légal
 register.workQueue.declarations.banner,,Declarations to register in your area,Déclarations à enregistrer dans votre région
+registerModal.cancel,The label for cancel button of register modal,Cancel,Annuler
+registerModal.description,The description for register modal,The declarant will be notified of this correction and a record of this decision will be recorded,Le déclarant sera informé de cette correction et un enregistrement de cette décision sera créé.
+registerModal.register,The label for register button of register modal,Register,Enregistrer
+registerModal.title,The title for register modal,Register the member?,Enregistrer le membre?
+rejectModal.archive,The label for archive button of reject modal,Archive,Archiver
+rejectModal.cancel,The label for cancel button of reject modal,Cancel,Annuler
+rejectModal.description,The description for reject modal,Please describe the updates required to this record for follow up action.,Veuillez décrire les mises à jour nécessaires à ce dossier pour un suivi.
+rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate,Marquer comme doublon
+rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update,Envoyer pour mise à jour
+rejectModal.title,The title for reject modal,Reason for rejection?,Raison du rejet?
 reloadmodal.body,Body of reload modal,There’s a new version of {app_name} available. Please update to continue.,Une nouvelle version de {app_name} est disponible. Veuillez effectuer la mise à jour pour continuer.
 reloadmodal.button.update,Label of update button,Update,Mise à jour
 reloadmodal.title,Title when update is available,Update available,Mise à jour disponible
@@ -1816,6 +1845,10 @@ review.signature.delete,Label for button that deletes signature,Delete,Supprimer
 review.signature.description,Label awknowledging the correctness of the declaration,"I, the undersigned, hereby declare that the particulars in this form are true and correct to the best of my knowledge.","Je soussigné(e) déclare par la présente que les informations contenues dans ce formulaire sont, à ma connaissance, vraies et correctes."
 review.signature.input.description,Description awknowledging the correctness of the declaration,"By signing this document with an electronic signature, I agree that such signature will be valid as handwritten signatures to the extent allowed by the laws of Farajaland.","En signant ce document avec une signature électronique, j'accepte que cette signature soit valable comme les signatures manuscrites dans la mesure où les lois du Farajaland le permettent."
 review.signature.open,Label for button that opens the signature input,Sign,Signer
+reviewAction.description,The description for review action,"By clicking register, you confirm that the information entered is correct and the member can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que le membre peut être enregistré."
+reviewAction.register,The label for register button of review action,Register,Enregistrer
+reviewAction.reject,The label for reject button of review action,Reject,Rejeter
+reviewAction.title,The title for review action,Register member,Enregistrer un membre
 search.bookmark.error.notification,Error Notification messages for bookmark advanced search result,"Sorry, something went wrong. Please try again","Désolé, quelque chose s'est mal passé. Veuillez réessayer"
 search.bookmark.loading.notification,Loading Notification messages for bookmark advanced search result,Bookmarking your advanced search results...,Mettre en signet les résultats de votre recherche avancée...
 search.bookmark.remove.loading.notification,Loading Notification messages for remove advanced search bookmark,Removing your advanced search bookmark...,Suppression de votre signet de recherche avancée...

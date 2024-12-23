@@ -49,6 +49,14 @@
     state: touch
     mode: 'u+rwX,g+rwX,o-rwx'
 
+- name: Create backup logfile for error
+  ansible.builtin.file:
+    path: /var/log/opencrvs-backup.error.log
+    owner: '{{ ansible_user }}'
+    group: 'application'
+    state: touch
+    mode: 'u+rwX,g+rwX,o-rwx'
+
 - name: Create restore logfile
   ansible.builtin.file:
     path: /var/log/opencrvs-restore.log
