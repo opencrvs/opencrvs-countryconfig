@@ -1,6 +1,13 @@
-import { SCOPES } from '@opencrvs/toolkit/scopes'
+import { SCOPES, Scope } from '@opencrvs/toolkit/scopes'
+import { MessageDescriptor } from 'react-intl'
 
-export const roles = [
+type Role = {
+  id: string
+  label: MessageDescriptor
+  scopes: Scope[]
+}
+
+export const roles: Role[] = [
   {
     id: 'FIELD_AGENT',
     label: {
@@ -8,7 +15,6 @@ export const roles = [
       description: 'Name for user role Field Agent',
       id: 'userRole.fieldAgent'
     },
-    systemRole: 'FIELD_AGENT',
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
@@ -27,7 +33,6 @@ export const roles = [
       description: 'Name for user role Police Officer',
       id: 'userRole.policeOfficer'
     },
-    systemRole: 'FIELD_AGENT',
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
@@ -46,7 +51,6 @@ export const roles = [
       description: 'Name for user role Social Worker',
       id: 'userRole.socialWorker'
     },
-    systemRole: 'FIELD_AGENT',
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
@@ -65,7 +69,6 @@ export const roles = [
       description: 'Name for user role Healthcare Worker',
       id: 'userRole.healthcareWorker'
     },
-    systemRole: 'FIELD_AGENT',
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
@@ -84,7 +87,6 @@ export const roles = [
       description: 'Name for user role Local Leader',
       id: 'userRole.localLeader'
     },
-    systemRole: 'FIELD_AGENT',
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
@@ -103,7 +105,6 @@ export const roles = [
       description: 'Name for user role Registration Agent',
       id: 'userRole.registrationAgent'
     },
-    systemRole: 'REGISTRATION_AGENT',
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
@@ -132,7 +133,6 @@ export const roles = [
       description: 'Name for user role Local Registrar',
       id: 'userRole.localRegistrar'
     },
-    systemRole: 'LOCAL_REGISTRAR',
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
@@ -166,7 +166,6 @@ export const roles = [
       description: 'Name for user role Local System Admin',
       id: 'userRole.localSystemAdmin'
     },
-    systemRole: 'LOCAL_SYSTEM_ADMIN',
     scopes: [
       SCOPES.USER_READ_MY_OFFICE,
       SCOPES.USER_CREATE_MY_JURISDICTION,
@@ -183,7 +182,6 @@ export const roles = [
       description: 'Name for user role National System Admin',
       id: 'userRole.nationalSystemAdmin'
     },
-    systemRole: 'NATIONAL_SYSTEM_ADMIN',
     scopes: [
       SCOPES.USER_CREATE,
       SCOPES.USER_READ,
@@ -202,7 +200,6 @@ export const roles = [
       description: 'Name for user role Performance Manager',
       id: 'userRole.performanceManager'
     },
-    systemRole: 'PERFORMANCE_MANAGEMENT',
     scopes: [
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
@@ -216,7 +213,6 @@ export const roles = [
       description: 'Name for user role National Registrar',
       id: 'userRole.nationalRegistrar'
     },
-    systemRole: 'NATIONAL_REGISTRAR',
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,

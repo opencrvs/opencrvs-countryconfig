@@ -291,12 +291,12 @@ async function upgradeRolesDefinitions() {
    * Create the new "roles.ts" file with the updated roles and new format
    */
 
-  const rolesWithoutOldLabels = rolesWithGeneratedIds.map((role) => {
-    const { oldLabels, ...rest } = role
+  const rolesWithoutDeprecatedFields = rolesWithGeneratedIds.map((role) => {
+    const { oldLabels, systemRole, ...rest } = role
     return rest
   })
 
-  const formattedRoles = rolesWithoutOldLabels.map((role) => {
+  const formattedRoles = rolesWithoutDeprecatedFields.map((role) => {
     return {
       ...role,
       scopes: new FormattedScopes(role.scopes)
@@ -311,9 +311,16 @@ async function upgradeRolesDefinitions() {
     join(__dirname, './data-seeding/roles/roles.ts'),
     await format(
       `
-      import { SCOPES } from '@opencrvs/toolkit/scopes'
+      import { SCOPES, Scope } from '@opencrvs/toolkit/scopes'
+      import { MessageDescriptor } from 'react-intl'
 
-      export const roles = ${inspect(formattedRoles, { depth: null })}
+      type Role = {
+        id: string
+        label: MessageDescriptor
+        scopes: Scope[]
+      }
+
+      export const roles: Role[] = ${inspect(formattedRoles, { depth: null })}
     `,
       {
         ...(await resolveConfig(__dirname)),
