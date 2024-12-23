@@ -232,7 +232,7 @@ async function upgradeRolesDefinitions() {
   })
 
   /*
-   * Fix role references in default-employees.csv from "National System Admin" to "NATIONAL_SYSTEM_ADMIN"
+   * Fix role references in default-employees.csv & prod-employees.csv from "National System Admin" to "NATIONAL_SYSTEM_ADMIN"
    */
 
   const defaultEmployees = await readCSVToJSON<any[]>(
@@ -240,6 +240,32 @@ async function upgradeRolesDefinitions() {
   )
 
   const defaultEmployeesWithRoles = defaultEmployees.map(
+    ({ systemRole, ...employee }) => {
+      if (!systemRole) {
+        logger.warn(
+          `Skipping employee "${employee.givenNames} ${employee.familyName}" as it already seems to have been migrated`
+        )
+        return employee
+      }
+      const role = rolesWithGeneratedIds.find(
+        (role) => role.oldLabels.en === employee.role
+      )
+      if (!role) {
+        logger.error(`Role with id ${employee.role} not found in roles.csv`)
+        process.exit(1)
+      }
+      return {
+        ...employee,
+        role: role.id
+      }
+    }
+  )
+
+  const prodEmployees = await readCSVToJSON<any[]>(
+    join(__dirname, './data-seeding/employees/source/prod-employees.csv')
+  )
+
+  const prodEmployeesWithRoles = prodEmployees.map(
     ({ systemRole, ...employee }) => {
       if (!systemRole) {
         logger.warn(
@@ -303,6 +329,11 @@ async function upgradeRolesDefinitions() {
   await writeJSONToCSV(
     join(__dirname, './data-seeding/employees/source/default-employees.csv'),
     defaultEmployeesWithRoles
+  )
+  logger.info('Updating prod employees file')
+  await writeJSONToCSV(
+    join(__dirname, './data-seeding/employees/source/prod-employees.csv'),
+    prodEmployeesWithRoles
   )
 
   logger.info('Removing old roles file')

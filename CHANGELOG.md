@@ -11,8 +11,8 @@
 - **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: *Link to scopes description file*
 
   **Migration notes**
-  - After pulling in the v1.7.0 changes, remove `roles.ts` file (we will regenerate it later), reject the changes incoming to `roles.csv` & `default-employees.csv` files.
-  - Run `yarn upgrade:code`. It will remove the `roles.csv` file and generate a `roles.ts` file. It will also update the corresponding role column in the `default-employees.csv` file & add the corresponding translations in the `client.csv` file (If you have entries in the `prod-employees.csv`, which you should if you are running a live OpenCRVS instance, those need to be updated manually). The employee files are only used when seeding new environments, if you already have a v1.6.x of OpenCRVS deployed, the data in the environment will automatically get migrated after deploying the upgrade. The changes in these two files are made to keep the roles in sync with your previously deployed environments, if any.
+  - After pulling in the v1.7.0 changes, remove `roles.ts` (we will regenerate it later), reject the changes incoming to `roles.csv`, `default-employees.csv` & `prod-employees.csv` files.
+  - Run `yarn upgrade:code`. It will remove `roles.csv` and generate a `roles.ts` file. It will also update the corresponding role column in `default-employees.csv` & `prod-employees.csv` while adding the corresponding translations in `client.csv`. The employee files are only used when seeding new environments, if you already have a v1.6.x of OpenCRVS deployed, the data in the environment will automatically get migrated after deploying the upgrade. The changes in these two files are made to keep the roles in sync with your previously deployed environments, if any.
   
   The `roles.ts` file now defines all the roles available in the system. New roles can be added & existing roles can be customized by giving them different scopes.
 
