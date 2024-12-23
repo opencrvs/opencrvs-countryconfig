@@ -16,8 +16,8 @@ import {
   NUI_GENERATOR_URL,
   NUI_API_KEY,
   X_ROAD_CLIENT,
-  CLIENT_SECRET,
-  CLIENT_ID
+  NUI_CLIENT_ID,
+  NUI_CLIENT_SECRET
 } from './constants'
 import { internal } from '@hapi/boom'
 
@@ -46,11 +46,11 @@ const fetchNewToken = async (): Promise<string> => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Road-Client': X_ROAD_CLIENT
+        'X-Road-Client': X_ROAD_CLIENT ?? ''
       },
       body: JSON.stringify({
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET
+        clientId: NUI_CLIENT_ID,
+        clientSecret: NUI_CLIENT_SECRET
       })
     })
 
@@ -82,7 +82,7 @@ export const generateNUI = async ({
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        'X-Road-Client': X_ROAD_CLIENT
+        'X-Road-Client': X_ROAD_CLIENT ?? ''
       },
       body: JSON.stringify({
         batchSize: NUI_BATCH_SIZE,
@@ -117,7 +117,7 @@ const affectNUI = async (nui: string, token: string) => {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
-      'X-Road-Client': X_ROAD_CLIENT
+      'X-Road-Client': X_ROAD_CLIENT ?? ''
     },
     body: JSON.stringify({
       nui: [nui]
