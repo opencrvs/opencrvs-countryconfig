@@ -223,18 +223,9 @@ export const birthForm: ISerializedForm = {
             getIDReaderField(
               'birth',
               'informant',
-              informantFirstNameConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat([
-                  {
-                    action: 'disable',
-                    expression: 'Boolean($form.qrCode1)'
-                  }
-                ]),
-              {
-                id: 'form.field.label.qrScanner.0',
-                defaultMessage: 'Scan QR code with Scanner 1'
-              }
+              informantFirstNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              )
             ),
             {
               name: 'someHTTPField',
@@ -258,30 +249,16 @@ export const birthForm: ISerializedForm = {
               informantFirstNameConditionals.concat(
                 hideIfInformantMotherOrFather
               ),
-              certificateHandlebars.informantFirstName,
-              {
-                dependsOn: ['qrCode1', 'qrCode2'],
-                expression:
-                  '$form.qrCode1?.firstName?.[0].value || $form.qrCode2?.firstName?.[0].value'
-              }
+              certificateHandlebars.informantFirstName
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
               informantFamilyNameConditionals.concat(
                 hideIfInformantMotherOrFather
               ),
-              certificateHandlebars.informantFamilyName,
-              {
-                dependsOn: ['qrCode1', 'qrCode2'],
-                expression:
-                  '$form.qrCode1?.lastName?.[0].value || $form.qrCode2?.lastName?.[0].value'
-              }
+              certificateHandlebars.informantFamilyName
             ), // Required field.
-            getGenderCustom('birth', 'informant', {
-              dependsOn: ['qrCode1', 'qrCode2'],
-              expression:
-                '$form.qrCode1?.gender?.[0].value?.toLowerCase() || $form.qrCode2?.gender?.[0].value?.toLowerCase()'
-            }),
+            getGenderCustom('birth', 'informant'),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(

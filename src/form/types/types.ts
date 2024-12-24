@@ -507,6 +507,10 @@ export interface IHttpFormField extends IFormFieldBase {
 
 export interface IRedirectFormField extends IFormFieldBase {
   type: typeof REDIRECT
+  icon?: {
+    desktop: string
+    mobile: string
+  }
   options: {
     url: string
     callback: {
@@ -518,15 +522,6 @@ export interface IRedirectFormField extends IFormFieldBase {
 
 export interface QRReaderType {
   type: 'QR'
-  labels: {
-    button: MessageDescriptor
-    scannerDialogSupportingCopy: MessageDescriptor
-    tutorial: {
-      cameraCleanliness: MessageDescriptor
-      distance: MessageDescriptor
-      lightBalance: MessageDescriptor
-    }
-  }
 }
 
 type ReaderType = QRReaderType | IRedirectFormField

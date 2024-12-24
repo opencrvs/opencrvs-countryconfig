@@ -61,8 +61,7 @@ import {
   spouseBirthDateConditionals,
   spouseFamilyNameConditionals,
   spouseFirstNameConditionals,
-  hideIfInformantSpouse,
-  hideIfDeceasedAddressNotAvailable
+  hideIfInformantSpouse
 } from '../common/default-validation-conditionals'
 import {
   documentsSection,

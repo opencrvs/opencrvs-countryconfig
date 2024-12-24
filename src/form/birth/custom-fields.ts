@@ -2,7 +2,6 @@ import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mappin
 import { formMessageDescriptors } from '../common/messages'
 import { Conditional, SerializedFormField } from '../types/types'
 import { genderOptions } from '../common/select-options'
-import { MessageDescriptor } from 'react-intl'
 
 /**
  *
@@ -13,10 +12,9 @@ import { MessageDescriptor } from 'react-intl'
 export function getIDReaderField(
   event: string,
   sectionId: string,
-  conditionals: Conditional[],
-  label: MessageDescriptor
+  conditionals: Conditional[]
 ): SerializedFormField {
-  const fieldName: string = 'informantIDReadeer'
+  const fieldName: string = 'informantID'
   const fieldId: string = `${event}.${sectionId}.${sectionId}-view-group.${fieldName}`
   return {
     name: fieldName,
@@ -24,61 +22,42 @@ export function getIDReaderField(
     custom: true,
     required: false,
     type: 'ID_READER',
-    label,
+    label: {
+      id: 'form.field.label.empty',
+      defaultMessage: ''
+    },
+    hideInPreview: true,
     initialValue: '',
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     conditionals,
     dividerLabel: {
-      id: 'id.divider.label',
+      id: 'views.idReader.label.or',
       defaultMessage: 'Or'
     },
     manualInputInstructionLabel: {
-      id: 'id.manualInputInstruction.label',
+      id: 'views.idReader.label.manualInput',
       defaultMessage: 'Complete fields below'
     },
     readers: [
       {
-        type: 'QR',
-        labels: {
-          button: {
-            id: 'id.qr.button.label',
-            defaultMessage: 'Scan ID QR code'
-          },
-          scannerDialogSupportingCopy: {
-            id: 'id.qr.scanner.supportingCopy',
-            defaultMessage:
-              "Place the Notifier's ID card in front of the camera."
-          },
-          tutorial: {
-            cameraCleanliness: {
-              id: 'id.qr.tutorial.cameraCleanliness',
-              defaultMessage: 'Ensure your camera is clean and functional.'
-            },
-            distance: {
-              id: 'id.qr.tutorial.distance',
-              defaultMessage:
-                'Hold the device steadily 6-12 inches away from the QR code.'
-            },
-            lightBalance: {
-              id: 'id.qr.tutorial.lightBalance',
-              defaultMessage:
-                'Ensure the QR code is well-lit and not damaged or blurry.'
-            }
-          }
-        }
+        type: 'QR'
       },
       {
         name: 'redirect',
         validator: [],
+        icon: {
+          desktop: 'Globe',
+          mobile: 'Fingerprint'
+        },
         type: 'REDIRECT',
         label: {
-          id: 'redirect.id',
+          id: 'views.idReader.label.eSignet',
           defaultMessage: 'E-signet'
         },
         options: {
-          url: 'test',
+          url: 'https://docs.esignet.io/',
           callback: {
             params: {
               authorized: 'true'
