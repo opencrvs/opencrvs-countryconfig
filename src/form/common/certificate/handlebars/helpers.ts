@@ -419,7 +419,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
                     .filter(Boolean)
                     .join(' ') || '- ') + ','
                 ]),
-            this.informantOccupation + ','
+            this.informantOccupation ? this.informantOccupation + ',' : ''
           ]),
       'izay miara-manao sonia aminay,',
       this.registrar.name + ',',
