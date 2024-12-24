@@ -14,7 +14,7 @@ export function getIDReaderField(
   sectionId: string,
   conditionals: Conditional[]
 ): SerializedFormField {
-  const fieldName: string = 'informantID'
+  const fieldName: string = 'idReader'
   const fieldId: string = `${event}.${sectionId}.${sectionId}-view-group.${fieldName}`
   return {
     name: fieldName,
@@ -74,6 +74,7 @@ export function getIDReaderField(
 export function getGenderCustom(
   event: string,
   sectionId: string,
+  conditionals: Conditional[],
   initialValue: { dependsOn: string[]; expression: string } | string = ''
 ) {
   const fieldName: string = 'gender'
@@ -86,6 +87,7 @@ export function getGenderCustom(
     label: formMessageDescriptors.sex,
     required: false,
     initialValue,
+    conditionals,
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     mapping: getCustomFieldMapping(fieldId),

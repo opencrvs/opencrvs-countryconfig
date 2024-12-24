@@ -20,14 +20,15 @@ export const getBirthDate = (
   fieldName: string,
   conditionals: Conditional[],
   validator: any[],
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  initialValue: string | { dependsOn: string[]; expression: string } = ''
 ): SerializedFormField => ({
   name: fieldName, // A field with this name MUST exist
   type: 'DATE',
   label: formMessageDescriptors.dateOfBirth,
   required: true,
   conditionals,
-  initialValue: '',
+  initialValue,
   validator,
   mapping: getFieldMapping('birthDate', certificateHandlebar)
 })

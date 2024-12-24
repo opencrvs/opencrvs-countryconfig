@@ -246,24 +246,54 @@ export const birthForm: ISerializedForm = {
             },
             getFirstNameField(
               'informantNameInEnglish',
-              informantFirstNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
-              certificateHandlebars.informantFirstName
+              informantFirstNameConditionals
+                .concat(hideIfInformantMotherOrFather)
+                .concat({
+                  action: 'disable',
+                  expression: '$form?.idReader?.firstName'
+                }),
+              certificateHandlebars.informantFirstName,
+              {
+                dependsOn: ['idReader'],
+                expression: '$form?.idReader?.firstName'
+              }
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
-              informantFamilyNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
-              certificateHandlebars.informantFamilyName
+              informantFamilyNameConditionals
+                .concat(hideIfInformantMotherOrFather)
+                .concat({
+                  action: 'disable',
+                  expression: '$form?.idReader?.familyName'
+                }),
+              certificateHandlebars.informantFamilyName,
+              {
+                dependsOn: ['idReader'],
+                expression: '$form?.idReader?.familyName'
+              }
             ), // Required field.
-            getGenderCustom('birth', 'informant'),
+            getGenderCustom(
+              'birth',
+              'informant',
+              [
+                {
+                  action: 'disable',
+                  expression: '$form?.idReader?.gender'
+                }
+              ],
+              {
+                dependsOn: ['idReader'],
+                expression: '$form?.idReader?.gender'
+              }
+            ),
             getBirthDate(
               'informantBirthDate',
-              informantBirthDateConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
+              informantBirthDateConditionals
+                .concat(hideIfInformantMotherOrFather)
+                .concat({
+                  action: 'disable',
+                  expression: '$form?.idReader?.birthDate'
+                }),
               [
                 {
                   operation: 'dateFormatIsCorrect',
@@ -274,7 +304,11 @@ export const birthForm: ISerializedForm = {
                   parameters: []
                 }
               ],
-              certificateHandlebars.informantBirthDate
+              certificateHandlebars.informantBirthDate,
+              {
+                dependsOn: ['idReader'],
+                expression: '$form?.idReader?.birthDate'
+              }
             ), // Required field.
             exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
             getAgeOfIndividualInYears(
