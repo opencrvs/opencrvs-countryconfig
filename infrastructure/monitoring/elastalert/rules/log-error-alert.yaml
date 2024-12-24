@@ -6,7 +6,7 @@
 # & Healthcare Disclaimer located at http://opencrvs.org/license.
 #
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
-name: 'log-alert'
+name: 'log-error-alert'
 type: 'frequency'
 index: 'kibana-alert-history-default'
 is_enabled: true
@@ -26,8 +26,8 @@ filter:
       should:
         - term:
             rule.name.keyword:
-              value: 'Error while backup'
-      minimum_should_match: 1
+              value: 'Error while backup  '
+
 
 alert: post2
 http_post2_url: 'http://countryconfig:3040/email'
