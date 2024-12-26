@@ -167,6 +167,14 @@ certificate.receipt.service.5year,,{event} registration after 5 years of event,{
 certificate.receipt.service.targetDay,,{event} registration after 45 days of event,{event} Déclaration après 45 jours de l'événement.
 certificate.receipt.service.targetDay.amount,,৳ 25.00,৳ 25.00
 certificate.receipt.subheader,Subheader for receipt on payment on certificate,{event} Registration after {DOBDiff} of {DOE},{event} Déclaration après {DOBDiff} de {DOE}
+certificate.selectTemplate,Select certificate template,Type,Taper
+certificate.selectedTemplate,Selected certificate template,Selected certificate template,Modèle de certificat sélectionné
+certificates.birth.certificate,Birth Certificate,Birth Certificate,Acte de naissance
+certificates.birth.certificate.copy,Birth Certificate Certified Copy,Birth Certificate Certified Copy,Copie certifiée conforme de l'acte de naissance
+certificates.death.certificate,Death Certificate,Death Certificate,Certificat de décès
+certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certificate Certified Copy,Copie certifiée conforme du certificat de décès
+certificates.marriage.certificate,Marriage Certificate,Marriage Certificate,Acte de mariage
+certificates.marriage.certificate.copy,Marriage Certificate Certified Copy,Marriage Certificate Certified Copy,Copie certifiée conforme de l'acte de mariage
 changeEmail.validation.msg,Phone number validation message,Must be a valid email address,Doit être une adresse e-mail valide
 changeModal.cancel,The label for cancel button of change modal,Cancel,Annuler
 changeModal.continue,The label for continue button of change modal,Continue,Continuer
@@ -1032,7 +1040,7 @@ form.field.label.informantRelation.headInst,,Head of the institution where the d
 form.field.label.informantRelation.legalGuardian,Label for option Legal Guardian,Legal guardian,Tuteur légal
 form.field.label.informantRelation.mother,Label for option mother,Mother,Mère
 form.field.label.informantRelation.officer,,Officer-in-charge of the road or public space where the death occurred,Officier responsable d'une route ou d'un espace public où le décès a eu lieu.
-form.field.label.informantRelation.other,,Other(Specify),Autre(Précisez)
+form.field.label.informantRelation.other,,Other ({otherInformantType}),Autre ({otherInformantType})
 form.field.label.informantRelation.others,Label for option someone else,Someone else,Autre
 form.field.label.informantRelation.owner,,Owner of the house or building where the death occurred,Propriétaire de la maison ou du bâtiment où le décès a eu lieu.
 form.field.label.informantRelation.sister,Label for option Sister,Sister,Soeur
@@ -1415,6 +1423,255 @@ misc.reEnterDescription,,Let's make sure we collected your PIN correctly,Assuron
 misc.reEnterTitle,The title displayed while creating a PIN,Re-enter your PIN,Saisissez à nouveau votre nouveau code PIN
 misc.session.expired,SessionExpire modal confirmation text,Your session has expired. Please login again.,Votre session a expiré. Veuillez vous connecter à nouveau.
 misc.title.declarationStatus,Title for review action component,Send for approval,Envoyer pour approbation
+nationality.ABW,,Aruban,Arubais
+nationality.AFG,,Afghan,Afghan
+nationality.AGO,,Angolan,Angolais
+nationality.AIA,,Anguillan,Anguillais
+nationality.ALA,,Åland Islander,Insulaire d’Åland
+nationality.ALB,,Albanian,Albanais
+nationality.AND,,Andorran,Andorran
+nationality.ARE,,Emirati,Emirien
+nationality.ARG,,Argentine,Argentin
+nationality.ARM,,Armenian,Arménien
+nationality.ASM,,American Samoan,Samoan Américain
+nationality.ATA,,Antarctic,Antarctique
+nationality.ATF,,French Southern,Des Terres Australes et Antarctiques Françaises
+nationality.ATG,,Antiguan/Barbudan,Antiguayen/Barbudien
+nationality.AUS,,Australian,Australien
+nationality.AUT,,Austrian,Autrichien
+nationality.AZE,,Azerbaijani,Azerbaïdjanais
+nationality.BDI,,Burundian,Burundais
+nationality.BEL,,Belgian,Belge
+nationality.BEN,,Beninese,Béninois
+nationality.BES,,Dutch Caribbean,Caribéen Néerlandais
+nationality.BFA,,Burkinabe,Burkinabé
+nationality.BGD,,Bangladeshi,Bangladais
+nationality.BGR,,Bulgarian,Bulgare
+nationality.BHR,,Bahraini,Bahreïnien
+nationality.BHS,,Bahamian,Bahaméen
+nationality.BIH,,Bosnian/Herzegovinian,Bosnien/Herzégovinien
+nationality.BLM,,Saint Barthélemy Islander,Insulaire de Saint-Barthélemy
+nationality.BLR,,Belarusian,Biélorusse
+nationality.BLZ,,Belizean,Bélizéen
+nationality.BMU,,Bermudian,Bermudien
+nationality.BOL,,Bolivian,Bolivien
+nationality.BRA,,Brazilian,Brésilien
+nationality.BRB,,Barbadian,Barbadien
+nationality.BRN,,Bruneian,Brunéien
+nationality.BTN,,Bhutanese,Bhoutanais
+nationality.BVT,,Bouvet Islander,Insulaire de Bouvet
+nationality.BWA,,Botswanan,Botswanais
+nationality.CAF,,Central African,Centrafricain
+nationality.CAN,,Canadian,Canadien
+nationality.CCK,,Cocos Islander,Insulaire des Cocos
+nationality.CHE,,Swiss,Suisse
+nationality.CHL,,Chilean,Chilien
+nationality.CHN,,Chinese,Chinois
+nationality.CIV,,Ivorian,Ivoirien
+nationality.CMR,,Cameroonian,Camerounais
+nationality.COD,,Congolese (DRC),Congolais (RDC)
+nationality.COG,,Congolese (Congo),Congolais (Congo)
+nationality.COK,,Cook Islander,Insulaire des Cook
+nationality.COL,,Colombian,Colombien
+nationality.COM,,Comoran,Comorien
+nationality.CPV,,Cape Verdean,Caboverdien
+nationality.CRI,,Costa Rican,Costaricien
+nationality.CUB,,Cuban,Cubain
+nationality.CUW,,Curaçaoan,Curacien
+nationality.CXR,,Christmas Islander,Insulaire de Christmas
+nationality.CYM,,Caymanian,Caïmanais
+nationality.CYP,,Cypriot,Chypriote
+nationality.CZE,,Czech,Tchèque
+nationality.DEU,,German,Allemand
+nationality.DJI,,Djiboutian,Djiboutien
+nationality.DMA,,Dominican,Dominicain
+nationality.DNK,,Danish,Danois
+nationality.DOM,,Dominican,Dominicain
+nationality.DZA,,Algerian,Algérien
+nationality.ECU,,Ecuadorian,Équatorien
+nationality.EGY,,Egyptian,Égyptien
+nationality.ERI,,Eritrean,Érythréen
+nationality.ESH,,Sahrawi,Sahraoui
+nationality.ESP,,Spanish,Espagnol
+nationality.EST,,Estonian,Estonien
+nationality.ETH,,Ethiopian,Éthiopien
+nationality.FAR,,Farajalandian,Farajalandien
+nationality.FIN,,Finnish,Finlandais
+nationality.FJI,,Fijian,Fidjien
+nationality.FLK,,Falkland Islander,Insulaire des Falkland
+nationality.FRA,,French,Français
+nationality.FRO,,Faroese,Féroïen
+nationality.FSM,,Micronesian,Micronésien
+nationality.GAB,,Gabonese,Gabonais
+nationality.GBR,,British,Britannique
+nationality.GEO,,Georgian,Géorgien
+nationality.GGY,,Guernsey,Guernesiais
+nationality.GHA,,Ghanaian,Ghanéen
+nationality.GIB,,Gibraltarian,Gibraltarien
+nationality.GIN,,Guinean,Guinéen
+nationality.GLP,,Guadeloupean,Guadeloupéen
+nationality.GMB,,Gambian,Gambien
+nationality.GNB,,Bissau-Guinean,Bissau-Guinéen
+nationality.GNQ,,Equatoguinean,Guinéen équatorial
+nationality.GRC,,Greek,Grec
+nationality.GRD,,Grenadian,Grenad
+nationality.GRD,,Grenadian,Grenadien
+nationality.GRL,,Greenlander,Groenlandais
+nationality.GTM,,Guatemalan,Guatémaltèque
+nationality.GUF,,French Guianese,Français de Guyane
+nationality.GUM,,Guamanian,Guaméen
+nationality.GUY,,Guyanese,Guyanais
+nationality.HKG,,Hong Kong Special Administrative Region,Région Administrative Spéciale de Hong Kong
+nationality.HMD,,Heard Islander,Îles Heard
+nationality.HND,,Honduran,Hondurien
+nationality.HRV,,Croatian,Croate
+nationality.HTI,,Haitian,Haïtien
+nationality.HUN,,Hungarian,Hongrois
+nationality.IDN,,Indonesian,Indonésien
+nationality.IMN,,Manx,Manxois
+nationality.IND,,Indian,Indien
+nationality.IOT,,British Indian Ocean Territory,Territoire britannique de l'océan Indien
+nationality.IRL,,Irish,Irlandais
+nationality.IRN,,Iranian,Iranien
+nationality.IRQ,,Iraqi,Irakien
+nationality.ISL,,Icelander,Islandais
+nationality.ISR,,Israeli,Israélien
+nationality.ITA,,Italian,Italien
+nationality.JAM,,Jamaican,Jamaïcain
+nationality.JEY,,Jersey,Jersiais
+nationality.JOR,,Jordanian,Jordannien
+nationality.JPN,,Japanese,Japonais
+nationality.KAZ,,Kazakhstani,Kazakh
+nationality.KEN,,Kenyan,Kényan
+nationality.KGZ,,Kyrgyz,Kirghize
+nationality.KHM,,Cambodian,Cambodgien
+nationality.KIR,,Kiribati,Kiribatien
+nationality.KNA,,Kittitian/Nevisian,Nevisien
+nationality.KOR,,South Korean,Coréen du Sud
+nationality.KWT,,Kuwaiti,Koweïtien
+nationality.LBN,,Lebanese,Libanais
+nationality.LBR,,Liberian,Libérien
+nationality.LBY,,Libyan,Libyen
+nationality.LCA,,Saint Lucian,Saint-Lucien
+nationality.LIE,,Liechtensteiner,Liechtensteinois
+nationality.LKA,,Sri Lankan,Sri Lankais
+nationality.LSO,,Lesotho,Lesothan
+nationality.LTU,,Lithuanian,Lituanien
+nationality.LUX,,Luxembourgish,Luxembourgeois
+nationality.LVA,,Latvian,Letton
+nationality.MAC,,Macao Special Administrative Region,Région Administrative Spéciale de Macao
+nationality.MAF,,Saint Martiner,Martiniquais
+nationality.MAR,,Moroccan,Marocain
+nationality.MCO,,Monégasque,Monégasque
+nationality.MDA,,Moldovan,Moldave
+nationality.MDG,,Madagascan,Malgache
+nationality.MDV,,Maldivian,Maldivien
+nationality.MEX,,Mexican,Mexicain
+nationality.MHL,,Marshallese,Marshalles
+nationality.MKD,,Macedonian,Macédonien
+nationality.MLI,,Malian,Malien
+nationality.MLT,,Maltese,Maltais
+nationality.MMR,,Myanmarese,Myanmarais
+nationality.MNE,,Montenegrin,Monténégrin
+nationality.MNG,,Mongolian,Mongol
+nationality.MNP,,Northern Marianan,Marianais
+nationality.MOZ,,Mozambican,Mozambicain
+nationality.MRT,,Mauritanian,Mauritanien
+nationality.MSR,,Montserratian,Montserratien
+nationality.MTQ,,Martinican,Martiniquais
+nationality.MUS,,Mauritian,Mauricien
+nationality.MWI,,Malawian,Malawite
+nationality.MYS,,Malaysian,Malaisien
+nationality.MYT,,Mayottean,Mayotien
+nationality.NAM,,Namibian,Namibien
+nationality.NCL,,New Caledonian,Calédonien
+nationality.NER,,Nigerien,Nigérien
+nationality.NFK,,Norfolk Islander,Îles Norfolk
+nationality.NGA,,Nigerian,Nigérian
+nationality.NIC,,Nicaraguan,Nicaraguayen
+nationality.NIU,,Niuean,Niouéen
+nationality.NLD,,Dutch,Néerlandais
+nationality.NOR,,Norwegian,Norvégien
+nationality.NPL,,Nepalese,Népalais
+nationality.NRU,,Nauruan,Nauruan
+nationality.NZL,,New Zealander,Néo-Zélandais
+nationality.OMN,,Omani,Omanais
+nationality.PAK,,Pakistani,Pakistanais
+nationality.PAN,,Panamanian,Panaméen
+nationality.PCN,,Pitcairn Islander,Pitcairnais
+nationality.PER,,Peruvian,Péruvien
+nationality.PHL,,Filipino,Philippin
+nationality.PLW,,Palauan,Palaosien
+nationality.PNG,,Papua New Guinean,Papouasien
+nationality.POL,,Polish,Polonais
+nationality.PRI,,Puerto Rican,Portoricain
+nationality.PRK,,North Korean,Coréen du Nord
+nationality.PRT,,Portuguese,Portugais
+nationality.PRY,,Paraguayan,Paraguayen
+nationality.PSE,,Palestinian,Palestinien
+nationality.PYF,,French Polynesian,Polynésien
+nationality.QAT,,Qatari,Qatarien
+nationality.REU,,Reunionese,Réunionnais
+nationality.ROU,,Romanian,Roumain
+nationality.RUS,,Russian,Russe
+nationality.RWA,,Rwandan,Rwandais
+nationality.SAU,,Saudi,Saoudien
+nationality.SDN,,Sudanese,Soudanais
+nationality.SEN,,Senegalese,Sénégalais
+nationality.SGP,,Singaporean,Singapourien
+nationality.SGS,,South Georgian/South Sandwich Islander,Îles Sandwich du Sud
+nationality.SHN,,Saint Helenian,Sainte-Hélène
+nationality.SJM,,Svalbardian,Spitzbergien
+nationality.SLB,,Solomon Islander,Salomonien
+nationality.SLE,,Sierra Leonean,Sierra-Léonais
+nationality.SLV,,Salvadoran,Salvadorien
+nationality.SMR,,Sammarinese,Saint-Marinais
+nationality.SOM,,Somali,Somalien
+nationality.SPM,,Saint-Pierrais/Miquelonnais,Saint-Pierrais/Miquelonnais
+nationality.SRB,,Serbian,Serbe
+nationality.SSD,,South Sudanese,Soudanais du Sud
+nationality.STP,,São Toméan,Santoméen
+nationality.SUR,,Surinamese,Surinamien
+nationality.SVK,,Slovak,Slovaque
+nationality.SVN,,Slovene,Slovène
+nationality.SWE,,Swedish,Suédois
+nationality.SWZ,,Swazi,Swazi
+nationality.SXM,,Sint Maartener,Saint-Martinois
+nationality.SYC,,Seychellois,Seychellois
+nationality.SYR,,Syrian,Syrien
+nationality.TCA,,Turks and Caicos Islander,Îles Turques-et-Caïques
+nationality.TCD,,Chadian,Tchadien
+nationality.TGO,,Togolese,Togolais
+nationality.THA,,Thai,Thaïlandais
+nationality.TJK,,Tajikistani,Tadjik
+nationality.TKL,,Tokelauan,Tokelauan
+nationality.TKM,,Turkmen,Turkmène
+nationality.TLS,,Timorese,Timorais
+nationality.TON,,Tongan,Tongien
+nationality.TTO,,Trinidadian/Tobagonian,Trinidadien
+nationality.TUN,,Tunisian,Tunisien
+nationality.TUR,,Turkish,Turc
+nationality.TUV,,Tuvaluan,Tuvaluan
+nationality.TZA,,Tanzanian,Tanzanien
+nationality.UGA,,Ugandan,Ugandais
+nationality.UKR,,Ukrainian,Ukrainien
+nationality.UMI,,American,Américain
+nationality.URY,,Uruguayan,Uruguayen
+nationality.USA,,American,Américain
+nationality.UZB,,Uzbekistani,Ouzbek
+nationality.VAT,,Holy See,Saint-Siège
+nationality.VCT,,Saint Vincentian,Saint-Vincentais
+nationality.VEN,,Venezuelan,Vénézuélien
+nationality.VGB,,British Virgin Islander,Îles Vierges britanniques
+nationality.VIR,,Virgin Islander,Îles Vierges
+nationality.VNM,,Vietnamese,Vietnamien
+nationality.VUT,,Ni-Vanuatu,Ni-Vanuatu
+nationality.WLF,,Wallis and Futuna Islander,Wallisien
+nationality.WSM,,Samoan,Samoan
+nationality.YEM,,Yemeni,Yéménite
+nationality.ZAF,,South African,Sud-Africain
+nationality.ZMB,,Zambian,Zambien
+nationality.ZWE,,Zimbabwean,Zimbabwéen
 navigation.analytic,Analytic Group,Analytics,Analytique
 navigation.application,Application label in navigation,Application,Application
 navigation.approvals,Sent for approval label in navigation,Sent for approval,Envoyé pour approbation
@@ -1551,6 +1808,7 @@ print.certificate.certificatePreview,The title for certificate preview form,Cert
 print.certificate.collectPayment,The label for collect payment paragraph,"Please collect the payment, print the receipt and hand it over to the payee.","Veuillez encaisser le paiement, imprimer le reçu et le remettre au bénéficiaire."
 print.certificate.collector.father,The label for select value when father is the collector of certificate,Father is collecting,Père
 print.certificate.collector.form.error,Form level error for collector form,Please select who is collecting the certificate,Veuillez sélectionner la personne qui collecte le certificat
+print.certificate.collector.form.error.template,Form level error for collector form template type,Please select certificate type,Veuillez sélectionner le type de certificat
 print.certificate.collector.idCheck.title,The title for id check component,Verify their identity,Vérifier leur identité
 print.certificate.collector.idCheckDialog.title,The title for the dialog when details of the collector not verified,Print without proof of ID?,Continuer sans preuve d'identité ?
 print.certificate.collector.informant,The label for select value when informant is the collector of certificate,Informant is collecting,Informateur

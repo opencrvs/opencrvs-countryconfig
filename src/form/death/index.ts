@@ -285,7 +285,8 @@ export const deathForm = {
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(hideIfInformantSpouse),
-              ageOfIndividualValidators
+              ageOfIndividualValidators,
+              certificateHandlebars.ageOfInformantInYears
             ),
             getNationality(
               certificateHandlebars.informantNationality,
@@ -347,7 +348,8 @@ export const deathForm = {
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfSpouse,
               exactDateOfBirthUnknownConditional.concat(detailsExist),
-              ageOfIndividualValidators
+              ageOfIndividualValidators,
+              certificateHandlebars.ageOfSpouseInYears
             ),
             getNationality(
               certificateHandlebars.spouseNationality,
