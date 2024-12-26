@@ -63,7 +63,6 @@ import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
-import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
 import { customEventHandler } from '@countryconfig/api/custom-event/handler'
 
@@ -245,13 +244,24 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/certificates/{event}.svg',
+    path: '/certificates/{id}',
     handler: certificateHandler,
     options: {
       tags: ['api', 'certificates'],
       description: 'Returns only one certificate metadata'
     }
   })
+
+  server.route({
+    method: 'GET',
+    path: '/certificates',
+    handler: certificateHandler,
+    options: {
+      tags: ['api', 'certificates'],
+      description: 'Returns certificate metadata'
+    }
+  })
+
   // add ping route by default for health check
   server.route({
     method: 'GET',
@@ -277,17 +287,6 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Serves available fonts'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/certificate-configuration',
-    handler: certificateConfigurationHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves certificate configurations'
     }
   })
 

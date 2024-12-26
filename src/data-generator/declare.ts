@@ -208,7 +208,7 @@ export function createBirthDeclarationData(
       otherInformantType: '',
       contactPhoneNumber:
         '+2607' + faker.number.bigInt({ min: 10000000, max: 99999999 }),
-      email: faker.internet.email({
+      contactEmail: faker.internet.email({
         firstName: motherFirstName,
         lastName: familyName
       }),
