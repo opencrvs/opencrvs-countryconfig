@@ -359,18 +359,56 @@ const relationMap = {
   grandfather: 'raibeny',
   grandmother: 'renibeny'
 }
+function convertToTimeZoneIso(dateUtc: string, timeZone: string): string {
+  // Crée une instance Date à partir de la chaîne UTC
+  const date = new Date(dateUtc)
+
+  // Options pour extraire les composants de la date dans le fuseau horaire souhaité
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }
+
+  // Utiliser Intl.DateTimeFormat pour obtenir les parties de la date
+  const formatter = new Intl.DateTimeFormat('en-CA', options)
+  const parts = formatter.formatToParts(date)
+
+  // Extraire les différentes parties
+  const year = parts.find((p) => p.type === 'year')?.value
+  const month = parts.find((p) => p.type === 'month')?.value
+  const day = parts.find((p) => p.type === 'day')?.value
+  const hour = parts.find((p) => p.type === 'hour')?.value
+  const minute = parts.find((p) => p.type === 'minute')?.value
+  const second = parts.find((p) => p.type === 'second')?.value
+
+  // Récupérer les millisecondes
+  const milliseconds = date.getUTCMilliseconds().toString().padStart(3, '0')
+
+  // Recomposer au format ISO
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}.${milliseconds}+03:00`
+}
+
 export function registrationStatement(): Handlebars.HelperDelegate {
   return function (
     this: Record<string, any>,
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
+    const registrarDateUTC = convertToTimeZoneIso(
+      this.registrar.date,
+      'Africa/Nairobi'
+    )
     return joinValuesWith([
       '---Nosoratana androany',
-      customizeDateInCertificateContent(this.registrar.date.split('T')[0]) +
-        ',',
+      customizeDateInCertificateContent(registrarDateUTC.split('T')[0]) + ',',
       'tamin’ny',
-      convertTimeToMdgCustomWords(this.registrar.date.split('T')[1]),
+      convertTimeToMdgCustomWords(registrarDateUTC.split('T')[1]),
       isInformantMotherOrFather(this.informantType)
         ? 'araka ny fanambarana nataon’ny'
         : joinValuesWith([
