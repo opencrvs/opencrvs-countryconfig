@@ -256,7 +256,8 @@ export const birthForm: ISerializedForm = {
               exactDateOfBirthUnknownConditional.concat(
                 hideIfInformantMotherOrFather
               ),
-              ageOfIndividualValidators
+              ageOfIndividualValidators,
+              certificateHandlebars.ageOfInformantInYears
             ),
             getNationality(
               certificateHandlebars.informantNationality,
@@ -328,7 +329,8 @@ export const birthForm: ISerializedForm = {
               exactDateOfBirthUnknownConditional.concat(
                 detailsExistConditional
               ),
-              ageOfParentsConditionals
+              ageOfParentsConditionals,
+              certificateHandlebars.ageOfMotherInYears
             ),
             getNationality(
               certificateHandlebars.motherNationality,
@@ -406,7 +408,8 @@ export const birthForm: ISerializedForm = {
               exactDateOfBirthUnknownConditional.concat(
                 detailsExistConditional
               ),
-              ageOfParentsConditionals
+              ageOfParentsConditionals,
+              certificateHandlebars.ageOfFatherInYears
             ),
             getNationality(
               certificateHandlebars.fatherNationality,
