@@ -37,7 +37,7 @@
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         font-weight="bold" letter-spacing="0em">
-        <tspan x="86" y="192.58">{{translateDateToMDGFormat registrar.date}}</tspan>
+        <tspan x="86" y="192.58">{{getBirthRegistrationDateMDGFormat}}</tspan>
     </text>
 
     {{#wrapGroup 30 24 233.712}}

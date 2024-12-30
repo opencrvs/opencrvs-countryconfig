@@ -168,6 +168,19 @@ export function linebreak(): Handlebars.HelperDelegate {
   }
 }
 
+function isValidDate(value?: string) {
+  // Check if value is null, undefined, or an empty string
+  if (!value || typeof value !== 'string') {
+    return false
+  }
+
+  // Parse the string into a Date object
+  const date = new Date(value)
+
+  // Check if the resulting Date object is valid
+  return !isNaN(date.getTime())
+}
+
 export function numberOfTimesCertificatePrinted(): Handlebars.HelperDelegate {
   return function (this: Record<string, any>) {
     // if (!this.certifier) {
@@ -391,7 +404,9 @@ function convertToTimeZoneIso(dateUtc: string, timeZone: string): string {
   const milliseconds = date.getUTCMilliseconds().toString().padStart(3, '0')
 
   // Recomposer au format ISO
-  return `${year}-${month}-${day}T${hour}:${minute}:${second}.${milliseconds}+03:00`
+  return `${year}-${month}-${day}T${
+    hour == '24' ? '00' : hour
+  }:${minute}:${second}.${milliseconds}+03:00`
 }
 
 export function registrationStatement(): Handlebars.HelperDelegate {
@@ -400,8 +415,11 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
+    const birthRegistrationDate = getBirthRegistrationDate(this)
     const registrarDateUTC = convertToTimeZoneIso(
-      this.registrar.date,
+      isValidDate(birthRegistrationDate)
+        ? birthRegistrationDate
+        : this.registrar.date,
       'Africa/Nairobi'
     )
     return joinValuesWith([
@@ -719,7 +737,7 @@ export function customizeChildBirthRegistrationNumber(): Handlebars.HelperDelega
 
 function removeOrdinalIndicator(dateString: string) {
   if (!dateString) return new Date() // TODO: Handle it later
-  return dateString && dateString?.replace(/\b(\d+)(th|st|nd|rd)\b/g, '$1')
+  return dateString && dateString?.replace?.(/\b(\d+)(th|st|nd|rd)\b/g, '$1')
 }
 
 export function translateTime(): Handlebars.HelperDelegate {
@@ -728,13 +746,40 @@ export function translateTime(): Handlebars.HelperDelegate {
   }
 }
 
+function handleTranslateDateToMDGFormat(eventDate: string) {
+  const dateWithoutOrdinal = removeOrdinalIndicator(eventDate)
+  const date = new Date(dateWithoutOrdinal)
+  const formattedDate = date.toLocaleString().split(', ')[0]
+
+  return convertLocaleDateToMdgCustomWords(formattedDate)
+}
+
+function getBirthRegistrationDate(data: any): string | undefined {
+  return data.birthChildLegacyBirthRegistrationDate &&
+    data.birthChildLegacyBirthRegistrationTime
+    ? data.birthChildLegacyBirthRegistrationDate +
+        'T' +
+        data.birthChildLegacyBirthRegistrationTime +
+        ':00.000+03:00'
+    : undefined
+}
+
+export function getBirthRegistrationDateMDGFormat(): Handlebars.HelperDelegate {
+  return function (this: any) {
+    const birthRegistrationDate = getBirthRegistrationDate(this)
+
+    if (isValidDate(birthRegistrationDate)) {
+      return handleTranslateDateToMDGFormat(
+        this.birthChildLegacyBirthRegistrationDate
+      )
+    }
+    return handleTranslateDateToMDGFormat(this.registrar.date)
+  }
+}
+
 export function translateDateToMDGFormat(): Handlebars.HelperDelegate {
   return function (this: any, eventDate: string) {
-    const dateWithoutOrdinal = removeOrdinalIndicator(eventDate)
-    const date = new Date(dateWithoutOrdinal)
-    const formattedDate = date.toLocaleString().split(', ')[0]
-
-    return convertLocaleDateToMdgCustomWords(formattedDate)
+    return handleTranslateDateToMDGFormat(eventDate)
   }
 }
 
