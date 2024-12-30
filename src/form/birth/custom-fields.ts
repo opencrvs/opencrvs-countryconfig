@@ -116,6 +116,15 @@ export function getLegacyBirthRegistrationDate({
         operation: 'dateNotInFuture',
         parameters: []
       }
+      /** @TODO - Maybe Add date constraints and format validator when value is set */
+      // {
+      //   operation: 'dateFormatIsCorrect',
+      //   parameters: []
+      // },
+      // {
+      //   operation: 'dateGreaterThan',
+      //   parameters: ['childBirthDate']
+      // },
     ],
     mapping: getCustomFieldMapping(fieldId),
     conditionals
