@@ -25,6 +25,7 @@ export type DeathDeclarationInput = {
     }
   }
   event?: {
+    date?: string
     placeOfDeath?:
       | 'Health Institution'
       | "Deceased's usual place of residence"
@@ -177,7 +178,9 @@ export async function createDeathDeclaration(
               }
             ],
             deceased: {
-              deathDate: formatDateObjectTo_yyyyMMdd(declaration.event.date)
+              deathDate:
+                details.event?.date ||
+                formatDateObjectTo_yyyyMMdd(declaration.event.date)
             }
           },
           eventLocation:

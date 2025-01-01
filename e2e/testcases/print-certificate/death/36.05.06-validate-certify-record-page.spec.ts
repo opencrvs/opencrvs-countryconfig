@@ -1,10 +1,9 @@
 import { expect, test, type Page } from '@playwright/test'
-import { BirthDeclaration } from '../../birth/types'
-import { getDeclarationForPrintCertificate } from './certificate-helper'
-import { uploadImage } from '../../../helpers'
+import { DeathDeclaration } from '../../death/types'
+import { getDeathDeclarationForPrintCertificate } from './certificate-helper'
 
 test.describe.serial('7.0 Validate collect payment page', () => {
-  let declaration: BirthDeclaration
+  let declaration: DeathDeclaration
   let page: Page
 
   test.beforeAll(async ({ browser }) => {
@@ -16,19 +15,19 @@ test.describe.serial('7.0 Validate collect payment page', () => {
   })
 
   test('5.1 check collect payment page header', async () => {
-    const response = await getDeclarationForPrintCertificate(page)
+    const response = await getDeathDeclarationForPrintCertificate(page)
     declaration = response.declaration
     await page
       .locator('#certificateTemplateId-form-input > span')
       .first()
       .click()
-    await page.getByText('Birth Certificate', { exact: true }).click()
+    await page.getByText('Death Certificate', { exact: true }).click()
     await page.getByLabel('Print and issue to someone else').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(
       page
         .url()
-        .includes(`/collector/${declaration.id}/birth/otherCertCollector`)
+        .includes(`/collector/${declaration.id}/death/otherCertCollector`)
     ).toBeTruthy()
   })
 
@@ -92,7 +91,7 @@ test.describe.serial('7.0 Validate collect payment page', () => {
   test("5.7 Fill all mandatory field and click 'Continue' should navigate to affidavit page", async () => {
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(
-      page.url().includes(`/cert/collector/${declaration.id}/birth/affidavit`)
+      page.url().includes(`/cert/collector/${declaration.id}/death/affidavit`)
     ).toBeTruthy()
   })
 
@@ -102,13 +101,12 @@ test.describe.serial('7.0 Validate collect payment page', () => {
     })
 
     test('6.2 Should be able to add file and navigate to the "Ready to certify?" page.', async () => {
-      await uploadImage(
-        page,
-        page.locator('input[name="affidavitFile"][type="file"]')
-      )
+      const attachmentPath = '../../birth/data/assets/528KB-random.png'
       const inputFile = await page.locator(
         'input[name="affidavitFile"][type="file"]'
       )
+
+      await inputFile.setInputFiles(attachmentPath)
       await expect(
         inputFile.evaluate(
           (input: HTMLInputElement) =>

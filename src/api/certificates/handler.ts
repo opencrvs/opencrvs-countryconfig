@@ -125,7 +125,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: false,
       fee: {
-        onTime: 6,
+        onTime: 0,
         late: 9,
         delayed: 14.5
       },
