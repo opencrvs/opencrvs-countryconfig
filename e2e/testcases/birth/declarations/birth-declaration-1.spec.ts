@@ -20,8 +20,8 @@ test.describe.serial('1. Birth declaration case - 1', () => {
   const declaration = {
     child: {
       name: {
-        firstNames: faker.name.firstName('male'),
-        familyName: faker.name.lastName('male')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
       gender: 'Male',
       birthDate: getRandomDate(0, 200)
@@ -35,8 +35,8 @@ test.describe.serial('1. Birth declaration case - 1', () => {
     informantEmail: faker.internet.email(),
     mother: {
       name: {
-        firstNames: faker.name.firstName('female'),
-        familyName: faker.name.lastName('female')
+        firstNames: faker.person.firstName('female'),
+        familyName: faker.person.lastName('female')
       },
       birthDate: getRandomDate(20, 200),
       nationality: 'Farajaland',
@@ -60,8 +60,8 @@ test.describe.serial('1. Birth declaration case - 1', () => {
     },
     father: {
       name: {
-        firstNames: faker.name.firstName('male'),
-        familyName: faker.name.lastName('male')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
       birthDate: getRandomDate(22, 200),
       nationality: 'Gabon',

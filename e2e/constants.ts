@@ -1,14 +1,24 @@
-// export const DOMAIN = process.env.DOMAIN || 'farajaland-dev.opencrvs.org'
-// export const LOGIN_URL = 'https://login.' + DOMAIN
-// export const AUTH_URL = 'https://auth.' + DOMAIN
-// export const CLIENT_URL = 'https://register.' + DOMAIN
-// export const GATEWAY_HOST = 'https://gateway.' + DOMAIN
-
 export const DOMAIN = process.env.DOMAIN || 'farajaland-dev.opencrvs.org'
-export const LOGIN_URL = 'http://localhost:3020'
-export const AUTH_URL = 'http://localhost:4040'
-export const CLIENT_URL = 'http://localhost:3000'
-export const GATEWAY_HOST = 'http://localhost:7070'
+
+export const LOGIN_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3020'
+    : 'https://login.' + DOMAIN
+
+export const AUTH_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:4040'
+    : 'https://auth.' + DOMAIN
+
+export const CLIENT_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'https://register.' + DOMAIN
+
+export const GATEWAY_HOST =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:7070'
+    : 'https://gateway.' + DOMAIN
 
 /*
  * This timeout is to ensure that all previous actions have been completed

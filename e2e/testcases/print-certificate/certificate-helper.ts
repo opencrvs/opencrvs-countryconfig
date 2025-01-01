@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { expect, type Page } from '@playwright/test'
 import { CREDENTIALS } from '../../constants'
 import { getToken, login, createPIN, getAction } from '../../helpers'
@@ -13,8 +13,8 @@ export async function getDeclarationForPrintCertificate(
   page: Page,
   options?: Record<string, any>
 ): Promise<{
-  declaration
-  trackingId
+  declaration: BirthDeclaration
+  trackingId: string
 }> {
   const token = await getToken(
     CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
@@ -22,8 +22,8 @@ export async function getDeclarationForPrintCertificate(
   )
   const declarationInput = {
     child: {
-      firstNames: faker.name.firstName(),
-      familyName: faker.name.firstName(),
+      firstNames: faker.person.firstName(),
+      familyName: faker.person.firstName(),
       gender: 'male',
       ...(options && { birthDate: options.child.birthDate })
     },
@@ -34,12 +34,12 @@ export async function getDeclarationForPrintCertificate(
       type: 'PHYSICIAN'
     },
     mother: {
-      firstNames: faker.name.firstName(),
-      familyName: faker.name.firstName()
+      firstNames: faker.person.firstName(),
+      familyName: faker.person.firstName()
     },
     father: {
-      firstNames: faker.name.firstName(),
-      familyName: faker.name.firstName()
+      firstNames: faker.person.firstName(),
+      familyName: faker.person.firstName()
     }
   } as ConvertEnumsToStrings<BirthInputDetails>
 
@@ -55,18 +55,25 @@ export async function getDeclarationForPrintCertificate(
   const declaration = (await fetchDeclaration(token, res.compositionId)).data
     .fetchBirthRegistration as BirthDeclaration
 
-  await login(
-    page,
-    CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-    CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-  )
-  await createPIN(page)
+  if (!options?.isLoggedIn) {
+    await login(
+      page,
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
+    await createPIN(page)
+  }
 
   await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
   await page.getByPlaceholder('Search for a tracking ID').press('Enter')
   await page.locator('#ListItemAction-0-icon').click()
-  await page.locator('#name_0').click()
 
+  const assignRecordModal = await page.locator('#assign').isVisible()
+  if (assignRecordModal) {
+    await page.locator('#assign').click()
+  }
+
+  await page.locator('#name_0').click()
   await page.getByRole('button', { name: 'Action' }).first().click()
   await getAction(page, 'Print certified copy').click()
 

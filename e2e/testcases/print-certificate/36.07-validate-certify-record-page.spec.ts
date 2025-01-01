@@ -54,7 +54,8 @@ test.describe
   test('7.3 should skip payment page if payment is 0', async () => {
     await page.goto(`${CLIENT_URL}/registration-home/print/1`)
     const response = await getDeclarationForPrintCertificate(page, {
-      child: { birthDate: format(new Date(), 'yyyy-MM-dd') }
+      child: { birthDate: format(new Date(), 'yyyy-MM-dd') },
+      isLoggedIn: true
     })
     declaration = response.declaration
     await page

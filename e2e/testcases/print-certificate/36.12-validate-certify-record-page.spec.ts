@@ -1,7 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { BirthDeclaration } from '../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
-import { getAction } from '../../helpers'
 
 test.describe.serial('12.0 Validate the following for "Review" page', () => {
   let declaration: BirthDeclaration
@@ -53,26 +52,13 @@ test.describe.serial('12.0 Validate the following for "Review" page', () => {
     ).toBeTruthy()
   })
 
-  test('12.3 Validate correction requester page', async ({ page }) => {
-    await page.getByRole('button', { name: 'Action' }).first().click()
-    await getAction(page, 'Correct record').click()
-
-    /*
-     * Expected result: should
-     * - Navigate to Correction Requester Page
-     */
-    await expect(page.getByText('Correction requester')).toBeVisible()
-    expect(page.url().includes('correction')).toBeTruthy()
-    expect(page.url().includes('corrector')).toBeTruthy()
-
-    /*
-     * Expected result: should say
-     * - Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.
-     */
+  test('12.3 Validate correction requester page', async () => {
+    await page.getByText('Mother', { exact: true }).click()
+    await page.getByRole('button', { name: 'Continue' }).click()
+    await expect(page.getByText('Verify their identity')).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Verified' })).toBeVisible()
     await expect(
-      page.getByText(
-        'Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.'
-      )
+      page.getByRole('button', { name: 'Identity does not match' })
     ).toBeVisible()
   })
 })

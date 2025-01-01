@@ -18,6 +18,7 @@
   "scripts": {
     "dev": "yarn start",
     "e2e": "NODE_OPTIONS=--dns-result-order=ipv4first yarn playwright test --ui",
+    "e2e-dev": "NODE_ENV=development NODE_OPTIONS=--dns-result-order=ipv4first yarn playwright test --ui",
     "e2e:generate-types": "graphql-codegen --config e2e/codegen.yml && yarn prettier --write e2e/gateway.ts",
     "precommit": "lint-staged",
     "test": "vitest 'src/**/*.test.ts' --passWithNoTests",
