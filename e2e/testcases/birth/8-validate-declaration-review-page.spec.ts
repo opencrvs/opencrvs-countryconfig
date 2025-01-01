@@ -12,7 +12,7 @@ import {
   getAction,
   assignRecord
 } from '../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 
 test.describe.serial('8. Validate declaration review page', () => {
@@ -20,8 +20,8 @@ test.describe.serial('8. Validate declaration review page', () => {
   const declaration = {
     child: {
       name: {
-        firstNames: faker.name.firstName('male'),
-        familyName: faker.name.lastName('male')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
       gender: 'Male',
       birthDate: getRandomDate(0, 200)
@@ -35,13 +35,13 @@ test.describe.serial('8. Validate declaration review page', () => {
     informantEmail: faker.internet.email(),
     mother: {
       name: {
-        firstNames: faker.name.firstName('female'),
-        familyName: faker.name.lastName('female')
+        firstNames: faker.person.firstName('female'),
+        familyName: faker.person.lastName('female')
       },
       birthDate: getRandomDate(20, 200),
       nationality: 'Farajaland',
       identifier: {
-        id: faker.random.numeric(10),
+        id: faker.string.numeric(10),
         type: 'National ID'
       },
       address: {
@@ -52,13 +52,13 @@ test.describe.serial('8. Validate declaration review page', () => {
     },
     father: {
       name: {
-        firstNames: faker.name.firstName('male'),
-        familyName: faker.name.lastName('male')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
       birthDate: getRandomDate(22, 200),
       nationality: 'Farajaland',
       identifier: {
-        id: faker.random.numeric(10),
+        id: faker.string.numeric(10),
         type: 'National ID'
       },
       address: 'Same as mother'
@@ -422,8 +422,8 @@ test.describe.serial('8. Validate declaration review page', () => {
         await page.locator('#child-content #Full').getByText('Change').click()
 
         declaration.child.name = {
-          firstNames: faker.name.firstName('male'),
-          familyName: faker.name.lastName('male')
+          firstNames: faker.person.firstName('male'),
+          familyName: faker.person.lastName('male')
         }
         await page
           .locator('#firstNamesEng')
@@ -612,8 +612,8 @@ test.describe.serial('8. Validate declaration review page', () => {
       test("8.1.2.10 Change mother's name", async () => {
         await page.locator('#mother-content #Full').getByText('Change').click()
 
-        declaration.mother.name.firstNames = faker.name.firstName('female')
-        declaration.mother.name.familyName = faker.name.lastName('female')
+        declaration.mother.name.firstNames = faker.person.firstName('female')
+        declaration.mother.name.familyName = faker.person.lastName('female')
         await page
           .locator('#firstNamesEng')
           .fill(declaration.mother.name.firstNames)
@@ -695,7 +695,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.1.2.14 Change mother's ID", async () => {
         await page.locator('#mother-content #ID').getByText('Change').click()
-        declaration.mother.identifier.id = faker.random.numeric(10)
+        declaration.mother.identifier.id = faker.string.numeric(10)
         await page
           .locator('#motherPassport')
           .fill(declaration.mother.identifier.id)
@@ -738,8 +738,8 @@ test.describe.serial('8. Validate declaration review page', () => {
       test("8.1.2.16 Change father's name", async () => {
         await page.locator('#father-content #Full').getByText('Change').click()
 
-        declaration.father.name.firstNames = faker.name.firstName('male')
-        declaration.father.name.familyName = faker.name.lastName('male')
+        declaration.father.name.firstNames = faker.person.firstName('male')
+        declaration.father.name.familyName = faker.person.lastName('male')
         await page
           .locator('#firstNamesEng')
           .fill(declaration.father.name.firstNames)
@@ -821,7 +821,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.1.2.20 Change father's ID", async () => {
         await page.locator('#father-content #ID').getByText('Change').click()
-        declaration.father.identifier.id = faker.random.numeric(10)
+        declaration.father.identifier.id = faker.string.numeric(10)
         await page
           .locator('#fatherPassport')
           .fill(declaration.father.identifier.id)
@@ -1349,7 +1349,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       ])
     })
 
-    const newFamilyNameForChild = faker.name.lastName('male')
+    const newFamilyNameForChild = faker.person.lastName('male')
 
     test("8.3.2.1 Update child's family name", async () => {
       await page

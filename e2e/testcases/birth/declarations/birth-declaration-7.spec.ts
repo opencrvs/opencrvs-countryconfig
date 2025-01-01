@@ -11,7 +11,7 @@ import {
   uploadImage,
   uploadImageToSection
 } from '../../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('7. Birth declaration case - 7', () => {
@@ -20,8 +20,8 @@ test.describe.serial('7. Birth declaration case - 7', () => {
   const declaration = {
     child: {
       name: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.lastName()
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.lastName()
       }
     },
     attendantAtBirth: 'None',

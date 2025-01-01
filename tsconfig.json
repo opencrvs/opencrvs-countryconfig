@@ -10,7 +10,7 @@
     "sourceMap": true,
     "moduleResolution": "node16",
     "rootDir": ".",
-    "lib": ["esnext.asynciterable", "es6", "es2017", "es2019", "es2022"],
+    "lib": ["esnext.asynciterable", "es6", "es2017", "es2019", "es2022", "dom"],
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "noImplicitReturns": true,
@@ -18,9 +18,15 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "types": ["jest", "fhir", "geojson"]
+    "types": ["jest", "fhir", "geojson"],
+    "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts", "infrastructure/environments/**/*.ts", "typings"],
+  "include": [
+    "src/**/*.ts",
+    "infrastructure/environments/**/*.ts",
+    "typings",
+    "e2e/**/*.ts"
+  ],
   "exclude": [
     "node_modules",
     "build",

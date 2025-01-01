@@ -40,14 +40,14 @@ export const certificateHandlebars = {
   districtPrimaryDeceased: 'districtPrimaryDeceased',
   cityPrimaryDeceased: 'cityPrimaryDeceased',
   ageOfDeceasedInYears: 'ageOfDeceasedInYears',
-  ageOfInformantInYears: 'ageOfInformantInYears',
-  ageOfSpouseInYears: 'ageOfSpouseInYears',
   addressLine3UrbanOptionPrimaryDeceased:
     'addressLine3UrbanOptionPrimaryDeceased',
   addressLine2UrbanOptionPrimaryDeceased:
     'addressLine2UrbanOptionPrimaryDeceased',
   addressLine1UrbanOptionPrimaryDeceased:
     'addressLine1UrbanOptionPrimaryDeceased',
+  ageOfSpouseInYears: 'ageOfSpouseInYears',
+  ageOfInformantInYears: 'ageOfInformantInYears',
   postalCodePrimaryDeceased: 'postalCodePrimaryDeceased',
   addressLine1RuralOptionPrimaryDeceased:
     'addressLine1RuralOptionPrimaryDeceased',

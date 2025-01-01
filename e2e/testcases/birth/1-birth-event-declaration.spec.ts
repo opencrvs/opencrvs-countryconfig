@@ -3,7 +3,7 @@ import { createPIN, getToken, login } from '../../helpers'
 import { createDeclaration } from './helpers'
 
 import TEST_DATA_1 from './data/1-both-mother-and-father.json'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 
 test.describe('1. Birth event declaration', () => {
@@ -569,8 +569,8 @@ test.describe('1. Birth event declaration', () => {
       const token = await getToken('k.mweene', 'test')
       const res = await createDeclaration(token, {
         child: {
-          firstNames: faker.name.firstName(),
-          familyName: faker.name.firstName(),
+          firstNames: faker.person.firstName(),
+          familyName: faker.person.firstName(),
           gender: TEST_DATA_1['Child details'].Sex.toLowerCase() as 'male'
         },
         informant: {
@@ -584,12 +584,12 @@ test.describe('1. Birth event declaration', () => {
           ].toUpperCase() as 'PHYSICIAN'
         },
         mother: {
-          firstNames: faker.name.firstName(),
-          familyName: faker.name.firstName()
+          firstNames: faker.person.firstName(),
+          familyName: faker.person.firstName()
         },
         father: {
-          firstNames: faker.name.firstName(),
-          familyName: faker.name.firstName()
+          firstNames: faker.person.firstName(),
+          familyName: faker.person.firstName()
         }
       })
       expect(res).toStrictEqual({

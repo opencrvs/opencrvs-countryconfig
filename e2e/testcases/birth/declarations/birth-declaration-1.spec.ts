@@ -12,7 +12,7 @@ import {
   goToSection,
   login
 } from '../../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('1. Birth declaration case - 1', () => {
@@ -41,7 +41,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       birthDate: getRandomDate(20, 200),
       nationality: 'Farajaland',
       identifier: {
-        id: faker.random.numeric(10),
+        id: faker.string.numeric(10),
         type: 'National ID'
       },
       address: {
@@ -49,11 +49,11 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         province: 'Sulaka',
         district: 'Irundu',
         urbanOrRural: 'Urban',
-        town: faker.address.city(),
-        residentialArea: faker.address.county(),
-        street: faker.address.streetName(),
-        number: faker.address.buildingNumber(),
-        postcodeOrZip: faker.address.zipCode()
+        town: faker.location.city(),
+        residentialArea: faker.location.county(),
+        street: faker.location.street(),
+        number: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       },
       maritalStatus: 'Single',
       levelOfEducation: 'No schooling'
@@ -66,7 +66,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       birthDate: getRandomDate(22, 200),
       nationality: 'Gabon',
       identifier: {
-        id: faker.random.numeric(10),
+        id: faker.string.numeric(10),
         type: 'National ID'
       },
       maritalStatus: 'Single',
