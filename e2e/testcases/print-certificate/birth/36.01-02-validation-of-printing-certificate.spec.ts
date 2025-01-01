@@ -1,6 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getAction } from '../../helpers'
-import { BirthDeclaration } from '../birth/types'
+import { BirthDeclaration } from '../../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
 
 test.describe.serial('Certified copies', () => {

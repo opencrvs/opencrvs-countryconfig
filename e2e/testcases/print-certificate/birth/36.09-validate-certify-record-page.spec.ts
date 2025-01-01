@@ -1,8 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
-import { BirthDeclaration } from '../birth/types'
+import { BirthDeclaration } from '../../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
 
-test.describe.serial('10.0 Validate the following for "Review" page', () => {
+test.describe.serial('9.0 Validate the following for "Payment" page', () => {
   let declaration: BirthDeclaration
   let page: Page
 
@@ -14,7 +14,7 @@ test.describe.serial('10.0 Validate the following for "Review" page', () => {
     await page.close()
   })
 
-  test('10.1 Review page validations', async () => {
+  test('9.1 Review page validations', async () => {
     const response = await getDeclarationForPrintCertificate(page)
     declaration = response.declaration
     await page
@@ -49,23 +49,5 @@ test.describe.serial('10.0 Validate the following for "Review" page', () => {
     await expect(
       page.getByRole('button', { name: 'Yes, print certificate' })
     ).toBeVisible()
-    await page.getByRole('button', { name: 'Yes, print certificate' }).click()
-    await expect(page.locator('#confirm-print-modal')).toBeVisible()
-    await expect(page.locator('#confirm-print-modal')).toContainText(
-      'Print and issue certificate?'
-    )
-    await expect(page.locator('#confirm-print-modal')).toContainText(
-      'A PDF of the certificate will open in a new tab for you to print and issue'
-    )
-  })
-
-  test('10.2 On click cancel button, modal will be closed', async () => {
-    await page.getByRole('button', { name: 'Cancel' }).click()
-    await expect(page.locator('#confirm-print-modal')).toBeHidden()
-  })
-
-  test('10.3 On click print button, user will navigate to a new tab from where user can download PDF', async () => {
-    await page.getByRole('button', { name: 'Yes, print certificate' }).click()
-    await page.getByRole('button', { name: 'Print', exact: true }).click()
   })
 })

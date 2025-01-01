@@ -1,10 +1,11 @@
 import { expect, test, type Page } from '@playwright/test'
-import { BirthDeclaration } from '../birth/types'
+import { BirthDeclaration } from '../../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
 import { format } from 'date-fns'
-import { CLIENT_URL } from '../../constants'
+import { CLIENT_URL } from '../../../constants'
 
-test.describe.serial('8.0 Validate the following for "Payment" page', () => {
+test.describe
+  .serial('7.0 Validate the following for "Certify record" page', () => {
   let declaration: BirthDeclaration
   let page: Page
 
@@ -16,7 +17,7 @@ test.describe.serial('8.0 Validate the following for "Payment" page', () => {
     await page.close()
   })
 
-  test('7.1 Payment page should correct payment fee based on selected template', async () => {
+  test('7.1 continue with "Print and issue to informant (Brother)" redirect to Collector details page', async () => {
     const response = await getDeclarationForPrintCertificate(page)
     declaration = response.declaration
     await page
@@ -41,9 +42,22 @@ test.describe.serial('8.0 Validate the following for "Payment" page', () => {
     )
     await expect(page.locator('#amountDue')).toContainText('$5.00')
     await expect(page.locator('#Continue')).toBeVisible()
+  })
 
-    await page.goBack()
-    await page.goBack()
+  test('7.2 should navigate to ready to certify page on continue button click', async () => {
+    await page.locator('#Continue').click()
+    await expect(
+      page.url().includes(`/review/${declaration.id}/birth`)
+    ).toBeTruthy()
+  })
+
+  test('7.3 should skip payment page if payment is 0', async () => {
+    await page.goto(`${CLIENT_URL}/registration-home/print/1`)
+    const response = await getDeclarationForPrintCertificate(page, {
+      child: { birthDate: format(new Date(), 'yyyy-MM-dd') },
+      isLoggedIn: true
+    })
+    declaration = response.declaration
     await page
       .locator('#certificateTemplateId-form-input > span')
       .first()

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { format, parseISO } from 'date-fns'
-import { BirthDeclaration } from '../birth/types'
+import { BirthDeclaration } from '../../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
 
 test.describe

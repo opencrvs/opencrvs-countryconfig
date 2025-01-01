@@ -1,13 +1,13 @@
 import { faker } from '@faker-js/faker'
 import { expect, type Page } from '@playwright/test'
-import { CREDENTIALS } from '../../constants'
-import { getToken, login, createPIN, getAction } from '../../helpers'
+import { CREDENTIALS } from '../../../constants'
+import { getToken, login, createPIN, getAction } from '../../../helpers'
 import {
   ConvertEnumsToStrings,
   createDeclaration,
   fetchDeclaration
-} from '../birth/helpers'
-import { BirthInputDetails, BirthDeclaration } from '../birth/types'
+} from '../../birth/helpers'
+import { BirthInputDetails, BirthDeclaration } from '../../birth/types'
 
 export async function getDeclarationForPrintCertificate(
   page: Page,
