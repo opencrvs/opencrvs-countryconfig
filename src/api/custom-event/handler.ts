@@ -10,10 +10,11 @@
  */
 import * as Hapi from '@hapi/hapi'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
+import { BirthEvent } from '@countryconfig/form/Legecy/birth'
 
 export const customEventHandler = (
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) => {
-  return h.response([tennisClubMembershipEvent]).code(200)
+  return h.response([tennisClubMembershipEvent, BirthEvent]).code(200)
 }
