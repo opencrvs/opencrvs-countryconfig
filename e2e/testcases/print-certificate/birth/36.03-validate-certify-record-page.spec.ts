@@ -3,8 +3,7 @@ import { format, parseISO } from 'date-fns'
 import { BirthDeclaration } from '../../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
 
-test.describe
-  .serial('3.0 Validate the following for "Certify record" page', () => {
+test.describe.serial('3.0 Validate "Certify record" page', () => {
   let declaration: BirthDeclaration
   let trackingId = ''
 

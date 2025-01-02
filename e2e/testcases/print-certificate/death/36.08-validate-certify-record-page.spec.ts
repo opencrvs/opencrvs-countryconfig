@@ -4,7 +4,7 @@ import { getDeathDeclarationForPrintCertificate } from './certificate-helper'
 import { format } from 'date-fns'
 import { CLIENT_URL } from '../../../constants'
 
-test.describe.serial('8.0 Validate the following for "Payment" page', () => {
+test.describe.serial('8.0 Validate "Payment" page', () => {
   let declaration: DeathDeclaration
   let page: Page
 

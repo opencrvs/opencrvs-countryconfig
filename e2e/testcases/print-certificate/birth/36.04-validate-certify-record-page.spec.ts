@@ -2,8 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { BirthDeclaration } from '../../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
 
-test.describe
-  .serial('4.0 Validate the following for "Certify record" page', () => {
+test.describe.serial('4.0 Validate "Certify record" page', () => {
   let declaration: BirthDeclaration
   let trackingId = ''
 

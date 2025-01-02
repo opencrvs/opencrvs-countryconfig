@@ -88,6 +88,12 @@ test.describe.serial(' Correct record - 17', () => {
     await page.getByRole('button', { name: 'Action' }).first().click()
     await getAction(page, 'Print certified copy').click()
 
+    await page
+      .locator('#certificateTemplateId-form-input > span')
+      .first()
+      .click()
+
+    await page.getByText('Death Certificate', { exact: true }).click()
     await page.getByLabel('Print in advance').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'No, make correction' }).click()

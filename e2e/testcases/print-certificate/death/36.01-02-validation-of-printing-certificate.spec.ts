@@ -28,7 +28,7 @@ test.describe.serial('Certified copies', () => {
     ).toBeTruthy()
   })
 
-  test.describe('2.0 Validate the following for "Certify record" page', async () => {
+  test.describe('2.0 Validate "Certify record" page', async () => {
     test('2.1 Click continue without selecting collector type and template type', async () => {
       await page.getByRole('button', { name: 'Continue' }).click()
       await expect(

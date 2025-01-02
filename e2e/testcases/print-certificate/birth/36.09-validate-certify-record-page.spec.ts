@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { BirthDeclaration } from '../../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
 
-test.describe.serial('9.0 Validate the following for "Payment" page', () => {
+test.describe.serial('9.0 Validate "Payment" page', () => {
   let declaration: BirthDeclaration
   let page: Page
 

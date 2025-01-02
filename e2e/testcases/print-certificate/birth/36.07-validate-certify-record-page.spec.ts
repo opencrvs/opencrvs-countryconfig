@@ -4,8 +4,7 @@ import { getDeclarationForPrintCertificate } from './certificate-helper'
 import { format } from 'date-fns'
 import { CLIENT_URL } from '../../../constants'
 
-test.describe
-  .serial('7.0 Validate the following for "Certify record" page', () => {
+test.describe.serial('7.0 Validate "Certify record" page', () => {
   let declaration: BirthDeclaration
   let page: Page
 
