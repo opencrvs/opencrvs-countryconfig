@@ -101,18 +101,15 @@ test.describe.serial('7.0 Validate collect payment page', () => {
     })
 
     test('6.2 Should be able to add file and navigate to the "Ready to certify?" page.', async () => {
-      const attachmentPath = '../../birth/data/assets/528KB-random.png'
+      const path = require('path')
+      const attachmentPath = path.resolve(__dirname, './528KB-random.png')
       const inputFile = await page.locator(
         'input[name="affidavitFile"][type="file"]'
       )
-
       await inputFile.setInputFiles(attachmentPath)
       await expect(
-        inputFile.evaluate(
-          (input: HTMLInputElement) =>
-            input && Array.isArray(input.files) && input.files[0].name
-        )
-      ).toBe('528KB-random.png')
+        page.getByRole('button', { name: 'Signed affidavit' })
+      ).toBeVisible()
     })
   })
 })
