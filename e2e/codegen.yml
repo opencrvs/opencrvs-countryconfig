@@ -1,6 +1,6 @@
 overwrite: true
 schema:
-  - https://gateway.ocrvs-7584.opencrvs.dev/graphql:
+  - https://gateway.farajaland-dev.opencrvs.org/graphql:
       headers:
         Authorization: 'Bearer ${TOKEN}'
 # documents:
