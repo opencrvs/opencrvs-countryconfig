@@ -1032,12 +1032,15 @@ const BIRTH_FORM = defineForm({
         },
         {
           id: 'child.weightAtBirth',
-          type: 'TEXT', // @Todo: Change to NUMBER
+          type: 'TEXT',
           required: true,
           label: {
             defaultMessage: 'Weight at birth',
             description: 'This is the label for the field',
             id: 'event.birth.action.declare.form.section.child.field.weightAtBirth.label'
+          },
+          options: {
+            type: 'number'
           }
         }
       ]
@@ -1060,7 +1063,25 @@ export const BirthEvent = defineConfig({
     },
     fields: []
   },
-  workqueues: [],
+  workqueues: [
+    {
+      id: 'all',
+      title: {
+        defaultMessage: 'All birth events',
+        description: 'Label for all birth events workqueue',
+        id: 'event.birth.workqueue.all.label'
+      },
+      fields: [
+        {
+          id: 'child.firstname'
+        },
+        {
+          id: 'child.surname'
+        }
+      ],
+      filters: []
+    }
+  ],
   actions: [
     {
       type: 'DECLARE',
@@ -1068,7 +1089,7 @@ export const BirthEvent = defineConfig({
         defaultMessage: 'Declare',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.tennis-club-membership.action.declare.label'
+        id: 'event.birth.action.declare.label'
       },
       forms: [BIRTH_FORM],
       allowedWhen: defineConditional(not(eventHasAction('DECLARE')))
