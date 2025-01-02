@@ -12,7 +12,7 @@
     <foreignObject x="24" y="110.488"  width="150" height="100">
         <div xmlns="http://www.w3.org/1999/xhtml">
         <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Distrika : </span> 
-        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{location registrar.stateId "name"}}</span> 
+        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionDistrictInTheAct (location registrar.stateId "name")}}</span> 
         </div>
     </foreignObject>
     
@@ -20,27 +20,27 @@
     <foreignObject x="24" y="142.488"  width="150" height="100">
         <div xmlns="http://www.w3.org/1999/xhtml">
         <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Kaominina : </span> 
-        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{replaceByUppercaseLocation (location registrar.districtId "name")}}</span> 
+        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionCommuneInTheAct (location registrar.districtId "name")}}</span> 
         </div>
     </foreignObject>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
-        <tspan x="24" y="177.58">Soratra n&#xb0; :</tspan>
+        <tspan x="24" y="187.58">Soratra n&#xb0; :</tspan>
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         font-weight="bold" letter-spacing="0em">
-        <tspan x="86" y="177.58">{{birthChildLegacyBirthRegistrationNumber}}</tspan>
+        <tspan x="86" y="187.58">{{birthChildLegacyBirthRegistrationNumber}}</tspan>
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
-        <tspan x="24" y="192.58">Natao ny :</tspan>
+        <tspan x="24" y="202.58">Natao ny :</tspan>
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         font-weight="bold" letter-spacing="0em">
-        <tspan x="86" y="192.58">{{getBirthRegistrationDateMDGFormat}}</tspan>
+        <tspan x="86" y="202.58">{{getBirthRegistrationDateMDGFormat}}</tspan>
     </text>
 
-    {{#wrapGroup 30 24 233.712}}
+    {{#wrapGroup 30 24 239.712}}
         {{#text fontSize=14 fontWeight="bold"}}
             {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
             FAHATERAHANA SY FANJANAHANA
@@ -74,7 +74,8 @@
 
     <foreignObject x="190" y="165" width="384" height="560">
         <p style="font-family: 'Plus Jakarta Sans';
-            text-align: justify;
+           text-align: justify;
+            word-break: break-all;
             font-size: 14px;
             line-height: 1.1;
             letter-spacing: 0em;
@@ -85,6 +86,7 @@
             font-size: 14px;
             line-height: 1.1;
             letter-spacing: 0em;
+             hyphens:auto;
             margin-top: 0;">{{{eventStatement
             (location statePlaceofbirthId "name") (location districtPlaceofbirthId "name")
             (location
@@ -95,6 +97,7 @@
             font-size: 14px;
             line-height: 1.1;
             letter-spacing: 0em;
+            hyphens:auto;
             margin-top: 0;">{{{registrationStatement (location
             districtPrimaryInformantId "name") (location registrar.districtId
             "name")}}}
@@ -112,6 +115,7 @@
             font-size: 14px;
             line-height: 1.1;
             letter-spacing: 0em;
+            hyphens:auto;
             margin-top: 0">{{{signatureDescription}}}
         </p><br /><br /><p class="large" style="font-family: 'Plus Jakarta Sans';
             text-align: justify;

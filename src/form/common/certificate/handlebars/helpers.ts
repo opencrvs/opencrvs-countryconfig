@@ -766,6 +766,7 @@ function getBirthRegistrationDate(data: any): string | undefined {
 
 export function getBirthRegistrationDateMDGFormat(): Handlebars.HelperDelegate {
   return function (this: any) {
+    console.log(this.registrar.date)
     const birthRegistrationDate = getBirthRegistrationDate(this)
 
     if (isValidDate(birthRegistrationDate)) {
@@ -869,6 +870,34 @@ function definitionOffice(officeName: string = '') {
 
   return officeName
 }
+function defineCommune(officeName: string = '') {
+  const locationMappings: { [key: string]: string } = {
+    'cu tana i': 'Antananarivo',
+    'cu tana ii': 'Antananarivo',
+    'cu tana iii': 'Antananarivo',
+    'cu tana iv': 'Antananarivo',
+    'cu tana v': 'Antananarivo',
+    'cu tana vi': 'Antananarivo'
+    // nouveau
+  }
+
+  const lowerCaseRegistrationLocation = officeName.toLowerCase()
+
+  for (const key in locationMappings) {
+    const regex = new RegExp(`\\b${key}\\b`) // Correspondance stricte avec limites de mots
+    if (regex.test(lowerCaseRegistrationLocation)) {
+      return locationMappings[key]
+    }
+  }
+
+  return officeName
+}
+
+export function definitionCommuneInTheAct(): Handlebars.HelperDelegate {
+  return function (this: any, name: string) {
+    return defineCommune(name)
+  }
+}
 function definitionDistrict(officeName: string = '') {
   const locationMappings: { [key: string]: string } = {
     'tana i': 'Antananarivo Renivohitra',
@@ -899,6 +928,12 @@ function definitionDistrict(officeName: string = '') {
   }
 
   return officeName
+}
+
+export function definitionDistrictInTheAct(): Handlebars.HelperDelegate {
+  return function (this: any, name: string) {
+    return definitionDistrict(name)
+  }
 }
 
 function replaceByUppercase(inputText: String) {
