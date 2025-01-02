@@ -37,7 +37,7 @@ test.describe('1. Login with valid information', () => {
 
     // Expected result: Must log in to the OPENCRVS Page
     await expect(
-      page.locator('#root-app-progress').or(page.locator('#pin-input'))
+      page.locator('#appSpinner').or(page.locator('#pin-input'))
     ).toBeVisible()
   })
 })
