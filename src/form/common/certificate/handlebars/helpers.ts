@@ -872,12 +872,12 @@ function definitionOffice(officeName: string = '') {
 }
 function defineCommune(officeName: string = '') {
   const locationMappings: { [key: string]: string } = {
-    'cu tana i': 'Antananarivo',
-    'cu tana ii': 'Antananarivo',
-    'cu tana iii': 'Antananarivo',
-    'cu tana iv': 'Antananarivo',
-    'cu tana v': 'Antananarivo',
-    'cu tana vi': 'Antananarivo'
+    'cu tana i': 'Antananarivo, Boriboritany Voalohany',
+    'cu tana ii': 'Antananarivo, Boriboritany Faharoa',
+    'cu tana iii': 'Antananarivo, Boriboritany Fahatelo',
+    'cu tana iv': 'Antananarivo, Boriboritany Fahaefatra',
+    'cu tana v': 'Antananarivo, Boriboritany Fahadimy',
+    'cu tana vi': 'Antananarivo, Boriboritany Fahaenina'
     // nouveau
   }
 
