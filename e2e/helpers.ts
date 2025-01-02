@@ -128,6 +128,7 @@ export const uploadImage = async (
   await locator.click()
   const fileChooser = await fileChooserPromise
   await fileChooser.setFiles(image)
+  return fileChooser
 }
 
 /**
