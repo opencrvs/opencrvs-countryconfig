@@ -12,6 +12,7 @@
 import {
   defineConfig,
   defineForm,
+  FieldConfig,
   SelectOption
 } from '@opencrvs/toolkit/events'
 import {
@@ -20,7 +21,7 @@ import {
   not,
   field
 } from '@opencrvs/toolkit/conditionals'
-export const formMessageDescriptors = {
+const formMessageDescriptors = {
   primaryAddress: {
     defaultMessage: 'Usual place of residence',
     description: 'Title of the primary adress',
@@ -810,7 +811,7 @@ export const formMessageDescriptors = {
   }
 }
 
-export const genderOptions: SelectOption[] = [
+const genderOptions: SelectOption[] = [
   {
     value: 'male',
     label: formMessageDescriptors.sexMale
@@ -825,7 +826,7 @@ export const genderOptions: SelectOption[] = [
   }
 ]
 
-export const typeOfBirthOptions: SelectOption[] = [
+const typeOfBirthOptions: SelectOption[] = [
   {
     value: 'SINGLE',
     label: formMessageDescriptors.birthTypeSingle
@@ -848,7 +849,7 @@ export const typeOfBirthOptions: SelectOption[] = [
   }
 ]
 
-export const attendantAtBirthOptions: SelectOption[] = [
+const attendantAtBirthOptions: SelectOption[] = [
   {
     value: 'PHYSICIAN',
     label: formMessageDescriptors.physician
@@ -876,6 +877,126 @@ export const attendantAtBirthOptions: SelectOption[] = [
   {
     value: 'NONE',
     label: formMessageDescriptors.attendantAtBirthNone
+  }
+]
+
+const idTypeOptions: SelectOption[] = [
+  {
+    value: 'NATIONAL_ID' as const,
+    label: {
+      defaultMessage: 'National ID',
+      description: 'Option for form field: Type of ID',
+      id: 'form.field.label.iDTypeNationalID'
+    }
+  },
+  {
+    value: 'PASSPORT' as const,
+    label: {
+      defaultMessage: 'Passport',
+      description: 'Option for form field: Type of ID',
+      id: 'form.field.label.iDTypePassport'
+    }
+  },
+  {
+    value: 'BIRTH_REGISTRATION_NUMBER' as const,
+    label: {
+      defaultMessage: 'Birth Registration Number',
+      description: 'Option for form field: Type of ID',
+      id: 'form.field.label.iDTypeBRN'
+    }
+  },
+  {
+    value: 'NONE' as const,
+    label: {
+      defaultMessage: 'None',
+      description: 'Option for form field: Type of ID',
+      id: 'form.field.label.iDTypeNone'
+    }
+  }
+]
+
+const getPersonInputFields = (person: string): FieldConfig[] => [
+  {
+    id: `${person}.firstname`,
+    type: 'TEXT',
+    required: true,
+    label: {
+      defaultMessage: 'First name',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.firstname.label`
+    },
+    conditionals: []
+  },
+  {
+    id: `${person}.surname`,
+    type: 'TEXT',
+    required: true,
+    label: {
+      defaultMessage: 'Surname',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.surname.label`
+    },
+    conditionals: []
+  },
+  {
+    id: `${person}.dob`,
+    type: 'DATE',
+    required: true,
+    validation: [
+      {
+        message: {
+          defaultMessage: 'Please enter a valid date',
+          description: 'This is the error message for invalid date',
+          id: `event.birth.action.declare.form.section.${person}.field.dob.error`
+        },
+        validator: field(`${person}.dob`).isBeforeNow()
+      }
+    ],
+    label: {
+      defaultMessage: 'Date of birth',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.dob.label`
+    },
+    conditionals: []
+  },
+  {
+    id: `${person}.dobUnknown`,
+    type: 'CHECKBOX',
+    required: true,
+    label: {
+      defaultMessage: 'Exact date of birth unknown',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.age.label`
+    },
+    conditionals: []
+  },
+  {
+    id: `${person}.age`,
+    type: 'TEXT',
+    required: true,
+    label: {
+      defaultMessage: `${person[0].toUpperCase() + person.slice(1)}'s age`,
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.age.label`
+    },
+    conditionals: [
+      {
+        type: 'SHOW',
+        conditional: field(`${person}.dobUnknown`).isEqualTo('true')
+      }
+    ]
+  },
+  {
+    id: `${person}.idType`,
+    type: 'SELECT',
+    required: true,
+    label: {
+      defaultMessage: 'Type of ID',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.idType.label`
+    },
+    options: idTypeOptions,
+    conditionals: []
   }
 ]
 
@@ -1044,6 +1165,15 @@ const BIRTH_FORM = defineForm({
           }
         }
       ]
+    },
+    {
+      id: 'informant',
+      title: {
+        defaultMessage: "Informant's details",
+        description: 'Form section title for informants',
+        id: 'form.section.informant.title'
+      },
+      fields: [...getPersonInputFields('informant')]
     }
   ]
 })
