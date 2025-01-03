@@ -846,12 +846,12 @@ export function customizeOfficeNameLocation(): Handlebars.HelperDelegate {
 
 function definitionOffice(officeName: string = '') {
   const locationMappings: { [key: string]: string } = {
-    'cu tana i': "ambonivohitr'Antananarivo - Boriboritany Voalohany",
-    'cu tana ii': "ambonivohitr'Antananarivo - Boriboritany Faharoa",
-    'cu tana iii': "ambonivohitr'Antananarivo - Boriboritany Fahatelo",
-    'cu tana iv': "ambonivohitr'Antananarivo - Boriboritany Fahaefatra",
-    'cu tana v': "ambonivohitr'Antananarivo - Boriboritany Fahadimy",
-    'cu tana vi': "ambonivohitr'Antananarivo - Boriboritany Fahaenina",
+    'cu tana i': "ambonivohitr'<wbr />Antananarivo - Boriboritany Voalohany",
+    'cu tana ii': "ambonivohitr'<wbr />Antananarivo - Boriboritany Faharoa",
+    'cu tana iii': "ambonivohitr'<wbr />Antananarivo - Boriboritany Fahatelo",
+    'cu tana iv': "ambonivohitr'<wbr />Antananarivo - Boriboritany Fahaefatra",
+    'cu tana v': "ambonivohitr'<wbr />Antananarivo - Boriboritany Fahadimy",
+    'cu tana vi': "ambonivohitr'<wbr />Antananarivo - Boriboritany Fahaenina",
     'cu toamasina arr. ambodimanga': 'ambonivohitra Toamasina arr. Ambodimanga',
     'cu toamasina arr. anjoma': 'ambonivohitra Toamasina arr. Anjoma',
     'cu toamasina arr. ankirihiry': 'ambonivohitra Toamasina arr. Ankirihiry',
