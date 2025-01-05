@@ -2,6 +2,17 @@
 
 ## 1.7.0 Release candidate
 
+### Migration notes
+In order to make the upgrade easier, there are a couple of steps that need to be performed which will make the codebase ready for the upgrade:
+- Run this command from the root of the countryconfig repository ```curl https://raw.githubusercontent.com/opencrvs/opencrvs-countryconfig/configurable-roles/src/upgrade-to-1_7.ts | npx ts-node -T --cwd ./src```
+
+  It will remove `roles.csv` and generate a `roles.ts` file. It will also update the corresponding role column in `default-employees.csv` & `prod-employees.csv` while adding the corresponding translations in `client.csv`. The employee files are only used when seeding new environments, if you already have a v1.6.x of OpenCRVS deployed, the data in the environment will automatically get migrated after deploying the upgrade. The changes in these two files are made to keep the roles in sync with your previously deployed environments, if any.
+- After pulling in the v1.7.0 changes reject the changes incoming to `roles.ts`, `default-employees.csv` & `prod-employees.csv` files as we used the script above to auto-generate them.
+
+  The `roles.ts` file now defines all the roles available in the system. New roles can be added & existing roles can be customized by giving them different scopes.
+
+  *N.B. The default roles generated in the `roles.ts` file during migration should not be removed to maintain backwards compatibility*
+
 ### New features
 
 - **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
@@ -9,14 +20,6 @@
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 - Add constant.humanName to allow countries to have custom ordering on their full name e.g. start with `lastName` or `firstName` [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 - **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: *Link to scopes description file*
-
-  **Migration notes**
-  - After pulling in the v1.7.0 changes, remove `roles.ts` (we will regenerate it later), reject the changes incoming to `roles.csv`, `default-employees.csv` & `prod-employees.csv` files.
-  - Run `yarn upgrade:code`. It will remove `roles.csv` and generate a `roles.ts` file. It will also update the corresponding role column in `default-employees.csv` & `prod-employees.csv` while adding the corresponding translations in `client.csv`. The employee files are only used when seeding new environments, if you already have a v1.6.x of OpenCRVS deployed, the data in the environment will automatically get migrated after deploying the upgrade. The changes in these two files are made to keep the roles in sync with your previously deployed environments, if any.
-  
-  The `roles.ts` file now defines all the roles available in the system. New roles can be added & existing roles can be customized by giving them different scopes.
-
-  *N.B. The default roles generated in the `roles.ts` file during migration should not be removed to maintain backwards compatibility*
 
 ### Bug fixes
 

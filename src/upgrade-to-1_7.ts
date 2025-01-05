@@ -176,7 +176,7 @@ async function main() {
 
 async function upgradeRolesDefinitions() {
   const roles = await readCSVToJSON<any[]>(
-    join(__dirname, './data-seeding/roles/source/roles.csv')
+    join(__dirname, './src/data-seeding/roles/source/roles.csv')
   ).catch((err) => {
     if (err.code === 'ENOENT') {
       logger.warn(
@@ -210,7 +210,7 @@ async function upgradeRolesDefinitions() {
    * Add language items to src/translations/client.csv
    */
   const copy = await readCSVToJSON<any[]>(
-    join(__dirname, './translations/client.csv')
+    join(__dirname, './src/translations/client.csv')
   )
 
   rolesWithGeneratedIds.forEach((role) => {
@@ -236,7 +236,7 @@ async function upgradeRolesDefinitions() {
    */
 
   const defaultEmployees = await readCSVToJSON<any[]>(
-    join(__dirname, './data-seeding/employees/source/default-employees.csv')
+    join(__dirname, './src/data-seeding/employees/source/default-employees.csv')
   )
 
   const defaultEmployeesWithRoles = defaultEmployees.map(
@@ -262,7 +262,7 @@ async function upgradeRolesDefinitions() {
   )
 
   const prodEmployees = await readCSVToJSON<any[]>(
-    join(__dirname, './data-seeding/employees/source/prod-employees.csv')
+    join(__dirname, './src/data-seeding/employees/source/prod-employees.csv')
   )
 
   const prodEmployeesWithRoles = prodEmployees.map(
@@ -308,7 +308,7 @@ async function upgradeRolesDefinitions() {
    */
   logger.info('Creating roles file')
   writeFileSync(
-    join(__dirname, './data-seeding/roles/roles.ts'),
+    join(__dirname, './src/data-seeding/roles/roles.ts'),
     await format(
       `
       import { SCOPES, Scope } from '@opencrvs/toolkit/scopes'
@@ -330,21 +330,24 @@ async function upgradeRolesDefinitions() {
   )
 
   logger.info('Updating copy file')
-  await writeJSONToCSV(join(__dirname, './translations/client.csv'), copy)
+  await writeJSONToCSV(join(__dirname, './src/translations/client.csv'), copy)
 
   logger.info('Updating default employees file')
   await writeJSONToCSV(
-    join(__dirname, './data-seeding/employees/source/default-employees.csv'),
+    join(
+      __dirname,
+      './src/data-seeding/employees/source/default-employees.csv'
+    ),
     defaultEmployeesWithRoles
   )
   logger.info('Updating prod employees file')
   await writeJSONToCSV(
-    join(__dirname, './data-seeding/employees/source/prod-employees.csv'),
+    join(__dirname, './src/data-seeding/employees/source/prod-employees.csv'),
     prodEmployeesWithRoles
   )
 
   logger.info('Removing old roles file')
-  rmdirSync(join(__dirname, './data-seeding/roles/source'), {
+  rmdirSync(join(__dirname, './src/data-seeding/roles/source'), {
     recursive: true
   })
 }
