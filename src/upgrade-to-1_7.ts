@@ -292,7 +292,7 @@ async function upgradeRolesDefinitions() {
   } catch (err) {
     if (err.code === 'ENOENT') {
       logger.warn(
-        'data-seeding/roles/source/roles.csv does not exist in the codebase. Skipping'
+        './src/data-seeding/employees/source/prod-employees.csv does not exist in the codebase. Skipping'
       )
     }
   }
@@ -350,8 +350,8 @@ async function upgradeRolesDefinitions() {
     ),
     defaultEmployeesWithRoles
   )
-  logger.info('Updating prod employees file')
   if (prodEmployeesWithRoles) {
+    logger.info('Updating prod employees file')
     await writeJSONToCSV(
       join(__dirname, './src/data-seeding/employees/source/prod-employees.csv'),
       prodEmployeesWithRoles
