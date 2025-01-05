@@ -261,31 +261,41 @@ async function upgradeRolesDefinitions() {
     }
   )
 
-  const prodEmployees = await readCSVToJSON<any[]>(
-    join(__dirname, './src/data-seeding/employees/source/prod-employees.csv')
-  )
+  let prodEmployeesWithRoles = null
 
-  const prodEmployeesWithRoles = prodEmployees.map(
-    ({ systemRole, ...employee }) => {
-      if (!systemRole) {
-        logger.warn(
-          `Skipping employee "${employee.givenNames} ${employee.familyName}" as it already seems to have been migrated`
+  try {
+    const prodEmployees = await readCSVToJSON<any[]>(
+      join(__dirname, './src/data-seeding/employees/source/prod-employees.csv')
+    )
+
+    prodEmployeesWithRoles = prodEmployees.map(
+      ({ systemRole, ...employee }) => {
+        if (!systemRole) {
+          logger.warn(
+            `Skipping employee "${employee.givenNames} ${employee.familyName}" as it already seems to have been migrated`
+          )
+          return employee
+        }
+        const role = rolesWithGeneratedIds.find(
+          (role) => role.oldLabels.en === employee.role
         )
-        return employee
+        if (!role) {
+          logger.error(`Role with id ${employee.role} not found in roles.csv`)
+          process.exit(1)
+        }
+        return {
+          ...employee,
+          role: role.id
+        }
       }
-      const role = rolesWithGeneratedIds.find(
-        (role) => role.oldLabels.en === employee.role
+    )
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      logger.warn(
+        'data-seeding/roles/source/roles.csv does not exist in the codebase. Skipping'
       )
-      if (!role) {
-        logger.error(`Role with id ${employee.role} not found in roles.csv`)
-        process.exit(1)
-      }
-      return {
-        ...employee,
-        role: role.id
-      }
     }
-  )
+  }
 
   /*
    * Create the new "roles.ts" file with the updated roles and new format
@@ -341,10 +351,12 @@ async function upgradeRolesDefinitions() {
     defaultEmployeesWithRoles
   )
   logger.info('Updating prod employees file')
-  await writeJSONToCSV(
-    join(__dirname, './src/data-seeding/employees/source/prod-employees.csv'),
-    prodEmployeesWithRoles
-  )
+  if (prodEmployeesWithRoles) {
+    await writeJSONToCSV(
+      join(__dirname, './src/data-seeding/employees/source/prod-employees.csv'),
+      prodEmployeesWithRoles
+    )
+  }
 
   logger.info('Removing old roles file')
   rmdirSync(join(__dirname, './src/data-seeding/roles/source'), {
