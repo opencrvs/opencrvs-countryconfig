@@ -90,17 +90,27 @@ const TENNIS_CLUB_FORM = defineForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.label'
           }
+        },
+        {
+          id: 'applicant.image',
+          type: 'FILE',
+          required: false,
+          label: {
+            defaultMessage: "Applicant's profile picture",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
+          }
+        },
+        {
+          id: 'applicant.image.label',
+          type: 'TEXT',
+          required: false,
+          label: {
+            defaultMessage: "Applicant's profile picture description",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
+          }
         }
-        // {
-        //   id: 'applicant.image',
-        //   type: 'FILE',
-        //   required: false,
-        //   label: {
-        //     defaultMessage: "Applicant's profile picture",
-        //     description: 'This is the label for the field',
-        //     id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
-        //   }
-        // }
       ]
     },
     {

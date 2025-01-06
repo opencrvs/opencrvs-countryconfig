@@ -14,6 +14,7 @@ window.config = {
   LOGIN_URL: 'http://localhost:3020',
   AUTH_URL: 'http://localhost:7070/auth/',
   MINIO_BUCKET: 'ocrvs',
+  MINIO_URL: 'http://localhost:3535/ocrvs/',
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',
