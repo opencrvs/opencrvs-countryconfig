@@ -980,7 +980,7 @@ const getPersonInputFields = (person: string): FieldConfig[] => [
     type: 'TEXT',
     required: true,
     label: {
-      defaultMessage: `${person[0].toUpperCase() + person.slice(1)}'s age`,
+      defaultMessage: `Age of ${person}`,
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.age.label`
     },
