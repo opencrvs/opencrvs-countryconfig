@@ -10,7 +10,7 @@
  */
 import * as Hapi from '@hapi/hapi'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
-import { BirthEvent } from '@countryconfig/form/Legecy/birth'
+import { BirthEvent } from '@countryconfig/form/V2/birth'
 
 export const customEventHandler = (
   request: Hapi.Request,
