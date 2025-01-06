@@ -833,6 +833,7 @@ function replaceByUppercaseLocation() {
     };
 }
 window.replaceByUppercaseLocation = replaceByUppercaseLocation;
+window.replaceAbbreviations = replaceAbbreviations;
 function customizeOfficeNameLocationHeader() {
     return function (registrationLocation) {
         if (registrationLocation === void 0) { registrationLocation = ''; }

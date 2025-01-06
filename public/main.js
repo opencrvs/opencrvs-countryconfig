@@ -272,7 +272,7 @@ const getChildBirthLocation = (eventLocationId, type, id) =>
     if (eventLocationId && type) {
       if (type === 'HEALTH_FACILITY') {
         const birthLocation = await fetchLocationById(eventLocationId)
-        if (birthLocation) return `tao amin'ny ${birthLocation?.name || '-'}`
+        if (birthLocation) return `tao amin'ny ${window.replaceAbbreviations(birthLocation?.name || '-')}`
       } else {
         const birthLocation = await fetchOtherBirthLocation(id)
         return `tao amin'ny${(() => {
