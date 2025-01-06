@@ -24,6 +24,7 @@ export const certificateHandlebars = {
   registrationLocation: 'registrationLocation', // @deprecated use registrar.office/state/district instead
   contactEmail: 'contactEmail',
   contactPhoneNumber: 'contactPhoneNumber',
+  childIdentifier: 'childIdentifier',
   birthConfigurableIdentifier1: 'birthConfigurableIdentifier1',
   birthConfigurableIdentifier2: 'birthConfigurableIdentifier2',
   birthConfigurableIdentifier3: 'birthConfigurableIdentifier3',
@@ -58,6 +59,9 @@ export const certificateHandlebars = {
   childFamilyName: 'childFamilyName',
   childGender: 'childGender',
   eventDate: 'eventDate',
+  ageOfFatherInYears: 'ageOfFatherInYears',
+  ageOfMotherInYears: 'ageOfMotherInYears',
+  ageOfInformantInYears: 'ageOfInformantInYears',
   informantFirstName: 'informantFirstName',
   informantFamilyName: 'informantFamilyName',
   informantBirthDate: 'informantBirthDate',
