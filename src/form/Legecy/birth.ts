@@ -957,7 +957,12 @@ const getPersonInputFields = (person: string): FieldConfig[] => [
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.dob.label`
     },
-    conditionals: []
+    conditionals: [
+      {
+        type: 'HIDE',
+        conditional: field(`${person}____dobUnknown`).isEqualTo('true')
+      }
+    ]
   },
   {
     id: `${person}.dobUnknown`,
@@ -981,8 +986,8 @@ const getPersonInputFields = (person: string): FieldConfig[] => [
     },
     conditionals: [
       {
-        type: 'SHOW',
-        conditional: field(`${person}.dobUnknown`).isEqualTo('true')
+        type: 'HIDE',
+        conditional: field(`${person}____dobUnknown`).isEqualTo('false')
       }
     ]
   },
