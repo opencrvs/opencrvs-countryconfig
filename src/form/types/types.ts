@@ -146,6 +146,7 @@ export const SIGNATURE = 'SIGNATURE'
 export const REDIRECT = 'REDIRECT'
 export const ID_READER = 'ID_READER'
 export const HTTP = 'HTTP'
+export const ID_VERIFICATION_BANNER = 'ID_VERIFICATION_BANNER'
 
 export enum RadioSize {
   LARGE = 'large',
@@ -532,6 +533,12 @@ export interface IIDReaderFormField extends IFormFieldBase {
   readers: [ReaderType, ...ReaderType[]]
 }
 
+export type BannerType = 'pending' | 'verified' | 'failed'
+export interface IBannerFormField extends IFormFieldBase {
+  type: typeof ID_VERIFICATION_BANNER
+  bannerType: BannerType
+  idFieldName: string
+}
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -569,6 +576,7 @@ export type IFormField =
   | IIDReaderFormField
   | IRedirectFormField
   | IHttpFormField
+  | IBannerFormField
 
 export interface SelectComponentOption {
   value: string

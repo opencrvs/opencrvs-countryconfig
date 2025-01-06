@@ -223,9 +223,12 @@ export const birthForm: ISerializedForm = {
             getIDReaderField(
               'birth',
               'informant',
-              informantFirstNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              )
+              informantFirstNameConditionals
+                .concat(hideIfInformantMotherOrFather)
+                .concat({
+                  action: 'hide',
+                  expression: '!!$form?.verified'
+                })
             ),
             {
               name: 'someHTTPField',
@@ -244,14 +247,39 @@ export const birthForm: ISerializedForm = {
                 method: 'GET'
               }
             },
+            {
+              name: 'verified',
+              type: 'HIDDEN',
+              custom: true,
+              label: {
+                id: 'messages.empty',
+                defaultMessage: ''
+              },
+              validator: []
+            },
+            {
+              name: 'idPending',
+              type: 'ID_VERIFICATION_BANNER',
+              custom: true,
+              bannerType: 'pending',
+              idFieldName: 'idReader',
+              label: {
+                id: 'messages.empty',
+                defaultMessage: ''
+              },
+              validator: [],
+              conditionals: [
+                {
+                  action: 'hide',
+                  expression: '$form?.verified !== "pending"'
+                }
+              ]
+            },
             getFirstNameField(
               'informantNameInEnglish',
-              informantFirstNameConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat({
-                  action: 'disable',
-                  expression: '$form?.idReader?.firstName'
-                }),
+              informantFirstNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
               certificateHandlebars.informantFirstName,
               {
                 dependsOn: ['idReader'],
@@ -260,40 +288,24 @@ export const birthForm: ISerializedForm = {
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
-              informantFamilyNameConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat({
-                  action: 'disable',
-                  expression: '$form?.idReader?.familyName'
-                }),
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
               certificateHandlebars.informantFamilyName,
               {
                 dependsOn: ['idReader'],
                 expression: '$form?.idReader?.familyName'
               }
             ), // Required field.
-            getGenderCustom(
-              'birth',
-              'informant',
-              [
-                {
-                  action: 'disable',
-                  expression: '$form?.idReader?.gender'
-                }
-              ],
-              {
-                dependsOn: ['idReader'],
-                expression: '$form?.idReader?.gender'
-              }
-            ),
+            getGenderCustom('birth', 'informant', [], {
+              dependsOn: ['idReader'],
+              expression: '$form?.idReader?.gender'
+            }),
             getBirthDate(
               'informantBirthDate',
-              informantBirthDateConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat({
-                  action: 'disable',
-                  expression: '$form?.idReader?.birthDate'
-                }),
+              informantBirthDateConditionals.concat(
+                hideIfInformantMotherOrFather
+              ),
               [
                 {
                   operation: 'dateFormatIsCorrect',
