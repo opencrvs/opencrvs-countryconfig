@@ -255,6 +255,10 @@ export const birthForm: ISerializedForm = {
                 id: 'messages.empty',
                 defaultMessage: ''
               },
+              initialValue: {
+                dependsOn: ['idReader'],
+                expression: 'Boolean($form?.idReader)? "pending":""'
+              },
               validator: []
             },
             {
@@ -283,7 +287,7 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantFirstName,
               {
                 dependsOn: ['idReader'],
-                expression: '$form?.idReader?.firstName'
+                expression: '$form?.idReader?.firstName || ""'
               }
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
@@ -294,12 +298,12 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantFamilyName,
               {
                 dependsOn: ['idReader'],
-                expression: '$form?.idReader?.familyName'
+                expression: '$form?.idReader?.familyName || ""'
               }
             ), // Required field.
             getGenderCustom('birth', 'informant', [], {
               dependsOn: ['idReader'],
-              expression: '$form?.idReader?.gender'
+              expression: '$form?.idReader?.gender || ""'
             }),
             getBirthDate(
               'informantBirthDate',
@@ -319,7 +323,7 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantBirthDate,
               {
                 dependsOn: ['idReader'],
-                expression: '$form?.idReader?.birthDate'
+                expression: '$form?.idReader?.birthDate || ""'
               }
             ), // Required field.
             exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
