@@ -272,7 +272,7 @@ const getChildBirthLocation = (eventLocationId, type, id) =>
     if (eventLocationId && type) {
       if (type === 'HEALTH_FACILITY') {
         const birthLocation = await fetchLocationById(eventLocationId)
-        if (birthLocation) return `tao amin'ny ${birthLocation?.name || '-'}`
+        if (birthLocation) return `tao amin'ny ${window.replaceAbbreviations(birthLocation?.name || '-')}`
       } else {
         const birthLocation = await fetchOtherBirthLocation(id)
         return `tao amin'ny${(() => {
@@ -285,13 +285,13 @@ const getChildBirthLocation = (eventLocationId, type, id) =>
           return _fokotany ? ' fokotany ' + _fokotany : ' - '
         })()}${(() => {
           const _commune =
-            birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
-              ?.districtName
+            window.defineCommune(birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
+              ?.districtName)
           return _commune ? ', kaominina ' + _commune : ' - '
         })()}${(() => {
           const _district =
-            birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
-              ?.districtName
+            window.definitionDistrict(birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
+              ?.districtName)
           return _district ? ', distrikta ' + _district : ' - '
         })()},`
       }
@@ -832,10 +832,10 @@ window.openPrintModal = async function openPrintModal(
     ).value
 
     const fatherAddress = `fokontany ${fatherFkt}, kaominina ${
-      event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName
+      window.defineCommune(event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName)
     }, distrika ${
-      event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-        ?.districtName
+      window.definitionDistrict(event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+      ?.districtName)
     }`
 
     const outputFather = `${
@@ -877,10 +877,10 @@ window.openPrintModal = async function openPrintModal(
     ).value
 
     const motherAddress = `fokontany ${motherFkt}, kaominina ${
-      event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName
+      window.defineCommune(event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName)
     }, distrika ${
-      event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')
-        ?.districtName
+      window.definitionDistrict(event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')
+      ?.districtName)
     }`
     const motherInfoNotIsAvailable = event.mother.reasonNotApplying != null
     const outputMother = `${
@@ -938,18 +938,18 @@ window.openPrintModal = async function openPrintModal(
     ).value
 
     const informantAddress = `fokontany ${informantFkt}, kaominina ${
-      event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-        ?.stateName
+      window.defineCommune(event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+        ?.stateName)
     }, distrikta ${
-      event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-        ?.districtName
+      window.definitionDistrict(event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+        ?.districtName)
     }`
 
     // registration info
     const birthRegistrationDate = dateFormatter(createdDate.split('T')[0])
     const birthRegistrationTime = timeFormatter(createdDate.split('T')[1])
     const registrarName = registrarFullName
-    const civilRegistrationCenterNname = officeNameFormatter(officeName || '')
+    const civilRegistrationCenterName = window.definitionOffice(officeName || '')
 
     const printableData = {
       soratra: childLegacyBirthRegistrationNumber,
@@ -964,7 +964,7 @@ window.openPrintModal = async function openPrintModal(
       ]
         .join(' ')
         .trim()}, ${childGender}, ${outputFather} ${outputMother}. ---`,
-      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon' ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterNname}, rehefa novakiana tamin'ity soratra ity.---`
+      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon' ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterName}, rehefa novakiana tamin'ity soratra ity.---`
     }
     document.getElementById('soratra').textContent = printableData.soratra
     document.getElementById('nataoNy').textContent = printableData.nataoNy
