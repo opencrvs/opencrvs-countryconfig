@@ -331,3 +331,9 @@ rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
 rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
 rm -r $BACKUP_RAW_FILES_DIR
 
+#Checking the disk usage of backup server
+
+DISK_USAGE=$(df -h / | awk 'NR==2 {print $5}' | sed 's/%//g')
+if (( DISK_USAGE > 80 )); then
+    echo "$(date): Disk usage is at ${DISK_USAGE}% on the root partition. Threshold exceeded!" >&2
+fi
