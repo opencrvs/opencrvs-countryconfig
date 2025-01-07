@@ -45,13 +45,13 @@ export function getIDReaderField(
         type: 'QR'
       },
       {
-        name: 'redirect',
+        name: 'eSignetLink',
         validator: [],
         icon: {
           desktop: 'Globe',
           mobile: 'Fingerprint'
         },
-        type: 'REDIRECT',
+        type: 'LINK_BUTTON',
         label: {
           id: 'views.idReader.label.eSignet',
           defaultMessage: 'E-signet'

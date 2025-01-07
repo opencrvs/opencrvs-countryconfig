@@ -143,7 +143,7 @@ export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
 export const SIGNATURE = 'SIGNATURE'
-export const REDIRECT = 'REDIRECT'
+export const LINK_BUTTON = 'LINK_BUTTON'
 export const ID_READER = 'ID_READER'
 export const HTTP = 'HTTP'
 export const ID_VERIFICATION_BANNER = 'ID_VERIFICATION_BANNER'
@@ -507,7 +507,7 @@ export interface IHttpFormField extends IFormFieldBase {
 }
 
 export interface IRedirectFormField extends IFormFieldBase {
-  type: typeof REDIRECT
+  type: typeof LINK_BUTTON
   icon?: {
     desktop: string
     mobile: string
