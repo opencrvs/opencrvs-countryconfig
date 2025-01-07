@@ -463,7 +463,30 @@ const BIRTH_FORM = defineForm({
                 }
               ]
             } as FieldConfig)
-        )
+        ),
+        {
+          id: 'informant.phoneNo',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Phone number',
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.informant.field.phoneNo.label'
+          }
+        },
+        {
+          id: 'informant.email',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Email',
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.informant.field.email.label'
+          },
+          options: {
+            type: 'email'
+          }
+        }
       ]
     }
   ]
