@@ -12,6 +12,7 @@
 import {
   defineConfig,
   defineForm,
+  FieldConfig,
   SelectOption
 } from '@opencrvs/toolkit/events'
 import {
@@ -448,7 +449,22 @@ const BIRTH_FORM = defineForm({
           },
           options: birthInformantTypeOptions
         },
-        ...getPersonInputFields('informant')
+        ...getPersonInputFields('informant').map(
+          (personInputField) =>
+            ({
+              ...personInputField,
+              conditionals: [
+                ...personInputField.conditionals,
+                {
+                  type: 'HIDE',
+                  conditional: field('informant____relation').isInArray([
+                    'MOTHER',
+                    'FATHER'
+                  ])
+                }
+              ]
+            } as FieldConfig)
+        )
       ]
     }
   ]
