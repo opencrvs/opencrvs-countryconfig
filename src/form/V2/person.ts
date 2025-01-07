@@ -47,6 +47,10 @@ const idTypeOptions: SelectOption[] = [
   }
 ]
 
+export const concatFields = (fields: string[]) => {
+  return fields.join('____')
+}
+
 export const getPersonInputFields = (person: string): FieldConfig[] => [
   {
     id: `${person}.firstname`,
@@ -81,7 +85,7 @@ export const getPersonInputFields = (person: string): FieldConfig[] => [
           description: 'This is the error message for invalid date',
           id: `event.birth.action.declare.form.section.${person}.field.dob.error`
         },
-        validator: field(`${person}.dob`).isBeforeNow()
+        validator: field(concatFields([person, 'dob'])).isBeforeNow()
       }
     ],
     label: {
@@ -92,7 +96,9 @@ export const getPersonInputFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}____dobUnknown`).isEqualTo('true')
+        conditional: field(concatFields([person, 'dobUnknown'])).isEqualTo(
+          'true'
+        )
       }
     ]
   },
@@ -119,7 +125,9 @@ export const getPersonInputFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}____dobUnknown`).isEqualTo('false')
+        conditional: field(concatFields([person, 'dobUnknown'])).isEqualTo(
+          'false'
+        )
       }
     ]
   },

@@ -22,7 +22,7 @@ import {
   field
 } from '@opencrvs/toolkit/conditionals'
 import { formMessageDescriptors } from './messageDescriptors'
-import { getPersonInputFields } from './person'
+import { concatFields, getPersonInputFields } from './person'
 
 const informantTypes = {
   SPOUSE: 'SPOUSE',
@@ -457,10 +457,9 @@ const BIRTH_FORM = defineForm({
                 ...personInputField.conditionals,
                 {
                   type: 'HIDE',
-                  conditional: field('informant____relation').isInArray([
-                    'MOTHER',
-                    'FATHER'
-                  ])
+                  conditional: field(
+                    concatFields(['informant', 'relation'])
+                  ).isInArray(['MOTHER', 'FATHER'])
                 }
               ]
             } as FieldConfig)
