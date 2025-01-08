@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { Event, ISerializedForm } from '../types/types'
+import { Event, ISerializedForm, SerializedFormField } from '../types/types'
 import { formMessageDescriptors } from '../common/messages'
 import { informantType } from './required-fields'
 import {
@@ -79,7 +79,20 @@ import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/ma
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
-import { getGenderCustom, getIDReaderField } from './custom-fields'
+import {
+  esignet,
+  esignetCallback,
+  idReader,
+  idVerificationFields,
+  qr
+} from '@opencrvs/mosip'
+import { getGenderCustom } from './custom-fields'
+import {
+  E_SIGNET_AUTH_URL,
+  OIDP_USER_INFO_URL,
+  OPENID_PROVIDER_CLAIMS,
+  OPENID_PROVIDER_CLIENT_ID
+} from '@countryconfig/constants'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -220,7 +233,7 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            getIDReaderField(
+            idReader(
               'birth',
               'informant',
               informantFirstNameConditionals
@@ -228,57 +241,27 @@ export const birthForm: ISerializedForm = {
                 .concat({
                   action: 'hide',
                   expression: '!!$form?.verified'
-                })
-            ),
-            {
-              name: 'someHTTPField',
-              type: 'HTTP',
-              custom: true,
-              label: {
-                id: 'messages.empty',
-                defaultMessage: ' '
-              },
-              validator: [],
-              options: {
-                url: 'someRoute',
-                headers: {
-                  'Content-type': 'application/json'
-                },
-                method: 'GET'
-              }
-            },
-            {
-              name: 'verified',
-              type: 'HIDDEN',
-              custom: true,
-              label: {
-                id: 'messages.empty',
-                defaultMessage: ''
-              },
-              initialValue: {
-                dependsOn: ['idReader'],
-                expression: 'Boolean($form?.idReader)? "pending":""'
-              },
-              validator: []
-            },
-            {
-              name: 'idPending',
-              type: 'ID_VERIFICATION_BANNER',
-              custom: true,
-              bannerType: 'pending',
-              idFieldName: 'idReader',
-              label: {
-                id: 'messages.empty',
-                defaultMessage: ''
-              },
-              validator: [],
-              conditionals: [
-                {
-                  action: 'hide',
-                  expression: '$form?.verified !== "pending"'
-                }
+                }),
+              [
+                qr(),
+                esignet(
+                  E_SIGNET_AUTH_URL,
+                  OPENID_PROVIDER_CLIENT_ID,
+                  OPENID_PROVIDER_CLAIMS,
+                  'esignet',
+                  'esignetCallback'
+                )
               ]
-            },
+            ) as SerializedFormField,
+            esignetCallback({
+              fieldName: 'esignetCallback',
+              getOIDPUserInfoUrl: OIDP_USER_INFO_URL,
+              openIdProviderClientId: OPENID_PROVIDER_CLIENT_ID
+            }) as SerializedFormField,
+            ...(idVerificationFields(
+              'birth',
+              'informant'
+            ) as SerializedFormField[]),
             getFirstNameField(
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(
