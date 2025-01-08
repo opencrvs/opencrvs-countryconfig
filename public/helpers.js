@@ -810,7 +810,7 @@ window.definitionDistrictInTheAct = definitionDistrictInTheAct;
 window.definitionDistrict = definitionDistrict;
 function replaceByUppercase(inputText) {
     // Utilisation d'une expression régulière pour remplacer "Cu" exactement (sensible à la casse)
-    return inputText.replace(/\bCu\b/g, 'CU');
+    return inputText?.replace?.(/\bCu\b/g, 'CU');
 }
 function replaceAbbreviations(inputText) {
     // Mapping des abréviations et leurs définitions
