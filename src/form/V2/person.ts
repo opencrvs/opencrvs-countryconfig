@@ -9,13 +9,10 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import {
-  FieldConditional,
-  FieldConfig,
-  SelectOption
-} from '@opencrvs/toolkit/events'
+import { FieldConfig, SelectOption } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { countries } from './countries'
+import { appendConditionalsToFields, concatFields } from './utils'
 
 const idTypeOptions: SelectOption[] = [
   {
@@ -51,10 +48,6 @@ const idTypeOptions: SelectOption[] = [
     }
   }
 ]
-
-export const concatFields = (fields: string[]) => {
-  return fields.join('____')
-}
 
 export const getPersonInputFields = (person: string): FieldConfig[] => [
   {
@@ -421,18 +414,3 @@ const getAddressFields = (person: string): FieldConfig[] => {
     })
   ]
 }
-
-export const appendConditionalsToFields = ({
-  inputFields,
-  newConditionals
-}: {
-  inputFields: FieldConfig[]
-  newConditionals: FieldConditional[]
-}): FieldConfig[] =>
-  inputFields.map(
-    (inputField) =>
-      ({
-        ...inputField,
-        conditionals: [...inputField.conditionals, ...newConditionals]
-      } as FieldConfig)
-  )

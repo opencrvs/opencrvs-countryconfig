@@ -21,11 +21,8 @@ import {
   field
 } from '@opencrvs/toolkit/conditionals'
 import { formMessageDescriptors } from './messageDescriptors'
-import {
-  appendConditionalsToFields,
-  concatFields,
-  getPersonInputFields
-} from './person'
+import { getPersonInputFields } from './person'
+import { appendConditionalsToFields, concatFields } from './utils'
 
 const informantTypes = {
   SPOUSE: 'SPOUSE',
