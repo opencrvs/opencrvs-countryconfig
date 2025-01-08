@@ -285,8 +285,8 @@ const getChildBirthLocation = (eventLocationId, type, id) =>
           return _fokotany ? ' fokotany ' + _fokotany : ' - '
         })()}${(() => {
           const _commune =
-            window.defineCommune(birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
-              ?.districtName)
+            window.definitionOffice(window.replaceByUppercase(birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
+              ?.districtName))
           return _commune ? ', kaominina ' + _commune : ' - '
         })()}${(() => {
           const _district =
@@ -832,7 +832,7 @@ window.openPrintModal = async function openPrintModal(
     ).value
 
     const fatherAddress = `fokontany ${fatherFkt}, kaominina ${
-      window.defineCommune(event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName)
+      window.definitionOffice(window.replaceByUppercase(event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName))
     }, distrika ${
       window.definitionDistrict(event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
       ?.districtName)
@@ -877,7 +877,7 @@ window.openPrintModal = async function openPrintModal(
     ).value
 
     const motherAddress = `fokontany ${motherFkt}, kaominina ${
-      window.defineCommune(event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName)
+      window.definitionOffice(window.replaceByUppercase(event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName))
     }, distrika ${
       window.definitionDistrict(event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')
       ?.districtName)
@@ -938,8 +938,8 @@ window.openPrintModal = async function openPrintModal(
     ).value
 
     const informantAddress = `fokontany ${informantFkt}, kaominina ${
-      window.defineCommune(event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-        ?.stateName)
+      window.definitionOffice(window.replaceByUppercase(event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+      ?.stateName))
     }, distrikta ${
       window.definitionDistrict(event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
         ?.districtName)
@@ -964,7 +964,7 @@ window.openPrintModal = async function openPrintModal(
       ]
         .join(' ')
         .trim()}, ${childGender}, ${outputFather} ${outputMother}. ---`,
-      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon' ${birthInformantInfo}, teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterName}, rehefa novakiana tamin'ity soratra ity.---`
+      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon' ${birthInformantInfo} ${window.isInformantMotherOrFather(event.informant?.relationship) ? '' :  `teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}`}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterName}, rehefa novakiana tamin'ity soratra ity.---`
     }
     document.getElementById('soratra').textContent = printableData.soratra
     document.getElementById('nataoNy').textContent = printableData.nataoNy

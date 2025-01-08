@@ -419,6 +419,7 @@ window.signatureDescription = signatureDescription;
 function isInformantMotherOrFather(informantType) {
     return informantType === 'MOTHER' || informantType === 'FATHER';
 }
+window.isInformantMotherOrFather = isInformantMotherOrFather
 var THE_UNITS_MDG_WORDS = [
     '',
     'iraika ',
@@ -833,6 +834,7 @@ function replaceByUppercaseLocation() {
     };
 }
 window.replaceByUppercaseLocation = replaceByUppercaseLocation;
+window.replaceByUppercase = replaceByUppercase;
 window.replaceAbbreviations = replaceAbbreviations;
 function customizeOfficeNameLocationHeader() {
     return function (registrationLocation) {
