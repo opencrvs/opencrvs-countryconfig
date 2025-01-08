@@ -12,7 +12,6 @@
 import {
   defineConfig,
   defineForm,
-  FieldConfig,
   SelectOption
 } from '@opencrvs/toolkit/events'
 import {
@@ -22,7 +21,11 @@ import {
   field
 } from '@opencrvs/toolkit/conditionals'
 import { formMessageDescriptors } from './messageDescriptors'
-import { concatFields, getPersonInputFields } from './person'
+import {
+  appendConditionalsToFields,
+  concatFields,
+  getPersonInputFields
+} from './person'
 
 const informantTypes = {
   SPOUSE: 'SPOUSE',
@@ -449,21 +452,17 @@ const BIRTH_FORM = defineForm({
           },
           options: birthInformantTypeOptions
         },
-        ...getPersonInputFields('informant').map(
-          (personInputField) =>
-            ({
-              ...personInputField,
-              conditionals: [
-                ...personInputField.conditionals,
-                {
-                  type: 'HIDE',
-                  conditional: field(
-                    concatFields(['informant', 'relation'])
-                  ).isInArray(['MOTHER', 'FATHER'])
-                }
-              ]
-            } as FieldConfig)
-        ),
+        ...appendConditionalsToFields({
+          inputFields: getPersonInputFields('informant'),
+          newConditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                concatFields(['informant', 'relation'])
+              ).isInArray(['MOTHER', 'FATHER'])
+            }
+          ]
+        }),
         {
           id: 'informant.phoneNo',
           type: 'TEXT',

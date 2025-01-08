@@ -9,8 +9,13 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { FieldConfig, SelectOption } from '@opencrvs/toolkit/events'
+import {
+  FieldConditional,
+  FieldConfig,
+  SelectOption
+} from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
+import { countries } from './countries'
 
 const idTypeOptions: SelectOption[] = [
   {
@@ -132,6 +137,23 @@ export const getPersonInputFields = (person: string): FieldConfig[] => [
     ]
   },
   {
+    id: `${person}.nationality`,
+    type: 'SELECT',
+    required: true,
+    label: {
+      defaultMessage: 'Nationality',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.nationality.label`
+    },
+    options: countries,
+    conditionals: []
+  },
+  ...getIdFields(person),
+  ...getAddressFields(person)
+]
+
+const getIdFields = (person: string): FieldConfig[] => [
+  {
     id: `${person}.idType`,
     type: 'SELECT',
     required: true,
@@ -142,5 +164,275 @@ export const getPersonInputFields = (person: string): FieldConfig[] => [
     },
     options: idTypeOptions,
     conditionals: []
+  },
+  {
+    id: `${person}.nid`,
+    type: 'TEXT',
+    required: true,
+    label: {
+      defaultMessage: 'NID Number',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.nid.label`
+    },
+    conditionals: [
+      {
+        type: 'HIDE',
+        conditional: field(concatFields([person, 'idType'])).isNotInArray([
+          'NATIONAL_ID'
+        ])
+      }
+    ]
+  },
+  {
+    id: `${person}.passport`,
+    type: 'TEXT',
+    required: true,
+    label: {
+      defaultMessage: 'Passport Number',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.passport.label`
+    },
+    conditionals: [
+      {
+        type: 'HIDE',
+        conditional: field(concatFields([person, 'idType'])).isNotInArray([
+          'PASSPORT'
+        ])
+      }
+    ]
+  },
+  {
+    id: `${person}.brn`,
+    type: 'TEXT',
+    required: true,
+    label: {
+      defaultMessage: 'Birth Registration Number',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.brn.label`
+    },
+    conditionals: [
+      {
+        type: 'HIDE',
+        conditional: field(concatFields([person, 'idType'])).isNotInArray([
+          'BIRTH_REGISTRATION_NUMBER'
+        ])
+      }
+    ]
   }
 ]
+
+const getAddressFields = (person: string): FieldConfig[] => {
+  const prefix = `${person}.address`
+
+  const genericAddressFields: FieldConfig[] = [
+    {
+      id: `${prefix}.state`,
+      type: 'TEXT',
+      required: true,
+      label: {
+        defaultMessage: 'State',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.state.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.district`,
+      type: 'TEXT',
+      required: true,
+      label: {
+        defaultMessage: 'District',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.district.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.town`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'City / Town',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.town.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.addressLine1`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Address Line 1',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.addressLine1.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.addressLine2`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Address Line 2',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.addressLine2.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.addressLine3`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Address Line 3',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.addressLine3.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.zipCode`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Postcode / Zip',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.zipCode.label`
+      },
+      conditionals: []
+    }
+  ]
+
+  const farajalandAddressFields: FieldConfig[] = [
+    {
+      id: `${prefix}.province`,
+      type: 'TEXT',
+      required: true,
+      label: {
+        defaultMessage: 'Province',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.province.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.district`,
+      type: 'TEXT',
+      required: true,
+      label: {
+        defaultMessage: 'District',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.district.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.town`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Town',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.town.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.residentialArea`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Residential Area',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.residentialArea.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.village`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Area / Ward / Mouja / Village',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.village.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.number`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Number',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.number.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.zipCode`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Postcode / Zip',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.zipCode.label`
+      },
+      conditionals: []
+    }
+  ]
+
+  return [
+    {
+      id: `${prefix}.country`,
+      type: 'SELECT',
+      required: true,
+      label: {
+        defaultMessage: 'Country',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.country.label`
+      },
+      options: countries,
+      conditionals: []
+    },
+    ...appendConditionalsToFields({
+      inputFields: genericAddressFields,
+      newConditionals: [
+        {
+          type: 'HIDE',
+          conditional: field(
+            concatFields([person, 'address', 'country'])
+          ).isInArray(['FAR'])
+        }
+      ]
+    }),
+    ...appendConditionalsToFields({
+      inputFields: farajalandAddressFields,
+      newConditionals: [
+        {
+          type: 'HIDE',
+          conditional: field(
+            concatFields([person, 'address', 'country'])
+          ).isNotInArray(['FAR'])
+        }
+      ]
+    })
+  ]
+}
+
+export const appendConditionalsToFields = ({
+  inputFields,
+  newConditionals
+}: {
+  inputFields: FieldConfig[]
+  newConditionals: FieldConditional[]
+}): FieldConfig[] =>
+  inputFields.map(
+    (inputField) =>
+      ({
+        ...inputField,
+        conditionals: [...inputField.conditionals, ...newConditionals]
+      } as FieldConfig)
+  )
