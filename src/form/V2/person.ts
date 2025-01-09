@@ -249,7 +249,7 @@ const getIdFields = (person: string): FieldConfig[] => [
   }
 ]
 
-const getAddressFields = (person: string): FieldConfig[] => {
+export const getAddressFields = (person: string): FieldConfig[] => {
   // @Todo: Same as mother or deseased
   const prefix = `${person}.address`
 

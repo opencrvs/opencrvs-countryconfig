@@ -22,7 +22,11 @@ import {
   and
 } from '@opencrvs/toolkit/conditionals'
 import { formMessageDescriptors } from './messageDescriptors'
-import { getInformantFields, getPersonInputFields } from './person'
+import {
+  getAddressFields,
+  getInformantFields,
+  getPersonInputFields
+} from './person'
 import { appendConditionalsToFields } from './utils'
 
 const informantTypes = {
@@ -265,6 +269,21 @@ const birthInformantTypeOptions: SelectOption[] = [
     label: informantMessageDescriptors.OTHER
   }
 ]
+
+export const placeOfBirthOptions: SelectOption[] = [
+  {
+    value: 'HEALTH_FACILITY',
+    label: formMessageDescriptors.healthInstitution
+  },
+  {
+    value: 'PRIVATE_HOME',
+    label: formMessageDescriptors.privateHome
+  },
+  {
+    value: 'OTHER',
+    label: formMessageDescriptors.otherInstitution
+  }
+]
 const BIRTH_FORM = defineForm({
   label: {
     id: 'event.birth.action.declare.form.label',
@@ -394,6 +413,57 @@ const BIRTH_FORM = defineForm({
             id: 'event.birth.action.declare.form.section.child.field.dob.label'
           }
         },
+        {
+          id: 'child.placeOfBirth',
+          type: 'SELECT',
+          required: true,
+          label: {
+            defaultMessage: 'Place of delivery',
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.child.field.placeOfBirth.label'
+          },
+          options: placeOfBirthOptions
+        },
+        {
+          id: 'child.birthLocation',
+          type: 'TEXT', // @ToDo: select
+          required: true,
+          label: {
+            defaultMessage: 'Health Institute',
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('child.placeOfBirth').isUndefinedOrNotInArray([
+                'HEALTH_FACILITY'
+              ])
+            }
+          ]
+        },
+        ...appendConditionalsToFields({
+          inputFields: getAddressFields('child.birthLocation'),
+          newConditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('child.placeOfBirth').isUndefinedOrNotInArray([
+                'PRIVATE_HOME'
+              ])
+            }
+          ]
+        }),
+        ...appendConditionalsToFields({
+          inputFields: getAddressFields('child.birthLocation'),
+          newConditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('child.placeOfBirth').isUndefinedOrNotInArray([
+                'OTHER'
+              ])
+            }
+          ]
+        }),
         {
           id: 'child.attendantAtBirth',
           type: 'SELECT',
