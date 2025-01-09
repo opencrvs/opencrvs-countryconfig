@@ -456,7 +456,7 @@ const BIRTH_FORM = defineForm({
               type: 'HIDE',
               conditional: field(
                 concatFields(['informant', 'relation'])
-              ).isInArray(['MOTHER', 'FATHER'])
+              ).isUndefinedOrInArray(['MOTHER', 'FATHER'])
             }
           ]
         }),

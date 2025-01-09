@@ -123,9 +123,9 @@ export const getPersonInputFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(concatFields([person, 'dobUnknown'])).isEqualTo(
-          'false'
-        )
+        conditional: field(
+          concatFields([person, 'dobUnknown'])
+        ).isUndefinedOrInArray(['false'])
       }
     ]
   },
@@ -170,9 +170,9 @@ const getIdFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(concatFields([person, 'idType'])).isNotInArray([
-          'NATIONAL_ID'
-        ])
+        conditional: field(
+          concatFields([person, 'idType'])
+        ).isUndefinedOrNotInArray(['NATIONAL_ID'])
       }
     ]
   },
@@ -188,9 +188,9 @@ const getIdFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(concatFields([person, 'idType'])).isNotInArray([
-          'PASSPORT'
-        ])
+        conditional: field(
+          concatFields([person, 'idType'])
+        ).isUndefinedOrNotInArray(['PASSPORT'])
       }
     ]
   },
@@ -206,9 +206,9 @@ const getIdFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(concatFields([person, 'idType'])).isNotInArray([
-          'BIRTH_REGISTRATION_NUMBER'
-        ])
+        conditional: field(
+          concatFields([person, 'idType'])
+        ).isUndefinedOrNotInArray(['BIRTH_REGISTRATION_NUMBER'])
       }
     ]
   }
@@ -397,7 +397,7 @@ const getAddressFields = (person: string): FieldConfig[] => {
           type: 'HIDE',
           conditional: field(
             concatFields([person, 'address', 'country'])
-          ).isInArray(['FAR'])
+          ).isUndefinedOrInArray(['FAR'])
         }
       ]
     }),
@@ -408,7 +408,7 @@ const getAddressFields = (person: string): FieldConfig[] => {
           type: 'HIDE',
           conditional: field(
             concatFields([person, 'address', 'country'])
-          ).isNotInArray(['FAR'])
+          ).isUndefinedOrNotInArray(['FAR'])
         }
       ]
     })
