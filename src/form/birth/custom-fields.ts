@@ -9,66 +9,6 @@ import { genderOptions } from '../common/select-options'
  * @param sectionId
  * @returns hidden field to store QR scanned data
  */
-export function getIDReaderField(
-  event: string,
-  sectionId: string,
-  conditionals: Conditional[]
-): SerializedFormField {
-  const fieldName: string = 'idReader'
-  const fieldId: string = `${event}.${sectionId}.${sectionId}-view-group.${fieldName}`
-  return {
-    name: fieldName,
-    customQuestionMappingId: fieldId,
-    custom: true,
-    required: false,
-    type: 'ID_READER',
-    label: {
-      id: 'form.field.label.empty',
-      defaultMessage: ''
-    },
-    hideInPreview: true,
-    initialValue: '',
-    validator: [],
-    mapping: getCustomFieldMapping(fieldId),
-    placeholder: formMessageDescriptors.formSelectPlaceholder,
-    conditionals,
-    dividerLabel: {
-      id: 'views.idReader.label.or',
-      defaultMessage: 'Or'
-    },
-    manualInputInstructionLabel: {
-      id: 'views.idReader.label.manualInput',
-      defaultMessage: 'Complete fields below'
-    },
-    readers: [
-      {
-        type: 'QR'
-      },
-      {
-        name: 'eSignetLink',
-        validator: [],
-        icon: {
-          desktop: 'Globe',
-          mobile: 'Fingerprint'
-        },
-        type: 'LINK_BUTTON',
-        label: {
-          id: 'views.idReader.label.eSignet',
-          defaultMessage: 'E-signet'
-        },
-        options: {
-          url: 'https://docs.esignet.io/',
-          callback: {
-            params: {
-              authorized: 'true'
-            },
-            trigger: 'someHTTPField'
-          }
-        }
-      }
-    ]
-  }
-}
 
 /** To bypass config validation */
 export function getGenderCustom(
