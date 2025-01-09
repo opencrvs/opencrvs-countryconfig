@@ -870,14 +870,15 @@ function definitionOffice(officeName: string = '') {
 
   return officeName
 }
+
 function defineCommune(officeName: string = '') {
   const locationMappings: { [key: string]: string } = {
-    'cu tana i': 'Antananarivo, Boriboritany Voalohany',
-    'cu tana ii': 'Antananarivo, Boriboritany Faharoa',
-    'cu tana iii': 'Antananarivo, Boriboritany Fahatelo',
-    'cu tana iv': 'Antananarivo, Boriboritany Fahaefatra',
-    'cu tana v': 'Antananarivo, Boriboritany Fahadimy',
-    'cu tana vi': 'Antananarivo, Boriboritany Fahaenina'
+    'cu tana i': 'Antananarivo Renivohitra',
+    'cu tana ii': 'Antananarivo Renivohitra',
+    'cu tana iii': 'Antananarivo Renivohitra',
+    'cu tana iv': 'Antananarivo Renivohitra',
+    'cu tana v': 'Antananarivo Renivohitra',
+    'cu tana vi': 'Antananarivo Renivohitra'
     // nouveau
   }
 
@@ -929,10 +930,41 @@ function definitionDistrict(officeName: string = '') {
 
   return officeName
 }
+function definitionDistrictHeader(officeName: string = '') {
+  const locationMappings: { [key: string]: string } = {
+    'tana i': 'Antananarivo I',
+    'tana ii': 'Antananarivo II',
+    'tana iii': 'Antananarivo III',
+    'tana iv': 'Antananarivo IV',
+    'tana v': 'Antananarivo V',
+    'tana vi': 'Antananarivo VI',
+    'toamasina i': 'Toamasina voalohany',
+    'toamasina ii': 'Toamasina faharoa',
+    'antsirabe i': 'Antsirabe voalohany',
+    'antsirabe ii': 'Antsirabe faharoa',
+    'antsiranana i': 'Antsiranana voalohany',
+    'antsiranana ii': 'Antsiranana faharoa',
+    'mahajanga i': 'Mahajanga voalohany',
+    'mahajanga ii': 'Mahajanga faharoa',
+    'toliara i': 'Toliara voalohany',
+    'toliara ii': 'Toliara faharoa'
+    // nouveau
+  }
+  const lowerCaseRegistrationLocation = officeName.toLowerCase()
+
+  for (const key in locationMappings) {
+    const regex = new RegExp(`\\b${key}\\b`) // Correspondance stricte avec limites de mots
+    if (regex.test(lowerCaseRegistrationLocation)) {
+      return locationMappings[key]
+    }
+  }
+
+  return officeName
+}
 
 export function definitionDistrictInTheAct(): Handlebars.HelperDelegate {
   return function (this: any, name: string) {
-    return definitionDistrict(name)
+    return definitionDistrictHeader(name)
   }
 }
 
