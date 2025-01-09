@@ -367,7 +367,7 @@ const BIRTH_FORM = defineForm({
           type: 'TEXT',
           required: true,
           label: {
-            defaultMessage: 'First name',
+            defaultMessage: 'First name(s)',
             description: 'This is the label for the field',
             id: 'event.birth.action.declare.form.section.child.field.firstname.label'
           }
@@ -377,7 +377,7 @@ const BIRTH_FORM = defineForm({
           type: 'TEXT',
           required: true,
           label: {
-            defaultMessage: 'Surname',
+            defaultMessage: 'Last name',
             description: 'This is the label for the field',
             id: 'event.birth.action.declare.form.section.child.field.surname.label'
           }
@@ -429,7 +429,7 @@ const BIRTH_FORM = defineForm({
           type: 'TEXT', // @ToDo: select
           required: true,
           label: {
-            defaultMessage: 'Health Institute',
+            defaultMessage: 'Health Institution',
             description: 'This is the label for the field',
             id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
           },
@@ -467,7 +467,7 @@ const BIRTH_FORM = defineForm({
         {
           id: 'child.attendantAtBirth',
           type: 'SELECT',
-          required: true,
+          required: false,
           label: {
             defaultMessage: 'Attendant at birth',
             description: 'This is the label for the field',
@@ -478,9 +478,9 @@ const BIRTH_FORM = defineForm({
         {
           id: 'child.birthType',
           type: 'SELECT',
-          required: true,
+          required: false,
           label: {
-            defaultMessage: 'Birth type',
+            defaultMessage: 'Type of birth',
             description: 'This is the label for the field',
             id: 'event.birth.action.declare.form.section.child.field.birthType.label'
           },
@@ -489,7 +489,7 @@ const BIRTH_FORM = defineForm({
         {
           id: 'child.weightAtBirth',
           type: 'TEXT',
-          required: true,
+          required: false,
           label: {
             defaultMessage: 'Weight at birth',
             description: 'This is the label for the field',
@@ -535,7 +535,7 @@ const BIRTH_FORM = defineForm({
         {
           id: 'informant.phoneNo',
           type: 'TEXT',
-          required: true,
+          required: false,
           label: {
             defaultMessage: 'Phone number',
             description: 'This is the label for the field',
@@ -607,7 +607,7 @@ const BIRTH_FORM = defineForm({
               type: 'TEXT',
               required: false,
               label: {
-                defaultMessage: 'No. of previous birth',
+                defaultMessage: 'No. of previous births',
                 description: 'This is the label for the field',
                 id: 'event.birth.action.declare.form.section.mother.field.previousBirths.label'
               },

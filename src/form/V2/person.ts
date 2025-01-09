@@ -54,7 +54,7 @@ export const getInformantFields = (person: string): FieldConfig[] => [
     type: 'TEXT',
     required: true,
     label: {
-      defaultMessage: 'First name',
+      defaultMessage: 'First name(s)',
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.firstname.label`
     },
@@ -65,7 +65,7 @@ export const getInformantFields = (person: string): FieldConfig[] => [
     type: 'TEXT',
     required: true,
     label: {
-      defaultMessage: 'Surname',
+      defaultMessage: 'Last name',
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.surname.label`
     },
@@ -146,7 +146,7 @@ export const getPersonInputFields = (person: string): FieldConfig[] => [
   {
     id: `${person}.maritalStatus`,
     type: 'SELECT',
-    required: true,
+    required: false,
     label: {
       defaultMessage: 'Marital Status',
       description: 'This is the label for the field',
@@ -198,7 +198,7 @@ const getIdFields = (person: string): FieldConfig[] => [
     type: 'TEXT',
     required: true,
     label: {
-      defaultMessage: 'NID Number',
+      defaultMessage: 'ID Number',
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.nid.label`
     },
@@ -216,7 +216,7 @@ const getIdFields = (person: string): FieldConfig[] => [
     type: 'TEXT',
     required: true,
     label: {
-      defaultMessage: 'Passport Number',
+      defaultMessage: 'ID Number',
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.passport.label`
     },
@@ -234,7 +234,7 @@ const getIdFields = (person: string): FieldConfig[] => [
     type: 'TEXT',
     required: true,
     label: {
-      defaultMessage: 'Birth Registration Number',
+      defaultMessage: 'ID Number',
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.brn.label`
     },
@@ -261,7 +261,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       label: {
         defaultMessage: 'State',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.state.label`
+        id: `event.birth.action.declare.form.section.${person}.field.address.other.state.label`
       },
       conditionals: []
     },
@@ -272,7 +272,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       label: {
         defaultMessage: 'District',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.district.label`
+        id: `event.birth.action.declare.form.section.${person}.field.address.other.district.label`
       },
       conditionals: []
     },
@@ -283,7 +283,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       label: {
         defaultMessage: 'City / Town',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.town.label`
+        id: `event.birth.action.declare.form.section.${person}.field.address.other.town.label`
       },
       conditionals: []
     },
@@ -294,7 +294,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       label: {
         defaultMessage: 'Address Line 1',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.addressLine1.label`
+        id: `event.birth.action.declare.form.section.${person}.field.address.other.addressLine1.label`
       },
       conditionals: []
     },
@@ -305,7 +305,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       label: {
         defaultMessage: 'Address Line 2',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.addressLine2.label`
+        id: `event.birth.action.declare.form.section.${person}.field.address.other.addressLine2.label`
       },
       conditionals: []
     },
@@ -316,7 +316,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       label: {
         defaultMessage: 'Address Line 3',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.addressLine3.label`
+        id: `event.birth.action.declare.form.section.${person}.field.address.other.addressLine3.label`
       },
       conditionals: []
     },
@@ -327,7 +327,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       label: {
         defaultMessage: 'Postcode / Zip',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.zipCode.label`
+        id: `event.birth.action.declare.form.section.${person}.field.address.other.zipCode.label`
       },
       conditionals: []
     }
