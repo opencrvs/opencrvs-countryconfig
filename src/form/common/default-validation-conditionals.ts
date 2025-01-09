@@ -33,7 +33,7 @@ export const isValidChildBirthDate = [
   },
   {
     operation: 'isDateNotOlderThanDays',
-    parameters: [30]
+    parameters: [90]
   }
 ] satisfies Validator[]
 
