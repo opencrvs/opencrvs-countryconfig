@@ -37,6 +37,7 @@ on:
           - staging
           - qa
           - development
+          - e2e
       core-image-tag:
         description: Core DockerHub image tag
         required: true
