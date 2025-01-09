@@ -805,7 +805,8 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
             value: 'production'
           },
           { title: 'Jump / Bastion', value: 'jump' },
-          { title: 'Other', value: 'development' }
+          { title: 'Other', value: 'development' },
+          { title: 'E2E', value: 'e2e' }
         ]
       }
     ].map(questionToPrompt)
