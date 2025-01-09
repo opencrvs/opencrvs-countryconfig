@@ -506,7 +506,7 @@ export interface IHttpFormField extends IFormFieldBase {
   }
 }
 
-export interface IRedirectFormField extends IFormFieldBase {
+export interface ILinkButtonFormField extends IFormFieldBase {
   type: typeof LINK_BUTTON
   icon?: {
     desktop: string
@@ -525,7 +525,7 @@ export interface QRReaderType {
   type: 'QR'
 }
 
-type ReaderType = QRReaderType | IRedirectFormField
+type ReaderType = QRReaderType | ILinkButtonFormField
 export interface IIDReaderFormField extends IFormFieldBase {
   type: typeof ID_READER
   dividerLabel: MessageDescriptor
@@ -574,7 +574,7 @@ export type IFormField =
   | IHeading3Field
   | ISignatureFormField
   | IIDReaderFormField
-  | IRedirectFormField
+  | ILinkButtonFormField
   | IHttpFormField
   | IBannerFormField
 
