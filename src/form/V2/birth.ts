@@ -622,6 +622,58 @@ const BIRTH_FORM = defineForm({
           ]
         })
       ]
+    },
+    {
+      id: 'documents',
+      title: {
+        defaultMessage: 'Upload supporting documents',
+        description: 'Form section title for documents',
+        id: 'form.section.documents.title'
+      },
+      fields: [
+        {
+          id: 'documents.profOfBirth',
+          type: 'FILE',
+          required: false,
+          label: {
+            defaultMessage: 'Proof of birth',
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.documents.field.profOfBirth.label'
+          }
+        },
+        {
+          id: 'documents.profOfMother',
+          type: 'FILE', // @ToDo File upload with options
+          required: false,
+          label: {
+            defaultMessage: "Proof of mother's ID",
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.documents.field.profOfMother.label'
+          }
+        },
+
+        {
+          id: 'documents.profOfFather',
+          type: 'FILE', // @ToDo File upload with options
+          required: false,
+          label: {
+            defaultMessage: "Proof of father's ID",
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.documents.field.profOfFather.label'
+          }
+        },
+
+        {
+          id: 'documents.proofOther',
+          type: 'FILE', // @ToDo File upload with options
+          required: false,
+          label: {
+            defaultMessage: 'Other',
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.documents.field.proofOther.label'
+          }
+        }
+      ]
     }
   ]
 })
