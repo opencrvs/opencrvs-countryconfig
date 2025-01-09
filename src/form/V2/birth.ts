@@ -18,10 +18,11 @@ import {
   defineConditional,
   eventHasAction,
   not,
-  field
+  field,
+  and
 } from '@opencrvs/toolkit/conditionals'
 import { formMessageDescriptors } from './messageDescriptors'
-import { getPersonInputFields } from './person'
+import { getInformantFields, getPersonInputFields } from './person'
 import { appendConditionalsToFields, concatFields } from './utils'
 
 const informantTypes = {
@@ -434,7 +435,7 @@ const BIRTH_FORM = defineForm({
       id: 'informant',
       title: {
         defaultMessage: "Informant's details",
-        description: 'Form section title for informants',
+        description: 'Form section title for informants details',
         id: 'form.section.informant.title'
       },
       fields: [
@@ -450,7 +451,7 @@ const BIRTH_FORM = defineForm({
           options: birthInformantTypeOptions
         },
         ...appendConditionalsToFields({
-          inputFields: getPersonInputFields('informant'),
+          inputFields: getInformantFields('informant'),
           newConditionals: [
             {
               type: 'HIDE',
@@ -483,6 +484,143 @@ const BIRTH_FORM = defineForm({
             type: 'email'
           }
         }
+      ]
+    },
+    {
+      id: 'mother',
+      title: {
+        defaultMessage: "Mother's details",
+        description: 'Form section title for mothers details',
+        id: 'form.section.mother.title'
+      },
+      fields: [
+        {
+          id: 'mother.detailsNotAvailable',
+          type: 'CHECKBOX',
+          required: true,
+          label: {
+            defaultMessage: "Mother's details not available",
+            description: 'This is the label for the field',
+            id: `event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label`
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                concatFields(['informant', 'relation'])
+              ).isInArray(['MOTHER'])
+            }
+          ]
+        },
+        {
+          id: 'mother.reason',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Reason',
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.mother.field.reason.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                concatFields(['mother', 'detailsNotAvailable'])
+              ).isUndefinedOrInArray(['false'])
+            }
+          ]
+        },
+        ...appendConditionalsToFields({
+          inputFields: [
+            ...getPersonInputFields('mother'),
+            {
+              id: 'mother.previousBirths',
+              type: 'TEXT',
+              required: false,
+              label: {
+                defaultMessage: 'No. of previous birth',
+                description: 'This is the label for the field',
+                id: 'event.birth.action.declare.form.section.mother.field.previousBirths.label'
+              },
+              conditionals: []
+            }
+          ],
+          newConditionals: [
+            {
+              type: 'HIDE',
+              conditional: and(
+                field(
+                  concatFields(['mother', 'detailsNotAvailable'])
+                ).isInArray(['true']),
+                field(
+                  concatFields(['informant', 'relation'])
+                ).isUndefinedOrNotInArray(['MOTHER'])
+              )
+            }
+          ]
+        })
+      ]
+    },
+    {
+      id: 'father',
+      title: {
+        defaultMessage: "Father's details",
+        description: 'Form section title for fathers details',
+        id: 'form.section.father.title'
+      },
+      fields: [
+        {
+          id: 'father.detailsNotAvailable',
+          type: 'CHECKBOX',
+          required: true,
+          label: {
+            defaultMessage: "Father's details not available",
+            description: 'This is the label for the field',
+            id: `event.birth.action.declare.form.section.father.field.detailsNotAvailable.label`
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                concatFields(['informant', 'relation'])
+              ).isInArray(['FATHER'])
+            }
+          ]
+        },
+        {
+          id: 'father.reason',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Reason',
+            description: 'This is the label for the field',
+            id: 'event.birth.action.declare.form.section.father.field.reason.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                concatFields(['father', 'detailsNotAvailable'])
+              ).isUndefinedOrInArray(['false'])
+            }
+          ]
+        },
+        ...appendConditionalsToFields({
+          inputFields: getPersonInputFields('father'),
+          newConditionals: [
+            {
+              type: 'HIDE',
+              conditional: and(
+                field(
+                  concatFields(['father', 'detailsNotAvailable'])
+                ).isInArray(['true']),
+                field(
+                  concatFields(['informant', 'relation'])
+                ).isUndefinedOrNotInArray(['FATHER'])
+              )
+            }
+          ]
+        })
       ]
     }
   ]

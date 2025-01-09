@@ -49,7 +49,7 @@ const idTypeOptions: SelectOption[] = [
   }
 ]
 
-export const getPersonInputFields = (person: string): FieldConfig[] => [
+export const getInformantFields = (person: string): FieldConfig[] => [
   {
     id: `${person}.firstname`,
     type: 'TEXT',
@@ -145,6 +145,45 @@ export const getPersonInputFields = (person: string): FieldConfig[] => [
   ...getAddressFields(person)
 ]
 
+export const getPersonInputFields = (person: string): FieldConfig[] => [
+  ...getInformantFields(person),
+  {
+    id: `${person}.maritalStatus`,
+    type: 'SELECT',
+    required: true,
+    label: {
+      defaultMessage: 'Marital Status',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.maritalStatus.label`
+    },
+    options: maritalStatusOptions,
+    conditionals: []
+  },
+  {
+    id: `${person}.educationalAttainment`,
+    type: 'SELECT',
+    required: false,
+    label: {
+      defaultMessage: 'Level of education',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.educationalAttainment.label`
+    },
+    options: educationalAttainmentOptions,
+    conditionals: []
+  },
+  {
+    id: `${person}.occupation`,
+    type: 'TEXT',
+    required: false,
+    label: {
+      defaultMessage: 'Occupation',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.occupation.label`
+    },
+    conditionals: []
+  }
+]
+
 const getIdFields = (person: string): FieldConfig[] => [
   {
     id: `${person}.idType`,
@@ -215,6 +254,7 @@ const getIdFields = (person: string): FieldConfig[] => [
 ]
 
 const getAddressFields = (person: string): FieldConfig[] => {
+  // @Todo: Same as mother or deseased
   const prefix = `${person}.address`
 
   const genericAddressFields: FieldConfig[] = [
@@ -414,3 +454,89 @@ const getAddressFields = (person: string): FieldConfig[] => {
     })
   ]
 }
+
+export const maritalStatusOptions: SelectOption[] = [
+  {
+    value: 'SINGLE',
+    label: {
+      defaultMessage: 'Single',
+      description: 'Option for form field: Marital status',
+      id: 'form.field.label.maritalStatusSingle'
+    }
+  },
+  {
+    value: 'MARRIED',
+    label: {
+      defaultMessage: 'Married',
+      description: 'Option for form field: Marital status',
+      id: 'form.field.label.maritalStatusMarried'
+    }
+  },
+  {
+    value: 'WIDOWED',
+    label: {
+      defaultMessage: 'Widowed',
+      description: 'Option for form field: Marital status',
+      id: 'form.field.label.maritalStatusWidowed'
+    }
+  },
+  {
+    value: 'DIVORCED',
+    label: {
+      defaultMessage: 'Divorced',
+      description: 'Option for form field: Marital status',
+      id: 'form.field.label.maritalStatusDivorced'
+    }
+  },
+  {
+    value: 'SEPARATED',
+    label: {
+      id: 'form.field.label.maritalStatusSeparated',
+      defaultMessage: 'Separated',
+      description: 'Option for form field: Marital status'
+    }
+  },
+  {
+    value: 'NOT_STATED',
+    label: {
+      defaultMessage: 'Not stated',
+      description: 'Option for form field: Marital status',
+      id: 'form.field.label.maritalStatusNotStated'
+    }
+  }
+]
+
+export const educationalAttainmentOptions: SelectOption[] = [
+  {
+    value: 'NO_SCHOOLING',
+    label: {
+      defaultMessage: 'No schooling',
+      description: 'Option for form field: no education',
+      id: 'form.field.label.educationAttainmentNone'
+    }
+  },
+  {
+    value: 'PRIMARY_ISCED_1',
+    label: {
+      defaultMessage: 'Primary',
+      description: 'Option for form field: ISCED1 education',
+      id: 'form.field.label.educationAttainmentISCED1'
+    }
+  },
+  {
+    value: 'POST_SECONDARY_ISCED_4',
+    label: {
+      defaultMessage: 'Secondary',
+      description: 'Option for form field: ISCED4 education',
+      id: 'form.field.label.educationAttainmentISCED4'
+    }
+  },
+  {
+    value: 'FIRST_STAGE_TERTIARY_ISCED_5',
+    label: {
+      defaultMessage: 'Tertiary',
+      description: 'Option for form field: ISCED5 education',
+      id: 'form.field.label.educationAttainmentISCED5'
+    }
+  }
+]
