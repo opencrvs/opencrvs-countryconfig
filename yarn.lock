@@ -790,10 +790,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@0.0.6-events":
-  version "0.0.6-events"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.6-events.tgz#48327b3e322bc82ae60ec13fc855e2e23300b298"
-  integrity sha512-wh4qaPJktG4Dnh+zFFbDv5b/oZ+bTSzQYRfOzLGS1KNqG7h2j6iZfvmSBtyL0rb/SrpIHcI+9eoqLfwg8cjfyQ==
+"@opencrvs/toolkit@0.0.9-events":
+  version "0.0.9-events"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.9-events.tgz#a1d9d1d786f280171018964a5604cbb428bccd88"
+  integrity sha512-unsHk3kjqlA4nkClkpmhNVK1c2oxAEuX66z4RsM19gvSPstqECRlCIpb1KboKh9tjofRBaOzQbj8vTZDqqsXmA==
   dependencies:
     ajv "^8.17.1"
 
@@ -2545,9 +2545,9 @@ fast-safe-stringify@^2.1.1:
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
 fast-uri@^3.0.1:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.3.tgz#892a1c91802d5d7860de728f18608a0573142241"
-  integrity sha512-aLrHthzCjH5He4Z2H9YZ+v6Ujb9ocRuW6ZzkJQOrTxleEijANq4v1TsaPaVG1PZcuurEzrLcWRyYBYXD5cEiaw==
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.5.tgz#19f5f9691d0dab9b85861a7bb5d98fca961da9cd"
+  integrity sha512-5JnBCWpFlMo0a3ciDy/JckMzzv1U9coZrIhedq+HXxxUfDTAiS0LA8OKVao4G9BxmCVck/jtA5r3KAtRWEyD8Q==
 
 fastq@^1.6.0:
   version "1.13.0"
