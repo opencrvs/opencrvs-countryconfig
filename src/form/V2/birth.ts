@@ -691,34 +691,34 @@ const BIRTH_FORM = defineForm({
       },
       fields: [
         {
-          id: 'documents.profOfBirth',
+          id: 'documents.proofOfBirth',
           type: 'FILE',
           required: false,
           label: {
             defaultMessage: 'Proof of birth',
             description: 'This is the label for the field',
-            id: 'event.birth.action.declare.form.section.documents.field.profOfBirth.label'
+            id: 'event.birth.action.declare.form.section.documents.field.proofOfBirth.label'
           }
         },
         {
-          id: 'documents.profOfMother',
+          id: 'documents.proofOfMother',
           type: 'FILE', // @ToDo File upload with options
           required: false,
           label: {
             defaultMessage: "Proof of mother's ID",
             description: 'This is the label for the field',
-            id: 'event.birth.action.declare.form.section.documents.field.profOfMother.label'
+            id: 'event.birth.action.declare.form.section.documents.field.proofOfMother.label'
           }
         },
 
         {
-          id: 'documents.profOfFather',
+          id: 'documents.proofOfFather',
           type: 'FILE', // @ToDo File upload with options
           required: false,
           label: {
             defaultMessage: "Proof of father's ID",
             description: 'This is the label for the field',
-            id: 'event.birth.action.declare.form.section.documents.field.profOfFather.label'
+            id: 'event.birth.action.declare.form.section.documents.field.proofOfFather.label'
           }
         },
 
