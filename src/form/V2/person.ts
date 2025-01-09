@@ -12,7 +12,7 @@
 import { FieldConfig, SelectOption } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { countries } from './countries'
-import { appendConditionalsToFields, concatFields } from './utils'
+import { appendConditionalsToFields } from './utils'
 
 const idTypeOptions: SelectOption[] = [
   {
@@ -83,7 +83,7 @@ export const getInformantFields = (person: string): FieldConfig[] => [
           description: 'This is the error message for invalid date',
           id: `event.birth.action.declare.form.section.${person}.field.dob.error`
         },
-        validator: field(concatFields([person, 'dob'])).isBeforeNow()
+        validator: field(`${person}.dob`).isBeforeNow()
       }
     ],
     label: {
@@ -94,9 +94,7 @@ export const getInformantFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(concatFields([person, 'dobUnknown'])).isEqualTo(
-          'true'
-        )
+        conditional: field(`${person}.dobUnknown`).isEqualTo('true')
       }
     ]
   },
@@ -123,9 +121,9 @@ export const getInformantFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(
-          concatFields([person, 'dobUnknown'])
-        ).isUndefinedOrInArray(['false'])
+        conditional: field(`${person}.dobUnknown`).isUndefinedOrInArray([
+          'false'
+        ])
       }
     ]
   },
@@ -209,9 +207,9 @@ const getIdFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(
-          concatFields([person, 'idType'])
-        ).isUndefinedOrNotInArray(['NATIONAL_ID'])
+        conditional: field(`${person}.idType`).isUndefinedOrNotInArray([
+          'NATIONAL_ID'
+        ])
       }
     ]
   },
@@ -227,9 +225,9 @@ const getIdFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(
-          concatFields([person, 'idType'])
-        ).isUndefinedOrNotInArray(['PASSPORT'])
+        conditional: field(`${person}.idType`).isUndefinedOrNotInArray([
+          'PASSPORT'
+        ])
       }
     ]
   },
@@ -245,9 +243,9 @@ const getIdFields = (person: string): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(
-          concatFields([person, 'idType'])
-        ).isUndefinedOrNotInArray(['BIRTH_REGISTRATION_NUMBER'])
+        conditional: field(`${person}.idType`).isUndefinedOrNotInArray([
+          'BIRTH_REGISTRATION_NUMBER'
+        ])
       }
     ]
   }
@@ -435,9 +433,9 @@ const getAddressFields = (person: string): FieldConfig[] => {
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field(
-            concatFields([person, 'address', 'country'])
-          ).isUndefinedOrInArray(['FAR'])
+          conditional: field(`${person}.address.country`).isUndefinedOrInArray([
+            'FAR'
+          ])
         }
       ]
     }),
@@ -447,7 +445,7 @@ const getAddressFields = (person: string): FieldConfig[] => {
         {
           type: 'HIDE',
           conditional: field(
-            concatFields([person, 'address', 'country'])
+            `${person}.address.country`
           ).isUndefinedOrNotInArray(['FAR'])
         }
       ]

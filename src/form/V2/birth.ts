@@ -23,7 +23,7 @@ import {
 } from '@opencrvs/toolkit/conditionals'
 import { formMessageDescriptors } from './messageDescriptors'
 import { getInformantFields, getPersonInputFields } from './person'
-import { appendConditionalsToFields, concatFields } from './utils'
+import { appendConditionalsToFields } from './utils'
 
 const informantTypes = {
   SPOUSE: 'SPOUSE',
@@ -455,9 +455,10 @@ const BIRTH_FORM = defineForm({
           newConditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                concatFields(['informant', 'relation'])
-              ).isUndefinedOrInArray(['MOTHER', 'FATHER'])
+              conditional: field('informant.relation').isUndefinedOrInArray([
+                'MOTHER',
+                'FATHER'
+              ])
             }
           ]
         }),
@@ -506,9 +507,7 @@ const BIRTH_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                concatFields(['informant', 'relation'])
-              ).isInArray(['MOTHER'])
+              conditional: field('informant.relation').isInArray(['MOTHER'])
             }
           ]
         },
@@ -525,7 +524,7 @@ const BIRTH_FORM = defineForm({
             {
               type: 'HIDE',
               conditional: field(
-                concatFields(['mother', 'detailsNotAvailable'])
+                'mother.detailsNotAvailable'
               ).isUndefinedOrInArray(['false'])
             }
           ]
@@ -549,12 +548,8 @@ const BIRTH_FORM = defineForm({
             {
               type: 'HIDE',
               conditional: and(
-                field(
-                  concatFields(['mother', 'detailsNotAvailable'])
-                ).isInArray(['true']),
-                field(
-                  concatFields(['informant', 'relation'])
-                ).isUndefinedOrNotInArray(['MOTHER'])
+                field('mother.detailsNotAvailable').isInArray(['true']),
+                field('informant.relation').isUndefinedOrNotInArray(['MOTHER'])
               )
             }
           ]
@@ -581,9 +576,7 @@ const BIRTH_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                concatFields(['informant', 'relation'])
-              ).isInArray(['FATHER'])
+              conditional: field('informant.relation').isInArray(['FATHER'])
             }
           ]
         },
@@ -600,7 +593,7 @@ const BIRTH_FORM = defineForm({
             {
               type: 'HIDE',
               conditional: field(
-                concatFields(['father', 'detailsNotAvailable'])
+                'father.detailsNotAvailable'
               ).isUndefinedOrInArray(['false'])
             }
           ]
@@ -611,12 +604,8 @@ const BIRTH_FORM = defineForm({
             {
               type: 'HIDE',
               conditional: and(
-                field(
-                  concatFields(['father', 'detailsNotAvailable'])
-                ).isInArray(['true']),
-                field(
-                  concatFields(['informant', 'relation'])
-                ).isUndefinedOrNotInArray(['FATHER'])
+                field('father.detailsNotAvailable').isInArray(['true']),
+                field('informant.relation').isUndefinedOrNotInArray(['FATHER'])
               )
             }
           ]

@@ -25,7 +25,3 @@ export const appendConditionalsToFields = ({
         conditionals: [...inputField.conditionals, ...newConditionals]
       } as FieldConfig)
   )
-
-export const concatFields = (fields: string[]) => {
-  return fields.join('____')
-}
