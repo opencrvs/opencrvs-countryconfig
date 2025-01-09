@@ -503,10 +503,11 @@ export interface IHttpFormField extends IFormFieldBase {
     method?: string
     headers: Record<string, string>
     body?: Record<string, any>
+    params?: Record<string, any>
   }
 }
 
-export interface IRedirectFormField extends IFormFieldBase {
+export interface ILinkButtonFormField extends IFormFieldBase {
   type: typeof LINK_BUTTON
   icon?: {
     desktop: string
@@ -525,7 +526,7 @@ export interface QRReaderType {
   type: 'QR'
 }
 
-type ReaderType = QRReaderType | IRedirectFormField
+type ReaderType = QRReaderType | ILinkButtonFormField
 export interface IIDReaderFormField extends IFormFieldBase {
   type: typeof ID_READER
   dividerLabel: MessageDescriptor
@@ -534,7 +535,7 @@ export interface IIDReaderFormField extends IFormFieldBase {
 }
 
 export type BannerType = 'pending' | 'verified' | 'failed'
-export interface IBannerFormField extends IFormFieldBase {
+export interface IIDVerificationBannerFormField extends IFormFieldBase {
   type: typeof ID_VERIFICATION_BANNER
   bannerType: BannerType
   idFieldName: string
@@ -574,9 +575,9 @@ export type IFormField =
   | ISignatureFormField
   | IHiddenFormField
   | IIDReaderFormField
-  | IRedirectFormField
+  | ILinkButtonFormField
   | IHttpFormField
-  | IBannerFormField
+  | IIDVerificationBannerFormField
 
 export interface SelectComponentOption {
   value: string
