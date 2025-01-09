@@ -11,7 +11,6 @@
 
 import { FieldConfig, SelectOption } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
-import { countries } from './countries'
 import { appendConditionalsToFields } from './utils'
 
 const idTypeOptions: SelectOption[] = [
@@ -129,14 +128,13 @@ export const getInformantFields = (person: string): FieldConfig[] => [
   },
   {
     id: `${person}.nationality`,
-    type: 'SELECT',
+    type: 'COUNTRY',
     required: true,
     label: {
       defaultMessage: 'Nationality',
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.nationality.label`
     },
-    options: countries,
     conditionals: []
   },
   ...getIdFields(person),
@@ -418,14 +416,13 @@ const getAddressFields = (person: string): FieldConfig[] => {
   return [
     {
       id: `${prefix}.country`,
-      type: 'SELECT',
+      type: 'COUNTRY',
       required: true,
       label: {
         defaultMessage: 'Country',
         description: 'This is the label for the field',
         id: `event.birth.action.declare.form.section.${person}.field.address.country.label`
       },
-      options: countries,
       conditionals: []
     },
     ...appendConditionalsToFields({
