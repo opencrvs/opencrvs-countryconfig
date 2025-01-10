@@ -350,7 +350,7 @@ const BIRTH_FORM = defineForm({
               id: 'form.section.information.birth.bullet4'
             }
           ],
-          font: 'h3'
+          font: 'reg16'
         }
       ]
     },
