@@ -334,16 +334,23 @@ function eventStatementSimplified(
           ? [
               'no teraka tao amin’ny',
               placeOfBirthFacility
-                ? replaceAbbreviations(placeOfBirthFacility) + ','
+                ? replaceAbbreviations(placeOfBirthFacility)
                 : '',
+              placeOfBirthDistrict && placeOfBirthState ? ',' : '',
               birthChildFokontanyCustomAddress
                 ? 'fokontany ' + birthChildFokontanyCustomAddress + ','
                 : '',
-              'kaominina',
-              (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
-                '-') + ',',
-              'district',
-              definitionDistrict(placeOfBirthState) || '-'
+              placeOfBirthDistrict
+                ? [
+                    'kaominina',
+                    (definitionOffice(
+                      replaceByUppercase(placeOfBirthDistrict)
+                    ) || '-') + ','
+                  ]
+                : '',
+              placeOfBirthState
+                ? ['district', definitionDistrict(placeOfBirthState) || '-']
+                : ''
             ]
           : [
               'no teraka tao',

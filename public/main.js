@@ -775,8 +775,14 @@ window.openPrintModal = async function openPrintModal(id) {
                 'birth.child.child-view-group.fokontanyCustomAddress'
             )?.value
           : undefined,
-      placeOfBirthDistrict: childBirthLocation?.stateName,
-      placeOfBirthState: childBirthLocation?.districtName,
+      placeOfBirthDistrict:
+        childBirthLocation === 'string'
+          ? undefined
+          : childBirthLocation?.stateName,
+      placeOfBirthState:
+        childBirthLocation === 'string'
+          ? undefined
+          : childBirthLocation?.districtName,
       childFamilyName: event.child.name[0].familyName,
       childFirstName: [
         event.child.name[0].middleName,
