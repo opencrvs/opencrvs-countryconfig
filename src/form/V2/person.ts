@@ -138,6 +138,17 @@ export const getInformantFields = (person: string): FieldConfig[] => [
     conditionals: []
   },
   ...getIdFields(person),
+  {
+    id: `${person}.addressHelper`,
+    type: 'PARAGRAPH',
+    label: {
+      defaultMessage: 'Usual place of residence',
+      description: 'This is the label for the field',
+      id: `event.birth.action.declare.form.section.${person}.field.addressHelper.label`
+    },
+    options: { fontVariant: 'h3' },
+    conditionals: []
+  },
   ...getAddressFields(person)
 ]
 

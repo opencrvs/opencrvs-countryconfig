@@ -691,6 +691,17 @@ const BIRTH_FORM = defineForm({
       },
       fields: [
         {
+          id: `documents.helper`,
+          type: 'PARAGRAPH',
+          label: {
+            defaultMessage: 'The following documents are required',
+            description: 'This is the label for the field',
+            id: `event.birth.action.declare.form.section.documents.field.helper.label`
+          },
+          options: { fontVariant: 'reg16' },
+          conditionals: []
+        },
+        {
           id: 'documents.proofOfBirth',
           type: 'FILE',
           required: false,
