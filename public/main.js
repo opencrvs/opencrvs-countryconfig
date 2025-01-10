@@ -816,7 +816,7 @@ window.openPrintModal = async function openPrintModal(id) {
         (q) => q.fieldId === 'birth.father.father-view-group.birthPlace'
       )).value,
       birthFatherFatherIsDeceased:
-        !!(event?.questionnaire?.find(
+        (event?.questionnaire?.find(
           (q) => q.fieldId === 'birth.father.father-view-group.fatherIsDeceased'
         )).value == 'false'
           ? false
