@@ -14,6 +14,10 @@ filebeat.inputs:
   - type: log
     enabled: true
     paths:
+      - /var/log/opencrvs-backup.error.log
+  - type: log
+    enabled: true
+    paths:
       - /var/log/opencrvs-restore.log
 
 # https://github.com/elastic/beats/blob/master/filebeat/filebeat.reference.yml

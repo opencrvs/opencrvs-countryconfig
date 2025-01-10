@@ -18,7 +18,7 @@
 
 ### Breaking changes
 
-- **Title** Description
+- Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
 
 ### Improvements
 
@@ -32,7 +32,7 @@
 
 ### New features
 
-- **Major new feature** Description
+- **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
 - Misc new feature
 - Add constant.humanName to allow coutries to have custom ordering on thier full name e.g start with `lastName` or `firstName` [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
