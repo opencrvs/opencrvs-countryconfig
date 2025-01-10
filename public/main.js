@@ -733,8 +733,6 @@ window.openPrintModal = async function openPrintModal(id) {
 
     const event = person.data.fetchBirthRegistration
 
-    console.log({ event, childBirthLocation })
-
     const now = new Date()
     const offset = now.getTimezoneOffset() * 60000 // Décalage horaire en millisecondes
     const createdDate = new Date(now - offset).toISOString().slice(0, -1) // Retirer le 'Z' à la fin

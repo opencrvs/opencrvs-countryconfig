@@ -321,7 +321,6 @@ function eventStatementSimplified(
     internationalPostalCodePlaceofbirth
   } = eventStatementContext
 
-  console.log({ placeOfBirthFacility })
   return joinValuesWith(
     __spreadArray(
       __spreadArray(
@@ -550,8 +549,6 @@ function motherDetailsSimplified(motherDetailsContext) {
     internationalPostalCodePrimaryMother
   } = motherDetailsContext
 
-  console.log({ motherDetailsContext })
-
   if (motherReasonNotApplying) {
     return ''
   }
@@ -762,11 +759,6 @@ function registrationStatementSimplified(registrationStatementContext) {
     birthChildLegacyBirthRegistrationTime
   )
 
-  console.log({
-    birthRegistrationDate,
-    birthChildLegacyBirthRegistrationDate,
-    birthChildLegacyBirthRegistrationTime
-  })
   var registrarDateUTC = convertToTimeZoneIso(
     isValidDate(birthRegistrationDate) ? birthRegistrationDate : registrarDate,
     timezone
