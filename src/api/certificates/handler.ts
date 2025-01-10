@@ -10,6 +10,7 @@
  */
 
 import { Request, ResponseToolkit } from '@hapi/hapi'
+import { Event } from '../../form/types/types'
 
 type FontFamilyTypes = {
   normal: string
@@ -43,7 +44,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
   const certificateConfigs: ICertificateConfigData[] = [
     {
       id: 'birth-certificate',
-      event: 'birth',
+      event: Event.Birth,
       label: {
         id: 'certificates.birth.certificate',
         defaultMessage: 'Birth Certificate',
@@ -67,7 +68,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'birth-certificate-certified-copy',
-      event: 'birth',
+      event: Event.Birth,
       label: {
         id: 'certificates.birth.certificate.copy',
         defaultMessage: 'Birth Certificate certified copy',
@@ -75,7 +76,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: false,
       fee: {
-        onTime: 8,
+        onTime: 0,
         late: 11.5,
         delayed: 17
       },
@@ -92,7 +93,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'death-certificate',
-      event: 'death',
+      event: 'death' as Event.Death,
       label: {
         id: 'certificates.death.certificate',
         defaultMessage: 'Death Certificate',
@@ -116,7 +117,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'death-certificate-certified-copy',
-      event: 'death',
+      event: 'death' as Event.Death,
       label: {
         id: 'certificates.death.certificate.copy',
         defaultMessage: 'Death Certificate certified copy',
@@ -124,7 +125,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       isDefault: false,
       fee: {
-        onTime: 6,
+        onTime: 0,
         late: 9,
         delayed: 14.5
       },
@@ -141,7 +142,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'marriage-certificate',
-      event: 'marriage',
+      event: 'marriage' as Event.Marriage,
       label: {
         id: 'certificates.marriage.certificate',
         defaultMessage: 'Marriage Certificate',
@@ -165,7 +166,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'marriage-certificate-certified-copy',
-      event: 'marriage',
+      event: 'marriage' as Event.Marriage,
       label: {
         id: 'certificates.marriage.certificate.copy',
         defaultMessage: 'Marriage Certificate certified copy',

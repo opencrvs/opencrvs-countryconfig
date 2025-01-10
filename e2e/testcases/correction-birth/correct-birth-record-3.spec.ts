@@ -12,7 +12,7 @@ import {
   joinValuesWith,
   login
 } from '../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import {
   ConvertEnumsToStrings,
   createDeclaration,
@@ -29,21 +29,21 @@ test.describe.serial(' Correct record - 3', () => {
   let page: Page
 
   const updatedMotherDetails = {
-    firstNames: faker.name.firstName('female'),
-    familyName: faker.name.firstName('female'),
+    firstNames: faker.person.firstName('female'),
+    familyName: faker.person.firstName('female'),
     age: random(20, 45),
     email: faker.internet.email(),
     nationality: 'Nauru',
-    id: faker.random.numeric(10),
+    id: faker.string.numeric(10),
     idType: 'Passport',
     address: {
       province: 'Sulaka',
       district: 'Irundu',
-      town: faker.address.city(),
-      residentialArea: faker.address.county(),
-      street: faker.address.streetName(),
-      number: faker.address.buildingNumber(),
-      zipCode: faker.address.zipCode()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      zipCode: faker.location.zipCode()
     },
     maritalStatus: 'Married',
     educationLevel: 'Primary'
@@ -53,11 +53,11 @@ test.describe.serial(' Correct record - 3', () => {
     birthLocation: {
       province: 'Pualula',
       district: 'Ienge',
-      town: faker.address.city(),
-      residentialArea: faker.address.county(),
-      street: faker.address.streetName(),
-      number: faker.address.buildingNumber(),
-      zipCode: faker.address.zipCode()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      zipCode: faker.location.zipCode()
     }
   }
 
@@ -73,8 +73,8 @@ test.describe.serial(' Correct record - 3', () => {
     let token = await getToken('k.mweene', 'test')
     const declarationInput = {
       child: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.firstName(),
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.firstName(),
         gender: 'male'
       },
       informant: {
@@ -84,12 +84,12 @@ test.describe.serial(' Correct record - 3', () => {
         type: 'PHYSICIAN'
       },
       mother: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.firstName()
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.firstName()
       },
       father: {
-        firstNames: faker.name.firstName(),
-        familyName: faker.name.firstName()
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.firstName()
       }
     } as ConvertEnumsToStrings<BirthInputDetails>
 
@@ -126,6 +126,12 @@ test.describe.serial(' Correct record - 3', () => {
       await page.getByRole('button', { name: 'Action' }).first().click()
       await getAction(page, 'Print certified copy').click()
 
+      await page
+        .locator('#certificateTemplateId-form-input > span')
+        .first()
+        .click()
+
+      await page.getByText('Birth Certificate', { exact: true }).click()
       await page.getByLabel('Print in advance').check()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Yes, print certificate' }).click()

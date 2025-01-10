@@ -11,7 +11,7 @@ import {
   joinValuesWith,
   login
 } from '../../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('6. Birth declaration case - 6', () => {
@@ -19,8 +19,8 @@ test.describe.serial('6. Birth declaration case - 6', () => {
   const declaration = {
     child: {
       name: {
-        firstNames: faker.name.firstName() + " O'Neil",
-        familyName: faker.name.lastName()
+        firstNames: faker.person.firstName() + " O'Neil",
+        familyName: faker.person.lastName()
       },
       gender: 'Unknown',
       birthDate: getRandomDate(0, 200)
@@ -30,20 +30,20 @@ test.describe.serial('6. Birth declaration case - 6', () => {
     placeOfBirth: 'Other',
     birthLocation: {
       country: 'Greenland',
-      state: faker.address.state(),
-      district: faker.address.county(),
-      town: faker.address.city(),
-      addressLine1: faker.address.county(),
-      addressLine2: faker.address.streetName(),
-      addressLine3: faker.address.buildingNumber(),
-      postcodeOrZip: faker.address.zipCode()
+      state: faker.location.state(),
+      district: faker.location.county(),
+      town: faker.location.city(),
+      addressLine1: faker.location.county(),
+      addressLine2: faker.location.street(),
+      addressLine3: faker.location.buildingNumber(),
+      postcodeOrZip: faker.location.zipCode()
     },
     informantType: 'Sister',
     informantEmail: faker.internet.email(),
     informant: {
       name: {
-        firstNames: faker.name.firstName('female'),
-        familyName: faker.name.lastName('female')
+        firstNames: faker.person.firstName('female'),
+        familyName: faker.person.lastName('female')
       },
       age: 17,
       nationality: 'Guernsey',
@@ -52,19 +52,19 @@ test.describe.serial('6. Birth declaration case - 6', () => {
       },
       address: {
         country: 'Haiti',
-        state: faker.address.state(),
-        district: faker.address.county(),
-        town: faker.address.city(),
-        addressLine1: faker.address.county(),
-        addressLine2: faker.address.streetName(),
-        addressLine3: faker.address.buildingNumber(),
-        postcodeOrZip: faker.address.zipCode()
+        state: faker.location.state(),
+        district: faker.location.county(),
+        town: faker.location.city(),
+        addressLine1: faker.location.county(),
+        addressLine2: faker.location.street(),
+        addressLine3: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       }
     },
     father: {
       name: {
-        firstNames: faker.name.firstName('male'),
-        familyName: faker.name.lastName('male')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
       age: 25,
       nationality: 'Farajaland',
@@ -73,13 +73,13 @@ test.describe.serial('6. Birth declaration case - 6', () => {
       },
       address: {
         country: 'Guam',
-        state: faker.address.state(),
-        district: faker.address.county(),
-        town: faker.address.city(),
-        addressLine1: faker.address.county(),
-        addressLine2: faker.address.streetName(),
-        addressLine3: faker.address.buildingNumber(),
-        postcodeOrZip: faker.address.zipCode()
+        state: faker.location.state(),
+        district: faker.location.county(),
+        town: faker.location.city(),
+        addressLine1: faker.location.county(),
+        addressLine2: faker.location.street(),
+        addressLine3: faker.location.buildingNumber(),
+        postcodeOrZip: faker.location.zipCode()
       },
       maritalStatus: 'Separated',
       levelOfEducation: 'Tertiary'
