@@ -245,6 +245,8 @@ export const birthForm: ISerializedForm = {
               [
                 qr(),
                 esignet(
+                  'birth',
+                  'informant',
                   E_SIGNET_AUTH_URL,
                   OPENID_PROVIDER_CLIENT_ID,
                   OPENID_PROVIDER_CLAIMS,
@@ -269,8 +271,9 @@ export const birthForm: ISerializedForm = {
               ),
               certificateHandlebars.informantFirstName,
               {
-                dependsOn: ['idReader'],
-                expression: '$form?.idReader?.firstName || ""'
+                dependsOn: ['idReader', 'esignetCallback'],
+                expression:
+                  '$form?.idReader?.firstName || "$form?.esignetCallback?.data?.firstName"'
               }
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
@@ -280,13 +283,15 @@ export const birthForm: ISerializedForm = {
               ),
               certificateHandlebars.informantFamilyName,
               {
-                dependsOn: ['idReader'],
-                expression: '$form?.idReader?.familyName || ""'
+                dependsOn: ['idReader', 'esignetCallback'],
+                expression:
+                  '$form?.idReader?.familyName || "$form?.esignetCallback?.data?.familyName"'
               }
             ), // Required field.
             getGenderCustom('birth', 'informant', [], {
-              dependsOn: ['idReader'],
-              expression: '$form?.idReader?.gender || ""'
+              dependsOn: ['idReader', 'esignetCallback'],
+              expression:
+                '$form?.idReader?.gender || "$form?.esignetCallback?.data?.gender"'
             }),
             getBirthDate(
               'informantBirthDate',
@@ -305,8 +310,9 @@ export const birthForm: ISerializedForm = {
               ],
               certificateHandlebars.informantBirthDate,
               {
-                dependsOn: ['idReader'],
-                expression: '$form?.idReader?.birthDate || ""'
+                dependsOn: ['idReader', 'esignetCallback'],
+                expression:
+                  '$form?.idReader?.birthDate || "$form?.esignetCallback?.data?.birthDate"'
               }
             ), // Required field.
             exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
