@@ -802,10 +802,17 @@ window.openPrintModal = async function openPrintModal(id) {
 
     const fatherDetailsContext = {
       fatherReasonNotApplying: event.father.reasonNotApplying,
-      fatherFamilyName: event.father.name[0].familyName,
+      fatherFamilyName:
+        event.father.name && event.father.name[0]
+          ? event.father.name[0].familyName
+          : '',
       fatherFirstName: [
-        event.father.name[0].middleName,
-        event.father.name[0].firstNames
+        event.father.name && event.father.name[0]
+          ? event.father.name[0].middleName
+          : '',
+        event.father.name && event.father.name[0]
+          ? event.father.name[0].firstNames
+          : ''
       ]
         .join(' ')
         .trim(),
