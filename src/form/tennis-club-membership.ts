@@ -173,6 +173,62 @@ const TENNIS_CLUB_FORM = defineForm({
   ]
 })
 
+const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
+  label: {
+    id: 'event.tennis-club-membership.action.certificate.form.label',
+    defaultMessage: 'Tennis club membership certificate collector',
+    description: 'This is what this form is referred as in the system'
+  },
+  review: {
+    title: {
+      id: 'event.tennis-club-membership.action.certificate.form.review.title',
+      defaultMessage: 'Member certificate collector for {firstname} {surname}',
+      description: 'Title of the form to show in review page'
+    }
+  },
+  active: true,
+  version: {
+    id: '1.0.0',
+    label: {
+      id: 'event.tennis-club-membership.action.certificate.form.version.1',
+      defaultMessage: 'Version 1',
+      description: 'This is the first version of the form'
+    }
+  },
+  pages: [
+    {
+      id: 'collector',
+      title: {
+        id: 'event.tennis-club-membership.action.certificate.form.section.who.title',
+        defaultMessage: 'Who is collecting the certificate?',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'collector.firstname',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: "Collector's first name",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.certificate.form.section.who.field.firstname.label'
+          }
+        },
+        {
+          id: 'collector.surname',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: "Collector's surname",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.certificate.form.section.who.field.surname.label'
+          }
+        }
+      ]
+    }
+  ]
+})
+
 export const tennisClubMembershipEvent = defineConfig({
   id: 'TENNIS_CLUB_MEMBERSHIP',
   label: {
@@ -394,6 +450,22 @@ export const tennisClubMembershipEvent = defineConfig({
         )
       ),
       forms: [TENNIS_CLUB_FORM]
+    },
+    {
+      type: 'COLLECT_CERTIFICATE',
+      label: {
+        defaultMessage: 'Collect certificate',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.tennis-club-membership.action.collect-certificate.label'
+      },
+      allowedWhen: defineConditional(
+        and(
+          eventHasAction('REGISTER'),
+          not(eventHasAction('COLLECT_CERTIFICATE'))
+        )
+      ),
+      forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
     },
     {
       type: 'CUSTOM',
