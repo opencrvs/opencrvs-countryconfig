@@ -819,9 +819,11 @@ window.openPrintModal = async function openPrintModal(id) {
       birthFatherCustomizedExactDateOfBirthUnknown: '',
       birthFatherYearOfBirth: '',
       fatherBirthDate: event.father.birthDate,
-      birthFatherBirthPlace: (event?.questionnaire?.find(
-        (q) => q.fieldId === 'birth.father.father-view-group.birthPlace'
-      )).value,
+      birthFatherBirthPlace: (
+        event?.questionnaire?.find(
+          (q) => q.fieldId === 'birth.father.father-view-group.birthPlace'
+        ) || { value: '' }
+      ).value,
       birthFatherFatherIsDeceased:
         (event?.questionnaire?.find(
           (q) => q.fieldId === 'birth.father.father-view-group.fatherIsDeceased'
@@ -833,14 +835,20 @@ window.openPrintModal = async function openPrintModal(id) {
           ?.country === 'MDG'
           ? 'Madagascar'
           : '',
-      birthFatherFokontanyCustomAddress: (event?.questionnaire?.find(
-        (q) =>
-          q.fieldId === 'birth.mother.mother-view-group.fokontanyCustomAddress'
-      )).value,
-      birthMotherFokontanyCustomAddress: (event?.questionnaire?.find(
-        (q) =>
-          q.fieldId === 'birth.mother.mother-view-group.fokontanyCustomAddress'
-      )).value,
+      birthFatherFokontanyCustomAddress: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.mother.mother-view-group.fokontanyCustomAddress'
+        ) || { value: '' }
+      ).value,
+      birthMotherFokontanyCustomAddress: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.mother.mother-view-group.fokontanyCustomAddress'
+        ) || { value: '' }
+      ).value,
       fatherPrimaryDistrict: event.father.address?.find(
         (a) => a.type === 'PRIMARY_ADDRESS'
       )?.districtName,
@@ -861,19 +869,28 @@ window.openPrintModal = async function openPrintModal(id) {
         (a) => a.type === 'PRIMARY_ADDRESS'
       )?.districtName,
       motherReasonNotApplying: event.mother.reasonNotApplying,
-      motherFamilyName: event.mother.name[0].familyName,
+      motherFamilyName:
+        event.mother.name && event.mother.name[0]
+          ? event.mother.name[0].familyName
+          : '',
       motherFirstName: [
-        event.mother.name[0].middleName,
-        event.mother.name[0].firstNames
+        event.mother.name && event.mother.name[0]
+          ? event.mother.name[0].middleName
+          : '',
+        event.mother.name && event.mother.name[0]
+          ? event.mother.name[0].firstNames
+          : ''
       ]
         .join(' ')
         .trim(),
       birthMotherCustomizedExactDateOfBirthUnknown: '',
       birthMotherYearOfBirth: '',
       motherBirthDate: event.mother.birthDate,
-      birthMotherBirthPlace: (event?.questionnaire?.find(
-        (q) => q.fieldId === 'birth.mother.mother-view-group.birthPlace'
-      )).value,
+      birthMotherBirthPlace: (
+        event?.questionnaire?.find(
+          (q) => q.fieldId === 'birth.mother.mother-view-group.birthPlace'
+        ) || { value: '' }
+      ).value,
       birthMotherMotherIsDeceased:
         (event?.questionnaire?.find(
           (q) => q.fieldId === 'birth.mother.mother-view-group.motherIsDeceased'
@@ -885,10 +902,13 @@ window.openPrintModal = async function openPrintModal(id) {
           ?.country === 'MDG'
           ? 'Madagascar'
           : '',
-      birthMotherFokontanyCustomAddress: (event?.questionnaire?.find(
-        (q) =>
-          q.fieldId === 'birth.mother.mother-view-group.fokontanyCustomAddress'
-      )).value,
+      birthMotherFokontanyCustomAddress: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.mother.mother-view-group.fokontanyCustomAddress'
+        ) || { value: '' }
+      ).value,
       motherOccupation: event.mother.occupation,
       internationalStatePrimaryMother: '',
       internationalDistrictPrimaryMother: '',
