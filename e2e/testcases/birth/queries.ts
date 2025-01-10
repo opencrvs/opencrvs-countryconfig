@@ -150,6 +150,31 @@ export const GET_BIRTH_REGISTRATION_FOR_REVIEW = print(gql`
         contactRelationship
         contactPhoneNumber
         contactEmail
+        assignment {
+          practitionerId
+          firstName
+          lastName
+          officeName
+          avatarURL
+        }
+        certificates {
+          hasShowedVerifiedDocument
+          certificateTemplateId
+          collector {
+            relationship
+            otherRelationship
+            name {
+              use
+              firstNames
+              familyName
+            }
+            telecom {
+              system
+              value
+              use
+            }
+          }
+        }
         duplicates {
           compositionId
           trackingId
@@ -207,6 +232,7 @@ export const GET_BIRTH_REGISTRATION_FOR_REVIEW = print(gql`
         requesterOther
         noSupportingDocumentationRequired
         hasShowedVerifiedDocument
+        certificateTemplateId
         date
         action
         regStatus
@@ -250,13 +276,13 @@ export const GET_BIRTH_REGISTRATION_FOR_REVIEW = print(gql`
         user {
           id
           role {
-            _id
-            labels {
-              lang
-              label
+            id
+            label {
+              id
+              defaultMessage
+              description
             }
           }
-          systemRole
           name {
             firstNames
             familyName
@@ -295,6 +321,7 @@ export const GET_BIRTH_REGISTRATION_FOR_REVIEW = print(gql`
         }
         certificates {
           hasShowedVerifiedDocument
+          certificateTemplateId
           collector {
             relationship
             otherRelationship
@@ -307,6 +334,21 @@ export const GET_BIRTH_REGISTRATION_FOR_REVIEW = print(gql`
               system
               value
               use
+            }
+          }
+          certifier {
+            name {
+              use
+              firstNames
+              familyName
+            }
+            role {
+              id
+              label {
+                id
+                defaultMessage
+                description
+              }
             }
           }
         }
