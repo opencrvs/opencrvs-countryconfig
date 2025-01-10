@@ -746,9 +746,11 @@ window.openPrintModal = async function openPrintModal(id) {
       .join(' ')
       .trim()
 
-    const birthChildBirthTime = (event?.questionnaire?.find(
-      (q) => q.fieldId === 'birth.child.child-view-group.birthTime'
-    )).value
+    const birthChildBirthTime = (
+      event?.questionnaire?.find(
+        (q) => q.fieldId === 'birth.child.child-view-group.birthTime'
+      ) || { value: '' }
+    ).value
 
     const childLegacyBirthRegistrationNumber = event.questionnaire?.find(
       (q) =>
@@ -825,9 +827,14 @@ window.openPrintModal = async function openPrintModal(id) {
         ) || { value: '' }
       ).value,
       birthFatherFatherIsDeceased:
-        (event?.questionnaire?.find(
-          (q) => q.fieldId === 'birth.father.father-view-group.fatherIsDeceased'
-        )).value == 'false'
+        (
+          event?.questionnaire?.find(
+            (q) =>
+              q.fieldId === 'birth.father.father-view-group.fatherIsDeceased'
+          ) || {
+            value: 'false'
+          }
+        ).value == 'false'
           ? false
           : true,
       countryPrimaryFather:
@@ -892,9 +899,12 @@ window.openPrintModal = async function openPrintModal(id) {
         ) || { value: '' }
       ).value,
       birthMotherMotherIsDeceased:
-        (event?.questionnaire?.find(
-          (q) => q.fieldId === 'birth.mother.mother-view-group.motherIsDeceased'
-        )).value === 'false'
+        (
+          event?.questionnaire?.find(
+            (q) =>
+              q.fieldId === 'birth.mother.mother-view-group.motherIsDeceased'
+          ) || { value: 'false' }
+        ).value === 'false'
           ? false
           : true,
       countryPrimaryMother:
