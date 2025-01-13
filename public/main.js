@@ -735,7 +735,15 @@ window.openPrintModal = async function openPrintModal(id) {
 
     const now = new Date()
     const offset = now.getTimezoneOffset() * 60000 // Décalage horaire en millisecondes
-    const createdDate = new Date(now - offset).toISOString().slice(0, -1) // Retirer le 'Z' à la fin
+    const legacyDate = event?.questionnaire?.find(
+      (q) =>
+        q.fieldId === 'birth.child.child-view-group.legacyBirthRegistrationDate'
+    )
+
+    const createdDate =
+      legacyDate && legacyDate.value
+        ? legacyDate.value
+        : new Date(now - offset).toISOString().slice(0, -1) // Retirer le 'Z' à la fin
 
     // child info
     const childFirstName = event.child.name[0].familyName
