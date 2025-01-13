@@ -4,6 +4,207 @@ let rowsPerPage = 10
 let totalPages = 1
 let sortDirection = 'desc'
 let sortColumn = '' // 'desc' by default
+var defaultLang = 'fr'
+
+var countryData = {
+  AFG: { fr: 'Afghanistan', en: 'Afghanistan' },
+  ALB: { fr: 'Albanie', en: 'Albania' },
+  DZA: { fr: 'Algérie', en: 'Algeria' },
+  AND: { fr: 'Andorre', en: 'Andorra' },
+  AGO: { fr: 'Angola', en: 'Angola' },
+  ARG: { fr: 'Argentine', en: 'Argentina' },
+  ARM: { fr: 'Arménie', en: 'Armenia' },
+  AUS: { fr: 'Australie', en: 'Australia' },
+  AUT: { fr: 'Autriche', en: 'Austria' },
+  AZE: { fr: 'Azerbaïdjan', en: 'Azerbaijan' },
+  BHS: { fr: 'Bahamas', en: 'Bahamas' },
+  BHR: { fr: 'Bahreïn', en: 'Bahrain' },
+  BGD: { fr: 'Bangladesh', en: 'Bangladesh' },
+  BLR: { fr: 'Biélorussie', en: 'Belarus' },
+  BEL: { fr: 'Belgique', en: 'Belgium' },
+  BLZ: { fr: 'Belize', en: 'Belize' },
+  BEN: { fr: 'Bénin', en: 'Benin' },
+  BTN: { fr: 'Bhoutan', en: 'Bhutan' },
+  BOL: { fr: 'Bolivie', en: 'Bolivia' },
+  BIH: { fr: 'Bosnie-Herzégovine', en: 'Bosnia and Herzegovina' },
+  BWA: { fr: 'Botswana', en: 'Botswana' },
+  BRA: { fr: 'Brésil', en: 'Brazil' },
+  BRN: { fr: 'Brunei', en: 'Brunei' },
+  BGR: { fr: 'Bulgarie', en: 'Bulgaria' },
+  BFA: { fr: 'Burkina Faso', en: 'Burkina Faso' },
+  BDI: { fr: 'Burundi', en: 'Burundi' },
+  KHM: { fr: 'Cambodge', en: 'Cambodia' },
+  CMR: { fr: 'Cameroun', en: 'Cameroon' },
+  CAN: { fr: 'Canada', en: 'Canada' },
+  CPV: { fr: 'Cap-Vert', en: 'Cape Verde' },
+  CAF: { fr: 'République centrafricaine', en: 'Central African Republic' },
+  TCD: { fr: 'Tchad', en: 'Chad' },
+  CHL: { fr: 'Chili', en: 'Chile' },
+  CHN: { fr: 'Chine', en: 'China' },
+  COL: { fr: 'Colombie', en: 'Colombia' },
+  COM: { fr: 'Comores', en: 'Comoros' },
+  COG: { fr: 'Congo', en: 'Congo' },
+  COD: { fr: 'Congo (RDC)', en: 'Congo (DRC)' },
+  CRI: { fr: 'Costa Rica', en: 'Costa Rica' },
+  HRV: { fr: 'Croatie', en: 'Croatia' },
+  CUB: { fr: 'Cuba', en: 'Cuba' },
+  CYP: { fr: 'Chypre', en: 'Cyprus' },
+  CZE: { fr: 'Tchéquie', en: 'Czech Republic' },
+  DNK: { fr: 'Danemark', en: 'Denmark' },
+  DJI: { fr: 'Djibouti', en: 'Djibouti' },
+  DMA: { fr: 'Dominique', en: 'Dominica' },
+  DOM: { fr: 'République dominicaine', en: 'Dominican Republic' },
+  ECU: { fr: 'Équateur', en: 'Ecuador' },
+  EGY: { fr: 'Égypte', en: 'Egypt' },
+  SLV: { fr: 'Salvador', en: 'El Salvador' },
+  GNQ: { fr: 'Guinée équatoriale', en: 'Equatorial Guinea' },
+  ERI: { fr: 'Érythrée', en: 'Eritrea' },
+  EST: { fr: 'Estonie', en: 'Estonia' },
+  SWZ: { fr: 'Eswatini', en: 'Eswatini' },
+  ETH: { fr: 'Éthiopie', en: 'Ethiopia' },
+  FJI: { fr: 'Fidji', en: 'Fiji' },
+  FIN: { fr: 'Finlande', en: 'Finland' },
+  FRA: { fr: 'France', en: 'France' },
+  GAB: { fr: 'Gabon', en: 'Gabon' },
+  GMB: { fr: 'Gambie', en: 'Gambia' },
+  GEO: { fr: 'Géorgie', en: 'Georgia' },
+  DEU: { fr: 'Allemagne', en: 'Germany' },
+  GHA: { fr: 'Ghana', en: 'Ghana' },
+  GRC: { fr: 'Grèce', en: 'Greece' },
+  GRD: { fr: 'Grenade', en: 'Grenada' },
+  GTM: { fr: 'Guatemala', en: 'Guatemala' },
+  GIN: { fr: 'Guinée', en: 'Guinea' },
+  GNB: { fr: 'Guinée-Bissau', en: 'Guinea-Bissau' },
+  GUY: { fr: 'Guyana', en: 'Guyana' },
+  HTI: { fr: 'Haïti', en: 'Haiti' },
+  HND: { fr: 'Honduras', en: 'Honduras' },
+  HUN: { fr: 'Hongrie', en: 'Hungary' },
+  ISL: { fr: 'Islande', en: 'Iceland' },
+  IND: { fr: 'Inde', en: 'India' },
+  IDN: { fr: 'Indonésie', en: 'Indonesia' },
+  IRN: { fr: 'Iran', en: 'Iran' },
+  IRQ: { fr: 'Irak', en: 'Iraq' },
+  IRL: { fr: 'Irlande', en: 'Ireland' },
+  ISR: { fr: 'Israël', en: 'Israel' },
+  ITA: { fr: 'Italie', en: 'Italy' },
+  JAM: { fr: 'Jamaïque', en: 'Jamaica' },
+  JPN: { fr: 'Japon', en: 'Japan' },
+  JOR: { fr: 'Jordanie', en: 'Jordan' },
+  KAZ: { fr: 'Kazakhstan', en: 'Kazakhstan' },
+  KEN: { fr: 'Kenya', en: 'Kenya' },
+  KIR: { fr: 'Kiribati', en: 'Kiribati' },
+  KWT: { fr: 'Koweït', en: 'Kuwait' },
+  KGZ: { fr: 'Kirghizistan', en: 'Kyrgyzstan' },
+  LAO: { fr: 'Laos', en: 'Laos' },
+  LVA: { fr: 'Lettonie', en: 'Latvia' },
+  LBN: { fr: 'Liban', en: 'Lebanon' },
+  LSO: { fr: 'Lesotho', en: 'Lesotho' },
+  LBR: { fr: 'Liberia', en: 'Liberia' },
+  LBY: { fr: 'Libye', en: 'Libya' },
+  LIE: { fr: 'Liechtenstein', en: 'Liechtenstein' },
+  LTU: { fr: 'Lituanie', en: 'Lithuania' },
+  LUX: { fr: 'Luxembourg', en: 'Luxembourg' },
+  MDG: { fr: 'Madagascar', en: 'Madagascar' },
+  MWI: { fr: 'Malawi', en: 'Malawi' },
+  MYS: { fr: 'Malaisie', en: 'Malaysia' },
+  MDV: { fr: 'Maldives', en: 'Maldives' },
+  MLI: { fr: 'Mali', en: 'Mali' },
+  MLT: { fr: 'Malte', en: 'Malta' },
+  MHL: { fr: 'Îles Marshall', en: 'Marshall Islands' },
+  MRT: { fr: 'Mauritanie', en: 'Mauritania' },
+  MUS: { fr: 'Maurice', en: 'Mauritius' },
+  MEX: { fr: 'Mexique', en: 'Mexico' },
+  FSM: { fr: 'Micronésie', en: 'Micronesia' },
+  MDA: { fr: 'Moldavie', en: 'Moldova' },
+  MCO: { fr: 'Monaco', en: 'Monaco' },
+  MNG: { fr: 'Mongolie', en: 'Mongolia' },
+  MNE: { fr: 'Monténégro', en: 'Montenegro' },
+  MAR: { fr: 'Maroc', en: 'Morocco' },
+  MOZ: { fr: 'Mozambique', en: 'Mozambique' },
+  MMR: { fr: 'Birmanie', en: 'Myanmar' },
+  NAM: { fr: 'Namibie', en: 'Namibia' },
+  NRU: { fr: 'Nauru', en: 'Nauru' },
+  NPL: { fr: 'Népal', en: 'Nepal' },
+  NLD: { fr: 'Pays-Bas', en: 'Netherlands' },
+  NZL: { fr: 'Nouvelle-Zélande', en: 'New Zealand' },
+  NIC: { fr: 'Nicaragua', en: 'Nicaragua' },
+  NER: { fr: 'Niger', en: 'Niger' },
+  NGA: { fr: 'Nigéria', en: 'Nigeria' },
+  PRK: { fr: 'Corée du Nord', en: 'North Korea' },
+  MKD: { fr: 'Macédoine du Nord', en: 'North Macedonia' },
+  NOR: { fr: 'Norvège', en: 'Norway' },
+  OMN: { fr: 'Oman', en: 'Oman' },
+  PAK: { fr: 'Pakistan', en: 'Pakistan' },
+  PLW: { fr: 'Palaos', en: 'Palau' },
+  PSE: { fr: 'Palestine', en: 'Palestine' },
+  PAN: { fr: 'Panama', en: 'Panama' },
+  PNG: { fr: 'Papouasie-Nouvelle-Guinée', en: 'Papua New Guinea' },
+  PRY: { fr: 'Paraguay', en: 'Paraguay' },
+  PER: { fr: 'Pérou', en: 'Peru' },
+  PHL: { fr: 'Philippines', en: 'Philippines' },
+  POL: { fr: 'Pologne', en: 'Poland' },
+  PRT: { fr: 'Portugal', en: 'Portugal' },
+  QAT: { fr: 'Qatar', en: 'Qatar' },
+  ROU: { fr: 'Roumanie', en: 'Romania' },
+  RUS: { fr: 'Russie', en: 'Russia' },
+  RWA: { fr: 'Rwanda', en: 'Rwanda' },
+  KNA: { fr: 'Saint-Christophe-et-Niévès', en: 'Saint Kitts and Nevis' },
+  LCA: { fr: 'Sainte-Lucie', en: 'Saint Lucia' },
+  VCT: {
+    fr: 'Saint-Vincent-et-les-Grenadines',
+    en: 'Saint Vincent and the Grenadines'
+  },
+  WSM: { fr: 'Samoa', en: 'Samoa' },
+  SMR: { fr: 'Saint-Marin', en: 'San Marino' },
+  STP: { fr: 'Sao Tomé-et-Principe', en: 'Sao Tome and Principe' },
+  SAU: { fr: 'Arabie Saoudite', en: 'Saudi Arabia' },
+  SEN: { fr: 'Sénégal', en: 'Senegal' },
+  SRB: { fr: 'Serbie', en: 'Serbia' },
+  SYC: { fr: 'Seychelles', en: 'Seychelles' },
+  SLE: { fr: 'Sierra Leone', en: 'Sierra Leone' },
+  SGP: { fr: 'Singapour', en: 'Singapore' },
+  SVK: { fr: 'Slovaquie', en: 'Slovakia' },
+  SVN: { fr: 'Slovénie', en: 'Slovenia' },
+  SLB: { fr: 'Îles Salomon', en: 'Solomon Islands' },
+  SOM: { fr: 'Somalie', en: 'Somalia' },
+  ZAF: { fr: 'Afrique du Sud', en: 'South Africa' },
+  KOR: { fr: 'Corée du Sud', en: 'South Korea' },
+  SSD: { fr: 'Soudan du Sud', en: 'South Sudan' },
+  ESP: { fr: 'Espagne', en: 'Spain' },
+  LKA: { fr: 'Sri Lanka', en: 'Sri Lanka' },
+  SDN: { fr: 'Soudan', en: 'Sudan' },
+  SUR: { fr: 'Suriname', en: 'Suriname' },
+  SWE: { fr: 'Suède', en: 'Sweden' },
+  CHE: { fr: 'Suisse', en: 'Switzerland' },
+  SYR: { fr: 'Syrie', en: 'Syria' },
+  TWN: { fr: 'Taïwan', en: 'Taiwan' },
+  TJK: { fr: 'Tadjikistan', en: 'Tajikistan' },
+  TZA: { fr: 'Tanzanie', en: 'Tanzania' },
+  THA: { fr: 'Thaïlande', en: 'Thailand' },
+  TLS: { fr: 'Timor-Leste', en: 'Timor-Leste' },
+  TGO: { fr: 'Togo', en: 'Togo' },
+  TON: { fr: 'Tonga', en: 'Tonga' },
+  TTO: { fr: 'Trinité-et-Tobago', en: 'Trinidad and Tobago' },
+  TUN: { fr: 'Tunisie', en: 'Tunisia' },
+  TUR: { fr: 'Turquie', en: 'Turkey' },
+  TKM: { fr: 'Turkménistan', en: 'Turkmenistan' },
+  TUV: { fr: 'Tuvalu', en: 'Tuvalu' },
+  UGA: { fr: 'Ouganda', en: 'Uganda' },
+  UKR: { fr: 'Ukraine', en: 'Ukraine' },
+  ARE: { fr: 'Émirats Arabes Unis', en: 'United Arab Emirates' },
+  GBR: { fr: 'Royaume-Uni', en: 'United Kingdom' },
+  USA: { fr: 'États-Unis', en: 'United States' },
+  URY: { fr: 'Uruguay', en: 'Uruguay' },
+  UZB: { fr: 'Ouzbékistan', en: 'Uzbekistan' },
+  VUT: { fr: 'Vanuatu', en: 'Vanuatu' },
+  VAT: { fr: 'Vatican', en: 'Vatican City' },
+  VEN: { fr: 'Venezuela', en: 'Venezuela' },
+  VNM: { fr: 'Vietnam', en: 'Vietnam' },
+  YEM: { fr: 'Yémen', en: 'Yemen' },
+  ZMB: { fr: 'Zambie', en: 'Zambia' },
+  ZWE: { fr: 'Zimbabwe', en: 'Zimbabwe' }
+}
+
 const eventType = {
   Birth: 'Naissance'
 }
@@ -172,6 +373,7 @@ const fetchEvents = (variables) =>
           registration {
             createdAt
             status
+            dateOfDeclaration
             registrationNumber
             assignment {
               firstName
@@ -270,12 +472,27 @@ const fetchUser = (variables) =>
 const getChildBirthLocation = (eventLocationId, type, id) =>
   handleAsyncFunction(async () => {
     if (eventLocationId && type) {
-      if (type === 'HEALTH_FACILITY') {
-        const birthLocation = await fetchLocationById(eventLocationId)
-        return birthLocation.name
-      } else {
-        const birthLocation = await fetchOtherBirthLocation(id)
-        return birthLocation.data.fetchBirthRegistration.eventLocation.address
+      switch (type) {
+        case 'HEALTH_FACILITY':
+          const healthFacility = await fetchLocationById(eventLocationId)
+          const healthFacilityCommune = await fetchLocationById(
+            healthFacility?.partOf?.reference?.split?.('/')[1]
+          )
+          const healthFacilityDistrict = await fetchLocationById(
+            healthFacilityCommune?.partOf?.reference?.split?.('/')[1]
+          )
+
+          return {
+            name: healthFacility?.name,
+            stateName: healthFacilityCommune?.name,
+            districtName: healthFacilityDistrict.name
+          }
+        case 'OTHER':
+          const other = await fetchLocationById(eventLocationId)
+          return other.address
+        default:
+          const home = await fetchOtherBirthLocation(id)
+          return home.data.fetchBirthRegistration.eventLocation.address
       }
     }
   })
@@ -677,9 +894,7 @@ const renderTable = async () => {
         item.dateOfBirth
       )}</td>
       <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
-        new Date(Number(item.registration.createdAt))
-          .toISOString()
-          .split('T')[0]
+        item.registration.dateOfDeclaration
       )}</td>
       <td  class="px-4 py-2 border-b border-gray-300"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded" onclick="openPrintModal('${
         item.id
@@ -735,7 +950,13 @@ window.openPrintModal = async function openPrintModal(id) {
 
     const now = new Date()
     const offset = now.getTimezoneOffset() * 60000 // Décalage horaire en millisecondes
-    const createdDate = new Date(now - offset).toISOString().slice(0, -1) // Retirer le 'Z' à la fin
+    const legacyDate = event?.questionnaire?.find(
+      (q) =>
+        q.fieldId === 'birth.child.child-view-group.legacyBirthRegistrationDate'
+    )
+
+    const createdDate =
+      legacyDate && legacyDate.value ? legacyDate.value : event.createdAt // Retirer le 'Z' à la fin
 
     // child info
     const childFirstName = event.child.name[0].familyName
@@ -766,9 +987,10 @@ window.openPrintModal = async function openPrintModal(id) {
     const eventStatementContext = {
       eventDate: event.child.birthDate,
       birthChildBirthTime: birthChildBirthTime,
-      countryPlaceofbirth: 'Madagascar',
-      placeOfBirthFacility:
-        typeof childBirthLocation === 'string' ? childBirthLocation : undefined,
+      countryPlaceofbirth: childBirthLocation?.country
+        ? countryData[childBirthLocation?.country][defaultLang]
+        : '',
+      placeOfBirthFacility: childBirthLocation?.name,
       birthChildFokontanyCustomAddress:
         typeof childBirthLocation === 'object'
           ? event?.questionnaire?.find(
@@ -777,14 +999,8 @@ window.openPrintModal = async function openPrintModal(id) {
                 'birth.child.child-view-group.fokontanyCustomAddress'
             )?.value
           : undefined,
-      placeOfBirthDistrict:
-        childBirthLocation === 'string'
-          ? undefined
-          : childBirthLocation?.stateName,
-      placeOfBirthState:
-        childBirthLocation === 'string'
-          ? undefined
-          : childBirthLocation?.districtName,
+      placeOfBirthDistrict: childBirthLocation?.stateName,
+      placeOfBirthState: childBirthLocation?.districtName,
       childFamilyName: event.child.name[0].familyName,
       childFirstName: [
         event.child.name[0].middleName,
@@ -793,13 +1009,13 @@ window.openPrintModal = async function openPrintModal(id) {
         .join(' ')
         .trim(),
       childGender: event.child.gender,
-      internationalStatePlaceofbirth: '',
-      internationalDistrictPlaceofbirth: '',
-      internationalCityPlaceofbirth: '',
-      internationalAddressLine1Placeofbirth: '',
-      internationalAddressLine2Placeofbirth: '',
-      internationalAddressLine3Placeofbirth: '',
-      internationalPostalCodePlaceofbirth: ''
+      internationalStatePlaceofbirth: childBirthLocation?.state,
+      internationalDistrictPlaceofbirth: childBirthLocation?.district,
+      internationalCityPlaceofbirth: childBirthLocation?.city,
+      internationalAddressLine1Placeofbirth: childBirthLocation?.line?.[6],
+      internationalAddressLine2Placeofbirth: childBirthLocation?.line?.[7],
+      internationalAddressLine3Placeofbirth: childBirthLocation?.line?.[8],
+      internationalPostalCodePlaceofbirth: childBirthLocation?.postalCode
     }
 
     const fatherDetailsContext = {
@@ -842,16 +1058,19 @@ window.openPrintModal = async function openPrintModal(id) {
             (q) =>
               q.fieldId === 'birth.father.father-view-group.fatherIsDeceased'
           ) || {
-            value: 'false'
+            value: false
           }
         ).value == 'false'
           ? false
           : true,
-      countryPrimaryFather:
-        event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-          ?.country === 'MDG'
-          ? 'Madagascar'
-          : '',
+      countryPrimaryFather: event.father.address?.find(
+        (a) => a.type === 'PRIMARY_ADDRESS'
+      )?.country
+        ? countryData[
+            event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+              ?.country
+          ][defaultLang]
+        : '',
       birthFatherFokontanyCustomAddress: (
         event?.questionnaire?.find(
           (q) =>
@@ -870,15 +1089,21 @@ window.openPrintModal = async function openPrintModal(id) {
         (a) => a.type === 'PRIMARY_ADDRESS'
       )?.districtName,
       fatherOccupation: event.father.occupation,
-      birthFatherFatherHasFormallyRecognisedChild: '',
+      birthFatherFatherHasFormallyRecognisedChild: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.father.father-view-group.fatherHasFormallyRecognisedChild'
+        ) || { value: '' }
+      ).value,
       motherReasonNotApplying: event.mother.reasonNotApplying,
-      internationalStatePrimaryFather: '',
-      internationalDistrictPrimaryFather: '',
-      internationalCityPrimaryFather: '',
-      internationalAddressLine1PrimaryFather: '',
-      internationalAddressLine2PrimaryFather: '',
-      internationalAddressLine3PrimaryFather: '',
-      internationalPostalCodePrimaryFather: ''
+      internationalStatePrimaryFather: event.father.address?.state,
+      internationalDistrictPrimaryFather: event.father.address?.district,
+      internationalCityPrimaryFather: event.father.address?.city,
+      internationalAddressLine1PrimaryFather: event.father.address?.line?.[6],
+      internationalAddressLine2PrimaryFather: event.father.address?.line?.[7],
+      internationalAddressLine3PrimaryFather: event.father.address?.line?.[8],
+      internationalPostalCodePrimaryFather: event.father.address?.postalCode
     }
 
     const motherDetailsContext = {
@@ -902,7 +1127,11 @@ window.openPrintModal = async function openPrintModal(id) {
         .trim(),
       birthMotherCustomizedExactDateOfBirthUnknown:
         event.mother.exactDateOfBirthUnknown,
-      birthMotherYearOfBirth: '',
+      birthMotherYearOfBirth: (
+        event?.questionnaire?.find(
+          (q) => q.fieldId === 'birth.mother.mother-view-group.yearOfBirth'
+        ) || { value: '' }
+      ).value,
       motherBirthDate: event.mother.birthDate,
       birthMotherBirthPlace: (
         event?.questionnaire?.find(
@@ -914,15 +1143,18 @@ window.openPrintModal = async function openPrintModal(id) {
           event?.questionnaire?.find(
             (q) =>
               q.fieldId === 'birth.mother.mother-view-group.motherIsDeceased'
-          ) || { value: 'false' }
-        ).value === 'false'
+          ) || { value: false }
+        ).value == 'false'
           ? false
           : true,
-      countryPrimaryMother:
-        event.mother.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-          ?.country === 'MDG'
-          ? 'Madagascar'
-          : '',
+      countryPrimaryMother: event.mother.address?.find(
+        (a) => a.type === 'PRIMARY_ADDRESS'
+      )?.country
+        ? countryData[
+            event.mother.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+              ?.country
+          ][defaultLang]
+        : '',
       birthMotherFokontanyCustomAddress: (
         event?.questionnaire?.find(
           (q) =>
@@ -931,13 +1163,13 @@ window.openPrintModal = async function openPrintModal(id) {
         ) || { value: '' }
       ).value,
       motherOccupation: event.mother.occupation,
-      internationalStatePrimaryMother: '',
-      internationalDistrictPrimaryMother: '',
-      internationalCityPrimaryMother: '',
-      internationalAddressLine1PrimaryMother: '',
-      internationalAddressLine2PrimaryMother: '',
-      internationalAddressLine3PrimaryMother: '',
-      internationalPostalCodePrimaryMother: ''
+      internationalStatePrimaryMother: event.mother.address?.state,
+      internationalDistrictPrimaryMother: event.mother.address?.district,
+      internationalCityPrimaryMother: event.mother.address?.city,
+      internationalAddressLine1PrimaryMother: event.mother.address?.line?.[6],
+      internationalAddressLine2PrimaryMother: event.mother.address?.line?.[7],
+      internationalAddressLine3PrimaryMother: event.mother.address?.line?.[8],
+      internationalPostalCodePrimaryMother: event.mother.address?.postalCode
     }
 
     const registrationStatementContext = {
@@ -967,12 +1199,36 @@ window.openPrintModal = async function openPrintModal(id) {
         .trim(),
       birthInformantCustomizedExactDateOfBirthUnknown:
         event.informant.exactDateOfBirthUnknown,
-      birthInformantYearOfBirth: '',
+      birthInformantYearOfBirth: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId === 'birth.informant.informant-view-group.yearOfBirth'
+        ) || { value: '' }
+      ).value,
       informantBirthDate: event.informant.birthDate,
-      birthInformantBirthPlace: '',
-      countryPrimaryInformant: '',
-      birthInformantFokontanyCustomAddress: '',
-      informantPrimaryDistrict: '',
+      birthInformantBirthPlace: (
+        event?.questionnaire?.find(
+          (q) => q.fieldId === 'birth.informant.informant-view-group.birthPlace'
+        ) || { value: '' }
+      ).value,
+      countryPrimaryInformant: event.informant.address?.find(
+        (a) => a.type === 'PRIMARY_ADDRESS'
+      )?.country
+        ? countryData[
+            event.informant.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+              ?.country
+          ][defaultLang]
+        : '',
+      birthInformantFokontanyCustomAddress: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.informant.informant-view-group.fokontanyCustomAddress'
+        ) || { value: '' }
+      ).value,
+      informantPrimaryDistrict: event.informant?.address?.find(
+        (a) => a.type === 'PRIMARY_ADDRESS'
+      )?.districtName,
       informantOccupation: event.informant.occupation,
       registrarName: [
         event.registration.assignment.firstName,
@@ -981,13 +1237,17 @@ window.openPrintModal = async function openPrintModal(id) {
         .join(' ')
         .trim(),
       registrationDistrict: event.registration.assignment.officeName,
-      internationalStatePrimaryInformant: '',
-      internationalDistrictPrimaryInformant: '',
-      internationalCityPrimaryInformant: '',
-      internationalAddressLine1PrimaryInformant: '',
-      internationalAddressLine2PrimaryInformant: '',
-      internationalAddressLine3PrimaryInformant: '',
-      internationalPostalCodePrimaryInformant: ''
+      internationalStatePrimaryInformant: event.informant.address?.state,
+      internationalDistrictPrimaryInformant: event.informant.address?.district,
+      internationalCityPrimaryInformant: event.informant.address?.city,
+      internationalAddressLine1PrimaryInformant:
+        event.informant.address?.line?.[6],
+      internationalAddressLine2PrimaryInformant:
+        event.informant.address?.line?.[7],
+      internationalAddressLine3PrimaryInformant:
+        event.informant.address?.line?.[8],
+      internationalPostalCodePrimaryInformant:
+        event.informant.address?.postalCode
     }
 
     const printableData = {
