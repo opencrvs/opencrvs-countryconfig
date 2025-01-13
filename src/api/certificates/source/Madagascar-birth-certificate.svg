@@ -1,6 +1,9 @@
 <svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <rect width="595" height="842" fill="white" />
+    {{#ifCond (isTanaIV (location registrar.districtId "name")) '===' true }}
+     <!-- ne fait rien-->
+    {{ else }}
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
         <tspan x="24" y="104.58">Faritra :</tspan>
@@ -16,13 +19,14 @@
         </div>
     </foreignObject>
     
-    
     <foreignObject x="24" y="142.488"  width="150" height="100">
         <div xmlns="http://www.w3.org/1999/xhtml">
         <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Kaominina : </span> 
         <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionCommuneInTheAct (location registrar.districtId "name")}}</span> 
         </div>
     </foreignObject>
+    {{/ifCond}}
+
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
         <tspan x="24" y="187.58">Soratra n&#xb0; :</tspan>
@@ -145,6 +149,13 @@
             line-height: 1.45 !important;
         }
     </style>
-    <image x=" 231" y="14" width="132" height="72" xlink:href="{{certificateLogo}}"
-        preserveAspectRatio="xMaxYMid meet" />
+    
+    <!-- Afficher uniquement le logo si different de tana 4 -->
+    {{#ifCond (isTanaIV (location registrar.districtId "name")) '===' true }}
+       <!-- ne fait rien-->
+    {{ else }}
+         <image x="231" y="14" width="132" height="72" xlink:href="{{certificateLogo}}" preserveAspectRatio="xMaxYMid meet" />
+    {{/ifCond}}
+   
+   
 </svg>
