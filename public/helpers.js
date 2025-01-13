@@ -336,20 +336,21 @@ function eventStatementSimplified(
               placeOfBirthFacility
                 ? replaceAbbreviations(placeOfBirthFacility)
                 : '',
-              placeOfBirthDistrict && placeOfBirthState ? ',' : '',
+              //placeOfBirthDistrict && placeOfBirthState ? ',' : '',
               birthChildFokontanyCustomAddress
                 ? 'fokontany ' + birthChildFokontanyCustomAddress + ','
                 : '',
               placeOfBirthDistrict
                 ? [
-                    'kaominina',
-                    (definitionOffice(
-                      replaceByUppercase(placeOfBirthDistrict)
-                    ) || '-') + ','
+                    'kaominina ' +
+                      (definitionOffice(
+                        replaceByUppercase(placeOfBirthDistrict)
+                      ) || '-') +
+                      ','
                   ]
                 : '',
               placeOfBirthState
-                ? ['district', definitionDistrict(placeOfBirthState) || '-']
+                ? ['district ' + definitionDistrict(placeOfBirthState) || '-']
                 : ''
             ]
           : [
@@ -761,10 +762,11 @@ function registrationStatementSimplified(registrationStatementContext) {
   } = registrationStatementContext
 
   var _a
-  var birthRegistrationDate = getBirthRegistrationDate(
+
+  var birthRegistrationDate = getBirthRegistrationDate({
     birthChildLegacyBirthRegistrationDate,
     birthChildLegacyBirthRegistrationTime
-  )
+  })
 
   var registrarDateUTC = convertToTimeZoneIso(
     isValidDate(birthRegistrationDate) ? birthRegistrationDate : registrarDate,
@@ -1250,6 +1252,7 @@ function getBirthRegistrationDate(data) {
 function getBirthRegistrationDateMDGFormat() {
   return function () {
     var birthRegistrationDate = getBirthRegistrationDate(this)
+
     if (isValidDate(birthRegistrationDate)) {
       return handleTranslateDateToMDGFormat(
         this.birthChildLegacyBirthRegistrationDate

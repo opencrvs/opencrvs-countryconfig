@@ -818,8 +818,18 @@ window.openPrintModal = async function openPrintModal(id) {
       ]
         .join(' ')
         .trim(),
-      birthFatherCustomizedExactDateOfBirthUnknown: '',
-      birthFatherYearOfBirth: '',
+      birthFatherCustomizedExactDateOfBirthUnknown: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.father.father-view-group.customizedExactDateOfBirthUnknown'
+        ) || { value: false }
+      ).value,
+      birthFatherYearOfBirth: (
+        event?.questionnaire?.find(
+          (q) => q.fieldId === 'birth.father.father-view-group.yearOfBirth'
+        ) || { value: '' }
+      ).value,
       fatherBirthDate: event.father.birthDate,
       birthFatherBirthPlace: (
         event?.questionnaire?.find(
@@ -890,7 +900,8 @@ window.openPrintModal = async function openPrintModal(id) {
       ]
         .join(' ')
         .trim(),
-      birthMotherCustomizedExactDateOfBirthUnknown: '',
+      birthMotherCustomizedExactDateOfBirthUnknown:
+        event.mother.exactDateOfBirthUnknown,
       birthMotherYearOfBirth: '',
       motherBirthDate: event.mother.birthDate,
       birthMotherBirthPlace: (
@@ -930,8 +941,20 @@ window.openPrintModal = async function openPrintModal(id) {
     }
 
     const registrationStatementContext = {
-      birthChildLegacyBirthRegistrationDate: '',
-      birthChildLegacyBirthRegistrationTime: '',
+      birthChildLegacyBirthRegistrationDate: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.child.child-view-group.legacyBirthRegistrationDate'
+        ) || { value: '' }
+      ).value,
+      birthChildLegacyBirthRegistrationTime: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.child.child-view-group.legacyBirthRegistrationTime'
+        ) || { value: '' }
+      ).value,
       registrarDate: event.createdAt,
       timezone: 'Africa/Nairobi',
       informantType: event.informant.relationship,
@@ -942,7 +965,8 @@ window.openPrintModal = async function openPrintModal(id) {
       ]
         .join(' ')
         .trim(),
-      birthInformantCustomizedExactDateOfBirthUnknown: '',
+      birthInformantCustomizedExactDateOfBirthUnknown:
+        event.informant.exactDateOfBirthUnknown,
       birthInformantYearOfBirth: '',
       informantBirthDate: event.informant.birthDate,
       birthInformantBirthPlace: '',
