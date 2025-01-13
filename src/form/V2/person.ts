@@ -347,23 +347,32 @@ export const getAddressFields = (person: string): FieldConfig[] => {
   const farajalandAddressFields: FieldConfig[] = [
     {
       id: `${prefix}.province`,
-      type: 'TEXT',
+      type: 'LOCATION',
       required: true,
       label: {
         defaultMessage: 'Province',
         description: 'This is the label for the field',
         id: `event.birth.action.declare.form.section.${person}.field.address.province.label`
       },
+      options: {
+        type: 'ADMIN_STRUCTURE'
+      },
       conditionals: []
     },
     {
       id: `${prefix}.district`,
-      type: 'TEXT',
+      type: 'LOCATION',
       required: true,
       label: {
         defaultMessage: 'District',
         description: 'This is the label for the field',
         id: `event.birth.action.declare.form.section.${person}.field.address.district.label`
+      },
+      options: {
+        partOf: {
+          $data: `${prefix}.province`
+        },
+        type: 'ADMIN_STRUCTURE'
       },
       conditionals: []
     },
