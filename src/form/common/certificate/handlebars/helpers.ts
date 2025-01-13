@@ -899,6 +899,11 @@ export function definitionCommuneInTheAct(): Handlebars.HelperDelegate {
     return defineCommune(name)
   }
 }
+export function isTanaIV(): Handlebars.HelperDelegate {
+  return function (this: any, name: string) {
+    return name.toLowerCase() === 'cu tana iv'
+  }
+}
 function definitionDistrict(officeName: string = '') {
   const locationMappings: { [key: string]: string } = {
     'tana i': 'Antananarivo Renivohitra',
