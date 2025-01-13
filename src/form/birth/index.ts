@@ -257,6 +257,8 @@ export const birthForm: ISerializedForm = {
             ) as SerializedFormField,
             esignetCallback({
               fieldName: 'esignetCallback',
+              event: 'birth',
+              sectionId: 'informant',
               getOIDPUserInfoUrl: OIDP_USER_INFO_URL,
               openIdProviderClientId: OPENID_PROVIDER_CLIENT_ID
             }) as SerializedFormField,
