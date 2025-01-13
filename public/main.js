@@ -272,31 +272,12 @@ const getChildBirthLocation = (eventLocationId, type, id) =>
     if (eventLocationId && type) {
       if (type === 'HEALTH_FACILITY') {
         const birthLocation = await fetchLocationById(eventLocationId)
-        if (birthLocation) return `tao amin'ny ${window.replaceAbbreviations(birthLocation?.name || '-')}`
+        return birthLocation.name
       } else {
         const birthLocation = await fetchOtherBirthLocation(id)
-        return `tao amin'ny${(() => {
-          const _fokotany =
-            birthLocation?.data?.fetchBirthRegistration?.questionnaire?.find(
-              (q) =>
-                q.fieldId ===
-                'birth.child.child-view-group.fokontanyCustomAddress'
-            )?.value
-          return _fokotany ? ' fokotany ' + _fokotany : ' - '
-        })()}${(() => {
-          const _commune =
-            window.definitionOffice(window.replaceByUppercase(birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
-              ?.districtName))
-          return _commune ? ', kaominina ' + _commune : ' - '
-        })()}${(() => {
-          const _district =
-            window.definitionDistrict(birthLocation?.data?.fetchBirthRegistration?.eventLocation?.address
-              ?.districtName)
-          return _district ? ', distrikta ' + _district : ' - '
-        })()},`
+        return birthLocation.data.fetchBirthRegistration.eventLocation.address
       }
     }
-    return ''
   })
 
 /** Main fetch for birth registration information */
@@ -469,6 +450,11 @@ const fetchBirthRegistrationForCertificate = (variables) =>
             trackingId
             registrationNumber
             mosipAid
+            assignment {
+              firstName
+              lastName
+              officeName
+            }
           }
           attendantAtBirth
           weightAtBirth
@@ -697,20 +683,7 @@ const renderTable = async () => {
       )}</td>
       <td  class="px-4 py-2 border-b border-gray-300"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded" onclick="openPrintModal('${
         item.id
-      }', '${[
-        item.registration?.assignment?.firstName || '',
-        item.registration?.assignment?.lastName || ''
-      ]
-        .join(' ')
-        //// escape '
-        .trim()
-        .replace(
-          /'/g,
-          "\\'"
-        )}', '${item.registration?.assignment?.officeName.replace(
-        /'/g,
-        "\\'"
-      )}')">Imprimer</button></td>
+      }')">Imprimer</button></td>
     `
       tableBody.appendChild(row)
     })
@@ -741,11 +714,7 @@ window.prevPage = function prevPage() {
   }
 }
 
-window.openPrintModal = async function openPrintModal(
-  id,
-  registrarFullName,
-  officeName
-) {
+window.openPrintModal = async function openPrintModal(id) {
   const person = await fetchBirthRegistrationForCertificate({ id })
 
   if (person.data.fetchBirthRegistration) {
@@ -763,9 +732,6 @@ window.openPrintModal = async function openPrintModal(
     modal.classList.remove('hidden')
 
     const event = person.data.fetchBirthRegistration
-    const dateFormatter = window.translateDate()
-    const timeFormatter = window.translateTime()
-    const officeNameFormatter = window.customizeOfficeNameLocation()
 
     const now = new Date()
     const offset = now.getTimezoneOffset() * 60000 // Décalage horaire en millisecondes
@@ -779,15 +745,13 @@ window.openPrintModal = async function openPrintModal(
     ]
       .join(' ')
       .trim()
-    const childGender =
-      event.child.gender.toLowerCase() === 'female' ? 'zazavavy' : 'zazalahy'
-    const childDob = dateFormatter(event.child.birthDate)
-    const childBirthTime = (
+
+    const birthChildBirthTime = (
       event?.questionnaire?.find(
         (q) => q.fieldId === 'birth.child.child-view-group.birthTime'
       ) || { value: '' }
     ).value
-    const childHourOfBirth = childBirthTime ? timeFormatter(childBirthTime) : ''
+
     const childLegacyBirthRegistrationNumber = event.questionnaire?.find(
       (q) =>
         q.fieldId ===
@@ -799,157 +763,232 @@ window.openPrintModal = async function openPrintModal(
       }
     ).id
 
-    // father info
-    const fatherInfoNotIsAvailable =
-      event.father.reasonNotApplying != null &&
-      Array.isArray(event.father.name) &&
-      event.father.name.length == 0
-
-    const fatherFullName =
-      Array.isArray(event.father.name) && event.father.name.length > 0
-        ? `${[
-            event.father.name[0].familyName,
-            event.father.name[0].middleName,
-            event.father.name[0].firstNames
-          ]
-            .join(' ')
-            .trim()}`
-        : ''
-    const fatherDateOfBirth =
-      Array.isArray(event.father.name) && event.father.name.length > 0
-        ? `${dateFormatter(event.father.birthDate)}`
-        : ''
-    const fatherPlaceOfBirth = (
-      event?.questionnaire?.find(
-        (q) => q.fieldId === 'birth.father.father-view-group.birthPlace'
-      ) || { value: '' }
-    ).value
-    const fatherFkt = (
-      event?.questionnaire?.find(
-        (q) =>
-          q.fieldId === 'birth.mother.mother-view-group.fokontanyCustomAddress'
-      ) || { value: '' }
-    ).value
-
-    const fatherAddress = `fokontany ${fatherFkt}, kaominina ${
-      window.definitionOffice(window.replaceByUppercase(event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName))
-    }, distrika ${
-      window.definitionDistrict(event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-      ?.districtName)
-    }`
-
-    const outputFather = `${
-      fatherInfoNotIsAvailable
-        ? "zanak'i "
-        : "zanak'i " +
-          fatherFullName +
-          ", teraka tamin'ny " +
-          fatherDateOfBirth +
-          ' tao ' +
-          fatherPlaceOfBirth +
-          " , monina ao amin'ny " +
-          fatherAddress +
-          ' , ' +
-          event.father.occupation +
-          ' , sy '
-    }`
-
-    // mother info
-    const motherFullName =
-      Array.isArray(event.mother.name) && event.mother.name.length > 0
-        ? `${event.mother.name[0].familyName} ${event.mother.name[0].middleName} ${event.mother.name[0].firstNames}`
-        : ''
-    const motherDateOfBirth =
-      Array.isArray(event.mother.name) && event.mother.name.length > 0
-        ? `${dateFormatter(event.mother.birthDate)}`
-        : ''
-    const motherOccupation = event?.mother?.occupation
-    const motherPlaceOfBirth = (
-      event?.questionnaire?.find(
-        (q) => q.fieldId === 'birth.mother.mother-view-group.birthPlace'
-      ) || { value: '' }
-    ).value
-    const motherFkt = (
-      event?.questionnaire?.find(
-        (q) =>
-          q.fieldId === 'birth.mother.mother-view-group.fokontanyCustomAddress'
-      ) || { value: '' }
-    ).value
-
-    const motherAddress = `fokontany ${motherFkt}, kaominina ${
-      window.definitionOffice(window.replaceByUppercase(event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')?.stateName))
-    }, distrika ${
-      window.definitionDistrict(event.mother.address.find((a) => a.type === 'PRIMARY_ADDRESS')
-      ?.districtName)
-    }`
-    const motherInfoNotIsAvailable = event.mother.reasonNotApplying != null
-    const outputMother = `${
-      motherInfoNotIsAvailable
-        ? ''
-        : motherFullName +
-          ", teraka tamin'ny " +
-          motherDateOfBirth +
-          'tao ' +
-          motherPlaceOfBirth +
-          ", monina ao amin'ny " +
-          motherAddress +
-          ', ' +
-          motherOccupation
-    }`
-    // informant info
-    const relationMap = {
-      mother: 'reniny',
-      father: 'rainy',
-      brother: 'zokiny lahy',
-      sister: 'zokiny vavy',
-      auncle: 'dadatoany',
-      aunt: 'nenitoany',
-      grandfather: 'raibeny',
-      grandmother: 'renibeny'
+    const eventStatementContext = {
+      eventDate: event.child.birthDate,
+      birthChildBirthTime: birthChildBirthTime,
+      countryPlaceofbirth: 'Madagascar',
+      placeOfBirthFacility:
+        typeof childBirthLocation === 'string' ? childBirthLocation : undefined,
+      birthChildFokontanyCustomAddress:
+        typeof childBirthLocation === 'object'
+          ? event?.questionnaire?.find(
+              (q) =>
+                q.fieldId ===
+                'birth.child.child-view-group.fokontanyCustomAddress'
+            )?.value
+          : undefined,
+      placeOfBirthDistrict:
+        childBirthLocation === 'string'
+          ? undefined
+          : childBirthLocation?.stateName,
+      placeOfBirthState:
+        childBirthLocation === 'string'
+          ? undefined
+          : childBirthLocation?.districtName,
+      childFamilyName: event.child.name[0].familyName,
+      childFirstName: [
+        event.child.name[0].middleName,
+        event.child.name[0].firstNames
+      ]
+        .join(' ')
+        .trim(),
+      childGender: event.child.gender,
+      internationalStatePlaceofbirth: '',
+      internationalDistrictPlaceofbirth: '',
+      internationalCityPlaceofbirth: '',
+      internationalAddressLine1Placeofbirth: '',
+      internationalAddressLine2Placeofbirth: '',
+      internationalAddressLine3Placeofbirth: '',
+      internationalPostalCodePlaceofbirth: ''
     }
-    const birthInformantLastName = `${
-      event?.informant?.name ? event?.informant?.name[0]?.familyName : ''
-    }`
-    const birthInformanFirstNames = `${
-      event?.informant?.name ? event?.informant?.name[0]?.firstNames : ''
-    }`
-    const birthInformantFullName = `${birthInformantLastName} ${birthInformanFirstNames}`
-    const birthInformantType =
-      relationMap[event.informant?.relationship?.toLowerCase()] || ''
 
-    const birthInformantDob = `${dateFormatter(event.informant?.birthDate)}`
-    const birthInformantoRelationship = `${event?.informant?.relationship}`
-    const birthInformantInfo =
-      birthInformantoRelationship.toLowerCase() === 'mother' ||
-      birthInformantoRelationship.toLowerCase() === 'father'
-        ? `ny ${birthInformantType} `
-        : `i ${birthInformantFullName}, ${birthInformantType}`
-    const informantOccupation = `${event?.informant?.occupation ?? ''}`
-    const informantFkt = (
-      event?.questionnaire?.find(
-        (q) =>
-          q.fieldId ===
-          (event.informant?.relationship.toLowerCase() === 'mother'
-            ? 'birth.mother.mother-view-group.fokontanyCustomAddress'
-            : event.informant?.relationship.toLowerCase() === 'father'
-            ? 'birth.father.father-view-group.fokontanyCustomAddress'
-            : 'birth.informant.informant-view-group.fokontanyCustomAddress')
-      ) || { value: '' }
-    ).value
+    const fatherDetailsContext = {
+      fatherReasonNotApplying: event.father.reasonNotApplying,
+      fatherFamilyName:
+        event.father.name && event.father.name[0]
+          ? event.father.name[0].familyName
+          : '',
+      fatherFirstName: [
+        event.father.name && event.father.name[0]
+          ? event.father.name[0].middleName
+          : '',
+        event.father.name && event.father.name[0]
+          ? event.father.name[0].firstNames
+          : ''
+      ]
+        .join(' ')
+        .trim(),
+      birthFatherCustomizedExactDateOfBirthUnknown: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.father.father-view-group.customizedExactDateOfBirthUnknown'
+        ) || { value: false }
+      ).value,
+      birthFatherYearOfBirth: (
+        event?.questionnaire?.find(
+          (q) => q.fieldId === 'birth.father.father-view-group.yearOfBirth'
+        ) || { value: '' }
+      ).value,
+      fatherBirthDate: event.father.birthDate,
+      birthFatherBirthPlace: (
+        event?.questionnaire?.find(
+          (q) => q.fieldId === 'birth.father.father-view-group.birthPlace'
+        ) || { value: '' }
+      ).value,
+      birthFatherFatherIsDeceased:
+        (
+          event?.questionnaire?.find(
+            (q) =>
+              q.fieldId === 'birth.father.father-view-group.fatherIsDeceased'
+          ) || {
+            value: 'false'
+          }
+        ).value == 'false'
+          ? false
+          : true,
+      countryPrimaryFather:
+        event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+          ?.country === 'MDG'
+          ? 'Madagascar'
+          : '',
+      birthFatherFokontanyCustomAddress: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.mother.mother-view-group.fokontanyCustomAddress'
+        ) || { value: '' }
+      ).value,
+      birthMotherFokontanyCustomAddress: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.mother.mother-view-group.fokontanyCustomAddress'
+        ) || { value: '' }
+      ).value,
+      fatherPrimaryDistrict: event.father.address?.find(
+        (a) => a.type === 'PRIMARY_ADDRESS'
+      )?.districtName,
+      fatherOccupation: event.father.occupation,
+      birthFatherFatherHasFormallyRecognisedChild: '',
+      motherReasonNotApplying: event.mother.reasonNotApplying,
+      internationalStatePrimaryFather: '',
+      internationalDistrictPrimaryFather: '',
+      internationalCityPrimaryFather: '',
+      internationalAddressLine1PrimaryFather: '',
+      internationalAddressLine2PrimaryFather: '',
+      internationalAddressLine3PrimaryFather: '',
+      internationalPostalCodePrimaryFather: ''
+    }
 
-    const informantAddress = `fokontany ${informantFkt}, kaominina ${
-      window.definitionOffice(window.replaceByUppercase(event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-      ?.stateName))
-    }, distrikta ${
-      window.definitionDistrict(event.informant?.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-        ?.districtName)
-    }`
+    const motherDetailsContext = {
+      motherPrimaryDistrict: event.mother.address?.find(
+        (a) => a.type === 'PRIMARY_ADDRESS'
+      )?.districtName,
+      motherReasonNotApplying: event.mother.reasonNotApplying,
+      motherFamilyName:
+        event.mother.name && event.mother.name[0]
+          ? event.mother.name[0].familyName
+          : '',
+      motherFirstName: [
+        event.mother.name && event.mother.name[0]
+          ? event.mother.name[0].middleName
+          : '',
+        event.mother.name && event.mother.name[0]
+          ? event.mother.name[0].firstNames
+          : ''
+      ]
+        .join(' ')
+        .trim(),
+      birthMotherCustomizedExactDateOfBirthUnknown:
+        event.mother.exactDateOfBirthUnknown,
+      birthMotherYearOfBirth: '',
+      motherBirthDate: event.mother.birthDate,
+      birthMotherBirthPlace: (
+        event?.questionnaire?.find(
+          (q) => q.fieldId === 'birth.mother.mother-view-group.birthPlace'
+        ) || { value: '' }
+      ).value,
+      birthMotherMotherIsDeceased:
+        (
+          event?.questionnaire?.find(
+            (q) =>
+              q.fieldId === 'birth.mother.mother-view-group.motherIsDeceased'
+          ) || { value: 'false' }
+        ).value === 'false'
+          ? false
+          : true,
+      countryPrimaryMother:
+        event.mother.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
+          ?.country === 'MDG'
+          ? 'Madagascar'
+          : '',
+      birthMotherFokontanyCustomAddress: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.mother.mother-view-group.fokontanyCustomAddress'
+        ) || { value: '' }
+      ).value,
+      motherOccupation: event.mother.occupation,
+      internationalStatePrimaryMother: '',
+      internationalDistrictPrimaryMother: '',
+      internationalCityPrimaryMother: '',
+      internationalAddressLine1PrimaryMother: '',
+      internationalAddressLine2PrimaryMother: '',
+      internationalAddressLine3PrimaryMother: '',
+      internationalPostalCodePrimaryMother: ''
+    }
 
-    // registration info
-    const birthRegistrationDate = dateFormatter(createdDate.split('T')[0])
-    const birthRegistrationTime = timeFormatter(createdDate.split('T')[1])
-    const registrarName = registrarFullName
-    const civilRegistrationCenterName = window.definitionOffice(officeName || '')
+    const registrationStatementContext = {
+      birthChildLegacyBirthRegistrationDate: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.child.child-view-group.legacyBirthRegistrationDate'
+        ) || { value: '' }
+      ).value,
+      birthChildLegacyBirthRegistrationTime: (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.child.child-view-group.legacyBirthRegistrationTime'
+        ) || { value: '' }
+      ).value,
+      registrarDate: event.createdAt,
+      timezone: 'Africa/Nairobi',
+      informantType: event.informant.relationship,
+      informantFamilyName: event.informant.name[0].familyName,
+      informantFirstName: [
+        event.informant.name[0].middleName,
+        event.informant.name[0].firstNames
+      ]
+        .join(' ')
+        .trim(),
+      birthInformantCustomizedExactDateOfBirthUnknown:
+        event.informant.exactDateOfBirthUnknown,
+      birthInformantYearOfBirth: '',
+      informantBirthDate: event.informant.birthDate,
+      birthInformantBirthPlace: '',
+      countryPrimaryInformant: '',
+      birthInformantFokontanyCustomAddress: '',
+      informantPrimaryDistrict: '',
+      informantOccupation: event.informant.occupation,
+      registrarName: [
+        event.registration.assignment.firstName,
+        event.registration.assignment.lastName
+      ]
+        .join(' ')
+        .trim(),
+      registrationDistrict: event.registration.assignment.officeName,
+      internationalStatePrimaryInformant: '',
+      internationalDistrictPrimaryInformant: '',
+      internationalCityPrimaryInformant: '',
+      internationalAddressLine1PrimaryInformant: '',
+      internationalAddressLine2PrimaryInformant: '',
+      internationalAddressLine3PrimaryInformant: '',
+      internationalPostalCodePrimaryInformant: ''
+    }
 
     const printableData = {
       soratra: childLegacyBirthRegistrationNumber,
@@ -958,13 +997,14 @@ window.openPrintModal = async function openPrintModal(
       fanampinAnarana: childLastName,
       lft: childNUI,
       dateOfBirth: window.setLocaleDateCustomString(event.child.birthDate),
-      firstParagraph: `---Tamin'ny ${childDob} tamin'ny ${childHourOfBirth}, no teraka ${childBirthLocation} i ${[
-        childFirstName,
-        childLastName
-      ]
-        .join(' ')
-        .trim()}, ${childGender}, ${outputFather} ${outputMother}. ---`,
-      secondParagraph: `---Nosoratana androany ${birthRegistrationDate} tamin'ny ${birthRegistrationTime}, araka ny fanambarana nataon' ${birthInformantInfo} ${window.isInformantMotherOrFather(event.informant?.relationship) ? '' :  `teraka tamin'ny ${birthInformantDob}, monina ao ${informantAddress}, ${informantOccupation}`}, izay miara-manao sonia aminay ${registrarName}, Mpandraikitra ny fiankohonana eto amin'ny Kaominina ${civilRegistrationCenterName}, rehefa novakiana tamin'ity soratra ity.---`
+      firstParagraph: window.eventStatementSimplified(
+        eventStatementContext,
+        fatherDetailsContext,
+        motherDetailsContext
+      ),
+      secondParagraph: window.registrationStatementSimplified(
+        registrationStatementContext
+      )
     }
     document.getElementById('soratra').textContent = printableData.soratra
     document.getElementById('nataoNy').textContent = printableData.nataoNy
