@@ -373,6 +373,7 @@ const fetchEvents = (variables) =>
           registration {
             createdAt
             status
+            dateOfDeclaration
             registrationNumber
             assignment {
               firstName
@@ -484,7 +485,7 @@ const getChildBirthLocation = (eventLocationId, type, id) =>
           return {
             name: healthFacility?.name,
             stateName: healthFacilityCommune?.name,
-            disctrictName: healthFacilityDistrict.name
+            districtName: healthFacilityDistrict.name
           }
         case 'OTHER':
           const other = await fetchLocationById(eventLocationId)
@@ -893,9 +894,7 @@ const renderTable = async () => {
         item.dateOfBirth
       )}</td>
       <td class="px-4 py-2 border-b border-gray-300">${timeAgo(
-        new Date(Number(item.registration.createdAt))
-          .toISOString()
-          .split('T')[0]
+        item.registration.dateOfDeclaration
       )}</td>
       <td  class="px-4 py-2 border-b border-gray-300"><button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded" onclick="openPrintModal('${
         item.id
@@ -957,9 +956,7 @@ window.openPrintModal = async function openPrintModal(id) {
     )
 
     const createdDate =
-      legacyDate && legacyDate.value
-        ? legacyDate.value
-        : new Date(now - offset).toISOString().slice(0, -1) // Retirer le 'Z' à la fin
+      legacyDate && legacyDate.value ? legacyDate.value : event.createdAt // Retirer le 'Z' à la fin
 
     // child info
     const childFirstName = event.child.name[0].familyName
