@@ -143,7 +143,6 @@ export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
 export const SIGNATURE = 'SIGNATURE'
-export const HIDDEN = 'HIDDEN'
 export const LINK_BUTTON = 'LINK_BUTTON'
 export const ID_READER = 'ID_READER'
 export const HTTP = 'HTTP'
@@ -497,10 +496,6 @@ export interface ISignatureFormField extends IFormFieldBase {
   )[]
 }
 
-export interface IHiddenFormField extends IFormFieldBase {
-  type: typeof HIDDEN
-}
-
 export interface IHttpFormField extends IFormFieldBase {
   type: typeof HTTP
   options: {
@@ -798,7 +793,7 @@ export type SerializedFormField = UnionOmit<
   mapping?: IFormFieldMapping
 }
 
-interface IHiddenFormField extends IFormFieldBase {
+export interface IHiddenFormField extends IFormFieldBase {
   type: typeof HIDDEN
 }
 
