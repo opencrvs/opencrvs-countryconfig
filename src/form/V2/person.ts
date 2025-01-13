@@ -260,6 +260,25 @@ const getIdFields = (person: string): FieldConfig[] => [
   }
 ]
 
+const urbanRuralRadioOptions: SelectOption[] = [
+  {
+    label: {
+      defaultMessage: 'Urban',
+      id: 'form.field.label.urban',
+      description: 'Label for form field checkbox option Urban'
+    },
+    value: 'URBAN'
+  },
+  {
+    label: {
+      defaultMessage: 'Rural',
+      id: 'form.field.label.rural',
+      description: 'Label for form field checkbox option Rural'
+    },
+    value: 'RURAL'
+  }
+]
+
 export const getAddressFields = (person: string): FieldConfig[] => {
   // @Todo: Same as mother or deseased
   const prefix = `${person}.address`
@@ -344,6 +363,63 @@ export const getAddressFields = (person: string): FieldConfig[] => {
     }
   ]
 
+  const urbanAddressFields: FieldConfig[] = [
+    {
+      id: `${prefix}.town`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Town',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.town.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.residentialArea`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Residential Area',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.residentialArea.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.street`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Street',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.street.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.number`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Number',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.number.label`
+      },
+      conditionals: []
+    },
+    {
+      id: `${prefix}.zipCode`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Postcode / Zip',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.zipCode.label`
+      },
+      conditionals: []
+    }
+  ]
   const farajalandAddressFields: FieldConfig[] = [
     {
       id: `${prefix}.province`,
@@ -377,59 +453,46 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       conditionals: []
     },
     {
-      id: `${prefix}.town`,
-      type: 'TEXT',
+      id: `${prefix}.urbanOrRural`,
+      type: 'RADIO_GROUP',
+      options: urbanRuralRadioOptions,
+      flexDirection: 'row',
       required: false,
       label: {
-        defaultMessage: 'Town',
+        defaultMessage: 'Urban or Rural',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.town.label`
+        id: `event.birth.action.declare.form.section.${person}.field.address.urbanOrRural.label`
       },
       conditionals: []
     },
-    {
-      id: `${prefix}.residentialArea`,
-      type: 'TEXT',
-      required: false,
-      label: {
-        defaultMessage: 'Residential Area',
-        description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.residentialArea.label`
-      },
-      conditionals: []
-    },
+    ...appendConditionalsToFields({
+      inputFields: urbanAddressFields,
+      newConditionals: [
+        {
+          type: 'HIDE',
+          conditional: field(`${prefix}.urbanOrRural`).isUndefinedOrInArray([
+            'RURAL'
+          ])
+        }
+      ]
+    }),
     {
       id: `${prefix}.village`,
       type: 'TEXT',
       required: false,
       label: {
-        defaultMessage: 'Area / Ward / Mouja / Village',
+        defaultMessage: 'Village',
         description: 'This is the label for the field',
         id: `event.birth.action.declare.form.section.${person}.field.address.village.label`
       },
-      conditionals: []
-    },
-    {
-      id: `${prefix}.number`,
-      type: 'TEXT',
-      required: false,
-      label: {
-        defaultMessage: 'Number',
-        description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.number.label`
-      },
-      conditionals: []
-    },
-    {
-      id: `${prefix}.zipCode`,
-      type: 'TEXT',
-      required: false,
-      label: {
-        defaultMessage: 'Postcode / Zip',
-        description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.zipCode.label`
-      },
-      conditionals: []
+      conditionals: [
+        {
+          type: 'HIDE',
+          conditional: field(`${prefix}.urbanOrRural`).isUndefinedOrInArray([
+            'URBAN'
+          ])
+        }
+      ]
     }
   ]
 
