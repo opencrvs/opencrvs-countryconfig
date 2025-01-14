@@ -32,7 +32,7 @@ export const PRODUCTION = env.isProd
 export const QA_ENV = env.QA_ENV
 
 // e-signet
-export const ESIGNET_AUTH_URL = env.ESIGNET_AUTH_URL
+export const ESIGNET_TOKEN_URL = env.ESIGNET_TOKEN_URL
 export const OPENID_PROVIDER_CLIENT_ID = env.OPENID_PROVIDER_CLIENT_ID
 export const OPENID_PROVIDER_CLAIMS = env.OPENID_PROVIDER_CLAIMS
-export const OIDP_USER_INFO_URL = env.OIDP_USER_INFO_URL
+export const ESIGNET_USERINFO_URL = env.ESIGNET_USERINFO_URL

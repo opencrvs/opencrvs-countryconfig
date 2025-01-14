@@ -88,8 +88,8 @@ import {
 } from '@opencrvs/mosip'
 import { getGenderCustom } from './custom-fields'
 import {
-  ESIGNET_AUTH_URL,
-  OIDP_USER_INFO_URL,
+  ESIGNET_TOKEN_URL,
+  ESIGNET_USERINFO_URL,
   OPENID_PROVIDER_CLAIMS,
   OPENID_PROVIDER_CLIENT_ID
 } from '@countryconfig/constants'
@@ -247,7 +247,7 @@ export const birthForm: ISerializedForm = {
                 esignet(
                   'birth',
                   'informant',
-                  ESIGNET_AUTH_URL,
+                  ESIGNET_TOKEN_URL,
                   OPENID_PROVIDER_CLIENT_ID,
                   OPENID_PROVIDER_CLAIMS,
                   'esignet',
@@ -259,7 +259,7 @@ export const birthForm: ISerializedForm = {
               fieldName: 'esignetCallback',
               event: 'birth',
               sectionId: 'informant',
-              getOIDPUserInfoUrl: OIDP_USER_INFO_URL,
+              getOIDPUserInfoUrl: ESIGNET_USERINFO_URL,
               openIdProviderClientId: OPENID_PROVIDER_CLIENT_ID
             }) as SerializedFormField,
             ...(idVerificationFields(
