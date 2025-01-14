@@ -19,6 +19,7 @@ import {
   not,
   field
 } from '@opencrvs/toolkit/conditionals'
+import { getAddressFields } from './V2/person'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
@@ -110,7 +111,21 @@ const TENNIS_CLUB_FORM = defineForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
           }
-        }
+        },
+        {
+          id: 'applicant.address.helper',
+          type: 'PARAGRAPH',
+          required: false,
+          label: {
+            defaultMessage: "Applicant's address",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.helper.label'
+          },
+          options: {
+            fontVariant: 'h3'
+          }
+        },
+        ...getAddressFields('applicant')
       ]
     },
     {
