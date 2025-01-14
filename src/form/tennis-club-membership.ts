@@ -10,6 +10,7 @@
  */
 
 import { defineConfig, defineForm } from '@opencrvs/toolkit/events'
+
 import {
   defineConditional,
   or,
@@ -17,7 +18,8 @@ import {
   userHasScope,
   and,
   not,
-  field
+  field,
+  deduplication
 } from '@opencrvs/toolkit/conditionals'
 
 const TENNIS_CLUB_FORM = defineForm({
@@ -286,6 +288,21 @@ export const tennisClubMembershipEvent = defineConfig({
           status: ['REGISTERED']
         }
       ]
+    }
+  ],
+  deduplication: [
+    {
+      id: 'STANDARD CHECK',
+      label: {
+        defaultMessage: 'Standard check',
+        description:
+          'This could be shown to the user in a reason for duplicate detected',
+        id: '...'
+      },
+      query: deduplication.or([
+        deduplication.field('requester.phone').strictMatches(),
+        deduplication.field('requester.name').fuzzyMatches()
+      ])
     }
   ],
   actions: [
