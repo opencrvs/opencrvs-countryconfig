@@ -1,7 +1,7 @@
 <svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <rect width="595" height="842" fill="white" />
-    {{#ifCond (isTanaIV (location registrar.districtId "name")) '===' true }}
+    {{#if (isTanaIV (location registrar.districtId "name")) }}
      <!-- ne fait rien-->
     {{ else }}
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
@@ -25,7 +25,7 @@
         <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionCommuneInTheAct (location registrar.districtId "name")}}</span> 
         </div>
     </foreignObject>
-    {{/ifCond}}
+    {{/if}}
 
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
@@ -72,9 +72,14 @@
         {{/foreignObject}}
     {{/wrapGroup}}
 
-    <text fill="black" xml:space="default" font-family="Kapakana" font-size="36" letter-spacing="0em">
+    {{#if (isTanaIV (location registrar.districtId "name"))}}
+       <!-- ne fait rien-->
+    {{ else }}
+     <text fill="black" xml:space="default" font-family="Kapakana" font-size="36" letter-spacing="0em">
         <tspan x="217.896" y="122.48">Kopian&#x2019;ny Sora-piankohonana</tspan>
-    </text>
+     </text>
+    {{/if}}
+   
 
     <foreignObject x="190" y="165" width="384" height="560">
         <p style="font-family: 'Plus Jakarta Sans';
@@ -151,11 +156,11 @@
     </style>
     
     <!-- Afficher uniquement le logo si different de tana 4 -->
-    {{#ifCond (isTanaIV (location registrar.districtId "name")) '===' true }}
+    {{#if (isTanaIV (location registrar.districtId "name"))}}
        <!-- ne fait rien-->
     {{ else }}
          <image x="231" y="14" width="132" height="72" xlink:href="{{certificateLogo}}" preserveAspectRatio="xMaxYMid meet" />
-    {{/ifCond}}
+    {{/if}}
    
    
 </svg>

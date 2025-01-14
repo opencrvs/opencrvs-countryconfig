@@ -766,7 +766,6 @@ function getBirthRegistrationDate(data: any): string | undefined {
 
 export function getBirthRegistrationDateMDGFormat(): Handlebars.HelperDelegate {
   return function (this: any) {
-    console.log(this.registrar.date)
     const birthRegistrationDate = getBirthRegistrationDate(this)
 
     if (isValidDate(birthRegistrationDate)) {
