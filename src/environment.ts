@@ -31,7 +31,7 @@ export const env = cleanEnv(process.env, {
     devDefault: 'http://localhost:5050/confirm/registration'
   }),
   QA_ENV: bool({ default: false }),
-  E_SIGNET_AUTH_URL: url({ devDefault: '' }),
+  ESIGNET_AUTH_URL: url({ devDefault: '' }),
   OPENID_PROVIDER_CLIENT_ID: str({ devDefault: '' }),
   OPENID_PROVIDER_CLAIMS: str({ devDefault: '' }),
   OIDP_USER_INFO_URL: url({ devDefault: '' })

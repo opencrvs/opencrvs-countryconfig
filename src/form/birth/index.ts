@@ -88,7 +88,7 @@ import {
 } from '@opencrvs/mosip'
 import { getGenderCustom } from './custom-fields'
 import {
-  E_SIGNET_AUTH_URL,
+  ESIGNET_AUTH_URL,
   OIDP_USER_INFO_URL,
   OPENID_PROVIDER_CLAIMS,
   OPENID_PROVIDER_CLIENT_ID
@@ -247,7 +247,7 @@ export const birthForm: ISerializedForm = {
                 esignet(
                   'birth',
                   'informant',
-                  E_SIGNET_AUTH_URL,
+                  ESIGNET_AUTH_URL,
                   OPENID_PROVIDER_CLIENT_ID,
                   OPENID_PROVIDER_CLAIMS,
                   'esignet',
