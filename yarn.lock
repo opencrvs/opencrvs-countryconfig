@@ -790,10 +790,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@0.0.10-events":
-  version "0.0.10-events"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.10-events.tgz#16bb01c07bc81603b4c36ceff3ee8e7a6d74fa09"
-  integrity sha512-/ZiuEvocyIdG/wyg74AyMFjq1t8pTz++FIgxm7Cf35D3MvmMN673yLJEXmax2WujPi97r3kkw7XsDaJ3y0hsBw==
+"@opencrvs/toolkit@0.0.13-events":
+  version "0.0.13-events"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.13-events.tgz#7b2c1fd73bba74c2cb6292a0ce4c6659e9711ee3"
+  integrity sha512-sdST83RXETbP6e1ETtM7VSUP2W+sYpz/DU9a8c036QlJ67I9306nuIqLePGU62pPggI8sI63fa2PL38bF3hAlg==
   dependencies:
     ajv "^8.17.1"
 
