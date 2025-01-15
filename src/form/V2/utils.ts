@@ -18,10 +18,7 @@ export const appendConditionalsToFields = ({
   inputFields: FieldConfig[]
   newConditionals: FieldConditional[]
 }): FieldConfig[] =>
-  inputFields.map(
-    (inputField) =>
-      ({
-        ...inputField,
-        conditionals: [...inputField.conditionals, ...newConditionals]
-      } as FieldConfig)
-  )
+  inputFields.map((inputField) => ({
+    ...inputField,
+    conditionals: [...inputField.conditionals, ...newConditionals]
+  }))

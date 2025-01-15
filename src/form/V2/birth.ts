@@ -143,7 +143,6 @@ export const informantMessageDescriptors = {
     description: 'Label for option Granddaughter',
     id: 'form.field.label.informantRelation.granddaughter'
   },
-  // selectContactPoint: {},
   selectContactPoint: {
     defaultMessage: 'Contact Point',
     description: 'Label for option Contact point',
