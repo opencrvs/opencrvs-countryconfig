@@ -146,7 +146,7 @@ export const getInformantFields = (person: string): FieldConfig[] => [
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.addressHelper.label`
     },
-    options: { fontVariant: 'h3' },
+    options: { fontVariant: 'h2' },
     conditionals: []
   },
   ...getAddressFields(person)

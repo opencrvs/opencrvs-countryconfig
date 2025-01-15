@@ -748,7 +748,7 @@ const BIRTH_FORM = defineForm({
   ]
 })
 
-export const BirthEvent = defineConfig({
+export const birthEvent = defineConfig({
   id: 'BIRTH',
   label: {
     defaultMessage: 'Birth declaration',
