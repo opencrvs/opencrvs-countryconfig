@@ -525,8 +525,8 @@ const BIRTH_FORM = defineForm({
             {
               type: 'HIDE',
               conditional: field('informant.relation').isUndefinedOrInArray([
-                'MOTHER',
-                'FATHER'
+                informantTypes.MOTHER,
+                informantTypes.FATHER
               ])
             }
           ]
@@ -576,7 +576,9 @@ const BIRTH_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('informant.relation').isInArray(['MOTHER'])
+              conditional: field('informant.relation').isInArray([
+                informantTypes.MOTHER
+              ])
             }
           ]
         },
@@ -618,7 +620,9 @@ const BIRTH_FORM = defineForm({
               type: 'HIDE',
               conditional: and(
                 field('mother.detailsNotAvailable').isInArray(['true']),
-                field('informant.relation').isUndefinedOrNotInArray(['MOTHER'])
+                field('informant.relation').isUndefinedOrNotInArray([
+                  informantTypes.MOTHER
+                ])
               )
             }
           ]
@@ -645,7 +649,9 @@ const BIRTH_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('informant.relation').isInArray(['FATHER'])
+              conditional: field('informant.relation').isInArray([
+                informantTypes.FATHER
+              ])
             }
           ]
         },
@@ -674,7 +680,9 @@ const BIRTH_FORM = defineForm({
               type: 'HIDE',
               conditional: and(
                 field('father.detailsNotAvailable').isInArray(['true']),
-                field('informant.relation').isUndefinedOrNotInArray(['FATHER'])
+                field('informant.relation').isUndefinedOrNotInArray([
+                  informantTypes.FATHER
+                ])
               )
             }
           ]
