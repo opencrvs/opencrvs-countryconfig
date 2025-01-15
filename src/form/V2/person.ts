@@ -285,7 +285,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
 
   const genericAddressFields: FieldConfig[] = [
     {
-      id: `${prefix}.state`,
+      id: `${prefix}.other.state`,
       type: 'TEXT',
       required: true,
       label: {
@@ -296,7 +296,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       conditionals: []
     },
     {
-      id: `${prefix}.district`,
+      id: `${prefix}.other.district`,
       type: 'TEXT',
       required: true,
       label: {
@@ -307,7 +307,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       conditionals: []
     },
     {
-      id: `${prefix}.town`,
+      id: `${prefix}.other.town`,
       type: 'TEXT',
       required: false,
       label: {
@@ -318,7 +318,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       conditionals: []
     },
     {
-      id: `${prefix}.addressLine1`,
+      id: `${prefix}.other.addressLine1`,
       type: 'TEXT',
       required: false,
       label: {
@@ -329,7 +329,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       conditionals: []
     },
     {
-      id: `${prefix}.addressLine2`,
+      id: `${prefix}.other.addressLine2`,
       type: 'TEXT',
       required: false,
       label: {
@@ -340,7 +340,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       conditionals: []
     },
     {
-      id: `${prefix}.addressLine3`,
+      id: `${prefix}.other.addressLine3`,
       type: 'TEXT',
       required: false,
       label: {
@@ -351,7 +351,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
       conditionals: []
     },
     {
-      id: `${prefix}.zipCode`,
+      id: `${prefix}.other.zipCode`,
       type: 'TEXT',
       required: false,
       label: {
