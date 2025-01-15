@@ -1060,9 +1060,9 @@ window.openPrintModal = async function openPrintModal(id) {
           ) || {
             value: false
           }
-        ).value == 'false'
-          ? false
-          : true,
+        ).value == 'true'
+          ? true
+          : false,
       countryPrimaryFather: event.father.address?.find(
         (a) => a.type === 'PRIMARY_ADDRESS'
       )?.country
@@ -1144,9 +1144,9 @@ window.openPrintModal = async function openPrintModal(id) {
             (q) =>
               q.fieldId === 'birth.mother.mother-view-group.motherIsDeceased'
           ) || { value: false }
-        ).value == 'false'
-          ? false
-          : true,
+        ).value == 'true'
+          ? true
+          : false,
       countryPrimaryMother: event.mother.address?.find(
         (a) => a.type === 'PRIMARY_ADDRESS'
       )?.country
