@@ -262,11 +262,20 @@ export function eventStatement(): Handlebars.HelperDelegate {
   }
 }
 
+function canShowFatherDetails(_this: Record<string, string>) {
+  if (_this.motherMaritalStatus?.toLocaleUpperCase() == 'MARRIED') {
+    return !(
+      'fatherReasonNotApplying' in _this && !('fatherFamilyName' in _this)
+    )
+  }
+  return !!_this.birthFatherFatherHasFormallyRecognisedChild
+}
+
 function fatherDetails(
   this: Record<string, string>,
   fatherPrimaryDistrict: string
 ) {
-  if ('fatherReasonNotApplying' in this && !('fatherFamilyName' in this)) {
+  if (!canShowFatherDetails(this)) {
     return ''
   }
   return joinValuesWith(
@@ -422,22 +431,24 @@ export function registrationStatement(): Handlebars.HelperDelegate {
         : this.registrar.date,
       'Africa/Nairobi'
     )
+    const informantTypeMapped =
+      relationMap[this.informantType?.toLowerCase() as keyof typeof relationMap]
     return joinValuesWith([
       '---Nosoratana androany',
       customizeDateInCertificateContent(registrarDateUTC.split('T')[0]) + ',',
       'tamin’ny',
       convertTimeToMdgCustomWords(registrarDateUTC.split('T')[1]),
-      isInformantMotherOrFather(this.informantType)
+      isInformantMotherOrFather(this)
         ? 'araka ny fanambarana nataon’ny'
         : joinValuesWith([
             "araka ny fanambarana nataon'i",
             this.informantFamilyName,
             this.informantFirstName
           ]) + ',',
-      (relationMap[
-        this.informantType?.toLowerCase() as keyof typeof relationMap
-      ] || 'mpanolotra') + ',',
-      ...(isInformantMotherOrFather(this.informantType)
+      (!isFatherAndHasReconizedChild(this)
+        ? 'mpanolotra'
+        : informantTypeMapped || 'mpanolotra') + ',',
+      ...(isInformantMotherOrFather(this)
         ? []
         : [
             "teraka tamin'ny",
@@ -503,8 +514,18 @@ export function signatureDescription(): Handlebars.HelperDelegate {
     )
   }
 }
-function isInformantMotherOrFather(informantType: string) {
-  return informantType === 'MOTHER' || informantType === 'FATHER'
+
+function isFatherAndHasReconizedChild(_this: Record<string, any>) {
+  return (
+    _this?.informantType === 'FATHER' &&
+    _this?.birthFatherFatherHasFormallyRecognisedChild
+  )
+}
+
+function isInformantMotherOrFather(_this: Record<string, any>) {
+  return (
+    _this?.informantType === 'MOTHER' || isFatherAndHasReconizedChild(_this)
+  )
 }
 
 const THE_UNITS_MDG_WORDS: string[] = [
@@ -901,6 +922,18 @@ export function definitionCommuneInTheAct(): Handlebars.HelperDelegate {
 export function isTanaIV(): Handlebars.HelperDelegate {
   return function (this: any, name: string) {
     return name.toLowerCase() === 'cu tana iv'
+  }
+}
+export function isWithAdpotion(): Handlebars.HelperDelegate {
+  return function (this: any) {
+    if (
+      this.motherMaritalStatus?.toLocaleUpperCase() == 'MARRIED' ||
+      ('fatherReasonNotApplying' in this && !('fatherFamilyName' in this))
+    ) {
+      return false
+    } else {
+      return !!this.birthFatherFatherHasFormallyRecognisedChild
+    }
   }
 }
 function definitionDistrict(officeName: string = '') {

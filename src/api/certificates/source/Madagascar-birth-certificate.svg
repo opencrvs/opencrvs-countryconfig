@@ -46,11 +46,11 @@
 
     {{#wrapGroup 30 24 239.712}}
         {{#text fontSize=14 fontWeight="bold"}}
-            {{#ifCond birthFatherFatherHasFormallyRecognisedChild '===' true }}
+            {{#if (isWithAdpotion)}}
             FAHATERAHANA SY FANJANAHANA
             {{ else }}
             FAHATERAHANA
-            {{/ifCond}}
+            {{/if}}
         {{/text}}
         {{#text fontSize=10 }}{{childFamilyName}}{{/text}}
         {{#text fontSize=10 }}{{childFirstName}}{{/text}}
