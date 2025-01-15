@@ -958,6 +958,19 @@ window.openPrintModal = async function openPrintModal(id) {
     const createdDate =
       legacyDate && legacyDate.value ? legacyDate.value : event.createdAt // Retirer le 'Z' à la fin
 
+    const isFatherHasFormallyRecognisedChild = (
+      event?.questionnaire?.find(
+        (q) =>
+          q.fieldId ===
+          'birth.father.father-view-group.fatherHasFormallyRecognisedChild'
+      ) || { value: '' }
+    ).value
+
+    const title =
+      isFatherHasFormallyRecognisedChild == 'true'
+        ? 'FAHATERAHANA SY FANJANAHANA'
+        : 'FAHATERAHANA'
+
     // child info
     const childFirstName = event.child.name[0].familyName
     const childLastName = [
@@ -1089,13 +1102,8 @@ window.openPrintModal = async function openPrintModal(id) {
         (a) => a.type === 'PRIMARY_ADDRESS'
       )?.districtName,
       fatherOccupation: event.father.occupation,
-      birthFatherFatherHasFormallyRecognisedChild: (
-        event?.questionnaire?.find(
-          (q) =>
-            q.fieldId ===
-            'birth.father.father-view-group.fatherHasFormallyRecognisedChild'
-        ) || { value: '' }
-      ).value,
+      birthFatherFatherHasFormallyRecognisedChild:
+        isFatherHasFormallyRecognisedChild,
       motherReasonNotApplying: event.mother.reasonNotApplying,
       internationalStatePrimaryFather: event.father.address?.state,
       internationalDistrictPrimaryFather: event.father.address?.district,
@@ -1253,6 +1261,7 @@ window.openPrintModal = async function openPrintModal(id) {
     const printableData = {
       soratra: childLegacyBirthRegistrationNumber,
       nataoNy: window.setLocaleDateCustomString(createdDate.split('T')[0]),
+      title: title,
       anarana: childFirstName,
       fanampinAnarana: childLastName,
       lft: childNUI,
@@ -1269,6 +1278,7 @@ window.openPrintModal = async function openPrintModal(id) {
     document.getElementById('soratra').textContent = printableData.soratra
     document.getElementById('nataoNy').textContent = printableData.nataoNy
     document.getElementById('anarana').textContent = printableData.anarana
+    document.getElementById('title').textContent = printableData.title
     document.getElementById('lft').textContent = printableData.lft
     document.getElementById('dateOfBirth').textContent =
       printableData.dateOfBirth
