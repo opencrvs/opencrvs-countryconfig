@@ -445,7 +445,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             this.informantFamilyName,
             this.informantFirstName
           ]) + ',',
-      (!isFatherAndHasReconizedChild(this)
+      (this.informantType === 'FATHER' && !isInformantLegalFather(this)
         ? 'mpanolotra'
         : informantTypeMapped || 'mpanolotra') + ',',
       ...(isInformantMotherOrFather(this)
@@ -515,17 +515,16 @@ export function signatureDescription(): Handlebars.HelperDelegate {
   }
 }
 
-function isFatherAndHasReconizedChild(_this: Record<string, any>) {
+function isInformantLegalFather(_this: Record<string, any>) {
   return (
     _this?.informantType === 'FATHER' &&
-    _this?.birthFatherFatherHasFormallyRecognisedChild
+    (_this.motherMaritalStatus?.toLocaleUpperCase() == 'MARRIED' ||
+      _this?.birthFatherFatherHasFormallyRecognisedChild)
   )
 }
 
 function isInformantMotherOrFather(_this: Record<string, any>) {
-  return (
-    _this?.informantType === 'MOTHER' || isFatherAndHasReconizedChild(_this)
-  )
+  return _this?.informantType === 'MOTHER' || isInformantLegalFather(_this)
 }
 
 const THE_UNITS_MDG_WORDS: string[] = [
