@@ -92,6 +92,24 @@ export const informantPage = defineFormPage({
       },
       options: birthInformantTypeOptions
     },
+    {
+      id: 'informant.other.relation',
+      type: 'TEXT',
+      required: true,
+      label: {
+        defaultMessage: 'Relationship to child',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.informant.field.other.relation.label'
+      },
+      conditionals: [
+        {
+          type: 'HIDE',
+          conditional: field('informant.relation').isUndefinedOrNotInArray([
+            InformantTypes.OTHER
+          ])
+        }
+      ]
+    },
     ...appendConditionalsToFields({
       inputFields: getInformantFields('informant'),
       newConditionals: [
