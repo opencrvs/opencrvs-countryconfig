@@ -21,7 +21,7 @@ import {
   field,
   deduplication
 } from '@opencrvs/toolkit/conditionals'
-import { getAddressFields } from './V2/person'
+import { getAddressFields } from './v2/person/address'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {

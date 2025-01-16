@@ -9,7 +9,12 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { FieldConditional, FieldConfig } from '@opencrvs/toolkit/events'
+import {
+  FieldConditional,
+  FieldConfig,
+  SelectOption,
+  TranslationConfig
+} from '@opencrvs/toolkit/events'
 
 export const appendConditionalsToFields = ({
   inputFields,
@@ -18,10 +23,19 @@ export const appendConditionalsToFields = ({
   inputFields: FieldConfig[]
   newConditionals: FieldConditional[]
 }): FieldConfig[] =>
-  inputFields.map(
-    (inputField) =>
-      ({
-        ...inputField,
-        conditionals: [...inputField.conditionals, ...newConditionals]
-      } as FieldConfig)
-  )
+  inputFields.map((inputField) => ({
+    ...inputField,
+    conditionals: [...(inputField.conditionals || []), ...newConditionals]
+  }))
+
+export const createSelectOptions = <
+  T extends Record<string, string>,
+  M extends Record<keyof T, TranslationConfig>
+>(
+  options: T,
+  messageDescriptors: M
+): SelectOption[] =>
+  Object.entries(options).map(([key, value]) => ({
+    value,
+    label: messageDescriptors[key as keyof T]
+  }))
