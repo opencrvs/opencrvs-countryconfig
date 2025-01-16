@@ -275,7 +275,7 @@ export const birthForm: ISerializedForm = {
               {
                 dependsOn: ['idReader', 'esignetCallback'],
                 expression:
-                  '$form?.idReader?.firstName || "$form?.esignetCallback?.data?.firstName"'
+                  '$form?.idReader?.firstName || $form?.esignetCallback?.data?.firstName || ""'
               }
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
@@ -287,13 +287,13 @@ export const birthForm: ISerializedForm = {
               {
                 dependsOn: ['idReader', 'esignetCallback'],
                 expression:
-                  '$form?.idReader?.familyName || "$form?.esignetCallback?.data?.familyName"'
+                  '$form?.idReader?.familyName || $form?.esignetCallback?.data?.familyName || ""'
               }
             ), // Required field.
             getGenderCustom('birth', 'informant', [], {
               dependsOn: ['idReader', 'esignetCallback'],
               expression:
-                '$form?.idReader?.gender || "$form?.esignetCallback?.data?.gender"'
+                '$form?.idReader?.gender || $form?.esignetCallback?.data?.gender || ""'
             }),
             getBirthDate(
               'informantBirthDate',
@@ -314,7 +314,7 @@ export const birthForm: ISerializedForm = {
               {
                 dependsOn: ['idReader', 'esignetCallback'],
                 expression:
-                  '$form?.idReader?.birthDate || "$form?.esignetCallback?.data?.birthDate"'
+                  '$form?.idReader?.birthDate || $form?.esignetCallback?.data?.birthDate || ""'
               }
             ), // Required field.
             exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
