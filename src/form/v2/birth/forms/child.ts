@@ -235,12 +235,15 @@ export const childPage = defineFormPage({
     },
     {
       id: 'child.birthLocation',
-      type: 'TEXT', // @ToDo: select
+      type: 'LOCATION',
       required: true,
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
+      },
+      options: {
+        type: 'HEALTH_FACILITY'
       },
       conditionals: [
         {
