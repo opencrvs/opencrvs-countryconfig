@@ -12,7 +12,7 @@
 import { FieldConfig, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { getAddressFields } from './address'
-import { createSelectOptions } from '../utils'
+import { appendConditionalsToFields, createSelectOptions } from '../utils'
 
 const IDTypes = {
   NATIONAL_ID: 'NATIONAL_ID',
@@ -127,6 +127,29 @@ const educationalAttainmentOptions = createSelectOptions(
   educationalAttainmentMessageDescriptors
 )
 
+const YesNoTypes = {
+  YES: 'YES',
+  NO: 'NO'
+} as const
+
+const yesNoMessageDescriptors = {
+  YES: {
+    defaultMessage: 'Yes',
+    id: 'form.field.label.Yes',
+    description: 'Label for form field radio option Yes'
+  },
+  NO: {
+    defaultMessage: 'No',
+    id: 'form.field.label.No',
+    description: 'Label for form field radio option No'
+  }
+} satisfies Record<keyof typeof YesNoTypes, TranslationConfig>
+
+const yesNoRadioOptions = createSelectOptions(
+  YesNoTypes,
+  yesNoMessageDescriptors
+)
+
 const getIdFields = (person: string): FieldConfig[] => [
   {
     id: `${person}.idType`,
@@ -194,6 +217,55 @@ const getIdFields = (person: string): FieldConfig[] => [
     ]
   }
 ]
+
+const getAddressOrSameAsMotherFields = (person: string): FieldConfig[] => {
+  if (person === 'father')
+    return [
+      ...appendConditionalsToFields({
+        inputFields: [
+          {
+            id: `${person}.addressSameAsHelper`,
+            type: 'PARAGRAPH',
+            label: {
+              defaultMessage: "Same as mother's usual place of residence?",
+              description: 'This is the label for the field',
+              id: `event.birth.action.declare.form.section.${person}.field.addressSameAsHelper.label`
+            },
+            options: { fontVariant: 'reg16' }
+          },
+          {
+            id: `${person}.addressSameAs`,
+            type: 'RADIO_GROUP',
+            options: yesNoRadioOptions,
+            required: true,
+            label: {
+              defaultMessage: "Same as mother's usual place of residence?",
+              description: 'This is the label for the field',
+              id: `event.birth.action.declare.form.section.${person}.field.address.addressSameAs.label`
+            }
+          }
+        ],
+        newConditionals: [
+          {
+            type: 'HIDE',
+            conditional: field('mother.detailsNotAvailable').isInArray(['true'])
+          }
+        ]
+      }),
+      ...appendConditionalsToFields({
+        inputFields: getAddressFields(person),
+        newConditionals: [
+          {
+            type: 'HIDE',
+            conditional: field(`${person}.addressSameAs`).isInArray([
+              YesNoTypes.YES
+            ])
+          }
+        ]
+      })
+    ]
+  return getAddressFields(person)
+}
 
 export const getInformantFields = (person: string): FieldConfig[] => [
   {
@@ -291,7 +363,7 @@ export const getInformantFields = (person: string): FieldConfig[] => [
     },
     options: { fontVariant: 'h2' }
   },
-  ...getAddressFields(person)
+  ...getAddressOrSameAsMotherFields(person)
 ]
 
 export const getPersonInputFields = (person: string): FieldConfig[] => [

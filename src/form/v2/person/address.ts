@@ -37,7 +37,6 @@ const urbanRuralRadioOptions = createSelectOptions(
 )
 
 export const getAddressFields = (person: string): FieldConfig[] => {
-  // @Todo: Same as mother or deseased
   const prefix = `${person}.address`
 
   const genericAddressFields: FieldConfig[] = [
