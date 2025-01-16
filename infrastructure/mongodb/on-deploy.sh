@@ -262,7 +262,7 @@ if [[ $EVENTS_USER != "FOUND" ]]; then
   db.createUser({
     user: 'events',
     pwd: '$EVENTS_MONGODB_PASSWORD',
-    roles: [{ role: 'readWrite', db: 'events' }]
+    roles: [{ role: 'readWrite', db: 'events' }, {role: 'read', db: 'user-mgnt'}]
   })
 EOF
 else
@@ -271,7 +271,7 @@ else
   use events
   db.updateUser('events', {
     pwd: '$EVENTS_MONGODB_PASSWORD',
-    roles: [{ role: 'readWrite', db: 'events' }]
+    roles: [{ role: 'readWrite', db: 'events' }, {role: 'read', db: 'user-mgnt'}]
   })
 EOF
 fi
