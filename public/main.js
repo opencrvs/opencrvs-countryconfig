@@ -1198,10 +1198,18 @@ window.openPrintModal = async function openPrintModal(id) {
       registrarDate: event.createdAt,
       timezone: 'Africa/Nairobi',
       informantType: event.informant.relationship,
-      informantFamilyName: event.informant.name[0].familyName,
+
+      informantFamilyName:
+        event.informant.name && event.informant.name[0]
+          ? event.informant.name[0].familyName
+          : '',
       informantFirstName: [
-        event.informant.name[0].middleName,
-        event.informant.name[0].firstNames
+        event.informant.name && event.informant.name[0]
+          ? event.informant.name[0].middleName
+          : '',
+        event.informant.name && event.informant.name[0]
+          ? event.informant.name[0].firstNames
+          : ''
       ]
         .join(' ')
         .trim(),
