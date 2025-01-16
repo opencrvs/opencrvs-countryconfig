@@ -11,7 +11,7 @@
 import * as Hapi from '@hapi/hapi'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 import { EventDocument } from '@opencrvs/toolkit/events'
-import { birthEvent } from '@countryconfig/form/V2/birth'
+import { birthEvent } from '@countryconfig/form/v2/birth'
 
 export function getCustomEventsHandler(
   request: Hapi.Request,
