@@ -1024,16 +1024,33 @@ services:
           - node.labels.data1 == true
 
   mosip-api:
-    image: ghcr.io/opencrvs/mosip:653cf94
+    image: ghcr.io/opencrvs/mosip-api:${MOSIP_API_VERSION:-}
     environment:
       - NODE_ENV=production
       - MOSIP_BIRTH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/birth
       - MOSIP_DEATH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/death
       - OPENCRVS_GRAPHQL_GATEWAY_URL=http://gateway:7070/graphql
+      - LOCALE=en
+      - ESIGNET_USERINFO_URL=${ESIGNET_USERINFO_URL:-}
+      - ESIGNET_TOKEN_URL=${ESIGNET_TOKEN_URL:-}
+      - OIDP_CLIENT_PRIVATE_KEY=${OIDP_CLIENT_PRIVATE_KEY:-}
     deploy:
       replicas: 1
       labels:
-        - 'traefik.enable=false'
+        - 'traefik.enable=true'
+        - 'traefik.http.routers.mosip-api.rule=Host(`mosip-api.{{hostname}}`)'
+        - 'traefik.http.services.mosip-api.loadbalancer.server.port=20260'
+        - 'traefik.http.routers.mosip-api.tls=true'
+        - 'traefik.http.routers.mosip-api.tls.certresolver=certResolver'
+        - 'traefik.http.routers.mosip-api.entrypoints=web,websecure'
+        - 'traefik.http.routers.mosip-api.middlewares=gzip-compression'
+        - 'traefik.docker.network=opencrvs_overlay_net'
+        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.Pragma=no-cache'
+        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.Cache-control=no-store'
+        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.X-Robots-Tag=none'
+        - 'traefik.http.middlewares.mosip-api.headers.stsseconds=31536000'
+        - 'traefik.http.middlewares.mosip-api.headers.stsincludesubdomains=true'
+        - 'traefik.http.middlewares.mosip-api.headers.stspreload=true'
     networks:
       - overlay_net
     logging:
@@ -1043,10 +1060,10 @@ services:
         tag: 'mosip-api'
 
   mosip-mock:
-    image: ghcr.io/opencrvs/mosip-mock:653cf94
+    image: ghcr.io/opencrvs/mosip-mock:${MOSIP_API_VERSION:-}
     environment:
       - NODE_ENV=production
-      - OPENCRVS_MOSIP_SERVER_URL=http://mosip-api:2024/webhooks/mosip
+      - OPENCRVS_MOSIP_SERVER_URL=https://mosip-api.{{hostname}}/webhooks/mosip
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS:-}
       - ALERT_EMAIL=${ALERT_EMAIL:-}
       - SMTP_HOST=${SMTP_HOST:-}
@@ -1065,6 +1082,23 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'mosip-mock'
+
+  esignet-mock:
+    image: ghcr.io/opencrvs/esignet-mock:${MOSIP_API_VERSION:-}
+    environment:
+      - NODE_ENV=production
+      - CLIENT_URL=http://mosip-api:2024/webhooks/mosip
+    deploy:
+      replicas: 1
+      labels:
+        - 'traefik.enable=false'
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'esignet-mock'
 
 secrets:
   jwt-public-key.{{ts}}:
