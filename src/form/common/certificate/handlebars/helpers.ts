@@ -263,7 +263,7 @@ export function eventStatement(): Handlebars.HelperDelegate {
 }
 
 function canShowFatherDetails(_this: Record<string, string>) {
-  if (_this.motherMaritalStatus?.toLocaleUpperCase() == 'MARRIED') {
+  if (isTranslatedMarriedMaritalStatus(_this.motherMaritalStatus)) {
     return !(
       'fatherReasonNotApplying' in _this && !('fatherFamilyName' in _this)
     )
@@ -318,9 +318,7 @@ function fatherDetails(
             ]),
         this.fatherOccupation
       ]),
-      this.birthFatherFatherHasFormallyRecognisedChild
-        ? 'izay manambara fa manjanaka azy'
-        : '',
+      getIsWithAdpotion(this) ? 'izay manambara fa manjanaka azy' : '',
       'motherReasonNotApplying' in this ? '' : 'sy'
     ].filter(Boolean),
     ', '
@@ -518,7 +516,7 @@ export function signatureDescription(): Handlebars.HelperDelegate {
 function isInformantLegalFather(_this: Record<string, any>) {
   return (
     _this?.informantType === 'FATHER' &&
-    (_this.motherMaritalStatus?.toLocaleUpperCase() == 'MARRIED' ||
+    (isTranslatedMarriedMaritalStatus(_this.motherMaritalStatus) ||
       _this?.birthFatherFatherHasFormallyRecognisedChild)
   )
 }
@@ -923,18 +921,46 @@ export function isTanaIV(): Handlebars.HelperDelegate {
     return name.toLowerCase() === 'cu tana iv'
   }
 }
-export function isWithAdpotion(): Handlebars.HelperDelegate {
-  return function (this: any) {
-    if (
-      this.motherMaritalStatus?.toLocaleUpperCase() == 'MARRIED' ||
-      ('fatherReasonNotApplying' in this && !('fatherFamilyName' in this))
-    ) {
-      return false
-    } else {
-      return !!this.birthFatherFatherHasFormallyRecognisedChild
-    }
+
+/**
+ * @TODO To optimize
+ * !! THIS marital status translation list is HARDCODED here because :
+ * - martial status value is the translated one not the key
+ * - no way to get the translation list here from API
+ * !! Should change this if there are changes on form.field.label.maritalStatusMarried in client.csv translations
+ */
+const MARTIAL_STATUS_TRANSLATION_LIST = [
+  'married',
+  'marié(e)',
+  'manambady',
+  'marié',
+  'mariée'
+  // new translations here
+]
+function isTranslatedMarriedMaritalStatus(maritalStatus?: string) {
+  return (
+    maritalStatus &&
+    MARTIAL_STATUS_TRANSLATION_LIST.includes(maritalStatus.toLocaleLowerCase())
+  )
+}
+
+function getIsWithAdpotion(_this: Record<string, string>) {
+  if (
+    isTranslatedMarriedMaritalStatus(_this.motherMaritalStatus) ||
+    ('fatherReasonNotApplying' in _this && !('fatherFamilyName' in _this))
+  ) {
+    return false
+  } else {
+    return !!_this.birthFatherFatherHasFormallyRecognisedChild
   }
 }
+
+export function isWithAdpotion(): Handlebars.HelperDelegate {
+  return function (this: any) {
+    return getIsWithAdpotion(this)
+  }
+}
+
 function definitionDistrict(officeName: string = '') {
   const locationMappings: { [key: string]: string } = {
     'tana i': 'Antananarivo Renivohitra',

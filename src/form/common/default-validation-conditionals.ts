@@ -178,6 +178,13 @@ export const fathersDetailsExistConditionals = [
   }
 ]
 
+export const fathersHasFormallyRecognisedChildConditionnals = [
+  {
+    action: 'hide',
+    expression: 'draftData?.mother?.maritalStatus==="MARRIED"'
+  }
+]
+
 export const fathersBirthDateConditionals = [
   {
     action: 'hide',
