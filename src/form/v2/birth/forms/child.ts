@@ -255,7 +255,7 @@ export const childPage = defineFormPage({
       ]
     },
     ...appendConditionalsToFields({
-      inputFields: getAddressFields('child.privateHome'),
+      inputFields: getAddressFields('child.residentialAddress'),
       newConditionals: [
         {
           type: 'HIDE',

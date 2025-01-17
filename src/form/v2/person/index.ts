@@ -14,6 +14,8 @@ import { field } from '@opencrvs/toolkit/conditionals'
 import { getAddressFields } from './address'
 import { appendConditionalsToFields, createSelectOptions } from '../utils'
 
+export type PersonTypes = 'father' | 'mother' | 'informant' | 'applicant'
+
 const IDTypes = {
   NATIONAL_ID: 'NATIONAL_ID',
   PASSPORT: 'PASSPORT',
@@ -150,7 +152,7 @@ const yesNoRadioOptions = createSelectOptions(
   yesNoMessageDescriptors
 )
 
-const getIdFields = (person: string): FieldConfig[] => [
+const getIdFields = (person: PersonTypes): FieldConfig[] => [
   {
     id: `${person}.idType`,
     type: 'SELECT',
@@ -218,56 +220,9 @@ const getIdFields = (person: string): FieldConfig[] => [
   }
 ]
 
-const getAddressOrSameAsMotherFields = (person: string): FieldConfig[] => {
-  if (person === 'father')
-    return [
-      ...appendConditionalsToFields({
-        inputFields: [
-          {
-            id: `${person}.addressSameAsHelper`,
-            type: 'PARAGRAPH',
-            label: {
-              defaultMessage: "Same as mother's usual place of residence?",
-              description: 'This is the label for the field',
-              id: `event.birth.action.declare.form.section.${person}.field.addressSameAsHelper.label`
-            },
-            options: { fontVariant: 'reg16' }
-          },
-          {
-            id: `${person}.addressSameAs`,
-            type: 'RADIO_GROUP',
-            options: yesNoRadioOptions,
-            required: true,
-            label: {
-              defaultMessage: "Same as mother's usual place of residence?",
-              description: 'This is the label for the field',
-              id: `event.birth.action.declare.form.section.${person}.field.address.addressSameAs.label`
-            }
-          }
-        ],
-        newConditionals: [
-          {
-            type: 'HIDE',
-            conditional: field('mother.detailsNotAvailable').isInArray(['true'])
-          }
-        ]
-      }),
-      ...appendConditionalsToFields({
-        inputFields: getAddressFields(person),
-        newConditionals: [
-          {
-            type: 'HIDE',
-            conditional: field(`${person}.addressSameAs`).isInArray([
-              YesNoTypes.YES
-            ])
-          }
-        ]
-      })
-    ]
-  return getAddressFields(person)
-}
-
-export const getInformantFields = (person: string): FieldConfig[] => [
+export const getPersonInputCommonFields = (
+  person: PersonTypes
+): FieldConfig[] => [
   {
     id: `${person}.firstname`,
     type: 'TEXT',
@@ -362,42 +317,95 @@ export const getInformantFields = (person: string): FieldConfig[] => [
       id: `event.birth.action.declare.form.section.${person}.field.addressHelper.label`
     },
     options: { fontVariant: 'h2' }
-  },
-  ...getAddressOrSameAsMotherFields(person)
-]
-
-export const getPersonInputFields = (person: string): FieldConfig[] => [
-  ...getInformantFields(person),
-  {
-    id: `${person}.maritalStatus`,
-    type: 'SELECT',
-    required: false,
-    label: {
-      defaultMessage: 'Marital Status',
-      description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.maritalStatus.label`
-    },
-    options: maritalStatusOptions
-  },
-  {
-    id: `${person}.educationalAttainment`,
-    type: 'SELECT',
-    required: false,
-    label: {
-      defaultMessage: 'Level of education',
-      description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.educationalAttainment.label`
-    },
-    options: educationalAttainmentOptions
-  },
-  {
-    id: `${person}.occupation`,
-    type: 'TEXT',
-    required: false,
-    label: {
-      defaultMessage: 'Occupation',
-      description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.occupation.label`
-    }
   }
 ]
+
+const fatherAddressFields = [
+  ...appendConditionalsToFields({
+    inputFields: [
+      {
+        id: `${'father' satisfies PersonTypes}.addressSameAsHelper`,
+        type: 'PARAGRAPH',
+        label: {
+          defaultMessage: "Same as mother's usual place of residence?",
+          description: 'This is the label for the field',
+          id: `event.birth.action.declare.form.section.${
+            'father' satisfies PersonTypes
+          }.field.addressSameAsHelper.label`
+        },
+        options: { fontVariant: 'reg16' }
+      },
+      {
+        id: `${'father' satisfies PersonTypes}.addressSameAs`,
+        type: 'RADIO_GROUP',
+        options: yesNoRadioOptions,
+        required: true,
+        label: {
+          defaultMessage: "Same as mother's usual place of residence?",
+          description: 'This is the label for the field',
+          id: `event.birth.action.declare.form.section.${
+            'father' satisfies PersonTypes
+          }.field.address.addressSameAs.label`
+        }
+      }
+    ],
+    newConditionals: [
+      {
+        type: 'HIDE',
+        conditional: field(
+          `${'mother' satisfies PersonTypes}.detailsNotAvailable`
+        ).isInArray(['true'])
+      }
+    ]
+  }),
+  ...appendConditionalsToFields({
+    inputFields: getAddressFields('father' satisfies PersonTypes),
+    newConditionals: [
+      {
+        type: 'HIDE',
+        conditional: field(
+          `${'father' satisfies PersonTypes}.addressSameAs`
+        ).isInArray([YesNoTypes.YES])
+      }
+    ]
+  })
+]
+export const getPersonInputFields = (person: PersonTypes): FieldConfig[] => {
+  const isFather = person === 'father'
+  return [
+    ...getPersonInputCommonFields(person),
+    ...(isFather ? fatherAddressFields : getAddressFields(person)),
+    {
+      id: `${person}.maritalStatus`,
+      type: 'SELECT',
+      required: false,
+      label: {
+        defaultMessage: 'Marital Status',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.maritalStatus.label`
+      },
+      options: maritalStatusOptions
+    },
+    {
+      id: `${person}.educationalAttainment`,
+      type: 'SELECT',
+      required: false,
+      label: {
+        defaultMessage: 'Level of education',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.educationalAttainment.label`
+      },
+      options: educationalAttainmentOptions
+    },
+    {
+      id: `${person}.occupation`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Occupation',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.occupation.label`
+      }
+    }
+  ]
+}
