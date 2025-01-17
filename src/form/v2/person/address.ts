@@ -9,12 +9,42 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { FieldConfig } from '@opencrvs/toolkit/events'
+import { FieldConfig, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
-import { appendConditionalsToFields } from '../utils'
+import { appendConditionalsToFields, createSelectOptions } from '../utils'
+import { PersonType } from './index'
 
-export const getAddressFields = (person: string): FieldConfig[] => {
-  // @Todo: Same as mother or deseased
+export const AddressType = {
+  childResidentialAddress: 'childResidentialAddress',
+  childOther: 'childOther'
+} as const
+
+export type AddressType = keyof typeof AddressType | PersonType
+
+const UrbanRuralTypes = {
+  URBAN: 'URBAN',
+  RURAL: 'RURAL'
+} as const
+
+const urbanRuralMessageDescriptors = {
+  URBAN: {
+    defaultMessage: 'Urban',
+    id: 'form.field.label.urban',
+    description: 'Label for form field checkbox option Urban'
+  },
+  RURAL: {
+    defaultMessage: 'Rural',
+    id: 'form.field.label.rural',
+    description: 'Label for form field checkbox option Rural'
+  }
+} satisfies Record<keyof typeof UrbanRuralTypes, TranslationConfig>
+
+const urbanRuralRadioOptions = createSelectOptions(
+  UrbanRuralTypes,
+  urbanRuralMessageDescriptors
+)
+
+export const getAddressFields = (person: AddressType): FieldConfig[] => {
   const prefix = `${person}.address`
 
   const genericAddressFields: FieldConfig[] = [
@@ -90,27 +120,7 @@ export const getAddressFields = (person: string): FieldConfig[] => {
     }
   ]
 
-  const farajalandAddressFields: FieldConfig[] = [
-    {
-      id: `${prefix}.province`,
-      type: 'TEXT',
-      required: true,
-      label: {
-        defaultMessage: 'Province',
-        description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.province.label`
-      }
-    },
-    {
-      id: `${prefix}.district`,
-      type: 'TEXT',
-      required: true,
-      label: {
-        defaultMessage: 'District',
-        description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.district.label`
-      }
-    },
+  const urbanAddressFields: FieldConfig[] = [
     {
       id: `${prefix}.town`,
       type: 'TEXT',
@@ -160,6 +170,78 @@ export const getAddressFields = (person: string): FieldConfig[] => {
         description: 'This is the label for the field',
         id: `event.action.declare.form.section.person.field.address.zipCode.label`
       }
+    }
+  ]
+  const farajalandAddressFields: FieldConfig[] = [
+    {
+      id: `${prefix}.province`,
+      type: 'LOCATION',
+      required: true,
+      label: {
+        defaultMessage: 'Province',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.province.label`
+      },
+      options: {
+        type: 'ADMIN_STRUCTURE'
+      }
+    },
+    {
+      id: `${prefix}.district`,
+      type: 'LOCATION',
+      required: true,
+      label: {
+        defaultMessage: 'District',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.district.label`
+      },
+      options: {
+        partOf: {
+          $data: `${prefix}.province`
+        },
+        type: 'ADMIN_STRUCTURE'
+      }
+    },
+    {
+      id: `${prefix}.urbanOrRural`,
+      type: 'RADIO_GROUP',
+      options: urbanRuralRadioOptions,
+      flexDirection: 'row',
+      required: false,
+      label: {
+        defaultMessage: 'Urban or Rural',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.urbanOrRural.label`
+      }
+    },
+    ...appendConditionalsToFields({
+      inputFields: urbanAddressFields,
+      newConditionals: [
+        {
+          type: 'HIDE',
+          conditional: field(`${prefix}.urbanOrRural`).isUndefinedOrInArray([
+            'RURAL'
+          ])
+        }
+      ]
+    }),
+    {
+      id: `${prefix}.village`,
+      type: 'TEXT',
+      required: false,
+      label: {
+        defaultMessage: 'Village',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${person}.field.address.village.label`
+      },
+      conditionals: [
+        {
+          type: 'HIDE',
+          conditional: field(`${prefix}.urbanOrRural`).isUndefinedOrInArray([
+            'URBAN'
+          ])
+        }
+      ]
     }
   ]
 

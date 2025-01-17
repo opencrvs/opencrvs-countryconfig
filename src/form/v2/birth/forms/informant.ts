@@ -12,7 +12,8 @@
 import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { appendConditionalsToFields, createSelectOptions } from '../../utils'
-import { getInformantFields } from '../../person'
+import { getPersonInputCommonFields, PersonType } from '../../person'
+import { getAddressFields } from '../../person/address'
 
 export const InformantTypes = {
   MOTHER: 'MOTHER',
@@ -92,8 +93,29 @@ export const informantPage = defineFormPage({
       },
       options: birthInformantTypeOptions
     },
+    {
+      id: 'informant.other.relation',
+      type: 'TEXT',
+      required: true,
+      label: {
+        defaultMessage: 'Relationship to child',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.informant.field.other.relation.label'
+      },
+      conditionals: [
+        {
+          type: 'HIDE',
+          conditional: field('informant.relation').isUndefinedOrNotInArray([
+            InformantTypes.OTHER
+          ])
+        }
+      ]
+    },
     ...appendConditionalsToFields({
-      inputFields: getInformantFields('informant'),
+      inputFields: [
+        ...getPersonInputCommonFields(PersonType.informant),
+        ...getAddressFields(PersonType.informant)
+      ],
       newConditionals: [
         {
           type: 'HIDE',

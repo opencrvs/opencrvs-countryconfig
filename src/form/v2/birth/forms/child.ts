@@ -12,7 +12,7 @@
 import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { appendConditionalsToFields, createSelectOptions } from '../../utils'
-import { getAddressFields } from '../../person/address'
+import { AddressType, getAddressFields } from '../../person/address'
 
 const GenderTypes = {
   MALE: 'male',
@@ -235,12 +235,15 @@ export const childPage = defineFormPage({
     },
     {
       id: 'child.birthLocation',
-      type: 'TEXT', // @ToDo: select
+      type: 'LOCATION',
       required: true,
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
+      },
+      options: {
+        type: 'HEALTH_FACILITY'
       },
       conditionals: [
         {
@@ -252,7 +255,7 @@ export const childPage = defineFormPage({
       ]
     },
     ...appendConditionalsToFields({
-      inputFields: getAddressFields('child.privateHome'),
+      inputFields: getAddressFields(AddressType.childResidentialAddress),
       newConditionals: [
         {
           type: 'HIDE',
@@ -263,7 +266,7 @@ export const childPage = defineFormPage({
       ]
     }),
     ...appendConditionalsToFields({
-      inputFields: getAddressFields('child.other'),
+      inputFields: getAddressFields(AddressType.childOther),
       newConditionals: [
         {
           type: 'HIDE',

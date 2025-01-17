@@ -14,7 +14,7 @@ import { field, and } from '@opencrvs/toolkit/conditionals'
 import { childPage } from './child'
 import { informantPage, InformantTypes } from './informant'
 import { appendConditionalsToFields } from '../../utils'
-import { getPersonInputFields } from '../../person'
+import { getPersonInputFields, PersonType } from '../../person'
 
 export const BIRTH_DECLARE_FORM = defineForm({
   label: {
@@ -134,7 +134,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
         },
         ...appendConditionalsToFields({
           inputFields: [
-            ...getPersonInputFields('mother'),
+            ...getPersonInputFields(PersonType.mother),
             {
               id: 'mother.previousBirths',
               type: 'TEXT',
@@ -206,7 +206,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
           ]
         },
         ...appendConditionalsToFields({
-          inputFields: getPersonInputFields('father'),
+          inputFields: getPersonInputFields(PersonType.father),
           newConditionals: [
             {
               type: 'HIDE',
