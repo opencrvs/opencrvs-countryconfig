@@ -12,12 +12,14 @@
 import { FieldConfig, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { appendConditionalsToFields, createSelectOptions } from '../utils'
-import { PersonTypes } from '.'
+import { PersonType } from './index'
 
-export type AddressTypes =
-  | 'child.residentialAddress'
-  | 'child.other'
-  | PersonTypes
+export const AddressType = {
+  childResidentialAddress: 'childResidentialAddress',
+  childOther: 'childOther'
+} as const
+
+export type AddressType = keyof typeof AddressType | PersonType
 
 const UrbanRuralTypes = {
   URBAN: 'URBAN',
@@ -42,7 +44,7 @@ const urbanRuralRadioOptions = createSelectOptions(
   urbanRuralMessageDescriptors
 )
 
-export const getAddressFields = (person: AddressTypes): FieldConfig[] => {
+export const getAddressFields = (person: AddressType): FieldConfig[] => {
   const prefix = `${person}.address`
 
   const genericAddressFields: FieldConfig[] = [

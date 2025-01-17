@@ -12,7 +12,7 @@
 import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { appendConditionalsToFields, createSelectOptions } from '../../utils'
-import { getAddressFields } from '../../person/address'
+import { AddressType, getAddressFields } from '../../person/address'
 
 const GenderTypes = {
   MALE: 'male',
@@ -255,7 +255,7 @@ export const childPage = defineFormPage({
       ]
     },
     ...appendConditionalsToFields({
-      inputFields: getAddressFields('child.residentialAddress'),
+      inputFields: getAddressFields(AddressType.childResidentialAddress),
       newConditionals: [
         {
           type: 'HIDE',
@@ -266,7 +266,7 @@ export const childPage = defineFormPage({
       ]
     }),
     ...appendConditionalsToFields({
-      inputFields: getAddressFields('child.other'),
+      inputFields: getAddressFields(AddressType.childOther),
       newConditionals: [
         {
           type: 'HIDE',

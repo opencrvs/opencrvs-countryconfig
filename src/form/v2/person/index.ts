@@ -14,7 +14,14 @@ import { field } from '@opencrvs/toolkit/conditionals'
 import { getAddressFields } from './address'
 import { appendConditionalsToFields, createSelectOptions } from '../utils'
 
-export type PersonTypes = 'father' | 'mother' | 'informant' | 'applicant'
+export const PersonType = {
+  father: 'father',
+  mother: 'mother',
+  informant: 'informant',
+  applicant: 'applicant'
+} as const
+
+export type PersonType = keyof typeof PersonType
 
 const IDTypes = {
   NATIONAL_ID: 'NATIONAL_ID',
@@ -152,7 +159,7 @@ const yesNoRadioOptions = createSelectOptions(
   yesNoMessageDescriptors
 )
 
-const getIdFields = (person: PersonTypes): FieldConfig[] => [
+const getIdFields = (person: PersonType): FieldConfig[] => [
   {
     id: `${person}.idType`,
     type: 'SELECT',
@@ -221,7 +228,7 @@ const getIdFields = (person: PersonTypes): FieldConfig[] => [
 ]
 
 export const getPersonInputCommonFields = (
-  person: PersonTypes
+  person: PersonType
 ): FieldConfig[] => [
   {
     id: `${person}.firstname`,
@@ -324,28 +331,24 @@ const fatherAddressFields = [
   ...appendConditionalsToFields({
     inputFields: [
       {
-        id: `${'father' satisfies PersonTypes}.addressSameAsHelper`,
+        id: `${PersonType.father}.addressSameAsHelper`,
         type: 'PARAGRAPH',
         label: {
           defaultMessage: "Same as mother's usual place of residence?",
           description: 'This is the label for the field',
-          id: `event.birth.action.declare.form.section.${
-            'father' satisfies PersonTypes
-          }.field.addressSameAsHelper.label`
+          id: `event.birth.action.declare.form.section.${PersonType.father}.field.addressSameAsHelper.label`
         },
         options: { fontVariant: 'reg16' }
       },
       {
-        id: `${'father' satisfies PersonTypes}.addressSameAs`,
+        id: `${PersonType.father}.addressSameAs`,
         type: 'RADIO_GROUP',
         options: yesNoRadioOptions,
         required: true,
         label: {
           defaultMessage: "Same as mother's usual place of residence?",
           description: 'This is the label for the field',
-          id: `event.birth.action.declare.form.section.${
-            'father' satisfies PersonTypes
-          }.field.address.addressSameAs.label`
+          id: `event.birth.action.declare.form.section.${PersonType.father}.field.address.addressSameAs.label`
         }
       }
     ],
@@ -353,25 +356,25 @@ const fatherAddressFields = [
       {
         type: 'HIDE',
         conditional: field(
-          `${'mother' satisfies PersonTypes}.detailsNotAvailable`
+          `${PersonType.mother}.detailsNotAvailable`
         ).isInArray(['true'])
       }
     ]
   }),
   ...appendConditionalsToFields({
-    inputFields: getAddressFields('father' satisfies PersonTypes),
+    inputFields: getAddressFields(PersonType.father),
     newConditionals: [
       {
         type: 'HIDE',
-        conditional: field(
-          `${'father' satisfies PersonTypes}.addressSameAs`
-        ).isInArray([YesNoTypes.YES])
+        conditional: field(`${PersonType.father}.addressSameAs`).isInArray([
+          YesNoTypes.YES
+        ])
       }
     ]
   })
 ]
-export const getPersonInputFields = (person: PersonTypes): FieldConfig[] => {
-  const isFather = person === 'father'
+export const getPersonInputFields = (person: PersonType): FieldConfig[] => {
+  const isFather = person === PersonType.father
   return [
     ...getPersonInputCommonFields(person),
     ...(isFather ? fatherAddressFields : getAddressFields(person)),
