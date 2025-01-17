@@ -948,8 +948,6 @@ window.openPrintModal = async function openPrintModal(id) {
 
     const event = person.data.fetchBirthRegistration
 
-    const now = new Date()
-    const offset = now.getTimezoneOffset() * 60000 // Décalage horaire en millisecondes
     const legacyDate = event?.questionnaire?.find(
       (q) =>
         q.fieldId === 'birth.child.child-view-group.legacyBirthRegistrationDate'
@@ -1047,13 +1045,16 @@ window.openPrintModal = async function openPrintModal(id) {
       ]
         .join(' ')
         .trim(),
-      birthFatherCustomizedExactDateOfBirthUnknown: (
-        event?.questionnaire?.find(
-          (q) =>
-            q.fieldId ===
-            'birth.father.father-view-group.customizedExactDateOfBirthUnknown'
-        ) || { value: false }
-      ).value,
+      birthFatherCustomizedExactDateOfBirthUnknown:
+        (
+          event?.questionnaire?.find(
+            (q) =>
+              q.fieldId ===
+              'birth.father.father-view-group.customizedExactDateOfBirthUnknown'
+          ) || { value: false }
+        ).value == 'true'
+          ? true
+          : false,
       birthFatherYearOfBirth: (
         event?.questionnaire?.find(
           (q) => q.fieldId === 'birth.father.father-view-group.yearOfBirth'
