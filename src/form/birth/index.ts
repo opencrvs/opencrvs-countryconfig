@@ -56,7 +56,8 @@ import {
   motherYearOfBirthValidators,
   hideIfDistrictPrimaryAddressNotSelected,
   hideIfFatherPrimaryAddressConditionsDontMeet,
-  hideIfNotDefaultCountry
+  hideIfNotDefaultCountry,
+  fathersHasFormallyRecognisedChildConditionnals
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -684,7 +685,10 @@ export const birthForm: ISerializedForm = {
               formMessageDescriptors.reasonFatherNotApplying
             ), // Strongly recommend is required if you want to register abandoned / orphaned children!
             getFatherIsDeceased(Event.Birth, detailsExist),
-            getFatherHasFormallyRecognisedChild(detailsExist),
+            getFatherHasFormallyRecognisedChild([
+              ...detailsExist,
+              ...fathersHasFormallyRecognisedChildConditionnals
+            ]),
             getFamilyNameField(
               'fatherNameInEnglish',
               fatherFamilyNameConditionals,
