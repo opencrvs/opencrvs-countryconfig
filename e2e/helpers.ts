@@ -8,6 +8,7 @@ import {
 } from './constants'
 import { format, parseISO } from 'date-fns'
 import { isArray, random } from 'lodash'
+import fetch from 'node-fetch'
 
 export async function login(page: Page, username: string, password: string) {
   const token = await getToken(username, password)
@@ -127,6 +128,7 @@ export const uploadImage = async (
   await locator.click()
   const fileChooser = await fileChooserPromise
   await fileChooser.setFiles(image)
+  return fileChooser
 }
 
 /**

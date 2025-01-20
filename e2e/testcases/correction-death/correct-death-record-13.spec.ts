@@ -13,7 +13,7 @@ import {
   uploadImage,
   uploadImageToSection
 } from '../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { format, subDays } from 'date-fns'
 import { DeathDeclaration } from '../death/types'
 import {
@@ -33,25 +33,25 @@ test.describe.serial(' Correct record - 13', () => {
   let declarationInput: DeathDeclarationInput
 
   const updatedSpouseDetails = {
-    firstNames: faker.name.firstName('female'),
-    familyName: faker.name.firstName('female'),
+    firstNames: faker.person.firstName('female'),
+    familyName: faker.person.firstName('female'),
     birthDate: format(
       subDays(new Date(), Math.ceil(50 * Math.random() + 365 * 25)),
       'yyyy-MM-dd'
     ),
     email: faker.internet.email(),
     nationality: 'Nauru',
-    id: faker.random.numeric(10),
+    id: faker.string.numeric(10),
     idType: 'Passport',
     address: {
       sameAsDeceased: false,
       province: 'Pualula',
       district: 'Ienge',
-      town: faker.address.city(),
-      residentialArea: faker.address.county(),
-      street: faker.address.streetName(),
-      number: faker.address.buildingNumber(),
-      zipCode: faker.address.zipCode()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      zipCode: faker.location.zipCode()
     }
   }
 

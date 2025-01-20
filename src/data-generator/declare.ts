@@ -76,9 +76,9 @@ export async function sendBirthNotification(
   district: Location,
   office: Facility
 ): Promise<string> {
-  const lastName = faker.name.lastName()
-  const firstName = faker.name.firstName()
-  const motherFirstName = faker.name.firstName('female')
+  const lastName = faker.person.lastName()
+  const firstName = faker.person.firstName()
+  const motherFirstName = faker.person.firstName('female')
   const requestStart = Date.now()
 
   const notification = birthNotification({
@@ -89,36 +89,35 @@ export async function sendBirthNotification(
       gender: sex
     },
     father: {
-      firstName: faker.name.firstName('male'),
+      firstName: faker.person.firstName('male'),
       lastName,
-      nid: faker.datatype
-        .number({ min: 1000000000, max: 9999999999 })
-        .toString(),
+      nid: faker.number.bigInt({ min: 1000000000, max: 9999999999 }).toString(),
       dateOfBirth: sub(birthDate, { years: 20 }).toISOString().split('T')[0]
     },
     mother: {
       firstName: motherFirstName,
       lastName,
       dateOfBirth: sub(birthDate, { years: 20 }).toISOString().split('T')[0],
-      nid: faker.datatype
-        .number({ min: 1000000000, max: 9999999999 })
-        .toString()
+      nid: faker.number.bigInt({ min: 1000000000, max: 9999999999 }).toString()
     },
     createdAt: createdAt.toISOString(),
     address: [
       {
         type: 'PRIMARY_ADDRESS',
         line: ['12', 'Usual Street', 'Usual Residental Area', '', '', 'URBAN'],
-        city: faker.address.city(),
+        city: faker.location.city(),
         district: district.id,
         state: district.partOf.split('/')[1],
-        postalCode: faker.address.zipCode(),
+        postalCode: faker.location.zipCode(),
         country: 'FAR'
       }
     ],
     phoneNumber:
-      '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
-    email: faker.internet.email(motherFirstName, lastName),
+      '+2607' + faker.number.bigInt({ min: 10000000, max: 99999999 }),
+    email: faker.internet.email({
+      firstName: motherFirstName,
+      lastName: lastName
+    }),
     dateOfBirth: birthDate.toISOString().split('T')[0],
     placeOfBirth: `Location/${facility.id}`,
     officeLocation: office.partOf,
@@ -169,9 +168,9 @@ export function createBirthDeclarationData(
   base64Attachment: string
 ): BirthRegistrationInput {
   const timeFilling = Math.round(100000 + Math.random() * 100000) // 100 - 200 seconds
-  const familyName = faker.name.lastName()
-  const firstNames = faker.name.firstName()
-  const motherFirstName = faker.name.firstName('female')
+  const familyName = faker.person.lastName()
+  const firstNames = faker.person.firstName()
+  const motherFirstName = faker.person.firstName('female')
   const isLateRegistration = differenceInDays(new Date(), birthDate) > 365
 
   const mother: PersonInput = {
@@ -181,8 +180,8 @@ export function createBirthDeclarationData(
     dateOfMarriage: sub(birthDate, { years: 2 }).toISOString().split('T')[0],
     identifier: [
       {
-        id: faker.datatype
-          .number({ min: 1000000000, max: 9999999999 })
+        id: faker.number
+          .bigInt({ min: 1000000000, max: 9999999999 })
           .toString(),
         type: identity.nationalId
       }
@@ -208,8 +207,11 @@ export function createBirthDeclarationData(
       informantType: informant.mother,
       otherInformantType: '',
       contactPhoneNumber:
-        '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
-      contactEmail: faker.internet.email(motherFirstName, familyName),
+        '+2607' + faker.number.bigInt({ min: 10000000, max: 99999999 }),
+      contactEmail: faker.internet.email({
+        firstName: motherFirstName,
+        lastName: familyName
+      }),
       status: [
         {
           timestamp: sub(declarationTime, {
@@ -218,7 +220,7 @@ export function createBirthDeclarationData(
           timeLoggedMS: timeFilling * 1000
         }
       ],
-      draftId: faker.datatype.uuid(),
+      draftId: faker.string.uuid(),
       attachments: faker.helpers
         .arrayElements(BIRTH_ATTACHMENTS, NUMBER_OF_ATTACHMENTS_PER_RECORD)
         .map((attachment) => ({
@@ -268,11 +270,11 @@ export function createBirthDeclarationData(
               country: 'FAR',
               state: location.partOf.replace('Location/', ''),
               district: location.id,
-              city: faker.address.city(),
-              postalCode: faker.address.zipCode(),
+              city: faker.location.city(),
+              postalCode: faker.location.zipCode(),
               line: [
-                faker.address.streetAddress(),
-                faker.address.zipCode(),
+                faker.location.streetAddress(),
+                faker.location.zipCode(),
                 'URBAN'
               ]
             },
@@ -357,9 +359,9 @@ export async function createDeathDeclaration(
   facility: Facility,
   base64Attachment: string
 ) {
-  const familyName = faker.name.lastName()
-  const firstNames = faker.name.firstName()
-  const spouseFirstName = faker.name.firstName()
+  const familyName = faker.person.lastName()
+  const firstNames = faker.person.firstName()
+  const spouseFirstName = faker.person.firstName()
 
   const requestStart = Date.now()
 
@@ -374,8 +376,11 @@ export async function createDeathDeclaration(
     registration: {
       informantType: 'SPOUSE',
       contactPhoneNumber:
-        '+2607' + faker.datatype.number({ min: 10000000, max: 99999999 }),
-      contactEmail: faker.internet.email(spouseFirstName, familyName),
+        '+2607' + faker.number.bigInt({ min: 10000000, max: 99999999 }),
+      contactEmail: faker.internet.email({
+        firstName: spouseFirstName,
+        lastName: familyName
+      }),
       attachments: faker.helpers
         .arrayElements(DEATH_ATTACHMENTS, NUMBER_OF_ATTACHMENTS_PER_RECORD)
         .map((attachment) => ({
@@ -383,7 +388,7 @@ export async function createDeathDeclaration(
           contentType: 'image/png',
           data: 'data:image/png;base64,' + base64Attachment
         })),
-      draftId: faker.datatype.uuid(),
+      draftId: faker.string.uuid(),
       status: [
         {
           timestamp: sub(declarationTime, {
@@ -398,14 +403,14 @@ export async function createDeathDeclaration(
     deceased: {
       identifier: [
         {
-          id: faker.datatype
-            .number({ min: 1000000000, max: 9999999999 })
+          id: faker.number
+            .bigInt({ min: 1000000000, max: 9999999999 })
             .toString(),
           type: identity.nationalId
         },
         {
-          id: faker.datatype
-            .number({ min: 100000000, max: 999999999 })
+          id: faker.number
+            .bigInt({ min: 100000000, max: 999999999 })
             .toString(),
           type: identity.socialSecurityNumber
         }
@@ -454,8 +459,8 @@ export async function createDeathDeclaration(
       nationality: ['FAR'],
       identifier: [
         {
-          id: faker.datatype
-            .number({ min: 1000000000, max: 9999999999 })
+          id: faker.number
+            .bigInt({ min: 1000000000, max: 9999999999 })
             .toString(),
           type: identity.nationalId
         }

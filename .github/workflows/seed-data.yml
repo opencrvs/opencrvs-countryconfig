@@ -21,6 +21,7 @@ on:
           - qa
           - staging
           - production
+          - e2e
       core-image-tag:
         description: Core DockerHub image tag
 jobs:

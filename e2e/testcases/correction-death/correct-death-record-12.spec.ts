@@ -11,7 +11,7 @@ import {
   goBackToReview,
   login
 } from '../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { format, parseISO, subDays } from 'date-fns'
 import { DeathDeclaration } from '../death/types'
 import {
@@ -31,26 +31,26 @@ test.describe.serial(' Correct record - 12', () => {
 
   const updatedInformantDetails = {
     type: 'Son',
-    firstNames: faker.name.firstName('female'),
-    familyName: faker.name.firstName('female'),
+    firstNames: faker.person.firstName('female'),
+    familyName: faker.person.firstName('female'),
     birthDate: format(
       subDays(new Date(), Math.ceil(50 * Math.random() + 365 * 25)),
       'yyyy-MM-dd'
     ),
     email: faker.internet.email(),
     nationality: 'Nauru',
-    id: faker.random.numeric(10),
+    id: faker.string.numeric(10),
     idType: 'Passport',
     address: {
       sameAsDeceased: false,
       country: 'Farajaland',
       province: 'Sulaka',
       district: 'Irundu',
-      town: faker.address.city(),
-      residentialArea: faker.address.county(),
-      street: faker.address.streetName(),
-      number: faker.address.buildingNumber(),
-      zipCode: faker.address.zipCode()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      zipCode: faker.location.zipCode()
     }
   }
 
@@ -59,11 +59,11 @@ test.describe.serial(' Correct record - 12', () => {
     deathLocation: {
       province: 'Chuminga',
       district: 'Soka',
-      town: faker.address.city(),
-      residentialArea: faker.address.county(),
-      street: faker.address.streetName(),
-      number: faker.address.buildingNumber(),
-      zipCode: faker.address.zipCode()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      zipCode: faker.location.zipCode()
     }
   }
 
@@ -120,6 +120,12 @@ test.describe.serial(' Correct record - 12', () => {
 
       await page.getByRole('button', { name: 'Action' }).first().click()
       await getAction(page, 'Print certified copy').click()
+      await page
+        .locator('#certificateTemplateId-form-input > span')
+        .first()
+        .click()
+
+      await page.getByText('Death Certificate', { exact: true }).click()
       await page.getByLabel('Print in advance').check()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Yes, print certificate' }).click()

@@ -10,7 +10,7 @@ import {
   goToSection,
   login
 } from '../../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
 test.describe.serial('9. Death declaration case - 9', () => {
@@ -19,7 +19,7 @@ test.describe.serial('9. Death declaration case - 9', () => {
   const declaration = {
     deceased: {
       name: {
-        firstNames: faker.name.firstName('male')
+        firstNames: faker.person.firstName('male')
       },
       address: {
         country: 'Farajaland',

@@ -12,7 +12,7 @@ import {
   joinValuesWith,
   login
 } from '../../helpers'
-import faker from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import { DeathDeclaration } from '../death/types'
 import { createDeathDeclaration, fetchDeclaration } from '../death/helpers'
 import { CREDENTIALS } from '../../constants'
@@ -24,21 +24,21 @@ test.describe.serial(' Correct record - 14', () => {
 
   let page: Page
   const updatedDeceasedDetails = {
-    firstNames: faker.name.firstName('female'),
-    familyName: faker.name.firstName('female'),
+    firstNames: faker.person.firstName('female'),
+    familyName: faker.person.firstName('female'),
     gender: 'Female',
     age: random(20, 45),
     nationality: 'Canada',
-    id: faker.random.numeric(10),
+    id: faker.string.numeric(10),
     idType: 'Passport',
     address: {
       province: 'Pualula',
       district: 'Pili',
-      town: faker.address.city(),
-      residentialArea: faker.address.county(),
-      street: faker.address.streetName(),
-      number: faker.address.buildingNumber(),
-      zipCode: faker.address.zipCode()
+      town: faker.location.city(),
+      residentialArea: faker.location.county(),
+      street: faker.location.street(),
+      number: faker.location.buildingNumber(),
+      zipCode: faker.location.zipCode()
     },
     maritalStatus: 'Married',
     NOdependants: '3',
@@ -86,6 +86,12 @@ test.describe.serial(' Correct record - 14', () => {
     await page.getByRole('button', { name: 'Action' }).first().click()
     await getAction(page, 'Print certified copy').click()
 
+    await page
+      .locator('#certificateTemplateId-form-input > span')
+      .first()
+      .click()
+
+    await page.getByText('Death Certificate', { exact: true }).click()
     await page.getByLabel('Print in advance').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'No, make correction' }).click()

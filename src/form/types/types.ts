@@ -563,7 +563,7 @@ export interface IFormFieldBase {
   disabled?: boolean
   enabled?: string
   custom?: boolean
-  initialValue?: IFormFieldValue
+  initialValue?: InitialValue
   initialValueKey?: string
   extraValue?: IFormFieldValue
   conditionals?: Conditional[]
@@ -791,7 +791,7 @@ export type IDeclarationCertificate = {
   corrector?: Partial<{ type: RelationForCertificateCorrection }>
   hasShowedVerifiedDocument?: boolean
   payments?: Payment
-  data?: string
+  certificateTemplateId?: string
 }
 
 export interface IFileValue {
@@ -838,6 +838,13 @@ export interface IDateRangePickerValue {
   rangeEnd: string | undefined
   isDateRangeActive: boolean | undefined
 }
+
+export type DependencyInfo = {
+  expression: string
+  dependsOn: string[]
+}
+
+export type InitialValue = IFormFieldValue | DependencyInfo
 
 export type IFormFieldValue =
   | string
