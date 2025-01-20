@@ -1024,7 +1024,7 @@ services:
           - node.labels.data1 == true
 
   mosip-api:
-    image: ghcr.io/opencrvs/mosip-api:${MOSIP_API_VERSION:-}
+    image: ghcr.io/opencrvs/mosip-api:${MOSIP_API_VERSION}
     environment:
       - NODE_ENV=production
       - MOSIP_BIRTH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/birth
@@ -1060,7 +1060,7 @@ services:
         tag: 'mosip-api'
 
   mosip-mock:
-    image: ghcr.io/opencrvs/mosip-mock:${MOSIP_API_VERSION:-}
+    image: ghcr.io/opencrvs/mosip-mock:${MOSIP_API_VERSION}
     environment:
       - NODE_ENV=production
       - OPENCRVS_MOSIP_SERVER_URL=https://mosip-api.{{hostname}}/webhooks/mosip
@@ -1084,7 +1084,7 @@ services:
         tag: 'mosip-mock'
 
   esignet-mock:
-    image: ghcr.io/opencrvs/esignet-mock:${MOSIP_API_VERSION:-}
+    image: ghcr.io/opencrvs/esignet-mock:${MOSIP_API_VERSION}
     environment:
       - NODE_ENV=production
       - CLIENT_URL=http://mosip-api:2024/webhooks/mosip
