@@ -581,6 +581,11 @@ services:
       - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
       - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
+      - ESIGNET_TOKEN_URL=${ESIGNET_TOKEN_URL:-}
+      - OPENID_PROVIDER_CLIENT_ID=${OPENID_PROVIDER_CLIENT_ID:-}
+      - OPENID_PROVIDER_CLAIMS=${OPENID_PROVIDER_CLAIMS:-}
+      - ESIGNET_USERINFO_URL=${ESIGNET_USERINFO_URL:-}
+      - LOCALE=en
     networks:
       - overlay_net
     logging:

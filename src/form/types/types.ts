@@ -115,6 +115,7 @@ export const TEL = 'TEL'
 export const NUMBER = 'NUMBER'
 export const BIG_NUMBER = 'BIG_NUMBER'
 export const RADIO_GROUP = 'RADIO_GROUP'
+export const HIDDEN = 'HIDDEN'
 export const INFORMATIVE_RADIO_GROUP = 'INFORMATIVE_RADIO_GROUP'
 export const CHECKBOX_GROUP = 'CHECKBOX_GROUP'
 export const CHECKBOX = 'CHECKBOX'
@@ -142,6 +143,10 @@ export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
 export const SIGNATURE = 'SIGNATURE'
+export const LINK_BUTTON = 'LINK_BUTTON'
+export const ID_READER = 'ID_READER'
+export const HTTP = 'HTTP'
+export const ID_VERIFICATION_BANNER = 'ID_VERIFICATION_BANNER'
 
 export enum RadioSize {
   LARGE = 'large',
@@ -491,6 +496,50 @@ export interface ISignatureFormField extends IFormFieldBase {
   )[]
 }
 
+export interface IHttpFormField extends IFormFieldBase {
+  type: typeof HTTP
+  options: {
+    url: string
+    method?: string
+    headers: Record<string, string>
+    body?: Record<string, any>
+    params?: Record<string, any>
+  }
+}
+
+export interface ILinkButtonFormField extends IFormFieldBase {
+  type: typeof LINK_BUTTON
+  icon?: {
+    desktop: string
+    mobile: string
+  }
+  options: {
+    url: string
+    callback: {
+      trigger: string
+      params: Record<string, string>
+    }
+  }
+}
+
+export interface QRReaderType {
+  type: 'QR'
+}
+
+type ReaderType = QRReaderType | ILinkButtonFormField
+export interface IIDReaderFormField extends IFormFieldBase {
+  type: typeof ID_READER
+  dividerLabel: MessageDescriptor
+  manualInputInstructionLabel: MessageDescriptor
+  readers: [ReaderType, ...ReaderType[]]
+}
+
+export type BannerType = 'pending' | 'verified' | 'failed'
+export interface IIDVerificationBannerFormField extends IFormFieldBase {
+  type: typeof ID_VERIFICATION_BANNER
+  bannerType: BannerType
+  idFieldName: string
+}
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -524,6 +573,11 @@ export type IFormField =
   | IDividerField
   | IHeading3Field
   | ISignatureFormField
+  | IHiddenFormField
+  | IIDReaderFormField
+  | ILinkButtonFormField
+  | IHttpFormField
+  | IIDVerificationBannerFormField
 
 export interface SelectComponentOption {
   value: string
@@ -737,6 +791,10 @@ export type SerializedFormField = UnionOmit<
 > & {
   validator: Validator[]
   mapping?: IFormFieldMapping
+}
+
+export interface IHiddenFormField extends IFormFieldBase {
+  type: typeof HIDDEN
 }
 
 export type IFormSectionQueryMapFunction = (
