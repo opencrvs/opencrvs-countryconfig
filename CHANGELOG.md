@@ -46,6 +46,10 @@ INSERT CSV ROWS IN ENGLISH ONLY
 
 - TBC
 
+### Deprecated
+
+- `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
+
 ## 1.6.1 (TBD)
 
 ### Bug fixes
