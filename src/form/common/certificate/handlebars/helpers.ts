@@ -226,8 +226,8 @@ export function eventStatement(): Handlebars.HelperDelegate {
             this.placeOfBirthFacility
               ? replaceAbbreviations(this.placeOfBirthFacility) + ','
               : '',
-            this.birthChildOtherFacilityAddress
-              ? this.birthChildOtherFacilityAddress + ','
+            this.birthChildotherPlaceOfBirthAddress
+              ? this.birthChildotherPlaceOfBirthAddress + ','
               : '',
             this.birthChildFokontanyCustomAddress
               ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','

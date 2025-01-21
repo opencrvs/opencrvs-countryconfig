@@ -248,21 +248,21 @@ export const birthForm: ISerializedForm = {
               'placeOfBirth'
             ),
             {
-              name: 'otherFacilityAddress',
-              customQuestionMappingId: 'otherFacilityAddress',
+              name: 'otherPlaceOfBirthAddress',
+              customQuestionMappingId: 'otherPlaceOfBirthAddress',
               custom: true,
               required: true,
               type: 'TEXT',
               label: {
-                id: 'form.field.label.otherFacilityAddress',
+                id: 'form.field.label.otherPlaceOfBirthAddress',
                 description:
-                  'A form field that asks for the other facility address of the birth',
-                defaultMessage: 'Other facility address'
+                  'A form field that asks for the other place of birth address of the birth',
+                defaultMessage: 'Other place of birth address'
               },
               initialValue: '',
               validator: [],
               mapping: getCustomFieldMapping(
-                'birth.child.child-view-group.otherFacilityAddress'
+                'birth.child.child-view-group.otherPlaceOfBirthAddress'
               ),
               conditionals: [
                 {
