@@ -11,12 +11,13 @@
 import * as Hapi from '@hapi/hapi'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 import { EventDocument } from '@opencrvs/toolkit/events'
+import { birthEvent } from '@countryconfig/form/v2/birth'
 
 export function getCustomEventsHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  return h.response([tennisClubMembershipEvent]).code(200)
+  return h.response([tennisClubMembershipEvent, birthEvent]).code(200)
 }
 
 export function onRegisterHandler(
