@@ -89,7 +89,7 @@ import {
 import { getGenderCustom } from './custom-fields'
 import {
   ESIGNET_TOKEN_URL,
-  ESIGNET_USERINFO_URL,
+  MOSIP_API_USERINFO_URL,
   OPENID_PROVIDER_CLAIMS,
   OPENID_PROVIDER_CLIENT_ID
 } from '@countryconfig/constants'
@@ -259,7 +259,7 @@ export const birthForm: ISerializedForm = {
               fieldName: 'esignetCallback',
               event: 'birth',
               sectionId: 'informant',
-              getOIDPUserInfoUrl: ESIGNET_USERINFO_URL,
+              getOIDPUserInfoUrl: MOSIP_API_USERINFO_URL,
               openIdProviderClientId: OPENID_PROVIDER_CLIENT_ID
             }) as SerializedFormField,
             ...(idVerificationFields(
