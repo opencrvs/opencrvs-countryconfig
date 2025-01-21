@@ -148,6 +148,15 @@
       when: "'docker-manager-first' in groups"
       tags:
         - backups
+      
+    - name: Create a file in backup directory to test connection
+      ansible.builtin.file:
+        path: '{{ backup_server_remote_target_directory }}/test_connection.txt'
+        state: touch
+        owner: '{{ backup_server_user }}'
+      tags:
+        - backups
+        
 
 - hosts: docker-manager-first
   become: yes
@@ -187,6 +196,13 @@
       shell: rsync -avz -e "ssh -o StrictHostKeyChecking=no" /tmp/test_connection.txt {{ backup_server_user }}@{{ destination_server }}:{{ backup_server_remote_target_directory }}/test_connection.txt
       remote_user: '{{ crontab_user }}'
       when: "'backups' in groups and groups['backups'] | length > 0"
+      tags:
+        - backups
+    
+    - name: Download the test connection file from the backup server 
+      shell: rsync -avz -e "ssh -o StrictHostKeyChecking=no" {{ backup_server_user }}@{{ destination_server }}:{{ backup_server_remote_target_directory }}/test_connection.txt /tmp/test_connection.txt
+      remote_user: '{{ crontab_user }}'
+      when: "'backups' in groups and groups['backups'] | length > 0 and periodic_restore_from_backup"
       tags:
         - backups
       
