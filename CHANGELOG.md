@@ -5,6 +5,7 @@
 ### New features
 
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+- Update form type definitions to support usage of newly added fields - `HIDDEN`, `LINK_BUTTON`, `ID_READER`, `HTTP`, `ID_VERIFICATION_BANNER` [#7979](https://github.com/opencrvs/opencrvs-core/issues/7979)
 
 ### Bug fixes
 
