@@ -8,7 +8,7 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-
+import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
 import { Event, ISerializedForm } from '../types/types'
 import {
   formMessageDescriptors,
@@ -75,7 +75,10 @@ import {
 } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
-import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import {
+  getCommonSectionMapping,
+  getCustomFieldMapping
+} from '@countryconfig/utils/mapping/field-mapping-utils'
 import {
   getLegacyBirthRegistrationDate,
   getLegacyBirthRegistrationNumber,
@@ -244,6 +247,37 @@ export const birthForm: ISerializedForm = {
               },
               'placeOfBirth'
             ),
+            {
+              name: 'otherFacilityAddress',
+              customQuestionMappingId: 'otherFacilityAddress',
+              custom: true,
+              required: true,
+              type: 'TEXT',
+              label: {
+                id: 'form.field.label.otherFacilityAddress',
+                description:
+                  'A form field that asks for the other facility address of the birth',
+                defaultMessage: 'Other facility address'
+              },
+              initialValue: '',
+              validator: [],
+              mapping: getCustomFieldMapping(
+                'birth.child.child-view-group.otherFacilityAddress'
+              ),
+              conditionals: [
+                {
+                  action: 'hide',
+                  expression: 'values.placeOfBirth!="OTHER"'
+                },
+                {
+                  action: 'hide',
+                  expression: ' !values.districtPlaceofbirth'
+                },
+                ...hideIfNotDefaultCountry('countryPlaceofbirth')
+              ],
+              maxLength: REGULAR_TEXT_MAX_LENGTH,
+              previewGroup: 'placeOfBirth'
+            },
             attendantAtBirth,
             {
               name: 'createNUI',

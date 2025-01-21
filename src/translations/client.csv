@@ -1392,6 +1392,7 @@ form.field.label.occupation,,Occupation,Profession,Asa
 form.field.label.optionalLabel,,Optional,Facultatif,Tsy voatery fenoina
 form.field.label.otherAddress,,Other address,Autre adresse,Adiresy hafa
 form.field.label.otherBirthSupportingDocuments,,Other,Autre,Hafa
+form.field.label.otherFacilityAddress,,Other facility address,Autre adresse,Adiresy hafa
 form.field.label.otherInformantType,,Other relation,Autre lien de parenté,Rohim-pianakaviana hafa
 form.field.label.otherInstitution,,Other,Autre,Hafa
 form.field.label.otherOption,,Other,Autre,Hafa
