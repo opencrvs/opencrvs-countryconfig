@@ -50,6 +50,7 @@ services:
   user-mgnt:
     environment:
       - NODE_ENV=production
+      - QA_ENV=true
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1,mongo2,mongo3/user-mgnt?replicaSet=rs0
     deploy:
