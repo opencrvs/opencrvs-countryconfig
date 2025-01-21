@@ -307,6 +307,7 @@ function eventStatementSimplified(
     countryPlaceofbirth,
     placeOfBirthFacility,
     birthChildFokontanyCustomAddress,
+    otherPlaceOfBirthAddress,
     placeOfBirthDistrict,
     placeOfBirthState,
     childFamilyName,
@@ -335,6 +336,9 @@ function eventStatementSimplified(
               'no teraka tao amin’ny',
               placeOfBirthFacility
                 ? replaceAbbreviations(placeOfBirthFacility) + ','
+                : '',
+              otherPlaceOfBirthAddress
+                ? otherPlaceOfBirthAddress + ','
                 : '',
               birthChildFokontanyCustomAddress
                 ? 'fokontany ' + birthChildFokontanyCustomAddress + ','

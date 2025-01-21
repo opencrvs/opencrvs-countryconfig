@@ -1010,6 +1010,13 @@ window.openPrintModal = async function openPrintModal(id) {
                 'birth.child.child-view-group.fokontanyCustomAddress'
             )?.value
           : undefined,
+      otherPlaceOfBirthAddress: typeof childBirthLocation === 'object'
+        ? event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.child.child-view-group.otherPlaceOfBirthAddress'
+        )?.value
+        : undefined,
       placeOfBirthDistrict: childBirthLocation?.stateName,
       placeOfBirthState: childBirthLocation?.districtName,
       childFamilyName: event.child.name[0].familyName,
