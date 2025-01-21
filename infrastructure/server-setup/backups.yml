@@ -124,6 +124,14 @@
         state: "{{ 'present' if (amount_of_backups_to_keep) else 'absent' }}"
       tags:
         - backups
+      
+    - name: Create a file in backup directory to test connection
+      ansible.builtin.file:
+        path: '{{ backup_server_remote_target_directory }}/test_connection.txt'
+        state: touch
+        owner: '{{ backup_server_user }}'
+      tags:
+        - backups
 
 - hosts: backups
   become: yes
@@ -148,15 +156,6 @@
       when: "'docker-manager-first' in groups"
       tags:
         - backups
-      
-    - name: Create a file in backup directory to test connection
-      ansible.builtin.file:
-        path: '{{ backup_server_remote_target_directory }}/test_connection.txt'
-        state: touch
-        owner: '{{ backup_server_user }}'
-      tags:
-        - backups
-        
 
 - hosts: docker-manager-first
   become: yes
