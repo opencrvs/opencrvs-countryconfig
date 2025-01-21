@@ -48,16 +48,12 @@
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="80.9999" y="688.312">Place of certification / Lieu de d&#xe9;livrance</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0.485px">
+  <!--<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0.485px">
     <tspan x="80.9999" y="747.084">{{mosipAid}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" font-weight="bold" letter-spacing="0px">
-    {{#ifCond mosipAid '===' undefined }}
-      <tspan x="80.9999" y="735.444">&#10;</tspan>
-      {{else}}
-        <tspan x="80.9999" y="735.444">{{mosipAIDLabel}}&#10;</tspan>
-    {{/ifCond}}
-  </text>
+    <tspan x="80.9999" y="735.444">MOSIP Application ID / MOSIP Application ID&#10;</tspan>
+  </text>-->
   <g clip-path="url(#clip2_1157_5003)">
     <rect x="321.759" y="646.161" width="190.241" height="65.8389" fill="url(#pattern1_1157_5003)" />
   </g>

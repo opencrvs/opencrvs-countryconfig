@@ -14,12 +14,12 @@
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="61" y="712.552">Place of certification / Lieu de certification</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0.5px">
-    <tspan x="61" y="759.104">12345678912345678912345678900</tspan>
+  <!--<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0.5px">
+    <tspan x="61" y="759.104">{{mosipAid}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="61" y="747.104">MOSIP Application ID / MOSIP Application ID&#10;</tspan>
-  </text>
+  </text>-->
   <path d="M324.42 741L532.999 741.984" stroke="#CCCCCC" stroke-width="0.782258" stroke-dasharray="3.13 1.56" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="387.936" y="754.656">Certified by: {{registrar.name}}</tspan>
