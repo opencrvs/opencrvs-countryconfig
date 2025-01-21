@@ -249,7 +249,8 @@ export const birthForm: ISerializedForm = {
             ),
             {
               name: 'otherPlaceOfBirthAddress',
-              customQuestionMappingId: 'otherPlaceOfBirthAddress',
+              customQuestionMappingId:
+                'birth.child.child-view-group.otherPlaceOfBirthAddress',
               custom: true,
               required: true,
               type: 'TEXT',
