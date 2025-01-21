@@ -10,6 +10,7 @@
  */
 
 import { defineConfig, defineForm } from '@opencrvs/toolkit/events'
+
 import {
   defineConditional,
   or,
@@ -17,8 +18,10 @@ import {
   userHasScope,
   and,
   not,
-  field
+  field,
+  deduplication
 } from '@opencrvs/toolkit/conditionals'
+import { getAddressFields } from './v2/person/address'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
@@ -110,7 +113,21 @@ const TENNIS_CLUB_FORM = defineForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
           }
-        }
+        },
+        {
+          id: 'applicant.address.helper',
+          type: 'PARAGRAPH',
+          required: false,
+          label: {
+            defaultMessage: "Applicant's address",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.helper.label'
+          },
+          options: {
+            fontVariant: 'h3'
+          }
+        },
+        ...getAddressFields('applicant')
       ]
     },
     {
@@ -286,6 +303,21 @@ export const tennisClubMembershipEvent = defineConfig({
           status: ['REGISTERED']
         }
       ]
+    }
+  ],
+  deduplication: [
+    {
+      id: 'STANDARD CHECK',
+      label: {
+        defaultMessage: 'Standard check',
+        description:
+          'This could be shown to the user in a reason for duplicate detected',
+        id: '...'
+      },
+      query: deduplication.or([
+        deduplication.field('requester.phone').strictMatches(),
+        deduplication.field('requester.name').fuzzyMatches()
+      ])
     }
   ],
   actions: [
