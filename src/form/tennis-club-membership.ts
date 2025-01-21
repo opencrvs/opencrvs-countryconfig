@@ -206,6 +206,37 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.certificate.form.section.who.field.surname.label'
           }
+        },
+        {
+          id: 'collector.certificateTemplateId',
+          type: 'RADIO_GROUP',
+          required: true,
+          label: {
+            defaultMessage: 'Select Certificate Template',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.certificate.form.section.who.field.surname.label'
+          },
+          options: [
+            {
+              label: {
+                id: 'certificates.tennis-club-membership.certificate.copy',
+                defaultMessage: 'Tennis Club Membership Certificate copy',
+                description:
+                  'The label for a tennis-club-membership certificate'
+              },
+              value: 'tennis-club-membership-certificate'
+            },
+            {
+              label: {
+                id: 'certificates.tennis-club-membership.certificate.certified-copy',
+                defaultMessage:
+                  'Tennis Club Membership Certificate certified copy',
+                description:
+                  'The label for a tennis-club-membership certificate'
+              },
+              value: 'tennis-club-membership-certified-certificate'
+            }
+          ]
         }
       ]
     }
