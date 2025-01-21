@@ -256,7 +256,7 @@ export const birthForm: ISerializedForm = {
               label: {
                 id: 'form.field.label.otherPlaceOfBirthAddress',
                 description:
-                  'A form field that asks for the other place of birth address of the birth',
+                  'A form field that asks for the other place of birth address',
                 defaultMessage: 'Other place of birth address'
               },
               initialValue: '',
