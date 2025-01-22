@@ -185,7 +185,21 @@ validations.isAgeInYearsBetween,The error message that appears when age for the 
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
 
+<<<<<<< HEAD
 ## 1.6.1
+=======
+## 1.6.4
+
+## 1.6.3
+
+### Breaking changes
+
+- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
+## 1.6.2
+
+## 1.6.1 Release candidate
+>>>>>>> 90eb6e63 (Merge changes from ocrvs-6830-human-name-constant)
 
 ### Bug fixes
 
