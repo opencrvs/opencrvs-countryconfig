@@ -261,13 +261,9 @@ export const tennisClubMembershipEvent = defineConfig({
         {
           column: 'title',
           label: {
-            defaultMessage: '{firstname} {surname}',
+            defaultMessage: '{applicant.firstname} {applicant.surname}',
             description: 'Label for name in all workqueue',
             id: 'event.tennis-club-membership.workqueue.all.name.label'
-          },
-          values: {
-            firstname: 'applicant.firstname',
-            surname: 'applicant.surname'
           }
         }
       ],
