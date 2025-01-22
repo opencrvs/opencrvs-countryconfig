@@ -11,7 +11,7 @@
 
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 - **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
-- Add constant.humanName to allow countries to have custom ordering on their full name e.g. start with `lastName` or `firstName` [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
 ### Improvements
 
@@ -38,6 +38,7 @@
 ```
 INSERT CSV ROWS IN ENGLISH ONLY
 ```
+
 ## 1.6.1 (TBD)
 
 ### Bug fixes
