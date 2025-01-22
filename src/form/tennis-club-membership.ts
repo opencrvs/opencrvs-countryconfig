@@ -182,48 +182,70 @@ export const tennisClubMembershipEvent = defineConfig({
   },
   summary: {
     title: {
-      defaultMessage: '{applicant.firstname} {applicant.surname}',
-      description: 'This is the title of the summary',
-      id: 'event.tennis-club-membership.summary.title'
+      id: 'event.tennis-club-membership.summary.title',
+      label: {
+        defaultMessage: '{applicant.firstname} {applicant.surname}',
+        description: 'This is the title of the summary',
+        id: 'event.tennis-club-membership.summary.title'
+      },
+      emptyValueMessage: {
+        defaultMessage: 'Membership application',
+        description:
+          'This is the message shown when the applicant name is missing',
+        id: 'event.tennis-club-membership.summary.title.empty'
+      }
     },
     fields: [
       {
-        id: 'applicant.firstname',
+        id: 'event.tennis-club-membership.summary.applicant.name',
+        label: {
+          defaultMessage: 'Applicant',
+          description: 'This is the label for the field',
+          id: 'event.tennis-club-membership.summary.field.name.label'
+        },
+        value: {
+          defaultMessage: '{applicant.firstname} {applicant.surname}',
+          id: 'event.tennis-club-membership.summary.field.name.label',
+          description: 'This is the value for the field'
+        },
         emptyValueMessage: {
-          defaultMessage: "Applicant's first name missing",
+          defaultMessage: "Applicant's name is missing",
           description:
-            "shown when the applicant's first name is missing in summary",
+            "shown when the applicant's names are missing in summary",
           id: 'event.tennis-club-membership.summary.field.applicant.firstname.empty'
         }
       },
       {
-        id: 'applicant.surname',
+        id: 'event.tennis-club-membership.summary.recommender.name',
+        label: {
+          defaultMessage: 'Recommender',
+          description: 'This is the label for the field',
+          id: 'event.tennis-club-membership.summary.field.recommender.name.label'
+        },
+        value: {
+          defaultMessage: '{recommender.firstname} {recommender.surname}',
+          id: 'event.tennis-club-membership.summary.field.name.label',
+          description: 'This is the value for the field'
+        },
         emptyValueMessage: {
-          defaultMessage: "Applicant's surname missing",
-          description: 'shown when the surname is missing in summary',
-          id: 'event.tennis-club-membership.summary.field.applicant.surname.empty'
-        }
-      },
-      {
-        id: 'recommender.firstname',
-        emptyValueMessage: {
-          defaultMessage: "Recommender's first name missing",
+          defaultMessage: "Recommender's name is missing",
           description:
-            'shown when the recommender first name is missing in summary',
-          id: 'event.tennis-club-membership.summary.field.recommender.firstname.empty'
-        }
-      },
-      {
-        id: 'recommender.surname',
-        emptyValueMessage: {
-          defaultMessage: "Recommender's surname missing",
-          description:
-            'shown when the recommender surname is missing in summary',
-          id: 'event.tennis-club-membership.summary.field.recommender.surname.empty'
+            "shown when the recommender's names are missing in summary",
+          id: 'event.tennis-club-membership.summary.field.recommender.name.empty'
         }
       },
       {
         id: 'recommender.id',
+        label: {
+          defaultMessage: 'Membership ID',
+          description: 'This is the label for the field',
+          id: 'event.tennis-club-membership.summary.field.recommender.id.label'
+        },
+        value: {
+          defaultMessage: '{recommender.id}',
+          id: 'event.tennis-club-membership.summary.field.recommender.id',
+          description: 'This is the value for the field'
+        },
         emptyValueMessage: {
           defaultMessage: "Recommender's id missing",
           description: 'shown when the recommender id is missing in summary',
