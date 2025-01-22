@@ -792,7 +792,7 @@
 
 "@opencrvs/mosip@^1.7.0-alpha.11":
   version "1.7.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.11.tgz#d84b58c6c4851de167a73e4b4ec606d5ee63a6ed"
+  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.11.tgz#0e39ac51b19a6a5d2409f36231c75f127f4e9818"
   integrity sha512-2SbPfh1zKI5dbj/I3lyjjI7bhemNjnQeVxpShPGywZK+K3yTM9/W5d85kti+VNt3bJofWsx32BlcXCjTtfAEBg==
 
 "@opencrvs/toolkit@0.0.17-events":
