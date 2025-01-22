@@ -1,8 +1,51 @@
 # Changelog
 
+## 1.6.3
+
+### Breaking changes
+
+- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
+
 ## 1.6.2
 
-## 1.6.1
+### Breaking changes
+
+- `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
+- Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
+
+### New features
+
+- Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+- **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
+
+### Improvements
+
+- Auth token, ip address, remote address, mobile number, email redacted/masked from server log
+- Optimized deployment times by making docker images download in parallel.
+- Country alpha3 ISO code now is derived from variables to the Docker Compose files and don't need to be hard coded
+
+### Bug fixes
+
+- Protect individual certificate endpoint with token
+- Kibana disk space alerts now work regardless of your disk device names. Alerts listen devices mounted both to `/` and `/data` (encrypted data partition)
+- "Publish release" pipeline now correctly uses the "Branch to build from" value as the branch to be tagged. Previously it tried tagging "master". "Release tag" is also now used as the release version as is instead of it being read from `package.json`.
+- Backup process now doesn't require internet connection to download docker images thus working more reliably when internet connections are unreliable. Previously non-active images were cleaned nightly, now we only do it as part of deployment. [#7896](https://github.com/opencrvs/opencrvs-core/issues/7896)
+- We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
+- Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
+- On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
+
+### Infrastructure breaking changes
+
+- **Title** Description
+
+### New content keys requiring translation
+
+```
+INSERT CSV ROWS IN ENGLISH ONLY
+```
+
+## 1.6.1 (TBD)
 
 ### Bug fixes
 
