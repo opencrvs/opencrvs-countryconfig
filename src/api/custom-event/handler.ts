@@ -10,10 +10,31 @@
  */
 import * as Hapi from '@hapi/hapi'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
+import { EventDocument } from '@opencrvs/toolkit/events'
+import { birthEvent } from '@countryconfig/form/v2/birth'
 
-export const customEventHandler = (
+export function getCustomEventsHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
-) => {
-  return h.response([tennisClubMembershipEvent]).code(200)
+) {
+  return h.response([tennisClubMembershipEvent, birthEvent]).code(200)
+}
+
+export function onRegisterHandler(
+  request: Hapi.Request,
+  h: Hapi.ResponseToolkit
+) {
+  const event = EventDocument.parse(request.payload)
+  console.log(event)
+  return h.response().code(200)
+}
+
+export function onAnyActionHandler(
+  request: Hapi.Request,
+  h: Hapi.ResponseToolkit
+) {
+  console.log(request.params.event, request.params.action)
+  const event = EventDocument.parse(request.payload)
+  console.log(event)
+  return h.response().code(200)
 }
