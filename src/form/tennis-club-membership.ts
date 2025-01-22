@@ -183,39 +183,29 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
       id: 'collector',
       title: {
         id: 'event.tennis-club-membership.action.certificate.form.section.who.title',
-        defaultMessage: 'Who is collecting the certificate?',
+        defaultMessage: 'Print certified copy',
         description: 'This is the title of the section'
       },
       fields: [
         {
-          id: 'collector.firstname',
-          type: 'TEXT',
-          required: true,
-          label: {
-            defaultMessage: "Collector's first name",
-            description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.certificate.form.section.who.field.firstname.label'
-          }
-        },
-        {
-          id: 'collector.surname',
-          type: 'TEXT',
-          required: true,
-          label: {
-            defaultMessage: "Collector's surname",
-            description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.certificate.form.section.who.field.surname.label'
-          }
-        },
-        {
           id: 'collector.certificateTemplateId',
-          type: 'RADIO_GROUP',
+          type: 'SELECT',
           required: true,
           label: {
             defaultMessage: 'Select Certificate Template',
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.certificate.form.section.who.field.surname.label'
           },
+          validation: [
+            {
+              message: {
+                id: '',
+                defaultMessage: '',
+                description: ''
+              }
+              // validator: field
+            }
+          ],
           options: [
             {
               label: {
@@ -237,6 +227,42 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
               value: 'tennis-club-membership-certified-certificate'
             }
           ]
+        },
+        {
+          id: 'collector.requesterId',
+          type: 'SELECT',
+          required: true,
+          label: {
+            defaultMessage: 'Requester',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.certificate.form.section.requester.label'
+          },
+          options: [
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.certificate.form.section.requester.informant.label',
+                defaultMessage: 'Print and issue Informant',
+                description: 'This is the label for the field'
+              },
+              value: 'INFORMANT'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.certificate.form.section.requester.other.label',
+                defaultMessage: 'Print and issue someone else',
+                description: 'This is the label for the field'
+              },
+              value: 'OTHER'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.certificate.form.section.requester.printInAdvance.label',
+                defaultMessage: 'Print in advance',
+                description: 'This is the label for the field'
+              },
+              value: 'PRINT_IN_ADVANCE'
+            }
+          ]
         }
       ]
     }
@@ -252,9 +278,12 @@ export const tennisClubMembershipEvent = defineConfig({
   },
   summary: {
     title: {
-      defaultMessage: '{applicant.firstname} {applicant.surname}',
-      description: 'This is the title of the summary',
-      id: 'event.tennis-club-membership.summary.title'
+      id: '',
+      label: {
+        defaultMessage: '{applicant.firstname} {applicant.surname}',
+        description: 'This is the title of the summary',
+        id: 'event.tennis-club-membership.summary.title'
+      }
     },
     fields: [
       {
@@ -262,16 +291,36 @@ export const tennisClubMembershipEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: "Applicant's first name missing",
           description:
-            "shown when the applicant's first name is missing in summary",
+            "Shown when the applicant's first name is missing in summary",
           id: 'event.tennis-club-membership.summary.field.applicant.firstname.empty'
+        },
+        label: {
+          defaultMessage: "Applicant's First Name",
+          description: "Label for the applicant's first name field",
+          id: 'event.tennis-club-membership.summary.field.applicant.firstname.label'
+        },
+        value: {
+          defaultMessage: 'First Name',
+          description: "Value for the applicant's first name field",
+          id: 'event.tennis-club-membership.summary.field.applicant.firstname.value'
         }
       },
       {
         id: 'applicant.surname',
         emptyValueMessage: {
           defaultMessage: "Applicant's surname missing",
-          description: 'shown when the surname is missing in summary',
+          description: 'Shown when the surname is missing in summary',
           id: 'event.tennis-club-membership.summary.field.applicant.surname.empty'
+        },
+        label: {
+          defaultMessage: "Applicant's Surname",
+          description: 'Label for the applicant’s surname field',
+          id: 'event.tennis-club-membership.summary.field.applicant.surname.label'
+        },
+        value: {
+          defaultMessage: 'Surname',
+          description: 'Value for the applicant’s surname field',
+          id: 'event.tennis-club-membership.summary.field.applicant.surname.value'
         }
       },
       {
@@ -279,8 +328,18 @@ export const tennisClubMembershipEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: "Recommender's first name missing",
           description:
-            'shown when the recommender first name is missing in summary',
+            'Shown when the recommender first name is missing in summary',
           id: 'event.tennis-club-membership.summary.field.recommender.firstname.empty'
+        },
+        label: {
+          defaultMessage: "Recommender's First Name",
+          description: 'Label for the recommender’s first name field',
+          id: 'event.tennis-club-membership.summary.field.recommender.firstname.label'
+        },
+        value: {
+          defaultMessage: 'First Name',
+          description: 'Value for the recommender’s first name field',
+          id: 'event.tennis-club-membership.summary.field.recommender.firstname.value'
         }
       },
       {
@@ -288,16 +347,36 @@ export const tennisClubMembershipEvent = defineConfig({
         emptyValueMessage: {
           defaultMessage: "Recommender's surname missing",
           description:
-            'shown when the recommender surname is missing in summary',
+            'Shown when the recommender surname is missing in summary',
           id: 'event.tennis-club-membership.summary.field.recommender.surname.empty'
+        },
+        label: {
+          defaultMessage: "Recommender's Surname",
+          description: 'Label for the recommender’s surname field',
+          id: 'event.tennis-club-membership.summary.field.recommender.surname.label'
+        },
+        value: {
+          defaultMessage: 'Surname',
+          description: 'Value for the recommender’s surname field',
+          id: 'event.tennis-club-membership.summary.field.recommender.surname.value'
         }
       },
       {
         id: 'recommender.id',
         emptyValueMessage: {
           defaultMessage: "Recommender's id missing",
-          description: 'shown when the recommender id is missing in summary',
+          description: 'Shown when the recommender id is missing in summary',
           id: 'event.tennis-club-membership.summary.field.recommender.id.empty'
+        },
+        label: {
+          defaultMessage: "Recommender's ID",
+          description: 'Label for the recommender’s ID field',
+          id: 'event.tennis-club-membership.summary.field.recommender.id.label'
+        },
+        value: {
+          defaultMessage: 'ID',
+          description: 'Value for the recommender’s ID field',
+          id: 'event.tennis-club-membership.summary.field.recommender.id.value'
         }
       }
     ]
