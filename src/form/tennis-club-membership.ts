@@ -396,6 +396,39 @@ export const tennisClubMembershipEvent = defineConfig({
       forms: [TENNIS_CLUB_FORM]
     },
     {
+      type: 'REQUEST_CORRECTION',
+      label: {
+        defaultMessage: 'Correct',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.tennis-club-membership.action.requestCorrection.label'
+      },
+      allowedWhen: defineConditional(eventHasAction('REGISTER')),
+      forms: [TENNIS_CLUB_FORM]
+    },
+    {
+      type: 'APPROVE_CORRECTION',
+      label: {
+        defaultMessage: 'Approve correction request',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.tennis-club-membership.action.approveCorrection.label'
+      },
+      allowedWhen: defineConditional(eventHasAction('REGISTER')),
+      forms: [TENNIS_CLUB_FORM]
+    },
+    {
+      type: 'REJECT_CORRECTION',
+      label: {
+        defaultMessage: 'Reject correction request',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.tennis-club-membership.action.rejectCorrection.label'
+      },
+      allowedWhen: defineConditional(eventHasAction('REGISTER')),
+      forms: [TENNIS_CLUB_FORM]
+    },
+    {
       type: 'CUSTOM',
       label: {
         defaultMessage: 'My custom action',
