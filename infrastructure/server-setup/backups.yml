@@ -200,7 +200,7 @@
         - backups
     
     - name: Download the test connection file from the backup server 
-      shell: rsync -avz -e "ssh -o StrictHostKeyChecking=no" {{ backup_server_user }}@{{ destination_server }}:{{ backup_server_remote_target_directory }}/test_connection.txt /tmp/test_connection.txt
+      shell: rsync -avz -e "ssh -o StrictHostKeyChecking=no" {{ backup_server_user }}@{{ destination_server }}:{{ backup_server_remote_target_directory }}/downloaded_from_backup.txt /tmp/downloaded_from_backup.txt
       remote_user: '{{ crontab_user }}'
       when: "'backups' in groups and groups['backups'] | length > 0 and periodic_restore_from_backup"
       tags:
