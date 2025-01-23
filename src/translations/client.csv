@@ -1,4 +1,5 @@
 id,description,en,fr
+...,This could be shown to the user in a reason for duplicate detected,Standard check,Chèque standard
 action.action,Label for action button,Action,Action
 action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
 action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
@@ -10,6 +11,10 @@ action.review.correction,Label for review correction in dropdown menu,Review cor
 action.review.declaration,Label for review declaration button in dropdown menu,"Review {isDuplicate, select, true{potential duplicate} other{declaration}}","Review {isDuplicate, select, true{doublon potentiel} other{déclaration}}"
 action.update,Label for reinstate update button in dropdown menu,Update declaration,Mettre à jour la déclaration
 action.view,Label for view button in dropdown menu,View {recordOrDeclaration},"voir {recordOrDeclaration, select, record{enregistrer} other{déclaration}}"
+actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, déclarer{Déclarer} autre{{action}}}"
+actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
+actionModal.description,The description for action modal,The declarant will be notified of this action and a record of this decision will be recorded,Le déclarant sera informé de cette action et un compte rendu de cette décision sera enregistré
+actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} le membre ?"
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,information de l'enfant
@@ -113,6 +118,7 @@ buttons.review,Review button text,Review,Reviser
 buttons.save,Save Button Text,Save,Sauvegarder
 buttons.saveAndExit,Save & exit Button Text,Save & Exit,Sauvegarder et quitter
 buttons.saveDraft,,Save as draft,Enregistrer comme brouillon
+buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
 buttons.saving,Saving Button Text,Saving...,Sauvegarde en cours
 buttons.search,The title of search input submit button,Search,Rechercher
 buttons.select,The select title,Select,Sélectionnez
@@ -798,7 +804,9 @@ error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !
 error.userListError,Error message when user list loads fails,Failed to load users,Impossible de charger les utilisateurs
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
 event.history.timeFormat,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a",
+event.newVitalEventRegistration,The title for the new vital event registration page,"New ""{event}"" registration","Nouvelle inscription ""{event}"""
 event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
+event.tennis-club-membership.action.declare.form.review.title,Title of the form to show in review page,Member declaration for {firstname} {surname},Déclaration de membre pour {firstname} {nom}
 event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Prénom du recommandeur
 event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,ID d'adhésion du recommandeur
 event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Nom de famille du recommandeur
@@ -810,6 +818,16 @@ event.tennis-club-membership.action.declare.form.section.who.title,This is the t
 event.tennis-club-membership.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
 event.tennis-club-membership.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Send an application,Envoyer une demande
 event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
+event.tennis-club-membership.summary.field.firstname.label,Label for the given field on form.,First name,Prénom
+event.tennis-club-membership.summary.field.firstname.value,Value for the matching field on form.,{applicant.firstname},{candidat.prénom}
+event.tennis-club-membership.summary.title.label,This is the title of the summary,{applicant.firstname} {applicant.surname},{candidat.prénom} {candidat.nom}
+event.tennis-club-membership.workqueue.in-progress.label,Label for in progress workqueue,In progress,En cours
+event.tennis-club-membership.workqueue.in-review.label,Label for in review workqueue,Ready for review,Prêt pour l'examen
+event.tennis-club-membership.workqueue.registered.label,Label for registered workqueue,Ready to print,Prêt à imprimer
+events.status,,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} other {Unknown}}","{statut, sélectionnez, OUTBOX {Syncing..} CRÉÉ {Brouillon} VALIDÉ {Validé} BROUILLON {Brouillon} DÉCLARÉ {Déclaré} ENREGISTRÉ {Enregistré} autre {Inconnu}}"
+events.workqueues.createdAt,,Created,Créé
+events.workqueues.modifiedAt,,Modified,Modifié
+events.workqueues.status,,Status,Statut
 exitModal.cancel,The label for cancel button in exit modal,Cancel,Annuler
 exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?,Quitter sans enregistrer les modifications?
 exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Êtes-vous sûr de vouloir quitter sans enregistrer?
@@ -1517,7 +1535,6 @@ nationality.GNB,,Bissau-Guinean,Bissau-Guinéen
 nationality.GNQ,,Equatoguinean,Guinéen équatorial
 nationality.GRC,,Greek,Grec
 nationality.GRD,,Grenadian,Grenad
-nationality.GRD,,Grenadian,Grenadien
 nationality.GRL,,Greenlander,Groenlandais
 nationality.GTM,,Guatemalan,Guatémaltèque
 nationality.GUF,,French Guianese,Français de Guyane
@@ -1674,6 +1691,9 @@ nationality.YEM,,Yemeni,Yéménite
 nationality.ZAF,,South African,Sud-Africain
 nationality.ZMB,,Zambian,Zambien
 nationality.ZWE,,Zimbabwean,Zimbabwéen
+navigation.CREATED,In progress label in navigation,In progress,En cours
+navigation.DECLARED,Ready for review label in navigation,Ready for review,Prêt pour l'examen
+navigation.REGISTERED,Ready to print label in navigation,Ready to print,Prêt à imprimer
 navigation.analytic,Analytic Group,Analytics,Analytique
 navigation.application,Application label in navigation,Application,Application
 navigation.approvals,Sent for approval label in navigation,Sent for approval,Envoyé pour approbation
@@ -1688,6 +1708,7 @@ navigation.informantNotification,Informant notifications label in navigation,Inf
 navigation.integration,Integration forms label in navigation,Integrations,Intégrations
 navigation.leaderboards,Leaderboards Dashboard Section,Leaderboards,Classements
 navigation.my-drafts,My drafts label in navigation,My drafts,Mes projets
+navigation.myDrafts,My drafts label in navigation,My drafts,Mes brouillons
 navigation.organisation,Organisations label in navigation,Organisation,Organisation
 navigation.outbox,Label for navigation item outbox,Outbox,Boîte d'envoi
 navigation.performance,Performance label in navigation,Performance,Performance
@@ -2040,6 +2061,9 @@ register.selectVitalEvent.registerNewEventHeading,The section heading on the pag
 register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration
 register.selectinformant.legalGuardian,,Legal guardian,Tuteur légal
 register.workQueue.declarations.banner,,Declarations to register in your area,Déclarations à enregistrer dans votre région
+registerAction.Declare,The label for declare button of register action,Register,Registre
+registerAction.description,The description for register action,"By clicking register, you confirm that the information entered is correct and the member can be registered.","En cliquant sur vous inscrire, vous confirmez que les informations saisies sont correctes et que le membre peut être inscrit."
+registerAction.title,The title for register action,Register member,Inscrire un membre
 registerModal.cancel,The label for cancel button of register modal,Cancel,Annuler
 registerModal.description,The description for register modal,The declarant will be notified of this correction and a record of this decision will be recorded,Le déclarant sera informé de cette correction et un enregistrement de cette décision sera créé.
 registerModal.register,The label for register button of register modal,Register,Enregistrer
@@ -2106,6 +2130,7 @@ review.signature.delete,Label for button that deletes signature,Delete,Supprimer
 review.signature.description,Label awknowledging the correctness of the declaration,"I, the undersigned, hereby declare that the particulars in this form are true and correct to the best of my knowledge.","Je soussigné(e) déclare par la présente que les informations contenues dans ce formulaire sont, à ma connaissance, vraies et correctes."
 review.signature.input.description,Description awknowledging the correctness of the declaration,"By signing this document with an electronic signature, I agree that such signature will be valid as handwritten signatures to the extent allowed by the laws of Farajaland.","En signant ce document avec une signature électronique, j'accepte que cette signature soit valable comme les signatures manuscrites dans la mesure où les lois du Farajaland le permettent."
 review.signature.open,Label for button that opens the signature input,Sign,Signer
+reviewAction.Declare,The label for declare button of review action,Declare,Déclarer
 reviewAction.description,The description for review action,"By clicking register, you confirm that the information entered is correct and the member can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que le membre peut être enregistré."
 reviewAction.register,The label for register button of review action,Register,Enregistrer
 reviewAction.reject,The label for reject button of review action,Reject,Rejeter
@@ -2367,6 +2392,21 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
+views.idVerification.banner.actions.reset,,Reset,Réinitialiser
+views.idVerification.banner.actions.revoke,,Revoke,Révoquer
+views.idVerification.banner.failed.title,,ID Verification Failed,Échec de la vérification de l'identité
+views.idVerification.banner.pending.description,,The data has been pre-filled from the notifier’s ID card and can be edited. It will be authenticated after submission,Les données ont été pré-remplies à partir de la carte d’identité du déclarant et peuvent être modifiées. 
+views.idVerification.banner.pending.title,,ID Pending Verification,ID en attente de vérification
+views.idVerification.banner.success.description,,"This identity data has been successfully verified with the Farajaland’s National ID System. Please note that their identity has not been authenticated using the individuals biometrics. To make edits, please remove the verification first.",Ces données d’identité ont été vérifiées avec succès avec le système d’identification national du Farajaland. 
+views.idVerification.banner.success.title,,ID Verified,Pièce d'identité vérifiée
+views.qrReader.button,Button to scan QR code,Scan QR code,Scanner le code QR
+views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialog,Place the Notifier's ID card in front of the camera.,Placez la carte d'identité du notifiant devant la caméra.
+views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.,Assurez-vous que votre caméra est propre et fonctionnelle.
+views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.,Tenez l'appareil fermement à une distance de 6 à 12 pouces du code QR.
+views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et qu’il n’est ni endommagé ni flou.
+wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
+wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun enregistrement prêt à être examiné
+wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun enregistrement prêt à imprimer
 wq.noRecords.draft,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.externalValidation,No records messages for empty external validation tab,No records in external validation,Aucun enregistrement dans la validation externe
 wq.noRecords.fieldAgents,No records messages for empty field agents tab,No records from field agents,Aucun enregistrement des agents de terrain
