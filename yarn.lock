@@ -790,10 +790,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@0.0.19-events-ml":
-  version "0.0.19-events-ml"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.19-events-ml.tgz#d93a4ed889908be0f0fd8a88b60640c807d74554"
-  integrity sha512-16TISLgkYpyrUUVpHtDqLjPhyPT21zPenGrj4UKKKjXt6J55t/y7Te6XXKK5jqsT0+i+VKlx2vVg3/BnSapVZA==
+"@opencrvs/toolkit@0.0.20-events-rr":
+  version "0.0.20-events-rr"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.20-events-rr.tgz#dd09bdb1dc6af0f492b190a6061542f7bedb957e"
+  integrity sha512-9UpHGAP0eGgr5W8OaRKSyjYsS+th7x4I91K6gYLyN7x1pAqPlLeZCywZ4Kdkk06XRV+PwMFaZ542O4fZN8Lq6w==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
