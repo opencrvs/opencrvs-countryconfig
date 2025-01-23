@@ -213,7 +213,7 @@ export const childPage = defineFormPage({
             description: 'This is the error message for invalid date',
             id: 'event.birth.action.declare.form.section.child.field.dob.error'
           },
-          validator: field('child.dob').isBeforeNow()
+          validator: field('child.dob').isBeforeNow().apply()
         }
       ],
       label: {
@@ -233,6 +233,7 @@ export const childPage = defineFormPage({
       },
       options: placeOfBirthOptions
     },
+
     {
       id: 'child.birthLocation',
       type: 'LOCATION',
@@ -245,12 +246,13 @@ export const childPage = defineFormPage({
       options: {
         type: 'HEALTH_FACILITY'
       },
+
       conditionals: [
         {
           type: 'HIDE',
-          conditional: field('child.placeOfBirth').isUndefinedOrNotInArray([
-            'HEALTH_FACILITY'
-          ])
+          conditional: field('child.placeOfBirth')
+            .or((field) => field.isUndefined().not.inArray(['HEALTH_FACILITY']))
+            .apply()
         }
       ]
     },
@@ -259,9 +261,9 @@ export const childPage = defineFormPage({
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field('child.placeOfBirth').isUndefinedOrNotInArray([
-            'PRIVATE_HOME'
-          ])
+          conditional: field('child.placeOfBirth')
+            .or((field) => field.isUndefined().not.inArray(['PRIVATE_HOME']))
+            .apply()
         }
       ]
     }),
@@ -270,9 +272,9 @@ export const childPage = defineFormPage({
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field('child.placeOfBirth').isUndefinedOrNotInArray([
-            'OTHER'
-          ])
+          conditional: field('child.placeOfBirth')
+            .or((field) => field.isUndefined().not.inArray(['OTHER']))
+            .apply()
         }
       ]
     }),
