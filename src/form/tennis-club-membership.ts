@@ -196,16 +196,6 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.certificate.form.section.who.field.surname.label'
           },
-          validation: [
-            {
-              message: {
-                id: '',
-                defaultMessage: '',
-                description: ''
-              }
-              // validator: field
-            }
-          ],
           options: [
             {
               label: {
@@ -263,6 +253,120 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
               value: 'PRINT_IN_ADVANCE'
             }
           ]
+        },
+        {
+          id: 'collector.OTHER.idType',
+          type: 'SELECT',
+          required: true,
+          label: {
+            defaultMessage: 'Select Type of ID',
+            description: 'This is the label for selecting the type of ID',
+            id: 'event.tennis-club-membership.action.form.section.idType.label'
+          },
+          options: [
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.passport.label',
+                defaultMessage: 'Passport',
+                description: 'Option for selecting Passport as the ID type'
+              },
+              value: 'PASSPORT'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.drivingLicense.label',
+                defaultMessage: 'Driving License',
+                description:
+                  'Option for selecting Driving License as the ID type'
+              },
+              value: 'DRIVING_LICENSE'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.refugeeNumber.label',
+                defaultMessage: 'Refugee Number',
+                description:
+                  'Option for selecting Refugee Number as the ID type'
+              },
+              value: 'REFUGEE_NUMBER'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.alienNumber.label',
+                defaultMessage: 'Alien Number',
+                description: 'Option for selecting Alien Number as the ID type'
+              },
+              value: 'ALIEN_NUMBER'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.other.label',
+                defaultMessage: 'Other',
+                description: 'Option for selecting Other as the ID type'
+              },
+              value: 'OTHER'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.noId.label',
+                defaultMessage: 'No ID',
+                description: 'Option for selecting No ID as the ID type'
+              },
+              value: 'NO_ID'
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.idTypeOther',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Other ID Type (if applicable)',
+            description:
+              'This is the label for entering an ID type if "Other" is selected',
+            id: 'event.tennis-club-membership.action.form.section.idTypeOther.label'
+          }
+        },
+        {
+          id: 'collector.OTHER.firstName',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'First Name',
+            description: 'This is the label for the first name field',
+            id: 'event.tennis-club-membership.action.form.section.firstName.label'
+          }
+        },
+        {
+          id: 'collector.OTHER.lastName',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Last Name',
+            description: 'This is the label for the last name field',
+            id: 'event.tennis-club-membership.action.form.section.lastName.label'
+          }
+        },
+        {
+          id: 'collector.OTHER.relationshipToMember',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Relationship to Member',
+            description:
+              'This is the label for the relationship to member field',
+            id: 'event.tennis-club-membership.action.form.section.relationshipToMember.label'
+          }
+        },
+        {
+          id: 'collector.OTHER.signedAffidavit',
+          type: 'FILE',
+          required: false,
+          label: {
+            defaultMessage: 'Signed Affidavit (Optional)',
+            description: 'This is the label for uploading a signed affidavit',
+            id: 'event.tennis-club-membership.action.form.section.signedAffidavit.label'
+          }
         }
       ]
     }
