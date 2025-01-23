@@ -183,9 +183,9 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.idType`).isUndefinedOrNotInArray([
-          'NATIONAL_ID'
-        ])
+        conditional: field(`${person}.idType`)
+          .or((field) => field.isUndefined().not.inArray(['NATIONAL_ID']))
+          .apply()
       }
     ]
   },
@@ -201,9 +201,9 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.idType`).isUndefinedOrNotInArray([
-          'PASSPORT'
-        ])
+        conditional: field(`${person}.idType`)
+          .or((field) => field.isUndefined().not.inArray(['PASSPORT']))
+          .apply()
       }
     ]
   },
@@ -219,9 +219,11 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.idType`).isUndefinedOrNotInArray([
-          'BIRTH_REGISTRATION_NUMBER'
-        ])
+        conditional: field(`${person}.idType`)
+          .or((field) =>
+            field.isUndefined().not.inArray(['BIRTH_REGISTRATION_NUMBER'])
+          )
+          .apply()
       }
     ]
   }
@@ -261,7 +263,7 @@ export const getPersonInputCommonFields = (
           description: 'This is the error message for invalid date',
           id: `event.birth.action.declare.form.section.${person}.field.dob.error`
         },
-        validator: field(`${person}.dob`).isBeforeNow()
+        validator: field(`${person}.dob`).isBeforeNow().apply()
       }
     ],
     label: {
@@ -272,7 +274,7 @@ export const getPersonInputCommonFields = (
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.dobUnknown`).isEqualTo('true')
+        conditional: field(`${person}.dobUnknown`).isEqualTo('true').apply()
       }
     ]
   },
@@ -298,9 +300,9 @@ export const getPersonInputCommonFields = (
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.dobUnknown`).isUndefinedOrInArray([
-          'false'
-        ])
+        conditional: field(`${person}.dobUnknown`)
+          .or((field) => field.isUndefined().inArray(['false']))
+          .apply()
       }
     ]
   },
@@ -355,9 +357,9 @@ const fatherAddressFields = [
     newConditionals: [
       {
         type: 'HIDE',
-        conditional: field(
-          `${PersonType.mother}.detailsNotAvailable`
-        ).isInArray(['true'])
+        conditional: field(`${PersonType.mother}.detailsNotAvailable`)
+          .inArray(['true'])
+          .apply()
       }
     ]
   }),
@@ -366,9 +368,9 @@ const fatherAddressFields = [
     newConditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${PersonType.father}.addressSameAs`).isInArray([
-          YesNoTypes.YES
-        ])
+        conditional: field(`${PersonType.father}.addressSameAs`)
+          .inArray([YesNoTypes.YES])
+          .apply()
       }
     ]
   })
