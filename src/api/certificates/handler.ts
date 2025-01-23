@@ -93,7 +93,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'death-certificate',
-      event: 'death' as Event.Death,
+      event: Event.Death,
       label: {
         id: 'certificates.death.certificate',
         defaultMessage: 'Death Certificate',
@@ -117,7 +117,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'death-certificate-certified-copy',
-      event: 'death' as Event.Death,
+      event: Event.Death,
       label: {
         id: 'certificates.death.certificate.copy',
         defaultMessage: 'Death Certificate certified copy',
@@ -142,7 +142,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'marriage-certificate',
-      event: 'marriage' as Event.Marriage,
+      event: Event.Marriage,
       label: {
         id: 'certificates.marriage.certificate',
         defaultMessage: 'Marriage Certificate',
@@ -166,7 +166,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'marriage-certificate-certified-copy',
-      event: 'marriage' as Event.Marriage,
+      event: Event.Marriage,
       label: {
         id: 'certificates.marriage.certificate.copy',
         defaultMessage: 'Marriage Certificate certified copy',
