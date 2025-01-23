@@ -191,7 +191,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'tennis-club-membership-certificate',
-      event: 'tennis-club-membership',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
       label: {
         id: 'certificates.tennis-club-membership.certificate.copy',
         defaultMessage: 'Tennis Club Membership Certificate copy',
@@ -216,7 +216,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'tennis-club-membership-certified-certificate',
-      event: 'tennis-club-membership',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
       label: {
         id: 'certificates.tennis-club-membership.certificate.certified-copy',
         defaultMessage: 'Tennis Club Membership Certificate certified copy',

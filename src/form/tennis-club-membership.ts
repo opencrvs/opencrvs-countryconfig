@@ -263,6 +263,14 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
             description: 'This is the label for selecting the type of ID',
             id: 'event.tennis-club-membership.action.form.section.idType.label'
           },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.requesterId'
+              ).isUndefinedOrNotInArray(['OTHER'])
+            }
+          ],
           options: [
             {
               label: {
@@ -317,15 +325,94 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           ]
         },
         {
+          id: 'collector.PASSPORT.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Passport Details',
+            description: 'Field for entering Passport details',
+            id: 'event.tennis-club-membership.action.form.section.passportDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.OTHER.idType'
+              ).isUndefinedOrNotInArray(['PASSPORT'])
+            }
+          ]
+        },
+        {
+          id: 'collector.DRIVING_LICENSE.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Driving License Details',
+            description: 'Field for entering Driving License details',
+            id: 'event.tennis-club-membership.action.form.section.drivingLicenseDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.OTHER.idType'
+              ).isUndefinedOrNotInArray(['DRIVING_LICENSE'])
+            }
+          ]
+        },
+        {
+          id: 'collector.REFUGEE_NUMBER.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Refugee Number Details',
+            description: 'Field for entering Refugee Number details',
+            id: 'event.tennis-club-membership.action.form.section.refugeeNumberDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.OTHER.idType'
+              ).isUndefinedOrNotInArray(['REFUGEE_NUMBER'])
+            }
+          ]
+        },
+        {
+          id: 'collector.ALIEN_NUMBER.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Alien Number Details',
+            description: 'Field for entering Alien Number details',
+            id: 'event.tennis-club-membership.action.form.section.alienNumberDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.OTHER.idType'
+              ).isUndefinedOrNotInArray(['ALIEN_NUMBER'])
+            }
+          ]
+        },
+        {
           id: 'collector.OTHER.idTypeOther',
           type: 'TEXT',
           required: true,
           label: {
             defaultMessage: 'Other ID Type (if applicable)',
-            description:
-              'This is the label for entering an ID type if "Other" is selected',
+            description: 'Field for entering ID type if "Other" is selected',
             id: 'event.tennis-club-membership.action.form.section.idTypeOther.label'
-          }
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.OTHER.idType'
+              ).isUndefinedOrNotInArray(['OTHER'])
+            }
+          ]
         },
         {
           id: 'collector.OTHER.firstName',
@@ -335,7 +422,15 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
             defaultMessage: 'First Name',
             description: 'This is the label for the first name field',
             id: 'event.tennis-club-membership.action.form.section.firstName.label'
-          }
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.requesterId'
+              ).isUndefinedOrNotInArray(['OTHER'])
+            }
+          ]
         },
         {
           id: 'collector.OTHER.lastName',
@@ -345,7 +440,15 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
             defaultMessage: 'Last Name',
             description: 'This is the label for the last name field',
             id: 'event.tennis-club-membership.action.form.section.lastName.label'
-          }
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.requesterId'
+              ).isUndefinedOrNotInArray(['OTHER'])
+            }
+          ]
         },
         {
           id: 'collector.OTHER.relationshipToMember',
@@ -356,7 +459,15 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
             description:
               'This is the label for the relationship to member field',
             id: 'event.tennis-club-membership.action.form.section.relationshipToMember.label'
-          }
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.requesterId'
+              ).isUndefinedOrNotInArray(['OTHER'])
+            }
+          ]
         },
         {
           id: 'collector.OTHER.signedAffidavit',
@@ -366,7 +477,15 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
             defaultMessage: 'Signed Affidavit (Optional)',
             description: 'This is the label for uploading a signed affidavit',
             id: 'event.tennis-club-membership.action.form.section.signedAffidavit.label'
-          }
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field(
+                'collector.requesterId'
+              ).isUndefinedOrNotInArray(['OTHER'])
+            }
+          ]
         }
       ]
     }
