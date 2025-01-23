@@ -243,6 +243,9 @@ export const BIRTH_DECLARE_FORM = defineForm({
           id: 'documents.proofOfBirth',
           type: 'FILE',
           required: false,
+          options: {
+            fullWidth: true
+          },
           label: {
             defaultMessage: 'Proof of birth',
             description: 'This is the label for the field',
