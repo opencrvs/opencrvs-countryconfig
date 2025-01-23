@@ -1033,8 +1033,7 @@ services:
       - MOSIP_DEATH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/death
       - OPENCRVS_GRAPHQL_GATEWAY_URL=http://gateway:7070/graphql
       - LOCALE=en
-      - MOSIP_API_USERINFO_URL=${MOSIP_API_USERINFO_URL:-}
-      - ESIGNET_TOKEN_URL=${ESIGNET_TOKEN_URL:-}
+      - ESIGNET_USERINFO_URL=${ESIGNET_USERINFO_URL:-}
       - OIDP_CLIENT_PRIVATE_KEY=${OIDP_CLIENT_PRIVATE_KEY:-}
     deploy:
       replicas: 1

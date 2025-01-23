@@ -245,8 +245,6 @@ export const birthForm: ISerializedForm = {
               [
                 qr(),
                 esignet(
-                  'birth',
-                  'informant',
                   ESIGNET_TOKEN_URL,
                   OPENID_PROVIDER_CLIENT_ID,
                   OPENID_PROVIDER_CLAIMS,
@@ -257,9 +255,7 @@ export const birthForm: ISerializedForm = {
             ) as SerializedFormField,
             esignetCallback({
               fieldName: 'esignetCallback',
-              event: 'birth',
-              sectionId: 'informant',
-              getOIDPUserInfoUrl: MOSIP_API_USERINFO_URL,
+              mosipAPIUserInfoUrl: MOSIP_API_USERINFO_URL,
               openIdProviderClientId: OPENID_PROVIDER_CLIENT_ID
             }) as SerializedFormField,
             ...(idVerificationFields(
