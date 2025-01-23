@@ -268,61 +268,45 @@ export const tennisClubMembershipEvent = defineConfig({
         }
       ],
       filters: []
+    },
+    {
+      id: 'ready-for-review',
+
+      fields: [
+        {
+          column: 'title',
+          label: {
+            defaultMessage: '{applicant.firstname} {applicant.surname}',
+            description: 'Label for name in all workqueue',
+            id: 'event.tennis-club-membership.workqueue.readyForReview.name.label'
+          }
+        }
+      ],
+      filters: [
+        {
+          status: ['DECLARED']
+        }
+      ]
+    },
+    {
+      id: 'registered',
+
+      fields: [
+        {
+          column: 'title',
+          label: {
+            defaultMessage: '{applicant.firstname} {applicant.surname}',
+            description: 'Label for name in all workqueue',
+            id: 'event.tennis-club-membership.workqueue.registered.name.label'
+          }
+        }
+      ],
+      filters: [
+        {
+          status: ['REGISTERED']
+        }
+      ]
     }
-    // {
-    //   id: 'ready-for-review',
-    //   title: {
-    //     defaultMessage: 'Ready for review',
-    //     description: 'Label for in review workqueue',
-    //     id: 'event.tennis-club-membership.workqueue.in-review.label'
-    //   },
-    //   fields: [
-    //     {
-    //       id: 'applicant.firstname'
-    //     },
-    //     {
-    //       id: 'event.type'
-    //     },
-    //     {
-    //       id: 'event.createdAt'
-    //     },
-    //     {
-    //       id: 'event.modifiedAt'
-    //     }
-    //   ],
-    //   filters: [
-    //     {
-    //       status: ['DECLARED']
-    //     }
-    //   ]
-    // },
-    // {
-    //   id: 'registered',
-    //   title: {
-    //     defaultMessage: 'Ready to print',
-    //     description: 'Label for registered workqueue',
-    //     id: 'event.tennis-club-membership.workqueue.registered.label'
-    //   },
-    //   fields: [
-    //     {
-    //       id: 'applicant.firstname'
-    //     },
-    //     {
-    //       id: 'event.type'
-    //     },
-    //     {
-    //       id: 'event.createdAt'
-    //     },
-    //     {
-    //       id: 'event.modifiedAt'
-    //     }
-    //   ],
-    //   filters: [
-    //     {
-    //       status: ['REGISTERED']
-    //     }
-    //   ]
-    // }
   ],
   deduplication: [
     {
