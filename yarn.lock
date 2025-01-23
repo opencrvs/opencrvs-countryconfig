@@ -790,10 +790,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/mosip@^1.7.0-alpha.11":
-  version "1.7.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.11.tgz#0e39ac51b19a6a5d2409f36231c75f127f4e9818"
-  integrity sha512-2SbPfh1zKI5dbj/I3lyjjI7bhemNjnQeVxpShPGywZK+K3yTM9/W5d85kti+VNt3bJofWsx32BlcXCjTtfAEBg==
+"@opencrvs/mosip@^1.7.0-alpha.13":
+  version "1.7.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.13.tgz#7fa45cfb389247f3d5d3e201f15aa0b5c209da17"
+  integrity sha512-aOOA/CnyjADyYS+YxIshKWyiAlVynkMEHf3jUDnddRQKTxObPj7K4Gm36iF+BDZIoRkBQMJch5LeJPqGXdxRRg==
 
 "@opencrvs/toolkit@0.0.28":
   version "0.0.28"
