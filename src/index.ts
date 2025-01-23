@@ -61,7 +61,11 @@ import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
-import { customEventHandler } from '@countryconfig/api/custom-event/handler'
+import {
+  getCustomEventsHandler,
+  onAnyActionHandler,
+  onRegisterHandler
+} from '@countryconfig/api/custom-event/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -549,10 +553,30 @@ export async function createServer() {
   server.route({
     method: 'GET',
     path: '/events',
-    handler: customEventHandler,
+    handler: getCustomEventsHandler,
     options: {
       tags: ['api', 'custom-event'],
       description: 'Serves custom events'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/register',
+    handler: onRegisterHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/{action}',
+    handler: onAnyActionHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on event actions'
     }
   })
 

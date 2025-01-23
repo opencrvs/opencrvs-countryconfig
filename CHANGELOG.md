@@ -2,12 +2,15 @@
 
 ## 1.7.0 Release candidate
 
+### Breaking changes
+
+- `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
+- Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
+- **Roles** The previous `roles.csv` file has been deprecated. It will get removed once you run `yarn upgrade:code` command after pulling in the v1.7 changes. The command automatically generates a `roles.json` file which can be used as a baseline to configure the roles as per your requirements.
+
 ### New features
 
-- **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
-- Misc new feature
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
-- Add constant.humanName to allow countries to have custom ordering on their full name e.g. start with `lastName` or `firstName` [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 - **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: *Link to scopes description file*
 
   **Migration notes**
@@ -17,6 +20,14 @@
   The `roles.ts` file now defines all the roles available in the system. New roles can be added & existing roles can be customized by giving them different scopes.
 
   *N.B. The default roles generated in the `roles.ts` file during migration should not be removed to maintain backwards compatibility*
+- **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
+- Add constant.humanName to allow countries to have custom ordering on their full name e.g. start with `lastName` or `firstName` [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
+### Improvements
+
+- Auth token, ip address, remote address, mobile number, email redacted/masked from server log
+- Optimized deployment times by making docker images download in parallel.
+- Country alpha3 ISO code now is derived from variables to the Docker Compose files and don't need to be hard coded
 
 ### Bug fixes
 
@@ -28,17 +39,6 @@
 - Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
 - On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
 
-### Breaking changes
-
-- Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
-- **Roles** The previous `roles.csv` file has been deprecated. It will get removed once you run `yarn upgrade:code` command after pulling in the v1.7 changes. The command automatically generates a `roles.json` file which can be used as a baseline to configure the roles as per your requirements.
-
-### Improvements
-
-- Auth token, ip address, remote address, mobile number, email redacted/masked from server log
-- Optimised deployment times by making docker images download in parallel.
-- Country alpha3 ISO code now is derived from variables to the Docker Compose files and don't need to be hard coded
-
 ### Infrastructure breaking changes
 
 - **Title** Description
@@ -48,11 +48,6 @@
 ```
 INSERT CSV ROWS IN ENGLISH ONLY
 ```
-
-## Bug fixes
-
-- TBC
-
 ## 1.6.1 (TBD)
 
 ### Bug fixes

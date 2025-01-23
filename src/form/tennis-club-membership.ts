@@ -10,6 +10,7 @@
  */
 
 import { defineConfig, defineForm } from '@opencrvs/toolkit/events'
+
 import {
   defineConditional,
   or,
@@ -17,8 +18,10 @@ import {
   userHasScope,
   and,
   not,
-  field
+  field,
+  deduplication
 } from '@opencrvs/toolkit/conditionals'
+import { getAddressFields } from './v2/person/address'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
@@ -90,17 +93,41 @@ const TENNIS_CLUB_FORM = defineForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.label'
           }
-        }
-        // {
-        //   id: 'applicant.image',
-        //   type: 'FILE',
-        //   required: false,
-        //   label: {
-        //     defaultMessage: "Applicant's profile picture",
-        //     description: 'This is the label for the field',
-        //     id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
-        //   }
-        // }
+        },
+        {
+          id: 'applicant.image',
+          type: 'FILE',
+          required: false,
+          label: {
+            defaultMessage: "Applicant's profile picture",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
+          }
+        },
+        {
+          id: 'applicant.image.label',
+          type: 'TEXT',
+          required: false,
+          label: {
+            defaultMessage: "Applicant's profile picture description",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
+          }
+        },
+        {
+          id: 'applicant.address.helper',
+          type: 'PARAGRAPH',
+          required: false,
+          label: {
+            defaultMessage: "Applicant's address",
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.helper.label'
+          },
+          options: {
+            fontVariant: 'h3'
+          }
+        },
+        ...getAddressFields('applicant')
       ]
     },
     {
@@ -155,25 +182,75 @@ export const tennisClubMembershipEvent = defineConfig({
   },
   summary: {
     title: {
-      defaultMessage: '{applicant.firstname} {applicant.surname}',
-      description: 'This is the title of the summary',
-      id: 'event.tennis-club-membership.summary.title'
+      id: 'event.tennis-club-membership.summary.title',
+      label: {
+        defaultMessage: '{applicant.firstname} {applicant.surname}',
+        description: 'This is the title of the summary',
+        id: 'event.tennis-club-membership.summary.title'
+      },
+      emptyValueMessage: {
+        defaultMessage: 'Membership application',
+        description:
+          'This is the message shown when the applicant name is missing',
+        id: 'event.tennis-club-membership.summary.title.empty'
+      }
     },
     fields: [
       {
-        id: 'applicant.firstname'
+        id: 'event.tennis-club-membership.summary.applicant.name',
+        label: {
+          defaultMessage: 'Applicant',
+          description: 'This is the label for the field',
+          id: 'event.tennis-club-membership.summary.field.name.label'
+        },
+        value: {
+          defaultMessage: '{applicant.firstname} {applicant.surname}',
+          id: 'event.tennis-club-membership.summary.field.name.label',
+          description: 'This is the value for the field'
+        },
+        emptyValueMessage: {
+          defaultMessage: "Applicant's name is missing",
+          description:
+            "shown when the applicant's names are missing in summary",
+          id: 'event.tennis-club-membership.summary.field.applicant.firstname.empty'
+        }
       },
       {
-        id: 'applicant.surname'
+        id: 'event.tennis-club-membership.summary.recommender.name',
+        label: {
+          defaultMessage: 'Recommender',
+          description: 'This is the label for the field',
+          id: 'event.tennis-club-membership.summary.field.recommender.name.label'
+        },
+        value: {
+          defaultMessage: '{recommender.firstname} {recommender.surname}',
+          id: 'event.tennis-club-membership.summary.field.name.label',
+          description: 'This is the value for the field'
+        },
+        emptyValueMessage: {
+          defaultMessage: "Recommender's name is missing",
+          description:
+            "shown when the recommender's names are missing in summary",
+          id: 'event.tennis-club-membership.summary.field.recommender.name.empty'
+        }
       },
       {
-        id: 'recommender.firstname'
-      },
-      {
-        id: 'recommender.surname'
-      },
-      {
-        id: 'recommender.id'
+        id: 'recommender.id',
+        label: {
+          defaultMessage: 'Membership ID',
+          description: 'This is the label for the field',
+          id: 'event.tennis-club-membership.summary.field.recommender.id.label'
+        },
+        value: {
+          defaultMessage: '{recommender.id}',
+          id: 'event.tennis-club-membership.summary.field.recommender.id',
+          description: 'This is the value for the field'
+        },
+        emptyValueMessage: {
+          defaultMessage: "Recommender's id missing",
+          description: 'shown when the recommender id is missing in summary',
+          id: 'event.tennis-club-membership.summary.field.recommender.id.empty'
+        }
       }
     ]
   },
@@ -250,6 +327,21 @@ export const tennisClubMembershipEvent = defineConfig({
       ]
     }
   ],
+  deduplication: [
+    {
+      id: 'STANDARD CHECK',
+      label: {
+        defaultMessage: 'Standard check',
+        description:
+          'This could be shown to the user in a reason for duplicate detected',
+        id: '...'
+      },
+      query: deduplication.or([
+        deduplication.field('requester.phone').strictMatches(),
+        deduplication.field('requester.name').fuzzyMatches()
+      ])
+    }
+  ],
   actions: [
     {
       type: 'DECLARE',
@@ -260,6 +352,17 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'event.tennis-club-membership.action.declare.label'
       },
       forms: [TENNIS_CLUB_FORM],
+      allowedWhen: defineConditional(not(eventHasAction('DECLARE')))
+    },
+    {
+      type: 'DELETE',
+      label: {
+        defaultMessage: 'Delete draft',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.tennis-club-membership.action.delete.label'
+      },
+      forms: [],
       allowedWhen: defineConditional(not(eventHasAction('DECLARE')))
     },
     {
