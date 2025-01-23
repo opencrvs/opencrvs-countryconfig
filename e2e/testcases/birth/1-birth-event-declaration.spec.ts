@@ -426,10 +426,10 @@ test.describe('1. Birth event declaration', () => {
 
         /*
          * Expected result: should
-         * - be navigated to "in-progress" tab
+         * - be navigated to "my-drafts" tab
          * - find the declared birth event record on this page list with saved data
          */
-        await expect(page.locator('#content-name')).toHaveText('In progress')
+        await expect(page.locator('#content-name')).toHaveText('My drafts')
         await expect(page.getByText(/seconds ago/)).toBeVisible()
       })
     })
@@ -483,13 +483,13 @@ test.describe('1. Birth event declaration', () => {
     test('1.10.3 Click Confirm', async ({ page }) => {
       await page.getByRole('button', { name: 'Confirm' }).click()
       /*
-       * Expected result: should be navigated to "in-progress" tab but no draft will be saved
+       * Expected result: should be navigated to "my-drafts" tab but no draft will be saved
        */
 
       await page.waitForTimeout(500) // This page renders twice at first
 
       await expect(
-        page.locator('#content-name', { hasText: 'In progress' })
+        page.locator('#content-name', { hasText: 'My drafts' })
       ).toBeVisible()
       await expect(page.getByText(/seconds ago/)).toBeHidden()
     })
@@ -552,13 +552,13 @@ test.describe('1. Birth event declaration', () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
 
       /*
-       * Expected result: should be navigated to "in-progress" tab but no draft will be saved
+       * Expected result: should be navigated to "my-drafts" tab but no draft will be saved
        */
 
       await page.waitForTimeout(500) // This page renders twice at first
 
       await expect(
-        page.locator('#content-name', { hasText: 'In progress' })
+        page.locator('#content-name', { hasText: 'My drafts' })
       ).toBeVisible()
       await expect(page.getByText(/seconds ago/)).toBeHidden()
     })

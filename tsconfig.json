@@ -8,6 +8,7 @@
     "module": "Node16",
     "outDir": "build/dist",
     "sourceMap": true,
+    "resolveJsonModule": true,
     "moduleResolution": "node16",
     "rootDir": ".",
     "lib": ["esnext.asynciterable", "es6", "es2017", "es2019", "es2022", "dom"],
