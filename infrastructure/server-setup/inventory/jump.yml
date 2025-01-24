@@ -67,5 +67,5 @@ all:
 
 jump-host:
   hosts:
-    farajaland-bastion:
+    backup:
       ansible_host: '159.89.14.13'

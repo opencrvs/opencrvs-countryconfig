@@ -62,6 +62,11 @@ all:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMSNTIIsM0C3uJg3V/Fqh2gi4lvl2y6nenrb2Ft1JlX jamil31415926@gmail.com
         state: present
         sudoer: true
+      - name: shoumik
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRSRTqm3vOfjyTutISEtbVp7ZddoWa9NZDZLeWZGzLy dsi@dsi-Inspiron-15-3511
+        state: present
+        sudoer: true
     # If the machine is repurposed to also be the backup host, we need to add more keys to the authorized_keys file so that
     # when the application servers get provisioned, the provision user of this machine can be used.
     additional_keys_for_provisioning_user:
@@ -70,7 +75,7 @@ all:
 docker-manager-first:
   hosts:
     farajaland-qa:
-      ansible_host: '165.22.110.53'
+      ansible_host: '5.223.46.129'
       data_label: data1
 
 # QA and staging servers are not configured to use workers.

@@ -41,5 +41,5 @@ all:
 
 backups-host:
   hosts:
-    backup:
-      ansible_host: '64.226.95.104'
+    farajaland-backup:
+      ansible_host: '188.245.61.69'

@@ -13,8 +13,6 @@ all:
     # OpenCRVS should never be exposed to the public internet. If this is not possible to organise,
     # then this should always be set when configuring a production server if there is no other firewall in front of the server.
     # BE CAREFUL! This will block all SSH traffic except from the IP addresses listed here.
-    only_allow_access_from_addresses:
-      - 159.89.14.13
     # Enable backups but write them to a different location from where production writes them
     enable_backups: true
     backup_server_remote_target_directory: /home/backup/staging-backups
@@ -64,19 +62,23 @@ all:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCWQihdKkwxTItN+rwYAX1vBg+8sv59sFsjYoVaO2mzS01rARfh+M+UVqpEv3zFT/3v6Dr5Z5VhzYvvbH8akiGQxURqie9quEi1iBCqcq+LApkMZxNm7yyvexlFsbkKMHsSZyVCzjE2Wt+6fwR1NqkMQgJjZS+b4CB+CUTNP2i6ytUTmck9K5iAOp1Gpm+Xgyvz6ZEJPkAJ16gV7gzNJUt/DSCkCyV8G2BqYLWeR2QxAbKyuf3LzO5i4XZdiZi9o60QAt3A6KGGLazd0UuYdehQDqVwXzwimLeeuZbaPNmwoAy7DeatOdurrWbnL7ytaiPvAbwai6Grt3PhhM41qO+uojnqTdnFdSOEPVIYMR7+mYu9tuwHZcMJIbbvMPD6EvKumD5Ndn5OxiLY/zQF5PuG89pBdTkTzzREvbV1Dkh2hwAIvgavlZl3P64On+4+FAgjrAx5U55khoRAe2FbEvB+EUGwro0bRffiM2NmxkUBraEuT2Xt5K01ZoBU6F4feO0= tareq.aziz@dsinnovators.com
         state: present
         sudoer: true
+      - name: shoumik
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRSRTqm3vOfjyTutISEtbVp7ZddoWa9NZDZLeWZGzLy dsi@dsi-Inspiron-15-3511
+        state: present
+        sudoer: true
 docker-manager-first:
   hosts:
     farajaland-staging:
-      ansible_host: '167.172.105.70'
+      ansible_host: '5.223.47.53'
       data_label: data1
-      ansible_ssh_common_args: '-J jump@159.89.14.13 -o StrictHostKeyChecking=no'
 
 # QA and staging servers are not configured to use workers.
 docker-workers: {}
 backups:
   hosts:
-    farajaland-qa:
-      ansible_host: '64.226.95.104'
+    farajaland-backup:
+      ansible_host: '188.245.61.69'
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
