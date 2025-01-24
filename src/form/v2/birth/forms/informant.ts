@@ -105,9 +105,11 @@ export const informantPage = defineFormPage({
       conditionals: [
         {
           type: 'HIDE',
-          conditional: field('informant.relation').isUndefinedOrNotInArray([
-            InformantTypes.OTHER
-          ])
+          conditional: field('informant.relation')
+            .or((field) =>
+              field.isUndefined().not.inArray([InformantTypes.OTHER])
+            )
+            .apply()
         }
       ]
     },
@@ -119,10 +121,13 @@ export const informantPage = defineFormPage({
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field('informant.relation').isUndefinedOrInArray([
-            InformantTypes.MOTHER,
-            InformantTypes.FATHER
-          ])
+          conditional: field('informant.relation')
+            .or((field) =>
+              field
+                .isUndefined()
+                .not.inArray([InformantTypes.MOTHER, InformantTypes.FATHER])
+            )
+            .apply()
         }
       ]
     }),
