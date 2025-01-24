@@ -20,6 +20,8 @@ import {
   field
 } from '@opencrvs/toolkit/conditionals'
 
+// import { defaultCertificateCollectorFormConfig } from '@opencrvs/toolkit/default'
+
 const TENNIS_CLUB_FORM = defineForm({
   label: {
     id: 'event.tennis-club-membership.action.declare.form.label',
@@ -744,7 +746,22 @@ export const tennisClubMembershipEvent = defineConfig({
           not(eventHasAction('COLLECT_CERTIFICATE'))
         )
       ),
-      forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
+      forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM],
+      verifyId: [
+        {
+          whenRequesterIs: 'collector.requesterId',
+          andRequesterValueIs: 'INFORMANT',
+          verifyTheseFields: [
+            'recommender.firstname',
+            'recommender.id',
+            'recommender.surname'
+          ]
+        }
+      ],
+      payment: {
+        registrationTarget: 30,
+        lateRegistrationTarget: 365
+      }
     },
     {
       type: 'CUSTOM',
