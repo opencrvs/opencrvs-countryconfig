@@ -41,7 +41,7 @@ on:
       core-image-tag:
         description: Core DockerHub image tag
         required: true
-        default: 'v1.6.0'
+        default: 'v1.7.0'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
