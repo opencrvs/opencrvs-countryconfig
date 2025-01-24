@@ -55,7 +55,7 @@ export const applicationConfig = {
     DATE_OF_BIRTH_UNKNOWN: false,
     INFORMANT_SIGNATURE_REQUIRED: false
   },
-  USER_NOTIFICATION_DELIVERY_METHOD: 'sms', // or 'sms', or 'email' ... You can use 'sms' for WhatsApp
+  USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or 'email' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms', // or 'sms', or 'email' ... You can use 'sms' for WhatsApp
   SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR']
 }
