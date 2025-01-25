@@ -123,6 +123,9 @@ services:
       - SMTP_SECURE=${SMTP_SECURE}
       - NUI_GENERATOR_URL=${NUI_GENERATOR_URL}
       - NUI_API_KEY=${NUI_API_KEY}
+      - NUI_CLIENT_ID=${NUI_CLIENT_ID}
+      - NUI_CLIENT_SECRET=${NUI_CLIENT_SECRET}
+      - X_ROAD_CLIENT=${X_ROAD_CLIENT}
       - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
