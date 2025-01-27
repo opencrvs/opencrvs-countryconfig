@@ -337,9 +337,7 @@ function eventStatementSimplified(
               placeOfBirthFacility
                 ? replaceAbbreviations(placeOfBirthFacility) + ','
                 : '',
-              otherPlaceOfBirthAddress
-                ? otherPlaceOfBirthAddress + ','
-                : '',
+              otherPlaceOfBirthAddress ? otherPlaceOfBirthAddress + ',' : '',
               birthChildFokontanyCustomAddress
                 ? 'fokontany ' + birthChildFokontanyCustomAddress + ','
                 : '',
@@ -379,19 +377,8 @@ function eventStatementSimplified(
   )
 }
 window.eventStatementSimplified = eventStatementSimplified
-function canShowFatherDetails() {
-  if (isTranslatedMarriedMaritalStatus(this.motherMaritalStatus)) {
-    return !(
-      'fatherReasonNotApplying' in this && !('fatherFamilyName' in this)
-    )
-  } 
-  if(this.birthFatherFatherIsDeceased){
-    return true
-  }
-  return !!this.birthFatherFatherHasFormallyRecognisedChild
-}
 function fatherDetails(fatherPrimaryDistrict) {
-  if (!canShowFatherDetails()) {
+  if ('fatherReasonNotApplying' in this && !('fatherFamilyName' in this)) {
     return ''
   }
   return joinValuesWith(
