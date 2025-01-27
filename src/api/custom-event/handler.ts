@@ -33,8 +33,8 @@ export function onAnyActionHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
+  // This catch-all event route can receive either legacy FHIR events with `Content-Type: application/fhir+json` or new events with `Content-Type: application/json`
   console.log(request.params.event, request.params.action)
-  const event = EventDocument.parse(request.payload)
-  console.log(event)
+  console.log(request.payload)
   return h.response().code(200)
 }
