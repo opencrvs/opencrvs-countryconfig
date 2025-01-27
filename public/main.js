@@ -964,10 +964,14 @@ window.openPrintModal = async function openPrintModal(id) {
       ) || { value: '' }
     ).value
 
-    const title =
-      isFatherHasFormallyRecognisedChild == 'true'
-        ? 'FAHATERAHANA SY FANJANAHANA'
-        : 'FAHATERAHANA'
+    const title = window.getIsWithAdpotion(
+      fatherDetailsContext.motherMaritalStatus,
+      fatherDetailsContext.fatherReasonNotApplying,
+      fatherDetailsContext.fatherFamilyName,
+      fatherDetailsContext.birthFatherFatherHasFormallyRecognisedChild
+    )
+      ? 'FAHATERAHANA SY FANJANAHANA'
+      : 'FAHATERAHANA'
 
     // child info
     const childFirstName = event.child.name[0].familyName
@@ -1010,13 +1014,14 @@ window.openPrintModal = async function openPrintModal(id) {
                 'birth.child.child-view-group.fokontanyCustomAddress'
             )?.value
           : undefined,
-      otherPlaceOfBirthAddress: typeof childBirthLocation === 'object'
-        ? event?.questionnaire?.find(
-          (q) =>
-            q.fieldId ===
-            'birth.child.child-view-group.otherPlaceOfBirthAddress'
-        )?.value
-        : undefined,
+      otherPlaceOfBirthAddress:
+        typeof childBirthLocation === 'object'
+          ? event?.questionnaire?.find(
+              (q) =>
+                q.fieldId ===
+                'birth.child.child-view-group.otherPlaceOfBirthAddress'
+            )?.value
+          : undefined,
       placeOfBirthDistrict: childBirthLocation?.stateName,
       placeOfBirthState: childBirthLocation?.districtName,
       childFamilyName: event.child.name[0].familyName,
@@ -1037,6 +1042,7 @@ window.openPrintModal = async function openPrintModal(id) {
     }
 
     const fatherDetailsContext = {
+      motherMaritalStatus: event.mother.maritalStatus,
       fatherReasonNotApplying: event.father.reasonNotApplying,
       fatherFamilyName:
         event.father.name && event.father.name[0]
@@ -1189,6 +1195,9 @@ window.openPrintModal = async function openPrintModal(id) {
     }
 
     const registrationStatementContext = {
+      motherMaritalStatus: motherDetailsContext.motherMaritalStatus,
+      birthFatherFatherHasFormallyRecognisedChild:
+        fatherDetailsContext.birthFatherFatherHasFormallyRecognisedChild,
       birthChildLegacyBirthRegistrationDate: (
         event?.questionnaire?.find(
           (q) =>

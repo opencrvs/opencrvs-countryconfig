@@ -440,8 +440,25 @@ function fatherDetails(fatherPrimaryDistrict) {
   )
 }
 
+function canShowFatherDetails(
+  motherMaritalStatus,
+  fatherReasonNotApplying,
+  fatherFamilyName,
+  birthFatherFatherIsDeceased,
+  birthFatherFatherHasFormallyRecognisedChild
+) {
+  if (isTranslatedMarriedMaritalStatus(motherMaritalStatus)) {
+    return !(fatherReasonNotApplying && !fatherFamilyName)
+  }
+  if (birthFatherFatherIsDeceased) {
+    return true
+  }
+  return birthFatherFatherHasFormallyRecognisedChild == 'true'
+}
+
 function fatherDetailsSimplified(fatherDetailsContext) {
   const {
+    motherMaritalStatus,
     fatherReasonNotApplying,
     fatherFamilyName,
     fatherFirstName,
@@ -465,7 +482,15 @@ function fatherDetailsSimplified(fatherDetailsContext) {
     internationalAddressLine3PrimaryFather,
     internationalPostalCodePrimaryFather
   } = fatherDetailsContext
-  if (fatherReasonNotApplying && !fatherFamilyName) {
+  if (
+    !canShowFatherDetails(
+      motherMaritalStatus,
+      fatherReasonNotApplying,
+      fatherFamilyName,
+      birthFatherFatherIsDeceased,
+      birthFatherFatherHasFormallyRecognisedChild
+    )
+  ) {
     return ''
   }
   return joinValuesWith(
@@ -517,7 +542,12 @@ function fatherDetailsSimplified(fatherDetailsContext) {
           false
         )
       ),
-      birthFatherFatherHasFormallyRecognisedChild
+      getIsWithAdpotion(
+        motherMaritalStatus,
+        fatherReasonNotApplying,
+        fatherFamilyName,
+        birthFatherFatherHasFormallyRecognisedChild
+      )
         ? 'izay manambara fa manjanaka azy'
         : '',
       motherReasonNotApplying ? '' : 'sy'
@@ -728,6 +758,8 @@ function convertToTimeZoneIso(dateUtc, timeZone) {
 
 function registrationStatementSimplified(registrationStatementContext) {
   const {
+    motherMaritalStatus,
+    birthFatherFatherHasFormallyRecognisedChild,
     birthChildLegacyBirthRegistrationDate,
     birthChildLegacyBirthRegistrationTime,
     registrarDate,
@@ -765,6 +797,10 @@ function registrationStatementSimplified(registrationStatementContext) {
     isValidDate(birthRegistrationDate) ? birthRegistrationDate : registrarDate,
     timezone
   )
+  var informantTypeMapped =
+    relationMap[
+      (_a = informantType) === null || _a === void 0 ? void 0 : _a.toLowerCase()
+    ]
   return joinValuesWith(
     __spreadArray(
       __spreadArray(
@@ -774,18 +810,25 @@ function registrationStatementSimplified(registrationStatementContext) {
             ',',
           'tamin’ny',
           convertTimeToMdgCustomWords(registrarDateUTC.split('T')[1]),
-          isInformantMotherOrFather(informantType)
+          isInformantMotherOrFather(
+            informantType,
+            motherMaritalStatus,
+            birthFatherFatherHasFormallyRecognisedChild
+          )
             ? 'araka ny fanambarana nataon’ny'
             : joinValuesWith([
                 "araka ny fanambarana nataon'i",
                 informantFamilyName,
                 informantFirstName
               ]) + ',',
-          (relationMap[
-            (_a = informantType) === null || _a === void 0
-              ? void 0
-              : _a.toLowerCase()
-          ] || 'mpanolotra') + ','
+          (informantType === 'FATHER' &&
+          !isInformantLegalFather(
+            informantType,
+            motherMaritalStatus,
+            birthFatherFatherHasFormallyRecognisedChild
+          )
+            ? 'mpanolotra'
+            : informantTypeMapped || 'mpanolotra') + ','
         ],
         isInformantMotherOrFather(informantType)
           ? []
@@ -969,6 +1012,34 @@ function signatureDescription() {
   }
 }
 window.signatureDescription = signatureDescription
+
+function isInformantLegalFather(
+  informantType,
+  motherMaritalStatus,
+  birthFatherFatherHasFormallyRecognisedChild
+) {
+  return (
+    informantType === 'FATHER' &&
+    (isTranslatedMarriedMaritalStatus(motherMaritalStatus) ||
+      birthFatherFatherHasFormallyRecognisedChild)
+  )
+}
+
+function isInformantMotherOrFather(
+  informantType,
+  motherMaritalStatus,
+  birthFatherFatherHasFormallyRecognisedChild
+) {
+  return (
+    informantType === 'MOTHER' ||
+    isInformantLegalFather(
+      informantType,
+      motherMaritalStatus,
+      birthFatherFatherHasFormallyRecognisedChild
+    )
+  )
+}
+
 function isInformantMotherOrFather(informantType) {
   return informantType === 'MOTHER' || informantType === 'FATHER'
 }
@@ -1388,6 +1459,55 @@ function definitionCommuneInTheAct() {
 window.definitionCommuneInTheAct = definitionCommuneInTheAct
 window.defineCommune = defineCommune
 window.definitionOffice = definitionOffice
+
+function isTanaIV() {
+  return function (name) {
+    return name.toLowerCase() === 'cu tana iv'
+  }
+}
+/**
+ * @TODO To optimize
+ * !! THIS marital status translation list is HARDCODED here because :
+ * - martial status value is the translated one not the key
+ * - no way to get the translation list here from API
+ * !! Should change this if there are changes on form.field.label.maritalStatusMarried in client.csv translations
+ */
+var MARTIAL_STATUS_TRANSLATION_LIST = [
+  'married',
+  'marié(e)',
+  'manambady',
+  'marié',
+  'mariée'
+  // new translations here
+]
+function isTranslatedMarriedMaritalStatus(maritalStatus) {
+  return (
+    maritalStatus &&
+    MARTIAL_STATUS_TRANSLATION_LIST.includes(maritalStatus.toLocaleLowerCase())
+  )
+}
+function getIsWithAdpotion(
+  motherMaritalStatus,
+  fatherReasonNotApplying,
+  fatherFamilyName,
+  birthFatherFatherHasFormallyRecognisedChild
+) {
+  if (
+    isTranslatedMarriedMaritalStatus(motherMaritalStatus) ||
+    (fatherReasonNotApplying && !fatherFamilyName)
+  ) {
+    return false
+  } else {
+    return birthFatherFatherHasFormallyRecognisedChild == 'true'
+  }
+}
+window.getIsWithAdpotion = getIsWithAdpotion
+function isWithAdpotion() {
+  return function () {
+    return getIsWithAdpotion(this)
+  }
+}
+
 function definitionDistrict(officeName) {
   if (officeName === void 0) {
     officeName = ''
