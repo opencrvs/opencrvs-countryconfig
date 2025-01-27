@@ -271,6 +271,9 @@ function canShowFatherDetails(_this: Record<string, string>) {
       'fatherReasonNotApplying' in _this && !('fatherFamilyName' in _this)
     )
   }
+  if (_this.birthFatherFatherIsDeceased) {
+    return true
+  }
   return !!_this.birthFatherFatherHasFormallyRecognisedChild
 }
 
@@ -278,6 +281,7 @@ function fatherDetails(
   this: Record<string, string>,
   fatherPrimaryDistrict: string
 ) {
+  console.log('===>', canShowFatherDetails(this))
   if (!canShowFatherDetails(this)) {
     return ''
   }
