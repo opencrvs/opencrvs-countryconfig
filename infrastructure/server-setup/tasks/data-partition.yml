@@ -96,14 +96,11 @@
     path: /data/metabase
   register: metabase_data
 
-- name: 'Create metabase data directory'
+- name: 'Delete metabase data directory if exists'
   file:
     path: /data/metabase
-    state: directory
-    group: 1000
-    owner: 1000
-    mode: g+rwx
-  when: not metabase_data.stat.exists
+    state: absent
+  when: metabase_data.stat.exists
 
 - name: Check metabase data backup directory
   stat:
