@@ -379,9 +379,19 @@ function eventStatementSimplified(
   )
 }
 window.eventStatementSimplified = eventStatementSimplified
-
+function canShowFatherDetails() {
+  if (isTranslatedMarriedMaritalStatus(this.motherMaritalStatus)) {
+    return !(
+      'fatherReasonNotApplying' in this && !('fatherFamilyName' in this)
+    )
+  } 
+  if(this.birthFatherFatherIsDeceased){
+    return true
+  }
+  return !!this.birthFatherFatherHasFormallyRecognisedChild
+}
 function fatherDetails(fatherPrimaryDistrict) {
-  if ('fatherReasonNotApplying' in this && !('fatherFamilyName' in this)) {
+  if (!canShowFatherDetails()) {
     return ''
   }
   return joinValuesWith(
