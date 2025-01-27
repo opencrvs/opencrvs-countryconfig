@@ -1413,7 +1413,7 @@ exports[`birth configuration is parsed 1`] = `
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.childResidentialAddress.field.address.urbanOrRural.label",
                   },
-                  "options": [
+                  "optionValues": [
                     {
                       "label": {
                         "defaultMessage": "Urban",
@@ -1431,6 +1431,7 @@ exports[`birth configuration is parsed 1`] = `
                       "value": "RURAL",
                     },
                   ],
+                  "options": {},
                   "required": false,
                   "type": "RADIO_GROUP",
                 },
@@ -3462,7 +3463,7 @@ exports[`birth configuration is parsed 1`] = `
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.childOther.field.address.urbanOrRural.label",
                   },
-                  "options": [
+                  "optionValues": [
                     {
                       "label": {
                         "defaultMessage": "Urban",
@@ -3480,6 +3481,7 @@ exports[`birth configuration is parsed 1`] = `
                       "value": "RURAL",
                     },
                   ],
+                  "options": {},
                   "required": false,
                   "type": "RADIO_GROUP",
                 },
@@ -6741,7 +6743,7 @@ exports[`birth configuration is parsed 1`] = `
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.informant.field.address.urbanOrRural.label",
                   },
-                  "options": [
+                  "optionValues": [
                     {
                       "label": {
                         "defaultMessage": "Urban",
@@ -6759,6 +6761,7 @@ exports[`birth configuration is parsed 1`] = `
                       "value": "RURAL",
                     },
                   ],
+                  "options": {},
                   "required": false,
                   "type": "RADIO_GROUP",
                 },
@@ -10395,7 +10398,7 @@ exports[`birth configuration is parsed 1`] = `
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.mother.field.address.urbanOrRural.label",
                   },
-                  "options": [
+                  "optionValues": [
                     {
                       "label": {
                         "defaultMessage": "Urban",
@@ -10413,6 +10416,7 @@ exports[`birth configuration is parsed 1`] = `
                       "value": "RURAL",
                     },
                   ],
+                  "options": {},
                   "required": false,
                   "type": "RADIO_GROUP",
                 },
@@ -13448,7 +13452,7 @@ exports[`birth configuration is parsed 1`] = `
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.father.field.address.addressSameAs.label",
                   },
-                  "options": [
+                  "optionValues": [
                     {
                       "label": {
                         "defaultMessage": "Yes",
@@ -13466,6 +13470,7 @@ exports[`birth configuration is parsed 1`] = `
                       "value": "NO",
                     },
                   ],
+                  "options": {},
                   "required": true,
                   "type": "RADIO_GROUP",
                 },
@@ -15131,7 +15136,7 @@ exports[`birth configuration is parsed 1`] = `
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.father.field.address.urbanOrRural.label",
                   },
-                  "options": [
+                  "optionValues": [
                     {
                       "label": {
                         "defaultMessage": "Urban",
@@ -15149,6 +15154,7 @@ exports[`birth configuration is parsed 1`] = `
                       "value": "RURAL",
                     },
                   ],
+                  "options": {},
                   "required": false,
                   "type": "RADIO_GROUP",
                 },
