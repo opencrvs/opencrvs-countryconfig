@@ -139,9 +139,26 @@ const TENNIS_CLUB_FORM = defineForm({
       },
       fields: [
         {
+          id: 'recommender.none',
+          type: 'CHECKBOX',
+          required: false,
+          conditionals: [],
+          label: {
+            defaultMessage: 'No recommender',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.none.label'
+          }
+        },
+        {
           id: 'recommender.firstname',
           type: 'TEXT',
           required: true,
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('recommender.none').isEqualTo('true').apply()
+            }
+          ],
           label: {
             defaultMessage: "Recommender's first name",
             description: 'This is the label for the field',
@@ -152,6 +169,12 @@ const TENNIS_CLUB_FORM = defineForm({
           id: 'recommender.surname',
           type: 'TEXT',
           required: true,
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('recommender.none').isEqualTo('true').apply()
+            }
+          ],
           label: {
             defaultMessage: "Recommender's surname",
             description: 'This is the label for the field',
@@ -162,6 +185,12 @@ const TENNIS_CLUB_FORM = defineForm({
           id: 'recommender.id',
           type: 'TEXT',
           required: true,
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('recommender.none').isEqualTo('true').apply()
+            }
+          ],
           label: {
             defaultMessage: "Recommender's membership ID",
             description: 'This is the label for the field',
