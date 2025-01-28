@@ -790,15 +790,16 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@0.0.30-rr":
-  version "0.0.30-rr"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.30-rr.tgz#b2fcb37f885c379821b27eb297a51c6b5a27345f"
-  integrity sha512-eWNZweNH0gBDI6aZIKYLxNIvDprzeYQWaOrhasiil9TAdE68+VQt9aXHdt4iiQuQ2dcAdnYZ9elxSRczbi1HKQ==
+"@opencrvs/toolkit@0.0.31-rr":
+  version "0.0.31-rr"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.31-rr.tgz#d7e5ca7dc19e205b7784134f9f43c471e1d94651"
+  integrity sha512-uldvtVncmuXAeC4/IGmCw1MWpiyxrxxny92GAnPLULKcJlQsRlYV6SFH8fd9NTm/W3el+hsyI5X/vbv1aoCbHA==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
     ajv "^8.17.1"
     superjson "1.9.0-0"
+    uuid "^9.0.0"
 
 "@pkgr/core@^0.1.0":
   version "0.1.1"
@@ -5250,6 +5251,11 @@ util-deprecate@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
+
+uuid@^9.0.0:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
 v8-compile-cache-lib@^3.0.1:
   version "3.0.1"
