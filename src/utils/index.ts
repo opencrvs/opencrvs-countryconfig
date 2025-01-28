@@ -233,10 +233,9 @@ export async function getStatistics(path?: string) {
   if (!path) {
     path = join(__dirname, '../data-seeding/locations/source/statistics.csv')
   }
-  const data =
-    await readCSVToJSON<Array<Record<string, string> & { adminPcode: string }>>(
-      path
-    )
+  const data = await readCSVToJSON<
+    Array<Record<string, string> & { adminPcode: string }>
+  >(path)
 
   return data.map<LocationStatistic>((item) => {
     const { adminPcode, name, ...yearKeys } = item
