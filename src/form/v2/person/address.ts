@@ -206,7 +206,8 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
     {
       id: `${prefix}.urbanOrRural`,
       type: 'RADIO_GROUP',
-      options: urbanRuralRadioOptions,
+      optionValues: urbanRuralRadioOptions,
+      options: {},
       flexDirection: 'row',
       required: false,
       label: {
