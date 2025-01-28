@@ -93,6 +93,7 @@ import {
   OPENID_PROVIDER_CLAIMS,
   OPENID_PROVIDER_CLIENT_ID
 } from '@countryconfig/constants'
+import { and, objectHasProperty } from '@opencrvs/toolkit/conditionals'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -243,7 +244,23 @@ export const birthForm: ISerializedForm = {
                   expression: '!!$form?.verified'
                 }),
               [
-                qr(),
+                qr({
+                  validation: {
+                    rule: and(
+                      objectHasProperty('firstName', 'string'),
+                      objectHasProperty('familyName', 'string'),
+                      objectHasProperty('gender', 'string'),
+                      objectHasProperty('birthDate', 'string'),
+                      objectHasProperty('NID', 'string')
+                    ),
+                    errorMessage: {
+                      defaultMessage:
+                        'This QR code is not recognised. Please try again.',
+                      description: 'Error message for QR code validation',
+                      id: 'form.field.qr.validation.error'
+                    }
+                  }
+                }),
                 esignet(
                   ESIGNET_TOKEN_URL,
                   OPENID_PROVIDER_CLIENT_ID,
