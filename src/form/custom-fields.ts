@@ -157,7 +157,10 @@ export function getIDType(
       description: 'A form field that asks for the type of ID.',
       defaultMessage: 'Type of ID'
     },
-    initialValue: '',
+    initialValue: {
+      dependsOn: ['idReader'],
+      expression: '!!$form?.idReader?.nid? "NATIONAL_ID" : ""'
+    },
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
     placeholder: formMessageDescriptors.formSelectPlaceholder,
@@ -171,6 +174,18 @@ function getValidators(configCase: string, idValue: IDType) {
     return getNationalIDValidators(configCase)
   }
   return []
+}
+
+function initialValuesForIDType(idType: IDType) {
+  if (idType === 'NATIONAL_ID') {
+    return {
+      dependsOn: ['idReader'],
+      expression:
+        '$form?.idReader?.nid || $form?.esignetCallback?.data?.nid || ""'
+    }
+  } else {
+    return ''
+  }
 }
 
 export function getIDNumber(
@@ -194,7 +209,7 @@ export function getIDNumber(
       description: 'A form field that asks for the id number.',
       defaultMessage: 'ID number'
     },
-    initialValue: '',
+    initialValue: initialValuesForIDType(idValue),
     validator: validators,
     mapping: {
       template: {

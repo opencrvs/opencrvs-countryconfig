@@ -251,7 +251,7 @@ export const birthForm: ISerializedForm = {
                       objectHasProperty('familyName', 'string'),
                       objectHasProperty('gender', 'string'),
                       objectHasProperty('birthDate', 'string'),
-                      objectHasProperty('NID', 'string')
+                      objectHasProperty('nid', 'string')
                     ),
                     errorMessage: {
                       defaultMessage:
