@@ -213,7 +213,8 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
         defaultMessage: 'Urban or Rural',
         description: 'This is the label for the field',
         id: `event.birth.action.declare.form.section.${person}.field.address.urbanOrRural.label`
-      }
+      },
+      hideLabel: true
     },
     ...appendConditionalsToFields({
       inputFields: urbanAddressFields,
@@ -221,7 +222,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
         {
           type: 'HIDE',
           conditional: field(`${prefix}.urbanOrRural`)
-            .or((field) => field.isUndefined().not.inArray(['RURAL']))
+            .or((field) => field.isUndefined().inArray(['RURAL']))
             .apply()
         }
       ]
@@ -239,7 +240,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
         {
           type: 'HIDE',
           conditional: field(`${prefix}.urbanOrRural`)
-            .or((field) => field.isUndefined().inArray(['RURAL']))
+            .or((field) => field.isUndefined().not.inArray(['RURAL']))
             .apply()
         }
       ]

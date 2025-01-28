@@ -56,6 +56,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
             defaultMessage: 'Birth Information',
             description: 'Label for the birth information bullet list'
           },
+          hideLabel: true,
           items: [
             {
               defaultMessage:

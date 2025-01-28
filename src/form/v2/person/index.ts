@@ -325,23 +325,13 @@ export const getPersonInputCommonFields = (
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.addressHelper.label`
     },
-    options: { fontVariant: 'h2' }
+    options: { fontVariant: 'h3' }
   }
 ]
 
 const fatherAddressFields = [
   ...appendConditionalsToFields({
     inputFields: [
-      {
-        id: `${PersonType.father}.addressSameAsHelper`,
-        type: 'PARAGRAPH',
-        label: {
-          defaultMessage: "Same as mother's usual place of residence?",
-          description: 'This is the label for the field',
-          id: `event.birth.action.declare.form.section.${PersonType.father}.field.addressSameAsHelper.label`
-        },
-        options: { fontVariant: 'reg16' }
-      },
       {
         id: `${PersonType.father}.addressSameAs`,
         type: 'RADIO_GROUP',
