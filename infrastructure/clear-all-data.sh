@@ -100,5 +100,9 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc -c "\
   mc rb myminio/ocrvs && \
   mc mb myminio/ocrvs"
 
+# Restart the metabase service
+#-----------------------------
+docker service scale opencrvs_dashboards=0
+docker service scale opencrvs_dashboards=1
 
 
