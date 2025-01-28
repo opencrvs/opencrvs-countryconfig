@@ -345,7 +345,8 @@ const fatherAddressFields = [
       {
         id: `${PersonType.father}.addressSameAs`,
         type: 'RADIO_GROUP',
-        options: yesNoRadioOptions,
+        optionValues: yesNoRadioOptions,
+        options: {},
         required: true,
         label: {
           defaultMessage: "Same as mother's usual place of residence?",
