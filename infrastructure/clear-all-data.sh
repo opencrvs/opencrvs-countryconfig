@@ -100,7 +100,5 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc -c "\
   mc rb myminio/ocrvs && \
   mc mb myminio/ocrvs"
 
-# Delete all data from metabase
-#-----------------------------
-docker exec $(docker ps | grep opencrvs_dashboards | awk '{print $1}' | head -n 1) /bin/sh -c "rm -rf /data/metabase/*"
+
 
