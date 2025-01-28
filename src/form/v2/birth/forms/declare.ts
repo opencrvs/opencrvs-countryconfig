@@ -137,12 +137,14 @@ export const BIRTH_DECLARE_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('mother.detailsNotAvailable')
-                .or((field) => field.isUndefined().inArray(['false']))
-                .apply()
-              // field('informant.relation')
-              //   .inArray([InformantTypes.MOTHER])
-              //   .apply()
+              conditional: or(
+                field('mother.detailsNotAvailable')
+                  .or((field) => field.isUndefined().inArray(['false']))
+                  .apply(),
+                field('informant.relation')
+                  .inArray([InformantTypes.MOTHER])
+                  .apply()
+              )
             }
           ]
         },
