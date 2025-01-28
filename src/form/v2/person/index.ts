@@ -301,6 +301,13 @@ export const getPersonInputCommonFields = (
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.age.label`
     },
+    options: {
+      postfix: {
+        defaultMessage: 'years',
+        description: 'This is the postfix for age field',
+        id: `event.birth.action.declare.form.section.${person}.field.age.postfix`
+      }
+    },
     conditionals: [
       {
         type: 'HIDE',

@@ -143,13 +143,13 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       }
     },
     {
-      id: `${prefix}.village`,
+      id: `${prefix}.street`,
       type: 'TEXT',
       required: false,
       label: {
-        defaultMessage: 'Area / Ward / Mouja / Village',
+        defaultMessage: 'Street',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.village.label`
+        id: `event.action.declare.form.section.person.field.address.street.label`
       }
     },
     {

@@ -104,7 +104,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
               type: 'CHECKBOX',
               required: true,
               label: {
-                defaultMessage: "Mother's details not available",
+                defaultMessage: "Mother's details are are not available",
                 description: 'This is the label for the field',
                 id: `event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label`
               }
@@ -137,9 +137,12 @@ export const BIRTH_DECLARE_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('mother.detailsNotAvailable').or((field) =>
-                field.isUndefined().inArray(['false'])
-              )
+              conditional: field('mother.detailsNotAvailable')
+                .or((field) => field.isUndefined().inArray(['false']))
+                .apply()
+              // field('informant.relation')
+              //   .inArray([InformantTypes.MOTHER])
+              //   .apply()
             }
           ]
         },
@@ -189,7 +192,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
               type: 'CHECKBOX',
               required: true,
               label: {
-                defaultMessage: "Father's details not available",
+                defaultMessage: "Father's details are not available",
                 description: 'This is the label for the field',
                 id: `event.birth.action.declare.form.section.father.field.detailsNotAvailable.label`
               }
@@ -221,9 +224,14 @@ export const BIRTH_DECLARE_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('father.detailsNotAvailable')
-                .or((field) => field.isUndefined().inArray(['false']))
-                .apply()
+              conditional: or(
+                field('father.detailsNotAvailable')
+                  .or((field) => field.isUndefined().inArray(['false']))
+                  .apply(),
+                field('informant.relation')
+                  .inArray([InformantTypes.FATHER])
+                  .apply()
+              )
             }
           ]
         },
