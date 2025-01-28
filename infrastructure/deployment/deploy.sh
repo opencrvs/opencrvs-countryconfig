@@ -422,7 +422,7 @@ EMAIL_PAYLOAD='{
   "to": "{{ALERT_EMAIL}}"
 }'
 
-reset_metabase
+
 
 configured_ssh "docker run --rm --network=opencrvs_overlay_net appropriate/curl \
   -X POST 'http://countryconfig:3040/email' \
