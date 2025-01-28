@@ -16821,7 +16821,7 @@ exports[`birth configuration is parsed 1`] = `
     "title": {
       "id": "event.birth.summary.title",
       "label": {
-        "defaultMessage": "{applicant.firstname} {applicant.surname}",
+        "defaultMessage": "{child.firstname} {child.surname}",
         "description": "This is the title of the summary",
         "id": "event.birth.summary.title",
       },
@@ -16831,29 +16831,16 @@ exports[`birth configuration is parsed 1`] = `
     {
       "fields": [
         {
-          "id": "child.firstname",
+          "column": "title",
           "label": {
-            "defaultMessage": "First name(s)",
-            "description": "This is the label for the field",
-            "id": "event.birth.action.declare.form.section.child.field.firstname.label",
-          },
-        },
-        {
-          "id": "child.surname",
-          "label": {
-            "defaultMessage": "Last name",
-            "description": "This is the label for the field",
-            "id": "event.birth.action.declare.form.section.child.field.surname.label",
+            "defaultMessage": "{child.surname} {child.firstname}",
+            "description": "Label for name in all workqueue",
+            "id": "event.birth.workqueue.all.name.label",
           },
         },
       ],
       "filters": [],
       "id": "all",
-      "title": {
-        "defaultMessage": "All birth events",
-        "description": "Label for all birth events workqueue",
-        "id": "event.birth.workqueue.all.label",
-      },
     },
   ],
 }
