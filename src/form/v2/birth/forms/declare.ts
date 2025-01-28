@@ -104,7 +104,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
               type: 'CHECKBOX',
               required: true,
               label: {
-                defaultMessage: "Mother's details are are not available",
+                defaultMessage: "Mother's details are not available",
                 description: 'This is the label for the field',
                 id: `event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label`
               }
