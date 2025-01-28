@@ -12,7 +12,11 @@
 import { FieldConfig, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { getAddressFields } from './address'
-import { appendConditionalsToFields, createSelectOptions } from '../utils'
+import {
+  appendConditionalsToFields,
+  createSelectOptions,
+  emptyMessage
+} from '../utils'
 
 export const PersonType = {
   father: 'father',
@@ -318,6 +322,11 @@ export const getPersonInputCommonFields = (
   },
   ...getIdFields(person),
   {
+    id: `${person}.address.divider.start`,
+    type: 'DIVIDER',
+    label: emptyMessage
+  },
+  {
     id: `${person}.addressHelper`,
     type: 'PARAGRAPH',
     label: {
@@ -370,6 +379,11 @@ export const getPersonInputFields = (person: PersonType): FieldConfig[] => {
   return [
     ...getPersonInputCommonFields(person),
     ...(isFather ? fatherAddressFields : getAddressFields(person)),
+    {
+      id: `${person}.address.divider.end`,
+      type: 'DIVIDER',
+      label: emptyMessage
+    },
     {
       id: `${person}.maritalStatus`,
       type: 'SELECT',
