@@ -143,13 +143,13 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       }
     },
     {
-      id: `${prefix}.village`,
+      id: `${prefix}.street`,
       type: 'TEXT',
       required: false,
       label: {
-        defaultMessage: 'Area / Ward / Mouja / Village',
+        defaultMessage: 'Street',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.village.label`
+        id: `event.action.declare.form.section.person.field.address.street.label`
       }
     },
     {
@@ -206,14 +206,16 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
     {
       id: `${prefix}.urbanOrRural`,
       type: 'RADIO_GROUP',
-      options: urbanRuralRadioOptions,
+      optionValues: urbanRuralRadioOptions,
+      options: {},
       flexDirection: 'row',
       required: false,
       label: {
         defaultMessage: 'Urban or Rural',
         description: 'This is the label for the field',
         id: `event.birth.action.declare.form.section.${person}.field.address.urbanOrRural.label`
-      }
+      },
+      hideLabel: true
     },
     ...appendConditionalsToFields({
       inputFields: urbanAddressFields,
@@ -221,7 +223,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
         {
           type: 'HIDE',
           conditional: field(`${prefix}.urbanOrRural`)
-            .or((field) => field.isUndefined().not.inArray(['RURAL']))
+            .or((field) => field.isUndefined().inArray(['RURAL']))
             .apply()
         }
       ]
@@ -239,7 +241,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
         {
           type: 'HIDE',
           conditional: field(`${prefix}.urbanOrRural`)
-            .or((field) => field.isUndefined().inArray(['RURAL']))
+            .or((field) => field.isUndefined().not.inArray(['RURAL']))
             .apply()
         }
       ]
