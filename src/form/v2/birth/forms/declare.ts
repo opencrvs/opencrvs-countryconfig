@@ -10,10 +10,10 @@
  */
 
 import { defineForm } from '@opencrvs/toolkit/events'
-import { and, field } from '@opencrvs/toolkit/conditionals'
+import { and, field, or } from '@opencrvs/toolkit/conditionals'
 import { childPage } from './child'
 import { informantPage, InformantTypes } from './informant'
-import { appendConditionalsToFields } from '../../utils'
+import { appendConditionalsToFields, emptyMessage } from '../../utils'
 import { getPersonInputFields, PersonType } from '../../person'
 
 export const BIRTH_DECLARE_FORM = defineForm({
@@ -56,6 +56,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
             defaultMessage: 'Birth Information',
             description: 'Label for the birth information bullet list'
           },
+          hideLabel: true,
           items: [
             {
               defaultMessage:
@@ -96,16 +97,25 @@ export const BIRTH_DECLARE_FORM = defineForm({
         id: 'form.section.mother.title'
       },
       fields: [
-        {
-          id: 'mother.detailsNotAvailable',
-          type: 'CHECKBOX',
-          required: true,
-          label: {
-            defaultMessage: "Mother's details not available",
-            description: 'This is the label for the field',
-            id: `event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label`
-          },
-          conditionals: [
+        ...appendConditionalsToFields({
+          inputFields: [
+            {
+              id: 'mother.detailsNotAvailable',
+              type: 'CHECKBOX',
+              required: true,
+              label: {
+                defaultMessage: "Mother's details are not available",
+                description: 'This is the label for the field',
+                id: `event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label`
+              }
+            },
+            {
+              id: 'mother.details.divider',
+              type: 'DIVIDER',
+              label: emptyMessage
+            }
+          ],
+          newConditionals: [
             {
               type: 'HIDE',
               conditional: field('informant.relation')
@@ -113,7 +123,8 @@ export const BIRTH_DECLARE_FORM = defineForm({
                 .apply()
             }
           ]
-        },
+        }),
+
         {
           id: 'mother.reason',
           type: 'TEXT',
@@ -126,8 +137,13 @@ export const BIRTH_DECLARE_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('mother.detailsNotAvailable').or((field) =>
-                field.isUndefined().inArray(['false'])
+              conditional: or(
+                field('mother.detailsNotAvailable')
+                  .or((field) => field.isUndefined().inArray(['false']))
+                  .apply(),
+                field('informant.relation')
+                  .inArray([InformantTypes.MOTHER])
+                  .apply()
               )
             }
           ]
@@ -171,16 +187,25 @@ export const BIRTH_DECLARE_FORM = defineForm({
         id: 'form.section.father.title'
       },
       fields: [
-        {
-          id: 'father.detailsNotAvailable',
-          type: 'CHECKBOX',
-          required: true,
-          label: {
-            defaultMessage: "Father's details not available",
-            description: 'This is the label for the field',
-            id: `event.birth.action.declare.form.section.father.field.detailsNotAvailable.label`
-          },
-          conditionals: [
+        ...appendConditionalsToFields({
+          inputFields: [
+            {
+              id: 'father.detailsNotAvailable',
+              type: 'CHECKBOX',
+              required: true,
+              label: {
+                defaultMessage: "Father's details are not available",
+                description: 'This is the label for the field',
+                id: `event.birth.action.declare.form.section.father.field.detailsNotAvailable.label`
+              }
+            },
+            {
+              id: 'father.details.divider',
+              type: 'DIVIDER',
+              label: emptyMessage
+            }
+          ],
+          newConditionals: [
             {
               type: 'HIDE',
               conditional: field('informant.relation')
@@ -188,7 +213,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
                 .apply()
             }
           ]
-        },
+        }),
         {
           id: 'father.reason',
           type: 'TEXT',
@@ -201,9 +226,14 @@ export const BIRTH_DECLARE_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('father.detailsNotAvailable')
-                .or((field) => field.isUndefined().inArray(['false']))
-                .apply()
+              conditional: or(
+                field('father.detailsNotAvailable')
+                  .or((field) => field.isUndefined().inArray(['false']))
+                  .apply(),
+                field('informant.relation')
+                  .inArray([InformantTypes.FATHER])
+                  .apply()
+              )
             }
           ]
         },

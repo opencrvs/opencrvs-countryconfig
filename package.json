@@ -65,7 +65,7 @@
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
     "@opencrvs/mosip": "^1.7.0-alpha.13",
-    "@opencrvs/toolkit": "0.0.28",
+    "@opencrvs/toolkit": "0.0.32-jr",
     "@types/chalk": "^2.2.0",
     "@types/csv2json": "^1.4.0",
     "@types/fhir": "^0.0.30",
