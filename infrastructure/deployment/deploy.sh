@@ -305,12 +305,6 @@ docker_stack_deploy() {
 }
 
 
-reset_metabase() {
-  echo "Reseting metabase"
-  configured_ssh "docker service scale opencrvs_dashboards=0 && \
-    docker service scale opencrvs_dashboards=1"
-}
-
 validate_options
 
 # Create new passwords for all MongoDB users created in
