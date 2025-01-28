@@ -1712,15 +1712,16 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@0.0.28":
-  version "0.0.28"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.28.tgz#5c95c74771741ac7b1db7a4eef8ca4891972b066"
-  integrity sha512-S/ZawgEY4I+WoJmQFwV3/sqWwfFTsWXPS3WeShDHwr4Cvx6yRcS+YxG0aIyW3yJ1tAwNsGVuQWRovc8pvSRHvA==
+"@opencrvs/toolkit@0.0.31-rr":
+  version "0.0.31-rr"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.31-rr.tgz#d7e5ca7dc19e205b7784134f9f43c471e1d94651"
+  integrity sha512-uldvtVncmuXAeC4/IGmCw1MWpiyxrxxny92GAnPLULKcJlQsRlYV6SFH8fd9NTm/W3el+hsyI5X/vbv1aoCbHA==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
     ajv "^8.17.1"
     superjson "1.9.0-0"
+    uuid "^9.0.0"
 
 "@parcel/watcher-android-arm64@2.5.0":
   version "2.5.0"
@@ -7751,6 +7752,11 @@ uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
+
+uuid@^9.0.0:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
 v8-compile-cache-lib@^3.0.1:
   version "3.0.1"

@@ -25,6 +25,7 @@ export const DECEASED_CODE = 'deceased-details'
 export const OPENCRVS_SPECIFICATION_URL = 'http://opencrvs.org/specs/'
 import { join } from 'path'
 import { stringify } from 'csv-stringify/sync'
+import { promisify } from 'util'
 
 export interface ILocation {
   id?: string
@@ -250,9 +251,10 @@ export async function getStatistics(path?: string) {
   if (!path) {
     path = join(__dirname, '../data-seeding/locations/source/statistics.csv')
   }
-  const data = await readCSVToJSON<
-    Array<Record<string, string> & { adminPcode: string }>
-  >(path)
+  const data =
+    await readCSVToJSON<Array<Record<string, string> & { adminPcode: string }>>(
+      path
+    )
 
   return data.map<LocationStatistic>((item) => {
     const { adminPcode, name, ...yearKeys } = item
