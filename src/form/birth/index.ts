@@ -93,7 +93,7 @@ import {
   OPENID_PROVIDER_CLAIMS,
   OPENID_PROVIDER_CLIENT_ID
 } from '@countryconfig/constants'
-import { and, objectHasProperty } from '@opencrvs/toolkit/conditionals'
+import { and, objectHasProperty } from '@opencrvs/toolkit-legacy/conditionals'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================

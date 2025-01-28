@@ -66,6 +66,7 @@
     "@hapi/inert": "^6.0.3",
     "@opencrvs/mosip": "^1.7.0-alpha.14",
     "@opencrvs/toolkit": "0.0.32-jr",
+    "@opencrvs/toolkit-legacy": "npm:@opencrvs/toolkit@0.0.30",
     "@types/chalk": "^2.2.0",
     "@types/csv2json": "^1.4.0",
     "@types/fhir": "^0.0.30",
