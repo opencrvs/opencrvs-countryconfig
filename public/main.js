@@ -965,10 +965,12 @@ window.openPrintModal = async function openPrintModal(id) {
     ).value
 
     const title = window.getIsWithAdpotion(
-      fatherDetailsContext.motherMaritalStatus,
-      fatherDetailsContext.fatherReasonNotApplying,
-      fatherDetailsContext.fatherFamilyName,
-      fatherDetailsContext.birthFatherFatherHasFormallyRecognisedChild
+      event.mother.maritalStatus,
+      event.father.reasonNotApplying,
+      event.father.name && event.father.name[0]
+        ? event.father.name[0].familyName
+        : '',
+      isFatherHasFormallyRecognisedChild
     )
       ? 'FAHATERAHANA SY FANJANAHANA'
       : 'FAHATERAHANA'
@@ -1195,9 +1197,9 @@ window.openPrintModal = async function openPrintModal(id) {
     }
 
     const registrationStatementContext = {
-      motherMaritalStatus: motherDetailsContext.motherMaritalStatus,
+      motherMaritalStatus: event.mother.maritalStatus,
       birthFatherFatherHasFormallyRecognisedChild:
-        fatherDetailsContext.birthFatherFatherHasFormallyRecognisedChild,
+        isFatherHasFormallyRecognisedChild,
       birthChildLegacyBirthRegistrationDate: (
         event?.questionnaire?.find(
           (q) =>
