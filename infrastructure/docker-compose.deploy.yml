@@ -606,10 +606,7 @@ services:
       - AWS_SNS_SENDER_ID=${AWS_SNS_SENDER_ID:-}
       - DOMAIN={{hostname}}
       - NUI_GENERATOR_URL=${NUI_GENERATOR_URL}
-      - NUI_CLIENT_ID=${NUI_CLIENT_ID}
-      - NUI_CLIENT_SECRET=${NUI_CLIENT_SECRET}
       - NUI_API_KEY=${NUI_API_KEY}
-      - X_ROAD_CLIENT=${X_ROAD_CLIENT}
     networks:
       - overlay_net
     logging:

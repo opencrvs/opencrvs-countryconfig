@@ -12,13 +12,7 @@
 import { Request } from '@hapi/hapi'
 import { z } from 'zod'
 import * as Joi from 'joi'
-import {
-  NUI_GENERATOR_URL,
-  NUI_API_KEY,
-  X_ROAD_CLIENT,
-  NUI_CLIENT_ID,
-  NUI_CLIENT_SECRET
-} from './constants'
+import { NUI_GENERATOR_URL, NUI_API_KEY } from './constants'
 import { internal } from '@hapi/boom'
 
 if (!NUI_GENERATOR_URL || !NUI_API_KEY) {
@@ -40,49 +34,13 @@ const affectNUIResponseSchema = z.object({
   status: z.string()
 })
 
-const fetchNewToken = async (): Promise<string> => {
+const generateNUI = async ({ office }: { office: string }): Promise<string> => {
   try {
-    const response = await fetch(`${NUI_GENERATOR_URL}/systems/token`, {
+    const response = await fetch(`${NUI_GENERATOR_URL}/generate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Road-Client': X_ROAD_CLIENT ?? ''
-      },
-      body: JSON.stringify({
-        clientId: NUI_CLIENT_ID,
-        clientSecret: NUI_CLIENT_SECRET
-      })
-    })
-
-    const body: any = await response.json()
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch token: ${body.message || 'Unknown error'}`
-      )
-    }
-
-    return body.data.accessToken
-  } catch (err) {
-    console.error('Error fetching new token', err)
-    throw internal()
-  }
-}
-
-export const generateNUI = async ({
-  office,
-  token
-}: {
-  office: string
-  token?: string
-}): Promise<string> => {
-  try {
-    const response = await fetch(`${NUI_GENERATOR_URL}/v1/generate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-        'X-Road-Client': X_ROAD_CLIENT ?? ''
+        Authorization: `Bearer ${NUI_API_KEY}`
       },
       body: JSON.stringify({
         batchSize: NUI_BATCH_SIZE,
@@ -90,34 +48,23 @@ export const generateNUI = async ({
       })
     })
 
-    const body: any = await response.json()
+    const body = await response.json()
 
-    if (body.statusCode === 401) {
-      token = await fetchNewToken()
-      return await generateNUI({ office, token })
-    }
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to generate NUI: ${body.message || 'Unknown error'}`
-      )
-    }
     const parsed = generateNUIResponseSchema.parse(body)
 
     return parsed.theNuis[0]
   } catch (err) {
-    console.error('Error generating NUI', err)
+    console.error(err)
     throw internal()
   }
 }
 
-const affectNUI = async (nui: string, token: string) => {
-  const response = await fetch(`${NUI_GENERATOR_URL}/v1/affect`, {
+const affectNUI = async (nui: string) => {
+  const response = await fetch(`${NUI_GENERATOR_URL}/affect`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-      'X-Road-Client': X_ROAD_CLIENT ?? ''
+      Authorization: `Bearer ${NUI_API_KEY}`
     },
     body: JSON.stringify({
       nui: [nui]
@@ -125,9 +72,10 @@ const affectNUI = async (nui: string, token: string) => {
   })
 
   const body = await response.json()
+
   const parsed = affectNUIResponseSchema.parse(body)
 
-  if (![200, 201].includes(parsed.status_code)) {
+  if (parsed.status_code !== 201) {
     console.error(parsed)
     throw internal()
   }
@@ -136,10 +84,8 @@ const affectNUI = async (nui: string, token: string) => {
 export async function NUIHandler(req: Request) {
   const body = req.payload as { office: string }
   try {
-    const currentToken = await fetchNewToken()
-
     const nui = await generateNUI(body)
-    await affectNUI(nui, currentToken)
+    await affectNUI(nui)
 
     return nui
   } catch (err) {
