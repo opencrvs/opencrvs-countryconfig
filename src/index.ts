@@ -562,7 +562,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/register',
+    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/REGISTER',
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'custom-event'],
