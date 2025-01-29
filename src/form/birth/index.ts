@@ -76,7 +76,10 @@ import {
 } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
-import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import {
+  getCommonSectionMapping,
+  getCustomFieldMapping
+} from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
 import {
@@ -277,7 +280,10 @@ export const birthForm: ISerializedForm = {
             }) as SerializedFormField,
             ...(idVerificationFields(
               'birth',
-              'informant'
+              'informant',
+              getCustomFieldMapping(
+                'birth.informant.informant-view-group.verified'
+              )
             ) as SerializedFormField[]),
             getFirstNameField(
               'informantNameInEnglish',
