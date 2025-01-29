@@ -19,8 +19,7 @@ import {
   not,
   field
 } from '@opencrvs/toolkit/conditionals'
-
-// import { defaultCertificateCollectorFormConfig } from '@opencrvs/toolkit/default'
+import { Event } from './types/types'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
@@ -189,37 +188,37 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
         description: 'This is the title of the section'
       },
       fields: [
-        {
-          id: 'collector.certificateTemplateId',
-          type: 'SELECT',
-          required: true,
-          label: {
-            defaultMessage: 'Select Certificate Template',
-            description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.certificate.form.section.who.field.surname.label'
-          },
-          options: [
-            {
-              label: {
-                id: 'certificates.tennis-club-membership.certificate.copy',
-                defaultMessage: 'Tennis Club Membership Certificate copy',
-                description:
-                  'The label for a tennis-club-membership certificate'
-              },
-              value: 'tennis-club-membership-certificate'
-            },
-            {
-              label: {
-                id: 'certificates.tennis-club-membership.certificate.certified-copy',
-                defaultMessage:
-                  'Tennis Club Membership Certificate certified copy',
-                description:
-                  'The label for a tennis-club-membership certificate'
-              },
-              value: 'tennis-club-membership-certified-certificate'
-            }
-          ]
-        },
+        // {
+        //   id: CERT_TEMPLATE_SELECT_ID,
+        //   type: 'SELECT',
+        //   required: true,
+        //   label: {
+        //     defaultMessage: 'Select Certificate Template (country config)',
+        //     description: 'This is the label for the field',
+        //     id: 'event.tennis-club-membership.action.certificate.form.section.who.field.surname.label'
+        //   },
+        //   options: [
+        //     {
+        //       label: {
+        //         id: 'certificates.tennis-club-membership.certificate.copy',
+        //         defaultMessage: 'Tennis Club Membership Certificate copy',
+        //         description:
+        //           'The label for a tennis-club-membership certificate'
+        //       },
+        //       value: 'tennis-club-membership-certificate'
+        //     },
+        //     {
+        //       label: {
+        //         id: 'certificates.tennis-club-membership.certificate.certified-copy',
+        //         defaultMessage:
+        //           'Tennis Club Membership Certificate certified copy',
+        //         description:
+        //           'The label for a tennis-club-membership certificate'
+        //       },
+        //       value: 'tennis-club-membership-certified-certificate'
+        //     }
+        //   ]
+        // },
         {
           id: 'collector.requesterId',
           type: 'SELECT',
@@ -268,9 +267,9 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.requesterId'
-              ).isUndefinedOrNotInArray(['OTHER'])
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
             }
           ],
           options: [
@@ -338,9 +337,9 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.OTHER.idType'
-              ).isUndefinedOrNotInArray(['PASSPORT'])
+              conditional: field('collector.OTHER.idType')
+                .or((field) => field.isUndefined().not.inArray(['PASSPORT']))
+                .apply()
             }
           ]
         },
@@ -356,9 +355,11 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.OTHER.idType'
-              ).isUndefinedOrNotInArray(['DRIVING_LICENSE'])
+              conditional: field('collector.OTHER.idType')
+                .or((field) =>
+                  field.isUndefined().not.inArray(['DRIVING_LICENSE'])
+                )
+                .apply()
             }
           ]
         },
@@ -374,9 +375,11 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.OTHER.idType'
-              ).isUndefinedOrNotInArray(['REFUGEE_NUMBER'])
+              conditional: field('collector.OTHER.idType')
+                .or((field) =>
+                  field.isUndefined().not.inArray(['REFUGEE_NUMBER'])
+                )
+                .apply()
             }
           ]
         },
@@ -392,9 +395,11 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.OTHER.idType'
-              ).isUndefinedOrNotInArray(['ALIEN_NUMBER'])
+              conditional: field('collector.OTHER.idType')
+                .or((field) =>
+                  field.isUndefined().not.inArray(['ALIEN_NUMBER'])
+                )
+                .apply()
             }
           ]
         },
@@ -410,9 +415,9 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.OTHER.idType'
-              ).isUndefinedOrNotInArray(['OTHER'])
+              conditional: field('collector.OTHER.idType')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
             }
           ]
         },
@@ -428,9 +433,9 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.requesterId'
-              ).isUndefinedOrNotInArray(['OTHER'])
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
             }
           ]
         },
@@ -446,9 +451,9 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.requesterId'
-              ).isUndefinedOrNotInArray(['OTHER'])
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
             }
           ]
         },
@@ -465,9 +470,9 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.requesterId'
-              ).isUndefinedOrNotInArray(['OTHER'])
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
             }
           ]
         },
@@ -483,9 +488,9 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field(
-                'collector.requesterId'
-              ).isUndefinedOrNotInArray(['OTHER'])
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
             }
           ]
         }
@@ -495,7 +500,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
 })
 
 export const tennisClubMembershipEvent = defineConfig({
-  id: 'TENNIS_CLUB_MEMBERSHIP',
+  id: Event.TENNIS_CLUB_MEMBERSHIP,
   label: {
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this event is referred as in the system',
@@ -733,35 +738,15 @@ export const tennisClubMembershipEvent = defineConfig({
       forms: [TENNIS_CLUB_FORM]
     },
     {
-      type: 'COLLECT_CERTIFICATE',
+      type: 'PRINT_CERTIFICATE',
       label: {
-        defaultMessage: 'Collect certificate',
+        defaultMessage: 'Print certificate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.tennis-club-membership.action.collect-certificate.label'
       },
-      allowedWhen: defineConditional(
-        and(
-          eventHasAction('REGISTER'),
-          not(eventHasAction('COLLECT_CERTIFICATE'))
-        )
-      ),
-      forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM],
-      verifyId: [
-        {
-          whenRequesterIs: 'collector.requesterId',
-          andRequesterValueIs: 'INFORMANT',
-          verifyTheseFields: [
-            'recommender.firstname',
-            'recommender.id',
-            'recommender.surname'
-          ]
-        }
-      ],
-      payment: {
-        registrationTarget: 30,
-        lateRegistrationTarget: 365
-      }
+      allowedWhen: defineConditional(eventHasAction('REGISTER')),
+      forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
     },
     {
       type: 'CUSTOM',

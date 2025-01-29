@@ -16,9 +16,10 @@ import {
   not
 } from '@opencrvs/toolkit/conditionals'
 import { BIRTH_DECLARE_FORM } from './forms/declare'
+import { Event } from '@countryconfig/form/types/types'
 
 export const birthEvent = defineConfig({
-  id: 'BIRTH',
+  id: Event.Birth,
   label: {
     defaultMessage: 'Birth declaration',
     description: 'This is what this event is referred as in the system',
