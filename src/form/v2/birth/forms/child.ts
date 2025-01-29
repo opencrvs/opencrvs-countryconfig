@@ -10,13 +10,14 @@
  */
 
 import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
-import { field } from '@opencrvs/toolkit/conditionals'
+import { field, or } from '@opencrvs/toolkit/conditionals'
 import {
   appendConditionalsToFields,
   createSelectOptions,
   emptyMessage
 } from '../../utils'
 import { AddressType, getAddressFields } from '../../person/address'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 const GenderTypes = {
   MALE: 'male',
@@ -225,6 +226,24 @@ export const childPage = defineFormPage({
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.child.field.dob.label'
       }
+    },
+    {
+      id: 'child.reason',
+      type: 'TEXT',
+      required: true,
+      label: {
+        defaultMessage: 'Reason for delayed registration',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.child.field.reason.label'
+      },
+      conditionals: [
+        {
+          type: 'HIDE',
+          conditional: field('child.dob')
+            .isAfter(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+            .apply()
+        }
+      ]
     },
     {
       id: 'child.divider_1',
