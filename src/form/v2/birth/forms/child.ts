@@ -11,7 +11,11 @@
 
 import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
-import { appendConditionalsToFields, createSelectOptions } from '../../utils'
+import {
+  appendConditionalsToFields,
+  createSelectOptions,
+  emptyMessage
+} from '../../utils'
 import { AddressType, getAddressFields } from '../../person/address'
 
 const GenderTypes = {
@@ -223,6 +227,11 @@ export const childPage = defineFormPage({
       }
     },
     {
+      id: 'child.placeOfBirth.divider.start',
+      type: 'DIVIDER',
+      label: emptyMessage
+    },
+    {
       id: 'child.placeOfBirth',
       type: 'SELECT',
       required: true,
@@ -233,7 +242,6 @@ export const childPage = defineFormPage({
       },
       options: placeOfBirthOptions
     },
-
     {
       id: 'child.birthLocation',
       type: 'LOCATION',
@@ -279,6 +287,11 @@ export const childPage = defineFormPage({
       ]
     }),
     {
+      id: 'child.placeOfBirth.divider.end',
+      type: 'DIVIDER',
+      label: emptyMessage
+    },
+    {
       id: 'child.attendantAtBirth',
       type: 'SELECT',
       required: false,
@@ -310,7 +323,12 @@ export const childPage = defineFormPage({
         id: 'event.birth.action.declare.form.section.child.field.weightAtBirth.label'
       },
       options: {
-        type: 'number'
+        type: 'number',
+        postfix: {
+          defaultMessage: 'Kilograms (kg)',
+          description: 'This is the postfix for the weight field',
+          id: 'event.birth.action.declare.form.section.child.field.weightAtBirth.postfix'
+        }
       }
     }
   ]

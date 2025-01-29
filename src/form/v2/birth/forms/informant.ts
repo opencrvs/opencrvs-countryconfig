@@ -11,7 +11,11 @@
 
 import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
-import { appendConditionalsToFields, createSelectOptions } from '../../utils'
+import {
+  appendConditionalsToFields,
+  createSelectOptions,
+  emptyMessage
+} from '../../utils'
 import { getPersonInputCommonFields, PersonType } from '../../person'
 import { getAddressFields } from '../../person/address'
 
@@ -116,7 +120,13 @@ export const informantPage = defineFormPage({
     ...appendConditionalsToFields({
       inputFields: [
         ...getPersonInputCommonFields(PersonType.informant),
-        ...getAddressFields(PersonType.informant)
+        ...getAddressFields(PersonType.informant),
+
+        {
+          id: 'informant.address.divider.end',
+          type: 'DIVIDER',
+          label: emptyMessage
+        }
       ],
       newConditionals: [
         {
@@ -125,7 +135,7 @@ export const informantPage = defineFormPage({
             .or((field) =>
               field
                 .isUndefined()
-                .not.inArray([InformantTypes.MOTHER, InformantTypes.FATHER])
+                .inArray([InformantTypes.MOTHER, InformantTypes.FATHER])
             )
             .apply()
         }
