@@ -123,7 +123,7 @@ export const informantPage = defineFormPage({
         ...getAddressFields(PersonType.informant),
 
         {
-          id: 'informant.address.divider.end',
+          id: 'informant.divider',
           type: 'DIVIDER',
           label: emptyMessage
         }

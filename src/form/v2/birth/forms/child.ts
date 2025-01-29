@@ -227,7 +227,7 @@ export const childPage = defineFormPage({
       }
     },
     {
-      id: 'child.placeOfBirth.divider.start',
+      id: 'child.divider_1',
       type: 'DIVIDER',
       label: emptyMessage
     },
@@ -287,7 +287,7 @@ export const childPage = defineFormPage({
       ]
     }),
     {
-      id: 'child.placeOfBirth.divider.end',
+      id: 'child.divider_2',
       type: 'DIVIDER',
       label: emptyMessage
     },

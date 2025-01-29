@@ -329,7 +329,7 @@ export const getPersonInputCommonFields = (
   },
   ...getIdFields(person),
   {
-    id: `${person}.address.divider.start`,
+    id: `${person}.addressDivider_1`,
     type: 'DIVIDER',
     label: emptyMessage
   },
@@ -388,7 +388,7 @@ export const getPersonInputFields = (person: PersonType): FieldConfig[] => {
     ...getPersonInputCommonFields(person),
     ...(isFather ? fatherAddressFields : getAddressFields(person)),
     {
-      id: `${person}.address.divider.end`,
+      id: `${person}.addressDivider_2`,
       type: 'DIVIDER',
       label: emptyMessage
     },
