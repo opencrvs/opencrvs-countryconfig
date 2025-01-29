@@ -63,10 +63,7 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_SECURE=${SMTP_SECURE}
       - NUI_GENERATOR_URL=${NUI_GENERATOR_URL}
-      - NUI_CLIENT_ID=${NUI_CLIENT_ID}
-      - NUI_CLIENT_SECRET=${NUI_CLIENT_SECRET}
       - NUI_API_KEY=${NUI_API_KEY}
-      - X_ROAD_CLIENT=${X_ROAD_CLIENT}
     deploy:
       replicas: 1
     networks:
