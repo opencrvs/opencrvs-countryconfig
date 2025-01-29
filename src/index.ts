@@ -35,7 +35,6 @@ import {
   contentHandler,
   countryLogoHandler
 } from '@countryconfig/api/content/handler'
-import { eventRegistrationHandler } from '@countryconfig/api/event-registration/handler'
 import decode from 'jwt-decode'
 import { join } from 'path'
 import { logger } from '@countryconfig/logger'
@@ -61,7 +60,11 @@ import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
-import { mosipRegistrationHandler } from '@opencrvs/mosip'
+import {
+  mosipRegistrationForReviewHandler,
+  mosipRegistrationForApprovalHandler,
+  mosipRegistrationHandler
+} from '@opencrvs/mosip'
 import { env } from './environment'
 import {
   getCustomEventsHandler,
@@ -571,6 +574,31 @@ export async function createServer() {
     options: {
       tags: ['api', 'custom-event'],
       description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/sent-notification-for-review',
+    handler: mosipRegistrationForReviewHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api', 'custom-event'],
+      description:
+        'Receives notifications on sent-notification-for-review action'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/sent-for-approval',
+    handler: mosipRegistrationForApprovalHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on sent-for-approval action'
     }
   })
 
