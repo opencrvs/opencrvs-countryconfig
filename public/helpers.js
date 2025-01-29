@@ -830,7 +830,11 @@ function registrationStatementSimplified(registrationStatementContext) {
             ? 'mpanolotra'
             : informantTypeMapped || 'mpanolotra') + ','
         ],
-        isInformantMotherOrFather(informantType)
+        isInformantMotherOrFather(
+          informantType,
+          motherMaritalStatus,
+          birthFatherFatherHasFormallyRecognisedChild
+        )
           ? []
           : __spreadArray(
               __spreadArray(
@@ -1040,9 +1044,6 @@ function isInformantMotherOrFather(
   )
 }
 
-function isInformantMotherOrFather(informantType) {
-  return informantType === 'MOTHER' || informantType === 'FATHER'
-}
 window.isInformantMotherOrFather = isInformantMotherOrFather
 var THE_UNITS_MDG_WORDS = [
   '',
