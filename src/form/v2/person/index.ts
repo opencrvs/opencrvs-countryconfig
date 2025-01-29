@@ -12,7 +12,11 @@
 import { FieldConfig, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { getAddressFields } from './address'
-import { appendConditionalsToFields, createSelectOptions } from '../utils'
+import {
+  appendConditionalsToFields,
+  createSelectOptions,
+  emptyMessage
+} from '../utils'
 
 export const PersonType = {
   father: 'father',
@@ -297,6 +301,13 @@ export const getPersonInputCommonFields = (
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.age.label`
     },
+    options: {
+      postfix: {
+        defaultMessage: 'years',
+        description: 'This is the postfix for age field',
+        id: `event.birth.action.declare.form.section.${person}.field.age.postfix`
+      }
+    },
     conditionals: [
       {
         type: 'HIDE',
@@ -318,6 +329,11 @@ export const getPersonInputCommonFields = (
   },
   ...getIdFields(person),
   {
+    id: `${person}.address.divider.start`,
+    type: 'DIVIDER',
+    label: emptyMessage
+  },
+  {
     id: `${person}.addressHelper`,
     type: 'PARAGRAPH',
     label: {
@@ -325,7 +341,7 @@ export const getPersonInputCommonFields = (
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.addressHelper.label`
     },
-    options: { fontVariant: 'h2' }
+    options: { fontVariant: 'h3' }
   }
 ]
 
@@ -333,19 +349,10 @@ const fatherAddressFields = [
   ...appendConditionalsToFields({
     inputFields: [
       {
-        id: `${PersonType.father}.addressSameAsHelper`,
-        type: 'PARAGRAPH',
-        label: {
-          defaultMessage: "Same as mother's usual place of residence?",
-          description: 'This is the label for the field',
-          id: `event.birth.action.declare.form.section.${PersonType.father}.field.addressSameAsHelper.label`
-        },
-        options: { fontVariant: 'reg16' }
-      },
-      {
         id: `${PersonType.father}.addressSameAs`,
         type: 'RADIO_GROUP',
-        options: yesNoRadioOptions,
+        optionValues: yesNoRadioOptions,
+        options: {},
         required: true,
         label: {
           defaultMessage: "Same as mother's usual place of residence?",
@@ -380,6 +387,11 @@ export const getPersonInputFields = (person: PersonType): FieldConfig[] => {
   return [
     ...getPersonInputCommonFields(person),
     ...(isFather ? fatherAddressFields : getAddressFields(person)),
+    {
+      id: `${person}.address.divider.end`,
+      type: 'DIVIDER',
+      label: emptyMessage
+    },
     {
       id: `${person}.maritalStatus`,
       type: 'SELECT',
