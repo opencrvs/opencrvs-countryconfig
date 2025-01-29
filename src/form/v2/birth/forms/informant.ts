@@ -11,7 +11,11 @@
 
 import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
-import { appendConditionalsToFields, createSelectOptions } from '../../utils'
+import {
+  appendConditionalsToFields,
+  createSelectOptions,
+  emptyMessage
+} from '../../utils'
 import { getPersonInputCommonFields, PersonType } from '../../person'
 import { getAddressFields } from '../../person/address'
 
@@ -105,24 +109,35 @@ export const informantPage = defineFormPage({
       conditionals: [
         {
           type: 'HIDE',
-          conditional: field('informant.relation').isUndefinedOrNotInArray([
-            InformantTypes.OTHER
-          ])
+          conditional: field('informant.relation')
+            .or((field) =>
+              field.isUndefined().not.inArray([InformantTypes.OTHER])
+            )
+            .apply()
         }
       ]
     },
     ...appendConditionalsToFields({
       inputFields: [
         ...getPersonInputCommonFields(PersonType.informant),
-        ...getAddressFields(PersonType.informant)
+        ...getAddressFields(PersonType.informant),
+
+        {
+          id: 'informant.address.divider.end',
+          type: 'DIVIDER',
+          label: emptyMessage
+        }
       ],
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field('informant.relation').isUndefinedOrInArray([
-            InformantTypes.MOTHER,
-            InformantTypes.FATHER
-          ])
+          conditional: field('informant.relation')
+            .or((field) =>
+              field
+                .isUndefined()
+                .inArray([InformantTypes.MOTHER, InformantTypes.FATHER])
+            )
+            .apply()
         }
       ]
     }),

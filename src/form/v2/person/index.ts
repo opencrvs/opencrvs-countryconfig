@@ -12,7 +12,11 @@
 import { FieldConfig, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { getAddressFields } from './address'
-import { appendConditionalsToFields, createSelectOptions } from '../utils'
+import {
+  appendConditionalsToFields,
+  createSelectOptions,
+  emptyMessage
+} from '../utils'
 
 export const PersonType = {
   father: 'father',
@@ -183,9 +187,9 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.idType`).isUndefinedOrNotInArray([
-          'NATIONAL_ID'
-        ])
+        conditional: field(`${person}.idType`)
+          .or((field) => field.isUndefined().not.inArray(['NATIONAL_ID']))
+          .apply()
       }
     ]
   },
@@ -201,9 +205,9 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.idType`).isUndefinedOrNotInArray([
-          'PASSPORT'
-        ])
+        conditional: field(`${person}.idType`)
+          .or((field) => field.isUndefined().not.inArray(['PASSPORT']))
+          .apply()
       }
     ]
   },
@@ -219,9 +223,11 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.idType`).isUndefinedOrNotInArray([
-          'BIRTH_REGISTRATION_NUMBER'
-        ])
+        conditional: field(`${person}.idType`)
+          .or((field) =>
+            field.isUndefined().not.inArray(['BIRTH_REGISTRATION_NUMBER'])
+          )
+          .apply()
       }
     ]
   }
@@ -261,7 +267,7 @@ export const getPersonInputCommonFields = (
           description: 'This is the error message for invalid date',
           id: `event.birth.action.declare.form.section.${person}.field.dob.error`
         },
-        validator: field(`${person}.dob`).isBeforeNow()
+        validator: field(`${person}.dob`).isBeforeNow().apply()
       }
     ],
     label: {
@@ -272,7 +278,7 @@ export const getPersonInputCommonFields = (
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.dobUnknown`).isEqualTo('true')
+        conditional: field(`${person}.dobUnknown`).isEqualTo('true').apply()
       }
     ]
   },
@@ -295,12 +301,19 @@ export const getPersonInputCommonFields = (
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.age.label`
     },
+    options: {
+      postfix: {
+        defaultMessage: 'years',
+        description: 'This is the postfix for age field',
+        id: `event.birth.action.declare.form.section.${person}.field.age.postfix`
+      }
+    },
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.dobUnknown`).isUndefinedOrInArray([
-          'false'
-        ])
+        conditional: field(`${person}.dobUnknown`)
+          .or((field) => field.isUndefined().inArray(['false']))
+          .apply()
       }
     ]
   },
@@ -316,6 +329,11 @@ export const getPersonInputCommonFields = (
   },
   ...getIdFields(person),
   {
+    id: `${person}.address.divider.start`,
+    type: 'DIVIDER',
+    label: emptyMessage
+  },
+  {
     id: `${person}.addressHelper`,
     type: 'PARAGRAPH',
     label: {
@@ -323,7 +341,7 @@ export const getPersonInputCommonFields = (
       description: 'This is the label for the field',
       id: `event.birth.action.declare.form.section.${person}.field.addressHelper.label`
     },
-    options: { fontVariant: 'h2' }
+    options: { fontVariant: 'h3' }
   }
 ]
 
@@ -331,19 +349,10 @@ const fatherAddressFields = [
   ...appendConditionalsToFields({
     inputFields: [
       {
-        id: `${PersonType.father}.addressSameAsHelper`,
-        type: 'PARAGRAPH',
-        label: {
-          defaultMessage: "Same as mother's usual place of residence?",
-          description: 'This is the label for the field',
-          id: `event.birth.action.declare.form.section.${PersonType.father}.field.addressSameAsHelper.label`
-        },
-        options: { fontVariant: 'reg16' }
-      },
-      {
         id: `${PersonType.father}.addressSameAs`,
         type: 'RADIO_GROUP',
-        options: yesNoRadioOptions,
+        optionValues: yesNoRadioOptions,
+        options: {},
         required: true,
         label: {
           defaultMessage: "Same as mother's usual place of residence?",
@@ -355,9 +364,9 @@ const fatherAddressFields = [
     newConditionals: [
       {
         type: 'HIDE',
-        conditional: field(
-          `${PersonType.mother}.detailsNotAvailable`
-        ).isInArray(['true'])
+        conditional: field(`${PersonType.mother}.detailsNotAvailable`)
+          .inArray(['true'])
+          .apply()
       }
     ]
   }),
@@ -366,9 +375,9 @@ const fatherAddressFields = [
     newConditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${PersonType.father}.addressSameAs`).isInArray([
-          YesNoTypes.YES
-        ])
+        conditional: field(`${PersonType.father}.addressSameAs`)
+          .inArray([YesNoTypes.YES])
+          .apply()
       }
     ]
   })
@@ -378,6 +387,11 @@ export const getPersonInputFields = (person: PersonType): FieldConfig[] => {
   return [
     ...getPersonInputCommonFields(person),
     ...(isFather ? fatherAddressFields : getAddressFields(person)),
+    {
+      id: `${person}.address.divider.end`,
+      type: 'DIVIDER',
+      label: emptyMessage
+    },
     {
       id: `${person}.maritalStatus`,
       type: 'SELECT',
