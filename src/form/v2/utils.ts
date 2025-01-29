@@ -39,3 +39,9 @@ export const createSelectOptions = <
     value,
     label: messageDescriptors[key as keyof T]
   }))
+
+export const emptyMessage = {
+  defaultMessage: '',
+  description: 'empty string',
+  id: 'messages.emptyString'
+}

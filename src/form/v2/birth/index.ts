@@ -16,9 +16,10 @@ import {
   not
 } from '@opencrvs/toolkit/conditionals'
 import { BIRTH_DECLARE_FORM } from './forms/declare'
+import { Event } from '@countryconfig/form/types/types'
 
 export const birthEvent = defineConfig({
-  id: 'BIRTH',
+  id: Event.Birth,
   label: {
     defaultMessage: 'Birth declaration',
     description: 'This is what this event is referred as in the system',
@@ -28,7 +29,7 @@ export const birthEvent = defineConfig({
     title: {
       id: 'event.birth.summary.title',
       label: {
-        defaultMessage: '{applicant.firstname} {applicant.surname}',
+        defaultMessage: '{child.firstname} {child.surname}',
         description: 'This is the title of the summary',
         id: 'event.birth.summary.title'
       }
@@ -38,17 +39,14 @@ export const birthEvent = defineConfig({
   workqueues: [
     {
       id: 'all',
-      title: {
-        defaultMessage: 'All birth events',
-        description: 'Label for all birth events workqueue',
-        id: 'event.birth.workqueue.all.label'
-      },
       fields: [
         {
-          id: 'child.firstname'
-        },
-        {
-          id: 'child.surname'
+          column: 'title',
+          label: {
+            defaultMessage: '{child.surname} {child.firstname}',
+            description: 'Label for name in all workqueue',
+            id: 'event.birth.workqueue.all.name.label'
+          }
         }
       ],
       filters: []
