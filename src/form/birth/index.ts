@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { Event, ISerializedForm, SerializedFormField } from '../types/types'
+import { Event, ISerializedForm } from '../types/types'
 import { formMessageDescriptors } from '../common/messages'
 import { informantType } from './required-fields'
 import {
@@ -76,27 +76,11 @@ import {
 } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
-import {
-  getCommonSectionMapping,
-  getCustomFieldMapping
-} from '@countryconfig/utils/mapping/field-mapping-utils'
+import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
-import {
-  esignet,
-  esignetCallback,
-  idReader,
-  idVerificationFields,
-  qr
-} from '@opencrvs/mosip'
 import { getGenderCustom } from './custom-fields'
-import {
-  ESIGNET_TOKEN_URL,
-  MOSIP_API_USERINFO_URL,
-  OPENID_PROVIDER_CLAIMS,
-  OPENID_PROVIDER_CLIENT_ID
-} from '@countryconfig/constants'
-import { and, objectHasProperty } from '@opencrvs/toolkit/conditionals'
+import { iDReaderFields } from '../common/id-reader-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -237,54 +221,13 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            idReader(
-              'birth',
+            ...iDReaderFields(
+              Event.Birth,
               'informant',
-              informantFirstNameConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat({
-                  action: 'hide',
-                  expression: '!!$form?.verified'
-                }),
-              [
-                qr({
-                  validation: {
-                    rule: and(
-                      objectHasProperty('firstName', 'string'),
-                      objectHasProperty('familyName', 'string'),
-                      objectHasProperty('gender', 'string'),
-                      objectHasProperty('birthDate', 'string'),
-                      objectHasProperty('nid', 'string')
-                    ),
-                    errorMessage: {
-                      defaultMessage:
-                        'This QR code is not recognised. Please try again.',
-                      description: 'Error message for QR code validation',
-                      id: 'form.field.qr.validation.error'
-                    }
-                  }
-                }),
-                esignet(
-                  ESIGNET_TOKEN_URL,
-                  OPENID_PROVIDER_CLIENT_ID,
-                  OPENID_PROVIDER_CLAIMS,
-                  'esignet',
-                  'esignetCallback'
-                )
-              ]
-            ) as SerializedFormField,
-            esignetCallback({
-              fieldName: 'esignetCallback',
-              mosipAPIUserInfoUrl: MOSIP_API_USERINFO_URL,
-              openIdProviderClientId: OPENID_PROVIDER_CLIENT_ID
-            }) as SerializedFormField,
-            ...(idVerificationFields(
-              'birth',
-              'informant',
-              getCustomFieldMapping(
-                'birth.informant.informant-view-group.verified'
+              informantFirstNameConditionals.concat(
+                hideIfInformantMotherOrFather
               )
-            ) as SerializedFormField[]),
+            ),
             getFirstNameField(
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(
@@ -393,6 +336,7 @@ export const birthForm: ISerializedForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            ...iDReaderFields(Event.Birth, 'mother', detailsExist),
             getFirstNameField(
               'motherNameInEnglish',
               motherFirstNameConditionals,
@@ -472,6 +416,7 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            ...iDReaderFields(Event.Birth, 'father', detailsExist),
             getFirstNameField(
               'fatherNameInEnglish',
               fatherFirstNameConditionals,
