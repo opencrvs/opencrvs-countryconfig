@@ -25,6 +25,11 @@ import {
 import { and, objectHasProperty } from '@opencrvs/toolkit/conditionals'
 import { Conditional, SerializedFormField } from '../types/types'
 
+export const getInitialValueFromIDReader = (fieldNameInReader: string) => ({
+  dependsOn: ['idReader', 'esignetCallback'],
+  expression: `$form?.idReader?.${fieldNameInReader} || $form?.esignetCallback?.data?.${fieldNameInReader} || ""`
+})
+
 export const iDReaderFields = (
   event: 'birth' | 'death',
   section: 'informant' | 'mother' | 'father',

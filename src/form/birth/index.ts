@@ -80,7 +80,10 @@ import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapp
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
 import { getGenderCustom } from './custom-fields'
-import { iDReaderFields } from '../common/id-reader-fields'
+import {
+  getInitialValueFromIDReader,
+  iDReaderFields
+} from '../common/id-reader-fields'
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -234,11 +237,7 @@ export const birthForm: ISerializedForm = {
                 hideIfInformantMotherOrFather
               ),
               certificateHandlebars.informantFirstName,
-              {
-                dependsOn: ['idReader', 'esignetCallback'],
-                expression:
-                  '$form?.idReader?.firstName || $form?.esignetCallback?.data?.firstName || ""'
-              }
+              getInitialValueFromIDReader('firstName')
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
@@ -246,17 +245,14 @@ export const birthForm: ISerializedForm = {
                 hideIfInformantMotherOrFather
               ),
               certificateHandlebars.informantFamilyName,
-              {
-                dependsOn: ['idReader', 'esignetCallback'],
-                expression:
-                  '$form?.idReader?.familyName || $form?.esignetCallback?.data?.familyName || ""'
-              }
+              getInitialValueFromIDReader('familyName')
             ), // Required field.
-            getGenderCustom('birth', 'informant', [], {
-              dependsOn: ['idReader', 'esignetCallback'],
-              expression:
-                '$form?.idReader?.gender || $form?.esignetCallback?.data?.gender || ""'
-            }),
+            getGenderCustom(
+              'birth',
+              'informant',
+              [],
+              getInitialValueFromIDReader('gender')
+            ), // Required field.
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
@@ -273,11 +269,7 @@ export const birthForm: ISerializedForm = {
                 }
               ],
               certificateHandlebars.informantBirthDate,
-              {
-                dependsOn: ['idReader', 'esignetCallback'],
-                expression:
-                  '$form?.idReader?.birthDate || $form?.esignetCallback?.data?.birthDate || ""'
-              }
+              getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
             getAgeOfIndividualInYears(
@@ -340,18 +332,21 @@ export const birthForm: ISerializedForm = {
             getFirstNameField(
               'motherNameInEnglish',
               motherFirstNameConditionals,
-              certificateHandlebars.motherFirstName
+              certificateHandlebars.motherFirstName,
+              getInitialValueFromIDReader('firstName')
             ), // Required field.
             getFamilyNameField(
               'motherNameInEnglish',
               motherFamilyNameConditionals,
-              certificateHandlebars.motherFamilyName
+              certificateHandlebars.motherFamilyName,
+              getInitialValueFromIDReader('familyName')
             ), // Required field.
             getBirthDate(
               'motherBirthDate',
               mothersBirthDateConditionals,
               parentsBirthDateValidators,
-              certificateHandlebars.motherBirthDate
+              certificateHandlebars.motherBirthDate,
+              getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(detailsExistConditional),
             getAgeOfIndividualInYears(
@@ -420,18 +415,21 @@ export const birthForm: ISerializedForm = {
             getFirstNameField(
               'fatherNameInEnglish',
               fatherFirstNameConditionals,
-              certificateHandlebars.fatherFirstName
+              certificateHandlebars.fatherFirstName,
+              getInitialValueFromIDReader('firstName')
             ), // Required field.
             getFamilyNameField(
               'fatherNameInEnglish',
               fatherFamilyNameConditionals,
-              certificateHandlebars.fatherFamilyName
+              certificateHandlebars.fatherFamilyName,
+              getInitialValueFromIDReader('familyName')
             ), // Required field.
             getBirthDate(
               'fatherBirthDate',
               fathersBirthDateConditionals,
               parentsBirthDateValidators,
-              certificateHandlebars.fatherBirthDate
+              certificateHandlebars.fatherBirthDate,
+              getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(detailsExistConditional),
             getAgeOfIndividualInYears(
