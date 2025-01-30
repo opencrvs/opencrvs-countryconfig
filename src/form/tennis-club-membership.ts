@@ -57,6 +57,7 @@ const TENNIS_CLUB_FORM = defineForm({
         {
           id: 'applicant.firstname',
           type: 'TEXT',
+          options: { maxLength: 32 },
           required: true,
           label: {
             defaultMessage: "Applicant's first name",
@@ -67,6 +68,7 @@ const TENNIS_CLUB_FORM = defineForm({
         {
           id: 'applicant.surname',
           type: 'TEXT',
+          options: { maxLength: 32 },
           required: true,
           label: {
             defaultMessage: "Applicant's surname",
@@ -151,6 +153,7 @@ const TENNIS_CLUB_FORM = defineForm({
         },
         {
           id: 'recommender.firstname',
+          options: { maxLength: 32 },
           type: 'TEXT',
           required: true,
           conditionals: [
@@ -167,6 +170,7 @@ const TENNIS_CLUB_FORM = defineForm({
         },
         {
           id: 'recommender.surname',
+          options: { maxLength: 32 },
           type: 'TEXT',
           required: true,
           conditionals: [

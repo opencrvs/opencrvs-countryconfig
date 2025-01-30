@@ -179,6 +179,7 @@ export const childPage = defineFormPage({
     {
       id: 'child.firstname',
       type: 'TEXT',
+      options: { maxLength: 32 },
       required: true,
       label: {
         defaultMessage: 'First name(s)',
@@ -189,6 +190,7 @@ export const childPage = defineFormPage({
     {
       id: 'child.surname',
       type: 'TEXT',
+      options: { maxLength: 32 },
       required: true,
       label: {
         defaultMessage: 'Last name',
