@@ -246,8 +246,10 @@ export const childPage = defineFormPage({
             .apply()
         },
         {
-          type: 'SHOW',
-          conditional: field('child.dob').isBeforeNow().apply()
+          type: 'HIDE',
+          conditional: field('child.dob')
+            .or((field) => field.isUndefined().not.isBeforeNow())
+            .apply()
         }
       ]
     },
