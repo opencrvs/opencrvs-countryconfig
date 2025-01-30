@@ -176,7 +176,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
   const farajalandAddressFields: FieldConfig[] = [
     {
       id: `${prefix}.province`,
-      type: 'LOCATION',
+      type: 'ADMINISTRATIVE_AREA',
       required: true,
       label: {
         defaultMessage: 'Province',
@@ -189,7 +189,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
     },
     {
       id: `${prefix}.district`,
-      type: 'LOCATION',
+      type: 'ADMINISTRATIVE_AREA',
       required: true,
       label: {
         defaultMessage: 'District',

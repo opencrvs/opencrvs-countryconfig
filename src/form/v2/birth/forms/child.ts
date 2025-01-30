@@ -244,7 +244,7 @@ export const childPage = defineFormPage({
     },
     {
       id: 'child.birthLocation',
-      type: 'LOCATION_SEARCH_FACILITIES',
+      type: 'FACILITY',
       required: true,
       label: {
         defaultMessage: 'Health Institution',
