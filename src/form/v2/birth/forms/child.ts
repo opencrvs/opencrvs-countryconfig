@@ -242,6 +242,10 @@ export const childPage = defineFormPage({
           conditional: field('child.dob')
             .isAfter(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
             .apply()
+        },
+        {
+          type: 'SHOW',
+          conditional: field('child.dob').isBeforeNow().apply()
         }
       ]
     },
