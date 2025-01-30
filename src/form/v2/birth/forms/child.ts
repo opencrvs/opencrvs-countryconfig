@@ -244,14 +244,13 @@ export const childPage = defineFormPage({
     },
     {
       id: 'child.birthLocation',
-      type: 'LOCATION_SEARCH_INPUT',
+      type: 'LOCATION_SEARCH_FACILITIES',
       required: true,
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
       },
-      searchableResource: ['facilities'],
       conditionals: [
         {
           type: 'HIDE',
