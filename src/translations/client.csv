@@ -1215,7 +1215,7 @@ form.field.nidVerificationOngoing,Label for indicating offline status for the us
 form.field.nidVerified,,Authenticated,Authentifié
 form.field.previewGroups.primaryAddress,,Usual place of residence,Adresse résidentielle
 form.field.previewGroups.secondaryAddress,,Secondary address,Adresse secondaire
-form.field.qr.validation.error,Error message for QR code validation,This QR code is not recognised. Please try again.,Ce code QR n'est pas reconnu. Veuillez réessayer.
+form.field.qr.validation.error,Error message for QR code validation,This QR code is not recognised.,Ce code QR n'est pas reconnu.
 form.field.select.placeholder,,Select,Sélectionnez
 form.field.showLabel,Button to show section,Show,Afficher
 form.field.tooltip.tooltipNationalID,,The National ID can only be numeric and must be 10 digits long,Il s'agit d'une info-bulle pour guider l'utilisateur dans la saisie de l'identifiant national.
