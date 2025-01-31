@@ -15,7 +15,8 @@ import { getAddressFields } from './address'
 import {
   appendConditionalsToFields,
   createSelectOptions,
-  emptyMessage
+  emptyMessage,
+  MAX_NAME_LENGTH
 } from '../utils'
 
 export const PersonType = {
@@ -238,7 +239,7 @@ export const getPersonInputCommonFields = (
 ): FieldConfig[] => [
   {
     id: `${person}.firstname`,
-    options: { maxLength: 32 },
+    options: { maxLength: MAX_NAME_LENGTH },
     type: 'TEXT',
     required: true,
     label: {
@@ -249,7 +250,7 @@ export const getPersonInputCommonFields = (
   },
   {
     id: `${person}.surname`,
-    options: { maxLength: 32 },
+    options: { maxLength: MAX_NAME_LENGTH },
     type: 'TEXT',
     required: true,
     label: {

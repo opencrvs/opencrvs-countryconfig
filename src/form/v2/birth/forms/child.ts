@@ -18,6 +18,7 @@ import {
 } from '../../utils'
 import { AddressType, getAddressFields } from '../../person/address'
 import { applicationConfig } from '@countryconfig/api/application/application-config'
+import { MAX_NAME_LENGTH } from '../../utils'
 
 const GenderTypes = {
   MALE: 'male',
@@ -179,7 +180,7 @@ export const childPage = defineFormPage({
     {
       id: 'child.firstname',
       type: 'TEXT',
-      options: { maxLength: 32 },
+      options: { maxLength: MAX_NAME_LENGTH },
       required: true,
       label: {
         defaultMessage: 'First name(s)',
@@ -190,7 +191,7 @@ export const childPage = defineFormPage({
     {
       id: 'child.surname',
       type: 'TEXT',
-      options: { maxLength: 32 },
+      options: { maxLength: MAX_NAME_LENGTH },
       required: true,
       label: {
         defaultMessage: 'Last name',
