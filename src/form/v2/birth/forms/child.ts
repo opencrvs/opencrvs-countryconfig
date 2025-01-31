@@ -11,7 +11,11 @@
 
 import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
-import { appendConditionalsToFields, createSelectOptions } from '../../utils'
+import {
+  appendConditionalsToFields,
+  createSelectOptions,
+  emptyMessage
+} from '../../utils'
 import { AddressType, getAddressFields } from '../../person/address'
 
 const GenderTypes = {
@@ -213,7 +217,7 @@ export const childPage = defineFormPage({
             description: 'This is the error message for invalid date',
             id: 'event.birth.action.declare.form.section.child.field.dob.error'
           },
-          validator: field('child.dob').isBeforeNow()
+          validator: field('child.dob').isBeforeNow().apply()
         }
       ],
       label: {
@@ -221,6 +225,11 @@ export const childPage = defineFormPage({
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.child.field.dob.label'
       }
+    },
+    {
+      id: 'child.placeOfBirth.divider.start',
+      type: 'DIVIDER',
+      label: emptyMessage
     },
     {
       id: 'child.placeOfBirth',
@@ -245,12 +254,13 @@ export const childPage = defineFormPage({
       options: {
         type: 'HEALTH_FACILITY'
       },
+
       conditionals: [
         {
           type: 'HIDE',
-          conditional: field('child.placeOfBirth').isUndefinedOrNotInArray([
-            'HEALTH_FACILITY'
-          ])
+          conditional: field('child.placeOfBirth')
+            .or((field) => field.isUndefined().not.inArray(['HEALTH_FACILITY']))
+            .apply()
         }
       ]
     },
@@ -259,9 +269,9 @@ export const childPage = defineFormPage({
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field('child.placeOfBirth').isUndefinedOrNotInArray([
-            'PRIVATE_HOME'
-          ])
+          conditional: field('child.placeOfBirth')
+            .or((field) => field.isUndefined().not.inArray(['PRIVATE_HOME']))
+            .apply()
         }
       ]
     }),
@@ -270,12 +280,17 @@ export const childPage = defineFormPage({
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field('child.placeOfBirth').isUndefinedOrNotInArray([
-            'OTHER'
-          ])
+          conditional: field('child.placeOfBirth')
+            .or((field) => field.isUndefined().not.inArray(['OTHER']))
+            .apply()
         }
       ]
     }),
+    {
+      id: 'child.placeOfBirth.divider.end',
+      type: 'DIVIDER',
+      label: emptyMessage
+    },
     {
       id: 'child.attendantAtBirth',
       type: 'SELECT',
@@ -308,7 +323,12 @@ export const childPage = defineFormPage({
         id: 'event.birth.action.declare.form.section.child.field.weightAtBirth.label'
       },
       options: {
-        type: 'number'
+        type: 'number',
+        postfix: {
+          defaultMessage: 'Kilograms (kg)',
+          description: 'This is the postfix for the weight field',
+          id: 'event.birth.action.declare.form.section.child.field.weightAtBirth.postfix'
+        }
       }
     }
   ]
