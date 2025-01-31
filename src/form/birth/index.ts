@@ -76,14 +76,16 @@ import {
 } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
-import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import {
+  getCommonSectionMapping,
+  getCustomFieldMapping
+} from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
 import { getGenderCustom } from './custom-fields'
-import {
-  getInitialValueFromIDReader,
-  iDReaderFields
-} from '../common/id-reader-fields'
+import { idReaderFields, getInitialValueFromIDReader } from '@opencrvs/mosip'
+import { esignetConfig, qrCodeConfig } from '../common/id-reader-configurations'
+
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -224,9 +226,14 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            ...iDReaderFields(
-              Event.Birth,
+            ...idReaderFields(
+              'birth',
               'informant',
+              qrCodeConfig,
+              esignetConfig,
+              getCustomFieldMapping(
+                `birth.informant.informant-view-group.verified`
+              ),
               informantFirstNameConditionals.concat(
                 hideIfInformantMotherOrFather
               )
@@ -328,7 +335,14 @@ export const birthForm: ISerializedForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            ...iDReaderFields(Event.Birth, 'mother', detailsExist),
+            ...idReaderFields(
+              'birth',
+              'mother',
+              qrCodeConfig,
+              esignetConfig,
+              getCustomFieldMapping(`birth.mother.mother-view-group.verified`),
+              detailsExist
+            ),
             getFirstNameField(
               'motherNameInEnglish',
               motherFirstNameConditionals,
@@ -411,7 +425,14 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            ...iDReaderFields(Event.Birth, 'father', detailsExist),
+            ...idReaderFields(
+              'birth',
+              'father',
+              qrCodeConfig,
+              esignetConfig,
+              getCustomFieldMapping(`birth.father.father-view-group.verified`),
+              detailsExist
+            ),
             getFirstNameField(
               'fatherNameInEnglish',
               fatherFirstNameConditionals,
