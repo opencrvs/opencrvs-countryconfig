@@ -28,6 +28,6 @@ window.config = {
   // http://localhost:4444/public/dashboard/a17e9bc0-15a2-4bd1-92fa-ab0f346227ca#bordered=false&titled=false&refresh=300
   STATISTICS_DASHBOARD_URL: '',
   FEATURES: {
-    V2_EVENTS: false
+    V2_EVENTS: {{ V2_EVENTS }}
   }
 }
