@@ -221,7 +221,7 @@ export const childPage = defineFormPage({
             description: 'This is the error message for invalid date',
             id: 'event.birth.action.declare.form.section.child.field.dob.error'
           },
-          validator: field('child.dob').isBeforeNow().apply()
+          validator: field('child.dob').isBefore().now().apply()
         }
       ],
       label: {
@@ -243,13 +243,15 @@ export const childPage = defineFormPage({
         {
           type: 'HIDE',
           conditional: field('child.dob')
-            .isAfter(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+            .isAfter()
+            .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+            .inPast()
             .apply()
         },
         {
           type: 'HIDE',
           conditional: field('child.dob')
-            .or((field) => field.isUndefined().not.isBeforeNow())
+            .or((field) => field.isUndefined().not.isBefore().now())
             .apply()
         }
       ]
