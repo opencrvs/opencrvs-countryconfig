@@ -188,6 +188,56 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
       }
+    },
+    {
+      id: 'tennis-club-membership-certificate',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.copy',
+        defaultMessage: 'Tennis Club Membership Certificate copy',
+        description: 'The label for a tennis-club-membership certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/tennis-club-membership-certificate.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'tennis-club-membership-certified-certificate',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.certified-copy',
+        defaultMessage: 'Tennis Club Membership Certificate certified copy',
+        description: 'The label for a tennis-club-membership certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/tennis-club-membership-certified-certificate.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
     }
   ]
   return certificateConfigs

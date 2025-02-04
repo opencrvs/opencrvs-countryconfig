@@ -10,7 +10,6 @@
  */
 
 import { defineConfig, defineForm } from '@opencrvs/toolkit/events'
-
 import {
   defineConditional,
   or,
@@ -18,10 +17,9 @@ import {
   userHasScope,
   and,
   not,
-  field,
-  deduplication
+  field
 } from '@opencrvs/toolkit/conditionals'
-import { getAddressFields } from './v2/person/address'
+import { Event } from './types/types'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
@@ -113,21 +111,7 @@ const TENNIS_CLUB_FORM = defineForm({
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
           }
-        },
-        {
-          id: 'applicant.address.helper',
-          type: 'PARAGRAPH',
-          required: false,
-          label: {
-            defaultMessage: "Applicant's address",
-            description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.helper.label'
-          },
-          options: {
-            fontVariant: 'h3'
-          }
-        },
-        ...getAddressFields('applicant')
+        }
       ]
     },
     {
@@ -202,8 +186,319 @@ const TENNIS_CLUB_FORM = defineForm({
   ]
 })
 
+const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
+  label: {
+    id: 'event.tennis-club-membership.action.certificate.form.label',
+    defaultMessage: 'Tennis club membership certificate collector',
+    description: 'This is what this form is referred as in the system'
+  },
+  review: {
+    title: {
+      id: 'event.tennis-club-membership.action.certificate.form.review.title',
+      defaultMessage: 'Member certificate collector for {firstname} {surname}',
+      description: 'Title of the form to show in review page'
+    }
+  },
+  active: true,
+  version: {
+    id: '1.0.0',
+    label: {
+      id: 'event.tennis-club-membership.action.certificate.form.version.1',
+      defaultMessage: 'Version 1',
+      description: 'This is the first version of the form'
+    }
+  },
+  pages: [
+    {
+      id: 'collector',
+      title: {
+        id: 'event.tennis-club-membership.action.certificate.form.section.who.title',
+        defaultMessage: 'Print certified copy',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'collector.requesterId',
+          type: 'SELECT',
+          required: true,
+          label: {
+            defaultMessage: 'Requester',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.certificate.form.section.requester.label'
+          },
+          options: [
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.certificate.form.section.requester.informant.label',
+                defaultMessage: 'Print and issue Informant',
+                description: 'This is the label for the field'
+              },
+              value: 'INFORMANT'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.certificate.form.section.requester.other.label',
+                defaultMessage: 'Print and issue someone else',
+                description: 'This is the label for the field'
+              },
+              value: 'OTHER'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.certificate.form.section.requester.printInAdvance.label',
+                defaultMessage: 'Print in advance',
+                description: 'This is the label for the field'
+              },
+              value: 'PRINT_IN_ADVANCE'
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.idType',
+          type: 'SELECT',
+          required: true,
+          label: {
+            defaultMessage: 'Select Type of ID',
+            description: 'This is the label for selecting the type of ID',
+            id: 'event.tennis-club-membership.action.form.section.idType.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ],
+          options: [
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.passport.label',
+                defaultMessage: 'Passport',
+                description: 'Option for selecting Passport as the ID type'
+              },
+              value: 'PASSPORT'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.drivingLicense.label',
+                defaultMessage: 'Driving License',
+                description:
+                  'Option for selecting Driving License as the ID type'
+              },
+              value: 'DRIVING_LICENSE'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.refugeeNumber.label',
+                defaultMessage: 'Refugee Number',
+                description:
+                  'Option for selecting Refugee Number as the ID type'
+              },
+              value: 'REFUGEE_NUMBER'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.alienNumber.label',
+                defaultMessage: 'Alien Number',
+                description: 'Option for selecting Alien Number as the ID type'
+              },
+              value: 'ALIEN_NUMBER'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.other.label',
+                defaultMessage: 'Other',
+                description: 'Option for selecting Other as the ID type'
+              },
+              value: 'OTHER'
+            },
+            {
+              label: {
+                id: 'event.tennis-club-membership.action.form.section.idType.noId.label',
+                defaultMessage: 'No ID',
+                description: 'Option for selecting No ID as the ID type'
+              },
+              value: 'NO_ID'
+            }
+          ]
+        },
+        {
+          id: 'collector.PASSPORT.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Passport Details',
+            description: 'Field for entering Passport details',
+            id: 'event.tennis-club-membership.action.form.section.passportDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) => field.isUndefined().not.inArray(['PASSPORT']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.DRIVING_LICENSE.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Driving License Details',
+            description: 'Field for entering Driving License details',
+            id: 'event.tennis-club-membership.action.form.section.drivingLicenseDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) =>
+                  field.isUndefined().not.inArray(['DRIVING_LICENSE'])
+                )
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.REFUGEE_NUMBER.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Refugee Number Details',
+            description: 'Field for entering Refugee Number details',
+            id: 'event.tennis-club-membership.action.form.section.refugeeNumberDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) =>
+                  field.isUndefined().not.inArray(['REFUGEE_NUMBER'])
+                )
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.ALIEN_NUMBER.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Alien Number Details',
+            description: 'Field for entering Alien Number details',
+            id: 'event.tennis-club-membership.action.form.section.alienNumberDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) =>
+                  field.isUndefined().not.inArray(['ALIEN_NUMBER'])
+                )
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.idTypeOther',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Other ID Type (if applicable)',
+            description: 'Field for entering ID type if "Other" is selected',
+            id: 'event.tennis-club-membership.action.form.section.idTypeOther.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.firstName',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'First Name',
+            description: 'This is the label for the first name field',
+            id: 'event.tennis-club-membership.action.form.section.firstName.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.lastName',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Last Name',
+            description: 'This is the label for the last name field',
+            id: 'event.tennis-club-membership.action.form.section.lastName.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.relationshipToMember',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Relationship to Member',
+            description:
+              'This is the label for the relationship to member field',
+            id: 'event.tennis-club-membership.action.form.section.relationshipToMember.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.signedAffidavit',
+          type: 'FILE',
+          required: false,
+          label: {
+            defaultMessage: 'Signed Affidavit (Optional)',
+            description: 'This is the label for uploading a signed affidavit',
+            id: 'event.tennis-club-membership.action.form.section.signedAffidavit.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        }
+      ]
+    }
+  ]
+})
+
 export const tennisClubMembershipEvent = defineConfig({
-  id: 'TENNIS_CLUB_MEMBERSHIP',
+  id: Event.TENNIS_CLUB_MEMBERSHIP,
   label: {
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this event is referred as in the system',
@@ -211,74 +506,105 @@ export const tennisClubMembershipEvent = defineConfig({
   },
   summary: {
     title: {
-      id: 'event.tennis-club-membership.summary.title',
+      id: '',
       label: {
         defaultMessage: '{applicant.firstname} {applicant.surname}',
         description: 'This is the title of the summary',
         id: 'event.tennis-club-membership.summary.title'
-      },
-      emptyValueMessage: {
-        defaultMessage: 'Membership application',
-        description:
-          'This is the message shown when the applicant name is missing',
-        id: 'event.tennis-club-membership.summary.title.empty'
       }
     },
     fields: [
       {
-        id: 'event.tennis-club-membership.summary.applicant.name',
+        id: 'applicant.firstname',
+        emptyValueMessage: {
+          defaultMessage: "Applicant's first name missing",
+          description:
+            "Shown when the applicant's first name is missing in summary",
+          id: 'event.tennis-club-membership.summary.field.applicant.firstname.empty'
+        },
         label: {
-          defaultMessage: 'Applicant',
-          description: 'This is the label for the field',
-          id: 'event.tennis-club-membership.summary.field.name.label'
+          defaultMessage: "Applicant's First Name",
+          description: "Label for the applicant's first name field",
+          id: 'event.tennis-club-membership.summary.field.applicant.firstname.label'
         },
         value: {
-          defaultMessage: '{applicant.firstname} {applicant.surname}',
-          id: 'event.tennis-club-membership.summary.field.name.label',
-          description: 'This is the value for the field'
-        },
-        emptyValueMessage: {
-          defaultMessage: "Applicant's name is missing",
-          description:
-            "shown when the applicant's names are missing in summary",
-          id: 'event.tennis-club-membership.summary.field.applicant.firstname.empty'
+          defaultMessage: 'First Name',
+          description: "Value for the applicant's first name field",
+          id: 'event.tennis-club-membership.summary.field.applicant.firstname.value'
         }
       },
       {
-        id: 'event.tennis-club-membership.summary.recommender.name',
+        id: 'applicant.surname',
+        emptyValueMessage: {
+          defaultMessage: "Applicant's surname missing",
+          description: 'Shown when the surname is missing in summary',
+          id: 'event.tennis-club-membership.summary.field.applicant.surname.empty'
+        },
         label: {
-          defaultMessage: 'Recommender',
-          description: 'This is the label for the field',
-          id: 'event.tennis-club-membership.summary.field.recommender.name.label'
+          defaultMessage: "Applicant's Surname",
+          description: 'Label for the applicant’s surname field',
+          id: 'event.tennis-club-membership.summary.field.applicant.surname.label'
         },
         value: {
-          defaultMessage: '{recommender.firstname} {recommender.surname}',
-          id: 'event.tennis-club-membership.summary.field.name.label',
-          description: 'This is the value for the field'
-        },
+          defaultMessage: 'Surname',
+          description: 'Value for the applicant’s surname field',
+          id: 'event.tennis-club-membership.summary.field.applicant.surname.value'
+        }
+      },
+      {
+        id: 'recommender.firstname',
         emptyValueMessage: {
-          defaultMessage: "Recommender's name is missing",
+          defaultMessage: "Recommender's first name missing",
           description:
-            "shown when the recommender's names are missing in summary",
-          id: 'event.tennis-club-membership.summary.field.recommender.name.empty'
+            'Shown when the recommender first name is missing in summary',
+          id: 'event.tennis-club-membership.summary.field.recommender.firstname.empty'
+        },
+        label: {
+          defaultMessage: "Recommender's First Name",
+          description: 'Label for the recommender’s first name field',
+          id: 'event.tennis-club-membership.summary.field.recommender.firstname.label'
+        },
+        value: {
+          defaultMessage: 'First Name',
+          description: 'Value for the recommender’s first name field',
+          id: 'event.tennis-club-membership.summary.field.recommender.firstname.value'
+        }
+      },
+      {
+        id: 'recommender.surname',
+        emptyValueMessage: {
+          defaultMessage: "Recommender's surname missing",
+          description:
+            'Shown when the recommender surname is missing in summary',
+          id: 'event.tennis-club-membership.summary.field.recommender.surname.empty'
+        },
+        label: {
+          defaultMessage: "Recommender's Surname",
+          description: 'Label for the recommender’s surname field',
+          id: 'event.tennis-club-membership.summary.field.recommender.surname.label'
+        },
+        value: {
+          defaultMessage: 'Surname',
+          description: 'Value for the recommender’s surname field',
+          id: 'event.tennis-club-membership.summary.field.recommender.surname.value'
         }
       },
       {
         id: 'recommender.id',
+        emptyValueMessage: {
+          defaultMessage: "Recommender's id missing",
+          description: 'Shown when the recommender id is missing in summary',
+          id: 'event.tennis-club-membership.summary.field.recommender.id.empty'
+        },
         label: {
-          defaultMessage: 'Membership ID',
-          description: 'This is the label for the field',
+          defaultMessage: "Recommender's ID",
+          description: 'Label for the recommender’s ID field',
           id: 'event.tennis-club-membership.summary.field.recommender.id.label'
         },
         value: {
-          defaultMessage: '{recommender.id}',
-          id: 'event.tennis-club-membership.summary.field.recommender.id',
-          description: 'This is the value for the field'
-        },
-        emptyValueMessage: {
-          defaultMessage: "Recommender's id missing",
-          description: 'shown when the recommender id is missing in summary',
-          id: 'event.tennis-club-membership.summary.field.recommender.id.empty'
+          defaultMessage: 'ID',
+          description: 'Value for the recommender’s ID field',
+          id: 'event.tennis-club-membership.summary.field.recommender.id.value'
         }
       }
     ]
@@ -337,21 +663,6 @@ export const tennisClubMembershipEvent = defineConfig({
       ]
     }
   ],
-  deduplication: [
-    {
-      id: 'STANDARD CHECK',
-      label: {
-        defaultMessage: 'Standard check',
-        description:
-          'This could be shown to the user in a reason for duplicate detected',
-        id: '...'
-      },
-      query: deduplication.or([
-        deduplication.field('requester.phone').strictMatches(),
-        deduplication.field('requester.name').fuzzyMatches()
-      ])
-    }
-  ],
   actions: [
     {
       type: 'DECLARE',
@@ -406,6 +717,17 @@ export const tennisClubMembershipEvent = defineConfig({
         )
       ),
       forms: [TENNIS_CLUB_FORM]
+    },
+    {
+      type: 'PRINT_CERTIFICATE',
+      label: {
+        defaultMessage: 'Print certificate',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'event.tennis-club-membership.action.collect-certificate.label'
+      },
+      allowedWhen: defineConditional(eventHasAction('REGISTER')),
+      forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
     },
     {
       type: 'REQUEST_CORRECTION',
