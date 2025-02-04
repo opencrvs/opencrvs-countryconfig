@@ -356,7 +356,7 @@ export ROTATING_APM_ELASTIC_PASSWORD=`generate_password`
 # Download core compose files to /tmp/
 for compose_file in ${COMPOSE_FILES_DOWNLOADED_FROM_CORE[@]}; do
     echo "Downloading $compose_file from https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/$(basename $compose_file)"
-    curl -o $compose_file https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/$(basename $compose_file)
+    curl --fail -o $compose_file https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/$(basename $compose_file)
 done
 
 validate_environment_variables
