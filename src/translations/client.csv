@@ -2303,6 +2303,188 @@ userSetup.type.healthSystem,The description for health system type,Health System
 userSetup.type.hospital,The description for HOSPITAL type,Hospital,Hôpital
 userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
+v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Correct Record
+v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Correct Record
+v2.actionModal.PrimaryAction,"{action, select, declare{Declare} other{{action}}}",The label for primary action button of action modal,
+v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Cancel
+v2.actionModal.description,The description for action modal,The declarant will be notified of this action and a record of this decision will be recorded,The declarant will be notified of this action and a record of this decision will be recorded
+v2.actionModal.title,"{action, select, declare{Declare} other{{action}}} the member?",The title for action modal,
+v2.buttons.cancel,Cancel button text in the modal,Cancel,Cancel
+v2.buttons.change,The label for the change button,Change,Change
+v2.buttons.continue,Continue Button Text,Continue,Continue
+v2.buttons.exit,Label for Exit button on EventTopBar,EXIT,EXIT
+v2.buttons.exit,The label for the exit button,Exit,Exit
+v2.buttons.print,Print button text,Print,Print
+v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Save & Exit
+v2.changeModal.cancel,The label for cancel button of change modal,Cancel,Cancel
+v2.changeModal.continue,The label for continue button of change modal,Continue,Continue
+v2.changeModal.description,The description for change modal,A record will be created of any changes you make,A record will be created of any changes you make
+v2.changeModal.title,The title for change modal,Edit declaration?,Edit declaration?
+v2.config.application.vsexport,Vital statistics title,Vital statistics,Vital statistics
+v2.constants.PIN,PIN label,PIN,PIN
+v2.constants.address,Label for address,Address,Address
+v2.constants.allEvents,Label for select option All events,All events,All events
+v2.constants.allStatuses,Label for select option All statuses,All statuses,All statuses
+v2.constants.application.title,Application title,Application,Application
+v2.constants.applicationName,Declaration name of CRVS,OpenCRVS,OpenCRVS
+v2.constants.assignRecord,A label for the Assign record -button,Assign record,Assign record
+v2.constants.averageRateOfRegistrations,avg. {amount}%,A label for Average rate of registrations,
+v2.constants.birth,A label from the birth event,Birth,Birth
+v2.constants.births,A label from the births event,Births,Births
+v2.constants.by,Label for By (the person who performed the action),By,By
+v2.constants.certificate.title,Certificate title,Certificate,Certificate
+v2.constants.certificationPaymentTitle,"Payment collected for {event, select, birth{birth} death{death} other{birth}} certificates",Label for certification payment performance reports,
+v2.constants.certified,A label for certified,certified,certified
+v2.constants.collected,The status label for collected,collected,collected
+v2.constants.collectedBy,The collected by sec text,Collected by,Collected by
+v2.constants.comment,Label for rejection comment,Comment,Comment
+v2.constants.countryName,Name of the OpenCRVS implementation country,Farajaland,Farajaland
+v2.constants.customTimePeriod,Label for Custom time period,Custom time period,Custom time period
+v2.constants.dateOfDeclaration,Date of declaration label,Date of declaration,Date of declaration
+v2.constants.death,A label from the death event,Death,Death
+v2.constants.deaths,A label from the deaths event,Deaths,Deaths
+v2.constants.declaration,A label for declaration,declaration,declaration
+v2.constants.declarationCollectedOn,Label for the workflow timestamp when the status is collected,Certificate collected on,Certificate collected on
+v2.constants.declarationFailedOn,Label for the workflow timestamp when the status is failed,Failed to send on,Failed to send on
+v2.constants.declarationRegisteredOn,Label for the workflow timestamp when the status is registered,Declaration registered on,Declaration registered on
+v2.constants.declarationRejectedOn,Label for the workflow timestamp when the status is rejected,Declaration sent for updates on,Declaration sent for updates on
+v2.constants.declarationRequestedCorrectionOn,Label for the workflow timestamp when the status is requested correction,Declaration requested correction on,Declaration requested correction on
+v2.constants.declarationSentForExternalValidationOn,Label for the workflow timestamp when the status is waiting_validation,Declaration sent for external validation on,Declaration sent for external validation on
+v2.constants.declarationStarted,Label for table header column Declaration started,Started,Started
+v2.constants.declarationStartedBy,Label for table header column Started by,Started by,Started by
+v2.constants.declarationStartedOn,Label for the workflow timestamp when the status is draft created,Started on,Started on
+v2.constants.declarationState,Declaration {action} on,A label to describe when the declaration was actioned on,
+v2.constants.declarationSubmittedOn,Label for the workflow timestamp when the status is declaration,Declaration submitted on,Declaration submitted on
+v2.constants.declarationUpdatedOn,Label for the workflow timestamp when the status is draft updated,Updated on,Updated on
+v2.constants.declarationValidatedOn,Label for the workflow timestamp when the status is validated,Declaration reviewed on,Declaration reviewed on
+v2.constants.declarations,Declaration title,Declarations,Declarations
+v2.constants.declarationsCount,Declarations ({totalItems}),A label for declarations count,
+v2.constants.declrationArchivedOn,Label for the workflow timestamp when the status is archived,Application archived on,Application archived on
+v2.constants.dob,Date of birth label,D.o.B.,D.o.B.
+v2.constants.dod,Label for DoD in work queue list item,D.o.D,D.o.D
+v2.constants.downloaded,Label for application download status Downloaded,Downloaded,Downloaded
+v2.constants.downloading,Label for declaration download status Downloading,Downloading...,Downloading...
+v2.constants.duplicateOf,table header for `duplicate of` in record audit,Duplicate of,Duplicate of
+v2.constants.emailAddress,Email label,Email Address,Email Address
+v2.constants.emailBody,Label for email body input,Message,Message
+v2.constants.emailSubject,Label for email subject input,Subject,Subject
+v2.constants.estimatedNumberOfEvents,"Estimated no. of {eventType, select, birth {birth} death {death} other {birth}}s",A label for Estimated number of events,
+v2.constants.estimatedNumberOfRegistartion,A label for estimated no. of registrations,Estimated no. of registrations,Estimated no. of registrations
+v2.constants.estimatedTargetDaysRegistrationTitle,Estimated vs total registered in {registrationTargetDays} days,A label for estimated vs total registered in {registrationTargetDays} days,
+v2.constants.event,Label for Event of event in work queue list item,Event,Event
+v2.constants.eventDate,Label for event date in list item,Date of event,Date of event
+v2.constants.eventType,Label for table header column Event type,Event,Event
+v2.constants.export,Label used for export,Export,Export
+v2.constants.failedToSend,Label for declaration status Failed,Failed to send,Failed to send
+v2.constants.femaleOver18,Label for femaleOver18,Female Over 18,Female Over 18
+v2.constants.femaleUnder18,Label for femaleUnder18,Female Under 18,Female Under 18
+v2.constants.form.title,Form Declaration title,Declaration forms,Declaration forms
+v2.constants.from,Label for text From,From,From
+v2.constants.gender,Gender label,Gender,Gender
+v2.constants.history,History heading,History,History
+v2.constants.id,ID Label,ID,ID
+v2.constants.inReview.status,A label for In Review,In Review,In Review
+v2.constants.incomplete.status,A label for Incomplete,Incomplete,Incomplete
+v2.constants.informant,Informant Label,Informant,Informant
+v2.constants.informantContactNumber,The title of contact number label,Informant contact number,Informant contact number
+v2.constants.integrations,Integration title,Integrations,Integrations
+v2.constants.issuedBy,The issued by sec text,Issued by,Issued by
+v2.constants.label.action,Action Label,Action,Action
+v2.constants.label.date,Date Label,Date,Date
+v2.constants.language,language label,Language,Language
+v2.constants.last12Months,Label for preset date range Last 12 months,Last 12 months,Last 12 months
+v2.constants.last30Days,Label for  preset date range Last 30 days,Last 30 days,Last 30 days
+v2.constants.lastEdited,Label for rejection date in work queue list item,Last edited,Last edited
+v2.constants.lastUpdated,Label for Last updated in list item,Last updated,Last updated
+v2.constants.loadMore,A label for load more,Load more,Load more
+v2.constants.location,Label for location,Location,Location
+v2.constants.maleOver18,Label for maleOver18,Male Over 18,Male Over 18
+v2.constants.maleUnder18,Label for maleUnder18,Male Under 18,Male Under 18
+v2.constants.marriage,A label from the marriage event,Marriage,Marriage
+v2.constants.marriages,A label from the marriages event,Marriages,Marriages
+v2.constants.matchedTo,table header for `Matched to` in record audit,Matched to,Matched to
+v2.constants.month,Label for month,Month,Month
+v2.constants.name,Name label,Name,Name
+v2.constants.noConnection,No Connection hover text,No connection,No connection
+v2.constants.noNameProvided,Label for empty title,No name provided,No name provided
+v2.constants.noResults,Text to display if the search return no results for the current filters,No result,No result
+v2.constants.noResultsOutbox,Text to display if there is no items in outbox,No records require processing,No records require processing
+v2.constants.notificationSent,label for notification sent,Notification sent,Notification sent
+v2.constants.over5Years,Label for registrations over 5 years,Over 5 years,Over 5 years
+v2.constants.password,Password label,Password,Password
+v2.constants.pendingConnection,Label for declaration status Pending Connection,Pending connection,Pending connection
+v2.constants.percentageOfEstimation,A label for percentage of estimate,Percentage of estimate,Percentage of estimate
+v2.constants.performance,Performance title,Performance,Performance
+v2.constants.phoneNumber,Phone label,Phone number,Phone number
+v2.constants.reason,Label for Reason the declaration was rejected,Reason,Reason
+v2.constants.record,Label for header table header Record,Record,Record
+v2.constants.refresh,label for refresh,Refresh,Refresh
+v2.constants.registered,A label for registered,Registered,Registered
+v2.constants.registered.status,A label for registered,Registered,Registered
+v2.constants.registeredAt,Label for comparison row registeredAt type,Registered at,Registered at
+v2.constants.registeredBy,Label for comparison row registeredBy type,Registered by,Registered by
+v2.constants.registeredInTargetd,Registered in {registrationTargetDays} days,A label for Registered in {registrationTargetDays} days,
+v2.constants.registeredWithinTargetd,Registered within\n{registrationTargetDays} days of event,A label for Registered {registrationTargetDays} within  days of event,
+v2.constants.rejected,A label for rejected,rejected,rejected
+v2.constants.rejectedDays,Sent for updates {text},The title of rejected days of declaration,
+v2.constants.relationship,Relationship Label for death,Relationship,Relationship
+v2.constants.requestReason,Label for Reason the declaration was corrected,Reason for request,Reason for request
+v2.constants.requestedCorrection,A label for requested correction,requested correction,requested correction
+v2.constants.requireUpdatesLoading,The text when all rejected declarations are loading,Checking your declarations,Checking your declarations
+v2.constants.requiresUpdates.status,A label for Requires updates,Requires updates,Requires updates
+v2.constants.review,A label from the review button,Review,Review
+v2.constants.role,Role label,Role,Role
+v2.constants.search,The title of the page,Search,Search
+v2.constants.sending,Label for declaration status Submitting,Sending...,Sending...
+v2.constants.sentForApproval,label for sent for approval,Sent for approval,Sent for approval
+v2.constants.sentForReview,label for sent for review,Sent for review,Sent for review
+v2.constants.sentForUpdates,label for sent for updates,Sent for updates,Sent for updates
+v2.constants.sentForUpdatesOn,Label for rejection date in work queue list item,Sent for updates on,Sent for updates on
+v2.constants.sentForValidation,label for sent for validation,Sent for validation,Sent for validation
+v2.constants.sentOn,Label for rejection date in work queue list item,Sent on,Sent on
+v2.constants.showMore,Show next {pageSize},Label for show more link,
+v2.constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content,Skip to main content
+v2.constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content,Skip to main content
+v2.constants.startedAt,Label for Started At in list item,Started,Started
+v2.constants.startedBy,Label for Started by in list item,Started by,Started by
+v2.constants.status,Title for column,Status,Status
+v2.constants.submissionStatus,Label for table header of column Submission status,Submission status,Submission status
+v2.constants.submitted,A label for submitted,submitted,submitted
+v2.constants.systemrole,System Role label,System Role,System Role
+v2.constants.timeFramesTitle,"{event, select, birth{Birth} death{Death} other{Birth}} registered by time period, from date of occurrence",Header for tabel performance timeframs,
+v2.constants.timeInProgress,Label for column Time in progress,Time in progress,Time in progress
+v2.constants.timePeriod,A label for Time period,Time period,Time period
+v2.constants.timeReadyForReview,Label for column Time in ready for review,Time in ready for review,Time in ready for review
+v2.constants.timeReadyToPrint,Label for column Time in ready to print,Time in ready to print,Time in ready to print
+v2.constants.timeRequireUpdates,Label for column Time in require updates,Time in require updates,Time in require updates
+v2.constants.timeWaitingExternalValidation,Label for column Time in external validation BRIS,Time in external validation,Time in external validation
+v2.constants.timeWatingApproval,Label for column Time in waiting for approval,Time in waiting for approval,Time in waiting for approval
+v2.constants.to,Used in sentence,to,to
+v2.constants.toCapitalized,Label for To,To,To
+v2.constants.total,Label for total,Total,Total
+v2.constants.totalFileSizeExceed,Total size of documents exceeds {fileSize}. Please reduce file size of your uploads,Accumulated File size exceed message,
+v2.constants.totalRegistered,A label for Total registered,Total registered,Total registered
+v2.constants.totalRegisteredInTargetDays,Total registered in {registrationTargetDays} days,A label for total registered in {registrationTargetDays} days,
+v2.constants.trackingId,Search menu tracking id type,Tracking ID,Tracking ID
+v2.constants.type,Label for type of event in work queue list item,Type,Type
+v2.constants.update,The title of reject button in list item actions,Update,Update
+v2.constants.user,The name of the user form,User,User
+v2.constants.username,Username,Username,Username
+v2.constants.validated,A label for validated,validated,validated
+v2.constants.viewAll,Label for view all link,View all,View all
+v2.constants.waitingToSend,Label for declaration status Ready to Submit,Waiting to send,Waiting to send
+v2.constants.waitingValidated,A label for waitingValidated,Waiting for validation,Waiting for validation
+v2.constants.week,Label for week,Week,Week
+v2.constants.within1YearTo5Years,Label for registrations within 1 year to 5 years,1 year - 5 years,1 year - 5 years
+v2.constants.withinTargetDays,Within {registrationTargetDays} days,Label for registrations within {registrationTargetDays} days,
+v2.constants.withinTargetDaysTo1Year,{registrationTargetDays} days - 1 year,Label for registrations within {registrationTargetDays} days to 1 year,
+v2.correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent,Another registration agent or field agent
+v2.correction.corrector.identity.instruction,The title for the corrector form,Please verify the identity of the person making this request,Please verify the identity of the person making this request
+v2.correction.corrector.identity.verified,Label for verified option in corrector identity check page,I have verified their identity,I have verified their identity
+v2.correction.corrector.identity.verified.label,The title for the corrector form,@todo,@todo
+v2.correction.corrector.informant,Label for informant option in certificate correction form,Informant,Informant
+v2.correction.corrector.me,Label for registrar option in certificate correction form,Me (Registrar),Me (Registrar)
+v2.correction.corrector.others,Label for someone else option in certificate correction form,Someone else,Someone else
 validate.complete.declaration.action.description,,The informant will receive an with a registration number that they can use to collect the certificate.,"En envoyant pour approbation, vous confirmez que la déclaration est prête à être approuvée."
 validate.complete.declaration.action.title,,Declaration complete,Envoyer pour approbation ou rejeter ?
 validate.declaration.action.modal.description,,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
