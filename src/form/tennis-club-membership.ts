@@ -630,5 +630,20 @@ export const tennisClubMembershipEvent = defineConfig({
       ),
       forms: []
     }
+  ],
+  advancedSearch: [
+    {
+      id: 'RANDOM',
+      title: {
+        defaultMessage: 'Tennis club registration search',
+        description: 'This is what this event is referred as in the system',
+        id: 'event.tennis-club-membership.search'
+      },
+      fields: [
+        {
+          fieldId: 'applicant.dob'
+        }
+      ]
+    }
   ]
 })

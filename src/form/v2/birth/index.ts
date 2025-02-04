@@ -16,6 +16,7 @@ import {
   not
 } from '@opencrvs/toolkit/conditionals'
 import { BIRTH_DECLARE_FORM } from './forms/declare'
+import { advancedSearchBirth } from './advancedSearch'
 
 export const birthEvent = defineConfig({
   id: 'BIRTH',
@@ -63,5 +64,6 @@ export const birthEvent = defineConfig({
       forms: [BIRTH_DECLARE_FORM],
       allowedWhen: defineConditional(not(eventHasAction('DECLARE')))
     }
-  ]
+  ],
+  advancedSearch: advancedSearchBirth
 })
