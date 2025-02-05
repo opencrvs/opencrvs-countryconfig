@@ -4,49 +4,54 @@ exports[`birth configuration is parsed 1`] = `
 {
   "actions": [
     {
-      "allowedWhen": {
-        "not": {
-          "properties": {
-            "$event": {
+      "conditionals": [
+        {
+          "conditional": {
+            "not": {
               "properties": {
-                "actions": {
-                  "contains": {
-                    "not": {
-                      "properties": {
-                        "draft": {
-                          "const": true,
+                "$event": {
+                  "properties": {
+                    "actions": {
+                      "contains": {
+                        "not": {
+                          "properties": {
+                            "draft": {
+                              "const": true,
+                            },
+                          },
                         },
+                        "properties": {
+                          "draft": {
+                            "type": "boolean",
+                          },
+                          "type": {
+                            "const": "DECLARE",
+                          },
+                        },
+                        "required": [
+                          "type",
+                        ],
+                        "type": "object",
                       },
+                      "type": "array",
                     },
-                    "properties": {
-                      "draft": {
-                        "type": "boolean",
-                      },
-                      "type": {
-                        "const": "DECLARE",
-                      },
-                    },
-                    "required": [
-                      "type",
-                    ],
-                    "type": "object",
                   },
-                  "type": "array",
+                  "required": [
+                    "actions",
+                  ],
+                  "type": "object",
                 },
               },
               "required": [
-                "actions",
+                "$event",
               ],
               "type": "object",
             },
+            "type": "object",
           },
-          "required": [
-            "$event",
-          ],
-          "type": "object",
+          "type": "SHOW",
         },
-        "type": "object",
-      },
+      ],
       "forms": [
         {
           "active": true,
@@ -17254,7 +17259,7 @@ exports[`birth configuration is parsed 1`] = `
     },
   ],
   "deduplication": [],
-  "id": "BIRTH",
+  "id": "birth",
   "label": {
     "defaultMessage": "Birth declaration",
     "description": "This is what this event is referred as in the system",
