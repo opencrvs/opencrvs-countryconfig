@@ -100,7 +100,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
         ...appendConditionalsToFields({
           inputFields: [
             {
-              id: 'v2.mother.detailsNotAvailable',
+              id: 'mother.detailsNotAvailable',
               type: 'CHECKBOX',
               required: true,
               label: {
@@ -110,7 +110,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
               }
             },
             {
-              id: 'v2.mother.details.divider',
+              id: 'mother.details.divider',
               type: 'DIVIDER',
               label: emptyMessage
             }
@@ -126,7 +126,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
         }),
 
         {
-          id: 'v2.mother',
+          id: 'mother',
           type: 'TEXT',
           required: true,
           label: {
@@ -190,7 +190,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
         ...appendConditionalsToFields({
           inputFields: [
             {
-              id: 'v2.father.detailsNotAvailable',
+              id: 'father.detailsNotAvailable',
               type: 'CHECKBOX',
               required: true,
               label: {
@@ -200,7 +200,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
               }
             },
             {
-              id: 'v2.father.details.divider',
+              id: 'father.details.divider',
               type: 'DIVIDER',
               label: emptyMessage
             }
