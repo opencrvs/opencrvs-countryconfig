@@ -29,12 +29,12 @@ const UrbanRuralTypes = {
 const urbanRuralMessageDescriptors = {
   URBAN: {
     defaultMessage: 'Urban',
-    id: 'form.field.label.urban',
+    id: 'v2.form.field.label.urban',
     description: 'Label for form field checkbox option Urban'
   },
   RURAL: {
     defaultMessage: 'Rural',
-    id: 'form.field.label.rural',
+    id: 'v2.form.field.label.rural',
     description: 'Label for form field checkbox option Rural'
   }
 } satisfies Record<keyof typeof UrbanRuralTypes, TranslationConfig>
@@ -181,7 +181,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Province',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.province.label`
+        id: `event.birth.action.declare.form.section.person.field.address.province.label`
       },
       options: {
         type: 'ADMIN_STRUCTURE'
@@ -194,7 +194,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'District',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.district.label`
+        id: `event.birth.action.declare.form.section.person.field.address.district.label`
       },
       options: {
         partOf: {
@@ -213,7 +213,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Urban or Rural',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.urbanOrRural.label`
+        id: `event.birth.action.declare.form.section.person.field.address.urbanOrRural.label`
       },
       hideLabel: true
     },
@@ -235,7 +235,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Village',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.village.label`
+        id: `event.birth.action.declare.form.section.person.field.address.village.label`
       },
       conditionals: [
         {

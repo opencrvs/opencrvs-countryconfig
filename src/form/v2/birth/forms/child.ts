@@ -52,17 +52,17 @@ const genderMessageDescriptors = {
   MALE: {
     defaultMessage: 'Male',
     description: 'Label for option male',
-    id: 'form.field.label.sexMale'
+    id: 'v2.form.field.label.sexMale'
   },
   FEMALE: {
     defaultMessage: 'Female',
     description: 'Label for option female',
-    id: 'form.field.label.sexFemale'
+    id: 'v2.form.field.label.sexFemale'
   },
   UNKNOWN: {
     defaultMessage: 'Unknown',
     description: 'Label for option unknown',
-    id: 'form.field.label.sexUnknown'
+    id: 'v2.form.field.label.sexUnknown'
   }
 } satisfies Record<keyof typeof GenderTypes, TranslationConfig>
 
@@ -70,27 +70,27 @@ const typeOfBirthMessageDescriptors = {
   SINGLE: {
     defaultMessage: 'Single',
     description: 'Label for single birth',
-    id: 'form.field.label.birthTypeSingle'
+    id: 'v2.form.field.label.birthTypeSingle'
   },
   TWIN: {
     defaultMessage: 'Twin',
     description: 'Label for twin birth',
-    id: 'form.field.label.birthTypeTwin'
+    id: 'v2.form.field.label.birthTypeTwin'
   },
   TRIPLET: {
     defaultMessage: 'Triplet',
     description: 'Label for triplet birth',
-    id: 'form.field.label.birthTypeTriplet'
+    id: 'v2.form.field.label.birthTypeTriplet'
   },
   QUADRUPLET: {
     defaultMessage: 'Quadruplet',
     description: 'Label for quadruplet birth',
-    id: 'form.field.label.birthTypeQuadruplet'
+    id: 'v2.form.field.label.birthTypeQuadruplet'
   },
   HIGHER_MULTIPLE_DELIVERY: {
     defaultMessage: 'Higher multiple delivery',
     description: 'Label for higher multiple delivery birth',
-    id: 'form.field.label.birthTypeHigherMultipleDelivery'
+    id: 'v2.form.field.label.birthTypeHigherMultipleDelivery'
   }
 } satisfies Record<keyof typeof TypeOfBirth, TranslationConfig>
 
@@ -98,37 +98,37 @@ const attendantAtBirthMessageDescriptors = {
   PHYSICIAN: {
     defaultMessage: 'Physician',
     description: 'Label for physician attendant',
-    id: 'form.field.label.attendantAtBirthPhysician'
+    id: 'v2.form.field.label.attendantAtBirthPhysician'
   },
   NURSE: {
     defaultMessage: 'Nurse',
     description: 'Label for nurse attendant',
-    id: 'form.field.label.attendantAtBirthNurse'
+    id: 'v2.form.field.label.attendantAtBirthNurse'
   },
   MIDWIFE: {
     defaultMessage: 'Midwife',
     description: 'Label for midwife attendant',
-    id: 'form.field.label.attendantAtBirthMidwife'
+    id: 'v2.form.field.label.attendantAtBirthMidwife'
   },
   OTHER_PARAMEDICAL_PERSONNEL: {
     defaultMessage: 'Other paramedical personnel',
     description: 'Label for other paramedical personnel',
-    id: 'form.field.label.attendantAtBirthOtherParamedicalPersonnel'
+    id: 'v2.form.field.label.attendantAtBirthOtherParamedicalPersonnel'
   },
   LAYPERSON: {
     defaultMessage: 'Layperson',
     description: 'Label for layperson attendant',
-    id: 'form.field.label.attendantAtBirthLayperson'
+    id: 'v2.form.field.label.attendantAtBirthLayperson'
   },
   TRADITIONAL_BIRTH_ATTENDANT: {
     defaultMessage: 'Traditional birth attendant',
     description: 'Label for traditional birth attendant',
-    id: 'form.field.label.attendantAtBirthTraditionalBirthAttendant'
+    id: 'v2.form.field.label.attendantAtBirthTraditionalBirthAttendant'
   },
   NONE: {
     defaultMessage: 'None',
     description: 'Label for no attendant',
-    id: 'form.field.label.attendantAtBirthNone'
+    id: 'v2.form.field.label.attendantAtBirthNone'
   }
 } satisfies Record<keyof typeof AttendantAtBirth, TranslationConfig>
 
@@ -136,17 +136,17 @@ const placeOfBirthMessageDescriptors = {
   HEALTH_FACILITY: {
     defaultMessage: 'Health Institution',
     description: 'Select item for Health Institution',
-    id: 'form.field.label.healthInstitution'
+    id: 'v2.form.field.label.healthInstitution'
   },
   PRIVATE_HOME: {
     defaultMessage: 'Residential address',
     description: 'Select item for Private Home',
-    id: 'form.field.label.privateHome'
+    id: 'v2.form.field.label.privateHome'
   },
   OTHER: {
     defaultMessage: 'Other',
     description: 'Select item for Other location',
-    id: 'form.field.label.otherInstitution'
+    id: 'v2.form.field.label.otherInstitution'
   }
 } satisfies Record<keyof typeof PlaceOfBirth, TranslationConfig>
 
@@ -168,46 +168,46 @@ const attendantAtBirthOptions = createSelectOptions(
 )
 
 export const childPage = defineFormPage({
-  id: 'child',
+  id: 'v2.child',
   title: {
     defaultMessage: "Child's details",
     description: 'Form section title for Child',
-    id: 'form.birth.child.title'
+    id: 'v2.form.birth.child.title'
   },
   fields: [
     {
-      id: 'child.firstname',
+      id: 'v2.child.firstname',
       type: 'TEXT',
       required: true,
       label: {
         defaultMessage: 'First name(s)',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.firstname.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.firstname.label'
       }
     },
     {
-      id: 'child.surname',
+      id: 'v2.child.surname',
       type: 'TEXT',
       required: true,
       label: {
         defaultMessage: 'Last name',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.surname.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.surname.label'
       }
     },
     {
-      id: 'child.gender',
+      id: 'v2.child.gender',
       type: 'SELECT',
       required: true,
       label: {
         defaultMessage: 'Sex',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.gender.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.gender.label'
       },
       options: genderOptions
     },
     {
-      id: 'child.dob',
+      id: 'v2.child.dob',
       type: 'DATE',
       required: true,
       validation: [
@@ -215,7 +215,7 @@ export const childPage = defineFormPage({
           message: {
             defaultMessage: 'Please enter a valid date',
             description: 'This is the error message for invalid date',
-            id: 'event.birth.action.declare.form.section.child.field.dob.error'
+            id: 'v2.event.birth.action.declare.form.section.child.field.dob.error'
           },
           validator: field('child.dob').isBeforeNow().apply()
         }
@@ -223,33 +223,33 @@ export const childPage = defineFormPage({
       label: {
         defaultMessage: 'Date of birth',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.dob.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.dob.label'
       }
     },
     {
-      id: 'child.placeOfBirth.divider.start',
+      id: 'v2.child.placeOfBirth.divider.start',
       type: 'DIVIDER',
       label: emptyMessage
     },
     {
-      id: 'child.placeOfBirth',
+      id: 'v2.child.placeOfBirth',
       type: 'SELECT',
       required: true,
       label: {
         defaultMessage: 'Place of delivery',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.placeOfBirth.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.placeOfBirth.label'
       },
       options: placeOfBirthOptions
     },
     {
-      id: 'child.birthLocation',
+      id: 'v2.child.birthLocation',
       type: 'LOCATION',
       required: true,
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.birthLocation.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.birthLocation.label'
       },
       options: {
         type: 'HEALTH_FACILITY'
@@ -287,47 +287,47 @@ export const childPage = defineFormPage({
       ]
     }),
     {
-      id: 'child.placeOfBirth.divider.end',
+      id: 'v2.child.placeOfBirth.divider.end',
       type: 'DIVIDER',
       label: emptyMessage
     },
     {
-      id: 'child.attendantAtBirth',
+      id: 'v2.child.attendantAtBirth',
       type: 'SELECT',
       required: false,
       label: {
         defaultMessage: 'Attendant at birth',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.attendantAtBirth.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label'
       },
       options: attendantAtBirthOptions
     },
     {
-      id: 'child.birthType',
+      id: 'v2.child.birthType',
       type: 'SELECT',
       required: false,
       label: {
         defaultMessage: 'Type of birth',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.birthType.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.birthType.label'
       },
       options: typeOfBirthOptions
     },
     {
-      id: 'child.weightAtBirth',
+      id: 'v2.child.weightAtBirth',
       type: 'TEXT',
       required: false,
       label: {
         defaultMessage: 'Weight at birth',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.child.field.weightAtBirth.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.label'
       },
       options: {
         type: 'number',
         postfix: {
           defaultMessage: 'Kilograms (kg)',
           description: 'This is the postfix for the weight field',
-          id: 'event.birth.action.declare.form.section.child.field.weightAtBirth.postfix'
+          id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.postfix'
         }
       }
     }
