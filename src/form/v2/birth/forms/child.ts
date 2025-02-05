@@ -168,7 +168,7 @@ const attendantAtBirthOptions = createSelectOptions(
 )
 
 export const childPage = defineFormPage({
-  id: 'v2.child',
+  id: 'child',
   title: {
     defaultMessage: "Child's details",
     description: 'Form section title for Child',
@@ -176,7 +176,7 @@ export const childPage = defineFormPage({
   },
   fields: [
     {
-      id: 'v2.child.firstname',
+      id: 'child.firstname',
       type: 'TEXT',
       required: true,
       label: {
@@ -186,7 +186,7 @@ export const childPage = defineFormPage({
       }
     },
     {
-      id: 'v2.child.surname',
+      id: 'child.surname',
       type: 'TEXT',
       required: true,
       label: {
@@ -196,7 +196,7 @@ export const childPage = defineFormPage({
       }
     },
     {
-      id: 'v2.child.gender',
+      id: 'child.gender',
       type: 'SELECT',
       required: true,
       label: {
@@ -207,7 +207,7 @@ export const childPage = defineFormPage({
       options: genderOptions
     },
     {
-      id: 'v2.child.dob',
+      id: 'child.dob',
       type: 'DATE',
       required: true,
       validation: [
@@ -227,12 +227,12 @@ export const childPage = defineFormPage({
       }
     },
     {
-      id: 'v2.child.placeOfBirth.divider.start',
+      id: 'child.placeOfBirth.divider.start',
       type: 'DIVIDER',
       label: emptyMessage
     },
     {
-      id: 'v2.child.placeOfBirth',
+      id: 'child.placeOfBirth',
       type: 'SELECT',
       required: true,
       label: {
@@ -243,7 +243,7 @@ export const childPage = defineFormPage({
       options: placeOfBirthOptions
     },
     {
-      id: 'v2.child.birthLocation',
+      id: 'child.birthLocation',
       type: 'LOCATION',
       required: true,
       label: {
@@ -287,12 +287,12 @@ export const childPage = defineFormPage({
       ]
     }),
     {
-      id: 'v2.child.placeOfBirth.divider.end',
+      id: 'child.placeOfBirth.divider.end',
       type: 'DIVIDER',
       label: emptyMessage
     },
     {
-      id: 'v2.child.attendantAtBirth',
+      id: 'child.attendantAtBirth',
       type: 'SELECT',
       required: false,
       label: {
@@ -303,7 +303,7 @@ export const childPage = defineFormPage({
       options: attendantAtBirthOptions
     },
     {
-      id: 'v2.child.birthType',
+      id: 'child.birthType',
       type: 'SELECT',
       required: false,
       label: {
@@ -314,7 +314,7 @@ export const childPage = defineFormPage({
       options: typeOfBirthOptions
     },
     {
-      id: 'v2.child.weightAtBirth',
+      id: 'child.weightAtBirth',
       type: 'TEXT',
       required: false,
       label: {

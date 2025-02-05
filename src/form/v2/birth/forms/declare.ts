@@ -31,7 +31,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
   },
   active: true,
   version: {
-    id: 'v2.1.0.0',
+    id: '1.0.0',
     label: {
       defaultMessage: 'Version 1',
       id: 'v2.event.birth.action.declare.form.version.1',
@@ -40,7 +40,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
   },
   pages: [
     {
-      id: 'v2.introduction',
+      id: 'introduction',
       title: {
         defaultMessage:
           'Introduce the birth registration process to the informant',
@@ -50,7 +50,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
       fields: [
         {
           type: 'BULLET_LIST',
-          id: 'v2.form.section.information.birth.bulletList',
+          id: 'form.section.information.birth.bulletList',
           label: {
             defaultMessage: 'Birth Information',
             id: 'v2.form.section.information.birth.bulletList.label',
@@ -90,7 +90,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
     childPage,
     informantPage,
     {
-      id: 'v2.mother',
+      id: 'mother',
       title: {
         defaultMessage: "Mother's details",
         description: 'Form section title for mothers details',
@@ -126,7 +126,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
         }),
 
         {
-          id: 'v2.mother.reason',
+          id: 'v2.mother',
           type: 'TEXT',
           required: true,
           label: {
@@ -152,7 +152,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
           inputFields: [
             ...getPersonInputFields(PersonType.mother),
             {
-              id: 'v2.mother.previousBirths',
+              id: 'mother.previousBirths',
               type: 'TEXT',
               required: false,
               label: {
@@ -180,7 +180,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
     },
 
     {
-      id: 'v2.father',
+      id: 'father',
       title: {
         defaultMessage: "Father's details",
         description: 'Form section title for fathers details',
@@ -215,7 +215,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
           ]
         }),
         {
-          id: 'v2.father.reason',
+          id: 'father.reason',
           type: 'TEXT',
           required: true,
           label: {
@@ -256,7 +256,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
       ]
     },
     {
-      id: 'v2.documents',
+      id: 'documents',
       title: {
         defaultMessage: 'Upload supporting documents',
         description: 'Form section title for documents',
@@ -274,7 +274,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
           options: { fontVariant: 'reg16' }
         },
         {
-          id: 'v2.documents.proofOfBirth',
+          id: 'documents.proofOfBirth',
           type: 'FILE',
           required: false,
           label: {
@@ -284,7 +284,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
           }
         },
         {
-          id: 'v2.documents.proofOfMother',
+          id: 'documents.proofOfMother',
           type: 'FILE', // @ToDo File upload with options
           required: false,
           label: {
@@ -295,7 +295,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
         },
 
         {
-          id: 'v2.documents.proofOfFather',
+          id: 'documents.proofOfFather',
           type: 'FILE', // @ToDo File upload with options
           required: false,
           label: {
@@ -306,7 +306,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
         },
 
         {
-          id: 'v2.documents.proofOther',
+          id: 'documents.proofOther',
           type: 'FILE', // @ToDo File upload with options
           required: false,
           label: {

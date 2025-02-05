@@ -2539,9 +2539,9 @@ v2.event.birth.action.declare.form.section.person.field.address.province.label,T
 v2.event.birth.action.declare.form.section.person.field.address.urbanOrRural.label,This is the label for the field,Urban or Rural,Urban or Rural
 v2.event.birth.action.declare.form.section.person.field.address.village.label,This is the label for the field,Village,Village
 v2.event.birth.action.declare.form.section.person.field.addressHelper.label,This is the label for the field,Usual place of residence,Usual place of residence
-v2.event.birth.action.declare.form.section.person.field.age.label,This is the label for the field,Exact date of birth unknown,Exact date of birth unknown
-v2.event.birth.action.declare.form.section.person.field.age.label,This is the label for the field,Age of person,Age of person
+v2.event.birth.action.declare.form.section.person.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Exact date of birth unknown
 v2.event.birth.action.declare.form.section.person.field.age.postfix,This is the postfix for age field,years,years
+v2.event.birth.action.declare.form.section.person.field.age.text.label,This is the label for the field,Age of person,Age of person
 v2.event.birth.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,ID Number
 v2.event.birth.action.declare.form.section.person.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
 v2.event.birth.action.declare.form.section.person.field.dob.label,This is the label for the field,Date of birth,Date of birth

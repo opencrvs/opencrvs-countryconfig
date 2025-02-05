@@ -79,7 +79,7 @@ const birthInformantTypeOptions = createSelectOptions(
 )
 
 export const informantPage = defineFormPage({
-  id: 'v2.informant',
+  id: 'informant',
   title: {
     defaultMessage: "Informant's details",
     description: 'Form section title for informants details',
@@ -87,7 +87,7 @@ export const informantPage = defineFormPage({
   },
   fields: [
     {
-      id: 'v2.informant.relation',
+      id: 'informant.relation',
       type: 'SELECT',
       required: true,
       label: {
@@ -98,7 +98,7 @@ export const informantPage = defineFormPage({
       options: birthInformantTypeOptions
     },
     {
-      id: 'v2.informant.other.relation',
+      id: 'informant.other.relation',
       type: 'TEXT',
       required: true,
       label: {
@@ -142,7 +142,7 @@ export const informantPage = defineFormPage({
       ]
     }),
     {
-      id: 'v2.informant.phoneNo',
+      id: 'informant.phoneNo',
       type: 'TEXT',
       required: false,
       label: {
@@ -152,7 +152,7 @@ export const informantPage = defineFormPage({
       }
     },
     {
-      id: 'v2.informant.email',
+      id: 'informant.email',
       type: 'TEXT',
       required: true,
       label: {
