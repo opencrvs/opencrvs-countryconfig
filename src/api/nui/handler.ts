@@ -14,6 +14,7 @@ import { z } from 'zod'
 import * as Joi from 'joi'
 import { NUI_GENERATOR_URL, NUI_API_KEY } from './constants'
 import { internal } from '@hapi/boom'
+import { isValidLuhn } from '@countryconfig/utils/nui'
 
 if (!NUI_GENERATOR_URL || !NUI_API_KEY) {
   throw new Error('NUI_GENERATOR_URL and NUI_API_KEY must be set')
@@ -51,8 +52,11 @@ const generateNUI = async ({ office }: { office: string }): Promise<string> => {
     const body = await response.json()
 
     const parsed = generateNUIResponseSchema.parse(body)
+    const theNui = parsed.theNuis[0]
 
-    return parsed.theNuis[0]
+    if (!isValidLuhn(theNui)) throw internal('Invalid NUI')
+
+    return theNui
   } catch (err) {
     console.error(err)
     throw internal()
