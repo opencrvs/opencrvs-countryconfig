@@ -160,7 +160,7 @@ export const informantPage = defineFormPage({
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.informant.field.email.label'
       },
-      options: {
+      configuration: {
         type: 'email'
       }
     }

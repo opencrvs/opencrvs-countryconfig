@@ -271,7 +271,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
             description: 'This is the label for the field',
             id: `event.birth.action.declare.form.section.documents.field.helper.label`
           },
-          options: { fontVariant: 'reg16' }
+          configuration: { styles: { fontVariant: 'reg16' } }
         },
         {
           id: 'documents.proofOfBirth',
