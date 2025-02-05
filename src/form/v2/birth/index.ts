@@ -72,7 +72,12 @@ export const birthEvent = defineConfig({
         id: 'event.birth.action.declare.label'
       },
       forms: [BIRTH_DECLARE_FORM],
-      allowedWhen: defineConditional(not(eventHasAction('DECLARE')))
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(not(eventHasAction('DECLARE')))
+        }
+      ]
     }
   ]
 })
