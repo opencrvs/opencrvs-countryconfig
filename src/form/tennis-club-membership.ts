@@ -673,7 +673,12 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'event.tennis-club-membership.action.declare.label'
       },
       forms: [TENNIS_CLUB_FORM],
-      allowedWhen: defineConditional(not(eventHasAction('DECLARE')))
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(not(eventHasAction('DECLARE')))
+        }
+      ]
     },
     {
       type: 'DELETE',
@@ -684,7 +689,12 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'event.tennis-club-membership.action.delete.label'
       },
       forms: [],
-      allowedWhen: defineConditional(not(eventHasAction('DECLARE')))
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(not(eventHasAction('DECLARE')))
+        }
+      ]
     },
     {
       type: 'VALIDATE',
@@ -694,9 +704,14 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.tennis-club-membership.action.validate.label'
       },
-      allowedWhen: defineConditional(
-        and(eventHasAction('DECLARE'), not(eventHasAction('VALIDATE')))
-      ),
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(
+            and(eventHasAction('DECLARE'), not(eventHasAction('VALIDATE')))
+          )
+        }
+      ],
       forms: [TENNIS_CLUB_FORM]
     },
     {
@@ -707,15 +722,20 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.tennis-club-membership.action.register.label'
       },
-      allowedWhen: defineConditional(
-        and(
-          or(
-            eventHasAction('VALIDATE'),
-            and(eventHasAction('DECLARE'), userHasScope('register'))
-          ),
-          not(eventHasAction('REGISTER'))
-        )
-      ),
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(
+            and(
+              or(
+                eventHasAction('VALIDATE'),
+                and(eventHasAction('DECLARE'), userHasScope('register'))
+              ),
+              not(eventHasAction('REGISTER'))
+            )
+          )
+        }
+      ],
       forms: [TENNIS_CLUB_FORM]
     },
     {
@@ -726,7 +746,12 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.tennis-club-membership.action.collect-certificate.label'
       },
-      allowedWhen: defineConditional(eventHasAction('REGISTER')),
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(eventHasAction('REGISTER'))
+        }
+      ],
       forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
     },
     {
@@ -737,7 +762,12 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.tennis-club-membership.action.requestCorrection.label'
       },
-      allowedWhen: defineConditional(and(eventHasAction('REGISTER'))),
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(and(eventHasAction('REGISTER')))
+        }
+      ],
       forms: [TENNIS_CLUB_FORM],
       onboardingForm: [
         {
@@ -944,12 +974,17 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.tennis-club-membership.action.sdf.label'
       },
-      allowedWhen: defineConditional(
-        or(
-          eventHasAction('VALIDATE'),
-          and(eventHasAction('DECLARE'), userHasScope('register'))
-        )
-      ),
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(
+            or(
+              eventHasAction('VALIDATE'),
+              and(eventHasAction('DECLARE'), userHasScope('register'))
+            )
+          )
+        }
+      ],
       forms: []
     }
   ]
