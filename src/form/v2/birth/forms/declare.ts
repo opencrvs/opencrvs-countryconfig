@@ -10,7 +10,12 @@
  */
 
 import { defineForm } from '@opencrvs/toolkit/events'
-import { and, field, or } from '@opencrvs/toolkit/conditionals'
+import {
+  and,
+  defineConditional,
+  field,
+  or
+} from '@opencrvs/toolkit/conditionals'
 import { childPage } from './child'
 import { informantPage, InformantTypes } from './informant'
 import { appendConditionalsToFields, emptyMessage } from '../../utils'
@@ -137,13 +142,15 @@ export const BIRTH_DECLARE_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: or(
-                field('mother.detailsNotAvailable')
-                  .or((field) => field.isUndefined().inArray(['false']))
-                  .apply(),
-                field('informant.relation')
-                  .inArray([InformantTypes.MOTHER])
-                  .apply()
+              conditional: defineConditional(
+                or(
+                  field('mother.detailsNotAvailable')
+                    .or((field) => field.isUndefined().inArray(['false']))
+                    .apply(),
+                  field('informant.relation')
+                    .inArray([InformantTypes.MOTHER])
+                    .apply()
+                )
               )
             }
           ]
@@ -165,13 +172,15 @@ export const BIRTH_DECLARE_FORM = defineForm({
           newConditionals: [
             {
               type: 'HIDE',
-              conditional: and(
-                field('mother.detailsNotAvailable').inArray(['true']).apply(),
-                field('informant.relation')
-                  .or((field) =>
-                    field.isUndefined().not.inArray([InformantTypes.MOTHER])
-                  )
-                  .apply()
+              conditional: defineConditional(
+                and(
+                  field('mother.detailsNotAvailable').inArray(['true']).apply(),
+                  field('informant.relation')
+                    .or((field) =>
+                      field.isUndefined().not.inArray([InformantTypes.MOTHER])
+                    )
+                    .apply()
+                )
               )
             }
           ]
@@ -242,13 +251,15 @@ export const BIRTH_DECLARE_FORM = defineForm({
           newConditionals: [
             {
               type: 'HIDE',
-              conditional: and(
-                field('father.detailsNotAvailable').inArray(['true']).apply(),
-                field('informant.relation')
-                  .or((field) =>
-                    field.isUndefined().not.inArray([InformantTypes.FATHER])
-                  )
-                  .apply()
+              conditional: defineConditional(
+                and(
+                  field('father.detailsNotAvailable').inArray(['true']).apply(),
+                  field('informant.relation')
+                    .or((field) =>
+                      field.isUndefined().not.inArray([InformantTypes.FATHER])
+                    )
+                    .apply()
+                )
               )
             }
           ]
