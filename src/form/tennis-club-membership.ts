@@ -791,14 +791,13 @@ export const tennisClubMembershipEvent = defineConfig({
             {
               id: 'correction.requester.relationship',
               type: 'RADIO_GROUP',
-              options: {},
               label: {
                 id: 'v2.correction.corrector.title',
                 defaultMessage: 'Who is requesting a change to this record?',
                 description: 'The title for the corrector form'
               },
               initialValue: '',
-              optionValues: [
+              options: [
                 {
                   value: 'INFORMANT',
                   label: {
@@ -860,7 +859,6 @@ export const tennisClubMembershipEvent = defineConfig({
             {
               id: 'correction.identity-check.verified',
               type: 'RADIO_GROUP',
-              options: {},
               label: {
                 id: 'correction.corrector.identity.verified.label',
                 defaultMessage: 'Identity verified',
@@ -868,7 +866,7 @@ export const tennisClubMembershipEvent = defineConfig({
               },
               initialValue: '',
               required: true,
-              optionValues: [
+              options: [
                 {
                   value: 'VERIFIED',
                   label: {
@@ -920,10 +918,12 @@ export const tennisClubMembershipEvent = defineConfig({
                 description: 'The title for the corrector form'
               },
               initialValue: '',
-              options: {
-                size: 'NORMAL'
+              configuration: {
+                styles: {
+                  size: 'NORMAL'
+                }
               },
-              optionValues: [
+              options: [
                 {
                   value: 'ATTEST',
                   label: {
