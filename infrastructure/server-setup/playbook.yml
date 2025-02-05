@@ -138,18 +138,12 @@
       tags:
         - decrypt-on-boot
 
+- import_playbook: swarm.yml
+
 - hosts: docker-manager-first
   become: yes
   become_method: sudo
   tasks:
-    - include_tasks:
-        file: tasks/swarm.yml
-        apply:
-          tags:
-            - swarm
-      tags:
-        - swarm
-
     - include_tasks:
         file: tasks/elasticsearch.yml
         apply:
