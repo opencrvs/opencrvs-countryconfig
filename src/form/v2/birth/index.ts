@@ -23,7 +23,7 @@ export const birthEvent = defineConfig({
   label: {
     defaultMessage: 'Birth declaration',
     description: 'This is what this event is referred as in the system',
-    id: 'event.birth.label'
+    id: 'v2.event.birth.label'
   },
   summary: {
     title: {
@@ -31,7 +31,7 @@ export const birthEvent = defineConfig({
       label: {
         defaultMessage: '{child.firstname} {child.surname}',
         description: 'This is the title of the summary',
-        id: 'event.birth.summary.title'
+        id: 'v2.event.birth.summary.title'
       }
     },
     fields: []
@@ -45,7 +45,7 @@ export const birthEvent = defineConfig({
           label: {
             defaultMessage: '{child.surname} {child.firstname}',
             description: 'Label for name in all workqueue',
-            id: 'event.birth.workqueue.all.name.label'
+            id: 'v2.event.birth.workqueue.all.name.label'
           }
         }
       ],
@@ -59,7 +59,7 @@ export const birthEvent = defineConfig({
         defaultMessage: 'Declare',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.birth.action.declare.label'
+        id: 'v2.event.birth.action.declare.label'
       },
       forms: [BIRTH_DECLARE_FORM],
       conditionals: [

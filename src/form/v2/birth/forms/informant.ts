@@ -34,42 +34,42 @@ const informantMessageDescriptors = {
   MOTHER: {
     defaultMessage: 'Mother',
     description: 'Label for option mother',
-    id: 'form.field.label.informantRelation.mother'
+    id: 'v2.form.field.label.informantRelation.mother'
   },
   FATHER: {
     defaultMessage: 'Father',
     description: 'Label for option father',
-    id: 'form.field.label.informantRelation.father'
+    id: 'v2.form.field.label.informantRelation.father'
   },
   GRANDFATHER: {
     defaultMessage: 'Grandfather',
     description: 'Label for option Grandfather',
-    id: 'form.field.label.informantRelation.grandfather'
+    id: 'v2.form.field.label.informantRelation.grandfather'
   },
   GRANDMOTHER: {
     defaultMessage: 'Grandmother',
     description: 'Label for option Grandmother',
-    id: 'form.field.label.informantRelation.grandmother'
+    id: 'v2.form.field.label.informantRelation.grandmother'
   },
   BROTHER: {
     defaultMessage: 'Brother',
     description: 'Label for option brother',
-    id: 'form.field.label.informantRelation.brother'
+    id: 'v2.form.field.label.informantRelation.brother'
   },
   SISTER: {
     defaultMessage: 'Sister',
     description: 'Label for option Sister',
-    id: 'form.field.label.informantRelation.sister'
+    id: 'v2.form.field.label.informantRelation.sister'
   },
   LEGAL_GUARDIAN: {
     defaultMessage: 'Legal guardian',
     description: 'Label for option Legal Guardian',
-    id: 'form.field.label.informantRelation.legalGuardian'
+    id: 'v2.form.field.label.informantRelation.legalGuardian'
   },
   OTHER: {
     defaultMessage: 'Someone else',
     description: 'Label for option someone else',
-    id: 'form.field.label.informantRelation.others'
+    id: 'v2.form.field.label.informantRelation.others'
   }
 } satisfies Record<keyof typeof InformantTypes, TranslationConfig>
 
@@ -83,7 +83,7 @@ export const informantPage = defineFormPage({
   title: {
     defaultMessage: "Informant's details",
     description: 'Form section title for informants details',
-    id: 'form.section.informant.title'
+    id: 'v2.form.section.informant.title'
   },
   fields: [
     {
@@ -93,7 +93,7 @@ export const informantPage = defineFormPage({
       label: {
         defaultMessage: 'Relationship to child',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.informant.field.relation.label'
+        id: 'v2.event.birth.action.declare.form.section.informant.field.relation.label'
       },
       options: birthInformantTypeOptions
     },
@@ -104,7 +104,7 @@ export const informantPage = defineFormPage({
       label: {
         defaultMessage: 'Relationship to child',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.informant.field.other.relation.label'
+        id: 'v2.event.birth.action.declare.form.section.informant.field.other.relation.label'
       },
       conditionals: [
         {
@@ -123,7 +123,7 @@ export const informantPage = defineFormPage({
         ...getAddressFields(PersonType.informant),
 
         {
-          id: 'informant.address.divider.end',
+          id: 'v2.informant.address.divider.end',
           type: 'DIVIDER',
           label: emptyMessage
         }
@@ -148,7 +148,7 @@ export const informantPage = defineFormPage({
       label: {
         defaultMessage: 'Phone number',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.informant.field.phoneNo.label'
+        id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.label'
       }
     },
     {
@@ -158,7 +158,7 @@ export const informantPage = defineFormPage({
       label: {
         defaultMessage: 'Email',
         description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.informant.field.email.label'
+        id: 'v2.event.birth.action.declare.form.section.informant.field.email.label'
       },
       options: {
         type: 'email'
