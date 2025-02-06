@@ -797,19 +797,6 @@ error.title,Error title,Oops!,Oups !
 error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !
 error.userListError,Error message when user list loads fails,Failed to load users,Impossible de charger les utilisateurs
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
-event.history.timeFormat,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a",
-event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
-event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Prénom du recommandeur
-event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,ID d'adhésion du recommandeur
-event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Nom de famille du recommandeur
-event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Qui recommande le demandeur?
-event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth,Date de naissance du demandeur
-event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name,Prénom du demandeur
-event.tennis-club-membership.action.declare.form.section.who.field.surname.label,This is the label for the field,Applicant's surname,Nom de famille du demandeur
-event.tennis-club-membership.action.declare.form.section.who.title,This is the title of the section,Who is applying for the membership?,Qui postule pour l'adhésion?
-event.tennis-club-membership.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
-event.tennis-club-membership.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Send an application,Envoyer une demande
-event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
 exitModal.cancel,The label for cancel button in exit modal,Cancel,Annuler
 exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?,Quitter sans enregistrer les modifications?
 exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Êtes-vous sûr de vouloir quitter sans enregistrer?
@@ -2302,6 +2289,418 @@ userSetup.type.healthSystem,The description for health system type,Health System
 userSetup.type.hospital,The description for HOSPITAL type,Hospital,Hôpital
 userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
+v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
+v2.actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, declare{Declare} other{{action}}}"
+v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
+v2.actionModal.description,The description for action modal,The declarant will be notified of this action and a record of this decision will be recorded,Le déclarant sera informé de cette action et un enregistrement de cette décision sera conservé
+v2.actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} the member?"
+v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
+v2.buttons.change,The label for the change button,Change,Changer
+v2.buttons.confirm,Confirm button,Confirm,Confirm
+v2.buttons.continue,Continue Button Text,Continue,Continuer
+v2.buttons.exit,Label for Exit button on EventTopBar,EXIT,QUITTER
+v2.buttons.print,Print button text,Print,Imprimer
+v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
+v2.changeModal.cancel,The label for cancel button of change modal,Cancel,Annuler
+v2.changeModal.continue,The label for continue button of change modal,Continue,Continuer
+v2.changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour toute modification que vous apporterez
+v2.changeModal.title,The title for change modal,Edit declaration?,Modifier la déclaration ?
+v2.config.application.vsexport,Vital statistics title,Vital statistics,Statistiques de l'état civil
+v2.constants.PIN,PIN label,PIN,PIN
+v2.constants.address,Label for address,Address,Adresse
+v2.constants.allEvents,Label for select option All events,All events,Tous les événements
+v2.constants.allStatuses,Label for select option All statuses,All statuses,Tous les statuts
+v2.constants.application.title,Application title,Application,Application
+v2.constants.applicationName,Declaration name of CRVS,OpenCRVS,OpenCRVS
+v2.constants.assignRecord,A label for the Assign record -button,Assign record,Assigner l'enregistrement
+v2.constants.averageRateOfRegistrations,A label for Average rate of registrations,avg. {amount}%,avg. {amount}%
+v2.constants.birth,A label from the birth event,Birth,Naissance
+v2.constants.births,A label from the births event,Births,Naissances
+v2.constants.by,Label for By (the person who performed the action),By,Par
+v2.constants.certificate.title,Certificate title,Certificate,Certificat
+v2.constants.certificationPaymentTitle,Label for certification payment performance reports,"Payment collected for {event, select, birth{birth} death{death} other{birth}} certificates","Payment collected for {event, select, birth{birth} death{death} other{birth}} certificates"
+v2.constants.certified,A label for certified,certified,certifié
+v2.constants.collected,The status label for collected,collected,collecté
+v2.constants.collectedBy,The collected by sec text,Collected by,Collecté par
+v2.constants.comment,Label for rejection comment,Comment,Commentaire
+v2.constants.countryName,Name of the OpenCRVS implementation country,Farajaland,Farajaland
+v2.constants.customTimePeriod,Label for Custom time period,Custom time period,Période personnalisée
+v2.constants.dateOfDeclaration,Date of declaration label,Date of declaration,Date de déclaration
+v2.constants.death,A label from the death event,Death,Décès
+v2.constants.deaths,A label from the deaths event,Deaths,Décès
+v2.constants.declaration,A label for declaration,declaration,déclaration
+v2.constants.declarationCollectedOn,Label for the workflow timestamp when the status is collected,Certificate collected on,Certificat collecté le
+v2.constants.declarationFailedOn,Label for the workflow timestamp when the status is failed,Failed to send on,Échec de l'envoi le
+v2.constants.declarationRegisteredOn,Label for the workflow timestamp when the status is registered,Declaration registered on,Déclaration enregistrée le
+v2.constants.declarationRejectedOn,Label for the workflow timestamp when the status is rejected,Declaration sent for updates on,Déclaration envoyée pour mise à jour le
+v2.constants.declarationRequestedCorrectionOn,Label for the workflow timestamp when the status is requested correction,Declaration requested correction on,Déclaration demandant une correction le
+v2.constants.declarationSentForExternalValidationOn,Label for the workflow timestamp when the status is waiting_validation,Declaration sent for external validation on,Déclaration envoyée pour validation externe le
+v2.constants.declarationStarted,Label for table header column Declaration started,Started,Commencé
+v2.constants.declarationStartedBy,Label for table header column Started by,Started by,Commencé par
+v2.constants.declarationStartedOn,Label for the workflow timestamp when the status is draft created,Started on,Commencé le
+v2.constants.declarationState,A label to describe when the declaration was actioned on,Declaration {action} on,Declaration {action} on
+v2.constants.declarationSubmittedOn,Label for the workflow timestamp when the status is declaration,Declaration submitted on,Déclaration soumise le
+v2.constants.declarationUpdatedOn,Label for the workflow timestamp when the status is draft updated,Updated on,Mis à jour le
+v2.constants.declarationValidatedOn,Label for the workflow timestamp when the status is validated,Declaration reviewed on,Déclaration revue le
+v2.constants.declarations,Declaration title,Declarations,Déclarations
+v2.constants.declarationsCount,A label for declarations count,Declarations ({totalItems}),Declarations ({totalItems})
+v2.constants.declrationArchivedOn,Label for the workflow timestamp when the status is archived,Application archived on,Demande archivée le
+v2.constants.dob,Date of birth label,D.o.B.,Date de naissance
+v2.constants.dod,Label for DoD in work queue list item,D.o.D,Date de décès
+v2.constants.downloaded,Label for application download status Downloaded,Downloaded,Téléchargé
+v2.constants.downloading,Label for declaration download status Downloading,Downloading...,Téléchargement en cours...
+v2.constants.duplicateOf,table header for `duplicate of` in record audit,Duplicate of,Duplicata de
+v2.constants.emailAddress,Email label,Email Address,Adresse e-mail
+v2.constants.emailBody,Label for email body input,Message,Message
+v2.constants.emailSubject,Label for email subject input,Subject,Sujet
+v2.constants.estimatedNumberOfEvents,A label for Estimated number of events,"Estimated no. of {eventType, select, birth {birth} death {death} other {birth}}s","Estimated no. of {eventType, select, birth {birth} death {death} other {birth}}s"
+v2.constants.estimatedNumberOfRegistartion,A label for estimated no. of registrations,Estimated no. of registrations,Nombre estimé d'enregistrements
+v2.constants.estimatedTargetDaysRegistrationTitle,A label for estimated vs total registered in {registrationTargetDays} days,Estimated vs total registered in {registrationTargetDays} days,Estimated vs total registered in {registrationTargetDays} days
+v2.constants.event,Label for Event of event in work queue list item,Event,Événement
+v2.constants.eventDate,Label for event date in list item,Date of event,Date de l'événement
+v2.constants.eventType,Label for table header column Event type,Event,Événement
+v2.constants.export,Label used for export,Export,Exporter
+v2.constants.failedToSend,Label for declaration status Failed,Failed to send,Échec de l'envoi
+v2.constants.femaleOver18,Label for femaleOver18,Female Over 18,Femme de plus de 18 ans
+v2.constants.femaleUnder18,Label for femaleUnder18,Female Under 18,Femme de moins de 18 ans
+v2.constants.form.title,Form Declaration title,Declaration forms,Formulaires de déclaration
+v2.constants.from,Label for text From,From,De
+v2.constants.gender,Gender label,Gender,Sexe
+v2.constants.history,History heading,History,Historique
+v2.constants.id,ID Label,ID,ID
+v2.constants.inReview.status,A label for In Review,In Review,En revue
+v2.constants.incomplete.status,A label for Incomplete,Incomplete,Incomplet
+v2.constants.informant,Informant Label,Informant,Informant
+v2.constants.informantContactNumber,The title of contact number label,Informant contact number,Numéro de contact de l'informant
+v2.constants.integrations,Integration title,Integrations,Intégrations
+v2.constants.issuedBy,The issued by sec text,Issued by,Émis par
+v2.constants.label.action,Action Label,Action,Action
+v2.constants.label.date,Date Label,Date,Date
+v2.constants.language,language label,Language,Langue
+v2.constants.last12Months,Label for preset date range Last 12 months,Last 12 months,12 derniers mois
+v2.constants.last30Days,Label for  preset date range Last 30 days,Last 30 days,30 derniers jours
+v2.constants.lastEdited,Label for rejection date in work queue list item,Last edited,Dernière modification
+v2.constants.lastUpdated,Label for Last updated in list item,Last updated,Dernière mise à jour
+v2.constants.loadMore,A label for load more,Load more,Charger plus
+v2.constants.location,Label for location,Location,Localisation
+v2.constants.maleOver18,Label for maleOver18,Male Over 18,Homme de plus de 18 ans
+v2.constants.maleUnder18,Label for maleUnder18,Male Under 18,Homme de moins de 18 ans
+v2.constants.marriage,A label from the marriage event,Marriage,Mariage
+v2.constants.marriages,A label from the marriages event,Marriages,Mariages
+v2.constants.matchedTo,table header for `Matched to` in record audit,Matched to,Correspond à
+v2.constants.month,Label for month,Month,Mois
+v2.constants.name,Name label,Name,Nom
+v2.constants.noConnection,No Connection hover text,No connection,Pas de connexion
+v2.constants.noNameProvided,Label for empty title,No name provided,Aucun nom fourni
+v2.constants.noResults,Text to display if the search return no results for the current filters,No result,Aucun résultat
+v2.constants.noResultsOutbox,Text to display if there is no items in outbox,No records require processing,Aucun enregistrement à traiter
+v2.constants.notificationSent,label for notification sent,Notification sent,Notification envoyée
+v2.constants.over5Years,Label for registrations over 5 years,Over 5 years,Plus de 5 ans
+v2.constants.password,Password label,Password,Mot de passe
+v2.constants.pendingConnection,Label for declaration status Pending Connection,Pending connection,Connexion en attente
+v2.constants.percentageOfEstimation,A label for percentage of estimate,Percentage of estimate,Pourcentage de l'estimation
+v2.constants.performance,Performance title,Performance,Performance
+v2.constants.phoneNumber,Phone label,Phone number,Numéro de téléphone
+v2.constants.reason,Label for Reason the declaration was rejected,Reason,Raison
+v2.constants.record,Label for header table header Record,Record,Enregistrement
+v2.constants.refresh,label for refresh,Refresh,Actualiser
+v2.constants.registered,A label for registered,Registered,Enregistré
+v2.constants.registered.status,A label for registered,Registered,Enregistré
+v2.constants.registeredAt,Label for comparison row registeredAt type,Registered at,Enregistré à
+v2.constants.registeredBy,Label for comparison row registeredBy type,Registered by,Enregistré par
+v2.constants.registeredInTargetd,A label for Registered in {registrationTargetDays} days,Registered in {registrationTargetDays} days,Enregistré dans les {registrationTargetDays} jours
+v2.constants.registeredWithinTargetd,A label for Registered {registrationTargetDays} within days of event,Registered within\n{registrationTargetDays} days of event,Enregistré dans les\n{registrationTargetDays} jours de l'événement
+v2.constants.rejected,A label for rejected,rejected,rejeté
+v2.constants.rejectedDays,The title of rejected days of declaration,Sent for updates {text},Envoyé pour mises à jour {text}
+v2.constants.relationship,Relationship Label for death,Relationship,Relation
+v2.constants.requestReason,Label for Reason the declaration was corrected,Reason for request,Raison de la demande
+v2.constants.requestedCorrection,A label for requested correction,requested correction,correction demandée
+v2.constants.requireUpdatesLoading,The text when all rejected declarations are loading,Checking your declarations,Vérification de vos déclarations
+v2.constants.requiresUpdates.status,A label for Requires updates,Requires updates,Nécessite des mises à jour
+v2.constants.review,A label from the review button,Review,Revue
+v2.constants.role,Role label,Role,Rôle
+v2.constants.search,The title of the page,Search,Rechercher
+v2.constants.sending,Label for declaration status Submitting,Sending...,Envoi en cours...
+v2.constants.sentForApproval,label for sent for approval,Sent for approval,Envoyé pour approbation
+v2.constants.sentForReview,label for sent for review,Sent for review,Envoyé pour revue
+v2.constants.sentForUpdates,label for sent for updates,Sent for updates,Envoyé pour mises à jour
+v2.constants.sentForUpdatesOn,Label for rejection date in work queue list item,Sent for updates on,Envoyé pour mises à jour le
+v2.constants.sentForValidation,label for sent for validation,Sent for validation,Envoyé pour validation
+v2.constants.sentOn,Label for rejection date in work queue list item,Sent on,Envoyé le
+v2.constants.showMore,Label for show more link,Show next {pageSize},Afficher les {pageSize} suivants
+v2.constants.skipToMainContent,Label for a keyboard accessibility link which skips to the main content,Skip to main content,Passer au contenu principal
+v2.constants.startedAt,Label for Started At in list item,Started,Commencé
+v2.constants.startedBy,Label for Started by in list item,Started by,Commencé par
+v2.constants.status,Title for column,Status,Statut
+v2.constants.submissionStatus,Label for table header of column Submission status,Submission status,Statut de soumission
+v2.constants.submitted,A label for submitted,submitted,soumis
+v2.constants.systemrole,System Role label,System Role,Rôle système
+v2.constants.timeFramesTitle,Header for tabel performance timeframs,"{event, select, birth{Birth} death{Death} other{Birth}} registered by time period, from date of occurrence","{event, select, birth{Birth} death{Death} other{Birth}} registered by time period, from date of occurrence"
+v2.constants.timeInProgress,Label for column Time in progress,Time in progress,Temps en cours
+v2.constants.timePeriod,A label for Time period,Time period,Période
+v2.constants.timeReadyForReview,Label for column Time in ready for review,Time in ready for review,Temps en attente de revue
+v2.constants.timeReadyToPrint,Label for column Time in ready to print,Time in ready to print,Temps en attente d'impression
+v2.constants.timeRequireUpdates,Label for column Time in require updates,Time in require updates,Temps en attente de mises à jour
+v2.constants.timeWaitingExternalValidation,Label for column Time in external validation BRIS,Time in external validation,Temps en attente de validation externe
+v2.constants.timeWatingApproval,Label for column Time in waiting for approval,Time in waiting for approval,Temps en attente d'approbation
+v2.constants.to,Used in sentence,to,à
+v2.constants.toCapitalized,Label for To,To,À
+v2.constants.total,Label for total,Total,Total
+v2.constants.totalFileSizeExceed,Accumulated File size exceed message,Total size of documents exceeds {fileSize}. Please reduce file size of your uploads,La taille totale des documents dépasse {fileSize}. Veuillez réduire la taille des fichiers de vos téléchargements
+v2.constants.totalRegistered,A label for Total registered,Total registered,Total enregistré
+v2.constants.totalRegisteredInTargetDays,A label for total registered in {registrationTargetDays} days,Total registered in {registrationTargetDays} days,Total enregistré dans les {registrationTargetDays} jours
+v2.constants.trackingId,Search menu tracking id type,Tracking ID,ID de suivi
+v2.constants.type,Label for type of event in work queue list item,Type,Type
+v2.constants.update,The title of reject button in list item actions,Update,Mettre à jour
+v2.constants.user,The name of the user form,User,Utilisateur
+v2.constants.username,Username,Username,Nom d'utilisateur
+v2.constants.validated,A label for validated,validated,validé
+v2.constants.viewAll,Label for view all link,View all,Voir tout
+v2.constants.waitingToSend,Label for declaration status Ready to Submit,Waiting to send,En attente d'envoi
+v2.constants.waitingValidated,A label for waitingValidated,Waiting for validation,En attente de validation
+v2.constants.week,Label for week,Week,Semaine
+v2.constants.within1YearTo5Years,Label for registrations within 1 year to 5 years,1 year - 5 years,1 an - 5 ans
+v2.constants.withinTargetDays,Label for registrations within {registrationTargetDays} days,Within {registrationTargetDays} days,Dans les {registrationTargetDays} jours
+v2.constants.withinTargetDaysTo1Year,Label for registrations within {registrationTargetDays} days to 1 year,{registrationTargetDays} days - 1 year,{registrationTargetDays} jours - 1 an
+v2.correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent,Another registration agent or field agent
+v2.correction.corrector.identity.instruction,The title for the corrector form,Please verify the identity of the person making this request,Please verify the identity of the person making this request
+v2.correction.corrector.identity.verified,Label for verified option in corrector identity check page,I have verified their identity,I have verified their identity
+v2.correction.corrector.identity.verified.label,The title for the corrector form,@todo,@todo
+v2.correction.corrector.informant,Label for informant option in certificate correction form,Informant,Informant
+v2.correction.corrector.me,Label for registrar option in certificate correction form,Me (Registrar),Me (Registrar)
+v2.correction.corrector.others,Label for someone else option in certificate correction form,Someone else,Someone else
+v2.correction.corrector.paragraph.title,The title for the corrector form,"For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.","For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided."
+v2.correction.corrector.title,The title for the corrector form,Who is requesting a change to this record?,Who is requesting a change to this record?
+v2.correction.reason.title,The title for the corrector form,Reason for correction?,Reason for correction?
+v2.correction.requester.relationshop.intro.label,The title for the corrector form,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.
+v2.error.required,This is the error message for required fields,Required for registration,Required for registration
+v2.error.search,The error message shown when a search query fails,An error occurred while searching,An error occurred while searching
+v2.event.action.declare.form.section.person.field.address.country.label,This is the label for the field,Country,Country
+v2.event.action.declare.form.section.person.field.address.number.label,This is the label for the field,Number,Number
+v2.event.action.declare.form.section.person.field.address.other.addressLine1.label,This is the label for the field,Address Line 1,Address Line 1
+v2.event.action.declare.form.section.person.field.address.other.addressLine2.label,This is the label for the field,Address Line 2,Address Line 2
+v2.event.action.declare.form.section.person.field.address.other.addressLine3.label,This is the label for the field,Address Line 3,Address Line 3
+v2.event.action.declare.form.section.person.field.address.other.district.label,This is the label for the field,District,District
+v2.event.action.declare.form.section.person.field.address.other.state.label,This is the label for the field,State,State
+v2.event.action.declare.form.section.person.field.address.other.town.label,This is the label for the field,City / Town,City / Town
+v2.event.action.declare.form.section.person.field.address.other.zipCode.label,This is the label for the field,Postcode / Zip,Postcode / Zip
+v2.event.action.declare.form.section.person.field.address.residentialArea.label,This is the label for the field,Residential Area,Residential Area
+v2.event.action.declare.form.section.person.field.address.street.label,This is the label for the field,Street,Street
+v2.event.action.declare.form.section.person.field.address.town.label,This is the label for the field,Town,Town
+v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Postcode / Zip
+v2.event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
+v2.event.birth.action.declare.form.review.title,Title of the form to show in review page,Birth declaration for {firstname} {surname},Birth declaration for {firstname} {surname}
+v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Attendant at birth
+v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Health Institution,Health Institution
+v2.event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type of birth
+v2.event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
+v2.event.birth.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Date of birth
+v2.event.birth.action.declare.form.section.child.field.firstname.label,This is the label for the field,First name(s),First name(s)
+v2.event.birth.action.declare.form.section.child.field.gender.label,This is the label for the field,Sex,Sex
+v2.event.birth.action.declare.form.section.child.field.placeOfBirth.label,This is the label for the field,Place of delivery,Place of delivery
+v2.event.birth.action.declare.form.section.child.field.surname.label,This is the label for the field,Last name,Last name
+v2.event.birth.action.declare.form.section.child.field.weightAtBirth.label,This is the label for the field,Weight at birth,Weight at birth
+v2.event.birth.action.declare.form.section.child.field.weightAtBirth.postfix,This is the postfix for the weight field,Kilograms (kg),Kilograms (kg)
+v2.event.birth.action.declare.form.section.documents.field.helper.label,This is the label for the field,The following documents are required,The following documents are required
+v2.event.birth.action.declare.form.section.documents.field.proofOfBirth.label,This is the label for the field,Proof of birth,Proof of birth
+v2.event.birth.action.declare.form.section.documents.field.proofOfFather.label,This is the label for the field,Proof of father's ID,Proof of father's ID
+v2.event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's ID,Proof of mother's ID
+v2.event.birth.action.declare.form.section.documents.field.proofOther.label,This is the label for the field,Other,Other
+v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label,This is the label for the field,Same as mother's usual place of residence?,Same as mother's usual place of residence?
+v2.event.birth.action.declare.form.section.father.field.detailsNotAvailable.label,This is the label for the field,Father's details are not available,Father's details are not available
+v2.event.birth.action.declare.form.section.father.field.reason.label,This is the label for the field,Reason,Reason
+v2.event.birth.action.declare.form.section.informant.field.email.label,This is the label for the field,Email,Email
+v2.event.birth.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to child,Relationship to child
+v2.event.birth.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Phone number
+v2.event.birth.action.declare.form.section.informant.field.relation.label,This is the label for the field,Relationship to child,Relationship to child
+v2.event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label,This is the label for the field,Mother's details are not available,Mother's details are not available
+v2.event.birth.action.declare.form.section.mother.field.previousBirths.label,This is the label for the field,No. of previous births,No. of previous births
+v2.event.birth.action.declare.form.section.mother.field.reason.label,This is the label for the field,Reason,Reason
+v2.event.birth.action.declare.form.section.person.field.address.district.label,This is the label for the field,District,District
+v2.event.birth.action.declare.form.section.person.field.address.province.label,This is the label for the field,Province,Province
+v2.event.birth.action.declare.form.section.person.field.address.urbanOrRural.label,This is the label for the field,Urban or Rural,Urban or Rural
+v2.event.birth.action.declare.form.section.person.field.address.village.label,This is the label for the field,Village,Village
+v2.event.birth.action.declare.form.section.person.field.addressHelper.label,This is the label for the field,Usual place of residence,Usual place of residence
+v2.event.birth.action.declare.form.section.person.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,Exact date of birth unknown
+v2.event.birth.action.declare.form.section.person.field.age.postfix,This is the postfix for age field,years,years
+v2.event.birth.action.declare.form.section.person.field.age.text.label,This is the label for the field,Age of person,Age of person
+v2.event.birth.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,ID Number
+v2.event.birth.action.declare.form.section.person.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
+v2.event.birth.action.declare.form.section.person.field.dob.label,This is the label for the field,Date of birth,Date of birth
+v2.event.birth.action.declare.form.section.person.field.educationalAttainment.label,This is the label for the field,Level of education,Level of education
+v2.event.birth.action.declare.form.section.person.field.firstname.label,This is the label for the field,First name(s),First name(s)
+v2.event.birth.action.declare.form.section.person.field.idType.label,This is the label for the field,Type of ID,Type of ID
+v2.event.birth.action.declare.form.section.person.field.maritalStatus.label,This is the label for the field,Marital Status,Marital Status
+v2.event.birth.action.declare.form.section.person.field.nationality.label,This is the label for the field,Nationality,Nationality
+v2.event.birth.action.declare.form.section.person.field.nid.label,This is the label for the field,ID Number,ID Number
+v2.event.birth.action.declare.form.section.person.field.occupation.label,This is the label for the field,Occupation,Occupation
+v2.event.birth.action.declare.form.section.person.field.passport.label,This is the label for the field,ID Number,ID Number
+v2.event.birth.action.declare.form.section.person.field.surname.label,This is the label for the field,Last name,Last name
+v2.event.birth.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
+v2.event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
+v2.event.birth.label,This is what this event is referred as in the system,Birth declaration,Birth declaration
+v2.event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
+v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
+v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Select Certificate Template,Select Certificate Template
+v2.event.history.timeFormat,Time format for timestamps in event history,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
+v2.event.tennis-club-membership.action.certificate.form.label,This is what this form is referred as in the system,Tennis club membership certificate collector,Tennis club membership certificate collector
+v2.event.tennis-club-membership.action.certificate.form.section.requester.informant.label,This is the label for the field,Print and issue Informant,Print and issue Informant
+v2.event.tennis-club-membership.action.certificate.form.section.requester.label,This is the label for the field,Requester,Requester
+v2.event.tennis-club-membership.action.certificate.form.section.requester.other.label,This is the label for the field,Print and issue someone else,Print and issue someone else
+v2.event.tennis-club-membership.action.certificate.form.section.requester.printInAdvance.label,This is the label for the field,Print in advance,Print in advance
+v2.event.tennis-club-membership.action.certificate.form.section.who.title,This is the title of the section,Print certified copy,Print certified copy
+v2.event.tennis-club-membership.action.certificate.form.version.1,This is the first version of the form,Version 1,Version 1
+v2.event.tennis-club-membership.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Print certificate
+v2.event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Tennis club membership application
+v2.event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Recommender's first name
+v2.event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,Recommender's membership ID
+v2.event.tennis-club-membership.action.declare.form.section.recommender.field.none.label,This is the label for the field,No recommender,No recommender
+v2.event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Recommender's surname
+v2.event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Who is recommending the applicant?
+v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
+v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth,Applicant's date of birth
+v2.event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name,Applicant's first name
+v2.event.tennis-club-membership.action.declare.form.section.who.field.image.label,This is the label for the field,Applicant's profile picture,Applicant's profile picture
+v2.event.tennis-club-membership.action.declare.form.section.who.field.surname.label,This is the label for the field,Applicant's surname,Applicant's surname
+v2.event.tennis-club-membership.action.declare.form.section.who.title,This is the title of the section,Who is applying for the membership?,Who is applying for the membership?
+v2.event.tennis-club-membership.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
+v2.event.tennis-club-membership.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Send an application,Send an application
+v2.event.tennis-club-membership.action.delete.label,This is shown as the action name anywhere the user can trigger the action from,Delete draft,Delete draft
+v2.event.tennis-club-membership.action.form.section.alienNumberDetails.label,Field for entering Alien Number details,Alien Number Details,Alien Number Details
+v2.event.tennis-club-membership.action.form.section.drivingLicenseDetails.label,Field for entering Driving License details,Driving License Details,Driving License Details
+v2.event.tennis-club-membership.action.form.section.firstName.label,This is the label for the first name field,First Name,First Name
+v2.event.tennis-club-membership.action.form.section.idType.alienNumber.label,Option for selecting Alien Number as the ID type,Alien Number,Alien Number
+v2.event.tennis-club-membership.action.form.section.idType.drivingLicense.label,Option for selecting Driving License as the ID type,Driving License,Driving License
+v2.event.tennis-club-membership.action.form.section.idType.label,This is the label for selecting the type of ID,Select Type of ID,Select Type of ID
+v2.event.tennis-club-membership.action.form.section.idType.noId.label,Option for selecting No ID as the ID type,No ID,No ID
+v2.event.tennis-club-membership.action.form.section.idType.other.label,Option for selecting Other as the ID type,Other,Other
+v2.event.tennis-club-membership.action.form.section.idType.passport.label,Option for selecting Passport as the ID type,Passport,Passport
+v2.event.tennis-club-membership.action.form.section.idType.refugeeNumber.label,Option for selecting Refugee Number as the ID type,Refugee Number,Refugee Number
+v2.event.tennis-club-membership.action.form.section.idTypeOther.label,Field for entering ID type if Other is selected,Other ID Type (if applicable),Other ID Type (if applicable)
+v2.event.tennis-club-membership.action.form.section.lastName.label,This is the label for the last name field,Last Name,Last Name
+v2.event.tennis-club-membership.action.form.section.passportDetails.label,Field for entering Passport details,Passport Details,Passport Details
+v2.event.tennis-club-membership.action.form.section.refugeeNumberDetails.label,Field for entering Refugee Number details,Refugee Number Details,Refugee Number Details
+v2.event.tennis-club-membership.action.form.section.relationshipToMember.label,This is the label for the relationship to member field,Relationship to Member,Relationship to Member
+v2.event.tennis-club-membership.action.form.section.signedAffidavit.label,This is the label for uploading a signed affidavit,Signed Affidavit (Optional),Signed Affidavit (Optional)
+v2.event.tennis-club-membership.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Register
+v2.event.tennis-club-membership.action.requestCorrection.form.section.corrector,This is the title of the section,Correction requester,Correction requester
+v2.event.tennis-club-membership.action.requestCorrection.form.section.verify,This is the title of the section,Verify their identity,Verify their identity
+v2.event.tennis-club-membership.action.requestCorrection.label,This is shown as the action name anywhere the user can trigger the action from,Request correction,Request correction
+v2.event.tennis-club-membership.action.sdf.label,This is shown as the action name anywhere the user can trigger the action from,My custom action,My custom action
+v2.event.tennis-club-membership.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Validate
+v2.event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Tennis club membership application
+v2.event.tennis-club-membership.summary.field.applicant.firstname.empty,Shown when the applicant's first name is missing in summary,Applicant's first name missing,Applicant's first name missing
+v2.event.tennis-club-membership.summary.field.applicant.firstname.label,Label for the applicant's first name field,Applicant's First Name,Applicant's First Name
+v2.event.tennis-club-membership.summary.field.applicant.firstname.value,Value for the applicant's first name field,First Name,First Name
+v2.event.tennis-club-membership.summary.field.applicant.surname.empty,Shown when the surname is missing in summary,Applicant's surname missing,Applicant's surname missing
+v2.event.tennis-club-membership.summary.field.applicant.surname.label,Label for the applicant's surname field,Applicant's Surname,Applicant's Surname
+v2.event.tennis-club-membership.summary.field.applicant.surname.value,Value for the applicant's surname field,Surname,Surname
+v2.event.tennis-club-membership.summary.field.firstname.label,Label for the given field on form.,First name,First name
+v2.event.tennis-club-membership.summary.field.recommender.firstname.empty,Shown when the recommender first name is missing in summary,Recommender's first name missing,Recommender's first name missing
+v2.event.tennis-club-membership.summary.field.recommender.firstname.label,Label for the recommender's first name field,Recommender's First Name,Recommender's First Name
+v2.event.tennis-club-membership.summary.field.recommender.firstname.value,Value for the recommender's first name field,First Name,First Name
+v2.event.tennis-club-membership.summary.field.recommender.id.empty,Shown when the recommender id is missing in summary,Recommender's id missing,Recommender's id missing
+v2.event.tennis-club-membership.summary.field.recommender.id.label,Label for the recommender's ID field,Recommender's ID,Recommender's ID
+v2.event.tennis-club-membership.summary.field.recommender.id.value,Value for the recommender's ID field,ID,ID
+v2.event.tennis-club-membership.summary.field.recommender.surname.empty,Shown when the recommender surname is missing in summary,Recommender's surname missing,Recommender's surname missing
+v2.event.tennis-club-membership.summary.field.recommender.surname.label,Label for the recommender's surname field,Recommender's Surname,Recommender's Surname
+v2.event.tennis-club-membership.summary.field.recommender.surname.value,Value for the recommender's surname field,Surname,Surname
+v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}","{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}"
+v2.exitModal.cancel, Modal cancel button,Cancel,Cancel
+v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Exit without saving changes?
+v2.exitModal.exitWithoutSavingDescription, exitmodal without saving  description,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?
+v2.form.birth.child.title,Form section title for Child,Child's details,Child's details
+v2.form.field.label.No,Label for form field radio option No,No,No
+v2.form.field.label.Yes,Label for form field radio option Yes,Yes,Yes
+v2.form.field.label.attendantAtBirthLayperson,Label for layperson attendant,Layperson,Layperson
+v2.form.field.label.attendantAtBirthMidwife,Label for midwife attendant,Midwife,Midwife
+v2.form.field.label.attendantAtBirthNone,Label for no attendant,None,None
+v2.form.field.label.attendantAtBirthNurse,Label for nurse attendant,Nurse,Nurse
+v2.form.field.label.attendantAtBirthOtherParamedicalPersonnel,Label for other paramedical personnel,Other paramedical personnel,Other paramedical personnel
+v2.form.field.label.attendantAtBirthPhysician,Label for physician attendant,Physician,Physician
+v2.form.field.label.attendantAtBirthTraditionalBirthAttendant,Label for traditional birth attendant,Traditional birth attendant,Traditional birth attendant
+v2.form.field.label.birthTypeHigherMultipleDelivery,Label for higher multiple delivery birth,Higher multiple delivery,Higher multiple delivery
+v2.form.field.label.birthTypeQuadruplet,Label for quadruplet birth,Quadruplet,Quadruplet
+v2.form.field.label.birthTypeSingle,Label for single birth,Single,Single
+v2.form.field.label.birthTypeTriplet,Label for triplet birth,Triplet,Triplet
+v2.form.field.label.birthTypeTwin,Label for twin birth,Twin,Twin
+v2.form.field.label.educationAttainmentISCED1,Option for form field: ISCED1 education,Primary,Primary
+v2.form.field.label.educationAttainmentISCED4,Option for form field: ISCED4 education,Secondary,Secondary
+v2.form.field.label.educationAttainmentISCED5,Option for form field: ISCED5 education,Tertiary,Tertiary
+v2.form.field.label.educationAttainmentNone,Option for form field: no education,No schooling,No schooling
+v2.form.field.label.healthInstitution,Select item for Health Institution,Health Institution,Health Institution
+v2.form.field.label.iDTypeBRN,Option for form field: Type of ID,Birth Registration Number,Birth Registration Number
+v2.form.field.label.iDTypeNationalID,Option for form field: Type of ID,National ID,National ID
+v2.form.field.label.iDTypeNone,Option for form field: Type of ID,None,None
+v2.form.field.label.iDTypePassport,Option for form field: Type of ID,Passport,Passport
+v2.form.field.label.informantRelation.brother,Label for option brother,Brother,Brother
+v2.form.field.label.informantRelation.father,Label for option father,Father,Father
+v2.form.field.label.informantRelation.grandfather,Label for option Grandfather,Grandfather,Grandfather
+v2.form.field.label.informantRelation.grandmother,Label for option Grandmother,Grandmother,Grandmother
+v2.form.field.label.informantRelation.legalGuardian,Label for option Legal Guardian,Legal guardian,Legal guardian
+v2.form.field.label.informantRelation.mother,Label for option mother,Mother,Mother
+v2.form.field.label.informantRelation.others,Label for option someone else,Someone else,Someone else
+v2.form.field.label.informantRelation.sister,Label for option Sister,Sister,Sister
+v2.form.field.label.maritalStatusDivorced,Option for form field: Marital status,Divorced,Divorced
+v2.form.field.label.maritalStatusMarried,Option for form field: Marital status,Married,Married
+v2.form.field.label.maritalStatusNotStated,Option for form field: Marital status,Not stated,Not stated
+v2.form.field.label.maritalStatusSeparated,Option for form field: Marital status,Separated,Separated
+v2.form.field.label.maritalStatusSingle,Option for form field: Marital status,Single,Single
+v2.form.field.label.maritalStatusWidowed,Option for form field: Marital status,Widowed,Widowed
+v2.form.field.label.otherInstitution,Select item for Other location,Other,Other
+v2.form.field.label.privateHome,Select item for Private Home,Residential address,Residential address
+v2.form.field.label.rural,Label for form field checkbox option Rural,Rural,Rural
+v2.form.field.label.sexFemale,Label for option female,Female,Female
+v2.form.field.label.sexMale,Label for option male,Male,Male
+v2.form.field.label.sexUnknown,Label for option unknown,Unknown,Unknown
+v2.form.field.label.urban,Label for form field checkbox option Urban,Urban,Urban
+v2.form.section.documents.title,Form section title for documents,Upload supporting documents,Upload supporting documents
+v2.form.section.father.title,Form section title for fathers details,Father's details,Father's details
+v2.form.section.informant.title,Form section title for informants details,Informant's details,Informant's details
+v2.form.section.information.birth.bullet1,Form information for birth,I am going to help you make a declaration of birth.,I am going to help you make a declaration of birth.
+v2.form.section.information.birth.bullet2,Form information for birth,As the legal Informant it is important that all the information provided by you is accurate.,As the legal Informant it is important that all the information provided by you is accurate.
+v2.form.section.information.birth.bullet3,Form information for birth,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.
+v2.form.section.information.birth.bullet4,Form information for birth,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.","Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits."
+v2.form.section.information.birth.bulletList.label,Label for the birth information bullet list,Birth Information,Birth Information
+v2.form.section.mother.title,Form section title for mothers details,Mother's details,Mother's details
+v2.messages.emptyString,Empty string,,
+v2.navigation.CREATED,In progress label in navigation,In progress,In progress
+v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Ready for review
+v2.navigation.REGISTERED,Ready to print label in navigation,Ready to print,Ready to print
+v2.print.certificate.button.confirmPrint,The text for print button,"Yes, print certificate","Yes, print certificate"
+v2.print.certificate.button.makeCorrection,The label for correction button of print action,"No, make correction","No, make correction"
+v2.print.certificate.review.modal.body.print,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.
+v2.print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing and issuing.,A Pdf of the certificate will open in a new tab for printing and issuing.
+v2.print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print and issue certificate?,Print and issue certificate?
+v2.print.certificate.review.printModalTitle,Print certificate modal title text,Print certificate?,Print certificate?
+v2.printAction.description,The description for print action,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.
+v2.printAction.title,The title for print action,Print certificate,Print certificate
+v2.regHome.issued,Label for workqueue tooltip,Empty message,Empty message
+v2.register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant,Introduce the birth registration process to the informant
+v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,"Are you certain you want to delete this draft declaration form? Please note, this action can't be undone.","Are you certain you want to delete this draft declaration form? Please note, this action can't be undone."
+v2.register.form.modal.title.deleteDeclarationConfirm,Title for delete declaration confirmation modal,Delete draft?,Delete draft?
+v2.register.selectInformant.newBirthRegistration,The title that appears for new birth registrations,New birth declaration,New birth declaration
+v2.register.selectInformant.newDeathRegistration,The title that appears for new death registrations,New death declaration,New death declaration
+v2.register.selectInformant.newMarriageRegistration,The title that appears for new marriage registrations,New marriage declaration,New marriage declaration
+v2.register.selectVitalEvent.errorMessage,Error Message to show when no event is being selected,Please select the type of event,Please select the type of event
+v2.register.selectVitalEvent.registerNewEventHeading,The section heading on the page,What type of event do you want to declare?,What type of event do you want to declare?
+v2.register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,New declaration
+v2.registerAction.Declare,The label for declare button of register action,Register,Register
+v2.registerAction.description,The description for register action,"By clicking register, you confirm that the information entered is correct and the member can be registered.","By clicking register, you confirm that the information entered is correct and the member can be registered."
+v2.registerAction.title,The title for register action,Register member,Register member
+v2.rejectModal.archive,The label for archive button of reject modal,Archive,Archive
+v2.rejectModal.cancel,The label for cancel button of reject modal,Cancel,Cancel
+v2.rejectModal.description,The description for reject modal,Please describe the updates required to this record for follow up action.,Please describe the updates required to this record for follow up action.
+v2.rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate,Mark as a duplicate
+v2.rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update,Send For Update
+v2.rejectModal.title,The title for reject modal,Reason for rejection?,Reason for rejection?
+v2.reviewAction.Declare,The label for declare button of review action,Declare,Declare
+v2.reviewAction.description,The description for review action,"By clicking declare, you confirm that the information entered is correct and the member can be declared.","By clicking declare, you confirm that the information entered is correct and the member can be declared."
+v2.reviewAction.reject,The label for reject button of review action,Reject,Reject
+v2.reviewAction.title,The title for review action,Declare member,Declare member
+v2.wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,No records in progress
+v2.wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,No records ready for review
+v2.wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,No records ready to print
 validate.complete.declaration.action.description,,The informant will receive an with a registration number that they can use to collect the certificate.,"En envoyant pour approbation, vous confirmez que la déclaration est prête à être approuvée."
 validate.complete.declaration.action.title,,Declaration complete,Envoyer pour approbation ou rejeter ?
 validate.declaration.action.modal.description,,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
