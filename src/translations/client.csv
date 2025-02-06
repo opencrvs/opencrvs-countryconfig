@@ -1017,6 +1017,7 @@ form.field.label.iDTypeOther,,Other,Autre
 form.field.label.iDTypeOtherLabel,,Other type of ID,Autre type de carte d'identité
 form.field.label.iDTypePassport,,Passport,Passeport
 form.field.label.iDTypeRefugeeNumber,,Refugee Number,Numéro de réfugié
+form.field.label.idReader,,ID verification,Vérification de l'identité
 form.field.label.imageUpload.uploadedList,,Uploaded:,Téléchargé :
 form.field.label.informant,Informant Label,Informant,Informateur
 form.field.label.informantAthorityToApplyProof,,Proof of informant's authority to apply,Preuve de l'autorité de l'informateur pour faire la demande
@@ -1215,6 +1216,7 @@ form.field.nidVerificationOngoing,Label for indicating offline status for the us
 form.field.nidVerified,,Authenticated,Authentifié
 form.field.previewGroups.primaryAddress,,Usual place of residence,Adresse résidentielle
 form.field.previewGroups.secondaryAddress,,Secondary address,Adresse secondaire
+form.field.qr.validation.error,Error message for QR code validation,This QR code is not recognised.,Ce code QR n'est pas reconnu.
 form.field.select.placeholder,,Select,Sélectionnez
 form.field.showLabel,Button to show section,Show,Afficher
 form.field.tooltip.tooltipNationalID,,The National ID can only be numeric and must be 10 digits long,Il s'agit d'une info-bulle pour guider l'utilisateur dans la saisie de l'identifiant national.
@@ -2367,10 +2369,24 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
-views.idReader.label.eSignet,E-signet button label,E-Signet,E-Signet
+views.idReader.label.eSignet,E-signet button label,Authenticate with e-Signet,S'authentifier avec e-Signet
 views.idReader.label.manualInput,Label that shows below the divider on the id reader component,Complete fields below,Complétez les champs ci-dessous
 views.idReader.label.or,Label that shows on the divider,Or,Ou
-views.qrReader.button,Button to scan QR code,Scan QR code,Scan QR code
+views.idVerification.banner.actions.reset,Action to reset ID,Reset,Réinitialiser
+views.idVerification.banner.actions.revoke,Action to revoke ID,Revoke,Révoquer
+views.idVerification.banner.authenticated.description,Description for authenticated ID,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.","Cette identité a été authentifiée avec succès avec le système d'identification national de Farajaland. Pour apporter des modifications, veuillez d'abord supprimer l'authentification."
+views.idVerification.banner.authenticated.resetConfirmation.description,Description for reset confirmation of authenticated ID,"By clicking ‘Continue,’ you’ll remove ID Authenticated status and unlock the fields for editing.","En cliquant sur « Continuer », vous supprimerez le statut d'ID authentifié et déverrouillerez les champs pour l'édition."
+views.idVerification.banner.authenticated.resetConfirmation.title,Title for reset confirmation of authenticated ID,Revoke authenticated ID?,Révoquer l'ID authentifié ?
+views.idVerification.banner.authenticated.title,Title for authenticated ID,ID Authenticated,ID Authentifié
+views.idVerification.banner.failed.description,Description for failed ID verification,The identity data does not match an entry in Farajaland’s National ID System,Les données d'identité ne correspondent pas à une entrée du système national d'identification du Farajaland.
+views.idVerification.banner.failed.resetConfirmation.description,Description for reset confirmation of failed ID,"By clicking ‘Continue,’ you’ll clear all information to it’s default state.","En cliquant sur « Continuer », vous réinitialiserez toutes les informations à leur état par défaut."
+views.idVerification.banner.failed.resetConfirmation.title,Title for reset confirmation of failed ID,Reset information?,Réinitialiser les informations ?
+views.idVerification.banner.failed.title,Title for failed ID verification,ID Verification Failed,Échec de la vérification de l'ID
+views.idVerification.banner.verified.description,Description for verified ID,"This identity data has been successfully verified with the Farajaland’s National ID System. Please note that their identity has not been authenticated using the individuals biometrics. To make edits, please remove the verification first.","Ces données d'identité ont été vérifiées avec succès avec le système d'identification national de Farajaland. Veuillez noter que leur identité n'a pas été authentifiée à l'aide des données biométriques des individus. Pour apporter des modifications, veuillez d'abord supprimer la vérification."
+views.idVerification.banner.verified.resetConfirmation.description,Description for reset confirmation of verified ID,"By clicking ‘Continue,’ you’ll remove ID Verified status and unlock the fields for editing.","En cliquant sur « Continuer », vous supprimerez le statut d'ID vérifié et déverrouillerez les champs pour l'édition."
+views.idVerification.banner.verified.resetConfirmation.title,Title for reset confirmation of verified ID,Revoke valid ID?,Révoquer l'ID valide ?
+views.idVerification.banner.verified.title,Title for verified ID,ID Verified,ID Vérifié
+views.qrReader.button,Button to scan QR code,Scan ID QR code,Scanner le code QR de l'ID
 views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialog,Place the Notifier's ID card in front of the camera.,Place the Notifier's ID card in front of the camera.
 views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.,Ensure your camera is clean and functional.
 views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.,Hold the device steadily 6-12 inches away from the QR code.

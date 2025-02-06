@@ -1035,6 +1035,8 @@ services:
       - LOCALE=en
       - ESIGNET_USERINFO_URL=${ESIGNET_USERINFO_URL:-}
       - OIDP_CLIENT_PRIVATE_KEY=${OIDP_CLIENT_PRIVATE_KEY:-}
+      - ESIGNET_TOKEN_URL=${ESIGNET_TOKEN_URL:-}
+      - OIDP_JWT_AUD_CLAIM=${OIDP_JWT_AUD_CLAIM:-}
     deploy:
       replicas: 1
       labels:
@@ -1064,7 +1066,7 @@ services:
     image: ghcr.io/opencrvs/mosip-mock:${MOSIP_API_VERSION}
     environment:
       - NODE_ENV=production
-      - OPENCRVS_MOSIP_SERVER_URL=https://mosip-api.{{hostname}}/webhooks/mosip
+      - OPENCRVS_MOSIP_API_URL=https://mosip-api.{{hostname}}/webhooks/mosip
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS:-}
       - ALERT_EMAIL=${ALERT_EMAIL:-}
       - SMTP_HOST=${SMTP_HOST:-}

@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { Event, ISerializedForm, SerializedFormField } from '../types/types'
+import { Event, ISerializedForm } from '../types/types'
 import { formMessageDescriptors } from '../common/messages'
 import { informantType } from './required-fields'
 import {
@@ -76,23 +76,16 @@ import {
 } from './required-sections'
 import { certificateHandlebars } from './certificate-handlebars'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/mapping-utils'
-import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import {
+  getCommonSectionMapping,
+  getCustomFieldMapping
+} from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
 import { getIDNumberFields, getIDType } from '../custom-fields'
-import {
-  esignet,
-  esignetCallback,
-  idReader,
-  idVerificationFields,
-  qr
-} from '@opencrvs/mosip'
 import { getGenderCustom } from './custom-fields'
-import {
-  ESIGNET_TOKEN_URL,
-  MOSIP_API_USERINFO_URL,
-  OPENID_PROVIDER_CLAIMS,
-  OPENID_PROVIDER_CLIENT_ID
-} from '@countryconfig/constants'
+import { idReaderFields, getInitialValueFromIDReader } from '@opencrvs/mosip'
+import { esignetConfig, qrCodeConfig } from '../common/id-reader-configurations'
+
 // import { createCustomFieldExample } from '../custom-fields'
 
 // ======================= FORM CONFIGURATION =======================
@@ -233,46 +226,25 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
-            idReader(
+            ...idReaderFields(
               'birth',
               'informant',
-              informantFirstNameConditionals
-                .concat(hideIfInformantMotherOrFather)
-                .concat({
-                  action: 'hide',
-                  expression: '!!$form?.verified'
-                }),
-              [
-                qr(),
-                esignet(
-                  ESIGNET_TOKEN_URL,
-                  OPENID_PROVIDER_CLIENT_ID,
-                  OPENID_PROVIDER_CLAIMS,
-                  'esignet',
-                  'esignetCallback'
-                )
-              ]
-            ) as SerializedFormField,
-            esignetCallback({
-              fieldName: 'esignetCallback',
-              mosipAPIUserInfoUrl: MOSIP_API_USERINFO_URL,
-              openIdProviderClientId: OPENID_PROVIDER_CLIENT_ID
-            }) as SerializedFormField,
-            ...(idVerificationFields(
-              'birth',
-              'informant'
-            ) as SerializedFormField[]),
+              qrCodeConfig,
+              esignetConfig,
+              getCustomFieldMapping(
+                `birth.informant.informant-view-group.verified`
+              ),
+              informantFirstNameConditionals.concat(
+                hideIfInformantMotherOrFather
+              )
+            ),
             getFirstNameField(
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(
                 hideIfInformantMotherOrFather
               ),
               certificateHandlebars.informantFirstName,
-              {
-                dependsOn: ['idReader', 'esignetCallback'],
-                expression:
-                  '$form?.idReader?.firstName || $form?.esignetCallback?.data?.firstName || ""'
-              }
+              getInitialValueFromIDReader('firstName')
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
@@ -280,17 +252,14 @@ export const birthForm: ISerializedForm = {
                 hideIfInformantMotherOrFather
               ),
               certificateHandlebars.informantFamilyName,
-              {
-                dependsOn: ['idReader', 'esignetCallback'],
-                expression:
-                  '$form?.idReader?.familyName || $form?.esignetCallback?.data?.familyName || ""'
-              }
+              getInitialValueFromIDReader('familyName')
             ), // Required field.
-            getGenderCustom('birth', 'informant', [], {
-              dependsOn: ['idReader', 'esignetCallback'],
-              expression:
-                '$form?.idReader?.gender || $form?.esignetCallback?.data?.gender || ""'
-            }),
+            getGenderCustom(
+              'birth',
+              'informant',
+              [],
+              getInitialValueFromIDReader('gender')
+            ), // Required field.
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
@@ -307,11 +276,7 @@ export const birthForm: ISerializedForm = {
                 }
               ],
               certificateHandlebars.informantBirthDate,
-              {
-                dependsOn: ['idReader', 'esignetCallback'],
-                expression:
-                  '$form?.idReader?.birthDate || $form?.esignetCallback?.data?.birthDate || ""'
-              }
+              getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
             getAgeOfIndividualInYears(
@@ -370,21 +335,32 @@ export const birthForm: ISerializedForm = {
               mothersDetailsExistConditionals
             ),
             getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            ...idReaderFields(
+              'birth',
+              'mother',
+              qrCodeConfig,
+              esignetConfig,
+              getCustomFieldMapping(`birth.mother.mother-view-group.verified`),
+              detailsExist
+            ),
             getFirstNameField(
               'motherNameInEnglish',
               motherFirstNameConditionals,
-              certificateHandlebars.motherFirstName
+              certificateHandlebars.motherFirstName,
+              getInitialValueFromIDReader('firstName')
             ), // Required field.
             getFamilyNameField(
               'motherNameInEnglish',
               motherFamilyNameConditionals,
-              certificateHandlebars.motherFamilyName
+              certificateHandlebars.motherFamilyName,
+              getInitialValueFromIDReader('familyName')
             ), // Required field.
             getBirthDate(
               'motherBirthDate',
               mothersBirthDateConditionals,
               parentsBirthDateValidators,
-              certificateHandlebars.motherBirthDate
+              certificateHandlebars.motherBirthDate,
+              getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(detailsExistConditional),
             getAgeOfIndividualInYears(
@@ -449,21 +425,32 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            ...idReaderFields(
+              'birth',
+              'father',
+              qrCodeConfig,
+              esignetConfig,
+              getCustomFieldMapping(`birth.father.father-view-group.verified`),
+              detailsExist
+            ),
             getFirstNameField(
               'fatherNameInEnglish',
               fatherFirstNameConditionals,
-              certificateHandlebars.fatherFirstName
+              certificateHandlebars.fatherFirstName,
+              getInitialValueFromIDReader('firstName')
             ), // Required field.
             getFamilyNameField(
               'fatherNameInEnglish',
               fatherFamilyNameConditionals,
-              certificateHandlebars.fatherFamilyName
+              certificateHandlebars.fatherFamilyName,
+              getInitialValueFromIDReader('familyName')
             ), // Required field.
             getBirthDate(
               'fatherBirthDate',
               fathersBirthDateConditionals,
               parentsBirthDateValidators,
-              certificateHandlebars.fatherBirthDate
+              certificateHandlebars.fatherBirthDate,
+              getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(detailsExistConditional),
             getAgeOfIndividualInYears(
