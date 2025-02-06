@@ -131,7 +131,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
         }),
 
         {
-          id: 'mother',
+          id: 'mother.reason',
           type: 'TEXT',
           required: true,
           label: {
