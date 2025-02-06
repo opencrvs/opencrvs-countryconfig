@@ -2297,6 +2297,7 @@ v2.actionModal.description,The description for action modal,The declarant will b
 v2.actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} the member?"
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
 v2.buttons.change,The label for the change button,Change,Changer
+v2.buttons.confirm,Confirm button,Confirm,Confirm
 v2.buttons.continue,Continue Button Text,Continue,Continuer
 v2.buttons.exit,Label for Exit button on EventTopBar,EXIT,QUITTER
 v2.buttons.print,Print button text,Print,Imprimer
@@ -2605,6 +2606,10 @@ v2.event.tennis-club-membership.summary.field.recommender.id.value,Value for the
 v2.event.tennis-club-membership.summary.field.recommender.surname.empty,Shown when the recommender surname is missing in summary,Recommender's surname missing,Recommender's surname missing
 v2.event.tennis-club-membership.summary.field.recommender.surname.label,Label for the recommender's surname field,Recommender's Surname,Recommender's Surname
 v2.event.tennis-club-membership.summary.field.recommender.surname.value,Value for the recommender's surname field,Surname,Surname
+v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}","{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}"
+v2.exitModal.cancel, Modal cancel button,Cancel,Cancel
+v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Exit without saving changes?
+v2.exitModal.exitWithoutSavingDescription, exitmodal without saving  description,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?
 v2.form.birth.child.title,Form section title for Child,Child's details,Child's details
 v2.form.field.label.No,Label for form field radio option No,No,No
 v2.form.field.label.Yes,Label for form field radio option Yes,Yes,Yes
