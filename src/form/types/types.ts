@@ -43,7 +43,8 @@ export type Validation = (
 export enum Event {
   Birth = 'birth',
   Death = 'death',
-  Marriage = 'marriage'
+  Marriage = 'marriage',
+  TENNIS_CLUB_MEMBERSHIP = 'tennis-club-membership'
 }
 
 export type ValidationInitializer = (...value: any[]) => Validation
@@ -644,8 +645,8 @@ type FunctionParamsToDescriptor<T, Descriptor> =
   T extends Array<any>
     ? { [K in keyof T]: FunctionParamsToDescriptor<T[K], Descriptor> }
     : T extends IFormFieldQueryMapFunction | IFormFieldMutationMapFunction // It's a query transformation function - return a query transformation descriptor
-    ? Descriptor
-    : T // It's a none of the above - return self
+      ? Descriptor
+      : T // It's a none of the above - return self
 
 export interface IStaticFieldType {
   kind: 'static'
@@ -947,3 +948,5 @@ export type AllowedAddressConfigurations = {
 }
 
 export type AdministrativeLevel = 1 | 2 | 3 | 4 | 5
+
+export const moi = 'asd'

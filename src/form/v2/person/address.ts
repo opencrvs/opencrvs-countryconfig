@@ -29,12 +29,12 @@ const UrbanRuralTypes = {
 const urbanRuralMessageDescriptors = {
   URBAN: {
     defaultMessage: 'Urban',
-    id: 'form.field.label.urban',
+    id: 'v2.form.field.label.urban',
     description: 'Label for form field checkbox option Urban'
   },
   RURAL: {
     defaultMessage: 'Rural',
-    id: 'form.field.label.rural',
+    id: 'v2.form.field.label.rural',
     description: 'Label for form field checkbox option Rural'
   }
 } satisfies Record<keyof typeof UrbanRuralTypes, TranslationConfig>
@@ -55,7 +55,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'State',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.other.state.label`
+        id: `v2.event.action.declare.form.section.person.field.address.other.state.label`
       }
     },
     {
@@ -65,7 +65,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'District',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.other.district.label`
+        id: `v2.event.action.declare.form.section.person.field.address.other.district.label`
       }
     },
     {
@@ -75,7 +75,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'City / Town',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.other.town.label`
+        id: `v2.event.action.declare.form.section.person.field.address.other.town.label`
       }
     },
     {
@@ -85,7 +85,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Address Line 1',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.other.addressLine1.label`
+        id: `v2.event.action.declare.form.section.person.field.address.other.addressLine1.label`
       }
     },
     {
@@ -95,7 +95,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Address Line 2',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.other.addressLine2.label`
+        id: `v2.event.action.declare.form.section.person.field.address.other.addressLine2.label`
       }
     },
     {
@@ -105,7 +105,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Address Line 3',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.other.addressLine3.label`
+        id: `v2.event.action.declare.form.section.person.field.address.other.addressLine3.label`
       }
     },
     {
@@ -115,7 +115,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Postcode / Zip',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.other.zipCode.label`
+        id: `v2.event.action.declare.form.section.person.field.address.other.zipCode.label`
       }
     }
   ]
@@ -128,7 +128,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Town',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.town.label`
+        id: `v2.event.action.declare.form.section.person.field.address.town.label`
       }
     },
 
@@ -139,7 +139,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Residential Area',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.residentialArea.label`
+        id: `v2.event.action.declare.form.section.person.field.address.residentialArea.label`
       }
     },
     {
@@ -149,7 +149,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Street',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.street.label`
+        id: `v2.event.action.declare.form.section.person.field.address.street.label`
       }
     },
     {
@@ -159,7 +159,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Number',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.number.label`
+        id: `v2.event.action.declare.form.section.person.field.address.number.label`
       }
     },
     {
@@ -169,7 +169,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Postcode / Zip',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.zipCode.label`
+        id: `v2.event.action.declare.form.section.person.field.address.zipCode.label`
       }
     }
   ]
@@ -181,7 +181,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Province',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.province.label`
+        id: `v2.event.birth.action.declare.form.section.person.field.address.province.label`
       },
       options: {
         type: 'ADMIN_STRUCTURE'
@@ -194,7 +194,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'District',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.district.label`
+        id: `v2.event.birth.action.declare.form.section.person.field.address.district.label`
       },
       options: {
         partOf: {
@@ -213,7 +213,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Urban or Rural',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.urbanOrRural.label`
+        id: `v2.event.birth.action.declare.form.section.person.field.address.urbanOrRural.label`
       },
       hideLabel: true
     },
@@ -235,7 +235,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Village',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.address.village.label`
+        id: `v2.event.birth.action.declare.form.section.person.field.address.village.label`
       },
       conditionals: [
         {
@@ -256,7 +256,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       label: {
         defaultMessage: 'Country',
         description: 'This is the label for the field',
-        id: `event.action.declare.form.section.person.field.address.country.label`
+        id: `v2.event.action.declare.form.section.person.field.address.country.label`
       }
     },
     ...appendConditionalsToFields({

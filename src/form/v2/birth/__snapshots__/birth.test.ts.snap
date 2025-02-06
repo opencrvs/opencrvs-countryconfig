@@ -4,49 +4,54 @@ exports[`birth configuration is parsed 1`] = `
 {
   "actions": [
     {
-      "allowedWhen": {
-        "not": {
-          "properties": {
-            "$event": {
+      "conditionals": [
+        {
+          "conditional": {
+            "not": {
               "properties": {
-                "actions": {
-                  "contains": {
-                    "not": {
-                      "properties": {
-                        "draft": {
-                          "const": true,
+                "$event": {
+                  "properties": {
+                    "actions": {
+                      "contains": {
+                        "not": {
+                          "properties": {
+                            "draft": {
+                              "const": true,
+                            },
+                          },
                         },
+                        "properties": {
+                          "draft": {
+                            "type": "boolean",
+                          },
+                          "type": {
+                            "const": "DECLARE",
+                          },
+                        },
+                        "required": [
+                          "type",
+                        ],
+                        "type": "object",
                       },
+                      "type": "array",
                     },
-                    "properties": {
-                      "draft": {
-                        "type": "boolean",
-                      },
-                      "type": {
-                        "const": "DECLARE",
-                      },
-                    },
-                    "required": [
-                      "type",
-                    ],
-                    "type": "object",
                   },
-                  "type": "array",
+                  "required": [
+                    "actions",
+                  ],
+                  "type": "object",
                 },
               },
               "required": [
-                "actions",
+                "$event",
               ],
               "type": "object",
             },
+            "type": "object",
           },
-          "required": [
-            "$event",
-          ],
-          "type": "object",
+          "type": "SHOW",
         },
-        "type": "object",
-      },
+      ],
       "forms": [
         {
           "active": true,
@@ -60,6 +65,7 @@ exports[`birth configuration is parsed 1`] = `
               "fields": [
                 {
                   "font": "reg16",
+                  "hideLabel": true,
                   "id": "form.section.information.birth.bulletList",
                   "items": [
                     {
@@ -202,6 +208,15 @@ exports[`birth configuration is parsed 1`] = `
                       },
                     },
                   ],
+                },
+                {
+                  "id": "child.placeOfBirth.divider.start",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
+                  },
+                  "type": "DIVIDER",
                 },
                 {
                   "id": "child.placeOfBirth",
@@ -1407,6 +1422,7 @@ exports[`birth configuration is parsed 1`] = `
                     },
                   ],
                   "flexDirection": "row",
+                  "hideLabel": true,
                   "id": "childResidentialAddress.address.urbanOrRural",
                   "label": {
                     "defaultMessage": "Urban or Rural",
@@ -1462,11 +1478,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childResidentialAddress.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -1615,11 +1629,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childResidentialAddress.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -1768,11 +1780,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childResidentialAddress.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -1885,11 +1895,11 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "childResidentialAddress.address.village",
+                  "id": "childResidentialAddress.address.street",
                   "label": {
-                    "defaultMessage": "Area / Ward / Mouja / Village",
+                    "defaultMessage": "Street",
                     "description": "This is the label for the field",
-                    "id": "event.action.declare.form.section.person.field.address.village.label",
+                    "id": "event.action.declare.form.section.person.field.address.street.label",
                   },
                   "required": false,
                   "type": "TEXT",
@@ -1921,11 +1931,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childResidentialAddress.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -2074,11 +2082,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childResidentialAddress.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -2227,9 +2233,11 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childResidentialAddress.address.urbanOrRural": {
-                                    "enum": [
-                                      "RURAL",
-                                    ],
+                                    "not": {
+                                      "enum": [
+                                        "RURAL",
+                                      ],
+                                    },
                                   },
                                 },
                                 "required": [
@@ -3457,6 +3465,7 @@ exports[`birth configuration is parsed 1`] = `
                     },
                   ],
                   "flexDirection": "row",
+                  "hideLabel": true,
                   "id": "childOther.address.urbanOrRural",
                   "label": {
                     "defaultMessage": "Urban or Rural",
@@ -3512,11 +3521,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childOther.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -3665,11 +3672,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childOther.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -3818,11 +3823,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childOther.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -3935,11 +3938,11 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "childOther.address.village",
+                  "id": "childOther.address.street",
                   "label": {
-                    "defaultMessage": "Area / Ward / Mouja / Village",
+                    "defaultMessage": "Street",
                     "description": "This is the label for the field",
-                    "id": "event.action.declare.form.section.person.field.address.village.label",
+                    "id": "event.action.declare.form.section.person.field.address.street.label",
                   },
                   "required": false,
                   "type": "TEXT",
@@ -3971,11 +3974,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childOther.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -4124,11 +4125,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childOther.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -4277,9 +4276,11 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "childOther.address.urbanOrRural": {
-                                    "enum": [
-                                      "RURAL",
-                                    ],
+                                    "not": {
+                                      "enum": [
+                                        "RURAL",
+                                      ],
+                                    },
                                   },
                                 },
                                 "required": [
@@ -4400,6 +4401,15 @@ exports[`birth configuration is parsed 1`] = `
                   },
                   "required": false,
                   "type": "TEXT",
+                },
+                {
+                  "id": "child.placeOfBirth.divider.end",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
+                  },
+                  "type": "DIVIDER",
                 },
                 {
                   "id": "child.attendantAtBirth",
@@ -4529,6 +4539,11 @@ exports[`birth configuration is parsed 1`] = `
                     "id": "event.birth.action.declare.form.section.child.field.weightAtBirth.label",
                   },
                   "options": {
+                    "postfix": {
+                      "defaultMessage": "Kilograms (kg)",
+                      "description": "This is the postfix for the weight field",
+                      "id": "event.birth.action.declare.form.section.child.field.weightAtBirth.postfix",
+                    },
                     "type": "number",
                   },
                   "required": false,
@@ -4706,12 +4721,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -4766,12 +4779,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -4848,12 +4859,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -4945,12 +4954,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5050,12 +5057,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5079,6 +5084,13 @@ exports[`birth configuration is parsed 1`] = `
                     "defaultMessage": "Age of informant",
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.informant.field.age.label",
+                  },
+                  "options": {
+                    "postfix": {
+                      "defaultMessage": "years",
+                      "description": "This is the postfix for age field",
+                      "id": "event.birth.action.declare.form.section.informant.field.age.postfix",
+                    },
                   },
                   "required": true,
                   "type": "TEXT",
@@ -5110,12 +5122,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5170,12 +5180,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5311,12 +5319,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5418,12 +5424,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5525,12 +5529,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5585,12 +5587,67 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.relation",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "informant.address.divider.start",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
+                  },
+                  "type": "DIVIDER",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.relation",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.relation": {
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5616,7 +5673,7 @@ exports[`birth configuration is parsed 1`] = `
                     "id": "event.birth.action.declare.form.section.informant.field.addressHelper.label",
                   },
                   "options": {
-                    "fontVariant": "h2",
+                    "fontVariant": "h3",
                   },
                   "type": "PARAGRAPH",
                 },
@@ -5647,12 +5704,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5752,12 +5807,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5857,12 +5910,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -5962,12 +6013,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6067,12 +6116,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6172,12 +6219,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6277,12 +6322,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6382,12 +6425,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6489,12 +6530,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6599,12 +6638,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6712,12 +6749,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6737,6 +6772,7 @@ exports[`birth configuration is parsed 1`] = `
                     },
                   ],
                   "flexDirection": "row",
+                  "hideLabel": true,
                   "id": "informant.address.urbanOrRural",
                   "label": {
                     "defaultMessage": "Urban or Rural",
@@ -6792,11 +6828,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6886,12 +6920,10 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -6915,622 +6947,6 @@ exports[`birth configuration is parsed 1`] = `
                     "defaultMessage": "Town",
                     "description": "This is the label for the field",
                     "id": "event.action.declare.form.section.person.field.address.town.label",
-                  },
-                  "required": false,
-                  "type": "TEXT",
-                },
-                {
-                  "conditionals": [
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.address.urbanOrRural",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.address.urbanOrRural",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.address.country",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.address.country": {
-                                    "not": {
-                                      "enum": [
-                                        "FAR",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.address.country",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.relation",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.relation",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                  ],
-                  "id": "informant.address.residentialArea",
-                  "label": {
-                    "defaultMessage": "Residential Area",
-                    "description": "This is the label for the field",
-                    "id": "event.action.declare.form.section.person.field.address.residentialArea.label",
-                  },
-                  "required": false,
-                  "type": "TEXT",
-                },
-                {
-                  "conditionals": [
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.address.urbanOrRural",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.address.urbanOrRural",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.address.country",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.address.country": {
-                                    "not": {
-                                      "enum": [
-                                        "FAR",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.address.country",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.relation",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.relation",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                  ],
-                  "id": "informant.address.village",
-                  "label": {
-                    "defaultMessage": "Area / Ward / Mouja / Village",
-                    "description": "This is the label for the field",
-                    "id": "event.action.declare.form.section.person.field.address.village.label",
-                  },
-                  "required": false,
-                  "type": "TEXT",
-                },
-                {
-                  "conditionals": [
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.address.urbanOrRural",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.address.urbanOrRural",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.address.country",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.address.country": {
-                                    "not": {
-                                      "enum": [
-                                        "FAR",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.address.country",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.relation",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.relation",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                  ],
-                  "id": "informant.address.number",
-                  "label": {
-                    "defaultMessage": "Number",
-                    "description": "This is the label for the field",
-                    "id": "event.action.declare.form.section.person.field.address.number.label",
-                  },
-                  "required": false,
-                  "type": "TEXT",
-                },
-                {
-                  "conditionals": [
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.address.urbanOrRural",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.address.urbanOrRural",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.address.country",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.address.country": {
-                                    "not": {
-                                      "enum": [
-                                        "FAR",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.address.country",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                    {
-                      "conditional": {
-                        "anyOf": [
-                          {
-                            "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "informant.relation",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "$form": {
-                                "properties": {
-                                  "informant.relation": {
-                                    "not": {
-                                      "enum": [
-                                        "MOTHER",
-                                        "FATHER",
-                                      ],
-                                    },
-                                  },
-                                },
-                                "required": [
-                                  "informant.relation",
-                                ],
-                                "type": "object",
-                              },
-                            },
-                            "required": [
-                              "$form",
-                            ],
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "type": "HIDE",
-                    },
-                  ],
-                  "id": "informant.address.zipCode",
-                  "label": {
-                    "defaultMessage": "Postcode / Zip",
-                    "description": "This is the label for the field",
-                    "id": "event.action.declare.form.section.person.field.address.zipCode.label",
                   },
                   "required": false,
                   "type": "TEXT",
@@ -7654,12 +7070,612 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.relation": {
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.relation",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "informant.address.residentialArea",
+                  "label": {
+                    "defaultMessage": "Residential Area",
+                    "description": "This is the label for the field",
+                    "id": "event.action.declare.form.section.person.field.address.residentialArea.label",
+                  },
+                  "required": false,
+                  "type": "TEXT",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.address.urbanOrRural",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.address.urbanOrRural": {
+                                    "enum": [
+                                      "RURAL",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.address.urbanOrRural",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.address.country",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.address.country": {
                                     "not": {
                                       "enum": [
-                                        "MOTHER",
-                                        "FATHER",
+                                        "FAR",
                                       ],
                                     },
+                                  },
+                                },
+                                "required": [
+                                  "informant.address.country",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.relation",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.relation": {
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.relation",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "informant.address.street",
+                  "label": {
+                    "defaultMessage": "Street",
+                    "description": "This is the label for the field",
+                    "id": "event.action.declare.form.section.person.field.address.street.label",
+                  },
+                  "required": false,
+                  "type": "TEXT",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.address.urbanOrRural",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.address.urbanOrRural": {
+                                    "enum": [
+                                      "RURAL",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.address.urbanOrRural",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.address.country",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.address.country": {
+                                    "not": {
+                                      "enum": [
+                                        "FAR",
+                                      ],
+                                    },
+                                  },
+                                },
+                                "required": [
+                                  "informant.address.country",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.relation",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.relation": {
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.relation",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "informant.address.number",
+                  "label": {
+                    "defaultMessage": "Number",
+                    "description": "This is the label for the field",
+                    "id": "event.action.declare.form.section.person.field.address.number.label",
+                  },
+                  "required": false,
+                  "type": "TEXT",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.address.urbanOrRural",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.address.urbanOrRural": {
+                                    "enum": [
+                                      "RURAL",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.address.urbanOrRural",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.address.country",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.address.country": {
+                                    "not": {
+                                      "enum": [
+                                        "FAR",
+                                      ],
+                                    },
+                                  },
+                                },
+                                "required": [
+                                  "informant.address.country",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.relation",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.relation": {
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.relation",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "informant.address.zipCode",
+                  "label": {
+                    "defaultMessage": "Postcode / Zip",
+                    "description": "This is the label for the field",
+                    "id": "event.action.declare.form.section.person.field.address.zipCode.label",
+                  },
+                  "required": false,
+                  "type": "TEXT",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.address.urbanOrRural",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.address.urbanOrRural": {
+                                    "not": {
+                                      "enum": [
+                                        "RURAL",
+                                      ],
+                                    },
+                                  },
+                                },
+                                "required": [
+                                  "informant.address.urbanOrRural",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.address.country",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.address.country": {
+                                    "not": {
+                                      "enum": [
+                                        "FAR",
+                                      ],
+                                    },
+                                  },
+                                },
+                                "required": [
+                                  "informant.address.country",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.relation",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.relation": {
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -7686,6 +7702,63 @@ exports[`birth configuration is parsed 1`] = `
                   },
                   "required": false,
                   "type": "TEXT",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "informant.relation",
+                                  ],
+                                  "type": "object",
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.relation": {
+                                    "enum": [
+                                      "MOTHER",
+                                      "FATHER",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.relation",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "informant.address.divider.end",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
+                  },
+                  "type": "DIVIDER",
                 },
                 {
                   "id": "informant.phoneNo",
@@ -7749,7 +7822,7 @@ exports[`birth configuration is parsed 1`] = `
                   ],
                   "id": "mother.detailsNotAvailable",
                   "label": {
-                    "defaultMessage": "Mother's details not available",
+                    "defaultMessage": "Mother's details are not available",
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label",
                   },
@@ -7760,17 +7833,107 @@ exports[`birth configuration is parsed 1`] = `
                   "conditionals": [
                     {
                       "conditional": {
-                        "_apply": [Function],
-                        "apply": [Function],
-                        "inArray": [Function],
-                        "isBeforeNow": [Function],
-                        "isEqualTo": [Function],
-                        "isUndefined": [Function],
-                        "not": {
-                          "equalTo": [Function],
-                          "inArray": [Function],
+                        "properties": {
+                          "$form": {
+                            "properties": {
+                              "informant.relation": {
+                                "enum": [
+                                  "MOTHER",
+                                ],
+                              },
+                            },
+                            "required": [
+                              "informant.relation",
+                            ],
+                            "type": "object",
+                          },
                         },
-                        "or": [Function],
+                        "required": [
+                          "$form",
+                        ],
+                        "type": "object",
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "mother.details.divider",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
+                  },
+                  "type": "DIVIDER",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "anyOf": [
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "not": {
+                                      "required": [
+                                        "mother.detailsNotAvailable",
+                                      ],
+                                      "type": "object",
+                                    },
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "properties": {
+                                      "mother.detailsNotAvailable": {
+                                        "enum": [
+                                          "false",
+                                        ],
+                                      },
+                                    },
+                                    "required": [
+                                      "mother.detailsNotAvailable",
+                                    ],
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                            ],
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.relation": {
+                                    "enum": [
+                                      "MOTHER",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.relation",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                        "type": "object",
                       },
                       "type": "HIDE",
                     },
@@ -8309,6 +8472,13 @@ exports[`birth configuration is parsed 1`] = `
                     "defaultMessage": "Age of mother",
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.mother.field.age.label",
+                  },
+                  "options": {
+                    "postfix": {
+                      "defaultMessage": "years",
+                      "description": "This is the postfix for age field",
+                      "id": "event.birth.action.declare.form.section.mother.field.age.postfix",
+                    },
                   },
                   "required": true,
                   "type": "TEXT",
@@ -8989,6 +9159,90 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
+                  "id": "mother.address.divider.start",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
+                  },
+                  "type": "DIVIDER",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "allOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "mother.detailsNotAvailable": {
+                                    "enum": [
+                                      "true",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "mother.detailsNotAvailable",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "anyOf": [
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "not": {
+                                      "required": [
+                                        "informant.relation",
+                                      ],
+                                      "type": "object",
+                                    },
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "properties": {
+                                      "informant.relation": {
+                                        "not": {
+                                          "enum": [
+                                            "MOTHER",
+                                          ],
+                                        },
+                                      },
+                                    },
+                                    "required": [
+                                      "informant.relation",
+                                    ],
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                            ],
+                          },
+                        ],
+                        "type": "object",
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
                   "id": "mother.addressHelper",
                   "label": {
                     "defaultMessage": "Usual place of residence",
@@ -8996,7 +9250,7 @@ exports[`birth configuration is parsed 1`] = `
                     "id": "event.birth.action.declare.form.section.mother.field.addressHelper.label",
                   },
                   "options": {
-                    "fontVariant": "h2",
+                    "fontVariant": "h3",
                   },
                   "type": "PARAGRAPH",
                 },
@@ -10392,6 +10646,7 @@ exports[`birth configuration is parsed 1`] = `
                     },
                   ],
                   "flexDirection": "row",
+                  "hideLabel": true,
                   "id": "mother.address.urbanOrRural",
                   "label": {
                     "defaultMessage": "Urban or Rural",
@@ -10447,11 +10702,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -10626,11 +10879,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -10805,11 +11056,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -10948,11 +11197,11 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "mother.address.village",
+                  "id": "mother.address.street",
                   "label": {
-                    "defaultMessage": "Area / Ward / Mouja / Village",
+                    "defaultMessage": "Street",
                     "description": "This is the label for the field",
-                    "id": "event.action.declare.form.section.person.field.address.village.label",
+                    "id": "event.action.declare.form.section.person.field.address.street.label",
                   },
                   "required": false,
                   "type": "TEXT",
@@ -10984,11 +11233,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -11163,11 +11410,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -11342,9 +11587,11 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.address.urbanOrRural": {
-                                    "enum": [
-                                      "RURAL",
-                                    ],
+                                    "not": {
+                                      "enum": [
+                                        "RURAL",
+                                      ],
+                                    },
                                   },
                                 },
                                 "required": [
@@ -11491,6 +11738,90 @@ exports[`birth configuration is parsed 1`] = `
                   },
                   "required": false,
                   "type": "TEXT",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "allOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "mother.detailsNotAvailable": {
+                                    "enum": [
+                                      "true",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "mother.detailsNotAvailable",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "anyOf": [
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "not": {
+                                      "required": [
+                                        "informant.relation",
+                                      ],
+                                      "type": "object",
+                                    },
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "properties": {
+                                      "informant.relation": {
+                                        "not": {
+                                          "enum": [
+                                            "MOTHER",
+                                          ],
+                                        },
+                                      },
+                                    },
+                                    "required": [
+                                      "informant.relation",
+                                    ],
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                            ],
+                          },
+                        ],
+                        "type": "object",
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "mother.address.divider.end",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
+                  },
+                  "type": "DIVIDER",
                 },
                 {
                   "conditionals": [
@@ -11955,7 +12286,7 @@ exports[`birth configuration is parsed 1`] = `
                   ],
                   "id": "father.detailsNotAvailable",
                   "label": {
-                    "defaultMessage": "Father's details not available",
+                    "defaultMessage": "Father's details are not available",
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.father.field.detailsNotAvailable.label",
                   },
@@ -11966,36 +12297,96 @@ exports[`birth configuration is parsed 1`] = `
                   "conditionals": [
                     {
                       "conditional": {
-                        "anyOf": [
-                          {
+                        "properties": {
+                          "$form": {
                             "properties": {
-                              "$form": {
-                                "not": {
-                                  "required": [
-                                    "father.detailsNotAvailable",
-                                  ],
-                                  "type": "object",
-                                },
-                                "type": "object",
+                              "informant.relation": {
+                                "enum": [
+                                  "FATHER",
+                                ],
                               },
                             },
                             "required": [
-                              "$form",
+                              "informant.relation",
                             ],
                             "type": "object",
+                          },
+                        },
+                        "required": [
+                          "$form",
+                        ],
+                        "type": "object",
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "father.details.divider",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
+                  },
+                  "type": "DIVIDER",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "anyOf": [
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "not": {
+                                      "required": [
+                                        "father.detailsNotAvailable",
+                                      ],
+                                      "type": "object",
+                                    },
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "properties": {
+                                      "father.detailsNotAvailable": {
+                                        "enum": [
+                                          "false",
+                                        ],
+                                      },
+                                    },
+                                    "required": [
+                                      "father.detailsNotAvailable",
+                                    ],
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                            ],
                           },
                           {
                             "properties": {
                               "$form": {
                                 "properties": {
-                                  "father.detailsNotAvailable": {
+                                  "informant.relation": {
                                     "enum": [
-                                      "false",
+                                      "FATHER",
                                     ],
                                   },
                                 },
                                 "required": [
-                                  "father.detailsNotAvailable",
+                                  "informant.relation",
                                 ],
                                 "type": "object",
                               },
@@ -12006,6 +12397,7 @@ exports[`birth configuration is parsed 1`] = `
                             "type": "object",
                           },
                         ],
+                        "type": "object",
                       },
                       "type": "HIDE",
                     },
@@ -12544,6 +12936,13 @@ exports[`birth configuration is parsed 1`] = `
                     "defaultMessage": "Age of father",
                     "description": "This is the label for the field",
                     "id": "event.birth.action.declare.form.section.father.field.age.label",
+                  },
+                  "options": {
+                    "postfix": {
+                      "defaultMessage": "years",
+                      "description": "This is the postfix for age field",
+                      "id": "event.birth.action.declare.form.section.father.field.age.postfix",
+                    },
                   },
                   "required": true,
                   "type": "TEXT",
@@ -13224,43 +13623,16 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "father.addressHelper",
+                  "id": "father.address.divider.start",
                   "label": {
-                    "defaultMessage": "Usual place of residence",
-                    "description": "This is the label for the field",
-                    "id": "event.birth.action.declare.form.section.father.field.addressHelper.label",
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
                   },
-                  "options": {
-                    "fontVariant": "h2",
-                  },
-                  "type": "PARAGRAPH",
+                  "type": "DIVIDER",
                 },
                 {
                   "conditionals": [
-                    {
-                      "conditional": {
-                        "properties": {
-                          "$form": {
-                            "properties": {
-                              "mother.detailsNotAvailable": {
-                                "enum": [
-                                  "true",
-                                ],
-                              },
-                            },
-                            "required": [
-                              "mother.detailsNotAvailable",
-                            ],
-                            "type": "object",
-                          },
-                        },
-                        "required": [
-                          "$form",
-                        ],
-                        "type": "object",
-                      },
-                      "type": "HIDE",
-                    },
                     {
                       "conditional": {
                         "allOf": [
@@ -13335,14 +13707,14 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "father.addressSameAsHelper",
+                  "id": "father.addressHelper",
                   "label": {
-                    "defaultMessage": "Same as mother's usual place of residence?",
+                    "defaultMessage": "Usual place of residence",
                     "description": "This is the label for the field",
-                    "id": "event.birth.action.declare.form.section.father.field.addressSameAsHelper.label",
+                    "id": "event.birth.action.declare.form.section.father.field.addressHelper.label",
                   },
                   "options": {
-                    "fontVariant": "reg16",
+                    "fontVariant": "h3",
                   },
                   "type": "PARAGRAPH",
                 },
@@ -15130,6 +15502,7 @@ exports[`birth configuration is parsed 1`] = `
                     },
                   ],
                   "flexDirection": "row",
+                  "hideLabel": true,
                   "id": "father.address.urbanOrRural",
                   "label": {
                     "defaultMessage": "Urban or Rural",
@@ -15185,11 +15558,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -15388,11 +15759,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -15591,11 +15960,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -15758,11 +16125,11 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "father.address.village",
+                  "id": "father.address.street",
                   "label": {
-                    "defaultMessage": "Area / Ward / Mouja / Village",
+                    "defaultMessage": "Street",
                     "description": "This is the label for the field",
-                    "id": "event.action.declare.form.section.person.field.address.village.label",
+                    "id": "event.action.declare.form.section.person.field.address.street.label",
                   },
                   "required": false,
                   "type": "TEXT",
@@ -15794,11 +16161,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -15997,11 +16362,9 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.address.urbanOrRural": {
-                                    "not": {
-                                      "enum": [
-                                        "RURAL",
-                                      ],
-                                    },
+                                    "enum": [
+                                      "RURAL",
+                                    ],
                                   },
                                 },
                                 "required": [
@@ -16200,9 +16563,11 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.address.urbanOrRural": {
-                                    "enum": [
-                                      "RURAL",
-                                    ],
+                                    "not": {
+                                      "enum": [
+                                        "RURAL",
+                                      ],
+                                    },
                                   },
                                 },
                                 "required": [
@@ -16373,6 +16738,90 @@ exports[`birth configuration is parsed 1`] = `
                   },
                   "required": false,
                   "type": "TEXT",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "allOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "father.detailsNotAvailable": {
+                                    "enum": [
+                                      "true",
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "father.detailsNotAvailable",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "anyOf": [
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "not": {
+                                      "required": [
+                                        "informant.relation",
+                                      ],
+                                      "type": "object",
+                                    },
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "properties": {
+                                      "informant.relation": {
+                                        "not": {
+                                          "enum": [
+                                            "FATHER",
+                                          ],
+                                        },
+                                      },
+                                    },
+                                    "required": [
+                                      "informant.relation",
+                                    ],
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                            ],
+                          },
+                        ],
+                        "type": "object",
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "father.address.divider.end",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "messages.emptyString",
+                  },
+                  "type": "DIVIDER",
                 },
                 {
                   "conditionals": [
@@ -16810,7 +17259,7 @@ exports[`birth configuration is parsed 1`] = `
     },
   ],
   "deduplication": [],
-  "id": "BIRTH",
+  "id": "birth",
   "label": {
     "defaultMessage": "Birth declaration",
     "description": "This is what this event is referred as in the system",

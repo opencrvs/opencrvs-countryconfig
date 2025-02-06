@@ -13,6 +13,7 @@ require('dotenv').config()
 
 import fetch from 'node-fetch'
 import path from 'path'
+import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
 import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
@@ -69,6 +70,7 @@ import {
   onAnyActionHandler,
   onRegisterHandler
 } from '@countryconfig/api/custom-event/handler'
+import { readFileSync } from 'fs'
 
 export interface ITokenPayload {
   sub: string
@@ -302,6 +304,14 @@ export async function createServer() {
         process.env.NODE_ENV === 'production'
           ? '/client-config.prod.js'
           : '/client-config.js'
+
+      if (process.env.NODE_ENV !== 'production') {
+        const template = Handlebars.compile(
+          readFileSync(join(__dirname, file), 'utf8')
+        )
+        const result = template({ V2_EVENTS: process.env.V2_EVENTS || false })
+        return h.response(result).type('application/javascript')
+      }
 
       return h.file(join(__dirname, file))
     },
@@ -607,7 +617,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/register',
+    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/REGISTER',
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'custom-event'],
