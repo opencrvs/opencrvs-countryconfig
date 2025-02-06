@@ -1036,7 +1036,7 @@ services:
       - ESIGNET_USERINFO_URL=${ESIGNET_USERINFO_URL:-}
       - OIDP_CLIENT_PRIVATE_KEY=${OIDP_CLIENT_PRIVATE_KEY:-}
       - ESIGNET_TOKEN_URL=${ESIGNET_TOKEN_URL:-}
-      - OIDP_JWT_AUD_CLAIM=${OIDP_JWT_AUD_CLAIM:-}
+      - OPENID_PROVIDER_CLAIMS=${OPENID_PROVIDER_CLAIMS:-}
     deploy:
       replicas: 1
       labels:
@@ -1061,47 +1061,6 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'mosip-api'
-
-  mosip-mock:
-    image: ghcr.io/opencrvs/mosip-mock:${MOSIP_API_VERSION}
-    environment:
-      - NODE_ENV=production
-      - OPENCRVS_MOSIP_API_URL=http://mosip-api:2024/webhooks/mosip
-      - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS:-}
-      - ALERT_EMAIL=${ALERT_EMAIL:-}
-      - SMTP_HOST=${SMTP_HOST:-}
-      - SMTP_PORT=${SMTP_PORT:-}
-      - SMTP_USERNAME=${SMTP_USERNAME:-}
-      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
-      - SMTP_SECURE=${SMTP_SECURE:-}
-    deploy:
-      replicas: 1
-      labels:
-        - 'traefik.enable=false'
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'mosip-mock'
-
-  esignet-mock:
-    image: ghcr.io/opencrvs/esignet-mock:${MOSIP_API_VERSION}
-    environment:
-      - NODE_ENV=production
-      - CLIENT_URL=http://mosip-api:2024/webhooks/mosip
-    deploy:
-      replicas: 1
-      labels:
-        - 'traefik.enable=false'
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'esignet-mock'
 
 secrets:
   jwt-public-key.{{ts}}:
