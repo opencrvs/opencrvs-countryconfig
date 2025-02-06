@@ -1042,7 +1042,7 @@ services:
       labels:
         - 'traefik.enable=true'
         - 'traefik.http.routers.mosip-api.rule=Host(`mosip-api.{{hostname}}`)'
-        - 'traefik.http.services.mosip-api.loadbalancer.server.port=20260'
+        - 'traefik.http.services.mosip-api.loadbalancer.server.port=2024'
         - 'traefik.http.routers.mosip-api.tls=true'
         - 'traefik.http.routers.mosip-api.tls.certresolver=certResolver'
         - 'traefik.http.routers.mosip-api.entrypoints=web,websecure'
@@ -1066,7 +1066,7 @@ services:
     image: ghcr.io/opencrvs/mosip-mock:${MOSIP_API_VERSION}
     environment:
       - NODE_ENV=production
-      - OPENCRVS_MOSIP_API_URL=https://mosip-api.{{hostname}}/webhooks/mosip
+      - OPENCRVS_MOSIP_API_URL=http://mosip-api:2024/webhooks/mosip
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS:-}
       - ALERT_EMAIL=${ALERT_EMAIL:-}
       - SMTP_HOST=${SMTP_HOST:-}
