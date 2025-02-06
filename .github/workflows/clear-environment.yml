@@ -6,6 +6,9 @@ on:
       environment:
         required: true
         type: string
+    outputs:
+      outcome:
+        value: ${{ jobs.reset-data.outputs.outcome }}
   workflow_dispatch:
     inputs:
       environment:
