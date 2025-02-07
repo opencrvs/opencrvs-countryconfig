@@ -36,6 +36,16 @@
   vars:
     manager_hostname: "{{ groups['docker-manager-first'][0] }}"
   tasks:
+    - name: Check if the node is already part of any swarm
+      ansible.builtin.command: docker info --format '{{.Swarm.LocalNodeState}}'
+      register: worker_swarm_status
+      changed_when: false
+
+    - name: Fail if the node is already part of a swarm
+      fail:
+        msg: "You are trying to attach a worker to a Swarm that is already part of another Swarm. Please make the node leave the current Swarm first, then run the playbook again."
+      when: "worker_swarm_status.stdout.find('active') != -1"
+
     - name: 'Join as a worker'
       shell: "docker swarm join --token {{ hostvars[manager_hostname]['worker_token']['stdout'] }} {{ hostvars[manager_hostname]['ansible_default_ipv4']['address'] }}:2377"
       when: "docker_info.stdout.find('Swarm: inactive') != -1"
