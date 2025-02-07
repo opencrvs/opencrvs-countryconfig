@@ -37,7 +37,7 @@
     manager_hostname: "{{ groups['docker-manager-first'][0] }}"
   tasks:
     - name: Check if the node is already part of any swarm
-      ansible.builtin.command: docker info --format '{{.Swarm.LocalNodeState}}'
+      shell: docker info --format "{% raw %}{{.Swarm.LocalNodeState}}{% endraw %}"
       register: worker_swarm_status
       changed_when: false
 
