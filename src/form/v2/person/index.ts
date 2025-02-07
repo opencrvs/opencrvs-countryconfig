@@ -301,7 +301,7 @@ export const getPersonInputCommonFields = (
       description: 'This is the label for the field',
       id: `v2.event.birth.action.declare.form.section.person.field.age.text.label`
     },
-    options: {
+    configuration: {
       postfix: {
         defaultMessage: 'years',
         description: 'This is the postfix for age field',
@@ -341,7 +341,7 @@ export const getPersonInputCommonFields = (
       description: 'This is the label for the field',
       id: `v2.event.birth.action.declare.form.section.person.field.addressHelper.label`
     },
-    options: { fontVariant: 'h3' }
+    configuration: { styles: { fontVariant: 'h3' } }
   }
 ]
 
@@ -351,8 +351,7 @@ const fatherAddressFields = [
       {
         id: `${PersonType.father}.addressSameAs`,
         type: 'RADIO_GROUP',
-        optionValues: yesNoRadioOptions,
-        options: {},
+        options: yesNoRadioOptions,
         required: true,
         label: {
           defaultMessage: "Same as mother's usual place of residence?",

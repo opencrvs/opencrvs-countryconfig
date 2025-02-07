@@ -205,10 +205,9 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
     },
     {
       id: `${prefix}.urbanOrRural`,
+      // @TODO: Change to SELECT
       type: 'RADIO_GROUP',
-      optionValues: urbanRuralRadioOptions,
-      options: {},
-      flexDirection: 'row',
+      options: urbanRuralRadioOptions,
       required: false,
       label: {
         defaultMessage: 'Urban or Rural',
