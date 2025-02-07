@@ -9,6 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
+import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
 
 type FontFamilyTypes = {
@@ -43,7 +44,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
   const certificateConfigs: ICertificateConfigData[] = [
     {
       id: 'birth-certificate',
-      event: 'birth',
+      event: Event.Birth,
       label: {
         id: 'certificates.birth.certificate',
         defaultMessage: 'Birth Certificate',
@@ -67,7 +68,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'birth-certificate-certified-copy',
-      event: 'birth',
+      event: Event.Birth,
       label: {
         id: 'certificates.birth.certificate.copy',
         defaultMessage: 'Birth Certificate certified copy',
@@ -92,7 +93,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'death-certificate',
-      event: 'death',
+      event: Event.Death,
       label: {
         id: 'certificates.death.certificate',
         defaultMessage: 'Death Certificate',
@@ -116,7 +117,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'death-certificate-certified-copy',
-      event: 'death',
+      event: Event.Death,
       label: {
         id: 'certificates.death.certificate.copy',
         defaultMessage: 'Death Certificate certified copy',
@@ -141,7 +142,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'marriage-certificate',
-      event: 'marriage',
+      event: Event.Marriage,
       label: {
         id: 'certificates.marriage.certificate',
         defaultMessage: 'Marriage Certificate',
@@ -165,7 +166,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
     },
     {
       id: 'marriage-certificate-certified-copy',
-      event: 'marriage',
+      event: Event.Marriage,
       label: {
         id: 'certificates.marriage.certificate.copy',
         defaultMessage: 'Marriage Certificate certified copy',
@@ -179,6 +180,56 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       svgUrl:
         '/api/countryconfig/certificates/marriage-certificate-certified-copy.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'tennis-club-membership-certificate',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.copy',
+        defaultMessage: 'Tennis Club Membership Certificate copy',
+        description: 'The label for a tennis-club-membership certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/tennis-club-membership-certificate.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'tennis-club-membership-certified-certificate',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.certified-copy',
+        defaultMessage: 'Tennis Club Membership Certificate certified copy',
+        description: 'The label for a tennis-club-membership certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/tennis-club-membership-certified-certificate.svg',
       fonts: {
         'Noto Sans': {
           normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',

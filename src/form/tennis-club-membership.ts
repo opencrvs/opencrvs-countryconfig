@@ -19,16 +19,17 @@ import {
   not,
   field
 } from '@opencrvs/toolkit/conditionals'
+import { Event } from './types/types'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
-    id: 'event.tennis-club-membership.action.declare.form.label',
+    id: 'v2.event.tennis-club-membership.action.declare.form.label',
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this form is referred as in the system'
   },
   review: {
     title: {
-      id: 'event.tennis-club-membership.action.declare.form.review.title',
+      id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
       defaultMessage: 'Member declaration for {firstname} {surname}',
       description: 'Title of the form to show in review page'
     }
@@ -37,7 +38,7 @@ const TENNIS_CLUB_FORM = defineForm({
   version: {
     id: '1.0.0',
     label: {
-      id: 'event.tennis-club-membership.action.declare.form.version.1',
+      id: 'v2.event.tennis-club-membership.action.declare.form.version.1',
       defaultMessage: 'Version 1',
       description: 'This is the first version of the form'
     }
@@ -46,7 +47,7 @@ const TENNIS_CLUB_FORM = defineForm({
     {
       id: 'applicant',
       title: {
-        id: 'event.tennis-club-membership.action.declare.form.section.who.title',
+        id: 'v2.event.tennis-club-membership.action.declare.form.section.who.title',
         defaultMessage: 'Who is applying for the membership?',
         description: 'This is the title of the section'
       },
@@ -58,7 +59,7 @@ const TENNIS_CLUB_FORM = defineForm({
           label: {
             defaultMessage: "Applicant's first name",
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.who.field.firstname.label'
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.firstname.label'
           }
         },
         {
@@ -68,7 +69,7 @@ const TENNIS_CLUB_FORM = defineForm({
           label: {
             defaultMessage: "Applicant's surname",
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.who.field.surname.label'
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.surname.label'
           }
         },
         {
@@ -80,15 +81,15 @@ const TENNIS_CLUB_FORM = defineForm({
               message: {
                 defaultMessage: 'Please enter a valid date',
                 description: 'This is the error message for invalid date',
-                id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.error'
+                id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error'
               },
-              validator: field('applicant.dob').isBeforeNow()
+              validator: field('applicant.dob').isBeforeNow().apply()
             }
           ],
           label: {
             defaultMessage: "Applicant's date of birth",
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.label'
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.label'
           }
         },
         {
@@ -98,7 +99,7 @@ const TENNIS_CLUB_FORM = defineForm({
           label: {
             defaultMessage: "Applicant's profile picture",
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.image.label'
           }
         },
         {
@@ -108,7 +109,7 @@ const TENNIS_CLUB_FORM = defineForm({
           label: {
             defaultMessage: "Applicant's profile picture description",
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.who.field.image.label'
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.image.label'
           }
         }
       ]
@@ -116,39 +117,68 @@ const TENNIS_CLUB_FORM = defineForm({
     {
       id: 'recommender',
       title: {
-        id: 'event.tennis-club-membership.action.declare.form.section.recommender.title',
+        id: 'v2.event.tennis-club-membership.action.declare.form.section.recommender.title',
         defaultMessage: 'Who is recommending the applicant?',
         description: 'This is the title of the section'
       },
       fields: [
         {
+          id: 'recommender.none',
+          type: 'CHECKBOX',
+          required: false,
+          conditionals: [],
+          label: {
+            defaultMessage: 'No recommender',
+            description: 'This is the label for the field',
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.recommender.field.none.label'
+          }
+        },
+        {
           id: 'recommender.firstname',
           type: 'TEXT',
           required: true,
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('recommender.none').isEqualTo('true').apply()
+            }
+          ],
           label: {
             defaultMessage: "Recommender's first name",
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label'
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label'
           }
         },
         {
           id: 'recommender.surname',
           type: 'TEXT',
           required: true,
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('recommender.none').isEqualTo('true').apply()
+            }
+          ],
           label: {
             defaultMessage: "Recommender's surname",
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label'
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label'
           }
         },
         {
           id: 'recommender.id',
           type: 'TEXT',
           required: true,
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('recommender.none').isEqualTo('true').apply()
+            }
+          ],
           label: {
             defaultMessage: "Recommender's membership ID",
             description: 'This is the label for the field',
-            id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.id.label'
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.recommender.field.id.label'
           }
         }
       ]
@@ -156,74 +186,455 @@ const TENNIS_CLUB_FORM = defineForm({
   ]
 })
 
+const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
+  label: {
+    id: 'v2.event.tennis-club-membership.action.certificate.form.label',
+    defaultMessage: 'Tennis club membership certificate collector',
+    description: 'This is what this form is referred as in the system'
+  },
+  review: {
+    title: {
+      id: 'v2.event.tennis-club-membership.action.certificate.form.review.title',
+      defaultMessage: 'Member certificate collector for {firstname} {surname}',
+      description: 'Title of the form to show in review page'
+    }
+  },
+  active: true,
+  version: {
+    id: '1.0.0',
+    label: {
+      id: 'v2.event.tennis-club-membership.action.certificate.form.version.1',
+      defaultMessage: 'Version 1',
+      description: 'This is the first version of the form'
+    }
+  },
+  pages: [
+    {
+      id: 'collector',
+      title: {
+        id: 'v2.event.tennis-club-membership.action.certificate.form.section.who.title',
+        defaultMessage: 'Print certified copy',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'collector.requesterId',
+          type: 'SELECT',
+          required: true,
+          label: {
+            defaultMessage: 'Requester',
+            description: 'This is the label for the field',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.section.requester.label'
+          },
+          options: [
+            {
+              label: {
+                id: 'v2.event.tennis-club-membership.action.certificate.form.section.requester.informant.label',
+                defaultMessage: 'Print and issue Informant',
+                description: 'This is the label for the field'
+              },
+              value: 'INFORMANT'
+            },
+            {
+              label: {
+                id: 'v2.event.tennis-club-membership.action.certificate.form.section.requester.other.label',
+                defaultMessage: 'Print and issue someone else',
+                description: 'This is the label for the field'
+              },
+              value: 'OTHER'
+            },
+            {
+              label: {
+                id: 'v2.event.tennis-club-membership.action.certificate.form.section.requester.printInAdvance.label',
+                defaultMessage: 'Print in advance',
+                description: 'This is the label for the field'
+              },
+              value: 'PRINT_IN_ADVANCE'
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.idType',
+          type: 'SELECT',
+          required: true,
+          label: {
+            defaultMessage: 'Select Type of ID',
+            description: 'This is the label for selecting the type of ID',
+            id: 'v2.event.tennis-club-membership.action.form.section.idType.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ],
+          options: [
+            {
+              label: {
+                id: 'v2.event.tennis-club-membership.action.form.section.idType.passport.label',
+                defaultMessage: 'Passport',
+                description: 'Option for selecting Passport as the ID type'
+              },
+              value: 'PASSPORT'
+            },
+            {
+              label: {
+                id: 'v2.event.tennis-club-membership.action.form.section.idType.drivingLicense.label',
+                defaultMessage: 'Driving License',
+                description:
+                  'Option for selecting Driving License as the ID type'
+              },
+              value: 'DRIVING_LICENSE'
+            },
+            {
+              label: {
+                id: 'v2.event.tennis-club-membership.action.form.section.idType.refugeeNumber.label',
+                defaultMessage: 'Refugee Number',
+                description:
+                  'Option for selecting Refugee Number as the ID type'
+              },
+              value: 'REFUGEE_NUMBER'
+            },
+            {
+              label: {
+                id: 'v2.event.tennis-club-membership.action.form.section.idType.alienNumber.label',
+                defaultMessage: 'Alien Number',
+                description: 'Option for selecting Alien Number as the ID type'
+              },
+              value: 'ALIEN_NUMBER'
+            },
+            {
+              label: {
+                id: 'v2.event.tennis-club-membership.action.form.section.idType.other.label',
+                defaultMessage: 'Other',
+                description: 'Option for selecting Other as the ID type'
+              },
+              value: 'OTHER'
+            },
+            {
+              label: {
+                id: 'v2.event.tennis-club-membership.action.form.section.idType.noId.label',
+                defaultMessage: 'No ID',
+                description: 'Option for selecting No ID as the ID type'
+              },
+              value: 'NO_ID'
+            }
+          ]
+        },
+        {
+          id: 'collector.PASSPORT.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Passport Details',
+            description: 'Field for entering Passport details',
+            id: 'v2.event.tennis-club-membership.action.form.section.passportDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) => field.isUndefined().not.inArray(['PASSPORT']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.DRIVING_LICENSE.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Driving License Details',
+            description: 'Field for entering Driving License details',
+            id: 'v2.event.tennis-club-membership.action.form.section.drivingLicenseDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) =>
+                  field.isUndefined().not.inArray(['DRIVING_LICENSE'])
+                )
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.REFUGEE_NUMBER.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Refugee Number Details',
+            description: 'Field for entering Refugee Number details',
+            id: 'v2.event.tennis-club-membership.action.form.section.refugeeNumberDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) =>
+                  field.isUndefined().not.inArray(['REFUGEE_NUMBER'])
+                )
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.ALIEN_NUMBER.details',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Alien Number Details',
+            description: 'Field for entering Alien Number details',
+            id: 'v2.event.tennis-club-membership.action.form.section.alienNumberDetails.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) =>
+                  field.isUndefined().not.inArray(['ALIEN_NUMBER'])
+                )
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.idTypeOther',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Other ID Type (if applicable)',
+            description: 'Field for entering ID type if "Other" is selected',
+            id: 'v2.event.tennis-club-membership.action.form.section.idTypeOther.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.OTHER.idType')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.firstName',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'First Name',
+            description: 'This is the label for the first name field',
+            id: 'v2.event.tennis-club-membership.action.form.section.firstName.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.lastName',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Last Name',
+            description: 'This is the label for the last name field',
+            id: 'v2.event.tennis-club-membership.action.form.section.lastName.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.relationshipToMember',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Relationship to Member',
+            description:
+              'This is the label for the relationship to member field',
+            id: 'v2.event.tennis-club-membership.action.form.section.relationshipToMember.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        },
+        {
+          id: 'collector.OTHER.signedAffidavit',
+          type: 'FILE',
+          required: false,
+          label: {
+            defaultMessage: 'Signed Affidavit (Optional)',
+            description: 'This is the label for uploading a signed affidavit',
+            id: 'v2.event.tennis-club-membership.action.form.section.signedAffidavit.label'
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: field('collector.requesterId')
+                .or((field) => field.isUndefined().not.inArray(['OTHER']))
+                .apply()
+            }
+          ]
+        }
+      ]
+    }
+  ]
+})
+
 export const tennisClubMembershipEvent = defineConfig({
-  id: 'TENNIS_CLUB_MEMBERSHIP',
+  id: Event.TENNIS_CLUB_MEMBERSHIP,
   label: {
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this event is referred as in the system',
-    id: 'event.tennis-club-membership.label'
+    id: 'v2.event.tennis-club-membership.label'
   },
   summary: {
     title: {
-      defaultMessage: '{applicant.firstname} {applicant.surname}',
-      description: 'This is the title of the summary',
-      id: 'event.tennis-club-membership.summary.title'
+      id: '',
+      label: {
+        defaultMessage: '{applicant.firstname} {applicant.surname}',
+        description: 'This is the title of the summary',
+        id: 'v2.event.tennis-club-membership.summary.title'
+      }
     },
     fields: [
       {
-        id: 'applicant.firstname'
+        id: 'applicant.firstname',
+        emptyValueMessage: {
+          defaultMessage: "Applicant's first name missing",
+          description:
+            "Shown when the applicant's first name is missing in summary",
+          id: 'v2.event.tennis-club-membership.summary.field.applicant.firstname.empty'
+        },
+        label: {
+          defaultMessage: "Applicant's First Name",
+          description: "Label for the applicant's first name field",
+          id: 'v2.event.tennis-club-membership.summary.field.applicant.firstname.label'
+        },
+        value: {
+          defaultMessage: 'First Name',
+          description: "Value for the applicant's first name field",
+          id: 'v2.event.tennis-club-membership.summary.field.applicant.firstname.value'
+        }
       },
       {
-        id: 'applicant.surname'
+        id: 'applicant.surname',
+        emptyValueMessage: {
+          defaultMessage: "Applicant's surname missing",
+          description: 'Shown when the surname is missing in summary',
+          id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.empty'
+        },
+        label: {
+          defaultMessage: "Applicant's Surname",
+          description: 'Label for the applicant’s surname field',
+          id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.label'
+        },
+        value: {
+          defaultMessage: 'Surname',
+          description: 'Value for the applicant’s surname field',
+          id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.value'
+        }
       },
       {
-        id: 'recommender.firstname'
+        id: 'recommender.firstname',
+        emptyValueMessage: {
+          defaultMessage: "Recommender's first name missing",
+          description:
+            'Shown when the recommender first name is missing in summary',
+          id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.empty'
+        },
+        label: {
+          defaultMessage: "Recommender's First Name",
+          description: 'Label for the recommender’s first name field',
+          id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.label'
+        },
+        value: {
+          defaultMessage: 'First Name',
+          description: 'Value for the recommender’s first name field',
+          id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.value'
+        }
       },
       {
-        id: 'recommender.surname'
+        id: 'recommender.surname',
+        emptyValueMessage: {
+          defaultMessage: "Recommender's surname missing",
+          description:
+            'Shown when the recommender surname is missing in summary',
+          id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.empty'
+        },
+        label: {
+          defaultMessage: "Recommender's Surname",
+          description: 'Label for the recommender’s surname field',
+          id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.label'
+        },
+        value: {
+          defaultMessage: 'Surname',
+          description: 'Value for the recommender’s surname field',
+          id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.value'
+        }
       },
       {
-        id: 'recommender.id'
+        id: 'recommender.id',
+        emptyValueMessage: {
+          defaultMessage: "Recommender's id missing",
+          description: 'Shown when the recommender id is missing in summary',
+          id: 'v2.event.tennis-club-membership.summary.field.recommender.id.empty'
+        },
+        label: {
+          defaultMessage: "Recommender's ID",
+          description: 'Label for the recommender’s ID field',
+          id: 'v2.event.tennis-club-membership.summary.field.recommender.id.label'
+        },
+        value: {
+          defaultMessage: 'ID',
+          description: 'Value for the recommender’s ID field',
+          id: 'v2.event.tennis-club-membership.summary.field.recommender.id.value'
+        }
       }
     ]
   },
   workqueues: [
     {
       id: 'all',
-      title: {
-        defaultMessage: 'All events',
-        description: 'Label for in progress workqueue',
-        id: 'event.tennis-club-membership.workqueue.all.label'
-      },
       fields: [
         {
-          id: 'applicant.firstname'
-        },
-        {
-          id: 'applicant.surname'
+          column: 'title',
+          label: {
+            defaultMessage: '{applicant.firstname} {applicant.surname}',
+            description: 'Label for name in all workqueue',
+            id: 'v2.event.tennis-club-membership.workqueue.all.name.label'
+          }
         }
       ],
       filters: []
     },
     {
       id: 'ready-for-review',
-      title: {
-        defaultMessage: 'Ready for review',
-        description: 'Label for in review workqueue',
-        id: 'event.tennis-club-membership.workqueue.in-review.label'
-      },
+
       fields: [
         {
-          id: 'applicant.firstname'
-        },
-        {
-          id: 'event.type'
-        },
-        {
-          id: 'event.createdAt'
-        },
-        {
-          id: 'event.modifiedAt'
+          column: 'title',
+          label: {
+            defaultMessage: '{applicant.firstname} {applicant.surname}',
+            description: 'Label for name in all workqueue',
+            id: 'v2.event.tennis-club-membership.workqueue.readyForReview.name.label'
+          }
         }
       ],
       filters: [
@@ -234,23 +645,15 @@ export const tennisClubMembershipEvent = defineConfig({
     },
     {
       id: 'registered',
-      title: {
-        defaultMessage: 'Ready to print',
-        description: 'Label for registered workqueue',
-        id: 'event.tennis-club-membership.workqueue.registered.label'
-      },
+
       fields: [
         {
-          id: 'applicant.firstname'
-        },
-        {
-          id: 'event.type'
-        },
-        {
-          id: 'event.createdAt'
-        },
-        {
-          id: 'event.modifiedAt'
+          column: 'title',
+          label: {
+            defaultMessage: '{applicant.firstname} {applicant.surname}',
+            description: 'Label for name in all workqueue',
+            id: 'v2.event.tennis-club-membership.workqueue.registered.name.label'
+          }
         }
       ],
       filters: [
@@ -267,10 +670,31 @@ export const tennisClubMembershipEvent = defineConfig({
         defaultMessage: 'Declare',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.tennis-club-membership.action.declare.label'
+        id: 'v2.event.tennis-club-membership.action.declare.label'
       },
       forms: [TENNIS_CLUB_FORM],
-      allowedWhen: defineConditional(not(eventHasAction('DECLARE')))
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(not(eventHasAction('DECLARE')))
+        }
+      ]
+    },
+    {
+      type: 'DELETE',
+      label: {
+        defaultMessage: 'Delete draft',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.tennis-club-membership.action.delete.label'
+      },
+      forms: [],
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(not(eventHasAction('DECLARE')))
+        }
+      ]
     },
     {
       type: 'VALIDATE',
@@ -278,9 +702,16 @@ export const tennisClubMembershipEvent = defineConfig({
         defaultMessage: 'Validate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.tennis-club-membership.action.validate.label'
+        id: 'v2.event.tennis-club-membership.action.validate.label'
       },
-      allowedWhen: defineConditional(eventHasAction('DECLARE')),
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(
+            and(eventHasAction('DECLARE'), not(eventHasAction('VALIDATE')))
+          )
+        }
+      ],
       forms: [TENNIS_CLUB_FORM]
     },
     {
@@ -289,18 +720,251 @@ export const tennisClubMembershipEvent = defineConfig({
         defaultMessage: 'Register',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.tennis-club-membership.action.register.label'
+        id: 'v2.event.tennis-club-membership.action.register.label'
       },
-      allowedWhen: defineConditional(
-        and(
-          or(
-            eventHasAction('VALIDATE'),
-            and(eventHasAction('DECLARE'), userHasScope('register'))
-          ),
-          not(eventHasAction('REGISTER'))
-        )
-      ),
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(
+            and(
+              or(
+                eventHasAction('VALIDATE'),
+                and(eventHasAction('DECLARE'), userHasScope('register'))
+              ),
+              not(eventHasAction('REGISTER'))
+            )
+          )
+        }
+      ],
       forms: [TENNIS_CLUB_FORM]
+    },
+    {
+      type: 'PRINT_CERTIFICATE',
+      label: {
+        defaultMessage: 'Print certificate',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.tennis-club-membership.action.collect-certificate.label'
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(eventHasAction('REGISTER'))
+        }
+      ],
+      forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
+    },
+    {
+      type: 'REQUEST_CORRECTION',
+      label: {
+        defaultMessage: 'Request correction',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.tennis-club-membership.action.requestCorrection.label'
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(and(eventHasAction('REGISTER')))
+        }
+      ],
+      forms: [TENNIS_CLUB_FORM],
+      onboardingForm: [
+        {
+          id: 'correction-requester',
+          title: {
+            id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.corrector',
+            defaultMessage: 'Correction requester',
+            description: 'This is the title of the section'
+          },
+          fields: [
+            {
+              id: 'correction.requester.relationshop.intro',
+              type: 'PAGE_HEADER',
+              label: {
+                id: 'v2.correction.requester.relationshop.intro.label',
+                defaultMessage:
+                  'Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.',
+                description: 'The title for the corrector form'
+              }
+            },
+            {
+              id: 'correction.requester.relationship',
+              type: 'RADIO_GROUP',
+              options: {},
+              label: {
+                id: 'v2.correction.corrector.title',
+                defaultMessage: 'Who is requesting a change to this record?',
+                description: 'The title for the corrector form'
+              },
+              initialValue: '',
+              optionValues: [
+                {
+                  value: 'INFORMANT',
+                  label: {
+                    id: 'v2.correction.corrector.informant',
+                    defaultMessage: 'Informant',
+                    description:
+                      'Label for informant option in certificate correction form'
+                  }
+                },
+                {
+                  value: 'ANOTHER_AGENT',
+                  label: {
+                    id: 'v2.correction.corrector.anotherAgent',
+                    defaultMessage: 'Another registration agent or field agent',
+                    description:
+                      'Label for another registration or field agent option in certificate correction form'
+                  }
+                },
+                {
+                  value: 'REGISTRAR',
+                  label: {
+                    id: 'v2.correction.corrector.me',
+                    defaultMessage: 'Me (Registrar)',
+                    description:
+                      'Label for registrar option in certificate correction form'
+                  }
+                },
+                {
+                  value: 'OTHER',
+                  label: {
+                    id: 'v2.correction.corrector.others',
+                    defaultMessage: 'Someone else',
+                    description:
+                      'Label for someone else option in certificate correction form'
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'identity-check',
+          title: {
+            id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
+            defaultMessage: 'Verify their identity',
+            description: 'This is the title of the section'
+          },
+          fields: [
+            {
+              id: 'correction.identity-check.instructions',
+              type: 'PAGE_HEADER',
+              label: {
+                id: 'v2.correction.corrector.identity.instruction',
+                defaultMessage:
+                  'Please verify the identity of the person making this request',
+                description: 'The title for the corrector form'
+              }
+            },
+            {
+              id: 'correction.identity-check.verified',
+              type: 'RADIO_GROUP',
+              options: {},
+              label: {
+                id: 'v2.correction.corrector.identity.verified.label',
+                defaultMessage: 'Identity verified',
+                description: 'The title for the corrector form'
+              },
+              initialValue: '',
+              required: true,
+              optionValues: [
+                {
+                  value: 'VERIFIED',
+                  label: {
+                    id: 'v2.correction.corrector.identity.verified',
+                    defaultMessage: 'I have verified their identity',
+                    description:
+                      'Label for verified option in corrector identity check page'
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      additionalDetailsForm: [
+        {
+          id: 'correction-request.supporting-documents',
+          title: {
+            id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
+            defaultMessage: 'Upload supporting documents',
+            description: 'This is the title of the section'
+          },
+          fields: [
+            {
+              id: 'correction.supportingDocs.introduction',
+              type: 'PAGE_HEADER',
+              label: {
+                id: 'v2.correction.corrector.paragraph.title',
+                defaultMessage:
+                  'For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.',
+                description: 'The title for the corrector form'
+              }
+            },
+            {
+              id: 'correction.supportingDocs',
+              type: 'FILE',
+              label: {
+                id: 'v2.correction.corrector.title',
+                defaultMessage: 'Upload supporting documents',
+                description: 'The title for the corrector form'
+              }
+            },
+            {
+              id: 'correction.request.supportingDocuments',
+              type: 'RADIO_GROUP',
+              label: {
+                id: 'v2.correction.corrector.title',
+                defaultMessage: 'Who is requesting a change to this record?',
+                description: 'The title for the corrector form'
+              },
+              initialValue: '',
+              options: {
+                size: 'NORMAL'
+              },
+              optionValues: [
+                {
+                  value: 'ATTEST',
+                  label: {
+                    id: 'v2.correction.supportingDocuments.attest.label',
+                    defaultMessage:
+                      'I attest to seeing supporting documentation and have a copy filed at my office',
+                    description: ''
+                  }
+                },
+                {
+                  value: 'NOT_NEEDED',
+                  label: {
+                    id: 'v2.correction.supportingDocuments.notNeeded.label',
+                    defaultMessage: 'No supporting documents required',
+                    description: ''
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'correction-request.additional-details',
+          title: {
+            id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.corrector',
+            defaultMessage: 'Reason for correction',
+            description: 'This is the title of the section'
+          },
+          fields: [
+            {
+              id: 'correction.request.reason',
+              type: 'TEXT',
+              label: {
+                id: 'v2.correction.reason.title',
+                defaultMessage: 'Reason for correction?',
+                description: 'The title for the corrector form'
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       type: 'CUSTOM',
@@ -308,14 +972,19 @@ export const tennisClubMembershipEvent = defineConfig({
         defaultMessage: 'My custom action',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.tennis-club-membership.action.sdf.label'
+        id: 'v2.event.tennis-club-membership.action.sdf.label'
       },
-      allowedWhen: defineConditional(
-        or(
-          eventHasAction('VALIDATE'),
-          and(eventHasAction('DECLARE'), userHasScope('register'))
-        )
-      ),
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(
+            or(
+              eventHasAction('VALIDATE'),
+              and(eventHasAction('DECLARE'), userHasScope('register'))
+            )
+          )
+        }
+      ],
       forms: []
     }
   ]
