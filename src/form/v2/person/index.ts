@@ -278,7 +278,7 @@ export const getPersonInputCommonFields = (
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.dobUnknown`).isEqualTo('true').apply()
+        conditional: field(`${person}.dobUnknown`).isEqualTo(true).apply()
       }
     ]
   },
@@ -312,7 +312,7 @@ export const getPersonInputCommonFields = (
       {
         type: 'HIDE',
         conditional: field(`${person}.dobUnknown`)
-          .or((field) => field.isUndefined().inArray(['false']))
+          .or((field) => field.isUndefined().isEqualTo(false))
           .apply()
       }
     ]
@@ -364,7 +364,7 @@ const fatherAddressFields = [
       {
         type: 'HIDE',
         conditional: field(`${PersonType.mother}.detailsNotAvailable`)
-          .inArray(['true'])
+          .isEqualTo(true)
           .apply()
       }
     ]
