@@ -55,22 +55,22 @@ const idTypeMessageDescriptors = {
   NATIONAL_ID: {
     defaultMessage: 'National ID',
     description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypeNationalID'
+    id: 'v2.form.field.label.iDTypeNationalID'
   },
   PASSPORT: {
     defaultMessage: 'Passport',
     description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypePassport'
+    id: 'v2.form.field.label.iDTypePassport'
   },
   BIRTH_REGISTRATION_NUMBER: {
     defaultMessage: 'Birth Registration Number',
     description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypeBRN'
+    id: 'v2.form.field.label.iDTypeBRN'
   },
   NONE: {
     defaultMessage: 'None',
     description: 'Option for form field: Type of ID',
-    id: 'form.field.label.iDTypeNone'
+    id: 'v2.form.field.label.iDTypeNone'
   }
 } satisfies Record<keyof typeof IDTypes, TranslationConfig>
 
@@ -78,32 +78,32 @@ const maritalStatusMessageDescriptors = {
   SINGLE: {
     defaultMessage: 'Single',
     description: 'Option for form field: Marital status',
-    id: 'form.field.label.maritalStatusSingle'
+    id: 'v2.form.field.label.maritalStatusSingle'
   },
   MARRIED: {
     defaultMessage: 'Married',
     description: 'Option for form field: Marital status',
-    id: 'form.field.label.maritalStatusMarried'
+    id: 'v2.form.field.label.maritalStatusMarried'
   },
   WIDOWED: {
     defaultMessage: 'Widowed',
     description: 'Option for form field: Marital status',
-    id: 'form.field.label.maritalStatusWidowed'
+    id: 'v2.form.field.label.maritalStatusWidowed'
   },
   DIVORCED: {
     defaultMessage: 'Divorced',
     description: 'Option for form field: Marital status',
-    id: 'form.field.label.maritalStatusDivorced'
+    id: 'v2.form.field.label.maritalStatusDivorced'
   },
   SEPARATED: {
     defaultMessage: 'Separated',
     description: 'Option for form field: Marital status',
-    id: 'form.field.label.maritalStatusSeparated'
+    id: 'v2.form.field.label.maritalStatusSeparated'
   },
   NOT_STATED: {
     defaultMessage: 'Not stated',
     description: 'Option for form field: Marital status',
-    id: 'form.field.label.maritalStatusNotStated'
+    id: 'v2.form.field.label.maritalStatusNotStated'
   }
 } satisfies Record<keyof typeof MaritalStatus, TranslationConfig>
 
@@ -111,22 +111,22 @@ const educationalAttainmentMessageDescriptors = {
   NO_SCHOOLING: {
     defaultMessage: 'No schooling',
     description: 'Option for form field: no education',
-    id: 'form.field.label.educationAttainmentNone'
+    id: 'v2.form.field.label.educationAttainmentNone'
   },
   PRIMARY_ISCED_1: {
     defaultMessage: 'Primary',
     description: 'Option for form field: ISCED1 education',
-    id: 'form.field.label.educationAttainmentISCED1'
+    id: 'v2.form.field.label.educationAttainmentISCED1'
   },
   POST_SECONDARY_ISCED_4: {
     defaultMessage: 'Secondary',
     description: 'Option for form field: ISCED4 education',
-    id: 'form.field.label.educationAttainmentISCED4'
+    id: 'v2.form.field.label.educationAttainmentISCED4'
   },
   FIRST_STAGE_TERTIARY_ISCED_5: {
     defaultMessage: 'Tertiary',
     description: 'Option for form field: ISCED5 education',
-    id: 'form.field.label.educationAttainmentISCED5'
+    id: 'v2.form.field.label.educationAttainmentISCED5'
   }
 } satisfies Record<keyof typeof EducationalAttainment, TranslationConfig>
 
@@ -149,12 +149,12 @@ const YesNoTypes = {
 const yesNoMessageDescriptors = {
   YES: {
     defaultMessage: 'Yes',
-    id: 'form.field.label.Yes',
+    id: 'v2.form.field.label.Yes',
     description: 'Label for form field radio option Yes'
   },
   NO: {
     defaultMessage: 'No',
-    id: 'form.field.label.No',
+    id: 'v2.form.field.label.No',
     description: 'Label for form field radio option No'
   }
 } satisfies Record<keyof typeof YesNoTypes, TranslationConfig>
@@ -172,7 +172,7 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     label: {
       defaultMessage: 'Type of ID',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.idType.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.idType.label`
     },
     options: idTypeOptions
   },
@@ -183,7 +183,7 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     label: {
       defaultMessage: 'ID Number',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.nid.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.nid.label`
     },
     conditionals: [
       {
@@ -201,7 +201,7 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     label: {
       defaultMessage: 'ID Number',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.passport.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.passport.label`
     },
     conditionals: [
       {
@@ -219,7 +219,7 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     label: {
       defaultMessage: 'ID Number',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.brn.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.brn.label`
     },
     conditionals: [
       {
@@ -245,7 +245,7 @@ export const getPersonInputCommonFields = (
     label: {
       defaultMessage: 'First name(s)',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.firstname.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.firstname.label`
     }
   },
   {
@@ -256,7 +256,7 @@ export const getPersonInputCommonFields = (
     label: {
       defaultMessage: 'Last name',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.surname.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.surname.label`
     }
   },
   {
@@ -268,7 +268,7 @@ export const getPersonInputCommonFields = (
         message: {
           defaultMessage: 'Please enter a valid date',
           description: 'This is the error message for invalid date',
-          id: `event.birth.action.declare.form.section.${person}.field.dob.error`
+          id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
         },
         validator: field(`${person}.dob`).isBefore().now().apply()
       }
@@ -276,12 +276,12 @@ export const getPersonInputCommonFields = (
     label: {
       defaultMessage: 'Date of birth',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.dob.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.dob.label`
     },
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.dobUnknown`).isEqualTo('true').apply()
+        conditional: field(`${person}.dobUnknown`).isEqualTo(true).apply()
       }
     ]
   },
@@ -292,7 +292,7 @@ export const getPersonInputCommonFields = (
     label: {
       defaultMessage: 'Exact date of birth unknown',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.age.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.age.checkbox.label`
     }
   },
   {
@@ -302,20 +302,20 @@ export const getPersonInputCommonFields = (
     label: {
       defaultMessage: `Age of ${person}`,
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.age.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.age.text.label`
     },
-    options: {
+    configuration: {
       postfix: {
         defaultMessage: 'years',
         description: 'This is the postfix for age field',
-        id: `event.birth.action.declare.form.section.${person}.field.age.postfix`
+        id: `v2.event.birth.action.declare.form.section.person.field.age.postfix`
       }
     },
     conditionals: [
       {
         type: 'HIDE',
         conditional: field(`${person}.dobUnknown`)
-          .or((field) => field.isUndefined().inArray(['false']))
+          .or((field) => field.isUndefined().isEqualTo(false))
           .apply()
       }
     ]
@@ -327,7 +327,7 @@ export const getPersonInputCommonFields = (
     label: {
       defaultMessage: 'Nationality',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.nationality.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.nationality.label`
     }
   },
   ...getIdFields(person),
@@ -342,9 +342,9 @@ export const getPersonInputCommonFields = (
     label: {
       defaultMessage: 'Usual place of residence',
       description: 'This is the label for the field',
-      id: `event.birth.action.declare.form.section.${person}.field.addressHelper.label`
+      id: `v2.event.birth.action.declare.form.section.person.field.addressHelper.label`
     },
-    options: { fontVariant: 'h3' }
+    configuration: { styles: { fontVariant: 'h3' } }
   }
 ]
 
@@ -354,13 +354,12 @@ const fatherAddressFields = [
       {
         id: `${PersonType.father}.addressSameAs`,
         type: 'RADIO_GROUP',
-        optionValues: yesNoRadioOptions,
-        options: {},
+        options: yesNoRadioOptions,
         required: true,
         label: {
           defaultMessage: "Same as mother's usual place of residence?",
           description: 'This is the label for the field',
-          id: `event.birth.action.declare.form.section.${PersonType.father}.field.address.addressSameAs.label`
+          id: `v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label`
         }
       }
     ],
@@ -368,7 +367,7 @@ const fatherAddressFields = [
       {
         type: 'HIDE',
         conditional: field(`${PersonType.mother}.detailsNotAvailable`)
-          .inArray(['true'])
+          .isEqualTo(true)
           .apply()
       }
     ]
@@ -402,7 +401,7 @@ export const getPersonInputFields = (person: PersonType): FieldConfig[] => {
       label: {
         defaultMessage: 'Marital Status',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.maritalStatus.label`
+        id: `v2.event.birth.action.declare.form.section.person.field.maritalStatus.label`
       },
       options: maritalStatusOptions
     },
@@ -413,7 +412,7 @@ export const getPersonInputFields = (person: PersonType): FieldConfig[] => {
       label: {
         defaultMessage: 'Level of education',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.educationalAttainment.label`
+        id: `v2.event.birth.action.declare.form.section.person.field.educationalAttainment.label`
       },
       options: educationalAttainmentOptions
     },
@@ -424,7 +423,7 @@ export const getPersonInputFields = (person: PersonType): FieldConfig[] => {
       label: {
         defaultMessage: 'Occupation',
         description: 'This is the label for the field',
-        id: `event.birth.action.declare.form.section.${person}.field.occupation.label`
+        id: `v2.event.birth.action.declare.form.section.person.field.occupation.label`
       }
     }
   ]
