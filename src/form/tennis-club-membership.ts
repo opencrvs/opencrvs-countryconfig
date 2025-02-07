@@ -140,7 +140,7 @@ const TENNIS_CLUB_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('recommender.none').isEqualTo('true').apply()
+              conditional: field('recommender.none').isEqualTo(true).apply()
             }
           ],
           label: {
@@ -156,7 +156,7 @@ const TENNIS_CLUB_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('recommender.none').isEqualTo('true').apply()
+              conditional: field('recommender.none').isEqualTo(true).apply()
             }
           ],
           label: {
@@ -172,7 +172,7 @@ const TENNIS_CLUB_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: field('recommender.none').isEqualTo('true').apply()
+              conditional: field('recommender.none').isEqualTo(true).apply()
             }
           ],
           label: {

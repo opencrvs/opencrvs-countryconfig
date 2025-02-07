@@ -5317,14 +5317,14 @@ exports[`birth configuration is parsed 1`] = `
                           "$form": {
                             "properties": {
                               "informant.dobUnknown": {
-                                "const": "true",
+                                "const": true,
                                 "oneOf": [
                                   {
-                                    "const": "true",
+                                    "const": true,
                                     "type": "string",
                                   },
                                   {
-                                    "const": "true",
+                                    "const": true,
                                     "type": "boolean",
                                   },
                                 ],
@@ -5536,10 +5536,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "informant.dobUnknown": {
-                                    "enum": [
-                                      "false",
+                                    "const": false,
+                                    "oneOf": [
+                                      {
+                                        "const": false,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": false,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -8731,10 +8738,17 @@ exports[`birth configuration is parsed 1`] = `
                                   "$form": {
                                     "properties": {
                                       "mother.detailsNotAvailable": {
-                                        "enum": [
-                                          "false",
+                                        "const": false,
+                                        "oneOf": [
+                                          {
+                                            "const": false,
+                                            "type": "string",
+                                          },
+                                          {
+                                            "const": false,
+                                            "type": "boolean",
+                                          },
                                         ],
-                                        "type": "string",
                                       },
                                     },
                                     "required": [
@@ -8800,10 +8814,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -8893,10 +8914,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -8984,14 +9012,14 @@ exports[`birth configuration is parsed 1`] = `
                           "$form": {
                             "properties": {
                               "mother.dobUnknown": {
-                                "const": "true",
+                                "const": true,
                                 "oneOf": [
                                   {
-                                    "const": "true",
+                                    "const": true,
                                     "type": "string",
                                   },
                                   {
-                                    "const": "true",
+                                    "const": true,
                                     "type": "boolean",
                                   },
                                 ],
@@ -9018,10 +9046,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -9148,10 +9183,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -9261,10 +9303,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.dobUnknown": {
-                                    "enum": [
-                                      "false",
+                                    "const": false,
+                                    "oneOf": [
+                                      {
+                                        "const": false,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": false,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -9292,10 +9341,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -9392,10 +9448,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -9485,10 +9548,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -9665,10 +9735,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -9811,10 +9888,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -9957,10 +10041,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -10050,10 +10141,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -10142,10 +10240,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -10239,10 +10344,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -10383,10 +10495,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -10527,10 +10646,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -10671,10 +10797,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -10815,10 +10948,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -10959,10 +11099,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -11103,10 +11250,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -11247,10 +11401,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -11393,10 +11554,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -11542,10 +11710,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -11694,10 +11869,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -11910,10 +12092,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -12107,10 +12296,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -12304,10 +12500,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -12501,10 +12704,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -12698,10 +12908,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -12897,10 +13114,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -12990,10 +13214,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -13082,10 +13313,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -13225,10 +13463,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -13352,10 +13597,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -13445,10 +13697,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "mother.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -13643,10 +13902,17 @@ exports[`birth configuration is parsed 1`] = `
                                   "$form": {
                                     "properties": {
                                       "father.detailsNotAvailable": {
-                                        "enum": [
-                                          "false",
+                                        "const": false,
+                                        "oneOf": [
+                                          {
+                                            "const": false,
+                                            "type": "string",
+                                          },
+                                          {
+                                            "const": false,
+                                            "type": "boolean",
+                                          },
                                         ],
-                                        "type": "string",
                                       },
                                     },
                                     "required": [
@@ -13712,10 +13978,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -13805,10 +14078,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -13896,14 +14176,14 @@ exports[`birth configuration is parsed 1`] = `
                           "$form": {
                             "properties": {
                               "father.dobUnknown": {
-                                "const": "true",
+                                "const": true,
                                 "oneOf": [
                                   {
-                                    "const": "true",
+                                    "const": true,
                                     "type": "string",
                                   },
                                   {
-                                    "const": "true",
+                                    "const": true,
                                     "type": "boolean",
                                   },
                                 ],
@@ -13930,10 +14210,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -14060,10 +14347,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -14173,10 +14467,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.dobUnknown": {
-                                    "enum": [
-                                      "false",
+                                    "const": false,
+                                    "oneOf": [
+                                      {
+                                        "const": false,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": false,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -14204,10 +14505,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -14304,10 +14612,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -14397,10 +14712,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -14577,10 +14899,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -14723,10 +15052,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -14869,10 +15205,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -14962,10 +15305,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -15054,10 +15404,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -15149,10 +15506,17 @@ exports[`birth configuration is parsed 1`] = `
                           "$form": {
                             "properties": {
                               "mother.detailsNotAvailable": {
-                                "enum": [
-                                  "true",
+                                "const": true,
+                                "oneOf": [
+                                  {
+                                    "const": true,
+                                    "type": "string",
+                                  },
+                                  {
+                                    "const": true,
+                                    "type": "boolean",
+                                  },
                                 ],
-                                "type": "string",
                               },
                             },
                             "required": [
@@ -15176,10 +15540,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -15312,10 +15683,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -15481,10 +15859,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -15650,10 +16035,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -15819,10 +16211,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -15988,10 +16387,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -16157,10 +16563,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -16326,10 +16739,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -16495,10 +16915,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -16666,10 +17093,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -16840,10 +17274,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -17017,10 +17458,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -17258,10 +17706,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -17480,10 +17935,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -17702,10 +18164,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -17924,10 +18393,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -18146,10 +18622,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -18370,10 +18853,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -18463,10 +18953,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -18555,10 +19052,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -18698,10 +19202,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
@@ -18825,10 +19336,17 @@ exports[`birth configuration is parsed 1`] = `
                               "$form": {
                                 "properties": {
                                   "father.detailsNotAvailable": {
-                                    "enum": [
-                                      "true",
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
                                     ],
-                                    "type": "string",
                                   },
                                 },
                                 "required": [
