@@ -15,7 +15,8 @@ import { getAddressFields } from './address'
 import {
   appendConditionalsToFields,
   createSelectOptions,
-  emptyMessage
+  emptyMessage,
+  MAX_NAME_LENGTH
 } from '../utils'
 
 export const PersonType = {
@@ -238,6 +239,7 @@ export const getPersonInputCommonFields = (
 ): FieldConfig[] => [
   {
     id: `${person}.firstname`,
+    options: { maxLength: MAX_NAME_LENGTH },
     type: 'TEXT',
     required: true,
     label: {
@@ -248,6 +250,7 @@ export const getPersonInputCommonFields = (
   },
   {
     id: `${person}.surname`,
+    options: { maxLength: MAX_NAME_LENGTH },
     type: 'TEXT',
     required: true,
     label: {
@@ -267,7 +270,7 @@ export const getPersonInputCommonFields = (
           description: 'This is the error message for invalid date',
           id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
         },
-        validator: field(`${person}.dob`).isBeforeNow().apply()
+        validator: field(`${person}.dob`).isBefore().now().apply()
       }
     ],
     label: {
@@ -329,7 +332,7 @@ export const getPersonInputCommonFields = (
   },
   ...getIdFields(person),
   {
-    id: `${person}.address.divider.start`,
+    id: `${person}.addressDivider_1`,
     type: 'DIVIDER',
     label: emptyMessage
   },
@@ -387,7 +390,7 @@ export const getPersonInputFields = (person: PersonType): FieldConfig[] => {
     ...getPersonInputCommonFields(person),
     ...(isFather ? fatherAddressFields : getAddressFields(person)),
     {
-      id: `${person}.address.divider.end`,
+      id: `${person}.addressDivider_2`,
       type: 'DIVIDER',
       label: emptyMessage
     },
