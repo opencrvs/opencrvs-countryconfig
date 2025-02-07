@@ -5318,7 +5318,16 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "informant.dobUnknown": {
                                 "const": "true",
-                                "type": "string",
+                                "oneOf": [
+                                  {
+                                    "const": "true",
+                                    "type": "string",
+                                  },
+                                  {
+                                    "const": "true",
+                                    "type": "boolean",
+                                  },
+                                ],
                               },
                             },
                             "required": [
@@ -8976,7 +8985,16 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "mother.dobUnknown": {
                                 "const": "true",
-                                "type": "string",
+                                "oneOf": [
+                                  {
+                                    "const": "true",
+                                    "type": "string",
+                                  },
+                                  {
+                                    "const": "true",
+                                    "type": "boolean",
+                                  },
+                                ],
                               },
                             },
                             "required": [
@@ -13879,7 +13897,16 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "father.dobUnknown": {
                                 "const": "true",
-                                "type": "string",
+                                "oneOf": [
+                                  {
+                                    "const": "true",
+                                    "type": "string",
+                                  },
+                                  {
+                                    "const": "true",
+                                    "type": "boolean",
+                                  },
+                                ],
                               },
                             },
                             "required": [
