@@ -839,10 +839,10 @@
   resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.17.tgz#e72a9f074afa6d85a18743837ca2f71077c7ec17"
   integrity sha512-ya4FrkncaYxCpoO+MOS6R9PW9gROimHndNWSV04lFUkZLldnqqRazowqTQKGUXFwOWh2zJUBbErB0JwGKXspFQ==
 
-"@opencrvs/toolkit@0.0.35-ml":
-  version "0.0.35-ml"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.35-ml.tgz#cfe9201fc2b203d482241778c2dd93e7e7537c39"
-  integrity sha512-ZgB0OKbKcJd3of5odr+u2qNs99AgItuxFYXYBaD80itL3/1HLG+QvZiUH2uGOseq7cejw1fPsBh2bMEx/S6oZQ==
+"@opencrvs/toolkit@0.0.37-ml":
+  version "0.0.37-ml"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.37-ml.tgz#b127bf47ca4300f4ceb89c7b80bf0bc72603b6e8"
+  integrity sha512-TUI3feu2pu7dQx8r6PotmM4sNSddAkHlJnOHX7vJmL6pTIoaiBSpdCyLYAgl4dn03OaAjBDzIBesaXJKvw/3FA==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
@@ -5706,7 +5706,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod@^3.17.3:
-  version "3.22.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
-  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
+zod@^3.24.1:
+  version "3.24.1"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.1.tgz#27445c912738c8ad1e9de1bea0359fa44d9d35ee"
+  integrity sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==

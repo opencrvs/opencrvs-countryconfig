@@ -145,7 +145,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
               conditional: defineConditional(
                 or(
                   field('mother.detailsNotAvailable')
-                    .or((field) => field.isUndefined().inArray(['false']))
+                    .or((field) => field.isUndefined().isEqualTo(false))
                     .apply(),
                   field('informant.relation')
                     .inArray([InformantTypes.MOTHER])
@@ -174,7 +174,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
               type: 'HIDE',
               conditional: defineConditional(
                 and(
-                  field('mother.detailsNotAvailable').inArray(['true']).apply(),
+                  field('mother.detailsNotAvailable').isEqualTo(true).apply(),
                   field('informant.relation')
                     .or((field) =>
                       field.isUndefined().not.inArray([InformantTypes.MOTHER])
@@ -237,7 +237,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
               type: 'HIDE',
               conditional: or(
                 field('father.detailsNotAvailable')
-                  .or((field) => field.isUndefined().inArray(['false']))
+                  .or((field) => field.isUndefined().isEqualTo(false))
                   .apply(),
                 field('informant.relation')
                   .inArray([InformantTypes.FATHER])
@@ -253,7 +253,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
               type: 'HIDE',
               conditional: defineConditional(
                 and(
-                  field('father.detailsNotAvailable').inArray(['true']).apply(),
+                  field('father.detailsNotAvailable').isEqualTo(true).apply(),
                   field('informant.relation')
                     .or((field) =>
                       field.isUndefined().not.inArray([InformantTypes.FATHER])
@@ -282,7 +282,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
             description: 'This is the label for the field',
             id: `event.birth.action.declare.form.section.documents.field.helper.label`
           },
-          options: { fontVariant: 'reg16' }
+          configuration: { styles: { fontVariant: 'reg16' } }
         },
         {
           id: 'documents.proofOfBirth',
