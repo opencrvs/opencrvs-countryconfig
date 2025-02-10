@@ -129,6 +129,10 @@ services:
     environment:
       - QA_ENV=true
       - NODE_ENV=production
+
+  mosip-api:
+    volumes:
+      - /certs:/certs:ro 
   
   mosip-mock:
     image: ghcr.io/opencrvs/mosip-mock:${MOSIP_API_VERSION}
