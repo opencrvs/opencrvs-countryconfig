@@ -160,9 +160,12 @@ services:
 
   esignet-mock:
     image: ghcr.io/opencrvs/esignet-mock:${MOSIP_API_VERSION}
+    volumes:
+      - /certs:/certs:ro 
     environment:
       - NODE_ENV=production
       - CLIENT_URL=http://mosip-api:2024/webhooks/mosip
+      - OIDP_CLIENT_PRIVATE_KEY_PATH=${OIDP_CLIENT_PRIVATE_KEY_PATH:-}
     deploy:
       replicas: 1
       labels:
