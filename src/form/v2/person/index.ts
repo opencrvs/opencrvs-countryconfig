@@ -130,7 +130,10 @@ const educationalAttainmentMessageDescriptors = {
   }
 } satisfies Record<keyof typeof EducationalAttainment, TranslationConfig>
 
-const idTypeOptions = createSelectOptions(IDTypes, idTypeMessageDescriptors)
+export const idTypeOptions = createSelectOptions(
+  IDTypes,
+  idTypeMessageDescriptors
+)
 
 const maritalStatusOptions = createSelectOptions(
   MaritalStatus,
@@ -239,7 +242,7 @@ export const getPersonInputCommonFields = (
 ): FieldConfig[] => [
   {
     id: `${person}.firstname`,
-    options: { maxLength: MAX_NAME_LENGTH },
+    configuration: { maxLength: MAX_NAME_LENGTH },
     type: 'TEXT',
     required: true,
     label: {
@@ -250,7 +253,7 @@ export const getPersonInputCommonFields = (
   },
   {
     id: `${person}.surname`,
-    options: { maxLength: MAX_NAME_LENGTH },
+    configuration: { maxLength: MAX_NAME_LENGTH },
     type: 'TEXT',
     required: true,
     label: {

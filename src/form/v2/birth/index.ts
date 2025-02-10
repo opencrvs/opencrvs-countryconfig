@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineConfig } from '@opencrvs/toolkit/events'
+import { and, defineConfig, or, userHasScope } from '@opencrvs/toolkit/events'
 import {
   defineConditional,
   eventHasAction,
@@ -76,6 +76,48 @@ export const birthEvent = defineConfig({
         {
           type: 'SHOW',
           conditional: defineConditional(not(eventHasAction('DECLARE')))
+        }
+      ]
+    },
+    {
+      type: 'VALIDATE',
+      label: {
+        defaultMessage: 'Validate',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.birth.action.validate.label'
+      },
+      forms: [BIRTH_DECLARE_FORM],
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(
+            and(eventHasAction('DECLARE'), not(eventHasAction('VALIDATE')))
+          )
+        }
+      ]
+    },
+    {
+      type: 'REGISTER',
+      label: {
+        defaultMessage: 'Register',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.birth.action.register.label'
+      },
+      forms: [BIRTH_DECLARE_FORM],
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: defineConditional(
+            and(
+              or(
+                eventHasAction('VALIDATE'),
+                and(eventHasAction('DECLARE'), userHasScope('register'))
+              ),
+              not(eventHasAction('REGISTER'))
+            )
+          )
         }
       ]
     }

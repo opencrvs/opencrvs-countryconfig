@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineForm } from '@opencrvs/toolkit/events'
+import { defineForm, JSONSchema } from '@opencrvs/toolkit/events'
 import {
   and,
   defineConditional,
@@ -19,7 +19,7 @@ import {
 import { childPage } from './child'
 import { informantPage, InformantTypes } from './informant'
 import { appendConditionalsToFields, emptyMessage } from '../../utils'
-import { getPersonInputFields, PersonType } from '../../person'
+import { getPersonInputFields, idTypeOptions, PersonType } from '../../person'
 
 export const BIRTH_DECLARE_FORM = defineForm({
   label: {
@@ -151,7 +151,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
                     .inArray([InformantTypes.MOTHER])
                     .apply()
                 )
-              )
+              ) as JSONSchema
             }
           ]
         },
@@ -181,7 +181,7 @@ export const BIRTH_DECLARE_FORM = defineForm({
                     )
                     .apply()
                 )
-              )
+              ) as JSONSchema
             }
           ]
         })
@@ -231,20 +231,20 @@ export const BIRTH_DECLARE_FORM = defineForm({
             defaultMessage: 'Reason',
             description: 'This is the label for the field',
             id: 'v2.event.birth.action.declare.form.section.father.field.reason.label'
-          },
-          conditionals: [
-            {
-              type: 'HIDE',
-              conditional: or(
-                field('father.detailsNotAvailable')
-                  .or((field) => field.isUndefined().isEqualTo(false))
-                  .apply(),
-                field('informant.relation')
-                  .inArray([InformantTypes.FATHER])
-                  .apply()
-              )
-            }
-          ]
+          }
+          // conditionals: [
+          //   {
+          //     type: 'HIDE',
+          //     conditional: or(
+          //       field('father.detailsNotAvailable')
+          //         .or((field) => field.isUndefined().isEqualTo(false))
+          //         .apply(),
+          //       field('informant.relation')
+          //         .inArray([InformantTypes.FATHER])
+          //         .apply()
+          //     )
+          //   }
+          // ] as JSONSchema
         },
         ...appendConditionalsToFields({
           inputFields: getPersonInputFields(PersonType.father),
@@ -275,16 +275,6 @@ export const BIRTH_DECLARE_FORM = defineForm({
       },
       fields: [
         {
-          id: `documents.helper`,
-          type: 'PARAGRAPH',
-          label: {
-            defaultMessage: 'The following documents are required',
-            description: 'This is the label for the field',
-            id: `event.birth.action.declare.form.section.documents.field.helper.label`
-          },
-          configuration: { styles: { fontVariant: 'reg16' } }
-        },
-        {
           id: 'documents.proofOfBirth',
           type: 'FILE',
           required: false,
@@ -299,13 +289,14 @@ export const BIRTH_DECLARE_FORM = defineForm({
         },
         {
           id: 'documents.proofOfMother',
-          type: 'FILE', // @ToDo File upload with options
+          type: 'FILE_WITH_OPTIONS',
           required: false,
           label: {
             defaultMessage: "Proof of mother's ID",
             description: 'This is the label for the field',
             id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfMother.label'
-          }
+          },
+          options: idTypeOptions
         },
 
         {
