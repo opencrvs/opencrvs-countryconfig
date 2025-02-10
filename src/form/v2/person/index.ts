@@ -239,7 +239,7 @@ export const getPersonInputCommonFields = (
 ): FieldConfig[] => [
   {
     id: `${person}.firstname`,
-    options: { maxLength: MAX_NAME_LENGTH },
+    configuration: { maxLength: MAX_NAME_LENGTH },
     type: 'TEXT',
     required: true,
     label: {
@@ -250,7 +250,7 @@ export const getPersonInputCommonFields = (
   },
   {
     id: `${person}.surname`,
-    options: { maxLength: MAX_NAME_LENGTH },
+    configuration: { maxLength: MAX_NAME_LENGTH },
     type: 'TEXT',
     required: true,
     label: {
