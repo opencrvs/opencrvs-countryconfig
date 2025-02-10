@@ -136,7 +136,7 @@ export function isDateNotOlderThanDays(limit: number) {
           description:
             'The error message appears when the given date is older than the limit days'
         },
-        props: { limit: 120 }
+        props: { limit: 365 }
       } satisfies ValidationResult
     }
 
