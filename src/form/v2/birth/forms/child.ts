@@ -17,6 +17,8 @@ import {
   emptyMessage
 } from '../../utils'
 import { AddressType, getAddressFields } from '../../person/address'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
+import { MAX_NAME_LENGTH } from '../../utils'
 
 const GenderTypes = {
   MALE: 'male',
@@ -178,6 +180,7 @@ export const childPage = defineFormPage({
     {
       id: 'child.firstname',
       type: 'TEXT',
+      configuration: { maxLength: MAX_NAME_LENGTH },
       required: true,
       label: {
         defaultMessage: 'First name(s)',
@@ -188,6 +191,7 @@ export const childPage = defineFormPage({
     {
       id: 'child.surname',
       type: 'TEXT',
+      configuration: { maxLength: MAX_NAME_LENGTH },
       required: true,
       label: {
         defaultMessage: 'Last name',
@@ -217,7 +221,7 @@ export const childPage = defineFormPage({
             description: 'This is the error message for invalid date',
             id: 'v2.event.birth.action.declare.form.section.child.field.dob.error'
           },
-          validator: field('child.dob').isBeforeNow().apply()
+          validator: field('child.dob').isBefore().now().apply()
         }
       ],
       label: {
@@ -227,7 +231,33 @@ export const childPage = defineFormPage({
       }
     },
     {
-      id: 'child.placeOfBirth.divider.start',
+      id: 'child.reason',
+      type: 'TEXT',
+      required: true,
+      label: {
+        defaultMessage: 'Reason for delayed registration',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.child.field.reason.label'
+      },
+      conditionals: [
+        {
+          type: 'HIDE',
+          conditional: field('child.dob')
+            .isAfter()
+            .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+            .inPast()
+            .apply()
+        },
+        {
+          type: 'HIDE',
+          conditional: field('child.dob')
+            .or((field) => field.isUndefined().not.isBefore().now())
+            .apply()
+        }
+      ]
+    },
+    {
+      id: 'child.divider_1',
       type: 'DIVIDER',
       label: emptyMessage
     },
@@ -287,7 +317,7 @@ export const childPage = defineFormPage({
       ]
     }),
     {
-      id: 'child.placeOfBirth.divider.end',
+      id: 'child.divider_2',
       type: 'DIVIDER',
       label: emptyMessage
     },

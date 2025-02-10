@@ -20,6 +20,7 @@ import {
   field
 } from '@opencrvs/toolkit/conditionals'
 import { Event } from './types/types'
+import { MAX_NAME_LENGTH } from './v2/utils'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
@@ -55,6 +56,7 @@ const TENNIS_CLUB_FORM = defineForm({
         {
           id: 'applicant.firstname',
           type: 'TEXT',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           required: true,
           label: {
             defaultMessage: "Applicant's first name",
@@ -65,6 +67,7 @@ const TENNIS_CLUB_FORM = defineForm({
         {
           id: 'applicant.surname',
           type: 'TEXT',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           required: true,
           label: {
             defaultMessage: "Applicant's surname",
@@ -83,7 +86,7 @@ const TENNIS_CLUB_FORM = defineForm({
                 description: 'This is the error message for invalid date',
                 id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error'
               },
-              validator: field('applicant.dob').isBeforeNow().apply()
+              validator: field('applicant.dob').isBefore().now().apply()
             }
           ],
           label: {
@@ -135,6 +138,7 @@ const TENNIS_CLUB_FORM = defineForm({
         },
         {
           id: 'recommender.firstname',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           type: 'TEXT',
           required: true,
           conditionals: [
@@ -151,6 +155,7 @@ const TENNIS_CLUB_FORM = defineForm({
         },
         {
           id: 'recommender.surname',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           type: 'TEXT',
           required: true,
           conditionals: [
