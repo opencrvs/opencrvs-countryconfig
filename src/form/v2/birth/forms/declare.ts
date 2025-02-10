@@ -231,20 +231,22 @@ export const BIRTH_DECLARE_FORM = defineForm({
             defaultMessage: 'Reason',
             description: 'This is the label for the field',
             id: 'v2.event.birth.action.declare.form.section.father.field.reason.label'
-          }
-          // conditionals: [
-          //   {
-          //     type: 'HIDE',
-          //     conditional: or(
-          //       field('father.detailsNotAvailable')
-          //         .or((field) => field.isUndefined().isEqualTo(false))
-          //         .apply(),
-          //       field('informant.relation')
-          //         .inArray([InformantTypes.FATHER])
-          //         .apply()
-          //     )
-          //   }
-          // ] as JSONSchema
+          },
+          conditionals: [
+            {
+              type: 'HIDE',
+              conditional: defineConditional(
+                or(
+                  field('father.detailsNotAvailable')
+                    .or((field) => field.isUndefined().isEqualTo(false))
+                    .apply(),
+                  field('informant.relation')
+                    .inArray([InformantTypes.FATHER])
+                    .apply()
+                )
+              )
+            }
+          ]
         },
         ...appendConditionalsToFields({
           inputFields: getPersonInputFields(PersonType.father),

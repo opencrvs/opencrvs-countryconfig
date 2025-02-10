@@ -118,6 +118,9 @@ exports[`birth configuration is parsed 1`] = `
             {
               "fields": [
                 {
+                  "configuration": {
+                    "maxLength": 32,
+                  },
                   "id": "child.firstname",
                   "label": {
                     "defaultMessage": "First name(s)",
@@ -128,6 +131,9 @@ exports[`birth configuration is parsed 1`] = `
                   "type": "TEXT",
                 },
                 {
+                  "configuration": {
+                    "maxLength": 32,
+                  },
                   "id": "child.surname",
                   "label": {
                     "defaultMessage": "Last name",
@@ -195,9 +201,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "child.dob": {
                                 "format": "date",
-                                "formatMaximum": {
-                                  "$data": "2/$now",
-                                },
+                                "formatMaximum": "2025-02-10",
                                 "type": "string",
                               },
                             },
@@ -206,14 +210,9 @@ exports[`birth configuration is parsed 1`] = `
                             ],
                             "type": "object",
                           },
-                          "$now": {
-                            "format": "date",
-                            "type": "string",
-                          },
                         },
                         "required": [
                           "$form",
-                          "$now",
                         ],
                         "type": "object",
                       },
@@ -221,7 +220,95 @@ exports[`birth configuration is parsed 1`] = `
                   ],
                 },
                 {
-                  "id": "child.placeOfBirth.divider.start",
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "properties": {
+                          "$form": {
+                            "properties": {
+                              "child.dob": {
+                                "format": "date",
+                                "formatMinimum": "2024-02-11",
+                                "type": "string",
+                              },
+                            },
+                            "required": [
+                              "child.dob",
+                            ],
+                            "type": "object",
+                          },
+                        },
+                        "required": [
+                          "$form",
+                        ],
+                        "type": "object",
+                      },
+                      "type": "HIDE",
+                    },
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "not": {
+                                  "required": [
+                                    "child.dob",
+                                  ],
+                                  "type": "object",
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "child.dob": {
+                                    "not": {
+                                      "format": "date",
+                                      "formatMaximum": "2025-02-10",
+                                    },
+                                    "type": "string",
+                                  },
+                                },
+                                "required": [
+                                  "child.dob",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                        "required": [],
+                        "type": "object",
+                      },
+                      "type": "HIDE",
+                    },
+                  ],
+                  "id": "child.reason",
+                  "label": {
+                    "defaultMessage": "Reason for delayed registration",
+                    "description": "This is the label for the field",
+                    "id": "event.birth.action.declare.form.section.child.field.reason.label",
+                  },
+                  "required": true,
+                  "type": "TEXT",
+                },
+                {
+                  "id": "child.divider_1",
                   "label": {
                     "defaultMessage": "",
                     "description": "empty string",
@@ -4884,7 +4971,7 @@ exports[`birth configuration is parsed 1`] = `
                   "type": "TEXT",
                 },
                 {
-                  "id": "child.placeOfBirth.divider.end",
+                  "id": "child.divider_2",
                   "label": {
                     "defaultMessage": "",
                     "description": "empty string",
@@ -5236,6 +5323,9 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
+                  "configuration": {
+                    "maxLength": 32,
+                  },
                   "id": "informant.firstname",
                   "label": {
                     "defaultMessage": "First name(s)",
@@ -5300,6 +5390,9 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
+                  "configuration": {
+                    "maxLength": 32,
+                  },
                   "id": "informant.surname",
                   "label": {
                     "defaultMessage": "Last name",
@@ -5417,9 +5510,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "informant.dob": {
                                 "format": "date",
-                                "formatMaximum": {
-                                  "$data": "2/$now",
-                                },
+                                "formatMaximum": "2025-02-10",
                                 "type": "string",
                               },
                             },
@@ -5428,14 +5519,9 @@ exports[`birth configuration is parsed 1`] = `
                             ],
                             "type": "object",
                           },
-                          "$now": {
-                            "format": "date",
-                            "type": "string",
-                          },
                         },
                         "required": [
                           "$form",
-                          "$now",
                         ],
                         "type": "object",
                       },
@@ -6203,7 +6289,7 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "informant.address.divider.start",
+                  "id": "informant.addressDivider_1",
                   "label": {
                     "defaultMessage": "",
                     "description": "empty string",
@@ -8895,6 +8981,9 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
+                  "configuration": {
+                    "maxLength": 32,
+                  },
                   "id": "mother.firstname",
                   "label": {
                     "defaultMessage": "First name(s)",
@@ -8995,6 +9084,9 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
+                  "configuration": {
+                    "maxLength": 32,
+                  },
                   "id": "mother.surname",
                   "label": {
                     "defaultMessage": "Last name",
@@ -9148,9 +9240,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "mother.dob": {
                                 "format": "date",
-                                "formatMaximum": {
-                                  "$data": "2/$now",
-                                },
+                                "formatMaximum": "2025-02-10",
                                 "type": "string",
                               },
                             },
@@ -9159,14 +9249,9 @@ exports[`birth configuration is parsed 1`] = `
                             ],
                             "type": "object",
                           },
-                          "$now": {
-                            "format": "date",
-                            "type": "string",
-                          },
                         },
                         "required": [
                           "$form",
-                          "$now",
                         ],
                         "type": "object",
                       },
@@ -10222,7 +10307,7 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "mother.address.divider.start",
+                  "id": "mother.addressDivider_1",
                   "label": {
                     "defaultMessage": "",
                     "description": "empty string",
@@ -13295,7 +13380,7 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "mother.address.divider.end",
+                  "id": "mother.addressDivider_2",
                   "label": {
                     "defaultMessage": "",
                     "description": "empty string",
@@ -14059,6 +14144,9 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
+                  "configuration": {
+                    "maxLength": 32,
+                  },
                   "id": "father.firstname",
                   "label": {
                     "defaultMessage": "First name(s)",
@@ -14159,6 +14247,9 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
+                  "configuration": {
+                    "maxLength": 32,
+                  },
                   "id": "father.surname",
                   "label": {
                     "defaultMessage": "Last name",
@@ -14312,9 +14403,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "father.dob": {
                                 "format": "date",
-                                "formatMaximum": {
-                                  "$data": "2/$now",
-                                },
+                                "formatMaximum": "2025-02-10",
                                 "type": "string",
                               },
                             },
@@ -14323,14 +14412,9 @@ exports[`birth configuration is parsed 1`] = `
                             ],
                             "type": "object",
                           },
-                          "$now": {
-                            "format": "date",
-                            "type": "string",
-                          },
                         },
                         "required": [
                           "$form",
-                          "$now",
                         ],
                         "type": "object",
                       },
@@ -15386,7 +15470,7 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "father.address.divider.start",
+                  "id": "father.addressDivider_1",
                   "label": {
                     "defaultMessage": "",
                     "description": "empty string",
@@ -19034,7 +19118,7 @@ exports[`birth configuration is parsed 1`] = `
                       "type": "HIDE",
                     },
                   ],
-                  "id": "father.address.divider.end",
+                  "id": "father.addressDivider_2",
                   "label": {
                     "defaultMessage": "",
                     "description": "empty string",
