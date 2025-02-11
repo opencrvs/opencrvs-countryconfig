@@ -8,13 +8,13 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-
 import { defineConfig } from '@opencrvs/toolkit/events'
 import {
   defineConditional,
   eventHasAction,
   not
 } from '@opencrvs/toolkit/conditionals'
+
 import { BIRTH_DECLARE_FORM } from './forms/declare'
 import { Event } from '@countryconfig/form/types/types'
 
