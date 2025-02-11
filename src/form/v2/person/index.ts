@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { FieldConfig, TranslationConfig } from '@opencrvs/toolkit/events'
+import { FieldConfig, or, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import { getAddressFields } from './address'
 import {
@@ -188,9 +188,10 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.idType`)
-          .or((field) => field.isUndefined().not.inArray(['NATIONAL_ID']))
-          .apply()
+        conditional: or(
+          field(`${person}.idType`).isUndefined(),
+          field(`${person}.idType`).not.inArray(['NATIONAL_ID'])
+        )
       }
     ]
   },
@@ -206,9 +207,10 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.idType`)
-          .or((field) => field.isUndefined().not.inArray(['PASSPORT']))
-          .apply()
+        conditional: or(
+          field(`${person}.idType`).isUndefined(),
+          field(`${person}.idType`).not.inArray(['PASSPORT'])
+        )
       }
     ]
   },
@@ -224,11 +226,10 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.idType`)
-          .or((field) =>
-            field.isUndefined().not.inArray(['BIRTH_REGISTRATION_NUMBER'])
-          )
-          .apply()
+        conditional: or(
+          field(`${person}.idType`).isUndefined(),
+          field(`${person}.idType`).not.inArray(['BIRTH_REGISTRATION_NUMBER'])
+        )
       }
     ]
   }
@@ -270,7 +271,7 @@ export const getPersonInputCommonFields = (
           description: 'This is the error message for invalid date',
           id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
         },
-        validator: field(`${person}.dob`).isBefore().now().apply()
+        validator: field(`${person}.dob`).isBefore().now()
       }
     ],
     label: {
@@ -281,7 +282,7 @@ export const getPersonInputCommonFields = (
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.dobUnknown`).isEqualTo(true).apply()
+        conditional: field(`${person}.dobUnknown`).isEqualTo(true)
       }
     ]
   },
@@ -314,9 +315,10 @@ export const getPersonInputCommonFields = (
     conditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${person}.dobUnknown`)
-          .or((field) => field.isUndefined().isEqualTo(false))
-          .apply()
+        conditional: or(
+          field(`${person}.dobUnknown`).isUndefined(),
+          field(`${person}.dobUnknown`).isEqualTo(false)
+        )
       }
     ]
   },
@@ -366,9 +368,9 @@ const fatherAddressFields = [
     newConditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${PersonType.mother}.detailsNotAvailable`)
-          .isEqualTo(true)
-          .apply()
+        conditional: field(
+          `${PersonType.mother}.detailsNotAvailable`
+        ).isEqualTo(true)
       }
     ]
   }),
@@ -377,9 +379,9 @@ const fatherAddressFields = [
     newConditionals: [
       {
         type: 'HIDE',
-        conditional: field(`${PersonType.father}.addressSameAs`)
-          .inArray([YesNoTypes.YES])
-          .apply()
+        conditional: field(`${PersonType.father}.addressSameAs`).inArray([
+          YesNoTypes.YES
+        ])
       }
     ]
   })

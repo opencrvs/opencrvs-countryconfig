@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
+import { defineFormPage, or, TranslationConfig } from '@opencrvs/toolkit/events'
 import { field } from '@opencrvs/toolkit/conditionals'
 import {
   appendConditionalsToFields,
@@ -109,11 +109,10 @@ export const informantPage = defineFormPage({
       conditionals: [
         {
           type: 'HIDE',
-          conditional: field('informant.relation')
-            .or((field) =>
-              field.isUndefined().not.inArray([InformantTypes.OTHER])
-            )
-            .apply()
+          conditional: or(
+            field('informant.relation').isUndefined(),
+            field('informant.relation').not.inArray([InformantTypes.OTHER])
+          )
         }
       ]
     },
@@ -131,13 +130,13 @@ export const informantPage = defineFormPage({
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field('informant.relation')
-            .or((field) =>
-              field
-                .isUndefined()
-                .inArray([InformantTypes.MOTHER, InformantTypes.FATHER])
-            )
-            .apply()
+          conditional: or(
+            field('informant.relation').isUndefined(),
+            field('informant.relation').inArray([
+              InformantTypes.MOTHER,
+              InformantTypes.FATHER
+            ])
+          )
         }
       ]
     }),
