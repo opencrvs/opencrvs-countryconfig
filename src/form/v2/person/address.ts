@@ -178,6 +178,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       id: `${prefix}.province`,
       type: 'ADMINISTRATIVE_AREA',
       required: true,
+      configuration: { type: 'ADMIN_STRUCTURE' },
       label: {
         defaultMessage: 'Province',
         description: 'This is the label for the field',
@@ -191,6 +192,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       id: `${prefix}.district`,
       type: 'ADMINISTRATIVE_AREA',
       required: true,
+      configuration: { type: 'ADMIN_STRUCTURE' },
       label: {
         defaultMessage: 'District',
         description: 'This is the label for the field',
