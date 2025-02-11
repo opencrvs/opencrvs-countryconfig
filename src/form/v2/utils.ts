@@ -16,13 +16,15 @@ import {
   TranslationConfig
 } from '@opencrvs/toolkit/events'
 
+export const MAX_NAME_LENGTH = 32
+
 export const appendConditionalsToFields = ({
   inputFields,
   newConditionals
 }: {
   inputFields: FieldConfig[]
   newConditionals: FieldConditional[]
-}): FieldConfig[] =>
+}): any =>
   inputFields.map((inputField) => ({
     ...inputField,
     conditionals: [...(inputField.conditionals || []), ...newConditionals]
@@ -43,5 +45,5 @@ export const createSelectOptions = <
 export const emptyMessage = {
   defaultMessage: '',
   description: 'empty string',
-  id: 'messages.emptyString'
+  id: 'v2.messages.emptyString'
 }
