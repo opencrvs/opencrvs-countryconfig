@@ -22,7 +22,7 @@ export const appendConditionalsToFields = ({
 }: {
   inputFields: FieldConfig[]
   newConditionals: FieldConditional[]
-}): FieldConfig[] =>
+}): any =>
   inputFields.map((inputField) => ({
     ...inputField,
     conditionals: [...(inputField.conditionals || []), ...newConditionals]

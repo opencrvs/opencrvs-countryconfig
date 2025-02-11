@@ -217,7 +217,7 @@ export const childPage = defineFormPage({
             description: 'This is the error message for invalid date',
             id: 'v2.event.birth.action.declare.form.section.child.field.dob.error'
           },
-          validator: field('child.dob').isBeforeNow().apply()
+          validator: field('child.dob').isBefore().now().apply()
         }
       ],
       label: {

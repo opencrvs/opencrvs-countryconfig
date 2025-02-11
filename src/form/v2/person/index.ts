@@ -267,7 +267,7 @@ export const getPersonInputCommonFields = (
           description: 'This is the error message for invalid date',
           id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
         },
-        validator: field(`${person}.dob`).isBeforeNow().apply()
+        validator: field(`${person}.dob`).isBefore().now().apply()
       }
     ],
     label: {

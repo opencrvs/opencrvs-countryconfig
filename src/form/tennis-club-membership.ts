@@ -19,6 +19,7 @@ import {
   not,
   field
 } from '@opencrvs/toolkit/conditionals'
+
 import { Event } from './types/types'
 
 const TENNIS_CLUB_FORM = defineForm({
@@ -83,7 +84,7 @@ const TENNIS_CLUB_FORM = defineForm({
                 description: 'This is the error message for invalid date',
                 id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error'
               },
-              validator: field('applicant.dob').isBeforeNow().apply()
+              validator: field('applicant.dob').isBefore().now().apply()
             }
           ],
           label: {
