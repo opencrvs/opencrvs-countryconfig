@@ -16,6 +16,8 @@ import {
   TranslationConfig
 } from '@opencrvs/toolkit/events'
 
+export const MAX_NAME_LENGTH = 32
+
 export const appendConditionalsToFields = ({
   inputFields,
   newConditionals

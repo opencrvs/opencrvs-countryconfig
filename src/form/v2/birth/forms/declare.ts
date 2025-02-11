@@ -235,13 +235,15 @@ export const BIRTH_DECLARE_FORM = defineForm({
           conditionals: [
             {
               type: 'HIDE',
-              conditional: or(
-                field('father.detailsNotAvailable')
-                  .or((field) => field.isUndefined().isEqualTo(false))
-                  .apply(),
-                field('informant.relation')
-                  .inArray([InformantTypes.FATHER])
-                  .apply()
+              conditional: defineConditional(
+                or(
+                  field('father.detailsNotAvailable')
+                    .or((field) => field.isUndefined().isEqualTo(false))
+                    .apply(),
+                  field('informant.relation')
+                    .inArray([InformantTypes.FATHER])
+                    .apply()
+                )
               )
             }
           ]

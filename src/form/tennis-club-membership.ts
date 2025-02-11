@@ -21,6 +21,7 @@ import {
 } from '@opencrvs/toolkit/conditionals'
 
 import { Event } from './types/types'
+import { MAX_NAME_LENGTH } from './v2/utils'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
@@ -56,6 +57,7 @@ const TENNIS_CLUB_FORM = defineForm({
         {
           id: 'applicant.firstname',
           type: 'TEXT',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           required: true,
           label: {
             defaultMessage: "Applicant's first name",
@@ -66,6 +68,7 @@ const TENNIS_CLUB_FORM = defineForm({
         {
           id: 'applicant.surname',
           type: 'TEXT',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           required: true,
           label: {
             defaultMessage: "Applicant's surname",
@@ -136,6 +139,7 @@ const TENNIS_CLUB_FORM = defineForm({
         },
         {
           id: 'recommender.firstname',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           type: 'TEXT',
           required: true,
           conditionals: [
@@ -152,6 +156,7 @@ const TENNIS_CLUB_FORM = defineForm({
         },
         {
           id: 'recommender.surname',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           type: 'TEXT',
           required: true,
           conditionals: [
