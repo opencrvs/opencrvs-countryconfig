@@ -201,7 +201,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "child.dob": {
                                 "format": "date",
-                                "formatMaximum": "2025-02-11",
+                                "formatMaximum": "2025-02-12",
                                 "type": "string",
                               },
                             },
@@ -228,7 +228,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "child.dob": {
                                 "format": "date",
-                                "formatMinimum": "2024-02-12",
+                                "formatMinimum": "2024-02-13",
                                 "type": "string",
                               },
                             },
@@ -279,7 +279,7 @@ exports[`birth configuration is parsed 1`] = `
                                   "child.dob": {
                                     "not": {
                                       "format": "date",
-                                      "formatMaximum": "2025-02-11",
+                                      "formatMaximum": "2025-02-12",
                                     },
                                     "type": "string",
                                   },
@@ -5846,7 +5846,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "informant.dob": {
                                 "format": "date",
-                                "formatMaximum": "2025-02-11",
+                                "formatMaximum": "2025-02-12",
                                 "type": "string",
                               },
                             },
@@ -9804,7 +9804,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "mother.dob": {
                                 "format": "date",
-                                "formatMaximum": "2025-02-11",
+                                "formatMaximum": "2025-02-12",
                                 "type": "string",
                               },
                             },
@@ -15211,7 +15211,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "father.dob": {
                                 "format": "date",
-                                "formatMaximum": "2025-02-11",
+                                "formatMaximum": "2025-02-12",
                                 "type": "string",
                               },
                             },
