@@ -2474,6 +2474,7 @@ v2.correction.corrector.paragraph.title,The title for the corrector form,"For al
 v2.correction.corrector.title,The title for the corrector form,Who is requesting a change to this record?,Who is requesting a change to this record?
 v2.correction.reason.title,The title for the corrector form,Reason for correction?,Reason for correction?
 v2.correction.requester.relationshop.intro.label,The title for the corrector form,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.
+v2.custom.field.form.requiredField,,Required for registration,Requis pour l'enregistrement
 v2.error.required,This is the error message for required fields,Required for registration,Required for registration
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,An error occurred while searching
 v2.event.action.declare.form.section.person.field.address.country.label,This is the label for the field,Country,Country

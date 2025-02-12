@@ -8,13 +8,9 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+import { ActionType, defineConfig } from '@opencrvs/toolkit/events'
+import { not, event } from '@opencrvs/toolkit/conditionals'
 
-import { defineConfig } from '@opencrvs/toolkit/events'
-import {
-  defineConditional,
-  eventHasAction,
-  not
-} from '@opencrvs/toolkit/conditionals'
 import { BIRTH_DECLARE_FORM } from './forms/declare'
 import { Event } from '@countryconfig/form/types/types'
 
@@ -54,7 +50,7 @@ export const birthEvent = defineConfig({
   ],
   actions: [
     {
-      type: 'CREATE',
+      type: ActionType.CREATE,
       label: {
         defaultMessage: 'Create',
         description:
@@ -64,7 +60,7 @@ export const birthEvent = defineConfig({
       forms: []
     },
     {
-      type: 'DECLARE',
+      type: ActionType.DECLARE,
       label: {
         defaultMessage: 'Declare',
         description:
@@ -75,7 +71,7 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(not(eventHasAction('DECLARE')))
+          conditional: not(event.hasAction(ActionType.DECLARE))
         }
       ]
     }

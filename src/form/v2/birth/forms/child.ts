@@ -9,8 +9,8 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
-import { field } from '@opencrvs/toolkit/conditionals'
+import { defineFormPage, or, TranslationConfig } from '@opencrvs/toolkit/events'
+import { field, not } from '@opencrvs/toolkit/conditionals'
 import {
   appendConditionalsToFields,
   createSelectOptions,
@@ -221,7 +221,7 @@ export const childPage = defineFormPage({
             description: 'This is the error message for invalid date',
             id: 'v2.event.birth.action.declare.form.section.child.field.dob.error'
           },
-          validator: field('child.dob').isBefore().now().apply()
+          validator: field('child.dob').isBefore().now()
         }
       ],
       label: {
@@ -246,13 +246,13 @@ export const childPage = defineFormPage({
             .isAfter()
             .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
             .inPast()
-            .apply()
         },
         {
           type: 'HIDE',
-          conditional: field('child.dob')
-            .or((field) => field.isUndefined().not.isBefore().now())
-            .apply()
+          conditional: or(
+            field('child.dob').isUndefined(),
+            not(field('child.dob').isBefore().now())
+          )
         }
       ]
     },
@@ -288,9 +288,10 @@ export const childPage = defineFormPage({
       conditionals: [
         {
           type: 'HIDE',
-          conditional: field('child.placeOfBirth')
-            .or((field) => field.isUndefined().not.inArray(['HEALTH_FACILITY']))
-            .apply()
+          conditional: or(
+            field('child.placeOfBirth').isUndefined(),
+            not(field('child.placeOfBirth').inArray(['HEALTH_FACILITY']))
+          )
         }
       ]
     },
@@ -299,9 +300,10 @@ export const childPage = defineFormPage({
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field('child.placeOfBirth')
-            .or((field) => field.isUndefined().not.inArray(['PRIVATE_HOME']))
-            .apply()
+          conditional: or(
+            field('child.placeOfBirth').isUndefined(),
+            not(field('child.placeOfBirth').inArray(['PRIVATE_HOME']))
+          )
         }
       ]
     }),
@@ -310,9 +312,10 @@ export const childPage = defineFormPage({
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field('child.placeOfBirth')
-            .or((field) => field.isUndefined().not.inArray(['OTHER']))
-            .apply()
+          conditional: or(
+            field('child.placeOfBirth').isUndefined(),
+            not(field('child.placeOfBirth').inArray(['OTHER']))
+          )
         }
       ]
     }),
