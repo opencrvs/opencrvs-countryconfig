@@ -2665,7 +2665,7 @@ v2.form.section.information.birth.bullet3,Form information for birth,Once the de
 v2.form.section.information.birth.bullet4,Form information for birth,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.","Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits."
 v2.form.section.information.birth.bulletList.label,Label for the birth information bullet list,Birth Information,Birth Information
 v2.form.section.mother.title,Form section title for mothers details,Mother's details,Mother's details
-v2.messages.emptyString,Empty string,,
+v2.messages.emptyString,Empty string, , 
 v2.navigation.CREATED,In progress label in navigation,In progress,In progress
 v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Ready for review
 v2.navigation.REGISTERED,Ready to print label in navigation,Ready to print,Ready to print

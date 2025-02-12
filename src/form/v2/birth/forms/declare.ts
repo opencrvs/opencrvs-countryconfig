@@ -47,10 +47,16 @@ export const BIRTH_DECLARE_FORM = defineForm({
       {
         type: 'SIGNATURE',
         id: 'review.signature',
+        required: false,
         label: {
           defaultMessage: 'Signature of informant',
           id: 'v2.event.birth.action.declare.form.review.signature.label',
           description: 'Label for the signature field in the review section'
+        },
+        modalTitle: {
+          id: 'v2.signature.upload.modal.title',
+          defaultMessage: 'Draw signature',
+          description: 'Title for the modal to draw signature'
         }
       }
     ]
