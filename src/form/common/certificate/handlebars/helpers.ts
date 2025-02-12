@@ -876,11 +876,11 @@ function definitionOffice(officeName: string = '') {
     'cu tana iv': "ambonivohitr'<wbr />Antananarivo - Boriboritany Fahaefatra",
     'cu tana v': "ambonivohitr'<wbr />Antananarivo - Boriboritany Fahadimy",
     'cu tana vi': "ambonivohitr'<wbr />Antananarivo - Boriboritany Fahaenina",
-    'cu toamasina arr. ambodimanga': 'ambonivohitra Toamasina arr. Ambodimanga',
-    'cu toamasina arr. anjoma': 'ambonivohitra Toamasina arr. Anjoma',
-    'cu toamasina arr. ankirihiry': 'ambonivohitra Toamasina arr. Ankirihiry',
-    'cu toamasina arr. morarano': 'ambonivohitra Toamasina arr. Morarano',
-    'cu toamasina arr. tanambao v': 'ambonivohitra Toamasina arr. Tanambao V'
+    'cu toamasina arr. ambodimanga': 'ambonivohitra Toamasina',
+    'cu toamasina arr. anjoma': 'ambonivohitra Toamasina',
+    'cu toamasina arr. ankirihiry': 'ambonivohitra Toamasina',
+    'cu toamasina arr. morarano': 'ambonivohitra Toamasina',
+    'cu toamasina arr. tanambao v': 'ambonivohitra Toamasina'
     // nouveau
   }
   const lowerCaseRegistrationLocation = officeName.toLowerCase()
@@ -902,7 +902,16 @@ function defineCommune(officeName: string = '') {
     'cu tana iii': 'Antananarivo Renivohitra',
     'cu tana iv': 'Antananarivo Renivohitra',
     'cu tana v': 'Antananarivo Renivohitra',
-    'cu tana vi': 'Antananarivo Renivohitra'
+    'cu tana vi': 'Antananarivo Renivohitra',
+    'cu toamasina arr. ambodimanga':
+      'Ambonivohitra Toamasina,boriboritany Ambodimanga',
+    'cu toamasina arr. anjoma': 'Ambonivohitra Toamasina, boriboritany Anjoma',
+    'cu toamasina arr. ankirihiry':
+      'Ambonivohitra Toamasina, boriboritany Ankirihiry',
+    'cu toamasina arr. morarano':
+      'Ambonivohitra Toamasina, boriboritany Morarano',
+    'cu toamasina arr. tanambao v':
+      'Ambonivohitra Toamasina, boriboritany Tanambao v'
     // nouveau
   }
 
@@ -926,6 +935,11 @@ export function definitionCommuneInTheAct(): Handlebars.HelperDelegate {
 export function isTanaIV(): Handlebars.HelperDelegate {
   return function (this: any, name: string) {
     return name.toLowerCase() === 'cu tana iv'
+  }
+}
+export function isToamasina(): Handlebars.HelperDelegate {
+  return function (this: any, name: string) {
+    return name.toLowerCase().includes('cu toamasina')
   }
 }
 

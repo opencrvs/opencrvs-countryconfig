@@ -1414,11 +1414,11 @@ function definitionOffice(officeName) {
     'cu tana iv': "ambonivohitr'Antananarivo - Boriboritany Fahaefatra",
     'cu tana v': "ambonivohitr'Antananarivo - Boriboritany Fahadimy",
     'cu tana vi': "ambonivohitr'Antananarivo - Boriboritany Fahaenina",
-    'cu toamasina arr. ambodimanga': 'ambonivohitra Toamasina arr. Ambodimanga',
-    'cu toamasina arr. anjoma': 'ambonivohitra Toamasina arr. Anjoma',
-    'cu toamasina arr. ankirihiry': 'ambonivohitra Toamasina arr. Ankirihiry',
-    'cu toamasina arr. morarano': 'ambonivohitra Toamasina arr. Morarano',
-    'cu toamasina arr. tanambao v': 'ambonivohitra Toamasina arr. Tanambao V'
+    'cu toamasina arr. ambodimanga': 'ambonivohitra Toamasina',
+    'cu toamasina arr. anjoma': 'ambonivohitra Toamasina',
+    'cu toamasina arr. ankirihiry': 'ambonivohitra Toamasina',
+    'cu toamasina arr. morarano': 'ambonivohitra Toamasina',
+    'cu toamasina arr. tanambao v': 'ambonivohitra Toamasina'
     // nouveau
   }
   var lowerCaseRegistrationLocation = officeName.toLowerCase()
@@ -1440,7 +1440,16 @@ function defineCommune(officeName) {
     'cu tana iii': 'Antananarivo, Boriboritany Fahatelo',
     'cu tana iv': 'Antananarivo, Boriboritany Fahaefatra',
     'cu tana v': 'Antananarivo, Boriboritany Fahadimy',
-    'cu tana vi': 'Antananarivo, Boriboritany Fahaenina'
+    'cu tana vi': 'Antananarivo, Boriboritany Fahaenina',
+    'cu toamasina arr. ambodimanga':
+      'Ambonivohitra Toamasina,boriboritany Ambodimanga',
+    'cu toamasina arr. anjoma': 'Ambonivohitra Toamasina, boriboritany Anjoma',
+    'cu toamasina arr. ankirihiry':
+      'Ambonivohitra Toamasina, boriboritany Ankirihiry',
+    'cu toamasina arr. morarano':
+      'Ambonivohitra Toamasina, boriboritany Morarano',
+    'cu toamasina arr. tanambao v':
+      'Ambonivohitra Toamasina, boriboritany Tanambao v'
     // nouveau
   }
   var lowerCaseRegistrationLocation = officeName.toLowerCase()
@@ -1464,6 +1473,11 @@ window.definitionOffice = definitionOffice
 function isTanaIV() {
   return function (name) {
     return name.toLowerCase() === 'cu tana iv'
+  }
+}
+function isToamasina() {
+  return function (name) {
+    return name.toLowerCase().includes('cu toamasina')
   }
 }
 /**

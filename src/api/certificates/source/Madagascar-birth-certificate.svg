@@ -21,27 +21,48 @@
     
     <foreignObject x="24" y="142.488"  width="150" height="100">
         <div xmlns="http://www.w3.org/1999/xhtml">
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+            <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Firaisana:</span> 
+        {{ else }}
         <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Kaominina : </span> 
+        {{/if}}
         <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionCommuneInTheAct (location registrar.districtId "name")}}</span> 
         </div>
     </foreignObject>
+
     {{/if}}
 
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
-        <tspan x="24" y="187.58">Soratra n&#xb0; :</tspan>
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+                <tspan x="24" y="208.58">Soratra n&#xb0; :</tspan>
+        {{ else }}
+                <tspan x="24" y="187.58">Soratra n&#xb0; :</tspan>
+        {{/if}}
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         font-weight="bold" letter-spacing="0em">
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+        <tspan x="86" y="208.58">{{birthChildLegacyBirthRegistrationNumber}}</tspan>
+        {{ else }}
         <tspan x="86" y="187.58">{{birthChildLegacyBirthRegistrationNumber}}</tspan>
+        {{/if}}
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         letter-spacing="0em">
-        <tspan x="24" y="202.58">Natao ny :</tspan>
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+                <tspan x="24" y="220.58">Natao ny :</tspan>
+        {{ else }}
+                <tspan x="24" y="202.58">Natao ny :</tspan>
+        {{/if}}
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         font-weight="bold" letter-spacing="0em">
-        <tspan x="86" y="202.58">{{getBirthRegistrationDateMDGFormat}}</tspan>
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+        <tspan x="86" y="220.58">{{getBirthRegistrationDateMDGFormat}}</tspan>  
+        {{ else }}
+        <tspan x="86" y="202.58">{{getBirthRegistrationDateMDGFormat}}</tspan>        
+        {{/if}}
     </text>
 
     {{#wrapGroup 30 24 239.712}}
