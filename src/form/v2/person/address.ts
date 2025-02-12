@@ -279,7 +279,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
           type: 'HIDE',
           conditional: or(
             field(`${person}.address.country`).isUndefined(),
-            field(`${person}.address.country`).inArray(['FAR'])
+            field(`${person}.address.country`).not.inArray(['FAR'])
           )
         }
       ]
