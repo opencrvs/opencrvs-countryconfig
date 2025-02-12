@@ -14,7 +14,8 @@ import {
   and,
   defineConditional,
   field,
-  or
+  or,
+  not
 } from '@opencrvs/toolkit/conditionals'
 import { childPage } from './child'
 import { informantPage, InformantTypes } from './informant'
@@ -175,9 +176,9 @@ export const BIRTH_DECLARE_FORM = defineForm({
                 field('mother.detailsNotAvailable').isEqualTo(true),
                 or(
                   field('informant.relation').isUndefined(),
-                  field('informant.relation').not.inArray([
-                    InformantTypes.MOTHER
-                  ])
+                  not(
+                    field('informant.relation').inArray([InformantTypes.MOTHER])
+                  )
                 )
               )
             }
@@ -252,9 +253,9 @@ export const BIRTH_DECLARE_FORM = defineForm({
                 field('father.detailsNotAvailable').isEqualTo(true),
                 or(
                   field('informant.relation').isUndefined(),
-                  field('informant.relation').not.inArray([
-                    InformantTypes.FATHER
-                  ])
+                  not(
+                    field('informant.relation').inArray([InformantTypes.FATHER])
+                  )
                 )
               )
             }

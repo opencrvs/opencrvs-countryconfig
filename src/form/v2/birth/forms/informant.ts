@@ -10,7 +10,7 @@
  */
 
 import { defineFormPage, or, TranslationConfig } from '@opencrvs/toolkit/events'
-import { field } from '@opencrvs/toolkit/conditionals'
+import { field, not } from '@opencrvs/toolkit/conditionals'
 import {
   appendConditionalsToFields,
   createSelectOptions,
@@ -111,7 +111,7 @@ export const informantPage = defineFormPage({
           type: 'HIDE',
           conditional: or(
             field('informant.relation').isUndefined(),
-            field('informant.relation').not.inArray([InformantTypes.OTHER])
+            not(field('informant.relation').inArray([InformantTypes.OTHER]))
           )
         }
       ]
