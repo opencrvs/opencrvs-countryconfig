@@ -718,7 +718,7 @@ export const tennisClubMembershipEvent = defineConfig({
           )
         }
       ],
-      forms: [TENNIS_CLUB_FORM]
+      forms: []
     },
     {
       type: 'REGISTER',
