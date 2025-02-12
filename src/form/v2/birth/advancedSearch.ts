@@ -19,7 +19,7 @@ export const advancedSearchBirth = [
     title: {
       defaultMessage: 'Registration details',
       description: 'The title of Registration details accordion',
-      id: 'advancedSearch.form.registrationDetails'
+      id: 'v2.advancedSearch.form.registrationDetails'
     },
     fields: [
       {
@@ -32,7 +32,7 @@ export const advancedSearchBirth = [
     title: {
       defaultMessage: 'Child details',
       description: 'The title of Child details accordion',
-      id: 'advancedSearch.form.childDetails'
+      id: 'v2.advancedSearch.form.childDetails'
     },
     fields: [
       {
