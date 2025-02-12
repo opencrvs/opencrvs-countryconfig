@@ -10,7 +10,7 @@
  */
 
 import { FieldConfig, or, TranslationConfig } from '@opencrvs/toolkit/events'
-import { field } from '@opencrvs/toolkit/conditionals'
+import { field, not } from '@opencrvs/toolkit/conditionals'
 import { getAddressFields } from './address'
 import {
   appendConditionalsToFields,
@@ -190,7 +190,7 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
         type: 'HIDE',
         conditional: or(
           field(`${person}.idType`).isUndefined(),
-          field(`${person}.idType`).not.inArray(['NATIONAL_ID'])
+          not(field(`${person}.idType`).inArray(['NATIONAL_ID']))
         )
       }
     ]
@@ -209,7 +209,7 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
         type: 'HIDE',
         conditional: or(
           field(`${person}.idType`).isUndefined(),
-          field(`${person}.idType`).not.inArray(['PASSPORT'])
+          not(field(`${person}.idType`).inArray(['PASSPORT']))
         )
       }
     ]
@@ -228,7 +228,7 @@ const getIdFields = (person: PersonType): FieldConfig[] => [
         type: 'HIDE',
         conditional: or(
           field(`${person}.idType`).isUndefined(),
-          field(`${person}.idType`).not.inArray(['BIRTH_REGISTRATION_NUMBER'])
+          not(field(`${person}.idType`).inArray(['BIRTH_REGISTRATION_NUMBER']))
         )
       }
     ]

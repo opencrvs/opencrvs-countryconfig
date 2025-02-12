@@ -10,7 +10,7 @@
  */
 
 import { FieldConfig, or, TranslationConfig } from '@opencrvs/toolkit/events'
-import { field } from '@opencrvs/toolkit/conditionals'
+import { field, not } from '@opencrvs/toolkit/conditionals'
 import { appendConditionalsToFields, createSelectOptions } from '../utils'
 import { PersonType } from './index'
 
@@ -242,7 +242,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
           type: 'HIDE',
           conditional: or(
             field(`${prefix}.urbanOrRural`).isUndefined(),
-            field(`${prefix}.urbanOrRural`).not.inArray(['RURAL'])
+            not(field(`${prefix}.urbanOrRural`).inArray(['RURAL']))
           )
         }
       ]
@@ -279,7 +279,7 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
           type: 'HIDE',
           conditional: or(
             field(`${person}.address.country`).isUndefined(),
-            field(`${person}.address.country`).not.inArray(['FAR'])
+            not(field(`${person}.address.country`).inArray(['FAR']))
           )
         }
       ]

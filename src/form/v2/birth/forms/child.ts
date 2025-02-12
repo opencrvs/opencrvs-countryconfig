@@ -10,7 +10,7 @@
  */
 
 import { defineFormPage, or, TranslationConfig } from '@opencrvs/toolkit/events'
-import { field } from '@opencrvs/toolkit/conditionals'
+import { field, not } from '@opencrvs/toolkit/conditionals'
 import {
   appendConditionalsToFields,
   createSelectOptions,
@@ -251,7 +251,7 @@ export const childPage = defineFormPage({
           type: 'HIDE',
           conditional: or(
             field('child.dob').isUndefined(),
-            field('child.dob').not.isBefore().now()
+            not(field('child.dob').isBefore().now())
           )
         }
       ]
@@ -290,7 +290,7 @@ export const childPage = defineFormPage({
           type: 'HIDE',
           conditional: or(
             field('child.placeOfBirth').isUndefined(),
-            field('child.placeOfBirth').not.inArray(['HEALTH_FACILITY'])
+            not(field('child.placeOfBirth').inArray(['HEALTH_FACILITY']))
           )
         }
       ]
@@ -302,7 +302,7 @@ export const childPage = defineFormPage({
           type: 'HIDE',
           conditional: or(
             field('child.placeOfBirth').isUndefined(),
-            field('child.placeOfBirth').not.inArray(['PRIVATE_HOME'])
+            not(field('child.placeOfBirth').inArray(['PRIVATE_HOME']))
           )
         }
       ]
@@ -314,7 +314,7 @@ export const childPage = defineFormPage({
           type: 'HIDE',
           conditional: or(
             field('child.placeOfBirth').isUndefined(),
-            field('child.placeOfBirth').not.inArray(['OTHER'])
+            not(field('child.placeOfBirth').inArray(['OTHER']))
           )
         }
       ]
