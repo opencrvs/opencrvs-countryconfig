@@ -8,11 +8,12 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { ActionType, defineConfig } from '@opencrvs/toolkit/events'
+import { ActionType, and, defineConfig, user } from '@opencrvs/toolkit/events'
 import { not, event } from '@opencrvs/toolkit/conditionals'
 
 import { BIRTH_DECLARE_FORM } from './forms/declare'
 import { Event } from '@countryconfig/form/types/types'
+import { SCOPES } from '@opencrvs/toolkit/scopes'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -57,7 +58,13 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.create.label'
       },
-      forms: []
+      forms: [],
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: user.hasScope(SCOPES.RECORD_DECLARE)
+        }
+      ]
     },
     {
       type: ActionType.DECLARE,
@@ -71,7 +78,10 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: not(event.hasAction(ActionType.DECLARE))
+          conditional: and(
+            not(event.hasAction(ActionType.DECLARE)),
+            user.hasScope(SCOPES.RECORD_DECLARE)
+          )
         }
       ]
     }
