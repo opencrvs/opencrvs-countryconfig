@@ -64,7 +64,8 @@ import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   mosipRegistrationForReviewHandler,
   mosipRegistrationForApprovalHandler,
-  mosipRegistrationHandler
+  mosipRegistrationHandler,
+  verify
 } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
@@ -73,6 +74,7 @@ import {
   onRegisterHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
+import { eventRegistrationHandler } from './api/event-registration/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -187,6 +189,22 @@ async function getPublicKey(): Promise<string> {
     await new Promise((resolve) => setTimeout(resolve, 3000))
     return getPublicKey()
   }
+}
+
+interface VerificationStatus {
+  father: boolean
+  mother: boolean
+  informant: boolean
+}
+
+/**
+ * Determines whether the registration data should be forwarded to the identity system
+ * for unique ID creation based on the custom country specific logic built on verification statuses.
+ */
+export function shouldForwardToIDSystem(
+  verificationStatus: Partial<VerificationStatus>
+) {
+  return verificationStatus.informant
 }
 
 export async function createServer() {
@@ -432,9 +450,25 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/event-registration',
-    handler: mosipRegistrationHandler({
-      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-    }),
+    handler: async (request, h) => {
+      const result = await verify({
+        url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024',
+        request
+      })
+      if (shouldForwardToIDSystem(result)) {
+        logger.info(
+          'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
+        )
+        return mosipRegistrationHandler({
+          url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+        })
+      } else {
+        logger.info(
+          'Failed country specified custom logic check for id creation. Bypassing id system...'
+        )
+        return eventRegistrationHandler
+      }
+    },
     options: {
       tags: ['api'],
       description:
