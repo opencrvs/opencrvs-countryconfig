@@ -451,22 +451,19 @@ export async function createServer() {
     method: 'POST',
     path: '/event-registration',
     handler: async (request, h) => {
-      const result = await verify({
-        url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024',
-        request
-      })
+      const url = env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+      const result = await verify({ url, request })
+
       if (shouldForwardToIDSystem(result)) {
         logger.info(
           'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
         )
-        return mosipRegistrationHandler({
-          url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-        })
+        return mosipRegistrationHandler({ url })(request, h)
       } else {
         logger.info(
           'Failed country specified custom logic check for id creation. Bypassing id system...'
         )
-        return eventRegistrationHandler
+        return eventRegistrationHandler(request, h)
       }
     },
     options: {
