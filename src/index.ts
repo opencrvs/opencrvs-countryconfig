@@ -202,9 +202,10 @@ interface VerificationStatus {
  * for unique ID creation based on the custom country specific logic built on verification statuses.
  */
 export function shouldForwardToIDSystem(
+  // eslint-disable-next-line no-unused-vars
   verificationStatus: Partial<VerificationStatus>
 ) {
-  return verificationStatus.informant
+  return true
 }
 
 export async function createServer() {
