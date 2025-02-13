@@ -621,6 +621,18 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
+    path: '/events/{event}/actions/sent-notification',
+    handler: mosipRegistrationForReviewHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on sent-notification action'
+    }
+  })
+
+  server.route({
+    method: 'POST',
     path: '/events/{event}/actions/sent-notification-for-review',
     handler: mosipRegistrationForReviewHandler({
       url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
