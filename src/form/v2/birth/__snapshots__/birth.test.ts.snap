@@ -20986,7 +20986,32 @@ exports[`birth configuration is parsed 1`] = `
             },
           ],
           "review": {
-            "fields": [],
+            "fields": [
+              {
+                "id": "review.comment",
+                "label": {
+                  "defaultMessage": "Comment",
+                  "description": "Label for the comment field in the review section",
+                  "id": "v2.event.birth.action.declare.form.review.comment.label",
+                },
+                "type": "TEXTAREA",
+              },
+              {
+                "id": "review.signature",
+                "label": {
+                  "defaultMessage": "Signature of informant",
+                  "description": "Label for the signature field in the review section",
+                  "id": "v2.event.birth.action.declare.form.review.signature.label",
+                },
+                "required": false,
+                "signaturePromptLabel": {
+                  "defaultMessage": "Draw signature",
+                  "description": "Title for the modal to draw signature",
+                  "id": "v2.signature.upload.modal.title",
+                },
+                "type": "SIGNATURE",
+              },
+            ],
             "title": {
               "defaultMessage": "Birth declaration for {firstname} {surname}",
               "description": "Title of the form to show in review page",
