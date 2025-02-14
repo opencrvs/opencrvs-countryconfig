@@ -28,7 +28,33 @@ export const BIRTH_DECLARE_FORM = defineForm({
       defaultMessage: 'Birth declaration for {firstname} {surname}',
       id: 'v2.event.birth.action.declare.form.review.title',
       description: 'Title of the form to show in review page'
-    }
+    },
+    fields: [
+      {
+        id: 'review.comment',
+        type: 'TEXTAREA',
+        label: {
+          defaultMessage: 'Comment',
+          id: 'v2.event.birth.action.declare.form.review.comment.label',
+          description: 'Label for the comment field in the review section'
+        }
+      },
+      {
+        type: 'SIGNATURE',
+        id: 'review.signature',
+        required: false,
+        label: {
+          defaultMessage: 'Signature of informant',
+          id: 'v2.event.birth.action.declare.form.review.signature.label',
+          description: 'Label for the signature field in the review section'
+        },
+        signaturePromptLabel: {
+          id: 'v2.signature.upload.modal.title',
+          defaultMessage: 'Draw signature',
+          description: 'Title for the modal to draw signature'
+        }
+      }
+    ]
   },
   active: true,
   version: {
