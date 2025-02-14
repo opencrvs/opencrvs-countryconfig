@@ -61,7 +61,8 @@ import {
   spouseBirthDateConditionals,
   spouseFamilyNameConditionals,
   spouseFirstNameConditionals,
-  hideIfInformantSpouse
+  hideIfInformantSpouse,
+  disableIfVerifiedOrAuthenticated
 } from '../common/default-validation-conditionals'
 import {
   documentsSection,
@@ -77,12 +78,17 @@ import {
   spouseNameInEnglish
 } from '../common/preview-groups'
 import { certificateHandlebars } from './certficate-handlebars'
-import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import {
+  getCommonSectionMapping,
+  getCustomFieldMapping
+} from '@countryconfig/utils/mapping/field-mapping-utils'
 import { getNumberOfDependants } from '@countryconfig/form/death/custom-fields'
 import { getIDNumberFields, getIDType } from '@countryconfig/form/custom-fields'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 //import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 import { getReasonForLateRegistration } from '../custom-fields'
+import { idReaderFields } from '@opencrvs/mosip'
+import { qrCodeConfig, esignetConfig } from '../common/id-reader-configurations'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -255,19 +261,38 @@ export const deathForm = {
           fields: [
             deathInformantType,
             otherInformantType(Event.Death),
+            ...idReaderFields(
+              'death',
+              'informant',
+              qrCodeConfig,
+              esignetConfig,
+              getCustomFieldMapping(
+                `death.informant.informant-view-group.verified`
+              ),
+              informantFirstNameConditionals.concat(hideIfInformantSpouse)
+            ),
             getFirstNameField(
               'informantNameInEnglish',
-              informantFirstNameConditionals.concat(hideIfInformantSpouse),
+              informantFirstNameConditionals.concat(
+                hideIfInformantSpouse,
+                disableIfVerifiedOrAuthenticated
+              ),
               certificateHandlebars.informantFirstName
             ), // Required field.
             getFamilyNameField(
               'informantNameInEnglish',
-              informantFamilyNameConditionals.concat(hideIfInformantSpouse),
+              informantFamilyNameConditionals.concat(
+                hideIfInformantSpouse,
+                disableIfVerifiedOrAuthenticated
+              ),
               certificateHandlebars.informantFamilyName
             ), // Required field.
             getBirthDate(
               'informantBirthDate',
-              informantBirthDateConditionals.concat(hideIfInformantSpouse),
+              informantBirthDateConditionals.concat(
+                hideIfInformantSpouse,
+                disableIfVerifiedOrAuthenticated
+              ),
               [
                 {
                   operation: 'dateFormatIsCorrect',
@@ -291,8 +316,17 @@ export const deathForm = {
               certificateHandlebars.informantNationality,
               hideIfInformantSpouse
             ),
-            getIDType('death', 'informant', hideIfInformantSpouse, true),
-            ...getIDNumberFields('informant', hideIfInformantSpouse, true),
+            getIDType(
+              'death',
+              'informant',
+              hideIfInformantSpouse.concat(disableIfVerifiedOrAuthenticated),
+              true
+            ),
+            ...getIDNumberFields(
+              'informant',
+              hideIfInformantSpouse.concat(disableIfVerifiedOrAuthenticated),
+              true
+            ),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('informant-address-separator', hideIfInformantSpouse),
             registrationPhone,

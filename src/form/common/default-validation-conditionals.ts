@@ -451,3 +451,11 @@ export const detailsDontExist = '!values.detailsExist'
 // primary address same as other primary
 export const primaryAddressSameAsOtherPrimaryAddress =
   'values.primaryAddressSameAsOtherPrimary'
+
+export const disableIfVerifiedOrAuthenticated = [
+  {
+    action: 'disable',
+    expression:
+      '$form?.verified === "verified" || $form?.verified === "authenticated"'
+  }
+]

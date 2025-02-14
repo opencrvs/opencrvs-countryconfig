@@ -60,7 +60,8 @@ import {
   informantNotMotherOrFather,
   detailsExistConditional,
   ageOfIndividualValidators,
-  ageOfParentsConditionals
+  ageOfParentsConditionals,
+  disableIfVerifiedOrAuthenticated
 } from '../common/default-validation-conditionals'
 import {
   informantFirstNameConditionals,
@@ -241,7 +242,8 @@ export const birthForm: ISerializedForm = {
             getFirstNameField(
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(
-                hideIfInformantMotherOrFather
+                hideIfInformantMotherOrFather,
+                disableIfVerifiedOrAuthenticated
               ),
               certificateHandlebars.informantFirstName,
               getInitialValueFromIDReader('firstName')
@@ -249,7 +251,8 @@ export const birthForm: ISerializedForm = {
             getFamilyNameField(
               'informantNameInEnglish',
               informantFamilyNameConditionals.concat(
-                hideIfInformantMotherOrFather
+                hideIfInformantMotherOrFather,
+                disableIfVerifiedOrAuthenticated
               ),
               certificateHandlebars.informantFamilyName,
               getInitialValueFromIDReader('familyName')
@@ -257,13 +260,14 @@ export const birthForm: ISerializedForm = {
             getGenderCustom(
               'birth',
               'informant',
-              [],
+              disableIfVerifiedOrAuthenticated,
               getInitialValueFromIDReader('gender')
             ), // Required field.
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
-                hideIfInformantMotherOrFather
+                hideIfInformantMotherOrFather,
+                disableIfVerifiedOrAuthenticated
               ),
               [
                 {
@@ -294,12 +298,16 @@ export const birthForm: ISerializedForm = {
             getIDType(
               'birth',
               'informant',
-              hideIfInformantMotherOrFather,
+              hideIfInformantMotherOrFather.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
               true
             ),
             ...getIDNumberFields(
               'informant',
-              hideIfInformantMotherOrFather,
+              hideIfInformantMotherOrFather.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -345,19 +353,25 @@ export const birthForm: ISerializedForm = {
             ),
             getFirstNameField(
               'motherNameInEnglish',
-              motherFirstNameConditionals,
+              motherFirstNameConditionals.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
               certificateHandlebars.motherFirstName,
               getInitialValueFromIDReader('firstName')
             ), // Required field.
             getFamilyNameField(
               'motherNameInEnglish',
-              motherFamilyNameConditionals,
+              motherFamilyNameConditionals.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
               certificateHandlebars.motherFamilyName,
               getInitialValueFromIDReader('familyName')
             ), // Required field.
             getBirthDate(
               'motherBirthDate',
-              mothersBirthDateConditionals,
+              mothersBirthDateConditionals.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
               parentsBirthDateValidators,
               certificateHandlebars.motherBirthDate,
               getInitialValueFromIDReader('birthDate')
@@ -375,8 +389,17 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.motherNationality,
               detailsExist
             ), // Required field.
-            getIDType('birth', 'mother', detailsExist, true),
-            ...getIDNumberFields('mother', detailsExist, true),
+            getIDType(
+              'birth',
+              'mother',
+              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              true
+            ),
+            ...getIDNumberFields(
+              'mother',
+              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              true
+            ),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('mother-address-seperator', detailsExist),
             getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
@@ -435,19 +458,25 @@ export const birthForm: ISerializedForm = {
             ),
             getFirstNameField(
               'fatherNameInEnglish',
-              fatherFirstNameConditionals,
+              fatherFirstNameConditionals.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
               certificateHandlebars.fatherFirstName,
               getInitialValueFromIDReader('firstName')
             ), // Required field.
             getFamilyNameField(
               'fatherNameInEnglish',
-              fatherFamilyNameConditionals,
+              fatherFamilyNameConditionals.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
               certificateHandlebars.fatherFamilyName,
               getInitialValueFromIDReader('familyName')
             ), // Required field.
             getBirthDate(
               'fatherBirthDate',
-              fathersBirthDateConditionals,
+              fathersBirthDateConditionals.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
               parentsBirthDateValidators,
               certificateHandlebars.fatherBirthDate,
               getInitialValueFromIDReader('birthDate')
@@ -465,8 +494,17 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.fatherNationality,
               detailsExist
             ), // Required field.
-            getIDType('birth', 'father', detailsExist, true),
-            ...getIDNumberFields('father', detailsExist, true),
+            getIDType(
+              'birth',
+              'father',
+              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              true
+            ),
+            ...getIDNumberFields(
+              'father',
+              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              true
+            ),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('father-address-seperator', detailsExist),
             getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
