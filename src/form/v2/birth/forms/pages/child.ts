@@ -247,19 +247,15 @@ export const child = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          // @TODO
           conditional: and(
             not(
               field('child.dob')
                 .isAfter()
                 .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
                 .inPast()
-            )
+            ),
+            field('child.dob').isBefore().now()
           )
-        },
-        {
-          type: ConditionalType.SHOW,
-          conditional: field('child.dob').isBefore().now()
         }
       ]
     },
