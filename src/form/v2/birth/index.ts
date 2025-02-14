@@ -8,15 +8,18 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-
-import { and, defineConfig, or, userHasScope } from '@opencrvs/toolkit/events'
 import {
-  defineConditional,
-  eventHasAction,
-  not
-} from '@opencrvs/toolkit/conditionals'
+  ActionType,
+  and,
+  defineConfig,
+  or,
+  user
+} from '@opencrvs/toolkit/events'
+import { not, event } from '@opencrvs/toolkit/conditionals'
+
 import { BIRTH_DECLARE_FORM } from './forms/declare'
 import { Event } from '@countryconfig/form/types/types'
+import { SCOPES } from '@opencrvs/toolkit/scopes'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -54,17 +57,23 @@ export const birthEvent = defineConfig({
   ],
   actions: [
     {
-      type: 'CREATE',
+      type: ActionType.CREATE,
       label: {
         defaultMessage: 'Create',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.create.label'
       },
-      forms: []
+      forms: [],
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: user.hasScope(SCOPES.RECORD_DECLARE)
+        }
+      ]
     },
     {
-      type: 'DECLARE',
+      type: ActionType.DECLARE,
       label: {
         defaultMessage: 'Declare',
         description:
@@ -75,7 +84,10 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(not(eventHasAction('DECLARE')))
+          conditional: and(
+            not(event.hasAction(ActionType.DECLARE)),
+            user.hasScope(SCOPES.RECORD_DECLARE)
+          )
         }
       ]
     },
@@ -91,8 +103,10 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(
-            and(eventHasAction('DECLARE'), not(eventHasAction('VALIDATE')))
+          conditional: and(
+            event.hasAction(ActionType.DECLARE),
+            not(event.hasAction(ActionType.VALIDATE)),
+            user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL)
           )
         }
       ]
@@ -109,14 +123,13 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(
-            and(
-              or(
-                eventHasAction('VALIDATE'),
-                and(eventHasAction('DECLARE'), userHasScope('register'))
-              ),
-              not(eventHasAction('REGISTER'))
-            )
+          conditional: and(
+            or(
+              event.hasAction(ActionType.VALIDATE),
+              and(event.hasAction('DECLARE'), user.hasScope('register'))
+            ),
+            not(event.hasAction(ActionType.REGISTER)),
+            user.hasScope(SCOPES.RECORD_REGISTER)
           )
         }
       ]
