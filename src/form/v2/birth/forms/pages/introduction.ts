@@ -9,7 +9,9 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-export const introduction = {
+import { defineFormPage, FieldType } from '@opencrvs/toolkit/events'
+
+export const introduction = defineFormPage({
   id: 'introduction',
   title: {
     defaultMessage: 'Introduce the birth registration process to the informant',
@@ -18,7 +20,7 @@ export const introduction = {
   },
   fields: [
     {
-      type: 'BULLET_LIST' as const,
+      type: FieldType.BULLET_LIST,
       id: 'form.section.information.birth.bulletList',
       label: {
         defaultMessage: 'Birth Information',
@@ -51,8 +53,11 @@ export const introduction = {
           id: 'v2.form.section.information.birth.bullet4'
         }
       ],
-      // @todo: move
-      font: 'reg16' as const
+      configuration: {
+        styles: {
+          fontVariant: 'reg16'
+        }
+      }
     }
   ]
-}
+})

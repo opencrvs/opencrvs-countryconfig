@@ -25,7 +25,7 @@ import {
 } from '../../../../common/select-options'
 
 const requireMotherDetails = or(
-  field('mother.detailsNotAvailable').isFalsy(),
+  field(`${PersonType.mother}.detailsNotAvailable`).isFalsy(),
   field('informant.relation').isEqualTo(InformantType.MOTHER)
 )
 
@@ -38,7 +38,7 @@ export const mother = defineFormPage({
   },
   fields: [
     {
-      id: 'mother.detailsNotAvailable',
+      id: `${PersonType.mother}.detailsNotAvailable`,
       type: FieldType.CHECKBOX,
       required: true,
       label: {
@@ -56,7 +56,7 @@ export const mother = defineFormPage({
       ]
     },
     {
-      id: 'mother.details.divider',
+      id: `${PersonType.mother}.details.divider`,
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
@@ -69,7 +69,7 @@ export const mother = defineFormPage({
       ]
     },
     {
-      id: 'mother.reason',
+      id: `${PersonType.mother}.reason`,
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -81,7 +81,7 @@ export const mother = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field('mother.detailsNotAvailable').isEqualTo(true),
+            field(`${PersonType.mother}.detailsNotAvailable`).isEqualTo(true),
             not(field('informant.relation').isEqualTo(InformantType.MOTHER))
           )
         }
