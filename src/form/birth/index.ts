@@ -305,7 +305,9 @@ export const birthForm: ISerializedForm = {
             ),
             ...getIDNumberFields(
               'informant',
-              hideIfInformantMotherOrFather,
+              hideIfInformantMotherOrFather.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE
