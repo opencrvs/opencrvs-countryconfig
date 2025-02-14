@@ -964,7 +964,7 @@ form.field.label.educationAttainmentISCED6,,Second stage tertiary,Second degré 
 form.field.label.educationAttainmentNone,,No schooling,Pas de scolarité
 form.field.label.educationAttainmentNotStated,,Not stated,Non déclaré
 form.field.label.email,,Email,e-mail
-form.field.label.empty,empty string,,
+form.field.label.empty,empty string, , 
 form.field.label.exactDateOfBirthUnknown,,Exact date of birth unknown,Date de naissance exacte inconnue
 form.field.label.familyName,,Last name,Nom de famille
 form.field.label.father.nationality,,Nationality,Nationalité
