@@ -33,7 +33,8 @@ export const BIRTH_DECLARE_FORM = defineForm({
       defaultMessage: 'Birth declaration for {firstname} {surname}',
       id: 'v2.event.birth.action.declare.form.review.title',
       description: 'Title of the form to show in review page'
-    }
+    },
+    fields: []
   },
   active: true,
   version: {

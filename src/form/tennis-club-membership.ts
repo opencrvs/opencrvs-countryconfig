@@ -34,7 +34,8 @@ const TENNIS_CLUB_FORM = defineForm({
       id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
       defaultMessage: 'Member declaration for {firstname} {surname}',
       description: 'Title of the form to show in review page'
-    }
+    },
+    fields: []
   },
   active: true,
   version: {
@@ -203,7 +204,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
       id: 'v2.event.tennis-club-membership.action.certificate.form.review.title',
       defaultMessage: 'Member certificate collector for {firstname} {surname}',
       description: 'Title of the form to show in review page'
-    }
+    },
+    fields: []
   },
   active: true,
   version: {
