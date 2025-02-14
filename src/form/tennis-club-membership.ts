@@ -26,6 +26,7 @@ import {
 
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/utils'
+import { SCOPES } from '@opencrvs/toolkit/scopes'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
@@ -666,7 +667,10 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: not(event.hasAction(ActionType.DECLARE))
+          conditional: and(
+            not(event.hasAction(ActionType.DECLARE)),
+            user.hasScope(SCOPES.RECORD_DECLARE)
+          )
         }
       ]
     },
@@ -682,7 +686,10 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: not(event.hasAction(ActionType.DECLARE))
+          conditional: and(
+            not(event.hasAction(ActionType.DECLARE)),
+            user.hasScope(SCOPES.RECORD_DECLARE)
+          )
         }
       ]
     },
@@ -699,11 +706,12 @@ export const tennisClubMembershipEvent = defineConfig({
           type: 'SHOW',
           conditional: and(
             event.hasAction(ActionType.DECLARE),
-            not(event.hasAction(ActionType.VALIDATE))
+            not(event.hasAction(ActionType.VALIDATE)),
+            user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL)
           )
         }
       ],
-      forms: [TENNIS_CLUB_FORM]
+      forms: []
     },
     {
       type: ActionType.REGISTER,
@@ -721,7 +729,8 @@ export const tennisClubMembershipEvent = defineConfig({
               event.hasAction(ActionType.VALIDATE),
               and(event.hasAction('DECLARE'), user.hasScope('register'))
             ),
-            not(event.hasAction(ActionType.REGISTER))
+            not(event.hasAction(ActionType.REGISTER)),
+            user.hasScope(SCOPES.RECORD_REGISTER)
           )
         }
       ],
@@ -738,7 +747,10 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: event.hasAction(ActionType.REGISTER)
+          conditional: and(
+            event.hasAction(ActionType.REGISTER),
+            user.hasScope(SCOPES.RECORD_DECLARATION_PRINT)
+          )
         }
       ],
       forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
@@ -754,7 +766,10 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: and(event.hasAction(ActionType.REGISTER))
+          conditional: and(
+            event.hasAction(ActionType.REGISTER),
+            user.hasScope(SCOPES.RECORD_REGISTRATION_REQUEST_CORRECTION)
+          )
         }
       ],
       forms: [TENNIS_CLUB_FORM],
@@ -954,25 +969,6 @@ export const tennisClubMembershipEvent = defineConfig({
           ]
         }
       ]
-    },
-    {
-      type: 'CUSTOM',
-      label: {
-        defaultMessage: 'My custom action',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.tennis-club-membership.action.sdf.label'
-      },
-      conditionals: [
-        {
-          type: 'SHOW',
-          conditional: or(
-            event.hasAction(ActionType.VALIDATE),
-            and(event.hasAction(ActionType.DECLARE), user.hasScope('register'))
-          )
-        }
-      ],
-      forms: []
     }
   ]
 })

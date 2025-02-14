@@ -4,7 +4,34 @@ exports[`birth configuration is parsed 1`] = `
 {
   "actions": [
     {
-      "conditionals": [],
+      "conditionals": [
+        {
+          "conditional": {
+            "properties": {
+              "$user": {
+                "properties": {
+                  "scope": {
+                    "contains": {
+                      "const": "record.declare-birth",
+                      "type": "string",
+                    },
+                    "type": "array",
+                  },
+                },
+                "required": [
+                  "scope",
+                ],
+                "type": "object",
+              },
+            },
+            "required": [
+              "$user",
+            ],
+            "type": "object",
+          },
+          "type": "SHOW",
+        },
+      ],
       "forms": [],
       "label": {
         "defaultMessage": "Create",
@@ -17,46 +44,75 @@ exports[`birth configuration is parsed 1`] = `
       "conditionals": [
         {
           "conditional": {
-            "not": {
-              "properties": {
-                "$event": {
+            "allOf": [
+              {
+                "not": {
                   "properties": {
-                    "actions": {
-                      "contains": {
-                        "not": {
-                          "properties": {
-                            "draft": {
-                              "const": true,
+                    "$event": {
+                      "properties": {
+                        "actions": {
+                          "contains": {
+                            "not": {
+                              "properties": {
+                                "draft": {
+                                  "const": true,
+                                },
+                              },
                             },
+                            "properties": {
+                              "draft": {
+                                "type": "boolean",
+                              },
+                              "type": {
+                                "const": "DECLARE",
+                              },
+                            },
+                            "required": [
+                              "type",
+                            ],
+                            "type": "object",
                           },
+                          "type": "array",
                         },
-                        "properties": {
-                          "draft": {
-                            "type": "boolean",
-                          },
-                          "type": {
-                            "const": "DECLARE",
-                          },
-                        },
-                        "required": [
-                          "type",
-                        ],
-                        "type": "object",
                       },
-                      "type": "array",
+                      "required": [
+                        "actions",
+                      ],
+                      "type": "object",
                     },
                   },
                   "required": [
-                    "actions",
+                    "$event",
                   ],
                   "type": "object",
                 },
+                "required": [],
+                "type": "object",
               },
-              "required": [
-                "$event",
-              ],
-              "type": "object",
-            },
+              {
+                "properties": {
+                  "$user": {
+                    "properties": {
+                      "scope": {
+                        "contains": {
+                          "const": "record.declare-birth",
+                          "type": "string",
+                        },
+                        "type": "array",
+                      },
+                    },
+                    "required": [
+                      "scope",
+                    ],
+                    "type": "object",
+                  },
+                },
+                "required": [
+                  "$user",
+                ],
+                "type": "object",
+              },
+            ],
             "required": [],
             "type": "object",
           },
@@ -75,7 +131,11 @@ exports[`birth configuration is parsed 1`] = `
             {
               "fields": [
                 {
-                  "font": "reg16",
+                  "configuration": {
+                    "styles": {
+                      "fontVariant": "reg16",
+                    },
+                  },
                   "hideLabel": true,
                   "id": "form.section.information.birth.bulletList",
                   "items": [
@@ -201,7 +261,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "child.dob": {
                                 "format": "date",
-                                "formatMaximum": "2025-02-14",
+                                "formatMaximum": "<date here>",
                                 "type": "string",
                               },
                             },
@@ -231,7 +291,7 @@ exports[`birth configuration is parsed 1`] = `
                                   "properties": {
                                     "child.dob": {
                                       "format": "date",
-                                      "formatMinimum": "2024-02-15",
+                                      "formatMinimum": "<date here>",
                                       "type": "string",
                                     },
                                   },
@@ -255,7 +315,7 @@ exports[`birth configuration is parsed 1`] = `
                                 "properties": {
                                   "child.dob": {
                                     "format": "date",
-                                    "formatMaximum": "2025-02-14",
+                                    "formatMaximum": "<date here>",
                                     "type": "string",
                                   },
                                 },
@@ -1035,7 +1095,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "informant.dob": {
                                 "format": "date",
-                                "formatMaximum": "2025-02-14",
+                                "formatMaximum": "<date here>",
                                 "type": "string",
                               },
                             },
@@ -2828,7 +2888,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "mother.dob": {
                                 "format": "date",
-                                "formatMaximum": "2025-02-14",
+                                "formatMaximum": "<date here>",
                                 "type": "string",
                               },
                             },
@@ -4940,7 +5000,7 @@ exports[`birth configuration is parsed 1`] = `
                             "properties": {
                               "father.dob": {
                                 "format": "date",
-                                "formatMaximum": "2025-02-14",
+                                "formatMaximum": "<date here>",
                                 "type": "string",
                               },
                             },
