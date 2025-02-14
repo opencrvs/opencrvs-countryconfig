@@ -302,7 +302,9 @@ export const BIRTH_DECLARE_FORM = defineForm({
           type: 'FILE',
           required: false,
           options: {
-            fullWidth: true
+            style: {
+              fullWidth: true
+            }
           },
           label: {
             defaultMessage: 'Proof of birth',
