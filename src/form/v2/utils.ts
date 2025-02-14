@@ -9,26 +9,9 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import {
-  FieldConditional,
-  FieldConfig,
-  SelectOption,
-  TranslationConfig
-} from '@opencrvs/toolkit/events'
+import { SelectOption, TranslationConfig } from '@opencrvs/toolkit/events'
 
 export const MAX_NAME_LENGTH = 32
-
-export const appendConditionalsToFields = ({
-  inputFields,
-  newConditionals
-}: {
-  inputFields: FieldConfig[]
-  newConditionals: FieldConditional[]
-}): any =>
-  inputFields.map((inputField) => ({
-    ...inputField,
-    conditionals: [...(inputField.conditionals || []), ...newConditionals]
-  }))
 
 export const createSelectOptions = <
   T extends Record<string, string>,
