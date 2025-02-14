@@ -9,8 +9,8 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { FieldConfig, TranslationConfig } from '@opencrvs/toolkit/events'
-import { field } from '@opencrvs/toolkit/conditionals'
+import { FieldConfig, or, TranslationConfig } from '@opencrvs/toolkit/events'
+import { field, not } from '@opencrvs/toolkit/conditionals'
 import { appendConditionalsToFields, createSelectOptions } from '../utils'
 import { PersonType } from './index'
 
@@ -223,9 +223,10 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field(`${prefix}.urbanOrRural`)
-            .or((field) => field.isUndefined().inArray(['RURAL']))
-            .apply()
+          conditional: or(
+            field(`${prefix}.urbanOrRural`).isUndefined(),
+            field(`${prefix}.urbanOrRural`).inArray(['RURAL'])
+          )
         }
       ]
     }),
@@ -241,9 +242,10 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       conditionals: [
         {
           type: 'HIDE',
-          conditional: field(`${prefix}.urbanOrRural`)
-            .or((field) => field.isUndefined().not.inArray(['RURAL']))
-            .apply()
+          conditional: or(
+            field(`${prefix}.urbanOrRural`).isUndefined(),
+            not(field(`${prefix}.urbanOrRural`).inArray(['RURAL']))
+          )
         }
       ]
     }
@@ -265,9 +267,10 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field(`${person}.address.country`)
-            .or((field) => field.isUndefined().inArray(['FAR']))
-            .apply()
+          conditional: or(
+            field(`${person}.address.country`).isUndefined(),
+            field(`${person}.address.country`).inArray(['FAR'])
+          )
         }
       ]
     }),
@@ -276,9 +279,10 @@ export const getAddressFields = (person: AddressType): FieldConfig[] => {
       newConditionals: [
         {
           type: 'HIDE',
-          conditional: field(`${person}.address.country`)
-            .or((field) => field.isUndefined().not.inArray(['FAR']))
-            .apply()
+          conditional: or(
+            field(`${person}.address.country`).isUndefined(),
+            not(field(`${person}.address.country`).inArray(['FAR']))
+          )
         }
       ]
     })
