@@ -2477,6 +2477,7 @@ v2.correction.requester.relationshop.intro.label,The title for the corrector for
 v2.correction.supportingDocuments.attest.label,Label for attestation of supporting documents,Attest,Attestation
 v2.correction.supportingDocuments.notNeeded.label,Label for indicating supporting documents are not needed,Not Needed,Non nécessaire
 v2.custom.field.form.requiredField,,Required for registration,Requis pour l'enregistrement
+v2.error.hidden,The error message shown when a hidden or disabled field is accessed,An error occurred while accessing a hidden field,An error occurred while accessing a hidden field
 v2.error.required,This is the error message for required fields,Required for registration,Required for registration
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,An error occurred while searching
 v2.event.action.declare.form.section.person.field.address.country.label,This is the label for the field,Country,Country
