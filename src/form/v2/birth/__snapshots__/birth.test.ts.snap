@@ -5851,35 +5851,308 @@ exports[`birth configuration is parsed 1`] = `
                   "conditionals": [
                     {
                       "conditional": {
-                        "not": {
-                          "properties": {
-                            "$form": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "father.detailsNotAvailable",
+                                    ],
+                                  },
+                                  {
+                                    "not": {
+                                      "required": [
+                                        "father.detailsNotAvailable",
+                                      ],
+                                    },
+                                  },
+                                ],
+                                "properties": {
+                                  "father.detailsNotAvailable": {
+                                    "anyOf": [
+                                      {
+                                        "const": "undefined",
+                                      },
+                                      {
+                                        "const": false,
+                                      },
+                                      {
+                                        "const": null,
+                                      },
+                                      {
+                                        "const": "",
+                                      },
+                                    ],
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.relation": {
+                                    "const": "FATHER",
+                                    "oneOf": [
+                                      {
+                                        "const": "FATHER",
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": "FATHER",
+                                        "type": "boolean",
+                                      },
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.relation",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                        "required": [],
+                        "type": "object",
+                      },
+                      "type": "SHOW",
+                    },
+                  ],
+                  "id": "father.addressDivider",
+                  "label": {
+                    "defaultMessage": "",
+                    "description": "empty string",
+                    "id": "v2.messages.emptyString",
+                  },
+                  "type": "DIVIDER",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "father.detailsNotAvailable",
+                                    ],
+                                  },
+                                  {
+                                    "not": {
+                                      "required": [
+                                        "father.detailsNotAvailable",
+                                      ],
+                                    },
+                                  },
+                                ],
+                                "properties": {
+                                  "father.detailsNotAvailable": {
+                                    "anyOf": [
+                                      {
+                                        "const": "undefined",
+                                      },
+                                      {
+                                        "const": false,
+                                      },
+                                      {
+                                        "const": null,
+                                      },
+                                      {
+                                        "const": "",
+                                      },
+                                    ],
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "informant.relation": {
+                                    "const": "FATHER",
+                                    "oneOf": [
+                                      {
+                                        "const": "FATHER",
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": "FATHER",
+                                        "type": "boolean",
+                                      },
+                                    ],
+                                  },
+                                },
+                                "required": [
+                                  "informant.relation",
+                                ],
+                                "type": "object",
+                              },
+                            },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
+                          },
+                        ],
+                        "required": [],
+                        "type": "object",
+                      },
+                      "type": "SHOW",
+                    },
+                  ],
+                  "configuration": {
+                    "styles": {
+                      "fontVariant": "h3",
+                    },
+                  },
+                  "id": "father.addressHelper",
+                  "label": {
+                    "defaultMessage": "Usual place of residence",
+                    "description": "This is the label for the field",
+                    "id": "v2.event.birth.action.declare.form.section.person.field.addressHelper.label",
+                  },
+                  "type": "PARAGRAPH",
+                },
+                {
+                  "conditionals": [
+                    {
+                      "conditional": {
+                        "allOf": [
+                          {
+                            "not": {
                               "properties": {
-                                "mother.detailsNotAvailable": {
-                                  "const": true,
-                                  "oneOf": [
-                                    {
+                                "$form": {
+                                  "properties": {
+                                    "mother.detailsNotAvailable": {
                                       "const": true,
-                                      "type": "string",
+                                      "oneOf": [
+                                        {
+                                          "const": true,
+                                          "type": "string",
+                                        },
+                                        {
+                                          "const": true,
+                                          "type": "boolean",
+                                        },
+                                      ],
                                     },
-                                    {
-                                      "const": true,
-                                      "type": "boolean",
-                                    },
+                                  },
+                                  "required": [
+                                    "mother.detailsNotAvailable",
                                   ],
+                                  "type": "object",
                                 },
                               },
                               "required": [
-                                "mother.detailsNotAvailable",
+                                "$form",
                               ],
                               "type": "object",
                             },
+                            "required": [],
+                            "type": "object",
                           },
-                          "required": [
-                            "$form",
-                          ],
-                          "type": "object",
-                        },
+                          {
+                            "anyOf": [
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "anyOf": [
+                                      {
+                                        "required": [
+                                          "father.detailsNotAvailable",
+                                        ],
+                                      },
+                                      {
+                                        "not": {
+                                          "required": [
+                                            "father.detailsNotAvailable",
+                                          ],
+                                        },
+                                      },
+                                    ],
+                                    "properties": {
+                                      "father.detailsNotAvailable": {
+                                        "anyOf": [
+                                          {
+                                            "const": "undefined",
+                                          },
+                                          {
+                                            "const": false,
+                                          },
+                                          {
+                                            "const": null,
+                                          },
+                                          {
+                                            "const": "",
+                                          },
+                                        ],
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                              {
+                                "properties": {
+                                  "$form": {
+                                    "properties": {
+                                      "informant.relation": {
+                                        "const": "FATHER",
+                                        "oneOf": [
+                                          {
+                                            "const": "FATHER",
+                                            "type": "string",
+                                          },
+                                          {
+                                            "const": "FATHER",
+                                            "type": "boolean",
+                                          },
+                                        ],
+                                      },
+                                    },
+                                    "required": [
+                                      "informant.relation",
+                                    ],
+                                    "type": "object",
+                                  },
+                                },
+                                "required": [
+                                  "$form",
+                                ],
+                                "type": "object",
+                              },
+                            ],
+                            "required": [],
+                            "type": "object",
+                          },
+                        ],
                         "required": [],
                         "type": "object",
                       },
@@ -5917,87 +6190,66 @@ exports[`birth configuration is parsed 1`] = `
                   "conditionals": [
                     {
                       "conditional": {
-                        "not": {
-                          "properties": {
-                            "$form": {
-                              "properties": {
-                                "father.addressSameAs": {
-                                  "const": "YES",
-                                  "oneOf": [
-                                    {
-                                      "const": "YES",
-                                      "type": "string",
-                                    },
-                                    {
-                                      "const": "YES",
-                                      "type": "boolean",
-                                    },
-                                  ],
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "father.addressSameAs": {
+                                    "const": "NO",
+                                    "oneOf": [
+                                      {
+                                        "const": "NO",
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": "NO",
+                                        "type": "boolean",
+                                      },
+                                    ],
+                                  },
                                 },
+                                "required": [
+                                  "father.addressSameAs",
+                                ],
+                                "type": "object",
                               },
-                              "required": [
-                                "father.addressSameAs",
-                              ],
-                              "type": "object",
                             },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
                           },
-                          "required": [
-                            "$form",
-                          ],
-                          "type": "object",
-                        },
-                        "required": [],
-                        "type": "object",
-                      },
-                      "type": "SHOW",
-                    },
-                  ],
-                  "configuration": {
-                    "styles": {
-                      "fontVariant": "h3",
-                    },
-                  },
-                  "id": "father.addressHelper",
-                  "label": {
-                    "defaultMessage": "Usual place of residence",
-                    "description": "This is the label for the field",
-                    "id": "v2.event.birth.action.declare.form.section.person.field.addressHelper.label",
-                  },
-                  "type": "PARAGRAPH",
-                },
-                {
-                  "conditionals": [
-                    {
-                      "conditional": {
-                        "not": {
-                          "properties": {
-                            "$form": {
-                              "properties": {
-                                "father.addressSameAs": {
-                                  "const": "YES",
-                                  "oneOf": [
-                                    {
-                                      "const": "YES",
-                                      "type": "string",
-                                    },
-                                    {
-                                      "const": "YES",
-                                      "type": "boolean",
-                                    },
-                                  ],
+                          {
+                            "properties": {
+                              "$form": {
+                                "properties": {
+                                  "mother.detailsNotAvailable": {
+                                    "const": true,
+                                    "oneOf": [
+                                      {
+                                        "const": true,
+                                        "type": "string",
+                                      },
+                                      {
+                                        "const": true,
+                                        "type": "boolean",
+                                      },
+                                    ],
+                                  },
                                 },
+                                "required": [
+                                  "mother.detailsNotAvailable",
+                                ],
+                                "type": "object",
                               },
-                              "required": [
-                                "father.addressSameAs",
-                              ],
-                              "type": "object",
                             },
+                            "required": [
+                              "$form",
+                            ],
+                            "type": "object",
                           },
-                          "required": [
-                            "$form",
-                          ],
-                          "type": "object",
-                        },
+                        ],
                         "required": [],
                         "type": "object",
                       },
