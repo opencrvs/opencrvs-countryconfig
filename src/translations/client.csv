@@ -964,7 +964,7 @@ form.field.label.educationAttainmentISCED6,,Second stage tertiary,Second degré 
 form.field.label.educationAttainmentNone,,No schooling,Pas de scolarité
 form.field.label.educationAttainmentNotStated,,Not stated,Non déclaré
 form.field.label.email,,Email,e-mail
-form.field.label.empty,empty string, , 
+form.field.label.empty,empty string, ,
 form.field.label.exactDateOfBirthUnknown,,Exact date of birth unknown,Date de naissance exacte inconnue
 form.field.label.familyName,,Last name,Nom de famille
 form.field.label.father.nationality,,Nationality,Nationalité
@@ -2601,23 +2601,23 @@ v2.event.tennis-club-membership.action.validate.label,This is shown as the actio
 v2.event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Tennis club membership application
 v2.event.tennis-club-membership.summary.field.applicant.firstname.empty,Shown when the applicant's first name is missing in summary,Applicant's first name missing,Applicant's first name missing
 v2.event.tennis-club-membership.summary.field.applicant.firstname.label,Label for the applicant's first name field,Applicant's First Name,Applicant's First Name
-v2.event.tennis-club-membership.summary.field.applicant.firstname.value,Value for the applicant's first name field,First Name,First Name
+v2.event.tennis-club-membership.summary.field.applicant.firstname.value,Value for the applicant's first name field,{applicant.firstname},{applicant.firstname}
 v2.event.tennis-club-membership.summary.field.applicant.surname.empty,Shown when the surname is missing in summary,Applicant's surname missing,Applicant's surname missing
 v2.event.tennis-club-membership.summary.field.applicant.surname.label,Label for the applicant's surname field,Applicant's Surname,Applicant's Surname
-v2.event.tennis-club-membership.summary.field.applicant.surname.value,Value for the applicant's surname field,Surname,Surname
+v2.event.tennis-club-membership.summary.field.applicant.surname.value,Value for the applicant's surname field,{applicant.surname},{applicant.surname}
 v2.event.tennis-club-membership.summary.field.firstname.label,Label for the given field on form.,First name,First name
 v2.event.tennis-club-membership.summary.field.firstname.value,Value for the first name field in membership summary,First Name,Prénom
 v2.event.tennis-club-membership.summary.field.recommender.firstname.empty,Shown when the recommender first name is missing in summary,Recommender's first name missing,Recommender's first name missing
 v2.event.tennis-club-membership.summary.field.recommender.firstname.label,Label for the recommender's first name field,Recommender's First Name,Recommender's First Name
-v2.event.tennis-club-membership.summary.field.recommender.firstname.value,Value for the recommender's first name field,First Name,First Name
+v2.event.tennis-club-membership.summary.field.recommender.firstname.value,Value for the recommender's first name field,{recommender.firstname},{recommender.firstname}
 v2.event.tennis-club-membership.summary.field.recommender.id.empty,Shown when the recommender id is missing in summary,Recommender's id missing,Recommender's id missing
 v2.event.tennis-club-membership.summary.field.recommender.id.label,Label for the recommender's ID field,Recommender's ID,Recommender's ID
-v2.event.tennis-club-membership.summary.field.recommender.id.value,Value for the recommender's ID field,ID,ID
+v2.event.tennis-club-membership.summary.field.recommender.id.value,Value for the recommender's ID field,{recommender.id},{recommender.id}
 v2.event.tennis-club-membership.summary.field.recommender.surname.empty,Shown when the recommender surname is missing in summary,Recommender's surname missing,Recommender's surname missing
 v2.event.tennis-club-membership.summary.field.recommender.surname.label,Label for the recommender's surname field,Recommender's Surname,Recommender's Surname
-v2.event.tennis-club-membership.summary.field.recommender.surname.value,Value for the recommender's surname field,Surname,Surname
+v2.event.tennis-club-membership.summary.field.recommender.surname.value,Value for the recommender's surname field,{recommender.surname},{recommender.surname}
 v2.event.tennis-club-membership.summary.title.label,Label for the summary title of the tennis club membership,Membership Summary,Résumé de l'adhésion
-v2.event.tennis-club-membership.workqueue.all.name.label,Label for the 'All' work queue filter for tennis club membership,All,Tous
+v2.event.tennis-club-membership.workqueue.all.name.label,Label for the 'All' work queue filter for tennis club membership,{applicant.firstname} {applicant.surname},{applicant.firstname} {applicant.surname}
 v2.event.tennis-club-membership.workqueue.readyForReview.name.label,Label for 'Ready for Review' work queue for tennis club membership,Ready for Review,Prêt pour révision
 v2.event.tennis-club-membership.workqueue.registered.name.label,Label for 'Registered' work queue for tennis club membership,Registered,Enregistré
 v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}","{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}"
@@ -2690,7 +2690,7 @@ v2.form.section.information.birth.bullet3,Form information for birth,Once the de
 v2.form.section.information.birth.bullet4,Form information for birth,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.","Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits."
 v2.form.section.information.birth.bulletList.label,Label for the birth information bullet list,Birth Information,Birth Information
 v2.form.section.mother.title,Form section title for mothers details,Mother's details,Mother's details
-v2.messages.emptyString,Empty string, , 
+v2.messages.emptyString,Empty string, ,
 v2.navigation.CREATED,In progress label in navigation,In progress,In progress
 v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Ready for review
 v2.navigation.REGISTERED,Ready to print label in navigation,Ready to print,Ready to print
