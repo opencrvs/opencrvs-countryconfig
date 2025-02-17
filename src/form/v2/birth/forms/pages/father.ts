@@ -289,21 +289,13 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.father}.addressSameAs`,
-      type: FieldType.RADIO_GROUP,
-      options: yesNoRadioOptions,
-      required: true,
-      label: {
-        defaultMessage: "Same as mother's usual place of residence?",
-        description: 'This is the label for the field',
-        id: `v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label`
-      },
+      id: `${PersonType.father}.addressDivider`,
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            field(`${PersonType.mother}.detailsNotAvailable`).isEqualTo(true)
-          )
+          conditional: requireFatherDetails
         }
       ]
     },
@@ -319,10 +311,28 @@ export const father = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
-            field(`${PersonType.father}.addressSameAs`).isEqualTo(
-              YesNoTypes.YES
-            )
+          conditional: requireFatherDetails
+        }
+      ]
+    },
+    {
+      id: `${PersonType.father}.addressSameAs`,
+      type: FieldType.RADIO_GROUP,
+      options: yesNoRadioOptions,
+      required: true,
+      label: {
+        defaultMessage: "Same as mother's usual place of residence?",
+        description: 'This is the label for the field',
+        id: `v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label`
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            not(
+              field(`${PersonType.mother}.detailsNotAvailable`).isEqualTo(true)
+            ),
+            requireFatherDetails
           )
         }
       ]
@@ -339,10 +349,11 @@ export const father = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: not(
+          conditional: or(
             field(`${PersonType.father}.addressSameAs`).isEqualTo(
-              YesNoTypes.YES
-            )
+              YesNoTypes.NO
+            ),
+            field(`${PersonType.mother}.detailsNotAvailable`).isEqualTo(true)
           )
         }
       ]
