@@ -14,12 +14,12 @@
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
     <tspan x="69" y="711.552">Place of certification / Lieu de certification</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0.5px">
-    <tspan x="69" y="758.104">12345678912345678912345678900</tspan>
-  </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
-    <tspan x="69" y="746.104">MOSIP Application ID / MOSIP Application ID&#10;</tspan>
-  </text>
+  <!-- <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0.5px"> -->
+  <!--   <tspan x="69" y="758.104">12345678912345678912345678900</tspan> -->
+  <!-- </text> -->
+  <!-- <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px"> -->
+  <!--   <tspan x="69" y="746.104">MOSIP Application ID / MOSIP Application ID&#10;</tspan> -->
+  <!-- </text> -->
   <path d="M316.793 740L512.999 740.925" stroke="#CCCCCC" stroke-width="0.782258" stroke-dasharray="3.13 1.56" />
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
     <tspan x="373.248" y="753.656">Registrar {{registrar.name}}</tspan>
