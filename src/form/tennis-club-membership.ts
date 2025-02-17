@@ -9,7 +9,12 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { ActionType, defineConfig, defineForm } from '@opencrvs/toolkit/events'
+import {
+  ActionType,
+  ConditionalType,
+  defineConfig,
+  defineForm
+} from '@opencrvs/toolkit/events'
 import {
   event,
   user,
@@ -170,8 +175,8 @@ const TENNIS_CLUB_FORM = defineForm({
           required: true,
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('recommender.none').isEqualTo(true)
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
             }
           ],
           label: {
@@ -187,8 +192,8 @@ const TENNIS_CLUB_FORM = defineForm({
           required: true,
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('recommender.none').isEqualTo(true)
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
             }
           ],
           label: {
@@ -203,8 +208,8 @@ const TENNIS_CLUB_FORM = defineForm({
           required: true,
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('recommender.none').isEqualTo(true)
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
             }
           ],
           label: {
@@ -297,11 +302,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: or(
-                field('collector.requesterId').isUndefined(),
-                not(field('collector.requesterId').inArray(['OTHER']))
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ],
           options: [
@@ -368,11 +370,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: or(
-                field('collector.OTHER.idType').isUndefined(),
-                not(field('collector.OTHER.idType').inArray(['PASSPORT']))
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray(['PASSPORT'])
             }
           ]
         },
@@ -387,14 +386,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-
-              conditional: or(
-                field('collector.OTHER.idType').isUndefined(),
-                not(
-                  field('collector.OTHER.idType').inArray(['DRIVING_LICENSE'])
-                )
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray([
+                'DRIVING_LICENSE'
+              ])
             }
           ]
         },
@@ -409,11 +404,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: or(
-                field('collector.OTHER.idType').isUndefined(),
-                not(field('collector.OTHER.idType').inArray(['REFUGEE_NUMBER']))
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray([
+                'REFUGEE_NUMBER'
+              ])
             }
           ]
         },
@@ -428,11 +422,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: or(
-                field('collector.OTHER.idType').isUndefined(),
-                not(field('collector.OTHER.idType').inArray(['ALIEN_NUMBER']))
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray([
+                'ALIEN_NUMBER'
+              ])
             }
           ]
         },
@@ -447,12 +440,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-
-              conditional: or(
-                field('collector.OTHER.idType').isUndefined(),
-                not(field('collector.OTHER.idType').inArray(['OTHER']))
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray(['OTHER'])
             }
           ]
         },
@@ -467,11 +456,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: or(
-                field('collector.requesterId').isUndefined(),
-                not(field('collector.requesterId').inArray(['OTHER']))
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ]
         },
@@ -486,11 +472,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: or(
-                field('collector.requesterId').isUndefined(),
-                not(field('collector.requesterId').inArray(['OTHER']))
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ]
         },
@@ -506,11 +489,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: or(
-                field('collector.requesterId').isUndefined(),
-                not(field('collector.requesterId').inArray(['OTHER']))
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ]
         },
@@ -525,11 +505,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: or(
-                field('collector.requesterId').isUndefined(),
-                not(field('collector.requesterId').inArray(['OTHER']))
-              )
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ]
         }
@@ -1017,6 +994,21 @@ export const tennisClubMembershipEvent = defineConfig({
               }
             }
           ]
+        }
+      ]
+    }
+  ],
+  advancedSearch: [
+    {
+      id: 'RANDOM',
+      title: {
+        defaultMessage: 'Tennis club registration search',
+        description: 'This is what this event is referred as in the system',
+        id: 'v2.event.tennis-club-membership.search'
+      },
+      fields: [
+        {
+          fieldId: 'applicant.dob'
         }
       ]
     }

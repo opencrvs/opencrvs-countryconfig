@@ -42,6 +42,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
 - Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
 - On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
+- Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
 ### Infrastructure breaking changes
 
