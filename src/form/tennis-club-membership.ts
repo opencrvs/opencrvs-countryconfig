@@ -53,7 +53,6 @@ const TENNIS_CLUB_FORM = defineForm({
       {
         type: 'SIGNATURE',
         id: 'review.signature',
-        required: false,
         label: {
           defaultMessage: 'Signature of informant',
           id: 'v2.event.birth.action.declare.form.review.signature.label',
