@@ -8,7 +8,13 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { ActionType, and, defineConfig, user } from '@opencrvs/toolkit/events'
+import {
+  ActionType,
+  and,
+  defineConfig,
+  or,
+  user
+} from '@opencrvs/toolkit/events'
 import { not, event } from '@opencrvs/toolkit/conditionals'
 
 import { BIRTH_DECLARE_FORM } from './forms/declare'
@@ -82,6 +88,49 @@ export const birthEvent = defineConfig({
           conditional: and(
             not(event.hasAction(ActionType.DECLARE)),
             user.hasScope(SCOPES.RECORD_DECLARE)
+          )
+        }
+      ]
+    },
+    {
+      type: 'VALIDATE',
+      label: {
+        defaultMessage: 'Validate',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.birth.action.validate.label'
+      },
+      forms: [BIRTH_DECLARE_FORM],
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: and(
+            event.hasAction(ActionType.DECLARE),
+            not(event.hasAction(ActionType.VALIDATE)),
+            user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL)
+          )
+        }
+      ]
+    },
+    {
+      type: 'REGISTER',
+      label: {
+        defaultMessage: 'Register',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.birth.action.register.label'
+      },
+      forms: [BIRTH_DECLARE_FORM],
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: and(
+            or(
+              event.hasAction(ActionType.VALIDATE),
+              and(event.hasAction('DECLARE'), user.hasScope('register'))
+            ),
+            not(event.hasAction(ActionType.REGISTER)),
+            user.hasScope(SCOPES.RECORD_REGISTER)
           )
         }
       ]

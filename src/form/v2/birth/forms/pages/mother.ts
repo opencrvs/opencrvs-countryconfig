@@ -24,7 +24,7 @@ import {
   maritalStatusOptions
 } from '../../../../common/select-options'
 
-const requireMotherDetails = or(
+export const requireMotherDetails = or(
   field(`${PersonType.mother}.detailsNotAvailable`).isFalsy(),
   field('informant.relation').isEqualTo(InformantType.MOTHER)
 )
