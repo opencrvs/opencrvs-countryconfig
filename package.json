@@ -22,7 +22,7 @@
     "e2e:generate-types": "graphql-codegen --config e2e/codegen.yml && yarn prettier --write e2e/gateway.ts",
     "precommit": "lint-staged",
     "test": "vitest 'src/**/*.test.ts' --passWithNoTests",
-    "test:compilation": "tsc --noEmit",
+    "test:compilation": "tsc --noEmit --resolveJsonModule",
     "lint": "eslint -c .eslintrc.js",
     "start": "cross-env NODE_ENV=development NODE_OPTIONS=--dns-result-order=ipv4first nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
     "start:prod": "ts-node --transpile-only -r tsconfig-paths/register src/index.ts",
