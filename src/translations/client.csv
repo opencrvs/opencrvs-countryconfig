@@ -2817,16 +2817,6 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
-views.idVerification.banner.actions.reset,,Reset,Réinitialiser
-views.idVerification.banner.actions.revoke,,Revoke,Révoquer
-views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.",Cette identité a été authentifiée avec succès avec le système national d'identité de Farajaland. 
-views.idVerification.banner.authenticated.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Authenticated status and unlock the fields for editing.","En cliquant sur «Continuer», vous supprimerez l'état authentifié de l'ID et déverrouillez les champs pour l'édition."
-views.idVerification.banner.authenticated.resetConfirmation.title,,Revoke authenticated ID?,Révoquer une pièce d'identité authentifiée?
-views.idVerification.banner.authenticated.title,,ID Authenticated,ID authentifié
-views.idVerification.banner.failed.description,,The identity card scanned has not be successfully authenticated,La carte d'identité numérisée n'a pas été authentifiée avec succès
-views.idVerification.banner.failed.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll clear all information to it’s default state.","En cliquant sur «Continuer», vous effacerez toutes les informations de son état par défaut."
-views.idVerification.banner.failed.resetConfirmation.title,,Reset information?,Réinitialiser les informations?
-views.idVerification.banner.failed.title,,ID Verification Failed,La vérification d'identification a échoué
 views.idVerification.banner.verified.description,,"This identity data has been successfully verified with the Farajaland’s National ID System. Please note that their identity has not been authenticated using the individuals biometrics. To make edits, please remove the verification first.",Ces données d'identité ont été vérifiées avec succès avec le système national d'identification de Farajaland. 
 views.idVerification.banner.verified.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Verified status and unlock the fields for editing.","En cliquant sur «Continuer», vous supprimerez l'état de l'ID vérifié et déverrouillez les champs pour l'édition."
 views.idVerification.banner.verified.resetConfirmation.title,,Revoke valid ID?,Révoquer une pièce d'identité valide?
