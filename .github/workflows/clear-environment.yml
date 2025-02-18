@@ -6,6 +6,9 @@ on:
       environment:
         required: true
         type: string
+    outputs:
+      outcome:
+        value: ${{ jobs.reset-data.outputs.outcome }}
   workflow_dispatch:
     inputs:
       environment:
@@ -29,7 +32,7 @@ jobs:
       - name: Clone country config resource package
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 1
           path: './${{ github.event.repository.name }}'
 
       - name: Read known hosts
