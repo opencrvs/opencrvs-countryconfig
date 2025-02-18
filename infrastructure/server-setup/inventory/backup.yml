@@ -29,5 +29,5 @@ all:
 
 backups-host:
   hosts:
-    backup: # @todo set this to be the hostname of your backup server
+    vadymland-backup: # @todo set this to be the hostname of your backup server
       ansible_host: '157.180.28.193'
