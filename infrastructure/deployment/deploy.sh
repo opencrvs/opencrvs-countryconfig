@@ -355,6 +355,8 @@ else
     SSH_HOST_TO_CHECK="[$SSH_HOST]:$SSH_PORT"
 fi
 
+echo "================ DEBUG INFO ================"
+cat "$INFRASTRUCTURE_DIRECTORY/known-hosts"
 if ! ssh-keygen -l -F "$SSH_HOST_TO_CHECK" -f "$INFRASTRUCTURE_DIRECTORY/known-hosts"; then
   echo "Host key for [$SSH_HOST]:$SSH_PORT not found in $INFRASTRUCTURE_DIRECTORY/known-hosts. Please add the host key to the known-hosts file."
   echo "You can do this by running the following command:"
