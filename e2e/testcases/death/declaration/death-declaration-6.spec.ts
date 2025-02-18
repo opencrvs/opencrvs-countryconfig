@@ -538,6 +538,10 @@ test.describe.serial('6. Death declaration case - 6', () => {
         })
         .click()
       await assignRecord(page)
+      // https://github.com/opencrvs/opencrvs-core/blob/f4eebcbaf0e9340783a22cbfb36bd547a3ad13f5/packages/workflow/src/records/handler/download.ts#L28-L80
+      // Assumption is that the optimisation done above causes the test 6.2.2. fail intermittently since we are fetching before the actual changes are propagated to database.
+      await page.waitForTimeout(2500)
+
       await page.getByRole('button', { name: 'Action' }).first().click()
       await getAction(page, 'View record').click()
     })
