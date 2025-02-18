@@ -30,16 +30,16 @@ all:
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+      - name: vmudryi
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgMcsSBwTE0EbMDRSF1T4vJDcN/5HAjKGbi2DqV7g/Q vmudryi@opencrvs.org
         state: present
         sudoer: true
 
 docker-manager-first:
   hosts:
-    prod-01: # @todo set this to be the hostname of your target server
-      ansible_host: '22.22.22.22' # @todo set this to be the hostname of your target server
+    vadymland-prod-master: # @todo set this to be the hostname of your target server
+      ansible_host: '157.180.29.201' # @todo set this to be the hostname of your target server
       data_label: data1
       # If you are using a jump server to access this environment, enter other SSH args here.
       # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
@@ -49,15 +49,19 @@ docker-manager-first:
 # If you are only using one production worker for very small countries or small pilot projects, replace with an empty block like so: docker-workers: {}
 docker-workers:
   hosts:
-    prod-02: # @todo set this to be the hostname of your target server
-      ansible_host: '33.33.33.33'
+    vadymland-prod-wrk1:
+      ansible_host: '65.108.152.80'
+      data_label: data2
+    vadymland-prod-wrk2:
+      ansible_host: '157.180.29.199'
+      data_label: data3
       # If you are using a jump server to access this environment, enter other SSH args here.
       # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
 
 backups:
   hosts:
-    backup: # @todo set this to be the hostname of your backup server
-      ansible_host: '66.66.66.66'
+    vadymland-backup: # @todo set this to be the hostname of your backup server
+      ansible_host: '157.180.28.193'
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key

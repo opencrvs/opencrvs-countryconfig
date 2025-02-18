@@ -32,16 +32,16 @@ all:
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+      - name: vmudryi
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgMcsSBwTE0EbMDRSF1T4vJDcN/5HAjKGbi2DqV7g/Q vmudryi@opencrvs.org
         state: present
         sudoer: true
 
 docker-manager-first:
   hosts:
-    staging: # @todo set this to be the hostname of your target server
-      ansible_host: '11.11.11.11' # @todo set this to be the hostname of your target server
+    vadymland-stg: # @todo set this to be the hostname of your target server
+      ansible_host: '157.180.28.172' # @todo set this to be the hostname of your target server
       data_label: data1
       # If you are using a jump server to access this environment, enter other SSH args here.
       # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
@@ -53,8 +53,8 @@ docker-workers: {}
 # @todo if you do not intend to set up automatic sync from the backup server, you can remove this section.
 backups:
   hosts:
-    backup: # @todo set this to be the hostname of your backup server
-      ansible_host: '66.66.66.66' # set this to be the IP address of your backup server
+    vadymland-backup: # @todo set this to be the hostname of your backup server
+      ansible_host: '157.180.28.193' # set this to be the IP address of your backup server
       # Written by provision pipeline. Assumes "backup" environment
       # exists in Github environments
       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key

@@ -22,3 +22,35 @@ vadymland-qa.opencrvs.dev ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIANj2Sx1GFUkitoyMU
 # 157.180.28.193:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
 157.180.28.193 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBUHbAPZZh7+/YkhOOkRhN21mNYduSY4z1AD88fkzL/C
 # 157.180.28.193:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+# vadymland-stg.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+vadymland-stg.opencrvs.dev ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDYTrOk0n1TYwZ9BRACrdhjiu6o7QS8p6f0/EnyOenreaiUsEBrpZGURhNCIAWRm5b7RjG5LSzxN0inVdZIuZnVMzSrSQEVEPpckhtWtqJihqcIh9ojQlysRkT4fhuPgKc7uUlX7ocgILTEmdDKS+ISsn7go4A1xoHjKRR4g/vQA0BXs/Be8N1RKwD20W3te9SE5g92A6ejRXFCwvJIg106mI6imbpahweZ0Y4TamQf6GDzr4lHuFsOAnThs6WGs01ZXeM6svrt05yFHtmQOlNCWcOrpIi18vqZnx2nnNy4AwavPfzFpzwgePMhF9UHl33AQ9NPp5JSYZUDfHpdAu2hV19vALVXoxXepHF/szxQOAsoikenw0zE0Bn1uFlPDkIwZf27hc+hW/lg2B0Lr0C4c17acPbYs8CydvTC6hRMcdwv4vrhucbfJ43Q82cCte83KLhhy4IlO7D/z774vxBJUgLKefLOVnaD8ydSJryLoX9Koys5G20dsJShCs4MJTM=
+# vadymland-stg.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+vadymland-stg.opencrvs.dev ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOAZ1Zcar/z+ff+w6VpqGiD15GyJFRVLXOP85GQG8RZAfB4BAeK0PCykpqaMyS1CCDdaZIKIjdzE7woemINc5UI=
+# vadymland-stg.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+vadymland-stg.opencrvs.dev ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP15tuMfRbi2OxTySODD6HomFvMn6ontYrv75YtkZQZS
+# vadymland-stg.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+# vadymland-stg.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+# 157.180.28.172:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+157.180.28.172 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDYTrOk0n1TYwZ9BRACrdhjiu6o7QS8p6f0/EnyOenreaiUsEBrpZGURhNCIAWRm5b7RjG5LSzxN0inVdZIuZnVMzSrSQEVEPpckhtWtqJihqcIh9ojQlysRkT4fhuPgKc7uUlX7ocgILTEmdDKS+ISsn7go4A1xoHjKRR4g/vQA0BXs/Be8N1RKwD20W3te9SE5g92A6ejRXFCwvJIg106mI6imbpahweZ0Y4TamQf6GDzr4lHuFsOAnThs6WGs01ZXeM6svrt05yFHtmQOlNCWcOrpIi18vqZnx2nnNy4AwavPfzFpzwgePMhF9UHl33AQ9NPp5JSYZUDfHpdAu2hV19vALVXoxXepHF/szxQOAsoikenw0zE0Bn1uFlPDkIwZf27hc+hW/lg2B0Lr0C4c17acPbYs8CydvTC6hRMcdwv4vrhucbfJ43Q82cCte83KLhhy4IlO7D/z774vxBJUgLKefLOVnaD8ydSJryLoX9Koys5G20dsJShCs4MJTM=
+# 157.180.28.172:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+157.180.28.172 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOAZ1Zcar/z+ff+w6VpqGiD15GyJFRVLXOP85GQG8RZAfB4BAeK0PCykpqaMyS1CCDdaZIKIjdzE7woemINc5UI=
+# 157.180.28.172:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+157.180.28.172 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP15tuMfRbi2OxTySODD6HomFvMn6ontYrv75YtkZQZS
+# 157.180.28.172:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+# 157.180.28.172:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+# vadymland.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+vadymland.opencrvs.dev ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtUzYHUN2aR+rLUOcYEJkg8pFL4ut18Kpoyfu9eaQ2Ba8D/VJqGoRCGK0X4SovUdUKzDExAy7OlfBO9j3MFxeLkirivyuA5BtzBX0ZbNYeZBu9WXO4uAGsWkMLSwsjrVlpYH2z+ZCfJIEDsb9VWjW8Lu8ue8UHo6445asTV9oEir3Eg8YZqkBimRdmgSi6cDBUlMCOjo85aeZ5LMHtYYCXrWMtGAfG8CEzAUluy0ZmbttNuDhwqCshmFeXY6bfoOfomCOSQme4JfUU+RcSCWyGPrMDIhJYYcgOE/kZRvrVQ+E31iDI5Mu+HPbRcDp4JT7krGHIQJaTw/cRXJoj6DoPfumbNzeK6qFG1JVt8d0pMtyBmsY1snAHsSubtKQYav8jykl9CVhTrcve4KqDz7/A5olrITzVPsmkdvo2TseiJkk7rdeRVBBOwN+7aZM8LnejEpk+rcAn6P8K+TVUqKMIP7EkVcSYpt8hAgZI8YeoP+Kg+lQkwOt7ljPpm1qhbrk=
+# vadymland.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+vadymland.opencrvs.dev ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMwnPELEriH/Iwkpt6q2DuFLgnCSNgRXf0M7K6KIlrCx9BoakrQbGEsdKSs1LK2jvFht6ad+EmhN1l2/n7s2bis=
+# vadymland.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+vadymland.opencrvs.dev ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbC1ay9nGoCbUUmV3PAjmU496aXWNPE+5RQWuVc55DL
+# vadymland.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+# vadymland.opencrvs.dev:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+# 95.217.0.65:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+95.217.0.65 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtUzYHUN2aR+rLUOcYEJkg8pFL4ut18Kpoyfu9eaQ2Ba8D/VJqGoRCGK0X4SovUdUKzDExAy7OlfBO9j3MFxeLkirivyuA5BtzBX0ZbNYeZBu9WXO4uAGsWkMLSwsjrVlpYH2z+ZCfJIEDsb9VWjW8Lu8ue8UHo6445asTV9oEir3Eg8YZqkBimRdmgSi6cDBUlMCOjo85aeZ5LMHtYYCXrWMtGAfG8CEzAUluy0ZmbttNuDhwqCshmFeXY6bfoOfomCOSQme4JfUU+RcSCWyGPrMDIhJYYcgOE/kZRvrVQ+E31iDI5Mu+HPbRcDp4JT7krGHIQJaTw/cRXJoj6DoPfumbNzeK6qFG1JVt8d0pMtyBmsY1snAHsSubtKQYav8jykl9CVhTrcve4KqDz7/A5olrITzVPsmkdvo2TseiJkk7rdeRVBBOwN+7aZM8LnejEpk+rcAn6P8K+TVUqKMIP7EkVcSYpt8hAgZI8YeoP+Kg+lQkwOt7ljPpm1qhbrk=
+# 95.217.0.65:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+95.217.0.65 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMwnPELEriH/Iwkpt6q2DuFLgnCSNgRXf0M7K6KIlrCx9BoakrQbGEsdKSs1LK2jvFht6ad+EmhN1l2/n7s2bis=
+# 95.217.0.65:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+95.217.0.65 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbC1ay9nGoCbUUmV3PAjmU496aXWNPE+5RQWuVc55DL
+# 95.217.0.65:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
+# 95.217.0.65:22 SSH-2.0-OpenSSH_9.6p1 Ubuntu-3ubuntu13.5
