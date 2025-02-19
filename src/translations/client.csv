@@ -2368,7 +2368,7 @@ v2.constants.declarationSentForExternalValidationOn,Label for the workflow times
 v2.constants.declarationStarted,Label for table header column Declaration started,Started,Commencé
 v2.constants.declarationStartedBy,Label for table header column Started by,Started by,Commencé par
 v2.constants.declarationStartedOn,Label for the workflow timestamp when the status is draft created,Started on,Commencé le
-v2.constants.declarationState,A label to describe when the declaration was actioned on,Declaration {action} on,Déclaration {action} le
+v2.constants.declarationState,A label to describe when the declaration was actioned on,Declaration {action} on,Déclaration {action} du
 v2.constants.declarationSubmittedOn,Label for the workflow timestamp when the status is declaration,Declaration submitted on,Déclaration soumise le
 v2.constants.declarationUpdatedOn,Label for the workflow timestamp when the status is draft updated,Updated on,Mis à jour le
 v2.constants.declarationValidatedOn,Label for the workflow timestamp when the status is validated,Declaration reviewed on,Déclaration revue le
@@ -2525,7 +2525,7 @@ v2.event.birth.action.declare.form.label,This is what this form is referred as i
 v2.event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
 v2.event.birth.action.declare.form.review.title,Title of the form to show in review page,Birth declaration for {firstname} {surname},Birth declaration for {firstname} {surname}
-v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur (se)
+v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur(se)
 v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Health Institution,Institution de santé
 v2.event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
 v2.event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
@@ -2655,12 +2655,12 @@ v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
 v2.exitModal.exitWithoutSavingDescription, exitmodal without saving  description,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Voulez-vous vraiment quitter sans enregistrer ?
 v2.field.address.country.label,Label for country in address,Country,Pays
-v2.field.address.district.label,Label for district in address,District,Arrondissement
+v2.field.address.district.label,Label for district in address,District,District
 v2.field.address.label.rural,Label for rural area,Rural,Zone rurale
 v2.field.address.label.urban,Label for urban area,Urban,Urbain
 v2.field.address.number.label,Label for address number,Number,Numéro
 v2.field.address.province.label,Label for province in address,Province,Province
-v2.field.address.residentialArea.label,Label for residential area in address,Residential Area,Zone résidentielle
+v2.field.address.residentialArea.label,Label for residential area in address,Residential Area,Zone de résidence
 v2.field.address.street.label,Label for street in address,Street,Rue
 v2.field.address.town.label,Label for town in address,Town,Ville
 v2.field.address.urbanOrRural.label,Label for selecting between urban or rural,Urban or Rural,Urbain ou rural
@@ -2675,7 +2675,7 @@ v2.form.field.label.attendantAtBirthNone,Label for no attendant,None,Aucun
 v2.form.field.label.attendantAtBirthNurse,Label for nurse attendant,Nurse,Infirmière
 v2.form.field.label.attendantAtBirthOtherParamedicalPersonnel,Label for other paramedical personnel,Other paramedical personnel,Autre personnel paramédical
 v2.form.field.label.attendantAtBirthPhysician,Label for physician attendant,Physician,Médecin
-v2.form.field.label.attendantAtBirthTraditionalBirthAttendant,Label for traditional birth attendant,Traditional birth attendant,Accoucheur (se) Traditionnel(le)
+v2.form.field.label.attendantAtBirthTraditionalBirthAttendant,Label for traditional birth attendant,Traditional birth attendant,Accoucheur(se) Traditionnel(le)
 v2.form.field.label.birthTypeHigherMultipleDelivery,Label for higher multiple delivery birth,Higher multiple delivery,Accouchement multiple supérieur
 v2.form.field.label.birthTypeQuadruplet,Label for quadruplet birth,Quadruplet,Quadruplet
 v2.form.field.label.birthTypeSingle,Label for single birth,Single,Célibataire
