@@ -51,7 +51,7 @@ on:
         default: false
 jobs:
   deploy:
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-24.04
     outputs:
       outcome: ${{ steps.deploy.outcome }}
@@ -165,7 +165,7 @@ jobs:
           node-version: 18
           node-version-file: .nvmrc
 
-      - name: Deploy to ${{ github.event.inputs.environment }}
+      - name: Deploy to ${{ inputs.environment }}
         id: deploy
         run: |
           cd ./${{ github.event.repository.name }}
