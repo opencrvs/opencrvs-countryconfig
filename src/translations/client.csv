@@ -1,4 +1,5 @@
 id,description,en,fr
+...,This could be shown to the user in a reason for duplicate detected,Standard check,Chèque standard
 action.action,Label for action button,Action,Action
 action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
 action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
@@ -797,6 +798,18 @@ error.title,Error title,Oops!,Oups !
 error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !
 error.userListError,Error message when user list loads fails,Failed to load users,Impossible de charger les utilisateurs
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
+event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Forme de décalration de naissance
+event.birth.action.declare.form.review.title,Title of the form to show in review page,Birth declaration for {firstname} {surname},Déclaration de naissance pour {FirstName} {nom de famille}
+event.birth.action.declare.form.section.documents.field.proofOfBirth.label,This is the label for the field,Proof of birth,Preuve de naissance
+event.birth.action.declare.form.section.documents.field.proofOfFather.label,This is the label for the field,Proof of father's ID,Preuve de l'identification du père
+event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's ID,Preuve de la pièce d'identité de la mère
+event.birth.action.declare.form.section.documents.field.proofOther.label,This is the label for the field,Other,Autre
+event.birth.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
+event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
+event.birth.label,This is what this event is referred as in the system,Birth declaration,Déclaration de naissance
+event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
+event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
+events.status,,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} other {Unknown}}","{Status, SELECT, Outbox {Syncing ..} Créé {Draft} validé {validé} Draft {Draft} DÉCLARÉ {DÉCLARÉ} enregistré {enregistré} Autre {inconnu}}"
 exitModal.cancel,The label for cancel button in exit modal,Cancel,Annuler
 exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?,Quitter sans enregistrer les modifications?
 exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Êtes-vous sûr de vouloir quitter sans enregistrer?
@@ -807,6 +820,7 @@ fieldAgentHome.requireUpdatesCount,,Require updates ({total}),Mises à jour néc
 fieldAgentHome.requireUpdatesCountLoading,,Checking your declarations,Vérification de vos déclarations
 fieldAgentHome.sentForReviewCount,,Sent for review ({total}),Envoyées pour révision ({total})
 fieldAgentHome.zeroUpdatesText,,No declarations require updates,Aucune déclaration ne nécessite de mise à jour
+foo.bar,bar,Foo,Foo
 form.customField.label.numberOfDependants,,No. of dependants,Nombre de personnes à charge
 form.customField.label.reasonForLateRegistrationBirth,,Reason for delayed registration,Raison du retard d'inscription
 form.customField.label.reasonForLateRegistrationDeath,,Reason for late registration,Raison de l'inscription tardive
@@ -1000,6 +1014,7 @@ form.field.label.iDTypeDRN,,Death Registration Number,Numéro d'enregistrement d
 form.field.label.iDTypeDrivingLicense,,Drivers License,Permis de conduire
 form.field.label.iDTypeNationalID,,National ID,Carte d'identité nationale
 form.field.label.iDTypeNoID,,No ID available,Aucune pièce d'identité disponible
+form.field.label.iDTypeNone,Option for form field: Type of ID,None,Aucun
 form.field.label.iDTypeOther,,Other,Autre
 form.field.label.iDTypeOtherLabel,,Other type of ID,Autre type de carte d'identité
 form.field.label.iDTypePassport,,Passport,Passeport
@@ -1504,7 +1519,6 @@ nationality.GNB,,Bissau-Guinean,Bissau-Guinéen
 nationality.GNQ,,Equatoguinean,Guinéen équatorial
 nationality.GRC,,Greek,Grec
 nationality.GRD,,Grenadian,Grenad
-nationality.GRD,,Grenadian,Grenadien
 nationality.GRL,,Greenlander,Groenlandais
 nationality.GTM,,Guatemalan,Guatémaltèque
 nationality.GUF,,French Guianese,Français de Guyane
@@ -1675,6 +1689,7 @@ navigation.informantNotification,Informant notifications label in navigation,Inf
 navigation.integration,Integration forms label in navigation,Integrations,Intégrations
 navigation.leaderboards,Leaderboards Dashboard Section,Leaderboards,Classements
 navigation.my-drafts,My drafts label in navigation,My drafts,Mes projets
+navigation.myDrafts,My drafts label in navigation,My drafts,Mes brouillons
 navigation.organisation,Organisations label in navigation,Organisation,Organisation
 navigation.outbox,Label for navigation item outbox,Outbox,Boîte d'envoi
 navigation.performance,Performance label in navigation,Performance,Performance
@@ -2139,6 +2154,15 @@ settings.user.label.assignedOffice,Assigned office,Assigned office,Bureau assign
 settings.user.label.nameBN,,Bengali name,Nom en bengali
 settings.user.label.nameEN,,Full name,Nom anglais
 settings.verifyPhone,Verify phone number title,Verify phone number,Vérifier le numéro de téléphone
+storybook.address.example,,This is an example of using formatMessage to format applicant's province: {applicant.address.province},Ceci est un exemple d'utilisation du formatMessage pour formater la province du demandeur: {demandeur.address.province}
+storybook.address.label,The title for the address input,Address,Adresse
+storybook.file.label,The title for the file input,Upload your captured photo,Téléchargez votre photo capturée
+storybook.file.option.beach,Option for a beach setting,Beach,Plage
+storybook.file.option.city,Option for a city setting,City,Ville
+storybook.file.option.desert,Option for a desert setting,Desert,Désert
+storybook.file.option.forest,Option for a forest setting,Forest,Forêt
+storybook.file.option.mountain,Option for a mountain setting,Mountain,Montagne
+storybook.file2.label,The title for the file input,Upload your photo,Téléchargez votre photo
 sysAdHome.config,The title of config tab,Config,Config
 sysAdHome.devices,The title of devices tab,Devices,Appareils
 sysAdHome.network,The title of network tab,Network,Réseau
@@ -2493,8 +2517,8 @@ v2.event.action.declare.form.section.person.field.address.street.label,This is t
 v2.event.action.declare.form.section.person.field.address.town.label,This is the label for the field,Town,Ville
 v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
 v2.event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
-v2.event.birth.action.declare.form.review.comment.label,Label for comment section in birth declaration review form,Comment,Commentaire
-v2.event.birth.action.declare.form.review.signature.label,Label for signature section in birth declaration review form,Signature,Signature
+v2.event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
+v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
 v2.event.birth.action.declare.form.review.title,Title of the form to show in review page,Birth declaration for {firstname} {surname},Birth declaration for {firstname} {surname}
 v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur (se)
 v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Health Institution,Institution de santé
@@ -2551,7 +2575,7 @@ v2.event.default.action.certificate.form.section.who.field.surname.label,This is
 v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR{Local Registrar} other{Unknown}}","{role, select, LOCAL_REGISTRAR{Registraire local} other{Inconnu}}"
 v2.event.history.timeFormat,Time format for timestamps in event history,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
 v2.event.tennis-club-membership.action.certificate.form.label,This is what this form is referred as in the system,Tennis club membership certificate collector,Tennis club membership certificate collector
-v2.event.tennis-club-membership.action.certificate.form.review.title,Title for the certificate review form for tennis club membership,Review Certificate Form,Revoir le formulaire de certificat
+v2.event.tennis-club-membership.action.certificate.form.review.title,Title of the form to show in review page,Member certificate collector for {firstname} {surname},Collecteur de certificat membre pour {FirstName} {nom de famille}
 v2.event.tennis-club-membership.action.certificate.form.section.requester.informant.label,This is the label for the field,Print and issue Informant,Print and issue Informant
 v2.event.tennis-club-membership.action.certificate.form.section.requester.label,This is the label for the field,Requester,Requester
 v2.event.tennis-club-membership.action.certificate.form.section.requester.other.label,This is the label for the field,Print and issue someone else,Print and issue someone else
@@ -2560,13 +2584,13 @@ v2.event.tennis-club-membership.action.certificate.form.section.who.title,This i
 v2.event.tennis-club-membership.action.certificate.form.version.1,This is the first version of the form,Version 1,Version 1
 v2.event.tennis-club-membership.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
 v2.event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Tennis club membership application
-v2.event.tennis-club-membership.action.declare.form.review.title,Title for the tennis club membership declaration review form,Review the tennis club membership declaration form,Revoir le formulaire de déclaration d'adhésion au club de tennis
+v2.event.tennis-club-membership.action.declare.form.review.title,Title of the form to show in review page,Member declaration for {firstname} {surname},Déclaration des membres pour {FirstName} {nom de famille}
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Recommender's first name
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,Recommender's membership ID
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.none.label,This is the label for the field,No recommender,No recommender
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Recommender's surname
 v2.event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Who is recommending the applicant?
-v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label,Label for address field in tennis club membership declaration form,Address,Adresse
+v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label,This is the label for the field,Applicant's address,Adresse du demandeur
 v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
 v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth,Applicant's date of birth
 v2.event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name,Applicant's first name
@@ -2606,7 +2630,7 @@ v2.event.tennis-club-membership.summary.field.applicant.surname.empty,Shown when
 v2.event.tennis-club-membership.summary.field.applicant.surname.label,Label for the applicant's surname field,Applicant's Surname,Applicant's Surname
 v2.event.tennis-club-membership.summary.field.applicant.surname.value,Value for the applicant's surname field,{applicant.surname},{applicant.surname}
 v2.event.tennis-club-membership.summary.field.firstname.label,Label for the given field on form.,First name,First name
-v2.event.tennis-club-membership.summary.field.firstname.value,Value for the first name field in membership summary,First Name,Prénom
+v2.event.tennis-club-membership.summary.field.firstname.value,Value for the matching field on form.,{applicant.firstname},{demandeur.firstname}
 v2.event.tennis-club-membership.summary.field.recommender.firstname.empty,Shown when the recommender first name is missing in summary,Recommender's first name missing,Recommender's first name missing
 v2.event.tennis-club-membership.summary.field.recommender.firstname.label,Label for the recommender's first name field,Recommender's First Name,Recommender's First Name
 v2.event.tennis-club-membership.summary.field.recommender.firstname.value,Value for the recommender's first name field,{recommender.firstname},{recommender.firstname}
@@ -2620,7 +2644,7 @@ v2.event.tennis-club-membership.summary.title.label,Label for the summary title 
 v2.event.tennis-club-membership.workqueue.all.name.label,Label for the 'All' work queue filter for tennis club membership,{applicant.firstname} {applicant.surname},{applicant.firstname} {applicant.surname}
 v2.event.tennis-club-membership.workqueue.readyForReview.name.label,Label for 'Ready for Review' work queue for tennis club membership,Ready for Review,Prêt pour révision
 v2.event.tennis-club-membership.workqueue.registered.name.label,Label for 'Registered' work queue for tennis club membership,Registered,Enregistré
-v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}","{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}"
+v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}","{status, select, CREATE {Brouillon} VALIDATE {Déclaration envoyée pour approbation} DRAFT {Brouillon} DECLARE {Déclaration initiée} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} other {Inconnu}}"
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
 v2.exitModal.exitWithoutSavingDescription, exitmodal without saving  description,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Voulez-vous vraiment quitter sans enregistrer ?
@@ -2793,6 +2817,25 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
+views.idVerification.banner.actions.reset,,Reset,Réinitialiser
+views.idVerification.banner.actions.revoke,,Revoke,Révoquer
+views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.",Cette identité a été authentifiée avec succès avec le système national d'identité de Farajaland.
+views.idVerification.banner.authenticated.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Authenticated status and unlock the fields for editing.","En cliquant sur «Continuer», vous supprimerez l'état authentifié de l'ID et déverrouillez les champs pour l'édition."
+views.idVerification.banner.authenticated.resetConfirmation.title,,Revoke authenticated ID?,Révoquer une pièce d'identité authentifiée?
+views.idVerification.banner.authenticated.title,,ID Authenticated,ID authentifié
+views.idVerification.banner.failed.description,,The identity card scanned has not be successfully authenticated,La carte d'identité numérisée n'a pas été authentifiée avec succès
+views.idVerification.banner.failed.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll clear all information to it’s default state.","En cliquant sur «Continuer», vous effacerez toutes les informations de son état par défaut."
+views.idVerification.banner.failed.resetConfirmation.title,,Reset information?,Réinitialiser les informations?
+views.idVerification.banner.failed.title,,ID Verification Failed,La vérification d'identification a échoué
+views.idVerification.banner.verified.description,,"This identity data has been successfully verified with the Farajaland’s National ID System. Please note that their identity has not been authenticated using the individuals biometrics. To make edits, please remove the verification first.",Ces données d'identité ont été vérifiées avec succès avec le système national d'identification de Farajaland.
+views.idVerification.banner.verified.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Verified status and unlock the fields for editing.","En cliquant sur «Continuer», vous supprimerez l'état de l'ID vérifié et déverrouillez les champs pour l'édition."
+views.idVerification.banner.verified.resetConfirmation.title,,Revoke valid ID?,Révoquer une pièce d'identité valide?
+views.idVerification.banner.verified.title,,ID Verified,Id vérifié
+views.qrReader.button,Button to scan QR code,Scan QR code,Scanner le code QR
+views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialog,Place the Notifier's ID card in front of the camera.,Placez la carte d'identité du notificateur devant la caméra.
+views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.,Assurez-vous que votre appareil photo est propre et fonctionnel.
+views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.,Tenez l'appareil régulièrement à 6 à 12 pouces du code QR.
+views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et non endommagé ou flou.
 wq.noRecords.draft,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 wq.noRecords.externalValidation,No records messages for empty external validation tab,No records in external validation,Aucun enregistrement dans la validation externe
 wq.noRecords.fieldAgents,No records messages for empty field agents tab,No records from field agents,Aucun enregistrement des agents de terrain
