@@ -2481,14 +2481,14 @@ v2.error.required,This is the error message for required fields,Required for reg
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
 v2.event.action.declare.form.section.person.field.address.country.label,This is the label for the field,Country,Pays
 v2.event.action.declare.form.section.person.field.address.number.label,This is the label for the field,Number,Numéro
-v2.event.action.declare.form.section.person.field.address.other.addressLine1.label,This is the label for the field,Address Line 1,Adresse ligne 1
-v2.event.action.declare.form.section.person.field.address.other.addressLine2.label,This is the label for the field,Address Line 2,Ligne d'adresse 2
-v2.event.action.declare.form.section.person.field.address.other.addressLine3.label,This is the label for the field,Address Line 3,Ligne d'adresse 3
+v2.event.action.declare.form.section.person.field.address.other.addressLine1.label,This is the label for the field,Address Line 1,Adresse 1
+v2.event.action.declare.form.section.person.field.address.other.addressLine2.label,This is the label for the field,Address Line 2,Adresse 2
+v2.event.action.declare.form.section.person.field.address.other.addressLine3.label,This is the label for the field,Address Line 3,Adresse 3
 v2.event.action.declare.form.section.person.field.address.other.district.label,This is the label for the field,District,District
 v2.event.action.declare.form.section.person.field.address.other.state.label,This is the label for the field,State,État
 v2.event.action.declare.form.section.person.field.address.other.town.label,This is the label for the field,City / Town,Ville / Village
 v2.event.action.declare.form.section.person.field.address.other.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
-v2.event.action.declare.form.section.person.field.address.residentialArea.label,This is the label for the field,Residential Area,Zone résidentielle
+v2.event.action.declare.form.section.person.field.address.residentialArea.label,This is the label for the field,Residential Area,Zone de résidence
 v2.event.action.declare.form.section.person.field.address.street.label,This is the label for the field,Street,Rue / Numéro de parcelle
 v2.event.action.declare.form.section.person.field.address.town.label,This is the label for the field,Town,Ville
 v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
@@ -2496,7 +2496,7 @@ v2.event.birth.action.declare.form.label,This is what this form is referred as i
 v2.event.birth.action.declare.form.review.comment.label,Label for comment section in birth declaration review form,Comment,Commentaire
 v2.event.birth.action.declare.form.review.signature.label,Label for signature section in birth declaration review form,Signature,Signature
 v2.event.birth.action.declare.form.review.title,Title of the form to show in review page,Birth declaration for {firstname} {surname},Birth declaration for {firstname} {surname}
-v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur
+v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur (se)
 v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Health Institution,Institution de santé
 v2.event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
 v2.event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
@@ -2512,16 +2512,16 @@ v2.event.birth.action.declare.form.section.documents.field.proofOfBirth.label,Th
 v2.event.birth.action.declare.form.section.documents.field.proofOfFather.label,This is the label for the field,Proof of father's ID,Identité du père
 v2.event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's ID,Identité de la mère
 v2.event.birth.action.declare.form.section.documents.field.proofOther.label,This is the label for the field,Other,Autre
-v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label,This is the label for the field,Same as mother's usual place of residence?,Même que le lieu de résidence habituel de la mère ?
+v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label,This is the label for the field,Same as mother's usual place of residence?,Identique au lieu de résidence habituel de la mère?
 v2.event.birth.action.declare.form.section.father.field.detailsNotAvailable.label,This is the label for the field,Father's details are not available,Pas d'information sur le père
-v2.event.birth.action.declare.form.section.father.field.reason.label,This is the label for the field,Reason,Motif de la mère
+v2.event.birth.action.declare.form.section.father.field.reason.label,This is the label for the field,Reason,Raison
 v2.event.birth.action.declare.form.section.informant.field.email.label,This is the label for the field,Email,E-mail
 v2.event.birth.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to child,Relation avec l'enfant
 v2.event.birth.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
 v2.event.birth.action.declare.form.section.informant.field.relation.label,This is the label for the field,Relationship to child,Relation avec l'enfant
 v2.event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label,This is the label for the field,Mother's details are not available,Pas d'information sur la mère
 v2.event.birth.action.declare.form.section.mother.field.previousBirths.label,This is the label for the field,No. of previous births,Nombre de naissances antérieures
-v2.event.birth.action.declare.form.section.mother.field.reason.label,This is the label for the field,Reason,Motif de la mère
+v2.event.birth.action.declare.form.section.mother.field.reason.label,This is the label for the field,Reason,Raison
 v2.event.birth.action.declare.form.section.person.field.address.district.label,This is the label for the field,District,District
 v2.event.birth.action.declare.form.section.person.field.address.province.label,This is the label for the field,Province,Province
 v2.event.birth.action.declare.form.section.person.field.address.urbanOrRural.label,This is the label for the field,Urban or Rural,Urban or Rural
@@ -2579,13 +2579,13 @@ v2.event.tennis-club-membership.action.delete.label,This is shown as the action 
 v2.event.tennis-club-membership.action.form.section.alienNumberDetails.label,Field for entering Alien Number details,Alien Number Details,Alien Number Details
 v2.event.tennis-club-membership.action.form.section.drivingLicenseDetails.label,Field for entering Driving License details,Driving License Details,Driving License Details
 v2.event.tennis-club-membership.action.form.section.firstName.label,This is the label for the first name field,First Name,First Name
-v2.event.tennis-club-membership.action.form.section.idType.alienNumber.label,Option for selecting Alien Number as the ID type,Alien Number,Numéro d'étranger
+v2.event.tennis-club-membership.action.form.section.idType.alienNumber.label,Option for selecting Alien Number as the ID type,Alien Number,Numéro de l'étranger
 v2.event.tennis-club-membership.action.form.section.idType.drivingLicense.label,Option for selecting Driving License as the ID type,Driving License,Driving License
 v2.event.tennis-club-membership.action.form.section.idType.label,This is the label for selecting the type of ID,Select Type of ID,Select Type of ID
 v2.event.tennis-club-membership.action.form.section.idType.noId.label,Option for selecting No ID as the ID type,No ID,No ID
 v2.event.tennis-club-membership.action.form.section.idType.other.label,Option for selecting Other as the ID type,Other,Autre
 v2.event.tennis-club-membership.action.form.section.idType.passport.label,Option for selecting Passport as the ID type,Passport,Passeport
-v2.event.tennis-club-membership.action.form.section.idType.refugeeNumber.label,Option for selecting Refugee Number as the ID type,Refugee Number,Numéro de réfugié
+v2.event.tennis-club-membership.action.form.section.idType.refugeeNumber.label,Option for selecting Refugee Number as the ID type,Refugee Number,Numéro du réfugié
 v2.event.tennis-club-membership.action.form.section.idTypeOther.label,Field for entering ID type if Other is selected,Other ID Type (if applicable),Other ID Type (if applicable)
 v2.event.tennis-club-membership.action.form.section.lastName.label,This is the label for the last name field,Last Name,Last Name
 v2.event.tennis-club-membership.action.form.section.passportDetails.label,Field for entering Passport details,Passport Details,Passport Details
@@ -2645,7 +2645,7 @@ v2.form.field.label.attendantAtBirthNone,Label for no attendant,None,Aucun
 v2.form.field.label.attendantAtBirthNurse,Label for nurse attendant,Nurse,Infirmière
 v2.form.field.label.attendantAtBirthOtherParamedicalPersonnel,Label for other paramedical personnel,Other paramedical personnel,Autre personnel paramédical
 v2.form.field.label.attendantAtBirthPhysician,Label for physician attendant,Physician,Médecin
-v2.form.field.label.attendantAtBirthTraditionalBirthAttendant,Label for traditional birth attendant,Traditional birth attendant,Accoucheur traditionnel
+v2.form.field.label.attendantAtBirthTraditionalBirthAttendant,Label for traditional birth attendant,Traditional birth attendant,Accoucheur (se) Traditionnel(le)
 v2.form.field.label.birthTypeHigherMultipleDelivery,Label for higher multiple delivery birth,Higher multiple delivery,Accouchement multiple supérieur
 v2.form.field.label.birthTypeQuadruplet,Label for quadruplet birth,Quadruplet,Quadruplet
 v2.form.field.label.birthTypeSingle,Label for single birth,Single,Célibataire
@@ -2668,14 +2668,14 @@ v2.form.field.label.informantRelation.legalGuardian,Label for option Legal Guard
 v2.form.field.label.informantRelation.mother,Label for option mother,Mother,Mère
 v2.form.field.label.informantRelation.others,Label for option someone else,Someone else,Quelqu'un d'autre
 v2.form.field.label.informantRelation.sister,Label for option Sister,Sister,Sœur
-v2.form.field.label.maritalStatusDivorced,Option for form field: Marital status,Divorced,Divorcé
+v2.form.field.label.maritalStatusDivorced,Option for form field: Marital status,Divorced,Divorcé(e)
 v2.form.field.label.maritalStatusMarried,Option for form field: Marital status,Married,Marié(e)
 v2.form.field.label.maritalStatusNotStated,Option for form field: Marital status,Not stated,Non déclaré
 v2.form.field.label.maritalStatusSeparated,Option for form field: Marital status,Separated,Séparé(e)
 v2.form.field.label.maritalStatusSingle,Option for form field: Marital status,Single,Célibataire
 v2.form.field.label.maritalStatusWidowed,Option for form field: Marital status,Widowed,Veuf(ve)
 v2.form.field.label.otherInstitution,Select item for Other location,Other,Autre
-v2.form.field.label.privateHome,Select item for Private Home,Residential address,Adresse résidentielle
+v2.form.field.label.privateHome,Select item for Private Home,Residential address,Adresse de résidence
 v2.form.field.label.rural,Label for form field checkbox option Rural,Rural,Zone rurale
 v2.form.field.label.sexFemale,Label for option female,Female,Femme
 v2.form.field.label.sexMale,Label for option male,Male,Homme
