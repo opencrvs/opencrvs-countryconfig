@@ -2319,6 +2319,8 @@ v2.actionModal.PrimaryAction,The label for primary action button of action modal
 v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
 v2.actionModal.description,The description for action modal,The declarant will be notified of this action and a record of this decision will be recorded,Le déclarant sera informé de cette action et un enregistrement de cette décision sera conservé
 v2.actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} the member?"
+v2.advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
+v2.advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
 v2.buttons.change,The label for the change button,Change,Changer
 v2.buttons.confirm,Confirm button,Confirm,Confirmer
@@ -2326,10 +2328,13 @@ v2.buttons.continue,Continue Button Text,Continue,Continuer
 v2.buttons.exit,Label for Exit button on EventTopBar,EXIT,QUITTER
 v2.buttons.print,Print button text,Print,Imprimer
 v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
+v2.buttons.search,The title of search input submit button,Search,Rechercher
 v2.changeModal.cancel,The label for cancel button of change modal,Cancel,Annuler
 v2.changeModal.continue,The label for continue button of change modal,Continue,Continuer
 v2.changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour toute modification que vous apporterez
 v2.changeModal.title,The title for change modal,Edit declaration?,Modifier la déclaration ?
+v2.config.advanced.search,This is used for the advanced search,Advanced Search,Recherche avancée
+v2.config.advanced.search.instruction,This is used for the advanced search,Select the options to build an advanced search. A minimum of two search parameters is required.,Sélectionnez les options pour construire une recherche avancée. Un minimum de deux paramètres de recherche est requis.
 v2.config.application.vsexport,Vital statistics title,Vital statistics,Statistiques de l'état civil
 v2.constants.PIN,PIN label,PIN,Code Pin
 v2.constants.address,Label for address,Address,Adresse
@@ -2623,6 +2628,7 @@ v2.event.tennis-club-membership.action.requestCorrection.label,This is shown as 
 v2.event.tennis-club-membership.action.sdf.label,This is shown as the action name anywhere the user can trigger the action from,My custom action,My custom action
 v2.event.tennis-club-membership.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Validate
 v2.event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Tennis club membership application
+v2.event.tennis-club-membership.search,This is what this event is referred as in the system,Tennis club registration search,Recherche d’inscription au club de tennis
 v2.event.tennis-club-membership.summary.field.applicant.firstname.empty,Shown when the applicant's first name is missing in summary,Applicant's first name missing,Applicant's first name missing
 v2.event.tennis-club-membership.summary.field.applicant.firstname.label,Label for the applicant's first name field,Applicant's First Name,Applicant's First Name
 v2.event.tennis-club-membership.summary.field.applicant.firstname.value,Value for the applicant's first name field,{applicant.firstname},{applicant.firstname}
