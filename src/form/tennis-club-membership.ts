@@ -9,17 +9,24 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineConfig, defineForm } from '@opencrvs/toolkit/events'
 import {
-  defineConditional,
+  ActionType,
+  ConditionalType,
+  defineConfig,
+  defineForm
+} from '@opencrvs/toolkit/events'
+import {
+  event,
+  user,
   or,
-  eventHasAction,
-  userHasScope,
   and,
   not,
   field
 } from '@opencrvs/toolkit/conditionals'
+
 import { Event } from './types/types'
+import { MAX_NAME_LENGTH } from './v2/utils'
+import { SCOPES } from '@opencrvs/toolkit/scopes'
 
 const TENNIS_CLUB_FORM = defineForm({
   label: {
@@ -32,7 +39,33 @@ const TENNIS_CLUB_FORM = defineForm({
       id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
       defaultMessage: 'Member declaration for {firstname} {surname}',
       description: 'Title of the form to show in review page'
-    }
+    },
+    fields: [
+      {
+        id: 'review.comment',
+        type: 'TEXTAREA',
+        label: {
+          defaultMessage: 'Comment',
+          id: 'v2.event.birth.action.declare.form.review.comment.label',
+          description: 'Label for the comment field in the review section'
+        }
+      },
+      {
+        type: 'SIGNATURE',
+        id: 'review.signature',
+        required: false,
+        label: {
+          defaultMessage: 'Signature of informant',
+          id: 'v2.event.birth.action.declare.form.review.signature.label',
+          description: 'Label for the signature field in the review section'
+        },
+        signaturePromptLabel: {
+          id: 'v2.signature.upload.modal.title',
+          defaultMessage: 'Draw signature',
+          description: 'Title for the modal to draw signature'
+        }
+      }
+    ]
   },
   active: true,
   version: {
@@ -55,6 +88,7 @@ const TENNIS_CLUB_FORM = defineForm({
         {
           id: 'applicant.firstname',
           type: 'TEXT',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           required: true,
           label: {
             defaultMessage: "Applicant's first name",
@@ -65,6 +99,7 @@ const TENNIS_CLUB_FORM = defineForm({
         {
           id: 'applicant.surname',
           type: 'TEXT',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           required: true,
           label: {
             defaultMessage: "Applicant's surname",
@@ -83,7 +118,7 @@ const TENNIS_CLUB_FORM = defineForm({
                 description: 'This is the error message for invalid date',
                 id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error'
               },
-              validator: field('applicant.dob').isBeforeNow().apply()
+              validator: field('applicant.dob').isBefore().now()
             }
           ],
           label: {
@@ -135,12 +170,13 @@ const TENNIS_CLUB_FORM = defineForm({
         },
         {
           id: 'recommender.firstname',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           type: 'TEXT',
           required: true,
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('recommender.none').isEqualTo('true').apply()
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
             }
           ],
           label: {
@@ -151,12 +187,13 @@ const TENNIS_CLUB_FORM = defineForm({
         },
         {
           id: 'recommender.surname',
+          configuration: { maxLength: MAX_NAME_LENGTH },
           type: 'TEXT',
           required: true,
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('recommender.none').isEqualTo('true').apply()
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
             }
           ],
           label: {
@@ -171,8 +208,8 @@ const TENNIS_CLUB_FORM = defineForm({
           required: true,
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('recommender.none').isEqualTo('true').apply()
+              type: ConditionalType.SHOW,
+              conditional: field('recommender.none').isFalsy()
             }
           ],
           label: {
@@ -197,7 +234,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
       id: 'v2.event.tennis-club-membership.action.certificate.form.review.title',
       defaultMessage: 'Member certificate collector for {firstname} {surname}',
       description: 'Title of the form to show in review page'
-    }
+    },
+    fields: []
   },
   active: true,
   version: {
@@ -264,10 +302,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.requesterId')
-                .or((field) => field.isUndefined().not.inArray(['OTHER']))
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ],
           options: [
@@ -334,10 +370,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.OTHER.idType')
-                .or((field) => field.isUndefined().not.inArray(['PASSPORT']))
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray(['PASSPORT'])
             }
           ]
         },
@@ -352,12 +386,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.OTHER.idType')
-                .or((field) =>
-                  field.isUndefined().not.inArray(['DRIVING_LICENSE'])
-                )
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray([
+                'DRIVING_LICENSE'
+              ])
             }
           ]
         },
@@ -372,12 +404,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.OTHER.idType')
-                .or((field) =>
-                  field.isUndefined().not.inArray(['REFUGEE_NUMBER'])
-                )
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray([
+                'REFUGEE_NUMBER'
+              ])
             }
           ]
         },
@@ -392,12 +422,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.OTHER.idType')
-                .or((field) =>
-                  field.isUndefined().not.inArray(['ALIEN_NUMBER'])
-                )
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray([
+                'ALIEN_NUMBER'
+              ])
             }
           ]
         },
@@ -412,10 +440,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.OTHER.idType')
-                .or((field) => field.isUndefined().not.inArray(['OTHER']))
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').inArray(['OTHER'])
             }
           ]
         },
@@ -430,10 +456,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.requesterId')
-                .or((field) => field.isUndefined().not.inArray(['OTHER']))
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ]
         },
@@ -448,10 +472,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.requesterId')
-                .or((field) => field.isUndefined().not.inArray(['OTHER']))
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ]
         },
@@ -467,10 +489,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.requesterId')
-                .or((field) => field.isUndefined().not.inArray(['OTHER']))
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ]
         },
@@ -485,10 +505,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           conditionals: [
             {
-              type: 'HIDE',
-              conditional: field('collector.requesterId')
-                .or((field) => field.isUndefined().not.inArray(['OTHER']))
-                .apply()
+              type: ConditionalType.SHOW,
+              conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ]
         }
@@ -528,7 +546,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.applicant.firstname.label'
         },
         value: {
-          defaultMessage: 'First Name',
+          defaultMessage: '{applicant.firstname}',
           description: "Value for the applicant's first name field",
           id: 'v2.event.tennis-club-membership.summary.field.applicant.firstname.value'
         }
@@ -546,7 +564,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.label'
         },
         value: {
-          defaultMessage: 'Surname',
+          defaultMessage: '{applicant.surname}',
           description: 'Value for the applicant’s surname field',
           id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.value'
         }
@@ -565,7 +583,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.label'
         },
         value: {
-          defaultMessage: 'First Name',
+          defaultMessage: '{recommender.firstname}',
           description: 'Value for the recommender’s first name field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.value'
         }
@@ -584,7 +602,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.label'
         },
         value: {
-          defaultMessage: 'Surname',
+          defaultMessage: '{recommender.surname}',
           description: 'Value for the recommender’s surname field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.value'
         }
@@ -602,7 +620,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.recommender.id.label'
         },
         value: {
-          defaultMessage: 'ID',
+          defaultMessage: '{recommender.id}',
           description: 'Value for the recommender’s ID field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.id.value'
         }
@@ -665,7 +683,7 @@ export const tennisClubMembershipEvent = defineConfig({
   ],
   actions: [
     {
-      type: 'DECLARE',
+      type: ActionType.DECLARE,
       label: {
         defaultMessage: 'Declare',
         description:
@@ -676,12 +694,15 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(not(eventHasAction('DECLARE')))
+          conditional: and(
+            not(event.hasAction(ActionType.DECLARE)),
+            user.hasScope(SCOPES.RECORD_DECLARE)
+          )
         }
       ]
     },
     {
-      type: 'DELETE',
+      type: ActionType.DELETE,
       label: {
         defaultMessage: 'Delete draft',
         description:
@@ -692,12 +713,15 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(not(eventHasAction('DECLARE')))
+          conditional: and(
+            not(event.hasAction(ActionType.DECLARE)),
+            user.hasScope(SCOPES.RECORD_DECLARE)
+          )
         }
       ]
     },
     {
-      type: 'VALIDATE',
+      type: ActionType.VALIDATE,
       label: {
         defaultMessage: 'Validate',
         description:
@@ -707,15 +731,17 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(
-            and(eventHasAction('DECLARE'), not(eventHasAction('VALIDATE')))
+          conditional: and(
+            event.hasAction(ActionType.DECLARE),
+            not(event.hasAction(ActionType.VALIDATE)),
+            user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL)
           )
         }
       ],
-      forms: [TENNIS_CLUB_FORM]
+      forms: []
     },
     {
-      type: 'REGISTER',
+      type: ActionType.REGISTER,
       label: {
         defaultMessage: 'Register',
         description:
@@ -725,14 +751,13 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(
-            and(
-              or(
-                eventHasAction('VALIDATE'),
-                and(eventHasAction('DECLARE'), userHasScope('register'))
-              ),
-              not(eventHasAction('REGISTER'))
-            )
+          conditional: and(
+            or(
+              event.hasAction(ActionType.VALIDATE),
+              and(event.hasAction('DECLARE'), user.hasScope('register'))
+            ),
+            not(event.hasAction(ActionType.REGISTER)),
+            user.hasScope(SCOPES.RECORD_REGISTER)
           )
         }
       ],
@@ -749,13 +774,16 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(eventHasAction('REGISTER'))
+          conditional: and(
+            event.hasAction(ActionType.REGISTER),
+            user.hasScope(SCOPES.RECORD_DECLARATION_PRINT)
+          )
         }
       ],
       forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
     },
     {
-      type: 'REQUEST_CORRECTION',
+      type: ActionType.REQUEST_CORRECTION,
       label: {
         defaultMessage: 'Request correction',
         description:
@@ -765,7 +793,10 @@ export const tennisClubMembershipEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(and(eventHasAction('REGISTER')))
+          conditional: and(
+            event.hasAction(ActionType.REGISTER),
+            user.hasScope(SCOPES.RECORD_REGISTRATION_REQUEST_CORRECTION)
+          )
         }
       ],
       forms: [TENNIS_CLUB_FORM],
@@ -791,14 +822,13 @@ export const tennisClubMembershipEvent = defineConfig({
             {
               id: 'correction.requester.relationship',
               type: 'RADIO_GROUP',
-              options: {},
               label: {
                 id: 'v2.correction.corrector.title',
                 defaultMessage: 'Who is requesting a change to this record?',
                 description: 'The title for the corrector form'
               },
               initialValue: '',
-              optionValues: [
+              options: [
                 {
                   value: 'INFORMANT',
                   label: {
@@ -860,7 +890,6 @@ export const tennisClubMembershipEvent = defineConfig({
             {
               id: 'correction.identity-check.verified',
               type: 'RADIO_GROUP',
-              options: {},
               label: {
                 id: 'v2.correction.corrector.identity.verified.label',
                 defaultMessage: 'Identity verified',
@@ -868,7 +897,7 @@ export const tennisClubMembershipEvent = defineConfig({
               },
               initialValue: '',
               required: true,
-              optionValues: [
+              options: [
                 {
                   value: 'VERIFIED',
                   label: {
@@ -920,10 +949,12 @@ export const tennisClubMembershipEvent = defineConfig({
                 description: 'The title for the corrector form'
               },
               initialValue: '',
-              options: {
-                size: 'NORMAL'
+              configuration: {
+                styles: {
+                  size: 'NORMAL'
+                }
               },
-              optionValues: [
+              options: [
                 {
                   value: 'ATTEST',
                   label: {
@@ -965,27 +996,21 @@ export const tennisClubMembershipEvent = defineConfig({
           ]
         }
       ]
-    },
+    }
+  ],
+  advancedSearch: [
     {
-      type: 'CUSTOM',
-      label: {
-        defaultMessage: 'My custom action',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'v2.event.tennis-club-membership.action.sdf.label'
+      id: 'RANDOM',
+      title: {
+        defaultMessage: 'Tennis club registration search',
+        description: 'This is what this event is referred as in the system',
+        id: 'v2.event.tennis-club-membership.search'
       },
-      conditionals: [
+      fields: [
         {
-          type: 'SHOW',
-          conditional: defineConditional(
-            or(
-              eventHasAction('VALIDATE'),
-              and(eventHasAction('DECLARE'), userHasScope('register'))
-            )
-          )
+          fieldId: 'applicant.dob'
         }
-      ],
-      forms: []
+      ]
     }
   ]
 })

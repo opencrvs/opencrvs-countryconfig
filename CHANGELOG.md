@@ -18,13 +18,14 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
 - Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
 - **Roles** The previous `roles.csv` file has been deprecated. It will get removed once you run `yarn upgrade:code` command after pulling in the v1.7 changes. The command automatically generates a `roles.json` file which can be used as a baseline to configure the roles as per your requirements.
+- **Github runners upgraded** to latest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045) and apply sticky node version from .nvmrc [#423](https://github.com/opencrvs/opencrvs-countryconfig/pull/423)
 
 ### New features
 
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 - **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: *Link to scopes description file*
 - **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
-- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+- Add constant.humanName to allow countries to customise the format of the full name in the system for `system users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
 ### Improvements
 
@@ -41,6 +42,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
 - Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
 - On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
+- Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
 ### Infrastructure breaking changes
 

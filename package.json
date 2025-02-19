@@ -78,7 +78,7 @@
     "@hapi/h2o2": "^9.1.0",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "0.0.34-rr",
+    "@opencrvs/toolkit": "0.0.47-jr",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
     "@types/csv2json": "^1.4.0",
@@ -128,7 +128,7 @@
     "uuid": "^3.3.2",
     "whatwg-fetch": "^3.0.0",
     "yargs": "^17.7.2",
-    "zod": "^3.17.3"
+    "zod": "^3.24.1"
   },
   "lint-staged": {
     "{src,e2e}/**/*.{ts,graphql}": [

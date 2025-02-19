@@ -9,14 +9,21 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineFormPage, TranslationConfig } from '@opencrvs/toolkit/events'
-import { field } from '@opencrvs/toolkit/conditionals'
 import {
-  appendConditionalsToFields,
+  defineFormPage,
+  TranslationConfig,
+  ConditionalType,
+  and,
+  FieldType
+} from '@opencrvs/toolkit/events'
+import { field, not } from '@opencrvs/toolkit/conditionals'
+
+import { applicationConfig } from '@countryconfig/api/application/application-config'
+import {
   createSelectOptions,
-  emptyMessage
-} from '../../utils'
-import { AddressType, getAddressFields } from '../../person/address'
+  emptyMessage,
+  MAX_NAME_LENGTH
+} from '../../../utils'
 
 const GenderTypes = {
   MALE: 'male',
@@ -167,7 +174,7 @@ const attendantAtBirthOptions = createSelectOptions(
   attendantAtBirthMessageDescriptors
 )
 
-export const childPage = defineFormPage({
+export const child = defineFormPage({
   id: 'child',
   title: {
     defaultMessage: "Child's details",
@@ -177,7 +184,8 @@ export const childPage = defineFormPage({
   fields: [
     {
       id: 'child.firstname',
-      type: 'TEXT',
+      type: FieldType.TEXT,
+      configuration: { maxLength: MAX_NAME_LENGTH },
       required: true,
       label: {
         defaultMessage: 'First name(s)',
@@ -187,7 +195,8 @@ export const childPage = defineFormPage({
     },
     {
       id: 'child.surname',
-      type: 'TEXT',
+      type: FieldType.TEXT,
+      configuration: { maxLength: MAX_NAME_LENGTH },
       required: true,
       label: {
         defaultMessage: 'Last name',
@@ -197,7 +206,7 @@ export const childPage = defineFormPage({
     },
     {
       id: 'child.gender',
-      type: 'SELECT',
+      type: FieldType.SELECT,
       required: true,
       label: {
         defaultMessage: 'Sex',
@@ -217,7 +226,7 @@ export const childPage = defineFormPage({
             description: 'This is the error message for invalid date',
             id: 'v2.event.birth.action.declare.form.section.child.field.dob.error'
           },
-          validator: field('child.dob').isBeforeNow().apply()
+          validator: field('child.dob').isBefore().now()
         }
       ],
       label: {
@@ -227,13 +236,37 @@ export const childPage = defineFormPage({
       }
     },
     {
-      id: 'child.placeOfBirth.divider.start',
-      type: 'DIVIDER',
+      id: 'child.reason',
+      type: FieldType.TEXT,
+      required: true,
+      label: {
+        defaultMessage: 'Reason for delayed registration',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.child.field.reason.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            not(
+              field('child.dob')
+                .isAfter()
+                .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                .inPast()
+            ),
+            field('child.dob').isBefore().now()
+          )
+        }
+      ]
+    },
+    {
+      id: 'child.divider_1',
+      type: FieldType.DIVIDER,
       label: emptyMessage
     },
     {
       id: 'child.placeOfBirth',
-      type: 'SELECT',
+      type: FieldType.SELECT,
       required: true,
       label: {
         defaultMessage: 'Place of delivery',
@@ -244,56 +277,49 @@ export const childPage = defineFormPage({
     },
     {
       id: 'child.birthLocation',
-      type: 'LOCATION',
+      type: 'FACILITY',
       required: true,
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.child.field.birthLocation.label'
       },
-      options: {
-        type: 'HEALTH_FACILITY'
-      },
-
       conditionals: [
         {
-          type: 'HIDE',
-          conditional: field('child.placeOfBirth')
-            .or((field) => field.isUndefined().not.inArray(['HEALTH_FACILITY']))
-            .apply()
+          type: ConditionalType.SHOW,
+          conditional: field('child.placeOfBirth').isEqualTo(
+            PlaceOfBirth.HEALTH_FACILITY
+          )
         }
       ]
     },
-    ...appendConditionalsToFields({
-      inputFields: getAddressFields(AddressType.childResidentialAddress),
-      newConditionals: [
-        {
-          type: 'HIDE',
-          conditional: field('child.placeOfBirth')
-            .or((field) => field.isUndefined().not.inArray(['PRIVATE_HOME']))
-            .apply()
-        }
-      ]
-    }),
-    ...appendConditionalsToFields({
-      inputFields: getAddressFields(AddressType.childOther),
-      newConditionals: [
-        {
-          type: 'HIDE',
-          conditional: field('child.placeOfBirth')
-            .or((field) => field.isUndefined().not.inArray(['OTHER']))
-            .apply()
-        }
-      ]
-    }),
     {
-      id: 'child.placeOfBirth.divider.end',
-      type: 'DIVIDER',
+      id: 'child.address',
+      type: FieldType.ADDRESS,
+      hideLabel: true,
+      label: {
+        defaultMessage: 'Child`s address',
+        description: 'This is the label for the field',
+        id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('child.placeOfBirth').inArray([
+            PlaceOfBirth.OTHER,
+            PlaceOfBirth.PRIVATE_HOME
+          ])
+        }
+      ]
+    },
+    {
+      id: 'child.divider_2',
+      type: FieldType.DIVIDER,
       label: emptyMessage
     },
     {
       id: 'child.attendantAtBirth',
-      type: 'SELECT',
+      type: FieldType.SELECT,
       required: false,
       label: {
         defaultMessage: 'Attendant at birth',
@@ -304,7 +330,7 @@ export const childPage = defineFormPage({
     },
     {
       id: 'child.birthType',
-      type: 'SELECT',
+      type: FieldType.SELECT,
       required: false,
       label: {
         defaultMessage: 'Type of birth',
@@ -315,14 +341,14 @@ export const childPage = defineFormPage({
     },
     {
       id: 'child.weightAtBirth',
-      type: 'TEXT',
+      type: FieldType.TEXT,
       required: false,
       label: {
         defaultMessage: 'Weight at birth',
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.label'
       },
-      options: {
+      configuration: {
         type: 'number',
         postfix: {
           defaultMessage: 'Kilograms (kg)',

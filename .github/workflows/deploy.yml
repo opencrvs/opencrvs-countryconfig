@@ -51,8 +51,8 @@ on:
         default: false
 jobs:
   deploy:
-    environment: ${{ inputs.environment }}
-    runs-on: ubuntu-22.04
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-24.04
     outputs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
@@ -159,7 +159,13 @@ jobs:
               .[]' <<< "$VARS_JSON_WITH_NEWLINES"
           )
 
-      - name: Deploy to ${{ inputs.environment }}
+      - name: Use Node.js from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          node-version-file: .nvmrc
+
+      - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
         run: |
           cd ./${{ github.event.repository.name }}

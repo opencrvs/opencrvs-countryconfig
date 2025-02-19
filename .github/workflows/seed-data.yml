@@ -26,10 +26,8 @@ on:
         description: Core DockerHub image tag
 jobs:
   seed-data:
-    environment: ${{ inputs.environment }}
-    runs-on: ubuntu-22.04
-    outputs:
-      outcome: ${{ steps.seed.outcome }}
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - name: Clone core
@@ -44,6 +42,11 @@ jobs:
         run: |
           cd opencrvs-core
           git checkout ${{ inputs.core-image-tag }}
+
+      - name: Use Node.js from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
 
       - name: Install dependencies
         working-directory: ./opencrvs-core
