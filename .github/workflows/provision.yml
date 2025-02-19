@@ -3,6 +3,14 @@ run-name: Provision ${{ github.event.inputs.environment }}
 on:
   workflow_dispatch:
     inputs:
+      runner:
+        description: "Runner for the job"
+        options:
+          - "ubuntu-22.04"
+          - "ubuntu-24.04"
+          - "vadymland-github-poc"
+        default: "ubuntu-24.04"
+        required: true
       environment:
         type: choice
         description: Machine to provision
@@ -80,7 +88,7 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
     needs: [get-backup-ssh-key, get-production-encryption-key, get-jump-ssh-key]
     if: always()
-    runs-on: ubuntu-22.04
+    runs-on: ${{ inputs.runner }}
     outputs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
