@@ -650,7 +650,6 @@ countries.MOZ,,Mozambique,Mozambique
 countries.MRT,,Mauritania,Mauritanie
 countries.MSR,,Montserrat,Montserrat
 countries.MTQ,,Martinique,Martinique
-countries.MTQ,,Martinique,Martinique
 countries.MUS,,Mauritius,Maurice
 countries.MWI,,Malawi,Malawi
 countries.MYS,,Malaysia,Malaisie
@@ -2628,3 +2627,46 @@ v2.event.tennis-club-membership.summary.field.applicant.firstname.label,Label fo
 v2.event.tennis-club-membership.summary.field.applicant.firstname.value,Value for the applicant's first name field,First Name,First Name
 v2.event.tennis-club-membership.summary.field.applicant.surname.empty,Shown when the surname is missing in summary,Applicant's surname missing,Applicant's surname missing
 v2.event.tennis-club-membership.summary.field.applicant.surname.label,Label for the applicant's surname field,Applicant's Surname,Applicant's Surname
+v2.event.tennis-club-membership.summary.field.firstname.label,Label for the given field on form.,First name,
+v2.event.tennis-club-membership.summary.field.firstname.value,Value for the matching field on form.,{applicant.firstname},
+v2.event.tennis-club-membership.summary.title.label,This is the title of the summary,{applicant.firstname} {applicant.surname},
+v2.event.tennis-club-membership.workqueue.all.name.label,Label for name in all workqueue,{applicant.firstname} {applicant.surname},
+v2.event.tennis-club-membership.workqueue.readyForReview.name.label,Label for name in all workqueue,{applicant.firstname} {applicant.surname},
+v2.event.tennis-club-membership.workqueue.registered.name.label,Label for name in all workqueue,{applicant.firstname} {applicant.surname},
+v2.events.history.status,,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} other {Unknown}}",
+v2.exitModal.cancel,,Cancel,
+v2.exitModal.exitWithoutSaving,,Exit without saving changes?,
+v2.exitModal.exitWithoutSavingDescription,,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,
+v2.field.address.country.label,This is the label for the field,Country,
+v2.field.address.district.label,This is the label for the field,District,
+v2.field.address.label.rural,Label for form field checkbox option Rural,Rural,
+v2.field.address.label.urban,Label for form field checkbox option Urban,Urban,
+v2.field.address.number.label,This is the label for the field,Number,
+v2.field.address.province.label,This is the label for the field,Province,
+v2.field.address.residentialArea.label,This is the label for the field,Residential Area,
+v2.field.address.street.label,This is the label for the field,Street,
+v2.field.address.town.label,This is the label for the field,Town,
+v2.field.address.urbanOrRural.label,This is the label for the field,Urban or Rural,
+v2.field.address.village.label,This is the label for the field,Village,
+v2.field.address.zipCode.label,This is the label for the field,Postcode / Zip,
+v2.navigation.CREATED,In progress label in navigation,In progress,
+v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,
+v2.navigation.REGISTERED,Ready to print label in navigation,Ready to print,
+v2.print.certificate.button.confirmPrint,The text for print button,"Yes, print certificate",
+v2.print.certificate.button.makeCorrection,The label for correction button of print action,"No, make correction",
+v2.print.certificate.review.modal.body.print,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.,
+v2.print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing and issuing.,
+v2.print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print and issue certificate?,
+v2.print.certificate.review.printModalTitle,Print certificate modal title text,Print certificate?,
+v2.printAction.description,The description for print action,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.,
+v2.printAction.title,The title for print action,Print certificate,
+v2.regHome.issued,Label for workqueue tooltip,Empty message,
+v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,"Are you certain you want to delete this draft declaration form? Please note, this action can't be undone.",
+v2.register.form.modal.title.deleteDeclarationConfirm,Title for delete declaration confirmation modal,Delete draft?,
+v2.register.selectInformant.newBirthRegistration,The title that appears for new birth registrations,New birth declaration,
+v2.register.selectInformant.newDeathRegistration,The title that appears for new death registrations,New death declaration,
+v2.register.selectInformant.newMarriageRegistration,The title that appears for new marriage registrations,New marriage declaration,
+v2.register.selectVitalEvent.errorMessage,Error Message to show when no event is being selected,Please select the type of event,
+v2.register.selectVitalEvent.registerNewEventHeading,The section heading on the page,What type of event do you want to declare?,
+v2.register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,
+v2.registerAction.Declare,The label for declare button of register action,Register,
