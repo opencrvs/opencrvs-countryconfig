@@ -206,7 +206,8 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      defaultValue: 'FAR'
     },
     {
       id: `${PersonType.mother}.idType`,

@@ -249,7 +249,8 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: informantOtherThanParent
         }
-      ]
+      ],
+      defaultValue: 'FAR'
     },
     {
       id: `${PersonType.informant}.idType`,
