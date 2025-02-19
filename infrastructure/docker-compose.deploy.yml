@@ -983,7 +983,6 @@ services:
 
   dashboards:
     volumes:
-      - /data/metabase:/data/metabase
       # Exceed Docker config file 500 kb file limit, thus a volume mount
       - /opt/opencrvs/infrastructure/metabase/metabase.init.db.sql:/metabase.init.db.sql
     networks:

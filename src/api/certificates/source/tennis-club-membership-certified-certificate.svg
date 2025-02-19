@@ -54,7 +54,7 @@
     </mask>
     <g mask="url(#mask0_5_2)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="247.708">{{ "applicant.firstname"}} {{ "applicant.surname"}}</tspan>
+        <tspan x="312" y="247.708">{{ lookup $data "applicant.firstname" }} {{ lookup $data "applicant.surname" }}</tspan>
       </text>
     </g>
     <path d="M70 253.5H514" stroke="#ECECEC" />
@@ -69,7 +69,7 @@
     </mask>
     <g mask="url(#mask1_5_2)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="267.708">{{ "applicant.dob" }}</tspan>
+        <tspan x="312" y="267.708">{{ lookup $data "applicant.dob" }}</tspan>
       </text>
     </g>
     <path d="M70 273.5H514" stroke="#ECECEC" />
@@ -85,7 +85,7 @@
     </mask>
     <g mask="url(#mask2_5_2)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="287.708">{{ "recommender.firstname" }} {{ "recommender.surname" }}</tspan>
+        <tspan x="312" y="287.708">{{ lookup $data "recommender.firstname" }} {{ lookup $data "recommender.surname" }}</tspan>
       </text>
     </g>
     <path d="M70 293.5H514" stroke="#ECECEC" />

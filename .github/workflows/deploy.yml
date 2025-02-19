@@ -41,7 +41,7 @@ on:
       core-image-tag:
         description: Core DockerHub image tag
         required: true
-        default: 'v1.6.0'
+        default: 'v1.7.0'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
@@ -52,7 +52,7 @@ on:
 jobs:
   deploy:
     environment: ${{ inputs.environment }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
@@ -158,6 +158,12 @@ jobs:
               ) |
               .[]' <<< "$VARS_JSON_WITH_NEWLINES"
           )
+
+      - name: Use Node.js from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          node-version-file: .nvmrc
 
       - name: Deploy to ${{ inputs.environment }}
         id: deploy
