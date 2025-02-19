@@ -3,6 +3,15 @@ run-name: Deploy to ${{ github.event.inputs.environment }} with reset=${{ github
 on:
   workflow_dispatch:
     inputs:
+      runner:
+        description: "Runner for the job"
+        type: choice
+        options:
+          - "ubuntu-22.04"
+          - "ubuntu-24.04"
+          - "vadymland-internal"
+        default: "ubuntu-24.04"
+        required: true
       environment:
         type: choice
         description: Environment to deploy to
@@ -12,14 +21,6 @@ on:
           - staging
           - qa
           - development
-      runner:
-        description: "Runner for the job"
-        options:
-          - "ubuntu-22.04"
-          - "ubuntu-24.04"
-          - "vadymland-github-poc"
-        default: "ubuntu-24.04"
-        required: true
       core-image-tag:
         description: Core DockerHub image tag
         required: true
