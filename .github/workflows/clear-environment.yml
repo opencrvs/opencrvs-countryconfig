@@ -23,7 +23,7 @@ on:
 jobs:
   reset-data:
     name: 'Reset data'
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-24.04
     outputs:
       outcome: ${{ steps.reset-data.outcome }}

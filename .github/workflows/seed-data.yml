@@ -26,8 +26,10 @@ on:
         description: Core DockerHub image tag
 jobs:
   seed-data:
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-24.04
+    outputs:
+      outcome: ${{ steps.seed.outcome }}
     timeout-minutes: 60
     steps:
       - name: Clone core
