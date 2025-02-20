@@ -851,12 +851,20 @@ const renderTable = async () => {
       locationHierarchy?.[0]?.name ?? ''
   }
 
+  const searchObj = /^(03\d{7,8}|\+261\d{8,9})|^\d+$/.test(search)
+    ? {
+        contactNumber: window.convertToMSISDN(search)
+      }
+    : {
+        name: search
+      }
+
   const variables = {
     advancedSearchParameters: {
       registrationStatuses: ['CERTIFIED', 'ISSUED'],
       dateOfRegistrationStart: startDate,
       dateOfRegistrationEnd: endDate,
-      name: search,
+      ...searchObj,
       declarationJurisdictionId: !!location
         ? location
         : locationHierarchy?.[0]?.id
