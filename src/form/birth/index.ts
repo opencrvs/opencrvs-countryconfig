@@ -293,7 +293,9 @@ export const birthForm: ISerializedForm = {
             ),
             getNationality(
               certificateHandlebars.informantNationality,
-              hideIfInformantMotherOrFather
+              hideIfInformantMotherOrFather.concat(
+                disableIfVerifiedOrAuthenticated
+              )
             ), // Required field.
             getIDType(
               'birth',
@@ -387,7 +389,7 @@ export const birthForm: ISerializedForm = {
             ),
             getNationality(
               certificateHandlebars.motherNationality,
-              detailsExist
+              detailsExist.concat(disableIfVerifiedOrAuthenticated)
             ), // Required field.
             getIDType(
               'birth',
@@ -492,7 +494,7 @@ export const birthForm: ISerializedForm = {
             ),
             getNationality(
               certificateHandlebars.fatherNationality,
-              detailsExist
+              detailsExist.concat(disableIfVerifiedOrAuthenticated)
             ), // Required field.
             getIDType(
               'birth',

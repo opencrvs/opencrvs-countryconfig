@@ -314,7 +314,7 @@ export const deathForm = {
             ),
             getNationality(
               certificateHandlebars.informantNationality,
-              hideIfInformantSpouse
+              hideIfInformantSpouse.concat(disableIfVerifiedOrAuthenticated)
             ),
             getIDType(
               'death',
