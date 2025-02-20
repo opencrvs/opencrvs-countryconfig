@@ -7,6 +7,72 @@
 #
 
 services:
+
+  gateway:
+    environment:
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  workflow:
+    environment:
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  search:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  metrics:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  auth:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  user-mgnt:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  webhooks:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  config:
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  documents:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+
+  scheduler:
+    environment:
+      - QA_ENV=true
+      - NODE_ENV=production
+  notification:
+    environment:
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
+      - NODE_ENV=production
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION}
     restart: unless-stopped
