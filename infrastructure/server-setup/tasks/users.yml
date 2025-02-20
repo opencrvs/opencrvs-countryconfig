@@ -87,6 +87,46 @@
     line: '#@include common-auth'
     state: present
 
+- name: Check short Diffie-Hellman keys
+  ansible.builtin.shell: |
+    awk '$5 < 3071' /etc/ssh/moduli | grep -q .
+  register: short_dh_keys
+  ignore_errors: yes
+
+- name: Remove short Diffie-Hellman keys
+  ansible.builtin.shell: |
+    awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
+    mv /etc/ssh/moduli.safe /etc/ssh/moduli
+  when: short_dh_keys.rc == 0
+  become: yes
+
+# Cleanup weak server keys 
+- name: Remove existing SSH host keys except for RSA and ED25519
+  ansible.builtin.command:
+    cmd: "find /etc/ssh -type f -name 'ssh_host_*' ! -name 'ssh_host_rsa_key' ! -name 'ssh_host_ed25519_key' -exec rm -f {} +"
+- name: Generate new RSA SSH host key if it does not exist
+  ansible.builtin.command:
+    cmd: "ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N ''"
+  args:
+    creates: /etc/ssh/ssh_host_rsa_key
+
+- name: Generate new ED25519 SSH host key if it does not exist
+  ansible.builtin.command:
+    cmd: "ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''"
+  args:
+    creates: /etc/ssh/ssh_host_ed25519_key
+
+# Allow only Strong server keys
+- name: Ensure HostKey for ED25519 is present in sshd_config
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    line: "HostKey /etc/ssh/ssh_host_ed25519_key"
+
+- name: Ensure HostKey for RSA is present in sshd_config
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    line: "HostKey /etc/ssh/ssh_host_rsa_key"
+
 - name: Set AuthenticationMethods to publickey,keyboard-interactive
   lineinfile:
     path: /etc/ssh/sshd_config
@@ -146,23 +186,52 @@
 - name: Only require public key from the user "{{ ansible_user }}"
   blockinfile:
     path: /etc/ssh/sshd_config
+    # Match block must have ending Match all
+    # https://linux.die.net/man/5/sshd_config
     block: |
       Match User {{ ansible_user }}
         PasswordAuthentication no
         AuthenticationMethods publickey
+      Match all
     marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER {{ ansible_user }}'
   become: yes
+
+
+# Add restriction configuration to sshd_config
+# For Ubuntu 22.04
+- name: SSHD Restrict key exchange, cipher, and MAC algorithms (Ubuntu 22.04)
+  ansible.builtin.copy:
+    src: ./files/sshd_audit_hardening.22.04.conf
+    dest: /etc/ssh/sshd_config.d/audit_hardening.conf
+    owner: root
+    group: root
+    mode: '0644'
+  when:
+    - ansible_facts['os_family'] == 'Debian'
+    - ansible_facts['distribution'] == 'Ubuntu'
+    - ansible_facts['distribution_version'] is version('22.04', '<=')
+# For Ubuntu 24.04
+- name: SSHD Restrict key exchange, cipher, and MAC algorithms (Ubuntu 24.04)
+  ansible.builtin.copy:
+    src: ./files/sshd_audit_hardening.24.04.conf
+    dest: /etc/ssh/sshd_config.d/ssh-audit_hardening.conf
+    owner: root
+    group: root
+    mode: '0644'
+  when:
+    - ansible_facts['os_family'] == 'Debian'
+    - ansible_facts['distribution'] == 'Ubuntu'
+    - ansible_facts['distribution_version'] == '24.04'
+
+- name: Check SSH config syntax
+  command: sshd -T
+  register: check_result
 
 - name: Enable logging in to the provisioning user with specified SSH keys
   authorized_key:
     user: '{{ ansible_user }}'
     key: '{{ item }}'
   with_items: '{{ additional_keys_for_provisioning_user | default([]) }}'
-
-- name: Check SSH config syntax
-  command: sshd -T
-  register: check_result
-  ignore_errors: yes
 
 # Ubuntu 22.10
 - name: Check if sshd service exists

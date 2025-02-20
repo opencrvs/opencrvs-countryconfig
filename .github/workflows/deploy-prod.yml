@@ -22,7 +22,7 @@ on:
 jobs:
   deploy:
     environment: ${{ github.event.inputs.environment }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: trstringer/manual-approval@v1
@@ -134,6 +134,12 @@ jobs:
               ) |
               .[]' <<< "$VARS_JSON_WITH_NEWLINES"
           )
+
+      - name: Use Node.js from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          node-version-file: .nvmrc
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         run: |

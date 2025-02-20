@@ -124,6 +124,14 @@
         state: "{{ 'present' if (amount_of_backups_to_keep) else 'absent' }}"
       tags:
         - backups
+      
+    - name: Create a file in backup directory to test connection
+      ansible.builtin.file:
+        path: '{{ backup_server_remote_target_directory }}/downloaded_from_backup.txt'
+        state: touch
+        owner: '{{ backup_server_user }}'
+      tags:
+        - backups
 
 - hosts: backups
   become: yes
@@ -174,3 +182,27 @@
       when: "'backups' in groups and groups['backups'] | length > 0 and ssh_test.rc != 0"
       tags:
         - backups
+
+    - name: Create a temporary file for test connection
+      ansible.builtin.file:
+        path: /tmp/test_connection.txt
+        state: touch
+        owner: '{{ crontab_user }}'
+      when: "'backups' in groups and groups['backups'] | length > 0 and enable_backups"
+      tags: 
+        - backups
+      
+    - name: Copy the test connection file to the backup server
+      shell: rsync --timeout=30 -avz -e "ssh -o StrictHostKeyChecking=no" /tmp/test_connection.txt {{ backup_server_user }}@{{ destination_server }}:{{ backup_server_remote_target_directory }}/test_connection.txt
+      remote_user: '{{ crontab_user }}'
+      when: "'backups' in groups and groups['backups'] | length > 0 and enable_backups"
+      tags:
+        - backups
+    
+    - name: Download the test connection file from the backup server 
+      shell: rsync --timeout=30 -avz -e "ssh -o StrictHostKeyChecking=no" {{ backup_server_user }}@{{ destination_server }}:{{ backup_server_remote_source_directory }}/downloaded_from_backup.txt /tmp/downloaded_from_backup.txt
+      remote_user: '{{ crontab_user }}'
+      when: "'backups' in groups and groups['backups'] | length > 0 and periodic_restore_from_backup"
+      tags:
+        - backups
+      
