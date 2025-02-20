@@ -96,28 +96,22 @@
     path: /data/metabase
   register: metabase_data
 
-- name: 'Create metabase data directory'
+- name: 'Delete metabase data directory if exists'
   file:
     path: /data/metabase
-    state: directory
-    group: 1000
-    owner: 1000
-    mode: g+rwx
-  when: not metabase_data.stat.exists
+    state: absent
+  when: metabase_data.stat.exists
 
 - name: Check metabase data backup directory
   stat:
     path: /data/backups/metabase
   register: metabase_data_backup
 
-- name: 'Create metabase backup directory'
+- name: 'Delete metabase backup directory if exists'
   file:
     path: /data/backups/metabase
-    state: directory
-    group: 1000
-    owner: 1000
-    mode: ugo+rwx
-  when: not metabase_data_backup.stat.exists
+    state: absent
+  when: metabase_data_backup.stat.exists
 
 - name: Check influxdb data directory
   stat:

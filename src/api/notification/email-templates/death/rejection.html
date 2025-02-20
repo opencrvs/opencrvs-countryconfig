@@ -37,7 +37,11 @@
                 max-width: 100%;">
     <h1>Death declaration requires changes</h1>
     <p>
-        Hello {{informantName}},
+        {{#if informantName}}
+            Hello {{informantName}},
+        {{else}}
+            Hello,
+        {{/if}}
     </p>
     <p>
         Your death declaration for {{name}} requires updates. Please visit {{crvsOffice}} to complete your
