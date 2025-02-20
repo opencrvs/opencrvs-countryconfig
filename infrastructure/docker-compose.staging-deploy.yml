@@ -136,6 +136,7 @@ services:
     environment:
       - CREDENTIAL_PARTNER_CERTIFICATE_PATH=/certs/credential-partner.csr
       - CREDENTIAL_PARTNER_PRIVATE_KEY_PATH=/certs/credential-partner.pem
+      - OIDP_CLIENT_PRIVATE_KEY_PATH=/certs/esignet-jwk.txt
       - MOSIP_AUTH_CLIENT_ID=${MOSIP_AUTH_CLIENT_ID}
       - MOSIP_AUTH_CLIENT_SECRET=${MOSIP_AUTH_CLIENT_SECRET}
       - MOSIP_AUTH_PASS=${MOSIP_AUTH_PASS}
