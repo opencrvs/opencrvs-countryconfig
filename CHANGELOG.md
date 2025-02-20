@@ -32,6 +32,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - Auth token, ip address, remote address, mobile number, email redacted/masked from server log
 - Optimized deployment times by making docker images download in parallel.
 - Country alpha3 ISO code now is derived from variables to the Docker Compose files and don't need to be hard coded
+- The backup.sh script checks disk usage after completing the backup process. If the disk usage exceeds 80%, it triggers an alert. 
 
 ### Bug fixes
 
