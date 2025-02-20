@@ -9,7 +9,6 @@
 services:
   gateway:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
@@ -18,7 +17,6 @@ services:
 
   workflow:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
@@ -27,7 +25,6 @@ services:
 
   search:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
@@ -35,7 +32,6 @@ services:
 
   metrics:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://metrics:${METRICS_MONGODB_PASSWORD}@mongo1/metrics?replicaSet=rs0
@@ -44,7 +40,6 @@ services:
 
   auth:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
     deploy:
@@ -52,7 +47,6 @@ services:
 
   user-mgnt:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
@@ -61,7 +55,6 @@ services:
 
   notification:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
@@ -71,7 +64,6 @@ services:
 
   webhooks:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
@@ -80,7 +72,6 @@ services:
 
   config:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
@@ -89,13 +80,11 @@ services:
 
   scheduler:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
 
   documents:
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
 
   countryconfig:
@@ -104,7 +93,6 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
-      - QA_ENV=true
       - NODE_ENV=production
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
@@ -124,7 +112,6 @@ services:
 
   client:
     environment:
-      - QA_ENV=true
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
     deploy:
       replicas: 1
@@ -149,7 +136,6 @@ services:
 
   migration:
     environment:
-      - QA_ENV=true
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - APPLICATION_CONFIG_MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
       - PERFORMANCE_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
