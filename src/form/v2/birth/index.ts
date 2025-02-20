@@ -8,15 +8,13 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+import { ActionType, and, defineConfig, user } from '@opencrvs/toolkit/events'
+import { not, event } from '@opencrvs/toolkit/conditionals'
 
-import { defineConfig } from '@opencrvs/toolkit/events'
-import {
-  defineConditional,
-  eventHasAction,
-  not
-} from '@opencrvs/toolkit/conditionals'
 import { BIRTH_DECLARE_FORM } from './forms/declare'
+import { advancedSearchBirth } from './advancedSearch'
 import { Event } from '@countryconfig/form/types/types'
+import { SCOPES } from '@opencrvs/toolkit/scopes'
 
 export const birthEvent = defineConfig({
   id: Event.Birth,
@@ -54,17 +52,23 @@ export const birthEvent = defineConfig({
   ],
   actions: [
     {
-      type: 'CREATE',
+      type: ActionType.CREATE,
       label: {
         defaultMessage: 'Create',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'event.birth.action.create.label'
       },
-      forms: []
+      forms: [],
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: user.hasScope(SCOPES.RECORD_DECLARE)
+        }
+      ]
     },
     {
-      type: 'DECLARE',
+      type: ActionType.DECLARE,
       label: {
         defaultMessage: 'Declare',
         description:
@@ -75,9 +79,13 @@ export const birthEvent = defineConfig({
       conditionals: [
         {
           type: 'SHOW',
-          conditional: defineConditional(not(eventHasAction('DECLARE')))
+          conditional: and(
+            not(event.hasAction(ActionType.DECLARE)),
+            user.hasScope(SCOPES.RECORD_DECLARE)
+          )
         }
       ]
     }
-  ]
+  ],
+  advancedSearch: advancedSearchBirth
 })

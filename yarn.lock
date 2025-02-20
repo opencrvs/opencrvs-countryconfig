@@ -839,14 +839,15 @@
   resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.21.tgz#ec92d296fa5f881364018c2da1991351f9f632fe"
   integrity sha512-WdDto52bonGjLtQwYDKjWK9r3ae+50+4Ezsxhk3mN7AMMl9wNGtbtvt+77Td3R9PIQDk+kg2WSf7AvOyWtEhIQ==
 
-"@opencrvs/toolkit@0.0.37-ml":
-  version "0.0.37-ml"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.37-ml.tgz#b127bf47ca4300f4ceb89c7b80bf0bc72603b6e8"
-  integrity sha512-TUI3feu2pu7dQx8r6PotmM4sNSddAkHlJnOHX7vJmL6pTIoaiBSpdCyLYAgl4dn03OaAjBDzIBesaXJKvw/3FA==
+"@opencrvs/toolkit@0.0.46-ml":
+  version "0.0.46-ml"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-0.0.46-ml.tgz#1ccd8b63e7b978358b5a435027cfdb798aabf5e8"
+  integrity sha512-RxZdaDf4L96SqwpgKsYcEkYcSp7QYu0koaYiju5RG8iPHfLtV+ujwnkeDrBKFc6su9X51OLF41gmqwEY0ted3g==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
     ajv "^8.17.1"
+    ajv-formats "^3.0.1"
     superjson "1.9.0-0"
     uuid "^9.0.0"
 
@@ -1469,6 +1470,13 @@ agent-base@6:
   dependencies:
     debug "4"
 
+ajv-formats@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/ajv-formats/-/ajv-formats-3.0.1.tgz#3d5dc762bca17679c3c2ea7e90ad6b7532309578"
+  integrity sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==
+  dependencies:
+    ajv "^8.0.0"
+
 ajv@^6.10.0, ajv@^6.12.4:
   version "6.12.6"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.12.6.tgz#baf5a62e802b07d977034586f8c3baf5adf26df4"
@@ -1479,7 +1487,7 @@ ajv@^6.10.0, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ajv@^8.17.1:
+ajv@^8.0.0, ajv@^8.17.1:
   version "8.17.1"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.17.1.tgz#37d9a5c776af6bc92d7f4f9510eba4c0a60d11a6"
   integrity sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==

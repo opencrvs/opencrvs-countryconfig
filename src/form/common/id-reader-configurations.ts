@@ -9,13 +9,30 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { and, objectHasProperty } from '@opencrvs/toolkit/conditionals'
+import { and } from '@opencrvs/toolkit/conditionals'
 import {
   ESIGNET_TOKEN_URL,
   MOSIP_API_USERINFO_URL,
   OPENID_PROVIDER_CLIENT_ID,
   OPENID_PROVIDER_CLAIMS
 } from '@countryconfig/constants'
+
+function objectHasProperty(
+  property: string,
+  type: 'string' | 'number' | 'boolean' | 'array' | 'object',
+  format?: string
+) {
+  return {
+    type: 'object',
+    properties: {
+      [property]: {
+        type,
+        format
+      }
+    },
+    required: [property]
+  }
+}
 
 export const qrCodeConfig = {
   validation: {
