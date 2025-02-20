@@ -132,7 +132,16 @@ services:
 
   mosip-api:
     volumes:
-      - /certs:/certs:ro 
+      - /certs:/certs:ro
+    environment:
+      - CREDENTIAL_PARTNER_CERTIFICATE_PATH=/certs/credential-partner.csr
+      - CREDENTIAL_PARTNER_PRIVATE_KEY_PATH=/certs/credential-partner.pem
+      - MOSIP_AUTH_CLIENT_ID=${MOSIP_AUTH_CLIENT_ID}
+      - MOSIP_AUTH_CLIENT_SECRET=${MOSIP_AUTH_CLIENT_SECRET}
+      - MOSIP_AUTH_PASS=${MOSIP_AUTH_PASS}
+      - MOSIP_AUTH_URL=${MOSIP_AUTH_URL}
+      - MOSIP_AUTH_USER=${MOSIP_AUTH_USER}
+      - MOSIP_GENERATE_AID_URL=${MOSIP_GENERATE_AID_URL}
     logging:
       driver: gelf
       options:
