@@ -617,6 +617,7 @@ const declarations = ({ lastUpdatedAt }: { lastUpdatedAt: string }) => ({
     { $unwind: '$state' },
     {
       $project: {
+        _id: 1,
         gender: '$child.gender',
         reason: '$reason.text',
         extensions: '$extensions',
