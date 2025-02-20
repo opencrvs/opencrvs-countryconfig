@@ -32,6 +32,7 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
       - NODE_ENV=production
 
   countryconfig:
@@ -41,6 +42,7 @@ services:
       - jwt-public-key.{{ts}}
     environment:
       - NODE_ENV=production
+      - QA_ENV=true
       - CHECK_INVALID_TOKEN=true
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - SENTRY_DSN=${SENTRY_DSN:-}
@@ -64,6 +66,7 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
       - NODE_ENV=production
       - DISABLE_RATE_LIMIT=true
 
@@ -71,42 +74,51 @@ services:
     environment:
       - LANGUAGES=en,fr
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
       - NODE_ENV=production
 
   search:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
       - NODE_ENV=production
 
   metrics:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
       - NODE_ENV=production
 
   auth:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
       - NODE_ENV=production
 
   user-mgnt:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
       - NODE_ENV=production
 
   webhooks:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
       - NODE_ENV=production
 
   config:
     environment:
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - QA_ENV=true
       - NODE_ENV=production
 
   documents:
     environment:
+      - QA_ENV=true
       - NODE_ENV=production
 
   scheduler:
     environment:
+      - QA_ENV=true
       - NODE_ENV=production
