@@ -13,6 +13,7 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - QA_ENV=true
       - NODE_ENV=production
       - CHECK_INVALID_TOKEN=true
       - SENTRY_DSN=${SENTRY_DSN:-}
