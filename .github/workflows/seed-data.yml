@@ -9,6 +9,15 @@ on:
       core-image-tag:
         required: true
         type: string
+      runner:
+        description: "Runner for the job"
+        type: choice
+        options:
+          - "ubuntu-22.04"
+          - "ubuntu-24.04"
+          - "vadymland-internal"
+        default: "ubuntu-24.04"
+        required: true
   workflow_dispatch:
     inputs:
       environment:
@@ -23,10 +32,19 @@ on:
           - production
       core-image-tag:
         description: Core DockerHub image tag
+      runner:
+        description: "Runner for the job"
+        type: choice
+        options:
+          - "ubuntu-22.04"
+          - "ubuntu-24.04"
+          - "vadymland-internal"
+        default: "ubuntu-24.04"
+        required: true
 jobs:
   seed-data:
     environment: ${{ github.event.inputs.environment }}
-    runs-on: ubuntu-22.04
+    runs-on: ${{ inputs.runner }}
     timeout-minutes: 60
     steps:
       - name: Clone core
