@@ -28,7 +28,7 @@ import {
   YesNoTypes
 } from '../../../person'
 
-const requireFatherDetails = or(
+export const requireFatherDetails = or(
   field('father.detailsNotAvailable').isFalsy(),
   field('informant.relation').isEqualTo(InformantType.FATHER)
 )
@@ -210,7 +210,8 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
         }
-      ]
+      ],
+      defaultValue: 'FAR'
     },
     {
       id: `${PersonType.father}.idType`,
