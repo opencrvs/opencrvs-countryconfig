@@ -12,11 +12,7 @@ on:
       runner:
         description: "Runner for the job"
         type: choice
-        options:
-          - "ubuntu-22.04"
-          - "ubuntu-24.04"
-          - "vadymland-internal"
-        default: "ubuntu-24.04"
+        default: "ubuntu-22.04"
         required: true
   workflow_dispatch:
     inputs:
