@@ -37,12 +37,13 @@ export const BIRTH_DECLARE_FORM = defineForm({
           defaultMessage: 'Comment',
           id: 'v2.event.birth.action.declare.form.review.comment.label',
           description: 'Label for the comment field in the review section'
-        }
+        },
+        required: true
       },
       {
         type: 'SIGNATURE',
         id: 'review.signature',
-        required: false,
+        required: true,
         label: {
           defaultMessage: 'Signature of informant',
           id: 'v2.event.birth.action.declare.form.review.signature.label',
