@@ -2584,3 +2584,29 @@ function getRegionName() {
   }
 }
 window.getRegionName = getRegionName
+
+const countryCodes = {
+  KEN: '+254',
+  USA: '+1',
+  GBR: '+44',
+  ZM: '+260',
+  MDG: '+261'
+  // TODO: Complete this for other country as well
+}
+
+/**
+ * Convert a local phone number to its international MSISDN format.
+ * @param {string} phone - The phone number to convert.
+ * @param {string} alpha3CountryCode - The 3-letter country code (ISO Alpha-3).
+ * @returns {string} The formatted MSISDN (E.164 format) or original phone number if conversion fails.
+ */
+function convertToMSISDN(phone, alpha3CountryCode = 'MDG') {
+  phone = phone.replace(/[^0-9]/g, '')
+  let countryCode = countryCodes[alpha3CountryCode] || ''
+  if (phone.startsWith('0')) phone = phone.substring(1)
+  if (phone.startsWith(countryCode?.substring(1))) return phone
+
+  return countryCode ? countryCode + phone : phone
+}
+
+window.convertToMSISDN = convertToMSISDN
