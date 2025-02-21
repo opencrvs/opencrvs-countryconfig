@@ -10,9 +10,7 @@ on:
         required: true
         type: string
       runner:
-        description: "Runner for the job"
-        type: choice
-        default: "ubuntu-22.04"
+        type: string
         required: true
   workflow_dispatch:
     inputs:
