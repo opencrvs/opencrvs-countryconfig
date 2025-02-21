@@ -155,8 +155,22 @@ export function isFatherRecognitionDocNeeded() {
         $draft.mention[key] &&
         $draft.mention[key] === 'RECOGNITION'
     )
+    const isDocProvided = $draft?.documents?.uploadDocForFather?.length
+    const isBirthRecognition =
+      $draft.father.fatherHasFormallyRecognisedChild == 'true'
 
-    if (isRecognition && !$draft?.documents?.uploadDocForFather?.length) {
+    if (isBirthRecognition && !isDocProvided) {
+      return {
+        message: {
+          id: 'validations.isFatherRecognitionDocNeeded',
+          defaultMessage: 'Required for recognition',
+          description:
+            'The error message appears when father recognize the child on declaration and father CIN is not provided'
+        }
+      } satisfies ValidationResult
+    }
+
+    if (isRecognition && !isDocProvided) {
       return {
         message: {
           id: 'validations.isFatherRecognitionDocNeeded',
@@ -166,6 +180,7 @@ export function isFatherRecognitionDocNeeded() {
         }
       } satisfies ValidationResult
     }
+
     return undefined
   }
 }

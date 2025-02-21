@@ -148,6 +148,8 @@ export const documentsSection = {
           label: formMessageDescriptors.proofOfFathersID,
           initialValue: '',
           maxSizeMB: 10,
+          hideAsterisk: true,
+          validateEmpty: true,
           extraValue: birthDocumentExtraValue.FATHER,
           validator: [
             {
