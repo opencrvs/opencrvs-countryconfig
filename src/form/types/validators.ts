@@ -47,6 +47,9 @@ type CoreValidator =
   | 'duplicateIDNumber'
   | 'isValidDeathOccurrenceDate'
   | 'isMoVisitDateAfterBirthDateAndBeforeDeathDate'
+  /**
+   * @deprecated This validator is deprecated and will be removed in future releases. Use `isAgeInYearsBetween` instead
+   */
   | 'isInformantOfLegalAge'
   | 'greaterThanZero'
   | 'notGreaterThan'
