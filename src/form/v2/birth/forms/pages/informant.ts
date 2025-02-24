@@ -249,8 +249,7 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: informantOtherThanParent
         }
-      ],
-      defaultValue: 'FAR'
+      ]
     },
     {
       id: `${PersonType.informant}.idType`,
@@ -396,7 +395,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.email',
-      type: FieldType.TEXT,
+      type: FieldType.EMAIL,
       required: true,
       label: {
         defaultMessage: 'Email',
@@ -404,7 +403,7 @@ export const informant = defineFormPage({
         id: 'v2.event.birth.action.declare.form.section.informant.field.email.label'
       },
       configuration: {
-        type: 'email'
+        maxLength: 255
       }
     }
   ]
