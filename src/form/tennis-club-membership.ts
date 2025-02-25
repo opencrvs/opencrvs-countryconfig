@@ -775,7 +775,7 @@ export const tennisClubMembershipEvent = defineConfig({
           type: 'SHOW',
           conditional: and(
             event.hasAction(ActionType.REGISTER),
-            user.hasScope(SCOPES.RECORD_DECLARATION_PRINT)
+            user.hasScope(SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES)
           )
         }
       ],
