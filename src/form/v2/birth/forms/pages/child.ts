@@ -341,7 +341,7 @@ export const child = defineFormPage({
     },
     {
       id: 'child.weightAtBirth',
-      type: FieldType.TEXT,
+      type: FieldType.NUMBER,
       required: false,
       label: {
         defaultMessage: 'Weight at birth',
@@ -349,7 +349,7 @@ export const child = defineFormPage({
         id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.label'
       },
       configuration: {
-        type: 'number',
+        min: 0,
         postfix: {
           defaultMessage: 'Kilograms (kg)',
           description: 'This is the postfix for the weight field',

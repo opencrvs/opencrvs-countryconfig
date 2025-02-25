@@ -53,7 +53,6 @@ const TENNIS_CLUB_FORM = defineForm({
       {
         type: 'SIGNATURE',
         id: 'review.signature',
-        required: false,
         label: {
           defaultMessage: 'Signature of informant',
           id: 'v2.event.birth.action.declare.form.review.signature.label',
@@ -546,7 +545,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.applicant.firstname.label'
         },
         value: {
-          defaultMessage: 'First Name',
+          defaultMessage: '{applicant.firstname}',
           description: "Value for the applicant's first name field",
           id: 'v2.event.tennis-club-membership.summary.field.applicant.firstname.value'
         }
@@ -564,7 +563,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.label'
         },
         value: {
-          defaultMessage: 'Surname',
+          defaultMessage: '{applicant.surname}',
           description: 'Value for the applicant’s surname field',
           id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.value'
         }
@@ -583,7 +582,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.label'
         },
         value: {
-          defaultMessage: 'First Name',
+          defaultMessage: '{recommender.firstname}',
           description: 'Value for the recommender’s first name field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.value'
         }
@@ -602,7 +601,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.label'
         },
         value: {
-          defaultMessage: 'Surname',
+          defaultMessage: '{recommender.surname}',
           description: 'Value for the recommender’s surname field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.value'
         }
@@ -620,7 +619,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.recommender.id.label'
         },
         value: {
-          defaultMessage: 'ID',
+          defaultMessage: '{recommender.id}',
           description: 'Value for the recommender’s ID field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.id.value'
         }
@@ -827,7 +826,7 @@ export const tennisClubMembershipEvent = defineConfig({
                 defaultMessage: 'Who is requesting a change to this record?',
                 description: 'The title for the corrector form'
               },
-              initialValue: '',
+              defaultValue: '',
               options: [
                 {
                   value: 'INFORMANT',
@@ -895,7 +894,7 @@ export const tennisClubMembershipEvent = defineConfig({
                 defaultMessage: 'Identity verified',
                 description: 'The title for the corrector form'
               },
-              initialValue: '',
+              defaultValue: '',
               required: true,
               options: [
                 {
@@ -948,7 +947,7 @@ export const tennisClubMembershipEvent = defineConfig({
                 defaultMessage: 'Who is requesting a change to this record?',
                 description: 'The title for the corrector form'
               },
-              initialValue: '',
+              defaultValue: '',
               configuration: {
                 styles: {
                   size: 'NORMAL'

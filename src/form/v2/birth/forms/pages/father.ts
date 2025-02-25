@@ -210,7 +210,8 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
         }
-      ]
+      ],
+      defaultValue: 'FAR'
     },
     {
       id: `${PersonType.father}.idType`,
