@@ -277,6 +277,10 @@ export const deathForm = {
                 {
                   operation: 'dateInPast',
                   parameters: []
+                },
+                {
+                  operation: 'isAgeInYearsBetween',
+                  parameters: [16, 150]
                 }
               ],
               certificateHandlebars.informantBirthDate
