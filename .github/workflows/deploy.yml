@@ -80,6 +80,8 @@ jobs:
 
       - name: Wait for images to be available
         run: |
+          env
+          echo ${{ github.event.inputs.core-image-tag }}
           while true; do
             if docker manifest inspect ghcr.io/opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}; then
               break
