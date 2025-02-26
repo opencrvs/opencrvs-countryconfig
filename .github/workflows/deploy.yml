@@ -107,7 +107,11 @@ jobs:
       - name: Wait for images to be available
         run: |
           env
-          echo ${{ github.event.inputs.core-image-tag }}
+          echo "github.event.inputs.core-image-tag : ${{ github.event.inputs.core-image-tag }}"
+          echo "github.event.inputs.countryconfig-image-tag : ${{ github.event.inputs.countryconfig-image-tag }}"
+          echo "inputs.core-image-tag : ${{ inputs.core-image-tag }}"
+          echo "inputs.countryconfig-image-tag : ${{ inputs.countryconfig-image-tag }}"
+          exit 1
           while true; do
             if docker manifest inspect ghcr.io/opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}; then
               break
