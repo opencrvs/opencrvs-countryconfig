@@ -14,7 +14,7 @@ on:
       core-image-tag:
         description: Core DockerHub image tag
         required: true
-        default: 'v1.5.0'
+        default: 'v1.7.0'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
@@ -25,6 +25,14 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: euanmillar,rikukissa,alsmk
+          minimum-approvals: 1
+          issue-title: 'Deploy (${{ github.event.inputs.environment }}): core: ${{ github.event.inputs.core-image-tag }} country config: ${{ github.event.inputs.countryconfig-image-tag }}'
+          issue-body: 'Please approve or deny the deployment of core: ${{ github.event.inputs.core-image-tag }} country config: ${{ github.event.inputs.countryconfig-image-tag }} to ${{ github.event.inputs.environment }}'
+          exclude-workflow-initiator-as-approver: false
       - name: Clone core
         uses: actions/checkout@v3
         with:
