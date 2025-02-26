@@ -123,7 +123,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'metricbeat'
   setup-kibana-config:
-    image: curlimages/curl:7.88.1
+    image: curlimages/curl:7.83.1
     entrypoint:
       [
         'curl',
@@ -532,7 +532,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=(Host(`countryconfig.{{hostname}}`) || Host(`registry.{{hostname}}`)) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
+        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -874,7 +874,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.config.rule=Host(`config.{{hostname}}`) && !Path(`/dashboardQueries`)'
+        - 'traefik.http.routers.config.rule=Host(`config.{{hostname}}`)'
         - 'traefik.http.services.config.loadbalancer.server.port=2021'
         - 'traefik.http.routers.config.tls=true'
         - 'traefik.http.routers.config.tls.certresolver=certResolver'
@@ -886,9 +886,6 @@ services:
         - 'traefik.http.middlewares.config.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.config.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.config.headers.stspreload=true'
-        - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
-        - 'traefik.http.routers.block-dashboard-queries.rule=Host(`countryconfig.{{hostname}}`) && Path(`/dashboardQueries`)'
-        - 'traefik.http.routers.block-dashboard-queries.middlewares=block-internal-routes'
       replicas: 1
     networks:
       - overlay_net
@@ -983,6 +980,7 @@ services:
 
   dashboards:
     volumes:
+      - /data/metabase:/data/metabase
       # Exceed Docker config file 500 kb file limit, thus a volume mount
       - /opt/opencrvs/infrastructure/metabase/metabase.init.db.sql:/metabase.init.db.sql
     networks:

@@ -43,6 +43,10 @@ services:
     environment:
       - NODE_ENV=production
       - QA_ENV=true
+      - FHIR_URL=http://hearth:3447/fhir
+      - AUTH_URL=http://auth:4040
+      - APPLICATION_CONFIG_URL=http://config:2021
+      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - SENTRY_DSN=${SENTRY_DSN:-}
@@ -68,7 +72,6 @@ services:
       - SENTRY_DSN=${SENTRY_DSN:-}
       - QA_ENV=true
       - NODE_ENV=production
-      - DISABLE_RATE_LIMIT=true
 
   workflow:
     environment:

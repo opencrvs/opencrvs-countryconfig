@@ -10,6 +10,7 @@
  */
 
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { divider } from '../common/common-optional-fields'
 import {
   formMessageDescriptors,
   informantMessageDescriptors
@@ -128,6 +129,16 @@ export const getDeathDescription: SerializedFormField = {
 
 export const getPlaceOfDeathFields = () =>
   [
+    {
+      name: 'placeOfDeathTitle',
+      type: 'HEADING3',
+      label: formMessageDescriptors.placeOfDeath,
+      previewGroup: 'placeOfDeath',
+      ignoreBottomMargin: false,
+      initialValue: '',
+      validator: []
+    },
+    divider('place-of-death-seperator'),
     {
       name: 'placeOfDeath',
       type: 'SELECT_WITH_OPTIONS',
