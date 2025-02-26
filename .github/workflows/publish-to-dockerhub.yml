@@ -2,9 +2,11 @@ name: Publish image to Dockerhub
 
 on:
   push:
-    branches-ignore:
-      - 'dependabot/**'
-      - 'renovate/**'
+    branches:
+      - master
+      - develop
+      - main
+      - 'release*'
   workflow_dispatch:
     inputs:
       branch_name:
