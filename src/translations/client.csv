@@ -2751,6 +2751,23 @@ v2.rejectModal.description,The description for reject modal,Please describe the 
 v2.rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate,Marquer comme duplicata
 v2.rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update,Envoyer pour mise à jour
 v2.rejectModal.title,The title for reject modal,Reason for rejection?,Quelle mise à jour la déclaration nécessite-t-elle ?
+v2.review.declare.confirm,The label for review action button when declaring,Send for review,Envoyer pour révision
+v2.review.declare.confirmModal.cancel,The label for modal cancel button when declaring,Cancel,Annuler
+v2.review.declare.confirmModal.confirm,The label for modal confirm button when declaring,Confirm,Confirmer
+v2.review.declare.confirmModal.description,The description for review action modal when declaring,This declaration will be sent for review,Cette déclaration sera envoyée pour révision.
+v2.review.declare.confirmModal.title,The title for review action modal when declaring,Send for review?,Envoyer pour révision ?
+v2.review.register.confirm,The label for register button of review action,Register,Enregistrer
+v2.review.register.confirmModal.cancel,The label for modal cancel button when registering,Cancel,Annuler
+v2.review.register.confirmModal.confirm,The label for modal confirm button when registering,Register,Enregistrer
+v2.review.register.confirmModal.description,The description for review action modal when registering,,
+v2.review.register.confirmModal.title,The title for review action modal when registering,Register?,Enregistrer ?
+v2.review.register.title,The title shown when reviewing a record to register,Register event,Enregistrer l'événement
+v2.review.validate.confirm,The label for review action button when validating,Send for approval,Envoyer pour approbation
+v2.review.validate.confirmModal.cancel,The label for modal cancel button when validating,Cancel,Annuler
+v2.review.validate.confirmModal.confirm,The label for modal confirm button when validating,Confirm,Confirmer
+v2.review.validate.confirmModal.description,The description for review action modal when validating,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
+v2.review.validate.confirmModal.title,The title for review action modal when validating,Send for approval?,Envoyer pour approbation ?
+v2.review.validate.title,The title shown when reviewing a record to validate,Send for approval,Envoyer pour approbation
 v2.reviewAction.Declare,The label for declare button of review action,Declare,Declare
 v2.reviewAction.description,The description for review action,"By clicking declare, you confirm that the information entered is correct and the member can be declared.","By clicking declare, you confirm that the information entered is correct and the member can be declared."
 v2.reviewAction.reject,The label for reject button of review action,Reject,Rejeter
@@ -2852,3 +2869,13 @@ wq.noRecords.readyToPrint,No records messages for ready to print tab,No records 
 wq.noRecords.requiresUpdate,No records messages for require updates tab,No records require updates,Aucun document ne nécessite de mise à jour
 wq.noRecords.sentForApproval,No records messages for sent for approval tab,No records sent for approval,Aucun document envoyé pour approbation
 wq.noRecords.sentForReview,No records messages for sent for review tab,No records sent for review,Aucun document envoyé pour examen
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
