@@ -2866,26 +2866,7 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
-views.idVerification.banner.actions.reset,,Reset,Réinitialiser
-views.idVerification.banner.actions.revoke,,Revoke,Révoquer
-views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.",Cette identité a été authentifiée avec succès avec le système national d'identité de Farajaland.
-views.idVerification.banner.authenticated.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Authenticated status and unlock the fields for editing.","En cliquant sur «Continuer», vous supprimerez l'état authentifié de l'ID et déverrouillez les champs pour l'édition."
-views.idVerification.banner.authenticated.resetConfirmation.title,,Revoke authenticated ID?,Révoquer une pièce d'identité authentifiée?
-views.idVerification.banner.authenticated.title,,ID Authenticated,ID authentifié
-views.idVerification.banner.failed.description,,The identity card scanned has not be successfully authenticated,La carte d'identité numérisée n'a pas été authentifiée avec succès
-views.idVerification.banner.failed.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll clear all information to it’s default state.","En cliquant sur «Continuer», vous effacerez toutes les informations de son état par défaut."
-views.idVerification.banner.failed.resetConfirmation.title,,Reset information?,Réinitialiser les informations?
-views.idVerification.banner.failed.title,,ID Verification Failed,La vérification d'identification a échoué
-views.idVerification.banner.verified.description,,"This identity data has been successfully verified with the Farajaland’s National ID System. Please note that their identity has not been authenticated using the individuals biometrics. To make edits, please remove the verification first.",Ces données d'identité ont été vérifiées avec succès avec le système national d'identification de Farajaland.
-views.idVerification.banner.verified.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Verified status and unlock the fields for editing.","En cliquant sur «Continuer», vous supprimerez l'état de l'ID vérifié et déverrouillez les champs pour l'édition."
-views.idVerification.banner.verified.resetConfirmation.title,,Revoke valid ID?,Révoquer une pièce d'identité valide?
-views.idVerification.banner.verified.title,,ID Verified,Id vérifié
-views.qrReader.button,Button to scan QR code,Scan QR code,Scanner le code QR
-views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialog,Place the Notifier's ID card in front of the camera.,Placez la carte d'identité du notificateur devant la caméra.
-views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.,Assurez-vous que votre appareil photo est propre et fonctionnel.
-views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.,Tenez l'appareil régulièrement à 6 à 12 pouces du code QR.
-views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et non endommagé ou flou.
-wq.noRecords.draft,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
+wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts,Aucun enregistrement dans mes brouillons
 wq.noRecords.externalValidation,No records messages for empty external validation tab,No records in external validation,Aucun enregistrement dans la validation externe
 wq.noRecords.fieldAgents,No records messages for empty field agents tab,No records from field agents,Aucun enregistrement des agents de terrain
 wq.noRecords.healthSystem,No records messages for empty health system tab,No records from health system,Aucun dossier du système de santé
