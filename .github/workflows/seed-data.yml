@@ -1,5 +1,5 @@
 name: Seed data
-run-name: Seed data to ${{ github.event.inputs.environment }} core=${{ github.event.inputs.core-image-tag }}
+run-name: Seed data to ${{ inputs.environment }} core=${{ inputs.core-image-tag }}
 on:
   workflow_call:
     inputs:
@@ -21,12 +21,15 @@ on:
           - qa
           - staging
           - production
+          - e2e
       core-image-tag:
         description: Core DockerHub image tag
 jobs:
   seed-data:
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-24.04
+    outputs:
+      outcome: ${{ steps.seed.outcome }}
     timeout-minutes: 60
     steps:
       - name: Clone core
@@ -37,14 +40,15 @@ jobs:
           path: './opencrvs-core'
 
       - name: Set CORE_VERSION from inputs
-        if: ${{ github.event.inputs.core-image-tag }}
+        if: ${{ inputs.core-image-tag }}
         run: |
           cd opencrvs-core
-          git checkout ${{ github.event.inputs.core-image-tag }}
+          git checkout ${{ inputs.core-image-tag }}
 
       - name: Use Node.js from .nvmrc
         uses: actions/setup-node@v4
         with:
+          node-version: 18
           node-version-file: .nvmrc
 
       - name: Install dependencies
@@ -52,9 +56,14 @@ jobs:
         run: yarn install
 
       - name: Seed data on given environment
-        run: |
-          cd ./opencrvs-core
-          yarn seed:prod
+        uses: nick-fields/retry@v2
+        id: seed
+        with:
+          timeout_minutes: 10
+          max_attempts: 5
+          command: |
+            cd ./opencrvs-core
+            yarn seed:prod
         env:
           ACTIVATE_USERS: ${{ vars.ACTIVATE_USERS }}
           GATEWAY_HOST: ${{ vars.GATEWAY_HOST }}
