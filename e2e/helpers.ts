@@ -83,10 +83,11 @@ type DeclarationSection =
   | 'witnessOne'
   | 'witnessTwo'
 type CorrectionSection = 'summary'
+type V2DeclarationSection = DeclarationSection | 'review'
 
 export const goToSection = async (
   page: Page,
-  section: DeclarationSection | CorrectionSection
+  section: DeclarationSection | CorrectionSection | V2DeclarationSection
 ) => {
   while (!page.url().includes(section)) {
     await page.getByRole('button', { name: 'Continue' }).click()
