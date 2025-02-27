@@ -395,7 +395,8 @@ test.describe('1. Birth event declaration', () => {
       })
     })
 
-    test.describe('1.9 Validate "Save & Exit" Button  ', async () => {
+    // @TODO: The Save & exit modal is not implemented in V2 events yet
+    test.describe.skip('1.9 Validate "Save & Exit" Button  ', async () => {
       test('1.9.1 Click the "Save & Exit" button from any page', async () => {
         await page.getByRole('button', { name: 'Save & Exit' }).click()
 
@@ -407,9 +408,11 @@ test.describe('1. Birth event declaration', () => {
          * - Cancel Button
          * - Confirm Button
          */
+
         await expect(
           page.getByRole('heading', { name: 'Save & exit?' })
         ).toBeVisible()
+
         await expect(
           page.getByText(
             'All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?'
@@ -497,10 +500,13 @@ test.describe('1. Birth event declaration', () => {
 
       await page.waitForTimeout(500) // This page renders twice at first
 
-      await expect(
-        page.locator('#content-name', { hasText: 'My drafts' })
-      ).toBeVisible()
-      await expect(page.getByText(/seconds ago/)).toBeHidden()
+      // @TODO: My drafts page is not available yet in V2 events
+      // await expect(
+      //   page.locator('#content-name', { hasText: 'My drafts' })
+      // ).toBeVisible()
+      // await expect(page.getByText(/seconds ago/)).toBeHidden()
+
+      await expect(page.getByText('All events')).toBeVisible()
     })
   })
 
@@ -525,7 +531,7 @@ test.describe('1. Birth event declaration', () => {
       /*
        * Expected result: should open modal with:
        * - Title: Delete draft?
-       * - Helper text: Are you certain you want to delete this draft declaration form? Please note, this action cant be undone.
+       * - Helper text: Are you certain you want to delete this draft declaration form? Please note, this action can't be undone.
        * - Cancel Button
        * - Confirm Button
        */
@@ -534,7 +540,7 @@ test.describe('1. Birth event declaration', () => {
       ).toBeVisible()
       await expect(
         page.getByText(
-          'Are you certain you want to delete this draft declaration form? Please note, this action cant be undone.'
+          "Are you certain you want to delete this draft declaration form? Please note, this action can't be undone."
         )
       ).toBeVisible()
       await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible()
@@ -561,10 +567,13 @@ test.describe('1. Birth event declaration', () => {
 
       await page.waitForTimeout(500) // This page renders twice at first
 
-      await expect(
-        page.locator('#content-name', { hasText: 'My drafts' })
-      ).toBeVisible()
-      await expect(page.getByText(/seconds ago/)).toBeHidden()
+      // @TODO: My drafts page is not available yet in V2 events
+      // await expect(
+      //   page.locator('#content-name', { hasText: 'My drafts' })
+      // ).toBeVisible()
+      // await expect(page.getByText(/seconds ago/)).toBeHidden()
+
+      await expect(page.getByText('All events')).toBeVisible()
     })
   })
 
