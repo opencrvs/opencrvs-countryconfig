@@ -1,22 +1,9 @@
 import { expect, test, type Page } from '@playwright/test'
-import { createPIN, getToken, login } from '../../helpers'
+import { getToken, loginToV2AsLocalRegistrar } from '../../helpers'
 import { createDeclaration } from './helpers'
 
 import TEST_DATA_1 from './data/1-both-mother-and-father.json'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS, CLIENT_V2_URL } from '../../constants'
-
-async function loginToV2AsLocalRegistrar(page: Page) {
-  await login(
-    page,
-    CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-    CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-  )
-  await createPIN(page)
-
-  // Navigate to the v2 client
-  await page.goto(CLIENT_V2_URL)
-}
 
 test.describe('1. Birth event declaration', () => {
   test.describe.serial('Fill all form sections. Save & Exit', () => {
