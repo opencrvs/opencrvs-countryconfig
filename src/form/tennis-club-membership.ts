@@ -737,7 +737,7 @@ export const tennisClubMembershipEvent = defineConfig({
           )
         }
       ],
-      forms: []
+      forms: [TENNIS_CLUB_FORM]
     },
     {
       type: ActionType.REGISTER,
@@ -763,7 +763,7 @@ export const tennisClubMembershipEvent = defineConfig({
       forms: [TENNIS_CLUB_FORM]
     },
     {
-      type: 'PRINT_CERTIFICATE',
+      type: ActionType.PRINT_CERTIFICATE,
       label: {
         defaultMessage: 'Print certificate',
         description:
