@@ -5,6 +5,8 @@ import {
   drawSignature,
   expectAddress,
   expectOutboxToBeEmpty,
+  expectValueInTestId,
+  expectValuesInTestId,
   formatDateObjectTo_ddMMMMyyyy,
   getAction,
   getRandomDate,
@@ -13,15 +15,6 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-
-// For some reason simply doing:
-// 'await expect(page.findByTestId(testId)).toHaveValue(value)'
-// did not work. So we use this helper function.
-async function expectValueInTestId(page: Page, testId: string, value: string) {
-  await expect(
-    page.locator(`[data-test-id="${testId}"]`).getByText(value)
-  ).toBeVisible()
-}
 
 test.describe.serial('1. Birth declaration case - 1 - V2', () => {
   let page: Page
@@ -457,10 +450,10 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * - Mother's address
        */
       // @TODO: There is a bug on V2, where it shows an empty 'Usual place of residence' field on the review page
-      await Promise.all(
-        Object.values(declaration.mother.address).map((key) =>
-          expectValueInTestId(page, `row-value-mother.address`, key)
-        )
+      await expectValuesInTestId(
+        page,
+        'row-value-mother.address',
+        Object.values(declaration.mother.address)
       )
 
       /*
@@ -543,7 +536,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        */
       await expectValueInTestId(page, 'row-value-father.addressSameAs', 'Yes')
     })
-    test('1.1.7 Fill up review metadata comment & signature', async () => {
+    test('1.1.7 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
@@ -580,6 +573,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
     })
   })
 
+  // @TODO: This is not yet supported on V2, please add this test case when it is!
   test.describe.skip('1.2 Declaration Review by RA', async () => {
     test('1.2.1 Navigate to the declaration review page', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)

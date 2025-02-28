@@ -396,3 +396,24 @@ export const assignRecord = async (page: Page) => {
   )
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
 }
+
+// For some reason simply doing:
+// 'await expect(page.findByTestId(testId)).toHaveValue(value)'
+// did not work. So we use this helper function.
+export async function expectValueInTestId(
+  page: Page,
+  testId: string,
+  value: string
+) {
+  await expect(
+    page.locator(`[data-test-id="${testId}"]`).getByText(value)
+  ).toBeVisible()
+}
+
+export async function expectValuesInTestId(
+  page: Page,
+  testId: string,
+  values: string[]
+) {
+  await Promise.all(values.map((key) => expectValueInTestId(page, testId, key)))
+}
