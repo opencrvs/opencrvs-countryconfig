@@ -279,6 +279,10 @@ function getMentionDate(type: MentionType, index: number): SerializedFormField {
       {
         operation: 'dateNotInFuture',
         parameters: []
+      },
+      {
+        operation: 'isDateNotBeforeChildBirthDate',
+        parameters: []
       }
     ],
     mapping: getCustomFieldMapping(fieldId),
