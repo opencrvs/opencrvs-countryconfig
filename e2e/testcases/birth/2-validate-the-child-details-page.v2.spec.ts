@@ -266,18 +266,16 @@ test.describe("2. Validate the child's details page", () => {
     })
 
     test('2.5.3 Enter "Reason for late registration"', async ({ page }) => {
-      await page.locator('#reasonForLateRegistration').fill('Lack of awareness')
+      await page.locator('#child____reason').fill('Lack of awareness')
 
       /*
        * Expected result: should accept text
        */
-      await expect(
-        page.locator('#reasonForLateRegistration_error')
-      ).toBeHidden()
+      await expect(page.locator('#child____reason_error')).toBeHidden()
     })
 
     test('2.5.4 Set the field as null', async ({ page }) => {
-      await goToSection(page, 'preview')
+      await goToSection(page, 'review')
 
       /*
        * Expected result: should throw error in application review page:
@@ -286,66 +284,76 @@ test.describe("2. Validate the child's details page", () => {
       await expect(
         page
           .getByRole('row', { name: 'Reason for delayed' })
-          .locator('[data-test-id="row-value-Reason"]')
+          .locator('[data-test-id="row-value-child.reason"]')
       ).toHaveText('Required for registration')
     })
   })
 
   test.describe('2.6 Validate place of delivery field', async () => {
     test('2.6.1 Keep field as null', async ({ page }) => {
-      await goToSection(page, 'preview')
+      await goToSection(page, 'review')
 
       /*
        * Expected result: should throw error in application review page:
        * - Required for registration
        */
-      await expect(page.locator('[data-test-id="row-value-Place"]')).toHaveText(
-        'Required for registration'
-      )
+      await expect(
+        page.locator('[data-test-id="row-value-child.placeOfBirth"]')
+      ).toHaveText('Required for registration')
     })
 
     test('2.6.2.a Validate Health Institution', async ({ page }) => {
       await test.step('Select Health Institution', async () => {
-        await page.locator('#placeOfBirth').click()
+        await page.locator('#child____placeOfBirth').click()
         await page.getByText('Health Institution', { exact: true }).click()
         /*
          * Expected result: should show input field for:
          * - Health institution
          */
-        await expect(page.getByText('Health Institution *')).toBeVisible()
+        await expect(page.locator('#child____birthLocation')).toBeVisible()
       })
       await test.step('Enter any health institution', async () => {
-        await page.locator('#birthLocation').fill('b')
+        await page.locator('#child____birthLocation').fill('b')
         await page.getByText('Bombwe Health Post').click()
         /*
          * Expected result: should select "Bombwe Health Post" as health institute
          */
-        await expect(page.locator('#birthLocation')).toHaveValue(
+        await expect(page.locator('#child____birthLocation')).toHaveValue(
           'Bombwe Health Post'
         )
       })
     })
 
     test('2.6.2.b Select Residential address', async ({ page }) => {
-      await page.locator('#placeOfBirth').click()
+      await page.locator('#child____placeOfBirth').click()
       await page.getByText('Residential address', { exact: true }).click()
 
       /*
-       * Expected result: should select "Residential address" as place of birth
+       * Expected result:
+       * - should select "Residential address" as place of birth
+       * - Should show input field for address
        */
-      await expect(page.locator('#placeOfBirth')).toContainText(
+      await expect(page.locator('#child____placeOfBirth')).toContainText(
         'Residential address'
       )
+
+      await expect(page.locator('#child____address-form-input')).toBeVisible()
     })
 
     test('2.6.2.c Select Other', async ({ page }) => {
-      await page.locator('#placeOfBirth').click()
+      await page.locator('#child____placeOfBirth').click()
       await page.getByText('Other', { exact: true }).click()
 
       /*
-       * Expected result: should select "Other" as place of birth
+       * Expected result:
+       should select "Other" as place of birth
+       * - Should show input field for address
        */
-      await expect(page.locator('#placeOfBirth')).toContainText('Other')
+      await expect(page.locator('#child____placeOfBirth')).toContainText(
+        'Other'
+      )
+
+      await expect(page.locator('#child____address-form-input')).toBeVisible()
     })
   })
 })
