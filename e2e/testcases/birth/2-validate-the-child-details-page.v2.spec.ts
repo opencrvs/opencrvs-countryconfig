@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { goToSection, loginToV2 } from '../../helpers'
 
-test.describe("2. Validate the child's details page", () => {
+test.describe("2. Validate the child's details page - V2", () => {
   test.beforeEach(async ({ page }) => {
     await loginToV2(page)
 
