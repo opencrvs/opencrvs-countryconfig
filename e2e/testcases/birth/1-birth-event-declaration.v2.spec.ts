@@ -5,7 +5,7 @@ import { createDeclaration } from './helpers'
 import TEST_DATA_1 from './data/1-both-mother-and-father.json'
 import { faker } from '@faker-js/faker'
 
-test.describe('1. Birth event declaration', () => {
+test.describe('1. Birth event declaration - V2', () => {
   test.describe.serial('Fill all form sections. Save & Exit', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
