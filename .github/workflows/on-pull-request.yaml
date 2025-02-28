@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
-      GH_TOKEN: ${{ secrets.OLLIE_BOT_GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
       FORK_REPOSITORY_PATH: "${{ secrets.FORK_REPOSITORY_ORGANISATION }}/${{ secrets.FORK_REPOSITORY_NAME }}"
     steps:
       - name: Checkout OpenCRVS Countryconfig repository
@@ -107,10 +107,10 @@ jobs:
           """
           echo "$BODY"
 
-          curl -X POST https://slack.com/api/chat.postMessage \
-          -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
-          -H 'Content-type: application/json' \
-          --data "{
-            'channel': 'C02LU432JGK',
-            'text': '$BODY'
-          }"
+          # curl -X POST https://slack.com/api/chat.postMessage \
+          # -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+          # -H 'Content-type: application/json' \
+          # --data "{
+          #   'channel': 'C02LU432JGK',
+          #   'text': '$BODY'
+          # }"
