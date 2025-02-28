@@ -313,8 +313,12 @@ export const formatName = (name: PersonOrName) => {
   return joinValuesWith([name.firstNames, name.familyName])
 }
 
-export const drawSignature = async (page: Page) => {
-  const canvas = page.locator('#informantSignature_modal canvas')
+export const drawSignature = async (page: Page, v2Events = false) => {
+  const canvasLocator = v2Events
+    ? '#review____signature-form-input canvas'
+    : '#informantSignature_modal canvas'
+
+  const canvas = page.locator(canvasLocator)
   const rect = await canvas.boundingBox()
 
   expect(rect).toBeTruthy()
@@ -391,4 +395,25 @@ export const assignRecord = async (page: Page) => {
     await page.getByRole('button', { name: 'Assign', exact: true }).isVisible()
   )
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
+}
+
+// For some reason simply doing:
+// 'await expect(page.findByTestId(testId)).toHaveValue(value)'
+// did not work. So we use this helper function.
+export async function expectValueInTestId(
+  page: Page,
+  testId: string,
+  value: string
+) {
+  await expect(
+    page.locator(`[data-test-id="${testId}"]`).getByText(value)
+  ).toBeVisible()
+}
+
+export async function expectValuesInTestId(
+  page: Page,
+  testId: string,
+  values: string[]
+) {
+  await Promise.all(values.map((key) => expectValueInTestId(page, testId, key)))
 }
