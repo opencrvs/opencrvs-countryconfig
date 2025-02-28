@@ -1,9 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, loginToV2 } from '../../helpers'
-import { createDeclaration } from './helpers'
-
-import TEST_DATA_1 from './data/1-both-mother-and-father.json'
-import { faker } from '@faker-js/faker'
+import { loginToV2 } from '../../helpers'
 
 test.describe('1. Birth event declaration - V2', () => {
   test.describe.serial('Fill all form sections. Save & Exit', () => {
