@@ -101,7 +101,7 @@ jobs:
         if: steps.sync_fork.outcome == 'failure'
         run: |
           ([ "x$STATUS" == "xSynced" ] || [ "x$STATUS" == "xNoChange" ]) && \
-              echo "No need to create PR: $RESULT ${{ steps.create_pr.outcome }}" && exit 0
+              echo "No need to create PR: $RESULT" && exit 0
           [ "x$STATUS" == "xCreated" ] && \
               FORK_STATUS="⚠️ Changes was not synced with Farajaland repo due to merge conflicts, please merge PR $RESULT manually to keep Farajaland in sync Countryconfig"
           [ "x$STATUS" == "xFailed" ] && \
