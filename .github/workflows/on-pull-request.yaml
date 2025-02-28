@@ -17,7 +17,6 @@
 # - sync_farajaland: Executes the steps to sync changes and send notifications. Only runs if the pull request is merged.
 #
 # Action secrets:
-# - `FORK_ORGANISATION_TOKEN`: A personal access token with access to the Farajaland repository.
 # - `FORK_REPOSITORY_ORGANISATION`: The organisation name of the Farajaland repository.
 # - `FORK_REPOSITORY_NAME`: The name of the Farajaland repository.
 # - `SLACK_BOT_TOKEN`: A Slack bot token for sending notifications.
@@ -35,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.OLLIE_BOT_GITHUB_TOKEN }}
       FORK_REPOSITORY_PATH: "${{ secrets.FORK_REPOSITORY_ORGANISATION }}/${{ secrets.FORK_REPOSITORY_NAME }}"
     steps:
       - name: Checkout OpenCRVS Countryconfig repository
