@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test'
-import { goToSection, loginToV2AsLocalRegistrar } from '../../helpers'
+import { goToSection, loginToV2 } from '../../helpers'
 
 test.describe("2. Validate the child's details page - V2", () => {
   test.beforeEach(async ({ page }) => {
-    await loginToV2AsLocalRegistrar(page)
+    await loginToV2(page)
 
     await page.click('#header_new_event')
 

@@ -27,12 +27,11 @@ export async function createPIN(page: Page) {
   }
 }
 
-export async function loginToV2AsLocalRegistrar(page: Page) {
-  await login(
-    page,
-    CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-    CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-  )
+export async function loginToV2(
+  page: Page,
+  credentials = CREDENTIALS.LOCAL_REGISTRAR
+) {
+  await login(page, credentials.USERNAME, credentials.PASSWORD)
   await createPIN(page)
 
   // Navigate to the v2 client
