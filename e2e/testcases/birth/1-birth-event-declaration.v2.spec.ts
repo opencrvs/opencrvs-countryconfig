@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, loginToV2AsLocalRegistrar } from '../../helpers'
+import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from './helpers'
 
 import TEST_DATA_1 from './data/1-both-mother-and-father.json'
@@ -17,7 +17,7 @@ test.describe('1. Birth event declaration', () => {
     })
 
     test('1.1. Navigate to the birth event declaration page', async () => {
-      await loginToV2AsLocalRegistrar(page)
+      await loginToV2(page)
 
       await page.click('#header_new_event')
       await expect(page.getByText('New Declaration')).toBeVisible()
@@ -439,7 +439,7 @@ test.describe('1. Birth event declaration', () => {
   })
   test.describe('1.10 Validate "Exit" Button', async () => {
     test.beforeEach(async ({ page }) => {
-      await loginToV2AsLocalRegistrar(page)
+      await loginToV2(page)
 
       await page.click('#header_new_event')
       await page.getByLabel('Birth').click()
@@ -499,7 +499,7 @@ test.describe('1. Birth event declaration', () => {
 
   test.describe('1.11 Validate "Delete Declaration" Button  ', async () => {
     test.beforeEach(async ({ page }) => {
-      await loginToV2AsLocalRegistrar(page)
+      await loginToV2(page)
       await page.click('#header_new_event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
