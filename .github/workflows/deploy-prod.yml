@@ -61,6 +61,7 @@ jobs:
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ env.KNOWN_HOSTS }}
+          if_key_exists: replace
 
       - name: Unset KNOWN_HOSTS variable
         run: |
