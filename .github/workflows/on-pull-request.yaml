@@ -86,7 +86,7 @@ jobs:
                   printf "PR already exists in Farajaland repo: $(grep ${FORK_REPOSITORY_PATH} result.txt)\n"
                   echo RESULT=$(grep ${FORK_REPOSITORY_PATH} result.txt) >> $GITHUB_ENV
                   echo STATUS="Created" >> $GITHUB_ENV
-              elif grep -q "No commits between develop and develop" result.txt; then
+              elif grep -q "No commits" result.txt; then
                   printf "No commits between develop and develop: $(cat result.txt)\n"
                   echo RESULT=$(cat result.txt) >> $GITHUB_ENV
                   echo STATUS="NoChange" >> $GITHUB_ENV
@@ -95,6 +95,7 @@ jobs:
                   echo RESULT=$(cat result.txt) >> $GITHUB_ENV
                   echo STATUS="Failed" >> $GITHUB_ENV
               fi
+            echo "WAS IT EXECUTED?"
           fi
       - name: Send slack notification
         if: steps.sync_fork.outcome == 'failure'
