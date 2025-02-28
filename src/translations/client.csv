@@ -62,6 +62,7 @@ advancedSearchResult.pill.timePeriod,The label for time period in active advance
 advancedSearchResult.pill.trackingId,The label for tracking id in active advancedSearchParams,Tracking ID,Identifiant de suivi
 advancedSearchResult.table.noResult,The label for no result in advancedSearchResult page,No result,Pas de résultat
 advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultat de la recherche
+applicant.firstname,The first name of the applicant,First name,Prénom
 buttons.add,Add button text on form config,Add,Ajouter
 buttons.apply,Apply button label,Apply,Appliquer
 buttons.approve,Approve button text,Approve,Approuver
@@ -1858,6 +1859,7 @@ print.declaration.header.title,,Civil Registration Centre,Centre d’Etat Civil
 print.declaration.informantAttestation,,"I attest to having received this {eventType, select, birth{birth} death{death} marriage{marriage} other{}} declaration","J’atteste avoir reçu cetter déclaration de {eventType, select, birth{naissance} death{décès} marriage{mariage} other{}}"
 print.declaration.placeOfDeclaration,,Place of declaration,Lieu de déclaration
 print.declaration.warning.declarationDetails,,To be completed by office,Partie réservée à l’officier d’état civil
+recommender.none,No recommender,No recommender,Aucun recommandataire
 record.certificate.collectedInAdvance,Table column header showing collector info in record audit,Printed in advance by,Imprimé à l'avance par
 record.certificate.collector,Table column header showing collector info in record audit,Printed on collection,Contrôle d'identité
 recordAudit.archive.confirmation.body,Confirmation body for archiving a declaration,This will archive the record and remove it from your workspace,"Cela supprimera la déclaration de la file d'attente et changera son statut en archive. Pour annuler ce changement, vous devrez rechercher la déclaration."
@@ -2327,7 +2329,7 @@ v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
 v2.buttons.change,The label for the change button,Change,Changer
 v2.buttons.confirm,Confirm button,Confirm,Confirmer
 v2.buttons.continue,Continue Button Text,Continue,Continuer
-v2.buttons.exit,Label for Exit button on EventTopBar,EXIT,QUITTER
+v2.buttons.exit,Label for Exit button on EventTopBar,Exit,Quitter
 v2.buttons.print,Print button text,Print,Imprimer
 v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
 v2.buttons.search,The title of search input submit button,Search,Rechercher
@@ -2753,8 +2755,33 @@ v2.rejectModal.description,The description for reject modal,Please describe the 
 v2.rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate,Marquer comme duplicata
 v2.rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update,Envoyer pour mise à jour
 v2.rejectModal.title,The title for reject modal,Reason for rejection?,Quelle mise à jour la déclaration nécessite-t-elle ?
+v2.review.declare.confirm,The label for review action button when declaring,Send for review,Envoyer pour révision
+v2.review.declare.confirmModal.cancel,The label for modal cancel button when declaring,Cancel,Annuler
+v2.review.declare.confirmModal.confirm,The label for modal confirm button when declaring,Confirm,Confirmer
+v2.review.declare.confirmModal.description,The description for review action modal when declaring,This declaration will be sent for review,Cette déclaration sera envoyée pour révision.
+v2.review.declare.confirmModal.title,The title for review action modal when declaring,Send for review?,Envoyer pour révision ?
+v2.review.declare.description.complete,The description for declare action when form is complete,The informant will receive an email with a registration number that they can use to collect the certificate,L'informateur recevra un e-mail avec un numéro d'enregistrement qu'il pourra utiliser pour récupérer le certificat.
+v2.review.declare.title.complete,The title shown when reviewing an incomplete record to declare,Declaration complete,Déclaration complète
+v2.review.declare.title.incomplete,The title shown when reviewing an incomplete record to declare,Declaration incomplete,Déclaration incomplète
+v2.review.register.confirm,The label for register button of review action,Register,Enregistrer
+v2.review.register.confirmModal.cancel,The label for modal cancel button when registering,Cancel,Annuler
+v2.review.register.confirmModal.confirm,The label for modal confirm button when registering,Register,Enregistrer
+v2.review.register.confirmModal.description,The description for review action modal when registering,‎,
+v2.review.register.confirmModal.title,The title for review action modal when registering,Register?,Enregistrer ?
+v2.review.register.description.complete,The description for registration action when form is complete,"By clicking register, you confirm that the information entered is correct and the event can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que l'événement peut être enregistré."
+v2.review.register.title,The title shown when reviewing a record to register,Register event,Enregistrer l'événement
+v2.review.validate.confirm,The label for review action button when validating,Send for approval,Envoyer pour approbation
+v2.review.validate.confirmModal.cancel,The label for modal cancel button when validating,Cancel,Annuler
+v2.review.validate.confirmModal.confirm,The label for modal confirm button when validating,Confirm,Confirmer
+v2.review.validate.confirmModal.description,The description for review action modal when validating,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
+v2.review.validate.confirmModal.title,The title for review action modal when validating,Send for approval?,Envoyer pour approbation ?
+v2.review.validate.description.complete,The description for validate action when form is complete,The informant will receive an email with a registration number that they can use to collect the certificate,L'informateur recevra un e-mail avec un numéro d'enregistrement qu'il pourra utiliser pour récupérer le certificat.
+v2.review.validate.description.incomplete,The description for validate action when form is complete,Please add mandatory information before sending for approval,Veuillez ajouter les informations obligatoires avant d'envoyer pour approbation.
+v2.review.validate.title,The title shown when reviewing a record to validate,Send for approval,Envoyer pour approbation
 v2.reviewAction.Declare,The label for declare button of review action,Declare,Declare
 v2.reviewAction.description,The description for review action,"By clicking declare, you confirm that the information entered is correct and the member can be declared.","By clicking declare, you confirm that the information entered is correct and the member can be declared."
+v2.reviewAction.incompleteForm,The label for warning of incomplete form,Please add mandatory information correctly before registering.,Veuillez ajouter correctement les informations obligatoires avant d'enregistrer.
+v2.reviewAction.register.description.incomplete,The description for registration action when form is incomplete,Please add mandatory information before registering,Veuillez ajouter les informations obligatoires avant d'enregistrer.
 v2.reviewAction.reject,The label for reject button of review action,Reject,Rejeter
 v2.reviewAction.title,The title for review action,Declare member,Declare member
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
