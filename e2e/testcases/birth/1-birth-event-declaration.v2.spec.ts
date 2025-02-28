@@ -485,8 +485,6 @@ test.describe('1. Birth event declaration - V2', () => {
        * Expected result: should be navigated to "my-drafts" tab but no draft will be saved
        */
 
-      await page.waitForTimeout(500) // This page renders twice at first
-
       // @TODO: My drafts page is not available yet in V2 events
       // await expect(
       //   page.locator('#content-name', { hasText: 'My drafts' })
@@ -552,8 +550,6 @@ test.describe('1. Birth event declaration - V2', () => {
        * Expected result: should be navigated to "my-drafts" tab but no draft will be saved
        */
 
-      await page.waitForTimeout(500) // This page renders twice at first
-
       // @TODO: My drafts page is not available yet in V2 events
       // await expect(
       //   page.locator('#content-name', { hasText: 'My drafts' })
@@ -564,40 +560,8 @@ test.describe('1. Birth event declaration - V2', () => {
     })
   })
 
-  test.describe('1.12 Technical test for shortcuts', () => {
-    test('Shortcut for quickly creating declarations', async () => {
-      const token = await getToken('k.mweene', 'test')
-      const res = await createDeclaration(token, {
-        child: {
-          firstNames: faker.person.firstName(),
-          familyName: faker.person.firstName(),
-          gender: TEST_DATA_1['Child details'].Sex.toLowerCase() as 'male'
-        },
-        informant: {
-          type: TEST_DATA_1['Informant details'][
-            'Relationship to child'
-          ].toUpperCase() as 'MOTHER'
-        },
-        attendant: {
-          type: TEST_DATA_1['Child details'][
-            'Attendant at birth'
-          ].toUpperCase() as 'PHYSICIAN'
-        },
-        mother: {
-          firstNames: faker.person.firstName(),
-          familyName: faker.person.firstName()
-        },
-        father: {
-          firstNames: faker.person.firstName(),
-          familyName: faker.person.firstName()
-        }
-      })
-      expect(res).toStrictEqual({
-        trackingId: expect.any(String),
-        compositionId: expect.any(String),
-        isPotentiallyDuplicate: false,
-        __typename: 'CreatedIds'
-      })
-    })
+  // @TODO: This test is not implemented in V2 events yet
+  test.describe.skip('1.12 Technical test for shortcuts', () => {
+    test.skip('Shortcut for quickly creating declarations', async () => {})
   })
 })
