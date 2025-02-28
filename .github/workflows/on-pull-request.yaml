@@ -34,6 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
+      # Check token under Olli's account
       GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
       FORK_REPOSITORY_PATH: "${{ secrets.FORK_REPOSITORY_ORGANISATION }}/${{ secrets.FORK_REPOSITORY_NAME }}"
     steps:
@@ -85,6 +86,10 @@ jobs:
                   printf "PR already exists in Farajaland repo: $(grep ${FORK_REPOSITORY_PATH} result.txt)\n"
                   echo RESULT=$(grep ${FORK_REPOSITORY_PATH} result.txt) >> $GITHUB_ENV
                   echo STATUS="Created" >> $GITHUB_ENV
+              elif grep -q "No commits between develop and develop" result.txt; then
+                  printf "No commits between develop and develop: $(cat result.txt)\n"
+                  echo RESULT=$(cat result.txt) >> $GITHUB_ENV
+                  echo STATUS="NoChange" >> $GITHUB_ENV
               else
                   echo "Failed to create PR: $(cat result.txt)"
                   echo RESULT=$(cat result.txt) >> $GITHUB_ENV
@@ -99,6 +104,8 @@ jobs:
               FORK_STATUS="⚠️ Changes was not synced with Farajaland repo due to merge conflicts, please merge PR $RESULT manually to keep Farajaland in sync Countryconfig"
           [ "x$STATUS" == "xFailed" ] && \
               FORK_STATUS="❌ Failed to create PR in Farajaland repository: $RESULT"
+          [ "x$STATUS" == "xNoChange" ] && \
+              echo "No need to create PR: $RESULT" && exit 0
           BODY="""
           Pull request https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
           authored by ${{ github.actor }} from branch ${{ github.head_ref }} was merged into ${BASE_BRANCH}.
