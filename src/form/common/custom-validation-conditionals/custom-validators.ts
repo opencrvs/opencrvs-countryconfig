@@ -185,6 +185,49 @@ export function isFatherRecognitionDocNeeded() {
   }
 }
 
+
+/**
+ * @todo find better way to set this the correct way into separate eusable file without importation error
+ */
+function isValidDate(value?: string) {
+  // Check if value is null, undefined, or an empty string
+  if (!value || typeof value !== 'string') {
+    return false
+  }
+
+  // Parse the string into a Date object
+  const date = new Date(value)
+
+  // Check if the resulting Date object is valid
+  return !isNaN(date.getTime())
+}
+
+/**
+ * Custom validator to check if the date value of the field is not before child birth date
+ */
+export function isDateNotBeforeChildBirthDate() {
+  return (value: string, $draft: Record<string, any>) => {
+    const childBirthDate = $draft?.child?.childBirthDate
+
+    if (
+      childBirthDate &&
+      value &&
+      isValidDate(childBirthDate) &&
+      isValidDate(value)
+    ) {
+      const isBeforeChildBirthDate = new Date(childBirthDate) > new Date(value)
+
+      if (isBeforeChildBirthDate) {
+        return {
+          message: {
+            id: 'validations.isDateNotBeforeChildBirthDate',
+            defaultMessage: 'Date must be after child birth date',
+            description:
+              'The error message appears when the given date is before child birth date'
+          }
+        } satisfies ValidationResult
+      }
+ }
 export function isProofOfRecognitionDocNeeded() {
   return (_: string, $draft: Record<string, any>) => {
     const isRecognition = Array.from(
@@ -208,7 +251,8 @@ export function isProofOfRecognitionDocNeeded() {
             'The error message appears when proof of recognition Doc is not provided on recognition'
         }
       } satisfies ValidationResult
-    }
+
+   
 
     return undefined
   }
