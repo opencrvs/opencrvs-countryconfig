@@ -185,6 +185,7 @@ export function isFatherRecognitionDocNeeded() {
   }
 }
 
+
 /**
  * @todo find better way to set this the correct way into separate eusable file without importation error
  */
@@ -226,7 +227,32 @@ export function isDateNotBeforeChildBirthDate() {
           }
         } satisfies ValidationResult
       }
-    }
+ }
+export function isProofOfRecognitionDocNeeded() {
+  return (_: string, $draft: Record<string, any>) => {
+    const isRecognition = Array.from(
+      { length: 10 },
+      (_, i) => 'typeOfMention__' + i
+    )?.some(
+      (key) =>
+        $draft?.mention &&
+        $draft.mention[key] &&
+        $draft.mention[key] === 'RECOGNITION'
+    )
+    const isRecognitionDocProvided =
+      $draft?.documents?.uploadDocForRecognition?.length
+
+    if (isRecognition && !isRecognitionDocProvided) {
+      return {
+        message: {
+          id: 'validations.isProofOfRecognitionDocNeeded',
+          defaultMessage: 'Required for recognition',
+          description:
+            'The error message appears when proof of recognition Doc is not provided on recognition'
+        }
+      } satisfies ValidationResult
+
+   
 
     return undefined
   }

@@ -86,15 +86,21 @@ export const documentsSection = {
           label: formMessageDescriptors.proofOfRecognition,
           initialValue: '',
           maxSizeMB: 10,
+          validateEmpty: true,
           extraValue: birthDocumentExtraValue.OTHER,
-          validator: [],
-          required: true,
+          validator: [
+            {
+              operation: 'isProofOfRecognitionDocNeeded',
+              parameters: []
+            }
+          ],
           options: [
             {
               value: birthDocumentType.RECOGNITION_ACT,
               label: formMessageDescriptors.docTypeRecognitionAct
             }
           ],
+
           conditionals: [
             {
               description: 'Hidden unless marginal mention is Recognition',
