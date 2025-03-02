@@ -185,7 +185,6 @@ export function isFatherRecognitionDocNeeded() {
   }
 }
 
-
 /**
  * @todo find better way to set this the correct way into separate eusable file without importation error
  */
@@ -227,7 +226,10 @@ export function isDateNotBeforeChildBirthDate() {
           }
         } satisfies ValidationResult
       }
- }
+    }
+    return undefined
+  }
+}
 export function isProofOfRecognitionDocNeeded() {
   return (_: string, $draft: Record<string, any>) => {
     const isRecognition = Array.from(
@@ -251,8 +253,7 @@ export function isProofOfRecognitionDocNeeded() {
             'The error message appears when proof of recognition Doc is not provided on recognition'
         }
       } satisfies ValidationResult
-
-   
+    }
 
     return undefined
   }
