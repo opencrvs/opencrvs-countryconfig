@@ -31,6 +31,16 @@ jobs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
     steps:
+      - name: Create .env file
+        run: |
+          echo "${{ vars.ENV_${{ github.event.inputs.environment }} }}" > .env.${{ github.event.inputs.environment }}
+
+      - name: Load environment variables
+        run: |
+          set -a
+          source .env.${{ github.event.inputs.environment }}
+          set +a
+
       - name: Clone core
         uses: actions/checkout@v3
         with:
@@ -65,7 +75,7 @@ jobs:
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.SSH_KEY }}
+          key: $SSH_KEY #${{ secrets.SSH_KEY }}
           known_hosts: ${{ env.KNOWN_HOSTS }}
 
       - name: Unset KNOWN_HOSTS variable
@@ -75,8 +85,8 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+          username: $DOCKER_USERNAME #${{ secrets.DOCKER_USERNAME }}
+          password: $DOCKER_TOKEN #${{ secrets.DOCKER_TOKEN }}
 
       - name: Wait for images to be available
         run: |
@@ -140,10 +150,10 @@ jobs:
           yarn deploy \
           --clear_data=no \
           --environment=${{ github.event.inputs.environment }} \
-          --host=${{ vars.DOMAIN }} \
-          --ssh_host=${{ vars.SSH_HOST || secrets.SSH_HOST }} \
-          --ssh_port=${{ vars.SSH_PORT || secrets.SSH_PORT }} \
-          --ssh_user=${{ secrets.SSH_USER }} \
+          --host=$DOMAIN \
+          --ssh_host=$SSH_HOST \
+          --ssh_port=$SSH_PORT \
+          --ssh_user=$SSH_USER \
           --version=${{ github.event.inputs.core-image-tag }} \
           --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
           --replicas=${{ vars.REPLICAS }}
