@@ -101,8 +101,7 @@ jobs:
           git commit -m "Merge upstream/${BASE_BRANCH} into sync-with-${BASE_BRANCH} with conflicts"
           echo "Push to sync-with-${BASE_BRANCH}"
           git remote -v
-          git pull origin sync-with-${BASE_BRANCH}
-          git push origin sync-with-${BASE_BRANCH}
+          git push --force origin sync-with-${BASE_BRANCH}
 
       - name: Create PR in ${{ env.FORK_REPOSITORY_ORGANISATION }}/${{ env.FORK_REPOSITORY_NAME }}
         if: steps.sync_fork.outcome == 'failure'
