@@ -104,11 +104,9 @@ test.describe("2. Validate the child's details page - V2", () => {
        * Expected result: should throw error in application review page:
        * - Required for registration
        */
-      await expect(
-        page
-          .locator('[data-test-id="row-value-child.firstname"]')
-          .getByText('Required for registration')
-      ).toBeVisible()
+      await expect(page.getByTestId('row-value-child.firstname')).toHaveText(
+        'Required for registration'
+      )
     })
 
     test('2.1.4 Enter more than 32 English characters', async ({ page }) => {
@@ -145,11 +143,9 @@ test.describe("2. Validate the child's details page - V2", () => {
        * Expected result: should throw error in application review page:
        * - Required for registration
        */
-      await expect(
-        page
-          .locator('[data-test-id="row-value-child.gender"]')
-          .getByText('Required for registration')
-      ).toBeVisible()
+      await expect(page.getByTestId('row-value-child.gender')).toHaveText(
+        'Required for registration'
+      )
     })
   })
 
@@ -212,11 +208,10 @@ test.describe("2. Validate the child's details page - V2", () => {
        * Expected result: should throw error in application review page:
        * - Please enter a valid date
        */
-      await expect(
-        page
-          .locator('[data-test-id="row-value-child.dob"]')
-          .getByText('Please enter a valid date')
-      ).toBeVisible()
+
+      await expect(page.getByTestId('row-value-child.dob')).toHaveText(
+        'Please enter a valid date'
+      )
     })
   })
 
@@ -284,7 +279,7 @@ test.describe("2. Validate the child's details page - V2", () => {
       await expect(
         page
           .getByRole('row', { name: 'Reason for delayed' })
-          .locator('[data-test-id="row-value-child.reason"]')
+          .getByTestId('row-value-child.reason')
       ).toHaveText('Required for registration')
     })
   })
@@ -297,9 +292,9 @@ test.describe("2. Validate the child's details page - V2", () => {
        * Expected result: should throw error in application review page:
        * - Required for registration
        */
-      await expect(
-        page.locator('[data-test-id="row-value-child.placeOfBirth"]')
-      ).toHaveText('Required for registration')
+      await expect(page.getByTestId('row-value-child.placeOfBirth')).toHaveText(
+        'Required for registration'
+      )
     })
 
     test('2.6.2.a Validate Health Institution', async ({ page }) => {
