@@ -152,6 +152,6 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
           -H 'Content-type: application/json' \
           --data "{
-            'channel': 'C08FCLKER8X',
+            'channel': '${{ vars.SLACK_BOT_CHANNEL }}',
             'text': '$BODY'
           }"
