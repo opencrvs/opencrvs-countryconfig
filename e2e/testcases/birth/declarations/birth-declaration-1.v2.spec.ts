@@ -5,8 +5,6 @@ import {
   drawSignature,
   expectAddress,
   expectOutboxToBeEmpty,
-  expectValueInTestId,
-  expectValuesInTestId,
   formatDateObjectTo_ddMMMMyyyy,
   getAction,
   getRandomDate,
@@ -88,7 +86,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
   test.describe('1.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
       await loginToV2(page)
-      await page.click('#header_new_event')
+      await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -272,15 +270,11 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * - Child's First Name
        * - Child's Family Name
        */
-      await expectValueInTestId(
-        page,
-        'row-value-child.firstname',
+      await expect(page.getByTestId('row-value-child.firstname')).toHaveText(
         declaration.child.name.firstNames
       )
 
-      await expectValueInTestId(
-        page,
-        'row-value-child.surname',
+      await expect(page.getByTestId('row-value-child.surname')).toHaveText(
         declaration.child.name.familyName
       )
 
@@ -288,9 +282,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Child's Gender
        */
-      await expectValueInTestId(
-        page,
-        'row-value-child.gender',
+      await expect(page.getByTestId('row-value-child.gender')).toHaveText(
         declaration.child.gender
       )
 
@@ -298,9 +290,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Child's date of birth
        */
-      await expectValueInTestId(
-        page,
-        'row-value-child.dob',
+      await expect(page.getByTestId('row-value-child.dob')).toHaveText(
         `${declaration.child.birthDate.yyyy}-${declaration.child.birthDate.mm}-${declaration.child.birthDate.dd}`
       )
 
@@ -309,34 +299,26 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * - Child's Place of birth type
        * - Child's Place of birth details
        */
-      await expectValueInTestId(
-        page,
-        'row-value-child.placeOfBirth',
+      await expect(page.getByTestId('row-value-child.placeOfBirth')).toHaveText(
         declaration.placeOfBirth
       )
-      await expectValueInTestId(
-        page,
-        'row-value-child.birthLocation',
-        declaration.birthLocation
-      )
+      await expect(
+        page.getByTestId('row-value-child.birthLocation')
+      ).toHaveText(declaration.birthLocation)
 
       /*
        * Expected result: should include
        * - Child's Attendant at birth
        */
-      await expectValueInTestId(
-        page,
-        'row-value-child.attendantAtBirth',
-        declaration.attendantAtBirth
-      )
+      await expect(
+        page.getByTestId('row-value-child.attendantAtBirth')
+      ).toHaveText(declaration.attendantAtBirth)
 
       /*
        * Expected result: should include
        * - Child's Birth type
        */
-      await expectValueInTestId(
-        page,
-        'row-value-child.birthType',
+      await expect(page.getByTestId('row-value-child.birthType')).toHaveText(
         declaration.birthType
       )
 
@@ -344,20 +326,16 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Child's Weight at birth
        */
-      await expectValueInTestId(
-        page,
-        'row-value-child.weightAtBirth',
-        declaration.weightAtBirth.toString()
-      )
+      await expect(
+        page.getByTestId('row-value-child.weightAtBirth')
+      ).toHaveText(declaration.weightAtBirth.toString())
 
       /*
        * Expected result: should include
        * - Informant's relation to child
        */
 
-      await expectValueInTestId(
-        page,
-        'row-value-informant.relation',
+      await expect(page.getByTestId('row-value-informant.relation')).toHaveText(
         declaration.informantType
       )
 
@@ -365,9 +343,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Informant's Email
        */
-      await expectValueInTestId(
-        page,
-        'row-value-informant.email',
+      await expect(page.getByTestId('row-value-informant.email')).toHaveText(
         declaration.informantEmail
       )
 
@@ -376,15 +352,11 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * - Mother's First Name
        * - Mother's Family Name
        */
-      await expectValueInTestId(
-        page,
-        'row-value-mother.firstname',
+      await expect(page.getByTestId('row-value-mother.firstname')).toHaveText(
         declaration.mother.name.firstNames
       )
 
-      await expectValueInTestId(
-        page,
-        'row-value-mother.surname',
+      await expect(page.getByTestId('row-value-mother.surname')).toHaveText(
         declaration.mother.name.familyName
       )
 
@@ -392,9 +364,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Mother's date of birth
        */
-      await expectValueInTestId(
-        page,
-        'row-value-mother.dob',
+      await expect(page.getByTestId('row-value-mother.dob')).toHaveText(
         `${declaration.mother.birthDate.yyyy}-${declaration.mother.birthDate.mm}-${declaration.mother.birthDate.dd}`
       )
 
@@ -402,9 +372,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Mother's Nationality
        */
-      await expectValueInTestId(
-        page,
-        'row-value-mother.nationality',
+      await expect(page.getByTestId('row-value-mother.nationality')).toHaveText(
         declaration.mother.nationality
       )
 
@@ -412,36 +380,28 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Mother's Marital status
        */
-      await expectValueInTestId(
-        page,
-        'row-value-mother.maritalStatus',
-        declaration.mother.maritalStatus
-      )
+      await expect(
+        page.getByTestId('row-value-mother.maritalStatus')
+      ).toHaveText(declaration.mother.maritalStatus)
 
       /*
        * Expected result: should include
        * - Mother's level of education
        */
-      await expectValueInTestId(
-        page,
-        'row-value-mother.educationalAttainment',
-        declaration.mother.levelOfEducation
-      )
+      await expect(
+        page.getByTestId('row-value-mother.educationalAttainment')
+      ).toHaveText(declaration.mother.levelOfEducation)
 
       /*
        * Expected result: should include
        * - Mother's Type of Id
        * - Mother's Id Number
        */
-      await expectValueInTestId(
-        page,
-        'row-value-mother.idType',
+      await expect(page.getByTestId('row-value-mother.idType')).toHaveText(
         declaration.mother.identifier.type
       )
 
-      await expectValueInTestId(
-        page,
-        'row-value-mother.nid',
+      await expect(page.getByTestId('row-value-mother.nid')).toHaveText(
         declaration.mother.identifier.id
       )
 
@@ -450,10 +410,12 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * - Mother's address
        */
       // @TODO: There is a bug on V2, where it shows an empty 'Usual place of residence' field on the review page
-      await expectValuesInTestId(
-        page,
-        'row-value-mother.address',
-        Object.values(declaration.mother.address)
+      await Promise.all(
+        Object.values(declaration.mother.address).map((val) =>
+          expect(
+            page.getByTestId('row-value-mother.address').getByText(val)
+          ).toBeVisible()
+        )
       )
 
       /*
@@ -461,15 +423,11 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * - Father's First Name
        * - Father's Family Name
        */
-      await expectValueInTestId(
-        page,
-        'row-value-father.firstname',
+      await expect(page.getByTestId('row-value-father.firstname')).toHaveText(
         declaration.father.name.firstNames
       )
 
-      await expectValueInTestId(
-        page,
-        'row-value-father.surname',
+      await expect(page.getByTestId('row-value-father.surname')).toHaveText(
         declaration.father.name.familyName
       )
 
@@ -477,9 +435,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Father's date of birth
        */
-      await expectValueInTestId(
-        page,
-        'row-value-father.dob',
+      await expect(page.getByTestId('row-value-father.dob')).toHaveText(
         `${declaration.father.birthDate.yyyy}-${declaration.father.birthDate.mm}-${declaration.father.birthDate.dd}`
       )
 
@@ -487,9 +443,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Father's Nationality
        */
-      await expectValueInTestId(
-        page,
-        'row-value-father.nationality',
+      await expect(page.getByTestId('row-value-father.nationality')).toHaveText(
         declaration.father.nationality
       )
 
@@ -498,15 +452,11 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * - Father's Type of Id
        * - Father's Id Number
        */
-      await expectValueInTestId(
-        page,
-        'row-value-father.idType',
+      await expect(page.getByTestId('row-value-father.idType')).toHaveText(
         declaration.father.identifier.type
       )
 
-      await expectValueInTestId(
-        page,
-        'row-value-father.nid',
+      await expect(page.getByTestId('row-value-father.nid')).toHaveText(
         declaration.father.identifier.id
       )
 
@@ -514,27 +464,25 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
        * Expected result: should include
        * - Father's Marital status
        */
-      await expectValueInTestId(
-        page,
-        'row-value-father.maritalStatus',
-        declaration.father.maritalStatus
-      )
+      await expect(
+        page.getByTestId('row-value-father.maritalStatus')
+      ).toHaveText(declaration.father.maritalStatus)
 
       /*
        * Expected result: should include
        * - Father's level of education
        */
-      await expectValueInTestId(
-        page,
-        'row-value-father.educationalAttainment',
-        declaration.father.levelOfEducation
-      )
+      await expect(
+        page.getByTestId('row-value-father.educationalAttainment')
+      ).toHaveText(declaration.father.levelOfEducation)
 
       /*
        * Expected result: should include
        * - Father's address
        */
-      await expectValueInTestId(page, 'row-value-father.addressSameAs', 'Yes')
+      await expect(
+        page.getByTestId('row-value-father.addressSameAs')
+      ).toHaveText('Yes')
     })
     test('1.1.7 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())

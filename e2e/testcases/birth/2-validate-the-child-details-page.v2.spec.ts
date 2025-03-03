@@ -5,7 +5,7 @@ test.describe("2. Validate the child's details page - V2", () => {
   test.beforeEach(async ({ page }) => {
     await loginToV2(page)
 
-    await page.click('#header_new_event')
+    await page.click('#header-new-event')
 
     await expect(page.getByText('New Declaration')).toBeVisible()
     await expect(

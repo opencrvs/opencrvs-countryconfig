@@ -15,7 +15,7 @@ test.describe('1. Birth event declaration - V2', () => {
     test('1.1. Navigate to the birth event declaration page', async () => {
       await loginToV2(page)
 
-      await page.click('#header_new_event')
+      await page.click('#header-new-event')
       await expect(page.getByText('New Declaration')).toBeVisible()
       await expect(
         page.getByText('What type of event do you want to declare?')
@@ -437,7 +437,7 @@ test.describe('1. Birth event declaration - V2', () => {
     test.beforeEach(async ({ page }) => {
       await loginToV2(page)
 
-      await page.click('#header_new_event')
+      await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
 
@@ -494,7 +494,7 @@ test.describe('1. Birth event declaration - V2', () => {
   test.describe('1.11 Validate "Delete Declaration" Button  ', async () => {
     test.beforeEach(async ({ page }) => {
       await loginToV2(page)
-      await page.click('#header_new_event')
+      await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
 
