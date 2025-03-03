@@ -22,7 +22,7 @@
 # - `SLACK_BOT_TOKEN`: A Slack bot token for sending notifications.
 
 name: Sync Changes to Farajaland
-
+# Test sync
 on:
   pull_request:
     types:
