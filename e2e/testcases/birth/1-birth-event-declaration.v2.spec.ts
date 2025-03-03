@@ -87,10 +87,10 @@ test.describe('1. Birth event declaration - V2', () => {
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
 
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
@@ -154,10 +154,10 @@ test.describe('1. Birth event declaration - V2', () => {
             page.getByRole('button', { name: 'Save & Exit' })
           ).toBeVisible()
 
-          await page.locator('#eventToggleMenu-dropdownMenu').click()
+          await page.locator('#event-menu-dropdownMenu').click()
           await expect(
             page
-              .locator('#eventToggleMenu-dropdownMenu')
+              .locator('#event-menu-dropdownMenu')
               .getByRole('listitem')
               .filter({ hasText: 'Delete declaration' })
           ).toBeVisible()
@@ -199,10 +199,10 @@ test.describe('1. Birth event declaration - V2', () => {
           await expect(
             page.getByRole('button', { name: 'Save & Exit' })
           ).toBeVisible()
-          await page.locator('#eventToggleMenu-dropdownMenu').click()
+          await page.locator('#event-menu-dropdownMenu').click()
           await expect(
             page
-              .locator('#eventToggleMenu-dropdownMenu')
+              .locator('#event-menu-dropdownMenu')
               .getByRole('listitem')
               .filter({ hasText: 'Delete declaration' })
           ).toBeVisible()
@@ -260,10 +260,10 @@ test.describe('1. Birth event declaration - V2', () => {
         await expect(
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
@@ -306,10 +306,10 @@ test.describe('1. Birth event declaration - V2', () => {
         await expect(
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
@@ -353,10 +353,10 @@ test.describe('1. Birth event declaration - V2', () => {
         await expect(
           page.getByRole('button', { name: 'Save & Exit' })
         ).toBeVisible()
-        await page.locator('#eventToggleMenu-dropdownMenu').click()
+        await page.locator('#event-menu-dropdownMenu').click()
         await expect(
           page
-            .locator('#eventToggleMenu-dropdownMenu')
+            .locator('#event-menu-dropdownMenu')
             .getByRole('listitem')
             .filter({ hasText: 'Delete declaration' })
         ).toBeVisible()
@@ -498,9 +498,9 @@ test.describe('1. Birth event declaration - V2', () => {
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
 
-      await page.locator('#eventToggleMenu-dropdownMenu').click()
+      await page.locator('#event-menu-dropdownMenu').click()
       await page
-        .locator('#eventToggleMenu-dropdownMenu')
+        .locator('#event-menu-dropdownMenu')
         .getByRole('listitem')
         .filter({ hasText: 'Delete declaration' })
         .click()
