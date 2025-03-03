@@ -31,9 +31,12 @@ jobs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
     steps:
+      - name: Set ENV_VAR dynamically
+        run: echo "ENV_VAR=ENV_${{ github.event.inputs.environment }}" >> $GITHUB_ENV
+
       - name: Create .env file
         run: |
-          echo "${{ vars.ENV_${{ github.event.inputs.environment }} }}" > .env.${{ github.event.inputs.environment }}
+          echo "${{ vars[env.ENV_VAR] }}" > .env.${{ github.event.inputs.environment }}
 
       - name: Load environment variables
         run: |
