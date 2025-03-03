@@ -64,13 +64,13 @@ jobs:
           gh repo sync ${FORK_REPOSITORY_PATH} --branch ${BASE_BRANCH}
           echo STATUS="Synced" >> $GITHUB_ENV
 
-          - name: Checkout OpenCRVS Farajaland repository
-          if: steps.sync_fork.outcome == 'failure'
-          uses: actions/checkout@v4
-          with:
-            fetch-depth: 0
-            repository: '${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}'
-            ref: ${{ github.event.pull_request.base.ref }}
+      - name: Checkout OpenCRVS Farajaland repository
+        if: steps.sync_fork.outcome == 'failure'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          repository: '${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}'
+          ref: ${{ github.event.pull_request.base.ref }}
 
       - if: steps.sync_fork.outcome == 'failure'
         name: Set up Farajaland Git repository
