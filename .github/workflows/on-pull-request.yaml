@@ -99,7 +99,10 @@ jobs:
         run: |
           git add -A
           git commit -m "Merge upstream/${BASE_BRANCH} into sync-with-${BASE_BRANCH} with conflicts"
-          echo "Push to sync-with-${BASE_BRANCH}"
+
+      - if: steps.sync_fork.outcome == 'failure'
+        name: "Push to Farajaland repository"
+        run: |
           git remote -v
           git push --force origin sync-with-${BASE_BRANCH}
 
@@ -132,6 +135,7 @@ jobs:
           fi
 
       - name: Send slack notification
+        if: steps.sync_fork.outcome == 'failure'
         run: |
           [ "x$STATUS" == "xSynced" ] && \
               echo "✅ Changes synced with Farajaland repo https://github.com/${FORK_REPOSITORY_PATH}" && \
