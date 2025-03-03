@@ -30,7 +30,7 @@ on:
 
 jobs:
   sync_farajaland:
-    if: ${{ github.event.pull_request.merged == true }}
+    if: ${{ github.event.pull_request.merged == true }} && ${{github.event.pull_request.base.repo.full_name == 'opencrvs/opencrvs-countryconfig' }}
     runs-on: ubuntu-latest
     env:
       BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
@@ -61,7 +61,6 @@ jobs:
         if: env.branch_exists == 'true'
         continue-on-error: true
         run: |
-          echo "REPOSITORY: ${{github.event.pull_request.base.repo.full_name}}"
           gh repo sync ${FORK_REPOSITORY_PATH} --branch ${BASE_BRANCH}
           echo STATUS="Synced" >> $GITHUB_ENV
 
