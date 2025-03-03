@@ -265,7 +265,7 @@ test.describe.serial('1. Birth declaration case - 1 - V2', () => {
     })
 
     // @TODO: This test was randomly failing in the CI pipeline, disable for now
-    test.skip('1.1.6 Verify information on review page', async () => {
+    test.fixme('1.1.6 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
