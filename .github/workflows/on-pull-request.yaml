@@ -34,6 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
+      # Check token under Olli's account
       GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
       FORK_REPOSITORY_PATH: "${{ secrets.FORK_REPOSITORY_ORGANISATION }}/${{ secrets.FORK_REPOSITORY_NAME }}"
     steps:
@@ -65,6 +66,7 @@ jobs:
 
       - name: Create PR in ${{ secrets.FORK_REPOSITORY_ORGANISATION }}/${{ secrets.FORK_REPOSITORY_NAME }}
         if: steps.sync_fork.outcome == 'failure'
+        id: create_pr
         run: |
           echo "The 'sync_fork' step failed. Creating a PR in ${SYNC_FORK_REPOSITORY_PATH}"
           if gh pr create \
@@ -85,6 +87,10 @@ jobs:
                   printf "PR already exists in Farajaland repo: $(grep ${FORK_REPOSITORY_PATH} result.txt)\n"
                   echo RESULT=$(grep ${FORK_REPOSITORY_PATH} result.txt) >> $GITHUB_ENV
                   echo STATUS="Created" >> $GITHUB_ENV
+              elif grep -q "No commits" result.txt; then
+                  printf "No commits between branches: $(cat result.txt)\n"
+                  echo RESULT=$(cat result.txt) >> $GITHUB_ENV
+                  echo STATUS="NoChange" >> $GITHUB_ENV
               else
                   echo "Failed to create PR: $(cat result.txt)"
                   echo RESULT=$(cat result.txt) >> $GITHUB_ENV
@@ -92,9 +98,10 @@ jobs:
               fi
           fi
       - name: Send slack notification
+        if: steps.sync_fork.outcome == 'failure'
         run: |
-          [ "x$STATUS" == "xSynced" ] && \
-              FORK_STATUS="✅ Changes synced with Farajaland repo https://github.com/${FORK_REPOSITORY_PATH}"
+          ([ "x$STATUS" == "xSynced" ] || [ "x$STATUS" == "xNoChange" ]) && \
+              echo "No need to create PR: $RESULT" && exit 0
           [ "x$STATUS" == "xCreated" ] && \
               FORK_STATUS="⚠️ Changes was not synced with Farajaland repo due to merge conflicts, please merge PR $RESULT manually to keep Farajaland in sync Countryconfig"
           [ "x$STATUS" == "xFailed" ] && \
