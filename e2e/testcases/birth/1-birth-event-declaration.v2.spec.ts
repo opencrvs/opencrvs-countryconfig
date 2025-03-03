@@ -222,7 +222,7 @@ test.describe('1. Birth event declaration - V2', () => {
           ).toBeVisible()
         })
 
-        test('1.5.3 Select eny option in relatinship to child and click the "continue" button', async () => {
+        test('1.5.3 Select any option in relationship to child and click the "continue" button', async () => {
           await page.getByText('Select').click()
           await page.getByText('Mother', { exact: true }).click()
           await page.getByRole('button', { name: 'Continue' }).click()
