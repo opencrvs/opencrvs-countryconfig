@@ -14,8 +14,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 
   The `roles.ts` file now defines all the roles available in the system. New roles can be added & existing roles can be customized by giving them different scopes.
 
-  _N.B. The default roles generated in the `roles.ts` file during migration should not be removed to maintain backwards compatibility_
-
+ *N.B. The default roles generated in the `roles.ts` file during migration should not be removed to maintain backwards compatibility*
 ### Breaking changes
 
 - `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
