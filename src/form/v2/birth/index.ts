@@ -58,22 +58,6 @@ export const birthEvent = defineConfig({
   ],
   actions: [
     {
-      type: ActionType.CREATE,
-      label: {
-        defaultMessage: 'Create',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.birth.action.create.label'
-      },
-      forms: [],
-      conditionals: [
-        {
-          type: 'SHOW',
-          conditional: user.hasScope(SCOPES.RECORD_DECLARE)
-        }
-      ]
-    },
-    {
       type: ActionType.DECLARE,
       label: {
         defaultMessage: 'Declare',
