@@ -63,9 +63,9 @@ jobs:
         id: check-specs
         run: |
           if ls ./e2e/testcases/${{ matrix.test_dir }}/*.spec.ts > /dev/null 2>&1; then
-            echo "::set-output name=has_spec_files::true"
+            echo "has_spec_files=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=has_spec_files::false"
+            echo "has_spec_files=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Cache Node.js dependencies
