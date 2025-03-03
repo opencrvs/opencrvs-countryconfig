@@ -280,7 +280,7 @@ export const deathForm = {
                 },
                 {
                   operation: 'isAgeInYearsBetween',
-                  parameters: [16, 150]
+                  parameters: [16, 100]
                 }
               ],
               certificateHandlebars.informantBirthDate
