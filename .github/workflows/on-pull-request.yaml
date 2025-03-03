@@ -61,8 +61,10 @@ jobs:
         if: env.branch_exists == 'true'
         continue-on-error: true
         run: |
+          echo "REPOSITORY: ${{github.event.pull_request.base.repo.full_name}}"
           gh repo sync ${FORK_REPOSITORY_PATH} --branch ${BASE_BRANCH}
           echo STATUS="Synced" >> $GITHUB_ENV
+
 
       - name: Checkout OpenCRVS Farajaland repository
         if: steps.sync_fork.outcome == 'failure'
