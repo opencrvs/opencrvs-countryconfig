@@ -1,34 +1,5 @@
-<<<<<<< HEAD
-# name: Sync Changes to Farajaland
-#
-# This GitHub Actions workflow automatically synchronizes changes from an
-# OpenCRVS Countryconfig repository to a forked Farajaland repository whenever
-# a pull request is merged. The workflow performs the following steps:
-# 
-# 1. Checkout the base branch of the pull request from the OpenCRVS Countryconfig repository.
-# 2. Check if the pull request base branch exists in the Farajaland repository.
-# 3. If the branch exists, attempt to sync the Farajaland fork with the latest changes.
-# 4. If syncing fails due to conflicts, create a pull request in the Farajaland repository to manually merge the changes.
-# 5. Send a Slack notification with the status of the sync operation.
-#
-# Trigger:
-# - This workflow is triggered by a `pull_request` event with the `closed` type, specifically when a pull request is merged.
-#
-# Job:
-# - sync_farajaland: Executes the steps to sync changes and send notifications. Only runs if the pull request is merged.
-#
-# Action secrets:
-# - `FORK_REPOSITORY_ORGANISATION`: The organisation name of the Farajaland repository.
-# - `FORK_REPOSITORY_NAME`: The name of the Farajaland repository.
-# - `SLACK_BOT_TOKEN`: A Slack bot token for sending notifications.
-# Change few more lines and make conflict
-name: Sync Changes to Farajaland
-# Make conflict
-=======
 
 name: Sync Changes to Farajaland
-
->>>>>>> upstream/ocrvs-8716
 on:
   pull_request:
     types:
