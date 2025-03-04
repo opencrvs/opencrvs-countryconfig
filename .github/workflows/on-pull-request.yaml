@@ -35,15 +35,10 @@ env:
   FORK_REPOSITORY_PATH: "${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}"
 # Check
 jobs:
-  sync_farajaland:
+  check_farajaland_branch:
     if: ${{ github.event.pull_request.merged == true }} && ${{github.event.pull_request.base.repo.full_name == 'opencrvs/opencrvs-countryconfig' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout OpenCRVS Countryconfig repository
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
-
       - name: Check if PR branch exists in Farajaland repository
         id: check_branch
         run: |
@@ -56,16 +51,27 @@ jobs:
             echo "=============================================="
             echo "branch_exists=false" >> $GITHUB_OUTPUT
           fi
-
+  sync_farajaland:
+    if: ${{ check_farajaland_branch.outputs.branch_exists == 'true' }}
+    runs-on: ubuntu-latest
+    needs: check_farajaland_branch
+    steps:
       - name: Sync Farajaland Fork repository
         id: sync_fork
-        if: env.branch_exists == 'true'
         continue-on-error: true
         run: |
           gh repo sync ${FORK_REPOSITORY_PATH} --branch ${BASE_BRANCH}
           echo STATUS="Synced" >> $GITHUB_ENV
 
-
+  merge_conflicts:
+    if: ${{ steps.sync_fork.outcome == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout OpenCRVS Countryconfig repository
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.base.ref }}
+  
       - name: Checkout OpenCRVS Farajaland repository
         if: steps.sync_fork.outcome == 'failure'
         uses: actions/checkout@v4
