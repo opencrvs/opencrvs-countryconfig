@@ -68,9 +68,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout OpenCRVS Countryconfig repository
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.event.pull_request.base.ref }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
   
       - name: Checkout OpenCRVS Farajaland repository
         if: steps.sync_fork.outcome == 'failure'
