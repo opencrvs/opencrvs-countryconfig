@@ -63,7 +63,7 @@ import {
 } from '../common/preview-groups'
 import { certificateHandlebars } from './certificate-handlebars'
 import { getCommonSectionMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { getIDNumberFields, getIDType } from '../custom-fields'
+import { getIDNumberFields, getIDType } from '../common/common-custom-fields'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
