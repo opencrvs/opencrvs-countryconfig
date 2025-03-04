@@ -43,16 +43,6 @@ export const birthEvent = defineConfig({
   workqueues: [
     {
       id: 'all',
-      fields: [
-        {
-          column: 'title',
-          label: {
-            defaultMessage: '{child.surname} {child.firstname}',
-            description: 'Label for name in all workqueue',
-            id: 'v2.event.birth.workqueue.all.name.label'
-          }
-        }
-      ],
       filters: []
     }
   ],
