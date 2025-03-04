@@ -51,6 +51,7 @@ jobs:
           while IFS= read -r line; do
             if [[ ! -z "$line" && "$line" != \#* ]]; then
               export "$line"
+              echo "$line" >> $GITHUB_ENV
             fi
           done < .env.${{ github.event.inputs.environment }}
           echo "DOMAIN=$DOMAIN"
