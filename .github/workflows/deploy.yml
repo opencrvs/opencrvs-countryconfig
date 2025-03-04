@@ -36,7 +36,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "${{ vars[env.ENV_VAR] }}" | sed -E 's/^(.*)=(.*)$/\1="\2"/' > .env.${{ github.event.inputs.environment }}
+          echo "${{ vars[env.ENV_VAR] }}" | awk -F= '{print $1 "=\"" $2 "\""}' > .env.${{ github.event.inputs.environment }}
 
       - name: Afficher le contenu du fichier .env
         run: cat .env.${{ github.event.inputs.environment }}
@@ -45,7 +45,15 @@ jobs:
           set -a
           source .env.${{ github.event.inputs.environment }}
           set +a
-          env | sort
+          echo "DOMAIN=$DOMAIN"
+      - name: Charger les variables autrement
+        run: |
+          while IFS= read -r line; do
+            if [[ ! -z "$line" && "$line" != \#* ]]; then
+              export "$line"
+            fi
+          done < .env.${{ github.event.inputs.environment }}
+          echo "DOMAIN=$DOMAIN"
 
       - name: Clone core
         uses: actions/checkout@v3
