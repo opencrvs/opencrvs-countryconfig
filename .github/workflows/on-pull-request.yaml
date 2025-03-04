@@ -60,12 +60,14 @@ jobs:
         id: sync_fork
         continue-on-error: true
         run: |
-          gh repo sync ${FORK_REPOSITORY_PATH} --branch ${BASE_BRANCH}
-          echo STATUS="Synced" >> $GITHUB_ENV
+          gh repo sync ${FORK_REPOSITORY_PATH} --branch ${BASE_BRANCH} && \
+          echo synced="true" >> $GITHUB_OUTPUT || \
+          echo synced="false" >> $GITHUB_OUTPUT
 
   merge_conflicts:
-    if: ${{ steps.sync_fork.outcome == 'failure' }}
+    if: ${{ needs.sync_farajaland.outcome.synced == 'false' }}
     runs-on: ubuntu-latest
+    needs: sync_farajaland
     steps:
       - name: Checkout OpenCRVS Countryconfig repository
         uses: actions/checkout@v4
