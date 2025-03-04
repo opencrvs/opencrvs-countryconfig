@@ -33,7 +33,7 @@ env:
   # Check token under Olli's account
   GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
   FORK_REPOSITORY_PATH: "${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}"
-
+# Check
 jobs:
   sync_farajaland:
     if: ${{ github.event.pull_request.merged == true }} && ${{github.event.pull_request.base.repo.full_name == 'opencrvs/opencrvs-countryconfig' }}
