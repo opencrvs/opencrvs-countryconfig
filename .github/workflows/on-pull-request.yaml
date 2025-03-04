@@ -52,7 +52,7 @@ jobs:
             echo "branch_exists=false" >> $GITHUB_OUTPUT
           fi
   sync_farajaland:
-    if: ${{ check_farajaland_branch.outputs.branch_exists == 'true' }}
+    if: ${{ needs.check_farajaland_branch.outputs.branch_exists == 'true' }}
     runs-on: ubuntu-latest
     needs: check_farajaland_branch
     steps:
