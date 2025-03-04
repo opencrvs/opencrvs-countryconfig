@@ -61,7 +61,8 @@ import {
   detailsExistConditional,
   ageOfIndividualValidators,
   ageOfParentsConditionals,
-  disableIfVerifiedOrAuthenticated
+  disableIfVerifiedOrAuthenticated,
+  hideIfIDReaderFilledBirthDate
 } from '../common/default-validation-conditionals'
 import {
   informantFirstNameConditionals,
@@ -282,7 +283,11 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
-            exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
+            exactDateOfBirthUnknown(
+              hideIfInformantMotherOrFather.concat(
+                hideIfIDReaderFilledBirthDate
+              )
+            ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(
@@ -378,7 +383,9 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.motherBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
-            exactDateOfBirthUnknown(detailsExistConditional),
+            exactDateOfBirthUnknown(
+              detailsExistConditional.concat(hideIfIDReaderFilledBirthDate)
+            ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfMother,
               exactDateOfBirthUnknownConditional.concat(
@@ -483,7 +490,9 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.fatherBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
-            exactDateOfBirthUnknown(detailsExistConditional),
+            exactDateOfBirthUnknown(
+              detailsExistConditional.concat(hideIfIDReaderFilledBirthDate)
+            ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfFather,
               exactDateOfBirthUnknownConditional.concat(
