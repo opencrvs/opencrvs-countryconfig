@@ -107,6 +107,8 @@ jobs:
             fi
             sleep 10
           done
+      - name: Vérifier les variables d'environnement
+        run: env | grep -E 'DOMAIN|SSH_HOST|SSH_PORT|SSH_USER|REPLICAS'
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
