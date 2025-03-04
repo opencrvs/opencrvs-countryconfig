@@ -90,7 +90,7 @@ jobs:
           git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | \
               xargs -L1 git config --unset-all
 
-      - name: Merge changes from upstream
+      - name: Merge changes from ${UPSTREAM_REPOSITORY}:${BASE_BRANCH} into Farajaland repository
         id: merge
         continue-on-error: true
         run: |
@@ -116,7 +116,7 @@ jobs:
           git push --force origin ${BASE_BRANCH}
 
       - name: Create PR in ${{ env.FORK_REPOSITORY_ORGANISATION }}/${{ env.FORK_REPOSITORY_NAME }}
-        if: steps.sync_fork.outcome == 'failure'
+        if: steps.merge.outcome == 'failure'
         run: |
           if gh pr create \
             --repo ${FORK_REPOSITORY_PATH} \
@@ -144,7 +144,7 @@ jobs:
           fi
 
       - name: Send slack notification
-        if: steps.sync_fork.outcome == 'failure'
+        if: steps.merge.outcome == 'failure'
         run: |
           [ "x$STATUS" == "xSynced" ] && \
               echo "✅ Changes synced with Farajaland repo https://github.com/${FORK_REPOSITORY_PATH}" && \
