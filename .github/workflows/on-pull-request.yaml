@@ -68,6 +68,7 @@ jobs:
           echo synced="true" >> $GITHUB_OUTPUT || \
           echo synced="false" >> $GITHUB_OUTPUT
 
+
   merge_conflicts:
     if: ${{ needs.sync_farajaland.outcome.synced == 'false' }}
     runs-on: ubuntu-latest
