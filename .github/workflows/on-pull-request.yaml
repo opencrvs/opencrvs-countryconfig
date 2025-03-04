@@ -1,28 +1,6 @@
-# name: Sync Changes to Farajaland
-#
-# This GitHub Actions workflow automatically synchronizes changes from an
-# OpenCRVS Countryconfig repository to a forked Farajaland repository whenever
-# a pull request is merged. The workflow performs the following steps:
-# 
-# 1. Checkout the base branch of the pull request from the OpenCRVS Countryconfig repository.
-# 2. Check if the pull request base branch exists in the Farajaland repository.
-# 3. If the branch exists, attempt to sync the Farajaland fork with the latest changes.
-# 4. If syncing fails due to conflicts, create a pull request in the Farajaland repository to manually merge the changes.
-# 5. Send a Slack notification with the status of the sync operation.
-#
-# Trigger:
-# - This workflow is triggered by a `pull_request` event with the `closed` type, specifically when a pull request is merged.
-#
-# Job:
-# - sync_farajaland: Executes the steps to sync changes and send notifications. Only runs if the pull request is merged.
-#
-# Action secrets:
-# - `FORK_REPOSITORY_ORGANISATION`: The organisation name of the Farajaland repository.
-# - `FORK_REPOSITORY_NAME`: The name of the Farajaland repository.
-# - `SLACK_BOT_TOKEN`: A Slack bot token for sending notifications.
-# Change few more lines
+
 name: Sync Changes to Farajaland
-# Test sync
+
 on:
   pull_request:
     types:
@@ -81,7 +59,7 @@ jobs:
           repository: '${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}'
           ref: ${{ github.event.pull_request.base.ref }}
 
-      - name: Set up Farajaland Git repository
+      - name: Set up Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -90,7 +68,7 @@ jobs:
           git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | \
               xargs -L1 git config --unset-all
 
-      - name: Merge changes from ${UPSTREAM_REPOSITORY}:${BASE_BRANCH} into Farajaland repository
+      - name: Merge changes from ${{ github.repository }}:${{ github.event.pull_request.base.ref }} into Farajaland repository
         id: merge
         continue-on-error: true
         run: |
@@ -99,10 +77,9 @@ jobs:
           git checkout ${BASE_BRANCH}
           git status
           git merge upstream/${BASE_BRANCH}
-          
 
       - if: steps.merge.outcome == 'failure'
-        name: Handle merge conflicts and push dedicated branch
+        name: Handle merge conflicts and push opencrvs-farajaland/sync-with-${{ github.event.pull_request.base.ref }}
         run: |
           git add -A
           git commit -m "Merge upstream/${BASE_BRANCH} into sync-with-${BASE_BRANCH} with conflicts"
@@ -115,7 +92,7 @@ jobs:
           git remote -v
           git push --force origin ${BASE_BRANCH}
 
-      - name: Create PR in ${{ env.FORK_REPOSITORY_ORGANISATION }}/${{ env.FORK_REPOSITORY_NAME }}
+      - name: Create PR in opencrvs-farajaland repository
         if: steps.merge.outcome == 'failure'
         run: |
           if gh pr create \
