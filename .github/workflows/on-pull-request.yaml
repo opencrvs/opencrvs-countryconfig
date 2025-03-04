@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # name: Sync Changes to Farajaland
 #
 # This GitHub Actions workflow automatically synchronizes changes from an
@@ -23,6 +24,11 @@
 # Change few more lines and make conflict
 name: Sync Changes to Farajaland
 # Make conflict
+=======
+
+name: Sync Changes to Farajaland
+
+>>>>>>> upstream/ocrvs-8716
 on:
   pull_request:
     types:
@@ -70,25 +76,18 @@ jobs:
 
 
   merge_conflicts:
-    if: ${{ needs.sync_farajaland.outcome.synced == 'false' }}
+    if: ${{ needs.sync_farajaland.outputs.synced == 'false' }}
     runs-on: ubuntu-latest
     needs: sync_farajaland
     steps:
-      - name: Checkout OpenCRVS Countryconfig repository
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
-  
       - name: Checkout OpenCRVS Farajaland repository
-        if: steps.sync_fork.outcome == 'failure'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           repository: '${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}'
           ref: ${{ github.event.pull_request.base.ref }}
 
-      - if: steps.sync_fork.outcome == 'failure'
-        name: Set up Farajaland Git repository
+      - name: Set up Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -97,30 +96,32 @@ jobs:
           git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | \
               xargs -L1 git config --unset-all
 
-      - if: steps.sync_fork.outcome == 'failure'
-        name: Merge changes from upstream
+      - name: Merge changes from ${{ github.repository }}:${{ github.event.pull_request.base.ref }} into Farajaland repository
         id: merge
         continue-on-error: true
         run: |
           git remote add upstream https://github.com/${UPSTREAM_REPOSITORY}.git
           git fetch upstream
-          git checkout -b sync-with-${BASE_BRANCH}
+          git checkout ${BASE_BRANCH}
+          git status
           git merge upstream/${BASE_BRANCH}
 
       - if: steps.merge.outcome == 'failure'
-        name: Handle merge conflicts
+        name: Handle merge conflicts and push opencrvs-farajaland/sync-with-${{ github.event.pull_request.base.ref }}
         run: |
           git add -A
           git commit -m "Merge upstream/${BASE_BRANCH} into sync-with-${BASE_BRANCH} with conflicts"
-
-      - if: steps.sync_fork.outcome == 'failure'
-        name: "Push to Farajaland repository"
-        run: |
-          git remote -v
+          git checkout -b sync-with-${BASE_BRANCH}
           git push --force origin sync-with-${BASE_BRANCH}
 
-      - name: Create PR in ${{ env.FORK_REPOSITORY_ORGANISATION }}/${{ env.FORK_REPOSITORY_NAME }}
-        if: steps.sync_fork.outcome == 'failure'
+      - if: steps.merge.outcome == 'success'
+        name: "Push ${BASE_BRANCH} to Farajaland repository"
+        run: |
+          git remote -v
+          git push --force origin ${BASE_BRANCH}
+
+      - name: Create PR in opencrvs-farajaland repository
+        if: steps.merge.outcome == 'failure'
         run: |
           if gh pr create \
             --repo ${FORK_REPOSITORY_PATH} \
@@ -148,11 +149,8 @@ jobs:
           fi
 
       - name: Send slack notification
-        if: steps.sync_fork.outcome == 'failure'
+        if: steps.merge.outcome == 'failure'
         run: |
-          [ "x$STATUS" == "xSynced" ] && \
-              echo "✅ Changes synced with Farajaland repo https://github.com/${FORK_REPOSITORY_PATH}" && \
-              exit 0
           [ "x$STATUS" == "xCreated" ] && \
               FORK_STATUS="⚠️ Changes was not synced with Farajaland repo due to merge conflicts, please merge PR $RESULT manually to keep Farajaland in sync Countryconfig"
           [ "x$STATUS" == "xFailed" ] && \
