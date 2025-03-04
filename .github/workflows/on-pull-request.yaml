@@ -46,7 +46,6 @@ jobs:
           echo synced="true" >> $GITHUB_OUTPUT || \
           echo synced="false" >> $GITHUB_OUTPUT
 
-
   merge_conflicts:
     if: ${{ needs.sync_farajaland.outputs.synced == 'false' }}
     runs-on: ubuntu-latest
@@ -87,7 +86,7 @@ jobs:
           git push --force origin sync-with-${BASE_BRANCH}
 
       - if: steps.merge.outcome == 'success'
-        name: "Push ${BASE_BRANCH} to Farajaland repository"
+        name: "Push ${{ github.event.pull_request.base.ref }}to Farajaland repository"
         run: |
           git remote -v
           git push --force origin ${BASE_BRANCH}
