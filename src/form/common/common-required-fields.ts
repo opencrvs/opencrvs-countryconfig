@@ -33,18 +33,21 @@ export const getBirthDate = (
   mapping: getFieldMapping('birthDate', certificateHandlebar)
 })
 
-export const getGender = (certificateHandlebar: string) =>
+export const getGender = (
+  certificateHandlebar: string,
+  initialValue: string | { dependsOn: string[]; expression: string } = ''
+) =>
   ({
     name: 'gender', // A field with this name MUST exist
     type: 'SELECT_WITH_OPTIONS',
     label: formMessageDescriptors.sex,
     required: true,
-    initialValue: '',
+    initialValue,
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     mapping: getFieldMapping('gender', certificateHandlebar),
     options: genderOptions
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getFamilyNameField = (
   previewGroup: string,
@@ -67,7 +70,7 @@ export const getFamilyNameField = (
       }
     ],
     mapping: getFieldMapping('familyName', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getFirstNameField = (
   previewGroup: string,
@@ -94,7 +97,7 @@ export const getFirstNameField = (
       }
     ],
     mapping: getFieldMapping('firstNames', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getNationality = (
   certificateHandlebar: string,
@@ -113,7 +116,7 @@ export const getNationality = (
     },
     conditionals,
     mapping: getFieldMapping('nationality', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const otherInformantType = (event: Event) =>
   ({
@@ -123,8 +126,8 @@ export const otherInformantType = (event: Event) =>
       event == Event.Birth
         ? formMessageDescriptors.informantsRelationWithChild
         : event == Event.Death
-        ? formMessageDescriptors.relationshipToDeceased
-        : formMessageDescriptors.relationshipToSpouses,
+          ? formMessageDescriptors.relationshipToDeceased
+          : formMessageDescriptors.relationshipToSpouses,
     placeholder: formMessageDescriptors.relationshipPlaceHolder,
     required: true,
     initialValue: '',
@@ -140,7 +143,7 @@ export const otherInformantType = (event: Event) =>
       }
     ],
     mapping: getFieldMapping('otherInformantType')
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getNationalID = (
   fieldName: string,
@@ -157,7 +160,7 @@ export const getNationalID = (
     validator,
     conditionals,
     mapping: getFieldMapping('nationalId', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getDetailsExist = (
   label: MessageDescriptor,
@@ -176,7 +179,7 @@ export const getDetailsExist = (
     conditionals,
     mapping: getFieldMapping('detailsExist'),
     ignoreBottomMargin: true
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getReasonNotExisting = (certificateHandlebar: string) =>
   ({
@@ -193,4 +196,4 @@ export const getReasonNotExisting = (certificateHandlebar: string) =>
     initialValue: '',
     required: true,
     mapping: getFieldMapping('reasonNotApplying', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
