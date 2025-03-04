@@ -74,21 +74,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: sync_farajaland
     steps:
-      - name: Checkout OpenCRVS Countryconfig repository
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.base.ref }}
-  
       - name: Checkout OpenCRVS Farajaland repository
-        if: steps.sync_fork.outcome == 'failure'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           repository: '${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}'
           ref: ${{ github.event.pull_request.base.ref }}
 
-      - if: steps.sync_fork.outcome == 'failure'
-        name: Set up Farajaland Git repository
+      - name: Set up Farajaland Git repository
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -97,27 +90,30 @@ jobs:
           git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | \
               xargs -L1 git config --unset-all
 
-      - if: steps.sync_fork.outcome == 'failure'
-        name: Merge changes from upstream
+      - name: Merge changes from upstream
         id: merge
         continue-on-error: true
         run: |
           git remote add upstream https://github.com/${UPSTREAM_REPOSITORY}.git
           git fetch upstream
-          git checkout -b sync-with-${BASE_BRANCH}
+          git checkout -b ${BASE_BRANCH}
+          git status
           git merge upstream/${BASE_BRANCH}
+          
 
       - if: steps.merge.outcome == 'failure'
-        name: Handle merge conflicts
+        name: Handle merge conflicts and push dedicated branch
         run: |
           git add -A
           git commit -m "Merge upstream/${BASE_BRANCH} into sync-with-${BASE_BRANCH} with conflicts"
+          git checkout -b sync-with-${BASE_BRANCH}
+          git push --force origin sync-with-${BASE_BRANCH}
 
-      - if: steps.sync_fork.outcome == 'failure'
-        name: "Push to Farajaland repository"
+      - if: steps.merge.outcome == 'success'
+        name: "Push ${BASE_BRANCH} to Farajaland repository"
         run: |
           git remote -v
-          git push --force origin sync-with-${BASE_BRANCH}
+          git push --force origin ${BASE_BRANCH}
 
       - name: Create PR in ${{ env.FORK_REPOSITORY_ORGANISATION }}/${{ env.FORK_REPOSITORY_NAME }}
         if: steps.sync_fork.outcome == 'failure'
