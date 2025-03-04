@@ -44,14 +44,15 @@ export const documentsSection = {
   groups: [
     {
       id: 'documents-view-group',
-      fields: [
+      conditionals: [
         {
-          name: 'paragraph',
-          type: 'PARAGRAPH',
-          label: formMessageDescriptors.deceasedParagraph,
-          initialValue: '',
-          validator: []
-        },
+          description: 'Hidden for record correction',
+          action: 'hide',
+          expression:
+            'draftData && draftData.corrector && draftData.corrector.relationship'
+        }
+      ],
+      fields: [
         {
           name: 'uploadDocForDeceased',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',

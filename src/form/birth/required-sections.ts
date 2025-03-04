@@ -48,14 +48,15 @@ export const documentsSection = {
   groups: [
     {
       id: 'documents-view-group',
-      fields: [
+      conditionals: [
         {
-          name: 'paragraph',
-          type: 'PARAGRAPH',
-          label: formMessageDescriptors.documentsParagraph,
-          initialValue: '',
-          validator: []
-        },
+          description: 'Hidden for record correction',
+          action: 'hide',
+          expression:
+            'draftData && draftData.corrector && draftData.corrector.relationship'
+        }
+      ],
+      fields: [
         {
           name: 'uploadDocForChildDOB',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
@@ -201,7 +202,7 @@ export const documentsSection = {
             {
               action: 'hide',
               expression:
-                "(draftData && draftData.registration && draftData.registration.informantType && selectedInformantAndContactType.selectedInformantType && (selectedInformantAndContactType.selectedInformantType === 'MOTHER' || selectedInformantAndContactType.selectedInformantType === 'FATHER'))"
+                "draftData?.informant?.informantType === 'MOTHER' || draftData?.informant?.informantType === 'FATHER'"
             }
           ],
           mapping: getFieldMapping('documents')
