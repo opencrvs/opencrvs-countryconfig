@@ -117,10 +117,6 @@ jobs:
             fi
             sleep 10
           done
-      - name: Vérifier la variable DOMAIN
-        run: |
-          echo "DOMAIN=${DOMAIN}"
-          env | grep DOMAIN || echo "DOMAIN non défini"
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
