@@ -342,7 +342,7 @@ export const deathForm = {
                 }
               ],
               certificateHandlebars.informantBirthDate,
-              getInitialValueFromIDReader('gender')
+              getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(hideIfInformantSpouse),
             getAgeOfIndividualInYears(
@@ -431,7 +431,7 @@ export const deathForm = {
                 }
               ],
               certificateHandlebars.spouseBirthDate,
-              getInitialValueFromIDReader('gender')
+              getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(detailsExist),
             getAgeOfIndividualInYears(
