@@ -146,9 +146,6 @@ jobs:
       - name: Send slack notification
         if: steps.merge.outcome == 'failure'
         run: |
-          [ "x$STATUS" == "xSynced" ] && \
-              echo "✅ Changes synced with Farajaland repo https://github.com/${FORK_REPOSITORY_PATH}" && \
-              exit 0
           [ "x$STATUS" == "xCreated" ] && \
               FORK_STATUS="⚠️ Changes was not synced with Farajaland repo due to merge conflicts, please merge PR $RESULT manually to keep Farajaland in sync Countryconfig"
           [ "x$STATUS" == "xFailed" ] && \
