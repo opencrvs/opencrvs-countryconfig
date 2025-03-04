@@ -27,17 +27,17 @@ on:
   pull_request:
     types:
       - closed
+env:
+  BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
+  UPSTREAM_REPOSITORY: ${{ github.repository }}
+  # Check token under Olli's account
+  GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
+  FORK_REPOSITORY_PATH: "${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}"
 
 jobs:
   sync_farajaland:
     if: ${{ github.event.pull_request.merged == true }} && ${{github.event.pull_request.base.repo.full_name == 'opencrvs/opencrvs-countryconfig' }}
     runs-on: ubuntu-latest
-    env:
-      BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
-      UPSTREAM_REPOSITORY: ${{ github.repository }}
-      # Check token under Olli's account
-      GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
-      FORK_REPOSITORY_PATH: "${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}"
     steps:
       - name: Checkout OpenCRVS Countryconfig repository
         uses: actions/checkout@v4
@@ -48,13 +48,13 @@ jobs:
         id: check_branch
         run: |
           if git ls-remote --heads https://${GH_TOKEN}@github.com/${FORK_REPOSITORY_PATH}.git "$BASE_BRANCH" | grep "$BASE_BRANCH"; then
-            echo "branch_exists=true" >> $GITHUB_ENV
+            echo "branch_exists=true" >> $GITHUB_OUTPUT
           else
             echo "=============================================="
             echo " 🚀 Branch $BASE_BRANCH doesn't exist in repository ${FORK_REPOSITORY_PATH}"
             echo " 🚪 Doing exit"
             echo "=============================================="
-            echo "branch_exists=false" >> $GITHUB_ENV
+            echo "branch_exists=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Sync Farajaland Fork repository
