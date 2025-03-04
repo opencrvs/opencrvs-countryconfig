@@ -37,7 +37,8 @@ jobs:
       - name: Create .env file
         run: |
           echo "${{ vars[env.ENV_VAR] }}" > .env.${{ github.event.inputs.environment }}
-
+      - name: Afficher le contenu du fichier .env
+        run: cat .env.${{ github.event.inputs.environment }}
       - name: Load environment variables
         run: |
           set -a
