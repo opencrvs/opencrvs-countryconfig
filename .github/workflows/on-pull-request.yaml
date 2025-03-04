@@ -1,0 +1,161 @@
+# name: Sync Changes to Farajaland
+#
+# This GitHub Actions workflow automatically synchronizes changes from an
+# OpenCRVS Countryconfig repository to a forked Farajaland repository whenever
+# a pull request is merged. The workflow performs the following steps:
+# 
+# 1. Checkout the base branch of the pull request from the OpenCRVS Countryconfig repository.
+# 2. Check if the pull request base branch exists in the Farajaland repository.
+# 3. If the branch exists, attempt to sync the Farajaland fork with the latest changes.
+# 4. If syncing fails due to conflicts, create a pull request in the Farajaland repository to manually merge the changes.
+# 5. Send a Slack notification with the status of the sync operation.
+#
+# Trigger:
+# - This workflow is triggered by a `pull_request` event with the `closed` type, specifically when a pull request is merged.
+#
+# Job:
+# - sync_farajaland: Executes the steps to sync changes and send notifications. Only runs if the pull request is merged.
+#
+# Action secrets:
+# - `FORK_REPOSITORY_ORGANISATION`: The organisation name of the Farajaland repository.
+# - `FORK_REPOSITORY_NAME`: The name of the Farajaland repository.
+# - `SLACK_BOT_TOKEN`: A Slack bot token for sending notifications.
+
+name: Sync Changes to Farajaland
+# Test sync
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  sync_farajaland:
+    if: ${{ github.event.pull_request.merged == true }} && ${{github.event.pull_request.base.repo.full_name == 'opencrvs/opencrvs-countryconfig' }}
+    runs-on: ubuntu-latest
+    env:
+      BASE_BRANCH: ${{ github.event.pull_request.base.ref }}
+      UPSTREAM_REPOSITORY: ${{ github.repository }}
+      # Check token under Olli's account
+      GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
+      FORK_REPOSITORY_PATH: "${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}"
+    steps:
+      - name: Checkout OpenCRVS Countryconfig repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Check if PR branch exists in Farajaland repository
+        id: check_branch
+        run: |
+          if git ls-remote --heads https://${GH_TOKEN}@github.com/${FORK_REPOSITORY_PATH}.git "$BASE_BRANCH" | grep "$BASE_BRANCH"; then
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else
+            echo "=============================================="
+            echo " 🚀 Branch $BASE_BRANCH doesn't exist in repository ${FORK_REPOSITORY_PATH}"
+            echo " 🚪 Doing exit"
+            echo "=============================================="
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
+
+      - name: Sync Farajaland Fork repository
+        id: sync_fork
+        if: env.branch_exists == 'true'
+        continue-on-error: true
+        run: |
+          gh repo sync ${FORK_REPOSITORY_PATH} --branch ${BASE_BRANCH}
+          echo STATUS="Synced" >> $GITHUB_ENV
+
+
+      - name: Checkout OpenCRVS Farajaland repository
+        if: steps.sync_fork.outcome == 'failure'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          repository: '${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}'
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - if: steps.sync_fork.outcome == 'failure'
+        name: Set up Farajaland Git repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config pull.rebase true
+          git config --global url."https://${{ secrets.FORK_ORGANISATION_TOKEN }}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | \
+              xargs -L1 git config --unset-all
+
+      - if: steps.sync_fork.outcome == 'failure'
+        name: Merge changes from upstream
+        id: merge
+        continue-on-error: true
+        run: |
+          git remote add upstream https://github.com/${UPSTREAM_REPOSITORY}.git
+          git fetch upstream
+          git checkout -b sync-with-${BASE_BRANCH}
+          git merge upstream/${BASE_BRANCH}
+
+      - if: steps.merge.outcome == 'failure'
+        name: Handle merge conflicts
+        run: |
+          git add -A
+          git commit -m "Merge upstream/${BASE_BRANCH} into sync-with-${BASE_BRANCH} with conflicts"
+
+      - if: steps.sync_fork.outcome == 'failure'
+        name: "Push to Farajaland repository"
+        run: |
+          git remote -v
+          git push --force origin sync-with-${BASE_BRANCH}
+
+      - name: Create PR in ${{ env.FORK_REPOSITORY_ORGANISATION }}/${{ env.FORK_REPOSITORY_NAME }}
+        if: steps.sync_fork.outcome == 'failure'
+        run: |
+          if gh pr create \
+            --repo ${FORK_REPOSITORY_PATH} \
+            --base ${BASE_BRANCH} \
+            --head sync-with-${BASE_BRANCH} \
+            --title "Update Farajaland from ${BASE_BRANCH}" \
+            --body \
+          """
+          This PR updates the ${BASE_BRANCH} branch with the latest changes from
+          the original repository https://github.com/${UPSTREAM_REPOSITORY}.
+          """ 1>result.txt 2>&1; then
+              printf "PR created successfully: $(grep ${FORK_REPOSITORY_PATH} result.txt)\n"
+              echo RESULT=$(grep ${FORK_REPOSITORY_PATH} result.txt) >> $GITHUB_ENV
+              echo STATUS="Created" >> $GITHUB_ENV
+          else
+              if grep -q "already exists" result.txt; then
+                  printf "PR already exists in Farajaland repo: $(grep ${FORK_REPOSITORY_PATH} result.txt)\n"
+                  echo RESULT=$(grep ${FORK_REPOSITORY_PATH} result.txt) >> $GITHUB_ENV
+                  echo STATUS="Created" >> $GITHUB_ENV
+              else
+                  echo "Failed to create PR: $(cat result.txt)"
+                  echo RESULT=$(cat result.txt) >> $GITHUB_ENV
+                  echo STATUS="Failed" >> $GITHUB_ENV
+              fi
+          fi
+
+      - name: Send slack notification
+        if: steps.sync_fork.outcome == 'failure'
+        run: |
+          [ "x$STATUS" == "xSynced" ] && \
+              echo "✅ Changes synced with Farajaland repo https://github.com/${FORK_REPOSITORY_PATH}" && \
+              exit 0
+          [ "x$STATUS" == "xCreated" ] && \
+              FORK_STATUS="⚠️ Changes was not synced with Farajaland repo due to merge conflicts, please merge PR $RESULT manually to keep Farajaland in sync Countryconfig"
+          [ "x$STATUS" == "xFailed" ] && \
+              FORK_STATUS="❌ Failed to create PR in Farajaland repository: $RESULT"
+          BODY="""
+          🚀 Pull request https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}
+          authored by 👤 <https://github.com/${{ github.actor }}|@${{ github.actor }}> from branch ${{ github.head_ref }} was merged into ${BASE_BRANCH}.
+
+          $FORK_STATUS
+          """
+          echo "$BODY"
+
+          curl -X POST https://slack.com/api/chat.postMessage \
+          -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+          -H 'Content-type: application/json' \
+          --data "{
+            'channel': '${{ vars.SLACK_BOT_CHANNEL }}',
+            'text': '$BODY'
+          }"
