@@ -45,6 +45,7 @@ jobs:
           set -a
           source .env.${{ github.event.inputs.environment }}
           set +a
+          env | sort
 
       - name: Clone core
         uses: actions/checkout@v3
