@@ -91,12 +91,14 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY_STAGING }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
         if: ${{ github.event.inputs.environment == 'staging' }}
 
       - name: Install SSH Key for Prod
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY_PROD }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
         if: ${{ github.event.inputs.environment == 'production' }}
 
       - name: Unset KNOWN_HOSTS variable
