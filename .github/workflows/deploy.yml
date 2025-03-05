@@ -125,6 +125,10 @@ jobs:
             fi
             sleep 10
           done
+      - name: Display first few lines of SSH private key
+        run: |
+          echo "${{ secrets.SSH_KEY_STAGING }}" | head -n 5
+
       - name: Debug SSH connection
         run: |
           echo "Testing SSH connection..."
