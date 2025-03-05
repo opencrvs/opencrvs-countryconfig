@@ -459,3 +459,11 @@ export const disableIfVerifiedOrAuthenticated = [
       '$form?.verified === "verified" || $form?.verified === "authenticated"'
   }
 ]
+
+export const hideIfIDReaderFilledBirthDate = [
+  {
+    action: 'hide',
+    expression:
+      '$form?.idReader?.birthDate || $form?.esignetCallback?.data?.birthDate'
+  }
+]
