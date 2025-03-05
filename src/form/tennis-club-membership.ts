@@ -629,31 +629,10 @@ export const tennisClubMembershipEvent = defineConfig({
   workqueues: [
     {
       id: 'all',
-      fields: [
-        {
-          column: 'title',
-          label: {
-            defaultMessage: '{applicant.firstname} {applicant.surname}',
-            description: 'Label for name in all workqueue',
-            id: 'v2.event.tennis-club-membership.workqueue.all.name.label'
-          }
-        }
-      ],
       filters: []
     },
     {
       id: 'ready-for-review',
-
-      fields: [
-        {
-          column: 'title',
-          label: {
-            defaultMessage: '{applicant.firstname} {applicant.surname}',
-            description: 'Label for name in all workqueue',
-            id: 'v2.event.tennis-club-membership.workqueue.readyForReview.name.label'
-          }
-        }
-      ],
       filters: [
         {
           status: ['DECLARED']
@@ -662,17 +641,6 @@ export const tennisClubMembershipEvent = defineConfig({
     },
     {
       id: 'registered',
-
-      fields: [
-        {
-          column: 'title',
-          label: {
-            defaultMessage: '{applicant.firstname} {applicant.surname}',
-            description: 'Label for name in all workqueue',
-            id: 'v2.event.tennis-club-membership.workqueue.registered.name.label'
-          }
-        }
-      ],
       filters: [
         {
           status: ['REGISTERED']
@@ -737,7 +705,7 @@ export const tennisClubMembershipEvent = defineConfig({
           )
         }
       ],
-      forms: []
+      forms: [TENNIS_CLUB_FORM]
     },
     {
       type: ActionType.REGISTER,
@@ -763,7 +731,7 @@ export const tennisClubMembershipEvent = defineConfig({
       forms: [TENNIS_CLUB_FORM]
     },
     {
-      type: 'PRINT_CERTIFICATE',
+      type: ActionType.PRINT_CERTIFICATE,
       label: {
         defaultMessage: 'Print certificate',
         description:
