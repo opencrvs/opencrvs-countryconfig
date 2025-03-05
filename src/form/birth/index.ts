@@ -81,11 +81,14 @@ import {
   getCommonSectionMapping,
   getCustomFieldMapping
 } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { getReasonForLateRegistration } from '../custom-fields'
-import { getIDNumberFields, getIDType } from '../custom-fields'
-import { getGenderCustom } from './custom-fields'
 import { idReaderFields, getInitialValueFromIDReader } from '@opencrvs/mosip'
 import { esignetConfig, qrCodeConfig } from '../common/id-reader-configurations'
+import {
+  getReasonForLateRegistration,
+  getGenderCustom,
+  getIDType,
+  getIDNumberFields
+} from '../common/common-custom-fields'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -262,7 +265,7 @@ export const birthForm: ISerializedForm = {
               'informant',
               disableIfVerifiedOrAuthenticated,
               getInitialValueFromIDReader('gender')
-            ), // Required field.
+            ),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
