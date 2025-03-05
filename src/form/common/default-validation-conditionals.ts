@@ -464,6 +464,6 @@ export const hideIfIDReaderFilledBirthDate = [
   {
     action: 'hide',
     expression:
-      '$form?.idReader.birthDate || $form?.esignetCallback?.data?.birthDate'
+      '$form?.idReader?.birthDate || $form?.esignetCallback?.data?.birthDate'
   }
 ]
