@@ -67,6 +67,7 @@
     "node-ssh": "^13.2.0",
     "nodemon": "^2.0.22",
     "pino-pretty": "^11.0.0",
+    "playwright-ctrf-json-reporter": "^0.0.18",
     "prettier": "^3.4.2",
     "react-intl": "^6.4.3",
     "vite-tsconfig-paths": "^3.5.0",
