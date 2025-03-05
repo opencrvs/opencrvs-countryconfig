@@ -196,7 +196,6 @@ export const informant = defineFormPage({
     {
       id: `${PersonType.informant}.dobUnknown`,
       type: FieldType.CHECKBOX,
-      required: true,
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',
