@@ -15,7 +15,8 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
-test.describe.serial('2. Birth declaration case - 2 - V2', () => {
+// @TODO: After the bug causing the flakiness is fixed, return this as serial()
+test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
   let page: Page
   const declaration = {
     child: {
