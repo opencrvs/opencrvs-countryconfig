@@ -36,7 +36,12 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "${{ vars[env.ENV_VAR] }}" | sed 's/[[:space:]]*$//' | awk -F= '{print $1 "=\"" $2 "\""}' > .env.${{ github.event.inputs.environment }}
+          echo "${{ vars[env.ENV_VAR] }}" | awk -F= '
+          /^SSH_KEY=/ { in_ssh_key = 1; print $1 "=\""; next }
+          in_ssh_key && /^-----END OPENSSH PRIVATE KEY-----$/ { print $0 "\n\""; in_ssh_key = 0; next }
+          in_ssh_key { print $0; next }
+          { print $1 "=\"" $2 "\"" }
+          ' > .env.${{ github.event.inputs.environment }}
 
       - name: Afficher le contenu du fichier .env
         run: cat .env.${{ github.event.inputs.environment }}
@@ -88,6 +93,12 @@ jobs:
           cat ./infrastructure/known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: $SSH_KEY
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+
       - name: Unset KNOWN_HOSTS variable
         run: |
           echo "KNOWN_HOSTS=" >> $GITHUB_ENV
@@ -112,11 +123,6 @@ jobs:
             fi
             sleep 10
           done
-      - name: Ajouter la clé SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_KEY" | sed 's/ $/=/g' | base64 --decode > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
