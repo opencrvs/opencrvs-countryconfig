@@ -125,6 +125,10 @@ jobs:
             fi
             sleep 10
           done
+      - name: Debug SSH connection
+        run: |
+          echo "Testing SSH connection..."
+          ssh -v -i ${{ secrets.SSH_KEY_STAGING }} provision@102.16.127.249 -p 10014
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
