@@ -36,7 +36,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "${{ vars[env.ENV_VAR] }}" | awk -F= '{print $1 "=\"" $2 "\""}' > .env.${{ github.event.inputs.environment }}
+          echo "${{ vars[env.ENV_VAR] }}" | awk -F= '{gsub(/^[ \t]+|[ \t]+$/, "", $2); print $1 "=\"" $2 "\""}' > .env.${{ github.event.inputs.environment }}
 
       - name: Afficher le contenu du fichier .env
         run: cat .env.${{ github.event.inputs.environment }}
