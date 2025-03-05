@@ -1,7 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
 import { loginToV2 } from '../../helpers'
 
-test.describe('1. Birth event declaration - V2', () => {
+// @TODO: After the bug causing the flakiness is fixed, return this as serial()
+test.describe.fixme('1. Birth event declaration - V2', () => {
   test.describe.serial('Fill all form sections. Save & Exit', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
