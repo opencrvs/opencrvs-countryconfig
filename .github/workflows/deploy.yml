@@ -115,7 +115,7 @@ jobs:
       - name: Ajouter la clé SSH
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_KEY" | base64 --decode > ~/.ssh/id_rsa
+          echo "$SSH_KEY" | sed 's/ $/=/g' | base64 --decode > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
       - name: Deploy to ${{ github.event.inputs.environment }}
