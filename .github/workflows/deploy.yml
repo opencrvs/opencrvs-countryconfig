@@ -55,7 +55,7 @@ jobs:
               echo "$line" >> $GITHUB_ENV
             fi
           done < .env.${{ github.event.inputs.environment }}
-          echo "DOMAIN=$DOMAIN"
+          echo "SSHKEY=$SSH_KEY"
 
       - name: Clone core
         uses: actions/checkout@v3
@@ -88,12 +88,6 @@ jobs:
           cat ./infrastructure/known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: $SSH_KEY #${{ secrets.SSH_KEY }}
-          known_hosts: ${{ env.KNOWN_HOSTS }}
-
       - name: Unset KNOWN_HOSTS variable
         run: |
           echo "KNOWN_HOSTS=" >> $GITHUB_ENV
@@ -118,6 +112,11 @@ jobs:
             fi
             sleep 10
           done
+      - name: Ajouter la clé SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" | base64 --decode > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
