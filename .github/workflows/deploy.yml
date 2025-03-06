@@ -139,6 +139,8 @@ jobs:
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
         run: |
+          export DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
+          export DOCKER_TOKEN="${{ secrets.DOCKER_TOKEN }}"
           cd ./${{ github.event.repository.name }}
           yarn deploy \
           --clear_data=no \
