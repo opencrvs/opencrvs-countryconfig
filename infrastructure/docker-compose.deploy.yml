@@ -1047,7 +1047,6 @@ services:
       - PARTNER_MISP_LK=${PARTNER_MISP_LK}
       - SIGN_P12_FILE_PATH=${SIGN_P12_FILE_PATH}
       - SIGN_P12_FILE_PASSWORD=${SIGN_P12_FILE_PASSWORD}
-      - CLIENT_APP_URL=https://register.{{hostname}}
     deploy:
       replicas: 1
       labels:

@@ -164,7 +164,7 @@ services:
       - /certs:/certs:ro 
     environment:
       - NODE_ENV=production
-      - CLIENT_URL=http://mosip-api:2024/webhooks/mosip
+      - CLIENT_APP_URL=https://register.{{hostname}}
       - OIDP_CLIENT_PRIVATE_KEY_PATH=${OIDP_CLIENT_PRIVATE_KEY_PATH}
     deploy:
       replicas: 1
