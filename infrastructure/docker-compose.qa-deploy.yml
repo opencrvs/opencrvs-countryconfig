@@ -165,11 +165,24 @@ services:
     environment:
       - NODE_ENV=production
       - CLIENT_URL=http://mosip-api:2024/webhooks/mosip
-      - OIDP_CLIENT_PRIVATE_KEY_PATH=${OIDP_CLIENT_PRIVATE_KEY_PATH:-}
+      - OIDP_CLIENT_PRIVATE_KEY_PATH=${OIDP_CLIENT_PRIVATE_KEY_PATH}
     deploy:
       replicas: 1
       labels:
-        - 'traefik.enable=false'
+        - 'traefik.enable=true'
+        - 'traefik.http.routers.mosip-api.rule=Host(`esignet-mock.{{hostname}}`)'
+        - 'traefik.http.services.mosip-api.loadbalancer.server.port=20260'
+        - 'traefik.http.routers.mosip-api.tls=true'
+        - 'traefik.http.routers.mosip-api.tls.certresolver=certResolver'
+        - 'traefik.http.routers.mosip-api.entrypoints=web,websecure'
+        - 'traefik.http.routers.mosip-api.middlewares=gzip-compression'
+        - 'traefik.docker.network=opencrvs_overlay_net'
+        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.Pragma=no-cache'
+        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.Cache-control=no-store'
+        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.X-Robots-Tag=none'
+        - 'traefik.http.middlewares.mosip-api.headers.stsseconds=31536000'
+        - 'traefik.http.middlewares.mosip-api.headers.stsincludesubdomains=true'
+        - 'traefik.http.middlewares.mosip-api.headers.stspreload=true'
     networks:
       - overlay_net
     logging:
