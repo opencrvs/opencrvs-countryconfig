@@ -170,19 +170,19 @@ services:
       replicas: 1
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.mosip-api.rule=Host(`esignet-mock.{{hostname}}`)'
-        - 'traefik.http.services.mosip-api.loadbalancer.server.port=20260'
-        - 'traefik.http.routers.mosip-api.tls=true'
-        - 'traefik.http.routers.mosip-api.tls.certresolver=certResolver'
-        - 'traefik.http.routers.mosip-api.entrypoints=web,websecure'
-        - 'traefik.http.routers.mosip-api.middlewares=gzip-compression'
+        - 'traefik.http.routers.esignet-mock.rule=Host(`esignet-mock.{{hostname}}`)'
+        - 'traefik.http.services.esignet-mock.loadbalancer.server.port=20260'
+        - 'traefik.http.routers.esignet-mock.tls=true'
+        - 'traefik.http.routers.esignet-mock.tls.certresolver=certResolver'
+        - 'traefik.http.routers.esignet-mock.entrypoints=web,websecure'
+        - 'traefik.http.routers.esignet-mock.middlewares=gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.mosip-api.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.mosip-api.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.mosip-api.headers.stspreload=true'
+        - 'traefik.http.middlewares.esignet-mock.headers.customresponseheaders.Pragma=no-cache'
+        - 'traefik.http.middlewares.esignet-mock.headers.customresponseheaders.Cache-control=no-store'
+        - 'traefik.http.middlewares.esignet-mock.headers.customresponseheaders.X-Robots-Tag=none'
+        - 'traefik.http.middlewares.esignet-mock.headers.stsseconds=31536000'
+        - 'traefik.http.middlewares.esignet-mock.headers.stsincludesubdomains=true'
+        - 'traefik.http.middlewares.esignet-mock.headers.stspreload=true'
     networks:
       - overlay_net
     logging:
