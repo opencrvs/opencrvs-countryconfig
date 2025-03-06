@@ -2158,6 +2158,7 @@ settings.user.label.nameEN,,Full name,Nom anglais
 settings.verifyPhone,Verify phone number title,Verify phone number,Vérifier le numéro de téléphone
 storybook.address.example,,This is an example of using formatMessage to format applicant's province: {applicant.address.province},Ceci est un exemple d'utilisation du formatMessage pour formater la province du demandeur: {demandeur.address.province}
 storybook.address.label,The title for the address input,Address,Adresse
+storybook.checkbox.label,The title for the checkbox input,Is my question true?,Ma question est-elle vraie ?
 storybook.file.label,The title for the file input,Upload your captured photo,Téléchargez votre photo capturée
 storybook.file.option.beach,Option for a beach setting,Beach,Plage
 storybook.file.option.city,Option for a city setting,City,Ville
@@ -2579,6 +2580,7 @@ v2.event.birth.label,This is what this event is referred as in the system,Birth 
 v2.event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Select Certificate Template,Select Certificate Template
+v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
 v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR{Local Registrar} other{Unknown}}","{role, select, LOCAL_REGISTRAR{Registraire local} other{Inconnu}}"
 v2.event.history.timeFormat,Time format for timestamps in event history,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
 v2.event.tennis-club-membership.action.certificate.form.label,This is what this form is referred as in the system,Tennis club membership certificate collector,Tennis club membership certificate collector
@@ -2745,6 +2747,7 @@ v2.register.selectVitalEvent.errorMessage,Error Message to show when no event is
 v2.register.selectVitalEvent.registerNewEventHeading,The section heading on the page,What type of event do you want to declare?,What type of event do you want to declare?
 v2.register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration
 v2.registerAction.Declare,The label for declare button of register action,Register,Enregistrer
+v2.registerAction.Reject,The label for reject button of register action,Reject,Rejeter
 v2.registerAction.description,The description for register action,"By clicking register, you confirm that the information entered is correct and the member can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que le membre peut être enregistré."
 v2.registerAction.title,The title for register action,Register member,Enregistrer un membre
 v2.rejectModal.archive,The label for archive button of reject modal,Archive,Archiver
@@ -2767,6 +2770,7 @@ v2.review.register.confirmModal.confirm,The label for modal confirm button when 
 v2.review.register.confirmModal.description,The description for review action modal when registering,‎,
 v2.review.register.confirmModal.title,The title for review action modal when registering,Register?,Enregistrer ?
 v2.review.register.description.complete,The description for registration action when form is complete,"By clicking register, you confirm that the information entered is correct and the event can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que l'événement peut être enregistré."
+v2.review.register.reject,The label for reject button of review action,Reject,Rejeter
 v2.review.register.title,The title shown when reviewing a record to register,Register event,Enregistrer l'événement
 v2.review.validate.confirm,The label for review action button when validating,Send for approval,Envoyer pour approbation
 v2.review.validate.confirmModal.cancel,The label for modal cancel button when validating,Cancel,Annuler
