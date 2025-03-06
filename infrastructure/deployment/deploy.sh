@@ -371,7 +371,7 @@ configured_rsync -rlD /tmp/docker-compose.yml /tmp/docker-compose.deps.yml $SSH_
 
 echo "Logging to Dockerhub $DOCKER_USERNAME $DOCKER_TOKEN"
 
-configured_ssh "echo $DOCKER_TOKEN | docker login -u $USERNAME --password-stdin"
+configured_ssh "echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin"
 
 # Setup configuration files and compose file for the deployment domain
 configured_ssh "/opt/opencrvs/infrastructure/setup-deploy-config.sh $HOST"
