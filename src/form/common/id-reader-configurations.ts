@@ -59,5 +59,6 @@ export const esignetConfig = {
   callback: {
     fieldName: 'esignetCallback',
     mosipAPIUserInfoUrl: MOSIP_API_USERINFO_URL
-  }
+  },
+  loaderFieldName: 'esignetLoader'
 }
