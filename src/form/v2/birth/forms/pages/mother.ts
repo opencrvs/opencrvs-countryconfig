@@ -40,7 +40,6 @@ export const mother = defineFormPage({
     {
       id: `${PersonType.mother}.detailsNotAvailable`,
       type: FieldType.CHECKBOX,
-      required: true,
       label: {
         defaultMessage: "Mother's details are not available",
         description: 'This is the label for the field',
@@ -153,7 +152,6 @@ export const mother = defineFormPage({
     {
       id: `${PersonType.mother}.dobUnknown`,
       type: FieldType.CHECKBOX,
-      required: true,
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',

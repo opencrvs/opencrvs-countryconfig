@@ -2158,6 +2158,7 @@ settings.user.label.nameEN,,Full name,Nom anglais
 settings.verifyPhone,Verify phone number title,Verify phone number,Vérifier le numéro de téléphone
 storybook.address.example,,This is an example of using formatMessage to format applicant's province: {applicant.address.province},Ceci est un exemple d'utilisation du formatMessage pour formater la province du demandeur: {demandeur.address.province}
 storybook.address.label,The title for the address input,Address,Adresse
+storybook.checkbox.label,The title for the checkbox input,Is my question true?,Ma question est-elle vraie?
 storybook.file.label,The title for the file input,Upload your captured photo,Téléchargez votre photo capturée
 storybook.file.option.beach,Option for a beach setting,Beach,Plage
 storybook.file.option.city,Option for a city setting,City,Ville
