@@ -11,7 +11,7 @@
 
 import { and } from '@opencrvs/toolkit/conditionals'
 import {
-  ESIGNET_TOKEN_URL,
+  ESIGNET_REDIRECT_URL,
   MOSIP_API_USERINFO_URL,
   OPENID_PROVIDER_CLIENT_ID,
   OPENID_PROVIDER_CLAIMS
@@ -53,7 +53,7 @@ export const qrCodeConfig = {
 
 export const esignetConfig = {
   fieldName: 'esignet',
-  esignetAuthUrl: ESIGNET_TOKEN_URL,
+  esignetAuthUrl: ESIGNET_REDIRECT_URL,
   openIdProviderClientId: OPENID_PROVIDER_CLIENT_ID,
   openIdProviderClaims: OPENID_PROVIDER_CLAIMS,
   callback: {
