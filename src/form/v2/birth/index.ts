@@ -25,7 +25,7 @@ import { SCOPES } from '@opencrvs/toolkit/scopes'
 export const birthEvent = defineConfig({
   id: Event.Birth,
   label: {
-    defaultMessage: 'Birth declaration',
+    defaultMessage: 'Birth',
     description: 'This is what this event is referred as in the system',
     id: 'v2.event.birth.label'
   },
