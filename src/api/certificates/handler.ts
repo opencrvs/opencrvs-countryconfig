@@ -92,6 +92,30 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       }
     },
     {
+      id: 'birth-registration-receipt',
+      event: Event.Birth,
+      label: {
+        id: 'certificates.birth.registration.receipt',
+        defaultMessage: 'Birth Registration Receipt',
+        description: 'The label for a birth registration receipt'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 0,
+        late: 12,
+        delayed: 18
+      },
+      svgUrl: '/api/countryconfig/certificates/birth-registration-receipt.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
+    },
+    {
       id: 'death-certificate',
       event: Event.Death,
       label: {

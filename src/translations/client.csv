@@ -171,6 +171,7 @@ certificate.selectTemplate,Select certificate template,Type,Taper
 certificate.selectedTemplate,Selected certificate template,Selected certificate template,Modèle de certificat sélectionné
 certificates.birth.certificate,Birth Certificate,Birth Certificate,Acte de naissance
 certificates.birth.certificate.copy,Birth Certificate Certified Copy,Birth Certificate Certified Copy,Copie certifiée conforme de l'acte de naissance
+certificates.birth.registration.receipt,Birth Registration Receipt,Birth Registration Registration,Reçu d'enregistrement de naissance
 certificates.death.certificate,Death Certificate,Death Certificate,Certificat de décès
 certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certificate Certified Copy,Copie certifiée conforme du certificat de décès
 certificates.marriage.certificate,Marriage Certificate,Marriage Certificate,Acte de mariage
