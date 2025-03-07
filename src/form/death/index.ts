@@ -87,8 +87,7 @@ import { getNumberOfDependants } from '@countryconfig/form/death/custom-fields'
 import {
   getIDNumberFields,
   getIDType,
-  getReasonForLateRegistration,
-  getGenderCustom
+  getReasonForLateRegistration
 } from '@countryconfig/form/common/common-custom-fields'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 import { getInitialValueFromIDReader, idReaderFields } from '@opencrvs/mosip'
@@ -210,7 +209,8 @@ export const deathForm = {
             ), // Required field.  Names in Latin characters must be provided for international passport
             getGender(
               certificateHandlebars.deceasedGender,
-              getInitialValueFromIDReader('gender')
+              getInitialValueFromIDReader('gender'),
+              disableIfVerifiedOrAuthenticated
             ), // Required field.
             getBirthDate(
               'deceasedBirthDate',
@@ -320,12 +320,6 @@ export const deathForm = {
               certificateHandlebars.informantFamilyName,
               getInitialValueFromIDReader('familyName')
             ), // Required field.
-            getGenderCustom(
-              'death',
-              'informant',
-              disableIfVerifiedOrAuthenticated,
-              getInitialValueFromIDReader('gender')
-            ),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(

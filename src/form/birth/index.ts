@@ -86,7 +86,6 @@ import { idReaderFields, getInitialValueFromIDReader } from '@opencrvs/mosip'
 import { esignetConfig, qrCodeConfig } from '../common/id-reader-configurations'
 import {
   getReasonForLateRegistration,
-  getGenderCustom,
   getIDType,
   getIDNumberFields
 } from '../common/common-custom-fields'
@@ -261,12 +260,6 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantFamilyName,
               getInitialValueFromIDReader('familyName')
             ), // Required field.
-            getGenderCustom(
-              'birth',
-              'informant',
-              disableIfVerifiedOrAuthenticated,
-              getInitialValueFromIDReader('gender')
-            ),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
