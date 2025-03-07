@@ -2694,6 +2694,7 @@ v2.form.field.label.iDTypeBRN,Option for form field: Type of ID,Birth Registrati
 v2.form.field.label.iDTypeNationalID,Option for form field: Type of ID,National ID,Carte d'identité nationale
 v2.form.field.label.iDTypeNone,Option for form field: Type of ID,None,Aucun
 v2.form.field.label.iDTypePassport,Option for form field: Type of ID,Passport,Passeport
+v2.form.field.label.iDTypeOther,Option for form field: Type of ID,Other,Autre
 v2.form.field.label.informantRelation.brother,Label for option brother,Brother,Frère
 v2.form.field.label.informantRelation.father,Label for option father,Father,Père
 v2.form.field.label.informantRelation.grandfather,Label for option Grandfather,Grandfather,Grand-père

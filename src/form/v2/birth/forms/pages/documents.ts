@@ -27,7 +27,7 @@ const IdType = {
   NATIONAL_ID: 'NATIONAL_ID',
   PASSPORT: 'PASSPORT',
   BIRTH_REGISTRATION_NUMBER: 'BIRTH_REGISTRATION_NUMBER',
-  NONE: 'NONE'
+  OTHER: 'OTHER'
 } as const
 
 const idTypeMessageDescriptors = {
@@ -46,10 +46,10 @@ const idTypeMessageDescriptors = {
     description: 'Option for form field: Type of ID',
     id: 'v2.form.field.label.iDTypeBRN'
   },
-  NONE: {
-    defaultMessage: 'None',
+  OTHER: {
+    defaultMessage: 'Other',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeNone'
+    id: 'v2.form.field.label.iDTypeOther'
   }
 } satisfies Record<keyof typeof IdType, TranslationConfig>
 
