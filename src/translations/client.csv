@@ -2738,7 +2738,7 @@ v2.printAction.description,The description for print action,Please confirm that 
 v2.printAction.title,The title for print action,Print certificate,Imprimer le certificat
 v2.regHome.issued,Label for workqueue tooltip,Empty message,Empty message
 v2.register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant,Présenter la procédure d'enregistrement des naissances à l'informateur
-v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,"Are you certain you want to delete this draft declaration form? Please note, this action can't be undone.","Are you certain you want to delete this draft declaration form? Please note, this action can't be undone."
+v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,Are you sure you want to delete this declaration?,Êtes-vous sûr de vouloir supprimer cette déclaration ?
 v2.register.form.modal.title.deleteDeclarationConfirm,Title for delete declaration confirmation modal,Delete draft?,Supprimer le brouillon?
 v2.register.selectInformant.newBirthRegistration,The title that appears for new birth registrations,New birth declaration,Nouvelle déclaration de naissance
 v2.register.selectInformant.newDeathRegistration,The title that appears for new death registrations,New death declaration,Nouvelle déclaration de décès
