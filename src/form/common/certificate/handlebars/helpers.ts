@@ -497,10 +497,15 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             this.informantOccupation ? this.informantOccupation + ',' : ''
           ]),
       'izay miara-manao sonia aminay,',
-      `${registrarFamilyName} ${registrarFirstName}` + ',',
+      this.registrar.name + ',',
       'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
       definitionOffice(registrationDistrict) + ',',
       'rehefa novakiana taminy ity soratra ity.---'
+      // 'izay miara-manao sonia aminay,',
+      // `${registrarFamilyName} ${registrarFirstName}` + ',',
+      // 'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
+      // definitionOffice(registrationDistrict) + ',',
+      // 'rehefa novakiana taminy ity soratra ity.---'
     ])
   }
 }
