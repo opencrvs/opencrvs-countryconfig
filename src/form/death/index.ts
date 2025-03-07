@@ -63,7 +63,8 @@ import {
   spouseFirstNameConditionals,
   hideIfInformantSpouse,
   disableIfVerifiedOrAuthenticated,
-  hideIfIDReaderFilledBirthDate
+  hideIfIDReaderFilledBirthDate,
+  typeOfIDVerificationConditionals
 } from '../common/default-validation-conditionals'
 import {
   documentsSection,
@@ -87,8 +88,7 @@ import { getNumberOfDependants } from '@countryconfig/form/death/custom-fields'
 import {
   getIDNumberFields,
   getIDType,
-  getReasonForLateRegistration,
-  getGenderCustom
+  getReasonForLateRegistration
 } from '@countryconfig/form/common/common-custom-fields'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 import { getInitialValueFromIDReader, idReaderFields } from '@opencrvs/mosip'
@@ -210,7 +210,8 @@ export const deathForm = {
             ), // Required field.  Names in Latin characters must be provided for international passport
             getGender(
               certificateHandlebars.deceasedGender,
-              getInitialValueFromIDReader('gender')
+              getInitialValueFromIDReader('gender'),
+              disableIfVerifiedOrAuthenticated
             ), // Required field.
             getBirthDate(
               'deceasedBirthDate',
@@ -238,12 +239,12 @@ export const deathForm = {
             getIDType(
               'death',
               'deceased',
-              disableIfVerifiedOrAuthenticated,
+              typeOfIDVerificationConditionals,
               true
             ),
             ...getIDNumberFields(
               'deceased',
-              disableIfVerifiedOrAuthenticated,
+              typeOfIDVerificationConditionals,
               true
             ),
             getMaritalStatus(certificateHandlebars.deceasedMaritalStatus, []),
@@ -320,12 +321,6 @@ export const deathForm = {
               certificateHandlebars.informantFamilyName,
               getInitialValueFromIDReader('familyName')
             ), // Required field.
-            getGenderCustom(
-              'death',
-              'informant',
-              disableIfVerifiedOrAuthenticated,
-              getInitialValueFromIDReader('gender')
-            ),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
@@ -361,12 +356,12 @@ export const deathForm = {
             getIDType(
               'death',
               'informant',
-              hideIfInformantSpouse.concat(disableIfVerifiedOrAuthenticated),
+              hideIfInformantSpouse.concat(typeOfIDVerificationConditionals),
               true
             ),
             ...getIDNumberFields(
               'informant',
-              hideIfInformantSpouse.concat(disableIfVerifiedOrAuthenticated),
+              hideIfInformantSpouse.concat(typeOfIDVerificationConditionals),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -452,12 +447,12 @@ export const deathForm = {
             getIDType(
               'death',
               'spouse',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             ...getIDNumberFields(
               'spouse',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE

@@ -62,7 +62,8 @@ import {
   ageOfIndividualValidators,
   ageOfParentsConditionals,
   disableIfVerifiedOrAuthenticated,
-  hideIfIDReaderFilledBirthDate
+  hideIfIDReaderFilledBirthDate,
+  typeOfIDVerificationConditionals
 } from '../common/default-validation-conditionals'
 import {
   informantFirstNameConditionals,
@@ -86,7 +87,6 @@ import { idReaderFields, getInitialValueFromIDReader } from '@opencrvs/mosip'
 import { esignetConfig, qrCodeConfig } from '../common/id-reader-configurations'
 import {
   getReasonForLateRegistration,
-  getGenderCustom,
   getIDType,
   getIDNumberFields
 } from '../common/common-custom-fields'
@@ -261,12 +261,6 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantFamilyName,
               getInitialValueFromIDReader('familyName')
             ), // Required field.
-            getGenderCustom(
-              'birth',
-              'informant',
-              disableIfVerifiedOrAuthenticated,
-              getInitialValueFromIDReader('gender')
-            ),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
@@ -309,14 +303,14 @@ export const birthForm: ISerializedForm = {
               'birth',
               'informant',
               hideIfInformantMotherOrFather.concat(
-                disableIfVerifiedOrAuthenticated
+                typeOfIDVerificationConditionals
               ),
               true
             ),
             ...getIDNumberFields(
               'informant',
               hideIfInformantMotherOrFather.concat(
-                disableIfVerifiedOrAuthenticated
+                typeOfIDVerificationConditionals
               ),
               true
             ),
@@ -404,12 +398,12 @@ export const birthForm: ISerializedForm = {
             getIDType(
               'birth',
               'mother',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             ...getIDNumberFields(
               'mother',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -511,12 +505,12 @@ export const birthForm: ISerializedForm = {
             getIDType(
               'birth',
               'father',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             ...getIDNumberFields(
               'father',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE

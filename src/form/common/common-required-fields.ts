@@ -35,7 +35,8 @@ export const getBirthDate = (
 
 export const getGender = (
   certificateHandlebar: string,
-  initialValue: string | { dependsOn: string[]; expression: string } = ''
+  initialValue: string | { dependsOn: string[]; expression: string } = '',
+  conditionals: Conditional[] = []
 ) =>
   ({
     name: 'gender', // A field with this name MUST exist
@@ -46,7 +47,8 @@ export const getGender = (
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     mapping: getFieldMapping('gender', certificateHandlebar),
-    options: genderOptions
+    options: genderOptions,
+    conditionals
   }) satisfies SerializedFormField
 
 export const getFamilyNameField = (
