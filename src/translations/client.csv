@@ -2578,7 +2578,7 @@ v2.event.birth.action.declare.form.section.person.field.passport.label,This is t
 v2.event.birth.action.declare.form.section.person.field.surname.label,This is the label for the field,Last name,Nom(s) de famille dans un jeu de caractères par défaut autre que l'anglais
 v2.event.birth.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
 v2.event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
-v2.event.birth.label,This is what this event is referred as in the system,Birth declaration,Déclaration de naissance
+v2.event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 v2.event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Select Certificate Template,Select Certificate Template
