@@ -2780,6 +2780,7 @@ v2.review.validate.confirmModal.description,The description for review action mo
 v2.review.validate.confirmModal.title,The title for review action modal when validating,Send for approval?,Envoyer pour approbation ?
 v2.review.validate.description.complete,The description for validate action when form is complete,The informant will receive an email with a registration number that they can use to collect the certificate,L'informateur recevra un e-mail avec un numéro d'enregistrement qu'il pourra utiliser pour récupérer le certificat.
 v2.review.validate.description.incomplete,The description for validate action when form is complete,Please add mandatory information before sending for approval,Veuillez ajouter les informations obligatoires avant d'envoyer pour approbation.
+v2.review.validate.reject,The label for reject button of review action,Reject,Rejeter
 v2.review.validate.title,The title shown when reviewing a record to validate,Send for approval,Envoyer pour approbation
 v2.reviewAction.Declare,The label for declare button of review action,Declare,Declare
 v2.reviewAction.description,The description for review action,"By clicking declare, you confirm that the information entered is correct and the member can be declared.","By clicking declare, you confirm that the information entered is correct and the member can be declared."
