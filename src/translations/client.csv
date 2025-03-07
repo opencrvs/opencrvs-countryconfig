@@ -2339,6 +2339,8 @@ v2.changeModal.title,The title for change modal,Edit declaration?,Modifier la d�
 v2.config.advanced.search,This is used for the advanced search,Advanced Search,Recherche avancée
 v2.config.advanced.search.instruction,This is used for the advanced search,Select the options to build an advanced search. A minimum of two search parameters is required.,Sélectionnez les options pour construire une recherche avancée. Un minimum de deux paramètres de recherche est requis.
 v2.config.application.vsexport,Vital statistics title,Vital statistics,Statistiques de l'état civil
+v2.configuration.dateFormat,Default format for date values,d MMMM y,d MMMM y
+v2.configuration.timeFormat,Default time format for timestamps,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
 v2.constants.PIN,PIN label,PIN,Code Pin
 v2.constants.address,Label for address,Address,Adresse
 v2.constants.allEvents,Label for select option All events,All events,Tous les événements
@@ -2582,7 +2584,6 @@ v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.s
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Select Certificate Template,Select Certificate Template
 v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
 v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR{Local Registrar} other{Unknown}}","{role, select, LOCAL_REGISTRAR{Registraire local} other{Inconnu}}"
-v2.event.history.timeFormat,Time format for timestamps in event history,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
 v2.event.tennis-club-membership.action.certificate.form.label,This is what this form is referred as in the system,Tennis club membership certificate collector,Tennis club membership certificate collector
 v2.event.tennis-club-membership.action.certificate.form.review.title,Title of the form to show in review page,Member certificate collector for {firstname} {surname},Collecteur de certificat membre pour {FirstName} {nom de famille}
 v2.event.tennis-club-membership.action.certificate.form.section.requester.informant.label,This is the label for the field,Print and issue Informant,Print and issue Informant
