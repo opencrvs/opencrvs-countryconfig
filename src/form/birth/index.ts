@@ -62,7 +62,8 @@ import {
   ageOfIndividualValidators,
   ageOfParentsConditionals,
   disableIfVerifiedOrAuthenticated,
-  hideIfIDReaderFilledBirthDate
+  hideIfIDReaderFilledBirthDate,
+  typeOfIDVerificationConditionals
 } from '../common/default-validation-conditionals'
 import {
   informantFirstNameConditionals,
@@ -302,14 +303,14 @@ export const birthForm: ISerializedForm = {
               'birth',
               'informant',
               hideIfInformantMotherOrFather.concat(
-                disableIfVerifiedOrAuthenticated
+                typeOfIDVerificationConditionals
               ),
               true
             ),
             ...getIDNumberFields(
               'informant',
               hideIfInformantMotherOrFather.concat(
-                disableIfVerifiedOrAuthenticated
+                typeOfIDVerificationConditionals
               ),
               true
             ),
@@ -397,12 +398,12 @@ export const birthForm: ISerializedForm = {
             getIDType(
               'birth',
               'mother',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             ...getIDNumberFields(
               'mother',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -504,12 +505,12 @@ export const birthForm: ISerializedForm = {
             getIDType(
               'birth',
               'father',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             ...getIDNumberFields(
               'father',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE

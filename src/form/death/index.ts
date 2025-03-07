@@ -63,7 +63,8 @@ import {
   spouseFirstNameConditionals,
   hideIfInformantSpouse,
   disableIfVerifiedOrAuthenticated,
-  hideIfIDReaderFilledBirthDate
+  hideIfIDReaderFilledBirthDate,
+  typeOfIDVerificationConditionals
 } from '../common/default-validation-conditionals'
 import {
   documentsSection,
@@ -238,12 +239,12 @@ export const deathForm = {
             getIDType(
               'death',
               'deceased',
-              disableIfVerifiedOrAuthenticated,
+              typeOfIDVerificationConditionals,
               true
             ),
             ...getIDNumberFields(
               'deceased',
-              disableIfVerifiedOrAuthenticated,
+              typeOfIDVerificationConditionals,
               true
             ),
             getMaritalStatus(certificateHandlebars.deceasedMaritalStatus, []),
@@ -355,12 +356,12 @@ export const deathForm = {
             getIDType(
               'death',
               'informant',
-              hideIfInformantSpouse.concat(disableIfVerifiedOrAuthenticated),
+              hideIfInformantSpouse.concat(typeOfIDVerificationConditionals),
               true
             ),
             ...getIDNumberFields(
               'informant',
-              hideIfInformantSpouse.concat(disableIfVerifiedOrAuthenticated),
+              hideIfInformantSpouse.concat(typeOfIDVerificationConditionals),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE
@@ -446,12 +447,12 @@ export const deathForm = {
             getIDType(
               'death',
               'spouse',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             ...getIDNumberFields(
               'spouse',
-              detailsExist.concat(disableIfVerifiedOrAuthenticated),
+              detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             // ADDRESS FIELDS WILL RENDER HERE
