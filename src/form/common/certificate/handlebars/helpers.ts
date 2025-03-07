@@ -429,6 +429,9 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
+    const parts = this.registrar.name.trim().split(' ')
+    const registrarFamilyName = parts.pop() || ''
+    const registrarFirstName = parts.join(' ')
     const birthRegistrationDate = getBirthRegistrationDate(this)
     const registrarDateUTC = convertToTimeZoneIso(
       isValidDate(birthRegistrationDate)
@@ -494,7 +497,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             this.informantOccupation ? this.informantOccupation + ',' : ''
           ]),
       'izay miara-manao sonia aminay,',
-      this.registrar.name + ',',
+      `${registrarFamilyName} ${registrarFirstName}` + ',',
       'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
       definitionOffice(registrationDistrict) + ',',
       'rehefa novakiana taminy ity soratra ity.---'
