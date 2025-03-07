@@ -101,7 +101,7 @@
      </text>
     {{/if}}
    
-
+    <!-- y="165"-->
     <foreignObject x="190" y="165" width="384" height="560">
         <p style="font-family: 'Plus Jakarta Sans';
            text-align: justify;
@@ -147,7 +147,10 @@
             letter-spacing: 0em;
             hyphens:auto;
             margin-top: 0">{{{signatureDescription}}}
-        </p><br /><br /><p class="large" style="font-family: 'Plus Jakarta Sans';
+        </p><br />
+    </foreignObject>
+    <foreignObject x="190" y="700" width="384" height="560">
+    <br /><p class="large" style="font-family: 'Plus Jakarta Sans';
             text-align: justify;
             line-height: 1.1;
             margin-top: 0;
