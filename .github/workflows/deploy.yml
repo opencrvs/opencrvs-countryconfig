@@ -38,14 +38,12 @@ jobs:
         run: |
           echo "${{ vars[env.ENV_VAR] }}" | sed 's/[[:space:]]*$//' | awk -F= '{print $1 "=\"" $2 "\""}' > .env.${{ github.event.inputs.environment }}
 
-      - name: Afficher le contenu du fichier .env
-        run: cat .env.${{ github.event.inputs.environment }}
       - name: Load environment variables
         run: |
           set -a
           source .env.${{ github.event.inputs.environment }}
           set +a
-          echo "DOMAIN=$DOMAIN"
+
       - name: Charger les variables autrement
         run: |
           while IFS= read -r line; do
@@ -125,16 +123,6 @@ jobs:
             fi
             sleep 10
           done
-      - name: Display first few lines of SSH private key
-        run: |
-          echo "${{ secrets.SSH_KEY_STAGING }}" | head -n 5
-
-      - name: Debug SSH connection
-        run: |
-          echo "Testing SSH connection..."
-          echo "${{ secrets.SSH_KEY_STAGING }}" > private_key
-          chmod 600 private_key
-          ssh -v -i private_key provision@102.16.127.249 -p 10014
 
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
