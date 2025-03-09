@@ -33,6 +33,29 @@ jobs:
           issue-title: 'Deploy (${{ github.event.inputs.environment }}): core: ${{ github.event.inputs.core-image-tag }} country config: ${{ github.event.inputs.countryconfig-image-tag }}'
           issue-body: 'Please approve or deny the deployment of core: ${{ github.event.inputs.core-image-tag }} country config: ${{ github.event.inputs.countryconfig-image-tag }} to ${{ github.event.inputs.environment }}'
           exclude-workflow-initiator-as-approver: false
+      - name: Set ENV_VAR dynamically
+        run: echo "ENV_VAR=ENV_${{ github.event.inputs.environment }}" >> $GITHUB_ENV
+
+      - name: Create .env file
+        run: |
+          echo "${{ vars[env.ENV_VAR] }}" | sed 's/[[:space:]]*$//' | awk -F= '{print $1 "=\"" $2 "\""}' > .env.${{ github.event.inputs.environment }}
+
+      - name: Load environment variables
+        run: |
+          set -a
+          source .env.${{ github.event.inputs.environment }}
+          set +a
+
+      - name: Charger les variables autrement
+        run: |
+          while IFS= read -r line; do
+            if [[ ! -z "$line" && "$line" != \#* ]]; then
+              line=$(echo "$line" | sed -E 's/^([^=]+)="(.*)"$/\1=\2/')
+              export "$line"
+              echo "$line" >> $GITHUB_ENV
+            fi
+          done < .env.${{ github.event.inputs.environment }}
+
       - name: Clone core
         uses: actions/checkout@v3
         with:
@@ -64,11 +87,12 @@ jobs:
           cat ./infrastructure/known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Install SSH Key
+      - name: Install SSH Key for Prod
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{ secrets.SSH_KEY_PROD }}
           known_hosts: ${{ env.KNOWN_HOSTS }}
+        if: ${{ github.event.inputs.environment == 'production' }}
 
       - name: Unset KNOWN_HOSTS variable
         run: |
@@ -95,56 +119,18 @@ jobs:
             sleep 10
           done
 
-      - name: Export all secrets and environment variables
-        run: |
-          cd ./${{ github.event.repository.name }}
-
-          SECRETS_JSON_WITH_NEWLINES=$(cat<<EOF
-            ${{ toJSON(secrets) }}
-          EOF)
-
-          #
-          # Secrets & variables with newlines are filtered out automatically
-          # This includes SSH_KEY and KNOWN_HOSTS
-          #
-          while IFS= read -r secret; do
-            echo "$secret" >> .env.${{ github.event.inputs.environment }}
-          done < <(
-            jq -r '
-              to_entries |
-              map(
-                select(.value | test("\n") | not) |
-                "\(.key)=\"\(.value)\""
-              ) |
-              .[]' <<< "$SECRETS_JSON_WITH_NEWLINES"
-          )
-
-          VARS_JSON_WITH_NEWLINES=$(cat<<EOF
-            ${{ toJSON(vars) }}
-          EOF)
-
-          while IFS= read -r var; do
-            echo "$var" >> .env.${{ github.event.inputs.environment }}
-          done < <(
-            jq -r '
-              to_entries |
-              map(
-                select(.value | test("\n") | not) |
-                "\(.key)=\"\(.value)\""
-              ) |
-              .[]' <<< "$VARS_JSON_WITH_NEWLINES"
-          )
-
       - name: Deploy to ${{ github.event.inputs.environment }}
         run: |
+          export DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
+          export DOCKER_TOKEN="${{ secrets.DOCKER_TOKEN }}"
           cd ./${{ github.event.repository.name }}
           yarn deploy \
           --clear_data=no \
           --environment=${{ github.event.inputs.environment }} \
-          --host=${{ vars.DOMAIN }} \
-          --ssh_host=${{ vars.SSH_HOST || secrets.SSH_HOST }} \
-          --ssh_port=${{ vars.SSH_PORT || secrets.SSH_PORT }} \
-          --ssh_user=${{ secrets.SSH_USER }} \
+          --host=$DOMAIN \
+          --ssh_host=$SSH_HOST \
+          --ssh_port=SSH_PORT \
+          --ssh_user=$SSH_USER \
           --version=${{ github.event.inputs.core-image-tag }} \
           --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
-          --replicas=${{ vars.REPLICAS }}
+          --replicas=$REPLICAS
