@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0 Release candidate
+
+### Improvements
+
+- **Upgrade Elasticsearch** to a AGPLv3 licensed version 8.16.4 [#8749](https://github.com/opencrvs/opencrvs-core/issues/8749)
+- **Github runners upgraded** to lastest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045)
+
 ## 1.7.0 Release candidate
 
 ### Migration notes
