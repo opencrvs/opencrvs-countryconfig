@@ -556,24 +556,14 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         .click()
     })
 
-    // @TODO: there is field validation bugs on the checkboxes on V2, so we can not send to review yet
-    test.skip('2.1.8 Send for review', async () => {
+    test('2.1.8 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await expect(page.getByText('Farajaland CRS')).toBeVisible()
+      await expect(page.getByText('All events')).toBeVisible()
 
       /*
-       * Expected result: should redirect to registration home
-       */
-      expect(page.url().includes('registration-home')).toBeTruthy()
-
-      await expectOutboxToBeEmpty(page)
-
-      await page.getByRole('button', { name: 'Sent for review' }).click()
-
-      /*
-       * Expected result: The declaration should be in sent for review
+       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
        */
       await expect(
         page.getByRole('button', {
