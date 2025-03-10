@@ -1,9 +1,4 @@
 <svg width="464" height="1148" viewBox="0 0 464 1148" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <pattern id="pattern0_0_1" patternContentUnits="objectBoundingBox" width="1" height="1">
-      <image width="338" height="352" preserveAspectRatio="none" transform="matrix(0.0032544401474297047, 0, 0, 0.0032544401474297047, -0.05000000447034836, -0.07278109341859818)" xlink:href="{{qrCode}}"/>
-    </pattern>
-  </defs>
   <rect width="464" height="1148" fill="#1E1E1E" transform="matrix(1, 0, 0, 1, 2.4158453015843406e-13, 2.842170943040401e-14)"/>
   <rect width="464" height="1148" fill="white" transform="matrix(1, 0, 0, 1, 2.4158453015843406e-13, 2.842170943040401e-14)"/>
   <path d="M91.5725 44.795C91.5753 53.298 91.5643 61.8037 91.578 70.3067C91.5835 70.6807 91.468 71.0355 91.2754 71.3352C91.0965 71.6102 90.8489 71.8357 90.5545 71.987L68.4523 84.7415C68.1469 84.9147 67.8222 85 67.5058 85C67.1811 85 66.8537 84.9092 66.562 84.7415L44.4708 71.998C44.1682 71.8467 43.9123 71.6185 43.7307 71.3407C43.5354 71.0355 43.4198 70.6807 43.4198 70.304L43.4281 70.1335L43.4226 44.696C43.417 44.355 43.5106 44.0332 43.6702 43.7555L43.6757 43.75C43.8408 43.464 44.0801 43.2275 44.3663 43.0597L66.5483 30.2585C66.8537 30.0852 67.1811 30 67.4948 30C67.8194 30 68.1496 30.0907 68.4385 30.2585L90.6288 43.0625C90.9397 43.2412 91.1791 43.4997 91.3414 43.794L91.3469 43.7995C91.5092 44.102 91.589 44.4485 91.5725 44.795Z" fill="#EFCFA4" transform="matrix(1, 0, 0, 1, 2.4158453015843406e-13, 2.842170943040401e-14)"/>
@@ -38,7 +33,7 @@
   <text fill="#222222" style="white-space: pre" font-family="Noto Sans" font-size="14" letter-spacing="0px" transform="matrix(1, 0, 0, 1, 2.4158453015843406e-13, 2.842170943040401e-14)"><tspan x="40" y="644.932">{{loggedInUser.name}}</tspan></text>
   <line x1="40" y1="665.5" x2="424" y2="665.5" stroke="black" stroke-dasharray="2 2" transform="matrix(1, 0, 0, 1, 2.4158453015843406e-13, 2.842170943040401e-14)"/>
   <text fill="#222222" style="white-space: pre" font-family="Noto Sans" font-size="12" font-weight="bold" letter-spacing="0px" transform="matrix(1, 0, 0, 1, 2.4158453015843406e-13, 2.842170943040401e-14)"><tspan x="151.973" y="705.656">Scan to view registration /  </tspan><tspan x="141.748" y="723.656">Scannez pour voir l’inscription</tspan></text>
-  <rect x="52" y="738" width="360" height="360" fill="url(#pattern0_0_1)" transform="matrix(1, 0, 0, 1, 2.4158453015843406e-13, 2.842170943040401e-14)"/>
+  <image x="52" y="738" width="360" height="360" xlink:href="{{qrCode}}"/>
   <path fill-rule="evenodd" clip-rule="evenodd" d="M89.6245 63.1567L78.0656 43.1587L89.683 49.8632L89.6245 63.1567Z" fill="#038E86" style="" transform="matrix(1, 0, 0, 1, 0, 1.4210854715202004e-14)"/>
   <path fill-rule="evenodd" clip-rule="evenodd" d="M62.4048 59.6615L56.4011 49.272L45.3128 55.6712L45.3155 63.1565L56.3489 63.1567L62.4048 59.6615Z" fill="#E2F5F4" style="" transform="matrix(1, 0, 0, 1, 0, 1.4210854715202004e-14)"/>
   <path fill-rule="evenodd" clip-rule="evenodd" d="M56.4011 49.272L62.4048 59.6615L68.4056 56.1992L61.9395 52.4674L56.4011 49.272Z" fill="#038E86" style="" transform="matrix(1, 0, 0, 1, 0, 1.4210854715202004e-14)"/>
