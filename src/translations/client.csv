@@ -2686,6 +2686,8 @@ v2.form.field.label.birthTypeQuadruplet,Label for quadruplet birth,Quadruplet,Qu
 v2.form.field.label.birthTypeSingle,Label for single birth,Single,Célibataire
 v2.form.field.label.birthTypeTriplet,Label for triplet birth,Triplet,Triplet
 v2.form.field.label.birthTypeTwin,Label for twin birth,Twin,Jumeau
+v2.form.field.label.documentTypeBirthCertificate,Option for form field: Type of ID,Birth Certificate,Certificat de naissance
+v2.form.field.label.documentTypeOther,Option for form field: Type of ID,Other,Autre
 v2.form.field.label.educationAttainmentISCED1,Option for form field: ISCED1 education,Primary,Primaire
 v2.form.field.label.educationAttainmentISCED4,Option for form field: ISCED4 education,Secondary,Secondaire
 v2.form.field.label.educationAttainmentISCED5,Option for form field: ISCED5 education,Tertiary,Tertiaire
@@ -2695,8 +2697,6 @@ v2.form.field.label.iDTypeBRN,Option for form field: Type of ID,Birth Registrati
 v2.form.field.label.iDTypeNationalID,Option for form field: Type of ID,National ID,Carte d'identité nationale
 v2.form.field.label.iDTypeNone,Option for form field: Type of ID,None,Aucun
 v2.form.field.label.iDTypePassport,Option for form field: Type of ID,Passport,Passeport
-v2.form.field.label.documentTypeOther,Option for form field: Type of ID,Other,Autre
-v2.form.field.label.documentTypeBirthCertificate,Option for form field: Type of ID,Birth Certificate,Certificat de naissance
 v2.form.field.label.informantRelation.brother,Label for option brother,Brother,Frère
 v2.form.field.label.informantRelation.father,Label for option father,Father,Père
 v2.form.field.label.informantRelation.grandfather,Label for option Grandfather,Grandfather,Grand-père
@@ -2752,6 +2752,7 @@ v2.register.selectVitalEvent.registerNewEventTitle,The title that appears on the
 v2.registerAction.Declare,The label for declare button of register action,Register,Enregistrer
 v2.registerAction.Reject,The label for reject button of register action,Reject,Rejeter
 v2.registerAction.description,The description for register action,"By clicking register, you confirm that the information entered is correct and the member can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que le membre peut être enregistré."
+v2.registerAction.incompleteForm,The label for warning of incomplete form,Please add mandatory information correctly before registering.,Veuillez ajouter correctement les informations obligatoires avant d'enregistrer.
 v2.registerAction.title,The title for register action,Register member,Enregistrer un membre
 v2.rejectModal.archive,The label for archive button of reject modal,Archive,Archiver
 v2.rejectModal.cancel,The label for cancel button of reject modal,Cancel,Annuler
@@ -2786,7 +2787,6 @@ v2.review.validate.reject,The label for reject button of review action,Reject,Re
 v2.review.validate.title,The title shown when reviewing a record to validate,Send for approval,Envoyer pour approbation
 v2.reviewAction.Declare,The label for declare button of review action,Declare,Declare
 v2.reviewAction.description,The description for review action,"By clicking declare, you confirm that the information entered is correct and the member can be declared.","By clicking declare, you confirm that the information entered is correct and the member can be declared."
-v2.reviewAction.incompleteForm,The label for warning of incomplete form,Please add mandatory information correctly before registering.,Veuillez ajouter correctement les informations obligatoires avant d'enregistrer.
 v2.reviewAction.register.description.incomplete,The description for registration action when form is incomplete,Please add mandatory information before registering,Veuillez ajouter les informations obligatoires avant d'enregistrer.
 v2.reviewAction.reject,The label for reject button of review action,Reject,Rejeter
 v2.reviewAction.title,The title for review action,Declare member,Declare member
