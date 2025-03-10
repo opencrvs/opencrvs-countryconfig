@@ -88,7 +88,9 @@ jobs:
 
       - name: Run Playwright Tests
         if: steps.check-specs.outputs.has_spec_files == 'true'
-        run: npx playwright test ./e2e/testcases/${{ matrix.test_dir }}
+        run: |
+          npx playwright test ./e2e/testcases/${{ matrix.test_dir }}
+          cat ctrf/ctrf-report.json
         env:
           DOMAIN: '${{ vars.DOMAIN }}'
         continue-on-error: true

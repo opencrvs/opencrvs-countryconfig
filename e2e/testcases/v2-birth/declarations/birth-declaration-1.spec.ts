@@ -495,8 +495,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         .click()
     })
 
-    // @TODO: there is field validation bugs on the checkboxes on V2, so we can not send to review yet
-    test.skip('1.1.8 Send for review', async () => {
+    test('1.1.8 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
