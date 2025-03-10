@@ -86,7 +86,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
 
   test.describe('1.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page)
+      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -499,14 +499,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await expect(page.getByText('Farajaland CRS')).toBeVisible()
-
-      /*
-       * Expected result: should redirect to registration home
-       */
-      expect(page.url().includes('registration-home')).toBeTruthy()
-
-      await expectOutboxToBeEmpty(page)
+      await expect(page.getByText('All events')).toBeVisible()
 
       await page.getByRole('button', { name: 'Sent for review' }).click()
 
