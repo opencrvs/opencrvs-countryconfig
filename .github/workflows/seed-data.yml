@@ -37,22 +37,17 @@ jobs:
         with:
           fetch-depth: 0
           repository: 'opencrvs/opencrvs-core'
-          path: './opencrvs-core'
 
       - name: Set CORE_VERSION from inputs
-        if: ${{ inputs.core-image-tag }}
-        run: |
-          cd opencrvs-core
-          git checkout ${{ inputs.core-image-tag }}
+        if: ${{ github.event.inputs.core-image-tag }}
+        run: git checkout ${{ github.event.inputs.core-image-tag }}
 
       - name: Use Node.js from .nvmrc
         uses: actions/setup-node@v4
         with:
-          node-version: 18
           node-version-file: .nvmrc
 
       - name: Install dependencies
-        working-directory: ./opencrvs-core
         run: yarn install
 
       - name: Seed data on given environment
@@ -62,7 +57,6 @@ jobs:
           timeout_minutes: 10
           max_attempts: 5
           command: |
-            cd ./opencrvs-core
             yarn seed:prod
         env:
           ACTIVATE_USERS: ${{ vars.ACTIVATE_USERS }}
