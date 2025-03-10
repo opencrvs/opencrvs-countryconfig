@@ -512,7 +512,7 @@ test.describe.serial('1. Birth event declaration', () => {
       /*
        * Expected result: should open modal with:
        * - Title: Delete draft?
-       * - Helper text: Are you certain you want to delete this draft declaration form? Please note, this action can't be undone.
+       * - Helper text: Are you sure you want to delete this declaration?
        * - Cancel Button
        * - Confirm Button
        */
@@ -520,9 +520,7 @@ test.describe.serial('1. Birth event declaration', () => {
         page.getByRole('heading', { name: 'Delete draft?' })
       ).toBeVisible()
       await expect(
-        page.getByText(
-          "Are you certain you want to delete this draft declaration form? Please note, this action can't be undone."
-        )
+        page.getByText('Are you sure you want to delete this declaration?')
       ).toBeVisible()
       await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible()
       await expect(page.getByRole('button', { name: 'Confirm' })).toBeVisible()

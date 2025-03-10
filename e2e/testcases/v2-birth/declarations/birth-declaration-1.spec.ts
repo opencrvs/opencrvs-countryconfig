@@ -501,10 +501,8 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
       await expect(page.getByText('All events')).toBeVisible()
 
-      await page.getByRole('button', { name: 'Sent for review' }).click()
-
       /*
-       * Expected result: The declaration should be in sent for review
+       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
        */
       await expect(
         page.getByRole('button', {
