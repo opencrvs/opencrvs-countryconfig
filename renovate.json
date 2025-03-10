@@ -1,25 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "monorepo:lerna", ":semanticCommits"],
-  "lockFileMaintenance": {
-    "enabled": true
-  },
-  "pruneStaleBranches": false,
-  "timezone": "Europe/London",
-  "schedule": [
-    "after 5pm every weekday",
-    "before 3am every weekday",
-    "every weekend"
-  ],
-  "vulnerabilityAlerts": {
-    "enabled": true,
-    "labels": ["Security"]
-  },
-  "osvVulnerabilityAlerts": true,
+  "extends": ["config:base"],
   "packageRules": [
     {
-      "updateTypes": ["patch"],
+      "matchDepTypes": ["dependencies", "devDependencies"],
+      "matchUpdateTypes": ["patch", "minor", "major"],
       "enabled": false
+    },
+    {
+      "matchPackagePatterns": ["^@opencrvs/mosip$"],
+      "enabled": true,
+      "matchUpdateTypes": ["patch", "minor", "major"]
     }
   ]
 }
