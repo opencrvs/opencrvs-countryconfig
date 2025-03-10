@@ -6,87 +6,73 @@ import {
   expectAddress,
   expectOutboxToBeEmpty,
   formatDateObjectTo_ddMMMMyyyy,
+  formatDateObjectTo_dMMMMyyyy,
   getAction,
   getRandomDate,
   goToSection,
-  joinValuesWith,
   loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
-// @TODO: After the bug causing the flakiness is fixed, return this as serial()
-test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
+test.describe.serial('1. Birth declaration case - 1', () => {
   let page: Page
   const declaration = {
     child: {
       name: {
-        firstNames: faker.person.firstName('female'),
-        familyName: faker.person.lastName('female')
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
       },
-      gender: 'Female',
+      gender: 'Male',
       birthDate: getRandomDate(0, 200)
     },
-    attendantAtBirth: 'Nurse',
-    birthType: 'Twin',
-    placeOfBirth: 'Residential address',
-    birthLocation: {
-      country: 'Farajaland',
-      province: 'Pualula',
-      district: 'Funabuli',
-      urbanOrRural: 'Urban',
-      town: faker.location.city(),
-      residentialArea: faker.location.county(),
-      street: faker.location.street(),
-      number: faker.location.buildingNumber(),
-      postcodeOrZip: faker.location.zipCode()
-    },
-    informantType: 'Father',
+    attendantAtBirth: 'Physician',
+    birthType: 'Single',
+    weightAtBirth: 2.4,
+    placeOfBirth: 'Health Institution',
+    birthLocation: 'Golden Valley Rural Health Centre',
+    informantType: 'Mother',
     informantEmail: faker.internet.email(),
     mother: {
       name: {
         firstNames: faker.person.firstName('female'),
         familyName: faker.person.lastName('female')
       },
-      age: 21,
-      nationality: 'Fiji',
+      birthDate: getRandomDate(20, 200),
+      nationality: 'Farajaland',
       identifier: {
-        id: faker.string.numeric(12),
-        type: 'Passport'
+        id: faker.string.numeric(10),
+        type: 'National ID'
       },
       address: {
         country: 'Farajaland',
         province: 'Sulaka',
         district: 'Irundu',
-        urbanOrRural: 'Rural',
-        village: faker.location.county()
-      },
-      maritalStatus: 'Married',
-      levelOfEducation: 'Primary'
-    },
-    father: {
-      name: {
-        firstNames: faker.person.firstName('male'),
-        familyName: faker.person.lastName('male')
-      },
-      age: 25,
-      nationality: 'Farajaland',
-      identifier: {
-        id: faker.string.numeric(8),
-        type: 'Passport'
-      },
-      maritalStatus: 'Married',
-      levelOfEducation: 'Primary',
-      address: {
-        country: 'Farajaland',
-        province: 'Sulaka',
-        district: 'Zobwe',
         urbanOrRural: 'Urban',
         town: faker.location.city(),
         residentialArea: faker.location.county(),
         street: faker.location.street(),
         number: faker.location.buildingNumber(),
         postcodeOrZip: faker.location.zipCode()
+      },
+      maritalStatus: 'Single',
+      levelOfEducation: 'No schooling'
+    },
+    father: {
+      name: {
+        firstNames: faker.person.firstName('male'),
+        familyName: faker.person.lastName('male')
+      },
+      birthDate: getRandomDate(22, 200),
+      nationality: 'Gabon',
+      identifier: {
+        id: faker.string.numeric(10),
+        type: 'National ID'
+      },
+      maritalStatus: 'Single',
+      levelOfEducation: 'No schooling',
+      address: {
+        sameAsMother: true
       }
     }
   }
@@ -98,16 +84,16 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
     await page.close()
   })
 
-  test.describe('2.1 Declaration started by FA', async () => {
+  test.describe('1.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
+      await loginToV2(page)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
-    test('2.1.1 Fill child details', async () => {
+    test('1.1.1 Fill child details', async () => {
       await page
         .locator('#child____firstname')
         .fill(declaration.child.name.firstNames)
@@ -127,38 +113,10 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
           exact: true
         })
         .click()
-
       await page
-        .locator('#child____address-form-input #country-form-input input')
-        .fill(declaration.birthLocation.country.slice(0, 3))
-      await page
-        .locator('#child____address-form-input #country-form-input')
-        .getByText(declaration.birthLocation.country, { exact: true })
-        .click()
-
-      await page.locator('#child____address-form-input #province').click()
-      await page
-        .getByText(declaration.birthLocation.province, {
-          exact: true
-        })
-        .click()
-
-      await page.locator('#child____address-form-input #district').click()
-      await page
-        .getByText(declaration.birthLocation.district, {
-          exact: true
-        })
-        .click()
-
-      await page.locator('#town').fill(declaration.birthLocation.town)
-      await page
-        .locator('#residentialArea')
-        .fill(declaration.birthLocation.residentialArea)
-      await page.locator('#street').fill(declaration.birthLocation.street)
-      await page.locator('#number').fill(declaration.birthLocation.number)
-      await page
-        .locator('#zipCode')
-        .fill(declaration.birthLocation.postcodeOrZip)
+        .locator('#child____birthLocation')
+        .fill(declaration.birthLocation.slice(0, 3))
+      await page.getByText(declaration.birthLocation).click()
 
       await page.locator('#child____attendantAtBirth').click()
       await page
@@ -174,10 +132,14 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
         })
         .click()
 
+      await page
+        .locator('#child____weightAtBirth')
+        .fill(declaration.weightAtBirth.toString())
+
       await continueForm(page)
     })
 
-    test('2.1.2 Fill informant details', async () => {
+    test('1.1.2 Fill informant details', async () => {
       await page.locator('#informant____relation').click()
       await page
         .getByText(declaration.informantType, {
@@ -192,7 +154,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
       await continueForm(page)
     })
 
-    test("2.1.3 Fill mother's details", async () => {
+    test("1.1.3 Fill mother's details", async () => {
       await page
         .locator('#mother____firstname')
         .fill(declaration.mother.name.firstNames)
@@ -200,15 +162,11 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
         .locator('#mother____surname')
         .fill(declaration.mother.name.familyName)
 
-      await page.getByLabel('Exact date of birth unknown').check()
+      await page.getByPlaceholder('dd').fill(declaration.mother.birthDate.dd)
+      await page.getByPlaceholder('mm').fill(declaration.mother.birthDate.mm)
       await page
-        .locator('#mother____age')
-        .fill(declaration.mother.age.toString())
-
-      await page.locator('#mother____nationality').click()
-      await page
-        .getByText(declaration.mother.nationality, { exact: true })
-        .click()
+        .getByPlaceholder('yyyy')
+        .fill(declaration.mother.birthDate.yyyy)
 
       await page.locator('#mother____idType').click()
       await page
@@ -216,7 +174,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
         .click()
 
       await page
-        .locator('#mother____passport')
+        .locator('#mother____nid')
         .fill(declaration.mother.identifier.id)
 
       await page.locator('#country').click()
@@ -237,8 +195,15 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
         .getByText(declaration.mother.address.district, { exact: true })
         .click()
 
-      await page.getByLabel('Rural').check()
-      await page.locator('#village').fill(declaration.mother.address.village)
+      await page.locator('#town').fill(declaration.mother.address.town)
+      await page
+        .locator('#residentialArea')
+        .fill(declaration.mother.address.residentialArea)
+      await page.locator('#street').fill(declaration.mother.address.street)
+      await page.locator('#number').fill(declaration.mother.address.number)
+      await page
+        .locator('#zipCode')
+        .fill(declaration.mother.address.postcodeOrZip)
 
       await page.locator('#mother____maritalStatus').click()
       await page
@@ -253,7 +218,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
       await continueForm(page)
     })
 
-    test("2.1.4 Fill father's details", async () => {
+    test("1.1.4 Fill father's details", async () => {
       await page
         .locator('#father____firstname')
         .fill(declaration.father.name.firstNames)
@@ -261,10 +226,11 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
         .locator('#father____surname')
         .fill(declaration.father.name.familyName)
 
-      await page.getByLabel('Exact date of birth unknown').check()
+      await page.getByPlaceholder('dd').fill(declaration.father.birthDate.dd)
+      await page.getByPlaceholder('mm').fill(declaration.father.birthDate.mm)
       await page
-        .locator('#father____age')
-        .fill(declaration.father.age.toString())
+        .getByPlaceholder('yyyy')
+        .fill(declaration.father.birthDate.yyyy)
 
       await page.locator('#father____idType').click()
       await page
@@ -272,38 +238,15 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
         .click()
 
       await page
-        .locator('#father____passport')
+        .locator('#father____nid')
         .fill(declaration.father.identifier.id)
 
-      await page.getByLabel('No', { exact: true }).check()
-
-      await page.locator('#country').click()
+      await page.locator('#father____nationality').click()
       await page
-        .locator('#country input')
-        .fill(declaration.father.address.country.slice(0, 3))
-      await page
-        .locator('#country')
-        .getByText(declaration.father.address.country, { exact: true })
+        .getByText(declaration.father.nationality, { exact: true })
         .click()
 
-      await page.locator('#province').click()
-      await page
-        .getByText(declaration.father.address.province, { exact: true })
-        .click()
-      await page.locator('#district').click()
-      await page
-        .getByText(declaration.father.address.district, { exact: true })
-        .click()
-      await page.getByLabel(declaration.father.address.urbanOrRural).check()
-      await page.locator('#town').fill(declaration.father.address.town)
-      await page
-        .locator('#residentialArea')
-        .fill(declaration.father.address.residentialArea)
-      await page.locator('#street').fill(declaration.father.address.street)
-      await page.locator('#number').fill(declaration.father.address.number)
-      await page
-        .locator('#zipCode')
-        .fill(declaration.father.address.postcodeOrZip)
+      await page.locator('#father____addressSameAs_YES').click()
 
       await page.locator('#father____maritalStatus').click()
       await page
@@ -317,12 +260,12 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
 
       await page.getByRole('button', { name: 'Continue' }).click()
     })
-    test('2.1.5 Go To Review', async () => {
+
+    test('1.1.5 Go to review', async () => {
       await goToSection(page, 'review')
     })
 
-    // @TODO: This test was randomly failing in the CI pipeline, disable for now
-    test.fixme('2.1.6 Verify information on review page', async () => {
+    test('1.1.6 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
@@ -349,7 +292,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
        * - Child's date of birth
        */
       await expect(page.getByTestId('row-value-child.dob')).toHaveText(
-        `${declaration.child.birthDate.yyyy}-${declaration.child.birthDate.mm}-${declaration.child.birthDate.dd}`
+        formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
       )
 
       /*
@@ -360,14 +303,9 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
       await expect(page.getByTestId('row-value-child.placeOfBirth')).toHaveText(
         declaration.placeOfBirth
       )
-
-      await Promise.all(
-        Object.values(declaration.birthLocation).map((val) =>
-          expect(
-            page.getByTestId('row-value-child.address').getByText(val)
-          ).toBeVisible()
-        )
-      )
+      await expect(
+        page.getByTestId('row-value-child.birthLocation')
+      ).toHaveText(declaration.birthLocation)
 
       /*
        * Expected result: should include
@@ -387,11 +325,21 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
 
       /*
        * Expected result: should include
+       * - Child's Weight at birth
+       */
+      await expect(
+        page.getByTestId('row-value-child.weightAtBirth')
+      ).toHaveText(declaration.weightAtBirth.toString())
+
+      /*
+       * Expected result: should include
        * - Informant's relation to child
        */
+
       await expect(page.getByTestId('row-value-informant.relation')).toHaveText(
         declaration.informantType
       )
+
       /*
        * Expected result: should include
        * - Informant's Email
@@ -415,14 +363,11 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
 
       /*
        * Expected result: should include
-       * - Mother's age
+       * - Mother's date of birth
        */
-      // @TODO: this should pass, but 'years' postfix is not yet implemented on V2
-      // await expect(
-      //   page.getByTestId(
-      //   'row-value-mother.age')).toHaveText(
-      //   joinValuesWith([declaration.mother.age, 'years'])
-      // )
+      await expect(page.getByTestId('row-value-mother.dob')).toHaveText(
+        formatDateObjectTo_dMMMMyyyy(declaration.mother.birthDate)
+      )
 
       /*
        * Expected result: should include
@@ -457,7 +402,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
         declaration.mother.identifier.type
       )
 
-      await expect(page.getByTestId('row-value-mother.passport')).toHaveText(
+      await expect(page.getByTestId('row-value-mother.nid')).toHaveText(
         declaration.mother.identifier.id
       )
 
@@ -465,6 +410,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
        * Expected result: should include
        * - Mother's address
        */
+      // @TODO: There is a bug on V2, where it shows an empty 'Usual place of residence' field on the review page
       await Promise.all(
         Object.values(declaration.mother.address).map((val) =>
           expect(
@@ -490,12 +436,9 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
        * Expected result: should include
        * - Father's date of birth
        */
-      // @TODO: this should pass, but 'years' postfix is not yet implemented on V2
-      // await expect(
-      //   page.getByTestId(
-      //   'row-value-father.age')).toHaveText(
-      //   joinValuesWith([declaration.father.age, 'years'])
-      // )
+      await expect(page.getByTestId('row-value-father.dob')).toHaveText(
+        formatDateObjectTo_dMMMMyyyy(declaration.father.birthDate)
+      )
 
       /*
        * Expected result: should include
@@ -514,7 +457,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
         declaration.father.identifier.type
       )
 
-      await expect(page.getByTestId('row-value-father.passport')).toHaveText(
+      await expect(page.getByTestId('row-value-father.nid')).toHaveText(
         declaration.father.identifier.id
       )
 
@@ -538,16 +481,11 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
        * Expected result: should include
        * - Father's address
        */
-      await Promise.all(
-        Object.values(declaration.father.address).map((val) =>
-          expect(
-            page.getByTestId('row-value-father.address').getByText(val)
-          ).toBeVisible()
-        )
-      )
+      await expect(
+        page.getByTestId('row-value-father.addressSameAs')
+      ).toHaveText('Yes')
     })
-
-    test('2.1.7 Fill up informant comment & signature', async () => {
+    test('1.1.7 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
@@ -558,7 +496,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
     })
 
     // @TODO: there is field validation bugs on the checkboxes on V2, so we can not send to review yet
-    test.skip('2.1.8 Send for review', async () => {
+    test.skip('1.1.8 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
@@ -585,8 +523,8 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
   })
 
   // @TODO: This is not yet supported on V2, please add this test case when it is!
-  test.describe.skip('2.2 Declaration Review by RA', async () => {
-    test('2.2.1 Navigate to the declaration review page', async () => {
+  test.describe.skip('1.2 Declaration Review by RA', async () => {
+    test('1.2.1 Navigate to the declaration review page', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       await page
@@ -599,13 +537,13 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
       await getAction(page, 'Review declaration').click()
     })
 
-    test('2.2.2 Verify information on review page', async () => {
+    test('1.2.2 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
        * - Child's Family Name
        */
-      await expect(page.locator('#child.firstname')).toContainText(
+      await expect(page.getByTestId('row-value-child.firstname')).toContainText(
         declaration.child.name.firstNames
       )
       await expect(page.locator('#child.surname')).toContainText(
@@ -636,8 +574,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
       await expect(page.locator('#child-content #Place')).toContainText(
         declaration.placeOfBirth
       )
-      await expectAddress(
-        page.locator('#child-content #Place'),
+      await expect(page.locator('#child-content #Place')).toContainText(
         declaration.birthLocation
       )
 
@@ -655,6 +592,14 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
        */
       await expect(page.locator('#child-content #Type')).toContainText(
         declaration.birthType
+      )
+
+      /*
+       * Expected result: should include
+       * - Child's Weight at birth
+       */
+      await expect(page.locator('#child-content #Weight')).toContainText(
+        declaration.weightAtBirth.toString()
       )
 
       /*
@@ -687,10 +632,10 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
 
       /*
        * Expected result: should include
-       * - Mother's age
+       * - Mother's date of birth
        */
-      await expect(page.locator('#mother-content #Age')).toContainText(
-        joinValuesWith([declaration.mother.age, 'years'])
+      await expect(page.locator('#mother-content #Date')).toContainText(
+        formatDateObjectTo_ddMMMMyyyy(declaration.mother.birthDate)
       )
 
       /*
@@ -734,7 +679,6 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
        * Expected result: should include
        * - Mother's address
        */
-
       await expectAddress(
         page.locator('#mother-content #Usual'),
         declaration.mother.address
@@ -756,8 +700,8 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
        * Expected result: should include
        * - Father's date of birth
        */
-      await expect(page.locator('#father-content #Age')).toContainText(
-        joinValuesWith([declaration.father.age, 'years'])
+      await expect(page.locator('#father-content #Date')).toContainText(
+        formatDateObjectTo_ddMMMMyyyy(declaration.father.birthDate)
       )
 
       /*
@@ -801,10 +745,7 @@ test.describe.fixme('2. Birth declaration case - 2 - V2', () => {
        * Expected result: should include
        * - Father's address
        */
-      await expectAddress(
-        page.locator('#father-content #Usual'),
-        declaration.father.address
-      )
+      await expect(page.locator('#father-content #Same')).toContainText('Yes')
     })
   })
 })
