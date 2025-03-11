@@ -134,7 +134,15 @@ jobs:
         run: npx playwright test ./e2e/testcases/${{ matrix.test_dir }}
         env:
           DOMAIN: '${{ vars.DOMAIN }}'
-
+          - id: ctrf_check
+          if: always()
+          run: |
+            [ -d ctrf ] && \
+             echo "ctrf=true" >> $GITHUB_OUTPUT || \
+             echo "ctrf=false" >> $GITHUB_OUTPUT
+        - name: Publish Test Summary Results
+          run: npx github-actions-ctrf ctrf/ctrf-report.json
+          if: always() && steps.ctrf_check.outputs.ctrf == 'true'
       - uses: actions/upload-artifact@v4
         if: always() && steps.check-specs.outputs.has_spec_files == 'true'
         with:
