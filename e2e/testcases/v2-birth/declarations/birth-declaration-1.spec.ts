@@ -6,6 +6,7 @@ import {
   expectAddress,
   expectOutboxToBeEmpty,
   formatDateObjectTo_ddMMMMyyyy,
+  formatDateObjectTo_dMMMMyyyy,
   getAction,
   getRandomDate,
   goToSection,
@@ -14,8 +15,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 
-// @TODO: After the bug causing the flakiness is fixed, return this as serial()
-test.describe.fixme('1. Birth declaration case - 1 - V2', () => {
+test.describe.serial('1. Birth declaration case - 1', () => {
   let page: Page
   const declaration = {
     child: {
@@ -86,7 +86,7 @@ test.describe.fixme('1. Birth declaration case - 1 - V2', () => {
 
   test.describe('1.1 Declaration started by FA', async () => {
     test.beforeAll(async () => {
-      await loginToV2(page)
+      await loginToV2(page, CREDENTIALS.FIELD_AGENT)
       await page.click('#header-new-event')
       await page.getByLabel('Birth').click()
       await page.getByRole('button', { name: 'Continue' }).click()
@@ -265,8 +265,7 @@ test.describe.fixme('1. Birth declaration case - 1 - V2', () => {
       await goToSection(page, 'review')
     })
 
-    // @TODO: This test was randomly failing in the CI pipeline, disable for now
-    test.fixme('1.1.6 Verify information on review page', async () => {
+    test('1.1.6 Verify information on review page', async () => {
       /*
        * Expected result: should include
        * - Child's First Name
@@ -293,7 +292,7 @@ test.describe.fixme('1. Birth declaration case - 1 - V2', () => {
        * - Child's date of birth
        */
       await expect(page.getByTestId('row-value-child.dob')).toHaveText(
-        `${declaration.child.birthDate.yyyy}-${declaration.child.birthDate.mm}-${declaration.child.birthDate.dd}`
+        formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
       )
 
       /*
@@ -367,7 +366,7 @@ test.describe.fixme('1. Birth declaration case - 1 - V2', () => {
        * - Mother's date of birth
        */
       await expect(page.getByTestId('row-value-mother.dob')).toHaveText(
-        `${declaration.mother.birthDate.yyyy}-${declaration.mother.birthDate.mm}-${declaration.mother.birthDate.dd}`
+        formatDateObjectTo_dMMMMyyyy(declaration.mother.birthDate)
       )
 
       /*
@@ -438,7 +437,7 @@ test.describe.fixme('1. Birth declaration case - 1 - V2', () => {
        * - Father's date of birth
        */
       await expect(page.getByTestId('row-value-father.dob')).toHaveText(
-        `${declaration.father.birthDate.yyyy}-${declaration.father.birthDate.mm}-${declaration.father.birthDate.dd}`
+        formatDateObjectTo_dMMMMyyyy(declaration.father.birthDate)
       )
 
       /*
@@ -496,24 +495,14 @@ test.describe.fixme('1. Birth declaration case - 1 - V2', () => {
         .click()
     })
 
-    // @TODO: there is field validation bugs on the checkboxes on V2, so we can not send to review yet
-    test.skip('1.1.8 Send for review', async () => {
+    test('1.1.8 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await expect(page.getByText('Farajaland CRS')).toBeVisible()
+      await expect(page.getByText('All events')).toBeVisible()
 
       /*
-       * Expected result: should redirect to registration home
-       */
-      expect(page.url().includes('registration-home')).toBeTruthy()
-
-      await expectOutboxToBeEmpty(page)
-
-      await page.getByRole('button', { name: 'Sent for review' }).click()
-
-      /*
-       * Expected result: The declaration should be in sent for review
+       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
        */
       await expect(
         page.getByRole('button', {
