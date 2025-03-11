@@ -2324,10 +2324,12 @@ v2.actionModal.description,The description for action modal,The declarant will b
 v2.actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} the member?"
 v2.advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 v2.advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
+v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de recherche
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
 v2.buttons.change,The label for the change button,Change,Changer
 v2.buttons.confirm,Confirm button,Confirm,Confirmer
 v2.buttons.continue,Continue Button Text,Continue,Continuer
+v2.buttons.edit,Edit button text,Edit,Modifier
 v2.buttons.exit,Label for Exit button on EventTopBar,Exit,Quitter
 v2.buttons.print,Print button text,Print,Imprimer
 v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
@@ -2656,6 +2658,7 @@ v2.event.tennis-club-membership.workqueue.all.name.label,Label for the 'All' wor
 v2.event.tennis-club-membership.workqueue.readyForReview.name.label,Label for 'Ready for Review' work queue for tennis club membership,Ready for Review,Prêt pour révision
 v2.event.tennis-club-membership.workqueue.registered.name.label,Label for 'Registered' work queue for tennis club membership,Registered,Enregistré
 v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} REJECT {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} NOTIFY {Sent incomplete} other {Unknown}}","{status, select, CREATE {Brouillon} VALIDATE {Déclaration envoyée pour approbation} DRAFT {Brouillon} DECLARE {Déclaration initiée} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVED {archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} NOTIFY {Envoyé incomplet} other {Inconnu}}"
+v2.events.status,,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} NOTIFIED {In progress} other {Unknown}}","{status, select, OUTBOX {Synchronisation...} CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} REJECTED {Nécessite une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} NOTIFIED {En cours} other {Inconnu}}"
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
 v2.exitModal.exitWithoutSavingDescription, exitmodal without saving  description,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Voulez-vous vraiment quitter sans enregistrer ?
@@ -2792,6 +2795,7 @@ v2.reviewAction.reject,The label for reject button of review action,Reject,Rejet
 v2.reviewAction.title,The title for review action,Declare member,Declare member
 v2.saveAndExit.desc.saveDeclarationConfirm,Description for save declaration confirmation modal,All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?,Toutes les données saisies seront conservées en toute sécurité pour de futures modifications. Êtes-vous prêt à enregistrer les modifications apportées à ce formulaire de déclaration?
 v2.saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
+v2.search.noResult,The no result text,No results,
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
 v2.wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 v2.wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
