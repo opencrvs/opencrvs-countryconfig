@@ -78,7 +78,7 @@ export const birthEvent = defineConfig({
       {
         id: 'informant.contact',
         emptyValueMessage: {
-          defaultMessage: 'No informant contact',
+          defaultMessage: 'No contact details provided',
           description: 'This is shown when there is no informant information',
           id: 'v2.event.birth.summary.informant.contact.empty'
         },

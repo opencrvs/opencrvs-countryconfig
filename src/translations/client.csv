@@ -2580,6 +2580,15 @@ v2.event.birth.action.declare.form.section.person.field.surname.label,This is th
 v2.event.birth.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
 v2.event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
 v2.event.birth.label,This is what this event is referred as in the system,Birth,Naissance
+v2.event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
+v2.event.birth.summary.child.dob.label,Label for date of birth,Date of birth,Date de naissance
+v2.event.birth.summary.child.dob.value,This is the dob value of the child,{child.dob},{child.dob}
+v2.event.birth.summary.child.placeOfBirth.empty,Label for place of birth not available,No place of birth,Pas de lieu de naissance
+v2.event.birth.summary.child.placeOfBirth.label,Label for place of birth,Place of birth,Lieu de naissance
+v2.event.birth.summary.child.placeOfBirth.value,This is the place of birth value of the child,{child.placeOfBirth},{child.placeOfBirth}
+v2.event.birth.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
+v2.event.birth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
+v2.event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo}\n{informant.email},{informant.phoneNo}\n{informant.email}
 v2.event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Select Certificate Template,Select Certificate Template
