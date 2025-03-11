@@ -60,7 +60,8 @@ import {
   informantNotMotherOrFather,
   detailsExistConditional,
   ageOfIndividualValidators,
-  ageOfParentsConditionals
+  ageOfParentsConditionals,
+  hideIfMotherAddressNotAvailable
 } from '../common/default-validation-conditionals'
 import {
   informantFirstNameConditionals,
@@ -225,7 +226,7 @@ export const birthForm: ISerializedForm = {
                 hideIfInformantMotherOrFather
               ),
               certificateHandlebars.informantFirstName
-            ), // Required field.
+            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
               informantFamilyNameConditionals.concat(
@@ -418,7 +419,10 @@ export const birthForm: ISerializedForm = {
             getIDType('birth', 'father', detailsExist, true),
             ...getIDNumberFields('father', detailsExist, true),
             // ADDRESS FIELDS WILL RENDER HERE
-            divider('father-address-seperator', detailsExist),
+            divider('father-address-seperator', [
+              ...detailsExist,
+              ...hideIfMotherAddressNotAvailable
+            ]),
             getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
               {
                 action: 'hide',
