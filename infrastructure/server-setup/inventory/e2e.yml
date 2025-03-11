@@ -61,6 +61,11 @@ all:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgMcsSBwTE0EbMDRSF1T4vJDcN/5HAjKGbi2DqV7g/Q vmudryi@opencrvs.org
         state: present
         sudoer: true
+      - name: cihan
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEtz5M5hYKcUehDiCm84BplV+3t1ex8DPjIsMtQEWGv cihan.m.bebek@gmail.com
+        state: present
+        sudoer: true
     enable_backups: false
 docker-manager-first:
   hosts:
