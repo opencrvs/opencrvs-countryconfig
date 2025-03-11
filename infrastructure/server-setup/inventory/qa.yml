@@ -73,6 +73,11 @@ all:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgMcsSBwTE0EbMDRSF1T4vJDcN/5HAjKGbi2DqV7g/Q vmudryi@opencrvs.org
         state: present
         sudoer: true
+      - name: cihan
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEtz5M5hYKcUehDiCm84BplV+3t1ex8DPjIsMtQEWGv cihan.m.bebek@gmail.com
+        state: present
+        sudoer: true
     # If the machine is repurposed to also be the backup host, we need to add more keys to the authorized_keys file so that
     # when the application servers get provisioned, the provision user of this machine can be used.
     additional_keys_for_provisioning_user:
