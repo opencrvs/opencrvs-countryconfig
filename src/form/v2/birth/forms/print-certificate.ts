@@ -9,7 +9,18 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { ConditionalType, defineForm, field } from '@opencrvs/toolkit/events'
+import {
+  ConditionalType,
+  defineForm,
+  field,
+  FieldType
+} from '@opencrvs/toolkit/events'
+
+const CertCollectorType = {
+  INFORMANT: 'INFORMANT',
+  OTHER: 'OTHER',
+  PRINT_IN_ADVANCE: 'PRINT_IN_ADVANCE'
+} as const
 
 export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
   label: {
@@ -45,7 +56,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
       fields: [
         {
           id: 'collector.requesterId',
-          type: 'SELECT',
+          type: FieldType.SELECT,
           required: true,
           label: {
             defaultMessage: 'Requester',
@@ -59,7 +70,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
                 defaultMessage: 'Print and issue Informant',
                 description: 'This is the label for the field'
               },
-              value: 'INFORMANT'
+              value: CertCollectorType.INFORMANT
             },
             {
               label: {
@@ -67,7 +78,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
                 defaultMessage: 'Print and issue someone else',
                 description: 'This is the label for the field'
               },
-              value: 'OTHER'
+              value: CertCollectorType.OTHER
             },
             {
               label: {
@@ -75,13 +86,13 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
                 defaultMessage: 'Print in advance',
                 description: 'This is the label for the field'
               },
-              value: 'PRINT_IN_ADVANCE'
+              value: CertCollectorType.PRINT_IN_ADVANCE
             }
           ]
         },
         {
           id: 'collector.OTHER.idType',
-          type: 'SELECT',
+          type: FieldType.SELECT,
           required: true,
           label: {
             defaultMessage: 'Select Type of ID',
@@ -91,7 +102,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').inArray(['OTHER'])
+              conditional: field('collector.requesterId').isEqualTo('OTHER')
             }
           ],
           options: [
@@ -149,7 +160,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
         },
         {
           id: 'collector.PASSPORT.details',
-          type: 'TEXT',
+          type: FieldType.TEXT,
           required: true,
           label: {
             defaultMessage: 'Passport Details',
@@ -159,13 +170,13 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray(['PASSPORT'])
+              conditional: field('collector.OTHER.idType').isEqualTo('PASSPORT')
             }
           ]
         },
         {
           id: 'collector.DRIVING_LICENSE.details',
-          type: 'TEXT',
+          type: FieldType.TEXT,
           required: true,
           label: {
             defaultMessage: 'Driving License Details',
@@ -175,15 +186,15 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray([
+              conditional: field('collector.OTHER.idType').isEqualTo(
                 'DRIVING_LICENSE'
-              ])
+              )
             }
           ]
         },
         {
           id: 'collector.REFUGEE_NUMBER.details',
-          type: 'TEXT',
+          type: FieldType.TEXT,
           required: true,
           label: {
             defaultMessage: 'Refugee Number Details',
@@ -193,15 +204,15 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray([
+              conditional: field('collector.OTHER.idType').isEqualTo(
                 'REFUGEE_NUMBER'
-              ])
+              )
             }
           ]
         },
         {
           id: 'collector.ALIEN_NUMBER.details',
-          type: 'TEXT',
+          type: FieldType.TEXT,
           required: true,
           label: {
             defaultMessage: 'Alien Number Details',
@@ -211,15 +222,15 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray([
+              conditional: field('collector.OTHER.idType').isEqualTo(
                 'ALIEN_NUMBER'
-              ])
+              )
             }
           ]
         },
         {
           id: 'collector.OTHER.idTypeOther',
-          type: 'TEXT',
+          type: FieldType.TEXT,
           required: true,
           label: {
             defaultMessage: 'Other ID Type (if applicable)',
@@ -229,13 +240,13 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray(['OTHER'])
+              conditional: field('collector.OTHER.idType').isEqualTo('OTHER')
             }
           ]
         },
         {
           id: 'collector.OTHER.firstName',
-          type: 'TEXT',
+          type: FieldType.TEXT,
           required: true,
           label: {
             defaultMessage: 'First Name',
@@ -245,13 +256,13 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').inArray(['OTHER'])
+              conditional: field('collector.requesterId').isEqualTo('OTHER')
             }
           ]
         },
         {
           id: 'collector.OTHER.lastName',
-          type: 'TEXT',
+          type: FieldType.TEXT,
           required: true,
           label: {
             defaultMessage: 'Last Name',
@@ -261,13 +272,13 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').inArray(['OTHER'])
+              conditional: field('collector.requesterId').isEqualTo('OTHER')
             }
           ]
         },
         {
           id: 'collector.OTHER.relationshipToMember',
-          type: 'TEXT',
+          type: FieldType.TEXT,
           required: true,
           label: {
             defaultMessage: 'Relationship to Member',
@@ -278,13 +289,13 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').inArray(['OTHER'])
+              conditional: field('collector.requesterId').isEqualTo('OTHER')
             }
           ]
         },
         {
           id: 'collector.OTHER.signedAffidavit',
-          type: 'FILE',
+          type: FieldType.FILE,
           required: false,
           label: {
             defaultMessage: 'Signed Affidavit (Optional)',
@@ -294,7 +305,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').inArray(['OTHER'])
+              conditional: field('collector.requesterId').isEqualTo('OTHER')
             }
           ]
         }

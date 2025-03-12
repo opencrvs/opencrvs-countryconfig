@@ -11,6 +11,7 @@
 import {
   ActionType,
   and,
+  ConditionalType,
   defineConfig,
   or,
   user
@@ -59,7 +60,7 @@ export const birthEvent = defineConfig({
       forms: [BIRTH_DECLARE_FORM],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             not(event.hasAction(ActionType.DECLARE)),
             user.hasScope(SCOPES.RECORD_DECLARE)
@@ -78,7 +79,7 @@ export const birthEvent = defineConfig({
       forms: [BIRTH_DECLARE_FORM],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.DECLARE),
             not(event.hasAction(ActionType.VALIDATE)),
@@ -98,7 +99,7 @@ export const birthEvent = defineConfig({
       forms: [BIRTH_DECLARE_FORM],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             or(
               event.hasAction(ActionType.VALIDATE),
@@ -120,7 +121,7 @@ export const birthEvent = defineConfig({
       },
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.REGISTER),
             user.hasScope(SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES)
