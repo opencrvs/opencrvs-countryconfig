@@ -21,9 +21,10 @@ import { BIRTH_DECLARE_FORM } from './forms/declare'
 import { advancedSearchBirth } from './advancedSearch'
 import { Event } from '@countryconfig/form/types/types'
 import { SCOPES } from '@opencrvs/toolkit/scopes'
+import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/print-certificate'
 
 export const birthEvent = defineConfig({
-  id: Event.Birth,
+  id: Event.V2_BIRTH,
   label: {
     defaultMessage: 'Birth',
     description: 'This is what this event is referred as in the system',
@@ -108,6 +109,25 @@ export const birthEvent = defineConfig({
           )
         }
       ]
+    },
+    {
+      type: ActionType.PRINT_CERTIFICATE,
+      label: {
+        defaultMessage: 'Print certificate',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.birth.action.collect-certificate.label'
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: and(
+            event.hasAction(ActionType.REGISTER),
+            user.hasScope(SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES)
+          )
+        }
+      ],
+      forms: [BIRTH_CERTIFICATE_COLLECTOR_FORM]
     }
   ],
   advancedSearch: advancedSearchBirth
