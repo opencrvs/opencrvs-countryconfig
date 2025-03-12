@@ -2326,6 +2326,7 @@ v2.advancedSearch.accordion.show,Label for show button when accordion is closed,
 v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de la recherche
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
 v2.buttons.change,The label for the change button,Change,Changer
+v2.buttons.changeAll,The label for the change all button,Change all,Changer tous
 v2.buttons.confirm,Confirm button,Confirm,Confirmer
 v2.buttons.continue,Continue Button Text,Continue,Continuer
 v2.buttons.edit,Edit button text,Edit,Modifier

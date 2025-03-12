@@ -13,6 +13,7 @@ import { defineFormPage, FieldType } from '@opencrvs/toolkit/events'
 
 export const introduction = defineFormPage({
   id: 'introduction',
+  hideOnReview: true,
   title: {
     defaultMessage: 'Introduce the birth registration process to the informant',
     description: 'Event information title for the birth',
