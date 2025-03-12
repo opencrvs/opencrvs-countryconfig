@@ -1,31 +1,6 @@
 name: Deploy (development)
-run-name: Deploy to ${{ inputs.environment }} with reset=${{ inputs.reset }} core=${{ inputs.core-image-tag }} country config=${{ inputs.countryconfig-image-tag }}
+run-name: Deploy to ${{ github.event.inputs.environment }} with reset=${{ github.event.inputs.reset }} core=${{ github.event.inputs.core-image-tag }} country config=${{ github.event.inputs.countryconfig-image-tag }}
 on:
-  workflow_call:
-    inputs:
-      environment:
-        type: string
-        description: Environment to deploy to
-        required: true
-      core-image-tag:
-        type: string
-        description: Core DockerHub image tag
-        required: true
-        default: 'v1.4.1'
-      countryconfig-image-tag:
-        type: string
-        description: Your Country Config DockerHub image tag
-        required: true
-      reset:
-        type: string
-        description: Reset the environment
-        default: 'false'
-        required: false
-      debug:
-        type: boolean
-        description: Open SSH session to the runner after deployment
-        default: false
-        required: false
   workflow_dispatch:
     inputs:
       environment:
@@ -37,11 +12,10 @@ on:
           - staging
           - qa
           - development
-          - e2e
       core-image-tag:
         description: Core DockerHub image tag
         required: true
-        default: 'v1.7.0'
+        default: 'v1.5.0'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
@@ -51,7 +25,7 @@ on:
         default: false
 jobs:
   deploy:
-    environment: ${{ inputs.environment }}
+    environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-24.04
     outputs:
       outcome: ${{ steps.deploy.outcome }}
@@ -104,13 +78,13 @@ jobs:
       - name: Wait for images to be available
         run: |
           while true; do
-            if docker manifest inspect ghcr.io/opencrvs/ocrvs-auth:${{ inputs.core-image-tag }}; then
+            if docker manifest inspect ghcr.io/opencrvs/ocrvs-auth:${{ github.event.inputs.core-image-tag }}; then
               break
             fi
             sleep 10
           done
           while true; do
-            if docker manifest inspect ${{ secrets.DOCKERHUB_ACCOUNT }}/${{ secrets.DOCKERHUB_REPO }}:${{ inputs.countryconfig-image-tag }}; then
+            if docker manifest inspect ${{ secrets.DOCKERHUB_ACCOUNT }}/${{ secrets.DOCKERHUB_REPO }}:${{ github.event.inputs.countryconfig-image-tag }}; then
               break
             fi
             sleep 10
@@ -128,7 +102,7 @@ jobs:
           # This includes SSH_KEY and KNOWN_HOSTS
           #
           while IFS= read -r secret; do
-            echo "$secret" >> .env.${{ inputs.environment }}
+            echo "$secret" >> .env.${{ github.event.inputs.environment }}
           done < <(
             jq -r '
               to_entries |
@@ -144,7 +118,7 @@ jobs:
           EOF)
 
           while IFS= read -r var; do
-            echo "$var" >> .env.${{ inputs.environment }}
+            echo "$var" >> .env.${{ github.event.inputs.environment }}
           done < <(
             jq -r '
               to_entries |
@@ -160,34 +134,34 @@ jobs:
         with:
           node-version-file: ${{ github.event.repository.name }}/.nvmrc
 
-      - name: Deploy to ${{ inputs.environment }}
+      - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
         working-directory: ${{ github.event.repository.name }}
         run: |
           yarn deploy \
           --clear_data=no \
-          --environment=${{ inputs.environment }} \
+          --environment=${{ github.event.inputs.environment }} \
           --host=${{ vars.DOMAIN }} \
           --ssh_host=${{ vars.SSH_HOST || secrets.SSH_HOST }} \
           --ssh_port=${{ vars.SSH_PORT || secrets.SSH_PORT }} \
           --ssh_user=${{ secrets.SSH_USER }} \
-          --version=${{ inputs.core-image-tag }} \
-          --country_config_version=${{ inputs.countryconfig-image-tag }} \
+          --version=${{ github.event.inputs.core-image-tag }} \
+          --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
           --replicas=${{ vars.REPLICAS }}
 
   reset:
     needs: deploy
-    if: ${{ inputs.reset == 'true' && needs.deploy.outputs.outcome == 'success' }}
+    if: ${{ github.event.inputs.reset == 'true' && needs.deploy.outputs.outcome == 'success' }}
     uses: ./.github/workflows/clear-environment.yml
     with:
-      environment: ${{ inputs.environment }}
+      environment: ${{ github.event.inputs.environment }}
     secrets: inherit
 
   seed-data:
     needs: reset
-    if: ${{ inputs.reset == 'true' && needs.reset.outputs.outcome == 'success' }}
+    if: ${{ github.event.inputs.reset == 'true' && needs.reset.outputs.outcome == 'success' }}
     uses: ./.github/workflows/seed-data.yml
     with:
-      environment: ${{ inputs.environment }}
-      core-image-tag: ${{ inputs.core-image-tag }}
+      environment: ${{ github.event.inputs.environment }}
+      core-image-tag: ${{ github.event.inputs.core-image-tag }}
     secrets: inherit

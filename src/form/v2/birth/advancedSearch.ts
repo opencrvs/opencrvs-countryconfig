@@ -15,6 +15,7 @@ type AdvancedSearch = EventConfig['advancedSearch']
 
 export const advancedSearchBirth = [
   {
+    id: 'BIRTHS',
     title: {
       defaultMessage: 'Registration details',
       description: 'The title of Registration details accordion',
@@ -27,6 +28,7 @@ export const advancedSearchBirth = [
     ]
   },
   {
+    id: 'NO',
     title: {
       defaultMessage: 'Child details',
       description: 'The title of Child details accordion',

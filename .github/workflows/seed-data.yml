@@ -1,5 +1,5 @@
 name: Seed data
-run-name: Seed data to ${{ inputs.environment }} core=${{ inputs.core-image-tag }}
+run-name: Seed data to ${{ github.event.inputs.environment }} core=${{ github.event.inputs.core-image-tag }}
 on:
   workflow_call:
     inputs:
@@ -21,15 +21,12 @@ on:
           - qa
           - staging
           - production
-          - e2e
       core-image-tag:
         description: Core DockerHub image tag
 jobs:
   seed-data:
-    environment: ${{ inputs.environment }}
+    environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-24.04
-    outputs:
-      outcome: ${{ steps.seed.outcome }}
     timeout-minutes: 60
     steps:
       - name: Clone core
@@ -51,13 +48,7 @@ jobs:
         run: yarn install
 
       - name: Seed data on given environment
-        uses: nick-fields/retry@v2
-        id: seed
-        with:
-          timeout_minutes: 10
-          max_attempts: 5
-          command: |
-            yarn seed:prod
+        run: yarn seed:prod
         env:
           ACTIVATE_USERS: ${{ vars.ACTIVATE_USERS }}
           GATEWAY_HOST: ${{ vars.GATEWAY_HOST }}
