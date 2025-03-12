@@ -2790,6 +2790,7 @@ v2.review.validate.reject,The label for reject button of review action,Reject,Re
 v2.review.validate.title,The title shown when reviewing a record to validate,Send for approval,Envoyer pour approbation
 v2.reviewAction.Declare,The label for declare button of review action,Declare,Declare
 v2.reviewAction.description,The description for review action,"By clicking declare, you confirm that the information entered is correct and the member can be declared.","By clicking declare, you confirm that the information entered is correct and the member can be declared."
+v2.reviewAction.incompleteForm,The label for warning of incomplete form,Please add mandatory information correctly before registering.,Veuillez ajouter correctement les informations obligatoires avant de vous inscrire.
 v2.reviewAction.register.description.incomplete,The description for registration action when form is incomplete,Please add mandatory information before registering,Veuillez ajouter les informations obligatoires avant d'enregistrer.
 v2.reviewAction.reject,The label for reject button of review action,Reject,Rejeter
 v2.reviewAction.title,The title for review action,Declare member,Declare member
