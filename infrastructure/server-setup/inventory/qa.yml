@@ -18,9 +18,11 @@ all:
 
 docker-manager-first:
   hosts:
-    farajaland-qa:
-      ansible_host: '5.223.46.129'
-      data_label: data1
+    qa: # @todo set this to be the hostname of your target server
+      ansible_host: '55.55.55.55' # @todo set this to be the IP address of your server
+      # ansible_port: '23' # @todo set this to be the SSH port if it's not 22
+      # internal_ssh_port: '22' # @todo if you are port-forwarding and server SSH port is not the same as ansible_port, set it here
+      data_label: data1 # for manager machines, this should always be "data1"
 
 # QA and staging servers are not configured to use workers.
 docker-workers: {}
