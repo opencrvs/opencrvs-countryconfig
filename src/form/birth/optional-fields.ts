@@ -79,9 +79,16 @@ export const multipleBirth: SerializedFormField = {
       expression: '!values.detailsExist'
     }
   ],
-  maxLength: 2,
   required: false,
   initialValue: '',
-  validator: [],
+  validator: [
+    {
+      operation: 'greaterThanZero'
+    },
+    {
+      operation: 'maxLength',
+      parameters: [2]
+    }
+  ],
   mapping: getFieldMapping('multipleBirth', certificateHandlebars.multipleBirth)
 }

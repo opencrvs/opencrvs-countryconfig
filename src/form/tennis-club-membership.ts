@@ -974,9 +974,6 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       fields: [
         {
-          fieldId: 'applicant.dob'
-        },
-        {
           fieldId: 'applicant.firstname'
         }
       ]

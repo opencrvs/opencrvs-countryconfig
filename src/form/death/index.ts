@@ -61,8 +61,7 @@ import {
   spouseBirthDateConditionals,
   spouseFamilyNameConditionals,
   spouseFirstNameConditionals,
-  hideIfInformantSpouse,
-  hideIfDeceasedAddressNotAvailable
+  hideIfInformantSpouse
 } from '../common/default-validation-conditionals'
 import {
   documentsSection,
@@ -260,7 +259,7 @@ export const deathForm = {
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(hideIfInformantSpouse),
               certificateHandlebars.informantFirstName
-            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
+            ), // Required field.
             getFamilyNameField(
               'informantNameInEnglish',
               informantFamilyNameConditionals.concat(hideIfInformantSpouse),
@@ -358,10 +357,7 @@ export const deathForm = {
             getIDType('death', 'spouse', detailsExist, true),
             ...getIDNumberFields('spouse', detailsExist, true),
             // ADDRESS FIELDS WILL RENDER HERE
-            divider(
-              'spouse-address-separator',
-              hideIfDeceasedAddressNotAvailable
-            )
+            divider('spouse-address-separator')
           ],
           previewGroups: [spouseNameInEnglish]
         }
