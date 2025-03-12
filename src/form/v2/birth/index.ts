@@ -25,7 +25,7 @@ import { SCOPES } from '@opencrvs/toolkit/scopes'
 export const birthEvent = defineConfig({
   id: Event.Birth,
   label: {
-    defaultMessage: 'Birth declaration',
+    defaultMessage: 'Birth',
     description: 'This is what this event is referred as in the system',
     id: 'v2.event.birth.label'
   },
@@ -43,36 +43,10 @@ export const birthEvent = defineConfig({
   workqueues: [
     {
       id: 'all',
-      fields: [
-        {
-          column: 'title',
-          label: {
-            defaultMessage: '{child.surname} {child.firstname}',
-            description: 'Label for name in all workqueue',
-            id: 'v2.event.birth.workqueue.all.name.label'
-          }
-        }
-      ],
       filters: []
     }
   ],
   actions: [
-    {
-      type: ActionType.CREATE,
-      label: {
-        defaultMessage: 'Create',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.birth.action.create.label'
-      },
-      forms: [],
-      conditionals: [
-        {
-          type: 'SHOW',
-          conditional: user.hasScope(SCOPES.RECORD_DECLARE)
-        }
-      ]
-    },
     {
       type: ActionType.DECLARE,
       label: {

@@ -2,6 +2,8 @@ import { Locator, Page, expect } from '@playwright/test'
 import {
   AUTH_URL,
   CLIENT_URL,
+  CLIENT_V2_URL,
+  CREDENTIALS,
   GATEWAY_HOST,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
   SAFE_OUTBOX_TIMEOUT_MS
@@ -23,6 +25,17 @@ export async function createPIN(page: Page) {
   for (let i = 1; i <= 8; i++) {
     await page.type('#pin-input', `${i % 2}`)
   }
+}
+
+export async function loginToV2(
+  page: Page,
+  credentials = CREDENTIALS.LOCAL_REGISTRAR
+) {
+  await login(page, credentials.USERNAME, credentials.PASSWORD)
+  await createPIN(page)
+
+  // Navigate to the v2 client
+  await page.goto(CLIENT_V2_URL)
 }
 
 export async function getToken(username: string, password: string) {
@@ -69,10 +82,11 @@ type DeclarationSection =
   | 'witnessOne'
   | 'witnessTwo'
 type CorrectionSection = 'summary'
+type V2ReviewSection = 'review'
 
 export const goToSection = async (
   page: Page,
-  section: DeclarationSection | CorrectionSection
+  section: DeclarationSection | CorrectionSection | V2ReviewSection
 ) => {
   while (!page.url().includes(section)) {
     await page.getByRole('button', { name: 'Continue' }).click()
@@ -273,6 +287,20 @@ export const formatDateObjectTo_ddMMMMyyyy = ({
   Date() object takes 0-indexed month,
   but month coming to the method is 1-indexed
 */
+export const formatDateObjectTo_dMMMMyyyy = ({
+  yyyy,
+  mm,
+  dd
+}: {
+  yyyy: string
+  mm: string
+  dd: string
+}) => format(new Date(Number(yyyy), Number(mm) - 1, Number(dd)), 'd MMMM yyyy')
+
+/*
+  Date() object takes 0-indexed month,
+  but month coming to the method is 1-indexed
+*/
 export const formatDateObjectTo_yyyyMMdd = ({
   yyyy,
   mm,
@@ -299,8 +327,12 @@ export const formatName = (name: PersonOrName) => {
   return joinValuesWith([name.firstNames, name.familyName])
 }
 
-export const drawSignature = async (page: Page) => {
-  const canvas = page.locator('#informantSignature_modal canvas')
+export const drawSignature = async (page: Page, v2Events = false) => {
+  const canvasLocator = v2Events
+    ? '#review____signature-form-input canvas'
+    : '#informantSignature_modal canvas'
+
+  const canvas = page.locator(canvasLocator)
   const rect = await canvas.boundingBox()
 
   expect(rect).toBeTruthy()

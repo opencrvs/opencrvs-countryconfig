@@ -60,7 +60,7 @@ services:
       - overlay_net
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:8.14.3
+    image: docker.elastic.co/beats/filebeat:8.16.4
     user: root
     networks:
       - overlay_net
@@ -85,7 +85,7 @@ services:
         - 'traefik.enable=false'
 
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:8.14.3
+    image: docker.elastic.co/beats/metricbeat:8.16.4
     user: root
     cap_add:
       - SYS_PTRACE
@@ -156,7 +156,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'setup-kibana-config'
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.14.3
+    image: docker.elastic.co/kibana/kibana:8.16.4
     restart: always
     deploy:
       labels:
@@ -412,7 +412,7 @@ services:
         tag: 'elastalert'
 
   logstash:
-    image: logstash:8.14.3
+    image: logstash:8.16.4
     command: logstash -f /etc/logstash/logstash.conf --verbose
     ports:
       - '12201:12201'
@@ -683,6 +683,7 @@ services:
       - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - ES_URL=http://search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
+      - APN_SERVICE_URL=http://apm-server:8200
     deploy:
       labels:
         - 'traefik.enable=false'

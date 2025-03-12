@@ -30,6 +30,7 @@ all:
       - name: riku
         ssh_keys:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWIF63S4f3z9wQMvWibmvl7MPuJ6EVrkP0HuvgNhcs/4DZYMcR/GRBvV4ldOSYMlBevIXycgGzNDxKJgENUuwIWanjBu7uVAHyD6+cIRD1h63qq7Cjv/2HYTfBDKOrKzPOhA6zWvKO0ZGWsjRXk5LWMCbKOkvKJCxOpj/NVBxeE4FTK5YADYPV3OSsmBtqTHrVLm2sMmShU/2hMYYswWkobidjX65+nK/X+3C+yJbHwiydVvn+QCrFlFfCLPWKe8rUpOxyxofPqWVQh6CHhHfT8okaOc9sOE8Qeip9ljo84DftJh3Xm3ynOdWK1hH2BvRvxNadWqcE1qECbkg4tx2x riku.rouvila@gmail.com
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGfWxxQHJv6Md/vBVoDH2UNm/uYgIBlFpP1mfh2Yj6jRNiQ/TQrfwpTawq0Sg+UW4LfYk5yxttsZ0h6L/v6PLiawgbMtf2ZqSviRTYSZTSihkK2zLmeJA2ByBCh57w4tR6IGqJK4w0kjYQSaaU6V5skQ4u+gnLQoKtkVQ4K34EFXAiIur96tLwjwDd/xCm+9T91+cAxGLv8Pe0PjirjwnvktUtzpgOhedkYK7KX0l8SKxQXUK6Ul2/QbpGO3rmguzEdtrl3Dw1TAEfu2njXbNGVQ+JWV9htH+ymsMIGoeumJRaaAZ4AXLlQPBCxTXcdQDuAjfFDPuppms/h7qB1S4Aioz7zqyd7pL7Z6Z8mJBZZlP3PsfGvADM2CdShpbL4HAa+n9miNNSYcJ7cHvC/zCitNjfaEYLVYkB5G+ggeK8Ss/MDcnsh3YFB8WnT582zt/TTJda5n+5Q7tquc1m+61t2gEKKTfBoDft9UYW2/4ViHj3ROL2Oyj7udrh/oAqV8M= riku@MBP16inch2231
         state: present
         sudoer: true
       - name: euan
@@ -67,6 +68,11 @@ all:
       - name: vmudryi
         ssh_keys:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgMcsSBwTE0EbMDRSF1T4vJDcN/5HAjKGbi2DqV7g/Q vmudryi@opencrvs.org
+        state: present
+        sudoer: true
+      - name: cihan
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEtz5M5hYKcUehDiCm84BplV+3t1ex8DPjIsMtQEWGv cihan.m.bebek@gmail.com
         state: present
         sudoer: true
 jump-host:

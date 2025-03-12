@@ -1738,10 +1738,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@1.7.0-rc.bda6468":
-  version "1.7.0-rc.bda6468"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.7.0-rc.bda6468.tgz#453f0a14fbf4f43a830232abf1040ff2bc156a56"
-  integrity sha512-LlwpVUf+4DMFwlYH7NLVirFPLoimPBDIgQBBjarB5Uyp5vvEK26sNGLl3gO7A8yz3Ll68kOPQsz+dXD5AhPUMg==
+"@opencrvs/toolkit@~1.7.0-rc.a540f68":
+  version "1.7.0-rc.a540f68"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.7.0-rc.a540f68.tgz#e9be682edeea0d4e86f8e68fd8e93c82972c3ceb"
+  integrity sha512-/dxxmlS+3M9yY+eB43Y8nje8aNS/C1TiQCpJQ52FSgaPV0BXWajhPZgJb7MJl5/Cg5uwwWd9bqPpS5pxQFIW0A==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
@@ -6556,6 +6556,11 @@ playwright-core@1.48.0:
   version "1.48.0"
   resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.48.0.tgz#34d209dd4aba8fccd4a96116f1c4f7630f868722"
   integrity sha512-RBvzjM9rdpP7UUFrQzRwR8L/xR4HyC1QXMzGYTbf1vjw25/ya9NRAVnXi/0fvFopjebvyPzsmoK58xxeEOaVvA==
+
+playwright-ctrf-json-reporter@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/playwright-ctrf-json-reporter/-/playwright-ctrf-json-reporter-0.0.18.tgz#74b0d6cd53e3860148070db8cbecb789cac766e4"
+  integrity sha512-AjFNpIMKI8zeyaktA2LBphYzy3ffiBjXobBXxEfrVUDov/Z8v5+y9FI0m3cBCr8yauk2brN+Er225vHsZDIu0g==
 
 playwright@1.48.0:
   version "1.48.0"
