@@ -2754,6 +2754,7 @@ v2.register.selectVitalEvent.registerNewEventTitle,The title that appears on the
 v2.registerAction.Declare,The label for declare button of register action,Register,Enregistrer
 v2.registerAction.Reject,The label for reject button of register action,Reject,Rejeter
 v2.registerAction.description,The description for register action,"By clicking register, you confirm that the information entered is correct and the member can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que le membre peut être enregistré."
+v2.registerAction.incompleteForm,The label for warning of incomplete form,Please add mandatory information correctly before registering.,Veuillez ajouter correctement les informations obligatoires avant d'enregistrer.
 v2.registerAction.title,The title for register action,Register member,Enregistrer un membre
 v2.rejectModal.archive,The label for archive button of reject modal,Archive,Archiver
 v2.rejectModal.cancel,The label for cancel button of reject modal,Cancel,Annuler
@@ -2788,7 +2789,6 @@ v2.review.validate.reject,The label for reject button of review action,Reject,Re
 v2.review.validate.title,The title shown when reviewing a record to validate,Send for approval,Envoyer pour approbation
 v2.reviewAction.Declare,The label for declare button of review action,Declare,Declare
 v2.reviewAction.description,The description for review action,"By clicking declare, you confirm that the information entered is correct and the member can be declared.","By clicking declare, you confirm that the information entered is correct and the member can be declared."
-v2.reviewAction.incompleteForm,The label for warning of incomplete form,Please add mandatory information correctly before registering.,Veuillez ajouter correctement les informations obligatoires avant d'enregistrer.
 v2.reviewAction.register.description.incomplete,The description for registration action when form is incomplete,Please add mandatory information before registering,Veuillez ajouter les informations obligatoires avant d'enregistrer.
 v2.reviewAction.reject,The label for reject button of review action,Reject,Rejeter
 v2.reviewAction.title,The title for review action,Declare member,Declare member
@@ -2796,6 +2796,11 @@ v2.saveAndExit.desc.saveDeclarationConfirm,Description for save declaration conf
 v2.saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
 v2.search.noResult,The no result text,No results,Aucun résultat
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
+v2.validateAction.Declare,The label for declare button of validate action,Send for approval,Envoyer pour approbation
+v2.validateAction.Reject,The label for reject button of validate action,Reject,Rejeter
+v2.validateAction.description,The description for validate action,The informant will receive an email with a registration number that they can use to collect the certificate,L'informateur recevra un e-mail avec un numéro d'enregistrement qu'il pourra utiliser pour récupérer le certificat.
+v2.validateAction.incompleteForm,The description for warning of incomplete form,Please add mandatory information before sending for approval,Veuillez ajouter les informations obligatoires avant d'envoyer pour approbation.
+v2.validateAction.title,The title for validate action,Send for approval,Envoyer pour approbation
 v2.wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 v2.wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 v2.wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé
