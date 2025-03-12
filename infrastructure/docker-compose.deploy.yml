@@ -226,11 +226,8 @@ services:
       labels:
         - traefik.enable=false
       replicas: 1
-      # If this doesn't get run successfully, both the replica set in mongo and
-      # the user schema remains uninitialized.
       restart_policy:
-        condition: on-failure
-        delay: 10s
+        condition: none
     environment:
       - REPLICAS=1
       - MONGODB_ADMIN_USER=${MONGODB_ADMIN_USER}
