@@ -830,7 +830,7 @@ form.field.SearchField.modalTitle,,"{fieldName, select, registrationOffice {Assi
 form.field.SearchField.officeLocationId,,Id: {locationId},Id : {locationId}
 form.field.SearchField.placeHolderText,,Search,Recherche
 form.field.dateRangepicker.checkbox.dateLabel,,{rangeStart} to {rangeEnd},{rangeStart} à {rangeEnd}
-form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,The National ID can only be numeric and must be 10 digits long
+form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,Le numéro d'identification national doit être uniquement numérique et comporter 10 chiffres
 form.field.hideLabel,Button to hide section,Hide,Cacher
 form.field.label.NID,,NID,NID
 form.field.label.NIDNetErr,,The request to the NID system was unsuccessful. Please try again with a better connection.,La demande au système NID n'a pas abouti. Veuillez réessayer avec une meilleure connexion.
@@ -1188,6 +1188,7 @@ form.field.label.someoneElse,Other Label,Someone else,Quelqu'un d'autre
 form.field.label.someoneElseCollector,,Print and issue to someone else,Imprimer et remettre à quelqu'un d'autre
 form.field.label.spouseDetailsExist,,Spouse's details are not available,Pas d'information sur le conjoint
 form.field.label.state,Label for State,Province,Province
+form.field.label.totalFees,Label for input Reason for Change,,
 form.field.label.typeOfDocument,,Choose type of supporting document,Choisissez le type de document
 form.field.label.typeOfId,,Type of ID,Type d'identification
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage
@@ -1213,7 +1214,7 @@ form.field.label.whatDocToUpload,,Which document type are you uploading?,Quel ty
 form.field.nidNotVerified,,Authenticate,Authentifier
 form.field.nidNotVerifiedReviewSection,,Unauthenticated,Non authentifié
 form.field.nidOffline,,National ID authentication is currently not available offline.,L'authentification de la carte d'identité nationale n'est actuellement pas disponible hors ligne.
-form.field.nidVerificationOngoing,Label for indicating offline status for the user. NID verification is not currently available offline.,National ID authentication is currently not available offline.,National ID authentication is currently not available offline.
+form.field.nidVerificationOngoing,Label for indicating offline status for the user. NID verification is not currently available offline.,National ID authentication is currently not available offline.,L'authentification de l'identifiant national n'est actuellement pas disponible hors ligne
 form.field.nidVerified,,Authenticated,Authentifié
 form.field.previewGroups.primaryAddress,,Usual place of residence,Adresse résidentielle
 form.field.previewGroups.secondaryAddress,,Secondary address,Adresse secondaire
@@ -1793,7 +1794,7 @@ phone.label.changeEmail,Change email address label,What is your new email?,Quell
 phone.label.changeNumber,Change phone number label,Enter new number,Quel est votre nouveau numéro ?
 phone.label.confirmation,Confirmation phone number message,A verification code has been sent to {num},Un SMS de confirmation a été envoyé à {num}.
 phone.label.verify,Verify phone number label,Enter 6 digit verification code,Entrez le code de vérification à 6 chiffres
-phone.start,,0(4|5),0(4|5)
+phone.start,Should starts with,0(4|5),0(4|5)
 print.cert.coll.id.actions.cancel,The for the dialog when details of the collector not verified,Cancel,Annuler
 print.cert.coll.id.actions.send,The for the dialog when details of the collector not verified,Confirm,Confirmer
 print.cert.coll.id.description,The description for the dialog when details of the collector not verified,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector","Sachez que si vous continuez, vous serez responsable de l'émission d'un certificat sans la preuve d'identité nécessaire du collecteur."
@@ -1892,12 +1893,12 @@ recordAudit.regAction.corrected,,Record corrected,Enregistrement corrigé
 recordAudit.regAction.downloaded,,Retrieved,Récupéré par
 recordAudit.regAction.flaggedAsPotentialDuplicate,,Flagged as potential duplicate,Marqué comme doublon potentiel
 recordAudit.regAction.markedAsDuplicate,,Marked as a duplicate,Marqué comme un doublon
-recordAudit.regAction.markedAsNotDuplicate,Marked not a duplicate status message for record audit,Marked not a duplicate,Marked not a duplicate
+recordAudit.regAction.markedAsNotDuplicate,Marked not a duplicate status message for record audit,Marked not a duplicate,Marqué comme non dupliqué
 recordAudit.regAction.reinstated,,"Reinstated to {regStatus, select, validated{ready for review} in_progress{in progress} declared{ready for review} rejected{requires updates} other{}}","Réintégré à {regStatus, select, validated{prêt pour la révision} in_progress{en cours} declared{prêt pour la révision} rejected{nécessite des mises à jour} other{}}"
 recordAudit.regAction.rejectedCorrection,,Correction rejected,Correction rejetée
 recordAudit.regAction.requestedCorrection,,Correction requested,Correction demandée
 recordAudit.regAction.unassigned,,Unassigned,Non assigné
-recordAudit.regAction.verified,Verified action,Certificate verified,Certificate verified
+recordAudit.regAction.verified,Verified action,Certificate verified,Certificat vérifié
 recordAudit.regAction.viewed,,Viewed,Vu
 recordAudit.regStatus.archived,,Archived,Archivé
 recordAudit.regStatus.certified,,Certified,Certifié
@@ -2323,12 +2324,10 @@ v2.actionModal.description,The description for action modal,The declarant will b
 v2.actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} the member?"
 v2.advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 v2.advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
-v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de la recherche
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
 v2.buttons.change,The label for the change button,Change,Changer
 v2.buttons.confirm,Confirm button,Confirm,Confirmer
 v2.buttons.continue,Continue Button Text,Continue,Continuer
-v2.buttons.edit,Edit button text,Edit,Modifier
 v2.buttons.exit,Label for Exit button on EventTopBar,Exit,Quitter
 v2.buttons.print,Print button text,Print,Imprimer
 v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
@@ -2657,7 +2656,6 @@ v2.event.tennis-club-membership.workqueue.all.name.label,Label for the 'All' wor
 v2.event.tennis-club-membership.workqueue.readyForReview.name.label,Label for 'Ready for Review' work queue for tennis club membership,Ready for Review,Prêt pour révision
 v2.event.tennis-club-membership.workqueue.registered.name.label,Label for 'Registered' work queue for tennis club membership,Registered,Enregistré
 v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} REJECT {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{status, select, CREATE {Brouillon} VALIDATE {Déclaration envoyée pour approbation} DRAFT {Brouillon} DECLARE {Déclaration initiée} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVED {archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
-v2.events.status,,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} other {Unknown}}","{status, select, Outbox {Syncing..} Créé {Draft} validé {validé} Draft {Draft} DÉCLARÉ {DÉCLARÉ} enregistré {enregistré} Autre {inconnu}}"
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
 v2.exitModal.exitWithoutSavingDescription, exitmodal without saving  description,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Voulez-vous vraiment quitter sans enregistrer ?
@@ -2795,7 +2793,6 @@ v2.reviewAction.reject,The label for reject button of review action,Reject,Rejet
 v2.reviewAction.title,The title for review action,Declare member,Declare member
 v2.saveAndExit.desc.saveDeclarationConfirm,Description for save declaration confirmation modal,All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?,Toutes les données saisies seront conservées en toute sécurité pour de futures modifications. Êtes-vous prêt à enregistrer les modifications apportées à ce formulaire de déclaration?
 v2.saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
-v2.search.noResult,The no result text,No results,Aucun résultat
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
 v2.validateAction.Declare,The label for declare button of validate action,Send for approval,Envoyer pour approbation
 v2.validateAction.Reject,The label for reject button of validate action,Reject,Rejeter
