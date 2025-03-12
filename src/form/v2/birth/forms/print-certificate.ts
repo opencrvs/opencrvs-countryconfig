@@ -22,6 +22,15 @@ const CertCollectorType = {
   PRINT_IN_ADVANCE: 'PRINT_IN_ADVANCE'
 } as const
 
+const otherIdType = {
+  PASSPORT: 'PASSPORT',
+  DRIVING_LICENSE: 'DRIVING_LICENSE',
+  REFUGEE_NUMBER: 'REFUGEE_NUMBER',
+  ALIEN_NUMBER: 'ALIEN_NUMBER',
+  OTHER: 'OTHER',
+  NO_ID: 'NO_ID'
+} as const
+
 export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
   label: {
     id: 'v2.event.tennis-club-membership.birth.action.certificate.form.label',
@@ -112,7 +121,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
                 defaultMessage: 'Passport',
                 description: 'Option for selecting Passport as the ID type'
               },
-              value: 'PASSPORT'
+              value: otherIdType.PASSPORT
             },
             {
               label: {
@@ -121,7 +130,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
                 description:
                   'Option for selecting Driving License as the ID type'
               },
-              value: 'DRIVING_LICENSE'
+              value: otherIdType.DRIVING_LICENSE
             },
             {
               label: {
@@ -130,7 +139,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
                 description:
                   'Option for selecting Refugee Number as the ID type'
               },
-              value: 'REFUGEE_NUMBER'
+              value: otherIdType.REFUGEE_NUMBER
             },
             {
               label: {
@@ -138,7 +147,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
                 defaultMessage: 'Alien Number',
                 description: 'Option for selecting Alien Number as the ID type'
               },
-              value: 'ALIEN_NUMBER'
+              value: otherIdType.ALIEN_NUMBER
             },
             {
               label: {
@@ -146,7 +155,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
                 defaultMessage: 'Other',
                 description: 'Option for selecting Other as the ID type'
               },
-              value: 'OTHER'
+              value: otherIdType.OTHER
             },
             {
               label: {
@@ -154,7 +163,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
                 defaultMessage: 'No ID',
                 description: 'Option for selecting No ID as the ID type'
               },
-              value: 'NO_ID'
+              value: otherIdType.NO_ID
             }
           ]
         },
@@ -170,7 +179,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').isEqualTo('PASSPORT')
+              conditional: field('collector.OTHER.idType').isEqualTo(
+                otherIdType.PASSPORT
+              )
             }
           ]
         },
@@ -187,7 +198,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             {
               type: ConditionalType.SHOW,
               conditional: field('collector.OTHER.idType').isEqualTo(
-                'DRIVING_LICENSE'
+                otherIdType.DRIVING_LICENSE
               )
             }
           ]
@@ -205,7 +216,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             {
               type: ConditionalType.SHOW,
               conditional: field('collector.OTHER.idType').isEqualTo(
-                'REFUGEE_NUMBER'
+                otherIdType.REFUGEE_NUMBER
               )
             }
           ]
@@ -223,7 +234,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             {
               type: ConditionalType.SHOW,
               conditional: field('collector.OTHER.idType').isEqualTo(
-                'ALIEN_NUMBER'
+                otherIdType.ALIEN_NUMBER
               )
             }
           ]
@@ -240,7 +251,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').isEqualTo('OTHER')
+              conditional: field('collector.OTHER.idType').isEqualTo(
+                otherIdType.OTHER
+              )
             }
           ]
         },
@@ -256,7 +269,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').isEqualTo('OTHER')
+              conditional: field('collector.requesterId').isEqualTo(
+                otherIdType.OTHER
+              )
             }
           ]
         },
@@ -272,7 +287,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').isEqualTo('OTHER')
+              conditional: field('collector.requesterId').isEqualTo(
+                otherIdType.OTHER
+              )
             }
           ]
         },
@@ -289,7 +306,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').isEqualTo('OTHER')
+              conditional: field('collector.requesterId').isEqualTo(
+                otherIdType.OTHER
+              )
             }
           ]
         },
@@ -305,7 +324,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').isEqualTo('OTHER')
+              conditional: field('collector.requesterId').isEqualTo(
+                otherIdType.OTHER
+              )
             }
           ]
         }
