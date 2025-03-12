@@ -1,3 +1,13 @@
+# TODO:
+# If merge conflicts are noticed:
+# - create new branch to farajaland, e.g. sync-with-countryconfig
+# - open new 'empty' pull request from new branch to develop
+# - send instructions and link to slack to:
+#   - checkout new branch
+#   - merge upstream (countryconfig) develop to new branch
+#   - fix merge conflicts
+#   - push branch
+# finally merge PR with fixed merge conflicts
 
 name: Sync Changes to Farajaland
 
