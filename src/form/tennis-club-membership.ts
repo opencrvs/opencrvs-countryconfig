@@ -967,7 +967,6 @@ export const tennisClubMembershipEvent = defineConfig({
   ],
   advancedSearch: [
     {
-      id: 'RANDOM',
       title: {
         defaultMessage: 'Tennis club registration search',
         description: 'This is what this event is referred as in the system',
@@ -975,7 +974,7 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       fields: [
         {
-          fieldId: 'applicant.dob'
+          fieldId: 'applicant.firstname'
         }
       ]
     }
