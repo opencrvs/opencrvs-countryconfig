@@ -11,7 +11,7 @@ env:
   # Check token under Olli's account
   GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
   FORK_REPOSITORY_PATH: "${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}"
-# Check
+
 jobs:
   check_farajaland_branch:
     if: ${{ github.event.pull_request.merged == true }} && ${{github.event.pull_request.base.repo.full_name == 'opencrvs/opencrvs-countryconfig' }}
@@ -67,7 +67,7 @@ jobs:
         name: "Push ${BASE_BRANCH} to Farajaland repository"
         run: |
           git remote -v
-          git push --force origin ${BASE_BRANCH}
+          git push origin ${BASE_BRANCH}
 
       - if: steps.merge.outcome == 'failure'
         name: Handle merge conflicts and push opencrvs-farajaland/sync-with-${{ github.event.pull_request.base.ref }}
