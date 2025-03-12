@@ -1,3 +1,13 @@
+# TODO:
+# If merge conflicts are noticed:
+# - create new branch to farajaland, e.g. sync-with-countryconfig
+# - open new 'empty' pull request from new branch to develop
+# - send instructions and link to slack to:
+#   - checkout new branch
+#   - merge upstream (countryconfig) develop to new branch
+#   - fix merge conflicts
+#   - push branch
+# finally merge PR with fixed merge conflicts
 
 name: Sync Changes to Farajaland
 
@@ -11,11 +21,11 @@ env:
   # Check token under Olli's account
   GH_TOKEN: ${{ secrets.FORK_ORGANISATION_TOKEN }}
   FORK_REPOSITORY_PATH: "${{ vars.FORK_REPOSITORY_ORGANISATION }}/${{ vars.FORK_REPOSITORY_NAME }}"
-# Check
+
 jobs:
   check_farajaland_branch:
     if: ${{ github.event.pull_request.merged == true }} && ${{github.event.pull_request.base.repo.full_name == 'opencrvs/opencrvs-countryconfig' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       branch_exists: ${{ steps.check_branch.outputs.branch_exists }}
     steps:
@@ -31,26 +41,11 @@ jobs:
             echo "=============================================="
             echo "branch_exists=false" >> $GITHUB_OUTPUT
           fi
-  sync_farajaland:
-    if: ${{ needs.check_farajaland_branch.outputs.branch_exists == 'true' }}
-    runs-on: ubuntu-latest
-    needs: check_farajaland_branch
-    outputs:
-      synced: ${{ steps.sync_fork.outputs.synced }}
-    steps:
-      - name: Sync Farajaland Fork repository
-        id: sync_fork
-        continue-on-error: true
-        run: |
-          gh repo sync ${FORK_REPOSITORY_PATH} --branch ${BASE_BRANCH} && \
-          echo synced="true" >> $GITHUB_OUTPUT || \
-          echo synced="false" >> $GITHUB_OUTPUT
-
 
   merge_conflicts:
-    if: ${{ needs.sync_farajaland.outputs.synced == 'false' }}
-    runs-on: ubuntu-latest
-    needs: sync_farajaland
+    if: ${{ needs.check_farajaland_branch.outputs.branch_exists == 'true' }}
+    runs-on: ubuntu-24.04
+    needs: check_farajaland_branch
     steps:
       - name: Checkout OpenCRVS Farajaland repository
         uses: actions/checkout@v4
@@ -78,6 +73,12 @@ jobs:
           git status
           git merge upstream/${BASE_BRANCH}
 
+      - if: steps.merge.outcome == 'success'
+        name: "Push ${BASE_BRANCH} to Farajaland repository"
+        run: |
+          git remote -v
+          git push origin ${BASE_BRANCH}
+
       - if: steps.merge.outcome == 'failure'
         name: Handle merge conflicts and push opencrvs-farajaland/sync-with-${{ github.event.pull_request.base.ref }}
         run: |
@@ -85,12 +86,6 @@ jobs:
           git commit -m "Merge upstream/${BASE_BRANCH} into sync-with-${BASE_BRANCH} with conflicts"
           git checkout -b sync-with-${BASE_BRANCH}
           git push --force origin sync-with-${BASE_BRANCH}
-
-      - if: steps.merge.outcome == 'success'
-        name: "Push ${BASE_BRANCH} to Farajaland repository"
-        run: |
-          git remote -v
-          git push --force origin ${BASE_BRANCH}
 
       - name: Create PR in opencrvs-farajaland repository
         if: steps.merge.outcome == 'failure'

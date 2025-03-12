@@ -44,6 +44,9 @@ export enum Event {
   Birth = 'birth',
   Death = 'death',
   Marriage = 'marriage',
+
+  // events v2 enums
+  V2_BIRTH = 'v2.birth',
   TENNIS_CLUB_MEMBERSHIP = 'tennis-club-membership'
 }
 
@@ -346,7 +349,6 @@ export interface INumberFormField extends IFormFieldBase {
   step?: number
   max?: number
   inputWidth?: number
-  maxLength?: number
 }
 export interface IBigNumberFormField extends IFormFieldBase {
   type: typeof BIG_NUMBER

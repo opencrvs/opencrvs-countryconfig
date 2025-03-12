@@ -660,7 +660,7 @@ export const tennisClubMembershipEvent = defineConfig({
       forms: [TENNIS_CLUB_FORM],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             not(event.hasAction(ActionType.DECLARE)),
             user.hasScope(SCOPES.RECORD_DECLARE)
@@ -679,7 +679,7 @@ export const tennisClubMembershipEvent = defineConfig({
       forms: [],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             not(event.hasAction(ActionType.DECLARE)),
             user.hasScope(SCOPES.RECORD_DECLARE)
@@ -697,7 +697,7 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.DECLARE),
             not(event.hasAction(ActionType.VALIDATE)),
@@ -717,7 +717,7 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             or(
               event.hasAction(ActionType.VALIDATE),
@@ -740,7 +740,7 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.REGISTER),
             user.hasScope(SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES)
@@ -759,7 +759,7 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.REGISTER),
             user.hasScope(SCOPES.RECORD_REGISTRATION_REQUEST_CORRECTION)
@@ -973,9 +973,6 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'v2.event.tennis-club-membership.search'
       },
       fields: [
-        {
-          fieldId: 'applicant.dob'
-        },
         {
           fieldId: 'applicant.firstname'
         }
