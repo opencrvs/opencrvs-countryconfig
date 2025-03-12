@@ -133,107 +133,105 @@ test.describe.serial('1. Birth event declaration', () => {
          */
         await expect(page.getByText("Child's details")).toBeVisible()
       })
+    })
 
-      test.describe('1.4 Validate "Child Details" page', async () => {
-        test('1.4.1 Validate the contents of Child details page', async () => {
-          /*
-           * Expected result: should see
-           * - Child details block
-           * - Continue Button
-           * - Exit Button
-           * - Save and exit button
-           * - 3dot menu (delete option)
-           */
-          await expect(
-            page.getByRole('button', { name: 'Continue' })
-          ).toBeVisible()
-          await expect(
-            page.getByRole('button', { name: 'Exit', exact: true })
-          ).toBeVisible()
-          await expect(
-            page.getByRole('button', { name: 'Save & Exit' })
-          ).toBeVisible()
+    test.describe('1.4 Validate "Child Details" page', async () => {
+      test('1.4.1 Validate the contents of Child details page', async () => {
+        /*
+         * Expected result: should see
+         * - Child details block
+         * - Continue Button
+         * - Exit Button
+         * - Save and exit button
+         * - 3dot menu (delete option)
+         */
+        await expect(
+          page.getByRole('button', { name: 'Continue' })
+        ).toBeVisible()
+        await expect(
+          page.getByRole('button', { name: 'Exit', exact: true })
+        ).toBeVisible()
+        await expect(
+          page.getByRole('button', { name: 'Save & Exit' })
+        ).toBeVisible()
 
-          await page.locator('#event-menu-dropdownMenu').click()
-          await expect(
-            page
-              .locator('#event-menu-dropdownMenu')
-              .getByRole('listitem')
-              .filter({ hasText: 'Delete declaration' })
-          ).toBeVisible()
-        })
-
-        test.skip('1.4.2 Validate Child details block', async () => {})
-
-        test('1.4.3 Click "continue"', async () => {
-          await page.getByRole('button', { name: 'Continue' }).click()
-
-          /*
-           * Expected result: should navigate to 'informant details' page
-           */
-          await expect(page.getByText("Informant's details")).toBeVisible()
-        })
+        await page.locator('#event-menu-dropdownMenu').click()
+        await expect(
+          page
+            .locator('#event-menu-dropdownMenu')
+            .getByRole('listitem')
+            .filter({ hasText: 'Delete declaration' })
+        ).toBeVisible()
       })
 
-      test.describe('1.5 Validate "Informant details" page', async () => {
-        test('1.5.1 Validate the contents of informant details page', async () => {
-          /*
-           * Expected result: should see
-           * - Relationship to child dropdown
-           * - Phone number field
-           * - Email address field
-           * - Continue button
-           * - Exit button
-           * - Save &exit button
-           * - 3dot menu (delete option)
-           */
-          await expect(page.getByText('Relationship to child')).toBeVisible()
-          await expect(page.getByText('Phone number')).toBeVisible()
-          await expect(page.getByText('Email')).toBeVisible()
-          await expect(
-            page.getByRole('button', { name: 'Continue' })
-          ).toBeVisible()
-          await expect(
-            page.getByRole('button', { name: 'Exit', exact: true })
-          ).toBeVisible()
-          await expect(
-            page.getByRole('button', { name: 'Save & Exit' })
-          ).toBeVisible()
-          await page.locator('#event-menu-dropdownMenu').click()
-          await expect(
-            page
-              .locator('#event-menu-dropdownMenu')
-              .getByRole('listitem')
-              .filter({ hasText: 'Delete declaration' })
-          ).toBeVisible()
-        })
+      test.skip('1.4.2 Validate Child details block', async () => {})
 
-        // This test will fail
-        test.skip('1.5.2 Click the "continue" button without selecting any relationship to child', async () => {
-          await page.getByRole('button', { name: 'Continue' }).click()
+      test('1.4.3 Click "continue"', async () => {
+        await page.getByRole('button', { name: 'Continue' }).click()
 
-          /*
-           * Expected result: should throw error:
-           * - Required for registration
-           */
-          await expect(page.getByText("Informant's details")).toBeVisible()
-          await expect(
-            page.getByText('Required for registration')
-          ).toBeVisible()
-        })
+        /*
+         * Expected result: should navigate to 'informant details' page
+         */
+        await expect(page.getByText("Informant's details")).toBeVisible()
+      })
+    })
 
-        test('1.5.3 Select any option in relationship to child and click the "continue" button', async () => {
-          await page.getByText('Select').click()
-          await page.getByText('Mother', { exact: true }).click()
-          await page.getByRole('button', { name: 'Continue' }).click()
+    test.describe('1.5 Validate "Informant details" page', async () => {
+      test('1.5.1 Validate the contents of informant details page', async () => {
+        /*
+         * Expected result: should see
+         * - Relationship to child dropdown
+         * - Phone number field
+         * - Email address field
+         * - Continue button
+         * - Exit button
+         * - Save &exit button
+         * - 3dot menu (delete option)
+         */
+        await expect(page.getByText('Relationship to child')).toBeVisible()
+        await expect(page.getByText('Phone number')).toBeVisible()
+        await expect(page.getByText('Email')).toBeVisible()
+        await expect(
+          page.getByRole('button', { name: 'Continue' })
+        ).toBeVisible()
+        await expect(
+          page.getByRole('button', { name: 'Exit', exact: true })
+        ).toBeVisible()
+        await expect(
+          page.getByRole('button', { name: 'Save & Exit' })
+        ).toBeVisible()
+        await page.locator('#event-menu-dropdownMenu').click()
+        await expect(
+          page
+            .locator('#event-menu-dropdownMenu')
+            .getByRole('listitem')
+            .filter({ hasText: 'Delete declaration' })
+        ).toBeVisible()
+      })
 
-          /*
-           * Expected result: should navigate to "mother's details" page
-           */
-          await expect(
-            page.getByText("Mother's details", { exact: true })
-          ).toBeVisible()
-        })
+      // @TODO: This kind of login is not implemented in V2 events yet
+      test.skip('1.5.2 Click the "continue" button without selecting any relationship to child', async () => {
+        await page.getByRole('button', { name: 'Continue' }).click()
+
+        /*
+         * Expected result: should throw error:
+         * - Required for registration
+         */
+        await expect(page.getByText("Informant's details")).toBeVisible()
+        await expect(page.getByText('Required for registration')).toBeVisible()
+      })
+
+      test('1.5.3 Select any option in relationship to child and click the "continue" button', async () => {
+        await page.getByText('Select').click()
+        await page.getByText('Mother', { exact: true }).click()
+        await page.getByRole('button', { name: 'Continue' }).click()
+
+        /*
+         * Expected result: should navigate to "mother's details" page
+         */
+        await expect(
+          page.getByText("Mother's details", { exact: true })
+        ).toBeVisible()
       })
     })
 
@@ -379,7 +377,7 @@ test.describe.serial('1. Birth event declaration', () => {
     })
 
     // @TODO: The Save & exit modal is not implemented in V2 events yet
-    test.describe.skip('1.9 Validate "Save & Exit" Button  ', async () => {
+    test.describe('1.9 Validate "Save & Exit" Button  ', async () => {
       test('1.9.1 Click the "Save & Exit" button from any page', async () => {
         await page.getByRole('button', { name: 'Save & Exit' }).click()
 
@@ -418,8 +416,7 @@ test.describe.serial('1. Birth event declaration', () => {
         ).toBeHidden()
       })
 
-      // @TODO: My drafts page is not available yet in V2 events
-      test.skip('1.9.3 Click Confirm', async () => {
+      test('1.9.3 Click Confirm', async () => {
         await page.getByRole('button', { name: 'Save & Exit' }).click()
         await page.getByRole('button', { name: 'Confirm' }).click()
 
@@ -428,8 +425,8 @@ test.describe.serial('1. Birth event declaration', () => {
          * - be navigated to "my-drafts" tab
          * - find the declared birth event record on this page list with saved data
          */
-        await expect(page.locator('#content-name')).toHaveText('My drafts')
-        await expect(page.getByText(/seconds ago/)).toBeVisible()
+        await expect(page.locator('#content-name')).toHaveText('All events')
+        await expect(page.getByText('seconds ago').first()).toBeVisible()
       })
     })
   })
