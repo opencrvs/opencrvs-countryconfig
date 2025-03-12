@@ -51,6 +51,8 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - "Publish release" pipeline now correctly uses the "Branch to build from" value as the branch to be tagged. Previously it tried tagging "master". "Release tag" is also now used as the release version as is instead of it being read from `package.json`.
 - Backup process now doesn't require internet connection to download docker images thus working more reliably when internet connections are unreliable. Previously non-active images were cleaned nightly, now we only do it as part of deployment. [#7896](https://github.com/opencrvs/opencrvs-core/issues/7896)
 - We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
+- Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
+- On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
 
 ### Infrastructure breaking changes
 
