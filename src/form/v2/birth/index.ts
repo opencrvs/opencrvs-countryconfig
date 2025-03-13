@@ -72,7 +72,8 @@ export const birthEvent = defineConfig({
           id: 'v2.event.birth.summary.child.placeOfBirth.label'
         },
         value: {
-          defaultMessage: '{child.placeOfBirth}',
+          defaultMessage:
+            '{child.birthLocation}, {child.address.district} {child.address.province}',
           description: 'This is the place of birth value of the child',
           id: 'v2.event.birth.summary.child.placeOfBirth.value'
         }
@@ -90,7 +91,7 @@ export const birthEvent = defineConfig({
           id: 'v2.event.birth.summary.informant.contact.label'
         },
         value: {
-          defaultMessage: '{informant.phoneNo}\n{informant.email}',
+          defaultMessage: '{informant.phoneNo} {informant.email}',
           description: 'This is the contact value of the informant',
           id: 'v2.event.birth.summary.informant.contact.value'
         }
