@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.7.1 Release candidate
+
+### New features
+
+- **Time field 12-hour format**: To enable the 12-hour (AM/PM) format of the `TimeField`, set the `use12HourFormat` property to `true`. [#8336](https://github.com/opencrvs/opencrvs-core/issues/8336)
+  ```
+  {
+    name: 'time',
+    custom: true,
+    type: 'TIME',
+    use12HourFormat: true,
+    ...otherProp
+  }
+  ```
+
 ## 1.7.0 Release candidate
 
 ### Migration notes
