@@ -26,8 +26,8 @@ import { InformantType } from './informant'
 const IdType = {
   NATIONAL_ID: 'NATIONAL_ID',
   PASSPORT: 'PASSPORT',
-  BIRTH_REGISTRATION_NUMBER: 'BIRTH_REGISTRATION_NUMBER',
-  NONE: 'NONE'
+  BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
+  OTHER: 'OTHER'
 } as const
 
 const idTypeMessageDescriptors = {
@@ -41,15 +41,15 @@ const idTypeMessageDescriptors = {
     description: 'Option for form field: Type of ID',
     id: 'v2.form.field.label.iDTypePassport'
   },
-  BIRTH_REGISTRATION_NUMBER: {
-    defaultMessage: 'Birth Registration Number',
+  BIRTH_CERTIFICATE: {
+    defaultMessage: 'Birth Certificate',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeBRN'
+    id: 'v2.form.field.label.iDTypeBirthCertificate'
   },
-  NONE: {
-    defaultMessage: 'None',
+  OTHER: {
+    defaultMessage: 'Other',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeNone'
+    id: 'v2.form.field.label.iDTypeOther'
   }
 } satisfies Record<keyof typeof IdType, TranslationConfig>
 

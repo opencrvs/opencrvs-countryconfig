@@ -11,6 +11,7 @@
 import {
   ActionType,
   and,
+  ConditionalType,
   defineConfig,
   or,
   user
@@ -21,11 +22,12 @@ import { BIRTH_DECLARE_FORM } from './forms/declare'
 import { advancedSearchBirth } from './advancedSearch'
 import { Event } from '@countryconfig/form/types/types'
 import { SCOPES } from '@opencrvs/toolkit/scopes'
+import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/print-certificate'
 
 export const birthEvent = defineConfig({
-  id: Event.Birth,
+  id: Event.V2_BIRTH,
   label: {
-    defaultMessage: 'Birth declaration',
+    defaultMessage: 'Birth',
     description: 'This is what this event is referred as in the system',
     id: 'v2.event.birth.label'
   },
@@ -43,36 +45,10 @@ export const birthEvent = defineConfig({
   workqueues: [
     {
       id: 'all',
-      fields: [
-        {
-          column: 'title',
-          label: {
-            defaultMessage: '{child.surname} {child.firstname}',
-            description: 'Label for name in all workqueue',
-            id: 'v2.event.birth.workqueue.all.name.label'
-          }
-        }
-      ],
       filters: []
     }
   ],
   actions: [
-    {
-      type: ActionType.CREATE,
-      label: {
-        defaultMessage: 'Create',
-        description:
-          'This is shown as the action name anywhere the user can trigger the action from',
-        id: 'event.birth.action.create.label'
-      },
-      forms: [],
-      conditionals: [
-        {
-          type: 'SHOW',
-          conditional: user.hasScope(SCOPES.RECORD_DECLARE)
-        }
-      ]
-    },
     {
       type: ActionType.DECLARE,
       label: {
@@ -84,7 +60,7 @@ export const birthEvent = defineConfig({
       forms: [BIRTH_DECLARE_FORM],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             not(event.hasAction(ActionType.DECLARE)),
             user.hasScope(SCOPES.RECORD_DECLARE)
@@ -103,7 +79,7 @@ export const birthEvent = defineConfig({
       forms: [BIRTH_DECLARE_FORM],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.DECLARE),
             not(event.hasAction(ActionType.VALIDATE)),
@@ -123,7 +99,7 @@ export const birthEvent = defineConfig({
       forms: [BIRTH_DECLARE_FORM],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             or(
               event.hasAction(ActionType.VALIDATE),
@@ -134,6 +110,25 @@ export const birthEvent = defineConfig({
           )
         }
       ]
+    },
+    {
+      type: ActionType.PRINT_CERTIFICATE,
+      label: {
+        defaultMessage: 'Print certificate',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.birth.action.collect-certificate.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            event.hasAction(ActionType.REGISTER),
+            user.hasScope(SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES)
+          )
+        }
+      ],
+      forms: [BIRTH_CERTIFICATE_COLLECTOR_FORM]
     }
   ],
   advancedSearch: advancedSearchBirth

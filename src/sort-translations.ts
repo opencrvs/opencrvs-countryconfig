@@ -14,6 +14,20 @@ import { readCSVToJSON, writeJSONToCSV } from './utils'
 
 async function sortMessages(path: string) {
   const translations = await readCSVToJSON<CSVRow[]>(path)
+  const columns = Object.keys(translations[0])
+
+  for (const translation of translations) {
+    const rowIndex = translations.indexOf(translation)
+    const keys = Object.keys(translation)
+    if (keys.length !== columns.length) {
+      console.log(translation)
+
+      throw new Error(
+        `The file ${path} contains a row with different columns on row ${rowIndex + 1}`
+      )
+    }
+  }
+
   const data = sortBy(translations, (row) => row.id)
   return writeJSONToCSV(path, data)
 }
