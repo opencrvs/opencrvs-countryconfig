@@ -2529,7 +2529,7 @@ v2.event.action.declare.form.section.person.field.address.zipCode.label,This is 
 v2.event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 v2.event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
-v2.event.birth.action.declare.form.review.title,Title of the form to show in review page,"Birth declaration{hasName, select, true { for {firstname} {surname}} other {}}","Déclaration de naissance{hasName, select, true { pour {firstname} {surname}} other {}}"
+v2.event.birth.action.declare.form.review.title,Title of the form to show in review page,"Birth declaration{hasAnyKey, select, true { for {child.firstname} {child.surname}} other {}}","Déclaration de naissance{hasAnyKey, select, true { pour {child.firstname} {child.surname}} other {}}"
 v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur(se)
 v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Health Institution,Institution de santé
 v2.event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
@@ -2594,7 +2594,7 @@ v2.event.tennis-club-membership.action.certificate.form.section.who.title,This i
 v2.event.tennis-club-membership.action.certificate.form.version.1,This is the first version of the form,Version 1,Version 1
 v2.event.tennis-club-membership.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
 v2.event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Tennis club membership application
-v2.event.tennis-club-membership.action.declare.form.review.title,Title of the form to show in review page,"Member declaration{hasName, select, true { for {firstname} {surname}} other {}}","Déclaration des membres{hasName, select, true { pour {firstname} {surname}} other {}}"
+v2.event.tennis-club-membership.action.declare.form.review.title,Title of the form to show in review page,"Member declaration{hasAnyKey, select, true { for {applicant.firstname} {applicant.surname}} other {}}","Déclaration des membres{hasAnyKey, select, true { pour {applicant.firstname} {applicant.surname}} other {}}"
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Recommender's first name
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,Recommender's membership ID
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.none.label,This is the label for the field,No recommender,No recommender

@@ -38,7 +38,7 @@ const TENNIS_CLUB_FORM = defineForm({
     title: {
       id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
       defaultMessage:
-        'Member declaration{hasName, select, true { for {firstname} {surname}} other {}}',
+        'Member declaration{hasAnyKey, select, true { for {applicant.firstname} {applicant.surname}} other {}}',
       description: 'Title of the form to show in review page'
     },
     fields: [
