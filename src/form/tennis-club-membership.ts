@@ -37,7 +37,8 @@ const TENNIS_CLUB_FORM = defineForm({
   review: {
     title: {
       id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
-      defaultMessage: 'Member declaration for {firstname} {surname}',
+      defaultMessage:
+        '{applicant.firstname, select, __EMPTY__ {Member declaration} other {{applicant.surname, select, __EMPTY__ {Member declaration} other {Member declaration for {applicant.firstname} {applicant.surname}}}}}',
       description: 'Title of the form to show in review page'
     },
     fields: [
@@ -660,7 +661,7 @@ export const tennisClubMembershipEvent = defineConfig({
       forms: [TENNIS_CLUB_FORM],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             not(event.hasAction(ActionType.DECLARE)),
             user.hasScope(SCOPES.RECORD_DECLARE)
@@ -679,7 +680,7 @@ export const tennisClubMembershipEvent = defineConfig({
       forms: [],
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             not(event.hasAction(ActionType.DECLARE)),
             user.hasScope(SCOPES.RECORD_DECLARE)
@@ -697,7 +698,7 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.DECLARE),
             not(event.hasAction(ActionType.VALIDATE)),
@@ -717,7 +718,7 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             or(
               event.hasAction(ActionType.VALIDATE),
@@ -740,7 +741,7 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.REGISTER),
             user.hasScope(SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES)
@@ -759,7 +760,7 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       conditionals: [
         {
-          type: 'SHOW',
+          type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.REGISTER),
             user.hasScope(SCOPES.RECORD_REGISTRATION_REQUEST_CORRECTION)
@@ -973,9 +974,6 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'v2.event.tennis-club-membership.search'
       },
       fields: [
-        {
-          fieldId: 'applicant.dob'
-        },
         {
           fieldId: 'applicant.firstname'
         }

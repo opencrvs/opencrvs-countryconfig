@@ -11,18 +11,36 @@
 
 - Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
+## 1.7.1 Release candidate
+
+### New features
+
+- **Time field 12-hour format**: To enable the 12-hour (AM/PM) format of the `TimeField`, set the `use12HourFormat` property to `true`. [#8336](https://github.com/opencrvs/opencrvs-core/issues/8336)
+  ```
+  {
+    name: 'time',
+    custom: true,
+    type: 'TIME',
+    use12HourFormat: true,
+    ...otherProp
+  }
+  ```
+
 ## 1.7.0 Release candidate
 
 ### Migration notes
+
 In order to make the upgrade easier, there are a couple of steps that need to be performed which will make the codebase ready for the upgrade:
-- Run this command from the root of the countryconfig repository ```curl https://raw.githubusercontent.com/opencrvs/opencrvs-countryconfig/configurable-roles/src/upgrade-to-1_7.ts | npx ts-node -T --cwd ./src```
+
+- Run this command from the root of the countryconfig repository `curl https://raw.githubusercontent.com/opencrvs/opencrvs-countryconfig/configurable-roles/src/upgrade-to-1_7.ts | npx ts-node -T --cwd ./src`
 
   It will remove `roles.csv` and generate a `roles.ts` file. It will also update the corresponding role column in `default-employees.csv` & `prod-employees.csv` while adding the corresponding translations in `client.csv`. The employee files are only used when seeding new environments, if you already have a v1.6.x of OpenCRVS deployed, the data in the environment will automatically get migrated after deploying the upgrade. The changes in these two files are made to keep the roles in sync with your previously deployed environments, if any.
+
 - After pulling in the v1.7.0 changes reject the changes incoming to `roles.ts`, `default-employees.csv` & `prod-employees.csv` files as we used the script above to auto-generate them.
 
   The `roles.ts` file now defines all the roles available in the system. New roles can be added & existing roles can be customized by giving them different scopes.
 
-  *N.B. The default roles generated in the `roles.ts` file during migration should not be removed to maintain backwards compatibility*
+  _N.B. The default roles generated in the `roles.ts` file during migration should not be removed to maintain backwards compatibility_
 
 ### Breaking changes
 
@@ -30,11 +48,10 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
 - **Roles** The previous `roles.csv` file has been deprecated. It will get removed once you run `yarn upgrade:code` command after pulling in the v1.7 changes. The command automatically generates a `roles.json` file which can be used as a baseline to configure the roles as per your requirements.
 
-
 ### New features
 
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
-- **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: *Link to scopes description file*
+- **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: _Link to scopes description file_
 - **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
 - Add constant.humanName to allow countries to customise the format of the full name in the system for `system users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
@@ -63,6 +80,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 ```
 INSERT CSV ROWS IN ENGLISH ONLY
 ```
+
 ## 1.6.1
 
 ### Bug fixes
