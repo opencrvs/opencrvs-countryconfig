@@ -467,7 +467,6 @@ export interface ILoaderButton extends IFormFieldBase {
 export interface ITimeFormFIeld extends IFormFieldBase {
   type: typeof TIME
   ignorePlaceHolder?: boolean
-  use12HourFormat?: boolean
 }
 
 export interface INidVerificationButton extends IFormFieldBase {
