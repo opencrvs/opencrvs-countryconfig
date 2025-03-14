@@ -2596,6 +2596,13 @@ v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.s
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Select Certificate Template,Select Certificate Template
 v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
 v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR{Local Registrar} other{Unknown}}","{role, select, LOCAL_REGISTRAR{Registraire local} other{Inconnu}}"
+v2.event.summary.event.label,Label for the event field,Event,Événement
+v2.event.summary.event.value,Value for the event field,{eventLabel},{eventLabel}
+v2.event.summary.status.label,Label for the status field,Status,Statut
+v2.event.summary.status.value,Value for the status field,"{event.status, select, CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{event.status, select, CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} REJECTED {Requiert une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
+v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
+v2.event.summary.trackingId.label,Label for the tracking ID field,Tracking ID,ID de suivi
+v2.event.summary.trackingId.value,Value for the tracking ID field,{event.trackingId},{event.trackingId}
 v2.event.tennis-club-membership.action.certificate.form.label,This is what this form is referred as in the system,Tennis club membership certificate collector,Tennis club membership certificate collector
 v2.event.tennis-club-membership.action.certificate.form.review.title,Title of the form to show in review page,Member certificate collector for {firstname} {surname},Collecteur de certificat membre pour {FirstName} {nom de famille}
 v2.event.tennis-club-membership.action.certificate.form.section.requester.informant.label,This is the label for the field,Print and issue Informant,Print and issue Informant
