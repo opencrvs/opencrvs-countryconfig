@@ -44,6 +44,9 @@ export enum Event {
   Birth = 'birth',
   Death = 'death',
   Marriage = 'marriage',
+
+  // events v2 enums
+  V2_BIRTH = 'v2.birth',
   TENNIS_CLUB_MEMBERSHIP = 'tennis-club-membership'
 }
 
@@ -465,6 +468,7 @@ export interface ILoaderButton extends IFormFieldBase {
 export interface ITimeFormFIeld extends IFormFieldBase {
   type: typeof TIME
   ignorePlaceHolder?: boolean
+  use12HourFormat?: boolean
 }
 
 export interface INidVerificationButton extends IFormFieldBase {
