@@ -324,7 +324,13 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      defaultValue: {
+        country: 'FAR',
+        province: '$user.province',
+        district: '$user.district',
+        urbanOrRural: 'URBAN'
+      }
     },
     {
       id: `${PersonType.mother}.maritalStatus`,
