@@ -355,7 +355,13 @@ export const father = defineFormPage({
             field(`${PersonType.mother}.detailsNotAvailable`).isEqualTo(true)
           )
         }
-      ]
+      ],
+      defaultValue: {
+        country: 'FAR',
+        province: '$user.province',
+        district: '$user.district',
+        urbanOrRural: 'URBAN'
+      }
     },
     {
       id: `${PersonType.father}.addressDivider_2`,
