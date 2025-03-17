@@ -2514,7 +2514,11 @@ v2.correction.requester.relationshop.intro.label,The title for the corrector for
 v2.correction.supportingDocuments.attest.label,Label for attestation of supporting documents,Attest,Attestation
 v2.correction.supportingDocuments.notNeeded.label,Label for indicating supporting documents are not needed,Not Needed,Non nécessaire
 v2.custom.field.form.requiredField,,Required for registration,Requis pour l'enregistrement
-v2.error.required,This is the error message for required fields,Required for registration,Requis pour l'enregistrement
+v2.error.hidden,"Error message when field is hidden or disabled, but a value was received",Hidden or disabled field should not receive a value,Le champ masqué ou désactivé ne doit pas recevoir de valeur
+v2.error.invalidDate,Error message when date field is invalid,Invalid date field,Champ de date invalide
+v2.error.invalidEmail,Error message when email address is invalid,Invalid email address,Doit être une adresse électronique valide
+v2.error.invalidInput,Error message when generic field is invalid,Invalid input,Entrée invalide
+v2.error.required,Error message when required field is missing,Required for registration,Requis pour l'enregistrement
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
 v2.event.action.declare.form.section.person.field.address.country.label,This is the label for the field,Country,Pays
 v2.event.action.declare.form.section.person.field.address.number.label,This is the label for the field,Number,Numéro
