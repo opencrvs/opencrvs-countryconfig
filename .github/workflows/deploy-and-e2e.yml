@@ -128,8 +128,11 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      - uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: npx playwright install --with-deps
 
       - name: Run Playwright Tests
         run: npx playwright test ./e2e/testcases/${{ matrix.test_file }}
