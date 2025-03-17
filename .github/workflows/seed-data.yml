@@ -51,7 +51,7 @@ jobs:
         run: yarn install
 
       - name: Seed data on given environment
-        uses: nick-fields/retry@v2
+        uses: nick-fields/retry@v3
         id: seed
         with:
           timeout_minutes: 10
