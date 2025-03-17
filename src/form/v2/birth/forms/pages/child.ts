@@ -10,7 +10,7 @@
  */
 
 import {
-  defineFormPage,
+  definePage,
   TranslationConfig,
   ConditionalType,
   and,
@@ -174,7 +174,7 @@ const attendantAtBirthOptions = createSelectOptions(
   attendantAtBirthMessageDescriptors
 )
 
-export const child = defineFormPage({
+export const child = definePage({
   id: 'child',
   title: {
     defaultMessage: "Child's details",

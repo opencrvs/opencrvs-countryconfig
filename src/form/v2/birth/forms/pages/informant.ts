@@ -12,7 +12,7 @@
 import {
   and,
   ConditionalType,
-  defineFormPage,
+  definePage,
   FieldType,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
@@ -93,7 +93,7 @@ const informantOtherThanParent = and(
   not(field('informant.relation').isFalsy())
 )
 
-export const informant = defineFormPage({
+export const informant = definePage({
   id: `${PersonType.informant}`,
   title: {
     defaultMessage: "Informant's details",
