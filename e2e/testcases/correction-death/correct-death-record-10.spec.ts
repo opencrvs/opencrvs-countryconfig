@@ -1066,6 +1066,13 @@ test.describe('10. Correct record - 10', () => {
       })
       test('10.2.6.4 Validate history in record audit', async () => {
         await page.getByText(formatName(updatedDeceasedDetails)).click()
+        /*
+         * Verify we're on the right record page
+         */
+        await expect(
+          page.getByText(formatName(updatedDeceasedDetails))
+        ).toBeVisible()
+
         await assignRecord(page)
         /*
          * Expected result: should show in task history

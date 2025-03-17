@@ -573,6 +573,13 @@ test.describe.serial(' Correct record - 11', () => {
         .first()
         .click()
 
+      /*
+       * Verify we're on the right record page
+       */
+      await expect(
+        page.getByText(formatName(declaration.deceased.name[0]))
+      ).toBeVisible()
+
       await assignRecord(page)
 
       /*
