@@ -85,7 +85,7 @@ jobs:
           git merge --abort
           git checkout upstream/${BASE_BRANCH}
           git checkout -b sync-with-${BASE_BRANCH}
-          git push --force --set-upstream origin sync-with-${BASE_BRANCH}
+          git push --set-upstream origin sync-with-${BASE_BRANCH}
 
       - name: Create PR in opencrvs-farajaland repository
         if: steps.merge.outcome == 'failure'
