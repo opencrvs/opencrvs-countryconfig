@@ -2335,6 +2335,8 @@ v2.buttons.exit,Label for Exit button on EventTopBar,Exit,Quitter
 v2.buttons.print,Print button text,Print,Imprimer
 v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
 v2.buttons.search,The title of search input submit button,Search,Rechercher
+v2.buttons.back,Back button text,Back,Retour
+v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
 v2.changeModal.cancel,The label for cancel button of change modal,Cancel,Annuler
 v2.changeModal.continue,The label for continue button of change modal,Continue,Continuer
 v2.changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour toute modification que vous apporterez
