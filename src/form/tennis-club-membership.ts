@@ -225,7 +225,6 @@ const TENNIS_CLUB_FORM = defineForm({
   ]
 })
 
-// TODO CIHAN: tänne lisätään?
 const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
   label: {
     id: 'v2.event.tennis-club-membership.action.certificate.form.label',
@@ -526,18 +525,12 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
         {
           id: 'collector.identity.verify.data',
           type: FieldType.DATA,
-          // TODO CIHAN: labelist eroon?
           label: {
-            defaultMessage: '',
-            description: '',
-            id: 'foo'
+            defaultMessage: 'Applicant details',
+            description: 'Title for the data section',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.section.verifyIdentity.data.label'
           },
           configuration: {
-            title: {
-              defaultMessage: 'Applicant details',
-              description: 'Title for the data section',
-              id: 'v2.event.tennis-club-membership.action.certificate.form.section.verifyIdentity.data.label'
-            },
             subtitle: {
               defaultMessage: 'Please verify the applicants identity',
               description: 'Subtitle for the data section',
