@@ -82,10 +82,10 @@ jobs:
       - if: steps.merge.outcome == 'failure'
         name: Handle merge conflicts and push opencrvs-farajaland/sync-with-${{ github.event.pull_request.base.ref }}
         run: |
-          git add -A
-          git commit -m "Merge upstream/${BASE_BRANCH} into sync-with-${BASE_BRANCH} with conflicts"
+          git merge --abort
+          git checkout upstream/${BASE_BRANCH}
           git checkout -b sync-with-${BASE_BRANCH}
-          git push --force origin sync-with-${BASE_BRANCH}
+          git push --set-upstream origin sync-with-${BASE_BRANCH}
 
       - name: Create PR in opencrvs-farajaland repository
         if: steps.merge.outcome == 'failure'
