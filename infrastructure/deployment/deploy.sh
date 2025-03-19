@@ -310,13 +310,6 @@ get_opencrvs_version() {
   echo "Current opencrvs version: $VERSION"
 }
 
-reset_metabase() {
-  echo "Reseting metabase"
-  configured_ssh "docker exec \$(docker ps | grep opencrvs_dashboards | awk '{print \$1}' | head -n 1) /bin/sh -c \"rm /data/metabase/metabase.mv.db\" && \
-    docker service scale opencrvs_dashboards=0 && \
-    docker service scale opencrvs_dashboards=1"
-}
-
 validate_options
 
 get_opencrvs_version
@@ -435,15 +428,6 @@ EMAIL_PAYLOAD='{
   "from": "{{SENDER_EMAIL_ADDRESS}}",
   "to": "{{ALERT_EMAIL}}"
 }'
-
-VERSION=$(echo "$VERSION" | xargs)
-PREVIOUS_VERSION=$(echo "$PREVIOUS_VERSION" | xargs)
-
-if [[ "$VERSION" == "$PREVIOUS_VERSION" ]]; then
-  echo "No reset needed for Metabase."
-else
-  reset_metabase
-fi
 
 configured_ssh "docker run --rm --network=opencrvs_overlay_net appropriate/curl \
   -X POST 'http://countryconfig:3040/email' \
