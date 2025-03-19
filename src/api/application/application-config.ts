@@ -1,6 +1,7 @@
 import { countryLogo } from '@countryconfig/api/application/country-logo'
 import * as fs from 'fs'
 import { join } from 'path'
+import { IScriptTag, IScriptTagOptions, IStyleTag } from '../custom-files/types'
 
 export const applicationConfig = {
   APPLICATION_NAME: 'SIECM',
@@ -37,6 +38,43 @@ export const applicationConfig = {
       .readFileSync(join(__dirname, 'login-bg-mdg.jpg'))
       .toString('base64')}`,
     imageFit: 'FILL'
+  },
+  ADVANCED_FRONTEND_CUSTOMIZATIONS: {
+    customFiles: true,
+    externalScripts: [
+      {
+        url: 'https://w.appzi.io/w.js?token=tyKuz',
+        activateOn: ['client', 'login'],
+        options: {
+          // async: true,
+          // defer: true,
+          // nomodule: true,
+          onload: function () {
+            console.info('🚀 Appzi loaded')
+          },
+          onerror: function () {
+            console.info('🔴 Appzi failed to load')
+          },
+          crossorigin: 'anonymous',
+          integrity:
+            'sha384-1trZnTo2NWT8MMlaYsZYUvOi6jG0DY1+8I14HAHjIVqKA3lw4cdzaEoXtD1GbQhk'
+        } as Partial<IScriptTagOptions>
+      }
+    ] as Partial<IScriptTag>[],
+    externalStyles: [
+      {
+        url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
+        activateOn: ['client', 'login']
+        // options: {
+        //   media: 'all',
+        //   crossorigin: 'anonymous',
+        //   integrity: 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN',
+        //   title: 'Example Stylesheet',
+        //   disabled: false,
+        //   type: 'text/css',
+        // }
+      }
+    ] as Partial<IStyleTag>[]
   },
   MARRIAGE: {
     REGISTRATION_TARGET: 45,

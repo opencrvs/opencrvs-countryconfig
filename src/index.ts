@@ -65,6 +65,11 @@ import { fontsHandler } from './api/fonts/handler'
 import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
 import { NUIHandler, nuiRequestBodySchema } from './api/nui/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
+import {
+  getCssFileHandler,
+  getJsFileHandler,
+  listCustomFilesHandler
+} from './api/custom-files/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -599,6 +604,40 @@ export async function createServer() {
       return h.continue
     }
   })
+
+  /** Advanced Customizations: Serves custom JavaScript and CSS files */
+  server.route([
+    {
+      method: 'GET',
+      path: '/custom-files',
+      handler: listCustomFilesHandler,
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'List custom JavaScript and CSS files'
+      }
+    },
+    {
+      method: 'GET',
+      path: '/custom-files/js/{filename}',
+      handler: getJsFileHandler,
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Get signle custom JavaScript file'
+      }
+    },
+    {
+      method: 'GET',
+      path: '/custom-files/css/{filename}',
+      handler: getCssFileHandler,
+      options: {
+        auth: false,
+        tags: ['api'],
+        description: 'Get signle custom CSS file'
+      }
+    }
+  ])
 
   async function stop() {
     await server.stop()
