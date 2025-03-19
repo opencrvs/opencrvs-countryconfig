@@ -20,6 +20,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 
 - `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
 - Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
+- Certificate fee in application config is deprecated in favor of CertificateConfigs `(GET /certificates)`
 - **Roles** The previous `roles.csv` file has been deprecated. It will get removed once you run `yarn upgrade:code` command after pulling in the v1.7 changes. The command automatically generates a `roles.json` file which can be used as a baseline to configure the roles as per your requirements.
 
 ### New features
