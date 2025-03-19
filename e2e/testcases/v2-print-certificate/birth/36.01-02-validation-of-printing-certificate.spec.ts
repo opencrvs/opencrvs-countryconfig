@@ -1,51 +1,22 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { loginToV2, getToken } from '../../helpers'
-import { EVENT_API_URL, CREDENTIALS } from '../../constants'
-import { birthDeclaration } from './data/birth-declaration'
-
-async function createDeclaration(token: string) {
-  await fetch(`${EVENT_API_URL}/event.actions.declare`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(birthDeclaration)
-  })
-
-  await fetch(`${EVENT_API_URL}/event.actions.validate`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(birthDeclaration)
-  })
-
-  const response = await fetch(`${EVENT_API_URL}/event.actions.register`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(birthDeclaration)
-  })
-
-  const res = await response.json()
-
-  return res
-}
+import { loginToV2, getToken } from '../../../helpers'
+import { CREDENTIALS } from '../../../constants'
+import {
+  createDeclaration,
+  CreateDeclarationResponse
+} from './data/birth-declaration'
 
 test.describe.serial('Print certificate', () => {
   let page: Page
+  let birthDeclaration: CreateDeclarationResponse
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    await createDeclaration(token)
+    birthDeclaration = await createDeclaration(token)
     page = await browser.newPage()
     await loginToV2(page)
   })
@@ -55,7 +26,8 @@ test.describe.serial('Print certificate', () => {
   })
 
   test('1.0 Click on "Print certificate" from action menu', async () => {
-    await page.getByRole('button', { name: 'Firstname Lastname' }).click()
+    const childName = `${birthDeclaration.data['child.firstname']} ${birthDeclaration.data['child.surname']}`
+    await page.getByRole('button', { name: childName }).click()
     await page.getByRole('button', { name: 'Action' }).click()
     await page.getByRole('listitem').click()
   })
