@@ -62,7 +62,7 @@ import {
   ageOfIndividualValidators,
   ageOfParentsConditionals,
   disableIfVerifiedOrAuthenticated,
-  hideIfIDReaderFilledBirthDate,
+  exactDateOfBirthUnknownConditionals,
   typeOfIDVerificationConditionals
 } from '../common/default-validation-conditionals'
 import {
@@ -282,7 +282,7 @@ export const birthForm: ISerializedForm = {
             ), // Required field.
             exactDateOfBirthUnknown(
               hideIfInformantMotherOrFather.concat(
-                hideIfIDReaderFilledBirthDate
+                exactDateOfBirthUnknownConditionals
               )
             ),
             getAgeOfIndividualInYears(
@@ -381,7 +381,9 @@ export const birthForm: ISerializedForm = {
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(
-              detailsExistConditional.concat(hideIfIDReaderFilledBirthDate)
+              detailsExistConditional.concat(
+                exactDateOfBirthUnknownConditionals
+              )
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfMother,
@@ -488,7 +490,9 @@ export const birthForm: ISerializedForm = {
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(
-              detailsExistConditional.concat(hideIfIDReaderFilledBirthDate)
+              detailsExistConditional.concat(
+                exactDateOfBirthUnknownConditionals
+              )
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfFather,

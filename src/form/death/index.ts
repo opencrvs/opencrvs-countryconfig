@@ -63,7 +63,7 @@ import {
   spouseFirstNameConditionals,
   hideIfInformantSpouse,
   disableIfVerifiedOrAuthenticated,
-  hideIfIDReaderFilledBirthDate,
+  exactDateOfBirthUnknownConditionals,
   typeOfIDVerificationConditionals
 } from '../common/default-validation-conditionals'
 import {
@@ -225,7 +225,7 @@ export const deathForm = {
               certificateHandlebars.deceasedBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.,
-            exactDateOfBirthUnknown(hideIfIDReaderFilledBirthDate),
+            exactDateOfBirthUnknown(exactDateOfBirthUnknownConditionals),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfDeceased,
               exactDateOfBirthUnknownConditional,
@@ -341,7 +341,7 @@ export const deathForm = {
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(
-              hideIfInformantSpouse.concat(hideIfIDReaderFilledBirthDate)
+              hideIfInformantSpouse.concat(exactDateOfBirthUnknownConditionals)
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
@@ -432,7 +432,7 @@ export const deathForm = {
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(
-              detailsExist.concat(hideIfIDReaderFilledBirthDate)
+              detailsExist.concat(exactDateOfBirthUnknownConditionals)
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfSpouse,
