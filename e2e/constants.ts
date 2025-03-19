@@ -25,6 +25,11 @@ export const CLIENT_V2_URL =
     ? 'http://localhost:3000/v2'
     : 'https://register.' + DOMAIN + '/v2'
 
+export const EVENT_API_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000/api/events'
+    : 'https://register.' + DOMAIN + '/api/events'
+
 /*
  * This timeout is to ensure that all previous actions have been completed
  * including filling inputs and that the changed values have been reflected
