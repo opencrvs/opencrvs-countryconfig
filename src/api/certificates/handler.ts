@@ -197,7 +197,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Birth Certificate copy',
         description: 'The label for a birth certificate'
       },
-      isDefault: false,
+      isDefault: true,
       fee: {
         onTime: 7,
         late: 10.6,
@@ -246,7 +246,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         defaultMessage: 'Tennis Club Membership Certificate copy',
         description: 'The label for a tennis-club-membership certificate'
       },
-      isDefault: false,
+      isDefault: true,
       fee: {
         onTime: 7,
         late: 10.6,

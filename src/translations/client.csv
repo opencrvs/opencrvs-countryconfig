@@ -2321,6 +2321,7 @@ v2.action.correct,Label for correct record button in dropdown menu,Correct Recor
 v2.actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, declare{Declare} other{{action}}}"
 v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
 v2.actionModal.description,The description for action modal,The declarant will be notified of this action and a record of this decision will be recorded,Le déclarant sera informé de cette action et un enregistrement de cette décision sera conservé
+v2.actionModal.description.incomplete,Description shown in the action modal when a declaration is incomplete,This incomplete declaration will be submitted for review.,Cette déclaration incomplète sera soumise à l'examen.
 v2.actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} the member?"
 v2.advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 v2.advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
@@ -2516,7 +2517,11 @@ v2.correction.requester.relationshop.intro.label,The title for the corrector for
 v2.correction.supportingDocuments.attest.label,Label for attestation of supporting documents,Attest,Attestation
 v2.correction.supportingDocuments.notNeeded.label,Label for indicating supporting documents are not needed,Not Needed,Non nécessaire
 v2.custom.field.form.requiredField,,Required for registration,Requis pour l'enregistrement
-v2.error.required,This is the error message for required fields,Required for registration,Requis pour l'enregistrement
+v2.error.hidden,"Error message when field is hidden or disabled, but a value was received",Hidden or disabled field should not receive a value,Le champ masqué ou désactivé ne doit pas recevoir de valeur
+v2.error.invalidDate,Error message when date field is invalid,Invalid date field,Champ de date invalide
+v2.error.invalidEmail,Error message when email address is invalid,Invalid email address,Doit être une adresse électronique valide
+v2.error.invalidInput,Error message when generic field is invalid,Invalid input,Entrée invalide
+v2.error.required,Error message when required field is missing,Required for registration,Requis pour l'enregistrement
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
 v2.event.action.declare.form.section.person.field.address.country.label,This is the label for the field,Country,Pays
 v2.event.action.declare.form.section.person.field.address.number.label,This is the label for the field,Number,Numéro
@@ -2584,11 +2589,27 @@ v2.event.birth.action.declare.form.section.person.field.surname.label,This is th
 v2.event.birth.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
 v2.event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
 v2.event.birth.label,This is what this event is referred as in the system,Birth,Naissance
+v2.event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
+v2.event.birth.summary.child.dob.label,Label for date of birth,Date of birth,Date de naissance
+v2.event.birth.summary.child.dob.value,This is the dob value of the child,{child.dob},{child.dob}
+v2.event.birth.summary.child.placeOfBirth.empty,Label for place of birth not available,No place of birth,Pas de lieu de naissance
+v2.event.birth.summary.child.placeOfBirth.label,Label for place of birth,Place of birth,Lieu de naissance
+v2.event.birth.summary.child.placeOfBirth.value,This is the place of birth value of the child,"{child.birthLocation, select, __EMPTY__ {} other {{child.birthLocation}, }}{child.address.district, select, __EMPTY__ {} other {{child.address.district}, }}{child.address.province, select, __EMPTY__ {} other {{child.address.province}}}","{child.birthLocation, select, __EMPTY__ {} other {{child.birthLocation}, }}{child.address.district, select, __EMPTY__ {} other {{child.address.district}, }}{child.address.province, select, __EMPTY__ {} other {{child.address.province}}}"
+v2.event.birth.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
+v2.event.birth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
+v2.event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
 v2.event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Select Certificate Template,Select Certificate Template
 v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
 v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR{Local Registrar} other{Unknown}}","{role, select, LOCAL_REGISTRAR{Registraire local} other{Inconnu}}"
+v2.event.summary.event.label,Label for the event field,Event,Événement
+v2.event.summary.event.value,Value for the event field,{eventLabel},{eventLabel}
+v2.event.summary.status.label,Label for the status field,Status,Statut
+v2.event.summary.status.value,Value for the status field,"{event.status, select, CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{event.status, select, CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} REJECTED {Requiert une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
+v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
+v2.event.summary.trackingId.label,Label for the tracking ID field,Tracking ID,ID de suivi
+v2.event.summary.trackingId.value,Value for the tracking ID field,{event.trackingId},{event.trackingId}
 v2.event.tennis-club-membership.action.certificate.form.label,This is what this form is referred as in the system,Tennis club membership certificate collector,Tennis club membership certificate collector
 v2.event.tennis-club-membership.action.certificate.form.review.title,Title of the form to show in review page,Member certificate collector for {firstname} {surname},Collecteur de certificat membre pour {FirstName} {nom de famille}
 v2.event.tennis-club-membership.action.certificate.form.section.requester.informant.label,This is the label for the field,Print and issue Informant,Print and issue Informant
@@ -2739,6 +2760,7 @@ v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Pr�
 v2.navigation.REGISTERED,Ready to print label in navigation,Ready to print,Prêt à imprimer
 v2.print.certificate.button.confirmPrint,The text for print button,"Yes, print certificate","Oui, imprimer le certificat"
 v2.print.certificate.button.makeCorrection,The label for correction button of print action,"No, make correction","Non, faites la correction"
+v2.print.certificate.onlineOnly,Print certificate online only message,Print certificate is an online only action. Please go online to print the certificate,L'impression du certificat est une action en ligne uniquement. Veuillez vous connecter pour imprimer le certificat.
 v2.print.certificate.review.modal.body.print,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.
 v2.print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing and issuing.,A Pdf of the certificate will open in a new tab for printing and issuing.
 v2.print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print and issue certificate?,Imprimer et émettre le certificat ?
