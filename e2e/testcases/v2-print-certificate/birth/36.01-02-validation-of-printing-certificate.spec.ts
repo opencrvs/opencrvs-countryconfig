@@ -44,7 +44,7 @@ test.describe.serial('Print certificate', () => {
     test('2.2 Continue button is disabled when no requester type is selected', async () => {
       await page.reload({ waitUntil: 'networkidle' })
 
-      await page.locator('#templateId svg').click()
+      await page.locator('#certificateTemplateId svg').click()
 
       await page
         .getByText('Birth Certificate Certified Copy', { exact: true })
@@ -57,16 +57,14 @@ test.describe.serial('Print certificate', () => {
       ).toBeDisabled()
     })
 
-    test('2.3 Continue button is disabled when no template type is selected', async () => {
+    test('2.3 Continue button is enabled when both template and requester type are selected', async () => {
       await page.reload({ waitUntil: 'networkidle' })
       await page.locator('#collector____requesterId div').nth(4).click()
       await page.getByText('Print and issue Informant', { exact: true }).click()
 
       await expect(page.getByText('Print certified copy')).toBeVisible()
 
-      await expect(
-        page.getByRole('button', { name: 'Continue' })
-      ).toBeDisabled()
+      await expect(page.getByRole('button', { name: 'Continue' })).toBeEnabled()
     })
   })
 })

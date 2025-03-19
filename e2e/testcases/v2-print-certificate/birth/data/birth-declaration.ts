@@ -21,12 +21,12 @@ const generateCreateRequestData = () => {
 const declarationData = {
   'father.detailsNotAvailable': true,
   'father.reason': 'Father is missing.',
-  'mother.firstname': 'MotherFirstname',
-  'mother.surname': 'MotherLastname',
+  'mother.firstname': faker.person.firstName(),
+  'mother.surname': faker.person.lastName(),
   'mother.dob': '1995-09-12',
   'mother.nationality': 'FAR',
   'mother.idType': 'NATIONAL_ID',
-  'mother.nid': '1111155555',
+  'mother.nid': faker.string.numeric(10),
   'mother.address': {
     country: 'FAR',
     province: 'e39966c4-940e-4a12-90e2-ebba05eac593',
