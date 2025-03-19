@@ -13,8 +13,10 @@ import {
   ConditionalType,
   defineForm,
   field,
-  FieldType
+  FieldType,
+  PageType
 } from '@opencrvs/toolkit/events'
+import { InformantType } from './pages/informant'
 
 const CertCollectorType = {
   INFORMANT: 'INFORMANT',
@@ -331,6 +333,79 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           ]
         }
       ]
+    },
+    {
+      id: 'collector.identity.verify',
+      type: PageType.VERIFICATION,
+      title: {
+        id: 'event.birth.action.print.verifyIdentity',
+        defaultMessage: 'Verify their identity',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        // TODO CIHAN: fix conditional and add alternative DATA fields
+        {
+          id: 'collector.identity.verify.data',
+          type: FieldType.DATA,
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('informant.relation').isEqualTo(
+                InformantType.MOTHER
+              )
+            }
+          ],
+          label: {
+            defaultMessage: 'Requester details',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
+          },
+          configuration: {
+            subtitle: {
+              defaultMessage: 'Please verify the requester identity',
+              description: 'Subtitle for the data section',
+              id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.subtitle'
+            },
+            data: [
+              { fieldId: 'informant.firstname' },
+              { fieldId: 'informant.surname' },
+              { fieldId: 'informant.dob' }
+            ]
+          }
+        }
+      ],
+      actions: {
+        verify: {
+          label: {
+            defaultMessage: 'Verified',
+            description: 'This is the label for the verification button',
+            id: 'v2.event.birth.action.certificate.form.verify'
+          }
+        },
+        cancel: {
+          label: {
+            defaultMessage: 'Identity does not match',
+            description:
+              'This is the label for the verification cancellation button',
+            id: 'v2.event.birth.action.certificate.form.cancel'
+          },
+          confirmation: {
+            title: {
+              defaultMessage: 'Print without proof of ID?',
+              description:
+                'This is the title for the verification cancellation modal',
+              id: 'v2.event.birth.action.certificate.form.cancel.confirmation.title'
+            },
+            body: {
+              defaultMessage:
+                'Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector',
+              description:
+                'This is the body for the verification cancellation modal',
+              id: 'v2.event.birth.action.certificate.form.cancel.confirmation.body'
+            }
+          }
+        }
+      }
     }
   ]
 })

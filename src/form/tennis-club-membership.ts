@@ -516,6 +516,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
     },
     {
       id: 'collector.identity.verify',
+      type: PageType.VERIFICATION,
       title: {
         id: 'event.tennis-club-membership.action.print.verifyIdentity',
         defaultMessage: 'Verify their identity',
@@ -544,7 +545,6 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           }
         }
       ],
-      type: PageType.VERIFICATION,
       actions: {
         verify: {
           label: {
