@@ -5,11 +5,6 @@ export const applicationConfig = {
   BIRTH: {
     REGISTRATION_TARGET: 30,
     LATE_REGISTRATION_TARGET: 365,
-    FEE: {
-      ON_TIME: 0,
-      LATE: 5.5,
-      DELAYED: 15
-    },
     PRINT_IN_ADVANCE: true
   },
   COUNTRY_LOGO: countryLogo,
@@ -19,10 +14,6 @@ export const applicationConfig = {
   },
   DEATH: {
     REGISTRATION_TARGET: 45,
-    FEE: {
-      ON_TIME: 0,
-      DELAYED: 0
-    },
     PRINT_IN_ADVANCE: true
   },
   PHONE_NUMBER_PATTERN: '^0(7|9)[0-9]{8}$',
@@ -32,10 +23,6 @@ export const applicationConfig = {
   },
   MARRIAGE: {
     REGISTRATION_TARGET: 45,
-    FEE: {
-      ON_TIME: 10,
-      DELAYED: 45
-    },
     PRINT_IN_ADVANCE: true
   },
   FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
