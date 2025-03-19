@@ -16,7 +16,7 @@ import {
   FieldType,
   PageType
 } from '@opencrvs/toolkit/events'
-import { InformantType } from './pages/informant'
+import { informantOtherThanParent, InformantType } from './pages/informant'
 
 const CertCollectorType = {
   INFORMANT: 'INFORMANT',
@@ -343,9 +343,8 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
         description: 'This is the title of the section'
       },
       fields: [
-        // TODO CIHAN: fix conditional and add alternative DATA fields
         {
-          id: 'collector.identity.verify.data',
+          id: 'collector.identity.verify.data.mother',
           type: FieldType.DATA,
           conditionals: [
             {
@@ -356,20 +355,70 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             }
           ],
           label: {
-            defaultMessage: 'Requester details',
+            defaultMessage: '',
             description: 'Title for the data section',
             id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
           },
           configuration: {
-            subtitle: {
-              defaultMessage: 'Please verify the requester identity',
-              description: 'Subtitle for the data section',
-              id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.subtitle'
-            },
             data: [
+              { fieldId: 'mother.idType' },
+              { fieldId: 'mother.nid' },
+              { fieldId: 'mother.firstname' },
+              { fieldId: 'mother.surname' },
+              { fieldId: 'mother.dob' },
+              { fieldId: 'mother.nationality' }
+            ]
+          }
+        },
+        {
+          id: 'collector.identity.verify.data.father',
+          type: FieldType.DATA,
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('informant.relation').isEqualTo(
+                InformantType.FATHER
+              )
+            }
+          ],
+          label: {
+            defaultMessage: '',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
+          },
+          configuration: {
+            data: [
+              { fieldId: 'father.idType' },
+              { fieldId: 'father.nid' },
+              { fieldId: 'father.firstname' },
+              { fieldId: 'father.surname' },
+              { fieldId: 'father.dob' },
+              { fieldId: 'father.nationality' }
+            ]
+          }
+        },
+        {
+          id: 'collector.identity.verify.data.other',
+          type: FieldType.DATA,
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: informantOtherThanParent
+            }
+          ],
+          label: {
+            defaultMessage: '',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
+          },
+          configuration: {
+            data: [
+              { fieldId: 'informant.idType' },
+              { fieldId: 'informant.nid' },
               { fieldId: 'informant.firstname' },
               { fieldId: 'informant.surname' },
-              { fieldId: 'informant.dob' }
+              { fieldId: 'informant.dob' },
+              { fieldId: 'informant.nationality' }
             ]
           }
         }
