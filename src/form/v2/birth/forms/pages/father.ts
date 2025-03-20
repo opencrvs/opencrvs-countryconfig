@@ -358,6 +358,7 @@ export const father = defineFormPage({
       ],
       defaultValue: {
         country: 'FAR',
+        addressType: 'DOMESTIC',
         province: '$user.province',
         district: '$user.district',
         urbanOrRural: 'URBAN'
