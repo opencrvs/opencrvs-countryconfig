@@ -150,6 +150,7 @@ jobs:
         if: always() && steps.ctrf_check.outputs.ctrf == 'true'
 
       - name: Form the artifact name from test_file
+        if: always()
         id: artifact
         run: echo "artifact=$(echo '${{ matrix.test_file }}' | sed 's/\//__/g')" >> $GITHUB_OUTPUT
 

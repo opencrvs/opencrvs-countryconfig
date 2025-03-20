@@ -2591,7 +2591,7 @@ v2.event.birth.summary.child.dob.label,Label for date of birth,Date of birth,Dat
 v2.event.birth.summary.child.dob.value,This is the dob value of the child,{child.dob},{child.dob}
 v2.event.birth.summary.child.placeOfBirth.empty,Label for place of birth not available,No place of birth,Pas de lieu de naissance
 v2.event.birth.summary.child.placeOfBirth.label,Label for place of birth,Place of birth,Lieu de naissance
-v2.event.birth.summary.child.placeOfBirth.value,This is the place of birth value of the child,"{child.birthLocation}, {child.address.district}, {child.address.province}","{child.birthLocation}, {child.address.district}, {child.address.province}"
+v2.event.birth.summary.child.placeOfBirth.value,This is the place of birth value of the child,"{child.birthLocation, select, __EMPTY__ {} other {{child.birthLocation}, }}{child.address.district, select, __EMPTY__ {} other {{child.address.district}, }}{child.address.province, select, __EMPTY__ {} other {{child.address.province}}}","{child.birthLocation, select, __EMPTY__ {} other {{child.birthLocation}, }}{child.address.district, select, __EMPTY__ {} other {{child.address.district}, }}{child.address.province, select, __EMPTY__ {} other {{child.address.province}}}"
 v2.event.birth.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
 v2.event.birth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
 v2.event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
@@ -2757,6 +2757,7 @@ v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Pr�
 v2.navigation.REGISTERED,Ready to print label in navigation,Ready to print,Prêt à imprimer
 v2.print.certificate.button.confirmPrint,The text for print button,"Yes, print certificate","Oui, imprimer le certificat"
 v2.print.certificate.button.makeCorrection,The label for correction button of print action,"No, make correction","Non, faites la correction"
+v2.print.certificate.onlineOnly,Print certificate online only message,Print certificate is an online only action. Please go online to print the certificate,L'impression du certificat est une action en ligne uniquement. Veuillez vous connecter pour imprimer le certificat.
 v2.print.certificate.review.modal.body.print,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.,A Pdf of the certificate will open in a new tab for printing. The record will move to the ready-to-issue queue.
 v2.print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing and issuing.,A Pdf of the certificate will open in a new tab for printing and issuing.
 v2.print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print and issue certificate?,Imprimer et émettre le certificat ?

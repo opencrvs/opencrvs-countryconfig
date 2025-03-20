@@ -212,12 +212,12 @@ test.describe.serial("2. Validate the child's details page", () => {
 
       /*
        * Expected result: should throw error in application review page:
-       * - Please enter a valid date
+       * - Required for registration
        */
       await expect(
         page
           .locator('[data-test-id="row-value-child.dob"]')
-          .getByText('Please enter a valid date')
+          .getByText('Required for registration')
       ).toBeVisible()
     })
   })
