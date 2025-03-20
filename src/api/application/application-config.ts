@@ -43,10 +43,11 @@ export const applicationConfig = {
     customFiles: true,
     externalScripts: [
       {
-        url: 'https://w.appzi.io/w.js?token=tyKuz',
+        url: 'https://w.appzi.io/w.js?token=Al3I4',
+        // url: 'https://w.appzi.io/w.js?token=tyKuz',
         activateOn: ['client', 'login'],
         options: {
-          // async: true,
+          async: true,
           // defer: true,
           // nomodule: true,
           onload: function () {
@@ -54,10 +55,10 @@ export const applicationConfig = {
           },
           onerror: function () {
             console.info('🔴 Appzi failed to load')
-          },
-          crossorigin: 'anonymous',
-          integrity:
-            'sha384-1trZnTo2NWT8MMlaYsZYUvOi6jG0DY1+8I14HAHjIVqKA3lw4cdzaEoXtD1GbQhk'
+          }
+          // crossorigin: 'anonymous',
+          // integrity:
+          //   'sha384-1trZnTo2NWT8MMlaYsZYUvOi6jG0DY1+8I14HAHjIVqKA3lw4cdzaEoXtD1GbQhk'
         } as Partial<IScriptTagOptions>
       }
     ] as Partial<IScriptTag>[],
