@@ -337,6 +337,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
     {
       id: 'collector.identity.verify',
       type: PageType.VERIFICATION,
+      conditional: field('collector.requesterId').isEqualTo('INFORMANT'),
       title: {
         id: 'event.birth.action.print.verifyIdentity',
         defaultMessage: 'Verify their identity',
