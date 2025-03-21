@@ -11,3 +11,11 @@ set -e
 
 docker compose build
 docker compose push
+
+echo $BRANCH_NAME
+if [ "x$BRANCH_NAME" == "xdevelop-tmp" ]
+then
+  docker tag ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION} \
+  ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:$BRANCH_NAME
+  docker push ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:$BRANCH_NAME
+fi
