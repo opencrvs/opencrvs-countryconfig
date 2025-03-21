@@ -351,6 +351,16 @@ export const child = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.label'
       },
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Must be within 0 and 6',
+            description: 'This is the error message for invalid number range',
+            id: 'v2.error.child.weightAtBirth.invalidNumberRange'
+          },
+          validator: field('child.weightAtBirth').isBetween(0, 6)
+        }
+      ],
       configuration: {
         min: 0,
         postfix: {
