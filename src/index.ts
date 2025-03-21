@@ -75,6 +75,8 @@ import {
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { eventRegistrationHandler } from './api/event-registration/handler'
+import { EVENT_TYPE, getChild, getEventType } from './utils/fhir'
+import differenceInYears from 'date-fns/differenceInYears'
 
 export interface ITokenPayload {
   sub: string
@@ -202,9 +204,20 @@ interface VerificationStatus {
  * for unique ID creation based on the custom country specific logic built on verification statuses.
  */
 export function shouldForwardToIDSystem(
-  // eslint-disable-next-line no-unused-vars
+  bundle: fhir3.Bundle,
   verificationStatus: Partial<VerificationStatus>
 ) {
+  const { father, mother, informant } = verificationStatus
+  const eventType = getEventType(bundle)
+  if (eventType === EVENT_TYPE.BIRTH) {
+    const child = getChild(bundle)
+    const childBirthDate = new Date(child.birthDate as string)
+    return (
+      differenceInYears(new Date(), childBirthDate) < 10 && (father || mother)
+    )
+  } else if (eventType === EVENT_TYPE.DEATH) {
+    return informant
+  }
   return true
 }
 
@@ -455,7 +468,7 @@ export async function createServer() {
       const url = env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
       const result = await verify({ url, request })
 
-      if (shouldForwardToIDSystem(result)) {
+      if (shouldForwardToIDSystem(request.payload as fhir3.Bundle, result)) {
         logger.info(
           'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
         )
