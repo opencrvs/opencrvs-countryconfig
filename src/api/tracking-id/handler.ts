@@ -5,6 +5,6 @@ export function trackingIDHandler(
   request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  const trackingId = generateTrackingId(request.payload as fhir.Bundle)
+  const trackingId = generateTrackingId(request.payload as fhir3.Bundle)
   return h.response(trackingId)
 }

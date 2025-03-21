@@ -60,7 +60,7 @@ export interface IApplicationConfigResponse {
   config: IApplicationConfig
 }
 
-export function getCompositionId(resBody: fhir.Bundle) {
+export function getCompositionId(resBody: fhir3.Bundle) {
   const id = resBody.entry
     ?.map((e) => e.resource)
     .find((res) => res?.resourceType === 'Composition')?.id
@@ -73,8 +73,8 @@ export function getCompositionId(resBody: fhir.Bundle) {
 }
 
 export function getTaskResource(
-  bundle: fhir.Bundle & fhir.BundleEntry
-): fhir.Task | undefined {
+  bundle: fhir3.Bundle & fhir3.BundleEntry
+): fhir3.Task | undefined {
   if (
     !bundle ||
     bundle.type !== 'document' ||
@@ -86,28 +86,28 @@ export function getTaskResource(
   }
 
   if (bundle.entry[0].resource.resourceType === 'Composition') {
-    return getTaskResourceFromFhirBundle(bundle as fhir.Bundle)
+    return getTaskResourceFromFhirBundle(bundle as fhir3.Bundle)
   } else if (bundle.entry[0].resource.resourceType === 'Task') {
-    return bundle.entry[0].resource as fhir.Task
+    return bundle.entry[0].resource as fhir3.Task
   } else {
     throw new Error('Unable to find Task Bundle from the provided data')
   }
 }
 
-export function getTaskResourceFromFhirBundle(fhirBundle: fhir.Bundle) {
+export function getTaskResourceFromFhirBundle(fhirBundle: fhir3.Bundle) {
   const taskEntry =
     fhirBundle.entry &&
-    fhirBundle.entry.find((entry: fhir.BundleEntry) => {
+    fhirBundle.entry.find((entry: fhir3.BundleEntry) => {
       if (entry.resource && entry.resource.resourceType === 'Task') {
         return true
       }
       return false
     })
 
-  return taskEntry && (taskEntry.resource as fhir.Task)
+  return taskEntry && (taskEntry.resource as fhir3.Task)
 }
 
-export function getTrackingIdFromTaskResource(taskResource: fhir.Task) {
+export function getTrackingIdFromTaskResource(taskResource: fhir3.Task) {
   const trackingIdentifier =
     taskResource &&
     taskResource.identifier &&
@@ -141,7 +141,7 @@ export const getFromFhir = (suffix: string) => {
     })
 }
 
-export async function updateResourceInHearth(resource: fhir.ResourceBase) {
+export async function updateResourceInHearth(resource: fhir3.Resource) {
   const res = await fetch(
     `${FHIR_URL}/${resource.resourceType}/${resource.id}`,
     {

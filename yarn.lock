@@ -834,10 +834,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/mosip@^1.7.0-alpha.26":
-  version "1.7.0-alpha.26"
-  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.26.tgz#08ca457d843395d1e359eb40dc4bb009fc00c2b2"
-  integrity sha512-T5oN3Nv0xAV8JacYTCdi6RO70zFVREB6VzgFoHhIFrafgSY/i50JnDJ0pxezMbEsytFV+vjM985Ro2fry685PQ==
+"@opencrvs/mosip@^1.7.0-alpha.27":
+  version "1.7.0-alpha.27"
+  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.27.tgz#7f4b67dfdad5b27c61a4f68d4d8e01c3bf438ec7"
+  integrity sha512-/x/nIDnQ0jNCXc6SVUgcHhhTHUi3HKA/IV4jVoWgsOv6gQC+Pgs8O/KevAl8eukoLUp9QoDHPnNhYEHnBX2rwA==
 
 "@opencrvs/toolkit@~1.8.0-rc.6a3cebd":
   version "1.8.0-rc.6a3cebd"
@@ -1077,10 +1077,10 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.6.tgz#628effeeae2064a1b4e79f78e81d87b7e5fc7b50"
   integrity sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==
 
-"@types/fhir@^0.0.30":
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/@types/fhir/-/fhir-0.0.30.tgz#a0aec3b2d7dd2a7584474dac446ede5f9a4d7a13"
-  integrity sha512-vDU62tUFeAYBVQThiWAfGd6D25TiLLDDS5pV19vim52FLpwWTBliLMvotbF4D/U+BmjxBKIuHGZgFnoh/HtV5g==
+"@types/fhir@^0.0.37":
+  version "0.0.37"
+  resolved "https://registry.yarnpkg.com/@types/fhir/-/fhir-0.0.37.tgz#54835d905009b34360437ba014564299c530253c"
+  integrity sha512-fR1y6tPfDmxYDWN4JkJhuI5F5QpbaFVSoNo3pu9A6nzuoojANqg0UBnNZTVegTz/MilV3PSjyvFe6/vO55geKA==
 
 "@types/geojson@^7946.0.4":
   version "7946.0.12"

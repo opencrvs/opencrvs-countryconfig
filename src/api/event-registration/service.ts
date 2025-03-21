@@ -24,7 +24,7 @@ function generateRegistrationNumber(trackingId: string): string {
   return brn
 }
 
-export function createUniqueRegistrationNumberFromBundle(bundle: fhir.Bundle) {
+export function createUniqueRegistrationNumberFromBundle(bundle: fhir3.Bundle) {
   const taskResource = getTaskResource(bundle)
 
   if (!taskResource || !taskResource.extension) {
