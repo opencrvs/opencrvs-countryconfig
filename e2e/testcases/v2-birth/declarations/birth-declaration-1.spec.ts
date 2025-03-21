@@ -7,6 +7,7 @@ import {
   expectOutboxToBeEmpty,
   formatDateObjectTo_ddMMMMyyyy,
   formatDateObjectTo_dMMMMyyyy,
+  formatName,
   getAction,
   getRandomDate,
   goToSection,
@@ -506,7 +507,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
        */
       await expect(
         page.getByRole('button', {
-          name: `${declaration.child.name.firstNames} ${declaration.child.name.familyName}`
+          name: formatName(declaration.child.name)
         })
       ).toBeVisible()
     })
@@ -519,7 +520,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await page.getByRole('button', { name: 'Ready for review' }).click()
       await page
         .getByRole('button', {
-          name: `${declaration.child.name.firstNames} ${declaration.child.name.familyName}`
+          name: formatName(declaration.child.name)
         })
         .click()
       await assignRecord(page)

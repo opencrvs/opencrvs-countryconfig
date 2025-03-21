@@ -1,10 +1,12 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
   assignRecord,
+  auditRecord,
   continueForm,
   createPIN,
   drawSignature,
   expectOutboxToBeEmpty,
+  formatName,
   getAction,
   goToSection,
   login,
@@ -254,7 +256,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        */
       await expect(
         page.getByRole('button', {
-          name: `${declaration.child.name.firstNames} ${declaration.child.name.familyName}`
+          name: formatName(declaration.child.name)
         })
       ).toBeVisible()
     })
@@ -270,11 +272,18 @@ test.describe.serial('7. Birth declaration case - 7', () => {
       await createPIN(page)
       await page.getByRole('button', { name: 'In Progress' }).click()
       await page.getByRole('button', { name: 'Field Agents' }).click()
-      await page
-        .getByRole('button', {
-          name: `${declaration.child.name.firstNames} ${declaration.child.name.familyName}`
+
+      await expect(
+        page.getByRole('button', {
+          name: formatName(declaration.child.name)
         })
-        .click()
+      ).toBeVisible()
+
+      await auditRecord({
+        page,
+        name: formatName(declaration.child.name)
+      })
+
       await assignRecord(page)
       await page.getByRole('button', { name: 'Action' }).first().click()
       await getAction(page, 'Update declaration').click()

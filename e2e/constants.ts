@@ -1,4 +1,4 @@
-export const DOMAIN = process.env.DOMAIN || 'farajaland-dev.opencrvs.org'
+export const DOMAIN = process.env.DOMAIN || 'farajaland-dev.opencrvs.dev'
 
 export const LOGIN_URL =
   process.env.NODE_ENV === 'development'

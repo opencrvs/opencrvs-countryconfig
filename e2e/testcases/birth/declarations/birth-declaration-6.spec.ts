@@ -6,6 +6,7 @@ import {
   expectAddress,
   expectOutboxToBeEmpty,
   formatDateObjectTo_ddMMMMyyyy,
+  formatName,
   getRandomDate,
   goToSection,
   joinValuesWith,
@@ -533,7 +534,7 @@ test.describe.serial('6. Birth declaration case - 6', () => {
        */
       await expect(
         page.getByRole('button', {
-          name: `${declaration.child.name.firstNames} ${declaration.child.name.familyName}`
+          name: formatName(declaration.child.name)
         })
       ).toBeVisible()
     })

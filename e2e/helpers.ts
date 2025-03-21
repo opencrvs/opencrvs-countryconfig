@@ -410,3 +410,31 @@ export const assignRecord = async (page: Page) => {
   )
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
 }
+
+/**
+  Opens the record audit view of a record with given trackingId or name
+ */
+export const auditRecord = async ({
+  page,
+  trackingId,
+  name
+}: {
+  page: Page
+  trackingId?: string
+  name: string
+}) => {
+  if (trackingId) {
+    await page
+      .getByRole('textbox', { name: 'Search for a tracking ID' })
+      .fill(trackingId)
+
+    await page.getByRole('button', { name: 'Search' }).click()
+    await page.getByRole('button', { name, exact: true }).click()
+  } else {
+    await page.locator('#searchType').getByText('Tracking ID').click()
+    await page.locator('li:has(svg) >> text=Name').click()
+    await page.getByRole('textbox', { name: 'Search for a name' }).fill(name)
+    await page.getByRole('button', { name: 'Search' }).click()
+    await page.getByRole('button', { name, exact: true }).click()
+  }
+}

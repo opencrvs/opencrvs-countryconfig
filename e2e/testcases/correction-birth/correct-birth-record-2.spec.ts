@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
   assignRecord,
+  auditRecord,
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
@@ -120,10 +121,12 @@ test.describe.serial('Correct record - 2', () => {
     )
     await createPIN(page)
 
-    await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
-    await page.getByPlaceholder('Search for a tracking ID').press('Enter')
-    await page.locator('#ListItemAction-0-icon').click()
-    await page.locator('#name_0').click()
+    await auditRecord({
+      page,
+      name: formatName(declaration.child.name[0]),
+      trackingId
+    })
+    await assignRecord(page)
 
     await page.getByRole('button', { name: 'Action' }).first().click()
     await getAction(page, 'Print certified copy').click()
@@ -920,12 +923,12 @@ test.describe.serial('Correct record - 2', () => {
     })
 
     test('2.8.1 Record audit by local registrar', async () => {
-      await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
-      await page.getByPlaceholder('Search for a tracking ID').press('Enter')
-      await page.locator('#ListItemAction-0-icon').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
-      await page.locator('#name_0').click()
+      await auditRecord({
+        page,
+        name: formatName(declaration.child.name[0]),
+        trackingId
+      })
+      await assignRecord(page)
     })
 
     test('2.8.2 Correction review', async () => {
@@ -1072,10 +1075,11 @@ test.describe.serial('Correct record - 2', () => {
 
     test.describe('2.8.4 Validate history in record audit', async () => {
       test('2.8.4.1 Validate entries in record audit', async () => {
-        await page
-          .getByText(formatName(declaration.child.name[0]))
-          .first()
-          .click()
+        await auditRecord({
+          page,
+          name: formatName(declaration.child.name[0]),
+          trackingId
+        })
 
         await assignRecord(page)
 
