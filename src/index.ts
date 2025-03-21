@@ -23,6 +23,7 @@ import {
   CLIENT_APP_URL,
   DOMAIN,
   LOGIN_URL,
+  QA_ENV,
   SENTRY_DSN
 } from '@countryconfig/constants'
 import {
@@ -207,6 +208,9 @@ export function shouldForwardToIDSystem(
   bundle: fhir3.Bundle,
   verificationStatus: Partial<VerificationStatus>
 ) {
+  if (!QA_ENV) {
+    return true
+  }
   const { father, mother, informant } = verificationStatus
   const eventType = getEventType(bundle)
   if (eventType === EVENT_TYPE.BIRTH) {
@@ -217,8 +221,7 @@ export function shouldForwardToIDSystem(
     )
   } else if (eventType === EVENT_TYPE.DEATH) {
     return informant
-  }
-  return true
+  } else return true
 }
 
 export async function createServer() {
