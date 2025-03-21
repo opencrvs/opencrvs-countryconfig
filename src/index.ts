@@ -208,9 +208,6 @@ export function shouldForwardToIDSystem(
   bundle: fhir3.Bundle,
   verificationStatus: Partial<VerificationStatus>
 ) {
-  if (!QA_ENV) {
-    return true
-  }
   const { father, mother, informant } = verificationStatus
   const eventType = getEventType(bundle)
   if (eventType === EVENT_TYPE.BIRTH) {
