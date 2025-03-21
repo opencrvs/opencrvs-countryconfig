@@ -12,7 +12,7 @@
 import { createSelectOptions } from '@countryconfig/form/v2/utils'
 import {
   ConditionalType,
-  definePage,
+  defineFormPage,
   field,
   FieldType,
   not,
@@ -75,7 +75,7 @@ const otherMessageDescriptors = {
 
 const otherOptions = createSelectOptions(Other, otherMessageDescriptors)
 
-export const documents = definePage({
+export const documents = defineFormPage({
   id: 'documents',
   title: {
     defaultMessage: 'Upload supporting documents',

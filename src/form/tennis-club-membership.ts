@@ -15,7 +15,7 @@ import {
   defineConfig,
   defineForm,
   FieldType,
-  PageType
+  FormPageType
 } from '@opencrvs/toolkit/events'
 import {
   event,
@@ -516,7 +516,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
     },
     {
       id: 'collector.identity.verify',
-      type: PageType.VERIFICATION,
+      type: FormPageType.VERIFICATION,
       title: {
         id: 'event.tennis-club-membership.action.print.verifyIdentity',
         defaultMessage: 'Verify their identity',
