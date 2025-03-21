@@ -39,5 +39,5 @@ export const invalidNameValidator = (fieldName: string) => ({
     description: 'This is the error message for invalid name',
     id: 'v2.error.invalidName'
   },
-  validator: field(fieldName).isValidName()
+  validator: field(fieldName).isValidEnglishName()
 })
