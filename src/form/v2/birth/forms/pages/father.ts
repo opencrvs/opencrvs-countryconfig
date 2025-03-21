@@ -16,7 +16,11 @@ import {
   FieldType
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
-import { emptyMessage, MAX_NAME_LENGTH } from '../../../utils'
+import {
+  emptyMessage,
+  invalidNameValidator,
+  MAX_NAME_LENGTH
+} from '../../../utils'
 import { InformantType } from './informant'
 import {
   educationalAttainmentOptions,
@@ -105,7 +109,8 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
         }
-      ]
+      ],
+      validation: [invalidNameValidator(`${PersonType.father}.firstname`)]
     },
     {
       id: `${PersonType.father}.surname`,
@@ -122,7 +127,8 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
         }
-      ]
+      ],
+      validation: [invalidNameValidator(`${PersonType.father}.surname`)]
     },
     {
       id: `${PersonType.father}.dob`,
@@ -348,11 +354,11 @@ export const father = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: or(
+          conditional: and(
             field(`${PersonType.father}.addressSameAs`).isEqualTo(
               YesNoTypes.NO
             ),
-            field(`${PersonType.mother}.detailsNotAvailable`).isEqualTo(true)
+            field(`${PersonType.father}.detailsNotAvailable`).isEqualTo(false)
           )
         }
       ],
