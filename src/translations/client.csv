@@ -2684,13 +2684,20 @@ v2.events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREAT
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
 v2.exitModal.exitWithoutSavingDescription, exitmodal without saving  description,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Voulez-vous vraiment quitter sans enregistrer ?
+v2.field.address.addressLine1.label,This is the label for the field,Address Line 1,Adresse Ligne 1
+v2.field.address.addressLine2.label,This is the label for the field,Address Line 2,Adresse Ligne 2
+v2.field.address.addressLine3.label,This is the label for the field,Address Line 3,Adresse Ligne 3
+v2.field.address.cityOrTown.label,This is the label for the field,City / Town,Ville / Commune
 v2.field.address.country.label,Label for country in address,Country,Pays
 v2.field.address.district.label,Label for district in address,District,District
+v2.field.address.district2.label,This is the label for the field,District,District
 v2.field.address.label.rural,Label for rural area,Rural,Zone rurale
 v2.field.address.label.urban,Label for urban area,Urban,Urbain
 v2.field.address.number.label,Label for address number,Number,Numéro
+v2.field.address.postcodeOrZip.label,This is the label for the field,Postcode / Zip,Code postal / Zip
 v2.field.address.province.label,Label for province in address,Province,Province
 v2.field.address.residentialArea.label,Label for residential area in address,Residential Area,Zone de résidence
+v2.field.address.state.label,This is the label for the field,State,État
 v2.field.address.street.label,Label for street in address,Street,Rue
 v2.field.address.town.label,Label for town in address,Town,Ville
 v2.field.address.urbanOrRural.label,Label for selecting between urban or rural,Urban or Rural,Urbain ou rural
