@@ -23,7 +23,6 @@ import {
   CLIENT_APP_URL,
   DOMAIN,
   LOGIN_URL,
-  QA_ENV,
   SENTRY_DSN
 } from '@countryconfig/constants'
 import {
