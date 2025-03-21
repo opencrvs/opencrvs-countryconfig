@@ -4,7 +4,6 @@ import { getDeclarationForPrintCertificate } from './certificate-helper'
 
 test.describe.serial('4.0 Validate "Certify record" page', () => {
   let declaration: BirthDeclaration
-  let trackingId = ''
 
   let page: Page
 
@@ -19,7 +18,6 @@ test.describe.serial('4.0 Validate "Certify record" page', () => {
   test('4.1 continue with print in advance redirect to review page', async () => {
     const response = await getDeclarationForPrintCertificate(page)
     declaration = response.declaration
-    trackingId = response.trackingId
     await page
       .locator('#certificateTemplateId-form-input > span')
       .first()

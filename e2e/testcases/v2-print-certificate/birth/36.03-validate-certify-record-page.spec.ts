@@ -83,7 +83,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await expect(page.getByRole('button', { name: 'Verified' })).toBeVisible()
   })
 
-  // @TODO: this is not implemented on events v2 yet
+  // @TODO: payment page is not implemented on events v2 yet
   test.skip('3.3 should navigate to collect payment page on "Verified" button click', async () => {
     await page.getByRole('button', { name: 'Verified' }).click()
     await expect(
