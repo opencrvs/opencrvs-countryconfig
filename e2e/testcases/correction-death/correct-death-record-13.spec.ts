@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
   assignRecord,
+  auditRecord,
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
@@ -100,10 +101,12 @@ test.describe.serial(' Correct record - 13', () => {
     )
     await createPIN(page)
 
-    await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
-    await page.getByPlaceholder('Search for a tracking ID').press('Enter')
-    await page.locator('#ListItemAction-0-icon').click()
-    await page.locator('#name_0').click()
+    await auditRecord({
+      page,
+      name: formatName(declaration.deceased.name[0]),
+      trackingId
+    })
+    await assignRecord(page)
 
     await page.getByRole('button', { name: 'Action' }).first().click()
     await getAction(page, 'Correct record').click()
@@ -679,11 +682,11 @@ test.describe.serial(' Correct record - 13', () => {
     ).toBeVisible()
   })
   test('13.8 Validate history in record audit', async () => {
-    await page
-      .getByText(formatName(declaration.deceased.name[0]))
-      .first()
-      .click()
-
+    await auditRecord({
+      page,
+      name: formatName(declaration.deceased.name[0]),
+      trackingId
+    })
     await assignRecord(page)
 
     /*

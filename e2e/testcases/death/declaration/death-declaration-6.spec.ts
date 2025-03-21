@@ -8,6 +8,7 @@ import {
   expectOutboxToBeEmpty,
   expectTextWithChangeLink,
   formatDateObjectTo_ddMMMMyyyy,
+  formatName,
   getAction,
   getRandomDate,
   goToSection,
@@ -517,7 +518,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
        */
       await expect(
         page.getByRole('button', {
-          name: `${declaration.deceased.name.firstNames} ${declaration.deceased.name.familyName}`
+          name: formatName(declaration.deceased.name)
         })
       ).toBeVisible()
     })
@@ -534,7 +535,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
       await page.getByRole('button', { name: 'Ready to print' }).click()
       await page
         .getByRole('button', {
-          name: `${declaration.deceased.name.firstNames} ${declaration.deceased.name.familyName}`
+          name: formatName(declaration.deceased.name)
         })
         .click()
       await assignRecord(page)
