@@ -22,6 +22,7 @@ import { applicationConfig } from '@countryconfig/api/application/application-co
 import {
   createSelectOptions,
   emptyMessage,
+  invalidNameValidator,
   MAX_NAME_LENGTH
 } from '../../../utils'
 
@@ -191,7 +192,8 @@ export const child = defineFormPage({
         defaultMessage: 'First name(s)',
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.child.field.firstname.label'
-      }
+      },
+      validation: [invalidNameValidator('child.firstname')]
     },
     {
       id: 'child.surname',
@@ -202,7 +204,8 @@ export const child = defineFormPage({
         defaultMessage: 'Last name',
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.child.field.surname.label'
-      }
+      },
+      validation: [invalidNameValidator('child.surname')]
     },
     {
       id: 'child.gender',
