@@ -10,6 +10,7 @@
  */
 
 import {
+  AddressType,
   and,
   ConditionalType,
   defineFormPage,
@@ -364,6 +365,7 @@ export const father = defineFormPage({
       ],
       defaultValue: {
         country: 'FAR',
+        addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',
         urbanOrRural: 'URBAN'
