@@ -14,7 +14,8 @@ import {
   TranslationConfig,
   ConditionalType,
   and,
-  FieldType
+  FieldType,
+  AddressType
 } from '@opencrvs/toolkit/events'
 import { field, not } from '@opencrvs/toolkit/conditionals'
 
@@ -297,7 +298,7 @@ export const child = defineFormPage({
       ]
     },
     {
-      id: 'child.address',
+      id: 'child.address.privateHome',
       type: FieldType.ADDRESS,
       hideLabel: true,
       label: {
@@ -308,12 +309,41 @@ export const child = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: field('child.placeOfBirth').inArray([
-            PlaceOfBirth.OTHER,
+          conditional: field('child.placeOfBirth').isEqualTo(
             PlaceOfBirth.PRIVATE_HOME
-          ])
+          )
         }
-      ]
+      ],
+      defaultValue: {
+        country: 'FAR',
+        addressType: AddressType.DOMESTIC,
+        province: '$user.province',
+        district: '$user.district',
+        urbanOrRural: 'URBAN'
+      }
+    },
+    {
+      id: 'child.address.other',
+      type: FieldType.ADDRESS,
+      hideLabel: true,
+      label: {
+        defaultMessage: 'Child`s address',
+        description: 'This is the label for the field',
+        id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('child.placeOfBirth').isEqualTo(PlaceOfBirth.OTHER)
+        }
+      ],
+      defaultValue: {
+        country: 'FAR',
+        addressType: AddressType.DOMESTIC,
+        province: '$user.province',
+        district: '$user.district',
+        urbanOrRural: 'URBAN'
+      }
     },
     {
       id: 'child.divider_2',
