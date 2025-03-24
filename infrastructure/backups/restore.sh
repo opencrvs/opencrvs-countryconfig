@@ -163,7 +163,6 @@ rm -rf $ROOT_PATH/minio/ocrvs
 mkdir -p $ROOT_PATH/minio/ocrvs
 
 ##
-
 # ------ VSEXPORTS -------
 ##
 
@@ -251,7 +250,10 @@ tar -xzvf $ROOT_PATH/backups/minio/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/minio
 docker service update --force opencrvs_minio
 
 ##
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/develop
 # ------ VSEXPORT -----
 ##
 tar -xzvf $ROOT_PATH/backups/vsexport/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/vsexport
