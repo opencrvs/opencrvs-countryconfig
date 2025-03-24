@@ -360,7 +360,7 @@ export const father = defineFormPage({
             not(
               field(`${PersonType.father}.detailsNotAvailable`).isEqualTo(true)
             ),
-            field(`${PersonType.father}.addressSameAs`).isEqualTo(YesNoTypes.NO)
+            requireFatherDetails
           )
         }
       ],
