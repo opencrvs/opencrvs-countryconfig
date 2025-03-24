@@ -3,15 +3,18 @@
 ## 1.7.0 Release candidate
 
 ### Migration notes
+
 In order to make the upgrade easier, there are a couple of steps that need to be performed which will make the codebase ready for the upgrade:
-- Run this command from the root of the countryconfig repository ```curl https://raw.githubusercontent.com/opencrvs/opencrvs-countryconfig/configurable-roles/src/upgrade-to-1_7.ts | npx ts-node -T --cwd ./src```
+
+- Run this command from the root of the countryconfig repository `curl https://raw.githubusercontent.com/opencrvs/opencrvs-countryconfig/configurable-roles/src/upgrade-to-1_7.ts | npx ts-node -T --cwd ./src`
 
   It will remove `roles.csv` and generate a `roles.ts` file. It will also update the corresponding role column in `default-employees.csv` & `prod-employees.csv` while adding the corresponding translations in `client.csv`. The employee files are only used when seeding new environments, if you already have a v1.6.x of OpenCRVS deployed, the data in the environment will automatically get migrated after deploying the upgrade. The changes in these two files are made to keep the roles in sync with your previously deployed environments, if any.
+
 - After pulling in the v1.7.0 changes reject the changes incoming to `roles.ts`, `default-employees.csv` & `prod-employees.csv` files as we used the script above to auto-generate them.
 
   The `roles.ts` file now defines all the roles available in the system. New roles can be added & existing roles can be customized by giving them different scopes.
 
-  *N.B. The default roles generated in the `roles.ts` file during migration should not be removed to maintain backwards compatibility*
+  _N.B. The default roles generated in the `roles.ts` file during migration should not be removed to maintain backwards compatibility_
 
 ### Breaking changes
 
@@ -22,9 +25,10 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 ### New features
 
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
-- **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: *Link to scopes description file*
+- **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: _Link to scopes description file_
 - **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
 - Add constant.humanName to allow countries to have custom ordering on their full name e.g. start with `lastName` or `firstName` [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+- Add `isAgeInYearsBetween` validator to enable validation that will constraint a date to be only valid if it falls within a specified date range. The `isInformantOfLegalAge` validator is now deprecated and removed in favor of `isAgeInYearsBetween` validator [#7636](https://github.com/opencrvs/opencrvs-core/issues/7636)
 
 ### Improvements
 
@@ -51,6 +55,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 ```
 INSERT CSV ROWS IN ENGLISH ONLY
 ```
+
 ## 1.6.1 Release candidate
 
 ### Bug fixes
@@ -236,7 +241,7 @@ Follow the descriptions in the migration notes to re-provision all servers safel
 advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested
 config.emailAllUsers.modal.supportingCopy,Label for send email all users confirmation supporting copy,User will receive emails over the next 24 hours
 config.emailAllUsers.modal.title,Label for send email all users confirmation title,Send email to all users?
-config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users you are active. Emails will be sent over the next 24 hours. Only one email can be sent per day
+config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users who are active. Emails will be sent over the next 24 hours. Only one email can be sent per day
 config.emailAllUsers.title,Title for email all users,Email all users
 config.userRoles.language,Language name,"{language, select, en {English} fr {French} other {{language}}}"
 constants.emailBody,Label for email body input,Message
