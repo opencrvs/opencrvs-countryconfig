@@ -2325,6 +2325,8 @@ v2.actionModal.title,The title for action modal,"{action, select, declare{Declar
 v2.advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 v2.advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de recherche
+v2.buttons.back,Back button text,Back,Retour
+v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
 v2.buttons.change,The label for the change button,Change,Changer
 v2.buttons.changeAll,The label for the change all button,Change all,Changer tous
