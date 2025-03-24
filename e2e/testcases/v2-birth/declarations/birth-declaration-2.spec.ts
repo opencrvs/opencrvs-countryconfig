@@ -130,21 +130,29 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         .click()
 
       await page
-        .locator('#child____address-form-input #country-form-input input')
+        .locator(
+          '#child____address____privateHome-form-input #country-form-input input'
+        )
         .fill(declaration.birthLocation.country.slice(0, 3))
       await page
-        .locator('#child____address-form-input #country-form-input')
+        .locator(
+          '#child____address____privateHome-form-input #country-form-input'
+        )
         .getByText(declaration.birthLocation.country, { exact: true })
         .click()
 
-      await page.locator('#child____address-form-input #province').click()
+      await page
+        .locator('#child____address____privateHome-form-input #province')
+        .click()
       await page
         .getByText(declaration.birthLocation.province, {
           exact: true
         })
         .click()
 
-      await page.locator('#child____address-form-input #district').click()
+      await page
+        .locator('#child____address____privateHome-form-input #district')
+        .click()
       await page
         .getByText(declaration.birthLocation.district, {
           exact: true
@@ -364,7 +372,9 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       await Promise.all(
         Object.values(declaration.birthLocation).map((val) =>
           expect(
-            page.getByTestId('row-value-child.address').getByText(val)
+            page
+              .getByTestId('row-value-child.address.privateHome')
+              .getByText(val)
           ).toBeVisible()
         )
       )
