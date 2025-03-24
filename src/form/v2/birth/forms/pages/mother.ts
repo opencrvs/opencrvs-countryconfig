@@ -17,7 +17,11 @@ import {
   FieldType
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
-import { emptyMessage, MAX_NAME_LENGTH } from '../../../utils'
+import {
+  emptyMessage,
+  invalidNameValidator,
+  MAX_NAME_LENGTH
+} from '../../../utils'
 import { InformantType } from './informant'
 import { IdType, idTypeOptions, PersonType } from '../../../person'
 import {
@@ -102,7 +106,8 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      validation: [invalidNameValidator(`${PersonType.mother}.firstname`)]
     },
     {
       id: `${PersonType.mother}.surname`,
@@ -119,7 +124,8 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      validation: [invalidNameValidator(`${PersonType.mother}.surname`)]
     },
     {
       id: `${PersonType.mother}.dob`,
@@ -333,6 +339,17 @@ export const mother = defineFormPage({
         district: '$user.district',
         urbanOrRural: 'URBAN'
       }
+    },
+    {
+      id: `${PersonType.mother}.addressDivider_2`,
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireMotherDetails
+        }
+      ]
     },
     {
       id: `${PersonType.mother}.maritalStatus`,

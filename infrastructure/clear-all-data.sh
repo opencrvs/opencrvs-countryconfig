@@ -104,5 +104,3 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc -c "\
 #-----------------------------
 docker service scale opencrvs_dashboards=0
 docker service scale opencrvs_dashboards=1
-
-
