@@ -9,9 +9,9 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { definePage, FieldType } from '@opencrvs/toolkit/events'
+import { defineFormPage, FieldType } from '@opencrvs/toolkit/events'
 
-export const introduction = definePage({
+export const introduction = defineFormPage({
   id: 'introduction',
   title: {
     defaultMessage: 'Introduce the birth registration process to the informant',

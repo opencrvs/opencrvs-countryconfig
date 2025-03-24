@@ -14,7 +14,7 @@ import {
   defineForm,
   field,
   FieldType,
-  PageType
+  FormPageType
 } from '@opencrvs/toolkit/events'
 import { informantOtherThanParent, InformantType } from './pages/informant'
 
@@ -336,7 +336,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
     },
     {
       id: 'collector.identity.verify',
-      type: PageType.VERIFICATION,
+      type: FormPageType.VERIFICATION,
       conditional: field('collector.requesterId').isEqualTo('INFORMANT'),
       title: {
         id: 'event.birth.action.print.verifyIdentity',

@@ -10,13 +10,18 @@
  */
 
 import {
+  AddressType,
   and,
   ConditionalType,
-  definePage,
+  defineFormPage,
   FieldType
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
-import { emptyMessage, MAX_NAME_LENGTH } from '../../../utils'
+import {
+  emptyMessage,
+  invalidNameValidator,
+  MAX_NAME_LENGTH
+} from '../../../utils'
 import { InformantType } from './informant'
 import { IdType, idTypeOptions, PersonType } from '../../../person'
 import {
@@ -29,7 +34,7 @@ export const requireMotherDetails = or(
   field('informant.relation').isEqualTo(InformantType.MOTHER)
 )
 
-export const mother = definePage({
+export const mother = defineFormPage({
   id: 'mother',
   title: {
     defaultMessage: "Mother's details",
@@ -101,7 +106,8 @@ export const mother = definePage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      validation: [invalidNameValidator(`${PersonType.mother}.firstname`)]
     },
     {
       id: `${PersonType.mother}.surname`,
@@ -118,7 +124,8 @@ export const mother = definePage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      validation: [invalidNameValidator(`${PersonType.mother}.surname`)]
     },
     {
       id: `${PersonType.mother}.dob`,
@@ -327,10 +334,22 @@ export const mother = definePage({
       ],
       defaultValue: {
         country: 'FAR',
+        addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',
         urbanOrRural: 'URBAN'
       }
+    },
+    {
+      id: `${PersonType.mother}.addressDivider_2`,
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireMotherDetails
+        }
+      ]
     },
     {
       id: `${PersonType.mother}.maritalStatus`,
