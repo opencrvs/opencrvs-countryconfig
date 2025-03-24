@@ -13,7 +13,7 @@ docker compose build
 docker compose push
 
 # Push additional image tag if branch is develop
-if [ "x$BRANCH_NAME" == "xdevelop" ]
+if [[ "$BRANCH_NAME" == "develop" ]]
 then
   docker tag ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION} \
   ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:$BRANCH_NAME
