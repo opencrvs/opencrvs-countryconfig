@@ -31,18 +31,25 @@ jobs:
     timeout-minutes: 60
     
     steps:
-      - name: Run the data-seeder container
-        uses: addnab/docker-run-action@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-           username: ${{ github.actor }}
-           password: ${{ secrets.GITHUB_TOKEN }}
-           registry: gcr.io
-           image: ocrvs-data-seeder:${{ github.event.inputs.core-image-tag }}
-           run: yarn seed:prod
-           env: |
-             ACTIVATE_USERS=${{ vars.ACTIVATE_USERS }}
-             GATEWAY_HOST=${{ vars.GATEWAY_HOST }}
-             AUTH_HOST=${{ vars.AUTH_HOST }}
-             COUNTRY_CONFIG_HOST=${{ vars.COUNTRY_CONFIG_HOST }}
-             SUPER_USER_PASSWORD=${{ secrets.SUPER_USER_PASSWORD }}
-
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Pull the seed-data image
+        run: docker pull ghcr.io/opencrvs/ocrvs-data-seeder:${{ github.event.inputs.core-image-tag }}
+        
+      - name: Run docker container
+        run: |
+          container_id=$(docker run -d \
+            -e "ACTIVATE_USERS=${{ vars.ACTIVATE_USERS }}" \
+            -e "GATEWAY_HOST=${{ vars.GATEWAY_HOST }}" \
+            -e "AUTH_HOST=${{ vars.AUTH_HOST }}" \
+            -e "COUNTRY_CONFIG_HOST=${{ vars.COUNTRY_CONFIG_HOST }}" \
+            -e "SUPER_USER_PASSWORD=${{ secrets.SUPER_USER_PASSWORD }}" \
+            ghcr.io/opencrvs/ocrvs-data-seeder:${{ github.event.inputs.core-image-tag }} \
+            sh -c "yarn seed")
+            docker wait $container_id
+            docker logs $container_id
