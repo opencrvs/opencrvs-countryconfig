@@ -10,6 +10,7 @@
  */
 
 import {
+  AddressType,
   and,
   ConditionalType,
   defineFormPage,
@@ -355,15 +356,17 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`${PersonType.father}.addressSameAs`).isEqualTo(
-              YesNoTypes.NO
+            // Checking explicitly for not true, since detailsNotAvailable might be hidden and thus undefined
+            not(
+              field(`${PersonType.father}.detailsNotAvailable`).isEqualTo(true)
             ),
-            field(`${PersonType.father}.detailsNotAvailable`).isEqualTo(false)
+            requireFatherDetails
           )
         }
       ],
       defaultValue: {
         country: 'FAR',
+        addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',
         urbanOrRural: 'URBAN'

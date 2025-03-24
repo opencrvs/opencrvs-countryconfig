@@ -810,7 +810,7 @@ event.birth.action.declare.label,This is shown as the action name anywhere the u
 event.birth.label,This is what this event is referred as in the system,Birth declaration,Déclaration de naissance
 event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
 event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
-events.status,,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{status, select, OUTBOX {Synchronisation...} CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} REJECTED {Nécessite une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
+events.status,,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} NOTIFIED {In progress} other {Unknown}}","{status, select, OUTBOX {Synchronisation...} CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} REJECTED {Nécessite une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} NOTIFIED {En cours} other {Inconnu}}"
 exitModal.cancel,The label for cancel button in exit modal,Cancel,Annuler
 exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?,Quitter sans enregistrer les modifications?
 exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Êtes-vous sûr de vouloir quitter sans enregistrer?
@@ -2326,6 +2326,8 @@ v2.actionModal.title,The title for action modal,"{action, select, declare{Declar
 v2.advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 v2.advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de recherche
+v2.buttons.back,Back button text,Back,Retour
+v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
 v2.buttons.change,The label for the change button,Change,Changer
 v2.buttons.changeAll,The label for the change all button,Change all,Changer tous
@@ -2540,7 +2542,7 @@ v2.event.birth.action.declare.form.review.comment.label,Label for the comment fi
 v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
 v2.event.birth.action.declare.form.review.title,Title of the form to show in review page,"{child.firstname, select, __EMPTY__ {Birth declaration} other {{child.surname, select, __EMPTY__ {Birth declaration} other {Birth declaration for {child.firstname} {child.surname}}}}}","{child.firstname, select, __EMPTY__ {Déclaration des membres} other {{child.surname, select, __EMPTY__ {Déclaration de naissance} other {Déclaration de naissance pour {child.firstname} {child.surname}}}}}"
 v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur(se)
-v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Health Institution,Institution de santé
+v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Location of birth,Lieu de naissance
 v2.event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
 v2.event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
 v2.event.birth.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Date de naissance
@@ -2685,13 +2687,20 @@ v2.events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREAT
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
 v2.exitModal.exitWithoutSavingDescription, exitmodal without saving  description,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Voulez-vous vraiment quitter sans enregistrer ?
+v2.field.address.addressLine1.label,This is the label for the field,Address Line 1,Adresse Ligne 1
+v2.field.address.addressLine2.label,This is the label for the field,Address Line 2,Adresse Ligne 2
+v2.field.address.addressLine3.label,This is the label for the field,Address Line 3,Adresse Ligne 3
+v2.field.address.cityOrTown.label,This is the label for the field,City / Town,Ville / Commune
 v2.field.address.country.label,Label for country in address,Country,Pays
 v2.field.address.district.label,Label for district in address,District,District
+v2.field.address.district2.label,This is the label for the field,District,District
 v2.field.address.label.rural,Label for rural area,Rural,Zone rurale
 v2.field.address.label.urban,Label for urban area,Urban,Urbain
 v2.field.address.number.label,Label for address number,Number,Numéro
+v2.field.address.postcodeOrZip.label,This is the label for the field,Postcode / Zip,Code postal / Zip
 v2.field.address.province.label,Label for province in address,Province,Province
 v2.field.address.residentialArea.label,Label for residential area in address,Residential Area,Zone de résidence
+v2.field.address.state.label,This is the label for the field,State,État
 v2.field.address.street.label,Label for street in address,Street,Rue
 v2.field.address.town.label,Label for town in address,Town,Ville
 v2.field.address.urbanOrRural.label,Label for selecting between urban or rural,Urban or Rural,Urbain ou rural

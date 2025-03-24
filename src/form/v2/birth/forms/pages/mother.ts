@@ -10,6 +10,7 @@
  */
 
 import {
+  AddressType,
   and,
   ConditionalType,
   defineFormPage,
@@ -333,10 +334,22 @@ export const mother = defineFormPage({
       ],
       defaultValue: {
         country: 'FAR',
+        addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',
         urbanOrRural: 'URBAN'
       }
+    },
+    {
+      id: `${PersonType.mother}.addressDivider_2`,
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireMotherDetails
+        }
+      ]
     },
     {
       id: `${PersonType.mother}.maritalStatus`,

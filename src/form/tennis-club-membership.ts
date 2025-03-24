@@ -13,7 +13,9 @@ import {
   ActionType,
   ConditionalType,
   defineConfig,
-  defineForm
+  defineForm,
+  FieldType,
+  FormPageType
 } from '@opencrvs/toolkit/events'
 import {
   event,
@@ -511,6 +513,70 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           ]
         }
       ]
+    },
+    {
+      id: 'collector.identity.verify',
+      type: FormPageType.VERIFICATION,
+      title: {
+        id: 'event.tennis-club-membership.action.print.verifyIdentity',
+        defaultMessage: 'Verify their identity',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'collector.identity.verify.data',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Applicant details',
+            description: 'Title for the data section',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.section.verifyIdentity.data.label'
+          },
+          configuration: {
+            subtitle: {
+              defaultMessage: 'Please verify the applicants identity',
+              description: 'Subtitle for the data section',
+              id: 'v2.event.tennis-club-membership.action.certificate.form.section.verifyIdentity.data.subtitle'
+            },
+            data: [
+              { fieldId: 'applicant.firstname' },
+              { fieldId: 'applicant.surname' },
+              { fieldId: 'applicant.dob' }
+            ]
+          }
+        }
+      ],
+      actions: {
+        verify: {
+          label: {
+            defaultMessage: 'Verified',
+            description: 'This is the label for the verification button',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.verify'
+          }
+        },
+        cancel: {
+          label: {
+            defaultMessage: 'Identity does not match',
+            description:
+              'This is the label for the verification cancellation button',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.cancel'
+          },
+          confirmation: {
+            title: {
+              defaultMessage: 'Print without proof of ID?',
+              description:
+                'This is the title for the verification cancellation modal',
+              id: 'v2.event.tennis-club-membership.action.certificate.form.cancel.confirmation.title'
+            },
+            body: {
+              defaultMessage:
+                'Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector',
+              description:
+                'This is the body for the verification cancellation modal',
+              id: 'v2.event.tennis-club-membership.action.certificate.form.cancel.confirmation.body'
+            }
+          }
+        }
+      }
     }
   ]
 })
