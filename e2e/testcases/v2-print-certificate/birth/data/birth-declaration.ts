@@ -31,8 +31,8 @@ const declarationData = {
   'mother.nid': faker.string.numeric(10),
   'mother.address': {
     country: 'FAR',
-    province: 'e37289b1-361e-4806-83ac-97983e888bdf',
-    district: '188f5ab7-0a3c-46d4-a774-ed839e98b9a1',
+    province: 'a9b82be4-fdbb-4cfc-9926-d1b0d1af8bea',
+    district: '4e471e0b-12e1-41d5-9c9b-f31cf5590f80',
     urbanOrRural: 'URBAN',
     town: null,
     residentialArea: null,
@@ -56,25 +56,12 @@ const declarationData = {
   'child.gender': 'female',
   'child.dob': '2025-03-18',
   'child.placeOfBirth': 'PRIVATE_HOME',
-  'child.address': {
+  'child.address.privateHome': {
     country: 'FAR',
-    province: 'e37289b1-361e-4806-83ac-97983e888bdf',
-    district: '188f5ab7-0a3c-46d4-a774-ed839e98b9a1',
-    urbanOrRural: 'URBAN',
-    town: null,
-    residentialArea: null,
-    street: null,
-    number: null,
-    zipCode: null,
-    village: null,
-    state: null,
-    district2: null,
-    cityOrTown: null,
-    addressLine1: null,
-    addressLine2: null,
-    addressLine3: null,
-    postcodeOrZip: null,
-    addressType: 'DOMESTIC'
+    addressType: 'DOMESTIC',
+    province: 'a9b82be4-fdbb-4cfc-9926-d1b0d1af8bea',
+    district: '4e471e0b-12e1-41d5-9c9b-f31cf5590f80',
+    urbanOrRural: 'URBAN'
   }
 }
 
