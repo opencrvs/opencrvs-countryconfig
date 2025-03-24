@@ -29,15 +29,23 @@ const declarationData = {
   'mother.nid': faker.string.numeric(10),
   'mother.address': {
     country: 'FAR',
-    province: 'e39966c4-940e-4a12-90e2-ebba05eac593',
-    district: 'd663b0ba-03ec-40a3-9e7e-42b6cb702eb9',
+    province: 'e37289b1-361e-4806-83ac-97983e888bdf',
+    district: '188f5ab7-0a3c-46d4-a774-ed839e98b9a1',
     urbanOrRural: 'URBAN',
     town: null,
     residentialArea: null,
     street: null,
     number: null,
     zipCode: null,
-    village: null
+    village: null,
+    state: null,
+    district2: null,
+    cityOrTown: null,
+    addressLine1: null,
+    addressLine2: null,
+    addressLine3: null,
+    postcodeOrZip: null,
+    addressType: 'DOMESTIC'
   },
   'informant.relation': 'MOTHER',
   'informant.email': 'mothers@email.com',
@@ -48,15 +56,23 @@ const declarationData = {
   'child.placeOfBirth': 'PRIVATE_HOME',
   'child.address': {
     country: 'FAR',
-    province: 'e39966c4-940e-4a12-90e2-ebba05eac593',
-    district: 'd663b0ba-03ec-40a3-9e7e-42b6cb702eb9',
+    province: 'e37289b1-361e-4806-83ac-97983e888bdf',
+    district: '188f5ab7-0a3c-46d4-a774-ed839e98b9a1',
     urbanOrRural: 'URBAN',
     town: null,
     residentialArea: null,
     street: null,
     number: null,
     zipCode: null,
-    village: null
+    village: null,
+    state: null,
+    district2: null,
+    cityOrTown: null,
+    addressLine1: null,
+    addressLine2: null,
+    addressLine3: null,
+    postcodeOrZip: null,
+    addressType: 'DOMESTIC'
   }
 }
 
