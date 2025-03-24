@@ -341,6 +341,17 @@ export const mother = defineFormPage({
       }
     },
     {
+      id: `${PersonType.mother}.addressDivider_2`,
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireMotherDetails
+        }
+      ]
+    },
+    {
       id: `${PersonType.mother}.maritalStatus`,
       type: FieldType.SELECT,
       required: false,
