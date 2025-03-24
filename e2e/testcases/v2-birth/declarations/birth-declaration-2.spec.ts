@@ -372,7 +372,9 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       await Promise.all(
         Object.values(declaration.birthLocation).map((val) =>
           expect(
-            page.getByTestId('row-value-child.address').getByText(val)
+            page
+              .getByTestId('row-value-child.address.privateHome')
+              .getByText(val)
           ).toBeVisible()
         )
       )
