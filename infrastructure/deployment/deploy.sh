@@ -304,6 +304,11 @@ docker_stack_deploy() {
     docker stack deploy --prune -c '$(split_and_join " " " -c " "$(to_remote_paths $COMPOSE_FILES_USED)")' --with-registry-auth opencrvs'
 }
 
+get_opencrvs_version() {
+  PREVIOUS_VERSION=$(configured_ssh "docker service ls | grep opencrvs_base | cut -d ':' -f 2")
+  echo "Previous opencrvs version: $PREVIOUS_VERSION"
+  echo "Current opencrvs version: $VERSION"
+}
 
 validate_options
 
@@ -421,8 +426,6 @@ EMAIL_PAYLOAD='{
   "from": "{{SENDER_EMAIL_ADDRESS}}",
   "to": "{{ALERT_EMAIL}}"
 }'
-
-
 
 configured_ssh "docker run --rm --network=opencrvs_overlay_net appropriate/curl \
   -X POST 'http://countryconfig:3040/email' \
