@@ -304,7 +304,7 @@ export const child = defineFormPage({
       label: {
         defaultMessage: 'Child`s address',
         description: 'This is the label for the field',
-        id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.birthLocation.label'
       },
       conditionals: [
         {
@@ -329,7 +329,7 @@ export const child = defineFormPage({
       label: {
         defaultMessage: 'Child`s address',
         description: 'This is the label for the field',
-        id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.birthLocation.label'
       },
       conditionals: [
         {
