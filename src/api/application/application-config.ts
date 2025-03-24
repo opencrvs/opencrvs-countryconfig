@@ -41,10 +41,15 @@ export const applicationConfig = {
   },
   ADVANCED_FRONTEND_CUSTOMIZATIONS: {
     customFiles: true,
+    /**
+     * external scripts and styles should be allowed in CSP on env CONTENT_SECURITY_POLICY_WILDCARD to work
+     **/
     externalScripts: [
       {
-        url: 'https://w.appzi.io/w.js?token=Al3I4',
-        // url: 'https://w.appzi.io/w.js?token=tyKuz',
+        url:
+          process.env.IS_PROD_ENV === 'true'
+            ? 'https://w.appzi.io/w.js?token=eoS5x'
+            : 'https://w.appzi.io/w.js?token=Al3I4',
         activateOn: ['client', 'login'],
         options: {
           async: true,
@@ -115,7 +120,7 @@ type NotificationFlags = {
   MARRIAGE?: EventNotificationFlags
 }
 
-const isNotificationEnabled = process.env.QA_ENV !== 'true' //process.env.QA_ENV !== 'true'
+const isNotificationEnabled = process.env.QA_ENV !== 'true'
 
 export const notificationForRecord: NotificationFlags = {
   BIRTH: {

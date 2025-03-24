@@ -131,6 +131,7 @@ services:
     environment:
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
       - DISABLE_RATE_LIMIT=true
+      - IS_PROD_ENV=false
     deploy:
       replicas: 1
 
@@ -147,6 +148,8 @@ services:
       replicas: 1
 
   login:
+    environment:
+      - IS_PROD_ENV=false
     deploy:
       replicas: 1
 
