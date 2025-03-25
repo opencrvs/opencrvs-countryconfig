@@ -36,6 +36,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - **Github runners upgraded** to latest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045) and apply sticky node version from .nvmrc [#423](https://github.com/opencrvs/opencrvs-countryconfig/pull/423)
 - **Removed metabase** volume(/data/metabase) mount in deployment configuration(docker compose files) from `dashboard` service. We are no longer creating
 backup for metabase and also we are no longer restoring metabase. In ansible playbooks, removed all `data/metabase/` related setup. [#8043](https://github.com/opencrvs/opencrvs-core/issues/8043)
+
 ### New features
 
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
