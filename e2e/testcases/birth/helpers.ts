@@ -323,6 +323,20 @@ export async function createDeclaration(token: string, details: BirthDetails) {
   })
   return res.json().then((r) => r.data.createBirthRegistration)
 }
+export async function sendEventNotification(token: string, payload: any) {
+  const res = await fetch(`${GATEWAY_HOST}/notification`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  })
+
+  console.log('await res.json() :>> ', await res.json())
+
+  return res.json().then((r) => r.data)
+}
 
 export const fetchDeclaration = async (
   token: string,
@@ -373,9 +387,9 @@ export const registerDeclaration = async (
 export type ConvertEnumsToStrings<T> = T extends (infer U)[]
   ? ConvertEnumsToStrings<U>[]
   : T extends string
-  ? `${T}`
-  : T extends object
-  ? {
-      [K in keyof T]: ConvertEnumsToStrings<T[K]>
-    }
-  : T
+    ? `${T}`
+    : T extends object
+      ? {
+          [K in keyof T]: ConvertEnumsToStrings<T[K]>
+        }
+      : T

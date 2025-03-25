@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker'
 import { AUTH_URL, GATEWAY_HOST } from '../../constants'
 import fetch from 'node-fetch'
 
@@ -49,4 +50,341 @@ export async function fetchEvents(trackingId: string, token: string) {
 
   const data = await response.json()
   return data as { data: { searchEvents: { totalItems: number } } }
+}
+
+export const eventNotificationPayload = {
+  resourceType: 'Bundle',
+  type: 'document',
+  meta: {
+    lastUpdated: '2022-08-14T14:43:47.000Z'
+  },
+  entry: [
+    {
+      fullUrl: 'urn:uuid:37dd8e55-69c0-493d-b1a0-b7462a1d806a',
+      resource: {
+        identifier: {
+          system: 'urn:ietf:rfc:3986',
+          value: '8f793c5a-3d53-4c9b-898b-1c04759716c6'
+        },
+        resourceType: 'Composition',
+        status: 'final',
+        type: {
+          coding: [
+            {
+              system: 'http://opencrvs.org/doc-types',
+              code: 'birth-notification'
+            }
+          ],
+          text: 'Birth Notification'
+        },
+        class: {
+          coding: [
+            {
+              system: 'http://opencrvs.org/specs/classes',
+              code: 'crvs-document'
+            }
+          ],
+          text: 'CRVS Document'
+        },
+        subject: {
+          reference: 'urn:uuid:760c393e-4dc3-4572-83f6-b70765963ef1'
+        },
+        date: '2022-08-14T14:43:47.000Z',
+        title: 'Birth Notification',
+        section: [
+          {
+            title: 'Child details',
+            code: {
+              coding: [
+                {
+                  system: 'http://opencrvs.org/specs/sections',
+                  code: 'child-details'
+                }
+              ],
+              text: 'Child details'
+            },
+            entry: [
+              {
+                reference: 'urn:uuid:760c393e-4dc3-4572-83f6-b70765963ef1'
+              }
+            ]
+          },
+          {
+            title: 'Birth encounter',
+            code: {
+              coding: [
+                {
+                  system: 'http://opencrvs.org/specs/sections',
+                  code: 'birth-encounter'
+                }
+              ],
+              text: 'Birth encounter'
+            },
+            entry: [
+              {
+                reference: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56'
+              }
+            ]
+          },
+          {
+            title: "Mother's details",
+            code: {
+              coding: [
+                {
+                  system: 'http://opencrvs.org/specs/sections',
+                  code: 'mother-details'
+                }
+              ],
+              text: "Mother's details"
+            },
+            entry: [
+              {
+                reference: 'urn:uuid:d9d3a8c8-6a47-47a1-be86-0493a4ec55a7'
+              }
+            ]
+          },
+          {
+            title: "Informant's details",
+            code: {
+              coding: [
+                {
+                  system: 'http://opencrvs.org/specs/sections',
+                  code: 'informant-details'
+                }
+              ],
+              text: "Informant's details"
+            },
+            entry: [
+              {
+                reference: 'urn:uuid:b74fbd0e-8536-4c11-833d-781e89a4b553'
+              }
+            ]
+          },
+          {
+            title: "Father's details",
+            code: {
+              coding: [
+                {
+                  system: 'http://opencrvs.org/doc-sections',
+                  code: 'father-details'
+                }
+              ],
+              text: "Father's details"
+            },
+            entry: [
+              {
+                reference: 'urn:uuid:ad1e15bb-51da-449a-8a12-c7dae10728e4'
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      fullUrl: 'urn:uuid:8546aaf3-8a60-4150-bc24-ab5579bc0fa2',
+      resource: {
+        resourceType: 'Task',
+        status: 'draft',
+        intent: 'unknown',
+        identifier: [],
+        code: {
+          coding: [
+            {
+              system: 'http://opencrvs.org/specs/types',
+              code: 'BIRTH'
+            }
+          ]
+        },
+        focus: {
+          reference: 'urn:uuid:37dd8e55-69c0-493d-b1a0-b7462a1d806a'
+        },
+        extension: [
+          {
+            url: 'http://opencrvs.org/specs/extension/contact-person',
+            valueString: 'MOTHER'
+          },
+          {
+            url: 'http://opencrvs.org/specs/extension/contact-person-phone-number',
+            valueString: '+260759205190'
+          },
+          {
+            url: 'http://opencrvs.org/specs/extension/contact-person-email',
+            valueString: 'axon@gmail.com'
+          },
+          {
+            url: 'http://opencrvs.org/specs/extension/timeLoggedMS',
+            valueInteger: 0
+          },
+          {
+            url: 'http://opencrvs.org/specs/extension/in-complete-fields',
+            valueString: 'N/A'
+          },
+          {
+            url: 'http://opencrvs.org/specs/extension/regLastOffice',
+            valueReference: {
+              reference: 'Location/cadcd92d-6caf-419d-b04a-c8cbb01d3579'
+            }
+          }
+        ]
+      }
+    },
+    {
+      fullUrl: 'urn:uuid:760c393e-4dc3-4572-83f6-b70765963ef1',
+      resource: {
+        resourceType: 'Patient',
+        active: true,
+        name: [
+          {
+            use: 'en',
+            family: faker.person.firstName,
+            given: [faker.person.middleName]
+          }
+        ],
+        gender: 'male',
+        birthDate: '2022-06-29',
+        deceasedBoolean: false,
+        multipleBirthBoolean: false
+      }
+    },
+    {
+      fullUrl: 'urn:uuid:d9d3a8c8-6a47-47a1-be86-0493a4ec55a7',
+      resource: {
+        resourceType: 'Patient',
+        active: true,
+        name: [
+          {
+            use: 'en',
+            family: faker.person.firstName,
+            given: [faker.person.middleName]
+          }
+        ],
+        gender: 'female',
+        birthDate: '2002-06-29',
+        deceasedBoolean: false,
+        multipleBirthBoolean: false,
+        address: [
+          {
+            type: 'PRIMARY_ADDRESS',
+            line: ['', '', '', '', '', 'URBAN'],
+            city: 'Meghnan',
+            district: '521167b3-9cb6-4e3d-be44-53503546a892',
+            state: 'f87242d5-285c-4565-aae5-f221020f1368',
+            postalCode: '52275',
+            country: 'FAR'
+          }
+        ],
+        extension: [
+          {
+            url: 'http://hl7.org/fhir/StructureDefinition/patient-nationality',
+            extension: [
+              {
+                url: 'code',
+                valueCodeableConcept: {
+                  coding: [
+                    {
+                      system: 'urn:iso:std:iso:3166',
+                      code: 'FAR'
+                    }
+                  ]
+                }
+              },
+              {
+                url: 'period',
+                valuePeriod: {
+                  start: '',
+                  end: ''
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      fullUrl: 'urn:uuid:b74fbd0e-8536-4c11-833d-781e89a4b553',
+      resource: {
+        resourceType: 'RelatedPerson',
+        relationship: {
+          coding: [
+            {
+              system:
+                'http://hl7.org/fhir/ValueSet/relatedperson-relationshiptype',
+              code: 'MOTHER'
+            }
+          ]
+        },
+        patient: {
+          reference: 'urn:uuid:d9d3a8c8-6a47-47a1-be86-0493a4ec55a7'
+        }
+      }
+    },
+    {
+      fullUrl: 'urn:uuid:ad1e15bb-51da-449a-8a12-c7dae10728e4',
+      resource: {
+        resourceType: 'Patient',
+        active: true,
+        name: [
+          {
+            use: 'en',
+            family: faker.person.firstName,
+            given: [faker.person.middleName]
+          }
+        ],
+        gender: 'male',
+        birthDate: '2002-06-29',
+        deceasedBoolean: false,
+        multipleBirthBoolean: false,
+        address: [
+          {
+            type: 'PRIMARY_ADDRESS',
+            line: ['', '', '', '', '', 'URBAN'],
+            city: 'Meghnan',
+            district: '521167b3-9cb6-4e3d-be44-53503546a892',
+            state: 'f87242d5-285c-4565-aae5-f221020f1368',
+            postalCode: '52275',
+            country: 'FAR'
+          }
+        ],
+        extension: [
+          {
+            url: 'http://hl7.org/fhir/StructureDefinition/patient-nationality',
+            extension: [
+              {
+                url: 'code',
+                valueCodeableConcept: {
+                  coding: [
+                    {
+                      system: 'urn:iso:std:iso:3166',
+                      code: 'FAR'
+                    }
+                  ]
+                }
+              },
+              {
+                url: 'period',
+                valuePeriod: {
+                  start: '',
+                  end: ''
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      fullUrl: 'urn:uuid:7cb1d9cc-ea4b-4046-bea0-38bdf3082f56',
+      resource: {
+        resourceType: 'Encounter',
+        status: 'finished',
+        location: [
+          {
+            location: {
+              reference: 'Location/2898a018-15d7-46d8-97c1-ddfe326a2c5f'
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
