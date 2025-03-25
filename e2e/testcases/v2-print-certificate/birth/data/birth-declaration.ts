@@ -1,5 +1,5 @@
 import uuid from 'uuid'
-import { EVENT_API_URL, GATEWAY_HOST } from '../../../../constants'
+import { GATEWAY_HOST } from '../../../../constants'
 import { faker } from '@faker-js/faker'
 import fs from 'fs'
 import path from 'path'
@@ -67,21 +67,6 @@ type DeclarationData = Awaited<ReturnType<typeof getDeclarationData>>
 export interface CreateDeclarationResponse {
   eventId: string
   data: DeclarationData
-}
-
-export async function fetchEventApi(
-  token: string,
-  path: string,
-  body: Record<string, any>
-) {
-  return fetch(`${EVENT_API_URL}/${path}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(body)
-  })
 }
 
 export async function createDeclaration(
