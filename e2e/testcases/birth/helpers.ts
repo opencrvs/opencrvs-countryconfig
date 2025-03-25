@@ -48,7 +48,7 @@ export type BirthDetails = {
     type: 'PHYSICIAN' | 'NURSE' | 'MIDWIFE' | 'OTHER'
   }
 }
-async function getAllLocations(
+export async function getAllLocations(
   type: 'ADMIN_STRUCTURE' | 'HEALTH_FACILITY' | 'CRVS_OFFICE'
 ) {
   const locations = (await fetch(
@@ -58,7 +58,7 @@ async function getAllLocations(
   return locations.entry!.map((entry) => entry.resource as fhir.Location)
 }
 
-function getLocationIdByName(locations: fhir.Location[], name: string) {
+export function getLocationIdByName(locations: fhir.Location[], name: string) {
   const location = locations.find((location) => location.name === name)
   if (!location) {
     throw new Error(`Location with name ${name} not found`)
