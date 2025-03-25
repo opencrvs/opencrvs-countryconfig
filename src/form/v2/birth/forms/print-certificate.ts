@@ -476,26 +476,20 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           configuration: {
             data: [
               {
-                fieldId: 'payment.service',
-                customValue: {
-                  label: {
-                    defaultMessage: 'Service',
-                    description: 'Title for the data entry',
-                    id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
-                  },
-                  value: 'Birth registration before 30 days of date of birth'
-                }
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: 'Birth registration before 30 days of date of birth'
               },
               {
-                fieldId: 'payment.fee',
-                customValue: {
-                  label: {
-                    defaultMessage: 'Fee',
-                    description: 'Title for the data entry',
-                    id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
-                  },
-                  value: '$5.00'
-                }
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$5.00'
               }
             ]
           }

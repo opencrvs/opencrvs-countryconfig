@@ -622,26 +622,20 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           configuration: {
             data: [
               {
-                fieldId: 'payment.service',
-                customValue: {
-                  label: {
-                    defaultMessage: 'Service',
-                    description: 'Title for the data entry',
-                    id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.service.label'
-                  },
-                  value: 'Member registration older than 30 years'
-                }
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: 'Member registration older than 30 years'
               },
               {
-                fieldId: 'payment.fee',
-                customValue: {
-                  label: {
-                    defaultMessage: 'Fee',
-                    description: 'Title for the data entry',
-                    id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.fee.label'
-                  },
-                  value: '$5.00'
-                }
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$5.00'
               }
             ]
           }
