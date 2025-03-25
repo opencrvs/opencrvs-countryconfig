@@ -153,7 +153,10 @@ const TENNIS_CLUB_FORM = defineForm({
     },
     {
       id: 'senior-pass',
-      conditional: field('applicant.dob').isBefore().date('1950-01-01'),
+      conditional: field('applicant.dob')
+        .isBefore()
+        .days(365 * 60 + 15)
+        .inPast(),
       title: {
         id: 'v2.event.tennis-club-membership.action.declare.form.section.senior-pass.title',
         defaultMessage: 'Assign senior pass for applicant',
