@@ -56,7 +56,92 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 ### New content keys requiring translation
 
 ```
-INSERT CSV ROWS IN ENGLISH ONLY
+action.action,Label for action button,Action
+action.archive,Label for archive record button in dropdown menu,Archive declaration
+action.assignee,Label for asignee,Assigned to {name } at {officeName}
+action.correct,Label for correct record button in dropdown menu,Correct record
+action.issue,Label for reinstate issue button in dropdown menu,Issue certificate
+action.print,Label for reinstate print button in dropdown menu,Print certified copy
+action.reinstate,Label for reinstate record button in dropdown menu,Reisntate declaration
+action.review.correction,Label for review correction in dropdown menu,Review correction request
+action.review.declaration,Label for review declaration button in dropdown menu,"Review {isDuplicate, select, true{potential duplicate} other{declaration}}"
+action.update,Label for reinstate update button in dropdown menu,Update declaration
+action.view,Label for view button in dropdown menu,View {recordOrDeclaration}
+advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated
+advancedSearch.form.timePeriodHelperText,Helper text for input Time period,Period of time since the record status changed
+advancedSearch.form.timePeriodLabel,Label for input Time period,Time period
+advancedSearchResult.pill.timePeriod,The label for time period in active advancedSearchParams,Time period
+certificate.selectTemplate,Select certificate template,Type
+certificate.selectedTemplate,Selected certificate template,Selected certificate template
+certificates.birth.certificate,Birth Certificate,Birth Certificate
+certificates.birth.certificate.copy,Birth Certificate Certified Copy,Birth Certificate Certified Copy
+certificates.birth.registration.receipt,Birth Registration Receipt,Birth Registration Receipt
+certificates.death.certificate,Death Certificate,Death Certificate
+certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certificate Certified Copy
+certificates.marriage.certificate,Marriage Certificate,Marriage Certificate
+certificates.marriage.certificate.copy,Marriage Certificate Certified Copy,Marriage Certificate Certified Copy
+changeModal.cancel,The label for cancel button of change modal,Cancel
+changeModal.continue,The label for continue button of change modal,Continue
+changeModal.description,The description for change modal,A record will be created of any changes you make
+changeModal.title,The title for change modal,Edit declaration?
+config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users who are active. Emails will be sent over the next 24 hours. Only one email can be sent per day
+constants.humanName,Formatted full name, {lastName} {middleName} {firstName}
+event.history.timeFormat,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a"
+event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application
+event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name
+event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID
+event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname
+event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?
+event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth
+event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name
+event.tennis-club-membership.action.declare.form.section.who.field.surname.label,This is the label for the field,Applicant's surname
+event.tennis-club-membership.action.declare.form.section.who.title,This is the title of the section,Who is applying for the membership?
+event.tennis-club-membership.action.declare.form.version.1,This is the first version of the form,Version 1
+event.tennis-club-membership.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Send an application
+event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application
+exitModal.cancel,The label for cancel button in exit modal,Cancel
+exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?
+exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?
+form.field.label.informantRelation.other,,Other ({otherInformantType})
+form.field.label.userFirstName,,User's first name
+form.field.label.userSurname,,User's surname
+form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,Last 30 days
+form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,Last 7 days
+form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,Last 90 days
+form.section.label.timePeriodLastYear,Label for option of time period select: last year,Last year
+integrations.type.nationalId,Label for national id,National id
+navigation.my-drafts,My drafts label in navigation,My drafts
+print.certificate.collector.form.error.template,Form level error for collector form template type,Please select certificate type
+registerModal.cancel,The label for cancel button of register modal,Cancel
+registerModal.description,The description for register modal,The declarant will be notified of this correction and a record of this decision will be recorded
+registerModal.register,The label for register button of register modal,Register
+registerModal.title,The title for register modal,Register the member?
+rejectModal.archive,The label for archive button of reject modal,Archive
+rejectModal.cancel,The label for cancel button of reject modal,Cancel
+rejectModal.description,The description for reject modal,Please describe the updates required to this record for follow up action.
+rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate
+rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update
+rejectModal.title,The title for reject modal,Reason for rejection?
+reloadmodal.body,Body of reload modal,There’s a new version of {app_name} available. Please update to continue.
+reloadmodal.button.update,Label of update button,Update
+reloadmodal.title,Title when update is available,Update available
+reviewAction.description,The description for review action,"By clicking register, you confirm that the information entered is correct and the member can be registered."
+reviewAction.register,The label for register button of review action,Register
+reviewAction.reject,The label for reject button of review action,Reject
+reviewAction.title,The title for review action,Register member
+userRole.fieldAgent,Name for user role Field Agent,Field Agent
+userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker
+userRole.localLeader,Name for user role Local Leader,Local Leader
+userRole.localRegistrar,Name for user role Local Registrar,Local Registrar
+userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin
+userRole.nationalRegistrar,Name for user role National Registrar,National Registrar
+userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin
+userRole.performanceManager,Name for user role Performance Manager,Performance Manager
+userRole.policeOfficer,Name for user role Police Officer,Police Officer
+userRole.registrationAgent,Name for user role Registration Agent,Registration Agent
+userRole.socialWorker,Name for user role Social Worker,Social Worker
+validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
+wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
 
 ## 1.6.1 Release candidate
