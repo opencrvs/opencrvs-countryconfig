@@ -1,4 +1,4 @@
-export const DOMAIN = process.env.DOMAIN || 'farajaland-dev.opencrvs.org'
+export const DOMAIN = process.env.DOMAIN || 'farajaland-dev.opencrvs.dev'
 
 export const LOGIN_URL =
   process.env.NODE_ENV === 'development'
@@ -50,6 +50,10 @@ export const CREDENTIALS = {
   },
   NATIONAL_REGISTRAR: {
     USERNAME: 'j.musonda',
+    PASSWORD: TEST_USER_PASSWORD
+  },
+  NATIONAL_SYSTEM_ADMIN: {
+    USERNAME: 'j.campbell',
     PASSWORD: TEST_USER_PASSWORD
   }
 }
