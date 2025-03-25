@@ -2,8 +2,8 @@ import { expect, test, type Page } from '@playwright/test'
 import { CREDENTIALS } from '../../../constants'
 import { getToken, loginToV2 } from '../../../helpers'
 import {
-  CreateDeclarationResponse,
-  createDeclaration
+  createDeclaration,
+  CreateDeclarationResponse
 } from './data/birth-declaration'
 
 test.describe.serial('4.0 Validate "Certify record" page', () => {
