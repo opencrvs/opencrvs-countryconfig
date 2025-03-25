@@ -47,7 +47,11 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 
 ### Infrastructure breaking changes
 
-- **Title** Description
+> [!CAUTION]
+> All Metabase configuration that is not persisted into `metabase.init.db.sql` will be cleared as part of upgrading to OpenCRVS 1.7.0 and on all proceeding deployments!
+
+- Metabase data is no longer backed up by the default OpenCRVS country configuration. This was done to ensure Metabase can properly be started up as part of OpenCRVS deployment, even when there has been a Metabase version upgrade. To learn more about how Metabase should be configured in a persistent manner, please refer our documentation on [4.2.5.2 Configuring Metabase Dashboards](https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration/3.2.5-set-up-application-settings/4.2.5.2-configuring-metabase-dashboards) [#8043](https://github.com/opencrvs/opencrvs-core/issues/8043)
+
 
 ### New content keys requiring translation
 
