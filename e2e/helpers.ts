@@ -66,6 +66,7 @@ export async function getToken(username: string, password: string) {
   })
 
   const verifyBody = await verifyResponse.json()
+
   return verifyBody.token
 }
 

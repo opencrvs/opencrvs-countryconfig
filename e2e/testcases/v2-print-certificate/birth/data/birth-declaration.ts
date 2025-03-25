@@ -1,30 +1,20 @@
 import uuid from 'uuid'
-import { EVENT_API_URL } from '../../../../constants'
+import { EVENT_API_URL, GATEWAY_HOST } from '../../../../constants'
 import { faker } from '@faker-js/faker'
 import fs from 'fs'
 import path from 'path'
 import { getAllLocations, getLocationIdByName } from '../../../birth/helpers'
-
-const generateCreateRequestData = () => {
-  const transactionId = `tmp-${uuid.v4()}`
-  return {
-    json: {
-      type: 'v2.birth',
-      transactionId,
-      data: null
-    },
-    meta: {
-      values: {
-        data: ['undefined']
-      }
-    }
-  }
-}
+import { createClient } from '@opencrvs/toolkit/api'
+import { AddressType } from '@opencrvs/toolkit/events'
 
 async function getDeclarationData() {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
   const province = getLocationIdByName(locations, 'Central')
   const district = getLocationIdByName(locations, 'Ibombo')
+
+  if (!province || !district) {
+    throw new Error('Province or district not found')
+  }
 
   return {
     'father.detailsNotAvailable': true,
@@ -39,7 +29,7 @@ async function getDeclarationData() {
       country: 'FAR',
       province,
       district,
-      urbanOrRural: 'URBAN',
+      urbanOrRural: 'URBAN' as const,
       town: null,
       residentialArea: null,
       street: null,
@@ -53,7 +43,7 @@ async function getDeclarationData() {
       addressLine2: null,
       addressLine3: null,
       postcodeOrZip: null,
-      addressType: 'DOMESTIC'
+      addressType: AddressType.DOMESTIC
     },
     'informant.relation': 'MOTHER',
     'informant.email': 'mothers@email.com',
@@ -64,10 +54,10 @@ async function getDeclarationData() {
     'child.placeOfBirth': 'PRIVATE_HOME',
     'child.address.privateHome': {
       country: 'FAR',
-      addressType: 'DOMESTIC',
+      addressType: AddressType.DOMESTIC,
       province,
       district,
-      urbanOrRural: 'URBAN'
+      urbanOrRural: 'URBAN' as const
     }
   }
 }
@@ -79,35 +69,12 @@ export interface CreateDeclarationResponse {
   data: DeclarationData
 }
 
-const generateBirthRequestData = async (
-  eventId: string,
-  declarationData: DeclarationData
-) => {
-  const signatureBase64 = await fs.readFileSync(
-    path.join(__dirname, 'signature.png'),
-    'base64'
-  )
-
-  return {
-    json: {
-      data: declarationData,
-      metadata: {
-        'review.comment': 'My comment',
-        'review.signature': `data:image/png;base64,${signatureBase64}`
-      },
-      eventId,
-      transactionId: uuid.v4(),
-      duplicates: []
-    }
-  }
-}
-
 export async function fetchEventApi(
   token: string,
   path: string,
   body: Record<string, any>
 ) {
-  return fetch(`${EVENT_API_URL}${path}`, {
+  return fetch(`${EVENT_API_URL}/${path}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -122,38 +89,51 @@ export async function createDeclaration(
 ): Promise<CreateDeclarationResponse> {
   const declarationData = await getDeclarationData()
 
-  const createResponse = await fetchEventApi(
-    token,
-    '/event.create',
-    generateCreateRequestData()
+  const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
+
+  const createResponse = await client.event.create.mutate({
+    type: 'v2.birth',
+    transactionId: uuid.v4()
+  })
+  const eventId = createResponse.id as string
+
+  const signatureBase64 = await fs.readFileSync(
+    path.join(__dirname, 'signature.png'),
+    'base64'
   )
 
-  const createResponseData = await createResponse.json()
-  const eventId = createResponseData.result.data.json.id as string
+  const metadata = {
+    'review.comment': 'My comment',
+    'review.signature': `data:image/png;base64,${signatureBase64}`
+  }
 
-  await fetchEventApi(
-    token,
-    '/event.actions.declare',
-    await generateBirthRequestData(eventId, declarationData)
+  await client.event.actions.declare.mutate({
+    eventId: eventId,
+    transactionId: uuid.v4(),
+    data: declarationData,
+    metadata
+  })
+
+  await client.event.actions.validate.mutate({
+    eventId: eventId,
+    transactionId: uuid.v4(),
+    data: declarationData,
+    metadata,
+    duplicates: []
+  })
+
+  const response = await client.event.actions.register.mutate({
+    eventId: eventId,
+    transactionId: uuid.v4(),
+    data: declarationData,
+    metadata
+  })
+
+  const declareAction = response.actions.find(
+    (action) => action.type === 'DECLARE'
   )
 
-  await fetchEventApi(
-    token,
-    '/event.actions.validate',
-    await generateBirthRequestData(eventId, declarationData)
-  )
-
-  const response = await fetchEventApi(
-    token,
-    '/event.actions.register',
-    await generateBirthRequestData(eventId, declarationData)
-  )
-
-  const parsedResponse = await response.json()
-  const res = parsedResponse.result.data.json
-
-  const data = res.actions.find((action: any) => action.type === 'DECLARE')
-    .data as DeclarationData
+  const data = declareAction?.data as DeclarationData
 
   return { eventId, data }
 }

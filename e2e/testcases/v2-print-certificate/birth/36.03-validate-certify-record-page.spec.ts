@@ -84,13 +84,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   })
 
   // @TODO: payment page is not implemented on events v2 yet
-  test.skip('3.3 should navigate to collect payment page on "Verified" button click', async () => {
-    // await page.getByRole('button', { name: 'Verified' }).click()
-    // await expect(
-    //   page.url().includes(`/print/payment/${declaration.id}/birth`)
-    // ).toBeTruthy()
-    // await page.goBack()
-  })
+  test.skip('3.3 should navigate to collect payment page on "Verified" button click', async () => {})
 
   test('3.4 should open warning modal on "Identity does not match" button click', async () => {
     await page.getByRole('button', { name: 'Identity does not match' }).click()
