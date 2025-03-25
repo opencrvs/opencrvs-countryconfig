@@ -15,7 +15,8 @@ import {
   ConditionalType,
   and,
   FieldType,
-  AddressType
+  AddressType,
+  or
 } from '@opencrvs/toolkit/events'
 import { field, not } from '@opencrvs/toolkit/conditionals'
 
@@ -388,7 +389,10 @@ export const child = defineFormPage({
             description: 'This is the error message for invalid number range',
             id: 'v2.error.child.weightAtBirth.invalidNumberRange'
           },
-          validator: field('child.weightAtBirth').isBetween(0, 6)
+          validator: or(
+            field('child.weightAtBirth').isBetween(0, 6),
+            field('child.weightAtBirth').isUndefined()
+          )
         }
       ],
       configuration: {
