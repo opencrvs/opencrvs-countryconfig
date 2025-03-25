@@ -497,7 +497,7 @@ services:
       labels:
         - 'traefik.enable=true'
         - 'traefik.http.routers.client.rule=Host(`register.{{hostname}}`,`{{hostname}}`)'
-        - 'traefik.http.routers.client.middlewares=test-replacepathregex,gzip-compression'
+        - 'traefik.http.routers.client.middlewares=csp-header,test-replacepathregex,gzip-compression'
         - 'traefik.http.routers.client.service=client'
         - 'traefik.http.services.client.loadbalancer.server.port=80'
         - 'traefik.http.routers.client.tls=true'
@@ -515,6 +515,10 @@ services:
         - 'traefik.http.middlewares.client.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.client.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.client.headers.stspreload=true'
+
+        ## CSP header middleware
+        - 'traefik.http.middlewares.csp-header.headers.customresponseheaders.Content-Security-Policy=default-src ''self'' ${CONTENT_SECURITY_POLICY_WILDCARD} *.sentry.io/ sentry.io/; font-src fonts.gstatic.com ${CONTENT_SECURITY_POLICY_WILDCARD}; object-src ''none''; script-src ''self'' ''unsafe-eval'' blob: https: http: storage.googleapis.com/workbox-cdn/ sentry.io/api/embed/error-page/ w.appzi.io/ countryconfig.{{hostname}}/; style-src ''self'' fonts.googleapis.com ''unsafe-inline'' w.appzi.io/ countryconfig.{{hostname}}/; img-src ''self'' data: http: https: '
+
       replicas: 1
     networks:
       - overlay_net
@@ -626,7 +630,7 @@ services:
         - 'traefik.http.routers.login.tls=true'
         - 'traefik.http.routers.login.tls.certresolver=certResolver'
         - 'traefik.http.routers.login.entrypoints=web,websecure'
-        - 'traefik.http.routers.login.middlewares=gzip-compression'
+        - 'traefik.http.routers.login.middlewares=csp-header,gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
         - 'traefik.http.middlewares.login.headers.customresponseheaders.Pragma=no-cache'
         - 'traefik.http.middlewares.login.headers.customresponseheaders.Cache-control=no-store'
@@ -634,6 +638,9 @@ services:
         - 'traefik.http.middlewares.login.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.login.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.login.headers.stspreload=true'
+
+        ## CSP header middleware
+        - 'traefik.http.middlewares.csp-header.headers.customresponseheaders.Content-Security-Policy=default-src ''self'' ${CONTENT_SECURITY_POLICY_WILDCARD} *.sentry.io/ sentry.io/; font-src fonts.gstatic.com ${CONTENT_SECURITY_POLICY_WILDCARD}; object-src ''none''; script-src ''self'' ''unsafe-eval'' blob: https: http: storage.googleapis.com/workbox-cdn/ sentry.io/api/embed/error-page/ w.appzi.io/ countryconfig.{{hostname}}/; style-src ''self'' fonts.googleapis.com ''unsafe-inline'' w.appzi.io/ countryconfig.{{hostname}}/; img-src ''self'' data: http: https: '        
       replicas: 1
     networks:
       - overlay_net
