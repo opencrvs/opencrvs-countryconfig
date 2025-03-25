@@ -33,7 +33,7 @@ export async function eventRegistrationHandler(
   // The reason is, under times of high traffic, it is likely that sequential number generation can
   // slow the performance of the service.  In a such a case a queue must be implemented here.
   try {
-    const bundle = request.payload as fhir.Bundle
+    const bundle = request.payload as fhir3.Bundle
 
     const eventRegistrationIdentifiersResponse =
       createUniqueRegistrationNumberFromBundle(bundle)
