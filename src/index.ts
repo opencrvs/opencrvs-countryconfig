@@ -65,7 +65,8 @@ import {
   mosipRegistrationForReviewHandler,
   mosipRegistrationForApprovalHandler,
   mosipRegistrationHandler,
-  verify
+  verify,
+  fhirBundleToMOSIPPayload
 } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
@@ -75,8 +76,19 @@ import {
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { eventRegistrationHandler } from './api/event-registration/handler'
-import { EVENT_TYPE, getChild, getEventType } from './utils/fhir'
+import {
+  EVENT_TYPE,
+  getChild,
+  getChildBirthDate,
+  getChildFullName,
+  getChildGender,
+  getEventType,
+  getGuardianFullName,
+  getQuestionnaireResponseAnswer,
+  getReturnParentID
+} from './utils/fhir'
 import differenceInYears from 'date-fns/differenceInYears'
+import { wrapValueIntoIdentityInfo } from './utils/mosip'
 
 export interface ITokenPayload {
   sub: string
@@ -481,6 +493,68 @@ export async function createServer() {
     },
     options: {
       tags: ['api'],
+      pre: [
+        {
+          method: (request, h) => {
+            ;(request.payload as any) = fhirBundleToMOSIPPayload(
+              request.payload as fhir3.Bundle,
+              {
+                fullName: (bundle: fhir3.Bundle) =>
+                  wrapValueIntoIdentityInfo(getChildFullName(bundle), 'eng'),
+                dateOfBirth: getChildBirthDate,
+                gender: (bundle: fhir3.Bundle) =>
+                  wrapValueIntoIdentityInfo(
+                    getChildGender(bundle) as string,
+                    'eng'
+                  ),
+                guardianOrParentName: (bundle: fhir3.Bundle) =>
+                  wrapValueIntoIdentityInfo(getGuardianFullName(bundle), 'eng'),
+                nationalIdNumber: (bundle: fhir3.Bundle) => {
+                  const id = getReturnParentID(bundle)
+                  return id?.type === 'NATIONAL_ID' ? id.identifier : ''
+                },
+                passportNumber: (bundle: fhir3.Bundle) => {
+                  const id = getReturnParentID(bundle)
+                  return id?.type === 'PASSPORT' ? id.identifier : ''
+                },
+                drivingLicenseNumber: (bundle: fhir3.Bundle) => {
+                  const id = getReturnParentID(bundle)
+                  return id?.type === 'DRIVING_LICENSE' ? id.identifier : ''
+                },
+                deceasedStatus: (bundle: fhir3.Bundle) =>
+                  getEventType(bundle) === EVENT_TYPE.DEATH ? true : false,
+                residentStatus: (bundle: fhir3.Bundle) => {
+                  const residentStatus =
+                    getQuestionnaireResponseAnswer(
+                      bundle,
+                      'birth.child.child-view-group.nonTongan'
+                    ) === true
+                      ? 'NON-TONGAN'
+                      : 'TONGAN'
+                  return wrapValueIntoIdentityInfo(residentStatus, 'eng')
+                },
+                // below comments are copied from mosip api
+                vid: () => 'JA8023B498309V', // cannot pass from crvs mdediator side (UID & VID created at the same
+                email: () => '', // Task --> contact-person-email
+                phone: () => '', // Task --> contact-person-phone-number
+                guardianOrParentBirthCertificateNumber: () => 'M89234BYAS0238', // from QuestionnaireResponse,
+                birthCertificateNumber: () => 'C83B023548BST', // BRN // Need to figure out how to get this
+                addressLine1: () => wrapValueIntoIdentityInfo('Kandy', 'eng'),
+                addressLine2: () => wrapValueIntoIdentityInfo('Badulla', 'eng'),
+                addressLine3: () => wrapValueIntoIdentityInfo('Badulla', 'eng'),
+                district: () => wrapValueIntoIdentityInfo('Vava’u', 'eng'),
+                village: () => wrapValueIntoIdentityInfo('Talihau', 'eng'),
+                birthRegistrationCertificate: () => 'base-64 document string',
+                passportId: () => 'base-64 document string',
+                nationalId: () => 'base-64 document string',
+                drivingLicenseId: () => 'base-64 document string',
+                addressProof: () => 'base-64 document string'
+              }
+            )
+            return h.continue
+          }
+        }
+      ],
       description:
         'Opportunity for sychrounous integrations with 3rd party systems as a final step in event registration. If successful returns identifiers for that event.'
     }

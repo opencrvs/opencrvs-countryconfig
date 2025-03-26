@@ -1,3 +1,13 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * OpenCRVS is also distributed under the terms of the Civil Registration
+ * & Healthcare Disclaimer located at http://opencrvs.org/license.
+ *
+ * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+ */
 // Copypasted types from @opencrvs/commons
 // For this reason, here are shortcuts and `!` assertions, as we haven't copypasted ALL types from @opencrvs/commons
 
@@ -180,4 +190,96 @@ export function findEntry(
 export function getChild(record: fhir3.Bundle) {
   const composition = getComposition(record)
   return findEntry('child-details', composition, record) as fhir3.Patient
+}
+
+export const getQuestionnaireResponseAnswer = (
+  bundle: fhir3.Bundle,
+  question: string
+) => {
+  const resourceType = bundle.entry?.find(
+    (entry) => entry.resource?.resourceType === 'QuestionnaireResponse'
+  )
+  const questionnaireResponse: any = resourceType?.resource
+
+  const answer = questionnaireResponse?.item?.find(
+    (item: any) => item.text === question
+  )
+
+  if (answer) {
+    // for the current answer fields, type --> valueString
+    // for number fields type can be different
+    return answer.answer[0].valueString
+  } else {
+    return ''
+  }
+}
+
+export function getChildFullName(bundle: fhir3.Bundle) {
+  const child = getChild(bundle)
+  return child.name?.[0]?.given?.join(' ') + ' ' + child.name?.[0]?.family
+}
+
+export function getChildBirthDate(bundle: fhir3.Bundle) {
+  const child = getChild(bundle)
+  return child.birthDate
+}
+
+export function getChildGender(bundle: fhir3.Bundle) {
+  const child = getChild(bundle)
+  return child.gender
+}
+
+export function getGuardian(bundle: fhir3.Bundle) {
+  const composition = getComposition(bundle)
+  const mother = findEntry(
+    'mother-details',
+    composition,
+    bundle
+  ) as fhir3.Patient
+
+  const father = findEntry(
+    'father-details',
+    composition,
+    bundle
+  ) as fhir3.Patient
+  return mother ?? father
+}
+
+export function getGuardianFullName(bundle: fhir3.Bundle) {
+  const guardian = getGuardian(bundle)
+  return guardian.name?.[0]?.given?.join(' ') + ' ' + guardian.name?.[0]?.family
+}
+
+export function getReturnParentID(bundle: fhir3.Bundle) {
+  const composition = getComposition(bundle)
+  const mother = findEntry(
+    'mother-details',
+    composition,
+    bundle
+  ) as fhir3.Patient
+
+  const father = findEntry(
+    'father-details',
+    composition,
+    bundle
+  ) as fhir3.Patient
+  const motherID = mother.identifier?.[0].value
+  const fatherID = father.identifier?.[0].value
+
+  if (motherID) {
+    return {
+      identifier: motherID,
+      type: mother.identifier?.[0].type?.coding?.[0].code
+    }
+  } else if (fatherID) {
+    return {
+      identifier: fatherID,
+      type: father.identifier?.[0].type?.coding?.[0].code
+    }
+  } else {
+    return {
+      identifier: '',
+      type: 'NOT_FOUND'
+    }
+  }
 }
