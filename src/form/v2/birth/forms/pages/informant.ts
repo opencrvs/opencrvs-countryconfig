@@ -390,7 +390,19 @@ export const informant = defineFormPage({
         defaultMessage: 'Phone number',
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.label'
-      }
+      },
+      validation: [
+        {
+          message: {
+            defaultMessage:
+              'Must be a valid 10 digit number that starts with 0(7|9)',
+            description:
+              'The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11',
+            id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.error'
+          },
+          validator: field('informant.phoneNo').matches(`^0(7|9)[0-9]{8}$`)
+        }
+      ]
     },
     {
       id: 'informant.email',
