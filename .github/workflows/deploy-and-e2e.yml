@@ -44,7 +44,7 @@ jobs:
       - name: Get latest commit SHA
         if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
         id: get_latest_commit
-        run: echo "::set-output name=commit_sha::$(git rev-parse HEAD | cut -c 1-7)"
+        run: echo "commit_sha=$(git rev-parse HEAD | cut -c 1-7)" >> $GITHUB_OUTPUT
 
   get-country-config-commit:
     name: Resolve latest Farajaland tag
@@ -58,7 +58,7 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
       - name: Get short commit hash
         id: set_short_sha
-        run: echo "::set-output name=short_sha::${GITHUB_SHA:0:7}"
+        run: echo "short_sha=${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
         if: github.event_name == 'push' || github.event_name == 'repository_dispatch'
 
   deploy:
@@ -74,6 +74,7 @@ jobs:
   discover-tests:
     name: Discover test directories
     runs-on: ubuntu-22.04
+    needs: [get-core-commit, get-country-config-commit]
     outputs:
       test_matrix: ${{ steps.list-tests.outputs.test_matrix }}
     steps:
@@ -83,11 +84,22 @@ jobs:
       - name: List Test Directories
         id: list-tests
         run: |
-          test_dirs=$(find ./e2e/testcases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | jq -R -s -c 'split("\n")[:-1]')
-          echo "Test directories: $test_dirs"
-          echo "test_matrix=$test_dirs" >> $GITHUB_OUTPUT
-          echo "test_matrix=$test_dirs"
+          tests_suites=$(cd e2e/testcases; find * -type f -name "*.spec.ts" | jq -R -s -c 'split("\n")[:-1]')
+          echo "Test suites: $tests_suites"
+          echo "test_matrix=$tests_suites" >> $GITHUB_OUTPUT
+          echo "test_matrix=$tests_suites"
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/yarn/v6
+          key: ${{github.event.inputs.countryconfig-image-tag || needs.get-country-config-commit.outputs.short_sha}}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
+      - name: Install Dependencies
+        run: yarn
   test:
     needs: [deploy, discover-tests, get-core-commit, get-country-config-commit]
     runs-on: ubuntu-22.04
@@ -95,21 +107,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        test_dir: ${{ fromJson(needs.discover-tests.outputs.test_matrix) }}
+        test_file: ${{ fromJson(needs.discover-tests.outputs.test_matrix) }}
+    name: ${{ matrix.test_file }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-
-      - name: Check for Spec Files
-        id: check-specs
-        run: |
-          if ls ./e2e/testcases/${{ matrix.test_dir }}/*.spec.ts > /dev/null 2>&1; then
-            echo "::set-output name=has_spec_files::true"
-          else
-            echo "::set-output name=has_spec_files::false"
-          fi
 
       - name: Cache Node.js dependencies
         uses: actions/cache@v4
@@ -117,28 +121,43 @@ jobs:
           path: |
             node_modules
             ~/.cache/yarn/v6
-          key: node-${{ hashFiles('**/yarn.lock', format('{0}/{1}',matrix.package,'package.json')) }}
+          key: ${{github.event.inputs.countryconfig-image-tag || needs.get-country-config-commit.outputs.short_sha}}
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Install Dependencies
-        if: steps.check-specs.outputs.has_spec_files == 'true'
         run: yarn
 
-      - name: Install Playwright Browsers
-        if: steps.check-specs.outputs.has_spec_files == 'true'
-        run: npx playwright install --with-deps
+      - uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: npx playwright install --with-deps
 
       - name: Run Playwright Tests
-        if: steps.check-specs.outputs.has_spec_files == 'true'
-        run: npx playwright test ./e2e/testcases/${{ matrix.test_dir }}
+        run: npx playwright test ./e2e/testcases/${{ matrix.test_file }}
         env:
           DOMAIN: '${{ vars.DOMAIN }}'
 
+      - id: ctrf_check
+        if: always()
+        run: |
+          [ -d ctrf ] && \
+            echo "ctrf=true" >> $GITHUB_OUTPUT || \
+            echo "ctrf=false" >> $GITHUB_OUTPUT
+      - name: Publish Test Summary Results
+        run: npx github-actions-ctrf ctrf/ctrf-report.json
+        if: always() && steps.ctrf_check.outputs.ctrf == 'true'
+
+      - name: Form the artifact name from test_file
+        if: always()
+        id: artifact
+        run: echo "artifact=$(echo '${{ matrix.test_file }}' | sed 's/\//__/g')" >> $GITHUB_OUTPUT
+
       - uses: actions/upload-artifact@v4
-        if: always() && steps.check-specs.outputs.has_spec_files == 'true'
+        if: always()
         with:
-          name: playwright-report-${{github.event.inputs.core-image-tag || needs.get-core-commit.outputs.latest_commit_sha}}-${{github.event.inputs.countryconfig-image-tag || needs.get-country-config-commit.outputs.short_sha}}-${{matrix.test_dir}}
+          name: playwright-report-${{github.event.inputs.core-image-tag || needs.get-core-commit.outputs.latest_commit_sha}}-${{github.event.inputs.countryconfig-image-tag || needs.get-country-config-commit.outputs.short_sha}}-${{ steps.artifact.outputs.artifact }}
           path: playwright-report/
           retention-days: 30
 

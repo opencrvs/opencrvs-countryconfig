@@ -52,7 +52,7 @@ on:
 jobs:
   deploy:
     environment: ${{ inputs.environment }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
@@ -70,19 +70,16 @@ jobs:
           path: './${{ github.event.repository.name }}'
 
       - name: Checkout country branch
-        run: |
-          cd ${{ github.event.repository.name }}
-          git checkout ${{ inputs.countryconfig-image-tag }}
-          cd ../
+        working-directory: ${{ github.event.repository.name }}
+        run: git checkout ${{ github.event.inputs.countryconfig-image-tag }}
 
       - name: Checkout core branch
-        run: |
-          cd opencrvs-core
-          git checkout ${{ inputs.core-image-tag }}
+        working-directory: opencrvs-core
+        run: git checkout ${{ github.event.inputs.core-image-tag }}
 
       - name: Read known hosts
+        working-directory: ${{ github.event.repository.name }}
         run: |
-          cd ${{ github.event.repository.name }}
           echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
           sed -i -e '$a\' ./infrastructure/known-hosts
           cat ./infrastructure/known-hosts >> $GITHUB_ENV
@@ -107,7 +104,7 @@ jobs:
       - name: Wait for images to be available
         run: |
           while true; do
-            if docker manifest inspect opencrvs/ocrvs-auth:${{ inputs.core-image-tag }}; then
+            if docker manifest inspect ghcr.io/opencrvs/ocrvs-auth:${{ inputs.core-image-tag }}; then
               break
             fi
             sleep 10
@@ -120,9 +117,8 @@ jobs:
           done
 
       - name: Export all secrets and environment variables
+        working-directory: ${{ github.event.repository.name }}
         run: |
-          cd ./${{ github.event.repository.name }}
-
           SECRETS_JSON_WITH_NEWLINES=$(cat<<EOF
             ${{ toJSON(secrets) }}
           EOF)
@@ -159,10 +155,15 @@ jobs:
               .[]' <<< "$VARS_JSON_WITH_NEWLINES"
           )
 
+      - name: Use Node.js from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ${{ github.event.repository.name }}/.nvmrc
+
       - name: Deploy to ${{ inputs.environment }}
         id: deploy
+        working-directory: ${{ github.event.repository.name }}
         run: |
-          cd ./${{ github.event.repository.name }}
           yarn deploy \
           --clear_data=no \
           --environment=${{ inputs.environment }} \

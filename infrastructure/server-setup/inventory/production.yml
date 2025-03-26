@@ -22,6 +22,7 @@ all:
       - name: riku
         ssh_keys:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWIF63S4f3z9wQMvWibmvl7MPuJ6EVrkP0HuvgNhcs/4DZYMcR/GRBvV4ldOSYMlBevIXycgGzNDxKJgENUuwIWanjBu7uVAHyD6+cIRD1h63qq7Cjv/2HYTfBDKOrKzPOhA6zWvKO0ZGWsjRXk5LWMCbKOkvKJCxOpj/NVBxeE4FTK5YADYPV3OSsmBtqTHrVLm2sMmShU/2hMYYswWkobidjX65+nK/X+3C+yJbHwiydVvn+QCrFlFfCLPWKe8rUpOxyxofPqWVQh6CHhHfT8okaOc9sOE8Qeip9ljo84DftJh3Xm3ynOdWK1hH2BvRvxNadWqcE1qECbkg4tx2x riku.rouvila@gmail.com
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGfWxxQHJv6Md/vBVoDH2UNm/uYgIBlFpP1mfh2Yj6jRNiQ/TQrfwpTawq0Sg+UW4LfYk5yxttsZ0h6L/v6PLiawgbMtf2ZqSviRTYSZTSihkK2zLmeJA2ByBCh57w4tR6IGqJK4w0kjYQSaaU6V5skQ4u+gnLQoKtkVQ4K34EFXAiIur96tLwjwDd/xCm+9T91+cAxGLv8Pe0PjirjwnvktUtzpgOhedkYK7KX0l8SKxQXUK6Ul2/QbpGO3rmguzEdtrl3Dw1TAEfu2njXbNGVQ+JWV9htH+ymsMIGoeumJRaaAZ4AXLlQPBCxTXcdQDuAjfFDPuppms/h7qB1S4Aioz7zqyd7pL7Z6Z8mJBZZlP3PsfGvADM2CdShpbL4HAa+n9miNNSYcJ7cHvC/zCitNjfaEYLVYkB5G+ggeK8Ss/MDcnsh3YFB8WnT582zt/TTJda5n+5Q7tquc1m+61t2gEKKTfBoDft9UYW2/4ViHj3ROL2Oyj7udrh/oAqV8M= riku@MBP16inch2231
         state: present
         sudoer: true
       - name: euan
@@ -32,14 +33,23 @@ all:
       - name: niko
         ssh_keys:
           - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGy93egakrVxXHb9LafRQ7T0Cl+p+gCTuymLyofTLK2ncwKhOZ/uV5SuzaKb4lJbBnpmxNdvAxsYXff5srvJfrV0ZZXFQdAAg0mmWuXxrhNfaE52S4s6WVKknTqDE5PhMxzVxzynBnaTdW9Cno7mO+rnS/VybjZIadpOuv5Bek1PztBmrUi4h0Qg1PxXNmFqzyc1dsil1T0nFeu5cH59G5fF1/oSUlC6CYBNoHdQ62IBoydBwMumk/trFoTlxPNK1wXgcUvsr8Sa5A4lN2Rrc6Y22CEGwomtyjHb2kDVbI+7B1Zq+S89yyyvkPFezEsCdK/Ehaj8HzfcsR/bassSn0/Xv3bL20eh7wv7cnut40kFizYifNGfpEqPvSzjfJbB4iG2WSKkW8F9t0/cvd0AdY/3jB0vXhvnRvCqHm1X6JVdGamF3GJeHUMk9JDg3rQdT47BZUtSJer4MGWWcNiALjeWPNLXK9cAvrI/6GbHbPyTzACfR6nhs03Z/eebuvpp0=
-        state: present
+        state: absent
         sudoer: true
       - name: shoumik
         ssh_keys:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRSRTqm3vOfjyTutISEtbVp7ZddoWa9NZDZLeWZGzLy dsi@dsi-Inspiron-15-3511
         state: present
         sudoer: true
-
+      - name: vmudryi
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgMcsSBwTE0EbMDRSF1T4vJDcN/5HAjKGbi2DqV7g/Q vmudryi@opencrvs.org
+        state: present
+        sudoer: true
+      - name: cihan
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEtz5M5hYKcUehDiCm84BplV+3t1ex8DPjIsMtQEWGv cihan.m.bebek@gmail.com
+        state: present
+        sudoer: true
 docker-manager-first:
   hosts:
     farajaland-prod-1:

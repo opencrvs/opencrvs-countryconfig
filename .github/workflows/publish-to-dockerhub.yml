@@ -13,7 +13,7 @@ on:
         required: true
 jobs:
   push:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         if: github.event_name == 'workflow_dispatch'
@@ -36,6 +36,7 @@ jobs:
         env:
           DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
           DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
           # Check if the current commit has a tag and use it; otherwise, use the short SHA of the HEAD commit
           export COUNTRY_CONFIG_VERSION=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short=7 HEAD)

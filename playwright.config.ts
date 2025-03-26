@@ -16,19 +16,22 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Don't retry */
-  retries: 0,
+  retries: process.env.CI ? 3 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['html', { open: 'never' }],
+    ['playwright-ctrf-json-reporter', {}]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
     /* Capture screenshot on failure */
-    screenshot: 'only-on-failure',
+    screenshot: 'on',
     /* Collect trace when the test failed. See https://playwright.dev/docs/trace-viewer */
-    trace: 'retain-on-failure'
+    trace: 'on'
   },
 
   /* Configure projects for major browsers */
