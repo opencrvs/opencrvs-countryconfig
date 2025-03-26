@@ -34,7 +34,7 @@ test.describe.serial('Print certificate', () => {
 
   test.describe('2.0 Validate "Certify record" page', async () => {
     test('2.1 Continue button is disabled when no template or requester type is selected', async () => {
-      await expect(page.getByText('Print certified copy')).toBeVisible()
+      await expect(page.getByText('Certify record')).toBeVisible()
 
       await expect(
         page.getByRole('button', { name: 'Continue' })
@@ -50,7 +50,7 @@ test.describe.serial('Print certificate', () => {
         .getByText('Birth Certificate Certified Copy', { exact: true })
         .click()
 
-      await expect(page.getByText('Print certified copy')).toBeVisible()
+      await expect(page.getByText('Certify record')).toBeVisible()
 
       await expect(
         page.getByRole('button', { name: 'Continue' })
@@ -62,7 +62,7 @@ test.describe.serial('Print certificate', () => {
       await page.locator('#collector____requesterId div').nth(4).click()
       await page.getByText('Print and issue Informant', { exact: true }).click()
 
-      await expect(page.getByText('Print certified copy')).toBeVisible()
+      await expect(page.getByText('Certify record')).toBeVisible()
 
       await expect(page.getByRole('button', { name: 'Continue' })).toBeEnabled()
     })

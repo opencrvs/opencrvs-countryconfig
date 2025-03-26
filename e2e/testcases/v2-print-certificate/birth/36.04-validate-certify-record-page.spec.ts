@@ -24,7 +24,7 @@ test.describe.serial('4.0 Validate "Certify record" page', () => {
     await page.close()
   })
 
-  test('4.1 continue with print in advance redirect to review page', async () => {
+  test('4.1 continue with print in advance skips identity verification', async () => {
     const childName = `${declaration.data['child.firstname']} ${declaration.data['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
     await page.getByRole('button', { name: 'Action' }).click()
@@ -37,12 +37,6 @@ test.describe.serial('4.0 Validate "Certify record" page', () => {
     await page.getByText('Print in advance', { exact: true }).click()
 
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page
-        .url()
-        .includes(
-          `/print-certificate/${declaration.eventId}/review?templateId=v2.birth-certificate`
-        )
-    ).toBeTruthy()
+    await expect(page.locator('#content-name')).toContainText('Collect Payment')
   })
 })
