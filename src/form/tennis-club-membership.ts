@@ -602,6 +602,45 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
           }
         }
       }
+    },
+    {
+      id: 'collector.collect.payment',
+      title: {
+        id: 'event.tennis-club-membership.action.print.collectPayment',
+        defaultMessage: 'Collect Payment',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'collector.collect.payment.data',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.data.label'
+          },
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: 'Member registration older than 30 years'
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$5.00'
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 })

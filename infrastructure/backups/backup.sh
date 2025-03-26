@@ -212,7 +212,7 @@ output="$(eval "$openhim_command" 2>&1)" || echo "Failed to backup MongoDB: $out
 echo ""
 echo "Delete all currently existing snapshots"
 echo ""
-docker run --rm --network=$NETWORK appropriate/curl curl -a -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
+docker run --rm --network=$NETWORK appropriate/curl curl -sS -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
 
 #-------------------------------------------------------------------------------------
 echo ""
@@ -220,7 +220,7 @@ echo "Register backup folder as an Elasticsearch repository for backing up the s
 echo ""
 
 create_elasticsearch_snapshot_repository() {
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}' 2>/dev/null)
+  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}' 2>/dev/null)
   while [ "$OUTPUT" != '{"acknowledged":true}' ]; do
     echo "Failed to register backup folder as an Elasticsearch repository. Trying again in..."
     sleep 1
@@ -238,7 +238,7 @@ echo ""
 
 create_elasticsearch_backup() {
   OUTPUT=""
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
+  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
   if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
     echo "Snapshot state is SUCCESS"
   else
