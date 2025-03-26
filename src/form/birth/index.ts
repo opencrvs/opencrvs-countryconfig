@@ -246,6 +246,10 @@ export const birthForm: ISerializedForm = {
                 {
                   operation: 'dateInPast',
                   parameters: []
+                },
+                {
+                  operation: 'isAgeInYearsBetween',
+                  parameters: [16, 100]
                 }
               ],
               certificateHandlebars.informantBirthDate
