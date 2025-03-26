@@ -129,7 +129,7 @@ test.describe('1. Marriage event validation', () => {
       await page.getByText('Confirm', { exact: true }).click()
       await page.waitForTimeout(500) // because the page is shown twice
       await expect(
-        page.getByRole('button', { name: 'In progress' })
+        page.getByRole('button', { name: 'My drafts' })
       ).toBeVisible()
       await expect(
         page.getByText('No name provided', { exact: true })
@@ -165,10 +165,10 @@ test.describe('1. Marriage event validation', () => {
       await page.getByText('Confirm', { exact: true }).click()
       await page.waitForTimeout(500) // because the page is shown twice
       await expect(
-        page.getByRole('button', { name: 'In progress' })
+        page.getByRole('button', { name: 'My drafts' })
       ).toBeVisible()
       await expect(
-        page.getByText('No records in progress', { exact: true })
+        page.getByText('No records in my drafts', { exact: true })
       ).toBeVisible()
     })
   })
@@ -187,7 +187,7 @@ test.describe('1. Marriage event validation', () => {
         .click()
       await page.getByText('Confirm', { exact: true }).click()
       await expect(
-        page.getByText('No records in progress', { exact: true })
+        page.getByText('No records in my drafts', { exact: true })
       ).toBeVisible()
     })
   })

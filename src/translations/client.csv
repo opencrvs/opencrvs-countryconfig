@@ -173,6 +173,7 @@ certificate.selectTemplate,Select certificate template,Type,Taper
 certificate.selectedTemplate,Selected certificate template,Selected certificate template,Modèle de certificat sélectionné
 certificates.birth.certificate,Birth Certificate,Birth Certificate,Acte de naissance
 certificates.birth.certificate.copy,Birth Certificate Certified Copy,Birth Certificate Certified Copy,Copie certifiée conforme de l'acte de naissance
+certificates.birth.registration.receipt,Birth Registration Receipt,Birth Registration Receipt,Reçu d'enregistrement de naissance
 certificates.death.certificate,Death Certificate,Death Certificate,Certificat de décès
 certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certificate Certified Copy,Copie certifiée conforme du certificat de décès
 certificates.marriage.certificate,Marriage Certificate,Marriage Certificate,Acte de mariage
@@ -198,7 +199,7 @@ config.certTemplate,Label for certificate templates,Certificate Template,Modèle
 config.certificate.options,Show options,Options,Options
 config.emailAllUsers.modal.supportingCopy,Label for send email all users confirmation supporting copy,User will receive emails over the next 24 hours,L'utilisateur recevra des courriels au cours des prochaines 24 heures
 config.emailAllUsers.modal.title,Label for send email all users confirmation title,Send email to all users?,Envoyer un e-mail à tous les utilisateurs ?
-config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users you are active. Emails will be sent over the next 24 hours. Only one email can be sent per day,Cet e-mail sera envoyé à tous les utilisateurs que vous activez. Les courriels seront envoyés au cours des prochaines 24 heures. Un seul courriel peut être envoyé par jour
+config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users who are active. Emails will be sent over the next 24 hours. Only one email can be sent per day,Cet e-mail sera envoyé à tous les utilisateurs qui sont actifs. Les courriels seront envoyés au cours des prochaines 24 heures. Un seul courriel peut être envoyé par jour
 config.emailAllUsers.title,Title for email all users,Email all users,Envoyer un e-mail à tous les utilisateurs
 config.userRoles.language,Language name,"{language, select, en {English} fr {French} other {{language}}}","{language, select, en {Anglais} fr {Français} other {{language}}}"
 conflicts.modal.assign.description,Description for modal when assign,Please note you will have sole access to this record. Please make any updates promptly otherwise unassign the record.,"Veuillez noter que vous aurez un accès exclusif à cet enregistrement. Veuillez effectuer rapidement les mises à jour éventuelles, sinon vous désassignez l'enregistrement."
@@ -2859,6 +2860,7 @@ validations.facilityMustBeSelected,The error message appears when no valid facil
 validations.greaterThanZero,The error message appears when input is less than or equal to 0,Must be a greater than zero,Doit être supérieur à zéro
 validations.illegalMarriageAge,The error message appears when the birth date is not old enough to register for marriage,Illegal age of marriage,Age illègale pour mariage
 validations.invalidDate,The error message that appears when a date field is invalid,Invalid date field,Champ de date invalide
+validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years,L'âge doit être compris entre {min} et {max} ans.
 validations.isDateNotAfterDeath,The error message appears when the given date of death is not valid,Date of birth must be before date of death,La date doit être antérieure à la date de décès
 validations.isDateNotBeforeBirth,The error message appears when the given date of death is not valid,Date of death must be after deceased date of birth,La date doit être postérieure à la date de naissance du défunt
 validations.isInformantOfLegalAge,The error message appears when the informant is not old enough to register an event,Informant is not of legal age,L'informateur n'est pas majeur
@@ -2926,7 +2928,7 @@ views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialo
 views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.,Assurez-vous que votre appareil photo est propre et fonctionnel.
 views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.,Tenez l'appareil régulièrement à 6 à 12 pouces du code QR.
 views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et non endommagé ou flou.
-wq.noRecords.draft,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
+wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts,Aucun enregistrement dans mes brouillons
 wq.noRecords.externalValidation,No records messages for empty external validation tab,No records in external validation,Aucun enregistrement dans la validation externe
 wq.noRecords.fieldAgents,No records messages for empty field agents tab,No records from field agents,Aucun enregistrement des agents de terrain
 wq.noRecords.healthSystem,No records messages for empty health system tab,No records from health system,Aucun dossier du système de santé

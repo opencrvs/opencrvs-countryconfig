@@ -53,6 +53,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - Update the translations for System user add/edit form, `Last name` to `User's surname` and `First name` to `User's first name` to make them less confusing for system users [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 - **User scopes** Introduce granular scopes to grant specific permissions to a particular role. The specifics about the introduced scopes can be found here: _Link to scopes description file_
 - **Refactored certificate handling:** SVGs are no longer stored in the database; streamlined configurations now include certificate details, and clients request SVGs directly via URLs.
+- Add `isAgeInYearsBetween` validator to enable validation that will constraint a date to be only valid if it falls within a specified date range. The `isInformantOfLegalAge` validator is now deprecated and removed in favor of `isAgeInYearsBetween` validator [#7636](https://github.com/opencrvs/opencrvs-core/issues/7636)
 - Add constant.humanName to allow countries to customise the format of the full name in the system for `system users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
 ### Improvements
@@ -266,7 +267,7 @@ Follow the descriptions in the migration notes to re-provision all servers safel
 advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested
 config.emailAllUsers.modal.supportingCopy,Label for send email all users confirmation supporting copy,User will receive emails over the next 24 hours
 config.emailAllUsers.modal.title,Label for send email all users confirmation title,Send email to all users?
-config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users you are active. Emails will be sent over the next 24 hours. Only one email can be sent per day
+config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users who are active. Emails will be sent over the next 24 hours. Only one email can be sent per day
 config.emailAllUsers.title,Title for email all users,Email all users
 config.userRoles.language,Language name,"{language, select, en {English} fr {French} other {{language}}}"
 constants.emailBody,Label for email body input,Message

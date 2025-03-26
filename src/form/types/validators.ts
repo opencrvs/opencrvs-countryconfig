@@ -47,7 +47,7 @@ type CoreValidator =
   | 'duplicateIDNumber'
   | 'isValidDeathOccurrenceDate'
   | 'isMoVisitDateAfterBirthDateAndBeforeDeathDate'
-  | 'isInformantOfLegalAge'
+  | 'isAgeInYearsBetween'
   | 'greaterThanZero'
   | 'notGreaterThan'
 
