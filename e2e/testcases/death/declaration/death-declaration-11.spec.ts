@@ -62,7 +62,7 @@ test.describe.serial('11. Death declaration case - 11', () => {
         familyName: faker.person.lastName('female')
       },
       age: 17,
-      birthDate: getRandomDate(5, 200),
+      birthDate: getRandomDate(16, 200),
       nationality: 'Malawi',
       identifier: {
         id: faker.string.numeric(10),
