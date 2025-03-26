@@ -86,7 +86,11 @@ drop_database performance;
 
 # Delete all data from elasticsearch
 #-----------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE "http://$(elasticsearch_host)/ocrvs" -v
+indices=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -XGET "http://$(elasticsearch_host)/_cat/indices?h=index")
+for index in "${indices[@]}"; do
+  echo "Check if index $index exists"
+  docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE "http://$(elasticsearch_host)/$index" -v
+done
 
 # Delete all data from metrics
 #-----------------------------
