@@ -1,5 +1,5 @@
 name: Deploy & run E2E
-run-name: Deploy & E2E, triggered by ${{ github.event.client_payload.actor || github.actor }} to ${{ github.event.inputs.environment || 'development' }}
+run-name: Deploy & E2E, triggered by ${{ github.event.client_payload.actor || github.actor }} to ${{ github.event.inputs.environment || 'e2e' }}
 on:
   repository_dispatch:
     types: [run_e2e]
@@ -12,17 +12,17 @@ on:
         type: choice
         description: Environment to deploy to
         required: true
-        default: 'development'
+        default: 'e2e'
         options:
-          - development
+          - e2e
       core-image-tag:
-        description: Core DockerHub image tag
+        description: Core image tag
         required: true
-        default: 'v1.4.1'
+        default: 'v1.6.0'
       countryconfig-image-tag:
-        description: Your Country Config DockerHub image tag
+        description: Your Country Config image tag
         required: true
-        default: 'v1.4.1'
+        default: 'v1.6.0'
 
 concurrency:
   group: ci-build
@@ -65,7 +65,7 @@ jobs:
     needs: [get-country-config-commit, get-core-commit]
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: ${{ github.event.inputs.environment || 'development' }}
+      environment: ${{ github.event.inputs.environment || 'e2e' }}
       core-image-tag: ${{ github.event.inputs.core-image-tag || needs.get-core-commit.outputs.latest_commit_sha }}
       countryconfig-image-tag: ${{ github.event.inputs.countryconfig-image-tag || needs.get-country-config-commit.outputs.short_sha }}
       reset: 'true'
@@ -103,7 +103,7 @@ jobs:
   test:
     needs: [deploy, discover-tests, get-core-commit, get-country-config-commit]
     runs-on: ubuntu-22.04
-    environment: ${{ github.event.inputs.environment || 'development' }}
+    environment: ${{ github.event.inputs.environment || 'e2e' }}
     strategy:
       fail-fast: false
       matrix:
