@@ -13,7 +13,9 @@ import {
   ActionType,
   ConditionalType,
   defineConfig,
-  defineForm
+  defineForm,
+  FieldType,
+  FormPageType
 } from '@opencrvs/toolkit/events'
 import {
   event,
@@ -37,7 +39,8 @@ const TENNIS_CLUB_FORM = defineForm({
   review: {
     title: {
       id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
-      defaultMessage: 'Member declaration for {firstname} {surname}',
+      defaultMessage:
+        '{applicant.firstname, select, __EMPTY__ {Member declaration} other {{applicant.surname, select, __EMPTY__ {Member declaration} other {Member declaration for {applicant.firstname} {applicant.surname}}}}}',
       description: 'Title of the form to show in review page'
     },
     fields: [
@@ -144,6 +147,30 @@ const TENNIS_CLUB_FORM = defineForm({
             defaultMessage: "Applicant's profile picture description",
             description: 'This is the label for the field',
             id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.image.label'
+          }
+        }
+      ]
+    },
+    {
+      id: 'senior-pass',
+      conditional: field('applicant.dob')
+        .isBefore()
+        .days(365 * 60 + 15)
+        .inPast(),
+      title: {
+        id: 'v2.event.tennis-club-membership.action.declare.form.section.senior-pass.title',
+        defaultMessage: 'Assign senior pass for applicant',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'senior-pass.id',
+          type: 'TEXT',
+          required: true,
+          label: {
+            defaultMessage: 'Senior pass ID',
+            description: 'This is the label for the field',
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.senior-pass.field.id.label'
           }
         }
       ]
@@ -508,6 +535,110 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
               conditional: field('collector.requesterId').inArray(['OTHER'])
             }
           ]
+        }
+      ]
+    },
+    {
+      id: 'collector.identity.verify',
+      type: FormPageType.VERIFICATION,
+      conditional: field('collector.requesterId').isEqualTo('INFORMANT'),
+      title: {
+        id: 'event.tennis-club-membership.action.print.verifyIdentity',
+        defaultMessage: 'Verify their identity',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'collector.identity.verify.data',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Applicant details',
+            description: 'Title for the data section',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.section.verifyIdentity.data.label'
+          },
+          configuration: {
+            subtitle: {
+              defaultMessage: 'Please verify the applicants identity',
+              description: 'Subtitle for the data section',
+              id: 'v2.event.tennis-club-membership.action.certificate.form.section.verifyIdentity.data.subtitle'
+            },
+            data: [
+              { fieldId: 'applicant.firstname' },
+              { fieldId: 'applicant.surname' },
+              { fieldId: 'applicant.dob' }
+            ]
+          }
+        }
+      ],
+      actions: {
+        verify: {
+          label: {
+            defaultMessage: 'Verified',
+            description: 'This is the label for the verification button',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.verify'
+          }
+        },
+        cancel: {
+          label: {
+            defaultMessage: 'Identity does not match',
+            description:
+              'This is the label for the verification cancellation button',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.cancel'
+          },
+          confirmation: {
+            title: {
+              defaultMessage: 'Print without proof of ID?',
+              description:
+                'This is the title for the verification cancellation modal',
+              id: 'v2.event.tennis-club-membership.action.certificate.form.cancel.confirmation.title'
+            },
+            body: {
+              defaultMessage:
+                'Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector',
+              description:
+                'This is the body for the verification cancellation modal',
+              id: 'v2.event.tennis-club-membership.action.certificate.form.cancel.confirmation.body'
+            }
+          }
+        }
+      }
+    },
+    {
+      id: 'collector.collect.payment',
+      title: {
+        id: 'event.tennis-club-membership.action.print.collectPayment',
+        defaultMessage: 'Collect Payment',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'collector.collect.payment.data',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.data.label'
+          },
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: 'Member registration older than 30 years'
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.tennis-club-membership.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$5.00'
+              }
+            ]
+          }
         }
       ]
     }

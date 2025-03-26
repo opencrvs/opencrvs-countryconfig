@@ -10,13 +10,18 @@
  */
 
 import {
+  AddressType,
   and,
   ConditionalType,
   defineFormPage,
   FieldType
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
-import { emptyMessage, MAX_NAME_LENGTH } from '../../../utils'
+import {
+  emptyMessage,
+  invalidNameValidator,
+  MAX_NAME_LENGTH
+} from '../../../utils'
 import { InformantType } from './informant'
 import { IdType, idTypeOptions, PersonType } from '../../../person'
 import {
@@ -101,7 +106,8 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      validation: [invalidNameValidator(`${PersonType.mother}.firstname`)]
     },
     {
       id: `${PersonType.mother}.surname`,
@@ -118,7 +124,8 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      validation: [invalidNameValidator(`${PersonType.mother}.surname`)]
     },
     {
       id: `${PersonType.mother}.dob`,
@@ -319,6 +326,24 @@ export const mother = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label'
       },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireMotherDetails
+        }
+      ],
+      defaultValue: {
+        country: 'FAR',
+        addressType: AddressType.DOMESTIC,
+        province: '$user.province',
+        district: '$user.district',
+        urbanOrRural: 'URBAN'
+      }
+    },
+    {
+      id: `${PersonType.mother}.addressDivider_2`,
+      type: FieldType.DIVIDER,
+      label: emptyMessage,
       conditionals: [
         {
           type: ConditionalType.SHOW,

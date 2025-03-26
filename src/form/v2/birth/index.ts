@@ -40,7 +40,63 @@ export const birthEvent = defineConfig({
         id: 'v2.event.birth.summary.title'
       }
     },
-    fields: []
+    fields: [
+      {
+        id: 'child.dob',
+        emptyValueMessage: {
+          defaultMessage: 'No date of birth',
+          description: 'This is shown when there is no child information',
+          id: 'v2.event.birth.summary.child.dob.empty'
+        },
+        label: {
+          defaultMessage: 'Date of birth',
+          description: 'This is the label for the child information',
+          id: 'v2.event.birth.summary.child.dob.label'
+        },
+        value: {
+          defaultMessage: '{child.dob}',
+          description: 'This is the dob value of the child',
+          id: 'v2.event.birth.summary.child.dob.value'
+        }
+      },
+      {
+        id: 'child.placeOfBirth',
+        emptyValueMessage: {
+          defaultMessage: 'No place of birth',
+          description: 'This is shown when there is no child information',
+          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+        },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'This is the label for the child information',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+        },
+        value: {
+          defaultMessage:
+            '{child.birthLocation}, {child.address.district} {child.address.province}',
+          description: 'This is the place of birth value of the child',
+          id: 'v2.event.birth.summary.child.placeOfBirth.value'
+        }
+      },
+      {
+        id: 'informant.contact',
+        emptyValueMessage: {
+          defaultMessage: 'No contact details provided',
+          description: 'This is shown when there is no informant information',
+          id: 'v2.event.birth.summary.informant.contact.empty'
+        },
+        label: {
+          defaultMessage: 'Contact',
+          description: 'This is the label for the informant information',
+          id: 'v2.event.birth.summary.informant.contact.label'
+        },
+        value: {
+          defaultMessage: '{informant.phoneNo} {informant.email}',
+          description: 'This is the contact value of the informant',
+          id: 'v2.event.birth.summary.informant.contact.value'
+        }
+      }
+    ]
   },
   workqueues: [
     {
