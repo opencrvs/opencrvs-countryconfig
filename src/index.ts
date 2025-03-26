@@ -83,10 +83,9 @@ import {
   getChildFullName,
   getChildGender,
   getComposition,
+  getDeceased,
   getEventType,
-  getGuardianFullName,
-  getQuestionnaireResponseAnswer,
-  getReturnParentID
+  getPatientNationalId
 } from './utils/fhir'
 import differenceInYears from 'date-fns/differenceInYears'
 import { wrapValueIntoIdentityInfo } from './utils/mosip'
@@ -484,7 +483,35 @@ export async function createServer() {
         logger.info(
           'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
         )
-        return mosipRegistrationHandler({ url })(request, h)
+        const mosipPayload = fhirBundleToMOSIPPayload(
+          request.payload as fhir3.Bundle,
+          {
+            compositionId: (bundle) => {
+              const composition = getComposition(bundle)
+              return composition.id
+            },
+            fullName: (bundle) =>
+              wrapValueIntoIdentityInfo(getChildFullName(bundle), 'eng'),
+            dateOfBirth: (bundle) => getChildBirthDate(bundle) ?? '',
+            gender: (bundle) =>
+              wrapValueIntoIdentityInfo(
+                getChildGender(bundle) as string,
+                'eng'
+              ),
+            nationalIdNumber: (bundle) => {
+              if (getEventType(bundle) === EVENT_TYPE.BIRTH) {
+                return ''
+              }
+              const deceased = getDeceased(bundle)
+              return getPatientNationalId(deceased)
+            }
+          }
+        )
+        return mosipRegistrationHandler({
+          url,
+          headers: request.headers,
+          payload: mosipPayload
+        })(request, h)
       } else {
         logger.info(
           'Failed country specified custom logic check for id creation. Bypassing id system...'
@@ -494,72 +521,6 @@ export async function createServer() {
     },
     options: {
       tags: ['api'],
-      pre: [
-        {
-          method: (request, h) => {
-            ;(request.payload as any) = fhirBundleToMOSIPPayload(
-              request.payload as fhir3.Bundle,
-              {
-                compositionId: (bundle) => {
-                  const composition = getComposition(bundle)
-                  return composition.id
-                },
-                fullName: (bundle) =>
-                  wrapValueIntoIdentityInfo(getChildFullName(bundle), 'eng'),
-                dateOfBirth: (bundle) => getChildBirthDate(bundle) ?? '',
-                gender: (bundle) =>
-                  wrapValueIntoIdentityInfo(
-                    getChildGender(bundle) as string,
-                    'eng'
-                  ),
-                guardianOrParentName: (bundle) =>
-                  wrapValueIntoIdentityInfo(getGuardianFullName(bundle), 'eng'),
-                nationalIdNumber: (bundle) => {
-                  const id = getReturnParentID(bundle)
-                  return id?.type === 'NATIONAL_ID' ? id.identifier : ''
-                },
-                passportNumber: (bundle) => {
-                  const id = getReturnParentID(bundle)
-                  return id?.type === 'PASSPORT' ? id.identifier : ''
-                },
-                drivingLicenseNumber: (bundle) => {
-                  const id = getReturnParentID(bundle)
-                  return id?.type === 'DRIVING_LICENSE' ? id.identifier : ''
-                },
-                deceasedStatus: (bundle) =>
-                  getEventType(bundle) === EVENT_TYPE.DEATH ? true : false,
-                residentStatus: (bundle) => {
-                  const residentStatus =
-                    getQuestionnaireResponseAnswer(
-                      bundle,
-                      'birth.child.child-view-group.nonTongan'
-                    ) === true
-                      ? 'NON-TONGAN'
-                      : 'TONGAN'
-                  return wrapValueIntoIdentityInfo(residentStatus, 'eng')
-                },
-                // below comments are copied from mosip api
-                vid: () => 'JA8023B498309V', // cannot pass from crvs mdediator side (UID & VID created at the same
-                email: () => '', // Task --> contact-person-email
-                phone: () => '', // Task --> contact-person-phone-number
-                guardianOrParentBirthCertificateNumber: () => 'M89234BYAS0238', // from QuestionnaireResponse,
-                birthCertificateNumber: () => 'C83B023548BST', // BRN // Need to figure out how to get this
-                addressLine1: () => wrapValueIntoIdentityInfo('Kandy', 'eng'),
-                addressLine2: () => wrapValueIntoIdentityInfo('Badulla', 'eng'),
-                addressLine3: () => wrapValueIntoIdentityInfo('Badulla', 'eng'),
-                district: () => wrapValueIntoIdentityInfo('Vava’u', 'eng'),
-                village: () => wrapValueIntoIdentityInfo('Talihau', 'eng'),
-                birthRegistrationCertificate: () => 'base-64 document string',
-                passportId: () => 'base-64 document string',
-                nationalId: () => 'base-64 document string',
-                drivingLicenseId: () => 'base-64 document string',
-                addressProof: () => 'base-64 document string'
-              }
-            )
-            return h.continue
-          }
-        }
-      ],
       description:
         'Opportunity for sychrounous integrations with 3rd party systems as a final step in event registration. If successful returns identifiers for that event.'
     }

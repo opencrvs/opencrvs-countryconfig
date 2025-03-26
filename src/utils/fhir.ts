@@ -283,3 +283,18 @@ export function getReturnParentID(bundle: fhir3.Bundle) {
     }
   }
 }
+
+export function getDeceased(record: fhir3.Bundle) {
+  const composition = getComposition(record)
+  return findEntry('deceased-details', composition, record) as fhir3.Patient
+}
+
+export function getPatientNationalId(patient: fhir3.Patient) {
+  const identifier = patient.identifier?.find(
+    (identifier) => identifier.type?.coding?.[0].code === 'NATIONAL_ID'
+  )
+  if (!identifier?.value) {
+    throw new Error('National ID not found in patient')
+  }
+  return identifier.value
+}
