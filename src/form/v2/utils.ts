@@ -9,24 +9,10 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import {
-  FieldConditional,
-  FieldConfig,
-  SelectOption,
-  TranslationConfig
-} from '@opencrvs/toolkit/events'
+import { SelectOption, TranslationConfig } from '@opencrvs/toolkit/events'
+import { field } from '@opencrvs/toolkit/conditionals'
 
-export const appendConditionalsToFields = ({
-  inputFields,
-  newConditionals
-}: {
-  inputFields: FieldConfig[]
-  newConditionals: FieldConditional[]
-}): FieldConfig[] =>
-  inputFields.map((inputField) => ({
-    ...inputField,
-    conditionals: [...(inputField.conditionals || []), ...newConditionals]
-  }))
+export const MAX_NAME_LENGTH = 32
 
 export const createSelectOptions = <
   T extends Record<string, string>,
@@ -39,3 +25,19 @@ export const createSelectOptions = <
     value,
     label: messageDescriptors[key as keyof T]
   }))
+
+export const emptyMessage = {
+  defaultMessage: '',
+  description: 'empty string',
+  id: 'v2.messages.emptyString'
+}
+
+export const invalidNameValidator = (fieldName: string) => ({
+  message: {
+    defaultMessage:
+      "Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)",
+    description: 'This is the error message for invalid name',
+    id: 'v2.error.invalidName'
+  },
+  validator: field(fieldName).isValidEnglishName()
+})

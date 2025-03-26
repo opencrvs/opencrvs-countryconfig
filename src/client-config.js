@@ -27,5 +27,8 @@ window.config = {
   REGISTRATIONS_DASHBOARD_URL: '',
   // http://localhost:4444/public/dashboard/a17e9bc0-15a2-4bd1-92fa-ab0f346227ca#bordered=false&titled=false&refresh=300
   STATISTICS_DASHBOARD_URL: '',
-  FEATURES: {}
+  FEATURES: {
+    // The V2_EVENTS variable is passed down from src/index.ts:309
+    V2_EVENTS: {{ V2_EVENTS }}
+  }
 }
