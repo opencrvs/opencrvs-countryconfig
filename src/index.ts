@@ -82,6 +82,7 @@ import {
   getChildBirthDate,
   getChildFullName,
   getChildGender,
+  getComposition,
   getEventType,
   getGuardianFullName,
   getQuestionnaireResponseAnswer,
@@ -499,31 +500,35 @@ export async function createServer() {
             ;(request.payload as any) = fhirBundleToMOSIPPayload(
               request.payload as fhir3.Bundle,
               {
-                fullName: (bundle: fhir3.Bundle) =>
+                compositionId: (bundle) => {
+                  const composition = getComposition(bundle)
+                  return composition.id
+                },
+                fullName: (bundle) =>
                   wrapValueIntoIdentityInfo(getChildFullName(bundle), 'eng'),
-                dateOfBirth: getChildBirthDate,
-                gender: (bundle: fhir3.Bundle) =>
+                dateOfBirth: (bundle) => getChildBirthDate(bundle) ?? '',
+                gender: (bundle) =>
                   wrapValueIntoIdentityInfo(
                     getChildGender(bundle) as string,
                     'eng'
                   ),
-                guardianOrParentName: (bundle: fhir3.Bundle) =>
+                guardianOrParentName: (bundle) =>
                   wrapValueIntoIdentityInfo(getGuardianFullName(bundle), 'eng'),
-                nationalIdNumber: (bundle: fhir3.Bundle) => {
+                nationalIdNumber: (bundle) => {
                   const id = getReturnParentID(bundle)
                   return id?.type === 'NATIONAL_ID' ? id.identifier : ''
                 },
-                passportNumber: (bundle: fhir3.Bundle) => {
+                passportNumber: (bundle) => {
                   const id = getReturnParentID(bundle)
                   return id?.type === 'PASSPORT' ? id.identifier : ''
                 },
-                drivingLicenseNumber: (bundle: fhir3.Bundle) => {
+                drivingLicenseNumber: (bundle) => {
                   const id = getReturnParentID(bundle)
                   return id?.type === 'DRIVING_LICENSE' ? id.identifier : ''
                 },
-                deceasedStatus: (bundle: fhir3.Bundle) =>
+                deceasedStatus: (bundle) =>
                   getEventType(bundle) === EVENT_TYPE.DEATH ? true : false,
-                residentStatus: (bundle: fhir3.Bundle) => {
+                residentStatus: (bundle) => {
                   const residentStatus =
                     getQuestionnaireResponseAnswer(
                       bundle,
