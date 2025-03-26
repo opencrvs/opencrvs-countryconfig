@@ -79,9 +79,7 @@ test.describe.serial('7.0 Validate collect payment page', () => {
 
   test('5.5 keep relationship null and continue', async () => {
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(page.locator('#form_error')).toContainText(
-      'Complete all the mandatory fields'
-    )
+    await expect(page.locator('#relationship_error')).toContainText('Required')
   })
 
   test('5.6 should be able to enter relationship', async () => {
