@@ -104,3 +104,7 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc -c "\
 #-----------------------------
 docker exec $(docker ps | grep opencrvs_dashboards | awk '{print $1}' | head -n 1) /bin/sh -c "rm -rf /data/metabase/*"
 
+# Delete all data from SQLite
+# ---------------------------
+docker run --rm -v /data/sqlite:/data/sqlite alpine \
+  sh -c "apk add --no-cache sqlite && sqlite3 /data/sqlite/mosip-api.db 'DELETE FROM transactions;'"

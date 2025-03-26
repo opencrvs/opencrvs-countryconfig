@@ -1026,12 +1026,15 @@ services:
           - node.labels.data1 == true
 
   mosip-api:
+    volumes:
+      - '/data/sqlite:/data/sqlite'
     image: ghcr.io/opencrvs/mosip-api:${MOSIP_API_VERSION}
     environment:
       - NODE_ENV=production
       - MOSIP_BIRTH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/birth
       - MOSIP_DEATH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/death
       - OPENCRVS_GRAPHQL_GATEWAY_URL=http://gateway:7070/graphql
+      - OPENCRVS_PUBLIC_KEY_URL=http://auth:4040/.well-known
       - LOCALE=en
       - ESIGNET_USERINFO_URL=${ESIGNET_USERINFO_URL}
       - ESIGNET_TOKEN_URL=${ESIGNET_TOKEN_URL}
@@ -1049,6 +1052,7 @@ services:
       - SIGN_P12_FILE_PATH=${SIGN_P12_FILE_PATH}
       - SIGN_P12_FILE_PASSWORD=${SIGN_P12_FILE_PASSWORD}
       - CLIENT_APP_URL=https://register.{{hostname}}
+      - SQLITE_DATABASE_PATH=/data/sqlite/mosip-api.db
     deploy:
       replicas: 1
       labels:
