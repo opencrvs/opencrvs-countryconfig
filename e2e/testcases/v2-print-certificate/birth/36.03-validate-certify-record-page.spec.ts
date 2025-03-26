@@ -83,8 +83,21 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await expect(page.getByRole('button', { name: 'Verified' })).toBeVisible()
   })
 
-  // @TODO: payment page is not implemented on events v2 yet
-  test.skip('3.3 should navigate to collect payment page on "Verified" button click', async () => {})
+  test('3.3 should navigate to collect payment page on "Verified" button click', async () => {
+    await page.getByRole('button', { name: 'Verified' }).click()
+
+    await expect(page.locator('#content-name')).toContainText('Collect Payment')
+
+    await expect(page.locator('#maincontent')).toContainText('Service')
+    await expect(page.locator('#maincontent')).toContainText(
+      'Birth registration before 30 days of date of birth'
+    )
+    await expect(page.locator('#maincontent')).toContainText('Fee')
+    await expect(page.locator('#maincontent')).toContainText('$5.00')
+
+    await expect(page.getByRole('button', { name: 'Continue' })).toBeVisible()
+    await page.getByRole('button', { name: 'Back' }).click()
+  })
 
   test('3.4 should open warning modal on "Identity does not match" button click', async () => {
     await page.getByRole('button', { name: 'Identity does not match' }).click()
@@ -96,9 +109,14 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     )
   })
 
-  // @TODO: this takes directly to pdf print page, we still need to implement the payment page
   test('3.5 click warning modal confirm button should take to payment page', async () => {
     await page.getByRole('button', { name: 'Confirm' }).click()
+
+    await expect(page.locator('#content-name')).toContainText('Collect Payment')
+    await expect(page.getByRole('button', { name: 'Continue' })).toBeVisible()
+
+    await page.getByRole('button', { name: 'Continue' }).click()
+
     await expect(
       page
         .url()
@@ -107,6 +125,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
         )
     ).toBeTruthy()
     await page.goBack()
+    await page.getByRole('button', { name: 'Back' }).click()
   })
 
   test('3.6 click warning modal cancel button should close the modal', async () => {
