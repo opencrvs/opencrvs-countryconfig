@@ -15,7 +15,8 @@ import {
   ConditionalType,
   and,
   FieldType,
-  AddressType
+  AddressType,
+  or
 } from '@opencrvs/toolkit/events'
 import { field, not } from '@opencrvs/toolkit/conditionals'
 
@@ -381,8 +382,20 @@ export const child = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.label'
       },
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Must be within 0 and 6',
+            description: 'This is the error message for invalid number range',
+            id: 'v2.error.child.weightAtBirth.invalidNumberRange'
+          },
+          validator: or(
+            field('child.weightAtBirth').isBetween(0, 6),
+            field('child.weightAtBirth').isUndefined()
+          )
+        }
+      ],
       configuration: {
-        min: 0,
         postfix: {
           defaultMessage: 'Kilograms (kg)',
           description: 'This is the postfix for the weight field',

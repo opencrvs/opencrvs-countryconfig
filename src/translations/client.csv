@@ -2516,6 +2516,7 @@ v2.correction.requester.relationshop.intro.label,The title for the corrector for
 v2.correction.supportingDocuments.attest.label,Label for attestation of supporting documents,Attest,Attestation
 v2.correction.supportingDocuments.notNeeded.label,Label for indicating supporting documents are not needed,Not Needed,Non nécessaire
 v2.custom.field.form.requiredField,,Required for registration,Requis pour l'enregistrement
+v2.error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6,Doit être compris entre 0 et 6
 v2.error.hidden,"Error message when field is hidden or disabled, but a value was received",Hidden or disabled field should not receive a value,Le champ masqué ou désactivé ne doit pas recevoir de valeur
 v2.error.invalidDate,Error message when date field is invalid,Invalid date field,Champ de date invalide
 v2.error.invalidEmail,Error message when email address is invalid,Invalid email address,Doit être une adresse électronique valide

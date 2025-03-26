@@ -35,13 +35,13 @@ const otherIdType = {
 
 export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
   label: {
-    id: 'v2.event.tennis-club-membership.birth.action.certificate.form.label',
+    id: 'v2.event.birth.action.certificate.form.label',
     defaultMessage: 'Birth certificate collector',
     description: 'This is what this form is referred as in the system'
   },
   review: {
     title: {
-      id: 'v2.event.tennis-club-membership.action.certificate.form.review.title',
+      id: 'v2.event.birth.action.certificate.form.review.title',
       defaultMessage: 'Member certificate collector for {firstname} {surname}',
       description: 'Title of the form to show in review page'
     },
@@ -51,7 +51,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
   version: {
     id: '1.0.0',
     label: {
-      id: 'v2.event.tennis-club-membership.action.certificate.form.version.1',
+      id: 'v2.event.birth.action.certificate.form.version.1',
       defaultMessage: 'Version 1',
       description: 'This is the first version of the form'
     }
@@ -60,7 +60,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
     {
       id: 'collector',
       title: {
-        id: 'v2.event.tennis-club-membership.action.certificate.form.section.who.title',
+        id: 'v2.event.birth.action.certificate.form.section.who.title',
         defaultMessage: 'Certify record',
         description: 'This is the title of the section'
       },
@@ -72,12 +72,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'Requester',
             description: 'This is the label for the field',
-            id: 'v2.event.tennis-club-membership.action.certificate.form.section.requester.label'
+            id: 'v2.event.birth.action.certificate.form.section.requester.label'
           },
           options: [
             {
               label: {
-                id: 'v2.event.tennis-club-membership.action.certificate.form.section.requester.informant.label',
+                id: 'v2.event.birth.action.certificate.form.section.requester.informant.label',
                 defaultMessage: 'Print and issue Informant',
                 description: 'This is the label for the field'
               },
@@ -85,7 +85,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             },
             {
               label: {
-                id: 'v2.event.tennis-club-membership.action.certificate.form.section.requester.other.label',
+                id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
                 defaultMessage: 'Print and issue someone else',
                 description: 'This is the label for the field'
               },
@@ -93,7 +93,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             },
             {
               label: {
-                id: 'v2.event.tennis-club-membership.action.certificate.form.section.requester.printInAdvance.label',
+                id: 'v2.event.birth.action.certificate.form.section.requester.printInAdvance.label',
                 defaultMessage: 'Print in advance',
                 description: 'This is the label for the field'
               },
@@ -108,7 +108,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'Select Type of ID',
             description: 'This is the label for selecting the type of ID',
-            id: 'v2.event.tennis-club-membership.action.form.section.idType.label'
+            id: 'v2.event.birth.action.form.section.idType.label'
           },
           conditionals: [
             {
@@ -119,7 +119,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           options: [
             {
               label: {
-                id: 'v2.event.tennis-club-membership.action.form.section.idType.passport.label',
+                id: 'v2.event.birth.action.form.section.idType.passport.label',
                 defaultMessage: 'Passport',
                 description: 'Option for selecting Passport as the ID type'
               },
@@ -127,7 +127,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             },
             {
               label: {
-                id: 'v2.event.tennis-club-membership.action.form.section.idType.drivingLicense.label',
+                id: 'v2.event.birth.action.form.section.idType.drivingLicense.label',
                 defaultMessage: 'Driving License',
                 description:
                   'Option for selecting Driving License as the ID type'
@@ -136,7 +136,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             },
             {
               label: {
-                id: 'v2.event.tennis-club-membership.action.form.section.idType.refugeeNumber.label',
+                id: 'v2.event.birth.action.form.section.idType.refugeeNumber.label',
                 defaultMessage: 'Refugee Number',
                 description:
                   'Option for selecting Refugee Number as the ID type'
@@ -145,7 +145,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             },
             {
               label: {
-                id: 'v2.event.tennis-club-membership.action.form.section.idType.alienNumber.label',
+                id: 'v2.event.birth.action.form.section.idType.alienNumber.label',
                 defaultMessage: 'Alien Number',
                 description: 'Option for selecting Alien Number as the ID type'
               },
@@ -153,7 +153,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             },
             {
               label: {
-                id: 'v2.event.tennis-club-membership.action.form.section.idType.other.label',
+                id: 'v2.event.birth.action.form.section.idType.other.label',
                 defaultMessage: 'Other',
                 description: 'Option for selecting Other as the ID type'
               },
@@ -161,7 +161,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             },
             {
               label: {
-                id: 'v2.event.tennis-club-membership.action.form.section.idType.noId.label',
+                id: 'v2.event.birth.action.form.section.idType.noId.label',
                 defaultMessage: 'No ID',
                 description: 'Option for selecting No ID as the ID type'
               },
@@ -176,7 +176,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'Passport Details',
             description: 'Field for entering Passport details',
-            id: 'v2.event.tennis-club-membership.action.form.section.passportDetails.label'
+            id: 'v2.event.birth.action.form.section.passportDetails.label'
           },
           conditionals: [
             {
@@ -194,7 +194,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'Driving License Details',
             description: 'Field for entering Driving License details',
-            id: 'v2.event.tennis-club-membership.action.form.section.drivingLicenseDetails.label'
+            id: 'v2.event.birth.action.form.section.drivingLicenseDetails.label'
           },
           conditionals: [
             {
@@ -212,7 +212,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'Refugee Number Details',
             description: 'Field for entering Refugee Number details',
-            id: 'v2.event.tennis-club-membership.action.form.section.refugeeNumberDetails.label'
+            id: 'v2.event.birth.action.form.section.refugeeNumberDetails.label'
           },
           conditionals: [
             {
@@ -230,7 +230,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'Alien Number Details',
             description: 'Field for entering Alien Number details',
-            id: 'v2.event.tennis-club-membership.action.form.section.alienNumberDetails.label'
+            id: 'v2.event.birth.action.form.section.alienNumberDetails.label'
           },
           conditionals: [
             {
@@ -248,7 +248,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'Other ID Type (if applicable)',
             description: 'Field for entering ID type if "Other" is selected',
-            id: 'v2.event.tennis-club-membership.action.form.section.idTypeOther.label'
+            id: 'v2.event.birth.action.form.section.idTypeOther.label'
           },
           conditionals: [
             {
@@ -266,7 +266,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'First Name',
             description: 'This is the label for the first name field',
-            id: 'v2.event.tennis-club-membership.action.form.section.firstName.label'
+            id: 'v2.event.birth.action.form.section.firstName.label'
           },
           conditionals: [
             {
@@ -284,7 +284,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'Last Name',
             description: 'This is the label for the last name field',
-            id: 'v2.event.tennis-club-membership.action.form.section.lastName.label'
+            id: 'v2.event.birth.action.form.section.lastName.label'
           },
           conditionals: [
             {
@@ -303,7 +303,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             defaultMessage: 'Relationship to Member',
             description:
               'This is the label for the relationship to member field',
-            id: 'v2.event.tennis-club-membership.action.form.section.relationshipToMember.label'
+            id: 'v2.event.birth.action.form.section.relationshipToMember.label'
           },
           conditionals: [
             {
@@ -321,7 +321,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           label: {
             defaultMessage: 'Signed Affidavit (Optional)',
             description: 'This is the label for uploading a signed affidavit',
-            id: 'v2.event.tennis-club-membership.action.form.section.signedAffidavit.label'
+            id: 'v2.event.birth.action.form.section.signedAffidavit.label'
           },
           conditionals: [
             {
@@ -456,6 +456,45 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           }
         }
       }
+    },
+    {
+      id: 'collector.collect.payment',
+      title: {
+        id: 'event.birth.action.print.collectPayment',
+        defaultMessage: 'Collect Payment',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'collector.collect.payment.data',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+          },
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: 'Birth registration before 30 days of date of birth'
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$5.00'
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 })
