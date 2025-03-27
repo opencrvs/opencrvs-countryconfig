@@ -36,7 +36,7 @@ jobs:
         
       - name: Run docker container
         run: |
-          docker run -d 
+          docker run 
             -e "ACTIVATE_USERS=${{ vars.ACTIVATE_USERS }}" \
             -e "GATEWAY_HOST=${{ vars.GATEWAY_HOST }}" \
             -e "AUTH_HOST=${{ vars.AUTH_HOST }}" \
