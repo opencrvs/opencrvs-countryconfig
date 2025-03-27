@@ -1,21 +1,21 @@
 export type TActivateCustomizationOn = 'login' | 'client'
 export interface IStyleTagOptions {
-  media: string
-  crossorigin: string
-  integrity: string
-  title: string
-  disabled: boolean
-  type: string
+  media?: string
+  crossorigin?: string
+  integrity?: string
+  title?: string
+  disabled?: boolean
+  type?: string
 }
 
 export interface IScriptTagOptions {
-  async: boolean
-  defer: boolean
-  nomodule: boolean
-  onload: ((this: any, ev: any) => any) | null
-  onerror: any
-  crossorigin: string
-  integrity: string
+  async?: boolean
+  defer?: boolean
+  nomodule?: boolean
+  onload?: ((this: any, ev: any) => any) | null
+  onerror?: any
+  crossorigin?: string
+  integrity?: string
 }
 
 export interface ITag {

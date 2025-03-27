@@ -17,27 +17,32 @@ function getLocaleFromIndexedDB(dbName, storeName, key) {
     });
 }
 
-getLocaleFromIndexedDB("OpenCRVS", "keyvaluepairs", "language")
-    .then((locale) => {
-        console.warn("getLocaleFromIndexedDB Current Locale:", locale);
-        window.appziSettings = {
-            data: {
-                'lang': ['fr', 'mg'].includes(locale) ? locale : 'fr'
+let currentLang = null;
+
+async function updateAppziSetting() {
+    getLocaleFromIndexedDB("OpenCRVS", "keyvaluepairs", "language")
+        .then((newLang) => {
+            if (currentLang != newLang) {
+                currentLang = ['fr', 'mg'].includes(newLang) ? newLang : 'fr';
+                window.appziSettings = {
+                    data: {
+                        'lang': currentLang
+                    }
+                }
             }
-        }
-    })
-    .catch((error) => console.error(error));
+        })
+        .catch((error) => console.error(error));
+}
+
+if (!currentLang || !window.appziSettings?.data?.lang) {
+    updateAppziSetting();
+}
 
 /**
- * Listen for changes to the locale in IndexedDB
+ * Listen for changes in IndexedDB
  */
-window.addEventListener('storagesetitem', (event) => {
-    console.warn("storagesetitem :", event?.detail);
+window.addEventListener('storageitemchange', (event) => {
     if (event?.detail?.key == 'language') {
-        window.appziSettings = {
-            data: {
-                'lang': ['fr', 'mg'].includes(event?.detail?.value) ? event?.detail?.value : 'fr'
-            }
-        }
+        updateAppziSetting()
     }
 });

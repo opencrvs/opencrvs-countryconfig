@@ -21,11 +21,28 @@ export async function listCustomFilesHandler(
       .response({
         scripts: jsFiles.map((file) => ({
           url: `/custom-files/js/${file}`,
-          activateOn: ['client', 'login']
+          activateOn: ['client', 'login'],
+          options: {
+            async: true
+            // defer: false,
+            // nomodule: false,
+            // onload: null,
+            // onerror: null,
+            // crossorigin: '',
+            // integrity: ''
+          }
         })) satisfies Partial<IScriptTag>[],
         styles: cssFiles.map((file) => ({
           url: `/custom-files/css/${file}`,
-          activateOn: ['client', 'login']
+          activateOn: ['client', 'login'],
+          options: {
+            // media: '',
+            // crossorigin: '',
+            // integrity: '',
+            // title: '',
+            // disabled: false,
+            // type: ''
+          }
         })) satisfies Partial<IStyleTag>[]
       })
       .type('application/json')

@@ -52,35 +52,34 @@ export const applicationConfig = {
             : 'https://w.appzi.io/w.js?token=Al3I4',
         activateOn: ['client', 'login'],
         options: {
-          async: true,
+          async: true
           // defer: true,
           // nomodule: true,
-          onload: function () {
-            console.info('🚀 Appzi loaded')
-          },
-          onerror: function () {
-            console.info('🔴 Appzi failed to load')
-          }
+          // onload: function (a: any, b: any) {
+          //   console.info('🚀 Appzi loaded')
+          // },
+          // onerror: function () {
+          //   console.info('🔴 Appzi failed to load')
+          // }
           // crossorigin: 'anonymous',
-          // integrity:
-          //   'sha384-1trZnTo2NWT8MMlaYsZYUvOi6jG0DY1+8I14HAHjIVqKA3lw4cdzaEoXtD1GbQhk'
+          // integrity: 'sha384-...'
         } as Partial<IScriptTagOptions>
       }
-    ] as Partial<IScriptTag>[],
-    externalStyles: [
-      {
-        url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
-        activateOn: ['client', 'login']
-        // options: {
-        //   media: 'all',
-        //   crossorigin: 'anonymous',
-        //   integrity: 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN',
-        //   title: 'Example Stylesheet',
-        //   disabled: false,
-        //   type: 'text/css',
-        // }
-      }
-    ] as Partial<IStyleTag>[]
+    ] as Partial<IScriptTag>[]
+    // externalStyles: [
+    //   {
+    //     url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
+    //     activateOn: ['client', 'login']
+    //     // options: {
+    //     //   media: 'all',
+    //     //   crossorigin: 'anonymous',
+    //     //   integrity: 'sha384-...',
+    //     //   title: 'Example Stylesheet',
+    //     //   disabled: false,
+    //     //   type: 'text/css',
+    //     // }
+    //   }
+    // ] as Partial<IStyleTag>[]
   },
   MARRIAGE: {
     REGISTRATION_TARGET: 45,
