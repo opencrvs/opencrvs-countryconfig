@@ -106,6 +106,7 @@ export const roles: Role[] = [
       id: 'userRole.registrationAgent'
     },
     scopes: [
+      SCOPES.RECORD_READ,
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
       SCOPES.RECORD_DECLARE_MARRIAGE,
@@ -134,6 +135,7 @@ export const roles: Role[] = [
       id: 'userRole.localRegistrar'
     },
     scopes: [
+      SCOPES.RECORD_READ,
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
       SCOPES.RECORD_DECLARE_MARRIAGE,
@@ -215,6 +217,7 @@ export const roles: Role[] = [
       id: 'userRole.nationalRegistrar'
     },
     scopes: [
+      SCOPES.RECORD_READ,
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
       SCOPES.RECORD_DECLARE_MARRIAGE,
