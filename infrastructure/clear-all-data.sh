@@ -1,4 +1,5 @@
 
+#!/bin/bash
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -86,7 +87,14 @@ drop_database performance;
 
 # Delete all data from elasticsearch
 #-----------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE "http://$(elasticsearch_host)/ocrvs" -v
+indices=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -XGET "http://$(elasticsearch_host)/_cat/indices?h=index")
+echo "--------------------------"
+echo "🧹 cleanup for indices from $(elasticsearch_host): $indices"
+echo "--------------------------"
+for index in ${indices[@]}; do
+  echo "Removing index $index"
+  docker run --rm --network=$NETWORK appropriate/curl curl -sS -XDELETE "http://$(elasticsearch_host)/$index"
+done
 
 # Delete all data from metrics
 #-----------------------------
@@ -100,7 +108,7 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc -c "\
   mc rb myminio/ocrvs && \
   mc mb myminio/ocrvs"
 
-# Restart the metabase service
+# Restart events service
 #-----------------------------
-docker service scale opencrvs_dashboards=0
-docker service scale opencrvs_dashboards=1
+docker service scale opencrvs_events=0
+docker service scale opencrvs_events=1
