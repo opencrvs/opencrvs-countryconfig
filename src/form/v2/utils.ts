@@ -10,6 +10,7 @@
  */
 
 import { SelectOption, TranslationConfig } from '@opencrvs/toolkit/events'
+import { field } from '@opencrvs/toolkit/conditionals'
 
 export const MAX_NAME_LENGTH = 32
 
@@ -30,3 +31,13 @@ export const emptyMessage = {
   description: 'empty string',
   id: 'v2.messages.emptyString'
 }
+
+export const invalidNameValidator = (fieldName: string) => ({
+  message: {
+    defaultMessage:
+      "Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)",
+    description: 'This is the error message for invalid name',
+    id: 'v2.error.invalidName'
+  },
+  validator: field(fieldName).isValidEnglishName()
+})
