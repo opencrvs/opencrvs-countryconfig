@@ -84,9 +84,36 @@ drop_database metrics;
 
 drop_database performance;
 
+drop_database events;
+
 # Delete all data from elasticsearch
 #-----------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE "http://$(elasticsearch_host)/ocrvs" -v
+
+aliases=("ocrvs" "events")
+
+for alias in "${aliases[@]}"; do
+  echo "Check if alias $alias exists"
+  exists=$(docker run --rm --network=$NETWORK appropriate/curl \
+    curl -s -o /dev/null -w "%{http_code}" "http://$(elasticsearch_host)/_alias/$alias")
+
+  if [ "$exists" -ne 200 ]; then
+    echo "Alias $alias does not exist, skipping."
+    continue
+  fi
+
+  echo "Alias $alias exists, deleting indices."
+
+  # Find all indices attached to the alias and delete them
+  indices=$(docker run --rm --network=$NETWORK appropriate/curl \
+    curl -s -XGET "http://$(elasticsearch_host)/_alias/$alias" | jq -r 'keys | join(",")')
+
+  echo "Clearing indices $indices"
+  if [ -n "$indices" ]; then
+    docker run --rm --network=$NETWORK appropriate/curl \
+      curl -XPOST "http://$(elasticsearch_host)/$indices/_delete_by_query" -H "Content-Type: application/json" \
+      -d '{"query": {"match_all": {}}}'
+  fi
+done
 
 # Delete all data from metrics
 #-----------------------------
