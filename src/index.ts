@@ -68,6 +68,7 @@ import {
   onRegisterHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
+import { ActionType } from '@opencrvs/toolkit/events'
 
 export interface ITokenPayload {
   sub: string
@@ -565,18 +566,8 @@ export async function createServer() {
     path: '/events',
     handler: getCustomEventsHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
       description: 'Serves custom events'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/REGISTER',
-    handler: onRegisterHandler,
-    options: {
-      tags: ['api', 'custom-event'],
-      description: 'Receives notifications on event actions'
     }
   })
 
@@ -585,7 +576,18 @@ export async function createServer() {
     path: '/events/{event}/actions/{action}',
     handler: onAnyActionHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    // TODO CIHAN: can we get this from the event config and action config?
+    path: `/events/tennis-club-membership/actions/${ActionType.REGISTER}`,
+    handler: onRegisterHandler,
+    options: {
+      tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
     }
   })
