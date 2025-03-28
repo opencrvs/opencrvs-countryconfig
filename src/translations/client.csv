@@ -2806,6 +2806,11 @@ v2.review.declare.confirmModal.confirm,The label for modal confirm button when d
 v2.review.declare.confirmModal.description,The description for review action modal when declaring,This declaration will be sent for review,Cette déclaration sera envoyée pour révision.
 v2.review.declare.confirmModal.title,The title for review action modal when declaring,Send for review?,Envoyer pour révision ?
 v2.review.declare.description.complete,The description for declare action when form is complete,The informant will receive an email with a registration number that they can use to collect the certificate,L'informateur recevra un e-mail avec un numéro d'enregistrement qu'il pourra utiliser pour récupérer le certificat.
+v2.review.declare.description.incomplete,The description for declare action when form is complete,The informant will receive an email with a tracking ID that they can use to provide the additional mandatory information required for registration,Cette déclaration sera envoyée au greffier pour être complétée. Veuillez informer l'informateur qu'il devra se présenter au bureau avec les informations manquantes et les documents justificatifs.
+v2.review.declare.incomplete.confirmModal.cancel,The label for modal cancel button when declaring,Cancel,Annuler
+v2.review.declare.incomplete.confirmModal.confirm,The label for modal confirm button when declaring,Confirm,Confirmer
+v2.review.declare.incomplete.confirmModal.description,The description for review action modal when declaring incomplete,This incomplete declaration will be sent for review.,Cette déclaration sera envoyée au greffier pour être complétée. Veuillez informer l'informateur qu'il devra se présenter au bureau avec les informations manquantes et les documents justificatifs.
+v2.review.declare.incomplete.confirmModal.title,The title for review action modal when declaring,Send for review?,Envoyer pour révision ?
 v2.review.declare.title.complete,The title shown when reviewing an incomplete record to declare,Declaration complete,Déclaration complète
 v2.review.declare.title.incomplete,The title shown when reviewing an incomplete record to declare,Declaration incomplete,Déclaration incomplète
 v2.review.register.confirm,The label for register button of review action,Register,Enregistrer
