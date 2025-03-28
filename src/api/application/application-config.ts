@@ -46,14 +46,11 @@ export const applicationConfig = {
      **/
     externalScripts: [
       {
-        url:
-          process.env.IS_PROD_ENV === 'true'
-            ? 'https://w.appzi.io/w.js?token=eoS5x'
-            : 'https://w.appzi.io/w.js?token=Al3I4',
+        url: 'https://w.appzi.io/w.js?token=' + (process.env.APPZI_TOKEN || ''),
         activateOn: ['client', 'login'],
         options: {
-          async: true
-          // defer: true,
+          // async: true
+          defer: true
           // nomodule: true,
           // onload: function (a: any, b: any) {
           //   console.info('🚀 Appzi loaded')

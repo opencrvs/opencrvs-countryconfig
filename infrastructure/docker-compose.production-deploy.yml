@@ -93,7 +93,6 @@ services:
   client:
     environment:
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
-      - IS_PROD_ENV=true
     deploy:
       replicas: 3
 
@@ -110,8 +109,6 @@ services:
       replicas: 3
 
   login:
-    environment:
-      - IS_PROD_ENV=true
     deploy:
       replicas: 3
 

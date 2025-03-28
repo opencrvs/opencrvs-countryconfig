@@ -23,8 +23,8 @@ export async function listCustomFilesHandler(
           url: `/custom-files/js/${file}`,
           activateOn: ['client', 'login'],
           options: {
-            async: true
-            // defer: false,
+            // async: true
+            defer: false
             // nomodule: false,
             // onload: null,
             // onerror: null,
