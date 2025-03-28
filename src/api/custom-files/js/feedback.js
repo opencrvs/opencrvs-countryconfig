@@ -11,7 +11,7 @@ function getLocaleFromIndexedDB(dbName, storeName, key) {
             const store = transaction.objectStore(storeName);
             const getRequest = store.get(key);
 
-            getRequest.onsuccess = () => resolve(getRequest.result || "en");
+            getRequest.onsuccess = () => resolve(getRequest.result || "");
             getRequest.onerror = () => reject("Failed to fetch locale from IndexedDB");
         };
     });
@@ -20,18 +20,42 @@ function getLocaleFromIndexedDB(dbName, storeName, key) {
 let currentLang = null;
 
 async function updateAppziSetting() {
-    getLocaleFromIndexedDB("OpenCRVS", "keyvaluepairs", "language")
+    let lang = currentLang;
+    let user_data = null;
+    await getLocaleFromIndexedDB("OpenCRVS", "keyvaluepairs", "language")
         .then((newLang) => {
-            if (currentLang != newLang) {
-                currentLang = ['fr', 'mg'].includes(newLang) ? newLang : 'fr';
-                window.appziSettings = {
-                    data: {
-                        'lang': currentLang
-                    }
+            if (lang != newLang) {
+                lang = ['fr', 'mg'].includes(newLang) ? newLang : 'fr';
+            }
+        })
+        .catch((error) => console.error(error));
+
+    await getLocaleFromIndexedDB("OpenCRVS", "keyvaluepairs", "USER_DETAILS")
+        .then((data) => {
+            if (data) {
+                try {
+                    user_data = JSON.parse(data)
+                } catch (error) {
+                    console.error('Feedback Error: parsing user details data')
                 }
             }
         })
         .catch((error) => console.error(error));
+
+    window.appziSettings = {
+        data: {
+            lang,
+            user: user_data?.name?.[0],
+            user_mobile: user_data?.mobile,
+            username: user_data?.username,
+            user_email: user_data?.email,
+            user_primary_office: user_data?.primaryOffice?.name,
+            system_role: user_data?.systemRole,
+        },
+        render: {
+            type: 'client',
+        },
+    }
 }
 
 if (!currentLang || !window.appziSettings?.data?.lang) {
