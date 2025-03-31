@@ -14,6 +14,7 @@ import {
   ConditionalType,
   defineFormPage,
   FieldType,
+  or,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
 import { field, not } from '@opencrvs/toolkit/conditionals'
@@ -35,6 +36,7 @@ export const InformantType = {
   LEGAL_GUARDIAN: 'LEGAL_GUARDIAN'
 } as const
 
+const PHONE_NUMBER_REGEX = '^0(7|9)[0-9]{8}$'
 const informantMessageDescriptors = {
   MOTHER: {
     defaultMessage: 'Mother',
@@ -390,7 +392,22 @@ export const informant = defineFormPage({
         defaultMessage: 'Phone number',
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.label'
-      }
+      },
+      validation: [
+        {
+          message: {
+            defaultMessage:
+              'Must be a valid 10 digit number that starts with 0(7|9)',
+            description:
+              'The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11',
+            id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.error'
+          },
+          validator: or(
+            field('informant.phoneNo').matches(PHONE_NUMBER_REGEX),
+            field('informant.phoneNo').isUndefined()
+          )
+        }
+      ]
     },
     {
       id: 'informant.email',
