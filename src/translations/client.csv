@@ -2613,6 +2613,9 @@ v2.event.summary.status.value,Value for the status field,"{event.status, select,
 v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
 v2.event.summary.trackingId.label,Label for the tracking ID field,Tracking ID,ID de suivi
 v2.event.summary.trackingId.value,Value for the tracking ID field,{event.trackingId},{event.trackingId}
+v2.event.summary.registrationNumber.label,Label for the registration number field,Registration Number,Numéro d'inscription
+v2.event.summary.registrationNumber.value,Value for the registration number field,{event.registrationNumber},{event.registrationNumber}
+v2.event.summary.registrationNumber.empty,No registration number message,No registration number,Aucun numéro d'inscription
 v2.event.tennis-club-membership.action.certificate.form.label,This is what this form is referred as in the system,Tennis club membership certificate collector,Tennis club membership certificate collector
 v2.event.tennis-club-membership.action.certificate.form.review.title,Title of the form to show in review page,Member certificate collector for {firstname} {surname},Collecteur de certificat membre pour {FirstName} {nom de famille}
 v2.event.tennis-club-membership.action.certificate.form.section.requester.informant.label,This is the label for the field,Print and issue Informant,Print and issue Informant
