@@ -584,7 +584,18 @@ export async function createServer() {
   server.route({
     method: 'POST',
     // TODO CIHAN: can we get this from the event config and action config?
+    // TODO CIHAN: rest of actions?
     path: `/events/tennis-club-membership/actions/${ActionType.REGISTER}`,
+    handler: onRegisterHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: `/events/v2.birth/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
