@@ -8,19 +8,18 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { env } from '@countryconfig/environment'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 import { birthEvent } from '@countryconfig/form/v2/birth'
-import { logger } from '@countryconfig/logger'
 import * as Hapi from '@hapi/hapi'
-import { createClient } from '@opencrvs/toolkit/api'
-import { EventDocument } from '@opencrvs/toolkit/events'
-import uuid from 'uuid'
 import { customAlphabet } from 'nanoid'
 
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 12)
 
-function generateRegistrationNumber() {
+/**
+ * Generates a custom registration number for events. You may edit this function to generate a custom registration number.
+ * @returns {string} Registration number for the event.
+ */
+function generateRegistrationNumber(): string {
   return nanoid()
 }
 
@@ -43,7 +42,6 @@ export async function onRegisterHandler(
   _: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
-  console.log('CIHA TESTAA')
   return h
     .response({ registrationNumber: generateRegistrationNumber() })
     .code(200)
