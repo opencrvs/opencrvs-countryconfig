@@ -20,10 +20,7 @@ export function getCustomEventsHandler(
   return h.response([tennisClubMembershipEvent, birthEvent]).code(200)
 }
 
-export function onAnyActionHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
+export function onAnyActionHandler(_: Hapi.Request, h: Hapi.ResponseToolkit) {
   // This catch-all event route can receive either legacy FHIR events with `Content-Type: application/fhir+json` or new events with `Content-Type: application/json`
   return h.response().code(200)
 }
@@ -38,10 +35,7 @@ function generateRegistrationNumber(): string {
   return nanoid()
 }
 
-export async function onRegisterHandler(
-  _: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
+export function onRegisterHandler(_: Hapi.Request, h: Hapi.ResponseToolkit) {
   return h
     .response({ registrationNumber: generateRegistrationNumber() })
     .code(200)
