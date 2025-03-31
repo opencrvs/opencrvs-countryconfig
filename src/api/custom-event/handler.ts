@@ -13,16 +13,6 @@ import { birthEvent } from '@countryconfig/form/v2/birth'
 import * as Hapi from '@hapi/hapi'
 import { customAlphabet } from 'nanoid'
 
-const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 12)
-
-/**
- * Generates a custom registration number for events. You may edit this function to generate a custom registration number.
- * @returns {string} Registration number for the event.
- */
-function generateRegistrationNumber(): string {
-  return nanoid()
-}
-
 export function getCustomEventsHandler(
   _: Hapi.Request,
   h: Hapi.ResponseToolkit
@@ -36,6 +26,16 @@ export function onAnyActionHandler(
 ) {
   // This catch-all event route can receive either legacy FHIR events with `Content-Type: application/fhir+json` or new events with `Content-Type: application/json`
   return h.response().code(200)
+}
+
+const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 12)
+
+/**
+ * Generates a custom registration number for events. You may edit this function to generate a custom registration number.
+ * @returns {string} Registration number for the event.
+ */
+function generateRegistrationNumber(): string {
+  return nanoid()
 }
 
 export async function onRegisterHandler(
