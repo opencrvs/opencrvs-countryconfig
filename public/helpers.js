@@ -1566,27 +1566,24 @@ function replaceByUppercase(inputText) {
   // Utilisation d'une expression régulière pour remplacer "Cu" exactement (sensible à la casse)
   return inputText?.replace?.(/\bCu\b/g, 'CU')
 }
+
 function replaceAbbreviations(inputText) {
-  // Mapping des abréviations et leurs définitions
-  var abbreviationMap = {
+  const abbreviationMap = {
     CSB2: 'Centre de Santé de Base Niveau 2',
     CHU: 'Centre Hospitalier Universitaire',
     CSB1: 'Centre de Santé de Base Niveau 1',
     CHRD2: 'Centre Hospitalier de Référence District Niveau 2',
-    CHRR: '',
-    CHRD1: 'Centre Hospitalier de Référence District Niveau 1'
-    // Ajouter d'autres abréviations si nécessaire
+    CHRD1: 'Centre Hospitalier de Référence District Niveau 1',
+    CHRR: ''
   }
-  // Construire une expression régulière pour détecter les abréviations
-  var regex = new RegExp(
-    '\\b('.concat(Object.keys(abbreviationMap).join('|'), ')\\b'),
-    'g'
+
+  return inputText.replace(
+    /\b(CSB1 Ambato Behenjy|CSB2|CHU|CSB1|CHRD2|CHRD1|CHRR)\b/g,
+    (match) =>
+      match === 'CSB1 Ambato Behenjy' ? 'CSB1 Ambato' : abbreviationMap[match]
   )
-  // Remplacer les abréviations par leurs définitions
-  return inputText.replace(regex, function (match) {
-    return abbreviationMap[match]
-  })
 }
+
 function replaceByUppercaseLocation() {
   return function (name) {
     return replaceByUppercase(name)
