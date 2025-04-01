@@ -8,49 +8,35 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { env } from '@countryconfig/environment'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 import { birthEvent } from '@countryconfig/form/v2/birth'
-import { logger } from '@countryconfig/logger'
 import * as Hapi from '@hapi/hapi'
-import { createClient } from '@opencrvs/toolkit/api'
-import { EventDocument } from '@opencrvs/toolkit/events'
+import { customAlphabet } from 'nanoid'
 
 export function getCustomEventsHandler(
-  request: Hapi.Request,
+  _: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
   return h.response([tennisClubMembershipEvent, birthEvent]).code(200)
 }
 
-export async function onRegisterHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
-  const event = EventDocument.parse(request.payload)
-  const client = createClient(
-    env.GATEWAY_URL + '/events',
-    request.headers.authorization
-  )
-
-  logger.info(`Confirming registration ${event.id}`)
-  await client.event.registration.confirm.mutate({
-    eventId: event.id,
-    data: {
-      status: 'CONFIRMED'
-    }
-  })
-  logger.info(`Registration ${event.id} confirmed`)
-
+export function onAnyActionHandler(_: Hapi.Request, h: Hapi.ResponseToolkit) {
+  // This catch-all event route can receive either legacy FHIR events with `Content-Type: application/fhir+json` or new events with `Content-Type: application/json`
   return h.response().code(200)
 }
 
-export function onAnyActionHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
-  // This catch-all event route can receive either legacy FHIR events with `Content-Type: application/fhir+json` or new events with `Content-Type: application/json`
-  console.log(request.params.event, request.params.action)
-  console.log(request.payload)
-  return h.response().code(200)
+const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 12)
+
+/**
+ * Generates a custom registration number for events. You may edit this function to generate a custom registration number.
+ * @returns {string} Registration number for the event.
+ */
+function generateRegistrationNumber(): string {
+  return nanoid()
+}
+
+export function onRegisterHandler(_: Hapi.Request, h: Hapi.ResponseToolkit) {
+  return h
+    .response({ registrationNumber: generateRegistrationNumber() })
+    .code(200)
 }
