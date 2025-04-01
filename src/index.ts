@@ -69,6 +69,7 @@ import {
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { ActionType } from '@opencrvs/toolkit/events'
+import { Event } from './form/types/types'
 
 export interface ITokenPayload {
   sub: string
@@ -583,9 +584,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    // TODO CIHAN: can we get this from the event config and action config?
-    // TODO CIHAN: rest of actions?
-    path: `/events/tennis-club-membership/actions/${ActionType.REGISTER}`,
+    path: `/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
@@ -595,7 +594,7 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: `/events/v2.birth/actions/${ActionType.REGISTER}`,
+    path: `/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
       tags: ['api', 'events'],
