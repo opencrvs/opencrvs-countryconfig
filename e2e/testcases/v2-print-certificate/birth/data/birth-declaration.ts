@@ -92,14 +92,14 @@ export async function createDeclaration(
     'review.signature': `data:image/png;base64,${signatureBase64}`
   }
 
-  await client.event.actions.declare.mutate({
+  await client.event.actions.declare.request.mutate({
     eventId: eventId,
     transactionId: uuid.v4(),
     data: declarationData,
     metadata
   })
 
-  await client.event.actions.validate.mutate({
+  await client.event.actions.validate.request.mutate({
     eventId: eventId,
     transactionId: uuid.v4(),
     data: declarationData,
@@ -107,7 +107,7 @@ export async function createDeclaration(
     duplicates: []
   })
 
-  const response = await client.event.actions.register.mutate({
+  const response = await client.event.actions.register.request.mutate({
     eventId: eventId,
     transactionId: uuid.v4(),
     data: declarationData,
