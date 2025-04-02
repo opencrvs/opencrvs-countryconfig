@@ -125,4 +125,4 @@ When the OpenCRVS Core servers start up with un-seeded databases they call the f
 
 ## Action Confirmation
 
-The Action Confirmation API is a feature of OpenCRVS that allows for asynchronous confirmation of event actions. See documentation here: [Action Confirmation API](./src/api/action-confirmation.md)
+The Action Confirmation is a feature of OpenCRVS that allows for asynchronous confirmation of event actions. See documentation here: [Action Confirmation](./src/api/action-confirmation.md)
