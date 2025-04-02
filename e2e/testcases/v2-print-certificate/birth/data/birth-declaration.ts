@@ -7,7 +7,7 @@ import { getAllLocations, getLocationIdByName } from '../../../birth/helpers'
 import { createClient } from '@opencrvs/toolkit/api'
 import { AddressType } from '@opencrvs/toolkit/events'
 
-async function getDeclarationData() {
+async function getDeclaration() {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
   const province = getLocationIdByName(locations, 'Central')
   const district = getLocationIdByName(locations, 'Ibombo')
@@ -62,17 +62,17 @@ async function getDeclarationData() {
   }
 }
 
-type DeclarationData = Awaited<ReturnType<typeof getDeclarationData>>
+type Declaration = Awaited<ReturnType<typeof getDeclaration>>
 
 export interface CreateDeclarationResponse {
   eventId: string
-  data: DeclarationData
+  declaration: Declaration
 }
 
 export async function createDeclaration(
   token: string
 ): Promise<CreateDeclarationResponse> {
-  const declarationData = await getDeclarationData()
+  const declaration = await getDeclaration()
 
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
 
@@ -87,7 +87,7 @@ export async function createDeclaration(
     'base64'
   )
 
-  const metadata = {
+  const annotation = {
     'review.comment': 'My comment',
     'review.signature': `data:image/png;base64,${signatureBase64}`
   }
@@ -95,30 +95,30 @@ export async function createDeclaration(
   await client.event.actions.declare.mutate({
     eventId: eventId,
     transactionId: uuid.v4(),
-    data: declarationData,
-    metadata
+    declaration,
+    annotation
   })
 
   await client.event.actions.validate.mutate({
     eventId: eventId,
     transactionId: uuid.v4(),
-    data: declarationData,
-    metadata,
+    declaration,
+    annotation,
     duplicates: []
   })
 
   const response = await client.event.actions.register.mutate({
     eventId: eventId,
     transactionId: uuid.v4(),
-    data: declarationData,
-    metadata
+    declaration,
+    annotation
   })
 
   const declareAction = response.actions.find(
     (action) => action.type === 'DECLARE'
   )
 
-  const data = declareAction?.data as DeclarationData
+  const data = declareAction?.declaration as Declaration
 
-  return { eventId, data }
+  return { eventId, declaration: data }
 }

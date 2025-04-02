@@ -25,7 +25,7 @@ test.describe.serial('4.0 Validate "Certify record" page', () => {
   })
 
   test('4.1 continue with print in advance skips identity verification', async () => {
-    const childName = `${declaration.data['child.firstname']} ${declaration.data['child.surname']}`
+    const childName = `${declaration.declaration['child.firstname']} ${declaration.declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
     await page.getByRole('button', { name: 'Action' }).click()
     await page.getByRole('listitem').click()
