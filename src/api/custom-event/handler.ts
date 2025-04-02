@@ -36,7 +36,7 @@ export async function onRegisterHandler(
   logger.info(`Confirming registration ${event.id}`)
   await client.event.registration.confirm.mutate({
     eventId: event.id,
-    data: {
+    declaration: {
       status: 'CONFIRMED'
     }
   })

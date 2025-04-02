@@ -39,15 +39,6 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     defaultMessage: 'Birth certificate collector',
     description: 'This is what this form is referred as in the system'
   },
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      id: 'v2.event.birth.action.certificate.form.version.1',
-      defaultMessage: 'Version 1',
-      description: 'This is the first version of the form'
-    }
-  },
   pages: [
     {
       id: 'collector',

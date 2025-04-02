@@ -50,28 +50,10 @@ export const BIRTH_DECLARATION_REVIEW = {
         description: 'Title for the modal to draw signature'
       }
     }
-  ],
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      defaultMessage: 'Version 1',
-      id: 'v2.event.birth.action.declare.form.version.1',
-      description: 'This is the first version of the form'
-    }
-  }
+  ]
 }
 
 export const BIRTH_DECLARATION_FORM = defineDeclarationForm({
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      defaultMessage: 'Version 1',
-      id: 'v2.event.birth.action.declare.form.version.1',
-      description: 'This is the first version of the form'
-    }
-  },
   label: {
     defaultMessage: 'Birth decalration form',
     id: 'v2.event.birth.action.declare.form.label',

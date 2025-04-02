@@ -29,7 +29,7 @@ import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/print-certificate'
 
 export const birthEvent = defineConfig({
   id: Event.V2_BIRTH,
-  declaration: [BIRTH_DECLARATION_FORM],
+  declaration: BIRTH_DECLARATION_FORM,
   label: {
     defaultMessage: 'Birth',
     description: 'This is what this event is referred as in the system',
@@ -117,7 +117,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.declare.label'
       },
-      review: [BIRTH_DECLARATION_REVIEW],
+      review: BIRTH_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -136,7 +136,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.validate.label'
       },
-      review: [BIRTH_DECLARATION_REVIEW],
+      review: BIRTH_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -156,7 +156,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.register.label'
       },
-      review: [BIRTH_DECLARATION_REVIEW],
+      review: BIRTH_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -188,7 +188,7 @@ export const birthEvent = defineConfig({
           )
         }
       ],
-      printForm: [BIRTH_CERTIFICATE_COLLECTOR_FORM]
+      printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     }
   ],
   advancedSearch: advancedSearchBirth

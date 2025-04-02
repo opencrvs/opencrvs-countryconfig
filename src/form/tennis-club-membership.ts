@@ -32,15 +32,6 @@ import { MAX_NAME_LENGTH } from './v2/utils'
 import { SCOPES } from '@opencrvs/toolkit/scopes'
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      id: 'v2.event.tennis-club-membership.action.declare.form.version.1',
-      defaultMessage: 'Version 1',
-      description: 'This is the first version of the form'
-    }
-  },
   title: {
     id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
     defaultMessage:
@@ -79,15 +70,6 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
     id: 'v2.event.tennis-club-membership.action.declare.form.label',
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this form is referred as in the system'
-  },
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      id: 'v2.event.tennis-club-membership.action.declare.form.version.1',
-      defaultMessage: 'Version 1',
-      description: 'This is the first version of the form'
-    }
   },
   pages: [
     {
@@ -268,15 +250,6 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     id: 'v2.event.tennis-club-membership.action.certificate.form.label',
     defaultMessage: 'Tennis club membership certificate collector',
     description: 'This is what this form is referred as in the system'
-  },
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      id: 'v2.event.tennis-club-membership.action.certificate.form.version.1',
-      defaultMessage: 'Version 1',
-      description: 'This is the first version of the form'
-    }
   },
   pages: [
     {
@@ -655,7 +628,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
 
 export const tennisClubMembershipEvent = defineConfig({
   id: Event.TENNIS_CLUB_MEMBERSHIP,
-  declaration: [TENNIS_CLUB_DECLARATION_FORM],
+  declaration: TENNIS_CLUB_DECLARATION_FORM,
   label: {
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this event is referred as in the system',
@@ -797,7 +770,7 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.declare.label'
       },
-      review: [TENNIS_CLUB_DECLARATION_REVIEW],
+      review: TENNIS_CLUB_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -844,7 +817,7 @@ export const tennisClubMembershipEvent = defineConfig({
           )
         }
       ],
-      review: [TENNIS_CLUB_DECLARATION_REVIEW]
+      review: TENNIS_CLUB_DECLARATION_REVIEW
     },
     {
       type: ActionType.REGISTER,
@@ -867,7 +840,7 @@ export const tennisClubMembershipEvent = defineConfig({
           )
         }
       ],
-      review: [TENNIS_CLUB_DECLARATION_REVIEW]
+      review: TENNIS_CLUB_DECLARATION_REVIEW
     },
     {
       type: ActionType.PRINT_CERTIFICATE,
@@ -886,7 +859,7 @@ export const tennisClubMembershipEvent = defineConfig({
           )
         }
       ],
-      printForm: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
+      printForm: TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM
     },
     {
       type: ActionType.REQUEST_CORRECTION,
