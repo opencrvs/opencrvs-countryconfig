@@ -17,11 +17,12 @@ import {
   FieldType
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
+import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
-  emptyMessage,
   invalidNameValidator,
+  invalidNationalIdValidator,
   MAX_NAME_LENGTH
-} from '../../../utils'
+} from '@countryconfig/form/v2/birth/validators'
 import { InformantType } from './informant'
 import { IdType, idTypeOptions, PersonType } from '../../../person'
 import {
@@ -248,7 +249,8 @@ export const mother = defineFormPage({
             requireMotherDetails
           )
         }
-      ]
+      ],
+      validation: [invalidNationalIdValidator(`${PersonType.mother}.nid`)]
     },
     {
       id: `${PersonType.mother}.passport`,

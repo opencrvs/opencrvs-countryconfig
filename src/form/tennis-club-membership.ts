@@ -27,7 +27,7 @@ import {
 } from '@opencrvs/toolkit/conditionals'
 
 import { Event } from './types/types'
-import { MAX_NAME_LENGTH } from './v2/utils'
+import { MAX_NAME_LENGTH } from './v2/birth/validators'
 import { SCOPES } from '@opencrvs/toolkit/scopes'
 
 const TENNIS_CLUB_FORM = defineForm({

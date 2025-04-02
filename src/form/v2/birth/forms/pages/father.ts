@@ -17,11 +17,12 @@ import {
   FieldType
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
+import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
-  emptyMessage,
   invalidNameValidator,
+  invalidNationalIdValidator,
   MAX_NAME_LENGTH
-} from '../../../utils'
+} from '@countryconfig/form/v2/birth/validators'
 import { InformantType } from './informant'
 import {
   educationalAttainmentOptions,
@@ -29,8 +30,7 @@ import {
   idTypeOptions,
   maritalStatusOptions,
   PersonType,
-  yesNoRadioOptions,
-  YesNoTypes
+  yesNoRadioOptions
 } from '../../../person'
 
 export const requireFatherDetails = or(
@@ -252,7 +252,8 @@ export const father = defineFormPage({
             requireFatherDetails
           )
         }
-      ]
+      ],
+      validation: [invalidNationalIdValidator(`${PersonType.father}.nid`)]
     },
     {
       id: `${PersonType.father}.passport`,

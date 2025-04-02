@@ -21,12 +21,12 @@ import {
 import { field, not } from '@opencrvs/toolkit/conditionals'
 
 import { applicationConfig } from '@countryconfig/api/application/application-config'
+
+import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
 import {
-  createSelectOptions,
-  emptyMessage,
   invalidNameValidator,
   MAX_NAME_LENGTH
-} from '../../../utils'
+} from '@countryconfig/form/v2/birth/validators'
 
 const GenderTypes = {
   MALE: 'male',
