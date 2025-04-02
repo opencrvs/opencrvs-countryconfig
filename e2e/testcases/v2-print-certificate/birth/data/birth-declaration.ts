@@ -1,4 +1,4 @@
-import uuid from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import { GATEWAY_HOST } from '../../../../constants'
 import { faker } from '@faker-js/faker'
 import fs from 'fs'
@@ -78,7 +78,7 @@ export async function createDeclaration(
 
   const createResponse = await client.event.create.mutate({
     type: 'v2.birth',
-    transactionId: uuid.v4()
+    transactionId: uuidv4()
   })
   const eventId = createResponse.id as string
 
@@ -94,14 +94,14 @@ export async function createDeclaration(
 
   await client.event.actions.declare.request.mutate({
     eventId: eventId,
-    transactionId: uuid.v4(),
+    transactionId: uuidv4(),
     data: declarationData,
     metadata
   })
 
   await client.event.actions.validate.request.mutate({
     eventId: eventId,
-    transactionId: uuid.v4(),
+    transactionId: uuidv4(),
     data: declarationData,
     metadata,
     duplicates: []
@@ -109,7 +109,7 @@ export async function createDeclaration(
 
   const response = await client.event.actions.register.request.mutate({
     eventId: eventId,
-    transactionId: uuid.v4(),
+    transactionId: uuidv4(),
     data: declarationData,
     metadata
   })
