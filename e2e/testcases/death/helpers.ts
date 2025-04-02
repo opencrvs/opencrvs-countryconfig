@@ -3,7 +3,7 @@ import { DeathRegistrationInput } from '../../gateway'
 import { faker } from '@faker-js/faker'
 
 import { readFileSync } from 'fs'
-import uuid from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import { join } from 'path'
 import {
   formatDateObjectTo_yyyyMMdd,
@@ -136,7 +136,7 @@ export async function createDeathDeclaration(
               ).toString('base64'),
             informantType: declaration.informantType,
             contactEmail: declaration.informantEmail,
-            draftId: uuid.v4()
+            draftId: uuidv4()
           },
           causeOfDeath: 'NATURAL',
           deceased: {
