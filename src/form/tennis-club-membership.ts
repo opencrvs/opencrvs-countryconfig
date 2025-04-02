@@ -263,7 +263,6 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
   ]
 })
 
-console.log(JSON.stringify(TENNIS_CLUB_DECLARATION_FORM))
 const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
     id: 'v2.event.tennis-club-membership.action.certificate.form.label',
