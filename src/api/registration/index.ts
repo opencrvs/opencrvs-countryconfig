@@ -72,7 +72,6 @@ export function onRegisterHandler(
   // setTimeout(() => {
   //   acceptRequestedRegistration(token, eventId, actionId, action)
   // }, 10000)
-
   // return h.response().code(202)
 }
 
