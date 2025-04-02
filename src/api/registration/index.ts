@@ -42,7 +42,7 @@ interface ActionConfirmationRequest extends Hapi.Request {
  *
  * - HTTP 202: Defer the decision (asynchronous flow). The action enters a 'Requested' state
  *   until it is later explicitly accepted or rejected. When using this approach, you must
- *   store the token, actionId, and eventId to use with the accept/reject API calls later.
+ *   store the token, actionId, eventId and action payload to use with the accept/reject API calls later.
  *
  * For registration actions specifically, when accepting asynchronously, you must provide
  * a registration number as shown in the acceptRequestedRegistration example below.
