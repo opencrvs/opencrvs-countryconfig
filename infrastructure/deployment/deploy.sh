@@ -312,8 +312,6 @@ get_opencrvs_version() {
 
 validate_options
 
-get_opencrvs_version
-
 # Create new passwords for all MongoDB users created in
 # infrastructure/mongodb/docker-entrypoint-initdb.d/create-mongo-users.sh
 #
