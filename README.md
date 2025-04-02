@@ -123,3 +123,6 @@ When the OpenCRVS Core servers start up with un-seeded databases they call the f
 
 **<a href="https://documentation.opencrvs.org">Read our documentation</a> in order to learn how to make your own country configuration!**
 
+## Action Confirmation
+
+The Action Confirmation is a feature of OpenCRVS that allows for asynchronous confirmation of event actions. See documentation here: [Action Confirmation](./src/api/action-confirmation.md)
