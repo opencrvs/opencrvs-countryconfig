@@ -1573,14 +1573,17 @@ function replaceAbbreviations(inputText) {
     CHU: 'Centre Hospitalier Universitaire',
     CSB1: 'Centre de Santé de Base Niveau 1',
     CHRD2: 'Centre Hospitalier de Référence District Niveau 2',
-    CHRD1: 'Centre Hospitalier de Référence District Niveau 1',
-    CHRR: ''
+    CHRR: '',
+    CHRD1: 'Centre Hospitalier de Référence District Niveau 1'
   }
 
-  return inputText.replace(
-    /\b(CSB1 Ambato Behenjy|CSB2|CHU|CSB1|CHRD2|CHRD1|CHRR)\b/g,
-    (match) =>
-      match === 'CSB1 Ambato Behenjy' ? 'CSB1 Ambato' : abbreviationMap[match]
+  // Extract text before "(district" or "(commune)"
+  const extractedText = inputText.split(/\s+\(district|\(commune/i)[0].trim()
+
+  // Replace abbreviations with their full forms
+  return extractedText.replace(
+    /\b(CSB2|CHU|CSB1|CHRD2|CHRR|CHRD1)\b/g,
+    (abbr) => abbreviationMap[abbr] || abbr
   )
 }
 

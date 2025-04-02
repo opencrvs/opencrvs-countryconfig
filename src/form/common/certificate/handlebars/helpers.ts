@@ -1059,20 +1059,22 @@ function replaceByUppercase(inputText: String) {
   return inputText!.replace(/\bCu\b/g, 'CU')
 }
 function replaceAbbreviations(inputText: string): string {
-  // Mapping des abréviations et leurs définitions
   const abbreviationMap: Record<string, string> = {
     CSB2: 'Centre de Santé de Base Niveau 2',
     CHU: 'Centre Hospitalier Universitaire',
     CSB1: 'Centre de Santé de Base Niveau 1',
     CHRD2: 'Centre Hospitalier de Référence District Niveau 2',
-    CHRD1: 'Centre Hospitalier de Référence District Niveau 1',
-    CHRR: ''
+    CHRR: '',
+    CHRD1: 'Centre Hospitalier de Référence District Niveau 1'
   }
 
-  return inputText.replace(
-    /\b(CSB1 Ambato Behenjy|CSB2|CHU|CSB1|CHRD2|CHRD1|CHRR)\b/g,
-    (match) =>
-      match === 'CSB1 Ambato Behenjy' ? 'CSB1 Ambato' : abbreviationMap[match]
+  // Extraire la partie avant "(district" ou "(commune)"
+  const extractedText = inputText.split(/\s+\(district|\(commune/i)[0].trim()
+
+  // Remplacement des abréviations
+  return extractedText.replace(
+    /\b(CSB2|CHU|CSB1|CHRD2|CHRR|CHRD1)\b/g,
+    (abbr) => abbreviationMap[abbr] ?? abbr
   )
 }
 
