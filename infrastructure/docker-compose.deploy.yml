@@ -492,6 +492,7 @@ services:
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
+      - APPZI_TOKEN=${APPZI_TOKEN}
       - MINIO_URL=https://minio.{{hostname}}
     deploy:
       labels:
@@ -515,9 +516,6 @@ services:
         - 'traefik.http.middlewares.client.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.client.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.client.headers.stspreload=true'
-
-        # ## CSP header middleware
-        # - 'traefik.http.middlewares.csp-header.headers.customresponseheaders.Content-Security-Policy=default-src ''self'' ${CONTENT_SECURITY_POLICY_WILDCARD} *.sentry.io/ sentry.io/; font-src fonts.gstatic.com ${CONTENT_SECURITY_POLICY_WILDCARD}; object-src ''none''; script-src ''self'' ''unsafe-eval'' blob: https: http: storage.googleapis.com/workbox-cdn/ sentry.io/api/embed/error-page/ w.appzi.io/ countryconfig.{{hostname}}/; style-src ''self'' fonts.googleapis.com ''unsafe-inline'' w.appzi.io/ countryconfig.{{hostname}}/; img-src ''self'' data: http: https: '
 
       replicas: 1
     networks:
@@ -611,6 +609,7 @@ services:
       - DOMAIN={{hostname}}
       - NUI_GENERATOR_URL=${NUI_GENERATOR_URL}
       - NUI_API_KEY=${NUI_API_KEY}
+      - APPZI_TOKEN=${APPZI_TOKEN}
     networks:
       - overlay_net
     logging:
@@ -622,6 +621,7 @@ services:
     environment:
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
+      - APPZI_TOKEN=${APPZI_TOKEN}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -639,8 +639,6 @@ services:
         - 'traefik.http.middlewares.login.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.login.headers.stspreload=true'
 
-        # ## CSP header middleware
-        # - 'traefik.http.middlewares.csp-header.headers.customresponseheaders.Content-Security-Policy=default-src ''self'' ${CONTENT_SECURITY_POLICY_WILDCARD} *.sentry.io/ sentry.io/; font-src fonts.gstatic.com ${CONTENT_SECURITY_POLICY_WILDCARD}; object-src ''none''; script-src ''self'' ''unsafe-eval'' blob: https: http: storage.googleapis.com/workbox-cdn/ sentry.io/api/embed/error-page/ w.appzi.io/ countryconfig.{{hostname}}/; style-src ''self'' fonts.googleapis.com ''unsafe-inline'' w.appzi.io/ countryconfig.{{hostname}}/; img-src ''self'' data: http: https: '        
       replicas: 1
     networks:
       - overlay_net
@@ -889,6 +887,7 @@ services:
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
+      - APPZI_TOKEN=${APPZI_TOKEN}
     deploy:
       labels:
         - 'traefik.enable=true'
