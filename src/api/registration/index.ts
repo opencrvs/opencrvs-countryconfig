@@ -11,7 +11,10 @@
 import * as Hapi from '@hapi/hapi'
 import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
-import { ActionInput } from '@opencrvs/toolkit/events'
+import {
+  ActionInput,
+  ActionConfirmationResponse
+} from '@opencrvs/toolkit/events'
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -60,15 +63,26 @@ export function onRegisterHandler(
   const eventId = request.payload.event.id
   const action = request.payload.action
 
-  // By default we return HTTP 200 with a registration number, to right away accept the registration action.
-  // We could also return HTTP 400 to reject the action immediately.
+  // OPTION 1: Immediate acceptance (HTTP 200)
+  // Return HTTP 200 with a registration number to immediately accept the registration action.
+  // This is the default implementation that automatically generates and assigns a registration number.
   return h
     .response({ registrationNumber: generateRegistrationNumber() })
     .code(200)
 
-  // Or we could return HTTP 202 to defer the decision to a later time.
-  // Example of asynchronous registration after a 10 second delay, for testing and example purposes:
+  // OPTION 2: Immediate rejection (HTTP 400)
+  // To reject the registration immediately, uncomment the following:
+  // return h.response({ reason: 'Rejection reason here' }).code(400)
 
+  // OPTION 3: Deferred decision (HTTP 202)
+  // To implement an asynchronous workflow where the decision is made later:
+  // 1. Store the token, eventId, actionId, and action details in your system
+  // 2. Return HTTP 202 to place the action in 'Requested' state
+  // 3. Later call client.event.actions.register.accept.mutate() or client.event.actions.register.reject.mutate()
+  //
+  // Below is example of how to defer the confirmation, accepting it after a 10 second delay
+  // To defer the confirmation, uncomment the following:
+  //
   // setTimeout(() => {
   //   acceptRequestedRegistration(token, eventId, actionId, action)
   // }, 10000)
