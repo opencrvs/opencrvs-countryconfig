@@ -74,15 +74,6 @@ export async function getOffices() {
   return officeList?.entry
 }
 
-export async function getTestFacilities() {
-  const resCRVFacilities = await fetch(
-    `${GATEWAY_HOST}/location?type=HEALTH_FACILITY&_count=0&status=active`
-  )
-
-  const facilityList = await resCRVFacilities.json()
-  return facilityList?.entry
-}
-
 export async function getFacilities() {
   const resCRVSOffices = await fetch(
     `${GATEWAY_HOST}/location?type=CRVS_OFFICE&_count=0`

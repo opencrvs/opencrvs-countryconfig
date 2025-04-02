@@ -11,10 +11,8 @@ import {
 } from './utils'
 import {
   getLocationById,
-  getOffices,
-  getTestFacilities
+  getOffices
 } from '@countryconfig/data-generator/location'
-// import { sendBirthNotification } from '@countryconfig/data-generator/declare'
 
 test.describe.serial('1. Birth declaration case - 1', () => {
   let page: Page
@@ -183,8 +181,14 @@ test.describe.serial('1. Birth declaration case - 1', () => {
     test('Send event notification', async () => {
       const clientToken = await getClientToken(token.clientId, token.secret)
 
-      // get facility
-      const facilities = await getTestFacilities()
+      // get facilities
+      const resCRVFacilities = await fetch(
+        `${GATEWAY_HOST}/location?type=HEALTH_FACILITY&_count=0&status=active`
+      )
+
+      const facilityList = await resCRVFacilities.json()
+
+      const facilities = facilityList?.entry
       const facility = facilities[0]
 
       const facilityPartOf = facility.resource.partOf.reference
