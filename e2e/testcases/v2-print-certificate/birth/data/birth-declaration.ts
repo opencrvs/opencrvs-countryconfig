@@ -5,7 +5,7 @@ import fs from 'fs'
 import path from 'path'
 import { getAllLocations, getLocationIdByName } from '../../../birth/helpers'
 import { createClient } from '@opencrvs/toolkit/api'
-import { AddressType } from '@opencrvs/toolkit/events'
+import { ActionDocument, AddressType } from '@opencrvs/toolkit/events'
 
 async function getDeclarationData() {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
@@ -115,7 +115,7 @@ export async function createDeclaration(
   })
 
   const declareAction = response.actions.find(
-    (action) => action.type === 'DECLARE'
+    (action: ActionDocument) => action.type === 'DECLARE'
   )
 
   const data = declareAction?.data as DeclarationData
