@@ -60,9 +60,20 @@ export function onRegisterHandler(
   const eventId = request.payload.event.id
   const action = request.payload.action
 
+  // By default we return HTTP 200 with a registration number, to right away accept the registration action.
+  // We could also return HTTP 400 to reject the action immediately.
   return h
     .response({ registrationNumber: generateRegistrationNumber() })
     .code(200)
+
+  // Or we could return HTTP 202 to defer the decision to a later time.
+  // Example of asynchronous registration after a 10 second delay, for testing and example purposes:
+
+  // setTimeout(() => {
+  //   acceptRequestedRegistration(token, eventId, actionId, action)
+  // }, 10000)
+
+  // return h.response().code(202)
 }
 
 /**
