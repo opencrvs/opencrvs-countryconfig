@@ -54,7 +54,36 @@ export async function getLocations() {
   )
 }
 
-export async function getFacilities() {
+export async function getLocationById(fhirId: string) {
+  const url = `${GATEWAY_HOST}/location/${fhirId}`
+
+  const res = await fetch(url, {
+    method: 'GET'
+  })
+
+  const response = await res.json()
+  return response
+}
+
+export async function getOffices() {
+  const resCRVSOffices = await fetch(
+    `${GATEWAY_HOST}/location?type=CRVS_OFFICE&_count=0&status=active`
+  )
+
+  const officeList = await resCRVSOffices.json()
+  return officeList?.entry
+}
+
+export async function getTestFacilities() {
+  const resCRVFacilities = await fetch(
+    `${GATEWAY_HOST}/location?type=HEALTH_FACILITY&_count=0&status=active`
+  )
+
+  const facilityList = await resCRVFacilities.json()
+  return facilityList?.entry
+}
+
+export async function getFacilities(token: string) {}
   const resCRVSOffices = await fetch(
     `${GATEWAY_HOST}/location?type=CRVS_OFFICE&_count=0`
   )

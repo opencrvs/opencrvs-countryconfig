@@ -323,23 +323,6 @@ export async function createDeclaration(token: string, details: BirthDetails) {
   })
   return res.json().then((r) => r.data.createBirthRegistration)
 }
-export async function getFacility(token: string) {
-  const res = await fetch(
-    `${GATEWAY_HOST}/location?type=HEALTH_FACILITY&_count=0&status=active`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      }
-    }
-  )
-
-  return res.json().then((r) => {
-    console.log('r :>> ', r)
-    return r.data
-  })
-}
 
 export const fetchDeclaration = async (
   token: string,

@@ -134,19 +134,15 @@ export async function sendBirthNotification(
     body: JSON.stringify(notification)
   })
 
-  console.log('createBirthNotification :>> ', createBirthNotification)
-
-  // if (!createBirthNotification.ok) {
-  //   log(
-  //     'Failed to create a birth notification',
-  //     await createBirthNotification.text()
-  //   )
-  //   throw new Error('Failed to create a birth notification')
-  // }
+  if (!createBirthNotification.ok) {
+    log(
+      'Failed to create a birth notification',
+      await createBirthNotification.text()
+    )
+    throw new Error('Failed to create a birth notification')
+  }
 
   const response = await createBirthNotification.json()
-
-  console.log('createBirthNotification :>> response >>>>>>>', response)
 
   const requestEnd = Date.now()
   log(
@@ -159,8 +155,6 @@ export async function sendBirthNotification(
     username,
     `(took ${requestEnd - requestStart}ms)`
   )
-
-  console.log('getIDFromResponse(response) :>> ', getIDFromResponse(response))
 
   return getIDFromResponse(response)
 }

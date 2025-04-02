@@ -52,7 +52,12 @@ export async function fetchEvents(trackingId: string, token: string) {
   return data as { data: { searchEvents: { totalItems: number } } }
 }
 
-export const eventNotificationPayload = {
+export const eventNotificationPayload = (
+  officeId: string,
+  districtId: string,
+  stateId: string,
+  facilityId: string
+) => ({
   resourceType: 'Bundle',
   type: 'document',
   meta: {
@@ -222,7 +227,7 @@ export const eventNotificationPayload = {
           {
             url: 'http://opencrvs.org/specs/extension/regLastOffice',
             valueReference: {
-              reference: 'Location/cadcd92d-6caf-419d-b04a-c8cbb01d3579'
+              reference: `Location/${officeId}`
             }
           }
         ]
@@ -236,8 +241,8 @@ export const eventNotificationPayload = {
         name: [
           {
             use: 'en',
-            family: faker.person.firstName,
-            given: [faker.person.middleName]
+            family: 'Min',
+            given: ['Child']
           }
         ],
         gender: 'male',
@@ -254,8 +259,8 @@ export const eventNotificationPayload = {
         name: [
           {
             use: 'en',
-            family: faker.person.firstName,
-            given: [faker.person.middleName]
+            family: 'Ratke',
+            given: ['Mom']
           }
         ],
         gender: 'female',
@@ -267,8 +272,8 @@ export const eventNotificationPayload = {
             type: 'PRIMARY_ADDRESS',
             line: ['', '', '', '', '', 'URBAN'],
             city: 'Meghnan',
-            district: '521167b3-9cb6-4e3d-be44-53503546a892',
-            state: 'f87242d5-285c-4565-aae5-f221020f1368',
+            district: districtId,
+            state: stateId,
             postalCode: '52275',
             country: 'FAR'
           }
@@ -326,8 +331,8 @@ export const eventNotificationPayload = {
         name: [
           {
             use: 'en',
-            family: faker.person.firstName,
-            given: [faker.person.middleName]
+            family: 'Ratke',
+            given: ['Dad']
           }
         ],
         gender: 'male',
@@ -339,8 +344,8 @@ export const eventNotificationPayload = {
             type: 'PRIMARY_ADDRESS',
             line: ['', '', '', '', '', 'URBAN'],
             city: 'Meghnan',
-            district: '521167b3-9cb6-4e3d-be44-53503546a892',
-            state: 'f87242d5-285c-4565-aae5-f221020f1368',
+            district: districtId,
+            state: stateId,
             postalCode: '52275',
             country: 'FAR'
           }
@@ -380,11 +385,11 @@ export const eventNotificationPayload = {
         location: [
           {
             location: {
-              reference: 'Location/2898a018-15d7-46d8-97c1-ddfe326a2c5f'
+              reference: `Location/${facilityId}`
             }
           }
         ]
       }
     }
   ]
-}
+})
