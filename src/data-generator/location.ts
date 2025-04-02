@@ -83,7 +83,7 @@ export async function getTestFacilities() {
   return facilityList?.entry
 }
 
-export async function getFacilities(token: string) {}
+export async function getFacilities() {
   const resCRVSOffices = await fetch(
     `${GATEWAY_HOST}/location?type=CRVS_OFFICE&_count=0`
   )
