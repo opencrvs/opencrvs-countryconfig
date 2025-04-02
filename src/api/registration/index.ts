@@ -11,10 +11,7 @@
 import * as Hapi from '@hapi/hapi'
 import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
-import {
-  ActionInput,
-  ActionConfirmationResponse
-} from '@opencrvs/toolkit/events'
+import { ActionInput } from '@opencrvs/toolkit/events'
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
 
