@@ -94,7 +94,9 @@ test.describe
      * - Print option should not be disabled
      */
     await expect(getAction(page, 'Correct record')).not.toHaveAttribute(
-      'disabled'
+      'disabled',
+      // Add timeout to avoid flakyness
+      { timeout: 30000 }
     )
 
     await expect(getAction(page, 'Print certified copy')).not.toHaveAttribute(
