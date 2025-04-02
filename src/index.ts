@@ -67,12 +67,12 @@ import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   getCustomEventsHandler,
-  onAnyActionHandler,
-  onRegisterHandler
+  onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
+import { onRegisterHandler } from './api/registration'
 
 export interface ITokenPayload {
   sub: string
