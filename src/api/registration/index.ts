@@ -28,15 +28,24 @@ interface ActionConfirmationRequest extends Hapi.Request {
 /* eslint-disable no-unused-vars */
 
 /**
- * Function which is called when an event registration is created.
- * This is an example of a event action confirmation API handler.
+ * Handler for event registration confirmation.
  *
- * Event action confirmation APIs are used to accept or rejected a requested action. These kinds of APIs have 3 valid HTTP status codes for the response:
- * - HTTP 200: Accept the action. In this case, the action will be accepted right away.
- * - HTTP 400: Reject the action. In this case, the action will be rejected right away.
- * - HTTP 202: Intercept action, and accept/reject later. In this case the action will end up in 'Requested' state, i.e. waiting for final acception or rejection.
- *             With interception, the action is expected to be accepted or rejected at a later time with the matching `accept` or `reject` API.
- *             With the interception flow, you will need to temporarily store the token, actionId and eventId to use them later when accepting or rejecting the action.
+ * This function is called when an event registration is initiated and demonstrates
+ * how to implement an action confirmation handler for the REGISTER action type.
+ *
+ * Action confirmation handlers support three response patterns:
+ *
+ * - HTTP 200: Immediately accept the action. For registration actions, the response
+ *   must include a registrationNumber in the payload: { registrationNumber: "..." }
+ *
+ * - HTTP 400: Immediately reject the action. The action will be marked as rejected.
+ *
+ * - HTTP 202: Defer the decision (asynchronous flow). The action enters a 'Requested' state
+ *   until it is later explicitly accepted or rejected. When using this approach, you must
+ *   store the token, actionId, and eventId to use with the accept/reject API calls later.
+ *
+ * For registration actions specifically, when accepting asynchronously, you must provide
+ * a registration number as shown in the acceptRequestedRegistration example below.
  *
  * @param {ActionConfirmationRequest} request - The request object.
  * @param {Hapi.ResponseToolkit} h - The response toolkit.
@@ -56,9 +65,15 @@ export function onRegisterHandler(
     .code(200)
 }
 
-/*
- * This is an example of asynchronously accepting.
- * This should only be used when an action is in 'Requested' state, after returning HTTP 202 for the initial notification request.
+/**
+ * Example function for asynchronously accepting a registration action.
+ *
+ * This should only be used when an action is in 'Requested' state (after returning HTTP 202
+ * for the initial confirmation request). This function demonstrates how to accept a registration
+ * that was previously placed in a pending state.
+ *
+ * For registration actions specifically, you must provide a registration number when accepting.
+ * See the Action Confirmation documentation for more details on asynchronous confirmation flows.
  */
 async function acceptRequestedRegistration(
   token: string,
@@ -80,9 +95,12 @@ async function acceptRequestedRegistration(
   return event
 }
 
-/*
- * This is an example of asynchronously rejecting.
- * This should only be done when an action is in 'Requested' state, after returning HTTP 202 for the initial notification request.
+/**
+ * Example function for asynchronously rejecting a registration action.
+ *
+ * This should only be used when an action is in 'Requested' state (after returning HTTP 202
+ * for the initial confirmation request). This function demonstrates how to reject a registration
+ * that was previously placed in a pending state.
  */
 async function rejectRequestedRegistration(
   token: string,
