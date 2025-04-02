@@ -66,12 +66,14 @@ export function onRegisterHandler(
   // OPTION 1: Immediate acceptance (HTTP 200)
   // Return HTTP 200 with a registration number to immediately accept the registration action.
   // This is the default implementation that automatically generates and assigns a registration number.
+
   return h
     .response({ registrationNumber: generateRegistrationNumber() })
     .code(200)
 
   // OPTION 2: Immediate rejection (HTTP 400)
   // To reject the registration immediately, uncomment the following:
+  //
   // return h.response({ reason: 'Rejection reason here' }).code(400)
 
   // OPTION 3: Deferred decision (HTTP 202)
