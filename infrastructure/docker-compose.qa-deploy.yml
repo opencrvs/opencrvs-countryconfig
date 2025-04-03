@@ -133,7 +133,6 @@ services:
   mosip-api:
     environment:
       - MOSIP_WEBSUB_CALLBACK_URL=http://mosip-api:2024/websub/callback
-      - MOSIP_WEBSUB_HUB_URL=http://mosip-mock:20240/websub/hub
     volumes:
       - /certs:/certs:ro 
   
