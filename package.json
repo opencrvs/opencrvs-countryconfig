@@ -65,7 +65,7 @@
     "@hapi/boom": "^9.1.1",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "1.8.0-rc.3bc0edd",
+    "@opencrvs/toolkit": "1.8.0-rc.24dd3f3",
     "@types/chalk": "^2.2.0",
     "@types/csv2json": "^1.4.0",
     "@types/fhir": "^0.0.30",
@@ -95,6 +95,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.21",
     "minimist": "^1.2.8",
+    "nanoid": "3",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.9.8",
     "opener": "^1.5.1",
@@ -105,6 +106,7 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^3.8.0",
     "typescript": "^5.1.6",
+    "uuid": "^11.1.0",
     "zod": "^3.24.1"
   },
   "lint-staged": {
