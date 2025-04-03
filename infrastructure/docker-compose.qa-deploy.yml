@@ -135,12 +135,14 @@ services:
       - MOSIP_WEBSUB_CALLBACK_URL=http://mosip-api:2024/websub/callback
     volumes:
       - /certs:/certs:ro 
-  
+
   mosip-mock:
     image: ghcr.io/opencrvs/mosip-mock:${MOSIP_API_VERSION}
+    depends_on:
+      - mosip-api
     environment:
       - NODE_ENV=production
-      - OPENCRVS_MOSIP_API_URL=http://mosip-api:2024/webhooks/mosip
+      - MOSIP_WEBSUB_CALLBACK_URL=
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS:-}
       - ALERT_EMAIL=${ALERT_EMAIL:-}
       - SMTP_HOST=${SMTP_HOST:-}
@@ -148,6 +150,7 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME:-}
       - SMTP_PASSWORD=${SMTP_PASSWORD:-}
       - SMTP_SECURE=${SMTP_SECURE:-}
+      - MOSIP_WEBSUB_CALLBACK_URL=http://mosip-api:2024/websub/callback
     deploy:
       replicas: 1
       labels:
