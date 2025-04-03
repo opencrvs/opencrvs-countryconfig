@@ -1,0 +1,24 @@
+name: Block PRs from Develop to Release
+
+on:
+  pull_request:
+    branches:
+      - release-*
+
+jobs:
+  block_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Source Branch
+        if: github.event.pull_request.head.ref == 'develop-test'
+        run: |
+          echo "❌ Pull requests from 'develop' to 'release-*' are blocked."
+          exit 1
+
+      - name: Comment on PR
+        if: github.event.pull_request.head.ref == 'develop'
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: "🚫 **Pull requests from 'develop' to 'release-*' are not allowed!**  
+            Please create a feature or hotfix branch instead."
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
