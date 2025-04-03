@@ -11,10 +11,10 @@
 
 import {
   ConditionalType,
-  defineForm,
+  defineActionForm,
   field,
   FieldType,
-  FormPageType
+  PageTypes
 } from '@opencrvs/toolkit/events'
 import { informantOtherThanParent, InformantType } from './pages/informant'
 
@@ -33,32 +33,16 @@ const otherIdType = {
   NO_ID: 'NO_ID'
 } as const
 
-export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
+export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
     id: 'v2.event.birth.action.certificate.form.label',
     defaultMessage: 'Birth certificate collector',
     description: 'This is what this form is referred as in the system'
   },
-  review: {
-    title: {
-      id: 'v2.event.birth.action.certificate.form.review.title',
-      defaultMessage: 'Member certificate collector for {firstname} {surname}',
-      description: 'Title of the form to show in review page'
-    },
-    fields: []
-  },
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      id: 'v2.event.birth.action.certificate.form.version.1',
-      defaultMessage: 'Version 1',
-      description: 'This is the first version of the form'
-    }
-  },
   pages: [
     {
       id: 'collector',
+      type: PageTypes.enum.FORM,
       title: {
         id: 'v2.event.birth.action.certificate.form.section.who.title',
         defaultMessage: 'Certify record',
@@ -336,7 +320,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
     },
     {
       id: 'collector.identity.verify',
-      type: FormPageType.VERIFICATION,
+      type: PageTypes.enum.VERIFICATION,
       conditional: field('collector.requesterId').isEqualTo('INFORMANT'),
       title: {
         id: 'event.birth.action.print.verifyIdentity',
@@ -459,6 +443,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
     },
     {
       id: 'collector.collect.payment',
+      type: PageTypes.enum.FORM,
       title: {
         id: 'event.birth.action.print.collectPayment',
         defaultMessage: 'Collect Payment',

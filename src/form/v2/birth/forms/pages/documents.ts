@@ -18,6 +18,7 @@ import {
   ImageMimeType,
   not,
   or,
+  PageTypes,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
 import { requireMotherDetails } from './mother'
@@ -87,6 +88,7 @@ const otherOptions = createSelectOptions(Other, otherMessageDescriptors)
 
 export const documents = defineFormPage({
   id: 'documents',
+  type: PageTypes.enum.FORM,
   title: {
     defaultMessage: 'Upload supporting documents',
     description: 'Form section title for documents',

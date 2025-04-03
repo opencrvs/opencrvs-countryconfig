@@ -16,7 +16,8 @@ import {
   and,
   FieldType,
   AddressType,
-  or
+  or,
+  PageTypes
 } from '@opencrvs/toolkit/events'
 import { field, not } from '@opencrvs/toolkit/conditionals'
 
@@ -179,6 +180,7 @@ const attendantAtBirthOptions = createSelectOptions(
 
 export const child = defineFormPage({
   id: 'child',
+  type: PageTypes.enum.FORM,
   title: {
     defaultMessage: "Child's details",
     description: 'Form section title for Child',
