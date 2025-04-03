@@ -252,7 +252,18 @@ export const mother = defineFormPage({
           )
         }
       ],
-      validation: [nationalIdValidator(`${PersonType.mother}.nid`)]
+      validation: [
+        nationalIdValidator(`${PersonType.mother}.nid`),
+        {
+          message: {
+            defaultMessage:
+              'ID Number must be different from fathers`s ID Number',
+            description: 'This is the error message for non-unique ID Number',
+            id: `v2.event.birth.action.declare.form.mother.nid.unique`
+          },
+          validator: not(field('mother.nid').isEqualTo(field('father.nid')))
+        }
+      ]
     },
     {
       id: `${PersonType.mother}.passport`,
