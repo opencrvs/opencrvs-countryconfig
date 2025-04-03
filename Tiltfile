@@ -25,7 +25,8 @@ dependencies_namespace = 'opencrvs-deps-dev'
 
 # If your machine is powerful feel free to change parallel updates from default 3
 # update_settings(max_parallel_updates=3)
-allow_k8s_contexts('k8s')
+# Uncomment this line if you are using ubuntu k8s cluster on desktop
+# allow_k8s_contexts('k8s')
 
 ############################################################
 # Checkout infrastructure directory if not exists
