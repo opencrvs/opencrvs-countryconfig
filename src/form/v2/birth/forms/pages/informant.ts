@@ -18,11 +18,8 @@ import {
   TranslationConfig
 } from '@opencrvs/toolkit/events'
 import { field, not } from '@opencrvs/toolkit/conditionals'
-import {
-  createSelectOptions,
-  emptyMessage,
-  MAX_NAME_LENGTH
-} from '../../../utils'
+import { createSelectOptions, emptyMessage } from '../../../utils'
+import { MAX_NAME_LENGTH } from '@countryconfig/form/v2/birth/validators'
 import { IdType, idTypeOptions, PersonType } from '../../../person'
 
 export const InformantType = {
