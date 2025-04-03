@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Check Source Branch
         run: |
-          if [[ "${{ github.event.pull_request.head.ref }}" == "develop" ]]; then
+          if [[ "${{ github.event.pull_request.head.ref }}" == "develop-test" ]]; then
             echo "blocked=true" >> $GITHUB_ENV
           else
             echo "blocked=false" >> $GITHUB_ENV
