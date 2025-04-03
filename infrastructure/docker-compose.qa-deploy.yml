@@ -131,6 +131,8 @@ services:
       - NODE_ENV=production
 
   mosip-api:
+    environment:
+      - MOSIP_WEBSUB_CALLBACK_URL=http://mosip-api:2024/websub/callback
     volumes:
       - /certs:/certs:ro 
   
