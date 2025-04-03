@@ -8,7 +8,7 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { field } from '@opencrvs/toolkit/conditionals'
+import { defineConditional, field } from '@opencrvs/toolkit/conditionals'
 
 export const MAX_NAME_LENGTH = 32
 
@@ -22,12 +22,29 @@ export const invalidNameValidator = (fieldName: string) => ({
   validator: field(fieldName).isValidEnglishName()
 })
 
-export const invalidNationalIdValidator = (fieldName: string) => ({
+export const nationalIdValidator = (fieldId: string) => ({
   message: {
     defaultMessage:
       'The national ID can only be numeric and must be 9 digits long',
     description: 'This is the error message for an invalid national ID',
     id: 'v2.error.invalidNationalId'
   },
-  validator: field(fieldName).isValidNationalId()
+  validator: defineConditional({
+    type: 'object',
+    properties: {
+      $form: {
+        type: 'object',
+        properties: {
+          [fieldId]: {
+            type: 'string',
+            pattern: '^[0-9]{9}$',
+            description:
+              'The National ID can only be numeric and must be 9 digits long.'
+          }
+        },
+        required: [fieldId]
+      }
+    },
+    required: ['$form']
+  })
 })
