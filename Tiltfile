@@ -22,7 +22,15 @@ countryconfig_image_tag="local"
 opencrvs_namespace = 'opencrvs-dev'
 dependencies_namespace = 'opencrvs-deps-dev'
 
+
+# If your machine is powerful feel free to change parallel updates from default 3
+# update_settings(max_parallel_updates=3)
+allow_k8s_contexts('k8s')
+
 ############################################################
+# Checkout infrastructure directory if not exists
+if not os.path.exists('../infrastructure'):
+    local("git clone git@github.com:opencrvs/infrastructure.git ../infrastructure")
 # What common Tiltfile does?
 # - Group resources by label on UI: http://localhost:10350/
 include('../infrastructure/tilt/Tiltfile.common')
@@ -33,8 +41,6 @@ load('ext://secret', 'secret_create_generic', 'secret_from_dict', 'secret_create
 load('ext://namespace', 'namespace_create', 'namespace_inject')
 load('ext://helm_resource', 'helm_resource', 'helm_repo')
 
-# If your machine is powerful feel free to change parallel updates from default 3
-# update_settings(max_parallel_updates=3)
 
 # Build countryconfig image
 docker_build(countryconfig_image_name, ".",
@@ -48,10 +54,6 @@ docker_build(countryconfig_image_name, ".",
 namespace_create('traefik')
 namespace_create(dependencies_namespace)
 namespace_create(opencrvs_namespace)
-
-# Checkout infrastructure directory if not exists
-if not os.path.exists('../infrastructure'):
-    local("git clone git@github.com:opencrvs/infrastructure.git ../infrastructure")
 
 # Install Traefik GW
 helm_repo('traefik-repo', 'https://traefik.github.io/charts', labels=['Dependencies'])
