@@ -29,8 +29,7 @@ import {
   idTypeOptions,
   maritalStatusOptions,
   PersonType,
-  yesNoRadioOptions,
-  YesNoTypes
+  yesNoRadioOptions
 } from '../../../person'
 
 export const requireFatherDetails = or(

@@ -45,8 +45,8 @@ export function createBirthIssuingDetails(
     completionDays < config.config.BIRTH.REGISTRATION_TARGET
       ? config.config.BIRTH.FEE.ON_TIME
       : completionDays < config.config.BIRTH.LATE_REGISTRATION_TARGET
-      ? config.config.BIRTH.FEE.LATE
-      : config.config.BIRTH.FEE.DELAYED
+        ? config.config.BIRTH.FEE.LATE
+        : config.config.BIRTH.FEE.DELAYED
   log(
     'Collecting certification payment of',
     paymentAmount,

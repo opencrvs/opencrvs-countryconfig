@@ -187,35 +187,35 @@ export async function createDeathDeclaration(
             details.event?.placeOfDeath === 'Other'
               ? {}
               : details.event?.placeOfDeath ===
-                "Deceased's usual place of residence"
-              ? {
-                  type: 'DECEASED_USUAL_RESIDENCE',
-                  address: {
-                    type: 'PRIMARY_ADDRESS',
-                    line: formatAddressLine(declaration.deceased.address),
-                    country: declaration.deceased.address.country,
-                    state: getLocationIdByName(
-                      locations,
-                      declaration.deceased.address.province
-                    ),
-                    partOf: getLocationIdByName(
-                      locations,
-                      declaration.deceased.address.district
-                    ),
-                    district: getLocationIdByName(
-                      locations,
-                      declaration.deceased.address.district
-                    ),
-                    city: declaration.deceased.address.town,
-                    postalCode: declaration.deceased.address.postcodeOrZip
+                  "Deceased's usual place of residence"
+                ? {
+                    type: 'DECEASED_USUAL_RESIDENCE',
+                    address: {
+                      type: 'PRIMARY_ADDRESS',
+                      line: formatAddressLine(declaration.deceased.address),
+                      country: declaration.deceased.address.country,
+                      state: getLocationIdByName(
+                        locations,
+                        declaration.deceased.address.province
+                      ),
+                      partOf: getLocationIdByName(
+                        locations,
+                        declaration.deceased.address.district
+                      ),
+                      district: getLocationIdByName(
+                        locations,
+                        declaration.deceased.address.district
+                      ),
+                      city: declaration.deceased.address.town,
+                      postalCode: declaration.deceased.address.postcodeOrZip
+                    }
                   }
-                }
-              : {
-                  _fhirID: getLocationIdByName(
-                    facilities,
-                    details.event?.deathFacility || 'Kalela Health Post'
-                  )
-                },
+                : {
+                    _fhirID: getLocationIdByName(
+                      facilities,
+                      details.event?.deathFacility || 'Kalela Health Post'
+                    )
+                  },
           informant: { relationship: 'SPOUSE' },
           questionnaire: [
             {
@@ -299,12 +299,12 @@ export const fetchDeclaration = async (
 type ConvertEnumsToStrings<T> = T extends (infer U)[]
   ? ConvertEnumsToStrings<U>[]
   : T extends string
-  ? `${T}`
-  : T extends object
-  ? {
-      [K in keyof T]: ConvertEnumsToStrings<T[K]>
-    }
-  : T
+    ? `${T}`
+    : T extends object
+      ? {
+          [K in keyof T]: ConvertEnumsToStrings<T[K]>
+        }
+      : T
 
 const formatAddressLine = (address: typeof declaration.deceased.address) => [
   address.number,
