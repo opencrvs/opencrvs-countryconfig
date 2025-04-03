@@ -8,17 +8,24 @@ on:
 jobs:
   block_pr:
     runs-on: ubuntu-latest
+    name: Block Develop to Release PR
     steps:
       - name: Check Source Branch
-        if: github.event.pull_request.head.ref == 'develop-test'
         run: |
-          echo "❌ Pull requests from 'develop' to 'release-*' are blocked."
-          exit 1
+          if [[ "${{ github.event.pull_request.head.ref }}" == "develop" ]]; then
+            echo "blocked=true" >> $GITHUB_ENV
+          else
+            echo "blocked=false" >> $GITHUB_ENV
+          fi
 
       - name: Comment on PR
-        if: github.event.pull_request.head.ref == 'develop'
+        if: env.blocked == 'true'
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: "🚫 **Pull requests from 'develop' to 'release-*' are not allowed!**  
             Please create a feature or hotfix branch instead."
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fail the Job
+        if: env.blocked == 'true'
+        run: exit 1
