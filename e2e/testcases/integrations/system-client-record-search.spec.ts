@@ -7,14 +7,12 @@ import { BirthInputDetails } from '../birth/types'
 import {
   eventNotificationPayload,
   fetchEvents,
+  getLocationById,
+  getOffices,
   getTokenForSystemClient
 } from './utils'
-import {
-  getLocationById,
-  getOffices
-} from '@countryconfig/data-generator/location'
 
-test.describe.serial('1. Birth declaration case - 1', () => {
+test.describe.serial('1. Api clients test case 1', () => {
   let page: Page
 
   test.beforeAll(async ({ browser }) => {

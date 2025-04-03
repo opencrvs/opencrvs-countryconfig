@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import { AUTH_URL, GATEWAY_HOST } from '../../constants'
 import fetch from 'node-fetch'
 
@@ -50,6 +49,26 @@ export async function fetchEvents(trackingId: string, token: string) {
 
   const data = await response.json()
   return data as { data: { searchEvents: { totalItems: number } } }
+}
+
+export async function getLocationById(fhirId: string) {
+  const url = `${GATEWAY_HOST}/location/${fhirId}`
+
+  const res = await fetch(url, {
+    method: 'GET'
+  })
+
+  const response = await res.json()
+  return response
+}
+
+export async function getOffices() {
+  const resCRVSOffices = await fetch(
+    `${GATEWAY_HOST}/location?type=CRVS_OFFICE&_count=0&status=active`
+  )
+
+  const officeList = await resCRVSOffices.json()
+  return officeList?.entry
 }
 
 export const eventNotificationPayload = (
