@@ -137,7 +137,7 @@ export const mother = defineFormPage({
       validation: [
         {
           message: {
-            defaultMessage: 'Must be a valid Birthdate',
+            defaultMessage: 'Must be a valid birth date',
             description: 'This is the error message for invalid date',
             id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
           },
