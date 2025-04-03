@@ -1053,6 +1053,13 @@ services:
       - SIGN_P12_FILE_PASSWORD=${SIGN_P12_FILE_PASSWORD}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - SQLITE_DATABASE_PATH=/data/sqlite/mosip-api.db
+      - MOSIP_AUTH_CLIENT_ID=${MOSIP_AUTH_CLIENT_ID}
+      - MOSIP_AUTH_CLIENT_SECRET=${MOSIP_AUTH_CLIENT_SECRET}
+      - MOSIP_AUTH_URL=${MOSIP_AUTH_URL}
+      - MOSIP_WEBSUB_CALLBACK_URL=https://mosip-api.{{hostname}}/websub/callback
+      - MOSIP_WEBSUB_HUB_URL=${MOSIP_WEBSUB_HUB_URL}
+      - MOSIP_WEBSUB_SECRET=${MOSIP_WEBSUB_SECRET}
+      - MOSIP_WEBSUB_TOPIC=${MOSIP_WEBSUB_TOPIC}
     deploy:
       replicas: 1
       labels:
