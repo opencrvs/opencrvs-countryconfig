@@ -18,7 +18,10 @@ import {
 } from '@opencrvs/toolkit/events'
 import { not, event } from '@opencrvs/toolkit/conditionals'
 
-import { BIRTH_DECLARE_FORM } from './forms/declare'
+import {
+  BIRTH_DECLARATION_FORM,
+  BIRTH_DECLARATION_REVIEW
+} from './forms/declaration'
 import { advancedSearchBirth } from './advancedSearch'
 import { Event } from '@countryconfig/form/types/types'
 import { SCOPES } from '@opencrvs/toolkit/scopes'
@@ -26,6 +29,7 @@ import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/print-certificate'
 
 export const birthEvent = defineConfig({
   id: Event.V2_BIRTH,
+  declaration: BIRTH_DECLARATION_FORM,
   label: {
     defaultMessage: 'Birth',
     description: 'This is what this event is referred as in the system',
@@ -113,7 +117,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.declare.label'
       },
-      forms: [BIRTH_DECLARE_FORM],
+      review: BIRTH_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -125,14 +129,14 @@ export const birthEvent = defineConfig({
       ]
     },
     {
-      type: 'VALIDATE',
+      type: ActionType.VALIDATE,
       label: {
         defaultMessage: 'Validate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.validate.label'
       },
-      forms: [BIRTH_DECLARE_FORM],
+      review: BIRTH_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -145,14 +149,14 @@ export const birthEvent = defineConfig({
       ]
     },
     {
-      type: 'REGISTER',
+      type: ActionType.REGISTER,
       label: {
         defaultMessage: 'Register',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.register.label'
       },
-      forms: [BIRTH_DECLARE_FORM],
+      review: BIRTH_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -184,7 +188,7 @@ export const birthEvent = defineConfig({
           )
         }
       ],
-      forms: [BIRTH_CERTIFICATE_COLLECTOR_FORM]
+      printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     }
   ],
   advancedSearch: advancedSearchBirth
