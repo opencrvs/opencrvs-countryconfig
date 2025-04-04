@@ -1,13 +1,13 @@
-import uuid from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import { GATEWAY_HOST } from '../../../../constants'
 import { faker } from '@faker-js/faker'
 import fs from 'fs'
 import path from 'path'
 import { getAllLocations, getLocationIdByName } from '../../../birth/helpers'
 import { createClient } from '@opencrvs/toolkit/api'
-import { AddressType } from '@opencrvs/toolkit/events'
+import { ActionDocument, AddressType } from '@opencrvs/toolkit/events'
 
-async function getDeclarationData() {
+async function getDeclaration() {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
   const province = getLocationIdByName(locations, 'Central')
   const district = getLocationIdByName(locations, 'Ibombo')
@@ -62,23 +62,23 @@ async function getDeclarationData() {
   }
 }
 
-type DeclarationData = Awaited<ReturnType<typeof getDeclarationData>>
+type Declaration = Awaited<ReturnType<typeof getDeclaration>>
 
 export interface CreateDeclarationResponse {
   eventId: string
-  data: DeclarationData
+  declaration: Declaration
 }
 
 export async function createDeclaration(
   token: string
 ): Promise<CreateDeclarationResponse> {
-  const declarationData = await getDeclarationData()
+  const declaration = await getDeclaration()
 
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
 
   const createResponse = await client.event.create.mutate({
     type: 'v2.birth',
-    transactionId: uuid.v4()
+    transactionId: uuidv4()
   })
   const eventId = createResponse.id as string
 
@@ -87,38 +87,38 @@ export async function createDeclaration(
     'base64'
   )
 
-  const metadata = {
+  const annotation = {
     'review.comment': 'My comment',
     'review.signature': `data:image/png;base64,${signatureBase64}`
   }
 
-  await client.event.actions.declare.mutate({
+  await client.event.actions.declare.request.mutate({
     eventId: eventId,
-    transactionId: uuid.v4(),
-    data: declarationData,
-    metadata
+    transactionId: uuidv4(),
+    declaration,
+    annotation
   })
 
-  await client.event.actions.validate.mutate({
+  await client.event.actions.validate.request.mutate({
     eventId: eventId,
-    transactionId: uuid.v4(),
-    data: declarationData,
-    metadata,
+    transactionId: uuidv4(),
+    declaration,
+    annotation,
     duplicates: []
   })
 
-  const response = await client.event.actions.register.mutate({
+  const response = await client.event.actions.register.request.mutate({
     eventId: eventId,
-    transactionId: uuid.v4(),
-    data: declarationData,
-    metadata
+    transactionId: uuidv4(),
+    declaration,
+    annotation
   })
 
   const declareAction = response.actions.find(
-    (action) => action.type === 'DECLARE'
+    (action: ActionDocument) => action.type === 'DECLARE'
   )
 
-  const data = declareAction?.data as DeclarationData
+  const data = declareAction?.declaration as Declaration
 
-  return { eventId, data }
+  return { eventId, declaration: data }
 }

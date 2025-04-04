@@ -14,7 +14,8 @@ import {
   and,
   ConditionalType,
   defineFormPage,
-  FieldType
+  FieldType,
+  PageTypes
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
 import {
@@ -36,6 +37,7 @@ export const requireMotherDetails = or(
 
 export const mother = defineFormPage({
   id: 'mother',
+  type: PageTypes.enum.FORM,
   title: {
     defaultMessage: "Mother's details",
     description: 'Form section title for mothers details',

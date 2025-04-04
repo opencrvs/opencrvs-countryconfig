@@ -25,7 +25,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   })
 
   test('3.1 should navigate to Verify their identity page', async () => {
-    const childName = `${declaration.data['child.firstname']} ${declaration.data['child.surname']}`
+    const childName = `${declaration.declaration['child.firstname']} ${declaration.declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
     await page.getByRole('button', { name: 'Action' }).click()
     await page.getByRole('listitem').click()
@@ -68,13 +68,13 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await expect(page.getByText('Verify their identity')).toBeVisible()
 
     await expect(page.locator('#maincontent')).toContainText(
-      declaration.data['mother.nid']
+      declaration.declaration['mother.nid']
     )
     await expect(page.locator('#maincontent')).toContainText(
-      declaration.data['mother.firstname']
+      declaration.declaration['mother.firstname']
     )
     await expect(page.locator('#maincontent')).toContainText(
-      declaration.data['mother.surname']
+      declaration.declaration['mother.surname']
     )
 
     await expect(
