@@ -141,7 +141,16 @@ export const mother = defineFormPage({
             description: 'This is the error message for invalid date',
             id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
           },
-          validator: field(`${PersonType.mother}.dob`).isBefore().now()
+          validator: field('mother.dob').isBefore().now()
+        },
+        {
+          message: {
+            defaultMessage: "Birth date must be before child's birth date",
+            description:
+              'This is the error message for a birth date after child`s birth date',
+            id: `v2.event.birth.action.declare.form.section.person.dob.afterChild`
+          },
+          validator: field('mother.dob').isBefore().date(field('child.dob'))
         }
       ],
       label: {
