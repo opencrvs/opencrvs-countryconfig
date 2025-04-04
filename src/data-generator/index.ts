@@ -173,8 +173,8 @@ async function main() {
 
   log('Got token for system administrator')
   log('Fetching locations')
-  const locations = await getLocations(localSYSAdminToken)
-  const facilities = await getFacilities(localSYSAdminToken)
+  const locations = await getLocations()
+  const facilities = await getFacilities()
   const crvsOffices = facilities.filter(
     ({ type }: Location) => type === 'CRVS_OFFICE'
   )

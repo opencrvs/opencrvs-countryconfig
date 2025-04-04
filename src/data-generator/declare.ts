@@ -68,7 +68,7 @@ function getIDFromResponse(resBody: fhir.Bundle): string {
 }
 
 export async function sendBirthNotification(
-  { username, token }: User,
+  { username, token }: Partial<User>,
   sex: 'male' | 'female',
   birthDate: Date,
   createdAt: Date,
