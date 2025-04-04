@@ -17,11 +17,12 @@ import {
   FieldType
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
+import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
-  emptyMessage,
   invalidNameValidator,
-  MAX_NAME_LENGTH
-} from '../../../utils'
+  MAX_NAME_LENGTH,
+  nationalIdValidator
+} from '@countryconfig/form/v2/birth/validators'
 import { InformantType } from './informant'
 import {
   educationalAttainmentOptions,
@@ -142,6 +143,15 @@ export const father = defineFormPage({
             id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
           },
           validator: field(`${PersonType.father}.dob`).isBefore().now()
+        },
+        {
+          message: {
+            defaultMessage: "Birth date must be before child's birth date",
+            description:
+              'This is the error message for a birth date after child`s birth date',
+            id: `v2.event.birth.action.declare.form.section.person.dob.afterChild`
+          },
+          validator: field('mother.dob').isBefore().date(field('child.dob'))
         }
       ],
       label: {
@@ -250,6 +260,18 @@ export const father = defineFormPage({
             field(`${PersonType.father}.idType`).isEqualTo(IdType.NATIONAL_ID),
             requireFatherDetails
           )
+        }
+      ],
+      validation: [
+        nationalIdValidator('father.nid'),
+        {
+          message: {
+            defaultMessage:
+              'ID Number must be different from mother`s ID Number',
+            description: 'This is the error message for non-unique ID Number',
+            id: `v2.event.birth.action.declare.form.father.nid.unique`
+          },
+          validator: not(field('father.nid').isEqualTo(field('mother.nid')))
         }
       ]
     },
