@@ -419,7 +419,7 @@ export async function createUsers(
   // These cannot be fetched through gateway, so we'll always have to regenerate them
   const hospitals: User[] = []
 
-  const facilities = await getFacilities(token)
+  const facilities = await getFacilities()
 
   const crvsOffices = facilities
     .filter(({ type }: Facility) => type === 'CRVS_OFFICE')

@@ -173,8 +173,8 @@ async function main() {
 
   log('Got token for system administrator')
   log('Fetching locations')
-  const locations = await getLocations(localSYSAdminToken)
-  const facilities = await getFacilities(localSYSAdminToken)
+  const locations = await getLocations()
+  const facilities = await getFacilities()
   const crvsOffices = facilities.filter(
     ({ type }: Location) => type === 'CRVS_OFFICE'
   )
@@ -452,14 +452,17 @@ async function main() {
         delta,
         distribution: Array.from({ length: delta })
           .map(() => getRandomFromBrackets(BIRTH_COMPLETION_DISTRIBUTION))
-          .reduce((acc, cur) => {
-            BIRTH_COMPLETION_DISTRIBUTION.forEach((d) => {
-              if (cur >= d.range[0] && cur <= d.range[1]) {
-                acc[d.range[0]] = acc[d.range[0]] ? acc[d.range[0]] + 1 : 1
-              }
-            })
-            return acc
-          }, {} as Record<number, number>)
+          .reduce(
+            (acc, cur) => {
+              BIRTH_COMPLETION_DISTRIBUTION.forEach((d) => {
+                if (cur >= d.range[0] && cur <= d.range[1]) {
+                  acc[d.range[0]] = acc[d.range[0]] ? acc[d.range[0]] + 1 : 1
+                }
+              })
+              return acc
+            },
+            {} as Record<number, number>
+          )
       })
 
       for (let ix = 0; ix < delta; ix++) {
@@ -510,14 +513,17 @@ async function main() {
         deathDelta,
         distribution: Array.from({ length: deathDelta })
           .map(() => getRandomFromBrackets(DEATH_COMPLETION_DISTRIBUTION))
-          .reduce((acc, cur) => {
-            DEATH_COMPLETION_DISTRIBUTION.forEach((d) => {
-              if (cur >= d.range[0] && cur <= d.range[1]) {
-                acc[d.range[0]] = acc[d.range[0]] ? acc[d.range[0]] + 1 : 1
-              }
-            })
-            return acc
-          }, {} as Record<number, number>)
+          .reduce(
+            (acc, cur) => {
+              DEATH_COMPLETION_DISTRIBUTION.forEach((d) => {
+                if (cur >= d.range[0] && cur <= d.range[1]) {
+                  acc[d.range[0]] = acc[d.range[0]] ? acc[d.range[0]] + 1 : 1
+                }
+              })
+              return acc
+            },
+            {} as Record<number, number>
+          )
       })
 
       for (let ix = 0; ix < deathDelta; ix++) {
