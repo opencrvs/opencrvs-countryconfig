@@ -1302,7 +1302,7 @@ window.translateTime = translateTime
 function handleTranslateDateToMDGFormat(eventDate) {
   var dateWithoutOrdinal = removeOrdinalIndicator(eventDate)
   var date = new Date(dateWithoutOrdinal)
-  var formattedDate = date.toLocaleString().split(', ')[0]
+  var formattedDate = date.toLocaleString('fr-FR').split(', ')[0]
   return convertLocaleDateToMdgCustomWords(formattedDate)
 }
 function getBirthRegistrationDate(data) {
