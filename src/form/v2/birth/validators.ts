@@ -25,7 +25,7 @@ export const invalidNameValidator = (fieldName: string) => ({
 export const nationalIdValidator = (fieldId: string) => ({
   message: {
     defaultMessage:
-      'The national ID can only be numeric and must be 9 digits long',
+      'The national ID can only be numeric and must be 10 digits long',
     description: 'This is the error message for an invalid national ID',
     id: 'v2.error.invalidNationalId'
   },
@@ -34,9 +34,8 @@ export const nationalIdValidator = (fieldId: string) => ({
     properties: {
       [fieldId]: {
         type: 'string',
-        pattern: '^[0-9]{9}$',
-        description:
-          'The National ID can only be numeric and must be 9 digits long.'
+        pattern: '^[0-9]{10}$',
+        description: 'Must be numeric and 10 digits long.'
       }
     }
   })
