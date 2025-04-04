@@ -21,7 +21,7 @@ export type Facility = {
   partOf: string
 }
 
-export async function getLocations(token: string) {
+export async function getLocations() {
   const url = `${GATEWAY_HOST}/location?type=ADMIN_STRUCTURE&_count=0`
 
   const res = await fetch(url, {
@@ -54,7 +54,7 @@ export async function getLocations(token: string) {
   )
 }
 
-export async function getFacilities(token: string) {
+export async function getFacilities() {
   const resCRVSOffices = await fetch(
     `${GATEWAY_HOST}/location?type=CRVS_OFFICE&_count=0`
   )

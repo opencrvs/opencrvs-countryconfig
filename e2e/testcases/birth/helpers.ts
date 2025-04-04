@@ -373,9 +373,9 @@ export const registerDeclaration = async (
 export type ConvertEnumsToStrings<T> = T extends (infer U)[]
   ? ConvertEnumsToStrings<U>[]
   : T extends string
-  ? `${T}`
-  : T extends object
-  ? {
-      [K in keyof T]: ConvertEnumsToStrings<T[K]>
-    }
-  : T
+    ? `${T}`
+    : T extends object
+      ? {
+          [K in keyof T]: ConvertEnumsToStrings<T[K]>
+        }
+      : T
