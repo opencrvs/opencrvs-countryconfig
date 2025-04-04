@@ -777,7 +777,7 @@ export function translateTime(): Handlebars.HelperDelegate {
 function handleTranslateDateToMDGFormat(eventDate: string) {
   const dateWithoutOrdinal = removeOrdinalIndicator(eventDate)
   const date = new Date(dateWithoutOrdinal)
-  const formattedDate = date.toLocaleString().split(', ')[0]
+  const formattedDate = date.toLocaleString('fr-FR').split(', ')[0]
 
   return convertLocaleDateToMdgCustomWords(formattedDate)
 }
