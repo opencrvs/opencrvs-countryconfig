@@ -2545,7 +2545,7 @@ v2.event.birth.action.declare.form.review.title,Title of the form to show in rev
 v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur(se)
 v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Location of birth,Lieu de naissance
 v2.event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
-v2.event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
+v2.event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Must be a valid birth date,Doit être une date de naissance valide
 v2.event.birth.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 v2.event.birth.action.declare.form.section.child.field.firstname.label,This is the label for the field,First name(s),Prénom(s) dans un jeu de caractères par défaut autre que l'anglais
 v2.event.birth.action.declare.form.section.child.field.gender.label,This is the label for the field,Sex,Sexe
@@ -2578,7 +2578,7 @@ v2.event.birth.action.declare.form.section.person.field.age.checkbox.label,This 
 v2.event.birth.action.declare.form.section.person.field.age.postfix,This is the postfix for age field,years,years
 v2.event.birth.action.declare.form.section.person.field.age.text.label,This is the label for the field,Age of person,Age of person
 v2.event.birth.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,Numéro d'identification
-v2.event.birth.action.declare.form.section.person.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
+v2.event.birth.action.declare.form.section.person.field.dob.error,This is the error message for invalid date,Must be a valid birth date,Doit être une date de naissance valide
 v2.event.birth.action.declare.form.section.person.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 v2.event.birth.action.declare.form.section.person.field.educationalAttainment.label,This is the label for the field,Level of education,Niveau d'éducation
 v2.event.birth.action.declare.form.section.person.field.firstname.label,This is the label for the field,First name(s),Prénom(s) dans un jeu de caractères par défaut autre que l'anglais
@@ -2633,7 +2633,7 @@ v2.event.tennis-club-membership.action.declare.form.section.recommender.field.no
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Recommender's surname
 v2.event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Who is recommending the applicant?
 v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label,This is the label for the field,Applicant's address,Adresse du demandeur
-v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
+v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error,This is the error message for invalid date,Must be a valid birth date,Doit être une date de naissance valide
 v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth,Applicant's date of birth
 v2.event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name,Applicant's first name
 v2.event.tennis-club-membership.action.declare.form.section.who.field.image.label,This is the label for the field,Applicant's profile picture,Applicant's profile picture

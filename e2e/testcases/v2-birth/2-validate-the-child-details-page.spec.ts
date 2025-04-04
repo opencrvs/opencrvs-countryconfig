@@ -179,10 +179,10 @@ test.describe.serial("2. Validate the child's details page", () => {
 
       /*
        * Expected result: should not accept the invalid date and show error:
-       * - Please enter a valid date
+       * - Must be a valid birth date
        */
       await expect(page.locator('#child____dob_error')).toHaveText(
-        'Please enter a valid date'
+        'Must be a valid birth date'
       )
     })
 
@@ -199,11 +199,11 @@ test.describe.serial("2. Validate the child's details page", () => {
 
       /*
        * Expected result: should not accept the future date and show error:
-       * - Please enter a valid date
+       * - Must be a valid birth date
 
        */
       await expect(page.locator('#child____dob_error')).toHaveText(
-        'Please enter a valid date'
+        'Must be a valid birth date'
       )
     })
 
