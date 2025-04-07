@@ -241,5 +241,19 @@ export const roles: Role[] = [
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE
     ]
+  },
+  {
+    id: 'HOSPITAL_CLERK',
+    label: {
+      defaultMessage: 'Hospital Clerk',
+      description: 'Name for user role Hospital Clerk',
+      id: 'userRole.hospitalClerk'
+    },
+    scopes: [
+      SCOPES.RECORD_DECLARE_BIRTH,
+      SCOPES.RECORD_DECLARE_DEATH,
+      SCOPES.RECORD_SUBMIT_INCOMPLETE,
+      SCOPES.RECORD_SUBMIT_FOR_REVIEW
+    ]
   }
 ]
