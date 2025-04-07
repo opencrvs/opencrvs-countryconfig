@@ -2280,10 +2280,10 @@ userRole.hospitalClerk, Name for user role Hospital Clerk, Hospital Clerk,Clerk 
 userRole.localLeader,Name for user role Local Leader,Local Leader,Leader local
 userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Registraire local
 userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local
-userRole.nationalRegistrar,Name for user role National Registrar,National Registrar,Registraire national
 userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national
 userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
+userRole.registrarGeneral, Name for user role Registrar General,Registrar General,Registraire général
 userRole.registrationOfficer,Name for user role Registration Officer,Registration Officer,Agent d'enregistrement
 userRole.socialWorker,Name for user role Social Worker,Social Worker,Travailleur social
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
