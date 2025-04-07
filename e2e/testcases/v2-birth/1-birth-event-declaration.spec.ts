@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { loginToV2 } from '../../helpers'
+import path from 'path'
 
 test.describe.serial('1. Birth event declaration', () => {
   test.describe.serial('Fill all form sections. Save & Exit', () => {
@@ -360,7 +361,24 @@ test.describe.serial('1. Birth event declaration', () => {
         ).toBeVisible()
       })
 
-      test.skip('1.8.2 Validate Supporting Document block', async () => {})
+      test('1.8.2 Validate Supporting Document block', async () => {
+        await page
+          .locator('#documents____proofOfMother-form-input div')
+          .filter({ hasText: /^Select\.\.\.$/ })
+          .nth(2)
+          .click()
+        await page.getByText('Birth Certificate', { exact: true }).click()
+        await page.locator('button[name="documents____proofOfMother"]').click()
+
+        await page
+          .getByTestId('documents____proofOfMother')
+          .setInputFiles(path.join(__dirname, 'test_img.png'))
+
+        await expect(
+          page.locator('#document_BIRTH_CERTIFICATE_link')
+        ).toContainText('Birth Certificate')
+        await expect(page.getByLabel('Delete attachment')).toBeVisible()
+      })
 
       test('1.8.3 click continue', async () => {
         await page.getByRole('button', { name: 'Continue' }).click()
@@ -376,7 +394,6 @@ test.describe.serial('1. Birth event declaration', () => {
       })
     })
 
-    // @TODO: The Save & exit modal is not implemented in V2 events yet
     test.describe('1.9 Validate "Save & Exit" Button  ', async () => {
       test('1.9.1 Click the "Save & Exit" button from any page', async () => {
         await page.getByRole('button', { name: 'Save & Exit' }).click()
