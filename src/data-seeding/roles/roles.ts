@@ -255,5 +255,24 @@ export const roles: Role[] = [
       SCOPES.RECORD_SUBMIT_INCOMPLETE,
       SCOPES.RECORD_SUBMIT_FOR_REVIEW
     ]
+  },
+  {
+    id: 'COMMUNITY_LEADER',
+    label: {
+      defaultMessage: 'Community Leader',
+      description: 'Name for user role Community Leader',
+      id: 'userRole.communityLeader'
+    },
+    scopes: [
+      SCOPES.RECORD_DECLARE_BIRTH,
+      SCOPES.RECORD_DECLARE_DEATH,
+      SCOPES.RECORD_DECLARE_MARRIAGE,
+      SCOPES.RECORD_SUBMIT_INCOMPLETE,
+      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
+      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
+      SCOPES.SEARCH_BIRTH,
+      SCOPES.SEARCH_DEATH,
+      SCOPES.SEARCH_MARRIAGE
+    ]
   }
 ]

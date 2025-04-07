@@ -2273,6 +2273,7 @@ user.profile.roleType,Title for roleType field,Role,Rôle/Type
 user.profile.sectionTitle.audit,Title for audit section,History,Historique
 user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
+userRole.communityLeader, Name for user role Community Leader,Community Leader,Leader communautaire
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
 userRole.hospitalClerk, Name for user role Hospital Clerk, Hospital Clerk,Clerk d'hôpital
