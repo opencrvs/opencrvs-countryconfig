@@ -2560,17 +2560,21 @@ v2.event.birth.action.declare.form.section.documents.field.proofOfFather.label,T
 v2.event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's ID,Identité de la mère
 v2.event.birth.action.declare.form.section.documents.field.proofOther.label,This is the label for the field,Other,Autre
 v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label,This is the label for the field,Same as mother's usual place of residence?,Identique au lieu de résidence habituel de la mère?
+v2.event.birth.action.declare.form.section.father.field.age.label,This is the label for the field,Age of father,Âge du père
 v2.event.birth.action.declare.form.section.father.field.detailsNotAvailable.label,This is the label for the field,Father's details are not available,Pas d'information sur le père
 v2.event.birth.action.declare.form.section.father.field.reason.label,This is the label for the field,Reason,Raison
+v2.event.birth.action.declare.form.section.informant.field.age.label,This is the label for the field,Age of informant,Âge de l'informateur
 v2.event.birth.action.declare.form.section.informant.field.email.label,This is the label for the field,Email,E-mail
 v2.event.birth.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to child,Relation avec l'enfant
 v2.event.birth.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de  {num} chiffres qui commence par  {start}
 v2.event.birth.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
 v2.event.birth.action.declare.form.section.informant.field.relation.label,This is the label for the field,Relationship to child,Relation avec l'enfant
+v2.event.birth.action.declare.form.section.mother.field.age.label,This is the label for the field,Age of mother,Âge de la mère
 v2.event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label,This is the label for the field,Mother's details are not available,Pas d'information sur la mère
 v2.event.birth.action.declare.form.section.mother.field.previousBirths.label,This is the label for the field,No. of previous births,Nombre de naissances antérieures
 v2.event.birth.action.declare.form.section.mother.field.reason.label,This is the label for the field,Reason,Raison
 v2.event.birth.action.declare.form.section.person.field.address.district.label,This is the label for the field,District,District
+v2.event.birth.action.declare.form.section.person.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 v2.event.birth.action.declare.form.section.person.field.address.province.label,This is the label for the field,Province,Province
 v2.event.birth.action.declare.form.section.person.field.address.urbanOrRural.label,This is the label for the field,Urban or Rural,Urban or Rural
 v2.event.birth.action.declare.form.section.person.field.address.village.label,This is the label for the field,Village,Village
