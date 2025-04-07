@@ -160,17 +160,15 @@ export const roles: Role[] = [
   {
     id: 'LOCAL_SYSTEM_ADMIN',
     label: {
-      defaultMessage: 'Local System Admin',
-      description: 'Name for user role Local System Admin',
-      id: 'userRole.localSystemAdmin'
+      defaultMessage: 'Administrator',
+      description: 'Name for user role Administrator',
+      id: 'userRole.administrator'
     },
     scopes: [
-      SCOPES.USER_READ_MY_OFFICE,
-      SCOPES.USER_CREATE_MY_JURISDICTION,
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS
+      SCOPES.USER_CREATE_MY_JURISDICTION,
+      SCOPES.USER_UPDATE_MY_JURISDICTION,
+      SCOPES.USER_READ_MY_JURISDICTION
     ]
   },
   {
