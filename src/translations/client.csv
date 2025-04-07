@@ -2280,7 +2280,7 @@ userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker
 userRole.hospitalClerk, Name for user role Hospital Clerk, Hospital Clerk,Clerk d'hôpital
 userRole.localLeader,Name for user role Local Leader,Local Leader,Leader local
 userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Registraire local
-userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national
+userRole.nationalAdministrator,Name for user role National Administrator,National Administrator,Administrateur national
 userRole.operationsManager,Name for user role Operations Manager,Operations Manager,Responsable des opérations
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
 userRole.registrarGeneral, Name for user role Registrar General,Registrar General,Registraire général

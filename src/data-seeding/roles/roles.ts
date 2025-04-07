@@ -174,19 +174,16 @@ export const roles: Role[] = [
   {
     id: 'NATIONAL_SYSTEM_ADMIN',
     label: {
-      defaultMessage: 'National System Admin',
-      description: 'Name for user role National System Admin',
-      id: 'userRole.nationalSystemAdmin'
+      defaultMessage: 'National Administrator',
+      description: 'Name for user role National Administrator',
+      id: 'userRole.nationalAdministrator'
     },
     scopes: [
-      SCOPES.USER_CREATE,
-      SCOPES.USER_READ,
-      SCOPES.USER_UPDATE,
+      SCOPES.CONFIG_UPDATE_ALL,
       SCOPES.ORGANISATION_READ_LOCATIONS,
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
-      SCOPES.CONFIG_UPDATE_ALL
+      SCOPES.USER_CREATE,
+      SCOPES.USER_UPDATE,
+      SCOPES.USER_READ
     ]
   },
   {
