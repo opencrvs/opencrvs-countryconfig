@@ -30,7 +30,8 @@ import {
   idTypeOptions,
   maritalStatusOptions,
   PersonType,
-  yesNoRadioOptions
+  yesNoRadioOptions,
+  YesNoTypes
 } from '../../../person'
 
 export const requireFatherDetails = or(
@@ -352,6 +353,7 @@ export const father = defineFormPage({
         description: 'This is the label for the field',
         id: `v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label`
       },
+      defaultValue: YesNoTypes.YES,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -378,10 +380,9 @@ export const father = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             // Checking explicitly for not true, since detailsNotAvailable might be hidden and thus undefined
-            not(
-              field(`${PersonType.father}.detailsNotAvailable`).isEqualTo(true)
-            ),
-            requireFatherDetails
+            not(field('father.detailsNotAvailable').isEqualTo(true)),
+            requireFatherDetails,
+            field('father.addressSameAs').isEqualTo(YesNoTypes.NO)
           )
         }
       ],
