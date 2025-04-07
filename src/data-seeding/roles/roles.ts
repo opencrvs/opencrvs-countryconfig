@@ -194,14 +194,15 @@ export const roles: Role[] = [
   {
     id: 'PERFORMANCE_MANAGER',
     label: {
-      defaultMessage: 'Performance Manager',
-      description: 'Name for user role Performance Manager',
-      id: 'userRole.performanceManager'
+      defaultMessage: 'Operations Manager',
+      description: 'Name for user role Operations Manager',
+      id: 'userRole.operationsManager'
     },
     scopes: [
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS
+      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
+      SCOPES.ORGANISATION_READ_LOCATIONS
     ]
   },
   {

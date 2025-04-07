@@ -2281,7 +2281,7 @@ userRole.localLeader,Name for user role Local Leader,Local Leader,Leader local
 userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Registraire local
 userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local
 userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national
-userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances
+userRole.operationsManager,Name for user role Operations Manager,Operations Manager,Responsable des opérations
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
 userRole.registrarGeneral, Name for user role Registrar General,Registrar General,Registraire général
 userRole.registrationOfficer,Name for user role Registration Officer,Registration Officer,Agent d'enregistrement
