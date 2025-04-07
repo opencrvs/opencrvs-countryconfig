@@ -1,5 +1,6 @@
 # Changelog
 
+
 ## 1.7.1 Release candidate
 
 ### Bugfixes
@@ -42,19 +43,6 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
 - Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. Default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
 - **Roles** The previous `roles.csv` file has been deprecated. It will get removed once you run the upgrade command before pulling in the v1.7 changes. The command automatically generates a `roles.ts` file which can be used as a baseline to configure the roles as per your requirements.
-## 1.6.3
-
-### Breaking changes
-
-- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
-
-
-## 1.6.2
-
-### Breaking changes
-
-- `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
-- Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
 
 ### New features
 
@@ -82,20 +70,15 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 
 ### Infrastructure breaking changes
 
-<<<<<<< HEAD
 > [!CAUTION]
 > All Metabase configuration that is not persisted into `metabase.init.db.sql` will be cleared as part of upgrading to OpenCRVS 1.7.0 and on all proceeding deployments!
 
 - Metabase data is no longer backed up by the default OpenCRVS country configuration. This was done to ensure Metabase can properly be started up as part of OpenCRVS deployment, even when there has been a Metabase version upgrade. To learn more about how Metabase should be configured in a persistent manner, please refer our documentation on [4.2.5.2 Configuring Metabase Dashboards](https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration/3.2.5-set-up-application-settings/4.2.5.2-configuring-metabase-dashboards) [#8043](https://github.com/opencrvs/opencrvs-core/issues/8043)
 
-=======
-- **Title** Description
->>>>>>> 47d60e03 (Merge changes from ocrvs-6830-human-name-constant)
 
 ### New content keys requiring translation
 
 ```
-<<<<<<< HEAD
 action.action,Label for action button,Action
 action.archive,Label for archive record button in dropdown menu,Archive declaration
 action.assignee,Label for asignee,Assigned to {name } at {officeName}
@@ -184,13 +167,16 @@ validations.isAgeInYearsBetween,The error message that appears when age for the 
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
 
-## 1.6.1 Release candidate
-=======
-INSERT CSV ROWS IN ENGLISH ONLY
-```
+## 1.6.3
 
-## 1.6.1 (TBD)
->>>>>>> 47d60e03 (Merge changes from ocrvs-6830-human-name-constant)
+### Breaking changes
+
+- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
+## 1.6.2
+
+
+## 1.6.1
 
 ### Bug fixes
 
