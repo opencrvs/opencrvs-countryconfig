@@ -89,6 +89,7 @@ import {
 } from './utils/fhir'
 import differenceInYears from 'date-fns/differenceInYears'
 import { wrapValueIntoIdentityInfo } from './utils/mosip'
+import { getTaskResource, getTrackingIdFromTaskResource } from './utils'
 
 export interface ITokenPayload {
   sub: string
@@ -489,6 +490,10 @@ export async function createServer() {
             compositionId: (bundle) => {
               const composition = getComposition(bundle)
               return composition.id
+            },
+            trackingId: (bundle) => {
+              const task = getTaskResource(bundle)
+              return (task && getTrackingIdFromTaskResource(task)) || ''
             },
             fullName: (bundle) =>
               wrapValueIntoIdentityInfo(getChildFullName(bundle), 'eng'),
