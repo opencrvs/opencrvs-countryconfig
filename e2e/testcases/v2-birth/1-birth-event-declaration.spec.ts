@@ -1,6 +1,11 @@
 import { expect, test, type Page } from '@playwright/test'
 import { loginToV2 } from '../../helpers'
 import path from 'path'
+import { faker } from '@faker-js/faker'
+
+const child = {
+  firstNames: faker.person.firstName('female')
+}
 
 test.describe.serial('1. Birth event declaration', () => {
   test.describe.serial('Fill all form sections. Save & Exit', () => {
@@ -165,7 +170,9 @@ test.describe.serial('1. Birth event declaration', () => {
         ).toBeVisible()
       })
 
-      test.skip('1.4.2 Validate Child details block', async () => {})
+      test('1.4.2 Validate Child details block', async () => {
+        await page.locator('#child____firstname').fill(child.firstNames)
+      })
 
       test('1.4.3 Click "continue"', async () => {
         await page.getByRole('button', { name: 'Continue' }).click()
@@ -444,6 +451,29 @@ test.describe.serial('1. Birth event declaration', () => {
          */
         await expect(page.locator('#content-name')).toHaveText('All events')
         await expect(page.getByText('seconds ago').first()).toBeVisible()
+      })
+
+      test('1.9.4 Reopen draft and navigate to review page', async () => {
+        await page
+          .getByRole('button', {
+            name: child.firstNames
+          })
+          .click()
+
+        await page.getByRole('button', { name: 'Action' }).click()
+        await page.getByText('Declare').click()
+        await page.getByRole('button', { name: 'Continue' }).click()
+        await page.getByRole('button', { name: 'Continue' }).click()
+        await page.getByRole('button', { name: 'Continue' }).click()
+        await page.getByRole('button', { name: 'Continue' }).click()
+        await page.getByRole('button', { name: 'Continue' }).click()
+        await page.getByRole('button', { name: 'Continue' }).click()
+        await expect(page.locator('#select_document')).toContainText(
+          "Proof of mother's ID (Birth Certificate)"
+        )
+        await expect(
+          page.getByRole('img', { name: 'Supporting Document' })
+        ).toBeVisible()
       })
     })
   })
