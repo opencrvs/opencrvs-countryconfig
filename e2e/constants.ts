@@ -1,29 +1,29 @@
 export const DOMAIN = process.env.DOMAIN || 'farajaland-dev.opencrvs.dev'
-
+export const SCHEME = process.env.SCHEME || 'https'
 export const LOGIN_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3020'
-    : 'https://login.' + DOMAIN
+    : SCHEME + '://login.' + DOMAIN
 
 export const AUTH_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:4040'
-    : 'https://auth.' + DOMAIN
+    : SCHEME + '://auth.' + DOMAIN
 
 export const CLIENT_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://register.' + DOMAIN
+    : SCHEME + '://register.' + DOMAIN
 
 export const GATEWAY_HOST =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:7070'
-    : 'https://gateway.' + DOMAIN
+    : SCHEME + '://gateway.' + DOMAIN
 
 export const CLIENT_V2_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000/v2'
-    : 'https://register.' + DOMAIN + '/v2'
+    : SCHEME + '://register.' + DOMAIN + '/v2'
 
 /*
  * This timeout is to ensure that all previous actions have been completed
