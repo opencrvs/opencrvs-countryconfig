@@ -85,6 +85,8 @@ import {
   getComposition,
   getDeceased,
   getEventType,
+  getInformantFullName,
+  getInformantPatient,
   getPatientNationalId
 } from './utils/fhir'
 import differenceInYears from 'date-fns/differenceInYears'
@@ -220,17 +222,18 @@ export function shouldForwardToIDSystem(
   bundle: fhir3.Bundle,
   verificationStatus: Partial<VerificationStatus>
 ) {
-  const { father, mother, informant } = verificationStatus
-  const eventType = getEventType(bundle)
-  if (eventType === EVENT_TYPE.BIRTH) {
-    const child = getChild(bundle)
-    const childBirthDate = new Date(child.birthDate as string)
-    return (
-      differenceInYears(new Date(), childBirthDate) < 10 && (father || mother)
-    )
-  } else if (eventType === EVENT_TYPE.DEATH) {
-    return informant
-  } else return true
+  // const { father, mother, informant } = verificationStatus
+  // const eventType = getEventType(bundle)
+  // if (eventType === EVENT_TYPE.BIRTH) {
+  //   const child = getChild(bundle)
+  //   const childBirthDate = new Date(child.birthDate as string)
+  //   return (
+  //     differenceInYears(new Date(), childBirthDate) < 10 && (father || mother)
+  //   )
+  // } else if (eventType === EVENT_TYPE.DEATH) {
+  //   return informant
+  // } else
+  return true
 }
 
 export async function createServer() {
@@ -495,20 +498,29 @@ export async function createServer() {
               const task = getTaskResource(bundle)
               return (task && getTrackingIdFromTaskResource(task)) || ''
             },
-            fullName: (bundle) =>
-              wrapValueIntoIdentityInfo(getChildFullName(bundle), 'eng'),
-            dateOfBirth: (bundle) => getChildBirthDate(bundle) ?? '',
-            gender: (bundle) =>
-              wrapValueIntoIdentityInfo(
-                getChildGender(bundle) as string,
-                'eng'
-              ),
-            nationalIdNumber: (bundle) => {
-              if (getEventType(bundle) === EVENT_TYPE.BIRTH) {
-                return ''
+            notification: (bundle) => {
+              const informant = getInformantPatient(bundle)
+              return {
+                recipientFullName: getInformantFullName(bundle),
+                recipientEmail: informant?.email || '',
+                recipientPhone: informant?.phone || ''
               }
+            },
+            requestFields: (bundle) => {
               const deceased = getDeceased(bundle)
-              return getPatientNationalId(deceased)
+              const nationalIdNumber = getPatientNationalId(deceased) || ''
+              return {
+                fullName: wrapValueIntoIdentityInfo(
+                  getChildFullName(bundle),
+                  'eng'
+                ),
+                dateOfBirth: getChildBirthDate(bundle) ?? '',
+                gender: wrapValueIntoIdentityInfo(
+                  getChildGender(bundle) as string,
+                  'eng'
+                ),
+                nationalIdNumber
+              }
             }
           }
         )

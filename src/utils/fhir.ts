@@ -298,3 +298,13 @@ export function getPatientNationalId(patient: fhir3.Patient) {
   }
   return identifier.value
 }
+
+export function getInformantPatient(record: fhir3.Bundle) {
+  const composition = getComposition(record)
+  return findEntry('informant-details', composition, record) as fhir3.Patient
+}
+
+export function getInformantFullName(bundle: fhir3.Bundle) {
+  const child = getInformantPatient(bundle)
+  return child.name?.[0]?.given?.join(' ') + ' ' + child.name?.[0]?.family
+}
