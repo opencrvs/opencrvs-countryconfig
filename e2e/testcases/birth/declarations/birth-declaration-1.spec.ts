@@ -32,7 +32,8 @@ test.describe.serial('1. Birth declaration case - 1', () => {
     birthType: 'Single',
     weightAtBirth: 2.4,
     placeOfBirth: 'Health Institution',
-    birthLocation: 'Golden Valley Rural Health Centre',
+    birthLocation:
+      'Golden Valley Rural Health Centre, Ibombo, Central, Farajaland',
     informantType: 'Mother',
     informantEmail: faker.internet.email(),
     mother: {
