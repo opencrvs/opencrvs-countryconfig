@@ -21,7 +21,8 @@ import { informantOtherThanParent, InformantType } from './pages/informant'
 const CertCollectorType = {
   INFORMANT: 'INFORMANT',
   OTHER: 'OTHER',
-  PRINT_IN_ADVANCE: 'PRINT_IN_ADVANCE'
+  MOTHER: 'MOTHER',
+  FATHER: 'FATHER'
 } as const
 
 const otherIdType = {
@@ -62,26 +63,34 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             {
               label: {
                 id: 'v2.event.birth.action.certificate.form.section.requester.informant.label',
-                defaultMessage: 'Print and issue Informant',
+                defaultMessage: 'Print and issue to informant',
                 description: 'This is the label for the field'
               },
               value: CertCollectorType.INFORMANT
             },
             {
               label: {
-                id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
-                defaultMessage: 'Print and issue someone else',
+                id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
+                defaultMessage: 'Print and issue to mother',
                 description: 'This is the label for the field'
               },
-              value: CertCollectorType.OTHER
+              value: CertCollectorType.MOTHER
             },
             {
               label: {
-                id: 'v2.event.birth.action.certificate.form.section.requester.printInAdvance.label',
-                defaultMessage: 'Print in advance',
+                id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
+                defaultMessage: 'Print and issue to father',
                 description: 'This is the label for the field'
               },
-              value: CertCollectorType.PRINT_IN_ADVANCE
+              value: CertCollectorType.FATHER
+            },
+            {
+              label: {
+                id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
+                defaultMessage: 'Print and issue to someone else',
+                description: 'This is the label for the field'
+              },
+              value: CertCollectorType.OTHER
             }
           ]
         },
@@ -97,7 +106,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').isEqualTo('OTHER')
+              conditional: field('collector.requesterId').isEqualTo(
+                CertCollectorType.OTHER
+              )
             }
           ],
           options: [
@@ -321,7 +332,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector.identity.verify',
       type: PageTypes.enum.VERIFICATION,
-      conditional: field('collector.requesterId').isEqualTo('INFORMANT'),
+      conditional: field('collector.requesterId').isEqualTo(
+        CertCollectorType.INFORMANT
+      ),
       title: {
         id: 'event.birth.action.print.verifyIdentity',
         defaultMessage: 'Verify their identity',

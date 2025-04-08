@@ -188,9 +188,9 @@ export const mother = defineFormPage({
       type: FieldType.TEXT,
       required: true,
       label: {
-        defaultMessage: `Age of ${PersonType.mother}`,
+        defaultMessage: `Age of mother`,
         description: 'This is the label for the field',
-        id: `v2.event.birth.action.declare.form.section.person.field.age.text.label`
+        id: 'v2.event.birth.action.declare.form.section.mother.field.age.label'
       },
       configuration: {
         postfix: {
@@ -346,9 +346,9 @@ export const mother = defineFormPage({
       type: FieldType.ADDRESS,
       hideLabel: true,
       label: {
-        defaultMessage: 'Child`s address',
+        defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label'
+        id: 'v2.event.birth.action.declare.form.section.person.field.address.label'
       },
       conditionals: [
         {
@@ -427,7 +427,7 @@ export const mother = defineFormPage({
     },
     {
       id: `${PersonType.mother}.previousBirths`,
-      type: FieldType.TEXT,
+      type: FieldType.NUMBER,
       required: false,
       label: {
         defaultMessage: 'No. of previous births',
@@ -439,7 +439,10 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      configuration: {
+        min: 0
+      }
     }
   ]
 })
