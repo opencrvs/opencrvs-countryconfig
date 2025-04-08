@@ -67,7 +67,7 @@ test.describe.serial('Print certificate', () => {
         'Print and issue to someone else'
       ]
       for (const label of selectOptionsLabels) {
-        await page.getByText(label, { exact: true }).toBeVisible()
+        await expect(page.getByText(label, { exact: true })).toBeVisible()
       }
 
       await page.getByText(selectOptionsLabels[0], { exact: true }).click()
