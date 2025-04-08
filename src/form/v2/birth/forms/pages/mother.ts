@@ -427,7 +427,7 @@ export const mother = defineFormPage({
     },
     {
       id: `${PersonType.mother}.previousBirths`,
-      type: FieldType.TEXT,
+      type: FieldType.NUMBER,
       required: false,
       label: {
         defaultMessage: 'No. of previous births',
@@ -439,7 +439,10 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      configuration: {
+        min: 0
+      }
     }
   ]
 })
