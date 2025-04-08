@@ -60,7 +60,17 @@ test.describe.serial('Print certificate', () => {
     test('2.3 Continue button is enabled when both template and requester type are selected', async () => {
       await page.reload({ waitUntil: 'networkidle' })
       await page.locator('#collector____requesterId div').nth(4).click()
-      await page.getByText('Print and issue Informant', { exact: true }).click()
+      const selectOptionsLabels = [
+        'Print and issue to informant',
+        'Print and issue to mother',
+        'Print and issue to father',
+        'Print and issue to someone else'
+      ]
+      for (const label of selectOptionsLabels) {
+        await expect(page.getByText(label, { exact: true })).toBeVisible()
+      }
+
+      await page.getByText(selectOptionsLabels[0], { exact: true }).click()
 
       await expect(page.getByText('Certify record')).toBeVisible()
 
