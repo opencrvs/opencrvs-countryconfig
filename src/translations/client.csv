@@ -2953,3 +2953,4 @@ wq.noRecords.readyToPrint,No records messages for ready to print tab,No records 
 wq.noRecords.requiresUpdate,No records messages for require updates tab,No records require updates,Aucun document ne nécessite de mise à jour
 wq.noRecords.sentForApproval,No records messages for sent for approval tab,No records sent for approval,Aucun document envoyé pour approbation
 wq.noRecords.sentForReview,No records messages for sent for review tab,No records sent for review,Aucun document envoyé pour examen
+v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Type,Type
