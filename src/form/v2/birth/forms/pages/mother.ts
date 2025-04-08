@@ -17,7 +17,7 @@ import {
   FieldType,
   PageTypes
 } from '@opencrvs/toolkit/events'
-import { field, or, not } from '@opencrvs/toolkit/conditionals'
+import { field, or, not, never } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,
@@ -180,6 +180,10 @@ export const mother = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ]
     },
