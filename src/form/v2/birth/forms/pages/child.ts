@@ -398,6 +398,7 @@ export const child = defineFormPage({
         }
       ],
       configuration: {
+        min: 0,
         postfix: {
           defaultMessage: 'Kilograms (kg)',
           description: 'This is the postfix for the weight field',
