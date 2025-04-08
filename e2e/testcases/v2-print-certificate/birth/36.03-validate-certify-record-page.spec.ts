@@ -40,7 +40,9 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await page.getByText('Birth Certificate').nth(1).click()
 
     await page.locator('#collector____requesterId div').nth(4).click()
-    await page.getByText('Print and issue Informant', { exact: true }).click()
+    await page
+      .getByText('Print and issue to informant', { exact: true })
+      .click()
 
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(
