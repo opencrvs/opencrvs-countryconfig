@@ -22,6 +22,13 @@ countryconfig_image_tag="local"
 opencrvs_namespace = 'opencrvs-dev'
 dependencies_namespace = 'opencrvs-deps-dev'
 
+
+# Checkout infrastructure directory if not exists
+if not os.path.exists('../infrastructure'):
+    local("git clone git@github.com:opencrvs/infrastructure.git ../infrastructure")
+
+local_resource('README.md', cmd='awk "/For OpenCRVS Country Config Developers/{flag=1; next} /Seed data/{flag=0} flag" ../infrastructure/README.md', labels=['0.Readme'])
+
 ############################################################
 # What common Tiltfile does?
 # - Group resources by label on UI: http://localhost:10350/
@@ -49,9 +56,6 @@ namespace_create('traefik')
 namespace_create(dependencies_namespace)
 namespace_create(opencrvs_namespace)
 
-# Checkout infrastructure directory if not exists
-if not os.path.exists('../infrastructure'):
-    local("git clone git@github.com:opencrvs/infrastructure.git ../infrastructure")
 
 # Install Traefik GW
 helm_repo('traefik-repo', 'https://traefik.github.io/charts', labels=['Dependencies'])
