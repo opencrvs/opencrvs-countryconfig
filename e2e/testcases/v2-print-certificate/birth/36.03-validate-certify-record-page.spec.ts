@@ -28,7 +28,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     const childName = `${declaration.declaration['child.firstname']} ${declaration.declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
     await page.getByRole('button', { name: 'Action' }).click()
-    await page.getByRole('listitem').click()
+    await page.getByText('Print certificate').click()
 
     await expect(
       page

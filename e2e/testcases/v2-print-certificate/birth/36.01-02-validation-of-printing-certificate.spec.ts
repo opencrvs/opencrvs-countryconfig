@@ -29,7 +29,7 @@ test.describe.serial('Print certificate', () => {
     const childName = `${birthDeclaration.declaration['child.firstname']} ${birthDeclaration.declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
     await page.getByRole('button', { name: 'Action' }).click()
-    await page.getByRole('listitem').click()
+    await page.getByText('Print certificate').click()
   })
 
   test.describe('2.0 Validate "Certify record" page', async () => {
