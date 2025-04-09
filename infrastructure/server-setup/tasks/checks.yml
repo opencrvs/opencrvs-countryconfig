@@ -16,3 +16,10 @@
       - elasticsearch_superuser_password is defined
       - disk_encryption_key is defined
       - encrypted_disk_size is defined
+
+- name: 'Check the production environment is using more than one node'
+  fail:
+    msg: 'The production environment must use more than one node. Please check the inventory file for production.'
+  when:
+    - groups['docker-workers'] | length == 0
+    - single_node is not defined or single_node == false  
