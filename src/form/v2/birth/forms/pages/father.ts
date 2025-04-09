@@ -14,7 +14,8 @@ import {
   and,
   ConditionalType,
   defineFormPage,
-  FieldType
+  FieldType,
+  never
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'
@@ -167,6 +168,10 @@ export const father = defineFormPage({
             not(field(`${PersonType.father}.dobUnknown`).isEqualTo(true)),
             requireFatherDetails
           )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ]
     },
@@ -344,7 +349,7 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.father}.addressSameAs`,
+      id: 'father.addressSameAs',
       type: FieldType.RADIO_GROUP,
       options: yesNoRadioOptions,
       required: true,
@@ -358,11 +363,13 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            not(
-              field(`${PersonType.mother}.detailsNotAvailable`).isEqualTo(true)
-            ),
+            not(field('mother.detailsNotAvailable').isEqualTo(true)),
             requireFatherDetails
           )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('father.addressSameAs').isEqualTo(YesNoTypes.YES)
         }
       ]
     },
