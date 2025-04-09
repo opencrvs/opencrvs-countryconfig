@@ -75,6 +75,8 @@ drop_database () {
 #---------------------------
 drop_database hearth-dev;
 
+drop_database events;
+
 drop_database openhim-dev;
 
 drop_database user-mgnt;
