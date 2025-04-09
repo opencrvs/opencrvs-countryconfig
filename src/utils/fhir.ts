@@ -308,3 +308,23 @@ export function getInformantFullName(bundle: fhir3.Bundle) {
   const child = getInformantPatient(bundle)
   return child.name?.[0]?.given?.join(' ') + ' ' + child.name?.[0]?.family
 }
+
+export function getEmailFromTaskResource(
+  taskResource: fhir3.Task
+): string | undefined {
+  const emailIdentifier = taskResource?.extension?.find(
+    (ext) =>
+      ext.url === 'http://opencrvs.org/specs/extension/contact-person-email'
+  )
+  return emailIdentifier?.valueString
+}
+export function getPhoneNumberFromTaskResource(
+  taskResource: fhir3.Task
+): string | undefined {
+  const phoneIdentifier = taskResource?.extension?.find(
+    (ext) =>
+      ext.url ===
+      'http://opencrvs.org/specs/extension/contact-person-phone-number'
+  )
+  return phoneIdentifier?.valueString
+}
