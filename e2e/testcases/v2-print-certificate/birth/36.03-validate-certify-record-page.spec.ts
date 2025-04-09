@@ -5,6 +5,7 @@ import {
   createDeclaration,
   CreateDeclarationResponse
 } from './data/birth-declaration'
+import { selectAction } from '../../../v2-utils'
 
 test.describe.serial('3.0 Validate "Certify record" page', () => {
   let declaration: CreateDeclarationResponse
@@ -27,8 +28,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   test('3.1 should navigate to Verify their identity page', async () => {
     const childName = `${declaration.declaration['child.firstname']} ${declaration.declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
-    await page.getByRole('button', { name: 'Action' }).click()
-    await page.getByText('Print certificate').click()
+    await selectAction(page, 'Print Certificate')
 
     await expect(
       page

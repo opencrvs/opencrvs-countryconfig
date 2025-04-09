@@ -6,6 +6,7 @@ import {
   createDeclaration,
   CreateDeclarationResponse
 } from './data/birth-declaration'
+import { selectAction } from '../../../v2-utils'
 
 test.describe.serial('Print certificate', () => {
   let page: Page
@@ -28,8 +29,7 @@ test.describe.serial('Print certificate', () => {
   test('1.0 Click on "Print certificate" from action menu', async () => {
     const childName = `${birthDeclaration.declaration['child.firstname']} ${birthDeclaration.declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
-    await page.getByRole('button', { name: 'Action' }).click()
-    await page.getByText('Print certificate').click()
+    await selectAction(page, 'Print Certificate')
   })
 
   test.describe('2.0 Validate "Certify record" page', async () => {
