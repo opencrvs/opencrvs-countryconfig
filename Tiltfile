@@ -6,6 +6,8 @@
 # - v1.7.0
 # - v1.7.1
 # NOTE: It could take any value from https://github.com/orgs/opencrvs/packages
+# If you are under opencrvs-core repository, please use "local" tag
+# Tilt will build new image every time when changes are made to repository
 core_images_tag="develop"
 
 # Countryconfig/Farajaland image repository and tag
@@ -14,8 +16,8 @@ core_images_tag="develop"
 # you local registry
 # (see: https://medium.com/@ankitkumargupta/quick-start-local-docker-registry-35107038242e)
 countryconfig_image_name="opencrvs/ocrvs-countryconfig"
-# Usually image tag value is set to "local", Tilt will build new
-# image every time when changes are made to repository
+# If you are under opencrvs-countryconfig or your own repository, please use "local" tag,
+# Tilt will build new image every time when changes are made to repository
 countryconfig_image_tag="local"
 
 # Namespaces:
@@ -34,9 +36,7 @@ local_resource('README.md', cmd='awk "/For OpenCRVS Country Config Developers/{f
 # - Group resources by label on UI: http://localhost:10350/
 include('../infrastructure/tilt/Tiltfile.common')
 
-# Load extensions for configmap/secret/namespace operations
-load('ext://configmap', 'configmap_create')
-load('ext://secret', 'secret_create_generic', 'secret_from_dict', 'secret_create_tls')
+# Load extensions for namespace and helm operations
 load('ext://namespace', 'namespace_create', 'namespace_inject')
 load('ext://helm_resource', 'helm_resource', 'helm_repo')
 
