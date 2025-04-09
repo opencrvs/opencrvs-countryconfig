@@ -264,8 +264,7 @@ export const marriageForm: ISerializedForm = {
           fields: [
             getMarriageDate, // Required field
             getTypeOfMarriage,
-            placeOfMarriageSubsection,
-            divider('place-of-marriage-seperator')
+            placeOfMarriageSubsection
             // PLACE OF MARRIAGE FIELDS WILL RENDER HERE
           ]
         }
