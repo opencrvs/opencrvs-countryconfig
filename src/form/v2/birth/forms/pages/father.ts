@@ -168,10 +168,6 @@ export const father = defineFormPage({
             not(field(`${PersonType.father}.dobUnknown`).isEqualTo(true)),
             requireFatherDetails
           )
-        },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
         }
       ]
     },
@@ -187,6 +183,10 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ]
     },
