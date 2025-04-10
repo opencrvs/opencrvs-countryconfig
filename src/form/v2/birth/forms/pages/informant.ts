@@ -164,7 +164,7 @@ export const informant = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.informant}.dob`,
+      id: 'informant.dob',
       type: 'DATE',
       required: true,
       validation: [
@@ -174,7 +174,7 @@ export const informant = defineFormPage({
             description: 'This is the error message for invalid date',
             id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
           },
-          validator: field(`${PersonType.informant}.dob`).isBefore().now()
+          validator: field('informant.dob').isBefore().now()
         },
         {
           message: {
@@ -183,7 +183,7 @@ export const informant = defineFormPage({
               'This is the error message for a birth date after child`s birth date',
             id: `v2.event.birth.action.declare.form.section.person.dob.afterChild`
           },
-          validator: field('mother.dob').isBefore().date(field('child.dob'))
+          validator: field('informant.dob').isBefore().date(field('child.dob'))
         }
       ],
       label: {
