@@ -361,9 +361,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             data: [
               { fieldId: 'mother.idType' },
               { fieldId: 'mother.nid' },
+              { fieldId: 'mother.passport' },
+              { fieldId: 'mother.brn' },
               { fieldId: 'mother.firstname' },
               { fieldId: 'mother.surname' },
               { fieldId: 'mother.dob' },
+              { fieldId: 'mother.age' },
               { fieldId: 'mother.nationality' }
             ]
           }
@@ -388,9 +391,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             data: [
               { fieldId: 'father.idType' },
               { fieldId: 'father.nid' },
+              { fieldId: 'father.passport' },
+              { fieldId: 'father.brn' },
               { fieldId: 'father.firstname' },
               { fieldId: 'father.surname' },
               { fieldId: 'father.dob' },
+              { fieldId: 'father.age' },
               { fieldId: 'father.nationality' }
             ]
           }
@@ -413,9 +419,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             data: [
               { fieldId: 'informant.idType' },
               { fieldId: 'informant.nid' },
+              { fieldId: 'informant.passport' },
+              { fieldId: 'informant.brn' },
               { fieldId: 'informant.firstname' },
               { fieldId: 'informant.surname' },
               { fieldId: 'informant.dob' },
+              { fieldId: 'informant.age' },
               { fieldId: 'informant.nationality' }
             ]
           }
