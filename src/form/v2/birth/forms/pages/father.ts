@@ -374,7 +374,7 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.father}.address`,
+      id: 'father.address',
       type: FieldType.ADDRESS,
       hideLabel: true,
       label: {
@@ -386,10 +386,11 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            // Checking explicitly for not true, since detailsNotAvailable might be hidden and thus undefined
-            not(field('father.detailsNotAvailable').isEqualTo(true)),
             requireFatherDetails,
-            field('father.addressSameAs').isEqualTo(YesNoTypes.NO)
+            or(
+              field('mother.detailsNotAvailable').isEqualTo(true),
+              field('father.addressSameAs').isEqualTo(YesNoTypes.NO)
+            )
           )
         }
       ],
