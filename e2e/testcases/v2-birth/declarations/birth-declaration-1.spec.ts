@@ -31,7 +31,12 @@ test.describe.serial('1. Birth declaration case - 1', () => {
     birthType: 'Single',
     weightAtBirth: 2.4,
     placeOfBirth: 'Health Institution',
-    birthLocation: 'Golden Valley Rural Health Centre',
+    birthLocation: {
+      facility: 'Golden Valley Rural Health Centre',
+      district: 'Ibombo',
+      province: 'Central',
+      country: 'Farajaland'
+    },
     informantType: 'Mother',
     informantEmail: faker.internet.email(),
     mother: {
@@ -116,8 +121,8 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         .click()
       await page
         .locator('#child____birthLocation')
-        .fill(declaration.birthLocation.slice(0, 3))
-      await page.getByText(declaration.birthLocation).click()
+        .fill(declaration.birthLocation.facility.slice(0, 3))
+      await page.getByText(declaration.birthLocation.facility).click()
 
       await page.locator('#child____attendantAtBirth').click()
       await page
@@ -306,7 +311,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       )
       await expect(
         page.getByTestId('row-value-child.birthLocation')
-      ).toHaveText(declaration.birthLocation)
+      ).toHaveText(Object.values(declaration.birthLocation).join(', '))
 
       /*
        * Expected result: should include
@@ -566,7 +571,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         declaration.placeOfBirth
       )
       await expect(page.locator('#child-content #Place')).toContainText(
-        declaration.birthLocation
+        Object.values(declaration.birthLocation).join(', ')
       )
 
       /*
