@@ -134,7 +134,7 @@ export const father = defineFormPage({
       validation: [invalidNameValidator(`${PersonType.father}.surname`)]
     },
     {
-      id: `${PersonType.father}.dob`,
+      id: 'father.dob',
       type: 'DATE',
       required: true,
       validation: [
@@ -144,7 +144,7 @@ export const father = defineFormPage({
             description: 'This is the error message for invalid date',
             id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
           },
-          validator: field(`${PersonType.father}.dob`).isBefore().now()
+          validator: field('father.dob').isBefore().now()
         },
         {
           message: {
@@ -153,7 +153,7 @@ export const father = defineFormPage({
               'This is the error message for a birth date after child`s birth date',
             id: `v2.event.birth.action.declare.form.section.person.dob.afterChild`
           },
-          validator: field('mother.dob').isBefore().date(field('child.dob'))
+          validator: field('father.dob').isBefore().date(field('child.dob'))
         }
       ],
       label: {
