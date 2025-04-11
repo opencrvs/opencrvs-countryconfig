@@ -525,7 +525,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       await expect(page.getByText('All events')).toBeVisible()
 
       /*
-       * Expected result: The declaration should be in Ready to print
+       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
        */
       await expect(
         page.getByRole('button', {
