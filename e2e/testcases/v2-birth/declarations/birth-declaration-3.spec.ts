@@ -2,11 +2,8 @@ import { test, expect, type Page } from '@playwright/test'
 import {
   continueForm,
   drawSignature,
-  expectAddress,
-  formatDateObjectTo_ddMMMMyyyy,
   formatDateObjectTo_dMMMMyyyy,
   formatName,
-  getAction,
   getRandomDate,
   goToSection,
   loginToV2,
@@ -192,11 +189,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         })
         .click()
 
-      await page.waitForTimeout(500) // Temporary measurement untill the bug is fixed. BUG: rerenders after selecting relation with child
-
       await page.locator('#informant____email').fill(declaration.informantEmail)
-
-      await page.waitForTimeout(500) // Temporary measurement untill the bug is fixed. BUG: rerenders after selecting relation with child
 
       /*
        * Expected result: should show additional fields:
