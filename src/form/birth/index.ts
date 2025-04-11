@@ -564,9 +564,8 @@ export const birthForm: ISerializedForm = {
               false,
               certificateHandlebars.informantNID
             ),
-            getPlaceOfBirth('informant', hideIfInformantMotherOrFather, false),
             // preceding field of address fields
-            divider('informant-nid-seperator', hideIfInformantMotherOrFather),
+            getPlaceOfBirth('informant', hideIfInformantMotherOrFather, false),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAddress(
               Event.Birth,
@@ -655,9 +654,8 @@ export const birthForm: ISerializedForm = {
               false,
               certificateHandlebars.motherNID
             ),
-            getPlaceOfBirth('mother', detailsExistConditional, true),
             // preceding field of address fields
-            divider('mother-nid-seperator', detailsExist),
+            getPlaceOfBirth('mother', detailsExistConditional, true),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAddress(
               Event.Birth,
@@ -763,9 +761,8 @@ export const birthForm: ISerializedForm = {
               false,
               certificateHandlebars.fatherNID
             ),
-            getPlaceOfBirth('father', detailsExistConditional, true),
             // preceding field of address fields
-            divider('father-nid-seperator', detailsExist),
+            getPlaceOfBirth('father', detailsExistConditional, true),
             // ADDRESS FIELDS WILL RENDER HERE
             getFokontanyCustomAddress(
               Event.Birth,
