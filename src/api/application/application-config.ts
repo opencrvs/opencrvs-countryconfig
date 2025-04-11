@@ -4,9 +4,6 @@ import { join } from 'path'
 
 export const applicationConfig = {
   APPLICATION_NAME: 'SIECM',
-  FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
-  DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
-  EXTERNAL_VALIDATION_WORKQUEUE: false,
   BIRTH: {
     REGISTRATION_TARGET: 30,
     LATE_REGISTRATION_TARGET: 365,
@@ -19,8 +16,8 @@ export const applicationConfig = {
   },
   COUNTRY_LOGO: countryLogo,
   CURRENCY: {
-    isoCode: 'MGA',
-    languagesAndCountry: ['en-US']
+    languagesAndCountry: ['en-US'],
+    isoCode: 'MGA'
   },
   DEATH: {
     REGISTRATION_TARGET: 30,
@@ -46,6 +43,9 @@ export const applicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
+  // Following constants aren't configurable via UI
+  FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
+  DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
   FEATURES: {
     DEATH_REGISTRATION: false,
     MARRIAGE_REGISTRATION: false,
@@ -55,8 +55,8 @@ export const applicationConfig = {
     DATE_OF_BIRTH_UNKNOWN: false,
     INFORMANT_SIGNATURE_REQUIRED: false
   },
-  USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or 'email' ... You can use 'sms' for WhatsApp
-  INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms', // or 'sms', or 'email' ... You can use 'sms' for WhatsApp
+  USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
+  INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR']
 }
 
