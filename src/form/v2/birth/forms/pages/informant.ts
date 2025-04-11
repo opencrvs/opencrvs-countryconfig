@@ -20,7 +20,10 @@ import {
 } from '@opencrvs/toolkit/events'
 import { field, not } from '@opencrvs/toolkit/conditionals'
 import { createSelectOptions, emptyMessage } from '../../../utils'
-import { MAX_NAME_LENGTH } from '@countryconfig/form/v2/birth/validators'
+import {
+  MAX_NAME_LENGTH,
+  nationalIdValidator
+} from '@countryconfig/form/v2/birth/validators'
 import { IdType, idTypeOptions, PersonType } from '../../../person'
 
 export const InformantType = {
@@ -278,23 +281,42 @@ export const informant = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.informant}.nid`,
+      id: 'informant.nid',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.birth.action.declare.form.section.person.field.nid.label`
+        id: 'v2.event.birth.action.declare.form.section.person.field.nid.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`${PersonType.informant}.idType`).isEqualTo(
-              IdType.NATIONAL_ID
-            ),
+            field('informant.idType').isEqualTo(IdType.NATIONAL_ID),
             informantOtherThanParent
           )
+        }
+      ],
+      validation: [
+        nationalIdValidator('informant.nid'),
+        {
+          message: {
+            defaultMessage:
+              'ID Number must be different from fathers`s ID Number',
+            description: 'This is the error message for non-unique ID Number',
+            id: `v2.event.birth.action.declare.form.nid.unique.father`
+          },
+          validator: not(field('informant.nid').isEqualTo(field('father.nid')))
+        },
+        {
+          message: {
+            defaultMessage:
+              'ID Number must be different from mothers`s ID Number',
+            description: 'This is the error message for non-unique ID Number',
+            id: `v2.event.birth.action.declare.form.nid.unique.mother`
+          },
+          validator: not(field('informant.nid').isEqualTo(field('mother.nid')))
         }
       ]
     },
