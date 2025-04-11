@@ -10,6 +10,7 @@
  */
 
 import {
+  AddressType,
   and,
   ConditionalType,
   defineFormPage,
@@ -256,7 +257,8 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: informantOtherThanParent
         }
-      ]
+      ],
+      defaultValue: 'FAR'
     },
     {
       id: `${PersonType.informant}.idType`,
@@ -377,7 +379,14 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: informantOtherThanParent
         }
-      ]
+      ],
+      defaultValue: {
+        country: 'FAR',
+        addressType: AddressType.DOMESTIC,
+        province: '$user.province',
+        district: '$user.district',
+        urbanOrRural: 'URBAN'
+      }
     },
     {
       id: 'v2.informant.address.divider.end',
