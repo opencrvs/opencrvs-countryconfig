@@ -1,12 +1,8 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
-  assignRecord,
-  auditRecord,
   continueForm,
   drawSignature,
-  expectOutboxToBeEmpty,
   formatName,
-  getAction,
   goToSection,
   loginToV2,
   logout,
