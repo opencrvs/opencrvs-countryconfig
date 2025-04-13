@@ -11,6 +11,10 @@ import { getNUI } from '../common/common-custom-fields'
 import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
 import { tribunalOfFirstInstanceActOptions } from '../common/select-options'
 import { conditionals } from './custom-conditionals'
+import {
+  hideInPreviewMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet,
+  hideMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet
+} from '../common/default-validation-conditionals'
 
 export function getTimeOfBirth(): SerializedFormField {
   const fieldName: string = 'birthTime'
@@ -856,7 +860,9 @@ export const getDetailsMentionExist = (index: number) => {
               action: 'hideInPreview',
               expression: `${index} !== 0 || values['detailsMentionExist__${index}'] === "true"`
             }
-          ]
+          ].concat(
+            hideInPreviewMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet
+          )
         : [
             {
               action: 'hideInPreview',
@@ -866,7 +872,13 @@ export const getDetailsMentionExist = (index: number) => {
               action: 'hide',
               expression: `!values['detailsMentionExist__${index - 1}']`
             }
-          ],
+          ]
+            .concat(
+              hideInPreviewMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet
+            )
+            .concat(
+              hideMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet
+            ),
     mapping: getCustomFieldMapping(fieldId),
     ignoreBottomMargin: false
   } satisfies SerializedFormField
