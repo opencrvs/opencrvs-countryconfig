@@ -494,6 +494,39 @@ export const primaryAddressSameAsOtherPrimary: Conditional[] = [
   }
 ]
 
+export const hideInPreviewMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet =
+  [
+    {
+      action: 'hideInPreview',
+      expression: `draftData?.history?.some(hist => ['CERTIFIED', 'ISSUED'].includes(hist?.regStatus)) === false`
+    }
+  ]
+
+export const hideMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet = [
+  {
+    action: 'hide',
+    expression: `draftData?.history?.some(hist => ['CERTIFIED', 'ISSUED'].includes(hist?.regStatus)) === false`
+  }
+]
+
+export const hideInPreviewAndBlockEditingAnyFieldIfBirthCertificateIsAlreadyissuedOrPrinted =
+  [
+    {
+      action: 'hideInPreview',
+      expression: `draftData?.history?.some(hist => ['CERTIFIED', 'ISSUED'].includes(hist?.regStatus)) === true`
+    }
+  ]
+
+export const hideInPreviewDocumentSectionIfBirthCertificateIsAlreadyissuedOrPrinted =
+  [
+    {
+      description:
+        'Hide in preview Documents section if birth certificate is already printed or issued',
+      action: 'hideInPreview',
+      expression: `draftData?.history?.some(hist => ['CERTIFIED', 'ISSUED'].includes(hist?.regStatus)) === true`
+    }
+  ]
+
 export const hideIfDistrictPrimaryAddressNotSelected = (
   section: string
 ): Conditional[] => [

@@ -57,7 +57,8 @@ import {
   hideIfDistrictPrimaryAddressNotSelected,
   hideIfFatherPrimaryAddressConditionsDontMeet,
   hideIfNotDefaultCountry,
-  fathersHasFormallyRecognisedChildConditionnals
+  fathersHasFormallyRecognisedChildConditionnals,
+  hideMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet
 } from '../common/default-validation-conditionals'
 import {
   getNationalIDValidators,
@@ -810,7 +811,9 @@ export const birthForm: ISerializedForm = {
                   expression:
                     '!Boolean(draftData?.registration?.registrationNumber)'
                 }
-              ]
+              ].concat(
+                hideMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet
+              )
             : [
                 {
                   action: 'hide',
@@ -823,7 +826,9 @@ export const birthForm: ISerializedForm = {
                     i - 1
                   }'] || values['detailsMentionExist__${i - 1}'] === "false"`
                 }
-              ],
+              ].concat(
+                hideMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet
+              ),
         title: {
           id: 'mention-view-group-' + i,
           defaultMessage: 'Mention ' + (i + 1),
