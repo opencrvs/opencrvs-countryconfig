@@ -1,15 +1,18 @@
 import { expect, test, type Page } from '@playwright/test'
-import { CLIENT_URL, CREDENTIALS } from '../../../constants'
+import { CREDENTIALS } from '../../../constants'
 import { getToken } from '../../../helpers'
 import { selectAction } from '../../../v2-utils'
 import { loginToV2 } from '../../../helpers'
-import { getDeclarationForPrintCertificate } from '../../print-certificate/birth/certificate-helper'
 import {
   createDeclaration,
   getDeclaration,
   Declaration
 } from './data/birth-declaration'
-import { selectCertificationType, selectRequesterType } from './helpers'
+import {
+  expectInUrl,
+  selectCertificationType,
+  selectRequesterType
+} from './helpers'
 
 test.describe.serial('7.0 Validate "Certify record" page', () => {
   let eventId: string
@@ -40,25 +43,19 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
     await selectCertificationType(page, 'Birth Certificate')
     await selectRequesterType(page, 'Print and issue to informant')
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page
-        .url()
-        .includes(
-          `/print-certificate/${eventId}/pages/collector.identity.verify`
-        )
-    ).toBeTruthy()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.identity.verify`
+    )
 
     await expect(page.getByText('Relationship to child')).toBeVisible()
     await expect(page.getByText('Brother')).toBeVisible()
 
     await page.getByRole('button', { name: 'Verified' }).click()
-    await expect(
-      page
-        .url()
-        .includes(
-          `/print-certificate/${eventId}/pages/collector.collect.payment`
-        )
-    ).toBeTruthy()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.collect.payment`
+    )
 
     await expect(page.locator('#content-name')).toContainText('Collect Payment')
     await expect(
@@ -69,13 +66,10 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
 
   test('7.2 should navigate to ready to certify page on continue button click', async () => {
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page
-        .url()
-        .includes(
-          `/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
-        )
-    ).toBeTruthy()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
+    )
   })
 
   // @TODO: this is not implemented in events v2 yet

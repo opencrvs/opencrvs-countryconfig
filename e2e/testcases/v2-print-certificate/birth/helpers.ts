@@ -12,3 +12,7 @@ export async function selectRequesterType(page: Page, type: string) {
   await page.locator('#collector____requesterId').click()
   await page.getByText(type, { exact: true }).click()
 }
+
+export async function expectInUrl(page: Page, assertionString: string) {
+  await expect(page.url().includes(assertionString)).toBeTruthy()
+}
