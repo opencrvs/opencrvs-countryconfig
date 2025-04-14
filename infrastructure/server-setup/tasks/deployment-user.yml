@@ -7,8 +7,12 @@
     name: docker
     state: present
 
+- name: Get the current logged in user
+  set_fact:
+    current_user: "{{ lookup('env', 'USER') }}"
+
 - name: Add user to Docker group
   user:
-    name: '{{ ansible_user }}'
+    name: '{{ current_user }}'
     groups: docker
     append: yes
