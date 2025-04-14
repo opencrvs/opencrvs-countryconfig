@@ -9,7 +9,6 @@ import { selectAction } from '../../../v2-utils'
 import { selectCertificationType, selectRequesterType } from './helpers'
 
 test.describe.serial('9.0 Validate "Certify record" page', () => {
-  let eventId: string
   let declaration: Declaration
   let page: Page
 
@@ -19,7 +18,6 @@ test.describe.serial('9.0 Validate "Certify record" page', () => {
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(token)
-    eventId = res.eventId
     declaration = res.declaration
     page = await browser.newPage()
     await loginToV2(page)
