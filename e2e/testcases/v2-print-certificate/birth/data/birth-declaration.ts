@@ -9,7 +9,7 @@ import { ActionDocument, AddressType } from '@opencrvs/toolkit/events'
 
 type InformantRelation = 'MOTHER' | 'BROTHER'
 
-function getInformantDetails(informantRelation: InformantRelation = 'MOTHER') {
+function getInformantDetails(informantRelation: InformantRelation) {
   if (informantRelation === 'MOTHER') {
     return {
       'informant.relation': informantRelation,
@@ -29,7 +29,9 @@ function getInformantDetails(informantRelation: InformantRelation = 'MOTHER') {
   }
 }
 
-export async function getDeclaration(informantRelation = 'MOTHER') {
+export async function getDeclaration(
+  informantRelation: InformantRelation = 'MOTHER'
+) {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
   const province = getLocationIdByName(locations, 'Central')
   const district = getLocationIdByName(locations, 'Ibombo')
