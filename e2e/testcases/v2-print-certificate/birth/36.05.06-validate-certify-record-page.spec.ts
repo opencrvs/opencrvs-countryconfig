@@ -43,7 +43,7 @@ test.describe.serial('Validate collect payment page', () => {
   })
 
   test('5.2 should be able to select "No ID available" and no other ID field will be visible', async () => {
-    await selectIdType(page, 'No ID')
+    await selectIdType(page, 'No ID available')
     await expect(page.locator('#collector____PASSPORT____details')).toBeHidden()
   })
 
@@ -61,59 +61,53 @@ test.describe.serial('Validate collect payment page', () => {
 
   test('5.2 should be able to select National ID and correspondent id input will be visible with validation rules', async () => {
     await selectIdType(page, 'National ID')
-    await page.fill('#collector____NATIONAL_ID____details', '1234567')
+    await page.fill('#collector____nid', '1234567')
+    await page.getByRole('heading', { name: 'Birth', exact: true }).click()
 
-    await expect(page.locator('#iD')).toHaveValue('1234567')
-    await page.locator('#lastName').click()
-    await expect(page.locator('#iD_error')).toContainText(
-      'The National ID can only be numeric and must be 10 digits long'
+    await expect(page.locator('#collector____nid_error')).toContainText(
+      'The national ID can only be numeric and must be 10 digits long'
     )
-    await page.fill('#iD', '1235678922')
-    await expect(page.locator('#iD_error')).toBeHidden()
+    await page.fill('#collector____nid', '1235678922')
+    await page.getByRole('heading', { name: 'Birth', exact: true }).click()
+    await expect(page.locator('#collector____nid_error')).toBeHidden()
   })
 
   test('5.3 should be able to enter first name', async () => {
-    await page.fill('#firstName', 'Muhammed Tareq')
-    await expect(page.locator('#firstName')).toHaveValue('Muhammed Tareq')
+    await page.fill('#collector____OTHER____firstName', 'Muhammed Tareq')
+    await expect(page.locator('#collector____OTHER____firstName')).toHaveValue(
+      'Muhammed Tareq'
+    )
   })
 
-  test('5.4 should be able to enter lastname name', async () => {
-    await page.fill('#lastName', 'Aziz')
-    await expect(page.locator('#lastName')).toHaveValue('Aziz')
+  test('5.4 should be able to enter last name', async () => {
+    await page.fill('#collector____OTHER____lastName', 'Aziz')
+    await expect(page.locator('#collector____OTHER____lastName')).toHaveValue(
+      'Aziz'
+    )
   })
 
   test('5.5 keep relationship null and continue', async () => {
-    await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(page.locator('#relationship_error')).toContainText('Required')
+    await expect(page.getByRole('button', { name: 'Continue' })).toBeDisabled()
   })
 
   test('5.6 should be able to enter relationship', async () => {
-    await page.fill('#relationship', 'Uncle')
-    await expect(page.locator('#relationship')).toHaveValue('Uncle')
-  })
-
-  test("5.7 Fill all mandatory field and click 'Continue' should navigate to affidavit page", async () => {
-    await page.getByRole('button', { name: 'Continue' }).click()
+    await page.fill('#collector____OTHER____relationshipToMember', 'Uncle')
     await expect(
-      page.url().includes(`/cert/collector/${eventId}/birth/affidavit`)
-    ).toBeTruthy()
+      page.locator('#collector____OTHER____relationshipToMember')
+    ).toHaveValue('Uncle')
   })
 
-  test.describe('6.0 Validate "Upload signed affidavit" page:', async () => {
-    test('6.1 Click continue without adding any file or clicking the checkbox should show error', async () => {
-      await page.getByRole('button', { name: 'Continue' }).click()
-    })
-
-    test('6.2 Should be able to add file and navigate to the "Ready to certify?" page.', async () => {
+  test.describe('6.0 Validate "Upload signed affidavit":', async () => {
+    test('6.1 Should be able to add file and navigate to the "Ready to certify?" page.', async () => {
       const path = require('path')
       const attachmentPath = path.resolve(__dirname, './528KB-random.png')
       const inputFile = await page.locator(
-        'input[name="affidavitFile"][type="file"]'
+        'input[name="collector____OTHER____signedAffidavit"][type="file"]'
       )
       await inputFile.setInputFiles(attachmentPath)
-      await expect(
-        page.getByRole('button', { name: 'Signed affidavit' })
-      ).toBeVisible()
+      await expect(page.getByText('528KB-random.png')).toBeVisible()
+      await expect(page.locator('#preview_delete')).toBeVisible()
+      await page.getByRole('button', { name: 'Continue' }).click()
     })
   })
 })
