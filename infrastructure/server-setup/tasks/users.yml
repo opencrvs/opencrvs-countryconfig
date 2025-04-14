@@ -98,48 +98,20 @@
     state: present
   become: yes
 
-- name: Gather service facts
-  ansible.builtin.service_facts:
-
-- name: Set SSH service name if present
-  set_fact:
-    ssh_service_name: "{{ item }}"
-  with_items:
-    - ssh
-    - sshd
-  when: item + '.service' in ansible_facts.services
-
-- name: Fail if SSH service name is not set
-  fail:
-    msg: "SSH service name not found. Please check the system."
-  when: ssh_service_name is not defined
-
-- name: Store ssh config file
-  set_fact:
-    ssh_config_file: "/etc/ssh/{{ ssh_service_name }}_config"
-
-# Cleanup weak server keys
-- name: Check if /etc/ssh/moduli exists
-  stat:
-    path: /etc/ssh/moduli
-  register: moduli_file
-
 - name: Check short Diffie-Hellman keys
   ansible.builtin.shell: |
     awk '$5 < 3071' /etc/ssh/moduli | grep -q .
   register: short_dh_keys
   ignore_errors: yes
-  when: moduli_file.stat.exists
 
 - name: Remove short Diffie-Hellman keys
   ansible.builtin.shell: |
     awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
     mv /etc/ssh/moduli.safe /etc/ssh/moduli
-  when:
-    - moduli_file.stat.exists
-    - short_dh_keys.rc == 0
+  when: short_dh_keys.rc == 0
   become: yes
 
+# Cleanup weak server keys
 - name: Remove existing SSH host keys except for RSA and ED25519
   ansible.builtin.command:
     cmd: "find /etc/ssh -type f -name 'ssh_host_*' ! -name 'ssh_host_rsa_key' ! -name 'ssh_host_ed25519_key' -exec rm -f {} +"
@@ -158,89 +130,81 @@
 # Allow only Strong server keys
 - name: Ensure HostKey for ED25519 is present in sshd_config
   ansible.builtin.lineinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     line: "HostKey /etc/ssh/ssh_host_ed25519_key"
 
 - name: Ensure HostKey for RSA is present in sshd_config
   ansible.builtin.lineinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     line: "HostKey /etc/ssh/ssh_host_rsa_key"
 
 - name: Set AuthenticationMethods to publickey,keyboard-interactive
   lineinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     regexp: '^#?AuthenticationMethods'
     line: 'AuthenticationMethods publickey,keyboard-interactive'
     state: present
 
 - name: Enable ChallengeResponseAuthentication in SSHD Config
   lineinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     regexp: '^#?ChallengeResponseAuthentication'
     line: 'ChallengeResponseAuthentication yes'
     state: present
 
 - name: Enable PubkeyAuthentication in SSHD Config
   lineinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     regexp: '^#?PubkeyAuthentication'
     line: 'PubkeyAuthentication yes'
     state: present
 
-- name: Get the current logged in user
-  set_fact:
-    current_user: "{{ lookup('env', 'USER') }}"
-
 - name: Disable SSH root login so all maintainers log in as their own user
   lineinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     regexp: '^#?PermitRootLogin'
     line: 'PermitRootLogin no'
     state: present
-  when: current_user != "root"
+  when: ansible_user != "root"
 
 - name: Disable root account login completely
   ansible.builtin.command:
     cmd: passwd -l root
   become: yes
-  when: current_user != "root"
+  when: ansible_user != "root"
 
 - name: Enable KbdInteractiveAuthentication in SSHD Config
   lineinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     regexp: '^#?KbdInteractiveAuthentication'
     line: 'KbdInteractiveAuthentication yes'
     state: present
 
 - name: Disable PasswordAuthentication in SSHD Config
   lineinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     regexp: '^#?PasswordAuthentication'
     line: 'PasswordAuthentication no'
     state: present
 
 - name: Disable PermitEmptyPasswords in SSHD Config
   lineinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     regexp: '^#?PermitEmptyPasswords'
     line: 'PermitEmptyPasswords no'
     state: present
 
-- name: Get the current logged in user
-  set_fact:
-    current_user: "{{ lookup('env', 'USER') }}"
-
-- name: Only require public key from the user "{{ current_user }}"
+- name: Only require public key from the user "{{ ansible_user }}"
   blockinfile:
-    path: "{{ ssh_config_file }}"
+    path: /etc/ssh/sshd_config
     # Match block must have ending Match all
     # https://linux.die.net/man/5/sshd_config
     block: |
-      Match User {{ current_user }}
+      Match User {{ ansible_user }}
         PasswordAuthentication no
         AuthenticationMethods publickey
       Match all
-    marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER {{ current_user }}'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER {{ ansible_user }}'
   become: yes
 
 
@@ -249,7 +213,7 @@
 - name: SSHD Restrict key exchange, cipher, and MAC algorithms (Ubuntu 22.04)
   ansible.builtin.copy:
     src: ./files/sshd_audit_hardening.22.04.conf
-    dest: "{{ ssh_config_file }}.d/audit_hardening.conf"
+    dest: /etc/ssh/sshd_config.d/audit_hardening.conf
     owner: root
     group: root
     mode: '0644'
@@ -261,7 +225,7 @@
 - name: SSHD Restrict key exchange, cipher, and MAC algorithms (Ubuntu 24.04)
   ansible.builtin.copy:
     src: ./files/sshd_audit_hardening.24.04.conf
-    dest: "{{ ssh_config_file }}.d/ssh-audit_hardening.conf"
+    dest: /etc/ssh/sshd_config.d/ssh-audit_hardening.conf
     owner: root
     group: root
     mode: '0644'
@@ -270,14 +234,38 @@
     - ansible_facts['distribution'] == 'Ubuntu'
     - ansible_facts['distribution_version'] == '24.04'
 
+- name: Check SSH config syntax
+  command: sshd -T
+  register: check_result
+
 - name: Enable logging in to the provisioning user with specified SSH keys
   authorized_key:
-    user: '{{ current_user }}'
+    user: '{{ ansible_user }}'
     key: '{{ item }}'
   with_items: '{{ additional_keys_for_provisioning_user | default([]) }}'
 
-- name: Restart SSH service
+# Ubuntu 22.10
+- name: Check if sshd service exists
+  command: systemctl status sshd
+  register: sshd_status
+  ignore_errors: yes
+
+- name: Restart SSH service (sshd)
   service:
-    name: "{{ ssh_service_name }}"
+    name: sshd
     state: restarted
-  become: true
+  when: sshd_status.rc == 0
+  become: yes
+
+# Ubuntu 23.10
+- name: Check if ssh service exists
+  command: systemctl status ssh
+  register: ssh_status
+  ignore_errors: yes
+
+- name: Restart SSH service (ssh)
+  service:
+    name: ssh
+    state: restarted
+  when: ssh_status.rc == 0 and sshd_status.rc != 0
+  become: yes

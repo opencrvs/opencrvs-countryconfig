@@ -29,7 +29,7 @@
       shell: docker swarm join-token -q worker
       register: worker_token
 
-  
+
 - hosts: docker-workers
   become: yes
   become_method: sudo
