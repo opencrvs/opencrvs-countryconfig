@@ -1,14 +1,13 @@
 import { expect, test, type Page } from '@playwright/test'
 import { CREDENTIALS } from '../../../constants'
 import { getToken, loginToV2 } from '../../../helpers'
-import {
-  createDeclaration,
-  CreateDeclarationResponse
-} from './data/birth-declaration'
+import { createDeclaration, Declaration } from './data/birth-declaration'
 import { selectAction } from '../../../v2-utils'
+import { selectCertificationType, selectRequesterType } from './helpers'
 
 test.describe.serial('3.0 Validate "Certify record" page', () => {
-  let declaration: CreateDeclarationResponse
+  let eventId: string
+  let declaration: Declaration
   let page: Page
 
   test.beforeAll(async ({ browser }) => {
@@ -16,7 +15,9 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    declaration = await createDeclaration(token)
+    const res = await createDeclaration(token)
+    eventId = res.eventId
+    declaration = res.declaration
     page = await browser.newPage()
     await loginToV2(page)
   })
@@ -26,30 +27,23 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   })
 
   test('3.1 should navigate to Verify their identity page', async () => {
-    const childName = `${declaration.declaration['child.firstname']} ${declaration.declaration['child.surname']}`
+    const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
     await selectAction(page, 'Print Certificate')
 
     await expect(
-      page
-        .url()
-        .includes(`/print-certificate/${declaration.eventId}/pages/collector`)
+      page.url().includes(`/print-certificate/${eventId}/pages/collector`)
     ).toBeTruthy()
 
-    await page.locator('#certificateTemplateId svg').click()
-    await page.getByText('Birth Certificate').nth(1).click()
-
-    await page.locator('#collector____requesterId div').nth(4).click()
-    await page
-      .getByText('Print and issue to informant', { exact: true })
-      .click()
+    await selectCertificationType(page, 'Birth Certificate')
+    await selectRequesterType(page, 'Print and issue to informant')
 
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(
       page
         .url()
         .includes(
-          `/print-certificate/${declaration.eventId}/pages/collector.identity.verify`
+          `/print-certificate/${eventId}/pages/collector.identity.verify`
         )
     ).toBeTruthy()
   })
@@ -59,7 +53,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
       page
         .url()
         .includes(
-          `/print-certificate/${declaration.eventId}/pages/collector.identity.verify`
+          `/print-certificate/${eventId}/pages/collector.identity.verify`
         )
     ).toBeTruthy()
 
@@ -70,13 +64,13 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await expect(page.getByText('Verify their identity')).toBeVisible()
 
     await expect(page.locator('#maincontent')).toContainText(
-      declaration.declaration['mother.nid']
+      declaration['mother.nid']
     )
     await expect(page.locator('#maincontent')).toContainText(
-      declaration.declaration['mother.firstname']
+      declaration['mother.firstname']
     )
     await expect(page.locator('#maincontent')).toContainText(
-      declaration.declaration['mother.surname']
+      declaration['mother.surname']
     )
 
     await expect(
@@ -123,7 +117,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
       page
         .url()
         .includes(
-          `/print-certificate/${declaration.eventId}/review?templateId=v2.birth-certificate`
+          `/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
         )
     ).toBeTruthy()
     await page.goBack()
@@ -138,7 +132,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
       page
         .url()
         .includes(
-          `/print-certificate/${declaration.eventId}/pages/collector.identity.verify`
+          `/print-certificate/${eventId}/pages/collector.identity.verify`
         )
     ).toBeTruthy()
   })

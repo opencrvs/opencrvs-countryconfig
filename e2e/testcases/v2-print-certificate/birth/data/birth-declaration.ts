@@ -62,7 +62,7 @@ async function getDeclaration() {
   }
 }
 
-type Declaration = Awaited<ReturnType<typeof getDeclaration>>
+export type Declaration = Awaited<ReturnType<typeof getDeclaration>>
 
 export interface CreateDeclarationResponse {
   eventId: string
