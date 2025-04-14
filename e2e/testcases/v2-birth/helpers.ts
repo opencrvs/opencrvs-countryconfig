@@ -13,3 +13,12 @@ export async function validateAddress(
     )
   )
 }
+
+export async function fillDate(
+  page: Page,
+  date: { dd: string; mm: string; yyyy: string }
+) {
+  await page.getByPlaceholder('dd').fill(date.dd)
+  await page.getByPlaceholder('mm').fill(date.mm)
+  await page.getByPlaceholder('yyyy').fill(date.yyyy)
+}

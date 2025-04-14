@@ -13,7 +13,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
-import { validateAddress } from '../helpers'
+import { fillDate, validateAddress } from '../helpers'
 
 test.describe.serial('3. Birth declaration case - 3', () => {
   let page: Page
@@ -312,11 +312,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         .locator('#father____surname')
         .fill(declaration.father.name.familyName)
 
-      await page.getByPlaceholder('dd').fill(declaration.father.birthDate.dd)
-      await page.getByPlaceholder('mm').fill(declaration.father.birthDate.mm)
-      await page
-        .getByPlaceholder('yyyy')
-        .fill(declaration.father.birthDate.yyyy)
+      await fillDate(page, declaration.father.birthDate)
 
       await page.locator('#father____idType').click()
       await page

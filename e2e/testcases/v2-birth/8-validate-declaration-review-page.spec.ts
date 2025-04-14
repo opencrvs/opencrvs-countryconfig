@@ -10,6 +10,7 @@ import {
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
+import { fillDate } from './helpers'
 
 test.describe.serial('8. Validate declaration review page', () => {
   let page: Page
@@ -193,11 +194,7 @@ test.describe.serial('8. Validate declaration review page', () => {
           .locator('#father____surname')
           .fill(declaration.father.name.familyName)
 
-        await page.getByPlaceholder('dd').fill(declaration.father.birthDate.dd)
-        await page.getByPlaceholder('mm').fill(declaration.father.birthDate.mm)
-        await page
-          .getByPlaceholder('yyyy')
-          .fill(declaration.father.birthDate.yyyy)
+        await fillDate(page, declaration.father.birthDate)
 
         await page.locator('#father____idType').click()
         await page
@@ -779,11 +776,7 @@ test.describe.serial('8. Validate declaration review page', () => {
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.father.birthDate = getRandomDate(21, 200)
-        await page.getByPlaceholder('dd').fill(declaration.father.birthDate.dd)
-        await page.getByPlaceholder('mm').fill(declaration.father.birthDate.mm)
-        await page
-          .getByPlaceholder('yyyy')
-          .fill(declaration.father.birthDate.yyyy)
+        await fillDate(page, declaration.father.birthDate)
 
         await page.getByRole('button', { name: 'Back to review' }).click()
 
