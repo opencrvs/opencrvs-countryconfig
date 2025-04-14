@@ -16,7 +16,7 @@
 all:
   vars:
     # "enable_backups" is set to true on production.  Production will always backup it's own data.
-    enable_backups: false
+    enable_backups: true
     # This configuration variable blocks all access to the server, including SSH, except from the IP addresses specified below.
     # In most cases these should be left empty, as the VPN server should be the only source of traffic.
     # OpenCRVS should never be exposed to the public internet. If this is not possible to organise,
@@ -30,24 +30,40 @@ all:
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: riku
+      - name: my-user
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWIF63S4f3z9wQMvWibmvl7MPuJ6EVrkP0HuvgNhcs/4DZYMcR/GRBvV4ldOSYMlBevIXycgGzNDxKJgENUuwIWanjBu7uVAHyD6+cIRD1h63qq7Cjv/2HYTfBDKOrKzPOhA6zWvKO0ZGWsjRXk5LWMCbKOkvKJCxOpj/NVBxeE4FTK5YADYPV3OSsmBtqTHrVLm2sMmShU/2hMYYswWkobidjX65+nK/X+3C+yJbHwiydVvn+QCrFlFfCLPWKe8rUpOxyxofPqWVQh6CHhHfT8okaOc9sOE8Qeip9ljo84DftJh3Xm3ynOdWK1hH2BvRvxNadWqcE1qECbkg4tx2x riku.rouvila@gmail.com
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
         state: present
         sudoer: true
 
 docker-manager-first:
   hosts:
-    manager:
-      ansible_host: 'manager@orb'
-      ansible_user: 'provision@manager'
+    prod-01: # @todo set this to be the hostname of your target server
+      ansible_host: '22.22.22.22' # @todo set this to be the hostname of your target server
       data_label: data1
+      # If you are using a jump server to access this environment, enter other SSH args here.
+      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
 
-# QA and staging servers are not configured to use workers.
+# @todo We recommend you add 2-4 workers for a scaled production deployment
+# This should depend on the size of your country and the number of end users.
+# If you are only using one production worker for very small countries or small pilot projects, replace with an empty block like so: docker-workers: {}
 docker-workers:
   hosts:
-    worker:
-      ansible_host: 'worker@orb'
-      ansible_user: 'provision@worker'
-      data_label: data2
+    prod-02: # @todo set this to be the hostname of your target server
+      ansible_host: '33.33.33.33'
+      # If you are using a jump server to access this environment, enter other SSH args here.
+      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no'
 
+backups:
+  hosts:
+    backup: # @todo set this to be the hostname of your backup server
+      ansible_host: '66.66.66.66'
+      # Written by provision pipeline. Assumes "backup" environment
+      # exists in Github environments
+      ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
+# If you are using a jump server to access this environment
+# jump:
+#   hosts:
+#     your-jumpserver-hostname-here: # @todo set this to be the hostname of your jump server
+#       ansible_ssh_private_key_file: /tmp/jump_ssh_private_key # Written by provision pipeline. Assumes "jump" environment exists in Github environments
+#       ansible_host: '55.55.55.55'
