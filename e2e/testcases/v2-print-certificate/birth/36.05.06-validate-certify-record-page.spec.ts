@@ -109,6 +109,13 @@ test.describe.serial('Validate collect payment page', () => {
       await expect(page.getByText('528KB-random.png')).toBeVisible()
       await expect(page.locator('#preview_delete')).toBeVisible()
       await page.getByRole('button', { name: 'Continue' }).click()
+      await expect(
+        page
+          .url()
+          .includes(
+            `/print-certificate/${eventId}/pages/collector.collect.payment`
+          )
+      ).toBeTruthy()
     })
   })
 })
