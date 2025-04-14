@@ -95,6 +95,7 @@ test.describe.serial('Validate collect payment page', () => {
     await expect(
       page.locator('#collector____OTHER____relationshipToMember')
     ).toHaveValue('Uncle')
+    await page.getByRole('heading', { name: 'Birth', exact: true }).click()
   })
 
   test.describe('6.0 Validate "Upload signed affidavit":', async () => {
