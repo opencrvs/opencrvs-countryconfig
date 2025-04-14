@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { goToSection, loginToV2 } from '../../helpers'
+import { REQUIRED_VALIDATION_ERROR } from './helpers'
 
 test.describe('3. Validate the mothers and fathers details pages', () => {
   test.beforeEach(async ({ page }) => {
@@ -87,7 +88,7 @@ test.describe('3. Validate the mothers and fathers details pages', () => {
       await expect(
         page
           .locator('[data-test-id="row-value-mother.firstname"]')
-          .getByText('Required for registration')
+          .getByText(REQUIRED_VALIDATION_ERROR)
       ).toBeVisible()
     })
 
@@ -115,7 +116,7 @@ test.describe('3. Validate the mothers and fathers details pages', () => {
       await page.locator('#mother____nid-form-input div').nth(1).click()
       await page.getByRole('heading', { name: 'Birth' }).click()
       await expect(page.locator('#mother____nid_error')).toContainText(
-        'Required for registration'
+        REQUIRED_VALIDATION_ERROR
       )
     })
 

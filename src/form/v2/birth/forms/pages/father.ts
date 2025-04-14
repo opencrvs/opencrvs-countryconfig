@@ -251,13 +251,13 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.father}.nid`,
+      id: 'father.nid',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.birth.action.declare.form.section.person.field.nid.label`
+        id: 'v2.event.birth.action.declare.form.section.person.field.nid.label'
       },
       conditionals: [
         {
@@ -275,9 +275,18 @@ export const father = defineFormPage({
             defaultMessage:
               'ID Number must be different from mother`s ID Number',
             description: 'This is the error message for non-unique ID Number',
-            id: `v2.event.birth.action.declare.form.father.nid.unique`
+            id: 'v2.event.birth.action.declare.form.nid.unique.mother'
           },
           validator: not(field('father.nid').isEqualTo(field('mother.nid')))
+        },
+        {
+          message: {
+            defaultMessage:
+              'ID Number must be different from informant`s ID Number',
+            description: 'This is the error message for non-unique ID Number',
+            id: 'v2.event.birth.action.declare.form.nid.unique.informant'
+          },
+          validator: not(field('father.nid').isEqualTo(field('informant.nid')))
         }
       ]
     },

@@ -272,9 +272,18 @@ export const mother = defineFormPage({
             defaultMessage:
               'ID Number must be different from fathers`s ID Number',
             description: 'This is the error message for non-unique ID Number',
-            id: `v2.event.birth.action.declare.form.mother.nid.unique`
+            id: 'v2.event.birth.action.declare.form.nid.unique.father'
           },
           validator: not(field('mother.nid').isEqualTo(field('father.nid')))
+        },
+        {
+          message: {
+            defaultMessage:
+              'ID Number must be different from informant`s ID Number',
+            description: 'This is the error message for non-unique ID Number',
+            id: 'v2.event.birth.action.declare.form.nid.unique.informant'
+          },
+          validator: not(field('mother.nid').isEqualTo(field('informant.nid')))
         }
       ]
     },

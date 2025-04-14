@@ -13,6 +13,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
+import { fillDate, validateAddress } from '../helpers'
 
 test.describe.serial('3. Birth declaration case - 3', () => {
   let page: Page
@@ -311,11 +312,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         .locator('#father____surname')
         .fill(declaration.father.name.familyName)
 
-      await page.getByPlaceholder('dd').fill(declaration.father.birthDate.dd)
-      await page.getByPlaceholder('mm').fill(declaration.father.birthDate.mm)
-      await page
-        .getByPlaceholder('yyyy')
-        .fill(declaration.father.birthDate.yyyy)
+      await fillDate(page, declaration.father.birthDate)
 
       await page.locator('#father____idType').click()
       await page
@@ -447,7 +444,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       })
     })
 
-    test('3.1.6 Go To Review', async () => {
+    test('3.1.6 Go to Review', async () => {
       await goToSection(page, 'review')
     })
 
@@ -490,14 +487,10 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         declaration.placeOfBirth
       )
 
-      await Promise.all(
-        Object.values(declaration.birthLocation).map((val) =>
-          expect(
-            page
-              .getByTestId('row-value-child.address.privateHome')
-              .getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.birthLocation,
+        'row-value-child.address.privateHome'
       )
 
       /*
@@ -562,12 +555,10 @@ test.describe.serial('3. Birth declaration case - 3', () => {
        * Expected result: should include
        * - Informant's address
        */
-      await Promise.all(
-        Object.values(declaration.informant.address).map((val) =>
-          expect(
-            page.getByTestId('row-value-informant.address').getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.informant.address,
+        'row-value-informant.address'
       )
 
       /*
@@ -632,12 +623,10 @@ test.describe.serial('3. Birth declaration case - 3', () => {
        * Expected result: should include
        * - Mother's address
        */
-      await Promise.all(
-        Object.values(declaration.mother.address).map((val) =>
-          expect(
-            page.getByTestId('row-value-mother.address').getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.mother.address,
+        'row-value-mother.address'
       )
 
       /*
@@ -702,14 +691,10 @@ test.describe.serial('3. Birth declaration case - 3', () => {
        * Expected result: should include
        * - Father's address
        */
-      await Promise.all(
-        Object.values(declaration.father.address).map(
-          (val) =>
-            typeof val !== 'boolean' &&
-            expect(
-              page.getByTestId('row-value-father.address').getByText(val)
-            ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.father.address,
+        'row-value-father.address'
       )
     })
 
@@ -791,14 +776,10 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         declaration.placeOfBirth
       )
 
-      await Promise.all(
-        Object.values(declaration.birthLocation).map((val) =>
-          expect(
-            page
-              .getByTestId('row-value-child.address.privateHome')
-              .getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.birthLocation,
+        'row-value-child.address.privateHome'
       )
 
       /*
@@ -863,12 +844,10 @@ test.describe.serial('3. Birth declaration case - 3', () => {
        * Expected result: should include
        * - Informant's address
        */
-      await Promise.all(
-        Object.values(declaration.informant.address).map((val) =>
-          expect(
-            page.getByTestId('row-value-informant.address').getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.informant.address,
+        'row-value-informant.address'
       )
 
       /*
@@ -933,12 +912,10 @@ test.describe.serial('3. Birth declaration case - 3', () => {
        * Expected result: should include
        * - Mother's address
        */
-      await Promise.all(
-        Object.values(declaration.mother.address).map((val) =>
-          expect(
-            page.getByTestId('row-value-mother.address').getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.mother.address,
+        'row-value-mother.address'
       )
 
       /*
@@ -1003,14 +980,10 @@ test.describe.serial('3. Birth declaration case - 3', () => {
        * Expected result: should include
        * - Father's address
        */
-      await Promise.all(
-        Object.values(declaration.father.address).map(
-          (val) =>
-            typeof val !== 'boolean' &&
-            expect(
-              page.getByTestId('row-value-father.address').getByText(val)
-            ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.father.address,
+        'row-value-father.address'
       )
     })
   })
