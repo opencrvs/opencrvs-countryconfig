@@ -4,7 +4,6 @@ import {
   continueForm,
   drawSignature,
   expectAddress,
-  expectOutboxToBeEmpty,
   formatDateObjectTo_ddMMMMyyyy,
   formatDateObjectTo_dMMMMyyyy,
   formatName,
@@ -15,6 +14,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
+import { fillDate, validateAddress } from '../helpers'
 
 test.describe.serial('1. Birth declaration case - 1', () => {
   let page: Page
@@ -153,8 +153,6 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         })
         .click()
 
-      await page.waitForTimeout(500) // Temporary measurement untill the bug is fixed. BUG: rerenders after selecting relation with child
-
       await page.locator('#informant____email').fill(declaration.informantEmail)
 
       await continueForm(page)
@@ -232,11 +230,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         .locator('#father____surname')
         .fill(declaration.father.name.familyName)
 
-      await page.getByPlaceholder('dd').fill(declaration.father.birthDate.dd)
-      await page.getByPlaceholder('mm').fill(declaration.father.birthDate.mm)
-      await page
-        .getByPlaceholder('yyyy')
-        .fill(declaration.father.birthDate.yyyy)
+      await fillDate(page, declaration.father.birthDate)
 
       await page.locator('#father____idType').click()
       await page
@@ -416,13 +410,10 @@ test.describe.serial('1. Birth declaration case - 1', () => {
        * Expected result: should include
        * - Mother's address
        */
-      // @TODO: There is a bug on V2, where it shows an empty 'Usual place of residence' field on the review page
-      await Promise.all(
-        Object.values(declaration.mother.address).map((val) =>
-          expect(
-            page.getByTestId('row-value-mother.address').getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.mother.address,
+        'row-value-mother.address'
       )
 
       /*
