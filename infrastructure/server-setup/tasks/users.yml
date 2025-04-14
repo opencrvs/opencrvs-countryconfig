@@ -101,10 +101,6 @@
 - name: Gather service facts
   ansible.builtin.service_facts:
 
-# debug print ansible_facts.services
-- debug:
-    var: ansible_facts.services
-
 - name: Set SSH service name if present
   set_fact:
     ssh_service_name: "{{ item }}"
