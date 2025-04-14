@@ -1143,15 +1143,11 @@ test.describe.serial('8. Validate declaration review page', () => {
 
     test('8.2.7 Click send button', async () => {
       await page.getByRole('button', { name: 'Send for approval' }).click()
-      await expect(
-        page.getByText(
-          'The declarant will be notified of this action and a record of this decision will be recorded'
-        )
-      ).toBeVisible()
+      await expect(page.getByText('Send for approval?')).toBeVisible()
     })
 
     test('8.2.8 Confirm the declaration to send for approval', async () => {
-      await page.getByRole('button', { name: 'Validate' }).click()
+      await page.getByRole('button', { name: 'Confirm' }).click()
       await expect(page.getByText('All events')).toBeVisible()
 
       /*
