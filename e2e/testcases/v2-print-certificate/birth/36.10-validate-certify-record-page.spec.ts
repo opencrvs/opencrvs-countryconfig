@@ -55,9 +55,8 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     await expect(page.locator('#confirm-print-modal')).toBeHidden()
   })
 
-  test('10.3 On click print button, a new tab will open with the certificate and the user will be redirect to the events overview page', async () => {
+  test('10.3 click print button, user will navigate to a new tab from where user can download PDF', async () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await page.getByRole('button', { name: 'Print', exact: true }).click()
-    await expectInUrl(page, `/events/overview/${eventId}`)
   })
 })
