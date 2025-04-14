@@ -92,11 +92,6 @@
     line: '#@include common-auth'
     state: present
 
-- name: Ensure /etc/ssh/sshd_config file exists
-  file:
-    path: /etc/ssh/sshd_config
-    state: touch
-
 # Cleanup weak server keys
 - name: Check if /etc/ssh/moduli exists
   stat:
