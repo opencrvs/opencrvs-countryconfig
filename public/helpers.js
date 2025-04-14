@@ -254,11 +254,20 @@ function eventStatement() {
                 this.birthChildFokontanyCustomAddress
                   ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
                   : '',
-                'kaominina',
-                (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
-                  '-') + ',',
-                'district',
-                definitionDistrict(placeOfBirthState) || '-'
+
+                this.birthChildFokontanyCustomAddress
+                  .toLowerCase()
+                  .includes('toamasina')
+                  ? ''
+                  : 'kaominina' +
+                      ' ' +
+                      (definitionOffice(
+                        replaceByUppercase(placeOfBirthDistrict)
+                      ) || '-') +
+                      ',' +
+                      'district' +
+                      ' ' +
+                      definitionDistrict(placeOfBirthState) || '-'
               ]
             : [
                 'no teraka tao',
@@ -406,10 +415,15 @@ function fatherDetails(fatherPrimaryDistrict) {
                   (this.birthFatherFokontanyCustomAddress ||
                     this.birthMotherFokontanyCustomAddress ||
                     '-') + ',',
-                  'kaominina',
-                  (definitionOffice(
-                    replaceByUppercase(fatherPrimaryDistrict)
-                  ) || '- ') + ','
+                  fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+                    ? // && (this.birthFatherFokontanyCustomAddress?.toLowerCase().includes('toamasina') || this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina'))
+                      ''
+                    : 'kaominina' +
+                      ' ' +
+                      (definitionOffice(
+                        replaceByUppercase(fatherPrimaryDistrict)
+                      ) || '- ') +
+                      ','
                 ]
               : [
                   ([
@@ -653,9 +667,16 @@ function motherDetails(motherPrimaryDistrict) {
           ? [
               'amin’ny fokontany',
               (this.birthMotherFokontanyCustomAddress || '-') + ',',
-              'kaominina',
-              (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
-                '-') + ','
+
+              motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+                ? // && this.birthMotherFokontanyCustomAddress.toLowerCase().includes('toamasina')
+                  ''
+                : 'kaominina' +
+                  ' ' +
+                  (definitionOffice(
+                    replaceByUppercase(motherPrimaryDistrict)
+                  ) || '-') +
+                  ','
             ]
           : [
               ([
@@ -1075,7 +1096,7 @@ var DOZENS_MDG_WORDS = [
   'roapolo ',
   'telopolo ',
   'efapolo ',
-  'dimapolo ',
+  'dimampolo ',
   'enipolo ',
   'fitopolo ',
   'valopolo ',
@@ -1480,6 +1501,13 @@ function isToamasina() {
     return name.toLowerCase().includes('cu toamasina')
   }
 }
+
+function isToamasinaSubUrbaine() {
+  return function (name) {
+    return name.toLowerCase().includes('toamasina suburbaine')
+  }
+}
+
 /**
  * @TODO To optimize
  * !! THIS marital status translation list is HARDCODED here because :
