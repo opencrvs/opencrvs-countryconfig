@@ -53,9 +53,9 @@ test.describe.serial('8. Validate declaration review page', () => {
         type: 'National ID'
       },
       address: {
-        Country: 'Farajaland',
-        Province: 'Pualula',
-        District: 'Pili'
+        country: 'Farajaland',
+        province: 'Pualula',
+        district: 'Pili'
       }
     },
     father: {
@@ -175,11 +175,11 @@ test.describe.serial('8. Validate declaration review page', () => {
 
         await page.locator('#province').click()
         await page
-          .getByText(declaration.mother.address.Province, { exact: true })
+          .getByText(declaration.mother.address.province, { exact: true })
           .click()
         await page.locator('#district').click()
         await page
-          .getByText(declaration.mother.address.District, { exact: true })
+          .getByText(declaration.mother.address.district, { exact: true })
           .click()
 
         await continueForm(page)
@@ -373,15 +373,15 @@ test.describe.serial('8. Validate declaration review page', () => {
          */
         await expectRowValueWithChangeButton(
           'mother.address',
-          declaration.mother.address.Country
+          declaration.mother.address.country
         )
         await expectRowValueWithChangeButton(
           'mother.address',
-          declaration.mother.address.District
+          declaration.mother.address.district
         )
         await expectRowValueWithChangeButton(
           'mother.address',
-          declaration.mother.address.Province
+          declaration.mother.address.province
         )
 
         /*
@@ -444,7 +444,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
     test.describe('8.1.2 Click any "Change" link', async () => {
       test("8.1.2.1 Change child's name", async () => {
-        await page.getByTestId(`change-button-child.firstname`).click()
+        await page.getByTestId('change-button-child.firstname').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.child.name = {
@@ -472,7 +472,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.2 Change child's gender", async () => {
-        await page.getByTestId(`change-button-child.gender`).click()
+        await page.getByTestId('change-button-child.gender').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.child.gender = 'Female'
@@ -490,7 +490,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.3 Change child's birthday", async () => {
-        await page.getByTestId(`change-button-child.dob`).click()
+        await page.getByTestId('change-button-child.dob').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.child.birthDate = getRandomDate(0, 200)
@@ -511,7 +511,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.4 Change child's birth location", async () => {
-        await page.getByTestId(`change-button-child.birthLocation`).click()
+        await page.getByTestId('change-button-child.birthLocation').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.birthLocation = 'Chikonkomene Health Post'
@@ -530,7 +530,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test('8.1.2.5 Change attendant at birth', async () => {
-        await page.getByTestId(`change-button-child.attendantAtBirth`).click()
+        await page.getByTestId('change-button-child.attendantAtBirth').click()
         await page.getByRole('button', { name: 'Continue' }).click()
         declaration.attendantAtBirth = 'Midwife'
         await page.locator('#child____attendantAtBirth').click()
@@ -550,7 +550,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test('8.1.2.6 Change type of birth', async () => {
-        await page.getByTestId(`change-button-child.birthType`).click()
+        await page.getByTestId('change-button-child.birthType').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.birthType = 'Twin'
@@ -571,7 +571,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.7 Change child's weight at birth", async () => {
-        await page.getByTestId(`change-button-child.weightAtBirth`).click()
+        await page.getByTestId('change-button-child.weightAtBirth').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.weightAtBirth = 2.7
@@ -589,10 +589,9 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test('8.1.2.8 Change informant type', async () => {
-        await page.getByTestId(`change-button-informant.relation`).click()
+        await page.getByTestId('change-button-informant.relation').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
-        await page.waitForTimeout(500) // Temporary measurement untill the bug is fixed. BUG: rerenders after selecting relation with child
         declaration.informantType = 'Father'
         await page.locator('#informant____relation').click()
         await page
@@ -611,7 +610,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test('8.1.2.9 Change registration email', async () => {
-        await page.getByTestId(`change-button-informant.email`).click()
+        await page.getByTestId('change-button-informant.email').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.informantEmail =
@@ -634,7 +633,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.10 Change mother's name", async () => {
-        await page.getByTestId(`change-button-mother.firstname`).click()
+        await page.getByTestId('change-button-mother.firstname').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.mother.name.firstNames = faker.person.firstName('female')
@@ -656,7 +655,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.11 Change mother's birthday", async () => {
-        await page.getByTestId(`change-button-mother.dob`).click()
+        await page.getByTestId('change-button-mother.dob').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.mother.birthDate = getRandomDate(19, 200)
@@ -677,7 +676,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.12 Change mother's nationality", async () => {
-        await page.getByTestId(`change-button-mother.nationality`).click()
+        await page.getByTestId('change-button-mother.nationality').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.mother.nationality = 'Holy See'
@@ -698,7 +697,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.13 & 8.1.2.14 Change mother's ID type and id number", async () => {
-        await page.getByTestId(`change-button-mother.idType`).click()
+        await page.getByTestId('change-button-mother.idType').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.mother.identifier.type = 'Passport'
@@ -727,18 +726,18 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.15 Change mother's address", async () => {
-        await page.getByTestId(`change-button-mother.address`).click()
+        await page.getByTestId('change-button-mother.address').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
-        declaration.mother.address.Province = 'Sulaka'
-        declaration.mother.address.District = 'Afue'
+        declaration.mother.address.province = 'Sulaka'
+        declaration.mother.address.district = 'Afue'
         await page.locator('#province').click()
         await page
-          .getByText(declaration.mother.address.Province, { exact: true })
+          .getByText(declaration.mother.address.province, { exact: true })
           .click()
         await page.locator('#district').click()
         await page
-          .getByText(declaration.mother.address.District, { exact: true })
+          .getByText(declaration.mother.address.district, { exact: true })
           .click()
         await page.getByRole('button', { name: 'Back to review' }).click()
 
@@ -747,14 +746,14 @@ test.describe.serial('8. Validate declaration review page', () => {
          */
         await expect(
           page.getByTestId('row-value-mother.address')
-        ).toContainText(declaration.mother.address.District)
+        ).toContainText(declaration.mother.address.district)
         await expect(
           page.getByTestId('row-value-mother.address')
-        ).toContainText(declaration.mother.address.Province)
+        ).toContainText(declaration.mother.address.province)
       })
 
       test("8.1.2.16 Change father's name", async () => {
-        await page.getByTestId(`change-button-father.firstname`).click()
+        await page.getByTestId('change-button-father.firstname').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.father.name.firstNames = faker.person.firstName('male')
@@ -776,7 +775,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.17 Change father's birthday", async () => {
-        await page.getByTestId(`change-button-father.dob`).click()
+        await page.getByTestId('change-button-father.dob').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.father.birthDate = getRandomDate(21, 200)
@@ -797,7 +796,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.18 Change father's nationality", async () => {
-        await page.getByTestId(`change-button-father.nationality`).click()
+        await page.getByTestId('change-button-father.nationality').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.father.nationality = 'Holy See'
@@ -818,7 +817,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.19 Change father's ID type", async () => {
-        await page.getByTestId(`change-button-father.idType`).click()
+        await page.getByTestId('change-button-father.idType').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.father.identifier.type = 'Passport'
@@ -1057,15 +1056,15 @@ test.describe.serial('8. Validate declaration review page', () => {
        */
       await expectRowValueWithChangeButton(
         'mother.address',
-        declaration.mother.address.Country
+        declaration.mother.address.country
       )
       await expectRowValueWithChangeButton(
         'mother.address',
-        declaration.mother.address.District
+        declaration.mother.address.district
       )
       await expectRowValueWithChangeButton(
         'mother.address',
-        declaration.mother.address.Province
+        declaration.mother.address.province
       )
 
       /*
@@ -1343,15 +1342,15 @@ test.describe.serial('8. Validate declaration review page', () => {
        */
       await expectRowValueWithChangeButton(
         'mother.address',
-        declaration.mother.address.Country
+        declaration.mother.address.country
       )
       await expectRowValueWithChangeButton(
         'mother.address',
-        declaration.mother.address.District
+        declaration.mother.address.district
       )
       await expectRowValueWithChangeButton(
         'mother.address',
-        declaration.mother.address.Province
+        declaration.mother.address.province
       )
 
       /*
@@ -1415,7 +1414,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     const newFamilyNameForChild = faker.person.lastName('male')
 
     test("8.3.2.1 Update child's family name", async () => {
-      await page.getByTestId(`change-button-child.surname`).click()
+      await page.getByTestId('change-button-child.surname').click()
       await page.getByRole('button', { name: 'Continue' }).click()
 
       await page.locator('#child____surname').fill(newFamilyNameForChild)

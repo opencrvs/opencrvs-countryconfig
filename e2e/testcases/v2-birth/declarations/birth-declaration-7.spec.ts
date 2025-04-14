@@ -75,7 +75,6 @@ test.describe.serial('7. Birth declaration case - 7', () => {
         })
         .click()
 
-      await page.waitForTimeout(500) // Temporary measurement untill the bug is fixed. BUG: rerenders after selecting relation with child
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 

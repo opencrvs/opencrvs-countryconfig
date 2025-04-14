@@ -152,8 +152,6 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         })
         .click()
 
-      await page.waitForTimeout(500) // Temporary measurement untill the bug is fixed. BUG: rerenders after selecting relation with child
-
       await page.locator('#informant____email').fill(declaration.informantEmail)
 
       await continueForm(page)
