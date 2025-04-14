@@ -1,7 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { CREDENTIALS } from '../../../constants'
 import { getToken } from '../../../helpers'
-import { selectAction } from '../../../v2-utils'
 import { loginToV2 } from '../../../helpers'
 import {
   createDeclaration,
@@ -10,6 +9,7 @@ import {
 } from './data/birth-declaration'
 import {
   expectInUrl,
+  navigateToCertificatePrintAction,
   selectCertificationType,
   selectRequesterType
 } from './helpers'
@@ -30,9 +30,7 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
     page = await browser.newPage()
     await loginToV2(page)
 
-    const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
-    await page.getByRole('button', { name: childName }).click()
-    await selectAction(page, 'Print Certificate')
+    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test.afterAll(async () => {

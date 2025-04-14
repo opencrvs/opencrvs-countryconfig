@@ -3,11 +3,11 @@ import { CREDENTIALS } from '../../../constants'
 import { loginToV2 } from '../../../helpers'
 import { getToken } from '../../../helpers'
 import { createDeclaration, Declaration } from './data/birth-declaration'
-import { selectAction } from '../../../v2-utils'
 import {
   selectRequesterType,
   selectCertificationType,
-  expectInUrl
+  expectInUrl,
+  navigateToCertificatePrintAction
 } from './helpers'
 
 async function selectIdType(page: Page, idType: string) {
@@ -31,9 +31,7 @@ test.describe.serial('Validate collect payment page', () => {
     page = await browser.newPage()
     await loginToV2(page)
 
-    const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
-    await page.getByRole('button', { name: childName }).click()
-    await selectAction(page, 'Print Certificate')
+    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test.afterAll(async () => {

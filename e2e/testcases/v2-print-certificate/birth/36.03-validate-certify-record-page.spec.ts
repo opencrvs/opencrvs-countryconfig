@@ -5,6 +5,7 @@ import { createDeclaration, Declaration } from './data/birth-declaration'
 import { selectAction } from '../../../v2-utils'
 import {
   expectInUrl,
+  navigateToCertificatePrintAction,
   selectCertificationType,
   selectRequesterType
 } from './helpers'
@@ -24,6 +25,8 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     declaration = res.declaration
     page = await browser.newPage()
     await loginToV2(page)
+
+    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test.afterAll(async () => {
@@ -31,10 +34,6 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   })
 
   test('3.1 should navigate to Verify their identity page', async () => {
-    const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
-    await page.getByRole('button', { name: childName }).click()
-    await selectAction(page, 'Print Certificate')
-
     await expectInUrl(page, `/print-certificate/${eventId}/pages/collector`)
 
     await selectCertificationType(page, 'Birth Certificate')

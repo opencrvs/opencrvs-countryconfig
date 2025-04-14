@@ -5,8 +5,11 @@ import { getToken } from '../../../helpers'
 import { createDeclaration } from './data/birth-declaration'
 import { CREDENTIALS } from '../../../constants'
 import { loginToV2 } from '../../../helpers'
-import { selectAction } from '../../../v2-utils'
-import { selectCertificationType, selectRequesterType } from './helpers'
+import {
+  navigateToCertificatePrintAction,
+  selectCertificationType,
+  selectRequesterType
+} from './helpers'
 
 test.describe.serial('9.0 Validate "Certify record" page', () => {
   let declaration: Declaration
@@ -22,9 +25,7 @@ test.describe.serial('9.0 Validate "Certify record" page', () => {
     page = await browser.newPage()
     await loginToV2(page)
 
-    const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
-    await page.getByRole('button', { name: childName }).click()
-    await selectAction(page, 'Print Certificate')
+    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test.afterAll(async () => {

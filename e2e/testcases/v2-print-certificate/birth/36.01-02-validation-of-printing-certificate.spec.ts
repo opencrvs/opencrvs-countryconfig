@@ -3,8 +3,10 @@ import { expect, test, type Page } from '@playwright/test'
 import { loginToV2, getToken } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import { createDeclaration, Declaration } from './data/birth-declaration'
-import { selectAction } from '../../../v2-utils'
-import { selectCertificationType } from './helpers'
+import {
+  navigateToCertificatePrintAction,
+  selectCertificationType
+} from './helpers'
 
 test.describe.serial('Print certificate', () => {
   let page: Page
@@ -26,9 +28,7 @@ test.describe.serial('Print certificate', () => {
   })
 
   test('1.0 Click on "Print certificate" from action menu', async () => {
-    const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
-    await page.getByRole('button', { name: childName }).click()
-    await selectAction(page, 'Print Certificate')
+    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test.describe('2.0 Validate "Certify record" page', async () => {

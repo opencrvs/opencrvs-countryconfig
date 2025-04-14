@@ -5,11 +5,13 @@ import { loginToV2 } from '../../../helpers'
 import { createDeclaration } from './data/birth-declaration'
 import { CREDENTIALS } from '../../../constants'
 import { getToken } from '../../../helpers'
-import { expectInUrl, selectRequesterType } from './helpers'
+import {
+  navigateToCertificatePrintAction,
+  selectRequesterType
+} from './helpers'
 import { selectCertificationType } from './helpers'
 
 test.describe.serial('10.0 Validate "Review" page', () => {
-  let eventId: string
   let declaration: Declaration
   let page: Page
 
@@ -19,14 +21,11 @@ test.describe.serial('10.0 Validate "Review" page', () => {
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
     const res = await createDeclaration(token)
-    eventId = res.eventId
     declaration = res.declaration
     page = await browser.newPage()
     await loginToV2(page)
 
-    const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
-    await page.getByRole('button', { name: childName }).click()
-    await selectAction(page, 'Print Certificate')
+    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test.afterAll(async () => {

@@ -1,4 +1,6 @@
 import { Page, expect } from '@playwright/test'
+import { Declaration } from './data/birth-declaration'
+import { selectAction } from '../../../v2-utils'
 
 export async function selectCertificationType(page: Page, type: string) {
   await page.locator('#certificateTemplateId svg').click()
@@ -15,4 +17,13 @@ export async function selectRequesterType(page: Page, type: string) {
 
 export async function expectInUrl(page: Page, assertionString: string) {
   await expect(page.url().includes(assertionString)).toBeTruthy()
+}
+
+export async function navigateToCertificatePrintAction(
+  page: Page,
+  declaration: Declaration
+) {
+  const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
+  await page.getByRole('button', { name: childName }).click()
+  await selectAction(page, 'Print Certificate')
 }
