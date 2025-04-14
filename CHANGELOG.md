@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8.0
+
+### New features
+- Added a local virtual machine setup for testing Ansible playbooks locally. Check [provision.ipynb](infrastructure/local/provision.ipynb) for more details.
+
 ## 1.7.1 Release candidate
 
 ### New features
