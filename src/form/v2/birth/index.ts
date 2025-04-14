@@ -143,7 +143,10 @@ export const birthEvent = defineConfig({
           conditional: and(
             event.hasAction(ActionType.DECLARE),
             not(event.hasAction(ActionType.VALIDATE)),
-            user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL)
+            or(
+              user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL),
+              user.hasScope(SCOPES.RECORD_REGISTER)
+            )
           )
         }
       ]
