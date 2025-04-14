@@ -37,6 +37,7 @@ on:
           - staging
           - qa
           - development
+          - v16
       core-image-tag:
         description: Core DockerHub image tag
         required: true
