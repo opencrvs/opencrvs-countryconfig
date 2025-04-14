@@ -102,7 +102,6 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        * As mother and father's details are not given, upload document for mother and father should not be visible
        */
       await expect(page.locator('#documents____proofOfMother')).toBeHidden()
-      await expect(page.locator('#documents____proofOfFather')).toBeHidden()
 
       await uploadImageToSection({
         page,

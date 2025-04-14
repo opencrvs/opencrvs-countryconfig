@@ -447,7 +447,7 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       })
     })
 
-    test('3.1.6 Go To Review', async () => {
+    test('3.1.6 Go to Review', async () => {
       await goToSection(page, 'review')
     })
 

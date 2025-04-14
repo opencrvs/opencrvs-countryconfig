@@ -618,7 +618,7 @@ test.describe.serial('8. Validate declaration review page', () => {
           '.' +
           declaration.father.name.familyName.toLowerCase() +
           (Math.random() * 1000).toFixed(0) +
-          '@gmail.com'
+          '@opencrvs.dev'
         await page
           .locator('#informant____email')
           .fill(declaration.informantEmail)
