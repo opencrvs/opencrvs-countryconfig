@@ -15,6 +15,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
+import { validateAddress } from '../helpers'
 
 test.describe.serial('2. Birth declaration case - 2', () => {
   let page: Page
@@ -367,14 +368,10 @@ test.describe.serial('2. Birth declaration case - 2', () => {
         declaration.placeOfBirth
       )
 
-      await Promise.all(
-        Object.values(declaration.birthLocation).map((val) =>
-          expect(
-            page
-              .getByTestId('row-value-child.address.privateHome')
-              .getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.birthLocation,
+        'row-value-child.address.privateHome'
       )
 
       /*
@@ -473,12 +470,10 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Mother's address
        */
-      await Promise.all(
-        Object.values(declaration.mother.address).map((val) =>
-          expect(
-            page.getByTestId('row-value-mother.address').getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.mother.address,
+        'row-value-mother.address'
       )
 
       /*
@@ -546,12 +541,10 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * Expected result: should include
        * - Father's address
        */
-      await Promise.all(
-        Object.values(declaration.father.address).map((val) =>
-          expect(
-            page.getByTestId('row-value-father.address').getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.father.address,
+        'row-value-father.address'
       )
     })
 

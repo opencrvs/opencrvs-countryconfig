@@ -14,6 +14,7 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
+import { validateAddress } from '../helpers'
 
 test.describe.serial('1. Birth declaration case - 1', () => {
   let page: Page
@@ -413,13 +414,10 @@ test.describe.serial('1. Birth declaration case - 1', () => {
        * Expected result: should include
        * - Mother's address
        */
-      // @TODO: There is a bug on V2, where it shows an empty 'Usual place of residence' field on the review page
-      await Promise.all(
-        Object.values(declaration.mother.address).map((val) =>
-          expect(
-            page.getByTestId('row-value-mother.address').getByText(val)
-          ).toBeVisible()
-        )
+      await validateAddress(
+        page,
+        declaration.mother.address,
+        'row-value-mother.address'
       )
 
       /*
