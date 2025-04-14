@@ -3,7 +3,11 @@ import { CREDENTIALS } from '../../../constants'
 import { getToken, loginToV2 } from '../../../helpers'
 import { createDeclaration, Declaration } from './data/birth-declaration'
 import { selectAction } from '../../../v2-utils'
-import { selectCertificationType, selectRequesterType } from './helpers'
+import {
+  expectInUrl,
+  selectCertificationType,
+  selectRequesterType
+} from './helpers'
 
 test.describe.serial('3.0 Validate "Certify record" page', () => {
   let eventId: string
@@ -31,31 +35,23 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await page.getByRole('button', { name: childName }).click()
     await selectAction(page, 'Print Certificate')
 
-    await expect(
-      page.url().includes(`/print-certificate/${eventId}/pages/collector`)
-    ).toBeTruthy()
+    await expectInUrl(page, `/print-certificate/${eventId}/pages/collector`)
 
     await selectCertificationType(page, 'Birth Certificate')
     await selectRequesterType(page, 'Print and issue to informant')
 
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(
-      page
-        .url()
-        .includes(
-          `/print-certificate/${eventId}/pages/collector.identity.verify`
-        )
-    ).toBeTruthy()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.identity.verify`
+    )
   })
 
   test('3.2 should see informant Id, names, nationality and dob', async () => {
-    await expect(
-      page
-        .url()
-        .includes(
-          `/print-certificate/${eventId}/pages/collector.identity.verify`
-        )
-    ).toBeTruthy()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.identity.verify`
+    )
 
     await expect(page.locator('#content-name')).toContainText(
       'Verify their identity'
@@ -113,13 +109,10 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
 
     await page.getByRole('button', { name: 'Continue' }).click()
 
-    await expect(
-      page
-        .url()
-        .includes(
-          `/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
-        )
-    ).toBeTruthy()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/review?templateId=v2.birth-certificate`
+    )
     await page.goBack()
     await page.getByRole('button', { name: 'Back' }).click()
   })
@@ -128,12 +121,9 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await page.getByRole('button', { name: 'Identity does not match' }).click()
     await page.getByRole('button', { name: 'Cancel' }).click()
     await expect(page.getByRole('dialog')).toBeHidden()
-    await expect(
-      page
-        .url()
-        .includes(
-          `/print-certificate/${eventId}/pages/collector.identity.verify`
-        )
-    ).toBeTruthy()
+    await expectInUrl(
+      page,
+      `/print-certificate/${eventId}/pages/collector.identity.verify`
+    )
   })
 })

@@ -4,8 +4,11 @@ import { loginToV2 } from '../../../helpers'
 import { getToken } from '../../../helpers'
 import { createDeclaration, Declaration } from './data/birth-declaration'
 import { selectAction } from '../../../v2-utils'
-import { selectRequesterType } from './helpers'
-import { selectCertificationType } from './helpers'
+import {
+  selectRequesterType,
+  selectCertificationType,
+  expectInUrl
+} from './helpers'
 
 async function selectIdType(page: Page, idType: string) {
   await page.locator('#collector____OTHER____idType').click()
@@ -109,13 +112,10 @@ test.describe.serial('Validate collect payment page', () => {
       await expect(page.getByText('528KB-random.png')).toBeVisible()
       await expect(page.locator('#preview_delete')).toBeVisible()
       await page.getByRole('button', { name: 'Continue' }).click()
-      await expect(
-        page
-          .url()
-          .includes(
-            `/print-certificate/${eventId}/pages/collector.collect.payment`
-          )
-      ).toBeTruthy()
+      await expectInUrl(
+        page,
+        `/print-certificate/${eventId}/pages/collector.collect.payment`
+      )
     })
   })
 })
