@@ -1,0 +1,49 @@
+{
+  "Declaration Type": "Complete",
+  "Declaration Started by": "FA",
+  "Child details": {
+    "First Name(s)": "Jack",
+    "Last Name": "Collen",
+    "Sex": "Male",
+    "Attendant at birth": "Physician",
+    "Type of Birth": "Single",
+    "Weight at birth": 2.4,
+    "Place of delivery": "H. Institution"
+  },
+  "Informant details": {
+    "Relationship to child": "Mother",
+    "Date of birth": null,
+    "Nationality": null,
+    "Type of ID": null,
+    "Usual place of residence": null
+  },
+  "Mother's details": {
+    "Details available?": true,
+    "Date of birth": "Date",
+    "Nationality": "Far",
+    "Type of ID": "NID",
+    "Marital status": "Single",
+    "Level of education": "No schooling",
+    "Usual place of residence": {
+      "Country": "Farajaland",
+      "Province": "Central",
+      "District": "Ibombo",
+      "Urban": true,
+      "Town": "Example town",
+      "Residential Area": "Example area",
+      "Street": "Example street",
+      "Number": "Example house number",
+      "Postcode / Zip": "12345"
+    }
+  },
+  "Father's details": {
+    "Details available?": true,
+    "Date of birth": "Date",
+    "Nationality": "Other than Farajaland",
+    "Type of ID": "NID",
+    "Marital status": "Single",
+    "Level of education": "No schooling",
+    "Usual place of residence same as mother's": true
+  },
+  "Supporting document": null
+}
