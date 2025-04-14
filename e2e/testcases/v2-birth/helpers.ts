@@ -1,5 +1,7 @@
 import { expect, type Page } from '@playwright/test'
 
+export const REQUIRED_VALIDATION_ERROR = 'Required for registration'
+
 export async function validateAddress(
   page: Page,
   address: Record<string, any>,

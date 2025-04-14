@@ -11,10 +11,10 @@ import {
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
+import { REQUIRED_VALIDATION_ERROR } from '../helpers'
 
 test.describe.serial('7. Birth declaration case - 7', () => {
   let page: Page
-  const required = 'Required for registration'
   const declaration = {
     child: {
       name: {
@@ -141,7 +141,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        * - Child's Gender
        */
       await expect(page.getByTestId('row-value-child.gender')).toContainText(
-        required
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -149,7 +149,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        * - Child's date of birth
        */
       await expect(page.getByTestId('row-value-child.dob')).toContainText(
-        required
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -159,7 +159,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        */
       await expect(
         page.getByTestId('row-value-child.placeOfBirth')
-      ).toContainText(required)
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
 
       /*
        * Expected result: should include
@@ -174,7 +174,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        * - Informant's Email
        */
       await expect(page.getByTestId('row-value-informant.email')).toContainText(
-        required
+        REQUIRED_VALIDATION_ERROR
       )
       /*
        * Expected result: should require
@@ -183,17 +183,17 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        */
       await expect(
         page.getByTestId('row-value-informant.firstname')
-      ).toContainText(required)
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
       await expect(
         page.getByTestId('row-value-informant.surname')
-      ).toContainText(required)
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
 
       /*
        * Expected result: should require
        * - Informant's date of birth
        */
       await expect(page.getByTestId('row-value-informant.dob')).toContainText(
-        required
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -202,7 +202,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        */
       await expect(
         page.getByTestId('row-value-informant.idType')
-      ).toContainText(required)
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
 
       /*
        * Expected result: should require
@@ -278,7 +278,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        * - Child's Gender
        */
       await expect(page.getByTestId('row-value-child.gender')).toContainText(
-        required
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -286,7 +286,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        * - Child's date of birth
        */
       await expect(page.getByTestId('row-value-child.dob')).toContainText(
-        required
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -296,7 +296,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        */
       await expect(
         page.getByTestId('row-value-child.placeOfBirth')
-      ).toContainText(required)
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
 
       /*
        * Expected result: should include
@@ -311,7 +311,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        * - Informant's Email
        */
       await expect(page.getByTestId('row-value-informant.email')).toContainText(
-        required
+        REQUIRED_VALIDATION_ERROR
       )
       /*
        * Expected result: should require
@@ -320,10 +320,10 @@ test.describe.serial('7. Birth declaration case - 7', () => {
        */
       await expect(
         page.getByTestId('row-value-informant.firstname')
-      ).toContainText(required)
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
       await expect(
         page.getByTestId('row-value-informant.surname')
-      ).toContainText(required)
+      ).toContainText(REQUIRED_VALIDATION_ERROR)
     })
   })
 })

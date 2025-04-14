@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { goToSection, loginToV2 } from '../../helpers'
-
+import { REQUIRED_VALIDATION_ERROR } from './helpers'
 test.describe.serial("2. Validate the child's details page", () => {
   test.beforeEach(async ({ page }) => {
     await loginToV2(page)
@@ -107,7 +107,7 @@ test.describe.serial("2. Validate the child's details page", () => {
       await expect(
         page
           .locator('[data-test-id="row-value-child.firstname"]')
-          .getByText('Required for registration')
+          .getByText(REQUIRED_VALIDATION_ERROR)
       ).toBeVisible()
     })
 
@@ -148,7 +148,7 @@ test.describe.serial("2. Validate the child's details page", () => {
       await expect(
         page
           .locator('[data-test-id="row-value-child.gender"]')
-          .getByText('Required for registration')
+          .getByText(REQUIRED_VALIDATION_ERROR)
       ).toBeVisible()
     })
   })
@@ -217,7 +217,7 @@ test.describe.serial("2. Validate the child's details page", () => {
       await expect(
         page
           .locator('[data-test-id="row-value-child.dob"]')
-          .getByText('Required for registration')
+          .getByText(REQUIRED_VALIDATION_ERROR)
       ).toBeVisible()
     })
   })
@@ -287,7 +287,7 @@ test.describe.serial("2. Validate the child's details page", () => {
         page
           .getByRole('row', { name: 'Reason for delayed' })
           .locator('[data-test-id="row-value-child.reason"]')
-      ).toHaveText('Required for registration')
+      ).toHaveText(REQUIRED_VALIDATION_ERROR)
     })
   })
 
