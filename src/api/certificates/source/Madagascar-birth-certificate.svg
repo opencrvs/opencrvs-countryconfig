@@ -149,7 +149,13 @@
             margin-top: 0">{{{signatureDescription}}}
         </p><br />
     </foreignObject>
-    <foreignObject x="190" y="700" width="384" height="560">
+    
+    {{#if (isToamasinaSubUrbaine (location registrar.districtId "name"))}}
+        <foreignObject x="190" y="640" width="384" height="560">
+    {{ else }}
+        <foreignObject x="190" y="700" width="384" height="560">
+    {{/if}}
+
     <br /><p class="large" style="font-family: 'Plus Jakarta Sans';
             text-align: justify;
             line-height: 1.1;

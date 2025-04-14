@@ -224,19 +224,31 @@ export function eventStatement(): Handlebars.HelperDelegate {
         ? [
             'no teraka tao amin’ny',
             this.placeOfBirthFacility
-              ? replaceAbbreviations(this.placeOfBirthFacility) + ','
+              ? replaceAbbreviations(this.placeOfBirthFacility)
               : '',
             this.birthChildOtherPlaceOfBirthAddress
-              ? this.birthChildOtherPlaceOfBirthAddress + ','
+              ? this.birthChildOtherPlaceOfBirthAddress + ''
               : '',
             this.birthChildFokontanyCustomAddress
               ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
               : '',
-            'kaominina',
-            (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
-              '-') + ',',
-            'district',
-            definitionDistrict(placeOfBirthState) || '-'
+
+            this.birthChildFokontanyCustomAddress
+              ?.toLowerCase()
+              .includes('toamasina') ||
+            this.placeOfBirthFacility?.toLowerCase().includes('toamasina') ||
+            this.birthChildFokontanyCustomAddress
+              ?.toLowerCase()
+              .includes('toamasina')
+              ? ''
+              : 'kaominina' +
+                  ' ' +
+                  (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
+                    '-') +
+                  ', ' +
+                  'district' +
+                  ' ' +
+                  definitionDistrict(placeOfBirthState) || '-'
           ]
         : [
             'no teraka tao',
@@ -305,9 +317,15 @@ function fatherDetails(
               (this.birthFatherFokontanyCustomAddress ||
                 this.birthMotherFokontanyCustomAddress ||
                 '-') + ',',
-              'kaominina',
-              (definitionOffice(replaceByUppercase(fatherPrimaryDistrict)) ||
-                '- ') + ','
+              fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+                ? // && (this.birthFatherFokontanyCustomAddress?.toLowerCase().includes('toamasina') || this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina'))
+                  ''
+                : 'kaominina' +
+                  ' ' +
+                  (definitionOffice(
+                    replaceByUppercase(fatherPrimaryDistrict)
+                  ) || '- ') +
+                  ','
             ]
           : [
               ([
@@ -355,9 +373,15 @@ function motherDetails(
       ? [
           'amin’ny fokontany',
           (this.birthMotherFokontanyCustomAddress || '-') + ',',
-          'kaominina',
-          (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) || '-') +
-            ','
+
+          motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+            ? // && this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina')
+              ''
+            : 'kaominina' +
+              ' ' +
+              (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
+                '-') +
+              ','
         ]
       : [
           ([
@@ -567,7 +591,7 @@ const DOZENS_MDG_WORDS: string[] = [
   'roapolo ',
   'telopolo ',
   'efapolo ',
-  'dimapolo ',
+  'dimampolo ',
   'enipolo ',
   'fitopolo ',
   'valopolo ',
@@ -943,6 +967,12 @@ export function isTanaIV(): Handlebars.HelperDelegate {
 export function isToamasina(): Handlebars.HelperDelegate {
   return function (this: any, name: string) {
     return name.toLowerCase().includes('cu toamasina')
+  }
+}
+
+export function isToamasinaSubUrbaine(): Handlebars.HelperDelegate {
+  return function (this: any, name: string) {
+    return name.toLowerCase().includes('toamasina suburbaine')
   }
 }
 
