@@ -813,8 +813,10 @@ export const tennisClubMembershipEvent = defineConfig({
           conditional: and(
             event.hasAction(ActionType.DECLARE),
             not(event.hasAction(ActionType.VALIDATE)),
-            user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL),
-            user.hasScope(SCOPES.RECORD_REGISTER)
+            or(
+              user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL),
+              user.hasScope(SCOPES.RECORD_REGISTER)
+            )
           )
         }
       ],
