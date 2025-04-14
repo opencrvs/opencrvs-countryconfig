@@ -2,22 +2,23 @@ import { expect, test, type Page } from '@playwright/test'
 
 import { loginToV2, getToken } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
+import { createDeclaration, Declaration } from './data/birth-declaration'
 import {
-  createDeclaration,
-  CreateDeclarationResponse
-} from './data/birth-declaration'
-import { selectAction } from '../../../v2-utils'
+  navigateToCertificatePrintAction,
+  selectCertificationType
+} from './helpers'
 
 test.describe.serial('Print certificate', () => {
   let page: Page
-  let birthDeclaration: CreateDeclarationResponse
+  let declaration: Declaration
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    birthDeclaration = await createDeclaration(token)
+    const res = await createDeclaration(token)
+    declaration = res.declaration
     page = await browser.newPage()
     await loginToV2(page)
   })
@@ -27,9 +28,7 @@ test.describe.serial('Print certificate', () => {
   })
 
   test('1.0 Click on "Print certificate" from action menu', async () => {
-    const childName = `${birthDeclaration.declaration['child.firstname']} ${birthDeclaration.declaration['child.surname']}`
-    await page.getByRole('button', { name: childName }).click()
-    await selectAction(page, 'Print Certificate')
+    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test.describe('2.0 Validate "Certify record" page', async () => {
@@ -44,11 +43,7 @@ test.describe.serial('Print certificate', () => {
     test('2.2 Continue button is disabled when no requester type is selected', async () => {
       await page.reload({ waitUntil: 'networkidle' })
 
-      await page.locator('#certificateTemplateId svg').click()
-
-      await page
-        .getByText('Birth Certificate Certified Copy', { exact: true })
-        .click()
+      await selectCertificationType(page, 'Birth Certificate Certified Copy')
 
       await expect(page.getByText('Certify record')).toBeVisible()
 
@@ -59,7 +54,7 @@ test.describe.serial('Print certificate', () => {
 
     test('2.3 Continue button is enabled when both template and requester type are selected', async () => {
       await page.reload({ waitUntil: 'networkidle' })
-      await page.locator('#collector____requesterId div').nth(4).click()
+      await page.locator('#collector____requesterId').click()
       const selectOptionsLabels = [
         'Print and issue to informant',
         'Print and issue to mother',

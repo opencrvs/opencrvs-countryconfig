@@ -7,7 +7,31 @@ import { getAllLocations, getLocationIdByName } from '../../../birth/helpers'
 import { createClient } from '@opencrvs/toolkit/api'
 import { ActionDocument, AddressType } from '@opencrvs/toolkit/events'
 
-async function getDeclaration() {
+type InformantRelation = 'MOTHER' | 'BROTHER'
+
+function getInformantDetails(informantRelation: InformantRelation) {
+  if (informantRelation === 'MOTHER') {
+    return {
+      'informant.relation': informantRelation,
+      'informant.email': 'mothers@email.com'
+    }
+  }
+
+  return {
+    'informant.relation': informantRelation,
+    'informant.email': 'brothers@email.com',
+    'informant.firstname': faker.person.firstName(),
+    'informant.surname': faker.person.lastName(),
+    'informant.dob': '2008-09-12',
+    'informant.nationality': 'FAR',
+    'informant.idType': 'NATIONAL_ID',
+    'informant.nid': faker.string.numeric(10)
+  }
+}
+
+export async function getDeclaration(
+  informantRelation: InformantRelation = 'MOTHER'
+) {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
   const province = getLocationIdByName(locations, 'Central')
   const district = getLocationIdByName(locations, 'Ibombo')
@@ -45,8 +69,6 @@ async function getDeclaration() {
       postcodeOrZip: null,
       addressType: AddressType.DOMESTIC
     },
-    'informant.relation': 'MOTHER',
-    'informant.email': 'mothers@email.com',
     'child.firstname': faker.person.firstName(),
     'child.surname': faker.person.lastName(),
     'child.gender': 'female',
@@ -58,11 +80,12 @@ async function getDeclaration() {
       province,
       district,
       urbanOrRural: 'URBAN' as const
-    }
+    },
+    ...getInformantDetails(informantRelation)
   }
 }
 
-type Declaration = Awaited<ReturnType<typeof getDeclaration>>
+export type Declaration = Awaited<ReturnType<typeof getDeclaration>>
 
 export interface CreateDeclarationResponse {
   eventId: string
@@ -70,9 +93,10 @@ export interface CreateDeclarationResponse {
 }
 
 export async function createDeclaration(
-  token: string
+  token: string,
+  dec?: Declaration
 ): Promise<CreateDeclarationResponse> {
-  const declaration = await getDeclaration()
+  const declaration = dec || (await getDeclaration())
 
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
 
