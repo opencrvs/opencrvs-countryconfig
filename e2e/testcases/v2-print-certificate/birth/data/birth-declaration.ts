@@ -7,7 +7,9 @@ import { getAllLocations, getLocationIdByName } from '../../../birth/helpers'
 import { createClient } from '@opencrvs/toolkit/api'
 import { ActionDocument, AddressType } from '@opencrvs/toolkit/events'
 
-function getInformantDetails(informantRelation: string = 'MOTHER') {
+type InformantRelation = 'MOTHER' | 'BROTHER'
+
+function getInformantDetails(informantRelation: InformantRelation = 'MOTHER') {
   if (informantRelation === 'MOTHER') {
     return {
       'informant.relation': informantRelation,
@@ -15,20 +17,16 @@ function getInformantDetails(informantRelation: string = 'MOTHER') {
     }
   }
 
-  if (informantRelation === 'BROTHER') {
-    return {
-      'informant.relation': informantRelation,
-      'informant.email': 'brothers@email.com',
-      'informant.firstname': faker.person.firstName(),
-      'informant.surname': faker.person.lastName(),
-      'informant.dob': '2008-09-12',
-      'informant.nationality': 'FAR',
-      'informant.idType': 'NATIONAL_ID',
-      'informant.nid': faker.string.numeric(10)
-    }
+  return {
+    'informant.relation': informantRelation,
+    'informant.email': 'brothers@email.com',
+    'informant.firstname': faker.person.firstName(),
+    'informant.surname': faker.person.lastName(),
+    'informant.dob': '2008-09-12',
+    'informant.nationality': 'FAR',
+    'informant.idType': 'NATIONAL_ID',
+    'informant.nid': faker.string.numeric(10)
   }
-
-  throw 'Unsupported informant type'
 }
 
 export async function getDeclaration(informantRelation = 'MOTHER') {

@@ -71,28 +71,5 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
   })
 
   // @TODO: this is not implemented in events v2 yet
-  test.skip('7.3 should skip payment page if payment is 0', async () => {
-    // await page.goto(`${CLIENT_URL}/registration-home/print/1`)
-    // const response = await getDeclarationForPrintCertificate(page, {
-    //   child: { birthDate: format(new Date(), 'yyyy-MM-dd') },
-    //   isLoggedIn: true
-    // })
-    // declaration = response.declaration
-    // await page
-    //   .locator('#certificateTemplateId-form-input > span')
-    //   .first()
-    //   .click()
-    // await page
-    //   .getByText('Birth Certificate Certified Copy', { exact: true })
-    //   .click()
-    // await page.getByLabel('Print and issue to informant (Brother)').check()
-    // await page.getByRole('button', { name: 'Continue' }).click()
-    // await expect(
-    //   page.url().includes(`/print/check/${declaration.id}/birth/informant`)
-    // ).toBeTruthy()
-    // await page.getByRole('button', { name: 'Verified' }).click()
-    // await expect(
-    //   page.url().includes(`/review/${declaration.id}/birth`)
-    // ).toBeTruthy()
-  })
+  test.skip('7.3 should skip payment page if payment is 0', async () => {})
 })
