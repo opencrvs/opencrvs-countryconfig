@@ -17,6 +17,7 @@ import {
   PageTypes
 } from '@opencrvs/toolkit/events'
 import { informantOtherThanParent, InformantType } from './pages/informant'
+import { nationalIdValidator } from '../validators'
 
 const CertCollectorType = {
   INFORMANT: 'INFORMANT',
@@ -31,7 +32,9 @@ const otherIdType = {
   REFUGEE_NUMBER: 'REFUGEE_NUMBER',
   ALIEN_NUMBER: 'ALIEN_NUMBER',
   OTHER: 'OTHER',
-  NO_ID: 'NO_ID'
+  NO_ID: 'NO_ID',
+  NATIONAL_ID: 'NATIONAL_ID',
+  BIRTH_REGISTRATION_NUMBER: 'BIRTH_REGISTRATION_NUMBER'
 } as const
 
 export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
@@ -122,12 +125,29 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             },
             {
               label: {
+                id: 'v2.event.birth.action.form.section.idType.nid.label',
+                defaultMessage: 'National ID',
+                description: 'Option for selecting National ID as the ID type'
+              },
+              value: otherIdType.NATIONAL_ID
+            },
+            {
+              label: {
                 id: 'v2.event.birth.action.form.section.idType.drivingLicense.label',
-                defaultMessage: 'Driving License',
+                defaultMessage: 'Drivers License',
                 description:
                   'Option for selecting Driving License as the ID type'
               },
               value: otherIdType.DRIVING_LICENSE
+            },
+            {
+              label: {
+                id: 'v2.event.birth.action.form.section.idType.brn.label',
+                defaultMessage: 'Birth Registration Number',
+                description:
+                  'Option for selecting Birth Registration Number as the ID type'
+              },
+              value: otherIdType.BIRTH_REGISTRATION_NUMBER
             },
             {
               label: {
@@ -157,7 +177,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             {
               label: {
                 id: 'v2.event.birth.action.form.section.idType.noId.label',
-                defaultMessage: 'No ID',
+                defaultMessage: 'No ID available',
                 description: 'Option for selecting No ID as the ID type'
               },
               value: otherIdType.NO_ID
@@ -183,6 +203,25 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           ]
         },
         {
+          id: 'collector.nid',
+          type: FieldType.TEXT,
+          required: true,
+          label: {
+            defaultMessage: 'ID Number',
+            description: 'Field for entering ID Number',
+            id: 'v2.event.birth.action.form.section.nid.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').isEqualTo(
+                otherIdType.NATIONAL_ID
+              )
+            }
+          ],
+          validation: [nationalIdValidator('collector.nid')]
+        },
+        {
           id: 'collector.DRIVING_LICENSE.details',
           type: FieldType.TEXT,
           required: true,
@@ -196,6 +235,24 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               type: ConditionalType.SHOW,
               conditional: field('collector.OTHER.idType').isEqualTo(
                 otherIdType.DRIVING_LICENSE
+              )
+            }
+          ]
+        },
+        {
+          id: 'collector.brn',
+          type: FieldType.TEXT,
+          required: true,
+          label: {
+            defaultMessage: 'ID Number',
+            description: 'Field for entering ID Number',
+            id: 'v2.event.birth.action.form.section.brn.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').isEqualTo(
+                otherIdType.BIRTH_REGISTRATION_NUMBER
               )
             }
           ]
@@ -417,6 +474,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           },
           configuration: {
             data: [
+              { fieldId: 'informant.relation' },
               { fieldId: 'informant.idType' },
               { fieldId: 'informant.nid' },
               { fieldId: 'informant.passport' },
