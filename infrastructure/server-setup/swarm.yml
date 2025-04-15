@@ -56,7 +56,7 @@
 
     - name: Fail if the worker is in a different swarm
       fail:
-        msg: "Worker is already part of a different swarm cluster."
+        msg: "You are trying to attach a worker to a Swarm that is already part of another Swarm. Please make the node leave the current Swarm first, then run the playbook again."
       when: worker_swarm_status.stdout == 'active' and worker_node_id.stdout not in manager_node_ids.stdout_lines
 
     - name: Join as a worker
