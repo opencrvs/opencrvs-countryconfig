@@ -29,26 +29,39 @@
       shell: docker swarm join-token -q worker
       register: worker_token
 
-  
+
 - hosts: docker-workers
   become: yes
   become_method: sudo
   vars:
     manager_hostname: "{{ groups['docker-manager-first'][0] }}"
   tasks:
-    - name: Check if the node is already part of any swarm
+    - name: Check if the node is part of any swarm
       shell: docker info --format "{% raw %}{{.Swarm.LocalNodeState}}{% endraw %}"
       register: worker_swarm_status
       changed_when: false
 
-    - name: Fail if the node is already part of a swarm
+    - name: Get NodeID of the worker (if part of a swarm)
+      shell: docker info --format "{% raw %}{{.Swarm.NodeID}}{% endraw %}"
+      register: worker_node_id
+      when: worker_swarm_status.stdout == 'active'
+      changed_when: false
+      failed_when: false
+
+    - name: Get list of nodes in the manager's swarm
+      shell: docker node ls --format '{% raw %}{{.ID}}{% endraw %}'
+      delegate_to: "{{ manager_hostname }}"
+      register: manager_node_ids
+      changed_when: false
+
+    - name: Fail if the worker is in a different swarm
       fail:
         msg: "You are trying to attach a worker to a Swarm that is already part of another Swarm. Please make the node leave the current Swarm first, then run the playbook again."
-      when: "worker_swarm_status.stdout.find('active') != -1"
+      when: worker_swarm_status.stdout == 'active' and worker_node_id.stdout not in manager_node_ids.stdout_lines
 
-    - name: 'Join as a worker'
+    - name: Join as a worker
       shell: "docker swarm join --token {{ hostvars[manager_hostname]['worker_token']['stdout'] }} {{ hostvars[manager_hostname]['ansible_default_ipv4']['address'] }}:2377"
-      when: "docker_info.stdout.find('Swarm: inactive') != -1"
+      when: worker_swarm_status.stdout != 'active'
       retries: 3
       delay: 20
 
