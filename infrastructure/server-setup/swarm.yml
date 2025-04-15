@@ -19,6 +19,13 @@
       tags: 
         - swarm
 
+    - name: 'Get docker info'
+      shell: docker info
+      register: docker_info
+      changed_when: False
+      tags: 
+        - swarm
+        
     - name: 'Create primary swarm manager'
       shell: docker swarm init --advertise-addr {{ ansible_default_ipv4.address }}
       when: "docker_info.stdout.find('Swarm: inactive') != -1"
