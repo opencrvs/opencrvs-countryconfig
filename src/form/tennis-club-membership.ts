@@ -12,10 +12,11 @@
 import {
   ActionType,
   ConditionalType,
+  defineActionForm,
   defineConfig,
-  defineForm,
+  defineDeclarationForm,
   FieldType,
-  FormPageType
+  PageTypes
 } from '@opencrvs/toolkit/events'
 import {
   event,
@@ -27,60 +28,53 @@ import {
 } from '@opencrvs/toolkit/conditionals'
 
 import { Event } from './types/types'
-import { MAX_NAME_LENGTH } from './v2/utils'
+import { MAX_NAME_LENGTH } from './v2/birth/validators'
 import { SCOPES } from '@opencrvs/toolkit/scopes'
 
-const TENNIS_CLUB_FORM = defineForm({
+const TENNIS_CLUB_DECLARATION_REVIEW = {
+  title: {
+    id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
+    defaultMessage:
+      '{applicant.firstname, select, __EMPTY__ {Member declaration} other {{applicant.surname, select, __EMPTY__ {Member declaration} other {Member declaration for {applicant.firstname} {applicant.surname}}}}}',
+    description: 'Title of the review page'
+  },
+  fields: [
+    {
+      id: 'review.comment',
+      type: FieldType.TEXTAREA,
+      label: {
+        defaultMessage: 'Comment',
+        id: 'v2.event.birth.action.declare.form.review.comment.label',
+        description: 'Label for the comment field in the review section'
+      }
+    },
+    {
+      type: FieldType.SIGNATURE,
+      id: 'review.signature',
+      label: {
+        defaultMessage: 'Signature of informant',
+        id: 'v2.event.birth.action.declare.form.review.signature.label',
+        description: 'Label for the signature field in the review section'
+      },
+      signaturePromptLabel: {
+        id: 'v2.signature.upload.modal.title',
+        defaultMessage: 'Draw signature',
+        description: 'Title for the modal to draw signature'
+      }
+    }
+  ]
+}
+
+const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
   label: {
     id: 'v2.event.tennis-club-membership.action.declare.form.label',
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this form is referred as in the system'
   },
-  review: {
-    title: {
-      id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
-      defaultMessage:
-        '{applicant.firstname, select, __EMPTY__ {Member declaration} other {{applicant.surname, select, __EMPTY__ {Member declaration} other {Member declaration for {applicant.firstname} {applicant.surname}}}}}',
-      description: 'Title of the form to show in review page'
-    },
-    fields: [
-      {
-        id: 'review.comment',
-        type: 'TEXTAREA',
-        label: {
-          defaultMessage: 'Comment',
-          id: 'v2.event.birth.action.declare.form.review.comment.label',
-          description: 'Label for the comment field in the review section'
-        }
-      },
-      {
-        type: 'SIGNATURE',
-        id: 'review.signature',
-        label: {
-          defaultMessage: 'Signature of informant',
-          id: 'v2.event.birth.action.declare.form.review.signature.label',
-          description: 'Label for the signature field in the review section'
-        },
-        signaturePromptLabel: {
-          id: 'v2.signature.upload.modal.title',
-          defaultMessage: 'Draw signature',
-          description: 'Title for the modal to draw signature'
-        }
-      }
-    ]
-  },
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      id: 'v2.event.tennis-club-membership.action.declare.form.version.1',
-      defaultMessage: 'Version 1',
-      description: 'This is the first version of the form'
-    }
-  },
   pages: [
     {
       id: 'applicant',
+      type: PageTypes.enum.FORM,
       title: {
         id: 'v2.event.tennis-club-membership.action.declare.form.section.who.title',
         defaultMessage: 'Who is applying for the membership?',
@@ -153,6 +147,7 @@ const TENNIS_CLUB_FORM = defineForm({
     },
     {
       id: 'senior-pass',
+      type: PageTypes.enum.FORM,
       conditional: field('applicant.dob')
         .isBefore()
         .days(365 * 60 + 15)
@@ -177,6 +172,7 @@ const TENNIS_CLUB_FORM = defineForm({
     },
     {
       id: 'recommender',
+      type: PageTypes.enum.FORM,
       title: {
         id: 'v2.event.tennis-club-membership.action.declare.form.section.recommender.title',
         defaultMessage: 'Who is recommending the applicant?',
@@ -249,32 +245,16 @@ const TENNIS_CLUB_FORM = defineForm({
   ]
 })
 
-const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
+const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
     id: 'v2.event.tennis-club-membership.action.certificate.form.label',
     defaultMessage: 'Tennis club membership certificate collector',
     description: 'This is what this form is referred as in the system'
   },
-  review: {
-    title: {
-      id: 'v2.event.tennis-club-membership.action.certificate.form.review.title',
-      defaultMessage: 'Member certificate collector for {firstname} {surname}',
-      description: 'Title of the form to show in review page'
-    },
-    fields: []
-  },
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      id: 'v2.event.tennis-club-membership.action.certificate.form.version.1',
-      defaultMessage: 'Version 1',
-      description: 'This is the first version of the form'
-    }
-  },
   pages: [
     {
       id: 'collector',
+      type: PageTypes.enum.FORM,
       title: {
         id: 'v2.event.tennis-club-membership.action.certificate.form.section.who.title',
         defaultMessage: 'Print certified copy',
@@ -540,7 +520,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
     },
     {
       id: 'collector.identity.verify',
-      type: FormPageType.VERIFICATION,
+      type: PageTypes.enum.VERIFICATION,
       conditional: field('collector.requesterId').isEqualTo('INFORMANT'),
       title: {
         id: 'event.tennis-club-membership.action.print.verifyIdentity',
@@ -605,6 +585,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
     },
     {
       id: 'collector.collect.payment',
+      type: PageTypes.enum.FORM,
       title: {
         id: 'event.tennis-club-membership.action.print.collectPayment',
         defaultMessage: 'Collect Payment',
@@ -647,6 +628,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineForm({
 
 export const tennisClubMembershipEvent = defineConfig({
   id: Event.TENNIS_CLUB_MEMBERSHIP,
+  declaration: TENNIS_CLUB_DECLARATION_FORM,
   label: {
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this event is referred as in the system',
@@ -788,7 +770,7 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.declare.label'
       },
-      forms: [TENNIS_CLUB_FORM],
+      review: TENNIS_CLUB_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -807,7 +789,6 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.delete.label'
       },
-      forms: [],
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -832,11 +813,14 @@ export const tennisClubMembershipEvent = defineConfig({
           conditional: and(
             event.hasAction(ActionType.DECLARE),
             not(event.hasAction(ActionType.VALIDATE)),
-            user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL)
+            or(
+              user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL),
+              user.hasScope(SCOPES.RECORD_REGISTER)
+            )
           )
         }
       ],
-      forms: [TENNIS_CLUB_FORM]
+      review: TENNIS_CLUB_DECLARATION_REVIEW
     },
     {
       type: ActionType.REGISTER,
@@ -859,7 +843,7 @@ export const tennisClubMembershipEvent = defineConfig({
           )
         }
       ],
-      forms: [TENNIS_CLUB_FORM]
+      review: TENNIS_CLUB_DECLARATION_REVIEW
     },
     {
       type: ActionType.PRINT_CERTIFICATE,
@@ -878,7 +862,7 @@ export const tennisClubMembershipEvent = defineConfig({
           )
         }
       ],
-      forms: [TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM]
+      printForm: TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM
     },
     {
       type: ActionType.REQUEST_CORRECTION,
@@ -897,10 +881,10 @@ export const tennisClubMembershipEvent = defineConfig({
           )
         }
       ],
-      forms: [TENNIS_CLUB_FORM],
       onboardingForm: [
         {
           id: 'correction-requester',
+          type: PageTypes.enum.FORM,
           title: {
             id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.corrector',
             defaultMessage: 'Correction requester',
@@ -969,6 +953,7 @@ export const tennisClubMembershipEvent = defineConfig({
         },
         {
           id: 'identity-check',
+          type: PageTypes.enum.FORM,
           title: {
             id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
             defaultMessage: 'Verify their identity',
@@ -1013,6 +998,7 @@ export const tennisClubMembershipEvent = defineConfig({
       additionalDetailsForm: [
         {
           id: 'correction-request.supporting-documents',
+          type: PageTypes.enum.FORM,
           title: {
             id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
             defaultMessage: 'Upload supporting documents',
@@ -1076,6 +1062,7 @@ export const tennisClubMembershipEvent = defineConfig({
         },
         {
           id: 'correction-request.additional-details',
+          type: PageTypes.enum.FORM,
           title: {
             id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.corrector',
             defaultMessage: 'Reason for correction',

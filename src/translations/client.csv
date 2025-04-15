@@ -2548,7 +2548,7 @@ v2.event.birth.action.declare.form.review.title,Title of the form to show in rev
 v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur(se)
 v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Location of birth,Lieu de naissance
 v2.event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
-v2.event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
+v2.event.birth.action.declare.form.section.child.field.dob.error,This is the error message for invalid date,Must be a valid birth date,Doit être une date de naissance valide
 v2.event.birth.action.declare.form.section.child.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 v2.event.birth.action.declare.form.section.child.field.firstname.label,This is the label for the field,First name(s),Prénom(s) dans un jeu de caractères par défaut autre que l'anglais
 v2.event.birth.action.declare.form.section.child.field.gender.label,This is the label for the field,Sex,Sexe
@@ -2562,17 +2562,21 @@ v2.event.birth.action.declare.form.section.documents.field.proofOfFather.label,T
 v2.event.birth.action.declare.form.section.documents.field.proofOfMother.label,This is the label for the field,Proof of mother's ID,Identité de la mère
 v2.event.birth.action.declare.form.section.documents.field.proofOther.label,This is the label for the field,Other,Autre
 v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label,This is the label for the field,Same as mother's usual place of residence?,Identique au lieu de résidence habituel de la mère?
+v2.event.birth.action.declare.form.section.father.field.age.label,This is the label for the field,Age of father,Âge du père
 v2.event.birth.action.declare.form.section.father.field.detailsNotAvailable.label,This is the label for the field,Father's details are not available,Pas d'information sur le père
 v2.event.birth.action.declare.form.section.father.field.reason.label,This is the label for the field,Reason,Raison
+v2.event.birth.action.declare.form.section.informant.field.age.label,This is the label for the field,Age of informant,Âge de l'informateur
 v2.event.birth.action.declare.form.section.informant.field.email.label,This is the label for the field,Email,E-mail
 v2.event.birth.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to child,Relation avec l'enfant
 v2.event.birth.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11,Must be a valid 10 digit number that starts with 0(7|9),Doit être un nombre valide de  {num} chiffres qui commence par  {start}
 v2.event.birth.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,Numéro de téléphone
 v2.event.birth.action.declare.form.section.informant.field.relation.label,This is the label for the field,Relationship to child,Relation avec l'enfant
+v2.event.birth.action.declare.form.section.mother.field.age.label,This is the label for the field,Age of mother,Âge de la mère
 v2.event.birth.action.declare.form.section.mother.field.detailsNotAvailable.label,This is the label for the field,Mother's details are not available,Pas d'information sur la mère
 v2.event.birth.action.declare.form.section.mother.field.previousBirths.label,This is the label for the field,No. of previous births,Nombre de naissances antérieures
 v2.event.birth.action.declare.form.section.mother.field.reason.label,This is the label for the field,Reason,Raison
 v2.event.birth.action.declare.form.section.person.field.address.district.label,This is the label for the field,District,District
+v2.event.birth.action.declare.form.section.person.field.address.label,This is the label for the field,Usual place of residence,Lieu de résidence habituel
 v2.event.birth.action.declare.form.section.person.field.address.province.label,This is the label for the field,Province,Province
 v2.event.birth.action.declare.form.section.person.field.address.urbanOrRural.label,This is the label for the field,Urban or Rural,Urban or Rural
 v2.event.birth.action.declare.form.section.person.field.address.village.label,This is the label for the field,Village,Village
@@ -2581,7 +2585,7 @@ v2.event.birth.action.declare.form.section.person.field.age.checkbox.label,This 
 v2.event.birth.action.declare.form.section.person.field.age.postfix,This is the postfix for age field,years,years
 v2.event.birth.action.declare.form.section.person.field.age.text.label,This is the label for the field,Age of person,Age of person
 v2.event.birth.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,Numéro d'identification
-v2.event.birth.action.declare.form.section.person.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
+v2.event.birth.action.declare.form.section.person.field.dob.error,This is the error message for invalid date,Must be a valid birth date,Doit être une date de naissance valide
 v2.event.birth.action.declare.form.section.person.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 v2.event.birth.action.declare.form.section.person.field.educationalAttainment.label,This is the label for the field,Level of education,Niveau d'éducation
 v2.event.birth.action.declare.form.section.person.field.firstname.label,This is the label for the field,First name(s),Prénom(s) dans un jeu de caractères par défaut autre que l'anglais
@@ -2606,11 +2610,15 @@ v2.event.birth.summary.informant.contact.label,This is the label for the informa
 v2.event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
 v2.event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
-v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Select Certificate Template,Select Certificate Template
+v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Type,Type
+v2.event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
 v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
-v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR{Local Registrar} other{Unknown}}","{role, select, LOCAL_REGISTRAR{Registraire local} other{Inconnu}}"
+v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} SOCIAL_WORKER {Field Agent} REGISTRATION_AGENT {Registration Agent} other {Unknown}}"," {role, select, LOCAL_REGISTRAR {Registraire local} SOCIAL_WORKER {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} other{Inconnu}}"
 v2.event.summary.event.label,Label for the event field,Event,Événement
 v2.event.summary.event.value,Value for the event field,{eventLabel},{eventLabel}
+v2.event.summary.registrationNumber.empty,No registration number message,No registration number,Aucun numéro d'inscription
+v2.event.summary.registrationNumber.label,Label for the registration number field,Registration Number,Numéro d'inscription
+v2.event.summary.registrationNumber.value,Value for the registration number field,{event.registrationNumber},{event.registrationNumber}
 v2.event.summary.status.label,Label for the status field,Status,Statut
 v2.event.summary.status.value,Value for the status field,"{event.status, select, CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{event.status, select, CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} REJECTED {Requiert une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
 v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
@@ -2633,7 +2641,7 @@ v2.event.tennis-club-membership.action.declare.form.section.recommender.field.no
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Recommender's surname
 v2.event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Who is recommending the applicant?
 v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label,This is the label for the field,Applicant's address,Adresse du demandeur
-v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error,This is the error message for invalid date,Please enter a valid date,Please enter a valid date
+v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.error,This is the error message for invalid date,Must be a valid birth date,Doit être une date de naissance valide
 v2.event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth,Applicant's date of birth
 v2.event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name,Applicant's first name
 v2.event.tennis-club-membership.action.declare.form.section.who.field.image.label,This is the label for the field,Applicant's profile picture,Applicant's profile picture
@@ -2687,7 +2695,7 @@ v2.event.tennis-club-membership.summary.title.label,Label for the summary title 
 v2.event.tennis-club-membership.workqueue.all.name.label,Label for the 'All' work queue filter for tennis club membership,{applicant.firstname} {applicant.surname},{applicant.firstname} {applicant.surname}
 v2.event.tennis-club-membership.workqueue.readyForReview.name.label,Label for 'Ready for Review' work queue for tennis club membership,Ready for Review,Prêt pour révision
 v2.event.tennis-club-membership.workqueue.registered.name.label,Label for 'Registered' work queue for tennis club membership,Registered,Enregistré
-v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} REJECT {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} READ {Viewed} other {Unknown}}","{status, select, CREATE {Brouillon} VALIDATE {Déclaration envoyée pour approbation} DRAFT {Brouillon} DECLARE {Déclaration initiée} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVED {archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} READ {Vue} other {Inconnu}}"
+v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} REJECT {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} other {Unknown}}","{status, select, CREATE {Brouillon} VALIDATE {Déclaration envoyée pour approbation} DRAFT {Brouillon} DECLARE {Déclaration initiée} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVED {archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} READ {Vue} ASSIGN {Attribué} UNASSIGN {Non attribué} other {Inconnu}}"
 v2.events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} other {Unknown}}","{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} other {Unknown}}"
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
@@ -2820,7 +2828,7 @@ v2.review.register.confirm,The label for register button of review action,Regist
 v2.review.register.confirmModal.cancel,The label for modal cancel button when registering,Cancel,Annuler
 v2.review.register.confirmModal.confirm,The label for modal confirm button when registering,Register,Enregistrer
 v2.review.register.confirmModal.description,The description for review action modal when registering,‎,
-v2.review.register.confirmModal.title,The title for review action modal when registering,Register?,Enregistrer ?
+v2.review.register.confirmModal.title,The title for review action modal when registering,Register the {event}?,Enregistrer cet {event}?
 v2.review.register.description.complete,The description for registration action when form is complete,"By clicking register, you confirm that the information entered is correct and the event can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que l'événement peut être enregistré."
 v2.review.register.reject,The label for reject button of review action,Reject,Rejeter
 v2.review.register.title,The title shown when reviewing a record to register,Register event,Enregistrer l'événement

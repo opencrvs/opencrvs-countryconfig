@@ -11,17 +11,19 @@
 
 import {
   ConditionalType,
-  defineForm,
+  defineActionForm,
   field,
   FieldType,
-  FormPageType
+  PageTypes
 } from '@opencrvs/toolkit/events'
 import { informantOtherThanParent, InformantType } from './pages/informant'
+import { nationalIdValidator } from '../validators'
 
 const CertCollectorType = {
   INFORMANT: 'INFORMANT',
   OTHER: 'OTHER',
-  PRINT_IN_ADVANCE: 'PRINT_IN_ADVANCE'
+  MOTHER: 'MOTHER',
+  FATHER: 'FATHER'
 } as const
 
 const otherIdType = {
@@ -30,35 +32,21 @@ const otherIdType = {
   REFUGEE_NUMBER: 'REFUGEE_NUMBER',
   ALIEN_NUMBER: 'ALIEN_NUMBER',
   OTHER: 'OTHER',
-  NO_ID: 'NO_ID'
+  NO_ID: 'NO_ID',
+  NATIONAL_ID: 'NATIONAL_ID',
+  BIRTH_REGISTRATION_NUMBER: 'BIRTH_REGISTRATION_NUMBER'
 } as const
 
-export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
+export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
     id: 'v2.event.birth.action.certificate.form.label',
     defaultMessage: 'Birth certificate collector',
     description: 'This is what this form is referred as in the system'
   },
-  review: {
-    title: {
-      id: 'v2.event.birth.action.certificate.form.review.title',
-      defaultMessage: 'Member certificate collector for {firstname} {surname}',
-      description: 'Title of the form to show in review page'
-    },
-    fields: []
-  },
-  active: true,
-  version: {
-    id: '1.0.0',
-    label: {
-      id: 'v2.event.birth.action.certificate.form.version.1',
-      defaultMessage: 'Version 1',
-      description: 'This is the first version of the form'
-    }
-  },
   pages: [
     {
       id: 'collector',
+      type: PageTypes.enum.FORM,
       title: {
         id: 'v2.event.birth.action.certificate.form.section.who.title',
         defaultMessage: 'Certify record',
@@ -78,26 +66,34 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             {
               label: {
                 id: 'v2.event.birth.action.certificate.form.section.requester.informant.label',
-                defaultMessage: 'Print and issue Informant',
+                defaultMessage: 'Print and issue to informant',
                 description: 'This is the label for the field'
               },
               value: CertCollectorType.INFORMANT
             },
             {
               label: {
-                id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
-                defaultMessage: 'Print and issue someone else',
+                id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
+                defaultMessage: 'Print and issue to mother',
                 description: 'This is the label for the field'
               },
-              value: CertCollectorType.OTHER
+              value: CertCollectorType.MOTHER
             },
             {
               label: {
-                id: 'v2.event.birth.action.certificate.form.section.requester.printInAdvance.label',
-                defaultMessage: 'Print in advance',
+                id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
+                defaultMessage: 'Print and issue to father',
                 description: 'This is the label for the field'
               },
-              value: CertCollectorType.PRINT_IN_ADVANCE
+              value: CertCollectorType.FATHER
+            },
+            {
+              label: {
+                id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
+                defaultMessage: 'Print and issue to someone else',
+                description: 'This is the label for the field'
+              },
+              value: CertCollectorType.OTHER
             }
           ]
         },
@@ -113,7 +109,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.requesterId').isEqualTo('OTHER')
+              conditional: field('collector.requesterId').isEqualTo(
+                CertCollectorType.OTHER
+              )
             }
           ],
           options: [
@@ -127,12 +125,29 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             },
             {
               label: {
+                id: 'v2.event.birth.action.form.section.idType.nid.label',
+                defaultMessage: 'National ID',
+                description: 'Option for selecting National ID as the ID type'
+              },
+              value: otherIdType.NATIONAL_ID
+            },
+            {
+              label: {
                 id: 'v2.event.birth.action.form.section.idType.drivingLicense.label',
-                defaultMessage: 'Driving License',
+                defaultMessage: 'Drivers License',
                 description:
                   'Option for selecting Driving License as the ID type'
               },
               value: otherIdType.DRIVING_LICENSE
+            },
+            {
+              label: {
+                id: 'v2.event.birth.action.form.section.idType.brn.label',
+                defaultMessage: 'Birth Registration Number',
+                description:
+                  'Option for selecting Birth Registration Number as the ID type'
+              },
+              value: otherIdType.BIRTH_REGISTRATION_NUMBER
             },
             {
               label: {
@@ -162,7 +177,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             {
               label: {
                 id: 'v2.event.birth.action.form.section.idType.noId.label',
-                defaultMessage: 'No ID',
+                defaultMessage: 'No ID available',
                 description: 'Option for selecting No ID as the ID type'
               },
               value: otherIdType.NO_ID
@@ -188,6 +203,25 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           ]
         },
         {
+          id: 'collector.nid',
+          type: FieldType.TEXT,
+          required: true,
+          label: {
+            defaultMessage: 'ID Number',
+            description: 'Field for entering ID Number',
+            id: 'v2.event.birth.action.form.section.nid.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').isEqualTo(
+                otherIdType.NATIONAL_ID
+              )
+            }
+          ],
+          validation: [nationalIdValidator('collector.nid')]
+        },
+        {
           id: 'collector.DRIVING_LICENSE.details',
           type: FieldType.TEXT,
           required: true,
@@ -201,6 +235,24 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
               type: ConditionalType.SHOW,
               conditional: field('collector.OTHER.idType').isEqualTo(
                 otherIdType.DRIVING_LICENSE
+              )
+            }
+          ]
+        },
+        {
+          id: 'collector.brn',
+          type: FieldType.TEXT,
+          required: true,
+          label: {
+            defaultMessage: 'ID Number',
+            description: 'Field for entering ID Number',
+            id: 'v2.event.birth.action.form.section.brn.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').isEqualTo(
+                otherIdType.BIRTH_REGISTRATION_NUMBER
               )
             }
           ]
@@ -336,8 +388,10 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
     },
     {
       id: 'collector.identity.verify',
-      type: FormPageType.VERIFICATION,
-      conditional: field('collector.requesterId').isEqualTo('INFORMANT'),
+      type: PageTypes.enum.VERIFICATION,
+      conditional: field('collector.requesterId').isEqualTo(
+        CertCollectorType.INFORMANT
+      ),
       title: {
         id: 'event.birth.action.print.verifyIdentity',
         defaultMessage: 'Verify their identity',
@@ -364,9 +418,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             data: [
               { fieldId: 'mother.idType' },
               { fieldId: 'mother.nid' },
+              { fieldId: 'mother.passport' },
+              { fieldId: 'mother.brn' },
               { fieldId: 'mother.firstname' },
               { fieldId: 'mother.surname' },
               { fieldId: 'mother.dob' },
+              { fieldId: 'mother.age' },
               { fieldId: 'mother.nationality' }
             ]
           }
@@ -391,9 +448,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
             data: [
               { fieldId: 'father.idType' },
               { fieldId: 'father.nid' },
+              { fieldId: 'father.passport' },
+              { fieldId: 'father.brn' },
               { fieldId: 'father.firstname' },
               { fieldId: 'father.surname' },
               { fieldId: 'father.dob' },
+              { fieldId: 'father.age' },
               { fieldId: 'father.nationality' }
             ]
           }
@@ -414,11 +474,15 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
           },
           configuration: {
             data: [
+              { fieldId: 'informant.relation' },
               { fieldId: 'informant.idType' },
               { fieldId: 'informant.nid' },
+              { fieldId: 'informant.passport' },
+              { fieldId: 'informant.brn' },
               { fieldId: 'informant.firstname' },
               { fieldId: 'informant.surname' },
               { fieldId: 'informant.dob' },
+              { fieldId: 'informant.age' },
               { fieldId: 'informant.nationality' }
             ]
           }
@@ -459,6 +523,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineForm({
     },
     {
       id: 'collector.collect.payment',
+      type: PageTypes.enum.FORM,
       title: {
         id: 'event.birth.action.print.collectPayment',
         defaultMessage: 'Collect Payment',

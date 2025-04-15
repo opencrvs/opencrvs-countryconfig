@@ -16,17 +16,18 @@ import {
   and,
   FieldType,
   AddressType,
-  or
+  or,
+  PageTypes
 } from '@opencrvs/toolkit/events'
 import { field, not } from '@opencrvs/toolkit/conditionals'
 
 import { applicationConfig } from '@countryconfig/api/application/application-config'
+
+import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
 import {
-  createSelectOptions,
-  emptyMessage,
   invalidNameValidator,
   MAX_NAME_LENGTH
-} from '../../../utils'
+} from '@countryconfig/form/v2/birth/validators'
 
 const GenderTypes = {
   MALE: 'male',
@@ -179,6 +180,7 @@ const attendantAtBirthOptions = createSelectOptions(
 
 export const child = defineFormPage({
   id: 'child',
+  type: PageTypes.enum.FORM,
   title: {
     defaultMessage: "Child's details",
     description: 'Form section title for Child',
@@ -396,6 +398,7 @@ export const child = defineFormPage({
         }
       ],
       configuration: {
+        min: 0,
         postfix: {
           defaultMessage: 'Kilograms (kg)',
           description: 'This is the postfix for the weight field',

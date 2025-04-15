@@ -14,14 +14,16 @@ import {
   and,
   ConditionalType,
   defineFormPage,
-  FieldType
+  FieldType,
+  never
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
+import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
-  emptyMessage,
   invalidNameValidator,
-  MAX_NAME_LENGTH
-} from '../../../utils'
+  MAX_NAME_LENGTH,
+  nationalIdValidator
+} from '@countryconfig/form/v2/birth/validators'
 import { InformantType } from './informant'
 import {
   educationalAttainmentOptions,
@@ -132,7 +134,7 @@ export const father = defineFormPage({
       validation: [invalidNameValidator(`${PersonType.father}.surname`)]
     },
     {
-      id: `${PersonType.father}.dob`,
+      id: 'father.dob',
       type: 'DATE',
       required: true,
       validation: [
@@ -142,7 +144,16 @@ export const father = defineFormPage({
             description: 'This is the error message for invalid date',
             id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
           },
-          validator: field(`${PersonType.father}.dob`).isBefore().now()
+          validator: field('father.dob').isBefore().now()
+        },
+        {
+          message: {
+            defaultMessage: "Birth date must be before child's birth date",
+            description:
+              'This is the error message for a birth date after child`s birth date',
+            id: `v2.event.birth.action.declare.form.section.person.dob.afterChild`
+          },
+          validator: field('father.dob').isBefore().date(field('child.dob'))
         }
       ],
       label: {
@@ -172,6 +183,10 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ]
     },
@@ -180,9 +195,9 @@ export const father = defineFormPage({
       type: FieldType.TEXT,
       required: true,
       label: {
-        defaultMessage: `Age of ${PersonType.father}`,
+        defaultMessage: `Age of father`,
         description: 'This is the label for the field',
-        id: `v2.event.birth.action.declare.form.section.person.field.age.text.label`
+        id: 'v2.event.birth.action.declare.form.section.father.field.age.label'
       },
       configuration: {
         postfix: {
@@ -236,13 +251,13 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.father}.nid`,
+      id: 'father.nid',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.birth.action.declare.form.section.person.field.nid.label`
+        id: 'v2.event.birth.action.declare.form.section.person.field.nid.label'
       },
       conditionals: [
         {
@@ -251,6 +266,27 @@ export const father = defineFormPage({
             field(`${PersonType.father}.idType`).isEqualTo(IdType.NATIONAL_ID),
             requireFatherDetails
           )
+        }
+      ],
+      validation: [
+        nationalIdValidator('father.nid'),
+        {
+          message: {
+            defaultMessage:
+              'ID Number must be different from mother`s ID Number',
+            description: 'This is the error message for non-unique ID Number',
+            id: 'v2.event.birth.action.declare.form.nid.unique.mother'
+          },
+          validator: not(field('father.nid').isEqualTo(field('mother.nid')))
+        },
+        {
+          message: {
+            defaultMessage:
+              'ID Number must be different from informant`s ID Number',
+            description: 'This is the error message for non-unique ID Number',
+            id: 'v2.event.birth.action.declare.form.nid.unique.informant'
+          },
+          validator: not(field('father.nid').isEqualTo(field('informant.nid')))
         }
       ]
     },
@@ -322,7 +358,7 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.father}.addressSameAs`,
+      id: 'father.addressSameAs',
       type: FieldType.RADIO_GROUP,
       options: yesNoRadioOptions,
       required: true,
@@ -331,36 +367,39 @@ export const father = defineFormPage({
         description: 'This is the label for the field',
         id: `v2.event.birth.action.declare.form.section.father.field.address.addressSameAs.label`
       },
+      defaultValue: YesNoTypes.YES,
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            not(
-              field(`${PersonType.mother}.detailsNotAvailable`).isEqualTo(true)
-            ),
+            not(field('mother.detailsNotAvailable').isEqualTo(true)),
             requireFatherDetails
           )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('father.addressSameAs').isEqualTo(YesNoTypes.YES)
         }
       ]
     },
     {
-      id: `${PersonType.father}.address`,
+      id: 'father.address',
       type: FieldType.ADDRESS,
       hideLabel: true,
       label: {
-        defaultMessage: 'Father`s address',
+        defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.address.label'
+        id: 'v2.event.birth.action.declare.form.section.person.field.address.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            // Checking explicitly for not true, since detailsNotAvailable might be hidden and thus undefined
-            not(
-              field(`${PersonType.father}.detailsNotAvailable`).isEqualTo(true)
-            ),
-            requireFatherDetails
+            requireFatherDetails,
+            or(
+              field('mother.detailsNotAvailable').isEqualTo(true),
+              field('father.addressSameAs').isEqualTo(YesNoTypes.NO)
+            )
           )
         }
       ],
