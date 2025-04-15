@@ -682,12 +682,6 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/{event}/actions/{action}',
-    handler: onAnyActionHandler
-  })
-
-  server.route({
-    method: 'POST',
     path: `/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
