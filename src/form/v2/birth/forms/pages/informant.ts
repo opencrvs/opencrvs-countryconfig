@@ -436,12 +436,12 @@ export const informant = defineFormPage({
             defaultMessage:
               'Must be a valid 10 digit number that starts with 0(7|9)',
             description:
-              'The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11',
+              'The error message that appears on phone numbers where the first two characters must be 07 or 09, and length must be 10',
             id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.error'
           },
           validator: or(
             field('informant.phoneNo').matches(PHONE_NUMBER_REGEX),
-            field('informant.phoneNo').isUndefined()
+            field('informant.phoneNo').isFalsy()
           )
         }
       ]
