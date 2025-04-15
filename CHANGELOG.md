@@ -11,6 +11,10 @@
 
 - Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
+### New features
+
+- Added a local virtual machine setup for testing Ansible playbooks locally (MacOS only). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
+
 ## 1.7.1 Release candidate
 
 ### New features
@@ -31,7 +35,8 @@
 ### Migration notes
 
 In order to make the upgrade easier, there are a couple of steps that need to be performed which will make the codebase ready for the upgrade:
-- Run this command from the root of the countryconfig repository ```curl https://raw.githubusercontent.com/opencrvs/opencrvs-countryconfig/release-v1.7.0/src/upgrade-to-1_7.ts | npx ts-node -T --cwd ./src```
+
+- Run this command from the root of the countryconfig repository `curl https://raw.githubusercontent.com/opencrvs/opencrvs-countryconfig/release-v1.7.0/src/upgrade-to-1_7.ts | npx ts-node -T --cwd ./src`
 
   It will remove `roles.csv` and generate a `roles.ts` file. It will also update the corresponding role column in `default-employees.csv` & `prod-employees.csv` while adding the corresponding translations in `client.csv`. The employee files are only used when seeding new environments, if you already have a v1.6.x of OpenCRVS deployed, the data in the environment will automatically get migrated after deploying the upgrade. The changes in these two files are made to keep the roles in sync with your previously deployed environments, if any.
 
