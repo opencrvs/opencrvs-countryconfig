@@ -86,7 +86,7 @@
     "date-fns": "^2.28.0",
     "dotenv": "^16.4.5",
     "envalid": "^8.0.0",
-    "esbuild": "^0.18.9",
+    "esbuild": "^0.25.0",
     "handlebars": "^4.7.7",
     "hapi-auth-jwt2": "10.4.0",
     "hapi-pino": "^9.0.0",
