@@ -67,3 +67,21 @@ sudo chown -R provision:provision /home/provision/.ssh
 
 # Clean up private keys on manager
 multipass exec manager -- sudo rm -f /tmp/ssh-key /tmp/ssh-key.pub
+
+# Update inventory file with new IP addresses
+echo "Updating inventory file with new IP addresses..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+INVENTORY_FILE="$SCRIPT_DIR/local.linux.yml"
+
+MANAGER_IP=$(multipass list | awk '/manager/ {print $3}')
+WORKER_IP=$(multipass list | awk '/worker/ {print $3}')
+
+if [[ -z "$MANAGER_IP" || -z "$WORKER_IP" ]]; then
+  echo "Failed to retrieve IP addresses from multipass."
+  exit 1
+fi
+
+sed -i "s/ansible_host: '.*'/ansible_host: '$MANAGER_IP'/" "$INVENTORY_FILE"
+sed -i "0,/ansible_host: '$MANAGER_IP'/!s/ansible_host: '.*'/ansible_host: '$WORKER_IP'/" "$INVENTORY_FILE"
+
+echo "Inventory updated successfully."

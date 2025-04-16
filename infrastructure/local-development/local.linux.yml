@@ -10,16 +10,16 @@ all:
   vars:
     users: 
       # @todo this is where you define your local user.
-      - name: my-user
+      - name: shoumik
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRSRTqm3vOfjyTutISEtbVp7ZddoWa9NZDZLeWZGzLy dsi@dsi-Inspiron-15-3511
         state: present
         sudoer: true
 
 docker-manager-first:
   hosts:
     manager:
-      ansible_host: '22.22.22.22' #@todo replace with your multipass manager IP
+      ansible_host: '10.133.51.192' #@todo replace with your multipass manager IP
       ansible_user: 'provision'
       data_label: data1
 
@@ -27,7 +27,7 @@ docker-manager-first:
 docker-workers:
   hosts:
     worker:
-      ansible_host: '33.33.33.33' #@todo replace with your multipass worker IP
+      ansible_host: '10.133.51.10' #@todo replace with your multipass worker IP
       ansible_user: 'provision'
       data_label: data2
 
