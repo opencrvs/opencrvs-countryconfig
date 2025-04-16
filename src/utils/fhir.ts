@@ -181,3 +181,12 @@ export function getChild(record: fhir3.Bundle) {
   const composition = getComposition(record)
   return findEntry('child-details', composition, record) as fhir3.Patient
 }
+
+export function findQuestionnaireResponse(record: fhir3.Bundle, item: string) {
+  const questionnaireResponses = record.entry?.find(
+    ({ resource }) => resource?.resourceType === 'QuestionnaireResponse'
+  )?.resource as fhir3.QuestionnaireResponse | undefined
+
+  return questionnaireResponses?.item?.find(({ text }) => text === item)
+    ?.answer?.[0].valueString
+}

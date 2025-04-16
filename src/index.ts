@@ -74,7 +74,12 @@ import {
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { eventRegistrationHandler } from './api/event-registration/handler'
-import { EVENT_TYPE, getChild, getEventType } from './utils/fhir'
+import {
+  EVENT_TYPE,
+  findQuestionnaireResponse,
+  getChild,
+  getEventType
+} from './utils/fhir'
 import differenceInYears from 'date-fns/differenceInYears'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
@@ -209,16 +214,45 @@ export function shouldForwardToIDSystem(
   bundle: fhir3.Bundle,
   verificationStatus: Partial<VerificationStatus>
 ) {
-  const { father, mother, informant } = verificationStatus
+  // IDA Auth
+  const {
+    father: isFatherVerified,
+    mother: isMotherVerified,
+    informant: isInformantVerified
+  } = verificationStatus
+
+  // E-Signet
+  const isFatherAuthenticated =
+    findQuestionnaireResponse(
+      bundle,
+      'birth.father.father-view-group.verified'
+    ) === 'authenticated'
+
+  const isMotherAuthenticated =
+    findQuestionnaireResponse(
+      bundle,
+      'birth.mother.mother-view-group.verified'
+    ) === 'authenticated'
+
+  const isInformantAuthenticated =
+    findQuestionnaireResponse(
+      bundle,
+      'birth.informant.informant-view-group.verified'
+    ) === 'authenticated'
+
   const eventType = getEventType(bundle)
   if (eventType === EVENT_TYPE.BIRTH) {
     const child = getChild(bundle)
     const childBirthDate = new Date(child.birthDate as string)
     return (
-      differenceInYears(new Date(), childBirthDate) < 10 && (father || mother)
+      differenceInYears(new Date(), childBirthDate) < 10 &&
+      (isFatherVerified ||
+        isFatherAuthenticated ||
+        isMotherVerified ||
+        isMotherAuthenticated)
     )
   } else if (eventType === EVENT_TYPE.DEATH) {
-    return informant
+    return isInformantAuthenticated || isInformantVerified
   } else return true
 }
 
