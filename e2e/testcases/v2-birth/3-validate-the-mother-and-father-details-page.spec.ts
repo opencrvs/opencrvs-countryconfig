@@ -178,14 +178,14 @@ test.describe('3. Validate the mothers and fathers details pages', () => {
       await page.getByRole('heading', { name: 'Birth' }).click()
 
       await expect(
-        page.getByText('ID Number must be different from mother`s ID Number', {
+        page.getByText('National id must be unique', {
           exact: true
         })
       ).toBeVisible()
       await page.getByTestId('text__father____nid').fill('12345678901')
       await page.getByRole('heading', { name: 'Birth' }).click()
       await expect(
-        page.getByText('ID Number must be different from mother`s ID Number', {
+        page.getByText('National id must be unique', {
           exact: true
         })
       ).not.toBeVisible()
