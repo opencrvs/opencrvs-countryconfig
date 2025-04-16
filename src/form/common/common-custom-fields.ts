@@ -16,6 +16,7 @@ import { getNationalIDValidators } from './default-validation-conditionals'
 import { formMessageDescriptors } from './messages'
 import { Conditional, SerializedFormField } from '../types/types'
 import { genderOptions } from './select-options'
+import { getInitialValueFromIDReader } from '@opencrvs/mosip'
 
 export function getReasonForLateRegistration(
   event: string
@@ -125,8 +126,9 @@ export function getIDType(
       defaultMessage: 'Type of ID'
     },
     initialValue: {
-      dependsOn: ['idReader'],
-      expression: '!!$form?.idReader?.nid? "NATIONAL_ID" : ""'
+      dependsOn: ['idReader', 'verified'],
+      expression:
+        '!!$form?.idReader?.nid || $form?.verified === "verified" || $form?.verified === "authenticated" ? "NATIONAL_ID" : ""'
     },
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
@@ -145,11 +147,7 @@ function getValidators(configCase: string, idValue: IDType) {
 
 function initialValuesForIDType(idType: IDType) {
   if (idType === 'NATIONAL_ID') {
-    return {
-      dependsOn: ['idReader'],
-      expression:
-        '$form?.idReader?.nid || $form?.esignetCallback?.data?.nid || ""'
-    }
+    return getInitialValueFromIDReader('nid')
   } else {
     return ''
   }
