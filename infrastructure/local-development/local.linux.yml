@@ -1,0 +1,33 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+all:
+  vars:
+    users: 
+      # @todo this is where you define your local user.
+      - name: my-user
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+        state: present
+        sudoer: true
+
+docker-manager-first:
+  hosts:
+    manager:
+      ansible_host: '22.22.22.22' #@todo replace with your multipass manager IP
+      ansible_user: 'provision'
+      data_label: data1
+
+# QA and staging servers are not configured to use workers.
+docker-workers:
+  hosts:
+    worker:
+      ansible_host: '33.33.33.33' #@todo replace with your multipass worker IP
+      ansible_user: 'provision'
+      data_label: data2
+
