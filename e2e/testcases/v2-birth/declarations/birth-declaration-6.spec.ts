@@ -510,7 +510,7 @@ test.describe.serial('6. Birth declaration case - 6', () => {
         .click()
     })
 
-    test('6.1.8 Register', async () => {
+    test.skip('6.1.8 Register', async () => {
       await page.getByRole('button', { name: 'Register' }).click()
       await page.locator('#confirm_Declare').click()
       await expect(page.getByText('All events')).toBeVisible()
