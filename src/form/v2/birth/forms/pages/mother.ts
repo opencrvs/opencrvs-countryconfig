@@ -248,7 +248,7 @@ export const mother = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.mother}.nid`,
+      id: 'mother.nid',
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -260,30 +260,23 @@ export const mother = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`${PersonType.mother}.idType`).isEqualTo(IdType.NATIONAL_ID),
+            field('mother.idType').isEqualTo(IdType.NATIONAL_ID),
             requireMotherDetails
           )
         }
       ],
       validation: [
-        nationalIdValidator(`${PersonType.mother}.nid`),
+        nationalIdValidator('mother.nid'),
         {
           message: {
-            defaultMessage:
-              'ID Number must be different from fathers`s ID Number',
+            defaultMessage: 'National id must be unique',
             description: 'This is the error message for non-unique ID Number',
-            id: 'v2.event.birth.action.declare.form.nid.unique.father'
+            id: 'v2.event.birth.action.declare.form.nid.unique'
           },
-          validator: not(field('mother.nid').isEqualTo(field('father.nid')))
-        },
-        {
-          message: {
-            defaultMessage:
-              'ID Number must be different from informant`s ID Number',
-            description: 'This is the error message for non-unique ID Number',
-            id: 'v2.event.birth.action.declare.form.nid.unique.informant'
-          },
-          validator: not(field('mother.nid').isEqualTo(field('informant.nid')))
+          validator: and(
+            not(field('mother.nid').isEqualTo(field('father.nid'))),
+            not(field('mother.nid').isEqualTo(field('informant.nid')))
+          )
         }
       ]
     },
