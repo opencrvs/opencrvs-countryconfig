@@ -143,12 +143,12 @@
         <tspan x="289.95" y="362.054">{{pickAddressPartByLocationId (lookup $declaration "child.birthLocation") 'district'}}, {{pickAddressPartByLocationId (lookup $declaration "child.birthLocation") 'province'}}, {{pickAddressPartByLocationId (lookup $declaration "child.birthLocation") 'country'}}</tspan>
       {{else}}
         {{#ifCond (lookup $declaration 'child.address.other') '!==' undefined }}
-          <tspan x="289.95" y="347.054">{{pickAddressPartByJsonString (lookup $declaration 'child.address.other') 'district'}}&#10;</tspan>
-          <tspan x="289.95" y="362.054">{{pickAddressPartByJsonString (lookup $declaration 'child.address.other') 'province'}}, {{pickAddressPartByJsonString (lookup $declaration 'child.address.other') 'country'}}</tspan>
+          <tspan x="289.95" y="347.054">{{addressLookup (lookup $declaration 'child.address.other') 'district'}}&#10;</tspan>
+          <tspan x="289.95" y="362.054">{{addressLookup (lookup $declaration 'child.address.other') 'province'}}, {{addressLookup (lookup $declaration 'child.address.other') 'country'}}</tspan>
         {{else}}
           {{#ifCond (lookup $declaration 'child.address.privateHome') '!==' undefined }}
-            <tspan x="289.95" y="347.054">{{pickAddressPartByJsonString (lookup $declaration 'child.address.privateHome') 'district'}}&#10;</tspan>
-            <tspan x="289.95" y="362.054">{{pickAddressPartByJsonString (lookup $declaration 'child.address.privateHome') 'province'}}, {{pickAddressPartByJsonString (lookup $declaration 'child.address.privateHome') 'country'}}</tspan>
+            <tspan x="289.95" y="347.054">{{addressLookup (lookup $declaration 'child.address.privateHome') 'district'}}&#10;</tspan>
+            <tspan x="289.95" y="362.054">{{addressLookup (lookup $declaration 'child.address.privateHome') 'province'}}, {{addressLookup (lookup $declaration 'child.address.privateHome') 'country'}}</tspan>
           {{/ifCond}}
         {{/ifCond}}
       {{/ifCond}}
