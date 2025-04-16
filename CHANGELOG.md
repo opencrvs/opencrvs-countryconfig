@@ -107,7 +107,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
 - Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 - The `swarm.yaml` playbook now includes a validation step on Docker worker nodes to check whether the node is already part of an existing Swarm (based on Node ID). 
-If a worker node is found to be part of another Swarm, the playbook will now explicitly fail with a clear error message. `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
+If a worker node is found to be part of another Swarm, the playbook will now explicitly fail with a clear error message. Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
 
 
 ### Infrastructure breaking changes
