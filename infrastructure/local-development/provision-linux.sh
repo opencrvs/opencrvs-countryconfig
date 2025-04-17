@@ -94,6 +94,7 @@ multipass exec manager -- sudo rm -f /tmp/ssh-key /tmp/ssh-key.pub
 # Update inventory file with new IP addresses
 echo "Updating inventory file with new IP addresses..."
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cp "$SCRIPT_DIR/local.linux.yml.template" "$SCRIPT_DIR/local.linux.yml"
 INVENTORY_FILE="$SCRIPT_DIR/local.linux.yml"
 
 MANAGER_IP=$(multipass list | awk '/manager/ {print $3}')
