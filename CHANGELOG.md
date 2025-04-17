@@ -28,6 +28,13 @@
     ...otherProp
   }
   ```
+### Bugfixes
+
+- InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
+```
+partial write: max-values-per-tag limit exceeded (100000/100000)
+```
+https://github.com/opencrvs/opencrvs-countryconfig/pull/393
 
 ## 1.7.0 Release candidate
 
