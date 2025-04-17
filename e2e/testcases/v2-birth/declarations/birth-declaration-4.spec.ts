@@ -12,6 +12,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../../constants'
 import { fillDate, validateAddress } from '../helpers'
+import { selectAction } from '../../../v2-utils'
 
 test.describe.serial('4. Birth declaration case - 4', () => {
   let page: Page
@@ -649,8 +650,10 @@ test.describe.serial('4. Birth declaration case - 4', () => {
           name: formatName(declaration.child.name)
         })
         .click()
-      await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('Register').click()
+
+      await selectAction(page, 'Unassign')
+      await selectAction(page, 'Assign')
+      await selectAction(page, 'Register')
     })
 
     test('4.2.2 Verify information on review page', async () => {

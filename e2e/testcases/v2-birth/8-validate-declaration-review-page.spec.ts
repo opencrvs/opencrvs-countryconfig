@@ -11,6 +11,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import { fillDate } from './helpers'
+import { selectAction } from '../../v2-utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
   let page: Page
@@ -889,8 +890,9 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
         .click()
 
-      await page.getByRole('button', { name: 'Action' }).first().click()
-      await page.getByText('Validate').click()
+      await selectAction(page, 'Unassign')
+      await selectAction(page, 'Assign')
+      await selectAction(page, 'Validate')
     })
     test('8.2.1.1 Verify information added on previous pages', async () => {
       /*
@@ -1171,8 +1173,9 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
         .click()
 
-      await page.getByRole('button', { name: 'Action' }).first().click()
-      await page.getByText('Register').click()
+      await selectAction(page, 'Unassign')
+      await selectAction(page, 'Assign')
+      await selectAction(page, 'Register')
     })
     test('8.3.1.1 Verify information added on previous pages', async () => {
       /*
