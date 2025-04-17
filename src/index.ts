@@ -546,8 +546,14 @@ export async function createServer() {
               dateOfBirth: (bundle) => getChildBirthDate(bundle) ?? '',
               gender: (bundle) => getChildGender(bundle) ?? '',
               nationalIdNumber: (bundle) => {
-                const deceased = getDeceased(bundle)
-                return getPatientNationalId(deceased) || ''
+                let deceased
+                try {
+                  deceased = getDeceased(bundle)
+                } catch (error) {
+                  logger.error('Error getting deceased from bundle', error)
+                  return ''
+                }
+                return (deceased && getPatientNationalId(deceased)) || ''
               }
             }
           }
