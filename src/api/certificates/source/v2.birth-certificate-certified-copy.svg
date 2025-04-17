@@ -33,7 +33,7 @@
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
     <tspan x="234.289" y="654.552">&#x2028;</tspan>
-    <tspan x="80.9999" y="667.352">{{ formatDate (lookup $state "modifiedAt") "dd MMMM yyyy"}}</tspan>
+    <tspan x="80.9999" y="667.352">{{ $formatDate (lookup $state "modifiedAt") "dd MMMM yyyy"}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" font-weight="bold" letter-spacing="0px">
     <tspan x="80.9999" y="654.552">Date of certification / Date de d&#xe9;livrance</tspan>
@@ -45,8 +45,8 @@
     <tspan x="80.9999" y="688.312">Place of certification / Lieu de d&#xe9;livrance</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
-    <tspan x="80.9999" y="701.112">{{location (lookup $state 'updatedAtLocation') 'location'}}</tspan>
-    <tspan x="80.9999" y="713.912">{{location (lookup $state 'updatedAtLocation') 'district'}}, {{location (lookup $state 'updatedAtLocation') 'province'}}, {{location (lookup $state 'createdAtLocation') 'country'}}</tspan>
+    <tspan x="80.9999" y="701.112">{{$location (lookup $state 'updatedAtLocation') 'location'}}</tspan>
+    <tspan x="80.9999" y="713.912">{{$location (lookup $state 'updatedAtLocation') 'district'}}, {{$location (lookup $state 'updatedAtLocation') 'province'}}, {{$location (lookup $state 'createdAtLocation') 'country'}}</tspan>
   </text>
   <!--<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0.485px">
     <tspan x="80.9999" y="747.084">{{mosipAid}}</tspan>
@@ -63,7 +63,7 @@
     <tspan x="357.751" y="728.084">Registrar / L&#39;Officier de l&#39;&#xc9;tat Civil</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="7.76" letter-spacing="0px">
-    <tspan x="391.819" y="740.694">{{ findUserById (lookup $state "updatedBy") "name"}}</tspan>
+    <tspan x="391.819" y="740.694">{{ $findUserById (lookup $state "updatedBy") "name"}}</tspan>
   </text>
   <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
     <tspan x="81.3999" y="605.325">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in pursuance </tspan>
@@ -106,7 +106,7 @@
     </text>
     <g clip-path="url(#clip5_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="271.274">{{intl 'constants' (lookup $declaration "child.gender")}}</tspan>
+        <tspan x="289.95" y="271.274">{{$intl 'constants' (lookup $declaration "child.gender")}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="287.845" x2="512.08" y2="287.845" stroke="#ECECEC" stroke-width="0.97" />
@@ -139,16 +139,16 @@
     <g clip-path="url(#clip7_1157_5003)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
       {{#ifCond (lookup $declaration 'child.birthLocation') '!==' undefined }}
-        <tspan x="289.95" y="347.054">{{location (lookup $declaration "child.birthLocation") 'location'}}&#10;</tspan>
-        <tspan x="289.95" y="362.054">{{location (lookup $declaration "child.birthLocation") 'district'}}, {{location (lookup $declaration "child.birthLocation") 'province'}}, {{location (lookup $declaration "child.birthLocation") 'country'}}</tspan>
+        <tspan x="289.95" y="347.054">{{$location (lookup $declaration "child.birthLocation") 'location'}}&#10;</tspan>
+        <tspan x="289.95" y="362.054">{{$location (lookup $declaration "child.birthLocation") 'district'}}, {{$location (lookup $declaration "child.birthLocation") 'province'}}, {{$location (lookup $declaration "child.birthLocation") 'country'}}</tspan>
       {{else}}
         {{#ifCond (lookup $declaration 'child.address.other') '!==' undefined }}
-          <tspan x="289.95" y="347.054">{{OR (modifiedLookup 'child.address.other' 'district') (modifiedLookup 'child.address.other' 'district2')}}&#10;</tspan>
-          <tspan x="289.95" y="362.054">{{OR (modifiedLookup 'child.address.other' 'state') (modifiedLookup 'child.address.other' 'province')}}, {{modifiedLookup 'child.address.other' 'country'}}</tspan>
+          <tspan x="289.95" y="347.054">{{$OR ($modifiedLookup 'child.address.other' 'district') ($modifiedLookup 'child.address.other' 'district2')}}&#10;</tspan>
+          <tspan x="289.95" y="362.054">{{$OR ($modifiedLookup 'child.address.other' 'state') ($modifiedLookup 'child.address.other' 'province')}}, {{$modifiedLookup 'child.address.other' 'country'}}</tspan>
         {{else}}
           {{#ifCond (lookup $declaration 'child.address.privateHome') '!==' undefined }}
-            <tspan x="289.95" y="347.054">{{OR (modifiedLookup 'child.address.privateHome' 'district') (modifiedLookup 'child.address.privateHome' 'district2')}}&#10;</tspan>
-            <tspan x="289.95" y="362.054">{{OR (modifiedLookup 'child.address.privateHome' 'state') (modifiedLookup 'child.address.privateHome' 'province')}}, {{modifiedLookup 'child.address.privateHome' 'country'}}</tspan>
+            <tspan x="289.95" y="347.054">{{$OR ($modifiedLookup 'child.address.privateHome' 'district') ($modifiedLookup 'child.address.privateHome' 'district2')}}&#10;</tspan>
+            <tspan x="289.95" y="362.054">{{$OR ($modifiedLookup 'child.address.privateHome' 'state') ($modifiedLookup 'child.address.privateHome' 'province')}}, {{$modifiedLookup 'child.address.privateHome' 'country'}}</tspan>
           {{/ifCond}}
         {{/ifCond}}
       {{/ifCond}}
@@ -204,8 +204,8 @@
     </text>
     <g clip-path="url(#clip10_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="471.974">{{location (lookup $state "createdAtLocation") 'location'}}&#x2028;</tspan>
-        <tspan x="289.95" y="486.974">{{location (lookup $state "createdAtLocation") 'district'}}, {{location (lookup $state "createdAtLocation") 'province'}}, {{location (lookup $state "createdAtLocation") 'country'}}</tspan>
+        <tspan x="289.95" y="471.974">{{$location (lookup $state "createdAtLocation") 'location'}}&#x2028;</tspan>
+        <tspan x="289.95" y="486.974">{{$location (lookup $state "createdAtLocation") 'district'}}, {{$location (lookup $state "createdAtLocation") 'province'}}, {{$location (lookup $state "createdAtLocation") 'country'}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="496.045" x2="512.08" y2="496.045" stroke="#ECECEC" stroke-width="0.97" />
@@ -223,7 +223,7 @@
     </text>
     <g clip-path="url(#clip11_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="521.114">{{formatDate (lookup $state 'createdAt') "dd MMMM yyyy"}}</tspan>
+        <tspan x="289.95" y="521.114">{{$formatDate (lookup $state 'createdAt') "dd MMMM yyyy"}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="537.685" x2="512.08" y2="537.685" stroke="#ECECEC" stroke-width="0.97" />
@@ -239,7 +239,7 @@
     </text>
     <g clip-path="url(#clip12_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="562.754">{{findUserById (lookup $state 'createdBy') 'name'}}</tspan>
+        <tspan x="289.95" y="562.754">{{$findUserById (lookup $state 'createdBy') 'name'}}</tspan>
       </text>
     </g>
   </g>
@@ -308,6 +308,6 @@
   </defs>
   <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
   <!-- #ifCond printInAdvance '!==' true}} -->
-    <image width="140" height="70" xlink:href="{{findUserById (lookup $state "updatedBy") "signatureFileName"}}" x="347" y="644"></image>
+    <image width="140" height="70" xlink:href="{{$findUserById (lookup $state "updatedBy") "signatureFileName"}}" x="347" y="644"></image>
   <!-- /ifCond}} -->
 </svg>
