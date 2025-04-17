@@ -15,6 +15,18 @@ set -e
 IMG="24.04"
 NODES=("manager" "worker")
 
+# Your local public key file
+LOCAL_PUBKEY_FILE="$HOME/.ssh/id_rsa.pub"
+
+# Check if public key exists
+if [[ ! -f "$LOCAL_PUBKEY_FILE" ]]; then
+  echo "Local SSH public key not found at $LOCAL_PUBKEY_FILE"
+  echo "Generate one"
+  exit 1
+fi
+
+LOCAL_PUBKEY=$(cat "$LOCAL_PUBKEY_FILE")
+
 for NODE in "${NODES[@]}"; do
   if multipass list | grep -q "^$NODE "; then
     echo "Removing existing VM: $NODE"
@@ -25,7 +37,7 @@ done
 
 # Create VMs
 for NODE in "${NODES[@]}"; do
-  multipass launch --name "$NODE" --cpus 2 --memory 2G --disk 10G "$IMG"
+  multipass launch --name "$NODE" --cpus 2 --memory 2G --disk 15G "$IMG"
 done
 
 # Provision user setup script
@@ -51,7 +63,7 @@ sudo ssh-keygen -t rsa -f /tmp/ssh-key -N ""
 sudo cat /tmp/ssh-key.pub | sudo tee -a /home/provision/.ssh/authorized_keys > /dev/null
 sudo chmod 600 /home/provision/.ssh/authorized_keys
 sudo chown -R provision:provision /home/provision/.ssh
-echo -e "\n\nThis is the SSH_KEY , copy this and store it in a file with 600 permission, You will need this to run the ansible playbook:\n\n"
+echo -e "\n\nThis is the SSH_KEY , copy this and store it in a file with 600 permission, You may need this to run the ansible playbook:\n\n"
 sudo cat /tmp/ssh-key
 '
 
@@ -64,6 +76,17 @@ sudo -u provision bash -c 'echo \"$PUBKEY\" >> /home/provision/.ssh/authorized_k
 sudo chmod 600 /home/provision/.ssh/authorized_keys
 sudo chown -R provision:provision /home/provision/.ssh
 "
+
+# Copy local public key to all nodes and adding node IPs to known_hosts 
+for NODE in "${NODES[@]}"; do
+  echo "Setting up SSH key on $NODE..."
+  multipass exec "$NODE" -- bash -c "
+    echo \"$LOCAL_PUBKEY\" | sudo -u provision tee -a /home/provision/.ssh/authorized_keys > /dev/null
+  "
+  IP=$(multipass info "$NODE" | grep "IPv4:" | awk '{print $2}')
+  echo "Adding $NODE ($IP) to known_hosts..."
+  ssh-keyscan -H "$IP" >> ~/.ssh/known_hosts 2>/dev/null
+done
 
 # Clean up private keys on manager
 multipass exec manager -- sudo rm -f /tmp/ssh-key /tmp/ssh-key.pub
