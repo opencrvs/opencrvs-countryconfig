@@ -13,7 +13,7 @@ all:
 docker-manager-first:
   hosts:
     manager:
-      ansible_host: '11.11.11.11' #@todo replace with your multipass manager IP
+      ansible_host: '11.11.11.11' 
       ansible_user: 'provision'
       data_label: data1
 
@@ -21,7 +21,7 @@ docker-manager-first:
 docker-workers:
   hosts:
     worker:
-      ansible_host: '10.10.10.10' #@todo replace with your multipass worker IP
+      ansible_host: '10.10.10.10'
       ansible_user: 'provision'
       data_label: data2
 
