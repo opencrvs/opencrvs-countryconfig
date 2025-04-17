@@ -124,6 +124,37 @@ const DETECT_EVENT: Record<string, EVENT_TYPE> = {
   'marriage-declaration': EVENT_TYPE.MARRIAGE
 }
 
+export function resourceIdentifierToUUID(
+  resourceIdentifier: ResourceIdentifier
+) {
+  const urlParts = resourceIdentifier.split('/')
+  return urlParts[urlParts.length - 1] as UUID
+}
+
+export type URNReference = `urn:uuid:${UUID}`
+
+export function isURNReference(id: string): id is URNReference {
+  return id.startsWith('urn:uuid:')
+}
+
+export function isSaved<T extends Resource>(resource: T) {
+  return resource.id !== undefined
+}
+
+export function findEntryFromBundle(
+  bundle: fhir3.Bundle,
+  reference: fhir3.Reference['reference']
+) {
+  return isURNReference(reference!)
+    ? bundle.entry!.find((entry) => entry.fullUrl === reference)
+    : bundle.entry!.find(
+        (entry) =>
+          isSaved(entry.resource!) &&
+          entry.resource!.id ===
+            resourceIdentifierToUUID(reference as ResourceIdentifier)
+      )
+}
+
 function getTaskEventType(task: Task) {
   const eventType = task?.code?.coding?.[0].code
   return eventType
@@ -309,13 +340,27 @@ export function getPatientNationalId(patient: fhir3.Patient) {
 }
 
 export function getInformantPatient(record: fhir3.Bundle) {
-  const composition = getComposition(record)
-  return findEntry('informant-details', composition, record) as fhir3.Patient
+  const compositionSection = findCompositionSection(
+    'informant-details',
+    getComposition(record)
+  )
+  if (!compositionSection) return undefined
+  const personSectionEntry = compositionSection.entry![0]
+  const relatedPersonEntry = findEntryFromBundle(
+    record,
+    personSectionEntry.reference
+  )
+  const reference = (relatedPersonEntry?.resource as fhir3.RelatedPerson)
+    .patient.reference
+  return getFromBundleById(record, reference!.split('/')[1])
+    .resource as fhir3.Patient
 }
 
 export function getInformantFullName(bundle: fhir3.Bundle) {
-  const child = getInformantPatient(bundle)
-  return child.name?.[0]?.given?.join(' ') + ' ' + child.name?.[0]?.family
+  const informant = getInformantPatient(bundle)
+  return (
+    informant?.name?.[0]?.given?.join(' ') + ' ' + informant?.name?.[0]?.family
+  )
 }
 
 export function getEmailFromTaskResource(
@@ -336,4 +381,19 @@ export function getPhoneNumberFromTaskResource(
       'http://opencrvs.org/specs/extension/contact-person-phone-number'
   )
   return phoneIdentifier?.valueString
+}
+
+export function getInformantRelation(record: fhir3.Bundle) {
+  const compositionSection = findCompositionSection(
+    'informant-details',
+    getComposition(record)
+  )
+  if (!compositionSection) return undefined
+  const personSectionEntry = compositionSection.entry![0]
+  const relatedPerson = findEntryFromBundle(
+    record,
+    personSectionEntry.reference
+  )?.resource as fhir3.RelatedPerson
+
+  return relatedPerson?.relationship?.coding?.[0]?.code
 }
