@@ -19,7 +19,7 @@
 
 - name: 'Check the production environment is using more than one node'
   fail:
-    msg: 'The production environment must use more than one node. Please check the inventory file for production.'
+    msg: 'The production environment should always use more than one node. Please check the inventory file for production.'
   when:
     - groups['docker-workers'] | length == 0
     - single_node is not defined or single_node == false  
