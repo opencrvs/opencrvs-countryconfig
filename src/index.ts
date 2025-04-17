@@ -65,7 +65,8 @@ import {
   mosipRegistrationForReviewHandler,
   mosipRegistrationForApprovalHandler,
   mosipRegistrationHandler,
-  verify
+  verify,
+  fhirBundleToMOSIPPayload
 } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
@@ -78,9 +79,20 @@ import {
   EVENT_TYPE,
   findQuestionnaireResponse,
   getChild,
-  getEventType
+  getChildBirthDate,
+  getChildFullName,
+  getChildGender,
+  getComposition,
+  getDeceased,
+  getEmailFromTaskResource,
+  getEventType,
+  getInformantFullName,
+  getPatientNationalId,
+  getPhoneNumberFromTaskResource
 } from './utils/fhir'
 import differenceInYears from 'date-fns/differenceInYears'
+import { wrapValueIntoIdentityInfo } from './utils/mosip'
+import { getTaskResource, getTrackingIdFromTaskResource } from './utils'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
@@ -507,7 +519,44 @@ export async function createServer() {
         logger.info(
           'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
         )
-        return mosipRegistrationHandler({ url })(request, h)
+        const mosipPayload = fhirBundleToMOSIPPayload(
+          request.payload as fhir3.Bundle,
+          {
+            compositionId: (bundle) => {
+              const composition = getComposition(bundle)
+              return composition.id
+            },
+            trackingId: (bundle) => {
+              const task = getTaskResource(bundle)
+              return (task && getTrackingIdFromTaskResource(task)) || ''
+            },
+            notification: {
+              recipientFullName: (bundle) => getInformantFullName(bundle) || '',
+              recipientPhone: (bundle) => {
+                const task = getTaskResource(bundle)
+                return (task && getPhoneNumberFromTaskResource(task)) || ''
+              },
+              recipientEmail: (bundle) => {
+                const task = getTaskResource(bundle)
+                return (task && getEmailFromTaskResource(task)) || ''
+              }
+            },
+            requestFields: {
+              fullName: (bundle) => getChildFullName(bundle),
+              dateOfBirth: (bundle) => getChildBirthDate(bundle) ?? '',
+              gender: (bundle) => getChildGender(bundle) ?? '',
+              nationalIdNumber: (bundle) => {
+                const deceased = getDeceased(bundle)
+                return getPatientNationalId(deceased) || ''
+              }
+            }
+          }
+        )
+        return mosipRegistrationHandler({
+          url,
+          headers: request.headers,
+          payload: mosipPayload
+        })(request, h)
       } else {
         logger.info(
           'Failed country specified custom logic check for id creation. Bypassing id system...'
