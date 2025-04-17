@@ -151,10 +151,24 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD:-}
       - SMTP_SECURE=${SMTP_SECURE:-}
       - MOSIP_WEBSUB_CALLBACK_URL=http://mosip-api:2024/websub/callback
+      - ISSUER_URL=https://mosip-mock.{{hostname}}
     deploy:
       replicas: 1
       labels:
-        - 'traefik.enable=false'
+        - 'traefik.enable=true'
+        - 'traefik.http.routers.mosip-mock.rule=Host(`mosip-mock.{{hostname}}`)'
+        - 'traefik.http.services.mosip-mock.loadbalancer.server.port=20260'
+        - 'traefik.http.routers.mosip-mock.tls=true'
+        - 'traefik.http.routers.mosip-mock.tls.certresolver=certResolver'
+        - 'traefik.http.routers.mosip-mock.entrypoints=web,websecure'
+        - 'traefik.http.routers.mosip-mock.middlewares=gzip-compression'
+        - 'traefik.docker.network=opencrvs_overlay_net'
+        - 'traefik.http.middlewares.mosip-mock.headers.customresponseheaders.Pragma=no-cache'
+        - 'traefik.http.middlewares.mosip-mock.headers.customresponseheaders.Cache-control=no-store'
+        - 'traefik.http.middlewares.mosip-mock.headers.customresponseheaders.X-Robots-Tag=none'
+        - 'traefik.http.middlewares.mosip-mock.headers.stsseconds=31536000'
+        - 'traefik.http.middlewares.mosip-mock.headers.stsincludesubdomains=true'
+        - 'traefik.http.middlewares.mosip-mock.headers.stspreload=true'
     networks:
       - overlay_net
     logging:
