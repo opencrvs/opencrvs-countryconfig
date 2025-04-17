@@ -542,14 +542,9 @@ export async function createServer() {
               }
             },
             requestFields: {
-              fullName: (bundle) =>
-                wrapValueIntoIdentityInfo(getChildFullName(bundle), 'eng'),
+              fullName: (bundle) => getChildFullName(bundle),
               dateOfBirth: (bundle) => getChildBirthDate(bundle) ?? '',
-              gender: (bundle) =>
-                wrapValueIntoIdentityInfo(
-                  getChildGender(bundle) as string,
-                  'eng'
-                ),
+              gender: (bundle) => getChildGender(bundle) ?? '',
               nationalIdNumber: (bundle) => {
                 const deceased = getDeceased(bundle)
                 return getPatientNationalId(deceased) || ''
