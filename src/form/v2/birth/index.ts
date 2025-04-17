@@ -18,7 +18,10 @@ import {
 } from '@opencrvs/toolkit/events'
 import { not, event } from '@opencrvs/toolkit/conditionals'
 
-import { BIRTH_DECLARE_FORM } from './forms/declare'
+import {
+  BIRTH_DECLARATION_FORM,
+  BIRTH_DECLARATION_REVIEW
+} from './forms/declaration'
 import { advancedSearchBirth } from './advancedSearch'
 import { Event } from '@countryconfig/form/types/types'
 import { SCOPES } from '@opencrvs/toolkit/scopes'
@@ -26,6 +29,7 @@ import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/print-certificate'
 
 export const birthEvent = defineConfig({
   id: Event.V2_BIRTH,
+  declaration: BIRTH_DECLARATION_FORM,
   label: {
     defaultMessage: 'Birth',
     description: 'This is what this event is referred as in the system',
@@ -40,7 +44,63 @@ export const birthEvent = defineConfig({
         id: 'v2.event.birth.summary.title'
       }
     },
-    fields: []
+    fields: [
+      {
+        id: 'child.dob',
+        emptyValueMessage: {
+          defaultMessage: 'No date of birth',
+          description: 'This is shown when there is no child information',
+          id: 'v2.event.birth.summary.child.dob.empty'
+        },
+        label: {
+          defaultMessage: 'Date of birth',
+          description: 'This is the label for the child information',
+          id: 'v2.event.birth.summary.child.dob.label'
+        },
+        value: {
+          defaultMessage: '{child.dob}',
+          description: 'This is the dob value of the child',
+          id: 'v2.event.birth.summary.child.dob.value'
+        }
+      },
+      {
+        id: 'child.placeOfBirth',
+        emptyValueMessage: {
+          defaultMessage: 'No place of birth',
+          description: 'This is shown when there is no child information',
+          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+        },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'This is the label for the child information',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+        },
+        value: {
+          defaultMessage:
+            '{child.birthLocation}, {child.address.district} {child.address.province}',
+          description: 'This is the place of birth value of the child',
+          id: 'v2.event.birth.summary.child.placeOfBirth.value'
+        }
+      },
+      {
+        id: 'informant.contact',
+        emptyValueMessage: {
+          defaultMessage: 'No contact details provided',
+          description: 'This is shown when there is no informant information',
+          id: 'v2.event.birth.summary.informant.contact.empty'
+        },
+        label: {
+          defaultMessage: 'Contact',
+          description: 'This is the label for the informant information',
+          id: 'v2.event.birth.summary.informant.contact.label'
+        },
+        value: {
+          defaultMessage: '{informant.phoneNo} {informant.email}',
+          description: 'This is the contact value of the informant',
+          id: 'v2.event.birth.summary.informant.contact.value'
+        }
+      }
+    ]
   },
   workqueues: [
     {
@@ -57,7 +117,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.declare.label'
       },
-      forms: [BIRTH_DECLARE_FORM],
+      review: BIRTH_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -69,34 +129,37 @@ export const birthEvent = defineConfig({
       ]
     },
     {
-      type: 'VALIDATE',
+      type: ActionType.VALIDATE,
       label: {
         defaultMessage: 'Validate',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.validate.label'
       },
-      forms: [BIRTH_DECLARE_FORM],
+      review: BIRTH_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
             event.hasAction(ActionType.DECLARE),
             not(event.hasAction(ActionType.VALIDATE)),
-            user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL)
+            or(
+              user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL),
+              user.hasScope(SCOPES.RECORD_REGISTER)
+            )
           )
         }
       ]
     },
     {
-      type: 'REGISTER',
+      type: ActionType.REGISTER,
       label: {
         defaultMessage: 'Register',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.register.label'
       },
-      forms: [BIRTH_DECLARE_FORM],
+      review: BIRTH_DECLARATION_REVIEW,
       conditionals: [
         {
           type: ConditionalType.SHOW,
@@ -128,7 +191,7 @@ export const birthEvent = defineConfig({
           )
         }
       ],
-      forms: [BIRTH_CERTIFICATE_COLLECTOR_FORM]
+      printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     }
   ],
   advancedSearch: advancedSearchBirth

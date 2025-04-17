@@ -71,13 +71,13 @@ import {
 import { env } from './environment'
 import {
   getCustomEventsHandler,
-  onAnyActionHandler,
-  onRegisterHandler
+  onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { eventRegistrationHandler } from './api/event-registration/handler'
 import {
   EVENT_TYPE,
+  findQuestionnaireResponse,
   getChild,
   getChildBirthDate,
   getChildFullName,
@@ -93,6 +93,9 @@ import {
 import differenceInYears from 'date-fns/differenceInYears'
 import { wrapValueIntoIdentityInfo } from './utils/mosip'
 import { getTaskResource, getTrackingIdFromTaskResource } from './utils'
+import { ActionType } from '@opencrvs/toolkit/events'
+import { Event } from './form/types/types'
+import { onRegisterHandler } from './api/registration'
 
 export interface ITokenPayload {
   sub: string
@@ -223,16 +226,45 @@ export function shouldForwardToIDSystem(
   bundle: fhir3.Bundle,
   verificationStatus: Partial<VerificationStatus>
 ) {
-  const { father, mother, informant } = verificationStatus
+  // IDA Auth
+  const {
+    father: isFatherVerified,
+    mother: isMotherVerified,
+    informant: isInformantVerified
+  } = verificationStatus
+
+  // E-Signet
+  const isFatherAuthenticated =
+    findQuestionnaireResponse(
+      bundle,
+      'birth.father.father-view-group.verified'
+    ) === 'authenticated'
+
+  const isMotherAuthenticated =
+    findQuestionnaireResponse(
+      bundle,
+      'birth.mother.mother-view-group.verified'
+    ) === 'authenticated'
+
+  const isInformantAuthenticated =
+    findQuestionnaireResponse(
+      bundle,
+      'birth.informant.informant-view-group.verified'
+    ) === 'authenticated'
+
   const eventType = getEventType(bundle)
   if (eventType === EVENT_TYPE.BIRTH) {
     const child = getChild(bundle)
     const childBirthDate = new Date(child.birthDate as string)
     return (
-      differenceInYears(new Date(), childBirthDate) < 10 && (father || mother)
+      differenceInYears(new Date(), childBirthDate) < 10 &&
+      (isFatherVerified ||
+        isFatherAuthenticated ||
+        isMotherVerified ||
+        isMotherAuthenticated)
     )
   } else if (eventType === EVENT_TYPE.DEATH) {
-    return informant
+    return isInformantAuthenticated || isInformantVerified
   } else return true
 }
 
@@ -674,17 +706,27 @@ export async function createServer() {
     path: '/events',
     handler: getCustomEventsHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
       description: 'Serves custom events'
     }
   })
 
   server.route({
     method: 'POST',
-    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/REGISTER',
+    path: '/events/{event}/actions/{action}',
+    handler: onAnyActionHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: `/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
     }
   })
@@ -728,10 +770,10 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/{event}/actions/{action}',
-    handler: onAnyActionHandler,
+    path: `/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
+    handler: onRegisterHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
     }
   })

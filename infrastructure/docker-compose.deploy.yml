@@ -335,7 +335,7 @@ services:
       - overlay_net
 
   minio-mc:
-    image: minio/mc
+    image: minio/mc:RELEASE.2023-09-13T23-08-58Z
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc admin trace --path ocrvs/* minio
@@ -902,9 +902,10 @@ services:
   migration:
     environment:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
-      - PERFORMANCE_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
+      - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
       - APPLICATION_CONFIG_MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
+      - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
       - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
       - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
@@ -1026,12 +1027,15 @@ services:
           - node.labels.data1 == true
 
   mosip-api:
+    volumes:
+      - '/data/sqlite:/data/sqlite'
     image: ghcr.io/opencrvs/mosip-api:${MOSIP_API_VERSION}
     environment:
       - NODE_ENV=production
       - MOSIP_BIRTH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/birth
       - MOSIP_DEATH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/death
       - OPENCRVS_GRAPHQL_GATEWAY_URL=http://gateway:7070/graphql
+      - OPENCRVS_PUBLIC_KEY_URL=http://auth:4040/.well-known
       - LOCALE=en
       - ESIGNET_USERINFO_URL=${ESIGNET_USERINFO_URL}
       - ESIGNET_TOKEN_URL=${ESIGNET_TOKEN_URL}
@@ -1049,6 +1053,14 @@ services:
       - SIGN_P12_FILE_PATH=${SIGN_P12_FILE_PATH}
       - SIGN_P12_FILE_PASSWORD=${SIGN_P12_FILE_PASSWORD}
       - CLIENT_APP_URL=https://register.{{hostname}}
+      - SQLITE_DATABASE_PATH=/data/sqlite/mosip-api.db
+      - MOSIP_AUTH_CLIENT_ID=${MOSIP_AUTH_CLIENT_ID}
+      - MOSIP_AUTH_CLIENT_SECRET=${MOSIP_AUTH_CLIENT_SECRET}
+      - MOSIP_AUTH_URL=${MOSIP_AUTH_URL}
+      - MOSIP_WEBSUB_CALLBACK_URL=https://mosip-api.{{hostname}}/websub/callback
+      - MOSIP_WEBSUB_HUB_URL=${MOSIP_WEBSUB_HUB_URL}
+      - MOSIP_WEBSUB_SECRET=${MOSIP_WEBSUB_SECRET}
+      - MOSIP_WEBSUB_TOPIC=${MOSIP_WEBSUB_TOPIC}
     deploy:
       replicas: 1
       labels:

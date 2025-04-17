@@ -1,4 +1,5 @@
 
+#!/bin/bash
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -74,6 +75,8 @@ drop_database () {
 #---------------------------
 drop_database hearth-dev;
 
+drop_database events;
+
 drop_database openhim-dev;
 
 drop_database user-mgnt;
@@ -86,7 +89,14 @@ drop_database performance;
 
 # Delete all data from elasticsearch
 #-----------------------------------
-docker run --rm --network=$NETWORK appropriate/curl curl -XDELETE "http://$(elasticsearch_host)/ocrvs" -v
+indices=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -XGET "http://$(elasticsearch_host)/_cat/indices?h=index")
+echo "--------------------------"
+echo "🧹 cleanup for indices from $(elasticsearch_host): $indices"
+echo "--------------------------"
+for index in ${indices[@]}; do
+  echo "Removing index $index"
+  docker run --rm --network=$NETWORK appropriate/curl curl -sS -XDELETE "http://$(elasticsearch_host)/$index"
+done
 
 # Delete all data from metrics
 #-----------------------------
@@ -94,13 +104,18 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 
 # Delete all data from minio
 #-----------------------------
-docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc -c "\
+docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc:RELEASE.2023-09-13T23-08-58Z -c "\
   mc alias set myminio http://minio:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD && \
   mc rm --recursive --force myminio/ocrvs && \
   mc rb myminio/ocrvs && \
   mc mb myminio/ocrvs"
 
-# Delete all data from metabase
+# Restart events service
 #-----------------------------
-docker exec $(docker ps | grep opencrvs_dashboards | awk '{print $1}' | head -n 1) /bin/sh -c "rm -rf /data/metabase/*"
+docker service scale opencrvs_events=0
+docker service scale opencrvs_events=1
 
+# Delete all data from SQLite
+# ---------------------------
+docker run --rm -v /data/sqlite:/data/sqlite alpine \
+  sh -c "apk add --no-cache sqlite && sqlite3 /data/sqlite/mosip-api.db 'DELETE FROM transactions;'"

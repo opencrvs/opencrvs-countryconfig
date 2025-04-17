@@ -275,6 +275,10 @@ export const birthForm: ISerializedForm = {
                 {
                   operation: 'dateInPast',
                   parameters: []
+                },
+                {
+                  operation: 'isAgeInYearsBetween',
+                  parameters: [16, 100]
                 }
               ],
               certificateHandlebars.informantBirthDate,
@@ -288,7 +292,8 @@ export const birthForm: ISerializedForm = {
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(
-                hideIfInformantMotherOrFather
+                hideIfInformantMotherOrFather,
+                exactDateOfBirthUnknownConditionals
               ),
               ageOfIndividualValidators,
               certificateHandlebars.ageOfInformantInYears
@@ -388,7 +393,8 @@ export const birthForm: ISerializedForm = {
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfMother,
               exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional
+                detailsExistConditional,
+                exactDateOfBirthUnknownConditionals
               ),
               ageOfParentsConditionals,
               certificateHandlebars.ageOfMotherInYears
@@ -497,7 +503,8 @@ export const birthForm: ISerializedForm = {
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfFather,
               exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional
+                detailsExistConditional,
+                exactDateOfBirthUnknownConditionals
               ),
               ageOfParentsConditionals,
               certificateHandlebars.ageOfFatherInYears

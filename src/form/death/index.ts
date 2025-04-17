@@ -228,7 +228,9 @@ export const deathForm = {
             exactDateOfBirthUnknown(exactDateOfBirthUnknownConditionals),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfDeceased,
-              exactDateOfBirthUnknownConditional,
+              exactDateOfBirthUnknownConditional.concat(
+                exactDateOfBirthUnknownConditionals
+              ),
               ageOfDeceasedConditionals,
               certificateHandlebars.ageOfDeceasedInYears
             ),
@@ -335,6 +337,10 @@ export const deathForm = {
                 {
                   operation: 'dateInPast',
                   parameters: []
+                },
+                {
+                  operation: 'isAgeInYearsBetween',
+                  parameters: [16, 100]
                 }
               ],
               certificateHandlebars.informantBirthDate,
@@ -345,7 +351,10 @@ export const deathForm = {
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
-              exactDateOfBirthUnknownConditional.concat(hideIfInformantSpouse),
+              exactDateOfBirthUnknownConditional.concat(
+                hideIfInformantSpouse,
+                exactDateOfBirthUnknownConditionals
+              ),
               ageOfIndividualValidators,
               certificateHandlebars.ageOfInformantInYears
             ),
@@ -436,7 +445,10 @@ export const deathForm = {
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfSpouse,
-              exactDateOfBirthUnknownConditional.concat(detailsExist),
+              exactDateOfBirthUnknownConditional.concat(
+                detailsExist,
+                exactDateOfBirthUnknownConditionals
+              ),
               ageOfIndividualValidators,
               certificateHandlebars.ageOfSpouseInYears
             ),

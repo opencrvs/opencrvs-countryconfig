@@ -2,7 +2,7 @@
   <g clip-path="url(#clip0_5_2)">
     <path d="M583 0H0V842H583V0Z" fill="white" />
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-      <tspan x="62" y="426.352">01 April 2012 </tspan>
+      <tspan x="62" y="426.352">{{ formatDate (lookup $state "modifiedAt") "dd MMMM yyyy"}}</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="62" y="413.552">Date of certification&#10;</tspan>
@@ -54,7 +54,7 @@
     </mask>
     <g mask="url(#mask0_5_2)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="247.708">{{ lookup $data "child.firstname" }} {{ lookup $data "child.surname" }}</tspan>
+        <tspan x="312" y="247.708">{{ lookup $declaration "child.firstname" }} {{ lookup $declaration "child.surname" }}</tspan>
       </text>
     </g>
     <path d="M70 253.5H514" stroke="#ECECEC" />
@@ -69,7 +69,7 @@
     </mask>
     <g mask="url(#mask1_5_2)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="267.708">{{ lookup $data "child.dob"  }}</tspan>
+        <tspan x="312" y="267.708">{{ lookup $declaration "child.dob"  }}</tspan>
       </text>
     </g>
     <path d="M70 273.5H514" stroke="#ECECEC" />
@@ -85,7 +85,7 @@
     </mask>
     <g mask="url(#mask2_5_2)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="287.708">{{ lookup $data "mother.firstname"  }} {{ lookup $data "mother.surname"  }}</tspan>
+        <tspan x="312" y="287.708">{{ lookup $declaration "mother.firstname"  }} {{ lookup $declaration "mother.surname"  }}</tspan>
       </text>
     </g>
     <path d="M70 293.5H514" stroke="#ECECEC" />
