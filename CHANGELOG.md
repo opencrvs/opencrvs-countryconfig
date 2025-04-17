@@ -3,7 +3,7 @@
 ## 1.8.0
 
 ### New features
-- Added a local virtual machine setup for testing Ansible playbooks locally (MacOS only). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
+- Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
 ### Improvements
 - Local development environment added for Ansible playbooks and other infrastructure components. Currently, the setup supports MacOS and Ubuntu.
