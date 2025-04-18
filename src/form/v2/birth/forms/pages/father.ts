@@ -14,7 +14,8 @@ import {
   and,
   ConditionalType,
   defineFormPage,
-  FieldType
+  FieldType,
+  never
 } from '@opencrvs/toolkit/events'
 import { field, or, not } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'
@@ -133,7 +134,7 @@ export const father = defineFormPage({
       validation: [invalidNameValidator(`${PersonType.father}.surname`)]
     },
     {
-      id: `${PersonType.father}.dob`,
+      id: 'father.dob',
       type: 'DATE',
       required: true,
       validation: [
@@ -143,7 +144,7 @@ export const father = defineFormPage({
             description: 'This is the error message for invalid date',
             id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
           },
-          validator: field(`${PersonType.father}.dob`).isBefore().now()
+          validator: field('father.dob').isBefore().now()
         },
         {
           message: {
@@ -152,7 +153,7 @@ export const father = defineFormPage({
               'This is the error message for a birth date after child`s birth date',
             id: `v2.event.birth.action.declare.form.section.person.dob.afterChild`
           },
-          validator: field('mother.dob').isBefore().date(field('child.dob'))
+          validator: field('father.dob').isBefore().date(field('child.dob'))
         }
       ],
       label: {
@@ -182,6 +183,10 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ]
     },
@@ -246,13 +251,13 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.father}.nid`,
+      id: 'father.nid',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.birth.action.declare.form.section.person.field.nid.label`
+        id: 'v2.event.birth.action.declare.form.section.person.field.nid.label'
       },
       conditionals: [
         {
@@ -267,12 +272,14 @@ export const father = defineFormPage({
         nationalIdValidator('father.nid'),
         {
           message: {
-            defaultMessage:
-              'ID Number must be different from mother`s ID Number',
+            defaultMessage: 'National id must be unique',
             description: 'This is the error message for non-unique ID Number',
-            id: `v2.event.birth.action.declare.form.father.nid.unique`
+            id: 'v2.event.birth.action.declare.form.nid.unique'
           },
-          validator: not(field('father.nid').isEqualTo(field('mother.nid')))
+          validator: and(
+            not(field('father.nid').isEqualTo(field('mother.nid'))),
+            not(field('father.nid').isEqualTo(field('informant.nid')))
+          )
         }
       ]
     },
@@ -344,7 +351,7 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.father}.addressSameAs`,
+      id: 'father.addressSameAs',
       type: FieldType.RADIO_GROUP,
       options: yesNoRadioOptions,
       required: true,
@@ -358,16 +365,18 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            not(
-              field(`${PersonType.mother}.detailsNotAvailable`).isEqualTo(true)
-            ),
+            not(field('mother.detailsNotAvailable').isEqualTo(true)),
             requireFatherDetails
           )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('father.addressSameAs').isEqualTo(YesNoTypes.YES)
         }
       ]
     },
     {
-      id: `${PersonType.father}.address`,
+      id: 'father.address',
       type: FieldType.ADDRESS,
       hideLabel: true,
       label: {
@@ -379,10 +388,11 @@ export const father = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            // Checking explicitly for not true, since detailsNotAvailable might be hidden and thus undefined
-            not(field('father.detailsNotAvailable').isEqualTo(true)),
             requireFatherDetails,
-            field('father.addressSameAs').isEqualTo(YesNoTypes.NO)
+            or(
+              field('mother.detailsNotAvailable').isEqualTo(true),
+              field('father.addressSameAs').isEqualTo(YesNoTypes.NO)
+            )
           )
         }
       ],

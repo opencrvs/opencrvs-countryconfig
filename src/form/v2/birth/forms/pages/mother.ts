@@ -17,7 +17,7 @@ import {
   FieldType,
   PageTypes
 } from '@opencrvs/toolkit/events'
-import { field, or, not } from '@opencrvs/toolkit/conditionals'
+import { field, or, not, never } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,
@@ -180,6 +180,10 @@ export const mother = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ]
     },
@@ -244,7 +248,7 @@ export const mother = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.mother}.nid`,
+      id: 'mother.nid',
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -256,21 +260,23 @@ export const mother = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`${PersonType.mother}.idType`).isEqualTo(IdType.NATIONAL_ID),
+            field('mother.idType').isEqualTo(IdType.NATIONAL_ID),
             requireMotherDetails
           )
         }
       ],
       validation: [
-        nationalIdValidator(`${PersonType.mother}.nid`),
+        nationalIdValidator('mother.nid'),
         {
           message: {
-            defaultMessage:
-              'ID Number must be different from fathers`s ID Number',
+            defaultMessage: 'National id must be unique',
             description: 'This is the error message for non-unique ID Number',
-            id: `v2.event.birth.action.declare.form.mother.nid.unique`
+            id: 'v2.event.birth.action.declare.form.nid.unique'
           },
-          validator: not(field('mother.nid').isEqualTo(field('father.nid')))
+          validator: and(
+            not(field('mother.nid').isEqualTo(field('father.nid'))),
+            not(field('mother.nid').isEqualTo(field('informant.nid')))
+          )
         }
       ]
     },
