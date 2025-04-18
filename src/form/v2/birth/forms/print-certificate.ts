@@ -10,14 +10,17 @@
  */
 
 import {
+  and,
   ConditionalType,
   defineActionForm,
   field,
   FieldType,
+  not,
   PageTypes
 } from '@opencrvs/toolkit/events'
 import { informantOtherThanParent, InformantType } from './pages/informant'
 import { nationalIdValidator } from '../validators'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 const CertCollectorType = {
   INFORMANT: 'INFORMANT',
@@ -538,6 +541,106 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             description: 'Title for the data section',
             id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
           },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                not(
+                  field('child.dob')
+                    .isAfter()
+                    .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                    .inPast()
+                ),
+                field('child.dob').isBefore().now()
+              )
+            }
+          ],
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: 'Birth registration before 30 days of date of birth'
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$5.00'
+              }
+            ]
+          }
+        },
+        {
+          id: 'collector.collect.payment.data',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                not(
+                  field('child.dob')
+                    .isAfter()
+                    .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                    .inPast()
+                ),
+                field('child.dob').isBefore().now()
+              )
+            }
+          ],
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: 'Birth registration before 30 days of date of birth'
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$5.00'
+              }
+            ]
+          }
+        },
+        {
+          id: 'collector.collect.payment.data',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                not(
+                  field('child.dob')
+                    .isAfter()
+                    .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                    .inPast()
+                ),
+                field('child.dob').isBefore().now()
+              )
+            }
+          ],
           configuration: {
             data: [
               {
