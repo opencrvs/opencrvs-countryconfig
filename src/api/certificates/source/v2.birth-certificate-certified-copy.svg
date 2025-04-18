@@ -143,12 +143,12 @@
         <tspan x="289.95" y="362.054">{{$location (lookup $declaration "child.birthLocation") 'district'}}, {{$location (lookup $declaration "child.birthLocation") 'province'}}, {{$location (lookup $declaration "child.birthLocation") 'country'}}</tspan>
       {{else}}
         {{#ifCond (lookup $declaration 'child.address.other') '!==' undefined }}
-          <tspan x="289.95" y="347.054">{{$OR ($lookup 'child.address.other' 'district') ($lookup 'child.address.other' 'district2')}}&#10;</tspan>
-          <tspan x="289.95" y="362.054">{{$OR ($lookup 'child.address.other' 'state') ($lookup 'child.address.other' 'province')}}, {{$lookup 'child.address.other' 'country'}}</tspan>
+          <tspan x="289.95" y="347.054">{{$OR (lookup ($lookup $declaration 'child.address.other') 'district') (lookup ($lookup $declaration 'child.address.other') 'district2')}}&#10;</tspan>
+          <tspan x="289.95" y="362.054">{{$OR (lookup ($lookup $declaration 'child.address.other') 'state') (lookup ($lookup $declaration 'child.address.other') 'province')}}, {{$lookup 'child.address.other' 'country'}}</tspan>
         {{else}}
           {{#ifCond (lookup $declaration 'child.address.privateHome') '!==' undefined }}
-            <tspan x="289.95" y="347.054">{{$OR ($lookup 'child.address.privateHome' 'district') ($lookup 'child.address.privateHome' 'district2')}}&#10;</tspan>
-            <tspan x="289.95" y="362.054">{{$OR ($lookup 'child.address.privateHome' 'state') ($lookup 'child.address.privateHome' 'province')}}, {{$lookup 'child.address.privateHome' 'country'}}</tspan>
+            <tspan x="289.95" y="347.054">{{$OR (lookup ($lookup $declaration 'child.address.privateHome') 'district') (lookup ($lookup $declaration 'child.address.privateHome') 'district2')}}&#10;</tspan>
+            <tspan x="289.95" y="362.054">{{$OR (lookup ($lookup $declaration 'child.address.privateHome') 'state') (lookup ($lookup $declaration 'child.address.privateHome') 'province')}}, {{lookup ($lookup $declaration 'child.address.privateHome') 'country'}}</tspan>
           {{/ifCond}}
         {{/ifCond}}
       {{/ifCond}}
