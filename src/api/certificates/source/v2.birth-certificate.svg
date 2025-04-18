@@ -1,157 +1,312 @@
-<svg width="583" height="842" viewBox="0 0 583 842" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <g clip-path="url(#clip0_5_2)">
-    <path d="M583 0H0V842H583V0Z" fill="white" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-      <tspan x="62" y="426.352">{{ formatDate (lookup $state "modifiedAt") "dd MMMM yyyy"}}</tspan>
+<svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect width="595" height="842" fill="white" />
+  <g clip-path="url(#clip0_1157_5003)">
+    <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="6" font-weight="bold" letter-spacing="0px">
+      <tspan x="61.9999" y="780.593">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE </tspan>
+      <tspan x="61.9999" y="790.593">IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES A LA FALSIFIATION OU &#xc0; LA MODIFICATION D&#39;UN </tspan>
+      <tspan x="61.9999" y="800.593">CERTIFICAT ET A L&#39;UTILISATION OU LA POSSESSION D&#39;UN FAUX CERTIFICAT. UN CERTIFICAT N&#39;EST PAS UNE PREUVE D&#39;IDENTITE</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="62" y="413.552">Date of certification&#10;</tspan>
+  </g>
+  <path d="M61.9999 762.075H533.42V761.105H61.9999V762.075Z" fill="#ECECEC" />
+  <g clip-path="url(#clip1_1157_5003)">
+    <path d="M324.882 62.43C324.886 72.0276 324.873 81.6282 324.889 91.2258C324.895 91.6479 324.764 92.0484 324.547 92.3867C324.345 92.6971 324.066 92.9516 323.733 93.1223L298.786 107.519C298.441 107.714 298.075 107.81 297.718 107.81C297.351 107.81 296.982 107.708 296.652 107.519L271.717 93.1348C271.376 92.964 271.087 92.7064 270.882 92.3929C270.662 92.0484 270.531 91.6479 270.531 91.2227L270.54 91.0303L270.534 62.3182C270.528 61.9333 270.634 61.5702 270.814 61.2567L270.82 61.2505C271.006 60.9277 271.276 60.6607 271.599 60.4714L296.637 46.0222C296.982 45.8267 297.351 45.7305 297.705 45.7305C298.072 45.7305 298.444 45.8329 298.77 46.0222L323.817 60.4745C324.168 60.6762 324.438 60.968 324.622 61.3001L324.628 61.3063C324.811 61.6478 324.901 62.0389 324.882 62.43Z" fill="#EFCFA4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M306.059 100.858H289.367L297.711 105.672L306.059 100.858Z" fill="#EFCFA4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M289.367 100.858H306.059L314.407 96.0401H281.019L289.367 100.858Z" fill="#F1B162" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M281.019 96.0401H314.407L322.752 91.2227H272.671L281.019 96.0401Z" fill="#C86E00" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M272.671 91.2227H322.752V83.1554H272.671V91.2227Z" fill="#EFCFA4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M285.124 83.1554H310.165L303.904 72.3193L298.733 75.3022L291.96 79.2102L285.124 83.1554Z" fill="#E2F5F4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M303.904 72.3193L310.165 83.1554H322.684L303.904 72.3193Z" fill="#038E86" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M303.904 72.3193L322.684 83.1554L309.637 60.5831L291.435 71.0902L298.733 75.3022L303.904 72.3193Z" fill="#E2F5F4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M322.684 83.1554L309.637 60.5831L322.749 68.1507L322.684 83.1554Z" fill="#038E86" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M291.96 79.2102L285.183 67.4833L272.668 74.7063L272.671 83.1554L285.124 83.1554L291.96 79.2102Z" fill="#E2F5F4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M285.183 67.4833L291.96 79.2102L298.733 75.3022L291.435 71.0902L285.183 67.4833Z" fill="#038E86" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M285.183 67.4833L291.435 71.0902L309.637 60.5862L322.749 68.1538V62.3214L297.708 47.8691L272.668 62.3183L272.671 74.7032L285.183 67.4833ZM297.708 61.2722C295.944 61.2722 294.516 59.8444 294.516 58.0844C294.516 56.3213 295.944 54.8935 297.708 54.8935C299.469 54.8935 300.901 56.3213 300.901 58.0844C300.898 59.8444 299.469 61.2722 297.708 61.2722Z" fill="#EEEEEE" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M297.708 61.2722C299.472 61.2722 300.901 59.8444 300.901 58.0813C300.901 56.3182 299.472 54.8904 297.708 54.8904C295.944 54.8904 294.516 56.3182 294.516 58.0813C294.516 59.8444 295.944 61.2722 297.708 61.2722Z" fill="#C86E00" />
+    <path d="M323.46 62.3555L323.466 91.2196C323.466 91.4803 323.323 91.71 323.112 91.8342L298.069 106.29C297.842 106.423 297.569 106.414 297.354 106.29L272.314 91.8373C272.075 91.6976 271.947 91.4431 271.96 91.1855L271.954 62.3214C271.954 62.0606 272.096 61.8309 272.308 61.7068L297.351 47.2514C297.581 47.118 297.851 47.1273 298.066 47.2514L323.106 61.7037C323.345 61.8433 323.473 62.0979 323.46 62.3555ZM297.708 54.1796C298.786 54.1796 299.764 54.6172 300.469 55.3218C301.174 56.0265 301.612 57.0042 301.612 58.0813C301.612 59.1584 301.174 60.133 300.469 60.8408C299.764 61.5454 298.786 61.983 297.708 61.983C296.631 61.983 295.656 61.5454 294.947 60.8408C294.243 60.1362 293.805 59.1584 293.805 58.0813C293.805 57.0042 294.243 56.0296 294.947 55.3218L294.991 55.2815C295.693 54.6017 296.652 54.1796 297.708 54.1796ZM299.46 56.3338C299.013 55.8868 298.392 55.6074 297.708 55.6074C297.038 55.6074 296.432 55.8713 295.988 56.2996L295.957 56.3338C295.51 56.7807 295.23 57.4015 295.23 58.0844C295.23 58.7673 295.51 59.3881 295.957 59.8351C296.404 60.282 297.025 60.5614 297.708 60.5614C298.392 60.5614 299.013 60.282 299.46 59.8351C299.907 59.3881 300.187 58.7673 300.187 58.0844C300.187 57.4015 299.907 56.7807 299.46 56.3338ZM273.382 90.5119H322.041V83.8693H273.382V90.5119ZM320.091 91.9366H275.336L281.208 95.3262H314.221L320.091 91.9366ZM305.848 74.2625L310.575 82.4446H320.025L305.848 74.2625ZM308.929 82.4446L303.643 73.2909L287.783 82.4446H308.929ZM287.128 69.4264L292.221 78.2418L297.311 75.3054L287.128 69.4264ZM290.988 78.9526L284.926 68.4549L273.379 75.1161L273.382 82.4446H284.938L290.988 78.9526ZM273.379 73.474L284.826 66.8687C285.041 66.7446 285.311 66.7353 285.541 66.8687L291.435 70.2707L309.28 59.9716C309.494 59.8475 309.764 59.8382 309.994 59.9716L322.038 66.9215V62.7311L297.708 48.6886L273.376 62.7311L273.379 73.474ZM322.038 68.5635L311.59 62.5324L322.041 80.6226L322.038 68.5635ZM309.382 61.5547L292.857 71.0902L298.733 74.4797L303.547 71.7017C303.761 71.5775 304.031 71.5682 304.261 71.7017L320.74 81.2123L309.382 61.5547ZM289.553 100.144H305.87L311.749 96.7509H283.677L289.553 100.144ZM303.401 101.568H292.025L297.711 104.849L303.401 101.568Z" fill="#222222" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="4.49316" font-weight="bold" letter-spacing="0.2em">
+      <tspan x="278.929" y="89.0554">FARAJALAND</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-      <tspan x="62" y="460.352">Imbobo District Office, Chiwala State, Farajaland</tspan>
+  </g>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
+    <tspan x="80.9999" y="667.352"></tspan>
+    <tspan x="136.164" y="667.352"></tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
+    <tspan x="234.289" y="654.552">&#x2028;</tspan>
+    <tspan x="80.9999" y="667.352">{{ $formatDate (lookup $state "modifiedAt") "dd MMMM yyyy"}}</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="80.9999" y="654.552">Date of certification / Date de d&#xe9;livrance</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
+    <tspan x="234.391" y="688.312">&#x2028;</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="80.9999" y="688.312">Place of certification / Lieu de d&#xe9;livrance</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
+    <tspan x="80.9999" y="701.112">{{$location (lookup $state 'updatedAtLocation') 'location'}}</tspan>
+    <tspan x="80.9999" y="713.912">{{$location (lookup $state 'updatedAtLocation') 'district'}}, {{$location (lookup $state 'updatedAtLocation') 'province'}}, {{$location (lookup $state 'createdAtLocation') 'country'}}</tspan>
+  </text>
+  <!--<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0.485px">
+    <tspan x="80.9999" y="747.084">{{mosipAid}}</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="80.9999" y="735.444">MOSIP Application ID / MOSIP Application ID&#10;</tspan>
+  </text>-->
+  <g clip-path="url(#clip2_1157_5003)">
+    <rect x="321.759" y="646.161" width="190.241" height="65.8389" fill="url(#pattern1_1157_5003)" />
+  </g>
+  <path d="M321.76 715.071L512.079 715.969" stroke="#CCCCCC" stroke-width="0.75879" stroke-dasharray="3.04 1.52" />
+  <path d="M321.76 715.071L512.079 715.969" stroke="#CCCCCC" stroke-width="0.75879" stroke-dasharray="3.04 1.52" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="7.76" font-weight="bold" letter-spacing="0px">
+    <tspan x="357.751" y="728.084">Registrar / L&#39;Officier de l&#39;&#xc9;tat Civil</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="7.76" letter-spacing="0px">
+    <tspan x="391.819" y="740.694">{{ $findUserById (lookup $state "updatedBy") "name"}}</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
+    <tspan x="81.3999" y="605.325">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in pursuance </tspan>
+    <tspan x="81.3999" y="618.325">of civil registration law / Je certifie que le pr&#xe9;sent certificat est une copie conforme du registre d&#39;&#xe9;tat civil et qu&#39;il </tspan>
+    <tspan x="81.3999" y="631.325">est d&#xe9;livr&#xe9; par l&#39;autorit&#xe9; mandat&#xe9;e conform&#xe9;ment &#xe0; la loi sur l&#39;&#xe9;tat civil.</tspan>
+  </text>
+  <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+    <tspan x="403.421" y="126.364">&#x2028;</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="7.76" font-weight="bold" letter-spacing="0px">
+    <tspan x="186.255" y="126.364">REPUBLIC OF FARAJALAND / REPUBLIQUE DE FARAJALAND</tspan>
+  </text>
+  <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="11.64" font-weight="bold" letter-spacing="0px">
+    <tspan x="169.795" y="145.364">CERTIFICATE OF BIRTH / ACTE DE NAISSANCE</tspan>
+  </text>
+  <g clip-path="url(#clip3_1157_5003)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="88.6029" y="222.134">1.</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="62" y="447.552">Place of certification&#10;</tspan>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="222.134">Child&#x2019;s full name /&#x2028;</tspan>
+      <tspan x="104.68" y="237.134">Nom complet de l&#39;enfant</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-      <tspan x="62" y="494.104">12345678912345678912345678900</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="62" y="482.104">Application ID</tspan>
-    </text>
-    <path d="M498.965 404.396H316.826V472.396H498.965V404.396Z" fill="url(#pattern0_5_2)" fill-opacity="0.2" />
-    <path d="M309.793 475.396L505.999 476.321" stroke="#CCCCCC" stroke-width="0.782258" stroke-dasharray="3.13 1.56" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-      <tspan x="366.248" y="489.656">Registrar Jude Hopper</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-      <tspan x="62" y="359.604">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in </tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-      <tspan x="62" y="372.604">pursuance of civil registration and vital statistics law / J&#x2019;attestation est une copie conforme de l&#39;&#xe9;tat civil. et est </tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-      <tspan x="62" y="385.604">d&#xe9;livr&#xe9; par l&#39;autorit&#xe9; mandat&#xe9;e conform&#xe9;ment &#xe0; la loi sur l&#39;enregistrement et les statistiques de l&#39;&#xe9;tat civil</tspan>
-    </text>
-    <path d="M50 700H535" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
-    <path d="M50 184H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
-    <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0em">
-      <tspan x="215.483" y="199.76">No. 2023HSND234S</tspan>
-    </text>
-    <path d="M50 206H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0em">
-      <tspan x="70" y="229.76">Details</tspan>
-    </text>
-    <path d="M70 233.5H514" stroke="#ECECEC" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="70" y="247.708">1.</tspan>
-    </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="90" y="247.208">Full name</tspan>
-    </text>
-    <mask id="mask0_5_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="312" y="238" width="202" height="12">
-      <path d="M514 238H312V250H514V238Z" fill="white" />
-    </mask>
-    <g mask="url(#mask0_5_2)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="247.708">{{ lookup $declaration "child.firstname" }} {{ lookup $declaration "child.surname" }}</tspan>
+    <g clip-path="url(#clip4_1157_5003)">
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
+        <tspan x="289.95" y="229.634">{{lookup $declaration "child.firstname"}} {{lookup $declaration "child.surname"}}</tspan>
       </text>
     </g>
-    <path d="M70 253.5H514" stroke="#ECECEC" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="70" y="267.708">2.</tspan>
+    <line x1="81.3999" y1="246.205" x2="512.08" y2="246.205" stroke="#ECECEC" stroke-width="0.97" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="88.6029" y="263.774">2.</tspan>
     </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="90" y="267.208">Date of birth&#10;</tspan>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="121.172" y="263.774"> /&#x2028;</tspan>
+      <tspan x="104.68" y="278.774">Sexe</tspan>
     </text>
-    <mask id="mask1_5_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="312" y="258" width="202" height="12">
-      <path d="M514 258H312V270H514V258Z" fill="white" />
-    </mask>
-    <g mask="url(#mask1_5_2)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="267.708">{{ lookup $declaration "child.dob"  }}</tspan>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="263.774">Sex</tspan>
+    </text>
+    <g clip-path="url(#clip5_1157_5003)">
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
+        <tspan x="289.95" y="271.274">{{$intl 'constants' (lookup $declaration "child.gender")}}</tspan>
       </text>
     </g>
-    <path d="M70 273.5H514" stroke="#ECECEC" />
-    <path d="M70 273.5H514" stroke="#ECECEC" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="70" y="287.708">3.</tspan>
+    <line x1="81.3999" y1="287.845" x2="512.08" y2="287.845" stroke="#ECECEC" stroke-width="0.97" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="88.6029" y="305.414">3.</tspan>
     </text>
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="90" y="287.208">Recommender Full name</tspan>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="166.527" y="305.414"> /&#x2028;</tspan>
     </text>
-    <mask id="mask2_5_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="312" y="278" width="202" height="12">
-      <path d="M514 278H312V290H514V278Z" fill="white" />
-    </mask>
-    <g mask="url(#mask2_5_2)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="287.708">{{ lookup $declaration "mother.firstname"  }} {{ lookup $declaration "mother.surname"  }}</tspan>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="305.414">Date of birth</tspan>
+      <tspan x="104.68" y="320.414">Date de naissance</tspan>
+    </text>
+    <g clip-path="url(#clip6_1157_5003)">
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
+        <tspan x="289.95" y="312.914">{{lookup $declaration "child.dob"}}</tspan>
       </text>
     </g>
-    <path d="M70 293.5H514" stroke="#ECECEC" />
-    <mask id="mask3_5_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="50" y="130" width="484" height="47">
-      <path d="M534 130H50V177H534V130Z" fill="white" />
-    </mask>
-    <g mask="url(#mask3_5_2)">
-      <path d="M98.071 142.643C98.0734 149.909 98.064 157.178 98.0757 164.444C98.0805 164.764 97.9817 165.067 97.8171 165.323C97.6643 165.558 97.4527 165.75 97.2011 165.88L78.3138 176.779C78.0528 176.927 77.7753 177 77.5049 177C77.2275 177 76.9477 176.922 76.6985 176.779L57.8205 165.889C57.5619 165.76 57.3432 165.565 57.1881 165.327C57.0211 165.067 56.9224 164.763 56.9224 164.442L56.9294 164.296L56.9247 142.558C56.92 142.267 57 141.992 57.1363 141.755L57.141 141.75C57.2821 141.506 57.4867 141.303 57.7312 141.16L76.6867 130.221C76.9477 130.073 77.2275 130 77.4955 130C77.773 130 78.0551 130.077 78.302 130.221L97.2646 141.162C97.5303 141.315 97.7348 141.536 97.8735 141.788L97.8782 141.792C98.017 142.051 98.0852 142.347 98.071 142.643Z" fill="#EFCFA4" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M83.8202 171.736H71.1824L77.5001 175.381L83.8202 171.736Z" fill="#EFCFA4" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M71.1819 171.736H83.8197L90.1398 168.089H64.8618L71.1819 171.736Z" fill="#F1B162" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M64.8623 168.089H90.1403L96.458 164.441H58.5422L64.8623 168.089Z" fill="#C86E00" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M58.5422 164.442H96.458V158.334H87.5093H66.4118H58.5422V164.442Z" fill="#EFCFA4" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M67.9709 158.334H86.9288L82.1888 150.13L78.274 152.388L73.146 155.347L67.9709 158.334Z" fill="#E2F5F4" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M82.1885 150.13L86.9285 158.334H96.4063L82.1885 150.13Z" fill="#038E86" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M82.1884 150.13L96.4063 158.334L86.5288 141.245L72.7483 149.2L78.2737 152.389L82.1884 150.13Z" fill="#E2F5F4" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M96.407 158.334L86.5295 141.245L96.4564 146.974L96.407 158.334Z" fill="#038E86" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M73.1458 155.347L68.0155 146.469L58.54 151.937L58.5424 158.334H67.9708L73.1458 155.347Z" fill="#E2F5F4" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M68.0154 146.469L73.1457 155.347L78.2737 152.388L72.7484 149.199L68.0154 146.469Z" fill="#038E86" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M68.0155 146.469L72.7485 149.199L86.5289 141.247L96.4558 146.976V142.561L77.4979 131.619L58.54 142.558L58.5424 151.935L68.0155 146.469ZM77.4979 141.766C76.1624 141.766 75.0809 140.685 75.0809 139.353C75.0809 138.018 76.1624 136.937 77.4979 136.937C78.8311 136.937 79.915 138.018 79.915 139.353C79.9126 140.685 78.8311 141.766 77.4979 141.766Z" fill="#EEEEEE" />
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M77.4976 141.766C78.8331 141.766 79.9147 140.685 79.9147 139.35C79.9147 138.016 78.8331 136.935 77.4976 136.935C76.1621 136.935 75.0806 138.016 75.0806 139.35C75.0806 140.685 76.1621 141.766 77.4976 141.766Z" fill="#C86E00" />
-      <path d="M96.9942 142.586L96.9989 164.439C96.9989 164.636 96.8908 164.81 96.7309 164.904L77.7707 175.848C77.599 175.949 77.3921 175.942 77.2299 175.848L58.272 164.907C58.091 164.801 57.9946 164.608 58.004 164.413L57.9993 142.561C57.9993 142.363 58.1074 142.189 58.2673 142.095L77.2275 131.151C77.4015 131.05 77.6061 131.057 77.7683 131.151L96.7262 142.093C96.9072 142.199 97.0036 142.391 96.9942 142.586ZM77.4979 136.397C78.3138 136.397 79.0544 136.728 79.5882 137.261C80.1219 137.795 80.4534 138.535 80.4534 139.35C80.4534 140.166 80.1219 140.904 79.5882 141.44C79.0544 141.973 78.3138 142.304 77.4979 142.304C76.682 142.304 75.9438 141.973 75.4077 141.44C74.874 140.906 74.5424 140.166 74.5424 139.35C74.5424 138.535 74.874 137.797 75.4077 137.261L75.4406 137.231C75.972 136.716 76.6985 136.397 77.4979 136.397ZM78.824 138.027C78.4854 137.689 78.0152 137.478 77.4979 137.478C76.9901 137.478 76.5316 137.677 76.1953 138.002L76.1718 138.027C75.8333 138.366 75.6217 138.836 75.6217 139.353C75.6217 139.87 75.8333 140.34 76.1718 140.678C76.5104 141.017 76.9807 141.228 77.4979 141.228C78.0152 141.228 78.4854 141.017 78.824 140.678C79.1626 140.34 79.3742 139.87 79.3742 139.353C79.3742 138.836 79.1626 138.366 78.824 138.027ZM59.0808 163.903H95.9197V158.874H59.0808V163.903ZM94.4432 164.982H60.5597L65.0059 167.548H89.9994L94.4432 164.982ZM83.6605 151.601L87.239 157.796H94.3938L83.6605 151.601ZM85.9929 157.796L81.9911 150.865L69.9834 157.796H85.9929ZM69.4873 147.94L73.3433 154.614L77.197 152.391L69.4873 147.94ZM72.4099 155.152L67.8203 147.204L59.0785 152.247L59.0808 157.796H67.8297L72.4099 155.152ZM59.0785 151.004L67.7451 146.003C67.9073 145.909 68.1119 145.902 68.2858 146.003L72.7485 148.579L86.2586 140.782C86.4208 140.688 86.6254 140.681 86.7993 140.782L95.9174 146.043V142.871L77.4979 132.239L59.0761 142.871L59.0785 151.004ZM95.9174 147.286L88.0079 142.72L95.9197 156.416L95.9174 147.286ZM86.3362 141.98L73.8253 149.199L78.2738 151.766L81.9182 149.662C82.0804 149.568 82.285 149.561 82.459 149.662L94.9346 156.863L86.3362 141.98ZM71.3236 171.195H83.6769L88.1278 168.627H66.8751L71.3236 171.195ZM81.8077 172.274H73.1952L77.5003 174.758L81.8077 172.274Z" fill="#222222" />
-      <path d="M91.479 161.194C91.479 161.47 91.4269 161.702 91.3226 161.888C91.2182 162.074 91.0686 162.213 90.8735 162.306C90.6785 162.399 90.4461 162.445 90.1762 162.445H89.4448V160.017H90.2442C90.5005 160.017 90.7205 160.062 90.9041 160.153C91.0901 160.243 91.2318 160.376 91.3294 160.551C91.4291 160.723 91.479 160.937 91.479 161.194ZM90.8803 161.214C90.8803 161.048 90.8565 160.912 90.8089 160.806C90.7635 160.699 90.6944 160.62 90.6014 160.568C90.5107 160.515 90.3973 160.489 90.2612 160.489H90.0231V161.969H90.2102C90.4393 161.969 90.6082 161.907 90.7171 161.782C90.8259 161.655 90.8803 161.466 90.8803 161.214Z" fill="#222222" />
-      <path d="M88.1922 162.445H87.4438L86.4642 160.666H86.4506C86.4528 160.714 86.4551 160.766 86.4574 160.823C86.4619 160.877 86.4653 160.934 86.4676 160.993C86.4698 161.05 86.4721 161.106 86.4744 161.163C86.4766 161.217 86.4789 161.271 86.4812 161.323V162.445H85.9641V160.017H86.7091L87.6854 161.775H87.6956C87.6933 161.728 87.691 161.678 87.6888 161.626C87.6865 161.571 87.6842 161.517 87.682 161.462C87.6797 161.406 87.6774 161.351 87.6752 161.299C87.6752 161.245 87.674 161.193 87.6718 161.143V160.017H88.1922V162.445Z" fill="#222222" />
-      <path d="M84.3653 162.446L84.2156 161.925H83.3754L83.2257 162.446H82.593L83.4196 160.007H84.1612L84.998 162.446H84.3653ZM83.9435 160.956C83.9321 160.915 83.9163 160.861 83.8959 160.793C83.8777 160.722 83.8584 160.651 83.838 160.578C83.8199 160.506 83.8052 160.445 83.7938 160.395C83.7847 160.445 83.77 160.507 83.7496 160.582C83.7314 160.654 83.7133 160.726 83.6952 160.796C83.677 160.864 83.6623 160.917 83.6509 160.956L83.5081 161.442H84.0864L83.9435 160.956Z" fill="#222222" />
-      <path d="M80.2483 162.445V160.017H80.8266V161.973H81.7893V162.445H80.2483Z" fill="#222222" />
-      <path d="M78.6495 162.446L78.4998 161.925H77.6596L77.5099 162.446H76.8772L77.7038 160.007H78.4454L79.2822 162.446H78.6495ZM78.2277 160.956C78.2163 160.915 78.2005 160.861 78.18 160.793C78.1619 160.722 78.1426 160.651 78.1222 160.578C78.1041 160.506 78.0893 160.445 78.078 160.395C78.0689 160.445 78.0542 160.507 78.0338 160.582C78.0156 160.654 77.9975 160.726 77.9793 160.796C77.9612 160.864 77.9465 160.917 77.9351 160.956L77.7923 161.442H78.3705L78.2277 160.956Z" fill="#222222" />
-      <path d="M75.0988 163.18C75.0285 163.18 74.9673 163.177 74.9151 163.17C74.863 163.163 74.8176 163.155 74.7791 163.146V162.68C74.8153 162.687 74.8539 162.694 74.8947 162.701C74.9333 162.71 74.9752 162.714 75.0206 162.714C75.0886 162.714 75.1453 162.701 75.1907 162.673C75.2383 162.646 75.2734 162.601 75.2961 162.537C75.3188 162.474 75.3301 162.388 75.3301 162.279V160.017H75.9118V162.251C75.9118 162.476 75.8767 162.656 75.8064 162.792C75.7383 162.931 75.6431 163.029 75.5206 163.088C75.4004 163.15 75.2598 163.18 75.0988 163.18Z" fill="#222222" />
-      <path d="M73.555 162.446L73.4053 161.925H72.5651L72.4154 162.446H71.7827L72.6093 160.007H73.3509L74.1877 162.446H73.555ZM73.1332 160.956C73.1218 160.915 73.106 160.861 73.0856 160.793C73.0674 160.722 73.0481 160.651 73.0277 160.578C73.0096 160.506 72.9949 160.445 72.9835 160.395C72.9744 160.445 72.9597 160.507 72.9393 160.582C72.9211 160.654 72.903 160.726 72.8849 160.796C72.8667 160.864 72.852 160.917 72.8406 160.956L72.6978 161.442H73.2761L73.1332 160.956Z" fill="#222222" />
-      <path d="M69.8641 160.017C70.0841 160.017 70.2655 160.044 70.4084 160.098C70.5535 160.15 70.6624 160.231 70.7349 160.34C70.8075 160.446 70.8438 160.58 70.8438 160.741C70.8438 160.845 70.8245 160.938 70.786 161.02C70.7474 161.102 70.6952 161.173 70.6295 161.234C70.566 161.296 70.4923 161.347 70.4084 161.388L71.1193 162.445H70.4696L69.9219 161.534H69.694V162.445H69.1157V160.017H69.8641ZM69.8403 160.472H69.694V161.081H69.8403C69.9333 161.081 70.0104 161.071 70.0716 161.051C70.1328 161.028 70.1782 160.993 70.2077 160.945C70.2394 160.895 70.2553 160.834 70.2553 160.762C70.2553 160.696 70.2405 160.642 70.2111 160.602C70.1816 160.559 70.1362 160.527 70.075 160.506C70.0138 160.484 69.9355 160.472 69.8403 160.472Z" fill="#222222" />
-      <path d="M67.5169 162.446L67.3672 161.925H66.527L66.3773 162.446H65.7446L66.5712 160.007H67.3128L68.1496 162.446H67.5169ZM67.0951 160.956C67.0838 160.915 67.0679 160.861 67.0475 160.793C67.0293 160.722 67.0101 160.651 66.9896 160.578C66.9715 160.506 66.9568 160.445 66.9454 160.395C66.9364 160.445 66.9216 160.507 66.9012 160.582C66.8831 160.654 66.8649 160.726 66.8468 160.796C66.8286 160.864 66.8139 160.917 66.8026 160.956L66.6597 161.442H67.238L67.0951 160.956Z" fill="#222222" />
-      <path d="M64.1376 162.445H63.5662V160.017H64.9779V160.486H64.1376V161.037H64.9166V161.507H64.1376V162.445Z" fill="#222222" />
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-        <tspan x="114" y="149.208">Farajaland</tspan>
-      </text>
-      <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0em">
-        <tspan x="114" y="165.76">Farajaland Birth Certificate</tspan>
+    <line x1="81.3999" y1="329.485" x2="512.08" y2="329.485" stroke="#ECECEC" stroke-width="0.97" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="88.6029" y="347.054">4.</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="169.17" y="347.054"> /&#x2028;</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="347.054">Place of birth</tspan>
+      <tspan x="104.68" y="362.054">Lieu de naissance</tspan>
+    </text>
+    <g clip-path="url(#clip7_1157_5003)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
+      {{#ifCond (lookup $declaration 'child.birthLocation') '!==' undefined }}
+        <tspan x="289.95" y="347.054">{{$location (lookup $declaration "child.birthLocation") 'location'}}&#10;</tspan>
+        <tspan x="289.95" y="362.054">{{$location (lookup $declaration "child.birthLocation") 'district'}}, {{$location (lookup $declaration "child.birthLocation") 'province'}}, {{$location (lookup $declaration "child.birthLocation") 'country'}}</tspan>
+      {{else}}
+        {{#ifCond (lookup $declaration 'child.address.other') '!==' undefined }}
+          <tspan x="289.95" y="347.054">{{$OR (lookup ($lookup $declaration 'child.address.other') 'district') (lookup ($lookup $declaration 'child.address.other') 'district2')}}&#10;</tspan>
+          <tspan x="289.95" y="362.054">{{$OR (lookup ($lookup $declaration 'child.address.other') 'state') (lookup ($lookup $declaration 'child.address.other') 'province')}}, {{$lookup 'child.address.other' 'country'}}</tspan>
+        {{else}}
+          {{#ifCond (lookup $declaration 'child.address.privateHome') '!==' undefined }}
+            <tspan x="289.95" y="347.054">{{$OR (lookup ($lookup $declaration 'child.address.privateHome') 'district') (lookup ($lookup $declaration 'child.address.privateHome') 'district2')}}&#10;</tspan>
+            <tspan x="289.95" y="362.054">{{$OR (lookup ($lookup $declaration 'child.address.privateHome') 'state') (lookup ($lookup $declaration 'child.address.privateHome') 'province')}}, {{lookup ($lookup $declaration 'child.address.privateHome') 'country'}}</tspan>
+          {{/ifCond}}
+        {{/ifCond}}
+      {{/ifCond}}
+    </text>
+
+    </g>
+    <line x1="81.3999" y1="371.125" x2="512.08" y2="371.125" stroke="#ECECEC" stroke-width="0.97" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="88.6029" y="388.694">5.</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="196.138" y="388.694"> /&#x2028;</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="388.694">Mother&#x2019;s full name</tspan>
+      <tspan x="104.68" y="403.694">Nom complet de la m&#xe8;re</tspan>
+    </text>
+    <g clip-path="url(#clip8_1157_5003)">
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
+        <tspan x="289.95" y="396.194">{{lookup $declaration 'mother.firstname'}} {{lookup $declaration 'mother.surname'}}</tspan>
       </text>
     </g>
-    <mask id="mask4_5_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="53" y="513" width="484" height="40">
-      <path d="M53 513.5H537V552.5H53V513.5Z" fill="white" />
-    </mask>
-    <g mask="url(#mask4_5_2)">
-      <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="6" font-weight="bold" letter-spacing="0em">
-        <tspan x="53" y="527.656">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE. A </tspan>
+    <line x1="81.3999" y1="412.765" x2="512.08" y2="412.766" stroke="#ECECEC" stroke-width="0.97" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="88.6029" y="430.334">6.</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="194.68" y="430.334">/&#x2028;</tspan>
+      <tspan x="104.68" y="445.334">N</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="430.334">Father&#x2019;s full name </tspan>
+      <tspan x="112.571" y="445.334">om complet du p&#xe8;re</tspan>
+    </text>
+    <g clip-path="url(#clip9_1157_5003)">
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
+        <tspan x="289.95" y="437.834">{{lookup $declaration 'father.firstname'}} {{lookup $declaration 'father.surname'}}</tspan>
       </text>
-      <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="6" font-weight="bold" letter-spacing="0em">
-        <tspan x="53" y="537.656">CERTIFICATE IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES &#xc0; LA FALSIFIATION OU &#xc0; LA MODIFICATION </tspan>
-      </text>
-      <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="6" font-weight="bold" letter-spacing="0em">
-        <tspan x="53" y="547.656">D&#39;UN CERTIFICAT ET &#xc0; L&#39;UTILISATION OU LA POSSESSION D&#39;UN FAUX CERTIFICAT. UN CERTIFICAT N&#39;EST PAS UNE PREUVE D&#39;IDENTIT&#xc9;</tspan>
-      </text>
-      <path d="M537 517.5H502.287V552.5H537V517.5Z" fill="url(#pattern1_5_2)" />
     </g>
-    <path d="M53 514H537V513H53V514Z" fill="#ECECEC" />
+    <line x1="81.3999" y1="454.405" x2="512.08" y2="454.405" stroke="#ECECEC" stroke-width="0.97" />
+    <line x1="81.3999" y1="454.405" x2="512.08" y2="454.405" stroke="#ECECEC" stroke-width="0.97" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="88.6029" y="471.974">8.</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="486.974">Lieu d&#39;enregistrement</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="205.289" y="471.974">&#x2028;</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="471.974">Place of registration /</tspan>
+    </text>
+    <g clip-path="url(#clip10_1157_5003)">
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
+        <tspan x="289.95" y="471.974">{{$location (lookup $state "createdAtLocation") 'location'}}&#x2028;</tspan>
+        <tspan x="289.95" y="486.974">{{$location (lookup $state "createdAtLocation") 'district'}}, {{$location (lookup $state "createdAtLocation") 'province'}}, {{$location (lookup $state "createdAtLocation") 'country'}}</tspan>
+      </text>
+    </g>
+    <line x1="81.3999" y1="496.045" x2="512.08" y2="496.045" stroke="#ECECEC" stroke-width="0.97" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="88.6029" y="513.614">9.</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="202.646" y="513.614">&#x2028;</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="513.614">Date of registration /</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="528.614">Date d&#39;enregistrement</tspan>
+    </text>
+    <g clip-path="url(#clip11_1157_5003)">
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
+        <tspan x="289.95" y="521.114">{{$formatDate (lookup $state 'createdAt') "dd MMMM yyyy"}}</tspan>
+      </text>
+    </g>
+    <line x1="81.3999" y1="537.685" x2="512.08" y2="537.685" stroke="#ECECEC" stroke-width="0.97" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="83.0519" y="555.254">10.</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="173.262" y="555.254">/&#x2028;</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
+      <tspan x="104.68" y="555.254">Registered by </tspan>
+      <tspan x="104.68" y="570.254">Enregistr&#xe9; par</tspan>
+    </text>
+    <g clip-path="url(#clip12_1157_5003)">
+      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
+        <tspan x="289.95" y="562.754">{{$findUserById (lookup $state 'createdBy') 'name'}}</tspan>
+      </text>
+    </g>
+  </g>
+  <path d="M62.9698 586.11H533.42" stroke="#038E86" stroke-width="1.94" stroke-linecap="round" />
+  <path d="M62.9698 159.22H532.45" stroke="#038E86" stroke-width="1.94" stroke-linecap="round" />
+  <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="15.52" font-weight="bold" letter-spacing="3.88px">
+    <tspan x="200.256" y="184.002">No. {{lookup $state 'registrationNumber'}}</tspan>
+  </text>
+  <path d="M62.9698 196.74H532.45" stroke="#038E86" stroke-width="1.94" stroke-linecap="round" />
+  <path d="M62.97 37H533.42" stroke="#DDDDDD" stroke-width="0.97" stroke-linecap="round" />
+  <g xmlns="http://www.w3.org/2000/svg" opacity="0.15" clip-path="url(#background)">
+    <path d="M559.045 398.468C559.074 488.393 558.957 578.347 559.103 668.272C559.161 672.228 557.937 675.979 555.896 679.149C554.001 682.058 551.378 684.443 548.259 686.042L314.089 820.93C310.854 822.762 307.414 823.664 304.061 823.664C300.622 823.664 297.153 822.704 294.063 820.93L60.0098 686.159C56.8032 684.559 54.0922 682.145 52.1682 679.208C50.0985 675.979 48.8741 672.228 48.8741 668.243L48.9616 666.44L48.9033 397.421C48.845 393.814 49.8361 390.412 51.5269 387.474L51.5852 387.416C53.3342 384.391 55.8704 381.89 58.9021 380.116L293.917 244.734C297.153 242.902 300.622 242 303.945 242C307.385 242 310.883 242.96 313.944 244.734L549.046 380.145C552.34 382.036 554.876 384.769 556.596 387.881L556.654 387.939C558.374 391.139 559.219 394.803 559.045 398.468Z" fill="white"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M185.855 592.655H420.899L362.13 491.126L313.594 519.075L250.016 555.691L185.855 592.655Z" fill="#E2F5F4"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M362.13 491.126L420.898 592.655H538.406L362.13 491.126Z" fill="#038E86"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M362.129 491.127L538.404 592.656L415.941 381.163L245.088 479.61L313.592 519.076L362.129 491.127Z" fill="#E2F5F4"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M538.413 592.656L415.95 381.163L539.025 452.068L538.413 592.656Z" fill="#038E86"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M250.016 555.691L186.408 445.815L68.9301 513.491L68.9592 592.656H185.854L250.016 555.691Z" fill="#E2F5F4"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M186.408 445.815L250.015 555.691L313.593 519.075L245.089 479.61L186.408 445.815Z" fill="#038E86"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M186.408 445.816L245.089 479.61L415.943 381.193L539.018 452.098V397.45L303.974 262.039L68.9301 397.421L68.9592 513.463L186.408 445.816ZM303.974 387.62C287.416 387.62 274.007 374.242 274.007 357.752C274.007 341.233 287.416 327.854 303.974 327.854C320.503 327.854 333.941 341.233 333.941 357.752C333.912 374.242 320.503 387.62 303.974 387.62Z" fill="#EEEEEE"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M303.971 387.622C320.528 387.622 333.938 374.243 333.938 357.724C333.938 341.205 320.528 327.827 303.971 327.827C287.413 327.827 274.004 341.205 274.004 357.724C274.004 374.243 287.413 387.622 303.971 387.622Z" fill="#C86E00"/>
+    <path d="M545.693 397.769L545.751 668.213C545.751 670.656 544.41 672.808 542.428 673.972L307.355 809.412C305.227 810.663 302.661 810.575 300.65 809.412L65.606 674.001C63.3614 672.692 62.1662 670.307 62.2828 667.893L62.2245 397.449C62.2245 395.006 63.5654 392.854 65.5477 391.69L300.621 256.25C302.778 254.999 305.314 255.086 307.325 256.25L542.369 391.661C544.614 392.97 545.809 395.355 545.693 397.769ZM303.973 321.163C314.089 321.163 323.271 325.264 329.888 331.866C336.506 338.468 340.616 347.629 340.616 357.721C340.616 367.813 336.506 376.945 329.888 383.576C323.271 390.178 314.089 394.279 303.973 394.279C293.858 394.279 284.704 390.178 278.058 383.576C271.441 376.974 267.33 367.813 267.33 357.721C267.33 347.629 271.441 338.497 278.058 331.866L278.466 331.488C285.054 325.119 294.062 321.163 303.973 321.163ZM320.414 341.347C316.217 337.159 310.386 334.542 303.973 334.542C297.677 334.542 291.992 337.014 287.824 341.027L287.532 341.347C283.334 345.535 280.711 351.352 280.711 357.75C280.711 364.148 283.334 369.965 287.532 374.153C291.73 378.341 297.56 380.958 303.973 380.958C310.386 380.958 316.217 378.341 320.414 374.153C324.612 369.965 327.236 364.148 327.236 357.75C327.236 351.352 324.612 345.535 320.414 341.347ZM75.6339 661.582H532.371V599.344H75.6339V661.582ZM514.064 674.931H93.9698L149.094 706.69H458.969L514.064 674.931ZM380.378 509.332L424.745 585.995H513.452L380.378 509.332ZM409.295 585.995L359.681 500.229L210.807 585.995H409.295ZM204.656 464.02L252.463 546.616L300.242 519.104L204.656 464.02ZM240.891 553.276L183.988 454.917L75.6048 517.33L75.6339 585.995H184.105L240.891 553.276ZM75.6048 501.945L183.055 440.056C185.066 438.892 187.603 438.805 189.76 440.056L245.088 471.931L412.589 375.433C414.601 374.269 417.137 374.182 419.294 375.433L532.341 440.55V401.288L303.973 269.715L75.5756 401.288L75.6048 501.945ZM532.341 455.935L434.278 399.426L532.371 568.923L532.341 455.935ZM413.551 390.265L258.439 479.609L313.593 511.367L358.777 485.338C360.788 484.175 363.324 484.087 365.482 485.338L520.156 574.449L413.551 390.265ZM227.423 751.827H380.582L435.764 720.039H172.269L227.423 751.827ZM357.407 765.176H250.627L304.002 795.917L357.407 765.176Z" fill="white"/>
   </g>
   <defs>
-    <pattern id="pattern0_5_2" patternContentUnits="objectBoundingBox" width="1" height="1">
-      <use xlink:href="#image0_5_2" transform="scale(0.015625)" />
-    </pattern>
-    <pattern id="pattern1_5_2" patternContentUnits="objectBoundingBox" width="1" height="1">
-      <use xlink:href="#image1_5_2" transform="translate(-0.05 -0.0727811) scale(0.00325444)" />
-    </pattern>
-    <clipPath id="clip0_5_2">
-      <rect width="583" height="842" fill="white" />
+    <clipPath id="background">
+      <rect width="482" height="357" fill="white" transform="translate(63 242)"/>
     </clipPath>
-    <image id="image0_5_2" width="64" height="64" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAONJREFUeF7t20EOhEAIRFG4/6F7DvEnYeFzryQIv6pBd2behOu9dPvsbog+k+NLgArQAqmJcw9iAAhSgZKB3IJkkAySQTJ4CiE+gA8oBeg0mH3Ai084P89HhqwEqIA209ICsQdjAeaZIgaAYKxBDMCAYy8fXwAIgiAIcoJpJEYGI4VjB3YrbC9gL2AvkCB43cM5PgZgAAZgQFnNZAhdGykQBEEQBEEQDBmgAm2glM/z+QUYisYUGoldO7kY32IEAzCg6RgIRgjFAsw+AgRBMNYgBmCAT2TCYfoPPz/HCqQCX1eBHzHnv7C7WhBSAAAAAElFTkSuQmCC" />
-    <image id="image1_5_2" width="338" height="352" xlink:href="data:image/png;base64,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" />
+    <clipPath id="clip0_1157_5003">
+      <path d="M61.9999 761.59H533.42V805.24H61.9999V761.59Z" fill="white" />
+    </clipPath>
+    <clipPath id="clip1_1157_5003">
+      <rect width="469.48" height="62.08" fill="white" transform="translate(62.97 45.7305)" />
+    </clipPath>
+    <clipPath id="clip2_1157_5003">
+      <rect width="190.321" height="66" fill="white" transform="translate(321.759 646.161)" />
+    </clipPath>
+    <clipPath id="clip3_1157_5003">
+      <rect x="61.9999" y="197.05" width="469.48" height="389.94" rx="1.94" fill="white" />
+    </clipPath>
+    <clipPath id="clip4_1157_5003">
+      <rect width="222.13" height="30" fill="white" transform="translate(289.95 210.87)" />
+    </clipPath>
+    <clipPath id="clip5_1157_5003">
+      <rect width="222.13" height="30" fill="white" transform="translate(289.95 252.51)" />
+    </clipPath>
+    <clipPath id="clip6_1157_5003">
+      <rect width="222.13" height="30" fill="white" transform="translate(289.95 294.15)" />
+    </clipPath>
+    <clipPath id="clip7_1157_5003">
+      <rect width="222.13" height="30" fill="white" transform="translate(289.95 335.79)" />
+    </clipPath>
+    <clipPath id="clip8_1157_5003">
+      <rect width="222.13" height="30" fill="white" transform="translate(289.95 377.43)" />
+    </clipPath>
+    <clipPath id="clip9_1157_5003">
+      <rect width="222.13" height="30" fill="white" transform="translate(289.95 419.07)" />
+    </clipPath>
+    <clipPath id="clip10_1157_5003">
+      <rect width="222.13" height="30" fill="white" transform="translate(289.95 460.71)" />
+    </clipPath>
+    <clipPath id="clip11_1157_5003">
+      <rect width="222.13" height="30" fill="white" transform="translate(289.95 502.35)" />
+    </clipPath>
+    <clipPath id="clip12_1157_5003">
+      <rect width="222.13" height="30" fill="white" transform="translate(289.95 543.99)" />
+    </clipPath>
   </defs>
+  <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
+  <!-- #ifCond printInAdvance '!==' true}} -->
+    <image width="140" height="70" xlink:href="{{$findUserById (lookup $state "updatedBy") "signatureFileName"}}" x="347" y="644"></image>
+  <!-- /ifCond}} -->
 </svg>
