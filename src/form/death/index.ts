@@ -218,7 +218,8 @@ export const deathForm = {
               [
                 {
                   action: 'hide',
-                  expression: 'values.exactDateOfBirthUnknown'
+                  expression:
+                    'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
                 }
               ].concat(disableIfVerifiedOrAuthenticated),
               isValidBirthDate,
