@@ -890,7 +890,6 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
         .click()
 
-      await selectAction(page, 'Unassign')
       await selectAction(page, 'Assign')
       await selectAction(page, 'Validate')
     })
@@ -1173,7 +1172,6 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
         .click()
 
-      await selectAction(page, 'Unassign')
       await selectAction(page, 'Assign')
       await selectAction(page, 'Register')
     })
