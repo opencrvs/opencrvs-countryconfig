@@ -1243,7 +1243,7 @@ form.field.label.fetchRegistrationModalInfo,,Birth Registration Number,Numéro d
 form.field.label.fileSizeError,,File size must be less than 2MB,La taille du fichier doit être inférieure à 2 Mo,
 form.field.label.fileUploadError,,{type} supported image only,{type} supporté uniquement,{type} supporté uniquement
 form.field.label.firstName,,First name(s),Prénom,Fanampin'anarana
-form.field.label.firstNameEN,,First name,Prénom,Fanampin'anarana
+form.field.label.firstNameEN,,First name (use xyz261 if not available),Prénom (utilisez xyz261 si non disponible),Fanampin'anarana (ataovy xyz261 raha tsy misy)
 form.field.label.firstNames,,First name(s),Prénom(s),Fanampin'anarana
 form.field.label.fokontanyCustomAddress,,Fokontany,Fokontany,Fokontany
 form.field.label.generateNUI,,Generate NUI,Générer NUI,

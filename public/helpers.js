@@ -922,6 +922,11 @@ window.registrationStatementSimplified = registrationStatementSimplified
 function registrationStatement() {
   return function (informantPrimaryDistrict, registrationDistrict) {
     var _a
+    const nameParts = this.registrar.name.trim().split(' ')
+    const registrarFamilyName = nameParts.pop() || ''
+    const rawFirstName = nameParts.join(' ')
+    const registrarFirstName =
+      rawFirstName.trim().toLowerCase() === 'xyz261' ? '' : ` ${rawFirstName}`
     var birthRegistrationDate = getBirthRegistrationDate(this)
     var registrarDateUTC = convertToTimeZoneIso(
       isValidDate(birthRegistrationDate)
@@ -1008,7 +1013,7 @@ function registrationStatement() {
         ),
         [
           'izay miara-manao sonia aminay,',
-          this.registrar.name + ',',
+          registrarFamilyName + registrarFirstName + ',',
           'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
           definitionOffice(registrationDistrict) + ',',
           'rehefa novakiana taminy ity soratra ity.---'
