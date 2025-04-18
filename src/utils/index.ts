@@ -11,11 +11,9 @@
 
 import fetch from 'node-fetch'
 import { APPLICATION_CONFIG_URL, FHIR_URL } from '@countryconfig/constants'
-import { callingCountries } from 'country-data'
 import csv2json from 'csv2json'
 import { createReadStream } from 'fs'
 import fs from 'fs'
-import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber'
 import { URL } from 'url'
 import { build } from 'esbuild'
 import { memoize } from 'lodash'
@@ -24,8 +22,7 @@ export const CHILD_CODE = 'child-details'
 export const DECEASED_CODE = 'deceased-details'
 export const OPENCRVS_SPECIFICATION_URL = 'http://opencrvs.org/specs/'
 import { join } from 'path'
-import { promisify } from 'util'
-import { stringify, Options } from 'csv-stringify'
+import { stringify } from 'csv-stringify/sync'
 
 export interface ILocation {
   id?: string
@@ -64,9 +61,15 @@ export interface IApplicationConfigResponse {
 }
 
 export function getCompositionId(resBody: fhir.Bundle) {
-  return resBody.entry
+  const id = resBody.entry
     ?.map((e) => e.resource)
     .find((res) => res?.resourceType === 'Composition')?.id
+
+  if (!id) {
+    throw new Error('Could not find composition id in FHIR Bundle')
+  }
+
+  return id
 }
 
 export function getTaskResource(
@@ -160,27 +163,11 @@ export async function updateResourceInHearth(resource: fhir.ResourceBase) {
   return res.text()
 }
 
-export const convertToMSISDN = (phone: string, countryAlpha3: string) => {
-  const countryCode = callingCountries[countryAlpha3.toUpperCase()].alpha2
-
-  const phoneUtil = PhoneNumberUtil.getInstance()
-  const number = phoneUtil.parse(phone, countryCode)
-
-  return (
-    phoneUtil
-      .format(number, PhoneNumberFormat.INTERNATIONAL)
-      // libphonenumber adds spaces and dashes to phone numbers,
-      // which we do not want to keep for now
-      .replace(/[\s-]/g, '')
-  )
-}
-
-const csvStringify = promisify<Array<Record<string, any>>, Options>(stringify)
 export async function writeJSONToCSV(
   filename: string,
   data: Array<Record<string, any>>
 ) {
-  const csv = await csvStringify(data, {
+  const csv = stringify(data, {
     header: true
   })
   return fs.promises.writeFile(filename, csv, 'utf8')
@@ -246,9 +233,10 @@ export async function getStatistics(path?: string) {
   if (!path) {
     path = join(__dirname, '../data-seeding/locations/source/statistics.csv')
   }
-  const data = await readCSVToJSON<
-    Array<Record<string, string> & { adminPcode: string }>
-  >(path)
+  const data =
+    await readCSVToJSON<Array<Record<string, string> & { adminPcode: string }>>(
+      path
+    )
 
   return data.map<LocationStatistic>((item) => {
     const { adminPcode, name, ...yearKeys } = item
