@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { EventConfig } from '@opencrvs/toolkit/events'
+import { EventConfig, field } from '@opencrvs/toolkit/events'
 
 type AdvancedSearch = EventConfig['advancedSearch']
 
@@ -20,11 +20,7 @@ export const advancedSearchBirth = [
       description: 'The title of Registration details accordion',
       id: 'v2.advancedSearch.form.registrationDetails'
     },
-    fields: [
-      {
-        fieldId: 'child.dob'
-      }
-    ]
+    fields: [field('child.dob').exact()]
   },
   {
     title: {
@@ -32,10 +28,6 @@ export const advancedSearchBirth = [
       description: 'The title of Child details accordion',
       id: 'v2.advancedSearch.form.childDetails'
     },
-    fields: [
-      {
-        fieldId: 'child.gender'
-      }
-    ]
+    fields: [field('child.gender').exact()]
   }
 ] satisfies AdvancedSearch

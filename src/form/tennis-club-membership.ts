@@ -1091,9 +1091,8 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'v2.event.tennis-club-membership.search'
       },
       fields: [
-        {
-          fieldId: 'applicant.firstname'
-        }
+        field('applicant.firstname').exact(),
+        field('applicant.surname').fuzzy()
       ]
     }
   ]
