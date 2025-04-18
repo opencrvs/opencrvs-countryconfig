@@ -12,8 +12,7 @@
 - Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
 ### New features
-
-- Added a local virtual machine setup for testing Ansible playbooks locally (MacOS only). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
+- Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
 ## 1.7.1 Release candidate
 
