@@ -463,6 +463,7 @@ export interface ILoaderButton extends IFormFieldBase {
 export interface ITimeFormFIeld extends IFormFieldBase {
   type: typeof TIME
   ignorePlaceHolder?: boolean
+  use12HourFormat?: boolean
 }
 
 export interface INidVerificationButton extends IFormFieldBase {
@@ -643,8 +644,8 @@ type FunctionParamsToDescriptor<T, Descriptor> =
   T extends Array<any>
     ? { [K in keyof T]: FunctionParamsToDescriptor<T[K], Descriptor> }
     : T extends IFormFieldQueryMapFunction | IFormFieldMutationMapFunction // It's a query transformation function - return a query transformation descriptor
-    ? Descriptor
-    : T // It's a none of the above - return self
+      ? Descriptor
+      : T // It's a none of the above - return self
 
 export interface IStaticFieldType {
   kind: 'static'
