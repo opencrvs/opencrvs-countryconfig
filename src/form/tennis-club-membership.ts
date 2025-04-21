@@ -15,6 +15,7 @@ import {
   defineActionForm,
   defineConfig,
   defineDeclarationForm,
+  eventField,
   FieldType,
   PageTypes
 } from '@opencrvs/toolkit/events'
@@ -626,6 +627,81 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   ]
 })
 
+const statusOptions = [
+  {
+    value: 'ALL',
+    label: {
+      defaultMessage: 'Any status',
+      description: 'Option for form field: status of record',
+      id: 'advancedSearch.form.recordStatusAny'
+    }
+  },
+  {
+    value: 'IN_PROGRESS',
+    label: {
+      defaultMessage: 'In progress',
+      description: 'Option for form field: status of record',
+      id: 'advancedSearch.form.recordStatusInprogress'
+    }
+  },
+  {
+    value: 'IN_REVIEW',
+    label: {
+      defaultMessage: 'In review',
+      description: 'Option for form field: status of record',
+      id: 'advancedSearch.form.recordStatusInReview'
+    }
+  },
+  {
+    value: 'REJECTED',
+    label: {
+      defaultMessage: 'Requires updates',
+      description: 'Option for form field: status of record',
+      id: 'advancedSearch.form.recordStatusRequireUpdate'
+    }
+  },
+  {
+    value: 'REGISTERED',
+    label: {
+      defaultMessage: 'Registered',
+      description: 'Option for form field: status of record',
+      id: 'advancedSearch.form.recordStatusRegistered'
+    }
+  },
+  {
+    value: 'CERTIFIED',
+    label: {
+      defaultMessage: 'Certified',
+      description: 'Option for form field: status of record',
+      id: 'advancedSearch.form.recordStatusCertified'
+    }
+  },
+  {
+    value: 'ARCHIVED',
+    label: {
+      defaultMessage: 'Archived',
+      description: 'Option for form field: status of record',
+      id: 'advancedSearch.form.recordStatusAchived'
+    }
+  },
+  {
+    value: 'CORRECTION_REQUESTED',
+    label: {
+      defaultMessage: 'Correction requested',
+      description: 'Option for form field: status of record',
+      id: 'advancedSearch.form.recordStatusCorrectionRequested'
+    }
+  },
+  {
+    value: 'VALIDATED',
+    label: {
+      defaultMessage: 'Validated',
+      description: 'Option for form field: status of record',
+      id: 'advancedSearch.form.recordStatusValidated'
+    }
+  }
+]
+
 export const tennisClubMembershipEvent = defineConfig({
   id: Event.TENNIS_CLUB_MEMBERSHIP,
   declaration: TENNIS_CLUB_DECLARATION_FORM,
@@ -1092,7 +1168,9 @@ export const tennisClubMembershipEvent = defineConfig({
       },
       fields: [
         field('applicant.firstname').exact(),
-        field('applicant.surname').fuzzy()
+        field('applicant.surname').fuzzy(),
+        eventField('trackingId'),
+        eventField('status', statusOptions)
       ]
     }
   ]
