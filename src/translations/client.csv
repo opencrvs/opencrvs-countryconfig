@@ -2539,6 +2539,12 @@ v2.event.action.declare.form.section.person.field.address.residentialArea.label,
 v2.event.action.declare.form.section.person.field.address.street.label,This is the label for the field,Street,Rue / Numéro de parcelle
 v2.event.action.declare.form.section.person.field.address.town.label,This is the label for the field,Town,Ville
 v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
+v2.event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
+v2.event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
+v2.event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
+v2.event.birth.action.certificate.form.section.collectPayment.service.label.after30before365,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
+v2.event.birth.action.certificate.form.section.collectPayment.service.label.after365,Birth registration after 365 days of date of birth,Birth registration after 365 days of date of birth,Enregistrement de naissance après 365 jours de la date de naissance
+v2.event.birth.action.certificate.form.section.collectPayment.service.label.before30,Birth registration before 30 days of date of birth,Birth registration before 30 days of date of birth,Enregistrement de naissance avant 30 jours de la date de naissance
 v2.event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 v2.event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
@@ -2608,9 +2614,10 @@ v2.event.birth.summary.informant.contact.label,This is the label for the informa
 v2.event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
 v2.event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
+v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Type,Type
 v2.event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
 v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
-v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR{Local Registrar} other{Unknown}}","{role, select, LOCAL_REGISTRAR{Registraire local} other{Inconnu}}"
+v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} SOCIAL_WORKER {Field Agent} REGISTRATION_AGENT {Registration Agent} other {Unknown}}"," {role, select, LOCAL_REGISTRAR {Registraire local} SOCIAL_WORKER {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} other{Inconnu}}"
 v2.event.summary.event.label,Label for the event field,Event,Événement
 v2.event.summary.event.value,Value for the event field,{eventLabel},{eventLabel}
 v2.event.summary.registrationNumber.empty,No registration number message,No registration number,Aucun numéro d'inscription
@@ -2692,7 +2699,7 @@ v2.event.tennis-club-membership.summary.title.label,Label for the summary title 
 v2.event.tennis-club-membership.workqueue.all.name.label,Label for the 'All' work queue filter for tennis club membership,{applicant.firstname} {applicant.surname},{applicant.firstname} {applicant.surname}
 v2.event.tennis-club-membership.workqueue.readyForReview.name.label,Label for 'Ready for Review' work queue for tennis club membership,Ready for Review,Prêt pour révision
 v2.event.tennis-club-membership.workqueue.registered.name.label,Label for 'Registered' work queue for tennis club membership,Registered,Enregistré
-v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} REJECT {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} READ {Viewed} other {Unknown}}","{status, select, CREATE {Brouillon} VALIDATE {Déclaration envoyée pour approbation} DRAFT {Brouillon} DECLARE {Déclaration initiée} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVED {archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} READ {Vue} other {Inconnu}}"
+v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} REJECT {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} other {Unknown}}","{status, select, CREATE {Brouillon} VALIDATE {Déclaration envoyée pour approbation} DRAFT {Brouillon} DECLARE {Déclaration initiée} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVED {archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} READ {Vue} ASSIGN {Attribué} UNASSIGN {Non attribué} other {Inconnu}}"
 v2.events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} other {Unknown}}","{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} other {Unknown}}"
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
@@ -2825,7 +2832,7 @@ v2.review.register.confirm,The label for register button of review action,Regist
 v2.review.register.confirmModal.cancel,The label for modal cancel button when registering,Cancel,Annuler
 v2.review.register.confirmModal.confirm,The label for modal confirm button when registering,Register,Enregistrer
 v2.review.register.confirmModal.description,The description for review action modal when registering,‎,
-v2.review.register.confirmModal.title,The title for review action modal when registering,Register?,Enregistrer ?
+v2.review.register.confirmModal.title,The title for review action modal when registering,Register the {event}?,Enregistrer cet {event}?
 v2.review.register.description.complete,The description for registration action when form is complete,"By clicking register, you confirm that the information entered is correct and the event can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que l'événement peut être enregistré."
 v2.review.register.reject,The label for reject button of review action,Reject,Rejeter
 v2.review.register.title,The title shown when reviewing a record to register,Register event,Enregistrer l'événement

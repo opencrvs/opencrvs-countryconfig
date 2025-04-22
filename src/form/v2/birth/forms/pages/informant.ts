@@ -10,16 +10,21 @@
  */
 
 import {
+  AddressType,
   and,
   ConditionalType,
   defineFormPage,
   FieldType,
+  never,
   or,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
 import { field, not } from '@opencrvs/toolkit/conditionals'
 import { createSelectOptions, emptyMessage } from '../../../utils'
-import { MAX_NAME_LENGTH } from '@countryconfig/form/v2/birth/validators'
+import {
+  MAX_NAME_LENGTH,
+  nationalIdValidator
+} from '@countryconfig/form/v2/birth/validators'
 import { IdType, idTypeOptions, PersonType } from '../../../person'
 
 export const InformantType = {
@@ -164,7 +169,7 @@ export const informant = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.informant}.dob`,
+      id: 'informant.dob',
       type: 'DATE',
       required: true,
       validation: [
@@ -174,7 +179,7 @@ export const informant = defineFormPage({
             description: 'This is the error message for invalid date',
             id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
           },
-          validator: field(`${PersonType.informant}.dob`).isBefore().now()
+          validator: field('informant.dob').isBefore().now()
         },
         {
           message: {
@@ -183,7 +188,7 @@ export const informant = defineFormPage({
               'This is the error message for a birth date after child`s birth date',
             id: `v2.event.birth.action.declare.form.section.person.dob.afterChild`
           },
-          validator: field('mother.dob').isBefore().date(field('child.dob'))
+          validator: field('informant.dob').isBefore().date(field('child.dob'))
         }
       ],
       label: {
@@ -213,6 +218,10 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: informantOtherThanParent
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ]
     },
@@ -256,7 +265,8 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: informantOtherThanParent
         }
-      ]
+      ],
+      defaultValue: 'FAR'
     },
     {
       id: `${PersonType.informant}.idType`,
@@ -276,22 +286,34 @@ export const informant = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.informant}.nid`,
+      id: 'informant.nid',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.birth.action.declare.form.section.person.field.nid.label`
+        id: 'v2.event.birth.action.declare.form.section.person.field.nid.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`${PersonType.informant}.idType`).isEqualTo(
-              IdType.NATIONAL_ID
-            ),
+            field('informant.idType').isEqualTo(IdType.NATIONAL_ID),
             informantOtherThanParent
+          )
+        }
+      ],
+      validation: [
+        nationalIdValidator('informant.nid'),
+        {
+          message: {
+            defaultMessage: 'National id must be unique',
+            description: 'This is the error message for non-unique ID Number',
+            id: 'v2.event.birth.action.declare.form.nid.unique'
+          },
+          validator: and(
+            not(field('informant.nid').isEqualTo(field('mother.nid'))),
+            not(field('informant.nid').isEqualTo(field('father.nid')))
           )
         }
       ]
@@ -377,7 +399,14 @@ export const informant = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: informantOtherThanParent
         }
-      ]
+      ],
+      defaultValue: {
+        country: 'FAR',
+        addressType: AddressType.DOMESTIC,
+        province: '$user.province',
+        district: '$user.district',
+        urbanOrRural: 'URBAN'
+      }
     },
     {
       id: 'v2.informant.address.divider.end',
@@ -405,12 +434,12 @@ export const informant = defineFormPage({
             defaultMessage:
               'Must be a valid 10 digit number that starts with 0(7|9)',
             description:
-              'The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11',
+              'The error message that appears on phone numbers where the first two characters must be 07 or 09, and length must be 10',
             id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.error'
           },
           validator: or(
             field('informant.phoneNo').matches(PHONE_NUMBER_REGEX),
-            field('informant.phoneNo').isUndefined()
+            field('informant.phoneNo').isFalsy()
           )
         }
       ]

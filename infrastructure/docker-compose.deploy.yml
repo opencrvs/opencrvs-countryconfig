@@ -335,7 +335,7 @@ services:
       - overlay_net
 
   minio-mc:
-    image: minio/mc
+    image: minio/mc:RELEASE.2023-09-13T23-08-58Z
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc admin trace --path ocrvs/* minio

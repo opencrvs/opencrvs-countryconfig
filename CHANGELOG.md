@@ -6,6 +6,10 @@
 
 - **Introduced `single_node` variable in inventory files** to define whether single-node clusters are allowed, set to false in production to enforce use of at least a two-node cluster. [#6918](https://github.com/opencrvs/opencrvs-core/issues/6918)
 
+### New features
+
+- Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
+
 ## 1.7.1 Release candidate
 
 ### New features

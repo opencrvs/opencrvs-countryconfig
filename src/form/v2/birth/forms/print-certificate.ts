@@ -10,13 +10,17 @@
  */
 
 import {
+  and,
   ConditionalType,
   defineActionForm,
   field,
   FieldType,
+  not,
   PageTypes
 } from '@opencrvs/toolkit/events'
 import { informantOtherThanParent, InformantType } from './pages/informant'
+import { nationalIdValidator } from '../validators'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 const CertCollectorType = {
   INFORMANT: 'INFORMANT',
@@ -31,7 +35,9 @@ const otherIdType = {
   REFUGEE_NUMBER: 'REFUGEE_NUMBER',
   ALIEN_NUMBER: 'ALIEN_NUMBER',
   OTHER: 'OTHER',
-  NO_ID: 'NO_ID'
+  NO_ID: 'NO_ID',
+  NATIONAL_ID: 'NATIONAL_ID',
+  BIRTH_REGISTRATION_NUMBER: 'BIRTH_REGISTRATION_NUMBER'
 } as const
 
 export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
@@ -122,12 +128,29 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             },
             {
               label: {
+                id: 'v2.event.birth.action.form.section.idType.nid.label',
+                defaultMessage: 'National ID',
+                description: 'Option for selecting National ID as the ID type'
+              },
+              value: otherIdType.NATIONAL_ID
+            },
+            {
+              label: {
                 id: 'v2.event.birth.action.form.section.idType.drivingLicense.label',
-                defaultMessage: 'Driving License',
+                defaultMessage: 'Drivers License',
                 description:
                   'Option for selecting Driving License as the ID type'
               },
               value: otherIdType.DRIVING_LICENSE
+            },
+            {
+              label: {
+                id: 'v2.event.birth.action.form.section.idType.brn.label',
+                defaultMessage: 'Birth Registration Number',
+                description:
+                  'Option for selecting Birth Registration Number as the ID type'
+              },
+              value: otherIdType.BIRTH_REGISTRATION_NUMBER
             },
             {
               label: {
@@ -157,7 +180,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             {
               label: {
                 id: 'v2.event.birth.action.form.section.idType.noId.label',
-                defaultMessage: 'No ID',
+                defaultMessage: 'No ID available',
                 description: 'Option for selecting No ID as the ID type'
               },
               value: otherIdType.NO_ID
@@ -183,6 +206,25 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           ]
         },
         {
+          id: 'collector.nid',
+          type: FieldType.TEXT,
+          required: true,
+          label: {
+            defaultMessage: 'ID Number',
+            description: 'Field for entering ID Number',
+            id: 'v2.event.birth.action.form.section.nid.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').isEqualTo(
+                otherIdType.NATIONAL_ID
+              )
+            }
+          ],
+          validation: [nationalIdValidator('collector.nid')]
+        },
+        {
           id: 'collector.DRIVING_LICENSE.details',
           type: FieldType.TEXT,
           required: true,
@@ -196,6 +238,24 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               type: ConditionalType.SHOW,
               conditional: field('collector.OTHER.idType').isEqualTo(
                 otherIdType.DRIVING_LICENSE
+              )
+            }
+          ]
+        },
+        {
+          id: 'collector.brn',
+          type: FieldType.TEXT,
+          required: true,
+          label: {
+            defaultMessage: 'ID Number',
+            description: 'Field for entering ID Number',
+            id: 'v2.event.birth.action.form.section.brn.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('collector.OTHER.idType').isEqualTo(
+                otherIdType.BIRTH_REGISTRATION_NUMBER
               )
             }
           ]
@@ -361,9 +421,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             data: [
               { fieldId: 'mother.idType' },
               { fieldId: 'mother.nid' },
+              { fieldId: 'mother.passport' },
+              { fieldId: 'mother.brn' },
               { fieldId: 'mother.firstname' },
               { fieldId: 'mother.surname' },
               { fieldId: 'mother.dob' },
+              { fieldId: 'mother.age' },
               { fieldId: 'mother.nationality' }
             ]
           }
@@ -388,9 +451,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             data: [
               { fieldId: 'father.idType' },
               { fieldId: 'father.nid' },
+              { fieldId: 'father.passport' },
+              { fieldId: 'father.brn' },
               { fieldId: 'father.firstname' },
               { fieldId: 'father.surname' },
               { fieldId: 'father.dob' },
+              { fieldId: 'father.age' },
               { fieldId: 'father.nationality' }
             ]
           }
@@ -411,11 +477,15 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           },
           configuration: {
             data: [
+              { fieldId: 'informant.relation' },
               { fieldId: 'informant.idType' },
               { fieldId: 'informant.nid' },
+              { fieldId: 'informant.passport' },
+              { fieldId: 'informant.brn' },
               { fieldId: 'informant.firstname' },
               { fieldId: 'informant.surname' },
               { fieldId: 'informant.dob' },
+              { fieldId: 'informant.age' },
               { fieldId: 'informant.nationality' }
             ]
           }
@@ -464,13 +534,27 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
       },
       fields: [
         {
-          id: 'collector.collect.payment.data',
+          id: 'collector.collect.payment.data.after365',
           type: FieldType.DATA,
           label: {
             defaultMessage: 'Payment details',
             description: 'Title for the data section',
             id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
           },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                not(
+                  field('child.dob')
+                    .isAfter()
+                    .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                    .inPast()
+                ),
+                field('child.dob').isBefore().now()
+              )
+            }
+          ],
           configuration: {
             data: [
               {
@@ -479,7 +563,114 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                   description: 'Title for the data entry',
                   id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
                 },
-                value: 'Birth registration before 30 days of date of birth'
+                value: {
+                  defaultMessage:
+                    'Birth registration after 365 days of date of birth',
+                  description:
+                    'Birth registration after 365 days of date of birth message',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.after365'
+                }
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$15.00'
+              }
+            ]
+          }
+        },
+        {
+          id: 'collector.collect.payment.data.after30.before365',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                not(
+                  field('child.dob')
+                    .isAfter()
+                    .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
+                    .inPast()
+                ),
+
+                field('child.dob')
+                  .isAfter()
+                  .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                  .inPast(),
+                field('child.dob').isBefore().now()
+              )
+            }
+          ],
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: {
+                  defaultMessage:
+                    'Birth registration after 30 days but before 365 days of date of birth',
+                  description:
+                    'Birth registration after 30 days but before 365 days of date of birth message',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.after30before365'
+                }
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$7.00'
+              }
+            ]
+          }
+        },
+        {
+          id: 'collector.collect.payment.data.before30',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                field('child.dob')
+                  .isAfter()
+                  .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
+                  .inPast(),
+                field('child.dob').isBefore().now()
+              )
+            }
+          ],
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: {
+                  defaultMessage:
+                    'Birth registration before 30 days of date of birth',
+                  description:
+                    'Birth registration before 30 days of date of birth message',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.before30'
+                }
               },
               {
                 label: {
