@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.8.0 Release candidate
+
+### Improvements
+
+- **Introduced `single_node` variable in inventory files** to define whether single-node clusters are allowed, set to false in production to enforce use of at least a two-node cluster. [#6918](https://github.com/opencrvs/opencrvs-core/issues/6918)
+
 ## 1.7.1 Release candidate
 
 ### New features
