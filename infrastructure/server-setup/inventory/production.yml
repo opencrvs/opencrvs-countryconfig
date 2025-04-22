@@ -17,6 +17,7 @@ all:
     backup_server_remote_target_directory: /home/backup/backups
     # external_backup_server_ssh_port: Defined in --extra-vars by the provisioning pipeline
     # external_backup_server_ip: Defined in --extra-vars by the provisioning pipeline
+    single_node: false  # At least 2 nodes are recommended for production environment. Set "single_node: true" at your own discretion.
     users:
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
       - name: riku

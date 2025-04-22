@@ -15,3 +15,12 @@
       - mongodb_admin_password is defined
       - elasticsearch_superuser_password is defined
       - encrypted_disk_size is defined
+
+- name: 'Prevent single-node configuration in production'
+  fail:
+    msg: 'The production environment should always use more than one node. Please check the inventory file for production.'
+  when: >
+    single_node == false and (
+      'docker-workers' not in groups or
+      groups['docker-workers'] | length == 0
+    ) 
