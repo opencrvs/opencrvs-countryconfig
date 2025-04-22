@@ -15,6 +15,7 @@ import {
   ConditionalType,
   defineFormPage,
   FieldType,
+  never,
   or,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
@@ -217,6 +218,10 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: informantOtherThanParent
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ]
     },
@@ -302,21 +307,14 @@ export const informant = defineFormPage({
         nationalIdValidator('informant.nid'),
         {
           message: {
-            defaultMessage:
-              'ID Number must be different from fathers`s ID Number',
+            defaultMessage: 'National id must be unique',
             description: 'This is the error message for non-unique ID Number',
-            id: `v2.event.birth.action.declare.form.nid.unique.father`
+            id: 'v2.event.birth.action.declare.form.nid.unique'
           },
-          validator: not(field('informant.nid').isEqualTo(field('father.nid')))
-        },
-        {
-          message: {
-            defaultMessage:
-              'ID Number must be different from mothers`s ID Number',
-            description: 'This is the error message for non-unique ID Number',
-            id: `v2.event.birth.action.declare.form.nid.unique.mother`
-          },
-          validator: not(field('informant.nid').isEqualTo(field('mother.nid')))
+          validator: and(
+            not(field('informant.nid').isEqualTo(field('mother.nid'))),
+            not(field('informant.nid').isEqualTo(field('father.nid')))
+          )
         }
       ]
     },
