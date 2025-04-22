@@ -19,9 +19,9 @@ import {
   PageTypes
 } from '@opencrvs/toolkit/events'
 import { applicationConfig } from '@countryconfig/api/application/application-config'
-import { printCertificateCollectors } from '@countryconfig/form/v2/birth/forms/print-certificate-collectors'
-import { printCertificateCollectorOther } from '@countryconfig/form/v2/birth/forms/print-certificate-collector-other'
-import { printCertificateCollectorIdentityVerify } from '@countryconfig/form/v2/birth/forms/print-certificate-collector-identity-verify'
+import { printCertificateCollectors } from './collectors'
+import { printCertificateCollectorOther } from './collector-other'
+import { printCertificateCollectorIdentityVerify } from './collector-identity-verify'
 
 export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {

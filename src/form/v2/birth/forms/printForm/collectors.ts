@@ -15,7 +15,7 @@ import {
   FieldConfig,
   FieldType
 } from '@opencrvs/toolkit/events'
-import { InformantType } from './pages/informant'
+import { InformantType } from '../pages/informant'
 
 export const printCertificateCollectors: FieldConfig[] = [
   {

@@ -14,8 +14,8 @@ import {
   FieldConfig,
   FieldType
 } from '@opencrvs/toolkit/events'
-import { nationalIdValidator } from '../validators'
-import { InformantType } from './pages/informant'
+import { nationalIdValidator } from '../../validators'
+import { InformantType } from '../pages/informant'
 
 const otherIdType = {
   PASSPORT: 'PASSPORT',
