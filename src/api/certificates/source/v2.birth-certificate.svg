@@ -307,6 +307,6 @@
   </defs>
   <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
   <!-- #ifCond printInAdvance '!==' true}} -->
-    <image width="140" height="70" xlink:href="{{$findUserById (lookup $state "updatedBy") "signatureFileName"}}" x="347" y="644"></image>
+    <image width="140" height="70" xlink:href="{{$findUserById (lookup $state "updatedBy") "signatureFilename"}}" x="347" y="644"></image>
   <!-- /ifCond}} -->
 </svg>
