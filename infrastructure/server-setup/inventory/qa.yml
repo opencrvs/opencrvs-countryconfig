@@ -8,6 +8,7 @@
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
 all:
   vars:
+    single_node: true
     users:
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
       - name: pyry
