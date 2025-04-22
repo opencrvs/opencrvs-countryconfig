@@ -142,7 +142,6 @@ services:
       - mosip-api
     environment:
       - NODE_ENV=production
-      - MOSIP_WEBSUB_CALLBACK_URL=
       - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS:-}
       - ALERT_EMAIL=${ALERT_EMAIL:-}
       - SMTP_HOST=${SMTP_HOST:-}
@@ -152,6 +151,7 @@ services:
       - SMTP_SECURE=${SMTP_SECURE:-}
       - MOSIP_WEBSUB_CALLBACK_URL=http://mosip-api:2024/websub/callback
       - ISSUER_URL=https://mosip-mock.{{hostname}}
+      - MOSIP_WEBSUB_TOPIC=${MOSIP_WEBSUB_TOPIC}
     deploy:
       replicas: 1
       labels:
