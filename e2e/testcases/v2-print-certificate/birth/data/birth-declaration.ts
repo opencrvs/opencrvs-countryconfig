@@ -72,7 +72,9 @@ export async function getDeclaration(
     'child.firstname': faker.person.firstName(),
     'child.surname': faker.person.lastName(),
     'child.gender': 'female',
-    'child.dob': '2025-03-18',
+    'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
+      .toISOString()
+      .split('T')[0], // yesterday
     'child.placeOfBirth': 'PRIVATE_HOME',
     'child.address.privateHome': {
       country: 'FAR',

@@ -2,7 +2,6 @@ import { expect, test, type Page } from '@playwright/test'
 import { CREDENTIALS } from '../../../constants'
 import { getToken, loginToV2 } from '../../../helpers'
 import { createDeclaration, Declaration } from './data/birth-declaration'
-import { selectAction } from '../../../v2-utils'
 import {
   expectInUrl,
   navigateToCertificatePrintAction,
