@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.8.0 Release candidate
+## 1.8.0
 
 ### Improvements
 
