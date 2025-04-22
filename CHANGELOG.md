@@ -14,8 +14,7 @@
 
 ### Bug Fixes
 
-- The `swarm.yaml` playbook now includes a validation step on Docker worker nodes to check whether the node is already part of an existing Swarm (based on Node ID).
-  If a worker node is found to be part of another Swarm, the playbook will now explicitly fail with a clear error message. Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
+- Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
 
 ## 1.6.4
 
