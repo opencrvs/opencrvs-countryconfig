@@ -15,6 +15,7 @@ import {
   ConditionalType,
   defineFormPage,
   FieldType,
+  never,
   or,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
@@ -217,6 +218,10 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: informantOtherThanParent
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: never()
         }
       ]
     },
