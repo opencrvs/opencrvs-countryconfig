@@ -2538,6 +2538,12 @@ v2.event.action.declare.form.section.person.field.address.residentialArea.label,
 v2.event.action.declare.form.section.person.field.address.street.label,This is the label for the field,Street,Rue / Numéro de parcelle
 v2.event.action.declare.form.section.person.field.address.town.label,This is the label for the field,Town,Ville
 v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
+v2.event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
+v2.event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
+v2.event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
+v2.event.birth.action.certificate.form.section.collectPayment.service.label.after30before365,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
+v2.event.birth.action.certificate.form.section.collectPayment.service.label.after365,Birth registration after 365 days of date of birth,Birth registration after 365 days of date of birth,Enregistrement de naissance après 365 jours de la date de naissance
+v2.event.birth.action.certificate.form.section.collectPayment.service.label.before30,Birth registration before 30 days of date of birth,Birth registration before 30 days of date of birth,Enregistrement de naissance avant 30 jours de la date de naissance
 v2.event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 v2.event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
