@@ -10,19 +10,70 @@
  */
 
 import {
+  and,
   ConditionalType,
   field,
   FieldConfig,
-  FieldType
+  FieldType,
+  not
 } from '@opencrvs/toolkit/events'
 import { InformantType, InformantTypeKey } from '../pages/informant'
 import { informantMessageDescriptors } from '@countryconfig/form/common/messages'
 
-const getConditional = (informantType: InformantTypeKey) => {
+const onlyMotherExist = (informantType: InformantTypeKey) => {
+  return {
+    type: ConditionalType.SHOW,
+    conditional: and(
+      field('informant.relation').isEqualTo(informantType),
+      not(field('mother.firstname').isFalsy()),
+      field('father.firstname').isFalsy()
+    )
+  }
+}
+
+const onlyFatherExist = (informantType: InformantTypeKey) => {
+  return {
+    type: ConditionalType.SHOW,
+    conditional: and(
+      field('informant.relation').isEqualTo(informantType),
+      not(field('father.firstname').isFalsy()),
+      field('mother.firstname').isFalsy()
+    )
+  }
+}
+
+const fatherMotherBothExist = (informantType: InformantTypeKey) => {
+  return {
+    type: ConditionalType.SHOW,
+    conditional: and(
+      field('informant.relation').isEqualTo(informantType),
+      not(field('father.firstname').isFalsy()),
+      not(field('mother.firstname').isFalsy())
+    )
+  }
+}
+
+const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
   return [
     {
-      type: ConditionalType.SHOW,
-      conditional: field('informant.relation').isEqualTo(informantType)
+      ...commonConfigs,
+      conditionals: [onlyMotherExist(informantType)],
+      options: [getInformantOption(informantType), motherOption, otherOption]
+    },
+    {
+      ...commonConfigs,
+      conditionals: [onlyFatherExist(informantType)],
+      options: [getInformantOption(informantType), fatherOption, otherOption]
+    },
+    {
+      ...commonConfigs,
+      conditionals: [fatherMotherBothExist(informantType)],
+      options: [
+        getInformantOption(informantType),
+        fatherOption,
+        motherOption,
+        otherOption
+      ]
     }
   ]
 }
@@ -37,6 +88,7 @@ const getInformantOption = (informantType: InformantTypeKey) => {
     value: informantType
   }
 }
+
 const fatherOption = {
   label: {
     id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
@@ -54,6 +106,7 @@ const motherOption = {
   },
   value: InformantType.MOTHER
 }
+
 const otherOption = {
   label: {
     id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
@@ -79,7 +132,12 @@ const commonConfigs = {
 export const printCertificateCollectors: FieldConfig[] = [
   {
     ...commonConfigs,
-    conditionals: getConditional(InformantType.MOTHER),
+    conditionals: [onlyMotherExist(InformantType.MOTHER)],
+    options: [getInformantOption(InformantType.MOTHER), otherOption]
+  },
+  {
+    ...commonConfigs,
+    conditionals: [fatherMotherBothExist(InformantType.MOTHER)],
     options: [
       getInformantOption(InformantType.MOTHER),
       fatherOption,
@@ -88,61 +146,21 @@ export const printCertificateCollectors: FieldConfig[] = [
   },
   {
     ...commonConfigs,
-    conditionals: getConditional(InformantType.FATHER),
+    conditionals: [onlyFatherExist(InformantType.FATHER)],
+    options: [getInformantOption(InformantType.FATHER), otherOption]
+  },
+  {
+    ...commonConfigs,
+    conditionals: [fatherMotherBothExist(InformantType.FATHER)],
     options: [
       getInformantOption(InformantType.FATHER),
       motherOption,
       otherOption
     ]
   },
-  {
-    ...commonConfigs,
-    conditionals: getConditional(InformantType.BROTHER),
-    options: [
-      getInformantOption(InformantType.BROTHER),
-      fatherOption,
-      motherOption,
-      otherOption
-    ]
-  },
-  {
-    ...commonConfigs,
-    conditionals: getConditional(InformantType.GRANDFATHER),
-    options: [
-      getInformantOption(InformantType.GRANDFATHER),
-      fatherOption,
-      motherOption,
-      otherOption
-    ]
-  },
-  {
-    ...commonConfigs,
-    conditionals: getConditional(InformantType.GRANDMOTHER),
-    options: [
-      getInformantOption(InformantType.GRANDMOTHER),
-      fatherOption,
-      motherOption,
-      otherOption
-    ]
-  },
-  {
-    ...commonConfigs,
-    conditionals: getConditional(InformantType.SISTER),
-    options: [
-      getInformantOption(InformantType.SISTER),
-      fatherOption,
-      motherOption,
-      otherOption
-    ]
-  },
-  {
-    ...commonConfigs,
-    conditionals: getConditional(InformantType.LEGAL_GUARDIAN),
-    options: [
-      getInformantOption(InformantType.LEGAL_GUARDIAN),
-      fatherOption,
-      motherOption,
-      otherOption
-    ]
-  }
+  ...getFieldConfigForInformant(InformantType.BROTHER),
+  ...getFieldConfigForInformant(InformantType.GRANDFATHER),
+  ...getFieldConfigForInformant(InformantType.GRANDMOTHER),
+  ...getFieldConfigForInformant(InformantType.SISTER),
+  ...getFieldConfigForInformant(InformantType.LEGAL_GUARDIAN)
 ]
