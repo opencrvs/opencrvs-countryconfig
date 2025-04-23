@@ -15,7 +15,44 @@ import {
   FieldConfig,
   FieldType
 } from '@opencrvs/toolkit/events'
-import { InformantType } from '../pages/informant'
+import { InformantType, InformantTypeKey } from '../pages/informant'
+import { informantMessageDescriptors } from '@countryconfig/form/common/messages'
+
+const getInformantOption = (informantType: InformantTypeKey) => {
+  return {
+    label: {
+      id: `v2.event.birth.action.certificate.form.section.requester.informant.${informantType.toLowerCase()}.label`,
+      defaultMessage: `Print and issue to Informant (${informantMessageDescriptors[informantType].defaultMessage})`,
+      description: 'This is the label for the field'
+    },
+    value: informantType
+  }
+}
+const fatherOption = {
+  label: {
+    id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
+    defaultMessage: 'Print and issue to father',
+    description: 'This is the label for the field'
+  },
+  value: InformantType.FATHER
+}
+
+const motherOption = {
+  label: {
+    id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
+    defaultMessage: 'Print and issue to mother',
+    description: 'This is the label for the field'
+  },
+  value: InformantType.MOTHER
+}
+const otherOption = {
+  label: {
+    id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
+    defaultMessage: 'Print and issue to someone else',
+    description: 'This is the label for the field'
+  },
+  value: InformantType.OTHER
+}
 
 export const printCertificateCollectors: FieldConfig[] = [
   {
@@ -34,30 +71,9 @@ export const printCertificateCollectors: FieldConfig[] = [
       }
     ],
     options: [
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
-          defaultMessage: 'Print and issue to Informant (Mother)',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.MOTHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
-          defaultMessage: 'Print and issue to father',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.FATHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
-          defaultMessage: 'Print and issue to someone else',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.OTHER
-      }
+      getInformantOption(InformantType.MOTHER),
+      fatherOption,
+      otherOption
     ]
   },
   {
@@ -76,30 +92,9 @@ export const printCertificateCollectors: FieldConfig[] = [
       }
     ],
     options: [
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
-          defaultMessage: 'Print and issue to Informant (Father)',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.FATHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
-          defaultMessage: 'Print and issue to mother',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.MOTHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
-          defaultMessage: 'Print and issue to someone else',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.OTHER
-      }
+      getInformantOption(InformantType.FATHER),
+      motherOption,
+      otherOption
     ]
   },
   {
@@ -120,38 +115,10 @@ export const printCertificateCollectors: FieldConfig[] = [
       }
     ],
     options: [
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.informant.label',
-          defaultMessage: 'Print and issue to Informant (Brother)',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.BROTHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
-          defaultMessage: 'Print and issue to Father',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.FATHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
-          defaultMessage: 'Print and issue to mother',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.MOTHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
-          defaultMessage: 'Print and issue to someone else',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.OTHER
-      }
+      getInformantOption(InformantType.BROTHER),
+      fatherOption,
+      motherOption,
+      otherOption
     ]
   },
   {
@@ -172,38 +139,10 @@ export const printCertificateCollectors: FieldConfig[] = [
       }
     ],
     options: [
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.informant.label',
-          defaultMessage: 'Print and issue to Informant (Grandfather)',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.GRANDFATHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
-          defaultMessage: 'Print and issue to Father',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.FATHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
-          defaultMessage: 'Print and issue to mother',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.MOTHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
-          defaultMessage: 'Print and issue to someone else',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.OTHER
-      }
+      getInformantOption(InformantType.GRANDFATHER),
+      fatherOption,
+      motherOption,
+      otherOption
     ]
   },
   {
@@ -224,38 +163,10 @@ export const printCertificateCollectors: FieldConfig[] = [
       }
     ],
     options: [
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.informant.label',
-          defaultMessage: 'Print and issue to Informant (Grandmother)',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.GRANDMOTHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
-          defaultMessage: 'Print and issue to Father',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.FATHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
-          defaultMessage: 'Print and issue to mother',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.MOTHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
-          defaultMessage: 'Print and issue to someone else',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.OTHER
-      }
+      getInformantOption(InformantType.GRANDMOTHER),
+      fatherOption,
+      motherOption,
+      otherOption
     ]
   },
   {
@@ -274,38 +185,10 @@ export const printCertificateCollectors: FieldConfig[] = [
       }
     ],
     options: [
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.informant.label',
-          defaultMessage: 'Print and issue to Informant (Sister)',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.SISTER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
-          defaultMessage: 'Print and issue to Father',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.FATHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
-          defaultMessage: 'Print and issue to mother',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.MOTHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
-          defaultMessage: 'Print and issue to someone else',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.OTHER
-      }
+      getInformantOption(InformantType.SISTER),
+      fatherOption,
+      motherOption,
+      otherOption
     ]
   },
   {
@@ -326,38 +209,10 @@ export const printCertificateCollectors: FieldConfig[] = [
       }
     ],
     options: [
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.informant.label',
-          defaultMessage: 'Print and issue to Informant (Legal Guardian)',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.LEGAL_GUARDIAN
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
-          defaultMessage: 'Print and issue to Father',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.FATHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
-          defaultMessage: 'Print and issue to mother',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.MOTHER
-      },
-      {
-        label: {
-          id: 'v2.event.birth.action.certificate.form.section.requester.other.label',
-          defaultMessage: 'Print and issue to someone else',
-          description: 'This is the label for the field'
-        },
-        value: InformantType.OTHER
-      }
+      getInformantOption(InformantType.LEGAL_GUARDIAN),
+      fatherOption,
+      motherOption,
+      otherOption
     ]
   }
 ]

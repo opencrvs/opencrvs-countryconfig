@@ -92,7 +92,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
       },
       fields: [
         {
-          id: 'collector.collect.payment.data.after365',
+          id: 'collector.collect.payment.data.afterLateRegistrationTarget',
           type: FieldType.DATA,
           label: {
             defaultMessage: 'Payment details',
@@ -126,7 +126,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                     'Birth registration after 365 days of date of birth',
                   description:
                     'Birth registration after 365 days of date of birth message',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.after365'
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget'
                 }
               },
               {
@@ -141,7 +141,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           }
         },
         {
-          id: 'collector.collect.payment.data.after30.before365',
+          id: 'collector.collect.payment.data.inBetweenRegistrationTargets',
           type: FieldType.DATA,
           label: {
             defaultMessage: 'Payment details',
@@ -180,7 +180,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                     'Birth registration after 30 days but before 365 days of date of birth',
                   description:
                     'Birth registration after 30 days but before 365 days of date of birth message',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.after30before365'
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets'
                 }
               },
               {
@@ -195,7 +195,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           }
         },
         {
-          id: 'collector.collect.payment.data.before30',
+          id: 'collector.collect.payment.data.beforeRegistrationTarget',
           type: FieldType.DATA,
           label: {
             defaultMessage: 'Payment details',
@@ -227,7 +227,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                     'Birth registration before 30 days of date of birth',
                   description:
                     'Birth registration before 30 days of date of birth message',
-                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.before30'
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget'
                 }
               },
               {
