@@ -18,6 +18,15 @@ import {
 import { InformantType, InformantTypeKey } from '../pages/informant'
 import { informantMessageDescriptors } from '@countryconfig/form/common/messages'
 
+const getConditional = (informantType: InformantTypeKey) => {
+  return [
+    {
+      type: ConditionalType.SHOW,
+      conditional: field('informant.relation').isEqualTo(informantType)
+    }
+  ]
+}
+
 const getInformantOption = (informantType: InformantTypeKey) => {
   return {
     label: {
@@ -31,7 +40,7 @@ const getInformantOption = (informantType: InformantTypeKey) => {
 const fatherOption = {
   label: {
     id: 'v2.event.birth.action.certificate.form.section.requester.father.label',
-    defaultMessage: 'Print and issue to father',
+    defaultMessage: 'Print and issue to Father',
     description: 'This is the label for the field'
   },
   value: InformantType.FATHER
@@ -40,7 +49,7 @@ const fatherOption = {
 const motherOption = {
   label: {
     id: 'v2.event.birth.action.certificate.form.section.requester.mother.label',
-    defaultMessage: 'Print and issue to mother',
+    defaultMessage: 'Print and issue to Mother',
     description: 'This is the label for the field'
   },
   value: InformantType.MOTHER
@@ -54,22 +63,23 @@ const otherOption = {
   value: InformantType.OTHER
 }
 
+const requesterLabel = {
+  defaultMessage: 'Requester',
+  description: 'This is the label for the field',
+  id: 'v2.event.birth.action.certificate.form.section.requester.label'
+}
+
+const commonConfigs = {
+  id: 'collector.requesterId',
+  type: FieldType.SELECT,
+  required: true,
+  label: requesterLabel
+}
+
 export const printCertificateCollectors: FieldConfig[] = [
   {
-    id: 'collector.requesterId',
-    type: FieldType.SELECT,
-    required: true,
-    label: {
-      defaultMessage: 'Requester',
-      description: 'This is the label for the field',
-      id: 'v2.event.birth.action.certificate.form.section.requester.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('informant.relation').isEqualTo(InformantType.MOTHER)
-      }
-    ],
+    ...commonConfigs,
+    conditionals: getConditional(InformantType.MOTHER),
     options: [
       getInformantOption(InformantType.MOTHER),
       fatherOption,
@@ -77,20 +87,8 @@ export const printCertificateCollectors: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.requesterId',
-    type: FieldType.SELECT,
-    required: true,
-    label: {
-      defaultMessage: 'Requester',
-      description: 'This is the label for the field',
-      id: 'v2.event.birth.action.certificate.form.section.requester.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('informant.relation').isEqualTo(InformantType.FATHER)
-      }
-    ],
+    ...commonConfigs,
+    conditionals: getConditional(InformantType.FATHER),
     options: [
       getInformantOption(InformantType.FATHER),
       motherOption,
@@ -98,22 +96,8 @@ export const printCertificateCollectors: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.requesterId',
-    type: FieldType.SELECT,
-    required: true,
-    label: {
-      defaultMessage: 'Requester',
-      description: 'This is the label for the field',
-      id: 'v2.event.birth.action.certificate.form.section.requester.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('informant.relation').isEqualTo(
-          InformantType.BROTHER
-        )
-      }
-    ],
+    ...commonConfigs,
+    conditionals: getConditional(InformantType.BROTHER),
     options: [
       getInformantOption(InformantType.BROTHER),
       fatherOption,
@@ -122,22 +106,8 @@ export const printCertificateCollectors: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.requesterId',
-    type: FieldType.SELECT,
-    required: true,
-    label: {
-      defaultMessage: 'Requester',
-      description: 'This is the label for the field',
-      id: 'v2.event.birth.action.certificate.form.section.requester.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('informant.relation').isEqualTo(
-          InformantType.GRANDFATHER
-        )
-      }
-    ],
+    ...commonConfigs,
+    conditionals: getConditional(InformantType.GRANDFATHER),
     options: [
       getInformantOption(InformantType.GRANDFATHER),
       fatherOption,
@@ -146,22 +116,8 @@ export const printCertificateCollectors: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.requesterId',
-    type: FieldType.SELECT,
-    required: true,
-    label: {
-      defaultMessage: 'Requester',
-      description: 'This is the label for the field',
-      id: 'v2.event.birth.action.certificate.form.section.requester.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('informant.relation').isEqualTo(
-          InformantType.GRANDMOTHER
-        )
-      }
-    ],
+    ...commonConfigs,
+    conditionals: getConditional(InformantType.GRANDMOTHER),
     options: [
       getInformantOption(InformantType.GRANDMOTHER),
       fatherOption,
@@ -170,20 +126,8 @@ export const printCertificateCollectors: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.requesterId',
-    type: FieldType.SELECT,
-    required: true,
-    label: {
-      defaultMessage: 'Requester',
-      description: 'This is the label for the field',
-      id: 'v2.event.birth.action.certificate.form.section.requester.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('informant.relation').isEqualTo(InformantType.SISTER)
-      }
-    ],
+    ...commonConfigs,
+    conditionals: getConditional(InformantType.SISTER),
     options: [
       getInformantOption(InformantType.SISTER),
       fatherOption,
@@ -192,22 +136,8 @@ export const printCertificateCollectors: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.requesterId',
-    type: FieldType.SELECT,
-    required: true,
-    label: {
-      defaultMessage: 'Requester',
-      description: 'This is the label for the field',
-      id: 'v2.event.birth.action.certificate.form.section.requester.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('informant.relation').isEqualTo(
-          InformantType.LEGAL_GUARDIAN
-        )
-      }
-    ],
+    ...commonConfigs,
+    conditionals: getConditional(InformantType.LEGAL_GUARDIAN),
     options: [
       getInformantOption(InformantType.LEGAL_GUARDIAN),
       fatherOption,
