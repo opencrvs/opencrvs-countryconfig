@@ -18,6 +18,7 @@ all:
     # @todo how many days to store backups for?
     amount_of_backups_to_keep: 7
     backup_server_remote_target_directory: /home/backup/backups
+    single_node: true
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
