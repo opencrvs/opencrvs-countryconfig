@@ -15,7 +15,6 @@ import {
   defineActionForm,
   defineConfig,
   defineDeclarationForm,
-  eventField,
   FieldType,
   PageTypes
 } from '@opencrvs/toolkit/events'
@@ -25,7 +24,8 @@ import {
   or,
   and,
   not,
-  field
+  field,
+  eventField
 } from '@opencrvs/toolkit/conditionals'
 
 import { Event } from './types/types'
