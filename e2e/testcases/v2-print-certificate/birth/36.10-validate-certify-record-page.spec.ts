@@ -1,8 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
-import { Declaration } from './data/birth-declaration'
-import { selectAction } from '../../../v2-utils'
+import { Declaration } from '../../v2-test-data/birth-declaration'
 import { loginToV2 } from '../../../helpers'
-import { createDeclaration } from './data/birth-declaration'
+import { createDeclaration } from '../../v2-test-data/birth-declaration'
 import { CREDENTIALS } from '../../../constants'
 import { getToken } from '../../../helpers'
 import {

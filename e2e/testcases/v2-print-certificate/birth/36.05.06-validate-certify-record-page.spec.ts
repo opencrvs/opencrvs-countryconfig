@@ -2,13 +2,16 @@ import { expect, test, type Page } from '@playwright/test'
 import { CREDENTIALS } from '../../../constants'
 import { loginToV2 } from '../../../helpers'
 import { getToken } from '../../../helpers'
-import { createDeclaration, Declaration } from './data/birth-declaration'
+import {
+  createDeclaration,
+  Declaration
+} from '../../v2-test-data/birth-declaration'
 import {
   selectRequesterType,
   selectCertificationType,
-  expectInUrl,
   navigateToCertificatePrintAction
 } from './helpers'
+import { expectInUrl } from '../../../v2-utils'
 
 async function selectIdType(page: Page, idType: string) {
   await page.locator('#collector____OTHER____idType').click()

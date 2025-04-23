@@ -2,7 +2,10 @@ import { expect, test, type Page } from '@playwright/test'
 
 import { loginToV2, getToken } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
-import { createDeclaration, Declaration } from './data/birth-declaration'
+import {
+  createDeclaration,
+  Declaration
+} from '../../v2-test-data/birth-declaration'
 import {
   navigateToCertificatePrintAction,
   selectCertificationType

@@ -6,13 +6,13 @@ import {
   createDeclaration,
   getDeclaration,
   Declaration
-} from './data/birth-declaration'
+} from '../../v2-test-data/birth-declaration'
 import {
-  expectInUrl,
   navigateToCertificatePrintAction,
   selectCertificationType,
   selectRequesterType
 } from './helpers'
+import { expectInUrl } from '../../../v2-utils'
 
 test.describe.serial('7.0 Validate "Certify record" page', () => {
   let eventId: string
