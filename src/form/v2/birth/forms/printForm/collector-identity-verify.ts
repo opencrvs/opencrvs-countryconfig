@@ -34,7 +34,6 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'informant.relation' },
         { fieldId: 'mother.idType' },
         { fieldId: 'mother.nid' },
         { fieldId: 'mother.passport' },
@@ -63,7 +62,6 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'informant.relation' },
         { fieldId: 'father.idType' },
         { fieldId: 'father.nid' },
         { fieldId: 'father.passport' },
@@ -92,7 +90,6 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'informant.relation' },
         { fieldId: 'informant.idType' },
         { fieldId: 'informant.nid' },
         { fieldId: 'informant.passport' },
