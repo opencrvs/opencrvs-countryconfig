@@ -70,11 +70,14 @@ test.describe.serial('Navigating in and out of action', () => {
     await page.getByRole('button', { name: 'Print', exact: true }).click()
     // Wait for 5 seconds to ensure the page has time to redirect
     await page.waitForTimeout(5000)
-    await expectInUrl(page, `/events/print-certificate/${eventId}/foo`)
+    await expectInUrl(
+      page,
+      `/events/overview/772d0471-3adf-407e-829d-851a8da4b4e1/${eventId}`
+    )
   })
 
   test('1.3 Browser back button should take user to the front page instead of action flow', async () => {
     await page.goBack()
-    await expect(page.url()).toBe('http://localhost:3000/')
+    await expect(page.locator('#content-name')).toContainText('All events')
   })
 })
