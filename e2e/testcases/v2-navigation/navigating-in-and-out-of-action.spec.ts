@@ -68,8 +68,6 @@ test.describe.serial('Navigating in and out of action', () => {
   test('1.2 After finishing action flow, user should be redirected to the event overview page', async () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await page.getByRole('button', { name: 'Print', exact: true }).click()
-    // Wait for 5 seconds to ensure the page has time to redirect
-    await page.waitForTimeout(5000)
     await expectInUrl(
       page,
       `/events/overview/772d0471-3adf-407e-829d-851a8da4b4e1/${eventId}`
