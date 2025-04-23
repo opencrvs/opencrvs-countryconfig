@@ -16,19 +16,33 @@
         rule: allow
         port: 2377
         proto: tcp
+      tags: 
+        - swarm
 
+    - name: 'Get docker info'
+      shell: docker info
+      register: docker_info
+      changed_when: False
+      tags: 
+        - swarm
+        
     - name: 'Create primary swarm manager'
       shell: docker swarm init --advertise-addr {{ ansible_default_ipv4.address }}
       when: "docker_info.stdout.find('Swarm: inactive') != -1"
+      tags: 
+        - swarm
 
     - name: 'Get docker swarm manager token'
       shell: docker swarm join-token -q manager
       register: manager_token
+      tags: 
+        - swarm
 
     - name: 'Get docker swarm worker token'
       shell: docker swarm join-token -q worker
       register: worker_token
-
+      tags: 
+        - swarm
 
 - hosts: docker-workers
   become: yes
@@ -40,6 +54,8 @@
       shell: docker info --format "{% raw %}{{.Swarm.LocalNodeState}}{% endraw %}"
       register: worker_swarm_status
       changed_when: false
+      tags: 
+        - swarm
 
     - name: Get NodeID of the worker (if part of a swarm)
       shell: docker info --format "{% raw %}{{.Swarm.NodeID}}{% endraw %}"
@@ -47,23 +63,31 @@
       when: worker_swarm_status.stdout == 'active'
       changed_when: false
       failed_when: false
+      tags: 
+        - swarm
 
     - name: Get list of nodes in the manager's swarm
       shell: docker node ls --format '{% raw %}{{.ID}}{% endraw %}'
       delegate_to: "{{ manager_hostname }}"
       register: manager_node_ids
       changed_when: false
+      tags: 
+        - swarm
 
     - name: Fail if the worker is in a different swarm
       fail:
         msg: "You are trying to attach a worker to a Swarm that is already part of another Swarm. Please make the node leave the current Swarm first, then run the playbook again."
       when: worker_swarm_status.stdout == 'active' and worker_node_id.stdout not in manager_node_ids.stdout_lines
+      tags: 
+        - swarm
 
     - name: Join as a worker
       shell: "docker swarm join --token {{ hostvars[manager_hostname]['worker_token']['stdout'] }} {{ hostvars[manager_hostname]['ansible_default_ipv4']['address'] }}:2377"
       when: worker_swarm_status.stdout != 'active'
       retries: 3
       delay: 20
+      tags: 
+        - swarm
 
 - hosts: docker-manager-first
   become: yes
@@ -75,3 +99,5 @@
       loop_control:
         loop_var: hostname
       when: hostvars[hostname]['data_label'] is defined
+      tags: 
+        - swarm

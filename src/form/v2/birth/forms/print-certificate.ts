@@ -10,14 +10,17 @@
  */
 
 import {
+  and,
   ConditionalType,
   defineActionForm,
   field,
   FieldType,
+  not,
   PageTypes
 } from '@opencrvs/toolkit/events'
 import { informantOtherThanParent, InformantType } from './pages/informant'
 import { nationalIdValidator } from '../validators'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 const CertCollectorType = {
   INFORMANT: 'INFORMANT',
@@ -531,13 +534,27 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
       },
       fields: [
         {
-          id: 'collector.collect.payment.data',
+          id: 'collector.collect.payment.data.after365',
           type: FieldType.DATA,
           label: {
             defaultMessage: 'Payment details',
             description: 'Title for the data section',
             id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
           },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                not(
+                  field('child.dob')
+                    .isAfter()
+                    .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                    .inPast()
+                ),
+                field('child.dob').isBefore().now()
+              )
+            }
+          ],
           configuration: {
             data: [
               {
@@ -546,7 +563,114 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                   description: 'Title for the data entry',
                   id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
                 },
-                value: 'Birth registration before 30 days of date of birth'
+                value: {
+                  defaultMessage:
+                    'Birth registration after 365 days of date of birth',
+                  description:
+                    'Birth registration after 365 days of date of birth message',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.after365'
+                }
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$15.00'
+              }
+            ]
+          }
+        },
+        {
+          id: 'collector.collect.payment.data.after30.before365',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                not(
+                  field('child.dob')
+                    .isAfter()
+                    .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
+                    .inPast()
+                ),
+
+                field('child.dob')
+                  .isAfter()
+                  .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                  .inPast(),
+                field('child.dob').isBefore().now()
+              )
+            }
+          ],
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: {
+                  defaultMessage:
+                    'Birth registration after 30 days but before 365 days of date of birth',
+                  description:
+                    'Birth registration after 30 days but before 365 days of date of birth message',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.after30before365'
+                }
+              },
+              {
+                label: {
+                  defaultMessage: 'Fee',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.fee.label'
+                },
+                value: '$7.00'
+              }
+            ]
+          }
+        },
+        {
+          id: 'collector.collect.payment.data.before30',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.certificate.form.section.collectPayment.data.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: and(
+                field('child.dob')
+                  .isAfter()
+                  .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
+                  .inPast(),
+                field('child.dob').isBefore().now()
+              )
+            }
+          ],
+          configuration: {
+            data: [
+              {
+                label: {
+                  defaultMessage: 'Service',
+                  description: 'Title for the data entry',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label'
+                },
+                value: {
+                  defaultMessage:
+                    'Birth registration before 30 days of date of birth',
+                  description:
+                    'Birth registration before 30 days of date of birth message',
+                  id: 'v2.event.birth.action.certificate.form.section.collectPayment.service.label.before30'
+                }
               },
               {
                 label: {
