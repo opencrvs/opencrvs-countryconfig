@@ -304,7 +304,6 @@ docker_stack_deploy() {
     docker stack deploy --prune -c '$(split_and_join " " " -c " "$(to_remote_paths $COMPOSE_FILES_USED)")' --with-registry-auth opencrvs'
 }
 
-
 validate_options
 
 # Create new passwords for all MongoDB users created in
@@ -421,8 +420,6 @@ EMAIL_PAYLOAD='{
   "from": "{{SENDER_EMAIL_ADDRESS}}",
   "to": "{{ALERT_EMAIL}}"
 }'
-
-
 
 configured_ssh "docker run --rm --network=opencrvs_overlay_net appropriate/curl \
   -X POST 'http://countryconfig:3040/email' \
