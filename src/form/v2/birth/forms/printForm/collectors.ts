@@ -53,6 +53,17 @@ const fatherMotherBothExist = (informantType: InformantTypeKey) => {
   }
 }
 
+const fatherMotherBothDoesNotExist = (informantType: InformantTypeKey) => {
+  return {
+    type: ConditionalType.SHOW,
+    conditional: and(
+      field('informant.relation').isEqualTo(informantType),
+      field('father.firstname').isFalsy(),
+      field('mother.firstname').isFalsy()
+    )
+  }
+}
+
 const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
   return [
     {
@@ -74,6 +85,11 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
         motherOption,
         otherOption
       ]
+    },
+    {
+      ...commonConfigs,
+      conditionals: [fatherMotherBothDoesNotExist(informantType)],
+      options: [getInformantOption(informantType), otherOption]
     }
   ]
 }
