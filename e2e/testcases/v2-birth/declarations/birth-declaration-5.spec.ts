@@ -1,16 +1,11 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
   continueForm,
-  createPIN,
   drawSignature,
-  expectAddress,
-  expectOutboxToBeEmpty,
-  formatDateObjectTo_ddMMMMyyyy,
+  formatDateObjectTo_dMMMMyyyy,
   formatName,
   getRandomDate,
   goToSection,
-  joinValuesWith,
-  login,
   loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
@@ -330,7 +325,7 @@ test.describe.serial('5. Birth declaration case - 5', () => {
        * - Child's date of birth
        */
       await expect(page.getByTestId('row-value-child.dob')).toHaveText(
-        formatDateObjectTo_ddMMMMyyyy(declaration.child.birthDate)
+        formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
       )
 
       /*
