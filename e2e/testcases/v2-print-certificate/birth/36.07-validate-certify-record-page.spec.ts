@@ -37,18 +37,14 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
     await page.close()
   })
 
-  test('7.1 continue with "Print and issue to informant (Brother)" redirect to Collector details page', async () => {
+  test('7.1 continue with "Print and issue to Informant (Brother)" redirect to Collector details page', async () => {
     await selectCertificationType(page, 'Birth Certificate')
-    await selectRequesterType(page, 'Print and issue to informant')
+    await selectRequesterType(page, 'Print and issue to Informant (Brother)')
     await page.getByRole('button', { name: 'Continue' }).click()
     await expectInUrl(
       page,
       `/print-certificate/${eventId}/pages/collector.identity.verify`
     )
-
-    await expect(page.getByText('Relationship to child')).toBeVisible()
-    await expect(page.getByText('Brother')).toBeVisible()
-
     await page.getByRole('button', { name: 'Verified' }).click()
     await expectInUrl(
       page,

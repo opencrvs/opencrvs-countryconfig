@@ -36,7 +36,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     await expectInUrl(page, `/print-certificate/${eventId}/pages/collector`)
 
     await selectCertificationType(page, 'Birth Certificate')
-    await selectRequesterType(page, 'Print and issue to informant')
+    await selectRequesterType(page, 'Print and issue to Informant (Mother)')
 
     await page.getByRole('button', { name: 'Continue' }).click()
     await expectInUrl(

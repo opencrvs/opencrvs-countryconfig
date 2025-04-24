@@ -56,9 +56,7 @@ test.describe.serial('Print certificate', () => {
       await page.reload({ waitUntil: 'networkidle' })
       await page.locator('#collector____requesterId').click()
       const selectOptionsLabels = [
-        'Print and issue to informant',
-        'Print and issue to mother',
-        'Print and issue to father',
+        'Print and issue to Informant (Mother)',
         'Print and issue to someone else'
       ]
       for (const label of selectOptionsLabels) {
