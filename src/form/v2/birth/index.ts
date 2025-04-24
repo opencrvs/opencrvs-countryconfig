@@ -10,12 +10,9 @@
  */
 import {
   ActionType,
-  and,
   ConditionalType,
   defineConfig,
-  field,
-  or,
-  user
+  field
 } from '@opencrvs/toolkit/events'
 import { not, event } from '@opencrvs/toolkit/conditionals'
 
@@ -25,7 +22,6 @@ import {
 } from './forms/declaration'
 import { advancedSearchBirth } from './advancedSearch'
 import { Event } from '@countryconfig/form/types/types'
-import { SCOPES } from '@opencrvs/toolkit/scopes'
 import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
 
 export const birthEvent = defineConfig({
@@ -117,16 +113,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.declare.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            not(event.hasAction(ActionType.DECLARE)),
-            user.hasScope(SCOPES.RECORD_DECLARE)
-          )
-        }
-      ]
+      review: BIRTH_DECLARATION_REVIEW
     },
     {
       type: ActionType.VALIDATE,
@@ -136,20 +123,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.validate.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            event.hasAction(ActionType.DECLARE),
-            not(event.hasAction(ActionType.VALIDATE)),
-            or(
-              user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL),
-              user.hasScope(SCOPES.RECORD_REGISTER)
-            )
-          )
-        }
-      ]
+      review: BIRTH_DECLARATION_REVIEW
     },
     {
       type: ActionType.REGISTER,
@@ -159,20 +133,7 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.register.label'
       },
-      review: BIRTH_DECLARATION_REVIEW,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            or(
-              event.hasAction(ActionType.VALIDATE),
-              and(event.hasAction('DECLARE'), user.hasScope('register'))
-            ),
-            not(event.hasAction(ActionType.REGISTER)),
-            user.hasScope(SCOPES.RECORD_REGISTER)
-          )
-        }
-      ]
+      review: BIRTH_DECLARATION_REVIEW
     },
     {
       type: ActionType.PRINT_CERTIFICATE,
@@ -182,15 +143,6 @@ export const birthEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.collect-certificate.label'
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            event.hasAction(ActionType.REGISTER),
-            user.hasScope(SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES)
-          )
-        }
-      ],
       printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
     }
   ],
