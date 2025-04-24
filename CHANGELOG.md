@@ -185,9 +185,6 @@ validations.isAgeInYearsBetween,The error message that appears when age for the 
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
 
-<<<<<<< HEAD
-## 1.6.1
-=======
 ## 1.6.4
 
 ## 1.6.3
@@ -198,8 +195,7 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 
 ## 1.6.2
 
-## 1.6.1 Release candidate
->>>>>>> 90eb6e63 (Merge changes from ocrvs-6830-human-name-constant)
+## 1.6.1
 
 ### Bug fixes
 
