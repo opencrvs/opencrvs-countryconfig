@@ -108,7 +108,7 @@ test.describe.serial('Validate collect payment page', () => {
       )
       await inputFile.setInputFiles(attachmentPath)
       await expect(
-        page.getByRole('link', { name: 'Signed Affidavit' })
+        page.getByRole('button', { name: 'Signed Affidavit' })
       ).toBeVisible()
       await expect(page.locator('#preview_delete')).toBeVisible()
       await page.getByRole('button', { name: 'Continue' }).click()
