@@ -61,7 +61,12 @@ export const birthEvent = defineConfig({
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
-        conditional: not(field('child.birthLocation').isFalsy())
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: not(field('child.birthLocation').isFalsy())
+          }
+        ]
       },
       {
         fieldId: 'child.address.privateHome',
@@ -70,7 +75,12 @@ export const birthEvent = defineConfig({
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
-        conditional: not(field('child.address.privateHome').isFalsy())
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: not(field('child.address.privateHome').isFalsy())
+          }
+        ]
       },
       {
         id: 'informant.contact',
