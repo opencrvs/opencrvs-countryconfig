@@ -407,6 +407,7 @@ constants.totalRegistered,A label for Total registered,Total{lineBreak}registere
 constants.totalRegisteredInTargetDays,A label for total registered in {registrationTargetDays} days,Total registered in {registrationTargetDays} days,Total enregistré en {registrationTargetDays} jours
 constants.trackingId,Search menu tracking id type,Tracking ID,ID de suivi
 constants.type,Label for type of event in work queue list item,Type,Type
+constants.unknown,Unknown gender,Unknown,Inconnu
 constants.update,The title of reject button in list item actions,Update,Mise à jour
 constants.updated,Application has been updated,Updated,Mise à jour de
 constants.updated_declaration,Declaration has been updated,Updated declaration,Déclaration actualisée
@@ -2413,6 +2414,14 @@ v2.constants.id,ID Label,ID,ID
 v2.constants.inReview.status,A label for In Review,In Review,En revue
 v2.constants.incomplete.status,A label for Incomplete,Incomplete,Incomplet
 v2.constants.informant,Informant Label,Informant,Informateur
+v2.constants.informant.BROTHER,Label Brother informant,Brother,Frère
+v2.constants.informant.FATHER,Label Father informant,Father,Père
+v2.constants.informant.GRANDFATHER,Label Grandfather informant,Grandfather,Grand-père
+v2.constants.informant.GRANDMOTHER,Label Grandmother informant,Grandmother,Grand-mère
+v2.constants.informant.LEGAL_GUARDIAN,Label Legal guardian informant,Legal guardian,Tuteur légal
+v2.constants.informant.MOTHER,Label Mother informant,Mother,Mère
+v2.constants.informant.OTHER,Label Other informant,Other,Autre
+v2.constants.informant.SISTER,Label Sister informant,Sister,Sœur
 v2.constants.informantContactNumber,The title of contact number label,Informant contact number,Numéro de contact de l'informant
 v2.constants.integrations,Integration title,Integrations,Intégrations
 v2.constants.issuedBy,The issued by sec text,Issued by,Émis par
