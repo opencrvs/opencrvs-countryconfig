@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.1 Release candidate
+
+### Bug fixes
+- "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
+- Use yarn cache in test workflow & read the version to use from .nvmrc
+
 ## 1.7.0
 
 ### Migration notes
