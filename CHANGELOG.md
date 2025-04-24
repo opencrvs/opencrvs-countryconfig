@@ -3,7 +3,7 @@
 ## 1.7.1 Release candidate
 
 ### Bug fixes
-
+- "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
 
 ## 1.7.0
 
