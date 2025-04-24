@@ -37,6 +37,7 @@ export const InformantType = {
   SISTER: 'SISTER',
   LEGAL_GUARDIAN: 'LEGAL_GUARDIAN'
 } as const
+export type InformantTypeKey = keyof typeof InformantType
 
 const PHONE_NUMBER_REGEX = '^0(7|9)[0-9]{8}$'
 const informantMessageDescriptors = {

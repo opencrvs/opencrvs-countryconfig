@@ -16,7 +16,7 @@ import {
 } from './forms/declaration'
 import { advancedSearchBirth } from './advancedSearch'
 import { Event } from '@countryconfig/form/types/types'
-import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/print-certificate'
+import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
 
 export const birthEvent = defineConfig({
   id: Event.V2_BIRTH,
