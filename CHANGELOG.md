@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.7.1 Release candidate
+## 1.7.2 Release candidate
 
 ### Bugfixes
 
@@ -22,7 +22,7 @@ https://github.com/opencrvs/opencrvs-countryconfig/pull/393
   }
   ```
 
-## 1.7.0 Release candidate
+## 1.7.0
 
 ### Migration notes
 
