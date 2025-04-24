@@ -633,7 +633,7 @@ const statusOptions = [
     label: {
       defaultMessage: 'Any status',
       description: 'Option for form field: status of record',
-      id: 'advancedSearch.form.recordStatusAny'
+      id: 'v2.advancedSearch.form.recordStatusAny'
     }
   },
   {
@@ -641,7 +641,7 @@ const statusOptions = [
     label: {
       defaultMessage: 'In progress',
       description: 'Option for form field: status of record',
-      id: 'advancedSearch.form.recordStatusInprogress'
+      id: 'v2.advancedSearch.form.recordStatusInprogress'
     }
   },
   {
@@ -649,7 +649,7 @@ const statusOptions = [
     label: {
       defaultMessage: 'In review',
       description: 'Option for form field: status of record',
-      id: 'advancedSearch.form.recordStatusInReview'
+      id: 'v2.advancedSearch.form.recordStatusInReview'
     }
   },
   {
@@ -657,7 +657,7 @@ const statusOptions = [
     label: {
       defaultMessage: 'Requires updates',
       description: 'Option for form field: status of record',
-      id: 'advancedSearch.form.recordStatusRequireUpdate'
+      id: 'v2.advancedSearch.form.recordStatusRequireUpdate'
     }
   },
   {
@@ -665,7 +665,7 @@ const statusOptions = [
     label: {
       defaultMessage: 'Registered',
       description: 'Option for form field: status of record',
-      id: 'advancedSearch.form.recordStatusRegistered'
+      id: 'v2.advancedSearch.form.recordStatusRegistered'
     }
   },
   {
@@ -673,7 +673,7 @@ const statusOptions = [
     label: {
       defaultMessage: 'Certified',
       description: 'Option for form field: status of record',
-      id: 'advancedSearch.form.recordStatusCertified'
+      id: 'v2.advancedSearch.form.recordStatusCertified'
     }
   },
   {
@@ -681,7 +681,7 @@ const statusOptions = [
     label: {
       defaultMessage: 'Archived',
       description: 'Option for form field: status of record',
-      id: 'advancedSearch.form.recordStatusAchived'
+      id: 'v2.advancedSearch.form.recordStatusAchived'
     }
   },
   {
@@ -689,7 +689,7 @@ const statusOptions = [
     label: {
       defaultMessage: 'Correction requested',
       description: 'Option for form field: status of record',
-      id: 'advancedSearch.form.recordStatusCorrectionRequested'
+      id: 'v2.advancedSearch.form.recordStatusCorrectionRequested'
     }
   },
   {
@@ -697,7 +697,7 @@ const statusOptions = [
     label: {
       defaultMessage: 'Validated',
       description: 'Option for form field: status of record',
-      id: 'advancedSearch.form.recordStatusValidated'
+      id: 'v2.advancedSearch.form.recordStatusValidated'
     }
   }
 ]
