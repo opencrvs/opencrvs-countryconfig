@@ -10,12 +10,14 @@
  */
 
 import {
+  and,
   ConditionalType,
   field,
   FieldConfig,
-  FieldType
+  FieldType,
+  not
 } from '@opencrvs/toolkit/events'
-import { InformantType, informantOtherThanParent } from '../pages/informant'
+import { InformantType } from '../pages/informant'
 
 export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
   {
@@ -24,7 +26,9 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('informant.relation').isEqualTo(InformantType.MOTHER)
+        conditional: field('collector.requesterId').isEqualTo(
+          InformantType.MOTHER
+        )
       }
     ],
     label: {
@@ -34,7 +38,6 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'informant.relation' },
         { fieldId: 'mother.idType' },
         { fieldId: 'mother.nid' },
         { fieldId: 'mother.passport' },
@@ -53,7 +56,9 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('informant.relation').isEqualTo(InformantType.FATHER)
+        conditional: field('collector.requesterId').isEqualTo(
+          InformantType.FATHER
+        )
       }
     ],
     label: {
@@ -63,7 +68,6 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'informant.relation' },
         { fieldId: 'father.idType' },
         { fieldId: 'father.nid' },
         { fieldId: 'father.passport' },
@@ -82,7 +86,16 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: informantOtherThanParent
+        conditional: and(
+          not(
+            field('collector.requesterId').inArray([
+              InformantType.MOTHER,
+              InformantType.FATHER,
+              InformantType.OTHER
+            ])
+          ),
+          not(field('collector.requesterId').isFalsy())
+        )
       }
     ],
     label: {
@@ -92,7 +105,6 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
-        { fieldId: 'informant.relation' },
         { fieldId: 'informant.idType' },
         { fieldId: 'informant.nid' },
         { fieldId: 'informant.passport' },
