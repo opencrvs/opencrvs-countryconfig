@@ -14,20 +14,10 @@
 
 - Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
 
+## 1.7.2 Release candidate
+
 ## 1.7.1 Release candidate
 
-### New features
-
-- **Time field 12-hour format**: To enable the 12-hour (AM/PM) format of the `TimeField`, set the `use12HourFormat` property to `true`. [#8336](https://github.com/opencrvs/opencrvs-core/issues/8336)
-  ```
-  {
-    name: 'time',
-    custom: true,
-    type: 'TIME',
-    use12HourFormat: true,
-    ...otherProp
-  }
-  ```
 ### Bugfixes
 
 - InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
@@ -48,7 +38,7 @@ https://github.com/opencrvs/opencrvs-countryconfig/pull/393
   }
   ```
 
-## 1.7.0 Release candidate
+## 1.7.0
 
 ### Migration notes
 
