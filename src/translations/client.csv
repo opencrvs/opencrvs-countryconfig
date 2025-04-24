@@ -2319,7 +2319,7 @@ userSetup.type.hospital,The description for HOSPITAL type,Hospital,Hôpital
 userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
 v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
-v2.action.view.record,Label for view record,View record,
+v2.action.view.record,Label for view record,View record,Afficher l'enregistrement
 v2.actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, declare{Declare} other{{action}}}"
 v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
 v2.actionModal.description,The description for action modal,The declarant will be notified of this action and a record of this decision will be recorded,Le déclarant sera informé de cette action et un enregistrement de cette décision sera conservé
@@ -2543,10 +2543,10 @@ v2.event.action.declare.form.section.person.field.address.zipCode.label,This is 
 v2.event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 v2.event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 v2.event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
-v2.event.birth.action.certificate.form.section.collectPayment.service.label.after30before365,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
-v2.event.birth.action.certificate.form.section.collectPayment.service.label.after365,Birth registration after 365 days of date of birth,Birth registration after 365 days of date of birth,Enregistrement de naissance après 365 jours de la date de naissance
-v2.event.birth.action.certificate.form.section.collectPayment.service.label.before30,Birth registration before 30 days of date of birth,Birth registration before 30 days of date of birth,Enregistrement de naissance avant 30 jours de la date de naissance
-v2.event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,
+v2.event.birth.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget,Birth registration after 365 days of date of birth,Birth registration after 365 days of date of birth,Enregistrement de naissance après 365 jours de la date de naissance
+v2.event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Birth registration before 30 days of date of birth,Birth registration before 30 days of date of birth,Enregistrement de naissance avant 30 jours de la date de naissance
+v2.event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
+v2.event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
 v2.event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 v2.event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
@@ -2604,9 +2604,9 @@ v2.event.birth.action.declare.form.section.person.field.passport.label,This is t
 v2.event.birth.action.declare.form.section.person.field.surname.label,This is the label for the field,Last name,Nom(s) de famille dans un jeu de caractères par défaut autre que l'anglais
 v2.event.birth.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
 v2.event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Declare
-v2.event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,
-v2.event.birth.action.register.label,Label for review record button in dropdown menu,Register,
-v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,
+v2.event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
+v2.event.birth.action.register.label,Label for review record button in dropdown menu,Register,Enregistrer
+v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
 v2.event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 v2.event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
 v2.event.birth.summary.child.dob.label,Label for date of birth,Date of birth,Date de naissance
