@@ -61,10 +61,14 @@ import {
   spouseBirthDateConditionals,
   spouseFamilyNameConditionals,
   spouseFirstNameConditionals,
-  hideIfInformantSpouse,
-  hideIfNidIntegrationEnabled
+  hideIfInformantSpouse
 } from '../common/default-validation-conditionals'
-import { documentsSection, registrationSection } from './required-sections'
+import {
+  documentsSection,
+  previewSection,
+  registrationSection,
+  reviewSection
+} from './required-sections'
 import {
   deceasedNameInEnglish,
   informantNameInEnglish /*,
@@ -143,7 +147,7 @@ export const deathForm = {
                 },
                 {
                   defaultMessage:
-                    'Once the declaration is processed you will receive you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
+                    'Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
                   description: 'Form information for birth',
                   id: 'form.section.information.death.bullet3'
                 },
@@ -255,7 +259,7 @@ export const deathForm = {
               'informantNameInEnglish',
               informantFirstNameConditionals.concat(hideIfInformantSpouse),
               certificateHandlebars.informantFirstName
-            ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
+            ), // Required field.
             getFamilyNameField(
               'informantNameInEnglish',
               informantFamilyNameConditionals.concat(hideIfInformantSpouse),
@@ -272,6 +276,10 @@ export const deathForm = {
                 {
                   operation: 'dateInPast',
                   parameters: []
+                },
+                {
+                  operation: 'isAgeInYearsBetween',
+                  parameters: [16, 100]
                 }
               ],
               certificateHandlebars.informantBirthDate
@@ -280,23 +288,15 @@ export const deathForm = {
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(hideIfInformantSpouse),
-              ageOfIndividualValidators
+              ageOfIndividualValidators,
+              certificateHandlebars.ageOfInformantInYears
             ),
             getNationality(
               certificateHandlebars.informantNationality,
               hideIfInformantSpouse
             ),
-            getIDType(
-              'death',
-              'informant',
-              hideIfNidIntegrationEnabled.concat(hideIfInformantSpouse),
-              true
-            ),
-            ...getIDNumberFields(
-              'informant',
-              hideIfNidIntegrationEnabled.concat(hideIfInformantSpouse),
-              true
-            ),
+            getIDType('death', 'informant', hideIfInformantSpouse, true),
+            ...getIDNumberFields('informant', hideIfInformantSpouse, true),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('informant-address-separator', hideIfInformantSpouse),
             registrationPhone,
@@ -351,7 +351,8 @@ export const deathForm = {
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfSpouse,
               exactDateOfBirthUnknownConditional.concat(detailsExist),
-              ageOfIndividualValidators
+              ageOfIndividualValidators,
+              certificateHandlebars.ageOfSpouseInYears
             ),
             getNationality(
               certificateHandlebars.spouseNationality,
@@ -359,8 +360,6 @@ export const deathForm = {
             ),
             getIDType('death', 'spouse', detailsExist, true),
             ...getIDNumberFields('spouse', detailsExist, true),
-            // preceding field of address fields
-            divider('spouse-nid-seperator', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('spouse-address-separator')
           ],
@@ -416,7 +415,7 @@ export const deathForm = {
             ), // Required field.
             getNationalID(
               'iD',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
+              detailsExist,
               getNationalIDValidators('mother'),
               certificateHandlebars.motherNID
             ),
@@ -489,7 +488,7 @@ export const deathForm = {
             ), // Required field.
             getNationalID(
               'iD',
-              hideIfNidIntegrationEnabled.concat(detailsExist),
+              detailsExist,
               getNationalIDValidators('father'),
               certificateHandlebars.fatherNID
             ),
@@ -509,6 +508,8 @@ export const deathForm = {
       ],
       mapping: getSectionMapping('father')
     },*/
-    documentsSection
+    documentsSection,
+    previewSection,
+    reviewSection
   ]
 } satisfies ISerializedForm

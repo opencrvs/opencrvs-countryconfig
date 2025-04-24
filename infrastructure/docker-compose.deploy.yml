@@ -6,8 +6,6 @@
 # & Healthcare Disclaimer located at http://opencrvs.org/license.
 #
 # Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
-version: '3.3'
-
 services:
   # Configure reverse proxy for public endpoints
   # Note: these published port will override UFW rules as Docker manages it's own iptables
@@ -49,7 +47,7 @@ services:
       replicas: 1
       labels:
         - 'traefik.http.services.traefik.loadbalancer.server.port=80'
-        - 'traefik.http.middlewares.test-compress.compress=true'
+        - 'traefik.http.middlewares.gzip-compression.compress=true'
       placement:
         constraints:
           - node.role == manager
@@ -62,7 +60,7 @@ services:
       - overlay_net
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:7.17.0
+    image: docker.elastic.co/beats/filebeat:8.14.3
     user: root
     networks:
       - overlay_net
@@ -87,7 +85,7 @@ services:
         - 'traefik.enable=false'
 
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:7.17.13
+    image: docker.elastic.co/beats/metricbeat:8.14.3
     user: root
     cap_add:
       - SYS_PTRACE
@@ -130,7 +128,7 @@ services:
       [
         'curl',
         '-u',
-        'elastic:${ELASTICSEARCH_SUPERUSER_PASSWORD}',
+        'kibana_system:${KIBANA_SYSTEM_PASSWORD}',
         '-X',
         'POST',
         'http://kibana:5601/api/saved_objects/_import?overwrite=true',
@@ -158,7 +156,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'setup-kibana-config'
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.0
+    image: docker.elastic.co/kibana/kibana:8.14.3
     restart: always
     deploy:
       labels:
@@ -175,8 +173,8 @@ services:
     networks:
       - overlay_net
     environment:
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_SUPERUSER_PASSWORD}
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
     configs:
       - source: kibana.{{ts}}
         target: /usr/share/kibana/config/kibana.yml
@@ -228,8 +226,11 @@ services:
       labels:
         - traefik.enable=false
       replicas: 1
+      # If this doesn't get run successfully, both the replica set in mongo and
+      # the user schema remains uninitialized.
       restart_policy:
-        condition: none
+        condition: on-failure
+        delay: 10s
     environment:
       - REPLICAS=1
       - MONGODB_ADMIN_USER=${MONGODB_ADMIN_USER}
@@ -241,6 +242,8 @@ services:
       - METRICS_MONGODB_PASSWORD=${METRICS_MONGODB_PASSWORD}
       - OPENHIM_MONGODB_PASSWORD=${OPENHIM_MONGODB_PASSWORD}
       - WEBHOOKS_MONGODB_PASSWORD=${WEBHOOKS_MONGODB_PASSWORD}
+      - NOTIFICATION_MONGODB_PASSWORD=${NOTIFICATION_MONGODB_PASSWORD}
+      - EVENTS_MONGODB_PASSWORD=${EVENTS_MONGODB_PASSWORD}
     networks:
       - overlay_net
     logging:
@@ -283,7 +286,6 @@ services:
       - path.repo=/data/backups/elasticsearch
       - cluster.name=docker-cluster
       - network.host=0.0.0.0
-      - discovery.zen.minimum_master_nodes=1
       - discovery.type=single-node
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true
@@ -366,6 +368,7 @@ services:
       - APM_ELASTIC_PASSWORD=${ROTATING_APM_ELASTIC_PASSWORD}
       - SEARCH_ELASTIC_USERNAME=search-user
       - SEARCH_ELASTIC_PASSWORD=${ROTATING_SEARCH_ELASTIC_PASSWORD}
+      - KIBANA_SYSTEM_PASSWORD=${KIBANA_SYSTEM_PASSWORD}
       - KIBANA_USERNAME=${KIBANA_USERNAME}
       - KIBANA_PASSWORD=${KIBANA_PASSWORD}
     volumes:
@@ -385,7 +388,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'setup-elasticsearch-users'
   elastalert:
-    image: jertel/elastalert2:2.3.0
+    image: jertel/elastalert2:2.19.0
     restart: unless-stopped
     environment:
       - ES_USERNAME=elastic
@@ -409,7 +412,7 @@ services:
         tag: 'elastalert'
 
   logstash:
-    image: logstash:7.17.0
+    image: logstash:8.14.3
     command: logstash -f /etc/logstash/logstash.conf --verbose
     ports:
       - '12201:12201'
@@ -432,7 +435,7 @@ services:
         - 'traefik.enable=false'
       replicas: 1
   apm-server:
-    image: docker.elastic.co/apm/apm-server:7.15.2
+    image: docker.elastic.co/apm/apm-server:7.17.22
     cap_add: ['CHOWN', 'DAC_OVERRIDE', 'SETGID', 'SETUID']
     cap_drop: ['ALL']
     restart: always
@@ -490,6 +493,7 @@ services:
   # Configure webapps and add traefik config
   client:
     environment:
+      - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - CONTENT_SECURITY_POLICY_WILDCARD=${CONTENT_SECURITY_POLICY_WILDCARD}
       - MINIO_URL=https://minio.{{hostname}}
@@ -497,7 +501,7 @@ services:
       labels:
         - 'traefik.enable=true'
         - 'traefik.http.routers.client.rule=Host(`register.{{hostname}}`,`{{hostname}}`)'
-        - 'traefik.http.routers.client.middlewares=test-replacepathregex'
+        - 'traefik.http.routers.client.middlewares=test-replacepathregex,gzip-compression'
         - 'traefik.http.routers.client.service=client'
         - 'traefik.http.services.client.loadbalancer.server.port=80'
         - 'traefik.http.routers.client.tls=true'
@@ -524,40 +528,16 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'client'
 
-  components:
-    deploy:
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.components.rule=Host(`ui-kit.{{hostname}}`)'
-        - 'traefik.http.services.components.loadbalancer.server.port=80'
-        - 'traefik.http.routers.components.tls=true'
-        - 'traefik.http.routers.components.tls.certresolver=certResolver'
-        - 'traefik.http.routers.components.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.components.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.components.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.components.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.components.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.components.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.components.headers.stspreload=true'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'components'
-
   countryconfig:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`)'
+        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
         - 'traefik.http.routers.countryconfig.entrypoints=web,websecure'
+        - 'traefik.http.routers.countryconfig.middlewares=gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
         - 'traefik.http.middlewares.countryconfig.headers.customresponseheaders.Pragma=no-cache'
         - 'traefik.http.middlewares.countryconfig.headers.customresponseheaders.Cache-control=no-store'
@@ -565,29 +545,41 @@ services:
         - 'traefik.http.middlewares.countryconfig.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.countryconfig.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.countryconfig.headers.stspreload=true'
-        # This is an invalid IP range, effectively blocking all IPs from accessing /email path.
+        # This is an invalid IP range, effectively blocking all IPs from accessing below paths.
         # It's only meant to be accessed from the internal docker network.
-        - 'traefik.http.middlewares.block-email.ipwhitelist.sourcerange=255.255.255.255'
+        - 'traefik.http.middlewares.block-internal-routes.ipwhitelist.sourcerange=255.255.255.255'
         - 'traefik.http.routers.block-email.rule=Host(`countryconfig.{{hostname}}`) && Path(`/email`)'
-        - 'traefik.http.routers.block-email.middlewares=block-email'
+        - 'traefik.http.routers.block-email.middlewares=block-internal-routes'
+        - 'traefik.http.routers.block-notification.rule=Host(`countryconfig.{{hostname}}`) && Path(`/notification`)'
+        - 'traefik.http.routers.block-notification.middlewares=block-internal-routes'
+        - 'traefik.http.routers.block-dashboard-queries.rule=Host(`countryconfig.{{hostname}}`) && Path(`/dashboards/queries.json`)'
+        - 'traefik.http.routers.block-dashboard-queries.middlewares=block-internal-routes'
       replicas: 1
     environment:
+      - NODE_ENV=production
+      - FHIR_URL=http://hearth:3447/fhir
+      - AUTH_URL=http://auth:4040
+      - APPLICATION_CONFIG_URL=http://config:2021
+      - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
       - CONFIG_MONGO_URL=mongodb://mongo1/application-config?replicaSet=rs0
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - LOGIN_URL=https://login.{{hostname}}
+      # This needs to be the internal swarm url
+      # as containers cannot connect to the web
+      - GATEWAY_URL=http://gateway:7070
       - CLIENT_APP_URL=https://register.{{hostname}}
       - NOTIFICATION_TRANSPORT=${NOTIFICATION_TRANSPORT}
-      - ALERT_EMAIL=${ALERT_EMAIL:-""}
-      - SMTP_HOST=${SMTP_HOST:-""}
-      - SMTP_PORT=${SMTP_PORT:-""}
-      - SMTP_USERNAME=${SMTP_USERNAME:-""}
-      - SMTP_PASSWORD=${SMTP_PASSWORD:-""}
-      - SMTP_SECURE=${SMTP_SECURE:-""}
-      - INFOBIP_GATEWAY_ENDPOINT=${INFOBIP_GATEWAY_ENDPOINT:-""}
-      - INFOBIP_API_KEY=${INFOBIP_API_KEY:-""}
-      - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-""}
+      - ALERT_EMAIL=${ALERT_EMAIL:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-}
+      - SMTP_USERNAME=${SMTP_USERNAME:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_SECURE=${SMTP_SECURE:-}
+      - INFOBIP_GATEWAY_ENDPOINT=${INFOBIP_GATEWAY_ENDPOINT:-}
+      - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
+      - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
     networks:
       - overlay_net
@@ -608,6 +600,7 @@ services:
         - 'traefik.http.routers.login.tls=true'
         - 'traefik.http.routers.login.tls.certresolver=certResolver'
         - 'traefik.http.routers.login.entrypoints=web,websecure'
+        - 'traefik.http.routers.login.middlewares=gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
         - 'traefik.http.middlewares.login.headers.customresponseheaders.Pragma=no-cache'
         - 'traefik.http.middlewares.login.headers.customresponseheaders.Cache-control=no-store'
@@ -629,6 +622,8 @@ services:
       - jwt-public-key.{{ts}}
       - jwt-private-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PRIVATE_KEY_PATH=/run/secrets/jwt-private-key.{{ts}}
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -663,6 +658,8 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - RECORD_SEARCH_QUOTA=2000
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -678,12 +675,35 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'user-mgnt'
+  events:
+    secrets:
+      - jwt-public-key.{{ts}}
+    environment:
+      - NODE_ENV=production
+      - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
+      - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
+      - ES_URL=http://search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
+    deploy:
+      labels:
+        - 'traefik.enable=false'
+      replicas: 1
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'events'
   notification:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
     deploy:
       replicas: 1
       labels:
@@ -699,11 +719,15 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
+      - COUNTRY=${COUNTRY:-FAR}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -712,6 +736,7 @@ services:
         - 'traefik.http.routers.gateway.tls=true'
         - 'traefik.http.routers.gateway.tls.certresolver=certResolver'
         - 'traefik.http.routers.gateway.entrypoints=web,websecure'
+        - 'traefik.http.routers.gateway.middlewares=gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
         - 'traefik.http.middlewares.gateway.headers.customresponseheaders.Pragma=no-cache'
         - 'traefik.http.middlewares.gateway.headers.customresponseheaders.Cache-control=no-store'
@@ -731,6 +756,9 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - LANGUAGES=en,fr
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
     deploy:
@@ -748,9 +776,12 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
     deploy:
       labels:
         - 'traefik.enable=false'
@@ -768,6 +799,8 @@ services:
     volumes:
       - /data/vsexport:/usr/src/app/packages/metrics/src/scripts
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://metrics:${METRICS_MONGODB_PASSWORD}@mongo1/metrics?replicaSet=rs0
@@ -789,6 +822,7 @@ services:
         tag: 'metrics'
   scheduler:
     environment:
+      - NODE_ENV=production
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
     deploy:
       replicas: 1
@@ -809,6 +843,7 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
@@ -828,6 +863,8 @@ services:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
@@ -860,7 +897,7 @@ services:
   migration:
     environment:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
-      - PERFORMANCE_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
+      - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
       - APPLICATION_CONFIG_MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
@@ -907,62 +944,13 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'hearth'
-  openhim-core:
-    environment:
-      - mongo_url=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-      - mongo_atnaUrl=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
-    deploy:
-      labels:
-        - 'traefik.enable=false'
-
-        # To expose OpenHIM to external systems as an interoperability layer
-        # Given OpenCRVS has it's own integrations UI and control.  This functionality is currently disabled
-        # If you wish to reopen OpenHIM interoperability, you can enable these lines
-        # Any subdomain labelled "api" is regularly spammed and can lead to DDOS attack
-        # Care must be taken to whitelist any access to this endpoint
-
-        # - 'traefik.http.routers.api.rule=Host(`api.{{hostname}}`)'
-        # - 'traefik.http.routers.api.tls=true'
-        # - 'traefik.http.routers.api.service=api'
-        # - 'traefik.http.routers.api.tls.certresolver=certResolver'
-        # - 'traefik.http.routers.api.entrypoints=web,websecure'
-        # - 'traefik.http.services.api.loadbalancer.server.port=5001'
-        # - 'traefik.http.middlewares.openhimapi-whitelist.ipwhitelist.sourcerange=<Comma separated IP list>'
-        # - "traefik.http.routers.openhimapi.middlewares=openhimapi-whitelist@docker"
-
-        - 'traefik.docker.network=opencrvs_overlay_net'
-
-        - 'traefik.http.middlewares.openhimcore.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.openhimcore.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.openhimcore.headers.stspreload=true'
-      replicas: 1
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'openhim-core'
-  openhim-console:
-    deploy:
-      labels:
-        - 'traefik.enable=false'
-      replicas: 1
-    configs:
-      - source: openhim-console-conf.{{ts}}
-        target: /usr/share/nginx/html/config/default.json
-    networks:
-      - overlay_net
-    logging:
-      driver: gelf
-      options:
-        gelf-address: 'udp://127.0.0.1:12201'
-        tag: 'openhim-console'
 
   webhooks:
     secrets:
       - jwt-public-key.{{ts}}
     environment:
+      - NODE_ENV=production
+      - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
@@ -1007,9 +995,11 @@ services:
       - OPENCRVS_METABASE_SITE_NAME=OpenCRVS Dashboards
       - OPENCRVS_METABASE_SITE_URL=http://metabase.{{hostname}}
       - OPENCRVS_METABASE_MAP_NAME=Farajaland
-      - OPENCRVS_METABASE_MAP_URL=http://countryconfig:3040/content/farajaland-map.geojson
+      - OPENCRVS_METABASE_MAP_URL=http://countryconfig:3040/content/map.geojson
       - OPENCRVS_METABASE_MAP_REGION_KEY=State
       - OPENCRVS_METABASE_MAP_REGION_NAME=State
+      - OPENCRVS_METABASE_ADMIN_EMAIL=${OPENCRVS_METABASE_ADMIN_EMAIL}
+      - OPENCRVS_METABASE_ADMIN_PASSWORD=${OPENCRVS_METABASE_ADMIN_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -1035,8 +1025,6 @@ secrets:
   jwt-private-key.{{ts}}:
     external: true
 configs:
-  openhim-console-conf.{{ts}}:
-    file: /opt/opencrvs/infrastructure/openhim-console-config.deploy.json
   hearth-check-dupe-plugin.{{ts}}:
     file: /opt/opencrvs/infrastructure/hearth-plugins/checkDuplicateTask.js
   hearth-queryparam-extensions-conf.{{ts}}:

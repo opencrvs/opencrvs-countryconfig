@@ -9,6 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 import {
+  getCompositionId,
   getTaskResource,
   getTrackingIdFromTaskResource
 } from '@countryconfig/utils'
@@ -23,9 +24,7 @@ function generateRegistrationNumber(trackingId: string): string {
   return brn
 }
 
-export async function createUniqueRegistrationNumberFromBundle(
-  bundle: fhir.Bundle
-) {
+export function createUniqueRegistrationNumberFromBundle(bundle: fhir.Bundle) {
   const taskResource = getTaskResource(bundle)
 
   if (!taskResource || !taskResource.extension) {
@@ -35,9 +34,11 @@ export async function createUniqueRegistrationNumberFromBundle(
   }
 
   const trackingId = getTrackingIdFromTaskResource(taskResource)
+  const compositionId = getCompositionId(bundle)
 
   return {
     trackingId,
+    compositionId,
     registrationNumber: generateRegistrationNumber(trackingId),
     ...(taskResource.code?.coding?.[0].code === 'BIRTH' && {
       // Some countries desire to create multiple identifiers for citizens at the point of birth registration using external systems.

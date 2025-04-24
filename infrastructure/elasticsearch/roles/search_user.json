@@ -1,8 +1,17 @@
 {
+  "cluster": ["manage"],
   "indices": [
     {
-      "names": ["ocrvs"],
-      "privileges": ["write", "create", "create_index", "delete", "delete_index", "read"]
+      "names": ["ocrvs", "ocrvs-*", "events_*"],
+      "privileges": [
+        "write",
+        "create",
+        "create_index",
+        "delete",
+        "delete_index",
+        "read",
+        "manage"
+      ]
     }
   ]
 }

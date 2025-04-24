@@ -37,7 +37,11 @@
                 max-width: 100%;">
     <h1>Complete your death declaration</h1>
     <p>
-        Hello {{informantName}},
+        {{#if informantName}}
+            Hello {{informantName}},
+        {{else}}
+            Hello,
+        {{/if}}
     </p>
     <p>
         Please visit {{crvsOffice}} to complete your death declaration. Your death registration tracking ID is

@@ -1,5 +1,6 @@
 const sodium = require('libsodium-wrappers')
 import { Octokit } from '@octokit/core'
+import { error } from './logger'
 
 export async function createVariable(
   octokit: Octokit,
@@ -211,7 +212,12 @@ export async function createEnvironment(
     )
     return true
   } catch (err) {
-    throw new Error('Cannot create environment')
+    error(
+      `Cannot create environment: [${err.status}] ${err.response.data.message}`
+    )
+    throw new Error(
+      `Cannot create environment: [${err.status}] ${err.response.data.message}`
+    )
   }
 }
 
@@ -238,9 +244,11 @@ export async function listEnvironmentSecrets(
     {
       owner: owner,
       repository_id: repositoryId,
-      environment_name: environmentName
+      environment_name: environmentName,
+      per_page: 100
     }
   )
+
   return response.data.secrets.map((secret) => ({
     ...secret,
     type: 'SECRET',
@@ -257,7 +265,8 @@ export async function listRepositorySecrets(
     'GET /repos/{owner}/{repo}/actions/secrets',
     {
       owner: owner,
-      repo: repositoryName
+      repo: repositoryName,
+      per_page: 100
     }
   )
   return response.data.secrets.map((secret) => ({
@@ -275,9 +284,9 @@ export async function listEnvironmentVariables(
   const response = await octokit.request(
     'GET /repositories/{repository_id}/environments/{environment_name}/variables',
     {
-      per_page: 30,
       repository_id: repositoryId,
       environment_name: environmentName,
+      per_page: 100,
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
       }

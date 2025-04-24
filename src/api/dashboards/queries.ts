@@ -101,7 +101,7 @@ const registrations = ({ lastUpdatedAt }: { lastUpdatedAt: string }) => ({
     },
     {
       $addFields: {
-        allTasks: { $concatArrays: ['$task', '$task_history'] }
+        allTasks: { $concatArrays: ['$task_history', '$task'] }
       }
     },
     {
@@ -486,7 +486,7 @@ const declarations = ({ lastUpdatedAt }: { lastUpdatedAt: string }) => ({
     {
       $match: {
         'meta.lastUpdated': { $gte: lastUpdatedAt },
-        'extension.url': 'http://opencrvs.org/specs/extension/requestCorrection'
+        'extension.url': 'http://opencrvs.org/specs/extension/makeCorrection'
       }
     },
     {
@@ -617,6 +617,8 @@ const declarations = ({ lastUpdatedAt }: { lastUpdatedAt: string }) => ({
     { $unwind: '$state' },
     {
       $project: {
+        _id: 0,
+        id: '$meta.versionId',
         gender: '$child.gender',
         reason: '$reason.text',
         extensions: '$extensions',
@@ -632,7 +634,7 @@ const declarations = ({ lastUpdatedAt }: { lastUpdatedAt: string }) => ({
     {
       $merge: {
         into: { db: 'performance', coll: 'corrections' },
-        on: '_id',
+        on: 'id',
         whenMatched: 'replace',
         whenNotMatched: 'insert'
       }

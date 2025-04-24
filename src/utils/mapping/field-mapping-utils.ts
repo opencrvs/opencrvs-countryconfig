@@ -135,11 +135,17 @@ export function getFieldMapping(
         },
         template: {
           fieldName: certificateHandlebar,
-          operation: 'selectTransformer'
+          operation: 'fieldValueTransformer',
+          parameters: ['relationship']
         }
       }
     case 'otherInformantType':
       return {
+        template: {
+          fieldName: certificateHandlebar,
+          operation: 'fieldValueTransformer',
+          parameters: ['otherRelationship']
+        },
         mutation: {
           operation: 'fieldValueSectionExchangeTransformer',
           parameters: ['registration', 'otherInformantType']
@@ -290,7 +296,7 @@ export function getFieldMapping(
       return {
         template: {
           fieldName: certificateHandlebar,
-          operation: 'nationalityTransformer'
+          operation: 'plainInputTransformer'
         },
         mutation: {
           operation: 'fieldToArrayTransformer'
@@ -316,10 +322,7 @@ export function getFieldMapping(
 export function getCustomFieldMapping(fieldId: string): IFormFieldMapping {
   const customFieldCertificateHandlebar =
     createCustomFieldHandlebarName(fieldId)
-  console.log(
-    'Custom field addded with handlebar: ',
-    customFieldCertificateHandlebar
-  )
+
   return {
     mutation: {
       operation: 'customFieldToQuestionnaireTransformer'

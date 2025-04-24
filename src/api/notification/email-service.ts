@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { logger } from '@countryconfig/logger'
+import { logger, maskEmail } from '@countryconfig/logger'
 import * as Handlebars from 'handlebars'
 import * as nodemailer from 'nodemailer'
 import {
@@ -28,6 +28,7 @@ export const sendEmail = async (params: {
   html: string
   from: string
   to: string
+  bcc?: string[]
 }) => {
   const replaceVariables = (text: string) =>
     Handlebars.compile(text)({
@@ -49,12 +50,14 @@ export const sendEmail = async (params: {
 
   if (formattedParams.to.endsWith('@example.com')) {
     logger.info(
-      `Example email detected: ${formattedParams.to}. Not sending the email.`
+      `Example email detected: ${maskEmail(
+        formattedParams.to
+      )}. Not sending the email.`
     )
     return
   }
 
-  logger.info(`Sending email to ${formattedParams.to}`)
+  logger.info(`Sending email to ${maskEmail(formattedParams.to)}`)
 
   const emailTransport = nodemailer.createTransport({
     host: SMTP_HOST,
@@ -65,13 +68,22 @@ export const sendEmail = async (params: {
       pass: SMTP_PASSWORD
     }
   })
+  const mailOptions = params.bcc
+    ? { ...formattedParams, bcc: params.bcc }
+    : formattedParams
 
   try {
-    await emailTransport.sendMail(formattedParams)
+    await emailTransport.sendMail(mailOptions)
   } catch (error) {
-    logger.error(
-      `Unable to send email to ${formattedParams.to} for error : ${error}`
-    )
+    if (params.bcc) {
+      logger.error(`Unable to send mass email for error : ${error}`)
+    } else {
+      logger.error(
+        `Unable to send email to ${maskEmail(
+          formattedParams.to
+        )} for error : ${error}`
+      )
+    }
 
     if (error.response) {
       logger.error(error.response.body)

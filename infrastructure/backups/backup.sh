@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
@@ -38,10 +40,6 @@ for i in "$@"; do
     SSH_PORT="${i#*=}"
     shift
     ;;
-  --production_ip=*)
-    PRODUCTION_IP="${i#*=}"
-    shift
-    ;;
   --remote_dir=*)
     REMOTE_DIR="${i#*=}"
     shift
@@ -63,7 +61,7 @@ for i in "$@"; do
 done
 
 print_usage_and_exit() {
-  echo 'Usage: ./backup.sh --passphrase=XXX --ssh_user=XXX --ssh_host=XXX --ssh_port=XXX --production_ip=XXX --remote_dir=XXX --replicas=XXX --label=XXX'
+  echo 'Usage: ./backup.sh --passphrase=XXX --ssh_user=XXX --ssh_host=XXX --ssh_port=XXX --remote_dir=XXX --replicas=XXX --label=XXX'
   echo "Script must receive SSH details and a target directory of a remote server to copy backup files to."
   echo "Optionally a LABEL i.e. 'v1.0.1' can be provided to be appended to the backup file labels"
   echo "7 days of backup data will be retained in the manager node"
@@ -94,10 +92,6 @@ if [ "$IS_LOCAL" = false ]; then
   fi
   if [ -z "$SSH_PORT" ]; then
     echo "Error: Argument for the --ssh_port is required."
-    print_usage_and_exit
-  fi
-  if [ -z "$PRODUCTION_IP" ]; then
-    echo "Error: Argument for the --production_ip is required."
     print_usage_and_exit
   fi
   if [ -z "$REMOTE_DIR" ]; then
@@ -138,17 +132,10 @@ mkdir -p $ROOT_PATH/backups/elasticsearch/indices
 mkdir -p $ROOT_PATH/backups/influxdb
 mkdir -p $ROOT_PATH/backups/mongo
 mkdir -p $ROOT_PATH/backups/minio
-mkdir -p $ROOT_PATH/backups/metabase
 mkdir -p $ROOT_PATH/backups/vsexport
-mkdir -p $ROOT_PATH/backups/metabase
 
 # This enables root-created directory to be writable by the docker user
 chown -R 1000:1000 $ROOT_PATH/backups
-
-# This might not exist if project is empty
-mkdir -p $ROOT_PATH/metabase
-chown -R 1000:1000 $ROOT_PATH/metabase
-
 
 # Select docker network and replica set in production
 #----------------------------------------------------
@@ -204,28 +191,28 @@ REMOTE_DIR="$REMOTE_DIR/${LABEL:-$BACKUP_DATE}"
 
 # Backup Hearth, OpenHIM, User, Application-config and any other service related Mongo databases into a mongo sub folder
 # ---------------------------------------------------------------------------------------------
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d hearth-dev --gzip --archive=/data/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev $(excluded_collections) --gzip --archive=/data/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d user-mgnt --gzip --archive=/data/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d application-config --gzip --archive=/data/backups/mongo/application-config-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d metrics --gzip --archive=/data/backups/mongo/metrics-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d webhooks --gzip --archive=/data/backups/mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz"
-docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
-  -c "mongodump $(mongo_credentials) --host $HOST -d performance --gzip --archive=/data/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz"
+dbs=(
+  'hearth-dev'
+  'user-mgnt'
+  'application-config'
+  'metrics'
+  'webhooks'
+  'performance'
+)
+for db in "${dbs[@]}"; do
+  command='docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash -c "mongodump $(mongo_credentials) --host $HOST -d ${db} --gzip --archive=/data/backups/mongo/${db}-${LABEL:-$BACKUP_DATE}.gz"'
+  output="$(eval "$command" 2>&1)" || echo "Failed to backup MongoDB: $output"
+done
 
+openhim_command='docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev $(excluded_collections) --gzip --archive=/data/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz"'
+output="$(eval "$openhim_command" 2>&1)" || echo "Failed to backup MongoDB: $output"
 
 #-------------------------------------------------------------------------------------
 
 echo ""
 echo "Delete all currently existing snapshots"
 echo ""
-docker run --rm --network=$NETWORK appropriate/curl curl -a -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
+docker run --rm --network=$NETWORK appropriate/curl curl -sS -X DELETE -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs"
 
 #-------------------------------------------------------------------------------------
 echo ""
@@ -233,7 +220,7 @@ echo "Register backup folder as an Elasticsearch repository for backing up the s
 echo ""
 
 create_elasticsearch_snapshot_repository() {
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}' 2>/dev/null)
+  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs" -d '{ "type": "fs", "settings": { "location": "/data/backups/elasticsearch", "compress": true }}' 2>/dev/null)
   while [ "$OUTPUT" != '{"acknowledged":true}' ]; do
     echo "Failed to register backup folder as an Elasticsearch repository. Trying again in..."
     sleep 1
@@ -251,7 +238,7 @@ echo ""
 
 create_elasticsearch_backup() {
   OUTPUT=""
-  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -s -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
+  OUTPUT=$(docker run --rm --network=$NETWORK appropriate/curl curl -sS -X PUT -H "Content-Type: application/json;charset=UTF-8" "http://$(elasticsearch_host)/_snapshot/ocrvs/snapshot_${LABEL:-$BACKUP_DATE}?wait_for_completion=true&pretty" -d '{ "indices": "ocrvs" }' 2>/dev/null)
   if echo $OUTPUT | jq -e '.snapshot.state == "SUCCESS"' > /dev/null; then
     echo "Snapshot state is SUCCESS"
   else
@@ -281,11 +268,6 @@ echo "Creating a backup for Minio"
 LOCAL_MINIO_BACKUP=$ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
 cd $ROOT_PATH/minio && tar -zcvf $LOCAL_MINIO_BACKUP . && cd /
 
-echo "Creating a backup for Metabase"
-
-LOCAL_METABASE_BACKUP=$ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
-cd $ROOT_PATH/metabase && tar -zcvf $LOCAL_METABASE_BACKUP . && cd /
-
 echo "Creating a backup for VSExport"
 
 LOCAL_VSEXPORT_BACKUP=$ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz
@@ -299,47 +281,40 @@ fi
 
 # Copy the backups to an offsite server in production
 #----------------------------------------------------
-if [[ "$OWN_IP" = "$PRODUCTION_IP" || "$OWN_IP" = "$(dig $PRODUCTION_IP +short)" ]]; then
 
-  # Create a temporary directory to store the backup files before packaging
-  BACKUP_RAW_FILES_DIR=/tmp/backup-${LABEL:-$BACKUP_DATE}/
-  mkdir -p $BACKUP_RAW_FILES_DIR
+# Create a temporary directory to store the backup files before packaging
+BACKUP_RAW_FILES_DIR=/tmp/backup-${LABEL:-$BACKUP_DATE}/
+mkdir -p $BACKUP_RAW_FILES_DIR
 
-  # Copy full directories to the temporary directory
-  cp -r $ROOT_PATH/backups/elasticsearch/ $BACKUP_RAW_FILES_DIR/elasticsearch/
-  cp -r $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE} $BACKUP_RAW_FILES_DIR/influxdb/
+# Copy full directories to the temporary directory
+cp -r $ROOT_PATH/backups/elasticsearch/ $BACKUP_RAW_FILES_DIR/elasticsearch/
+cp -r $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE} $BACKUP_RAW_FILES_DIR/influxdb/
 
 
-  mkdir -p $BACKUP_RAW_FILES_DIR/minio/ && cp $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/minio/
-  mkdir -p $BACKUP_RAW_FILES_DIR/metabase/ && cp $ROOT_PATH/backups/metabase/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/metabase/
-  mkdir -p $BACKUP_RAW_FILES_DIR/vsexport/ && cp $ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/vsexport/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/application-config-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/metrics-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-  mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
+mkdir -p $BACKUP_RAW_FILES_DIR/minio/ && cp $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/minio/
+mkdir -p $BACKUP_RAW_FILES_DIR/vsexport/ && cp $ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/vsexport/
+mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
+mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
+mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
+mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/application-config-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
+mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/metrics-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
+mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
+mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 
-  tar -czf /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -C "$BACKUP_RAW_FILES_DIR" .
+tar -czf /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -C "$BACKUP_RAW_FILES_DIR" .
 
-  openssl enc -aes-256-cbc -salt -pbkdf2 -in /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -out /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc -pass pass:$PASSPHRASE
+openssl enc -aes-256-cbc -salt -pbkdf2 -in /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -out /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc -pass pass:$PASSPHRASE
 
+if [ "$IS_LOCAL" = false ]; then
+  set +e
   rsync -a -r --rsync-path="mkdir -p $REMOTE_DIR/ && rsync" --progress --rsh="ssh -o StrictHostKeyChecking=no -p $SSH_PORT" /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc $SSH_USER@$SSH_HOST:$REMOTE_DIR/
-
-  echo "Copied backup files to remote server."
-
-  rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
-  rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
-  rm -r $BACKUP_RAW_FILES_DIR
+  if [ $? -eq 0 ]; then
+    echo "Copied backup files to remote server."
+  fi
+  set -e
 fi
 
-# Cleanup any old backups from influx or mongo. Keep previous 7 days of data and all elastic data
-# Elastic snapshots require a random selection of files in the data/backups/elasticsearch/indices
-# folder
-#------------------------------------------------------------------------------------------------
-find $ROOT_PATH/backups/influxdb -mtime +7 -exec rm {} \;
-find $ROOT_PATH/backups/mongo -mtime +7 -exec rm {} \;
-find $ROOT_PATH/backups/minio -mtime +7 -exec rm {} \;
-find $ROOT_PATH/backups/metabase -mtime +7 -exec rm {} \;
-find $ROOT_PATH/backups/vsexport -mtime +7 -exec rm {} \;
+rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
+rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
+rm -r $BACKUP_RAW_FILES_DIR
+

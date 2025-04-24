@@ -12,6 +12,7 @@ require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
 
 import fetch from 'node-fetch'
+import path from 'path'
 import * as Hapi from '@hapi/hapi'
 import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
@@ -30,7 +31,6 @@ import {
   AUTH_URL,
   DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
-import { statisticsHandler } from '@countryconfig/api/data-generator/handler'
 import {
   contentHandler,
   countryLogoHandler
@@ -45,23 +45,27 @@ import {
   notificationHandler,
   notificationSchema
 } from './api/notification/handler'
-import { mosipMediatorHandler } from '@countryconfig/api/mediators/mosip-openhim-mediator/handler'
 import { ErrorContext } from 'hapi-auth-jwt2'
 import { mapGeojsonHandler } from '@countryconfig/api/dashboards/handler'
 import { formHandler } from '@countryconfig/form'
 import { locationsHandler } from './data-seeding/locations/handler'
-import { certificateHandler } from './data-seeding/certificates/handler'
+import { certificateHandler } from './api/certificates/handler'
 import { rolesHandler } from './data-seeding/roles/handler'
 import { usersHandler } from './data-seeding/employees/handler'
 import { applicationConfigHandler } from './api/application/handler'
 import { validatorsHandler } from './form/common/custom-validation-conditionals/validators-handler'
 import { conditionalsHandler } from './form/common/custom-validation-conditionals/conditionals-handler'
-import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config-default'
+import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config'
 import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
-import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
+import { recordNotificationHandler } from './api/record-notification/handler'
+import {
+  getCustomEventsHandler,
+  onAnyActionHandler,
+  onRegisterHandler
+} from '@countryconfig/api/custom-event/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -71,18 +75,18 @@ export interface ITokenPayload {
 }
 
 export default function getPlugins() {
-  const plugins: any[] = [
-    inert,
-    JWT,
-    {
+  const plugins: any[] = [inert, JWT]
+
+  if (process.env.NODE_ENV === 'production') {
+    plugins.push({
       plugin: Pino,
       options: {
         prettyPrint: false,
         logPayload: false,
         instance: logger
       }
-    }
-  ]
+    })
+  }
 
   if (SENTRY_DSN) {
     plugins.push({
@@ -139,18 +143,18 @@ export const verifyToken = async (token: string, authUrl: string) => {
 const validateFunc = async (
   payload: any,
   request: Hapi.Request,
-  checkInvalidToken: string,
+  checkInvalidToken: boolean,
   authUrl: string
 ) => {
   let valid
-  if (checkInvalidToken === 'true') {
+  if (checkInvalidToken) {
     valid = await verifyToken(
       request.headers.authorization.replace('Bearer ', ''),
       authUrl
     )
   }
 
-  if (valid === true || checkInvalidToken !== 'true') {
+  if (valid === true || !checkInvalidToken) {
     return {
       isValid: true,
       credentials: payload
@@ -167,7 +171,7 @@ async function getPublicKey(): Promise<string> {
     const response = await fetch(`${AUTH_URL}/.well-known`)
     return response.text()
   } catch (error) {
-    console.log(
+    logger.error(
       `Failed to fetch public key from Core. Make sure Core is running, and you are able to connect to ${AUTH_URL}/.well-known.`
     )
     if (process.env.NODE_ENV === 'production') {
@@ -239,13 +243,27 @@ export async function createServer() {
 
   server.auth.default('jwt')
 
-  // add ping route by default for health check
   server.route({
     method: 'GET',
-    path: '/certificates/{event}.svg',
-    handler: certificateHandler
+    path: '/certificates/{id}',
+    handler: certificateHandler,
+    options: {
+      tags: ['api', 'certificates'],
+      description: 'Returns only one certificate metadata'
+    }
   })
 
+  server.route({
+    method: 'GET',
+    path: '/certificates',
+    handler: certificateHandler,
+    options: {
+      tags: ['api', 'certificates'],
+      description: 'Returns certificate metadata'
+    }
+  })
+
+  // add ping route by default for health check
   server.route({
     method: 'GET',
     path: '/ping',
@@ -270,17 +288,6 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Serves available fonts'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/certificate-configuration',
-    handler: certificateConfigurationHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves certificate configurations'
     }
   })
 
@@ -370,6 +377,7 @@ export async function createServer() {
     handler: dashboardQueriesHandler,
     options: {
       tags: ['api'],
+      auth: false,
       description: 'Serves dashboard view refresher queries'
     }
   })
@@ -386,7 +394,7 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/content/farajaland-map.geojson',
+    path: '/content/map.geojson',
     handler: mapGeojsonHandler,
     options: {
       auth: false,
@@ -430,22 +438,12 @@ export async function createServer() {
   })
 
   server.route({
-    method: 'GET',
-    path: '/statistics',
-    handler: statisticsHandler,
-    options: {
-      tags: ['api'],
-      description:
-        'Returns population and crude birth rate statistics for each location'
-    }
-  })
-
-  server.route({
     method: 'POST',
     path: '/notification',
     handler: notificationHandler,
     options: {
       tags: ['api'],
+      auth: false,
       validate: {
         payload: notificationSchema
       },
@@ -468,17 +466,7 @@ export async function createServer() {
       validate: {
         payload: emailSchema
       },
-      description: 'Handles sending SMS'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/mosip-openhim-mediator',
-    handler: mosipMediatorHandler,
-    options: {
-      tags: ['api'],
-      description: 'Handles submission of mosip generaed NID'
+      description: 'Handles sending email using a predefined template file'
     }
   })
 
@@ -506,17 +494,6 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/certificates',
-    handler: certificateHandler,
-    options: {
-      auth: false,
-      tags: ['api', 'certificates'],
-      description: 'Returns certificate metadata'
-    }
-  })
-
-  server.route({
-    method: 'GET',
     path: '/roles',
     handler: rolesHandler,
     options: {
@@ -531,7 +508,6 @@ export async function createServer() {
     path: '/users',
     handler: usersHandler,
     options: {
-      auth: false,
       tags: ['api', 'users'],
       description: 'Returns users metadata'
     }
@@ -544,6 +520,63 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Provides a tracking id'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/static/{param*}',
+    handler: {
+      directory: {
+        path: path.join(__dirname, 'client-static'),
+        redirectToSlash: true,
+        index: false
+      }
+    },
+    options: {
+      auth: false,
+      tags: ['api', 'static'],
+      description: 'Server static files for client'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/record-notification',
+    handler: recordNotificationHandler,
+    options: {
+      tags: ['api'],
+      description: 'Checks for enabled notification for record'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/events',
+    handler: getCustomEventsHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Serves custom events'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/register',
+    handler: onRegisterHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/{action}',
+    handler: onAnyActionHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on event actions'
     }
   })
 
