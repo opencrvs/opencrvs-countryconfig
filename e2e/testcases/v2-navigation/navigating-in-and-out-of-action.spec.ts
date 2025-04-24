@@ -34,10 +34,10 @@ test.describe.serial('Navigating in and out of action', () => {
     await page.close()
   })
 
-  test('1.0 Navigate successfully through the print certificate action flow', async () => {
+  test('Navigate successfully through the print certificate action flow', async () => {
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Birth Certificate Certified Copy')
-    await selectRequesterType(page, 'Print and issue to informant')
+    await selectRequesterType(page, 'Print and issue to Informant (Mother)')
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Verified' }).click()
     await page.getByRole('button', { name: 'Continue' }).click()
@@ -48,7 +48,7 @@ test.describe.serial('Navigating in and out of action', () => {
     )
   })
 
-  test('1.1 Browser back and forward actions work correctly inside the action flow', async () => {
+  test('Browser back and forward actions work correctly inside the action flow', async () => {
     await page.goBack()
     await page.goBack()
     await page.goForward()
@@ -65,17 +65,26 @@ test.describe.serial('Navigating in and out of action', () => {
     )
   })
 
-  test('1.2 After finishing action flow, user should be redirected to the event overview page', async () => {
+  test('After finishing action flow, user should be redirected to the event overview page', async () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await page.getByRole('button', { name: 'Print', exact: true }).click()
+
     await expectInUrl(
       page,
       `/events/overview/772d0471-3adf-407e-829d-851a8da4b4e1/${eventId}`
     )
   })
 
-  test('1.3 Browser back button should take user to the front page instead of action flow', async () => {
+  test('Browser back button should take user to the front page instead of action flow', async () => {
     await page.goBack()
     await expect(page.locator('#content-name')).toContainText('All events')
+  })
+
+  test('Browser forward button should take user back to the event overview page', async () => {
+    await page.goForward()
+    await expectInUrl(
+      page,
+      `/events/overview/772d0471-3adf-407e-829d-851a8da4b4e1/${eventId}`
+    )
   })
 })
