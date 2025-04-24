@@ -107,7 +107,9 @@ test.describe.serial('Validate collect payment page', () => {
         'input[name="collector____OTHER____signedAffidavit"][type="file"]'
       )
       await inputFile.setInputFiles(attachmentPath)
-      await expect(page.getByText('528KB-random.png')).toBeVisible()
+      await expect(
+        page.getByRole('button', { name: 'Signed Affidavit' })
+      ).toBeVisible()
       await expect(page.locator('#preview_delete')).toBeVisible()
       await page.getByRole('button', { name: 'Continue' }).click()
       await expectInUrl(
