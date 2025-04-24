@@ -109,19 +109,37 @@ export function getComposition<T extends fhir3.Bundle>(bundle: T) {
   return composition
 }
 
-export enum EVENT_TYPE {
-  BIRTH = 'BIRTH',
-  DEATH = 'DEATH',
-  MARRIAGE = 'MARRIAGE'
+const EVENTS = {
+  BIRTH: 'BIRTH' as const,
+  DEATH: 'DEATH' as const,
+  MARRIAGE: 'MARRIAGE' as const
+}
+type ValueOf<T> = T[keyof T]
+type EVENT_TYPE = ValueOf<typeof EVENTS>
+
+const FHIR_TO_OPENCRVS_EVENT_MAP = {
+  'birth-notification': EVENTS.BIRTH,
+  'birth-declaration': EVENTS.BIRTH,
+  'death-notification': EVENTS.DEATH,
+  'death-declaration': EVENTS.DEATH,
+  'marriage-notification': EVENTS.MARRIAGE,
+  'marriage-declaration': EVENTS.MARRIAGE
 }
 
-const DETECT_EVENT: Record<string, EVENT_TYPE> = {
-  'birth-notification': EVENT_TYPE.BIRTH,
-  'birth-declaration': EVENT_TYPE.BIRTH,
-  'death-notification': EVENT_TYPE.DEATH,
-  'death-declaration': EVENT_TYPE.DEATH,
-  'marriage-notification': EVENT_TYPE.MARRIAGE,
-  'marriage-declaration': EVENT_TYPE.MARRIAGE
+function getCompositionEventType(composition: fhir3.Composition) {
+  const eventType = composition?.type?.coding?.[0]
+    .code as keyof typeof FHIR_TO_OPENCRVS_EVENT_MAP
+  return eventType && (FHIR_TO_OPENCRVS_EVENT_MAP[eventType] as EVENT_TYPE)
+}
+
+export function getEventType(fhirBundle: fhir3.Bundle) {
+  const composition = fhirBundle.entry?.find(
+    (item) => item.resource?.resourceType === 'Composition'
+  )?.resource as fhir3.Composition
+  if (composition) {
+    return getCompositionEventType(composition as fhir3.Composition)
+  }
+  throw new Error('Composition not found in FHIR bundle')
 }
 
 export function resourceIdentifierToUUID(
@@ -153,31 +171,6 @@ export function findEntryFromBundle(
           entry.resource!.id ===
             resourceIdentifierToUUID(reference as ResourceIdentifier)
       )
-}
-
-function getTaskEventType(task: Task) {
-  const eventType = task?.code?.coding?.[0].code
-  return eventType
-}
-
-function getCompositionEventType(composition: fhir3.Composition) {
-  const eventType = composition?.type?.coding?.[0].code
-  return eventType && DETECT_EVENT[eventType]
-}
-
-export function getEventType(fhirBundle: fhir3.Bundle) {
-  if (fhirBundle.entry && fhirBundle.entry[0] && fhirBundle.entry[0].resource) {
-    const firstEntry = fhirBundle.entry[0].resource
-    if (firstEntry.resourceType === 'Composition') {
-      return getCompositionEventType(
-        firstEntry as fhir3.Composition
-      ) as EVENT_TYPE
-    } else {
-      return getTaskEventType(firstEntry as Task) as EVENT_TYPE
-    }
-  }
-
-  throw new Error('Invalid FHIR bundle found')
 }
 
 function getFromBundleById(bundle: fhir3.Bundle, id: string) {

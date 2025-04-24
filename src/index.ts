@@ -65,8 +65,7 @@ import {
   mosipRegistrationForReviewHandler,
   mosipRegistrationForApprovalHandler,
   mosipRegistrationHandler,
-  verify,
-  fhirBundleToMOSIPPayload
+  verify
 } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
@@ -75,29 +74,15 @@ import {
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { eventRegistrationHandler } from './api/event-registration/handler'
-import {
-  EVENT_TYPE,
-  findQuestionnaireResponse,
-  getChild,
-  getChildBirthDate,
-  getChildFullName,
-  getChildGender,
-  getComposition,
-  getDeceased,
-  getEmailFromTaskResource,
-  getEventType,
-  getInformantFullName,
-  getInformantRelation,
-  getPatientNationalId,
-  getPhoneNumberFromTaskResource
-} from './utils/fhir'
-import differenceInYears from 'date-fns/differenceInYears'
-import { wrapValueIntoIdentityInfo } from './utils/mosip'
-import { getTaskResource, getTrackingIdFromTaskResource } from './utils'
+import { getEventType } from './utils/fhir'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
-import { createUniqueRegistrationNumberFromBundle } from './api/event-registration/service'
+import {
+  fhirBirthToMosip,
+  fhirDeathToMosip,
+  shouldForwardToIDSystem
+} from './utils/mosip'
 
 export interface ITokenPayload {
   sub: string
@@ -212,74 +197,6 @@ async function getPublicKey(): Promise<string> {
     await new Promise((resolve) => setTimeout(resolve, 3000))
     return getPublicKey()
   }
-}
-
-interface VerificationStatus {
-  father: boolean
-  mother: boolean
-  informant: boolean
-  spouse: boolean
-}
-
-/**
- * Determines whether the registration data should be forwarded to the identity system
- * for unique ID creation based on the custom country specific logic built on verification statuses.
- */
-export function shouldForwardToIDSystem(
-  bundle: fhir3.Bundle,
-  verificationStatus: Partial<VerificationStatus>
-) {
-  // IDA Auth
-  const {
-    father: isFatherVerified,
-    mother: isMotherVerified,
-    informant: isInformantVerified,
-    spouse: isSpouseVerified
-  } = verificationStatus
-
-  // E-Signet
-  const isFatherAuthenticated =
-    findQuestionnaireResponse(
-      bundle,
-      'birth.father.father-view-group.verified'
-    ) === 'authenticated'
-
-  const isMotherAuthenticated =
-    findQuestionnaireResponse(
-      bundle,
-      'birth.mother.mother-view-group.verified'
-    ) === 'authenticated'
-
-  const isInformantAuthenticated =
-    findQuestionnaireResponse(
-      bundle,
-      'birth.informant.informant-view-group.verified'
-    ) === 'authenticated'
-
-  const isSpouseAuthenticated =
-    findQuestionnaireResponse(
-      bundle,
-      'death.spouse.spouse-view-group.verified'
-    ) === 'authenticated'
-
-  const eventType = getEventType(bundle)
-  if (eventType === EVENT_TYPE.BIRTH) {
-    const child = getChild(bundle)
-    const childBirthDate = new Date(child.birthDate as string)
-    return (
-      differenceInYears(new Date(), childBirthDate) < 10 &&
-      (isFatherVerified ||
-        isFatherAuthenticated ||
-        isMotherVerified ||
-        isMotherAuthenticated)
-    )
-  } else if (eventType === EVENT_TYPE.DEATH) {
-    const relation = getInformantRelation(bundle)
-    if (relation === 'SPOUSE') {
-      return isSpouseVerified || isSpouseAuthenticated
-    }
-    return isInformantAuthenticated || isInformantVerified
-  } else return true
 }
 
 export async function createServer() {
@@ -528,57 +445,22 @@ export async function createServer() {
     handler: async (request, h) => {
       const url = env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
       const result = await verify({ url, request })
+      const bundle = request.payload as fhir3.Bundle
 
       if (shouldForwardToIDSystem(request.payload as fhir3.Bundle, result)) {
+        const payload =
+          getEventType(bundle) === 'BIRTH'
+            ? fhirBirthToMosip(bundle)
+            : fhirDeathToMosip(bundle)
+
         logger.info(
           'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
         )
-        const mosipPayload = fhirBundleToMOSIPPayload(
-          request.payload as fhir3.Bundle,
-          {
-            compositionId: (bundle) => {
-              const composition = getComposition(bundle)
-              return composition.id
-            },
-            trackingId: (bundle) => {
-              const task = getTaskResource(bundle)
-              return (task && getTrackingIdFromTaskResource(task)) || ''
-            },
-            notification: {
-              recipientFullName: (bundle) => getInformantFullName(bundle) || '',
-              recipientPhone: (bundle) => {
-                const task = getTaskResource(bundle)
-                return (task && getPhoneNumberFromTaskResource(task)) || ''
-              },
-              recipientEmail: (bundle) => {
-                const task = getTaskResource(bundle)
-                return (task && getEmailFromTaskResource(task)) || ''
-              }
-            },
-            requestFields: {
-              fullName: (bundle) => getChildFullName(bundle),
-              dateOfBirth: (bundle) => getChildBirthDate(bundle) ?? '',
-              gender: (bundle) => getChildGender(bundle) ?? '',
-              birthCertificateNumber: (bundle) =>
-                createUniqueRegistrationNumberFromBundle(bundle)
-                  .registrationNumber,
-              nationalIdNumber: (bundle) => {
-                let deceased
-                try {
-                  deceased = getDeceased(bundle)
-                } catch (error) {
-                  logger.error('Error getting deceased from bundle', error)
-                  return ''
-                }
-                return (deceased && getPatientNationalId(deceased)) || ''
-              }
-            }
-          }
-        )
+
         return mosipRegistrationHandler({
           url,
           headers: request.headers,
-          payload: mosipPayload
+          payload
         })(request, h)
       } else {
         logger.info(
