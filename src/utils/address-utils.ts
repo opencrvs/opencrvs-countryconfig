@@ -684,28 +684,28 @@ function getTemplateMapping(
           parameters: [location]
         }
     : fhirLineArrayPosition
-    ? {
-        fieldName,
-        operation: 'addressLineTemplateTransformer',
-        parameters: [
-          useCase.toUpperCase() === 'PRIMARY'
-            ? AddressCases.PRIMARY_ADDRESS
-            : AddressCases.SECONDARY_ADDRESS,
-          fhirLineArrayPosition,
+      ? {
           fieldName,
-          location
-        ]
-      }
-    : {
-        fieldName,
-        operation: 'addressFHIRPropertyTemplateTransformer',
-        parameters: [
-          useCase.toUpperCase() === 'PRIMARY'
-            ? AddressCases.PRIMARY_ADDRESS
-            : AddressCases.SECONDARY_ADDRESS,
-          location
-        ]
-      }
+          operation: 'addressLineTemplateTransformer',
+          parameters: [
+            useCase.toUpperCase() === 'PRIMARY'
+              ? AddressCases.PRIMARY_ADDRESS
+              : AddressCases.SECONDARY_ADDRESS,
+            fhirLineArrayPosition,
+            fieldName,
+            location
+          ]
+        }
+      : {
+          fieldName,
+          operation: 'addressFHIRPropertyTemplateTransformer',
+          parameters: [
+            useCase.toUpperCase() === 'PRIMARY'
+              ? AddressCases.PRIMARY_ADDRESS
+              : AddressCases.SECONDARY_ADDRESS,
+            location
+          ]
+        }
 }
 
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
@@ -743,32 +743,32 @@ function getMutationMapping({
           ]
         }
     : fhirLineArrayPosition || fhirLineArrayPosition === 0
-    ? {
-        operation: 'addressMutationTransformer',
-        parameters: [
-          {
-            useCase:
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-            lineNumber: fhirLineArrayPosition,
-            isLowestAdministrativeLevel
-          }
-        ]
-      }
-    : {
-        operation: 'addressMutationTransformer',
-        parameters: [
-          {
-            useCase:
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-            transformedFieldName: location,
-            isLowestAdministrativeLevel
-          }
-        ]
-      }
+      ? {
+          operation: 'addressMutationTransformer',
+          parameters: [
+            {
+              useCase:
+                useCase.toUpperCase() === 'PRIMARY'
+                  ? AddressCases.PRIMARY_ADDRESS
+                  : AddressCases.SECONDARY_ADDRESS,
+              lineNumber: fhirLineArrayPosition,
+              isLowestAdministrativeLevel
+            }
+          ]
+        }
+      : {
+          operation: 'addressMutationTransformer',
+          parameters: [
+            {
+              useCase:
+                useCase.toUpperCase() === 'PRIMARY'
+                  ? AddressCases.PRIMARY_ADDRESS
+                  : AddressCases.SECONDARY_ADDRESS,
+              transformedFieldName: location,
+              isLowestAdministrativeLevel
+            }
+          ]
+        }
 }
 
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)
@@ -840,30 +840,30 @@ function getQueryMapping(
             : [{ lineNumber: fhirLineArrayPosition }]
       }
     : fhirLineArrayPosition || fhirLineArrayPosition === 0
-    ? {
-        operation: 'addressQueryTransformer',
-        parameters: [
-          {
-            useCase:
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-            lineNumber: fhirLineArrayPosition
-          }
-        ]
-      }
-    : {
-        operation: 'addressQueryTransformer',
-        parameters: [
-          {
-            useCase:
-              useCase.toUpperCase() === 'PRIMARY'
-                ? AddressCases.PRIMARY_ADDRESS
-                : AddressCases.SECONDARY_ADDRESS,
-            transformedFieldName: location
-          }
-        ]
-      }
+      ? {
+          operation: 'addressQueryTransformer',
+          parameters: [
+            {
+              useCase:
+                useCase.toUpperCase() === 'PRIMARY'
+                  ? AddressCases.PRIMARY_ADDRESS
+                  : AddressCases.SECONDARY_ADDRESS,
+              lineNumber: fhirLineArrayPosition
+            }
+          ]
+        }
+      : {
+          operation: 'addressQueryTransformer',
+          parameters: [
+            {
+              useCase:
+                useCase.toUpperCase() === 'PRIMARY'
+                  ? AddressCases.PRIMARY_ADDRESS
+                  : AddressCases.SECONDARY_ADDRESS,
+              transformedFieldName: location
+            }
+          ]
+        }
 }
 
 // You should never need to edit this function.  If there is a bug here raise an issue in [Github](https://github.com/opencrvs/opencrvs-farajaland)

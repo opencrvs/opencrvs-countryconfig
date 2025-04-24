@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.7.0 Release candidate
+## 1.7.0
 
 ### Migration notes
 
@@ -144,7 +144,7 @@ validations.isAgeInYearsBetween,The error message that appears when age for the 
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
 
-## 1.6.1 Release candidate
+## 1.6.1
 
 ### Bug fixes
 
@@ -237,13 +237,13 @@ INSERT CSV ROWS IN ENGLISH ONLY
 - Update template transformer for fields `informantType` and `otherInformantType` that fixes the bug of unavailability of these template fields [#5952](https://github.com/opencrvs/opencrvs-countryconfig/pull/5952)
 - Fixed missing InitialValue property to set initial values based on an expression
 
-## 1.5.2 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.5.1...v1.5.2)
+## [1.5.2](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.5.1...v1.5.2)
 
 ## Bug fixes
 
 - Broken email alerts from low disk space are now fixed [293](https://github.com/opencrvs/opencrvs-countryconfig/pull/293)
 
-## 1.5.0 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.1...v1.5.0)
+## [1.5.0](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.1...v1.5.0)
 
 ### Breaking changes
 
@@ -390,37 +390,6 @@ verifyCertificate.certifiedAt,Label for date of certification,Date of certificat
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
-### Other changes
-
-- Upgrade Node.js to 18
-- Remove dependency OpenHIM. The OpenHIM database is kept for backwards compatibility reasons and will be removed in v1.6
-- Change auth URLs to access them via gateway
-- Add hearth URL to search service
-- Include an endpoint for serving individual certificates in development mode
-- Include compositionId in confirm registration payload
-- Remove logrocket refrences
-- Enable gzip compression in client & login
-- Make SENTRY_DSN variable optional
-- Use docker compose v2 in github workflows
-- Mass email from national system admin
-- Add SMTP environment variables in qa compose file
-- Use image tag instead of patterns in certificate SVGs
-- Generate default address according to logged-in user's location
-- Remove authentication from dashboard queries route
-- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
-- In the certificate, the 'Place of Certification' now accurately reflects the correct location.
-- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
-- Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
-- Add query mapper for International Postal Code field
-- Add support for image compression configuration
-- Provide env variables for metabase admin credentials
-- Improved formatting of informant name for inProgress declaration emails
-- Rename `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming
-- Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field [#114](https://github.com/opencrvs/opencrvs-countryconfig/pull/114)
-- Enable authentication for certificates endpoint [#188](https://github.com/opencrvs/opencrvs-countryconfig/pull/188)
-
-## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
-
 - Improved logging for emails being sent
 - Updated default Metabase init file so that it's compatible with the current Metabase version
 - Deployment: Verifies Kibana is ready before setting up alert configuration
@@ -482,12 +451,9 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 
 ## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
 
-### Breaking changes
-
 ### New features
 
 - #### Greater customizability of location data in certificates
-
   The various admin level handlebars e.g. **statePlaceofbirth**,
   **districtPrimaryMother** only contained the name of that location which was
   not able to take advantage of all the information OpenCRVS had available
