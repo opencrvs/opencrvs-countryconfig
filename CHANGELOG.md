@@ -1,6 +1,11 @@
 # Changelog
 
-## 1.7.0 Release candidate
+## 1.7.1 Release candidate
+
+### Bug fixes
+
+
+## 1.7.0
 
 ### Migration notes
 
