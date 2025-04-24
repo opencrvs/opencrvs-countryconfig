@@ -13,6 +13,7 @@ import {
   and,
   ConditionalType,
   defineConfig,
+  field,
   or,
   user
 } from '@opencrvs/toolkit/events'
@@ -46,41 +47,40 @@ export const birthEvent = defineConfig({
     },
     fields: [
       {
-        id: 'child.dob',
+        fieldId: 'child.dob',
         emptyValueMessage: {
           defaultMessage: 'No date of birth',
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.dob.empty'
-        },
-        label: {
-          defaultMessage: 'Date of birth',
-          description: 'This is the label for the child information',
-          id: 'v2.event.birth.summary.child.dob.label'
-        },
-        value: {
-          defaultMessage: '{child.dob}',
-          description: 'This is the dob value of the child',
-          id: 'v2.event.birth.summary.child.dob.value'
         }
       },
       {
-        id: 'child.placeOfBirth',
+        fieldId: 'child.birthLocation',
         emptyValueMessage: {
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
-        label: {
-          defaultMessage: 'Place of birth',
-          description: 'This is the label for the child information',
-          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: not(field('child.birthLocation').isFalsy())
+          }
+        ]
+      },
+      {
+        fieldId: 'child.address.privateHome',
+        emptyValueMessage: {
+          defaultMessage: 'No place of birth',
+          description: 'This is shown when there is no child information',
+          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
-        value: {
-          defaultMessage:
-            '{child.birthLocation}, {child.address.district} {child.address.province}',
-          description: 'This is the place of birth value of the child',
-          id: 'v2.event.birth.summary.child.placeOfBirth.value'
-        }
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: not(field('child.address.privateHome').isFalsy())
+          }
+        ]
       },
       {
         id: 'informant.contact',
