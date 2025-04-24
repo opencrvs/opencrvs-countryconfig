@@ -10,7 +10,7 @@
  */
 
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { defaultApplicationConfig as applicationConfig } from './application-config-default'
+import { applicationConfig } from './application-config'
 
 export async function applicationConfigHandler(_: Request, h: ResponseToolkit) {
   const res = JSON.stringify(applicationConfig)

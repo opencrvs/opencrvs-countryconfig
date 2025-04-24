@@ -52,7 +52,9 @@ export const getMarriageDate: SerializedFormField = {
   mapping: getFieldMapping('marriageDate', certificateHandlebars.eventDate)
 }
 
-export const getRelationshipToSpousesForWitness: SerializedFormField = {
+export const getRelationshipToSpousesForWitness = (
+  fieldName: string
+): SerializedFormField => ({
   name: 'relationship',
   type: 'SELECT_WITH_OPTIONS',
   label: formMessageDescriptors.relationshipToSpouses,
@@ -60,10 +62,18 @@ export const getRelationshipToSpousesForWitness: SerializedFormField = {
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
-  options: witnessRelationshipOptions
-}
+  options: witnessRelationshipOptions,
+  mapping: {
+    template: {
+      operation: 'selectTransformer',
+      fieldName
+    }
+  }
+})
 
-export const witnessRelationshipForOthers: SerializedFormField = {
+export const witnessRelationshipForOthers = (
+  fieldName: string
+): SerializedFormField => ({
   name: 'otherRelationship',
   type: 'TEXT',
   label: formMessageDescriptors.other,
@@ -76,8 +86,14 @@ export const witnessRelationshipForOthers: SerializedFormField = {
       action: 'hide',
       expression: '(values.relationship!=="OTHER")'
     }
-  ]
-}
+  ],
+  mapping: {
+    template: {
+      operation: 'fieldValueTransformer',
+      fieldName
+    }
+  }
+})
 
 const marriageDocumentExtraValue = {
   GROOM: 'GROOM',

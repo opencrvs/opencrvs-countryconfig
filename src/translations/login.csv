@@ -50,6 +50,9 @@ password.minLength,Password validation,{min} characters minimum,{min} caractère
 password.mismatch,Password validation,Passwords do not match,Les mots de passe ne correspondent pas
 password.number,Password validation,At least one number,Au moins un chiffre
 password.validation.msg,Password validation message,Password must have:,"Le mot de passe doit avoir ,"
+reloadmodal.body,Body of reload modal,There’s a new version of {app_name} available. Please update to continue.,Une nouvelle version de {app_name} est disponible. Veuillez effectuer la mise à jour pour continuer.
+reloadmodal.button.update,Label of update button,Update,Mise à jour
+reloadmodal.title,Title when update is available,Update available,Mise à jour disponible
 resend.sms,Text for button that resend SMS or email verification code,"Resend {notificationMethod, select, sms {SMS} email {Email} other {}}","Renvoyer un {notificationMethod, select, sms {SMS} email {Email} other {}}"
 resetCredentials.emailAddressConfirmation.form.body.header,Form body header used in the body of email address confirmation step,Enter your email address,Entrez votre adresse email
 resetCredentials.forgottenItem.form.body.header,Body header for forgotten item form,Select an option,Qu'avez-vous oublié ?

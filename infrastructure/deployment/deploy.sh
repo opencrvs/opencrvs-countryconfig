@@ -63,8 +63,7 @@ done
 
 
 # Default values
-SSH_PORT=22
-SSH_ARGS=${SSH_ARGS:-""}
+SSH_ARGS=${SSH_ARGS:-}
 LOG_LOCATION=${LOG_LOCATION:-/var/log}
 
 COMPOSE_FILES_DOWNLOADED_FROM_CORE="/tmp/docker-compose.deps.yml /tmp/docker-compose.yml"
@@ -90,7 +89,7 @@ function trapint {
 }
 
 print_usage_and_exit () {
-  echo 'Usage: ./deploy.sh --host --environment --ssh_host --ssh_user --version --country_config_version --replicas'
+  echo 'Usage: ./deploy.sh --host --environment --ssh_host --ssh_port --ssh_user --version --country_config_version --replicas'
   echo "  --environment can be 'production', 'development', 'qa' or similar"
   echo '  --host    is the server to deploy to'
   echo "  --version can be any OpenCRVS Core docker image tag or 'latest'"
@@ -117,6 +116,11 @@ validate_options() {
 
   if [ -z "$SSH_HOST" ] ; then
     echo 'Error: Argument --ssh_host is required.'
+    print_usage_and_exit
+  fi
+
+  if [ -z "$SSH_PORT" ] ; then
+    echo 'Error: Argument --ssh_port is required.'
     print_usage_and_exit
   fi
 
@@ -220,6 +224,8 @@ get_docker_tags_from_compose_files() {
    IMAGE_TAG_LIST=$(cat $SPACE_SEPARATED_COMPOSE_FILE_LIST \
    `# Select rows with the image tag` \
    | grep image: \
+   `# Ignore the baseimage file as its not used directly` \
+   | grep -v ocrvs-base \
    `# Only keep the image version` \
    | sed "s/image://")
 
@@ -262,6 +268,11 @@ split_and_join() {
    SPLIT=$(echo $text | sed -e "s/$separator_for_splitting/$separator_for_joining/g")
    echo $SPLIT
 }
+cleanup_docker_images()
+{
+   echo "Cleaning up the docker images"
+   configured_ssh "/usr/bin/docker system prune -af | sudo tee -a /var/log/docker-prune.log > /dev/null"
+}
 
 docker_stack_deploy() {
   echo "Deploying this environment: $ENVIRONMENT_COMPOSE"
@@ -283,16 +294,25 @@ docker_stack_deploy() {
     do
       echo "Server failed to download $tag. Retrying..."
       sleep 5
-    done
+    done &
   done
-
+  wait
+  echo "Images are successfully downloaded"
   echo "Updating docker swarm stack with new compose files"
 
   configured_ssh 'cd /opt/opencrvs && \
     docker stack deploy --prune -c '$(split_and_join " " " -c " "$(to_remote_paths $COMPOSE_FILES_USED)")' --with-registry-auth opencrvs'
 }
 
+get_opencrvs_version() {
+  PREVIOUS_VERSION=$(configured_ssh "docker service ls | grep opencrvs_base | cut -d ':' -f 2")
+  echo "Previous opencrvs version: $PREVIOUS_VERSION"
+  echo "Current opencrvs version: $VERSION"
+}
+
 validate_options
+
+get_opencrvs_version
 
 # Create new passwords for all MongoDB users created in
 # infrastructure/mongodb/docker-entrypoint-initdb.d/create-mongo-users.sh
@@ -307,6 +327,8 @@ export METRICS_MONGODB_PASSWORD=`generate_password`
 export PERFORMANCE_MONGODB_PASSWORD=`generate_password`
 export OPENHIM_MONGODB_PASSWORD=`generate_password`
 export WEBHOOKS_MONGODB_PASSWORD=`generate_password`
+export NOTIFICATION_MONGODB_PASSWORD=`generate_password`
+export EVENTS_MONGODB_PASSWORD=`generate_password`
 
 #
 # Elasticsearch credentials
@@ -334,6 +356,23 @@ done
 
 validate_environment_variables
 
+if [ "$SSH_PORT" -eq 22 ]; then
+    SSH_HOST_TO_CHECK="$SSH_HOST"
+else
+    SSH_HOST_TO_CHECK="[$SSH_HOST]:$SSH_PORT"
+fi
+
+if ! ssh-keygen -l -F "$SSH_HOST_TO_CHECK" -f "$INFRASTRUCTURE_DIRECTORY/known-hosts"; then
+  echo "Host key for [$SSH_HOST]:$SSH_PORT not found in $INFRASTRUCTURE_DIRECTORY/known-hosts. Please add the host key to the known-hosts file."
+  echo "You can do this by running the following command:"
+  echo "sh ./infrastructure/environments/update-known-hosts.sh <YOUR DOMAIN>"
+  echo ""
+  echo "or"
+  echo ""
+  echo "sh ./infrastructure/environments/update-known-hosts.sh <YOUR SERVER IP>"
+  exit 1
+fi
+
 echo
 echo "Deploying VERSION $VERSION to $SSH_HOST..."
 echo
@@ -341,19 +380,20 @@ echo "Deploying COUNTRY_CONFIG_VERSION $COUNTRY_CONFIG_VERSION to $SSH_HOST..."
 echo
 echo "Syncing configuration files to the target server"
 
+
 configured_rsync -rlD $PROJECT_ROOT/infrastructure $SSH_USER@$SSH_HOST:/opt/opencrvs/ --delete --no-perms --omit-dir-times --verbose
 configured_rsync -rlD /tmp/docker-compose.yml /tmp/docker-compose.deps.yml $SSH_USER@$SSH_HOST:/opt/opencrvs/infrastructure --no-perms --omit-dir-times  --verbose
 
 echo "Logging to Dockerhub"
 
-configured_ssh << EOF
-  docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
-EOF
+configured_ssh "docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN"
 
 # Setup configuration files and compose file for the deployment domain
 configured_ssh "/opt/opencrvs/infrastructure/setup-deploy-config.sh $HOST"
 
 rotate_secrets
+
+cleanup_docker_images
 
 docker_stack_deploy
 
@@ -362,6 +402,15 @@ echo "This script doesnt ensure that all docker containers successfully start, j
 echo
 echo "Waiting 2 mins for mongo to deploy before working with data. Please note it can take up to 10 minutes for the entire stack to deploy in some scenarios."
 echo
+
+echo 'Setting up elastalert indices'
+
+while true; do
+  if configured_ssh "/opt/opencrvs/infrastructure/elasticsearch/setup-elastalert-indices.sh"; then
+    break
+  fi
+  sleep 5
+done
 
 echo "Setting up Kibana config & alerts"
 

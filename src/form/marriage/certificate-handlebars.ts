@@ -34,21 +34,19 @@ export const certificateHandlebars = {
   informantPassport: 'informantPassport',
   informantAlienId: 'informantAlienId',
   informantRefugeeId: 'informantRefugeeId',
+  ageOfInformantInYears: 'ageOfInformantInYears',
+  ageOfGroomInYears: 'ageOfGroomInYears',
+  ageOfBrideInYears: 'ageOfBrideInYears',
   countryPrimaryInformant: 'countryPrimaryInformant',
   statePrimaryInformant: 'statePrimaryInformant', // @deprecated use statePrimaryInformantId instead
   statePrimaryInformantId: 'statePrimaryInformantId',
   districtPrimaryInformant: 'districtPrimaryInformant', // @deprecated use districtPrimaryInformantId instead
   districtPrimaryInformantId: 'districtPrimaryInformantId',
   cityPrimaryInformant: 'cityPrimaryInformant',
-  addressLine3UrbanOptionPrimaryInformant:
-    'addressLine3UrbanOptionPrimaryInformant',
-  addressLine2UrbanOptionPrimaryInformant:
-    'addressLine2UrbanOptionPrimaryInformant',
-  addressLine1UrbanOptionPrimaryInformant:
-    'addressLine1UrbanOptionPrimaryInformant',
+  addressLine3PrimaryInformant: 'addressLine3PrimaryInformant',
+  addressLine2PrimaryInformant: 'addressLine2PrimaryInformant',
+  addressLine1PrimaryInformant: 'addressLine1PrimaryInformant',
   postalCodePrimaryInformant: 'postalCodePrimaryInformant',
-  addressLine1RuralOptionPrimaryInformant:
-    'addressLine1RuralOptionPrimaryInformant',
   internationalStatePrimaryInformant: 'internationalStatePrimaryInformant',
   internationalDistrictPrimaryInformant:
     'internationalDistrictPrimaryInformant',
@@ -80,11 +78,10 @@ export const certificateHandlebars = {
   districtPrimaryGroom: 'districtPrimaryGroom', // @deprecated use districtPrimaryGroomId instead
   districtPrimaryGroomId: 'districtPrimaryGroomId',
   cityPrimaryGroom: 'cityPrimaryGroom',
-  addressLine3UrbanOptionPrimaryGroom: 'addressLine3UrbanOptionPrimaryGroom',
-  addressLine2UrbanOptionPrimaryGroom: 'addressLine2UrbanOptionPrimaryGroom',
-  addressLine1UrbanOptionPrimaryGroom: 'addressLine1UrbanOptionPrimaryGroom',
+  addressLine3PrimaryGroom: 'addressLine3PrimaryGroom',
+  addressLine2PrimaryGroom: 'addressLine2PrimaryGroom',
+  addressLine1PrimaryGroom: 'addressLine1PrimaryGroom',
   postalCodePrimaryGroom: 'postalCodePrimaryGroom',
-  addressLine1RuralOptionPrimaryGroom: 'addressLine1RuralOptionPrimaryGroom',
   internationalStatePrimaryGroom: 'internationalStatePrimaryGroom',
   internationalDistrictPrimaryGroom: 'internationalDistrictPrimaryGroom',
   internationalCityPrimaryGroom: 'internationalCityPrimaryGroom',
@@ -110,11 +107,10 @@ export const certificateHandlebars = {
   districtPrimaryBride: 'districtPrimaryBride', // @deprecated use districtPrimaryBrideId instead
   districtPrimaryBrideId: 'districtPrimaryBrideId',
   cityPrimaryBride: 'cityPrimaryBride',
-  addressLine3UrbanOptionPrimaryBride: 'addressLine3UrbanOptionPrimaryBride',
-  addressLine2UrbanOptionPrimaryBride: 'addressLine2UrbanOptionPrimaryBride',
-  addressLine1UrbanOptionPrimaryBride: 'addressLine1UrbanOptionPrimaryBride',
+  addressLine3PrimaryBride: 'addressLine3PrimaryBride',
+  addressLine2PrimaryBride: 'addressLine2PrimaryBride',
+  addressLine1PrimaryBride: 'addressLine1PrimaryBride',
   postalCodePrimaryBride: 'postalCodePrimaryBride',
-  addressLine1RuralOptionPrimaryBride: 'addressLine1RuralOptionPrimaryBride',
   internationalStatePrimaryBride: 'internationalStatePrimaryBride',
   internationalDistrictPrimaryBride: 'internationalDistrictPrimaryBride',
   internationalCityPrimaryBride: 'internationalCityPrimaryBride',
@@ -132,15 +128,10 @@ export const certificateHandlebars = {
   districtPlaceofmarriage: 'districtPlaceofmarriage', // @deprecated use districtPlaceofmarriageId instead
   districtPlaceofmarriageId: 'districtPlaceofmarriageId',
   cityPlaceofmarriage: 'cityPlaceofmarriage',
-  addressLine3UrbanOptionPlaceofmarriage:
-    'addressLine3UrbanOptionPlaceofmarriage',
-  addressLine2UrbanOptionPlaceofmarriage:
-    'addressLine2UrbanOptionPlaceofmarriage',
-  addressLine1UrbanOptionPlaceofmarriage:
-    'addressLine1UrbanOptionPlaceofmarriage',
+  addressLine3Placeofmarriage: 'addressLine3Placeofmarriage',
+  addressLine2Placeofmarriage: 'addressLine2Placeofmarriage',
+  addressLine1Placeofmarriage: 'addressLine1Placeofmarriage',
   postalCodePlaceofmarriage: 'postalCodePlaceofmarriage',
-  addressLine1RuralOptionPlaceofmarriage:
-    'addressLine1RuralOptionPlaceofmarriage',
   internationalStatePlaceofmarriage: 'internationalStatePlaceofmarriage',
   internationalDistrictPlaceofmarriage: 'internationalDistrictPlaceofmarriage',
   internationalCityPlaceofmarriage: 'internationalCityPlaceofmarriage',

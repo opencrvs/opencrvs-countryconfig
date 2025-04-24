@@ -8,14 +8,19 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-
+import { Request } from '@hapi/hapi'
 import { decorateFormsWithAddresses } from '../utils/address-utils'
 import { birthForm } from './birth'
 import { deathForm } from './death'
 import { marriageForm } from './marriage'
 import { IForms, Event } from './types/types'
+import { fetchUserLocationHierarchy } from '@countryconfig/utils/gateway-api'
 
-export async function formHandler(): Promise<IForms> {
+export async function formHandler(req: Request): Promise<IForms> {
+  const addressHierarchy = await fetchUserLocationHierarchy(
+    req.auth.credentials.sub as string,
+    { headers: req.headers }
+  )
   // ====================== NOTE REGARDING MIGRATING FROM OPNCRVS v1.2 OR EARLIER ======================
 
   // SIMPLY RETURN A JSON OF YOUR FULL FORM HERE, WITH THE ADDITION OF THE NEW MARRIAGE AND VERSION PROP
@@ -51,8 +56,12 @@ export async function formHandler(): Promise<IForms> {
     // THIS DECORATOR FUNCTION POPULATES ADDRESSES ACCORDING TO THE defaultAddressConfiguration in address-settings.ts
     // SO YOU ONLY NEED TO CONFIGURE ADDRESS FIELDS IN A SINGLE LOCATION FOR ALL DECORATED INSTANCES.
 
-    birth: decorateFormsWithAddresses(birthForm, Event.Birth),
-    death: decorateFormsWithAddresses(deathForm, Event.Death),
-    marriage: decorateFormsWithAddresses(marriageForm, Event.Marriage)
+    birth: decorateFormsWithAddresses(birthForm, Event.Birth, addressHierarchy),
+    death: decorateFormsWithAddresses(deathForm, Event.Death, addressHierarchy),
+    marriage: decorateFormsWithAddresses(
+      marriageForm,
+      Event.Marriage,
+      addressHierarchy
+    )
   }
 }
