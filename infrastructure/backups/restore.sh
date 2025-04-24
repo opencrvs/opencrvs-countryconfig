@@ -163,13 +163,6 @@ rm -rf $ROOT_PATH/minio/ocrvs
 mkdir -p $ROOT_PATH/minio/ocrvs
 
 ##
-# ------ METABASE -------
-##
-
-
-rm -rf $ROOT_PATH/metabase/*
-
-##
 # ------ VSEXPORTS -------
 ##
 
@@ -255,12 +248,6 @@ tar -xzvf $ROOT_PATH/backups/minio/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/minio
 
 # Restart minio again so it picks up the updated files
 docker service update --force opencrvs_minio
-
-##
-# ------ METABASE -----
-##
-tar -xzvf $ROOT_PATH/backups/metabase/ocrvs-$LABEL.tar.gz -C $ROOT_PATH/metabase
-
 
 ##
 # ------ VSEXPORT -----
