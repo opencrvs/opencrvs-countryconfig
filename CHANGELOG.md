@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.7.0 Release candidate
+## 1.7.0
 
 ### Migration notes
 
@@ -148,6 +148,7 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 
 ### Bug fixes
 
+- Fix a typo in the birth certificate svg code that was causing the birth certificate to fail to render in the `print certified copy` flow. [7886](https://github.com/opencrvs/opencrvs-core/issues/7886)
 - We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
 - Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
 - On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
@@ -314,8 +315,11 @@ Follow the descriptions in the migration notes to re-provision all servers safel
 - Added SMTP environment variables into the qa compose file to enable QA of SMTP servers.
 - In the certificate, the 'Place of Certification' now accurately reflects the correct location.
 - Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
+- Change condition of Number of previous births
 - Add query mapper for International Postal Code field
 - Provide env variables for metabase admin credentials
+- Remove 'Other' dropdown when informant is mother or father [#7011](https://github.com/opencrvs/opencrvs-core/issues/7011)
+- Hide same as other primary address field if the other person's details not available [#7000](https://github.com/opencrvs/opencrvs-core/issues/7000)
 - Improved formatting of informant name for inProgress declaration emails
 - There is now an option to print the review page of an event declaration form. The PRINT_DECLARATION feature flag in application config settings can enable this on or off.
 
@@ -405,6 +409,7 @@ verifyCertificate.certifiedAt,Label for date of certification,Date of certificat
 - Each environment now has a dedicated docker-compose-<environment>-deploy.yml. Use `environment:init` to create a new environment and generate a corresponding file for customizable configurations.
 - 🔒 OpenHIM console is no longer exposed via HTTP.
 - Ansible playbooks are refactored into smaller task files.
+- Resolved the issue of National ID validation to prevent the informant, father, and mother from having the same ID.
 
 ### New features
 
@@ -517,3 +522,5 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 
 - Updated translations for form introduction page and sending for approval to reflect the default notification method being email.
 - Remove hard-coded conditionals from "occupation" field to make it usable in the deceased form
+
+See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
