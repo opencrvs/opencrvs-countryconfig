@@ -1,313 +1,410 @@
 <svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <rect width="595" height="842" fill="white" />
-  <g clip-path="url(#clip0_1157_5003)">
-    <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="6" font-weight="bold" letter-spacing="0px">
-      <tspan x="61.9999" y="780.593">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE </tspan>
-      <tspan x="61.9999" y="790.593">IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES A LA FALSIFIATION OU &#xc0; LA MODIFICATION D&#39;UN </tspan>
-      <tspan x="61.9999" y="800.593">CERTIFICAT ET A L&#39;UTILISATION OU LA POSSESSION D&#39;UN FAUX CERTIFICAT. UN CERTIFICAT N&#39;EST PAS UNE PREUVE D&#39;IDENTITE</tspan>
-    </text>
-  </g>
-  <path d="M61.9999 762.075H533.42V761.105H61.9999V762.075Z" fill="#ECECEC" />
-  <g clip-path="url(#clip1_1157_5003)">
-    <path d="M324.882 62.43C324.886 72.0276 324.873 81.6282 324.889 91.2258C324.895 91.6479 324.764 92.0484 324.547 92.3867C324.345 92.6971 324.066 92.9516 323.733 93.1223L298.786 107.519C298.441 107.714 298.075 107.81 297.718 107.81C297.351 107.81 296.982 107.708 296.652 107.519L271.717 93.1348C271.376 92.964 271.087 92.7064 270.882 92.3929C270.662 92.0484 270.531 91.6479 270.531 91.2227L270.54 91.0303L270.534 62.3182C270.528 61.9333 270.634 61.5702 270.814 61.2567L270.82 61.2505C271.006 60.9277 271.276 60.6607 271.599 60.4714L296.637 46.0222C296.982 45.8267 297.351 45.7305 297.705 45.7305C298.072 45.7305 298.444 45.8329 298.77 46.0222L323.817 60.4745C324.168 60.6762 324.438 60.968 324.622 61.3001L324.628 61.3063C324.811 61.6478 324.901 62.0389 324.882 62.43Z" fill="#EFCFA4" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M306.059 100.858H289.367L297.711 105.672L306.059 100.858Z" fill="#EFCFA4" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M289.367 100.858H306.059L314.407 96.0401H281.019L289.367 100.858Z" fill="#F1B162" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M281.019 96.0401H314.407L322.752 91.2227H272.671L281.019 96.0401Z" fill="#C86E00" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M272.671 91.2227H322.752V83.1554H272.671V91.2227Z" fill="#EFCFA4" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M285.124 83.1554H310.165L303.904 72.3193L298.733 75.3022L291.96 79.2102L285.124 83.1554Z" fill="#E2F5F4" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M303.904 72.3193L310.165 83.1554H322.684L303.904 72.3193Z" fill="#038E86" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M303.904 72.3193L322.684 83.1554L309.637 60.5831L291.435 71.0902L298.733 75.3022L303.904 72.3193Z" fill="#E2F5F4" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M322.684 83.1554L309.637 60.5831L322.749 68.1507L322.684 83.1554Z" fill="#038E86" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M291.96 79.2102L285.183 67.4833L272.668 74.7063L272.671 83.1554L285.124 83.1554L291.96 79.2102Z" fill="#E2F5F4" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M285.183 67.4833L291.96 79.2102L298.733 75.3022L291.435 71.0902L285.183 67.4833Z" fill="#038E86" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M285.183 67.4833L291.435 71.0902L309.637 60.5862L322.749 68.1538V62.3214L297.708 47.8691L272.668 62.3183L272.671 74.7032L285.183 67.4833ZM297.708 61.2722C295.944 61.2722 294.516 59.8444 294.516 58.0844C294.516 56.3213 295.944 54.8935 297.708 54.8935C299.469 54.8935 300.901 56.3213 300.901 58.0844C300.898 59.8444 299.469 61.2722 297.708 61.2722Z" fill="#EEEEEE" />
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M297.708 61.2722C299.472 61.2722 300.901 59.8444 300.901 58.0813C300.901 56.3182 299.472 54.8904 297.708 54.8904C295.944 54.8904 294.516 56.3182 294.516 58.0813C294.516 59.8444 295.944 61.2722 297.708 61.2722Z" fill="#C86E00" />
-    <path d="M323.46 62.3555L323.466 91.2196C323.466 91.4803 323.323 91.71 323.112 91.8342L298.069 106.29C297.842 106.423 297.569 106.414 297.354 106.29L272.314 91.8373C272.075 91.6976 271.947 91.4431 271.96 91.1855L271.954 62.3214C271.954 62.0606 272.096 61.8309 272.308 61.7068L297.351 47.2514C297.581 47.118 297.851 47.1273 298.066 47.2514L323.106 61.7037C323.345 61.8433 323.473 62.0979 323.46 62.3555ZM297.708 54.1796C298.786 54.1796 299.764 54.6172 300.469 55.3218C301.174 56.0265 301.612 57.0042 301.612 58.0813C301.612 59.1584 301.174 60.133 300.469 60.8408C299.764 61.5454 298.786 61.983 297.708 61.983C296.631 61.983 295.656 61.5454 294.947 60.8408C294.243 60.1362 293.805 59.1584 293.805 58.0813C293.805 57.0042 294.243 56.0296 294.947 55.3218L294.991 55.2815C295.693 54.6017 296.652 54.1796 297.708 54.1796ZM299.46 56.3338C299.013 55.8868 298.392 55.6074 297.708 55.6074C297.038 55.6074 296.432 55.8713 295.988 56.2996L295.957 56.3338C295.51 56.7807 295.23 57.4015 295.23 58.0844C295.23 58.7673 295.51 59.3881 295.957 59.8351C296.404 60.282 297.025 60.5614 297.708 60.5614C298.392 60.5614 299.013 60.282 299.46 59.8351C299.907 59.3881 300.187 58.7673 300.187 58.0844C300.187 57.4015 299.907 56.7807 299.46 56.3338ZM273.382 90.5119H322.041V83.8693H273.382V90.5119ZM320.091 91.9366H275.336L281.208 95.3262H314.221L320.091 91.9366ZM305.848 74.2625L310.575 82.4446H320.025L305.848 74.2625ZM308.929 82.4446L303.643 73.2909L287.783 82.4446H308.929ZM287.128 69.4264L292.221 78.2418L297.311 75.3054L287.128 69.4264ZM290.988 78.9526L284.926 68.4549L273.379 75.1161L273.382 82.4446H284.938L290.988 78.9526ZM273.379 73.474L284.826 66.8687C285.041 66.7446 285.311 66.7353 285.541 66.8687L291.435 70.2707L309.28 59.9716C309.494 59.8475 309.764 59.8382 309.994 59.9716L322.038 66.9215V62.7311L297.708 48.6886L273.376 62.7311L273.379 73.474ZM322.038 68.5635L311.59 62.5324L322.041 80.6226L322.038 68.5635ZM309.382 61.5547L292.857 71.0902L298.733 74.4797L303.547 71.7017C303.761 71.5775 304.031 71.5682 304.261 71.7017L320.74 81.2123L309.382 61.5547ZM289.553 100.144H305.87L311.749 96.7509H283.677L289.553 100.144ZM303.401 101.568H292.025L297.711 104.849L303.401 101.568Z" fill="#222222" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="4.49316" font-weight="bold" letter-spacing="0.2em">
-      <tspan x="278.929" y="89.0554">FARAJALAND</tspan>
-    </text>
-  </g>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
-    <tspan x="80.9999" y="667.352"></tspan>
-    <tspan x="136.164" y="667.352"></tspan>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+    <tspan x="220.625" y="678.552">&#x2028;</tspan>
+    <tspan x="61" y="691.352">{{ $formatDate (lookup $state "modifiedAt") "dd MMMM yyyy"}}</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
-    <tspan x="234.289" y="654.552">&#x2028;</tspan>
-    <tspan x="80.9999" y="667.352">{{ $formatDate (lookup $state "modifiedAt") "dd MMMM yyyy"}}</tspan>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="61" y="678.552">Date of certification / Date de certification</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="80.9999" y="654.552">Date of certification / Date de d&#xe9;livrance</tspan>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+    <tspan x="220.727" y="712.552">&#x2028;</tspan>
+    <tspan x="61" y="725.352">{{$location (lookup $state 'updatedAtLocation') 'location'}}, {{$location (lookup $state 'updatedAtLocation') 'district'}}, {{$location (lookup $state 'updatedAtLocation') 'province'}}, {{$location (lookup $state 'createdAtLocation') 'country'}}</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
-    <tspan x="234.391" y="688.312">&#x2028;</tspan>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="61" y="712.552">Place of certification / Lieu de certification</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="80.9999" y="688.312">Place of certification / Lieu de d&#xe9;livrance</tspan>
+  <!--<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0.5px">
+    <tspan x="61" y="759.104">{{mosipAid}}</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
-    <tspan x="80.9999" y="701.112">{{$location (lookup $state 'updatedAtLocation') 'location'}}</tspan>
-    <tspan x="80.9999" y="713.912">{{$location (lookup $state 'updatedAtLocation') 'district'}}, {{$location (lookup $state 'updatedAtLocation') 'province'}}, {{$location (lookup $state 'createdAtLocation') 'country'}}</tspan>
-  </text>
-  <!--<text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0.485px">
-    <tspan x="80.9999" y="747.084">{{mosipAid}}</tspan>
-  </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" font-weight="bold" letter-spacing="0px">
-    <tspan x="80.9999" y="735.444">MOSIP Application ID / MOSIP Application ID&#10;</tspan>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="61" y="747.104">MOSIP Application ID / MOSIP Application ID&#10;</tspan>
   </text>-->
-  <g clip-path="url(#clip2_1157_5003)">
-    <rect x="321.759" y="646.161" width="190.241" height="65.8389" fill="url(#pattern1_1157_5003)" />
+  <path d="M324.42 741L532.999 741.984" stroke="#CCCCCC" stroke-width="0.782258" stroke-dasharray="3.13 1.56" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+    <tspan x="387.936" y="754.656">Certified by: {{ $findUserById (lookup $state "updatedBy") "name"}}</tspan>
+  </text>
+  <g clip-path="url(#clip0_946_2501)">
+    <text fill="#8D8D8D" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="6" font-weight="600" letter-spacing="0px">
+      <tspan x="56" y="793.828">CAUTION : THERE ARE OFFENCES RELATING TO FALSIFYING OR ALTERING A CERTIFICATE AND USING OR POSSESSING A FALSE CERTIFICATE. A</tspan>
+      <tspan x="56" y="803.828">CERTIFICATE IS NOT PROOF OF IDENTITY / ATTENTION : IL EXISTE DES INFRACTIONS RELATIVES &#xc0; LA FALSIFIATION OU &#xc0; LA MODIFICATION</tspan>
+      <tspan x="56" y="813.828">D&#39;UN CERTIFICAT ET &#xc0; L&#39;UTILISATION OU LA POSSESSION D&#39;UN FAUX CERTIFICAT. UN CERTIFICAT N&#39;EST PAS UNE PREUVE D&#39;IDENTIT&#xc9;</tspan>
+    </text>
   </g>
-  <path d="M321.76 715.071L512.079 715.969" stroke="#CCCCCC" stroke-width="0.75879" stroke-dasharray="3.04 1.52" />
-  <path d="M321.76 715.071L512.079 715.969" stroke="#CCCCCC" stroke-width="0.75879" stroke-dasharray="3.04 1.52" />
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="7.76" font-weight="bold" letter-spacing="0px">
-    <tspan x="357.751" y="728.084">Registrar / L&#39;Officier de l&#39;&#xc9;tat Civil</tspan>
+  <path d="M56 780.5H541V779.5H56V780.5Z" fill="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+    <tspan x="61" y="628.604">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in pursuance</tspan>
+    <tspan x="61" y="641.604">of civil registration and vital statistics law / J&#x2019;attestation est une copie conforme de l&#39;&#xe9;tat civil et est d&#xe9;livr&#xe9; par</tspan>
+    <tspan x="61" y="654.604">l&#39;autorit&#xe9; mandat&#xe9;e conform&#xe9;ment &#xe0; la loi sur l&#39;enregistrement et les statistiques de l&#39;&#xe9;tat civil</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="7.76" letter-spacing="0px">
-    <tspan x="391.819" y="740.694">{{ $findUserById (lookup $state "updatedBy") "name"}}</tspan>
+  <path d="M56 610H541" stroke="#038E86" stroke-width="2" stroke-linecap="round" />
+  <path d="M56 85H540" stroke="#038E86" stroke-width="2" stroke-linecap="round" />
+  <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="4px">
+    <tspan x="221.483" y="99.88">No. {{lookup $state 'registrationNumber'}}</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="8" letter-spacing="0px">
-    <tspan x="81.3999" y="605.325">I certify that this certificate is a true copy of the civil registry and is issued by the mandated authority in pursuance </tspan>
-    <tspan x="81.3999" y="618.325">of civil registration law / Je certifie que le pr&#xe9;sent certificat est une copie conforme du registre d&#39;&#xe9;tat civil et qu&#39;il </tspan>
-    <tspan x="81.3999" y="631.325">est d&#xe9;livr&#xe9; par l&#39;autorit&#xe9; mandat&#xe9;e conform&#xe9;ment &#xe0; la loi sur l&#39;&#xe9;tat civil.</tspan>
+  <path d="M56 107H540" stroke="#038E86" stroke-width="2" stroke-linecap="round" />
+  <path d="M56 25H541" stroke="#DDDDDD" stroke-linecap="round" />
+  <g clip-path="url(#clip1_946_2501)">
+    <path d="M101.995 43.5958C101.997 50.8349 101.988 58.0763 102 65.3154C102.005 65.6338 101.906 65.9359 101.742 66.1911C101.59 66.4252 101.379 66.6172 101.128 66.7459L82.3116 77.6046C82.0516 77.7521 81.7752 77.8246 81.5058 77.8246C81.2294 77.8246 80.9506 77.7474 80.7023 77.6046L61.8948 66.7553C61.6371 66.6265 61.4193 66.4322 61.2647 66.1957C61.0984 65.9359 61 65.6338 61 65.3131L61.007 65.1679L61.0023 43.5115C60.9977 43.2212 61.0773 42.9473 61.2132 42.7108L61.2178 42.7062C61.3584 42.4627 61.5622 42.2613 61.8058 42.1185L80.6906 31.2201C80.9506 31.0726 81.2294 31 81.4964 31C81.7728 31 82.0539 31.0773 82.2999 31.2201L101.192 42.1209C101.456 42.273 101.66 42.4931 101.798 42.7436L101.803 42.7483C101.941 43.0058 102.009 43.3008 101.995 43.5958Z" fill="#EFCFA4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M87.7976 72.5803H75.207L81.5011 76.2115L87.7976 72.5803Z" fill="#EFCFA4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M75.207 72.5803H87.7976L94.094 68.9467H68.9104L75.207 72.5803Z" fill="#F1B162" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M68.9104 68.9467H94.094L100.388 65.3131H62.6139L68.9104 68.9467Z" fill="#C86E00" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M62.6139 65.3131H100.388V59.2282H62.6139V65.3131Z" fill="#EFCFA4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M72.0072 59.2282H90.8944L86.172 51.055L82.2718 53.3049L77.1629 56.2525L72.0072 59.2282Z" fill="#E2F5F4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M86.172 51.055L90.8944 59.2282H100.337L86.172 51.055Z" fill="#038E86" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M86.172 51.055L100.337 59.2282L90.4961 42.2028L76.767 50.1279L82.2718 53.3049L86.172 51.055Z" fill="#E2F5F4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M100.337 59.2282L90.4961 42.2028L100.386 47.9107L100.337 59.2282Z" fill="#038E86" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M77.1629 56.2525L72.0517 47.4073L62.6116 52.8554L62.6139 59.2282L72.0072 59.2282L77.1629 56.2525Z" fill="#E2F5F4" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M72.0517 47.4073L77.1629 56.2525L82.2718 53.3049L76.767 50.1279L72.0517 47.4073Z" fill="#038E86" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M72.0517 47.4073L76.767 50.1279L90.4961 42.2051L100.386 47.9131V43.5139L81.4988 32.6131L62.6116 43.5115L62.614 52.8531L72.0517 47.4073ZM81.4988 42.7226C80.1682 42.7226 79.0907 41.6456 79.0907 40.3181C79.0907 38.9883 80.1682 37.9113 81.4988 37.9113C82.8269 37.9113 83.9068 38.9883 83.9068 40.3181C83.9044 41.6456 82.8269 42.7226 81.4988 42.7226Z" fill="#EEEEEE" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M81.4988 42.7226C82.8293 42.7226 83.9068 41.6456 83.9068 40.3158C83.9068 38.9859 82.8293 37.909 81.4988 37.909C80.1682 37.909 79.0907 38.9859 79.0907 40.3158C79.0907 41.6456 80.1682 42.7226 81.4988 42.7226Z" fill="#C86E00" />
+    <path d="M100.922 43.5396L100.927 65.3108C100.927 65.5074 100.819 65.6807 100.66 65.7743L81.7705 76.6774C81.5995 76.7781 81.3934 76.7711 81.2318 76.6774L62.3446 65.7767C62.1642 65.6713 62.0682 65.4793 62.0776 65.285L62.0729 43.5139C62.0729 43.3172 62.1806 43.144 62.3399 43.0503L81.2294 32.1472C81.4028 32.0465 81.6065 32.0536 81.7682 32.1472L100.655 43.048C100.836 43.1533 100.932 43.3453 100.922 43.5396ZM81.4988 37.3728C82.3116 37.3728 83.0495 37.703 83.5812 38.2344C84.113 38.7659 84.4432 39.5034 84.4432 40.3158C84.4432 41.1282 84.113 41.8633 83.5812 42.3971C83.0495 42.9286 82.3116 43.2587 81.4988 43.2587C80.686 43.2587 79.9504 42.9286 79.4164 42.3971C78.8846 41.8657 78.5543 41.1282 78.5543 40.3158C78.5543 39.5034 78.8846 38.7682 79.4164 38.2344L79.4492 38.204C79.9785 37.6913 80.7024 37.3728 81.4988 37.3728ZM82.8199 38.9977C82.4826 38.6605 82.0141 38.4498 81.4988 38.4498C80.9928 38.4498 80.536 38.6488 80.2011 38.9719L80.1777 38.9977C79.8403 39.3348 79.6295 39.803 79.6295 40.3181C79.6295 40.8332 79.8403 41.3014 80.1777 41.6386C80.515 41.9757 80.9835 42.1864 81.4988 42.1864C82.0141 42.1864 82.4826 41.9757 82.8199 41.6386C83.1572 41.3014 83.3681 40.8332 83.3681 40.3181C83.3681 39.803 83.1572 39.3348 82.8199 38.9977ZM63.1504 64.777H99.8519V59.7667H63.1504V64.777ZM98.3808 65.8516H64.6238L69.0534 68.4082H93.9536L98.3808 65.8516ZM87.6383 52.5206L91.2035 58.6921H98.3316L87.6383 52.5206ZM89.962 58.6921L85.9752 51.7878L74.0123 58.6921H89.962ZM73.5181 48.873L77.3597 55.5221L81.199 53.3073L73.5181 48.873ZM76.4297 56.0582L71.8573 48.1402L63.1481 53.1645L63.1504 58.6921H71.8667L76.4297 56.0582ZM63.1481 51.9259L71.7823 46.9438C71.944 46.8502 72.1477 46.8431 72.3211 46.9438L76.7671 49.5098L90.2267 41.7416C90.3884 41.6479 90.5922 41.6409 90.7655 41.7416L99.8495 46.9836V43.8229L81.4988 33.2312L63.1457 43.8229L63.1481 51.9259ZM99.8495 48.2221L91.9695 43.6731L99.8519 57.3178L99.8495 48.2221ZM90.304 42.9356L77.8399 50.1279L82.2718 52.6845L85.9026 50.5891C86.0642 50.4954 86.268 50.4884 86.4414 50.5891L98.8704 57.7626L90.304 42.9356ZM75.3475 72.0418H87.6547L92.089 69.4828H70.9156L75.3475 72.0418ZM85.7925 73.1164H77.2121L81.5011 75.5911L85.7925 73.1164Z" fill="#222222" />
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="3.38904" font-weight="800" letter-spacing="0.2em">
+      <tspan x="67.334" y="63.5386">FARAJALAND</tspan>
+    </text>
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0.2px">
+      <tspan x="115" y="49.5161">REPUBLIC OF FARAJALAND / REPUBLIC OF FARAJALAND</tspan>
+    </text>
+    <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="600" letter-spacing="0px">
+      <tspan x="115" y="65.7921">CERTIFIED COPY OF BIRTH RECORD / COPIE CERTIFI&#xc9;E DE L&#39;ACTE DE NAISSANCE</tspan>
+    </text>
+  </g>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="129.88">Child&#x2019;s details / D&#xe9;tails de l&#39;enfant</tspan>
   </text>
-  <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-    <tspan x="403.421" y="126.364">&#x2028;</tspan>
+  <line x1="65" y1="134.5" x2="533" y2="134.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="148.104">1.</tspan>
   </text>
-  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="7.76" font-weight="bold" letter-spacing="0px">
-    <tspan x="186.255" y="126.364">REPUBLIC OF FARAJALAND / REPUBLIQUE DE FARAJALAND</tspan>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="147.604">Full name / Nom et pr&#xe9;nom</tspan>
   </text>
-  <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="11.64" font-weight="bold" letter-spacing="0px">
-    <!-- <tspan x="169.795" y="145.364">CERTIFICATE OF BIRTH / ACTE DE NAISSANCE</tspan> -->
-    <tspan x="65.795" y="145.364">CERTIFIED CERTIFICATE OF BIRTH / ACTE DE NAISSANCE CERTIFIÉ</tspan>
+  <g clip-path="url(#clip2_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="148.104">{{lookup $declaration "child.firstname"}} {{lookup $declaration "child.surname"}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="154.5" x2="533" y2="154.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="168.104">2.</tspan>
   </text>
-  <g clip-path="url(#clip3_1157_5003)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="88.6029" y="222.134">1.</tspan>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="167.604">Sex / Sexe</tspan>
+  </text>
+  <g clip-path="url(#clip3_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="168.104">{{$intl 'constants' (lookup $declaration "child.gender")}}</tspan>
     </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="222.134">Child&#x2019;s full name /&#x2028;</tspan>
-      <tspan x="104.68" y="237.134">Nom complet de l&#39;enfant</tspan>
+  </g>
+  <line x1="65" y1="174.5" x2="533" y2="174.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="188.104">3.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="187.604">Date of birth / Date de naissance</tspan>
+  </text>
+  <g clip-path="url(#clip4_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="188.104">{{lookup $declaration "child.dob"}}</tspan>
     </text>
-    <g clip-path="url(#clip4_1157_5003)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="229.634">{{lookup $declaration "child.firstname"}} {{lookup $declaration "child.surname"}}</tspan>
-      </text>
-    </g>
-    <line x1="81.3999" y1="246.205" x2="512.08" y2="246.205" stroke="#ECECEC" stroke-width="0.97" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="88.6029" y="263.774">2.</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="121.172" y="263.774"> /&#x2028;</tspan>
-      <tspan x="104.68" y="278.774">Sexe</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="263.774">Sex</tspan>
-    </text>
-    <g clip-path="url(#clip5_1157_5003)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="271.274">{{$intl 'constants' (lookup $declaration "child.gender")}}</tspan>
-      </text>
-    </g>
-    <line x1="81.3999" y1="287.845" x2="512.08" y2="287.845" stroke="#ECECEC" stroke-width="0.97" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="88.6029" y="305.414">3.</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="166.527" y="305.414"> /&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="305.414">Date of birth</tspan>
-      <tspan x="104.68" y="320.414">Date de naissance</tspan>
-    </text>
-    <g clip-path="url(#clip6_1157_5003)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="312.914">{{lookup $declaration "child.dob"}}</tspan>
-      </text>
-    </g>
-    <line x1="81.3999" y1="329.485" x2="512.08" y2="329.485" stroke="#ECECEC" stroke-width="0.97" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="88.6029" y="347.054">4.</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="169.17" y="347.054"> /&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="347.054">Place of birth</tspan>
-      <tspan x="104.68" y="362.054">Lieu de naissance</tspan>
-    </text>
-    <g clip-path="url(#clip7_1157_5003)">
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-      {{#ifCond (lookup $declaration 'child.birthLocation') '!==' undefined }}
-        <tspan x="289.95" y="347.054">{{$location (lookup $declaration "child.birthLocation") 'location'}}&#10;</tspan>
-        <tspan x="289.95" y="362.054">{{$location (lookup $declaration "child.birthLocation") 'district'}}, {{$location (lookup $declaration "child.birthLocation") 'province'}}, {{$location (lookup $declaration "child.birthLocation") 'country'}}</tspan>
+  </g>
+  <line x1="65" y1="194.5" x2="533" y2="194.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="208.104">4.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="207.604">Place of birth / Lieu de naissance</tspan>
+  </text>
+  <g clip-path="url(#clip5_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      {{#ifCond ($lookup $declaration 'child.birthLocation') '!==' undefined }}
+        <tspan x="307" y="208.104">{{$location (lookup $declaration "child.birthLocation") 'location'}}&#10;</tspan>
+        <tspan x="307" y="220.104">{{$location (lookup $declaration "child.birthLocation") 'district'}}, {{$location (lookup $declaration "child.birthLocation") 'province'}}, {{$location (lookup $declaration "child.birthLocation") 'country'}}</tspan>
       {{else}}
-        {{#ifCond (lookup $declaration 'child.address.other') '!==' undefined }}
-          <tspan x="289.95" y="347.054">{{$OR (lookup ($lookup $declaration 'child.address.other') 'district') (lookup ($lookup $declaration 'child.address.other') 'district2')}}&#10;</tspan>
-          <tspan x="289.95" y="362.054">{{$OR (lookup ($lookup $declaration 'child.address.other') 'state') (lookup ($lookup $declaration 'child.address.other') 'province')}}, {{$lookup 'child.address.other' 'country'}}</tspan>
+        {{#ifCond ($lookup $declaration 'child.address.other') '!==' undefined }}
+          <tspan x="307" y="208.104">{{$OR (lookup ($lookup $declaration 'child.address.other') 'district') (lookup ($lookup $declaration 'child.address.other') 'district2')}}&#10;</tspan>
+          <tspan x="307" y="220.104">{{$OR (lookup ($lookup $declaration 'child.address.other') 'state') (lookup ($lookup $declaration 'child.address.other') 'province')}}, {{lookup ($lookup $declaration 'child.address.other') 'country'}}</tspan>
         {{else}}
-          {{#ifCond (lookup $declaration 'child.address.privateHome') '!==' undefined }}
-            <tspan x="289.95" y="347.054">{{$OR (lookup ($lookup $declaration 'child.address.privateHome') 'district') (lookup ($lookup $declaration 'child.address.privateHome') 'district2')}}&#10;</tspan>
-            <tspan x="289.95" y="362.054">{{$OR (lookup ($lookup $declaration 'child.address.privateHome') 'state') (lookup ($lookup $declaration 'child.address.privateHome') 'province')}}, {{lookup ($lookup $declaration 'child.address.privateHome') 'country'}}</tspan>
+          {{#ifCond ($lookup $declaration 'child.address.privateHome') '!==' undefined }}
+            <tspan x="307" y="208.104">{{$OR (lookup ($lookup $declaration 'child.address.privateHome') 'district') (lookup ($lookup $declaration 'child.address.privateHome') 'district2')}}&#10;</tspan>
+            <tspan x="307" y="220.104">{{$OR (lookup ($lookup $declaration 'child.address.privateHome') 'state') (lookup ($lookup $declaration 'child.address.privateHome') 'province')}}, {{lookup ($lookup $declaration 'child.address.privateHome') 'country'}}</tspan>
           {{/ifCond}}
         {{/ifCond}}
       {{/ifCond}}
     </text>
-
-    </g>
-    <line x1="81.3999" y1="371.125" x2="512.08" y2="371.125" stroke="#ECECEC" stroke-width="0.97" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="88.6029" y="388.694">5.</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="196.138" y="388.694"> /&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="388.694">Mother&#x2019;s full name</tspan>
-      <tspan x="104.68" y="403.694">Nom complet de la m&#xe8;re</tspan>
-    </text>
-    <g clip-path="url(#clip8_1157_5003)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="396.194">{{lookup $declaration 'mother.firstname'}} {{lookup $declaration 'mother.surname'}}</tspan>
-      </text>
-    </g>
-    <line x1="81.3999" y1="412.765" x2="512.08" y2="412.766" stroke="#ECECEC" stroke-width="0.97" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="88.6029" y="430.334">6.</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="194.68" y="430.334">/&#x2028;</tspan>
-      <tspan x="104.68" y="445.334">N</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="430.334">Father&#x2019;s full name </tspan>
-      <tspan x="112.571" y="445.334">om complet du p&#xe8;re</tspan>
-    </text>
-    <g clip-path="url(#clip9_1157_5003)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="437.834">{{lookup $declaration 'father.firstname'}} {{lookup $declaration 'father.surname'}}</tspan>
-      </text>
-    </g>
-    <line x1="81.3999" y1="454.405" x2="512.08" y2="454.405" stroke="#ECECEC" stroke-width="0.97" />
-    <line x1="81.3999" y1="454.405" x2="512.08" y2="454.405" stroke="#ECECEC" stroke-width="0.97" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="88.6029" y="471.974">8.</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="486.974">Lieu d&#39;enregistrement</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="205.289" y="471.974">&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="471.974">Place of registration /</tspan>
-    </text>
-    <g clip-path="url(#clip10_1157_5003)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="471.974">{{$location (lookup $state "createdAtLocation") 'location'}}&#x2028;</tspan>
-        <tspan x="289.95" y="486.974">{{$location (lookup $state "createdAtLocation") 'district'}}, {{$location (lookup $state "createdAtLocation") 'province'}}, {{$location (lookup $state "createdAtLocation") 'country'}}</tspan>
-      </text>
-    </g>
-    <line x1="81.3999" y1="496.045" x2="512.08" y2="496.045" stroke="#ECECEC" stroke-width="0.97" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="88.6029" y="513.614">9.</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="202.646" y="513.614">&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="513.614">Date of registration /</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="528.614">Date d&#39;enregistrement</tspan>
-    </text>
-    <g clip-path="url(#clip11_1157_5003)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="521.114">{{$formatDate (lookup $state 'createdAt') "dd MMMM yyyy"}}</tspan>
-      </text>
-    </g>
-    <line x1="81.3999" y1="537.685" x2="512.08" y2="537.685" stroke="#ECECEC" stroke-width="0.97" />
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="83.0519" y="555.254">10.</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="173.262" y="555.254">/&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="555.254">Registered by </tspan>
-      <tspan x="104.68" y="570.254">Enregistr&#xe9; par</tspan>
-    </text>
-    <g clip-path="url(#clip12_1157_5003)">
-      <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="562.754">{{$findUserById (lookup $state 'createdBy') 'name'}}</tspan>
-      </text>
-    </g>
   </g>
-  <path d="M62.9698 586.11H533.42" stroke="#038E86" stroke-width="1.94" stroke-linecap="round" />
-  <path d="M62.9698 159.22H532.45" stroke="#038E86" stroke-width="1.94" stroke-linecap="round" />
-  <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="15.52" font-weight="bold" letter-spacing="3.88px">
-    <tspan x="200.256" y="184.002">No. {{lookup $state 'registrationNumber'}}</tspan>
+  <line x1="65" y1="232.5" x2="533" y2="232.5" stroke="#222222" />
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="247.88">Mother&#x2019;s details / D&#xe9;tails de la m&#xe8;re</tspan>
   </text>
-  <path d="M62.9698 196.74H532.45" stroke="#038E86" stroke-width="1.94" stroke-linecap="round" />
-  <path d="M62.97 37H533.42" stroke="#DDDDDD" stroke-width="0.97" stroke-linecap="round" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="266.104">5.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="265.604">Full name / Nom complet</tspan>
+  </text>
+  <g clip-path="url(#clip6_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="266.104">{{lookup $declaration 'mother.firstname'}} {{lookup $declaration 'mother.surname'}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="272.5" x2="533" y2="272.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="286.104">6.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="285.604">Date of birth / Date de naissance</tspan>
+  </text>
+  <g clip-path="url(#clip7_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      {{#ifCond (lookup $declaration 'mother.dob') '!==' undefined }}
+      <tspan x="307" y="286.104">{{lookup $declaration 'mother.dob'}}</tspan>
+      {{else}}
+      <tspan x="307" y="286.104">{{lookup $declaration 'mother.age'}} {{#ifCond (lookup $declaration 'mother.age') '!==' undefined }}years old{{/ifCond}}</tspan>
+      {{/ifCond}}
+    </text>
+  </g>
+  <line x1="65" y1="292.5" x2="533" y2="292.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="306.104">7.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="305.604">Resident at / Domicili&#xe9; &#xe0;</tspan>
+  </text>
+  <g clip-path="url(#clip8_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      {{#ifCond (lookup $declaration 'mother.firstname') '!==' undefined }}
+      <tspan x="307" y="306.104">{{ lookup ($lookup $declaration 'mother.address') 'district' }}{{ lookup ($lookup $declaration 'mother.address') 'district2' }}, {{ lookup ($lookup $declaration 'mother.address') 'province' }}{{ lookup ($lookup $declaration 'mother.address') 'state' }}, {{ lookup ($lookup $declaration 'mother.address') 'country' }}</tspan>
+      {{/ifCond}}
+    </text>
+  </g>
+  <line x1="65" y1="312.5" x2="533" y2="312.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="326.104">8.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="325.604">Nationality / Nationalit&#xe9;</tspan>
+  </text>
+  <g clip-path="url(#clip9_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="326.104">{{$lookup $declaration 'mother.nationality'}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="332.5" x2="533" y2="332.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="346.104">9.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="345.604">Occupation / Profession</tspan>
+  </text>
+  <g clip-path="url(#clip10_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="346.104">{{lookup $declaration 'mother.occupation'}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="358.5" x2="533" y2="358.5" stroke="#222222" />
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="373.88">Father&#x2019;s details / D&#xe9;tails du p&#xe8;re</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="392.104">10.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="391.604">Full name / Nom complet</tspan>
+  </text>
+  <g clip-path="url(#clip11_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="392.104">{{lookup $declaration 'father.firstname'}} {{lookup $declaration 'father.surname'}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="398.5" x2="533" y2="398.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="412.104">11.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="411.604">Date of birth / Date de naissance</tspan>
+  </text>
+  <g clip-path="url(#clip12_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      {{#ifCond (lookup $declaration 'father.dob') '!==' undefined }}
+      <tspan x="307" y="412.104">{{lookup $declaration 'father.dob'}}</tspan>
+      {{else}}
+      <tspan x="307" y="412.104">{{lookup $declaration 'father.age'}} {{#ifCond (lookup $declaration 'father.age') '!==' undefined }}years old{{/ifCond}}</tspan>
+      {{/ifCond}}
+    </text>
+  </g>
+  <line x1="65" y1="418.5" x2="533" y2="418.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="432.104">12.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="431.604">Resident at / Domicili&#xe9; &#xe0;</tspan>
+  </text>
+  <g clip-path="url(#clip13_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      {{#ifCond (lookup $declaration 'father.firstname') '!==' undefined }}
+        {{#ifCond (lookup $declaration 'father.addressSameAs') '===' 'YES'}}
+          <tspan x="307" y="432.104">{{ lookup ($lookup $declaration 'mother.address') 'district' }}{{ lookup ($lookup $declaration 'mother.address') 'district2' }}, {{ lookup ($lookup $declaration 'mother.address') 'province' }}{{ lookup ($lookup $declaration 'mother.address') 'state' }}, {{ lookup ($lookup $declaration 'mother.address') 'country' }}</tspan>
+        {{else}}
+          <tspan x="307" y="432.104">{{ lookup ($lookup $declaration 'father.address') 'district' }}{{ lookup ($lookup $declaration 'father.address') 'district2' }}, {{ lookup ($lookup $declaration 'father.address') 'province' }}{{ lookup ($lookup $declaration 'father.address') 'state' }}, {{ lookup ($lookup $declaration 'father.address') 'country' }}</tspan>
+        {{/ifCond}}
+      {{/ifCond}}
+    </text>
+  </g>
+  <line x1="65" y1="438.5" x2="533" y2="438.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="452.104">13.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="451.604">Nationality / Nationalit&#xe9;</tspan>
+  </text>
+  <g clip-path="url(#clip14_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="452.104">{{$lookup $declaration 'father.nationality'}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="458.5" x2="533" y2="458.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="472.104">14.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="471.604">Occupation / Profession</tspan>
+  </text>
+  <g clip-path="url(#clip15_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="472.104">{{lookup $declaration 'father.occupation'}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="484.5" x2="533" y2="484.5" stroke="#222222" />
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="499.88">Registration details / D&#xe9;tails d&#39;inscription</tspan>
+  </text>
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="518.104">15.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="517.604">Informant full name / Informant full name</tspan>
+  </text>
+  <g clip-path="url(#clip16_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="518.104">{{$lookup $declaration 'informant.firstname'}} {{$lookup $declaration 'informant.surname'}}</tspan>
+      <tspan x="307" y="528.104">{{$intl 'v2.constants.informant' ($lookup $declaration 'informant.relation')}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="536.5" x2="533" y2="536.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="550.104">16.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="549.604">Place of registration / Inscrit &#xe0;</tspan>
+  </text>
+  <g clip-path="url(#clip17_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="550.104">{{$location (lookup $state "createdAtLocation") 'district'}}, {{$location (lookup $state "createdAtLocation") 'province'}}, {{$location (lookup $state "createdAtLocation") 'country'}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="556.5" x2="533" y2="556.5" stroke="#ECECEC" />
+  <line x1="65" y1="556.5" x2="533" y2="556.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="570.104">17.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="569.604">Date of registration / Date d&#39;enregistrement</tspan>
+  </text>
+  <g clip-path="url(#clip18_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="570.104">{{$formatDate (lookup $state 'createdAt') "dd MMMM yyyy"}}</tspan>
+    </text>
+  </g>
+  <line x1="65" y1="576.5" x2="533" y2="576.5" stroke="#ECECEC" />
+  <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0px">
+    <tspan x="65" y="590.104">18.</tspan>
+  </text>
+  <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="600" letter-spacing="0px">
+    <tspan x="85" y="589.604">Registered by / Enregistr&#xe9; par</tspan>
+  </text>
+  <g clip-path="url(#clip19_946_2501)">
+    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
+      <tspan x="307" y="590.104">{{$findUserById (lookup $state 'createdBy') 'name'}}</tspan>
+    </text>
+  </g>
   <g xmlns="http://www.w3.org/2000/svg" opacity="0.15" clip-path="url(#background)">
-    <path d="M559.045 398.468C559.074 488.393 558.957 578.347 559.103 668.272C559.161 672.228 557.937 675.979 555.896 679.149C554.001 682.058 551.378 684.443 548.259 686.042L314.089 820.93C310.854 822.762 307.414 823.664 304.061 823.664C300.622 823.664 297.153 822.704 294.063 820.93L60.0098 686.159C56.8032 684.559 54.0922 682.145 52.1682 679.208C50.0985 675.979 48.8741 672.228 48.8741 668.243L48.9616 666.44L48.9033 397.421C48.845 393.814 49.8361 390.412 51.5269 387.474L51.5852 387.416C53.3342 384.391 55.8704 381.89 58.9021 380.116L293.917 244.734C297.153 242.902 300.622 242 303.945 242C307.385 242 310.883 242.96 313.944 244.734L549.046 380.145C552.34 382.036 554.876 384.769 556.596 387.881L556.654 387.939C558.374 391.139 559.219 394.803 559.045 398.468Z" fill="white"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M185.855 592.655H420.899L362.13 491.126L313.594 519.075L250.016 555.691L185.855 592.655Z" fill="#E2F5F4"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M362.13 491.126L420.898 592.655H538.406L362.13 491.126Z" fill="#038E86"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M362.129 491.127L538.404 592.656L415.941 381.163L245.088 479.61L313.592 519.076L362.129 491.127Z" fill="#E2F5F4"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M538.413 592.656L415.95 381.163L539.025 452.068L538.413 592.656Z" fill="#038E86"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M250.016 555.691L186.408 445.815L68.9301 513.491L68.9592 592.656H185.854L250.016 555.691Z" fill="#E2F5F4"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M186.408 445.815L250.015 555.691L313.593 519.075L245.089 479.61L186.408 445.815Z" fill="#038E86"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M186.408 445.816L245.089 479.61L415.943 381.193L539.018 452.098V397.45L303.974 262.039L68.9301 397.421L68.9592 513.463L186.408 445.816ZM303.974 387.62C287.416 387.62 274.007 374.242 274.007 357.752C274.007 341.233 287.416 327.854 303.974 327.854C320.503 327.854 333.941 341.233 333.941 357.752C333.912 374.242 320.503 387.62 303.974 387.62Z" fill="#EEEEEE"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M303.971 387.622C320.528 387.622 333.938 374.243 333.938 357.724C333.938 341.205 320.528 327.827 303.971 327.827C287.413 327.827 274.004 341.205 274.004 357.724C274.004 374.243 287.413 387.622 303.971 387.622Z" fill="#C86E00"/>
-    <path d="M545.693 397.769L545.751 668.213C545.751 670.656 544.41 672.808 542.428 673.972L307.355 809.412C305.227 810.663 302.661 810.575 300.65 809.412L65.606 674.001C63.3614 672.692 62.1662 670.307 62.2828 667.893L62.2245 397.449C62.2245 395.006 63.5654 392.854 65.5477 391.69L300.621 256.25C302.778 254.999 305.314 255.086 307.325 256.25L542.369 391.661C544.614 392.97 545.809 395.355 545.693 397.769ZM303.973 321.163C314.089 321.163 323.271 325.264 329.888 331.866C336.506 338.468 340.616 347.629 340.616 357.721C340.616 367.813 336.506 376.945 329.888 383.576C323.271 390.178 314.089 394.279 303.973 394.279C293.858 394.279 284.704 390.178 278.058 383.576C271.441 376.974 267.33 367.813 267.33 357.721C267.33 347.629 271.441 338.497 278.058 331.866L278.466 331.488C285.054 325.119 294.062 321.163 303.973 321.163ZM320.414 341.347C316.217 337.159 310.386 334.542 303.973 334.542C297.677 334.542 291.992 337.014 287.824 341.027L287.532 341.347C283.334 345.535 280.711 351.352 280.711 357.75C280.711 364.148 283.334 369.965 287.532 374.153C291.73 378.341 297.56 380.958 303.973 380.958C310.386 380.958 316.217 378.341 320.414 374.153C324.612 369.965 327.236 364.148 327.236 357.75C327.236 351.352 324.612 345.535 320.414 341.347ZM75.6339 661.582H532.371V599.344H75.6339V661.582ZM514.064 674.931H93.9698L149.094 706.69H458.969L514.064 674.931ZM380.378 509.332L424.745 585.995H513.452L380.378 509.332ZM409.295 585.995L359.681 500.229L210.807 585.995H409.295ZM204.656 464.02L252.463 546.616L300.242 519.104L204.656 464.02ZM240.891 553.276L183.988 454.917L75.6048 517.33L75.6339 585.995H184.105L240.891 553.276ZM75.6048 501.945L183.055 440.056C185.066 438.892 187.603 438.805 189.76 440.056L245.088 471.931L412.589 375.433C414.601 374.269 417.137 374.182 419.294 375.433L532.341 440.55V401.288L303.973 269.715L75.5756 401.288L75.6048 501.945ZM532.341 455.935L434.278 399.426L532.371 568.923L532.341 455.935ZM413.551 390.265L258.439 479.609L313.593 511.367L358.777 485.338C360.788 484.175 363.324 484.087 365.482 485.338L520.156 574.449L413.551 390.265ZM227.423 751.827H380.582L435.764 720.039H172.269L227.423 751.827ZM357.407 765.176H250.627L304.002 795.917L357.407 765.176Z" fill="white"/>
+    <path d="M560.248 419.659C560.278 510.844 560.16 602.058 560.308 693.243C560.367 697.253 559.125 701.058 557.055 704.272C555.132 707.221 552.47 709.639 549.306 711.261L311.736 848.038C308.453 849.896 304.963 850.81 301.562 850.81C298.072 850.81 294.553 849.837 291.418 848.038L53.9663 711.379C50.7132 709.757 47.9627 707.31 46.0108 704.331C43.9111 701.058 42.6689 697.253 42.6689 693.213L42.7577 691.385L42.6985 418.597C42.6394 414.941 43.6449 411.49 45.3602 408.512L45.4194 408.453C47.1938 405.386 49.7668 402.849 52.8425 401.05L291.27 263.772C294.553 261.914 298.072 261 301.444 261C304.934 261 308.483 261.973 311.588 263.772L550.105 401.08C553.446 402.997 556.019 405.769 557.764 408.924L557.823 408.983C559.568 412.227 560.426 415.943 560.248 419.659Z" fill="white"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M181.639 616.567H420.096L360.475 513.615L311.233 541.956L246.732 579.084L181.639 616.567Z" fill="#E2F5F4"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M360.474 513.615L420.096 616.567H539.31L360.474 513.615Z" fill="#038E86"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M360.473 513.616L539.309 616.567L415.067 402.112L241.732 501.938L311.232 541.956L360.473 513.616Z" fill="#E2F5F4"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M539.317 616.567L415.076 402.112L539.938 474.01L539.317 616.567Z" fill="#038E86"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M246.732 579.085L182.201 467.67L63.0162 536.294L63.0458 616.567H181.639L246.732 579.085Z" fill="#E2F5F4"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M182.2 467.67L246.731 579.085L311.233 541.956L241.733 501.938L182.2 467.67Z" fill="#038E86"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M182.201 467.67L241.734 501.938L415.068 402.142L539.931 474.04V418.627L301.474 281.319L63.0162 418.598L63.0458 536.265L182.201 467.67ZM301.474 408.659C284.675 408.659 271.071 395.094 271.071 378.373C271.071 361.622 284.675 348.056 301.474 348.056C318.242 348.056 331.876 361.622 331.876 378.373C331.846 395.094 318.242 408.659 301.474 408.659Z" fill="#EEEEEE"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M301.47 408.662C318.268 408.662 331.873 395.096 331.873 378.346C331.873 361.595 318.268 348.029 301.47 348.029C284.672 348.029 271.068 361.595 271.068 378.346C271.068 395.096 284.672 408.662 301.47 408.662Z" fill="#C86E00"/>
+    <path d="M546.703 418.95L546.762 693.183C546.762 695.66 545.401 697.842 543.39 699.022L304.903 836.359C302.744 837.627 300.142 837.539 298.101 836.359L59.6438 699.051C57.3665 697.724 56.154 695.306 56.2723 692.858L56.2131 418.626C56.2131 416.149 57.5736 413.966 59.5846 412.787L298.072 275.449C300.26 274.181 302.833 274.27 304.874 275.449L543.331 412.757C545.608 414.084 546.821 416.503 546.703 418.95ZM301.473 341.272C311.735 341.272 321.051 345.43 327.764 352.125C334.478 358.819 338.648 368.109 338.648 378.342C338.648 388.575 334.478 397.835 327.764 404.559C321.051 411.253 311.735 415.411 301.473 415.411C291.21 415.411 281.924 411.253 275.181 404.559C268.468 397.865 264.298 388.575 264.298 378.342C264.298 368.109 268.468 358.849 275.181 352.125L275.595 351.741C282.279 345.283 291.417 341.272 301.473 341.272ZM318.153 361.739C313.894 357.492 307.979 354.838 301.473 354.838C295.085 354.838 289.318 357.345 285.089 361.414L284.793 361.739C280.534 365.985 277.872 371.883 277.872 378.371C277.872 384.859 280.534 390.757 284.793 395.004C289.051 399.251 294.966 401.905 301.473 401.905C307.979 401.905 313.894 399.251 318.153 395.004C322.411 390.757 325.073 384.859 325.073 378.371C325.073 371.883 322.411 365.985 318.153 361.739ZM69.8173 686.459H533.187V623.349H69.8173V686.459ZM514.615 699.995H88.4195L144.344 732.199H458.719L514.615 699.995ZM378.987 532.076L423.999 609.813H513.993L378.987 532.076ZM408.325 609.813L357.989 522.845L206.953 609.813H408.325ZM200.713 486.13L249.215 569.883L297.687 541.985L200.713 486.13ZM237.474 576.636L179.745 476.899L69.7877 540.186L69.8173 609.813H179.863L237.474 576.636ZM69.7877 524.585L178.799 461.829C180.839 460.65 183.412 460.561 185.601 461.829L241.733 494.151L411.666 396.302C413.707 395.122 416.28 395.033 418.468 396.302L533.158 462.331V422.519L301.473 289.104L69.7582 422.519L69.7877 524.585ZM533.158 477.931L433.67 420.631L533.187 592.502L533.158 477.931ZM412.642 411.342L255.278 501.937L311.232 534.14L357.072 507.746C359.113 506.567 361.686 506.478 363.874 507.746L520.795 598.105L412.642 411.342ZM223.811 777.968H379.194L435.178 745.735H167.856L223.811 777.968ZM355.682 791.504H247.352L301.502 822.675L355.682 791.504Z" fill="white"/>
   </g>
   <defs>
     <clipPath id="background">
-      <rect width="482" height="357" fill="white" transform="translate(63 242)"/>
+      <rect width="489" height="362" fill="white" transform="translate(57 261)"/>
     </clipPath>
-    <clipPath id="clip0_1157_5003">
-      <path d="M61.9999 761.59H533.42V805.24H61.9999V761.59Z" fill="white" />
+    <clipPath id="clip0_946_2501">
+      <path d="M56 780H541V819H56V780Z" fill="white" />
     </clipPath>
-    <clipPath id="clip1_1157_5003">
-      <rect width="469.48" height="62.08" fill="white" transform="translate(62.97 45.7305)" />
+    <clipPath id="clip1_946_2501">
+      <rect width="484" height="46.8246" fill="white" transform="translate(57 31)" />
     </clipPath>
-    <clipPath id="clip2_1157_5003">
-      <rect width="190.321" height="66" fill="white" transform="translate(321.759 646.161)" />
+    <clipPath id="clip2_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 139)" />
     </clipPath>
-    <clipPath id="clip3_1157_5003">
-      <rect x="61.9999" y="197.05" width="469.48" height="389.94" rx="1.94" fill="white" />
+    <clipPath id="clip3_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 159)" />
     </clipPath>
-    <clipPath id="clip4_1157_5003">
-      <rect width="222.13" height="30" fill="white" transform="translate(289.95 210.87)" />
+    <clipPath id="clip4_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 179)" />
     </clipPath>
-    <clipPath id="clip5_1157_5003">
-      <rect width="222.13" height="30" fill="white" transform="translate(289.95 252.51)" />
+    <clipPath id="clip5_946_2501">
+      <rect width="226" height="24" fill="white" transform="translate(307 199)" />
     </clipPath>
-    <clipPath id="clip6_1157_5003">
-      <rect width="222.13" height="30" fill="white" transform="translate(289.95 294.15)" />
+    <clipPath id="clip6_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 257)" />
     </clipPath>
-    <clipPath id="clip7_1157_5003">
-      <rect width="222.13" height="30" fill="white" transform="translate(289.95 335.79)" />
+    <clipPath id="clip7_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 277)" />
     </clipPath>
-    <clipPath id="clip8_1157_5003">
-      <rect width="222.13" height="30" fill="white" transform="translate(289.95 377.43)" />
+    <clipPath id="clip8_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 297)" />
     </clipPath>
-    <clipPath id="clip9_1157_5003">
-      <rect width="222.13" height="30" fill="white" transform="translate(289.95 419.07)" />
+    <clipPath id="clip9_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 317)" />
     </clipPath>
-    <clipPath id="clip10_1157_5003">
-      <rect width="222.13" height="30" fill="white" transform="translate(289.95 460.71)" />
+    <clipPath id="clip10_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 337)" />
     </clipPath>
-    <clipPath id="clip11_1157_5003">
-      <rect width="222.13" height="30" fill="white" transform="translate(289.95 502.35)" />
+    <clipPath id="clip11_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 383)" />
     </clipPath>
-    <clipPath id="clip12_1157_5003">
-      <rect width="222.13" height="30" fill="white" transform="translate(289.95 543.99)" />
+    <clipPath id="clip12_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 403)" />
+    </clipPath>
+    <clipPath id="clip13_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 423)" />
+    </clipPath>
+    <clipPath id="clip14_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 443)" />
+    </clipPath>
+    <clipPath id="clip15_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 463)" />
+    </clipPath>
+    <clipPath id="clip16_946_2501">
+      <rect width="226" height="24" fill="white" transform="translate(307 509)" />
+    </clipPath>
+    <clipPath id="clip17_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 541)" />
+    </clipPath>
+    <clipPath id="clip18_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 561)" />
+    </clipPath>
+    <clipPath id="clip19_946_2501">
+      <rect width="226" height="12" fill="white" transform="translate(307 581)" />
     </clipPath>
   </defs>
-  <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
-  <!-- #ifCond printInAdvance '!==' true}} -->
-    <image width="140" height="70" xlink:href="{{$findUserById (lookup $state "updatedBy") "signatureFilename"}}" x="347" y="644"></image>
-  <!-- /ifCond}} -->
+  <image x="506.287" y="784" width="34.7131" height="35" xlink:href="{{qrCode}}" />
+  <image id="image0_946_2501" x="331.453" y="670" width="194.513" height="68" xlink:href="{{$findUserById (lookup $state "updatedBy") "signatureFilename"}}" />
 </svg>
