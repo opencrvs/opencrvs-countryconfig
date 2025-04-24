@@ -4,7 +4,6 @@ import {
   continueForm,
   drawSignature,
   expectAddress,
-  formatDateObjectTo_ddMMMMyyyy,
   formatDateObjectTo_dMMMMyyyy,
   formatName,
   getAction,
@@ -616,7 +615,7 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * - Child's date of birth
        */
       await expect(page.locator('#child-content #Date')).toContainText(
-        formatDateObjectTo_ddMMMMyyyy(declaration.child.birthDate)
+        formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
       )
 
       /*

@@ -4,7 +4,6 @@ import {
   continueForm,
   drawSignature,
   expectAddress,
-  formatDateObjectTo_ddMMMMyyyy,
   formatDateObjectTo_dMMMMyyyy,
   formatName,
   getAction,
@@ -550,7 +549,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
        * - Child's date of birth
        */
       await expect(page.locator('#child-content #Date')).toContainText(
-        formatDateObjectTo_ddMMMMyyyy(declaration.child.birthDate)
+        formatDateObjectTo_dMMMMyyyy(declaration.child.birthDate)
       )
 
       /*
@@ -622,7 +621,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
        * - Mother's date of birth
        */
       await expect(page.locator('#mother-content #Date')).toContainText(
-        formatDateObjectTo_ddMMMMyyyy(declaration.mother.birthDate)
+        formatDateObjectTo_dMMMMyyyy(declaration.mother.birthDate)
       )
 
       /*
@@ -688,7 +687,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
        * - Father's date of birth
        */
       await expect(page.locator('#father-content #Date')).toContainText(
-        formatDateObjectTo_ddMMMMyyyy(declaration.father.birthDate)
+        formatDateObjectTo_dMMMMyyyy(declaration.father.birthDate)
       )
 
       /*
