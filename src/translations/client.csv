@@ -2330,6 +2330,7 @@ v2.advancedSearch.form.recordStatusAchived,Option for form field: status of reco
 v2.advancedSearch.form.recordStatusAny,Option for form field: status of record,Any status,Tout statut
 v2.advancedSearch.form.recordStatusCertified,Option for form field: status of record,Certified,Agréé
 v2.advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested,Correction demandée
+v2.advancedSearch.form.recordStatusCreated, Option for form field: status of record,Draft,Brouillon
 v2.advancedSearch.form.recordStatusInReview,Option for form field: status of record,In review,En cours d'examen
 v2.advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress,En cours
 v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit

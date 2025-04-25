@@ -699,6 +699,14 @@ const statusOptions = [
       description: 'Option for form field: status of record',
       id: 'v2.advancedSearch.form.recordStatusValidated'
     }
+  },
+  {
+    value: 'CREATED',
+    label: {
+      defaultMessage: 'Draft',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusCreated'
+    }
   }
 ]
 
