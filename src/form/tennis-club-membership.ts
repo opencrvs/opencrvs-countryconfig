@@ -18,19 +18,10 @@ import {
   FieldType,
   PageTypes
 } from '@opencrvs/toolkit/events'
-import {
-  event,
-  user,
-  or,
-  and,
-  not,
-  field,
-  eventField
-} from '@opencrvs/toolkit/conditionals'
+import { field, eventField } from '@opencrvs/toolkit/conditionals'
 
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
-import { SCOPES } from '@opencrvs/toolkit/scopes'
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
@@ -854,16 +845,7 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.declare.label'
       },
-      review: TENNIS_CLUB_DECLARATION_REVIEW,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            not(event.hasAction(ActionType.DECLARE)),
-            user.hasScope(SCOPES.RECORD_DECLARE)
-          )
-        }
-      ]
+      review: TENNIS_CLUB_DECLARATION_REVIEW
     },
     {
       type: ActionType.DELETE,
@@ -872,16 +854,7 @@ export const tennisClubMembershipEvent = defineConfig({
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.delete.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            not(event.hasAction(ActionType.DECLARE)),
-            user.hasScope(SCOPES.RECORD_DECLARE)
-          )
-        }
-      ]
+      }
     },
     {
       type: ActionType.VALIDATE,
@@ -891,19 +864,6 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.validate.label'
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            event.hasAction(ActionType.DECLARE),
-            not(event.hasAction(ActionType.VALIDATE)),
-            or(
-              user.hasScope(SCOPES.RECORD_SUBMIT_FOR_APPROVAL),
-              user.hasScope(SCOPES.RECORD_REGISTER)
-            )
-          )
-        }
-      ],
       review: TENNIS_CLUB_DECLARATION_REVIEW
     },
     {
@@ -914,19 +874,6 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.register.label'
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            or(
-              event.hasAction(ActionType.VALIDATE),
-              and(event.hasAction('DECLARE'), user.hasScope('register'))
-            ),
-            not(event.hasAction(ActionType.REGISTER)),
-            user.hasScope(SCOPES.RECORD_REGISTER)
-          )
-        }
-      ],
       review: TENNIS_CLUB_DECLARATION_REVIEW
     },
     {
@@ -937,15 +884,6 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.collect-certificate.label'
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            event.hasAction(ActionType.REGISTER),
-            user.hasScope(SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES)
-          )
-        }
-      ],
       printForm: TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM
     },
     {
@@ -956,15 +894,6 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.requestCorrection.label'
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            event.hasAction(ActionType.REGISTER),
-            user.hasScope(SCOPES.RECORD_REGISTRATION_REQUEST_CORRECTION)
-          )
-        }
-      ],
       onboardingForm: [
         {
           id: 'correction-requester',
