@@ -14,7 +14,7 @@ import {
   defineConfig,
   field
 } from '@opencrvs/toolkit/events'
-import { not, event } from '@opencrvs/toolkit/conditionals'
+import { not } from '@opencrvs/toolkit/conditionals'
 
 import {
   BIRTH_DECLARATION_FORM,
@@ -75,6 +75,20 @@ export const birthEvent = defineConfig({
           {
             type: ConditionalType.SHOW,
             conditional: not(field('child.address.privateHome').isFalsy())
+          }
+        ]
+      },
+      {
+        fieldId: 'child.address.other',
+        emptyValueMessage: {
+          defaultMessage: 'No place of birth',
+          description: 'This is shown when there is no child information',
+          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: not(field('child.address.other').isFalsy())
           }
         ]
       },
