@@ -15,6 +15,7 @@ import {
   ConditionalType,
   defineFormPage,
   FieldType,
+  InferredInput,
   never,
   or,
   TranslationConfig
@@ -37,7 +38,10 @@ export const InformantType = {
   SISTER: 'SISTER',
   LEGAL_GUARDIAN: 'LEGAL_GUARDIAN'
 } as const
+
 export type InformantTypeKey = keyof typeof InformantType
+
+const informantTypes = Object.values(InformantType)
 
 const PHONE_NUMBER_REGEX = '^0(7|9)[0-9]{8}$'
 const informantMessageDescriptors = {
@@ -98,45 +102,12 @@ export const informantOtherThanParent = and(
   not(field('informant.relation').isFalsy())
 )
 
-export const informant = defineFormPage({
-  id: `${PersonType.informant}`,
-  title: {
-    defaultMessage: "Informant's details",
-    description: 'Form section title for informants details',
-    id: 'v2.form.section.informant.title'
-  },
-  fields: [
+const getInformantCommonFields = (
+  informantType: InformantTypeKey
+): InferredInput[] => {
+  return [
     {
-      id: `${PersonType.informant}.relation`,
-      type: FieldType.SELECT,
-      required: true,
-      label: {
-        defaultMessage: 'Relationship to child',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.informant.field.relation.label'
-      },
-      options: birthInformantTypeOptions
-    },
-    {
-      id: `${PersonType.informant}.other.relation`,
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'Relationship to child',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.informant.field.other.relation.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: field('informant.relation').isEqualTo(
-            InformantType.OTHER
-          )
-        }
-      ]
-    },
-    {
-      id: `${PersonType.informant}.firstname`,
+      id: `${PersonType.informant}.${informantType}.firstname`,
       configuration: { maxLength: MAX_NAME_LENGTH },
       type: FieldType.TEXT,
       required: true,
@@ -148,12 +119,15 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
+          )
         }
       ]
     },
     {
-      id: `${PersonType.informant}.surname`,
+      id: `${PersonType.informant}.${informantType}.surname`,
       configuration: { maxLength: MAX_NAME_LENGTH },
       type: FieldType.TEXT,
       required: true,
@@ -165,13 +139,16 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
+          )
         }
       ]
     },
     {
-      id: 'informant.dob',
-      type: 'DATE',
+      id: `${PersonType.informant}.${informantType}.dob`,
+      type: FieldType.DATE,
       required: true,
       validation: [
         {
@@ -180,7 +157,9 @@ export const informant = defineFormPage({
             description: 'This is the error message for invalid date',
             id: `v2.event.birth.action.declare.form.section.person.field.dob.error`
           },
-          validator: field('informant.dob').isBefore().now()
+          validator: field(`${PersonType.informant}.${informantType}.dob`)
+            .isBefore()
+            .now()
         },
         {
           message: {
@@ -189,7 +168,9 @@ export const informant = defineFormPage({
               'This is the error message for a birth date after child`s birth date',
             id: `v2.event.birth.action.declare.form.section.person.dob.afterChild`
           },
-          validator: field('informant.dob').isBefore().date(field('child.dob'))
+          validator: field(`${PersonType.informant}.${informantType}.dob`)
+            .isBefore()
+            .date(field('child.dob'))
         }
       ],
       label: {
@@ -201,14 +182,19 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            not(field(`${PersonType.informant}.dobUnknown`).isEqualTo(true)),
-            informantOtherThanParent
+            not(
+              field(
+                `${PersonType.informant}.${informantType}.dobUnknown`
+              ).isEqualTo(true)
+            ),
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
           )
         }
       ]
     },
     {
-      id: `${PersonType.informant}.dobUnknown`,
+      id: `${PersonType.informant}.${informantType}.dobUnknown`,
       type: FieldType.CHECKBOX,
       label: {
         defaultMessage: 'Exact date of birth unknown',
@@ -218,7 +204,10 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
+          )
         },
         {
           type: ConditionalType.DISPLAY_ON_REVIEW,
@@ -227,7 +216,7 @@ export const informant = defineFormPage({
       ]
     },
     {
-      id: `${PersonType.informant}.age`,
+      id: `${PersonType.informant}.${informantType}.age`,
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -246,14 +235,17 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`${PersonType.informant}.dobUnknown`).isEqualTo(true),
-            informantOtherThanParent
+            field(
+              `${PersonType.informant}.${informantType}.dobUnknown`
+            ).isEqualTo(true),
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
           )
         }
       ]
     },
     {
-      id: `${PersonType.informant}.nationality`,
+      id: `${PersonType.informant}.${informantType}.nationality`,
       type: FieldType.COUNTRY,
       required: true,
       label: {
@@ -264,13 +256,16 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
+          )
         }
       ],
       defaultValue: 'FAR'
     },
     {
-      id: `${PersonType.informant}.idType`,
+      id: `${PersonType.informant}.${informantType}.idType`,
       type: FieldType.SELECT,
       required: true,
       label: {
@@ -282,12 +277,15 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
+          )
         }
       ]
     },
     {
-      id: 'informant.nid',
+      id: `${PersonType.informant}.${informantType}.nid`,
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -299,13 +297,16 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field('informant.idType').isEqualTo(IdType.NATIONAL_ID),
-            informantOtherThanParent
+            field(`${PersonType.informant}.${informantType}.idType`).isEqualTo(
+              IdType.NATIONAL_ID
+            ),
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
           )
         }
       ],
       validation: [
-        nationalIdValidator('informant.nid'),
+        nationalIdValidator(`${PersonType.informant}.${informantType}.nid`),
         {
           message: {
             defaultMessage: 'National id must be unique',
@@ -313,14 +314,22 @@ export const informant = defineFormPage({
             id: 'v2.event.birth.action.declare.form.nid.unique'
           },
           validator: and(
-            not(field('informant.nid').isEqualTo(field('mother.nid'))),
-            not(field('informant.nid').isEqualTo(field('father.nid')))
+            not(
+              field(`${PersonType.informant}.${informantType}.nid`).isEqualTo(
+                field('mother.nid')
+              )
+            ),
+            not(
+              field(`${PersonType.informant}.${informantType}.nid`).isEqualTo(
+                field('father.nid')
+              )
+            )
           )
         }
       ]
     },
     {
-      id: `${PersonType.informant}.passport`,
+      id: `${PersonType.informant}.${informantType}.passport`,
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -332,14 +341,17 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`${PersonType.informant}.idType`).isEqualTo(IdType.PASSPORT),
-            informantOtherThanParent
+            field(`${PersonType.informant}.${informantType}.idType`).isEqualTo(
+              IdType.PASSPORT
+            ),
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
           )
         }
       ]
     },
     {
-      id: `${PersonType.informant}.brn`,
+      id: `${PersonType.informant}.${informantType}.brn`,
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -351,7 +363,7 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`${PersonType.informant}.idType`).isEqualTo(
+            field(`${PersonType.informant}.${informantType}.idType`).isEqualTo(
               IdType.BIRTH_REGISTRATION_NUMBER
             ),
             informantOtherThanParent
@@ -387,7 +399,7 @@ export const informant = defineFormPage({
       ]
     },
     {
-      id: 'informant.address',
+      id: `${PersonType.informant}.${informantType}.address`,
       type: FieldType.ADDRESS,
       hideLabel: true,
       label: {
@@ -398,7 +410,10 @@ export const informant = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
+          )
         }
       ],
       defaultValue: {
@@ -421,7 +436,7 @@ export const informant = defineFormPage({
       ]
     },
     {
-      id: 'informant.phoneNo',
+      id: `${PersonType.informant}.${informantType}.phoneNo`,
       type: FieldType.TEXT,
       required: false,
       label: {
@@ -439,14 +454,22 @@ export const informant = defineFormPage({
             id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.error'
           },
           validator: or(
-            field('informant.phoneNo').matches(PHONE_NUMBER_REGEX),
-            field('informant.phoneNo').isFalsy()
+            field(`${PersonType.informant}.${informantType}.phoneNo`).matches(
+              PHONE_NUMBER_REGEX
+            ),
+            field(`${PersonType.informant}.${informantType}.phoneNo`).isFalsy()
           )
+        }
+      ],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('informant.relation').isEqualTo(informantType)
         }
       ]
     },
     {
-      id: 'informant.email',
+      id: `${PersonType.informant}.${informantType}.email`,
       type: FieldType.EMAIL,
       required: true,
       label: {
@@ -456,7 +479,54 @@ export const informant = defineFormPage({
       },
       configuration: {
         maxLength: 255
-      }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('informant.relation').isEqualTo(informantType)
+        }
+      ]
     }
+  ]
+}
+
+export const informant = defineFormPage({
+  id: PersonType.informant,
+  title: {
+    defaultMessage: "Informant's details",
+    description: 'Form section title for informants details',
+    id: 'v2.form.section.informant.title'
+  },
+  fields: [
+    {
+      id: `${PersonType.informant}.relation`,
+      type: FieldType.SELECT,
+      required: true,
+      label: {
+        defaultMessage: 'Relationship to child',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.informant.field.relation.label'
+      },
+      options: birthInformantTypeOptions
+    },
+    {
+      id: `${PersonType.informant}.${InformantType.OTHER}.relation`,
+      type: FieldType.TEXT,
+      required: true,
+      label: {
+        defaultMessage: 'Relationship to child',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.informant.field.other.relation.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('informant.relation').isEqualTo(
+            InformantType.OTHER
+          )
+        }
+      ]
+    },
+    ...informantTypes.flatMap(getInformantCommonFields)
   ]
 })
