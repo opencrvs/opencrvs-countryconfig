@@ -378,7 +378,10 @@ const getInformantCommonFields = (
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
+          )
         }
       ]
     },
@@ -394,7 +397,10 @@ const getInformantCommonFields = (
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
+          )
         }
       ]
     },
@@ -431,7 +437,10 @@ const getInformantCommonFields = (
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
+          conditional: and(
+            informantOtherThanParent,
+            field('informant.relation').isEqualTo(informantType)
+          )
         }
       ]
     },
