@@ -822,6 +822,11 @@ function registrationStatementSimplified(registrationStatementContext) {
     relationMap[
       (_a = informantType) === null || _a === void 0 ? void 0 : _a.toLowerCase()
     ]
+  const isNotInformantLegalFather = !isInformantLegalFather(
+    informantType,
+    motherMaritalStatus,
+    birthFatherFatherHasFormallyRecognisedChild
+  )
   return joinValuesWith(
     __spreadArray(
       __spreadArray(
@@ -843,13 +848,8 @@ function registrationStatementSimplified(registrationStatementContext) {
                 informantFirstName
               ]) + ',',
           (informantType === 'FATHER' &&
-          !isInformantLegalFather(
-            informantType,
-            motherMaritalStatus,
-            birthFatherFatherHasFormallyRecognisedChild
-          )
-            ? 'mpanolotra'
-            : informantTypeMapped || 'mpanolotra') + ','
+            isNotInformantLegalFather ? ''
+            : (informantTypeMapped ? informantTypeMapped + ',' : ''))
         ],
         isInformantMotherOrFather(
           informantType,
@@ -934,6 +934,11 @@ function registrationStatement() {
         : this.registrar.date,
       'Africa/Nairobi'
     )
+    const informantRelationMapped = relationMap[
+      (_a = this.informantType) === null || _a === void 0
+        ? void 0
+        : _a.toLowerCase()
+    ]
     return joinValuesWith(
       __spreadArray(
         __spreadArray(
@@ -950,11 +955,7 @@ function registrationStatement() {
                   this.informantFamilyName,
                   this.informantFirstName
                 ]) + ',',
-            (relationMap[
-              (_a = this.informantType) === null || _a === void 0
-                ? void 0
-                : _a.toLowerCase()
-            ] || 'mpanolotra') + ','
+            (informantRelationMapped ? informantRelationMapped + ',' : '')
           ],
           isInformantMotherOrFather(this.informantType)
             ? []
