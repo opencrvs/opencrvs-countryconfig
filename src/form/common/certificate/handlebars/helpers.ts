@@ -479,9 +479,11 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             this.informantFamilyName,
             this.informantFirstName
           ]) + ',',
-      (this.informantType === 'FATHER' && !isInformantLegalFather(this)
-        ? 'mpanolotra'
-        : informantTypeMapped || 'mpanolotra') + ',',
+      this.informantType === 'FATHER' && !isInformantLegalFather(this)
+        ? ''
+        : informantTypeMapped
+        ? informantTypeMapped + ','
+        : '',
       ...(isInformantMotherOrFather(this)
         ? []
         : [

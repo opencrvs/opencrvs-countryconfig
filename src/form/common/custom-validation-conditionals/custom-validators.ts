@@ -157,7 +157,7 @@ export function isFatherRecognitionDocNeeded() {
     )
     const isDocProvided = $draft?.documents?.uploadDocForFather?.length
     const isBirthRecognition =
-      $draft.father.fatherHasFormallyRecognisedChild == 'true'
+      $draft?.father?.fatherHasFormallyRecognisedChild == 'true'
 
     if (isBirthRecognition && !isDocProvided) {
       return {
