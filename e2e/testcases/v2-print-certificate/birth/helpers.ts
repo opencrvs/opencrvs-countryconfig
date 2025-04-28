@@ -1,5 +1,5 @@
-import { Page, expect } from '@playwright/test'
-import { Declaration } from './data/birth-declaration'
+import { Page } from '@playwright/test'
+import { Declaration } from '../../v2-test-data/birth-declaration'
 import { ensureAssigned, selectAction } from '../../../v2-utils'
 
 export async function selectCertificationType(page: Page, type: string) {
@@ -13,10 +13,6 @@ export async function selectCertificationType(page: Page, type: string) {
 export async function selectRequesterType(page: Page, type: string) {
   await page.locator('#collector____requesterId').click()
   await page.getByText(type, { exact: true }).click()
-}
-
-export async function expectInUrl(page: Page, assertionString: string) {
-  await expect(page.url().includes(assertionString)).toBeTruthy()
 }
 
 export async function navigateToCertificatePrintAction(

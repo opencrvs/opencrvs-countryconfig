@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid'
-import { GATEWAY_HOST } from '../../../../constants'
+import { GATEWAY_HOST } from '../../constants'
 import { faker } from '@faker-js/faker'
 import fs from 'fs'
 import path from 'path'
-import { getAllLocations, getLocationIdByName } from '../../../birth/helpers'
+import { getAllLocations, getLocationIdByName } from '../birth/helpers'
 import { createClient } from '@opencrvs/toolkit/api'
 import { ActionDocument, AddressType } from '@opencrvs/toolkit/events'
 

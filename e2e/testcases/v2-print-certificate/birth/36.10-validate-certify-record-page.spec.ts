@@ -1,8 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
-import { Declaration } from './data/birth-declaration'
-import { selectAction } from '../../../v2-utils'
+import { Declaration } from '../../v2-test-data/birth-declaration'
 import { loginToV2 } from '../../../helpers'
-import { createDeclaration } from './data/birth-declaration'
+import { createDeclaration } from '../../v2-test-data/birth-declaration'
 import { CREDENTIALS } from '../../../constants'
 import { getToken } from '../../../helpers'
 import {
@@ -10,10 +9,12 @@ import {
   selectRequesterType
 } from './helpers'
 import { selectCertificationType } from './helpers'
+import { expectInUrl } from '../../../v2-utils'
 
 test.describe.serial('10.0 Validate "Review" page', () => {
   let declaration: Declaration
   let page: Page
+  let eventId: string
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
@@ -22,6 +23,7 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     )
     const res = await createDeclaration(token)
     declaration = res.declaration
+    eventId = res.eventId
     page = await browser.newPage()
     await loginToV2(page)
 
@@ -54,8 +56,19 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     await expect(page.locator('#confirm-print-modal')).toBeHidden()
   })
 
-  test('10.3 click print button, user will navigate to a new tab from where user can download PDF', async () => {
+  test('10.3 Click print button, user will navigate to a new tab from where user can download PDF', async () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
+
+    const popupPromise = page.waitForEvent('popup')
     await page.getByRole('button', { name: 'Print', exact: true }).click()
+    const popup = await popupPromise
+    const downloadPromise = popup.waitForEvent('download')
+    const download = await downloadPromise
+
+    // Check that the popup URL contains PDF content
+    await expect(popup.url()).toBe('about:blank')
+    await expect(download.suggestedFilename()).toMatch(/^.*\.pdf$/)
+
+    await expectInUrl(page, `/events/overview/${eventId}`)
   })
 })
