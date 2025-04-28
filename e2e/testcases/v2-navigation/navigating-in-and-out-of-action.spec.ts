@@ -69,10 +69,9 @@ test.describe.serial('Navigating in and out of action', () => {
     await page.getByRole('button', { name: 'Yes, print certificate' }).click()
     await page.getByRole('button', { name: 'Print', exact: true }).click()
 
-    await expectInUrl(
-      page,
-      `/events/overview/772d0471-3adf-407e-829d-851a8da4b4e1/${eventId}`
-    )
+    // Wait for PDF the load and the page to be redirected to the overview page
+    await page.waitForURL(`**/events/overview/${eventId}`)
+    await expectInUrl(page, `/events/overview/${eventId}`)
   })
 
   test('Browser back button should take user to the front page instead of action flow', async () => {
@@ -82,9 +81,6 @@ test.describe.serial('Navigating in and out of action', () => {
 
   test('Browser forward button should take user back to the event overview page', async () => {
     await page.goForward()
-    await expectInUrl(
-      page,
-      `/events/overview/772d0471-3adf-407e-829d-851a8da4b4e1/${eventId}`
-    )
+    await expectInUrl(page, `/events/overview/${eventId}`)
   })
 })
