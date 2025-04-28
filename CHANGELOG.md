@@ -2,6 +2,10 @@
 
 ## 1.6.4
 
+### Breaking changes
+
+- Limit year past record `LIMIT_YEAR_PAST_RECORDS` forcing date of birth to start from the year 1900 has been addressed [#9326](https://github.com/opencrvs/opencrvs-core/pull/9326)
+
 ## 1.6.3
 
 ### Breaking changes
