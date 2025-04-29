@@ -122,7 +122,8 @@ export async function createDeclaration(
     eventId: eventId,
     transactionId: uuidv4(),
     declaration,
-    annotation
+    annotation,
+    keepAssignment: true
   })
 
   await client.event.actions.validate.request.mutate({
@@ -130,7 +131,8 @@ export async function createDeclaration(
     transactionId: uuidv4(),
     declaration,
     annotation,
-    duplicates: []
+    duplicates: [],
+    keepAssignment: true
   })
 
   const response = await client.event.actions.register.request.mutate({
