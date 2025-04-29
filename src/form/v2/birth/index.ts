@@ -112,12 +112,6 @@ export const birthEvent = defineConfig({
       }
     ]
   },
-  workqueues: [
-    {
-      id: 'all',
-      filters: []
-    }
-  ],
   actions: [
     {
       type: ActionType.DECLARE,
