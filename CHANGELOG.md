@@ -22,6 +22,11 @@ https://github.com/opencrvs/opencrvs-countryconfig/pull/393
     ...otherProp
   }
   ```
+## 1.7.1
+
+### Bug fixes
+- "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
+- Use yarn cache in test workflow & read the version to use from .nvmrc
 
 ## 1.7.0
 
@@ -181,11 +186,7 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 
 ## 1.6.2
 
-### Bug fixes
-- "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
-- Use yarn cache in test workflow & read the version to use from .nvmrc
-
-## 1.6.1 Release candidate
+## 1.6.1
 
 ### Bug fixes
 
