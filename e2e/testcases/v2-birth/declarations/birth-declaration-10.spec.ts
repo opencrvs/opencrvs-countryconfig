@@ -199,7 +199,8 @@ test.describe.serial('10. Birth declaration case - 10', () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
       await page
         .getByRole('button', {
-          name: formatName(declaration.child.name)
+          name: formatName(declaration.child.name),
+          exact: true
         })
         .click()
       await page.getByRole('button', { name: 'Action', exact: true }).click()
