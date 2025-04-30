@@ -2,6 +2,10 @@
 
 ## 1.6.4
 
+### Bug fixes
+
+- Query the location tree directly from the config service to improve performance for large datasets
+
 ## 1.6.3
 
 ### Breaking changes
