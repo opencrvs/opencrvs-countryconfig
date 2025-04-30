@@ -253,6 +253,11 @@ services:
         tag: 'mongo-on-update'
   # Configure redis
   redis:
+    environment:
+      - VALKEY_PASSWORD=false
+      - VALKEY_ACLFILE=/run/secrets/redis-acl.{{STACK}}.{{ts}}
+    secrets:
+      - redis-acl.{{STACK}}.{{ts}}
     networks:
       - overlay_net
     deploy:
@@ -631,6 +636,8 @@ services:
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
+      - REDIS_USERNAME=${AUTH_REDIS_USERNAME}
+      - REDIS_PASSWORD=${AUTH_REDIS_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -728,6 +735,8 @@ services:
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
       - COUNTRY=${COUNTRY:-FAR}
+      - REDIS_USERNAME=${GATEWAY_REDIS_USERNAME}
+      - REDIS_PASSWORD=${GATEWAY_REDIS_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -761,6 +770,8 @@ services:
       - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - REDIS_USERNAME=${WORKFLOW_REDIS_USERNAME}
+      - REDIS_PASSWORD=${WORKFLOW_REDIS_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=false'
@@ -955,6 +966,8 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - REDIS_USERNAME=${WEBHOOKS_REDIS_USERNAME}
+      - REDIS_PASSWORD=${WEBHOOKS_REDIS_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -1021,6 +1034,8 @@ services:
         constraints:
           - node.labels.data1 == true
 secrets:
+  redis-acl.{{STACK}}.{{ts}}:
+    external: true
   jwt-public-key.{{ts}}:
     external: true
   jwt-private-key.{{ts}}:
