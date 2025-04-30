@@ -74,6 +74,9 @@ test.describe.serial('8. Validate declaration review page', () => {
       address: 'Same as mother'
     }
   }
+
+  let comment = faker.lorem.sentence()
+
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
     await loginToV2(page, CREDENTIALS.FIELD_AGENT)
@@ -851,7 +854,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     })
 
     test('8.1.6 Fill up informant signature', async () => {
-      await page.locator('#review____comment').fill(faker.lorem.sentence())
+      await page.locator('#review____comment').fill(comment)
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
@@ -1132,8 +1135,20 @@ test.describe.serial('8. Validate declaration review page', () => {
       test.skip('Skipped for now', async () => {})
     })
 
-    test('8.2.6 Add signature and comment', async () => {
-      await page.locator('#review____comment').fill(faker.lorem.sentence())
+    test('8.2.6 Validate previous signature and comment, add new signature and comment', async () => {
+      await expect(page.locator('#review____comment')).toContainText(comment)
+      await expect(page.getByAltText('Upload Signature')).toBeVisible()
+
+      comment = faker.lorem.sentence()
+
+      await page.locator('#review____comment').clear()
+      await page.locator('#review____comment').fill(comment)
+
+      await page
+        .locator('#review____signature-form-input')
+        .getByText('Delete')
+        .click()
+
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
@@ -1428,8 +1443,20 @@ test.describe.serial('8. Validate declaration review page', () => {
       test.skip('Skipped for now', async () => {})
     })
 
-    test('8.3.6 Add signature and comment', async () => {
-      await page.locator('#review____comment').fill(faker.lorem.sentence())
+    test('8.3.6 Validate previous signature and comment, add new signature and comment', async () => {
+      await expect(page.locator('#review____comment')).toContainText(comment)
+      await expect(page.getByAltText('Upload Signature')).toBeVisible()
+
+      comment = faker.lorem.sentence()
+
+      await page.locator('#review____comment').clear()
+      await page.locator('#review____comment').fill(comment)
+
+      await page
+        .locator('#review____signature-form-input')
+        .getByText('Delete')
+        .click()
+
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
