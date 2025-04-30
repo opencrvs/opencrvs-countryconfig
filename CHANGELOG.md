@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.7.1 Release candidate
+## 1.7.1
 
 ### Bug fixes
 - "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
@@ -149,6 +149,14 @@ userRole.socialWorker,Name for user role Social Worker,Social Worker
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
+
+## 1.6.3
+
+### Breaking changes
+
+- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
+## 1.6.2
 
 ## 1.6.1
 
