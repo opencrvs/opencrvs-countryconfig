@@ -5,7 +5,33 @@
 ### New features
 - Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
+## 1.7.2 Release candidate
+
+### Bugfixes
+
+- InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
+```
+partial write: max-values-per-tag limit exceeded (100000/100000)
+```
+https://github.com/opencrvs/opencrvs-countryconfig/pull/393
+### New features
+
+- **Time field 12-hour format**: To enable the 12-hour (AM/PM) format of the `TimeField`, set the `use12HourFormat` property to `true`. [#8336](https://github.com/opencrvs/opencrvs-core/issues/8336)
+  ```
+  {
+    name: 'time',
+    custom: true,
+    type: 'TIME',
+    use12HourFormat: true,
+    ...otherProp
+  }
+  ```
+
 ## 1.7.1 Release candidate
+
+### Bug fixes
+- "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
+- Use yarn cache in test workflow & read the version to use from .nvmrc
 
 ### New features
 
@@ -166,6 +192,20 @@ userRole.socialWorker,Name for user role Social Worker,Social Worker
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
+
+## 1.6.4
+
+### Bug fixes
+
+- Query the location tree directly from the config service to improve performance for large datasets
+
+## 1.6.3
+
+### Breaking changes
+
+- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
+## 1.6.2
 
 ## 1.6.1
 
