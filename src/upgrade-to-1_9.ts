@@ -150,7 +150,9 @@ async function main() {
       fields: []
     }
   })
-
-  await fs.writeFile('new-form.json', JSON.stringify(newForm, null, 2))
+  await fs.writeFile(
+    path.join(__dirname, './forms-v2.json'),
+    JSON.stringify(newForm, null, 2)
+  )
 }
 main()
