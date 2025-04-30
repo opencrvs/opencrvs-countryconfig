@@ -169,6 +169,10 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 
 ## 1.6.4
 
+### Bug fixes
+
+- Query the location tree directly from the config service to improve performance for large datasets
+
 ## 1.6.3
 
 ### Breaking changes
@@ -176,6 +180,10 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 - Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
 ## 1.6.2
+
+### Bug fixes
+- "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
+- Use yarn cache in test workflow & read the version to use from .nvmrc
 
 ## 1.6.1 Release candidate
 
