@@ -872,6 +872,7 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
