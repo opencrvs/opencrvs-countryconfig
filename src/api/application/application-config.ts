@@ -38,21 +38,28 @@ export const applicationConfig = {
     },
     PRINT_IN_ADVANCE: true
   },
-  // Following constants aren't configurable via UI
   FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
   DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
   FEATURES: {
     DEATH_REGISTRATION: true,
     MARRIAGE_REGISTRATION: false,
     EXTERNAL_VALIDATION_WORKQUEUE: false,
-    INFORMANT_SIGNATURE: false,
     PRINT_DECLARATION: false,
-    DATE_OF_BIRTH_UNKNOWN: true,
-    INFORMANT_SIGNATURE_REQUIRED: false
+    DATE_OF_BIRTH_UNKNOWN: true
   },
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
-  SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR']
+  SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR'],
+  SEARCH_DEFAULT_CRITERIA: 'TRACKING_ID'
+  /*
+   * SEARCH_DEFAULT_CRITERIA's value can be one of the following
+   * | 'TRACKING_ID',
+   * | 'REGISTRATION_NUMBER',
+   * | 'NATIONAL_ID',
+   * | 'NAME',
+   * | 'PHONE_NUMBER',
+   * | 'EMAIL'
+   */
 }
 
 export const COUNTRY_WIDE_CRUDE_DEATH_RATE = 10

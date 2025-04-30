@@ -294,16 +294,25 @@ docker_stack_deploy() {
     do
       echo "Server failed to download $tag. Retrying..."
       sleep 5
-    done
+    done &
   done
-
+  wait
+  echo "Images are successfully downloaded"
   echo "Updating docker swarm stack with new compose files"
 
   configured_ssh 'cd /opt/opencrvs && \
     docker stack deploy --prune -c '$(split_and_join " " " -c " "$(to_remote_paths $COMPOSE_FILES_USED)")' --with-registry-auth opencrvs'
 }
 
+get_opencrvs_version() {
+  PREVIOUS_VERSION=$(configured_ssh "docker service ls | grep opencrvs_base | cut -d ':' -f 2")
+  echo "Previous opencrvs version: $PREVIOUS_VERSION"
+  echo "Current opencrvs version: $VERSION"
+}
+
 validate_options
+
+get_opencrvs_version
 
 # Create new passwords for all MongoDB users created in
 # infrastructure/mongodb/docker-entrypoint-initdb.d/create-mongo-users.sh
@@ -319,6 +328,7 @@ export PERFORMANCE_MONGODB_PASSWORD=`generate_password`
 export OPENHIM_MONGODB_PASSWORD=`generate_password`
 export WEBHOOKS_MONGODB_PASSWORD=`generate_password`
 export NOTIFICATION_MONGODB_PASSWORD=`generate_password`
+export EVENTS_MONGODB_PASSWORD=`generate_password`
 
 #
 # Elasticsearch credentials

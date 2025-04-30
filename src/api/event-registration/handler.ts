@@ -9,11 +9,14 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 import * as Hapi from '@hapi/hapi'
-import fetch from 'node-fetch'
 import { logger } from '@countryconfig/logger'
-import { CONFIRM_REGISTRATION_URL } from '@countryconfig/constants'
 import { createUniqueRegistrationNumberFromBundle } from '@countryconfig/api/event-registration/service'
 import { badImplementation } from '@hapi/boom'
+import {
+  confirmRegistration
+  // rejectRegistration
+} from '@countryconfig/utils/gateway-api'
+import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 
 export async function eventRegistrationHandler(
   request: Hapi.Request,
@@ -33,15 +36,28 @@ export async function eventRegistrationHandler(
     const bundle = request.payload as fhir.Bundle
 
     const eventRegistrationIdentifiersResponse =
-      await createUniqueRegistrationNumberFromBundle(bundle)
+      createUniqueRegistrationNumberFromBundle(bundle)
 
-    await fetch(CONFIRM_REGISTRATION_URL, {
-      method: 'POST',
-      body: JSON.stringify(eventRegistrationIdentifiersResponse),
-      headers: request.headers
-    })
+    await confirmRegistration(
+      eventRegistrationIdentifiersResponse.compositionId,
+      eventRegistrationIdentifiersResponse,
+      {
+        headers: request.headers
+      }
+    )
   } catch (err) {
-    // IF ANY ERROR OCCURS IN THIS API, THE REGISTRATION WILL BE REJECTED AND MUST BE RE-SUBMITTED BY A REGISTRAR ONCE THE ISSUE IS RESOLVED
+    // If the confirm registration endpoint throws an error, the registration will be retried through country-config
+    // If you don't want the registration to retry, you can call `rejectRegistration` from here and return 202 Accepted
+
+    // await confirmRegistration(
+    //   eventRegistrationIdentifiersResponse.compositionId,
+    //   {
+    //     reason: 'other', // Refer to the GraphQL schema for other options
+    //     comment: 'The comment that will be visible on audit log.'
+    //   },
+    //   { headers: request.headers }
+    // )
+
     logger.error(err)
 
     const boomError = badImplementation()
@@ -51,4 +67,11 @@ export async function eventRegistrationHandler(
   }
 
   return h.response().code(202)
+}
+
+export const tennisClubMembershipEventHandler = (
+  request: Hapi.Request,
+  h: Hapi.ResponseToolkit
+) => {
+  return h.response(tennisClubMembershipEvent).code(200)
 }

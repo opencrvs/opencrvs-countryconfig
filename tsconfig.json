@@ -2,22 +2,16 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@countryconfig/*": [
-        "./*"
-      ]
+      "@countryconfig/*": ["./*"]
     },
     "target": "es6",
-    "module": "commonjs",
+    "module": "Node16",
     "outDir": "build/dist",
     "sourceMap": true,
-    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "moduleResolution": "node16",
     "rootDir": ".",
-    "lib": [
-      "esnext.asynciterable",
-      "es6",
-      "es2017",
-      "es2019"
-    ],
+    "lib": ["esnext.asynciterable", "es6", "es2017", "es2019", "es2022"],
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "noImplicitReturns": true,
@@ -25,16 +19,9 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "types": [
-      "fhir",
-      "geojson"
-    ]
+    "types": ["fhir", "geojson"]
   },
-  "include": [
-    "src/**/*.ts",
-    "infrastructure/environments/**/*.ts",
-    "typings"
-  ],
+  "include": ["src/**/*.ts", "infrastructure/environments/**/*.ts", "typings"],
   "exclude": [
     "node_modules",
     "cypress",

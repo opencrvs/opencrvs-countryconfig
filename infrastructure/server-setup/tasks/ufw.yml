@@ -3,18 +3,18 @@
     name: ufw
     state: present
 
+- name: Set default SSH port
+  set_fact:
+    ssh_port: '{{ internal_ssh_port | default(ansible_port) | default(22) }}'
+
 - name: Allow OpenSSH for IPv4 from specific addresses
   ufw:
     rule: allow
-    port: 22
+    port: '{{ ssh_port }}'
     proto: tcp
     src: '{{ item }}'
   loop: '{{ only_allow_access_from_addresses }}'
   when: only_allow_access_from_addresses is defined and only_allow_access_from_addresses | length > 0
-
-- name: Set default SSH port
-  set_fact:
-    ssh_port: '{{ ansible_port | default(22) }}'
 
 - name: Remove general OpenSSH allow rule
   ufw:

@@ -1,4 +1,15 @@
 id,description,en,fr
+action.action,Label for action button,Action,Action
+action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive
+action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName}
+action.correct,Label for correct record button in dropdown menu,Correct record,Enregistrement correct
+action.issue,Label for reinstate issue button in dropdown menu,Issue certificate,Délivrer un certificat
+action.print,Label for reinstate print button in dropdown menu,Print certified copy,Imprimer une copie certifiée
+action.reinstate,Label for reinstate record button in dropdown menu,Reisntate declaration,Déclaration de rétablissement
+action.review.correction,Label for review correction in dropdown menu,Review correction request,Vérifier la demande de correction
+action.review.declaration,Label for review declaration button in dropdown menu,"Review {isDuplicate, select, true{potential duplicate} other{declaration}}","Review {isDuplicate, select, true{doublon potentiel} other{déclaration}}"
+action.update,Label for reinstate update button in dropdown menu,Update declaration,Mettre à jour la déclaration
+action.view,Label for view button in dropdown menu,View {recordOrDeclaration},"voir {recordOrDeclaration, select, record{enregistrer} other{déclaration}}"
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,information de l'enfant
@@ -18,8 +29,11 @@ advancedSearch.form.recordStatusInReview,Option for form field: status of record
 advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress,En cours
 advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
 advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
+advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé
 advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'inscription
 advancedSearch.form.statusOfRecordLabel,Label for input Status of record,Status of record,Etat d'avancement du dossier
+advancedSearch.form.timePeriodHelperText,Helper text for input Time period,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement
+advancedSearch.form.timePeriodLabel,Label for input Time period,Time period,Période de temps
 advancedSearchResult.pill.childDoB,The label for child d.o.b in active advancedSearchParams,Child d.o.b,Date de naissance enfant
 advancedSearchResult.pill.childFirstName,The label for child firstname in active advancedSearchParams,Child firstname,Prénom de l'enfant
 advancedSearchResult.pill.childLastName,The label for child lastname in active advancedSearchParams,Child lastname,Nom de l'enfant
@@ -43,6 +57,7 @@ advancedSearchResult.pill.regDate,The label for  registration date in active adv
 advancedSearchResult.pill.regLocation,The label for event location in active advancedSearchParams,Location,Emplacement
 advancedSearchResult.pill.regNumber,The label for registration number in active advancedSearchParams,Registration number,Numéro d'enregistrement
 advancedSearchResult.pill.registationStatus,The label for registration Status param in active advancedSearchParams,Registration status,Statut d'enregistrement
+advancedSearchResult.pill.timePeriod,The label for time period in active advancedSearchParams,Time period,Période de temps
 advancedSearchResult.pill.trackingId,The label for tracking id in active advancedSearchParams,Tracking ID,Identifiant de suivi
 advancedSearchResult.table.noResult,The label for no result in advancedSearchResult page,No result,Pas de résultat
 advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultat de la recherche
@@ -152,7 +167,20 @@ certificate.receipt.service.5year,,{event} registration after 5 years of event,{
 certificate.receipt.service.targetDay,,{event} registration after 45 days of event,{event} Déclaration après 45 jours de l'événement.
 certificate.receipt.service.targetDay.amount,,৳ 25.00,৳ 25.00
 certificate.receipt.subheader,Subheader for receipt on payment on certificate,{event} Registration after {DOBDiff} of {DOE},{event} Déclaration après {DOBDiff} de {DOE}
+certificate.selectTemplate,Select certificate template,Type,Taper
+certificate.selectedTemplate,Selected certificate template,Selected certificate template,Modèle de certificat sélectionné
+certificates.birth.certificate,Birth Certificate,Birth Certificate,Acte de naissance
+certificates.birth.certificate.copy,Birth Certificate Certified Copy,Birth Certificate Certified Copy,Copie certifiée conforme de l'acte de naissance
+certificates.birth.registration.receipt,Birth Registration Receipt,Birth Registration Receipt,Reçu d'enregistrement de naissance
+certificates.death.certificate,Death Certificate,Death Certificate,Certificat de décès
+certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certificate Certified Copy,Copie certifiée conforme du certificat de décès
+certificates.marriage.certificate,Marriage Certificate,Marriage Certificate,Acte de mariage
+certificates.marriage.certificate.copy,Marriage Certificate Certified Copy,Marriage Certificate Certified Copy,Copie certifiée conforme de l'acte de mariage
 changeEmail.validation.msg,Phone number validation message,Must be a valid email address,Doit être une adresse e-mail valide
+changeModal.cancel,The label for cancel button of change modal,Cancel,Annuler
+changeModal.continue,The label for continue button of change modal,Continue,Continuer
+changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour chaque modification que vous apporterez.
+changeModal.title,The title for change modal,Edit declaration?,Modifier la déclaration?
 changePhone.validation.msg,Phone number validation message,Must be a valid 10 digit number that starts with 0,Doit être un numéro valide à {num} chiffres qui commence par {start}.
 config.advanced.search,This is used for the advanced search,Advanced Search,Recherche avancée
 config.advanced.search.instruction,This is used for the advanced search,Select the options to build an advanced search. A minimum of two search parameters is required.,Sélectionnez les options pour construire une recherche avancée. Un minimum de deux paramètres de recherche est requis.
@@ -169,10 +197,9 @@ config.certTemplate,Label for certificate templates,Certificate Template,Modèle
 config.certificate.options,Show options,Options,Options
 config.emailAllUsers.modal.supportingCopy,Label for send email all users confirmation supporting copy,User will receive emails over the next 24 hours,L'utilisateur recevra des courriels au cours des prochaines 24 heures
 config.emailAllUsers.modal.title,Label for send email all users confirmation title,Send email to all users?,Envoyer un e-mail à tous les utilisateurs ?
-config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users you are active. Emails will be sent over the next 24 hours. Only one email can be sent per day,Cet e-mail sera envoyé à tous les utilisateurs que vous activez. Les courriels seront envoyés au cours des prochaines 24 heures. Un seul courriel peut être envoyé par jour
+config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users who are active. Emails will be sent over the next 24 hours. Only one email can be sent per day,Cet e-mail sera envoyé à tous les utilisateurs qui sont actifs. Les courriels seront envoyés au cours des prochaines 24 heures. Un seul courriel peut être envoyé par jour
 config.emailAllUsers.title,Title for email all users,Email all users,Envoyer un e-mail à tous les utilisateurs
 config.userRoles.language,Language name,"{language, select, en {English} fr {French} other {{language}}}","{language, select, en {Anglais} fr {Français} other {{language}}}"
-config.userRoles.roleUpdateInstruction,Instruction for adding/updating role in role management modal,Add the roles to be assigned the system role of {systemRole},Ajoutez les rôles auxquels attribuer le rôle système de {systemRole}
 conflicts.modal.assign.description,Description for modal when assign,Please note you will have sole access to this record. Please make any updates promptly otherwise unassign the record.,"Veuillez noter que vous aurez un accès exclusif à cet enregistrement. Veuillez effectuer rapidement les mises à jour éventuelles, sinon vous désassignez l'enregistrement."
 conflicts.modal.assign.title,Title for modal when assign,Assign record?,Attribuer un enregistrement ?
 conflicts.modal.assigned.description,Description for modal when record already assigned,{name} at {officeName} has sole editable access to this record,{name} à {officeName} a un accès unique et modifiable à cet enregistrement.
@@ -261,7 +288,7 @@ constants.gender,Gender label,Gender,Sexe
 constants.healthDivision,The description for HEALTH_DIVISION type,Health Division,Division de la santé
 constants.healthcareWorker,The description for Healthcare Worker type,Healthcare Worker,Travailleur de la santé
 constants.history,History heading,History,Histoire
-constants.humanName,Formatted full name, {firstName} {middleName} {lastName}, {firstName} {middleName} {lastName}
+constants.humanName,Formatted full name,{lastName} {middleName} {firstName},{lastName} {middleName} {firstName}
 constants.id,ID Label,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?
 constants.inReview.status,A label for In Review,In review,En cours de révision
@@ -771,6 +798,22 @@ error.title,Error title,Oops!,Oups !
 error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !
 error.userListError,Error message when user list loads fails,Failed to load users,Impossible de charger les utilisateurs
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute."
+event.history.timeFormat,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a",
+event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
+event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Prénom du recommandeur
+event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,ID d'adhésion du recommandeur
+event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Nom de famille du recommandeur
+event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Qui recommande le demandeur?
+event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth,Date de naissance du demandeur
+event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name,Prénom du demandeur
+event.tennis-club-membership.action.declare.form.section.who.field.surname.label,This is the label for the field,Applicant's surname,Nom de famille du demandeur
+event.tennis-club-membership.action.declare.form.section.who.title,This is the title of the section,Who is applying for the membership?,Qui postule pour l'adhésion?
+event.tennis-club-membership.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
+event.tennis-club-membership.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Send an application,Envoyer une demande
+event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis
+exitModal.cancel,The label for cancel button in exit modal,Cancel,Annuler
+exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?,Quitter sans enregistrer les modifications?
+exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Êtes-vous sûr de vouloir quitter sans enregistrer?
 fieldAgentHome.allUpdatesText,,Great job! You have updated all declarations,Bon travail ! Vous avez mis à jour toutes les déclarations
 fieldAgentHome.inProgressCount,,In progress ({total}),En cours ({total})
 fieldAgentHome.queryError,The text when error ocurred loading rejected declarations,An error occurred while loading declarations,Une erreur s'est produite lors du chargement des déclarations
@@ -960,7 +1003,6 @@ form.field.label.fetchRegistrationModalInfo,,Birth Registration Number,Numéro d
 form.field.label.fileSizeError,,File size must be less than 2MB,La taille du fichier doit être inférieure à 2 Mo
 form.field.label.fileUploadError,,{type} supported image only,{type} format d'images accepté
 form.field.label.firstName,,First name(s),Prénom(s)
-form.field.label.firstNameEN,,First name(s),Prénom(s)
 form.field.label.firstNames,,First name(s),Prénom(s)
 form.field.label.healthInstitution,,Health Institution,Institution de santé
 form.field.label.hospital,,Hospital,Hôpital
@@ -999,7 +1041,7 @@ form.field.label.informantRelation.headInst,,Head of the institution where the d
 form.field.label.informantRelation.legalGuardian,Label for option Legal Guardian,Legal guardian,Tuteur légal
 form.field.label.informantRelation.mother,Label for option mother,Mother,Mère
 form.field.label.informantRelation.officer,,Officer-in-charge of the road or public space where the death occurred,Officier responsable d'une route ou d'un espace public où le décès a eu lieu.
-form.field.label.informantRelation.other,,Other(Specify),Autre(Précisez)
+form.field.label.informantRelation.other,,Other ({otherInformantType}),Autre ({otherInformantType})
 form.field.label.informantRelation.others,Label for option someone else,Someone else,Autre
 form.field.label.informantRelation.owner,,Owner of the house or building where the death occurred,Propriétaire de la maison ou du bâtiment où le décès a eu lieu.
 form.field.label.informantRelation.sister,Label for option Sister,Sister,Soeur
@@ -1158,9 +1200,11 @@ form.field.label.uploadFile,,Upload,Télécharger
 form.field.label.urban,,Urban,Urbain
 form.field.label.userAttachmentSection,,Signature,Signature
 form.field.label.userDevice,,Device,Dispositif
+form.field.label.userFirstName,,User's first name,Prénom de l'utilisateur
 form.field.label.userSignatureAttachment,,User's signature,Signature de l'utilisateur
 form.field.label.userSignatureAttachmentDesc,,Ask the user to sign a piece of paper and then scan or take a photo,"Demandez à l'utilisateur de signer une feuille de papier, puis scannez ou prenez une photo."
 form.field.label.userSignatureAttachmentTitle,,Upload signature,Joindre la signature
+form.field.label.userSurname,,User's surname,Nom de famille de l'utilisateur
 form.field.label.verbalAutopsy,,Verbal autopsy,Autopsie verbale
 form.field.label.verbalAutopsyReport,,Verbal autopsy report,Rapport d'autopsie verbal
 form.field.label.weightAtBirth,,Weight at birth,Poids à la naissance
@@ -1242,6 +1286,10 @@ form.section.information.death.bullet2,,As the legal Informant it is important t
 form.section.information.death.bullet3,,Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un courriel vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité."
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts."
 form.section.information.name,,Information,Informations
+form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,Last 30 days,les 30 derniers jours
+form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,Last 7 days,les 7 derniers jours
+form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,Last 90 days,les 90 derniers jours
+form.section.label.timePeriodLastYear,Label for option of time period select: last year,Last year,l'année dernière
 form.section.marriageEvent.date,,Date of marriage,Date du mariage
 form.section.marriageEvent.name,,Marriage event details,Détails de l'événement de mariage
 form.section.marriageEvent.title,,Marriage details,Détails du mariage
@@ -1329,7 +1377,6 @@ integrations.name,Label for name input,Name,Nom
 integrations.nationalIDName,Label for name input for National ID,Name,Nom
 integrations.nationalidAlertDescription,,"A National ID client (eg. MOSIP) can react to birth or death webhooks to create or invalidate NID numbers, and respond to OpenCRVS to provide a temporary ID to children, and link vital events to each other. For more information, visit:","Un client d'identification nationale (par exemple MOSIP) peut réagir aux webhooks de naissance ou de décès pour créer ou invalider des numéros d'identification nationale, et répondre à OpenCRVS pour fournir une identification temporaire aux enfants, et relier les événements d'état civil entre eux. Pour plus d'informations, visitez le site :"
 integrations.newIntegrationDescription,Description to help user fill name and type of a new integration client,Add a unique name and select the type of client you would like to create,Ajoutez un nom unique et sélectionnez le type de client que vous souhaitez créer
-integrations.onlyOneNationalId,,Only one National ID integration is allowed.,Une seule intégration d'identité nationale est autorisée
 integrations.otherAlertDescription,,...Please visit,...Veuillez visiter
 integrations.pageIntroduction,Label for the text integration page intorduction,"For each new client that needs to integrate with OpenCRVS you can create unique client IDs. A number of integration use cases are currently supported, based on both API and webhook technologies.","Pour chaque nouveau client qui doit s'intégrer à OpenCRVS, vous pouvez créer des identifiants client uniques. Un certain nombre de cas d'utilisation de l'intégration sont actuellement pris en charge, sur la base des technologies API et webhook"
 integrations.pageTitle,Title for integrations page,Integrations,Intégrations
@@ -1340,7 +1387,7 @@ integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.supportingDescription,,Supporting description to help user make a decision and navigate the content,Description complémentaire pour aider l'utilisateur à prendre une décision et à naviguer dans le contenu.
 integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement
 integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé
-integrations.type.nationalID,Label for national ID system client,National ID,Carte d'identité nationale
+integrations.type.nationalId,Label for national id,National id,Identité nationale
 integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements
 integrations.type.webhook,Label for web hook,Webhook,Webhook
 integrations.uniqueKeyDescription,Label for the unique key description,These unique keys will be required by the client integrating...,Ces clés uniques seront requises par l'interface du système
@@ -1379,6 +1426,255 @@ misc.reEnterDescription,,Let's make sure we collected your PIN correctly,Assuron
 misc.reEnterTitle,The title displayed while creating a PIN,Re-enter your PIN,Saisissez à nouveau votre nouveau code PIN
 misc.session.expired,SessionExpire modal confirmation text,Your session has expired. Please login again.,Votre session a expiré. Veuillez vous connecter à nouveau.
 misc.title.declarationStatus,Title for review action component,Send for approval,Envoyer pour approbation
+nationality.ABW,,Aruban,Arubais
+nationality.AFG,,Afghan,Afghan
+nationality.AGO,,Angolan,Angolais
+nationality.AIA,,Anguillan,Anguillais
+nationality.ALA,,Åland Islander,Insulaire d’Åland
+nationality.ALB,,Albanian,Albanais
+nationality.AND,,Andorran,Andorran
+nationality.ARE,,Emirati,Emirien
+nationality.ARG,,Argentine,Argentin
+nationality.ARM,,Armenian,Arménien
+nationality.ASM,,American Samoan,Samoan Américain
+nationality.ATA,,Antarctic,Antarctique
+nationality.ATF,,French Southern,Des Terres Australes et Antarctiques Françaises
+nationality.ATG,,Antiguan/Barbudan,Antiguayen/Barbudien
+nationality.AUS,,Australian,Australien
+nationality.AUT,,Austrian,Autrichien
+nationality.AZE,,Azerbaijani,Azerbaïdjanais
+nationality.BDI,,Burundian,Burundais
+nationality.BEL,,Belgian,Belge
+nationality.BEN,,Beninese,Béninois
+nationality.BES,,Dutch Caribbean,Caribéen Néerlandais
+nationality.BFA,,Burkinabe,Burkinabé
+nationality.BGD,,Bangladeshi,Bangladais
+nationality.BGR,,Bulgarian,Bulgare
+nationality.BHR,,Bahraini,Bahreïnien
+nationality.BHS,,Bahamian,Bahaméen
+nationality.BIH,,Bosnian/Herzegovinian,Bosnien/Herzégovinien
+nationality.BLM,,Saint Barthélemy Islander,Insulaire de Saint-Barthélemy
+nationality.BLR,,Belarusian,Biélorusse
+nationality.BLZ,,Belizean,Bélizéen
+nationality.BMU,,Bermudian,Bermudien
+nationality.BOL,,Bolivian,Bolivien
+nationality.BRA,,Brazilian,Brésilien
+nationality.BRB,,Barbadian,Barbadien
+nationality.BRN,,Bruneian,Brunéien
+nationality.BTN,,Bhutanese,Bhoutanais
+nationality.BVT,,Bouvet Islander,Insulaire de Bouvet
+nationality.BWA,,Botswanan,Botswanais
+nationality.CAF,,Central African,Centrafricain
+nationality.CAN,,Canadian,Canadien
+nationality.CCK,,Cocos Islander,Insulaire des Cocos
+nationality.CHE,,Swiss,Suisse
+nationality.CHL,,Chilean,Chilien
+nationality.CHN,,Chinese,Chinois
+nationality.CIV,,Ivorian,Ivoirien
+nationality.CMR,,Cameroonian,Camerounais
+nationality.COD,,Congolese (DRC),Congolais (RDC)
+nationality.COG,,Congolese (Congo),Congolais (Congo)
+nationality.COK,,Cook Islander,Insulaire des Cook
+nationality.COL,,Colombian,Colombien
+nationality.COM,,Comoran,Comorien
+nationality.CPV,,Cape Verdean,Caboverdien
+nationality.CRI,,Costa Rican,Costaricien
+nationality.CUB,,Cuban,Cubain
+nationality.CUW,,Curaçaoan,Curacien
+nationality.CXR,,Christmas Islander,Insulaire de Christmas
+nationality.CYM,,Caymanian,Caïmanais
+nationality.CYP,,Cypriot,Chypriote
+nationality.CZE,,Czech,Tchèque
+nationality.DEU,,German,Allemand
+nationality.DJI,,Djiboutian,Djiboutien
+nationality.DMA,,Dominican,Dominicain
+nationality.DNK,,Danish,Danois
+nationality.DOM,,Dominican,Dominicain
+nationality.DZA,,Algerian,Algérien
+nationality.ECU,,Ecuadorian,Équatorien
+nationality.EGY,,Egyptian,Égyptien
+nationality.ERI,,Eritrean,Érythréen
+nationality.ESH,,Sahrawi,Sahraoui
+nationality.ESP,,Spanish,Espagnol
+nationality.EST,,Estonian,Estonien
+nationality.ETH,,Ethiopian,Éthiopien
+nationality.FAR,,Farajalandian,Farajalandien
+nationality.FIN,,Finnish,Finlandais
+nationality.FJI,,Fijian,Fidjien
+nationality.FLK,,Falkland Islander,Insulaire des Falkland
+nationality.FRA,,French,Français
+nationality.FRO,,Faroese,Féroïen
+nationality.FSM,,Micronesian,Micronésien
+nationality.GAB,,Gabonese,Gabonais
+nationality.GBR,,British,Britannique
+nationality.GEO,,Georgian,Géorgien
+nationality.GGY,,Guernsey,Guernesiais
+nationality.GHA,,Ghanaian,Ghanéen
+nationality.GIB,,Gibraltarian,Gibraltarien
+nationality.GIN,,Guinean,Guinéen
+nationality.GLP,,Guadeloupean,Guadeloupéen
+nationality.GMB,,Gambian,Gambien
+nationality.GNB,,Bissau-Guinean,Bissau-Guinéen
+nationality.GNQ,,Equatoguinean,Guinéen équatorial
+nationality.GRC,,Greek,Grec
+nationality.GRD,,Grenadian,Grenad
+nationality.GRD,,Grenadian,Grenadien
+nationality.GRL,,Greenlander,Groenlandais
+nationality.GTM,,Guatemalan,Guatémaltèque
+nationality.GUF,,French Guianese,Français de Guyane
+nationality.GUM,,Guamanian,Guaméen
+nationality.GUY,,Guyanese,Guyanais
+nationality.HKG,,Hong Kong Special Administrative Region,Région Administrative Spéciale de Hong Kong
+nationality.HMD,,Heard Islander,Îles Heard
+nationality.HND,,Honduran,Hondurien
+nationality.HRV,,Croatian,Croate
+nationality.HTI,,Haitian,Haïtien
+nationality.HUN,,Hungarian,Hongrois
+nationality.IDN,,Indonesian,Indonésien
+nationality.IMN,,Manx,Manxois
+nationality.IND,,Indian,Indien
+nationality.IOT,,British Indian Ocean Territory,Territoire britannique de l'océan Indien
+nationality.IRL,,Irish,Irlandais
+nationality.IRN,,Iranian,Iranien
+nationality.IRQ,,Iraqi,Irakien
+nationality.ISL,,Icelander,Islandais
+nationality.ISR,,Israeli,Israélien
+nationality.ITA,,Italian,Italien
+nationality.JAM,,Jamaican,Jamaïcain
+nationality.JEY,,Jersey,Jersiais
+nationality.JOR,,Jordanian,Jordannien
+nationality.JPN,,Japanese,Japonais
+nationality.KAZ,,Kazakhstani,Kazakh
+nationality.KEN,,Kenyan,Kényan
+nationality.KGZ,,Kyrgyz,Kirghize
+nationality.KHM,,Cambodian,Cambodgien
+nationality.KIR,,Kiribati,Kiribatien
+nationality.KNA,,Kittitian/Nevisian,Nevisien
+nationality.KOR,,South Korean,Coréen du Sud
+nationality.KWT,,Kuwaiti,Koweïtien
+nationality.LBN,,Lebanese,Libanais
+nationality.LBR,,Liberian,Libérien
+nationality.LBY,,Libyan,Libyen
+nationality.LCA,,Saint Lucian,Saint-Lucien
+nationality.LIE,,Liechtensteiner,Liechtensteinois
+nationality.LKA,,Sri Lankan,Sri Lankais
+nationality.LSO,,Lesotho,Lesothan
+nationality.LTU,,Lithuanian,Lituanien
+nationality.LUX,,Luxembourgish,Luxembourgeois
+nationality.LVA,,Latvian,Letton
+nationality.MAC,,Macao Special Administrative Region,Région Administrative Spéciale de Macao
+nationality.MAF,,Saint Martiner,Martiniquais
+nationality.MAR,,Moroccan,Marocain
+nationality.MCO,,Monégasque,Monégasque
+nationality.MDA,,Moldovan,Moldave
+nationality.MDG,,Madagascan,Malgache
+nationality.MDV,,Maldivian,Maldivien
+nationality.MEX,,Mexican,Mexicain
+nationality.MHL,,Marshallese,Marshalles
+nationality.MKD,,Macedonian,Macédonien
+nationality.MLI,,Malian,Malien
+nationality.MLT,,Maltese,Maltais
+nationality.MMR,,Myanmarese,Myanmarais
+nationality.MNE,,Montenegrin,Monténégrin
+nationality.MNG,,Mongolian,Mongol
+nationality.MNP,,Northern Marianan,Marianais
+nationality.MOZ,,Mozambican,Mozambicain
+nationality.MRT,,Mauritanian,Mauritanien
+nationality.MSR,,Montserratian,Montserratien
+nationality.MTQ,,Martinican,Martiniquais
+nationality.MUS,,Mauritian,Mauricien
+nationality.MWI,,Malawian,Malawite
+nationality.MYS,,Malaysian,Malaisien
+nationality.MYT,,Mayottean,Mayotien
+nationality.NAM,,Namibian,Namibien
+nationality.NCL,,New Caledonian,Calédonien
+nationality.NER,,Nigerien,Nigérien
+nationality.NFK,,Norfolk Islander,Îles Norfolk
+nationality.NGA,,Nigerian,Nigérian
+nationality.NIC,,Nicaraguan,Nicaraguayen
+nationality.NIU,,Niuean,Niouéen
+nationality.NLD,,Dutch,Néerlandais
+nationality.NOR,,Norwegian,Norvégien
+nationality.NPL,,Nepalese,Népalais
+nationality.NRU,,Nauruan,Nauruan
+nationality.NZL,,New Zealander,Néo-Zélandais
+nationality.OMN,,Omani,Omanais
+nationality.PAK,,Pakistani,Pakistanais
+nationality.PAN,,Panamanian,Panaméen
+nationality.PCN,,Pitcairn Islander,Pitcairnais
+nationality.PER,,Peruvian,Péruvien
+nationality.PHL,,Filipino,Philippin
+nationality.PLW,,Palauan,Palaosien
+nationality.PNG,,Papua New Guinean,Papouasien
+nationality.POL,,Polish,Polonais
+nationality.PRI,,Puerto Rican,Portoricain
+nationality.PRK,,North Korean,Coréen du Nord
+nationality.PRT,,Portuguese,Portugais
+nationality.PRY,,Paraguayan,Paraguayen
+nationality.PSE,,Palestinian,Palestinien
+nationality.PYF,,French Polynesian,Polynésien
+nationality.QAT,,Qatari,Qatarien
+nationality.REU,,Reunionese,Réunionnais
+nationality.ROU,,Romanian,Roumain
+nationality.RUS,,Russian,Russe
+nationality.RWA,,Rwandan,Rwandais
+nationality.SAU,,Saudi,Saoudien
+nationality.SDN,,Sudanese,Soudanais
+nationality.SEN,,Senegalese,Sénégalais
+nationality.SGP,,Singaporean,Singapourien
+nationality.SGS,,South Georgian/South Sandwich Islander,Îles Sandwich du Sud
+nationality.SHN,,Saint Helenian,Sainte-Hélène
+nationality.SJM,,Svalbardian,Spitzbergien
+nationality.SLB,,Solomon Islander,Salomonien
+nationality.SLE,,Sierra Leonean,Sierra-Léonais
+nationality.SLV,,Salvadoran,Salvadorien
+nationality.SMR,,Sammarinese,Saint-Marinais
+nationality.SOM,,Somali,Somalien
+nationality.SPM,,Saint-Pierrais/Miquelonnais,Saint-Pierrais/Miquelonnais
+nationality.SRB,,Serbian,Serbe
+nationality.SSD,,South Sudanese,Soudanais du Sud
+nationality.STP,,São Toméan,Santoméen
+nationality.SUR,,Surinamese,Surinamien
+nationality.SVK,,Slovak,Slovaque
+nationality.SVN,,Slovene,Slovène
+nationality.SWE,,Swedish,Suédois
+nationality.SWZ,,Swazi,Swazi
+nationality.SXM,,Sint Maartener,Saint-Martinois
+nationality.SYC,,Seychellois,Seychellois
+nationality.SYR,,Syrian,Syrien
+nationality.TCA,,Turks and Caicos Islander,Îles Turques-et-Caïques
+nationality.TCD,,Chadian,Tchadien
+nationality.TGO,,Togolese,Togolais
+nationality.THA,,Thai,Thaïlandais
+nationality.TJK,,Tajikistani,Tadjik
+nationality.TKL,,Tokelauan,Tokelauan
+nationality.TKM,,Turkmen,Turkmène
+nationality.TLS,,Timorese,Timorais
+nationality.TON,,Tongan,Tongien
+nationality.TTO,,Trinidadian/Tobagonian,Trinidadien
+nationality.TUN,,Tunisian,Tunisien
+nationality.TUR,,Turkish,Turc
+nationality.TUV,,Tuvaluan,Tuvaluan
+nationality.TZA,,Tanzanian,Tanzanien
+nationality.UGA,,Ugandan,Ugandais
+nationality.UKR,,Ukrainian,Ukrainien
+nationality.UMI,,American,Américain
+nationality.URY,,Uruguayan,Uruguayen
+nationality.USA,,American,Américain
+nationality.UZB,,Uzbekistani,Ouzbek
+nationality.VAT,,Holy See,Saint-Siège
+nationality.VCT,,Saint Vincentian,Saint-Vincentais
+nationality.VEN,,Venezuelan,Vénézuélien
+nationality.VGB,,British Virgin Islander,Îles Vierges britanniques
+nationality.VIR,,Virgin Islander,Îles Vierges
+nationality.VNM,,Vietnamese,Vietnamien
+nationality.VUT,,Ni-Vanuatu,Ni-Vanuatu
+nationality.WLF,,Wallis and Futuna Islander,Wallisien
+nationality.WSM,,Samoan,Samoan
+nationality.YEM,,Yemeni,Yéménite
+nationality.ZAF,,South African,Sud-Africain
+nationality.ZMB,,Zambian,Zambien
+nationality.ZWE,,Zimbabwean,Zimbabwéen
 navigation.analytic,Analytic Group,Analytics,Analytique
 navigation.application,Application label in navigation,Application,Application
 navigation.approvals,Sent for approval label in navigation,Sent for approval,Envoyé pour approbation
@@ -1392,6 +1688,7 @@ navigation.emailAllUsers,Email all users label in navigation,Email all users,Env
 navigation.informantNotification,Informant notifications label in navigation,Informant notifications,Notifications des informateurs
 navigation.integration,Integration forms label in navigation,Integrations,Intégrations
 navigation.leaderboards,Leaderboards Dashboard Section,Leaderboards,Classements
+navigation.my-drafts,My drafts label in navigation,My drafts,Mes projets
 navigation.organisation,Organisations label in navigation,Organisation,Organisation
 navigation.outbox,Label for navigation item outbox,Outbox,Boîte d'envoi
 navigation.performance,Performance label in navigation,Performance,Performance
@@ -1515,6 +1812,7 @@ print.certificate.certificatePreview,The title for certificate preview form,Cert
 print.certificate.collectPayment,The label for collect payment paragraph,"Please collect the payment, print the receipt and hand it over to the payee.","Veuillez encaisser le paiement, imprimer le reçu et le remettre au bénéficiaire."
 print.certificate.collector.father,The label for select value when father is the collector of certificate,Father is collecting,Père
 print.certificate.collector.form.error,Form level error for collector form,Please select who is collecting the certificate,Veuillez sélectionner la personne qui collecte le certificat
+print.certificate.collector.form.error.template,Form level error for collector form template type,Please select certificate type,Veuillez sélectionner le type de certificat
 print.certificate.collector.idCheck.title,The title for id check component,Verify their identity,Vérifier leur identité
 print.certificate.collector.idCheckDialog.title,The title for the dialog when details of the collector not verified,Print without proof of ID?,Continuer sans preuve d'identité ?
 print.certificate.collector.informant,The label for select value when informant is the collector of certificate,Informant is collecting,Informateur
@@ -1743,6 +2041,19 @@ register.selectVitalEvent.registerNewEventHeading,The section heading on the pag
 register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration
 register.selectinformant.legalGuardian,,Legal guardian,Tuteur légal
 register.workQueue.declarations.banner,,Declarations to register in your area,Déclarations à enregistrer dans votre région
+registerModal.cancel,The label for cancel button of register modal,Cancel,Annuler
+registerModal.description,The description for register modal,The declarant will be notified of this correction and a record of this decision will be recorded,Le déclarant sera informé de cette correction et un enregistrement de cette décision sera créé.
+registerModal.register,The label for register button of register modal,Register,Enregistrer
+registerModal.title,The title for register modal,Register the member?,Enregistrer le membre?
+rejectModal.archive,The label for archive button of reject modal,Archive,Archiver
+rejectModal.cancel,The label for cancel button of reject modal,Cancel,Annuler
+rejectModal.description,The description for reject modal,Please describe the updates required to this record for follow up action.,Veuillez décrire les mises à jour nécessaires à ce dossier pour un suivi.
+rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate,Marquer comme doublon
+rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update,Envoyer pour mise à jour
+rejectModal.title,The title for reject modal,Reason for rejection?,Raison du rejet?
+reloadmodal.body,Body of reload modal,There’s a new version of {app_name} available. Please update to continue.,Une nouvelle version de {app_name} est disponible. Veuillez effectuer la mise à jour pour continuer.
+reloadmodal.button.update,Label of update button,Update,Mise à jour
+reloadmodal.title,Title when update is available,Update available,Mise à jour disponible
 review.actions.desc.regConfComp,,"By clicking register, you confirm that the information entered is correct and the vital event can be registered.","En cliquant sur Enregistrer, vous confirmez que les informations sont correctes et ont été vérifiées par l'informateur. L'informateur comprend qu'elles seront utilisées pour enregistrer la naissance et à des fins de planification. En enregistrant cette naissance, un certificat de naissance sera généré avec votre signature pour être délivré."
 review.actions.desc.regConfInComp,,Please add mandatory information before registering.,Des informations obligatoires sont manquantes. Veuillez ajouter ces informations afin de pouvoir terminer le processus d'enregistrement.
 review.actions.description,,"By clicking register, you confirm that the information entered is correct and the vital event can be registered. ","En vous enregistrant, vous confirmez que vous avez examiné cette déclaration et que vous êtes convaincu qu'elle remplit les conditions requises pour l'enregistrement."
@@ -1796,6 +2107,10 @@ review.signature.delete,Label for button that deletes signature,Delete,Supprimer
 review.signature.description,Label awknowledging the correctness of the declaration,"I, the undersigned, hereby declare that the particulars in this form are true and correct to the best of my knowledge.","Je soussigné(e) déclare par la présente que les informations contenues dans ce formulaire sont, à ma connaissance, vraies et correctes."
 review.signature.input.description,Description awknowledging the correctness of the declaration,"By signing this document with an electronic signature, I agree that such signature will be valid as handwritten signatures to the extent allowed by the laws of Farajaland.","En signant ce document avec une signature électronique, j'accepte que cette signature soit valable comme les signatures manuscrites dans la mesure où les lois du Farajaland le permettent."
 review.signature.open,Label for button that opens the signature input,Sign,Signer
+reviewAction.description,The description for review action,"By clicking register, you confirm that the information entered is correct and the member can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que le membre peut être enregistré."
+reviewAction.register,The label for register button of review action,Register,Enregistrer
+reviewAction.reject,The label for reject button of review action,Reject,Rejeter
+reviewAction.title,The title for review action,Register member,Enregistrer un membre
 search.bookmark.error.notification,Error Notification messages for bookmark advanced search result,"Sorry, something went wrong. Please try again","Désolé, quelque chose s'est mal passé. Veuillez réessayer"
 search.bookmark.loading.notification,Loading Notification messages for bookmark advanced search result,Bookmarking your advanced search results...,Mettre en signet les résultats de votre recherche avancée...
 search.bookmark.remove.loading.notification,Loading Notification messages for remove advanced search bookmark,Removing your advanced search bookmark...,Suppression de votre signet de recherche avancée...
@@ -1959,6 +2274,17 @@ user.profile.roleType,Title for roleType field,Role,Rôle/Type
 user.profile.sectionTitle.audit,Title for audit section,History,Historique
 user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
+userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
+userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
+userRole.localLeader,Name for user role Local Leader,Local Leader,Leader local
+userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Registraire local
+userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local
+userRole.nationalRegistrar,Name for user role National Registrar,National Registrar,Registraire national
+userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national
+userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances
+userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
+userRole.registrationAgent,Name for user role Registration Agent,Registration Agent,Agent d'enregistrement
+userRole.socialWorker,Name for user role Social Worker,Social Worker,Travailleur social
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
 userSetup.complete.title,Title for the setup complete page,Account setup complete,Configuration du compte terminée
 userSetup.instruction,User setup review page instruction,Check the details below to confirm your account details are correct,Vérifiez les détails ci-dessous pour confirmer que les détails de votre compte sont corrects. et faites les changements nécessaires pour confirmer que les détails de votre compte sont corrects.
@@ -1996,6 +2322,7 @@ validations.facilityMustBeSelected,The error message appears when no valid facil
 validations.greaterThanZero,The error message appears when input is less than or equal to 0,Must be a greater than zero,Doit être supérieur à zéro
 validations.illegalMarriageAge,The error message appears when the birth date is not old enough to register for marriage,Illegal age of marriage,Age illègale pour mariage
 validations.invalidDate,The error message that appears when a date field is invalid,Invalid date field,Champ de date invalide
+validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years,L'âge doit être compris entre {min} et {max} ans.
 validations.isDateNotAfterDeath,The error message appears when the given date of death is not valid,Date of birth must be before date of death,La date doit être antérieure à la date de décès
 validations.isDateNotBeforeBirth,The error message appears when the given date of death is not valid,Date of death must be after deceased date of birth,La date doit être postérieure à la date de naissance du défunt
 validations.isInformantOfLegalAge,The error message appears when the informant is not old enough to register an event,Informant is not of legal age,L'informateur n'est pas majeur
@@ -2042,7 +2369,7 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
-wq.noRecords.draft,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
+wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts,Aucun enregistrement dans mes brouillons
 wq.noRecords.externalValidation,No records messages for empty external validation tab,No records in external validation,Aucun enregistrement dans la validation externe
 wq.noRecords.fieldAgents,No records messages for empty field agents tab,No records from field agents,Aucun enregistrement des agents de terrain
 wq.noRecords.healthSystem,No records messages for empty health system tab,No records from health system,Aucun dossier du système de santé

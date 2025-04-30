@@ -8,7 +8,7 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { Conditional, IntegratingSystemType } from '../types/types'
+import { Conditional } from '../types/types'
 import { Validator } from '../types/validators'
 
 /**
@@ -29,20 +29,6 @@ export const isValidChildBirthDate = [
     operation: 'isValidChildBirthDate'
   }
 ] satisfies Validator[]
-
-export const hideIfNidIntegrationDisabled = [
-  {
-    action: 'hide',
-    expression: `const nationalIdSystem =
-    offlineCountryConfig &&
-    offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
-    !nationalIdSystem ||
-    !nationalIdSystem.settings.openIdProviderBaseUrl ||
-    !nationalIdSystem.settings.openIdProviderClientId ||
-    !nationalIdSystem.settings.openIdProviderClaims;
-  `
-  }
-]
 
 export const detailsExistConditional: Conditional[] = [
   {
@@ -392,20 +378,6 @@ export function getNationalIDValidators(configCase: string): Validator[] {
     ]
   }
 }
-
-export const hideIfNidIntegrationEnabled = [
-  {
-    action: 'hide',
-    expression: `const nationalIdSystem =
-          offlineCountryConfig &&
-          offlineCountryConfig.systems.find(s => s.integratingSystemType === '${IntegratingSystemType.Mosip}');
-          nationalIdSystem &&
-          nationalIdSystem.settings.openIdProviderBaseUrl &&
-          nationalIdSystem.settings.openIdProhideIfNidIntegrationDisabledviderClientId &&
-          nationalIdSystem.settings.openIdProviderClaims;
-      `
-  }
-]
 
 export const informantBirthDateConditionals = [
   {

@@ -60,8 +60,12 @@ import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
-import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
+import {
+  getCustomEventsHandler,
+  onAnyActionHandler,
+  onRegisterHandler
+} from '@countryconfig/api/custom-event/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -139,18 +143,18 @@ export const verifyToken = async (token: string, authUrl: string) => {
 const validateFunc = async (
   payload: any,
   request: Hapi.Request,
-  checkInvalidToken: string,
+  checkInvalidToken: boolean,
   authUrl: string
 ) => {
   let valid
-  if (checkInvalidToken === 'true') {
+  if (checkInvalidToken) {
     valid = await verifyToken(
       request.headers.authorization.replace('Bearer ', ''),
       authUrl
     )
   }
 
-  if (valid === true || checkInvalidToken !== 'true') {
+  if (valid === true || !checkInvalidToken) {
     return {
       isValid: true,
       credentials: payload
@@ -241,13 +245,24 @@ export async function createServer() {
 
   server.route({
     method: 'GET',
-    path: '/certificates/{event}.svg',
+    path: '/certificates/{id}',
     handler: certificateHandler,
     options: {
       tags: ['api', 'certificates'],
       description: 'Returns only one certificate metadata'
     }
   })
+
+  server.route({
+    method: 'GET',
+    path: '/certificates',
+    handler: certificateHandler,
+    options: {
+      tags: ['api', 'certificates'],
+      description: 'Returns certificate metadata'
+    }
+  })
+
   // add ping route by default for health check
   server.route({
     method: 'GET',
@@ -273,17 +288,6 @@ export async function createServer() {
       auth: false,
       tags: ['api'],
       description: 'Serves available fonts'
-    }
-  })
-
-  server.route({
-    method: 'GET',
-    path: '/certificate-configuration',
-    handler: certificateConfigurationHandler,
-    options: {
-      auth: false,
-      tags: ['api'],
-      description: 'Serves certificate configurations'
     }
   })
 
@@ -493,6 +497,7 @@ export async function createServer() {
     path: '/roles',
     handler: rolesHandler,
     options: {
+      auth: false,
       tags: ['api', 'user-roles'],
       description: 'Returns user roles metadata'
     }
@@ -542,6 +547,36 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Checks for enabled notification for record'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/events',
+    handler: getCustomEventsHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Serves custom events'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/register',
+    handler: onRegisterHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/{action}',
+    handler: onAnyActionHandler,
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on event actions'
     }
   })
 
