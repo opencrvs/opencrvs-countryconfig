@@ -150,6 +150,7 @@
       Match User {{ ansible_user }}
         PasswordAuthentication no
         AuthenticationMethods publickey
+      Match all
     marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER {{ ansible_user }}'
   become: yes
 
