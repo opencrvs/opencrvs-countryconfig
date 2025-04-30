@@ -21,6 +21,7 @@ on:
           - qa
           - staging
           - production
+          - v16
       core-image-tag:
         description: Core DockerHub image tag
 jobs:

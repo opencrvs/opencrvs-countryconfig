@@ -11,6 +11,7 @@ on:
         options:
           - production
           - staging
+          - v16
       core-image-tag:
         description: Core DockerHub image tag
         required: true
