@@ -112,6 +112,7 @@ const defineLegacyEvent = (form: ISerializedForm, params: NewParameters) => {
 const validEvents = ['birth', 'death', 'marriage'] as const
 
 async function main() {
+  // 1. Select an event to upgrade
   const { event } = await prompts({
     type: 'select',
     name: 'event',
@@ -125,6 +126,7 @@ async function main() {
   const forms = await fs.readFile(path.join(__dirname, './forms.json'))
   const eventForm = JSON.parse(forms.toString())[event]
 
+  // 2. Convert the form to the new format
   const newForm = defineLegacyEvent(eventForm, {
     id: event,
     label: {
@@ -150,9 +152,20 @@ async function main() {
       fields: []
     }
   })
+
+  // 3. Write the new form to a file
   await fs.writeFile(
     path.join(__dirname, './forms-v2.json'),
     JSON.stringify(newForm, null, 2)
   )
+
+  /*
+   * 4. Go through the new form and check if all translations are available in client.csv
+   *    -> If not, add them to the file
+   */
+
+  /*
+   * 5. Figure out how to 'finish' the migration, are manual steps needed?
+   */
 }
 main()
