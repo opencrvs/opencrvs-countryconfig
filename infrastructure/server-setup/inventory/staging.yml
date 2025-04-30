@@ -28,39 +28,36 @@ all:
     # "periodic_restore_from_backup" restores daily production backups to your staging server.
     # For this you need to first setup a backup environment
     periodic_restore_from_backup: true
-    backup_server_remote_source_directory: /home/backup/backups
+    # backup_server_remote_source_directory: /home/backup/backups
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+
+      - name: solo
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIET4ZrgJvwtWBZkY0aKgz/p8RhtUfPvWRGEBfo99msyX bastion_default_key
+        state: present
+        sudoer: true
+
+      - name: rochel
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3NSCi6xSkPMl21e9TEAudav4pOO2EGguP4Djy4X8WLp6jO+GHDRo4gceInimCOdA9mqzb4yJgNoVFlEG6J9X5Axj4TfZ1fg9NdsJcLcEd3N7V0g51vbv7StCqdgr5m7TrjRXfSinDd9R41KHTzbfQNh3uYbp+cAm0vDoNgtXCzBkpqnsEo2rTNmnqgKAiWmu2vybT/A0i4PsaIeeSlsMZ9zLH7AdRxvrWlmXJA7ye9noQVyW8b2zOpE3LFiMEk93ZItDqzhFgOyLN3NNFGhhCvmcqYrLqIO9hpHOrDeio+ykG8g+3s42AG7AdyuW7BVcbr99mpd02NZW9RmY5va6+j156GVRf54KrM4yXxLeZjVj/h4uaLEGIulZh1mECDWiQc2L7/sWW6l3LoAL1k3b11shhpvXz4PA/22YTHsfcWObMQ7Uiy6bbfQO3hswaLyfJVMJ9QT3LymxZGvReGb2lpMATwWo8YH7dzIsBAaPugFAZdjskuJe6Y6BhdFgjdjOlcjxhi94Ui7PGS0XQHESQl7lwUeAxz0yEJ0arVwCOyq/hMKmmVS6PhezP2iYw9azvqwu+UqEFPUaBkdbphWQ2WmouK2xEazqsjSnyHA0rWxHAv43uCqvq+BXpBagEJHLfZ0uEeHkuerFWwpUOVKnJQn34NDL6v12l3/Xonwt9+Q== rochel@rochel
         state: present
         sudoer: true
 
 docker-manager-first:
   hosts:
-    staging: # @todo set this to be the hostname of your target server
-      ansible_host: '11.11.11.11' # @todo set this to be the hostname of your target server
+    siecm-staging-app-1: # @todo set this to be the hostname of your target server
+      ansible_host: '102.16.127.249' # @todo set this to be the hostname of your target server
+      ansible_port: 10014
+      internal_ssh_port: 22
       data_label: data1
       # If you are using a jump server to access this environment, enter other SSH args here.
-      # ansible_ssh_common_args: '-J jump@55.55.55.55 -o StrictHostKeyChecking=no' # @todo set this to be the IP address of your jump server
-
-# This staging servers is configured to only use one server
 docker-workers: {}
-
-# For staging server to be able to restore from backups, it needs to have access to the backup server.
-# @todo if you do not intend to set up automatic sync from the backup server, you can remove this section.
-backups:
-  hosts:
-    backup: # @todo set this to be the hostname of your backup server
-      ansible_host: '66.66.66.66' # set this to be the IP address of your backup server
-      # Written by provision pipeline. Assumes "backup" environment
-      # exists in Github environments
-      ansible_ssh_private_key_file: /tmp/backup_ssh_private_key
-# If you are using a jump server to access this environment
-# jump:
+# backups:
 #   hosts:
-#     your-jumpserver-hostname-here: # @todo set this to be the hostname of your backup server
-#       ansible_ssh_private_key_file: /tmp/jump_ssh_private_key # Written by provision pipeline. Assumes "jump" environment exists in Github environments
-#       ansible_host: '55.55.55.55'
+#     siecm-backup-app-2: # @todo set this to be the hostname of your backup server
+#       ansible_host: '102.16.127.245'
+#       ansible_port: 10015
+#       internal_ssh_port: 22
+#       ansible_ssh_private_key_file: /tmp/backup_ssh_private_key

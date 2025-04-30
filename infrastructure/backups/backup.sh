@@ -330,4 +330,3 @@ fi
 rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz.enc
 rm /tmp/${LABEL:-$BACKUP_DATE}.tar.gz
 rm -r $BACKUP_RAW_FILES_DIR
-

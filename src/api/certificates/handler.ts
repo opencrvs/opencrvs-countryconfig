@@ -11,10 +11,61 @@
 
 import { Request, ResponseToolkit } from '@hapi/hapi'
 import { readFileSync } from 'fs'
+import { join } from 'path'
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
-  const res = readFileSync(
-    `./src/api/certificates/source/Farajaland-${request.params.event}-certificate-v2.svg`
-  ).toString()
-  return h.response(res).code(200)
+  if (request.params.event) {
+    const res = readFileSync(
+      `./src/api/certificates/source/Madagascar-${request.params.event}-certificate.svg`
+    )
+      .toString()
+      .replace(
+        '{{certificateLogo}}',
+        `data:image/png;base64,${readFileSync(
+          join(__dirname, './source/Madagascar-logo.png'),
+          {
+            encoding: 'base64'
+          }
+        )}`
+      )
+
+    return h.response(res).code(200)
+  }
+
+  const Certificates = [
+    {
+      event: 'birth',
+      fileName: 'Madagascar-birth-certificate.svg',
+      svgCode: readFileSync(
+        './src/api/certificates/source/Madagascar-birth-certificate.svg'
+      )
+        .toString()
+        .replace(
+          '{{certificateLogo}}',
+          `data:image/png;base64,${readFileSync(
+            join(__dirname, './source/Madagascar-logo.png'),
+            {
+              encoding: 'base64'
+            }
+          )}`
+        )
+    },
+    {
+      event: 'death',
+      fileName: 'Madagascar-death-certificate.svg',
+      svgCode: readFileSync(
+        './src/api/certificates/source/Madagascar-death-certificate.svg'
+      ).toString()
+    },
+    {
+      event: 'marriage',
+      fileName: 'Madagascar-marriage-certificate.svg',
+      svgCode: readFileSync(
+        './src/api/certificates/source/Madagascar-marriage-certificate.svg'
+      ).toString()
+    }
+  ]
+
+  const res = JSON.stringify(Certificates)
+  return h.response(res)
 }

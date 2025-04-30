@@ -10,16 +10,18 @@ services:
   gateway:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en,fr,mg
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
   workflow:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=en,fr,mg
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -27,6 +29,7 @@ services:
     environment:
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -37,28 +40,34 @@ services:
       - MONGO_URL=mongodb://metrics:${METRICS_MONGODB_PASSWORD}@mongo1/metrics?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
+      - DISABLE_RATE_LIMIT=true
 
   auth:
     environment:
       - NODE_ENV=production
+      - QA_ENV=true
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
   user-mgnt:
     environment:
       - NODE_ENV=production
+      - QA_ENV=true
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
   notification:
     environment:
       - NODE_ENV=production
-      - LANGUAGES=en,fr
+      - LANGUAGES=mg,fr,en
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://notification:${NOTIFICATION_MONGODB_PASSWORD}@mongo1/notification?replicaSet=rs0
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -67,6 +76,7 @@ services:
       - NODE_ENV=production
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -76,6 +86,7 @@ services:
       - SENTRY_DSN=${SENTRY_DSN:-}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -83,10 +94,12 @@ services:
     environment:
       - NODE_ENV=production
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
+      - DISABLE_RATE_LIMIT=true
 
   documents:
     environment:
       - NODE_ENV=production
+      - DISABLE_RATE_LIMIT=true
 
   countryconfig:
     image: ${DOCKERHUB_ACCOUNT}/${DOCKERHUB_REPO}:${COUNTRY_CONFIG_VERSION}
@@ -97,6 +110,7 @@ services:
       - NODE_ENV=production
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
+      - GATEWAY_URL=http://gateway:7070
       - APPLICATION_CONFIG_URL=http://config:2021
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true
@@ -108,12 +122,16 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME}
       - SMTP_PASSWORD=${SMTP_PASSWORD}
       - SMTP_SECURE=${SMTP_SECURE}
+      - NUI_GENERATOR_URL=${NUI_GENERATOR_URL}
+      - NUI_API_KEY=${NUI_API_KEY}
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
   client:
     environment:
       - DECLARED_DECLARATION_SEARCH_QUERY_COUNT=100
+      - DISABLE_RATE_LIMIT=true
     deploy:
       replicas: 1
 
@@ -147,6 +165,7 @@ services:
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
       - WAIT_HOSTS=mongo1:27017,influxdb:8086,minio:9000,elasticsearch:9200
+      - DISABLE_RATE_LIMIT=true
 
   mongo-on-update:
     environment:
@@ -181,13 +200,20 @@ services:
     #   - --tls.certificates.stores=default
     #   - --tls.stores.default.defaultcertificate.certfile=/certs/crvs.cm.crt
     #   - --tls.stores.default.defaultcertificate.keyfile=/certs/crvs.cm.key
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_HOSTED_ZONE_ID=${AWS_HOSTED_ZONE_ID}
+      - AWS_REGION=af-south-1 # https://docs.aws.amazon.com/general/latest/gr/r53.html
+      - DISABLE_RATE_LIMIT=true
 
     command:
-      - --certificatesresolvers.certResolver.acme.email=riku@opencrvs.org
+      - --certificatesresolvers.certResolver.acme.dnschallenge=true
+      - --certificatesresolvers.certResolver.acme.dnschallenge.provider=route53
+      - --certificatesresolvers.certResolver.acme.email=sd-identity@digital.gov.mg
       - --certificatesresolvers.certResolver.acme.storage=acme.json
-      - --certificatesresolvers.certResolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
-      - --certificatesresolvers.certResolver.acme.httpchallenge.entrypoint=web
-      - --certificatesresolvers.certResolver.acme.httpchallenge=true
+      - --certificatesresolvers.certResolver.acme.dnschallenge.delayBeforeCheck=600
+      - --certificatesresolvers.certResolver.acme.dnschallenge.disablePropagationCheck=true
 
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443

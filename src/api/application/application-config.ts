@@ -1,34 +1,39 @@
 import { countryLogo } from '@countryconfig/api/application/country-logo'
+import * as fs from 'fs'
+import { join } from 'path'
 
 export const applicationConfig = {
-  APPLICATION_NAME: 'Farajaland CRS',
+  APPLICATION_NAME: 'SIECM',
   BIRTH: {
     REGISTRATION_TARGET: 30,
     LATE_REGISTRATION_TARGET: 365,
     FEE: {
       ON_TIME: 0,
-      LATE: 5.5,
-      DELAYED: 15
+      LATE: 1000.0,
+      DELAYED: 2000
     },
     PRINT_IN_ADVANCE: true
   },
   COUNTRY_LOGO: countryLogo,
   CURRENCY: {
     languagesAndCountry: ['en-US'],
-    isoCode: 'USD'
+    isoCode: 'MGA'
   },
   DEATH: {
-    REGISTRATION_TARGET: 45,
+    REGISTRATION_TARGET: 30,
     FEE: {
       ON_TIME: 0,
-      DELAYED: 0
+      DELAYED: 2000
     },
     PRINT_IN_ADVANCE: true
   },
-  PHONE_NUMBER_PATTERN: '^0(7|9)[0-9]{8}$',
+  PHONE_NUMBER_PATTERN: '^(\\+261|0)?3[0-9]{8}$',
   NID_NUMBER_PATTERN: '^[0-9]{10}$',
   LOGIN_BACKGROUND: {
-    backgroundColor: '36304E'
+    backgroundImage: `data:image/jpg;base64,${fs
+      .readFileSync(join(__dirname, 'login-bg-mdg.jpg'))
+      .toString('base64')}`,
+    imageFit: 'FILL'
   },
   MARRIAGE: {
     REGISTRATION_TARGET: 45,
@@ -42,16 +47,16 @@ export const applicationConfig = {
   FIELD_AGENT_AUDIT_LOCATIONS: 'DISTRICT',
   DECLARATION_AUDIT_LOCATIONS: 'DISTRICT',
   FEATURES: {
-    DEATH_REGISTRATION: true,
+    DEATH_REGISTRATION: false,
     MARRIAGE_REGISTRATION: false,
     EXTERNAL_VALIDATION_WORKQUEUE: false,
     INFORMANT_SIGNATURE: false,
-    PRINT_DECLARATION: false,
-    DATE_OF_BIRTH_UNKNOWN: true,
+    PRINT_DECLARATION: true,
+    DATE_OF_BIRTH_UNKNOWN: false,
     INFORMANT_SIGNATURE_REQUIRED: false
   },
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
-  INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
+  INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   SIGNATURE_REQUIRED_FOR_ROLES: ['LOCAL_REGISTRAR', 'NATIONAL_REGISTRAR']
 }
 
@@ -71,19 +76,21 @@ type NotificationFlags = {
   MARRIAGE?: EventNotificationFlags
 }
 
+const isNotificationEnabled = process.env.QA_ENV !== 'true' //process.env.QA_ENV !== 'true'
+
 export const notificationForRecord: NotificationFlags = {
   BIRTH: {
-    'sent-notification': true,
-    'sent-notification-for-review': true,
-    'sent-for-approval': true,
-    registered: true,
-    'sent-for-updates': true
+    'sent-notification': isNotificationEnabled,
+    'sent-notification-for-review': isNotificationEnabled,
+    'sent-for-approval': isNotificationEnabled,
+    registered: isNotificationEnabled,
+    'sent-for-updates': isNotificationEnabled
   },
   DEATH: {
-    'sent-notification': true,
-    'sent-notification-for-review': true,
-    'sent-for-approval': true,
-    registered: true,
-    'sent-for-updates': true
+    'sent-notification': false,
+    'sent-notification-for-review': false,
+    'sent-for-approval': false,
+    registered: false,
+    'sent-for-updates': false
   }
 }

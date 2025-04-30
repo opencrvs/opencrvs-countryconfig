@@ -86,20 +86,20 @@ export async function notificationHandler(
   const applicationConfig = await getApplicationConfig()
   const applicationName = applicationConfig.APPLICATION_NAME
 
-  if (process.env.NODE_ENV !== 'production') {
-    const { templateName, recipient, convertUnicode, type } = payload
-    logger.info(
-      `Ignoring notification due to NODE_ENV not being 'production'. Params: ${JSON.stringify(
-        {
-          templateName,
-          recipient,
-          convertUnicode,
-          type
-        }
-      )}`
-    )
-    return h.response().code(200)
-  }
+  // if (process.env.NODE_ENV !== 'production') {
+  //   const { templateName, recipient, convertUnicode, type } = payload
+  //   logger.info(
+  //     `Ignoring notification due to NODE_ENV not being 'production'. Params: ${JSON.stringify(
+  //       {
+  //         templateName,
+  //         recipient,
+  //         convertUnicode,
+  //         type
+  //       }
+  //     )}`
+  //   )
+  //   return h.response().code(200)
+  // }
 
   if (isEmailPayload(applicationConfig, payload)) {
     const { templateName, variables, recipient } = payload

@@ -15,7 +15,7 @@ on:
       core-image-tag:
         description: Core DockerHub image tag
         required: true
-        default: 'v1.6.1'
+        default: 'v1.6.3'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
@@ -31,6 +31,29 @@ jobs:
       outcome: ${{ steps.deploy.outcome }}
     timeout-minutes: 60
     steps:
+      - name: Set ENV_VAR dynamically
+        run: echo "ENV_VAR=ENV_${{ github.event.inputs.environment }}" >> $GITHUB_ENV
+
+      - name: Create .env file
+        run: |
+          echo "${{ vars[env.ENV_VAR] }}" | sed 's/[[:space:]]*$//' | awk -F= '{print $1 "=\"" $2 "\""}' > .env.${{ github.event.inputs.environment }}
+
+      - name: Load environment variables
+        run: |
+          set -a
+          source .env.${{ github.event.inputs.environment }}
+          set +a
+
+      - name: Charger les variables autrement
+        run: |
+          while IFS= read -r line; do
+            if [[ ! -z "$line" && "$line" != \#* ]]; then
+              line=$(echo "$line" | sed -E 's/^([^=]+)="(.*)"$/\1=\2/')
+              export "$line"
+              echo "$line" >> $GITHUB_ENV
+            fi
+          done < .env.${{ github.event.inputs.environment }}
+
       - name: Clone core
         uses: actions/checkout@v3
         with:
@@ -62,11 +85,26 @@ jobs:
           cat ./infrastructure/known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Install SSH Key
+      - name: Install SSH Key for QA
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{ secrets.SSH_KEY_QA }}
           known_hosts: ${{ env.KNOWN_HOSTS }}
+        if: ${{ github.event.inputs.environment == 'qa' }}
+
+      - name: Install SSH Key for Staging
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY_STAGING }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+        if: ${{ github.event.inputs.environment == 'staging' }}
+
+      - name: Install SSH Key for Prod
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY_PROD }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+        if: ${{ github.event.inputs.environment == 'production' }}
 
       - name: Unset KNOWN_HOSTS variable
         run: |
@@ -93,60 +131,22 @@ jobs:
             sleep 10
           done
 
-      - name: Export all secrets and environment variables
-        run: |
-          cd ./${{ github.event.repository.name }}
-
-          SECRETS_JSON_WITH_NEWLINES=$(cat<<EOF
-            ${{ toJSON(secrets) }}
-          EOF)
-
-          #
-          # Secrets & variables with newlines are filtered out automatically
-          # This includes SSH_KEY and KNOWN_HOSTS
-          #
-          while IFS= read -r secret; do
-            echo "$secret" >> .env.${{ github.event.inputs.environment }}
-          done < <(
-            jq -r '
-              to_entries |
-              map(
-                select(.value | test("\n") | not) |
-                "\(.key)=\"\(.value)\""
-              ) |
-              .[]' <<< "$SECRETS_JSON_WITH_NEWLINES"
-          )
-
-          VARS_JSON_WITH_NEWLINES=$(cat<<EOF
-            ${{ toJSON(vars) }}
-          EOF)
-
-          while IFS= read -r var; do
-            echo "$var" >> .env.${{ github.event.inputs.environment }}
-          done < <(
-            jq -r '
-              to_entries |
-              map(
-                select(.value | test("\n") | not) |
-                "\(.key)=\"\(.value)\""
-              ) |
-              .[]' <<< "$VARS_JSON_WITH_NEWLINES"
-          )
-
       - name: Deploy to ${{ github.event.inputs.environment }}
         id: deploy
         run: |
+          export DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
+          export DOCKER_TOKEN="${{ secrets.DOCKER_TOKEN }}"
           cd ./${{ github.event.repository.name }}
           yarn deploy \
           --clear_data=no \
           --environment=${{ github.event.inputs.environment }} \
-          --host=${{ vars.DOMAIN }} \
-          --ssh_host=${{ vars.SSH_HOST || secrets.SSH_HOST }} \
-          --ssh_port=${{ vars.SSH_PORT || secrets.SSH_PORT }} \
-          --ssh_user=${{ secrets.SSH_USER }} \
+          --host=$DOMAIN \
+          --ssh_host=$SSH_HOST \
+          --ssh_port=$SSH_PORT \
+          --ssh_user=$SSH_USER \
           --version=${{ github.event.inputs.core-image-tag }} \
           --country_config_version=${{ github.event.inputs.countryconfig-image-tag }} \
-          --replicas=${{ vars.REPLICAS }}
+          --replicas=$REPLICAS
 
   reset:
     needs: deploy

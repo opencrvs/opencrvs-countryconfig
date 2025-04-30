@@ -34,7 +34,8 @@ export const deathDocumentType = {
   BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
   NATIONAL_ID: 'NATIONAL_ID',
   PASSPORT: 'PASSPORT',
-  OTHER: 'OTHER'
+  OTHER: 'OTHER',
+  DEATH_PROOF_FROM_FOKONTANY: 'DEATH_PROOF_FROM_FOKONTANY'
 }
 export const documentsSection = {
   id: 'documents',
@@ -53,10 +54,28 @@ export const documentsSection = {
           validator: []
         },
         {
+          name: 'uploadDocForProofOfDeathFromFokontany',
+          type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          label: formMessageDescriptors.deathProofFromFokontany,
+          initialValue: '',
+          required: true,
+          extraValue: deathDocumentExtraValue.DECEASED_DEATH_PROOF,
+          hideAsterisk: true,
+          validator: [],
+          options: [
+            {
+              value: deathDocumentType.DEATH_PROOF_FROM_FOKONTANY,
+              label: formMessageDescriptors.deathProofFromFokontany
+            }
+          ],
+          mapping: getFieldMapping('documents')
+        },
+        {
           name: 'uploadDocForDeceased',
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.deceasedIDProof,
           initialValue: '',
+          required: true,
           extraValue: deathDocumentExtraValue.DECEASED_ID_PROOF,
           hideAsterisk: true,
           validator: [],
@@ -85,6 +104,7 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.proofOfInformantsID,
           initialValue: '',
+          required: true,
           extraValue: deathDocumentExtraValue.INFORMANT_ID_PROOF,
           hideAsterisk: true,
           validator: [],
@@ -100,73 +120,6 @@ export const documentsSection = {
             {
               value: deathDocumentType.BIRTH_CERTIFICATE,
               label: formMessageDescriptors.docTypeBirthCert
-            },
-            {
-              value: deathDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
-            }
-          ],
-          mapping: getFieldMapping('documents')
-        },
-        {
-          name: 'uploadDocForDeceasedDeath',
-          type: 'DOCUMENT_UPLOADER_WITH_OPTION',
-          label: formMessageDescriptors.deceasedDeathProof,
-          initialValue: '',
-          extraValue: deathDocumentExtraValue.DECEASED_DEATH_PROOF,
-          hideAsterisk: true,
-          validator: [],
-          options: [
-            {
-              value: deathDocumentType.ATTESTED_LETTER_OF_DEATH,
-              label: formMessageDescriptors.docTypeLetterOfDeath
-            },
-            {
-              value: deathDocumentType.POLICE_CERTIFICATE_OF_DEATH,
-              label: formMessageDescriptors.docTypePoliceCertificate
-            },
-            {
-              value: deathDocumentType.HOSPITAL_CERTIFICATE_OF_DEATH,
-              label: formMessageDescriptors.docTypeHospitalDeathCertificate
-            },
-            {
-              value: deathDocumentType.CORONERS_REPORT,
-              label: formMessageDescriptors.docTypeCoronersReport
-            },
-            {
-              value: deathDocumentType.BURIAL_RECEIPT,
-              label: formMessageDescriptors.docTypeCopyOfBurialReceipt
-            },
-            {
-              value: deathDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
-            }
-          ],
-          mapping: getFieldMapping('documents')
-        },
-        {
-          name: 'uploadDocForCauseOfDeath',
-          type: 'DOCUMENT_UPLOADER_WITH_OPTION',
-          label: formMessageDescriptors.causeOfDeathProof,
-          initialValue: '',
-          extraValue: deathDocumentExtraValue.DECEASED_DEATH_CAUSE_PROOF,
-          hideAsterisk: true,
-          validator: [],
-          conditionals: [
-            {
-              action: 'hide',
-              expression:
-                'draftData?.deathEvent?.causeOfDeathEstablished !== "true"'
-            }
-          ],
-          options: [
-            {
-              value: deathDocumentType.MEDICALLY_CERTIFIED_CAUSE_OF_DEATH,
-              label: formMessageDescriptors.medicallyCertified
-            },
-            {
-              value: deathDocumentType.VERBAL_AUTOPSY_REPORT,
-              label: formMessageDescriptors.verbalAutopsyReport
             },
             {
               value: deathDocumentType.OTHER,

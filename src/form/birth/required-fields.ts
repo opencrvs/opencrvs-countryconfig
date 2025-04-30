@@ -9,13 +9,8 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { MessageDescriptor } from 'react-intl'
-import {
-  formMessageDescriptors,
-  informantMessageDescriptors
-} from '../common/messages'
-import { Conditional, SerializedFormField } from '../types/types'
-import { divider } from '../common/common-optional-fields'
+import { formMessageDescriptors } from '../common/messages'
+import { SerializedFormField } from '../types/types'
 import {
   birthInformantTypeOptions,
   placeOfBirthOptions
@@ -41,7 +36,6 @@ export const informantType: SerializedFormField = {
 }
 
 export const getPlaceOfBirthFields = (): SerializedFormField[] => [
-  divider('place-of-birth'),
   {
     name: 'placeOfBirth',
     type: 'SELECT_WITH_OPTIONS',

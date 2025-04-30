@@ -16,6 +16,7 @@ services:
       - QA_ENV=true
       - FHIR_URL=http://hearth:3447/fhir
       - AUTH_URL=http://auth:4040
+      - GATEWAY_URL=http://gateway:7070
       - APPLICATION_CONFIG_URL=http://config:2021
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - CHECK_INVALID_TOKEN=true

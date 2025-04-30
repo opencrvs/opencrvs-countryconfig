@@ -11,16 +11,29 @@ all:
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
-      - name: my-user
+      - name: ocrvs-markus
         ssh_keys:
-          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABg...Z/rhU= user@example.com
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGvvjFxXqcdKn9kk8VHzm38R3nLWvvwP8W0e3uXxOgby/7LJZx2bosXCZ28FyPTYwVRezHE9lguKiaCo2kxqzNwwx64MzUFRH60sE5cYeH1IqjCBTY3Ht8hkZlYaVoRmsHiqiqogW+bJPo8PBO+ydCh53KUdJFEOXAYvKZ/RfDsWh7/SjeQrQzpRFNeb9keefX+uNNBbKRm9/AEWIHFCGJpDvpJcz3i8hKbRPtXi5OTcEx1Kr4iOMikGXvGzsC1u84qgiy5moeBzpWeROwyJOHRLqPqQ/IHvUkE4F1BXen02G69nHpFdmjTOcjBbT1RzGTeWZs+ehc/kJaS3dUMHd5rSPsimjiCKZ5+wCAyxc5gJlQof71IpHVN4ZDoetH4Lo2bnLdA1YX6DaVU1Fd/6rPWw02DA1OEIhrjJ3Gak87/HUYGNhpZVyIxyNYGXBMPkmHCHCjzjN7sPdMRvkbl5tahD2PoS4172tsO7YYMfAZ/UYYZw745CDxQYIjjfrFRn8= markuslaurila@MacBook-Pro.local
+        state: present
+        sudoer: true
+      # solo ssh keys
+      - name: solo
+        ssh_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIET4ZrgJvwtWBZkY0aKgz/p8RhtUfPvWRGEBfo99msyX bastion_default_key
+        state: present
+        sudoer: true
+      - name: ocrvs-riku
+        ssh_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWIF63S4f3z9wQMvWibmvl7MPuJ6EVrkP0HuvgNhcs/4DZYMcR/GRBvV4ldOSYMlBevIXycgGzNDxKJgENUuwIWanjBu7uVAHyD6+cIRD1h63qq7Cjv/2HYTfBDKOrKzPOhA6zWvKO0ZGWsjRXk5LWMCbKOkvKJCxOpj/NVBxeE4FTK5YADYPV3OSsmBtqTHrVLm2sMmShU/2hMYYswWkobidjX65+nK/X+3C+yJbHwiydVvn+QCrFlFfCLPWKe8rUpOxyxofPqWVQh6CHhHfT8okaOc9sOE8Qeip9ljo84DftJh3Xm3ynOdWK1hH2BvRvxNadWqcE1qECbkg4tx2x riku.rouvila@gmail.com
         state: present
         sudoer: true
 
 docker-manager-first:
   hosts:
-    qa: # @todo set this to be the hostname of your target server
-      ansible_host: '55.55.55.55' # @todo set this to be the IP address of your server
+    siecm-dev-app-1: # @todo set this to be the hostname of your target server'
+      ansible_host: '102.16.127.249' # @todo set this to be the IP address of your server
+      ansible_port: 10203 # @todo set this to be the SSH port of your server if not 22
+      internal_ssh_port: 22 # @todo if you are port-forwarding and server SSH port is not the same as ansible_port, set it here
       data_label: data1 # for manager machines, this should always be "data1"
 
 # QA and staging servers are not configured to use workers.

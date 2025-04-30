@@ -219,7 +219,7 @@ export function getFieldMapping(
         template: {
           operation: 'dateFormatTransformer',
           fieldName: certificateHandlebar,
-          parameters: ['birthDate', 'en', 'do MMMM yyyy']
+          parameters: ['birthDate', 'en', 'yyyy-MM-dd']
         },
         mutation: {
           operation: 'longDateTransformer',

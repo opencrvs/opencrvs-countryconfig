@@ -40,11 +40,15 @@ export type Validation = (
   offlineCountryConfig?: any
 ) => ValidationResult | undefined
 
-export enum Event {
-  Birth = 'birth',
-  Death = 'death',
-  Marriage = 'marriage'
-}
+export const Event = {
+  Birth: 'birth',
+  Death: 'death',
+  Marriage: 'marriage'
+} as const
+
+const events = Object.values(Event)
+
+export type Event = (typeof events)[number]
 
 export type ValidationInitializer = (...value: any[]) => Validation
 
@@ -142,6 +146,9 @@ export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
 export const SIGNATURE = 'SIGNATURE'
+export const HTTP = 'HTTP'
+export const BUTTON = 'BUTTON'
+export const REDIRECT = 'REDIRECT'
 
 export enum RadioSize {
   LARGE = 'large',
@@ -495,6 +502,28 @@ export interface ISignatureFormField extends IFormFieldBase {
   )[]
 }
 
+export interface IHttpFormField extends IFormFieldBase {
+  type: typeof HTTP
+  options: any
+}
+export interface IButtonFormField extends IFormFieldBase {
+  type: typeof BUTTON
+  icon?: string
+  buttonLabel: MessageDescriptor
+  loadingLabel?: MessageDescriptor
+  options: {
+    trigger: string
+    shouldHandleLoadingState?: boolean
+  }
+}
+
+export interface IRedirectButtonFormField extends IFormFieldBase {
+  type: typeof REDIRECT
+  options: {
+    url: string
+  }
+}
+
 export type IFormField =
   | ITextFormField
   | ITelFormField
@@ -528,6 +557,9 @@ export type IFormField =
   | IDividerField
   | IHeading3Field
   | ISignatureFormField
+  | IHttpFormField
+  | IButtonFormField
+  | IRedirectButtonFormField
 
 export interface SelectComponentOption {
   value: string
@@ -553,6 +585,7 @@ export interface IFormFieldBase {
   name: string
   type: IFormField['type']
   label: MessageDescriptor
+  labelParam?: Record<string, string>
   helperText?: MessageDescriptor
   tooltip?: MessageDescriptor
   validator: Validator[]
@@ -896,6 +929,7 @@ export interface IFormSection {
   optional?: boolean
   notice?: MessageDescriptor
   mapping?: ISectionMapping
+  canContinue?: string
 }
 
 export type ISerializedFormSection = Omit<
@@ -923,7 +957,8 @@ export enum AddressSubsections {
 
 export enum AddressCases {
   PRIMARY_ADDRESS = 'PRIMARY_ADDRESS',
-  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS'
+  SECONDARY_ADDRESS = 'SECONDARY_ADDRESS',
+  PLACE_OF_BIRTH_ADDRESS = 'PLACE_OF_BIRTH_ADDRESS'
 }
 export enum EventLocationAddressCases {
   PLACE_OF_BIRTH = 'placeOfBirth',

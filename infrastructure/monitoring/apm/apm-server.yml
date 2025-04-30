@@ -472,7 +472,9 @@ queue:
   # Queue type by name (default 'mem').
   mem:
     # Max number of events the queue can buffer.
-    events: 12096
+    events: 12096 # 24000
+  # flush:
+  #   min_events: 512 # Adjust this to a lower value to force flushing more frequently
 
 # Hints the minimum number of events stored in the queue,
 # before providing a batch of events to the outputs.

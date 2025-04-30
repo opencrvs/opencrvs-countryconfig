@@ -19,13 +19,6 @@ import { certificateHandlebars } from '../birth/certificate-handlebars'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { Validator } from '../types/validators'
 
-const exactDobConditional: Conditional[] = [
-  {
-    action: 'hide',
-    expression: '!window.config.FEATURES.DATE_OF_BIRTH_UNKNOWN'
-  }
-]
-
 export const exactDateOfBirthUnknown = (
   conditionalCase: Conditional[]
 ): SerializedFormField => ({
@@ -36,12 +29,12 @@ export const exactDateOfBirthUnknown = (
     description: 'Checkbox for exact date of birth unknown',
     id: 'form.field.label.exactDateOfBirthUnknown'
   },
-  hideInPreview: true,
+  hideInPreview: false,
   required: false,
   hideHeader: true,
   initialValue: false,
   validator: [],
-  conditionals: exactDobConditional.concat(conditionalCase),
+  conditionals: conditionalCase,
   mapping: {
     query: {
       operation: 'booleanTransformer'
@@ -73,7 +66,8 @@ export const getAgeOfIndividualInYears = (
 
 export const getMaritalStatus = (
   certificateHandlebar: string,
-  conditionals: Conditional[]
+  conditionals: Conditional[],
+  required: boolean = true
 ): SerializedFormField => ({
   name: 'maritalStatus',
   type: 'SELECT_WITH_OPTIONS',
@@ -82,7 +76,7 @@ export const getMaritalStatus = (
     description: 'Label for form field: Marital status',
     id: 'form.field.label.maritalStatus'
   },
-  required: false,
+  required,
   initialValue: '',
   validator: [],
   placeholder: formMessageDescriptors.formSelectPlaceholder,
@@ -95,7 +89,7 @@ export const registrationEmail: SerializedFormField = {
   name: 'registrationEmail',
   type: 'TEXT',
   label: formMessageDescriptors.email,
-  required: true, // Email is the configured INFORMANT_NOTIFICATION_DELIVERY_METHOD in Farajaland
+  required: false,
   initialValue: '',
   validator: [
     {
@@ -163,8 +157,9 @@ export const getNIDVerificationButton = (
   labelForOffline: formMessageDescriptors.nidOffline
 })
 export const getOccupation = (
+  conditionals: Conditional[],
   certificateHandlebar: string,
-  conditionals: Conditional[] = []
+  required: boolean = true
 ): SerializedFormField => ({
   name: 'occupation',
   type: 'TEXT',
@@ -173,7 +168,7 @@ export const getOccupation = (
     description: 'text for occupation form field',
     id: 'form.field.label.occupation'
   },
-  required: false,
+  required,
   initialValue: '',
   validator: [],
   conditionals,

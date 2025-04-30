@@ -15,10 +15,11 @@ window.config = {
   AUTH_URL: 'https://gateway.{{hostname}}/auth/',
   MINIO_BUCKET: 'ocrvs',
   COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
-  // Country code in uppercase ALPHA-3 format
-  COUNTRY: 'FAR',
-  LANGUAGES: 'en,fr',
-  SENTRY: '{{sentry}}',
+  // Country code in uppercase ALPHA-3 format// Country code in uppercase ALPHA-3 format
+  COUNTRY: 'MDG',
+  LANGUAGES: 'fr,en,mg',
+  SENTRY:
+    'https://f892d643aab642108f44e2d1795706bc@o309867.ingest.sentry.io/1774604',
   LEADERBOARDS_DASHBOARD_URL:
     'https://metabase.{{hostname}}/public/dashboard/acae0527-74be-4804-a3ee-f8b3c9c8784c#bordered=false&titled=false&refresh=300',
   REGISTRATIONS_DASHBOARD_URL:

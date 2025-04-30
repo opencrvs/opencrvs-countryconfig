@@ -42,7 +42,9 @@ export const informantTypes = {
   OTHER_FAMILY_MEMBER: 'OTHER_FAMILY_MEMBER',
   LEGAL_GUARDIAN: 'LEGAL_GUARDIAN',
   HEAD_OF_GROOM_FAMILY: 'HEAD_OF_GROOM_FAMILY',
-  HEAD_OF_BRIDE_FAMILY: 'HEAD_OF_BRIDE_FAMILY'
+  HEAD_OF_BRIDE_FAMILY: 'HEAD_OF_BRIDE_FAMILY',
+  DOCTOR: 'DOCTOR',
+  MID_WIFE: 'MID_WIFE'
 }
 
 export const identityNumberMapping = {
@@ -179,6 +181,14 @@ export const birthInformantTypeOptions: ISelectOption[] = [
     label: informantMessageDescriptors.LEGAL_GUARDIAN
   },
   {
+    value: informantTypes.DOCTOR,
+    label: informantMessageDescriptors.DOCTOR
+  },
+  {
+    value: informantTypes.MID_WIFE,
+    label: informantMessageDescriptors.MID_WIFE
+  },
+  {
     value: informantTypes.OTHER,
     label: informantMessageDescriptors.OTHER
   }
@@ -230,10 +240,6 @@ export const genderOptions: ISelectOption[] = [
   {
     value: 'female',
     label: formMessageDescriptors.sexFemale
-  },
-  {
-    value: 'unknown',
-    label: formMessageDescriptors.sexUnknown
   }
 ]
 
@@ -317,6 +323,10 @@ export const mannerOfDeathOptions: ISelectOption[] = [
   {
     value: 'MANNER_UNDETERMINED',
     label: formMessageDescriptors.mannerUndetermined
+  },
+  {
+    value: 'OTHER',
+    label: formMessageDescriptors.other
   }
 ]
 
@@ -442,24 +452,8 @@ export const typeOfBirthOptions: ISelectOption[] = [
 
 export const attendantAtBirthOptions: ISelectOption[] = [
   {
-    value: 'PHYSICIAN',
-    label: formMessageDescriptors.physician
-  },
-  {
-    value: 'NURSE',
-    label: formMessageDescriptors.attendantAtBirthNurse
-  },
-  {
-    value: 'MIDWIFE',
-    label: formMessageDescriptors.attendantAtBirthMidwife
-  },
-  {
-    value: 'OTHER_PARAMEDICAL_PERSONNEL',
-    label: formMessageDescriptors.attendantAtBirthOtherParamedicalPersonnel
-  },
-  {
-    value: 'LAYPERSON',
-    label: formMessageDescriptors.attendantAtBirthLayperson
+    value: 'HEALTH_WORKER',
+    label: formMessageDescriptors.attendantAtBirthHealthWorker
   },
   {
     value: 'TRADITIONAL_BIRTH_ATTENDANT',
@@ -508,3 +502,65 @@ export const yesNoRadioOptions: IRadioOption[] = [
     }
   }
 ]
+
+const courtNames = [
+  'TPI Antananarivo',
+  'TPI Antananarivo Avaradrano',
+  'TPI Ankazobe',
+  'TPI Tsiroanomandidy',
+  'TPI Miarinarivo',
+  'TPI Arivonimamo',
+  'TPI Antsirabe',
+  'TPI Ambatolampy',
+  'TPI Toamasina',
+  'TPI Vatomandry',
+  'TPI Mahanoro',
+  'TPI Ambatondrazaka',
+  'TPI Moramanga',
+  'TPI Fenoarivo Atsinanana',
+  'TPI Maroantsetra',
+  'TPI Sainte Marie',
+  'TPI Fianarantsoa',
+  'TPI Ambositra',
+  'TPI Ambatofinandrahana',
+  'TPI Manakara',
+  'TPI Ikongo',
+  'TPI Mananjary',
+  'TPI Farafangana',
+  'TPI Vangaindrano',
+  'TPI Ihosy',
+  'TPI Toliara',
+  'TPI Morombe',
+  'TPI Ankazoabo Sud',
+  'TPI Beroroha',
+  'TPI Ampanihy',
+  'TPI Ambovombe',
+  'TPI Tolagnaro',
+  'TPI Betroka',
+  'TPI Mahajanga',
+  'TPI Maevatanana',
+  'TPI Antsohihy',
+  'TPI Analalava',
+  'TPI Bealanana',
+  'TPI Befandriana Avaratra',
+  'TPI Mampikony',
+  'TPI Mandritsara',
+  'TPI Boriziny',
+  'TPI Maintirano',
+  'TPI Besalampy',
+  'TPI Antsiranana',
+  'TPI Ambanja',
+  'TPI Ambilobe',
+  'TPI Nosy Be',
+  'TPI Sambava',
+  'TPI Antalaha'
+]
+
+export const tribunalOfFirstInstanceActOptions: ISelectOption[] =
+  courtNames.map((name) => ({
+    value: name,
+    label: {
+      id: 'form.field.label.courtName.' + name.replace(/\s/, ''),
+      defaultMessage: name
+    }
+  }))

@@ -23,6 +23,7 @@ export const COUNTRY_CONFIG_URL =
   process.env.COUNTRY_CONFIG_URL || 'http://localhost:3040'
 export const APPLICATION_CONFIG_URL =
   process.env.APPLICATION_CONFIG_URL || 'http://localhost:2021/'
+
 export const SENTRY_DSN = process.env.SENTRY_DSN
 // Check if the token has been invalided in the auth service before it has expired
 // This needs to be a string to make it easy to pass as an ENV var.
@@ -33,3 +34,5 @@ export const CONFIRM_REGISTRATION_URL =
 export const DEFAULT_TIMEOUT = 600000
 export const PRODUCTION = process.env.NODE_ENV === 'production'
 export const QA_ENV = process.env.QA_ENV || false
+
+export const REGULAR_TEXT_MAX_LENGTH = 255

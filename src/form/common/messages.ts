@@ -122,6 +122,16 @@ export const informantMessageDescriptors = {
     defaultMessage: 'Bride',
     description: 'Label for option bride',
     id: 'form.field.label.informantRelation.bride'
+  },
+  DOCTOR: {
+    defaultMessage: 'Doctor',
+    description: 'Label for option doctor',
+    id: 'form.field.label.informantRelation.doctor'
+  },
+  MID_WIFE: {
+    defaultMessage: 'Midwife',
+    description: 'Label for option midwife',
+    id: 'form.field.label.informantRelation.midwife'
   }
 }
 
@@ -187,6 +197,11 @@ export const formMessageDescriptors = {
     defaultMessage: 'Physician',
     description: 'Label for form field: physician',
     id: 'form.field.label.physician'
+  },
+  attendantAtBirthHealthWorker: {
+    defaultMessage: 'Health worker',
+    description: 'Label for form field: Attendant at birth',
+    id: 'form.field.label.attendantAtBirthHealthWorker'
   },
   attendantAtBirthNurse: {
     defaultMessage: 'Nurse',
@@ -386,6 +401,16 @@ export const formMessageDescriptors = {
     description: 'Label for form field: reasonNotApplying',
     id: 'form.field.label.reasonNotApplying'
   },
+  reasonMotherNotApplying: {
+    defaultMessage: 'Reason',
+    description: 'Label for form field: reasonMotherNotApplying',
+    id: 'form.field.label.reasonMotherNotApplying'
+  },
+  reasonFatherNotApplying: {
+    defaultMessage: 'Reason',
+    description: 'Label for form field: reasonFatherNotApplying',
+    id: 'form.field.label.reasonFatherNotApplying'
+  },
   childTab: {
     defaultMessage: 'Child',
     description: 'Form section name for Child',
@@ -436,6 +461,16 @@ export const formMessageDescriptors = {
     description: 'Label for form field: Age of mother',
     id: 'form.field.label.ageOfMother'
   },
+  yearOfBirth: {
+    defaultMessage: 'Year of birth',
+    description: 'Label for form field: Year of birth',
+    id: 'form.field.label.yearOfBirth'
+  },
+  prefixAround: {
+    defaultMessage: 'Around',
+    description: 'Label for prefix around in field: getYearOfBirth',
+    id: 'form.field.label.prefixAround'
+  },
   fathersDetailsExist: {
     defaultMessage: "Father's details are not available",
     description: "Question to ask the user if they have the father's details",
@@ -462,9 +497,29 @@ export const formMessageDescriptors = {
     id: 'form.field.label.proofOfBirth'
   },
   docTypeChildBirthProof: {
-    defaultMessage: 'Notification of birth',
+    defaultMessage: 'Notification of birth (Recto)',
     description: 'Label for select option Notification of birth',
     id: 'form.field.label.docTypeChildBirthProof'
+  },
+  docTypeChildBirthProofVerso: {
+    defaultMessage: 'Notification of birth (Verso)',
+    description: 'Label for select option Notification of birth (verso)',
+    id: 'form.field.label.docTypeChildBirthVersoProof'
+  },
+  docTypeAdoption: {
+    defaultMessage: 'Adoption Letter',
+    description: 'Label for select option radio option Adoption Letter',
+    id: 'form.field.label.docTypeAdoption'
+  },
+  docTypeLivretDeFamille: {
+    defaultMessage: 'Livret de Famille',
+    description: 'Label for select option radio option Livret de Famille',
+    id: 'form.field.label.docTypeLivretDeFamille'
+  },
+  proofOfRecognition: {
+    defaultMessage: 'Proof of recognition',
+    description: 'Label for list item Recognition Proof',
+    id: 'form.field.label.proofOfRecognition'
   },
   proofOfMothersID: {
     defaultMessage: "Mother's identity",
@@ -485,6 +540,11 @@ export const formMessageDescriptors = {
     defaultMessage: 'Birth certificate',
     description: 'Label for select option birth certificate',
     id: 'form.field.label.docTypeBirthCert'
+  },
+  docTypeRecognitionAct: {
+    defaultMessage: 'Recognition act',
+    description: 'Label for select option Recognition act',
+    id: 'form.field.label.docTypeRecognitionAct'
   },
   docTypeOther: {
     defaultMessage: 'Other',
@@ -675,6 +735,12 @@ export const formMessageDescriptors = {
       'For this death registration, the following documents are required:',
     description: 'Documents Paragraph text',
     id: 'form.field.label.deceasedDocumentParagraph'
+  },
+  deathProofFromFokontany: {
+    defaultMessage: 'Proof of death of from Fokontany',
+    description:
+      'Option for radio group field: Proof of death of from Fokontany',
+    id: 'form.field.label.deathProofFromFokontany'
   },
   deceasedIDProof: {
     defaultMessage: "Proof of deceased's ID",
@@ -912,6 +978,21 @@ export const formMessageDescriptors = {
     defaultMessage: 'Death Registration Number',
     description: 'Option for form field: Type of ID',
     id: 'form.field.label.iDTypeDRN'
+  },
+  nui: {
+    defaultMessage: 'NUI',
+    description: 'text for generated NUI form field',
+    id: 'form.field.label.NUI'
+  },
+  generateNUI: {
+    defaultMessage: 'Generate NUI',
+    description: 'text for NUI button form field',
+    id: 'form.field.label.generateNUI'
+  },
+  generatingNUI: {
+    defaultMessage: 'Generating...',
+    description: 'Label for form field: Generating NUI',
+    id: 'form.field.label.generatingNUI'
   }
 }
 
@@ -936,5 +1017,148 @@ export function getDateOfMarriageLabel(): MessageDescriptor {
     id: 'form.field.label.dateOfMarriage',
     defaultMessage: 'Date of marriage',
     description: 'Option for form field: Date of marriage'
+  }
+}
+
+export const mentionMessageDescriptors = {
+  sectionName: {
+    defaultMessage: 'Marginal notes',
+    description: 'Form section name for Mention',
+    id: 'form.section.mention.name'
+  },
+  sectionTitle: {
+    defaultMessage: 'Marginal notes',
+    description: 'Form section title for Mention',
+    id: 'form.section.mention.title'
+  },
+  typeOfMention: {
+    id: 'form.field.label.typeOfMention',
+    defaultMessage: 'Type of marginal note',
+    description: 'Label for Type of marginal note'
+  },
+  // TODO: add the following messages in client.csv
+  RECOGNITION: {
+    id: 'form.field.label.mentionType.recognition',
+    defaultMessage: 'Recognition',
+    description: 'Label for mention type Recognition'
+  },
+  SIMPLE_ADOPTION: {
+    id: 'form.field.label.mentionType.simpleAdoption',
+    defaultMessage: 'Simple adoption',
+    description: 'Label for mention type Simple adoption'
+  },
+  JUDICIAL_ADOPTION: {
+    id: 'form.field.label.mentionType.judicialAdoption',
+    defaultMessage: 'Judicial adoption',
+    description: 'Label for mention type Judicial adoption'
+  },
+  NAME_CHANGE: {
+    id: 'form.field.label.mentionType.nameChange',
+    defaultMessage: 'Name change',
+    description: 'Label for mention type Name change'
+  },
+  MARRIAGE: {
+    id: 'form.field.label.mentionType.marriage',
+    defaultMessage: 'Marriage',
+    description: 'Label for mention type Marriage'
+  },
+  DIVORCE: {
+    id: 'form.field.label.mentionType.divorce',
+    defaultMessage: 'Divorce',
+    description: 'Label for mention type Divorce'
+  },
+  REJECTION: {
+    id: 'form.field.label.mentionType.rejection',
+    defaultMessage: 'Rejection',
+    description: 'Label for mention type Rejection'
+  },
+  DEATH: {
+    id: 'form.field.label.mentionType.death',
+    defaultMessage: 'Death',
+    description: 'Label for mention type Death'
+  },
+  actNumber: {
+    id: 'form.field.label.mention.actNumber',
+    defaultMessage:
+      '{type, select, RECOGNITION{Recognition} SIMPLE_ADOPTION{Simple adoption} JUDICIAL_ADOPTION{Adoption} NAME_CHANGE{Name change} MARRIAGE{Marriage} DIVORCE{Divorce} REJECTION{Rejection} DEATH{Death} other{Other}} Act number',
+    description: 'Label for mention act number'
+  },
+  dateOfMention: {
+    id: 'form.field.label.mention.dateOfMention',
+    defaultMessage:
+      'Date of {type, select, RECOGNITION{recognition} SIMPLE_ADOPTION{adoption} JUDICIAL_ADOPTION{registration of the judicial act at the commune} NAME_CHANGE{registration of the judicial act at the commune} MARRIAGE{marriage} DIVORCE{registration of the judicial act at the commune} REJECTION{Rejection} DEATH{registration of the death at the municipality} other{Other}}',
+    description: 'Label for mention date'
+  },
+  placeOfMention: {
+    id: 'form.field.label.mention.placeOfMention',
+    defaultMessage:
+      'Name of the commune where {type, select, RECOGNITION{recognition} MARRIAGE{marriage} DEATH{death} other{other}} was done',
+    description: 'Label for mention place'
+  },
+  adoptiveParent: {
+    id: 'form.field.label.mention.adoptiveParent',
+    defaultMessage: 'Adoptive parent {number}',
+    description: 'Label for adoptive parent header'
+  },
+  judgementDecisionNumber: {
+    id: 'form.field.label.mention.judgmentDecisionNumber',
+    defaultMessage: 'Judgement decision number',
+    description: 'Label for Judgement decision number'
+  },
+  judgementDecisionDate: {
+    id: 'form.field.label.mention.judgmentDecisionDate',
+    defaultMessage: 'Judgement decision date',
+    description: 'Label for Judgement decision date'
+  },
+  tribunalOfFirstInstanceAct: {
+    id: 'form.field.label.mention.tribunalOfFirstInstanceAct',
+    defaultMessage: 'Tribunal of first instance act',
+    description: 'Label for Tribunal of first instance act'
+  },
+  brideOrGroom: {
+    id: 'form.field.label.mention.brideOrGroom',
+    defaultMessage: 'Bride/Groom',
+    description: 'Label for Bride/Groom'
+  },
+  wifeOrHusband: {
+    id: 'form.field.label.mention.wifeOrHusband',
+    defaultMessage: 'Wife/Husband',
+    description: 'Label for Wife/Husband'
+  },
+  modification: {
+    id: 'form.field.label.mention.modification',
+    defaultMessage:
+      'Any modification : name of the child/name of father/name of mother',
+    description: 'Label for modification'
+  },
+  placeOfDeath: {
+    id: 'form.field.label.mention.placeOfDeath',
+    defaultMessage: 'Commune of death',
+    description: 'Label for place of death'
+  },
+  notes: {
+    id: 'form.field.label.mention.notes',
+    defaultMessage: 'Notes',
+    description: 'Label for notes'
+  },
+  mentionDetailsExist: {
+    id: 'form.field.label.mentionDetailsExist',
+    defaultMessage: 'Mention details exist',
+    description: 'Label for Mention details exist checkbox'
+  },
+  typeMention: {
+    id: 'form.preview.group.label.typeMention',
+    defaultMessage: 'Details of the mention {i}',
+    description: 'Label for details preview group title'
+  },
+  recognitionFatherFirstName: {
+    id: 'form.field.label.mention.fatherFirstName',
+    defaultMessage: 'Father first name',
+    description: 'Label for father first name field'
+  },
+  recognitionFatherLastName: {
+    id: 'form.field.label.mention.fatherLastName',
+    defaultMessage: 'Father last name',
+    description: 'Label for father last name field'
   }
 }

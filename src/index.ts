@@ -18,9 +18,11 @@ import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
 import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
+import * as H2o2 from '@hapi/h2o2'
 import {
   CLIENT_APP_URL,
   DOMAIN,
+  GATEWAY_URL,
   LOGIN_URL,
   SENTRY_DSN
 } from '@countryconfig/constants'
@@ -61,6 +63,7 @@ import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { certificateConfigurationHandler } from './api/certificate-configuration/handler'
+import { NUIHandler, nuiRequestBodySchema } from './api/nui/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
 
 export interface ITokenPayload {
@@ -71,7 +74,7 @@ export interface ITokenPayload {
 }
 
 export default function getPlugins() {
-  const plugins: any[] = [inert, JWT]
+  const plugins: any[] = [inert, JWT, H2o2]
 
   if (process.env.NODE_ENV === 'production') {
     plugins.push({
@@ -335,6 +338,19 @@ export async function createServer() {
   })
 
   server.route({
+    method: 'POST',
+    path: '/nui',
+    handler: NUIHandler,
+    options: {
+      tags: ['api'],
+      description: 'Generates and reserves NUI',
+      validate: {
+        payload: nuiRequestBodySchema
+      }
+    }
+  })
+
+  server.route({
     method: 'GET',
     path: '/validators.js',
     handler: validatorsHandler,
@@ -515,6 +531,37 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Provides a tracking id'
+    }
+  })
+
+  server.route({
+    method: '*',
+    path: '/graphql',
+    handler: (_, h) =>
+      h.proxy({
+        uri: `${GATEWAY_URL}/graphql`,
+        passThrough: true
+      }),
+    options: {
+      auth: false,
+      payload: {
+        output: 'data',
+        parse: false
+      }
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/{param*}',
+    options: {
+      auth: false
+    },
+    handler: {
+      directory: {
+        path: 'public',
+        index: ['index.html', 'default.html']
+      }
     }
   })
 

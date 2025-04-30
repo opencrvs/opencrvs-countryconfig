@@ -1,0 +1,196 @@
+<svg width="595" height="842" viewBox="0 0 595 842" fill="none" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <rect width="595" height="842" fill="white" />
+    {{#if (isTanaIV (location registrar.districtId "name")) }}
+     <!-- ne fait rien-->
+    {{ else }}
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        letter-spacing="0em">
+        <tspan x="24" y="104.58">Faritra :</tspan>
+    </text>
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        font-weight="bold" letter-spacing="0em">
+        <tspan x="88" y="104.58">{{getRegionName (location registrar.stateId "name")}}</tspan>
+    </text>
+    <foreignObject x="24" y="110.488"  width="150" height="100">
+        <div xmlns="http://www.w3.org/1999/xhtml">
+        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Distrika : </span> 
+        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionDistrictInTheAct (location registrar.stateId "name")}}</span> 
+        </div>
+    </foreignObject>
+    
+    <foreignObject x="24" y="142.488"  width="150" height="100">
+        <div xmlns="http://www.w3.org/1999/xhtml">
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+            <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Firaisana:</span> 
+        {{ else }}
+        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Kaominina : </span> 
+        {{/if}}
+        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionCommuneInTheAct (location registrar.districtId "name")}}</span> 
+        </div>
+    </foreignObject>
+
+    {{/if}}
+
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        letter-spacing="0em">
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+                <tspan x="24" y="208.58">Soratra n&#xb0; :</tspan>
+        {{ else }}
+                <tspan x="24" y="187.58">Soratra n&#xb0; :</tspan>
+        {{/if}}
+    </text>
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        font-weight="bold" letter-spacing="0em">
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+        <tspan x="86" y="208.58">{{birthChildLegacyBirthRegistrationNumber}}</tspan>
+        {{ else }}
+        <tspan x="86" y="187.58">{{birthChildLegacyBirthRegistrationNumber}}</tspan>
+        {{/if}}
+    </text>
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        letter-spacing="0em">
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+                <tspan x="24" y="220.58">Natao ny :</tspan>
+        {{ else }}
+                <tspan x="24" y="202.58">Natao ny :</tspan>
+        {{/if}}
+    </text>
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        font-weight="bold" letter-spacing="0em">
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+        <tspan x="86" y="220.58">{{getBirthRegistrationDateMDGFormat}}</tspan>  
+        {{ else }}
+        <tspan x="86" y="202.58">{{getBirthRegistrationDateMDGFormat}}</tspan>        
+        {{/if}}
+    </text>
+
+    {{#wrapGroup 30 24 239.712}}
+        {{#text fontSize=14 fontWeight="bold"}}
+            {{#if (isWithAdpotion)}}
+            FAHATERAHANA SY FANJANAHANA
+            {{ else }}
+            FAHATERAHANA
+            {{/if}}
+        {{/text}}
+        {{#text fontSize=10 }}{{childFamilyName}}{{/text}}
+        {{#text fontSize=10 }}{{childFirstName}}{{/text}}
+        {{#text fontSize=10 }}NUI: {{childNID}}{{/text}}
+        {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat eventDate}}{{/text}}
+        {{linebreak}}
+        {{#text fontSize=10 fontWeight="bold"}}{{numberOfTimesCertificatePrinted}}{{/text}}
+        {{#text fontSize=10 fontWeight="bold"}}
+            {{#with (mentions) as |mentionsValue|}}{{#if mentionsValue.hasMention}}SORATRA AN-TSISINY :{{else}}{{/if}} {{/with}}
+        {{/text}}
+        {{#foreignObject 154 500}}<pre class="mentions" style="font-family: 'Plus Jakarta Sans'; width: 100%; white-space: pre-wrap; overflow-wrap: break-word; max-width: 100%;
+                text-align: left;
+                font-size: 13px;
+                line-height: 1.1;
+                letter-spacing: 0em;
+                margin-top: 0;">{{#with (mentions) as |mentionsValue|}}{{#if mentionsValue.hasMention}}{{mentionsValue.text}}{{else}}{{/if}}
+                {{/with}}
+            </pre>
+        {{/foreignObject}}
+    {{/wrapGroup}}
+
+    {{#if (isTanaIV (location registrar.districtId "name"))}}
+       <!-- ne fait rien-->
+    {{ else }}
+     <text fill="black" xml:space="default" font-family="Kapakana" font-size="36" letter-spacing="0em">
+        <tspan x="217.896" y="122.48">Kopian&#x2019;ny Sora-piankohonana</tspan>
+     </text>
+    {{/if}}
+   
+    <!-- y="165"-->
+    <foreignObject x="190" y="165" width="384" height="560">
+        <p style="font-family: 'Plus Jakarta Sans';
+           text-align: justify;
+            word-break: break-all;
+            font-size: 14px;
+            line-height: 1.1;
+            letter-spacing: 0em;
+            margin-top: 0;">{{{introduction (location
+            registrar.districtId "name")}}}
+        </p><p style="font-family: 'Plus Jakarta Sans';
+            text-align: justify;
+            font-size: 14px;
+            line-height: 1.1;
+            letter-spacing: 0em;
+             hyphens:auto;
+            margin-top: 0;">{{{eventStatement
+            (location statePlaceofbirthId "name") (location districtPlaceofbirthId "name")
+            (location
+            districtPrimaryFatherId "name") (location districtPrimaryMotherId
+            "name")}}}
+        </p><p style="font-family: 'Plus Jakarta Sans';
+            text-align: justify;
+            font-size: 14px;
+            line-height: 1.1;
+            letter-spacing: 0em;
+            hyphens:auto;
+            margin-top: 0;">{{{registrationStatement (location
+            districtPrimaryInformantId "name") (location registrar.districtId
+            "name")}}}
+        </p><br />
+        <p style="font-family: 'Plus Jakarta Sans';
+            text-align: justify;
+            font-size: 14px;
+            line-height: 1.1;
+            margin-top: 0;
+            text-align: center;
+            letter-spacing: 0em;
+            font-weight: bold">---MANARAKA NY SONIA---
+        </p><p style="font-family: 'Plus Jakarta Sans';
+            text-align: justify;
+            font-size: 14px;
+            line-height: 1.1;
+            letter-spacing: 0em;
+            hyphens:auto;
+            margin-top: 0">{{{signatureDescription}}}
+        </p><br />
+    </foreignObject>
+    
+    {{#if (isToamasinaSubUrbaine (location registrar.districtId "name"))}}
+        <foreignObject x="190" y="640" width="384" height="560">
+    {{ else }}
+        <foreignObject x="190" y="700" width="384" height="560">
+    {{/if}}
+
+    <br /><p class="large" style="font-family: 'Plus Jakarta Sans';
+            text-align: justify;
+            line-height: 1.1;
+            margin-top: 0;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 0em;
+            font-size: 16px;">Ny Mpiandraikitra ny sora-piankohonana
+        </p>
+    </foreignObject>
+
+    <style>
+        p {
+            font-size: 11px !important;
+            letter-spacing: 0em;
+            line-height: 1.4 !important;
+        }
+
+        .large {
+            font-size: 12px !important;
+        }
+
+        .mentions {
+            font-size: 10px !important;
+            letter-spacing: 0em;
+            line-height: 1.45 !important;
+        }
+    </style>
+    
+    <!-- Afficher uniquement le logo si different de tana 4 -->
+    {{#if (isTanaIV (location registrar.districtId "name"))}}
+       <!-- ne fait rien-->
+    {{ else }}
+         <image x="231" y="14" width="132" height="72" xlink:href="{{certificateLogo}}" preserveAspectRatio="xMaxYMid meet" />
+    {{/if}}
+   
+   
+</svg>

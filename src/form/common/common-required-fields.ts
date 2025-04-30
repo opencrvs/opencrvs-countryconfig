@@ -15,6 +15,7 @@ import { genderOptions } from './select-options'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { Validator } from '../types/validators'
 import { MessageDescriptor } from 'react-intl'
+import { REGULAR_TEXT_MAX_LENGTH } from '@countryconfig/constants'
 
 export const getBirthDate = (
   fieldName: string,
@@ -56,7 +57,7 @@ export const getFamilyNameField = (
     conditionals,
     type: 'TEXT',
     label: formMessageDescriptors.familyName,
-    maxLength: 32,
+    maxLength: REGULAR_TEXT_MAX_LENGTH,
     required: true,
     initialValue: '',
     validator: [
@@ -82,8 +83,8 @@ export const getFirstNameField = (
       id: 'form.field.label.firstNames'
     },
     conditionals,
-    maxLength: 32,
-    required: true,
+    maxLength: REGULAR_TEXT_MAX_LENGTH,
+    required: false,
     initialValue: '',
     validator: [
       {
@@ -102,7 +103,7 @@ export const getNationality = (
     type: 'SELECT_WITH_OPTIONS',
     label: formMessageDescriptors.nationality,
     required: true,
-    initialValue: 'FAR',
+    initialValue: 'MDG',
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     options: {
@@ -149,7 +150,7 @@ export const getNationalID = (
     name: fieldName,
     type: 'TEXT',
     label: formMessageDescriptors.iDTypeNationalID,
-    required: true,
+    required: false,
     initialValue: '',
     validator,
     conditionals,
@@ -175,7 +176,10 @@ export const getDetailsExist = (
     ignoreBottomMargin: true
   } satisfies SerializedFormField)
 
-export const getReasonNotExisting = (certificateHandlebar: string) =>
+export const getReasonNotExisting = (
+  certificateHandlebar: string,
+  label: MessageDescriptor
+) =>
   ({
     name: 'reasonNotApplying',
     conditionals: [
@@ -185,7 +189,7 @@ export const getReasonNotExisting = (certificateHandlebar: string) =>
       }
     ],
     type: 'TEXT',
-    label: formMessageDescriptors.reasonNA,
+    label,
     validator: [],
     initialValue: '',
     required: true,

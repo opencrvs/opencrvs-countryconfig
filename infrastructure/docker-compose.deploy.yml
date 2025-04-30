@@ -556,7 +556,7 @@ services:
     deploy:
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.countryconfig.rule=Host(`countryconfig.{{hostname}}`) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
+        - 'traefik.http.routers.countryconfig.rule=(Host(`countryconfig.{{hostname}}`) || Host(`registry.{{hostname}}`)) && !Path(`/email`) && !Path(`/notification`) && !Path(`/dashboards/queries.json`)'
         - 'traefik.http.services.countryconfig.loadbalancer.server.port=3040'
         - 'traefik.http.routers.countryconfig.tls=true'
         - 'traefik.http.routers.countryconfig.tls.certresolver=certResolver'
@@ -586,6 +586,8 @@ services:
       - APPLICATION_CONFIG_URL=http://config:2021
       - CONFIRM_REGISTRATION_URL=http://workflow:5050/confirm/registration
       - MONGO_URL=mongodb://mongo1/user-mgnt?replicaSet=rs0
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
+      - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - CONFIG_MONGO_URL=mongodb://mongo1/application-config?replicaSet=rs0
       - APN_SERVICE_URL=http://apm-server:8200
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
@@ -601,10 +603,13 @@ services:
       - SMTP_USERNAME=${SMTP_USERNAME:-}
       - SMTP_PASSWORD=${SMTP_PASSWORD:-}
       - SMTP_SECURE=${SMTP_SECURE:-}
-      - INFOBIP_GATEWAY_ENDPOINT=${INFOBIP_GATEWAY_ENDPOINT:-}
-      - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
-      - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
+      - AWS_SNS_REGION_NAME=${AWS_SNS_REGION_NAME:-}
+      - AWS_SNS_ACCESS_KEY_ID=${AWS_SNS_ACCESS_KEY_ID:-}
+      - AWS_SNS_SECRET_ACCESS_KEY=${AWS_SNS_SECRET_ACCESS_KEY:-}
+      - AWS_SNS_SENDER_ID=${AWS_SNS_SENDER_ID:-}
       - DOMAIN={{hostname}}
+      - NUI_GENERATOR_URL=${NUI_GENERATOR_URL}
+      - NUI_API_KEY=${NUI_API_KEY}
     networks:
       - overlay_net
     logging:
@@ -740,7 +745,6 @@ services:
         - 'traefik.http.routers.gateway.tls=true'
         - 'traefik.http.routers.gateway.tls.certresolver=certResolver'
         - 'traefik.http.routers.gateway.entrypoints=web,websecure'
-        - 'traefik.http.routers.gateway.middlewares=gzip-compression'
         - 'traefik.docker.network=opencrvs_overlay_net'
         - 'traefik.http.middlewares.gateway.headers.customresponseheaders.Pragma=no-cache'
         - 'traefik.http.middlewares.gateway.headers.customresponseheaders.Cache-control=no-store'
@@ -748,6 +752,12 @@ services:
         - 'traefik.http.middlewares.gateway.headers.stsseconds=31536000'
         - 'traefik.http.middlewares.gateway.headers.stsincludesubdomains=true'
         - 'traefik.http.middlewares.gateway.headers.stspreload=true'
+        - 'traefik.http.middlewares.cors-gateway.headers.accesscontrolallowmethods=GET,POST,PUT,DELETE,OPTIONS'
+        - 'traefik.http.middlewares.cors-gateway.headers.accesscontrolallowheaders=*'
+        - 'traefik.http.middlewares.cors-gateway.headers.accesscontrolalloworiginlist=https://registry.{{hostname}},https://login.{{hostname}},https://countryconfig.{{hostname}},https://register.{{hostname}}'
+        - 'traefik.http.middlewares.cors-gateway.headers.accesscontrolmaxage=100'
+        - 'traefik.http.middlewares.cors-gateway.headers.addvaryheader=true'
+        - 'traefik.http.routers.gateway.middlewares=cors-gateway,gzip-compression'
       replicas: 1
     networks:
       - overlay_net

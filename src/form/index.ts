@@ -57,7 +57,11 @@ export async function formHandler(req: Request): Promise<IForms> {
     // SO YOU ONLY NEED TO CONFIGURE ADDRESS FIELDS IN A SINGLE LOCATION FOR ALL DECORATED INSTANCES.
 
     birth: decorateFormsWithAddresses(birthForm, Event.Birth, addressHierarchy),
-    death: decorateFormsWithAddresses(deathForm, Event.Death, addressHierarchy),
+    death: decorateFormsWithAddresses(
+      deathForm(addressHierarchy),
+      Event.Death,
+      addressHierarchy
+    ),
     marriage: decorateFormsWithAddresses(
       marriageForm,
       Event.Marriage,

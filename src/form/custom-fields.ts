@@ -57,7 +57,7 @@ export function getReasonForLateRegistration(
   const fieldId: string =
     event === 'birth'
       ? `birth.child.child-view-group.${fieldName}`
-      : `death.deathEvent.death-event-details.${fieldName}`
+      : `death.deathEvent.death-event-view-group.${fieldName}`
   const label: MessageDescriptor =
     event === 'birth'
       ? {

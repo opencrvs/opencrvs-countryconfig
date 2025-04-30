@@ -2,7 +2,6 @@ import { getSectionMapping } from '@countryconfig/utils/mapping/section/birth/ma
 import { formMessageDescriptors } from '../common/messages'
 import { ISerializedFormSection } from '../types/types'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { informantsSignature } from '../common/common-optional-fields'
 
 export const registrationSection = {
   id: 'registration', // A hidden 'registration' section must be included to store identifiers in a form draft that are used in certificates
@@ -32,8 +31,12 @@ export const birthDocumentType = {
   PASSPORT: 'PASSPORT',
   OTHER: 'OTHER',
   NOTIFICATION_OF_BIRTH: 'NOTIFICATION_OF_BIRTH',
+  NOTIFICATION_OF_BIRTH_VERSO: 'NOTIFICATION_OF_BIRTH_VERSO',
   PROOF_OF_LEGAL_GUARDIANSHIP: 'PROOF_OF_LEGAL_GUARDIANSHIP',
-  PROOF_OF_ASSIGNED_RESPONSIBILITY: 'PROOF_OF_ASSIGNED_RESPONSIBILITY'
+  PROOF_OF_ASSIGNED_RESPONSIBILITY: 'PROOF_OF_ASSIGNED_RESPONSIBILITY',
+  ADOPTION_LETTER: 'ADOPTION_LETTER',
+  LIVRET_DE_FAMILLE: 'LIVRET_DE_FAMILLE',
+  RECOGNITION_ACT: 'RECOGNITION_ACT'
 }
 
 export const documentsSection = {
@@ -63,11 +66,47 @@ export const documentsSection = {
           initialValue: '',
           extraValue: birthDocumentExtraValue.CHILD,
           hideAsterisk: true,
+          maxSizeMB: 10,
           validator: [],
           options: [
             {
               value: birthDocumentType.NOTIFICATION_OF_BIRTH,
               label: formMessageDescriptors.docTypeChildBirthProof
+            },
+            {
+              value: birthDocumentType.NOTIFICATION_OF_BIRTH_VERSO,
+              label: formMessageDescriptors.docTypeChildBirthProofVerso
+            }
+          ],
+          mapping: getFieldMapping('documents')
+        },
+        {
+          name: 'uploadDocForRecognition',
+          type: 'DOCUMENT_UPLOADER_WITH_OPTION',
+          label: formMessageDescriptors.proofOfRecognition,
+          initialValue: '',
+          maxSizeMB: 10,
+          validateEmpty: true,
+          extraValue: birthDocumentExtraValue.OTHER,
+          validator: [
+            {
+              operation: 'isProofOfRecognitionDocNeeded',
+              parameters: []
+            }
+          ],
+          options: [
+            {
+              value: birthDocumentType.RECOGNITION_ACT,
+              label: formMessageDescriptors.docTypeRecognitionAct
+            }
+          ],
+
+          conditionals: [
+            {
+              description: 'Hidden unless marginal mention is Recognition',
+              action: 'hide',
+              expression:
+                '!draftData || !draftData.mention || !Array.from({ length: 10 }, (_,i) => "typeOfMention__" + i).some(key => draftData.mention[key] === "RECOGNITION")'
             }
           ],
           mapping: getFieldMapping('documents')
@@ -77,6 +116,7 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.proofOfMothersID,
           initialValue: '',
+          maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.MOTHER,
           hideAsterisk: true,
           validator: [],
@@ -86,16 +126,16 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeNID
             },
             {
+              value: birthDocumentType.OTHER,
+              label: formMessageDescriptors.docTypeOther
+            },
+            {
               value: birthDocumentType.PASSPORT,
               label: formMessageDescriptors.docTypePassport
             },
             {
               value: birthDocumentType.BIRTH_CERTIFICATE,
               label: formMessageDescriptors.docTypeBirthCert
-            },
-            {
-              value: birthDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
             }
           ],
           conditionals: [
@@ -103,7 +143,7 @@ export const documentsSection = {
               description: 'Hidden for Parent Details none or Mother only',
               action: 'hide',
               expression:
-                'draftData && draftData.mother && !draftData.mother.detailsExist'
+                '(draftData && draftData.mother && !draftData.mother.detailsExist) || Array.from({ length: 10 }, (_,i) => "typeOfMention__" + i).some(key => draftData?.mention && draftData.mention[key] && draftData.mention[key] === "RECOGNITION")'
             }
           ],
           mapping: getFieldMapping('documents')
@@ -113,13 +153,24 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.proofOfFathersID,
           initialValue: '',
-          extraValue: birthDocumentExtraValue.FATHER,
+          maxSizeMB: 10,
           hideAsterisk: true,
-          validator: [],
+          validateEmpty: true,
+          extraValue: birthDocumentExtraValue.FATHER,
+          validator: [
+            {
+              operation: 'isFatherRecognitionDocNeeded',
+              parameters: []
+            }
+          ],
           options: [
             {
               value: birthDocumentType.NATIONAL_ID,
               label: formMessageDescriptors.docTypeNID
+            },
+            {
+              value: birthDocumentType.OTHER,
+              label: formMessageDescriptors.docTypeOther
             },
             {
               value: birthDocumentType.PASSPORT,
@@ -130,8 +181,12 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeBirthCert
             },
             {
-              value: birthDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
+              value: birthDocumentType.RECOGNITION_ACT,
+              label: formMessageDescriptors.docTypeRecognitionAct
+            },
+            {
+              value: birthDocumentType.LIVRET_DE_FAMILLE,
+              label: formMessageDescriptors.docTypeLivretDeFamille
             }
           ],
           conditionals: [
@@ -149,6 +204,7 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.proofOfInformantsID,
           initialValue: '',
+          maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.INFORMANT_ID_PROOF,
           hideAsterisk: true,
           validator: [],
@@ -158,16 +214,16 @@ export const documentsSection = {
               label: formMessageDescriptors.docTypeNID
             },
             {
+              value: birthDocumentType.OTHER,
+              label: formMessageDescriptors.docTypeOther
+            },
+            {
               value: birthDocumentType.PASSPORT,
               label: formMessageDescriptors.docTypePassport
             },
             {
               value: birthDocumentType.BIRTH_CERTIFICATE,
               label: formMessageDescriptors.docTypeBirthCert
-            },
-            {
-              value: birthDocumentType.OTHER,
-              label: formMessageDescriptors.docTypeOther
             }
           ],
           conditionals: [
@@ -184,6 +240,7 @@ export const documentsSection = {
           type: 'DOCUMENT_UPLOADER_WITH_OPTION',
           label: formMessageDescriptors.otherBirthSupportingDocuments,
           initialValue: '',
+          maxSizeMB: 10,
           extraValue: birthDocumentExtraValue.LEGAL_GUARDIAN_PROOF,
           hideAsterisk: true,
           validator: [],
@@ -219,7 +276,7 @@ export const previewSection = {
   groups: [
     {
       id: 'preview-view-group',
-      fields: [informantsSignature]
+      fields: []
     }
   ]
 } satisfies ISerializedFormSection
@@ -232,7 +289,7 @@ export const reviewSection = {
   groups: [
     {
       id: 'review-view-group',
-      fields: [informantsSignature]
+      fields: []
     }
   ]
 } satisfies ISerializedFormSection

@@ -8,8 +8,10 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+import { subYears } from 'date-fns'
 import { Conditional, IntegratingSystemType } from '../types/types'
 import { Validator } from '../types/validators'
+import { capitalize } from 'lodash'
 
 /**
  * Turns a string expression into a Conditional object
@@ -27,6 +29,10 @@ export const expressionToConditional = (
 export const isValidChildBirthDate = [
   {
     operation: 'isValidChildBirthDate'
+  },
+  {
+    operation: 'isDateNotOlderThanDays',
+    parameters: [365] // 30 days by default
   }
 ] satisfies Validator[]
 
@@ -62,6 +68,15 @@ export const motherNationalIDVerfication = [
   }
 ]
 
+export const hideIfNotDefaultCountry = (
+  countryFieldName: string
+): Conditional[] => [
+  {
+    action: 'hide',
+    expression: `!isDefaultCountry($form.${countryFieldName})`
+  }
+]
+
 export const fatherNationalIDVerfication = [
   {
     action: 'hide',
@@ -81,6 +96,14 @@ export const mothersBirthDateConditionals = [
   {
     action: 'hide',
     expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.birthInformantCustomizedExactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -121,16 +144,6 @@ export const hideIfInformantMotherOrFather = [
   }
 ]
 
-export const isInformantSpouse =
-  '!values.informantType || values.informantType==="SPOUSE"'
-
-export const hideIfInformantSpouse = [
-  {
-    action: 'hide',
-    expression: isInformantSpouse
-  }
-]
-
 export const mothersDetailsExistConditionals = [
   {
     action: 'hide',
@@ -164,6 +177,13 @@ export const fathersDetailsExistConditionals = [
   }
 ]
 
+export const fathersHasFormallyRecognisedChildConditionnals = [
+  {
+    action: 'hide',
+    expression: 'draftData?.mother?.maritalStatus==="MARRIED"'
+  }
+]
+
 export const fathersBirthDateConditionals = [
   {
     action: 'hide',
@@ -172,6 +192,14 @@ export const fathersBirthDateConditionals = [
   {
     action: 'hide',
     expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.birthInformantCustomizedExactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -252,51 +280,11 @@ export const brideOrGroomBirthDateValidators = (spouseType: string) => [
   }
 ]
 
-export const brideOrGroomAgeValidators = [
-  {
-    operation: 'range',
-    parameters: [18, 120]
-  },
-  {
-    operation: 'maxLength',
-    parameters: [3]
-  }
-] satisfies Validator[]
-
-export const ageOfIndividualValidators: Validator[] = [
-  {
-    operation: 'range',
-    parameters: [12, 120]
-  },
-  {
-    operation: 'maxLength',
-    parameters: [3]
-  }
-]
-
-export const ageOfParentsConditionals = [
-  ...ageOfIndividualValidators,
-  {
-    operation: 'isValidParentsBirthDate',
-    parameters: [10, true]
-  }
-] satisfies Validator[]
-
-export const ageOfDeceasedConditionals = [
-  {
-    operation: 'range',
-    parameters: [0, 120]
-  },
-  {
-    operation: 'maxLength',
-    parameters: [3]
-  }
-] satisfies Validator[]
-
 export const exactDateOfBirthUnknownConditional = [
   {
     action: 'hide',
-    expression: '!values.exactDateOfBirthUnknown'
+    expression:
+      '!values.customizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown === "false"'
   }
 ]
 
@@ -349,6 +337,10 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       {
         operation: 'duplicateIDNumber',
         parameters: ['bride.iD']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['informant.informantID']
       }
     ]
   } else if (configCase === 'bride') {
@@ -360,6 +352,10 @@ export function getNationalIDValidators(configCase: string): Validator[] {
       {
         operation: 'duplicateIDNumber',
         parameters: ['groom.iD']
+      },
+      {
+        operation: 'duplicateIDNumber',
+        parameters: ['informant.informantID']
       }
     ]
   } else {
@@ -410,7 +406,8 @@ export const hideIfNidIntegrationEnabled = [
 export const informantBirthDateConditionals = [
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown || values.birthInformantCustomizedExactDateOfBirthUnknown || values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -426,6 +423,10 @@ export const spouseBirthDateConditionals = [
   {
     action: 'hide',
     expression: 'values.exactDateOfBirthUnknown'
+  },
+  {
+    action: 'hide',
+    expression: 'values.customizedExactDateOfBirthUnknown === "true"'
   },
   {
     action: 'disable',
@@ -479,3 +480,153 @@ export const detailsDontExist = '!values.detailsExist'
 // primary address same as other primary
 export const primaryAddressSameAsOtherPrimaryAddress =
   'values.primaryAddressSameAsOtherPrimary'
+
+export const hideIfFatherPrimaryAddressConditionsDontMeet = [
+  {
+    action: 'hide',
+    expression: `((${detailsDontExist} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
+  }
+]
+export const primaryAddressSameAsOtherPrimary: Conditional[] = [
+  {
+    action: 'hide',
+    expression: primaryAddressSameAsOtherPrimaryAddress
+  }
+]
+
+export const hideInPreviewMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet =
+  [
+    {
+      action: 'hideInPreview',
+      expression: `draftData?.history?.some(hist => ['CERTIFIED', 'ISSUED'].includes(hist?.regStatus)) === false`
+    }
+  ]
+
+export const hideMarginalNoteIfBirthCertificateIsNoteIssuedNorPrintedYet = [
+  {
+    action: 'hide',
+    expression: `draftData?.history?.some(hist => ['CERTIFIED', 'ISSUED'].includes(hist?.regStatus)) === false`
+  }
+]
+
+export const hideInPreviewAndBlockEditingAnyFieldIfBirthCertificateIsAlreadyissuedOrPrinted =
+  [
+    {
+      action: 'hideInPreview',
+      expression: `draftData?.history?.some(hist => ['CERTIFIED', 'ISSUED'].includes(hist?.regStatus)) === true`
+    }
+  ]
+
+export const hideInPreviewDocumentSectionIfBirthCertificateIsAlreadyissuedOrPrinted =
+  [
+    {
+      description:
+        'Hide in preview Documents section if birth certificate is already printed or issued',
+      action: 'hideInPreview',
+      expression: `draftData?.history?.some(hist => ['CERTIFIED', 'ISSUED'].includes(hist?.regStatus)) === true`
+    }
+  ]
+
+export const hideIfDistrictPrimaryAddressNotSelected = (
+  section: string
+): Conditional[] => [
+  {
+    action: 'hide',
+    expression: `!values.districtPrimary${capitalize(section)}`
+  }
+]
+
+export const hideIfDistrictPlaceOfBirthAddressNotSelected = (
+  section: string
+): Conditional[] => [
+  {
+    action: 'hide',
+    expression: `!values.districtAddressplaceofbirth${capitalize(section)}`
+  }
+]
+
+export const hideIfDistrictPlaceOfDeathNotSelected = [
+  {
+    action: 'hide',
+    expression: '!values.districtPlaceofdeath'
+  }
+]
+
+export const locationOfBirthIsNotHealthFacility: Conditional[] = [
+  {
+    action: 'hide',
+    expression: '(values.placeOfBirth=="HEALTH_FACILITY")'
+  }
+]
+
+export const ageOfIndividualValidators: Validator[] = [
+  {
+    operation: 'range',
+    parameters: [12, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  },
+  {
+    operation: 'isValidParentsBirthDate',
+    parameters: [10, true]
+  }
+]
+
+export const ageOfDeceasedConditionals = [
+  {
+    operation: 'range',
+    parameters: [0, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+] satisfies Validator[]
+
+export const isInformantSpouseOrMotherOrFather =
+  '!values.informantType || values.informantType==="SPOUSE" || values.informantType==="MOTHER" ||  values.informantType==="FATHER"'
+
+export const hideIfInformantSpouseOrMotherOrFather = [
+  {
+    action: 'hide',
+    expression: isInformantSpouseOrMotherOrFather
+  }
+]
+
+export const brideOrGroomAgeValidators = [
+  {
+    operation: 'range',
+    parameters: [18, 120]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [3]
+  }
+] satisfies Validator[]
+
+export const yearOfBirthValidtors = [
+  {
+    operation: 'range',
+    parameters: [1883, Number.parseInt(new Date().getFullYear().toString())]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [4]
+  }
+] satisfies Validator[]
+
+export const motherYearOfBirthValidators = [
+  {
+    operation: 'range',
+    parameters: [
+      1883,
+      Number.parseInt(subYears(new Date(), 7).getFullYear().toString())
+    ]
+  },
+  {
+    operation: 'maxLength',
+    parameters: [4]
+  }
+] satisfies Validator[]

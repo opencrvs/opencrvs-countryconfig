@@ -1,0 +1,65 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#
+# OpenCRVS is also distributed under the terms of the Civil Registration
+# & Healthcare Disclaimer located at http://opencrvs.org/license.
+#
+# Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
+name: Restore environment from backup
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Environment to restore
+        required: true
+        default: qa
+        options:
+          - qa
+          - staging
+          - production
+      version_label:
+        description: Version label for backup
+        required: true
+      replicas:
+        description: No of replicas deployed in the environment
+        default: '1'
+        required: true
+jobs:
+  restore-environment:
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-22.04
+    env:
+      SSH_HOST: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
+      SSH_PORT: ${{ vars.SSH_PORT || secrets.SSH_PORT }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+    steps:
+      - name: Clone country config resource package
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          path: './${{ github.event.repository.name }}'
+
+      - name: Read known hosts
+        run: |
+          cd ${{ github.event.repository.name }}
+          echo "KNOWN_HOSTS<<EOF" >> $GITHUB_ENV
+          sed -i -e '$a\' ./infrastructure/known-hosts
+          cat ./infrastructure/known-hosts >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: ${{ env.KNOWN_HOSTS }}
+      - name: Restore backup
+        run: |
+          cd ${{ github.event.repository.name }}
+          scp -P $SSH_PORT infrastructure/backups/restore.sh $SSH_USER@$SSH_HOST:/tmp/
+          ssh $SSH_USER@$SSH_HOST -p $SSH_PORT "\
+          sudo bash /tmp/restore.sh \
+          --label=${{ github.event.inputs.version_label }} \
+          --replicas=${{ github.event.inputs.replicas }} >> /tmp/opencrvs-backup-restore-${{ github.event.inputs.version_label }}.log 2>&1"
