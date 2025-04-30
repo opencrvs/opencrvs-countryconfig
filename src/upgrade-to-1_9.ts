@@ -1,49 +1,63 @@
 import {
-  InferredInput,
   PageTypes,
   defineConfig,
-  defineFormPage
+  defineFormPage,
+  fieldTypes as ALL_SUPPORTED_FIELD_TYPES,
+  defineDeclarationForm,
+  EventConfig
 } from '@opencrvs/toolkit/events'
-import { birthForm } from './form/birth'
 import {
   ISerializedForm,
-  ISerializedFormSectionGroup,
+  ISerializedFormSection,
   SerializedFormField
 } from './form/types/types'
-import assert from 'assert'
-import { Event } from '@countryconfig/form/types/types'
-
-const BIRTH_FORM_V1 = JSON.parse(JSON.stringify(birthForm)) as ISerializedForm
+import { defineTextField } from './upgrade-field-to-1_9'
+import { compact as removeUndefineds } from 'lodash'
+import prompts from 'prompts'
+import fs from 'fs/promises'
+import path from 'path'
 
 const defineLegacyField = (field: SerializedFormField) => {
-  return {} satisfies InferredInput
+  // @TODO: Prompt the user to input the field id, and use a good default? Or just always default without prompt?
+
+  if (field.type === 'TEXT') {
+    return defineTextField(field)
+  }
+
+  console.warn(
+    `Field type ${field.type} is not supported. Supported types are: ${ALL_SUPPORTED_FIELD_TYPES.join(
+      ', '
+    )}. Please file an issue explaining your use case for this field type.`
+  )
+
+  return undefined
 }
 
-const defineLegacyFormPage = (group: ISerializedFormSectionGroup) => {
-  assert(group.title !== undefined, 'group.title must be defined')
-  assert(
-    typeof group.title.defaultMessage === 'string',
-    'group.title.defaultMessage must be a string'
-  )
-  assert(
-    typeof group.title.description === 'string',
-    'group.title.description must be a string'
-  )
-  assert(typeof group.title.id === 'string', 'group.title.id must be a string')
+const defineLegacyFormPage = (section: ISerializedFormSection) => {
+  /* Groups in V1 are a redundant layer, country config doesn't have multiple groups */
+  const group = section.groups[0]
+
+  const title = section.title ?? section.name
+  const fields = group.fields.map((field) => defineLegacyField(field))
 
   return defineFormPage({
     id: group.id,
     type: PageTypes.enum.FORM,
     title: {
-      defaultMessage: group.title.defaultMessage,
-      description: group.title.description,
-      id: group.title.id
+      /*
+       * Asserting the values as string, as Zod is eventually anyway validating these. This upgrade script is 'convert' and not 'validate'.
+       */
+      defaultMessage: title.defaultMessage as string,
+      description: title.description as string,
+      id: title.id as string
     },
-    fields: group.fields.map((field) => defineLegacyField(field))
+    fields: removeUndefineds(fields)
   })
 }
 
 /** Data that may not be available in the old form and needs to be added. */
+
+/** @TODO: Look into if we can figure out which event type is in question */
 interface NewParameters {
   /** The identifier of the new form */
   id: string
@@ -61,25 +75,18 @@ interface NewParameters {
       defaultMessage: string
     }
   }
+  summary: EventConfig['summary']
 }
 
 const defineLegacyEvent = (form: ISerializedForm, params: NewParameters) => {
-  const sections = form.sections
-    .filter(
-      /*
-       * Form is the only ViewType that matters in the context of `declaration.pages[]`
-       *
-       * type ViewType = 'form' | 'preview' | 'review' | 'hidden'
-       */
-      (section) => section.viewType === 'form'
-    )
-    .map(({ groups }) => {
-      // @TODO: Is this true?
-      /* Groups have been a redundant layer, country config doesn't have multiple groups */
-      assert(groups.length === 1, 'groups.length must be 1')
-
-      return groups[0]
-    })
+  const sections = form.sections.filter(
+    /*
+     * Form is the only ViewType that matters in the context of `declaration.pages[]`
+     *
+     * type ViewType = 'form' | 'preview' | 'review' | 'hidden'
+     */
+    (section) => section.viewType === 'form'
+  )
 
   return defineConfig({
     id: params.id,
@@ -88,30 +95,62 @@ const defineLegacyEvent = (form: ISerializedForm, params: NewParameters) => {
       description: 'This is what this event is referred as in the system',
       id: params.label.id
     },
-    declaration: {
+    declaration: defineDeclarationForm({
       label: {
         defaultMessage: params.declaration.label.defaultMessage,
         description: 'This is what this form is referred as in the system',
         id: params.declaration.label.id
       },
       pages: sections.map((section) => defineLegacyFormPage(section))
-    },
+    }),
     actions: [],
-    summary: {},
+    summary: params.summary,
     workqueues: []
   })
 }
 
-const convertedBirthForm = defineLegacyEvent(BIRTH_FORM_V1, {
-  id: Event.V2_BIRTH,
-  label: {
-    id: 'v2.event.birth.label',
-    defaultMessage: 'Birth'
-  },
-  declaration: {
+const validEvents = ['birth', 'death', 'marriage'] as const
+
+async function main() {
+  const { event } = await prompts({
+    type: 'select',
+    name: 'event',
+    message: 'Choose an event',
+    choices: validEvents.map((e) => ({
+      title: e[0].toUpperCase() + e.slice(1),
+      value: e
+    }))
+  })
+
+  const forms = await fs.readFile(path.join(__dirname, './forms.json'))
+  const eventForm = JSON.parse(forms.toString())[event]
+
+  const newForm = defineLegacyEvent(eventForm, {
+    id: event,
     label: {
-      id: 'v2.event.birth.action.declare.form.label',
-      defaultMessage: 'Birth declaration form'
+      id: `event.${event}.label`,
+      defaultMessage: event[0].toUpperCase() + event.slice(1)
+    },
+    declaration: {
+      label: {
+        id: `event.${event}.action.declare.form.label`,
+        defaultMessage: `${event[0].toUpperCase() + event.slice(1)} declaration form`
+      }
+    },
+    summary: {
+      title: {
+        id: 'event.birth.summary.title',
+        label: {
+          defaultMessage: '{child.firstname} {child.surname}',
+          description: 'This is the title of the summary',
+          id: 'v2.event.birth.summary.title'
+        }
+      },
+      // @TODO: Add fields to summary
+      fields: []
     }
-  }
-})
+  })
+
+  await fs.writeFile('new-form.json', JSON.stringify(newForm, null, 2))
+}
+main()
