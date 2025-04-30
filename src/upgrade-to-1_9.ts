@@ -123,10 +123,12 @@ async function main() {
     }))
   })
 
+  // 2. Read the forms as JSON.
+  //    @TODO: How do we get the forms as JSON? The forms endpoint needs a JWT which adds complexity.
   const forms = await fs.readFile(path.join(__dirname, './forms.json'))
   const eventForm = JSON.parse(forms.toString())[event]
 
-  // 2. Convert the form to the new format
+  // 3. Convert the form to the new format
   const newForm = defineLegacyEvent(eventForm, {
     id: event,
     label: {
@@ -153,19 +155,19 @@ async function main() {
     }
   })
 
-  // 3. Write the new form to a file
+  // 4. Write the new form to a file
   await fs.writeFile(
     path.join(__dirname, './forms-v2.json'),
     JSON.stringify(newForm, null, 2)
   )
 
   /*
-   * 4. Go through the new form and check if all translations are available in client.csv
+   * 5. Go through the new form and check if all translations are available in client.csv
    *    -> If not, add them to the file
    */
 
   /*
-   * 5. Figure out how to 'finish' the migration, are manual steps needed?
+   * 6. Figure out how to 'finish' the migration, are manual steps needed?
    */
 }
 main()
