@@ -1037,7 +1037,7 @@ services:
         constraints:
           - node.labels.data1 == true
 secrets:
-  redis-acl.{{STACK}}.{{ts}}:
+  redis-acl.{{ts}}:
     external: true
   jwt-public-key.{{ts}}:
     external: true
