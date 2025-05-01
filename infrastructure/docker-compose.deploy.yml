@@ -255,9 +255,9 @@ services:
   redis:
     environment:
       - VALKEY_PASSWORD=false
-      - VALKEY_ACLFILE=/run/secrets/redis-acl.{{STACK}}.{{ts}}
+      - VALKEY_ACLFILE=/run/secrets/redis-acl.{{ts}}
     secrets:
-      - redis-acl.{{STACK}}.{{ts}}
+      - redis-acl.{{ts}}
     networks:
       - overlay_net
     deploy:
@@ -1034,7 +1034,7 @@ services:
         constraints:
           - node.labels.data1 == true
 secrets:
-  redis-acl.{{STACK}}.{{ts}}:
+  redis-acl.{{ts}}:
     external: true
   jwt-public-key.{{ts}}:
     external: true
