@@ -2681,6 +2681,7 @@ v2.event.tennis-club-membership.action.form.section.idTypeOther.label,Field for 
 v2.event.tennis-club-membership.action.form.section.lastName.label,This is the label for the last name field,Last Name,Last Name
 v2.event.tennis-club-membership.action.form.section.passportDetails.label,Field for entering Passport details,Passport Details,Passport Details
 v2.event.tennis-club-membership.action.form.section.refugeeNumberDetails.label,Field for entering Refugee Number details,Refugee Number Details,Refugee Number Details
+v2.event.tennis-club-membership.action.form.section.relationshipToChild.label,This is the label for the relationship to member field,Relationship to Child,Relationship to Child
 v2.event.tennis-club-membership.action.form.section.relationshipToMember.label,This is the label for the relationship to member field,Relationship to Member,Relationship to Member
 v2.event.tennis-club-membership.action.form.section.signedAffidavit.label,This is the label for uploading a signed affidavit,Signed Affidavit (Optional),Signed Affidavit (Optional)
 v2.event.tennis-club-membership.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Enregistrer
