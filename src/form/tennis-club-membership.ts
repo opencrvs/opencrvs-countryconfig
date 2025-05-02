@@ -486,14 +486,14 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           ]
         },
         {
-          id: 'collector.OTHER.relationshipToChild',
+          id: 'collector.OTHER.relationshipToMember',
           type: 'TEXT',
           required: true,
           label: {
-            defaultMessage: 'Relationship to child',
+            defaultMessage: 'Relationship to Member',
             description:
-              'This is the label for the relationship to child field',
-            id: 'v2.event.tennis-club-membership.action.form.section.relationshipToChild.label'
+              'This is the label for the relationship to member field',
+            id: 'v2.event.tennis-club-membership.action.form.section.relationshipToMember.label'
           },
           conditionals: [
             {

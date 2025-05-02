@@ -303,13 +303,13 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.OTHER.relationshipToMember',
+    id: 'collector.OTHER.relationshipToChild',
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Relationship to Member',
-      description: 'This is the label for the relationship to member field',
-      id: 'v2.event.birth.action.form.section.relationshipToMember.label'
+      defaultMessage: 'Relationship to Child',
+      description: 'This is the label for the relationship to child field',
+      id: 'v2.event.birth.action.form.section.relationshipToChild.label'
     },
     conditionals: [
       {
