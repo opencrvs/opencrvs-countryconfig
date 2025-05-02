@@ -834,10 +834,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@1.8.0-rc.99ff84e":
-  version "1.8.0-rc.99ff84e"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.99ff84e.tgz#251ae771b885a7126ce2c1e560474ac57412b699"
-  integrity sha512-SU/rQGZffnDOERgiiX/yb+Ay70F7LXsL6lPeHUshkxerqvI+qy4uwEIDMVZKi2ajN+CwQFiCW+PsRett0ZeMZQ==
+"@opencrvs/toolkit@1.8.0-rc.994797e":
+  version "1.8.0-rc.994797e"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.994797e.tgz#d74eef9bab3241453e8843f51366d110c3015f61"
+  integrity sha512-L33ABJSK8GxgDz7DRneLyotkSRDkQwq/v+2gjOVuf2AFS+3BC1JIf6eKbJ31S4sD4CXLTCZDZWOh2+GtbS0Vjw==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
@@ -845,6 +845,7 @@
     ajv-formats "^3.0.1"
     superjson "1.9.0-0"
     uuid "^9.0.0"
+    zod-openapi "^4.2.4"
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
@@ -1017,14 +1018,14 @@
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
 "@trpc/client@^11.0.0-rc.648":
-  version "11.0.0-rc.711"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.0.0-rc.711.tgz#6d07b6fa8221fe0aa886495a507ca34575a32a25"
-  integrity sha512-m3uFfgEW+hbxA2IS4q238fTfT4hJFwz6Y4FQUfrgj3395W1afaOoUbF3S970jG9Gf/VTlIfTG8pQ1sTrZ7Uwug==
+  version "11.1.2"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.1.2.tgz#4119238d569281692e7aea843fdad128e0fe3cec"
+  integrity sha512-RpifJOAv+ql9gF3oafa3dLCF01AzWu2DzejvehAPG2IlwHxopKoYXaImJ8zPwRkZokuWiKz5v65HjElmi8TlrQ==
 
 "@trpc/server@^11.0.0-rc.532":
-  version "11.0.0-rc.711"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.0.0-rc.711.tgz#a9a0db9eea2bdc0fa705b1459f03325e54202add"
-  integrity sha512-dGaMXLFJaLg1XWGRQ3ZQp2dkq7Od6u+9DOrp+fn0s88sZW57eEhX2MOxWpFp5z9xLZNN0Hq5G6/4QtR0iMUVcw==
+  version "11.1.2"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.1.2.tgz#2e506f767f6e6189121733dad3daea0a5423b98b"
+  integrity sha512-Oi9zWHG0ZDkbDo4sYkduoV7q4sIe6UwjrRLC91vNMYQK+PVgpbTCmK1laRwewAGu0zaayqcGDosANjceOIC3GA==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.9"
@@ -2668,9 +2669,9 @@ fast-safe-stringify@^2.1.1:
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
 fast-uri@^3.0.1:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.5.tgz#19f5f9691d0dab9b85861a7bb5d98fca961da9cd"
-  integrity sha512-5JnBCWpFlMo0a3ciDy/JckMzzv1U9coZrIhedq+HXxxUfDTAiS0LA8OKVao4G9BxmCVck/jtA5r3KAtRWEyD8Q==
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.6.tgz#88f130b77cfaea2378d56bf970dea21257a68748"
+  integrity sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw==
 
 fastq@^1.6.0:
   version "1.13.0"
@@ -5702,6 +5703,11 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod-openapi@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/zod-openapi/-/zod-openapi-4.2.4.tgz#44a0ec81ace6d64d705c8e4232095fac313359cf"
+  integrity sha512-tsrQpbpqFCXqVXUzi3TPwFhuMtLN3oNZobOtYnK6/5VkXsNdnIgyNr4r8no4wmYluaxzN3F7iS+8xCW8BmMQ8g==
 
 zod@^3.24.1:
   version "3.24.1"
