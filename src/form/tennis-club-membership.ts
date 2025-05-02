@@ -1085,8 +1085,8 @@ export const tennisClubMembershipEvent = defineConfig({
       fields: [
         field('applicant.firstname').exact(),
         field('applicant.surname').fuzzy(),
-        event('event.trackingId'),
-        event('event.status', statusOptions)
+        event('trackingId'),
+        event('status', statusOptions)
       ]
     }
   ]
