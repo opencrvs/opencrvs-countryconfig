@@ -95,9 +95,9 @@ test.describe.serial('Validate collect payment page', () => {
   })
 
   test('5.6 should be able to enter relationship', async () => {
-    await page.fill('#collector____OTHER____relationshipToMember', 'Uncle')
+    await page.fill('#collector____OTHER____relationshipToChild', 'Uncle')
     await expect(
-      page.locator('#collector____OTHER____relationshipToMember')
+      page.locator('#collector____OTHER____relationshipToChild')
     ).toHaveValue('Uncle')
     await page.getByRole('heading', { name: 'Birth', exact: true }).click()
   })
