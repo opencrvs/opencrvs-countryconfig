@@ -255,18 +255,12 @@ function eventStatement() {
                   ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
                   : '',
 
-                this.birthChildFokontanyCustomAddress
-                  .toLowerCase()
-                  .includes('toamasina')
-                  ? ''
-                  : 'kaominina' +
-                      ' ' +
+                      'kaominina',
                       (definitionOffice(
                         replaceByUppercase(placeOfBirthDistrict)
                       ) || '-') +
                       ',' +
-                      'district' +
-                      ' ' +
+                      'district ' +
                       definitionDistrict(placeOfBirthState) || '-'
               ]
             : [
@@ -416,10 +410,7 @@ function fatherDetails(fatherPrimaryDistrict) {
                   (this.birthFatherFokontanyCustomAddress ||
                     this.birthMotherFokontanyCustomAddress ||
                     '-') + ',',
-                  fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
-                    ? // && (this.birthFatherFokontanyCustomAddress?.toLowerCase().includes('toamasina') || this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina'))
-                      ''
-                    : 'kaominina' +
+                    'kaominina' +
                       ' ' +
                       (definitionOffice(
                         replaceByUppercase(fatherPrimaryDistrict)
@@ -671,16 +662,12 @@ function motherDetails(motherPrimaryDistrict) {
           ? [
               'amin’ny fokontany',
               (this.birthMotherFokontanyCustomAddress || '-') + ',',
-
-              motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
-                ? // && this.birthMotherFokontanyCustomAddress.toLowerCase().includes('toamasina')
-                  ''
-                : 'kaominina' +
-                  ' ' +
-                  (definitionOffice(
-                    replaceByUppercase(motherPrimaryDistrict)
-                  ) || '-') +
-                  ','
+              'kaominina' +
+                ' ' +
+                (definitionOffice(
+                  replaceByUppercase(motherPrimaryDistrict)
+                ) || '-') +
+                ','
             ]
           : [
               ([
