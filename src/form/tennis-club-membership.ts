@@ -11,6 +11,7 @@
 
 import {
   ActionType,
+  and,
   ConditionalType,
   defineActionForm,
   defineConfig,
@@ -369,7 +370,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray(['PASSPORT'])
+              conditional: and(
+                field('collector.requesterId').inArray(['OTHER']),
+                field('collector.OTHER.idType').inArray(['PASSPORT'])
+              )
             }
           ]
         },
@@ -385,9 +389,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray([
-                'DRIVING_LICENSE'
-              ])
+              conditional: and(
+                field('collector.requesterId').inArray(['OTHER']),
+                field('collector.OTHER.idType').inArray(['DRIVING_LICENSE'])
+              )
             }
           ]
         },
@@ -403,9 +408,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray([
-                'REFUGEE_NUMBER'
-              ])
+              conditional: and(
+                field('collector.requesterId').inArray(['OTHER']),
+                field('collector.OTHER.idType').inArray(['REFUGEE_NUMBER'])
+              )
             }
           ]
         },
@@ -421,9 +427,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray([
-                'ALIEN_NUMBER'
-              ])
+              conditional: and(
+                field('collector.requesterId').inArray(['OTHER']),
+                field('collector.OTHER.idType').inArray(['ALIEN_NUMBER'])
+              )
             }
           ]
         },
@@ -439,7 +446,10 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('collector.OTHER.idType').inArray(['OTHER'])
+              conditional: and(
+                field('collector.requesterId').inArray(['OTHER']),
+                field('collector.OTHER.idType').inArray(['OTHER'])
+              )
             }
           ]
         },
