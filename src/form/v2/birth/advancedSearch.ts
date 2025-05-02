@@ -20,11 +20,7 @@ export const advancedSearchBirth = [
       description: 'The title of Registration details accordion',
       id: 'v2.advancedSearch.form.registrationDetails'
     },
-    fields: [
-      {
-        fieldId: 'child.dob'
-      }
-    ]
+    fields: []
   },
   {
     title: {
@@ -33,9 +29,18 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.childDetails'
     },
     fields: [
-      {
-        fieldId: 'child.gender'
-      }
+      { fieldId: 'child.firstname' },
+      { fieldId: 'child.surname' },
+      { fieldId: 'child.gender' },
+      { fieldId: 'child.dob' }
     ]
+  },
+  {
+    title: {
+      defaultMessage: 'Event details',
+      description: 'The title of Event details details accordion',
+      id: 'v2.advancedSearch.form.eventDetails'
+    },
+    fields: [{ fieldId: 'child.placeOfBirth' }]
   }
 ] satisfies AdvancedSearch
