@@ -54,6 +54,15 @@ type Question<T extends string> = PromptObject<T> & {
   valueLabel?: string
 }
 
+type Question2<T extends string> = PromptObject<T> & {
+  name: T
+  type: PromptObject<string>['type']
+  valueType?: 'SECRET' | 'VARIABLE'
+  scope: 'ENVIRONMENT' | 'REPOSITORY'
+  valueLabel?: string
+  environmentVariable: string
+}
+
 type QuestionDescriptor<T extends string> = Omit<Question<T>, 'type'> & {
   type: 'disabled' | PromptObject<T>['type']
 }
@@ -83,6 +92,28 @@ type AnswerWithNullValue =
   | (Omit<VariableAnswer, 'value'> & {
       value: VariableAnswer['value'] | null
     })
+
+async function checkForValueOrPrompt<T extends string>(
+  question: Question2<T>
+): Promise<string> {
+  // check if value exists in environment variables
+  const environmentVariableValue = process.env[question.environmentVariable]
+
+  if (
+    environmentVariableValue &&
+    typeof environmentVariableValue === 'string'
+  ) {
+    return environmentVariableValue
+  }
+
+  const promptedValue = await prompts<T>(questionToPrompt(question), {
+    onCancel: () => {
+      process.exit(1)
+    }
+  })
+
+  return promptedValue[question.name]
+}
 
 function questionToPrompt<T extends string>({
   // eslint-disable-next-line no-unused-vars
@@ -256,7 +287,8 @@ const githubQuestions = [
     type: 'text' as const,
     message: 'What is the name of your Github organisation?',
     validate: notEmpty,
-    initial: process.env.GITHUB_ORGANISATION,
+    environmentVariable: 'GITHUB_ORGANISATION',
+    // initial: process.env.GITHUB_ORGANISATION,
     scope: 'REPOSITORY' as const
   },
   {
@@ -264,10 +296,12 @@ const githubQuestions = [
     type: 'text' as const,
     message: 'What is your Github repository?',
     validate: notEmpty,
-    initial: process.env.GITHUB_REPOSITORY,
+    environmentVariable: 'GITHUB_REPOSITORY',
+    // initial: process.env.GITHUB_REPOSITORY,
     scope: 'REPOSITORY' as const
   }
 ]
+
 const githubTokenQuestion = [
   {
     name: 'githubToken',
@@ -324,6 +358,7 @@ const dockerhubQuestions = [
     scope: 'REPOSITORY' as const
   }
 ]
+
 const sshQuestions = [
   {
     name: 'sshHost',
@@ -818,14 +853,8 @@ const SPECIAL_NON_APPLICATION_ENVIRONMENTS = ['jump', 'backup']
 
   log('\n', kleur.bold().underline('Github'))
 
-  const { githubOrganisation, githubRepository } = await prompts(
-    githubQuestions.map(questionToPrompt),
-    {
-      onCancel: () => {
-        process.exit(1)
-      }
-    }
-  )
+  const githubOrganisation = await checkForValueOrPrompt(githubQuestions[0])
+  const githubRepository = await checkForValueOrPrompt(githubQuestions[1])
 
   const { githubToken } = await promptAndStoreAnswer(
     environment,
