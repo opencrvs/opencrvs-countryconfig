@@ -401,7 +401,8 @@ function fatherDetails(fatherPrimaryDistrict) {
               // 'rainy,',
               'teraka tamin’ny',
               this.birthFatherCustomizedExactDateOfBirthUnknown
-                ? convertNumberToLetterForMalagasySpecificLanguage(
+                ? 'taona ' +
+                  convertNumberToLetterForMalagasySpecificLanguage(
                     parseInt(this.birthFatherYearOfBirth)
                   )
                 : customizeDateInCertificateContent(this.fatherBirthDate),
@@ -517,7 +518,8 @@ function fatherDetailsSimplified(fatherDetailsContext) {
               // 'rainy,',
               'teraka tamin’ny',
               birthFatherCustomizedExactDateOfBirthUnknown
-                ? convertNumberToLetterForMalagasySpecificLanguage(
+                ? 'taona ' +
+                  convertNumberToLetterForMalagasySpecificLanguage(
                     parseInt(birthFatherYearOfBirth)
                   )
                 : customizeDateInCertificateContent(fatherBirthDate),
@@ -602,9 +604,10 @@ function motherDetailsSimplified(motherDetailsContext) {
       __spreadArray(
         [
           joinValuesWith([motherFamilyName, motherFirstName]) + ',',
-          "teraka tamin'ny",
+          "teraka tamin’ny",
           birthMotherCustomizedExactDateOfBirthUnknown
-            ? convertNumberToLetterForMalagasySpecificLanguage(
+            ? 'taona ' +
+              convertNumberToLetterForMalagasySpecificLanguage(
                 parseInt(birthMotherYearOfBirth)
               )
             : customizeDateInCertificateContent(motherBirthDate),
@@ -653,9 +656,10 @@ function motherDetails(motherPrimaryDistrict) {
         [
           joinValuesWith([this.motherFamilyName, this.motherFirstName]) + ',',
           // 'reniny,',
-          "teraka tamin'ny",
+          "teraka tamin’ny",
           this.birthMotherCustomizedExactDateOfBirthUnknown
-            ? convertNumberToLetterForMalagasySpecificLanguage(
+            ? 'taona ' +
+              convertNumberToLetterForMalagasySpecificLanguage(
                 parseInt(this.birthMotherYearOfBirth)
               )
             : customizeDateInCertificateContent(this.motherBirthDate),
@@ -860,9 +864,10 @@ function registrationStatementSimplified(registrationStatementContext) {
           : __spreadArray(
               __spreadArray(
                 [
-                  "teraka tamin'ny",
+                  "teraka tamin’ny",
                   birthInformantCustomizedExactDateOfBirthUnknown
-                    ? convertNumberToLetterForMalagasySpecificLanguage(
+                    ? 'taona ' +
+                      convertNumberToLetterForMalagasySpecificLanguage(
                         parseInt(birthInformantYearOfBirth)
                       )
                     : customizeDateInCertificateContent(informantBirthDate),
@@ -962,9 +967,10 @@ function registrationStatement() {
             : __spreadArray(
                 __spreadArray(
                   [
-                    "teraka tamin'ny",
+                    "teraka tamin’ny",
                     this.birthInformantCustomizedExactDateOfBirthUnknown
-                      ? convertNumberToLetterForMalagasySpecificLanguage(
+                      ? 'taona ' +
+                        convertNumberToLetterForMalagasySpecificLanguage(
                           parseInt(this.birthInformantYearOfBirth)
                         )
                       : customizeDateInCertificateContent(
@@ -1214,7 +1220,7 @@ function convertTimeToMdgCustomWords(timeString) {
             convertNumberToLetterForMalagasySpecificLanguage(newMinute),
             ' '
           )
-        : 'ora'
+        : ' ora'
     )
     .concat(newMinute > 0 ? 'minitra ' : '', ' ')
     .concat(timePeriod)
