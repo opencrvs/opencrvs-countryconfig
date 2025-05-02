@@ -236,10 +236,7 @@ export function eventStatement(): Handlebars.HelperDelegate {
             this.birthChildFokontanyCustomAddress
               ?.toLowerCase()
               .includes('toamasina') ||
-            this.placeOfBirthFacility?.toLowerCase().includes('toamasina') ||
-            this.birthChildFokontanyCustomAddress
-              ?.toLowerCase()
-              .includes('toamasina')
+            this.placeOfBirthFacility?.toLowerCase().includes('toamasina')
               ? ''
               : 'kaominina' +
                   ' ' +
@@ -304,7 +301,8 @@ function fatherDetails(
         // 'rainy,',
         'teraka tamin’ny',
         this.birthFatherCustomizedExactDateOfBirthUnknown
-          ? convertNumberToLetterForMalagasySpecificLanguage(
+          ? 'taona ' +
+            convertNumberToLetterForMalagasySpecificLanguage(
               parseInt(this.birthFatherYearOfBirth)
             )
           : customizeDateInCertificateContent(this.fatherBirthDate),
@@ -360,9 +358,10 @@ function motherDetails(
   return joinValuesWith([
     joinValuesWith([this.motherFamilyName, this.motherFirstName]) + ',',
     // 'reniny,',
-    "teraka tamin'ny",
+    'teraka tamin’ny',
     this.birthMotherCustomizedExactDateOfBirthUnknown
-      ? convertNumberToLetterForMalagasySpecificLanguage(
+      ? 'taona ' +
+        convertNumberToLetterForMalagasySpecificLanguage(
           parseInt(this.birthMotherYearOfBirth)
         )
       : customizeDateInCertificateContent(this.motherBirthDate),
@@ -487,9 +486,10 @@ export function registrationStatement(): Handlebars.HelperDelegate {
       ...(isInformantMotherOrFather(this)
         ? []
         : [
-            "teraka tamin'ny",
+            'teraka tamin’ny',
             this.birthInformantCustomizedExactDateOfBirthUnknown
-              ? convertNumberToLetterForMalagasySpecificLanguage(
+              ? 'taona ' +
+                convertNumberToLetterForMalagasySpecificLanguage(
                   parseInt(this.birthInformantYearOfBirth)
                 )
               : customizeDateInCertificateContent(this.informantBirthDate),
@@ -709,7 +709,7 @@ function convertTimeToMdgCustomWords(timeString: string) {
       ? ` ora sy ${convertNumberToLetterForMalagasySpecificLanguage(
           newMinute
         )} `
-      : 'ora'
+      : ' ora'
   }${newMinute > 0 ? `minitra ` : ''} ${timePeriod}`
 
   return res
