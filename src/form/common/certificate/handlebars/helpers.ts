@@ -216,7 +216,7 @@ export function eventStatement(): Handlebars.HelperDelegate {
     motherPrimaryDistrict: string
   ) {
     return joinValuesWith([
-      "--Tamin'ny",
+      '--Tamin’ny',
       customizeDateInCertificateContent(this.eventDate) + ',',
       'tamin’ny',
       convertTimeToMdgCustomWords(this.birthChildBirthTime),
@@ -233,19 +233,19 @@ export function eventStatement(): Handlebars.HelperDelegate {
               ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
               : '',
 
-            this.birthChildFokontanyCustomAddress
-              ?.toLowerCase()
-              .includes('toamasina') ||
-            this.placeOfBirthFacility?.toLowerCase().includes('toamasina')
-              ? ''
-              : 'kaominina' +
-                  ' ' +
-                  (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
-                    '-') +
-                  ', ' +
-                  'district' +
-                  ' ' +
-                  definitionDistrict(placeOfBirthState) || '-'
+            // // this.birthChildFokontanyCustomAddress
+            // //   ?.toLowerCase()
+            // //   .includes('toamasina') ||
+            // // this.placeOfBirthFacility?.toLowerCase().includes('toamasina')
+            // //   ? ''
+            // //   :
+            //   // (this.birthChildFokontanyCustomAddress ? ', ' : '') +
+            'kaominina',
+            (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
+              '-') +
+              ', ' +
+              'district ' +
+              (definitionDistrict(placeOfBirthState) || '-')
           ]
         : [
             'no teraka tao',
@@ -315,15 +315,14 @@ function fatherDetails(
               (this.birthFatherFokontanyCustomAddress ||
                 this.birthMotherFokontanyCustomAddress ||
                 '-') + ',',
-              fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
-                ? // && (this.birthFatherFokontanyCustomAddress?.toLowerCase().includes('toamasina') || this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina'))
-                  ''
-                : 'kaominina' +
-                  ' ' +
-                  (definitionOffice(
-                    replaceByUppercase(fatherPrimaryDistrict)
-                  ) || '- ') +
-                  ','
+              // // fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina') &&
+              // //   this.birthFatherFokontanyCustomAddress?.toLowerCase().includes('toamasina')
+              // //   ? ''
+              // //   :
+              'kaominina ' +
+                (definitionOffice(replaceByUppercase(fatherPrimaryDistrict)) ||
+                  '- ') +
+                ','
             ]
           : [
               ([
@@ -373,14 +372,14 @@ function motherDetails(
           'amin’ny fokontany',
           (this.birthMotherFokontanyCustomAddress || '-') + ',',
 
-          motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
-            ? // && this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina')
-              ''
-            : 'kaominina' +
-              ' ' +
-              (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
-                '-') +
-              ','
+          // // motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+          // //   ? // && this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina')
+          // //     ''
+          // //   :
+          'kaominina ' +
+            (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
+              '-') +
+            ','
         ]
       : [
           ([
@@ -499,10 +498,15 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             'monina ao',
             ...(this.countryPrimaryInformant == 'Madagascar'
               ? [
-                  `amin'ny`,
+                  `amin’ny`,
                   this.birthInformantFokontanyCustomAddress
-                    ? `fokontany ${this.birthInformantFokontanyCustomAddress},`
+                    ? `fokontany ${
+                        this.birthInformantFokontanyCustomAddress || '-'
+                      },`
                     : '',
+                  // // informantPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+                  // //   ? ''
+                  // //   :
                   'kaominina',
                   (definitionOffice(
                     replaceByUppercase(informantPrimaryDistrict)
@@ -1163,12 +1167,12 @@ function getRecognitionMentionValues(this: Record<string, string>, i: number) {
   return [
     `Nozanahan'i ${this['birthMentionChildFamilyName__' + i] || '-'} ${
       this['birthMentionChildFirstName__' + i] || '-'
-    } tamin'ny ${
+    } tamin’ny ${
       this['birthMentionRecognitionDate__' + i]
         ?.split('-')
         ?.reverse()
         ?.join('/') || '-'
-    } tao amin'ny kaominina ${
+    } tao amin’ny kaominina ${
       this['birthMentionRecognitionPlace__' + i] || '-'
     } soratra faha ${this['birthMentionRecognitionActNumber__' + i] || '-'}.`
   ]
