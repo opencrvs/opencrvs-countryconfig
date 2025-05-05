@@ -834,10 +834,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@1.8.0-rc.4522eb1":
-  version "1.8.0-rc.4522eb1"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.4522eb1.tgz#fcf6719d8fda09569763a73a27d019cc3b2290f8"
-  integrity sha512-YeHvtOXwwvvBmwc/7NJgqfpmFbP9Un2J/UuYiteTXvC3vuNiUbBqmVdVPIhU6etdlylSUnNnnVJNpPLmBpCHQA==
+"@opencrvs/toolkit@1.8.0-rc.98cf377":
+  version "1.8.0-rc.98cf377"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.98cf377.tgz#e7a82d521f66b0f15ba0cc3b32cc678dca4111b9"
+  integrity sha512-N+LquRaWeQzEQMNbUYDTHc4rQZuoohotMToM3hEDE/SY213OW3lm6sXS+kjsKRoyHi6BAp9CyceVjZInZkoumA==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
@@ -845,6 +845,7 @@
     ajv-formats "^3.0.1"
     superjson "1.9.0-0"
     uuid "^9.0.0"
+    zod-openapi "^4.2.4"
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
@@ -5718,6 +5719,11 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod-openapi@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/zod-openapi/-/zod-openapi-4.2.4.tgz#44a0ec81ace6d64d705c8e4232095fac313359cf"
+  integrity sha512-tsrQpbpqFCXqVXUzi3TPwFhuMtLN3oNZobOtYnK6/5VkXsNdnIgyNr4r8no4wmYluaxzN3F7iS+8xCW8BmMQ8g==
 
 zod@^3.24.1:
   version "3.24.1"
