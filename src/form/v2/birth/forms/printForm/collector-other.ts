@@ -9,6 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 import {
+  and,
   ConditionalType,
   field,
   FieldConfig,
@@ -34,7 +35,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     type: FieldType.SELECT,
     required: true,
     label: {
-      defaultMessage: 'Select Type of ID',
+      defaultMessage: 'Type of ID',
       description: 'This is the label for selecting the type of ID',
       id: 'v2.event.birth.action.form.section.idType.label'
     },
@@ -119,15 +120,16 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Passport Details',
+      defaultMessage: 'Passport',
       description: 'Field for entering Passport details',
       id: 'v2.event.birth.action.form.section.passportDetails.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.OTHER.idType').isEqualTo(
-          otherIdType.PASSPORT
+        conditional: and(
+          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.OTHER.idType').isEqualTo(otherIdType.PASSPORT)
         )
       }
     ]
@@ -137,15 +139,16 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'ID Number',
+      defaultMessage: 'National ID',
       description: 'Field for entering ID Number',
       id: 'v2.event.birth.action.form.section.nid.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.OTHER.idType').isEqualTo(
-          otherIdType.NATIONAL_ID
+        conditional: and(
+          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.OTHER.idType').isEqualTo(otherIdType.NATIONAL_ID)
         )
       }
     ],
@@ -156,15 +159,16 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Driving License Details',
+      defaultMessage: 'Drivers License',
       description: 'Field for entering Driving License details',
       id: 'v2.event.birth.action.form.section.drivingLicenseDetails.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.OTHER.idType').isEqualTo(
-          otherIdType.DRIVING_LICENSE
+        conditional: and(
+          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.OTHER.idType').isEqualTo(otherIdType.DRIVING_LICENSE)
         )
       }
     ]
@@ -174,15 +178,18 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'ID Number',
-      description: 'Field for entering ID Number',
+      defaultMessage: 'Birth Registration Number',
+      description: 'Field for entering Birth Registration Number',
       id: 'v2.event.birth.action.form.section.brn.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.OTHER.idType').isEqualTo(
-          otherIdType.BIRTH_REGISTRATION_NUMBER
+        conditional: and(
+          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.OTHER.idType').isEqualTo(
+            otherIdType.BIRTH_REGISTRATION_NUMBER
+          )
         )
       }
     ]
@@ -192,15 +199,16 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Refugee Number Details',
+      defaultMessage: 'Refugee Number',
       description: 'Field for entering Refugee Number details',
       id: 'v2.event.birth.action.form.section.refugeeNumberDetails.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.OTHER.idType').isEqualTo(
-          otherIdType.REFUGEE_NUMBER
+        conditional: and(
+          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.OTHER.idType').isEqualTo(otherIdType.REFUGEE_NUMBER)
         )
       }
     ]
@@ -210,15 +218,16 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Alien Number Details',
+      defaultMessage: 'Alien Number',
       description: 'Field for entering Alien Number details',
       id: 'v2.event.birth.action.form.section.alienNumberDetails.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.OTHER.idType').isEqualTo(
-          otherIdType.ALIEN_NUMBER
+        conditional: and(
+          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.OTHER.idType').isEqualTo(otherIdType.ALIEN_NUMBER)
         )
       }
     ]
@@ -228,15 +237,35 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Other ID Type (if applicable)',
+      defaultMessage: 'Other type of ID',
       description: 'Field for entering ID type if "Other" is selected',
       id: 'v2.event.birth.action.form.section.idTypeOther.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.OTHER.idType').isEqualTo(
-          otherIdType.OTHER
+        conditional: and(
+          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.OTHER.idType').isEqualTo(otherIdType.OTHER)
+        )
+      }
+    ]
+  },
+  {
+    id: 'collector.OTHER.idNumberOther',
+    type: FieldType.TEXT,
+    required: true,
+    label: {
+      defaultMessage: 'ID Number',
+      description: 'Field for entering ID Number if "Other" is selected',
+      id: 'v2.event.birth.action.form.section.idNumberOther.label'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: and(
+          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.OTHER.idType').isEqualTo(otherIdType.OTHER)
         )
       }
     ]
@@ -274,13 +303,13 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.OTHER.relationshipToMember',
+    id: 'collector.OTHER.relationshipToChild',
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Relationship to Member',
-      description: 'This is the label for the relationship to member field',
-      id: 'v2.event.birth.action.form.section.relationshipToMember.label'
+      defaultMessage: 'Relationship to child',
+      description: 'This is the label for the relationship to child field',
+      id: 'v2.event.birth.action.form.section.relationshipToChild.label'
     },
     conditionals: [
       {
