@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.4.0 Release Candidate
+
 ## 1.8.0
 
 ### Improvements
