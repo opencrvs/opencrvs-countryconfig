@@ -1011,6 +1011,9 @@ export const tennisClubMembershipEvent = defineConfig({
       fields: [
         {
           fieldId: 'applicant.firstname'
+        },
+        {
+          fieldId: 'applicant.surname'
         }
       ]
     }
