@@ -50,6 +50,13 @@ test.describe('9. Save and delete drafts', () => {
     await page.getByRole('button', { name: childName, exact: true }).click()
     await page.getByRole('button', { name: 'Action', exact: true }).click()
     await page.getByText('Declare').click()
+
+    // Ensure user is directed to review page
+    await expect(page.getByText('Republic of Farajaland')).toBeVisible()
+    await expect(
+      page.getByText(`Birth declaration for ${childName}`)
+    ).toBeVisible()
+
     await page.locator('#event-menu-dropdownMenu').click()
     await page.getByText('Delete declaration').click()
 
