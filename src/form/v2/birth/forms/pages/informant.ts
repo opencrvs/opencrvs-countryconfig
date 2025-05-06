@@ -17,9 +17,10 @@ import {
   FieldType,
   never,
   or,
+  field,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
-import { field, not } from '@opencrvs/toolkit/conditionals'
+import { not } from '@opencrvs/toolkit/conditionals'
 import { createSelectOptions, emptyMessage } from '../../../utils'
 import {
   MAX_NAME_LENGTH,

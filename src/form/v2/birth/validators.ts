@@ -8,7 +8,8 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { field, defineFormConditional } from '@opencrvs/toolkit/conditionals'
+import { field } from '@opencrvs/toolkit/events'
+import { defineFormConditional } from '@opencrvs/toolkit/conditionals'
 
 export const MAX_NAME_LENGTH = 32
 

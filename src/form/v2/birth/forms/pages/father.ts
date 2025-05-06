@@ -15,9 +15,10 @@ import {
   ConditionalType,
   defineFormPage,
   FieldType,
+  field,
   never
 } from '@opencrvs/toolkit/events'
-import { field, or, not } from '@opencrvs/toolkit/conditionals'
+import { or, not } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,

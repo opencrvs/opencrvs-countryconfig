@@ -17,9 +17,10 @@ import {
   FieldType,
   AddressType,
   or,
+  field,
   PageTypes
 } from '@opencrvs/toolkit/events'
-import { field, not } from '@opencrvs/toolkit/conditionals'
+import { not } from '@opencrvs/toolkit/conditionals'
 
 import { applicationConfig } from '@countryconfig/api/application/application-config'
 

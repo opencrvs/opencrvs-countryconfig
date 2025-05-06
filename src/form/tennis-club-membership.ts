@@ -16,13 +16,97 @@ import {
   defineActionForm,
   defineConfig,
   defineDeclarationForm,
+  event,
+  field,
   FieldType,
   PageTypes
 } from '@opencrvs/toolkit/events'
-import { field } from '@opencrvs/toolkit/conditionals'
 
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
+
+const statusOptions = [
+  {
+    value: 'ALL',
+    label: {
+      defaultMessage: 'Any status',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusAny'
+    }
+  },
+  {
+    value: 'IN_PROGRESS',
+    label: {
+      defaultMessage: 'In progress',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusInprogress'
+    }
+  },
+  {
+    value: 'IN_REVIEW',
+    label: {
+      defaultMessage: 'In review',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusInReview'
+    }
+  },
+  {
+    value: 'REJECTED',
+    label: {
+      defaultMessage: 'Requires updates',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusRequireUpdate'
+    }
+  },
+  {
+    value: 'REGISTERED',
+    label: {
+      defaultMessage: 'Registered',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusRegistered'
+    }
+  },
+  {
+    value: 'CERTIFIED',
+    label: {
+      defaultMessage: 'Certified',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusCertified'
+    }
+  },
+  {
+    value: 'ARCHIVED',
+    label: {
+      defaultMessage: 'Archived',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusAchived'
+    }
+  },
+  {
+    value: 'CORRECTION_REQUESTED',
+    label: {
+      defaultMessage: 'Correction requested',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusCorrectionRequested'
+    }
+  },
+  {
+    value: 'VALIDATED',
+    label: {
+      defaultMessage: 'Validated',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusValidated'
+    }
+  },
+  {
+    value: 'CREATED',
+    label: {
+      defaultMessage: 'Draft',
+      description: 'Option for form field: status of record',
+      id: 'v2.advancedSearch.form.recordStatusCreated'
+    }
+  }
+]
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
@@ -1009,12 +1093,10 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'v2.event.tennis-club-membership.search'
       },
       fields: [
-        {
-          fieldId: 'applicant.firstname'
-        },
-        {
-          fieldId: 'applicant.surname'
-        }
+        field('applicant.firstname').exact(),
+        field('applicant.surname').fuzzy(),
+        event('trackingId'),
+        event('status', statusOptions)
       ]
     }
   ]
