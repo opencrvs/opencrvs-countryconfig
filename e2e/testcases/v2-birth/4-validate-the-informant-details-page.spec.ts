@@ -15,12 +15,9 @@ test.describe('4. Validate the informants details pages', () => {
     await page.getByRole('button', { name: 'Continue' }).click()
   })
 
-  test.afterEach(async ({ page }) => {
+  test.afterAll(async () => {
     await page.getByRole('button', { name: 'Exit', exact: true }).click()
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
-  })
-
-  test.afterAll(async () => {
     await page.close()
   })
 
