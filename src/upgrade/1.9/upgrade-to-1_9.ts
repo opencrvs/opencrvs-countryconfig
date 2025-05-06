@@ -10,7 +10,7 @@ import {
   ISerializedForm,
   ISerializedFormSection,
   SerializedFormField
-} from './form/types/types'
+} from '../../form/types/types'
 import { defineTextField } from './upgrade-field-to-1_9'
 import { compact as removeUndefineds } from 'lodash'
 import prompts from 'prompts'
@@ -104,8 +104,7 @@ const defineLegacyEvent = (form: ISerializedForm, params: NewParameters) => {
       pages: sections.map((section) => defineLegacyFormPage(section))
     }),
     actions: [],
-    summary: params.summary,
-    workqueues: []
+    summary: params.summary
   })
 }
 
