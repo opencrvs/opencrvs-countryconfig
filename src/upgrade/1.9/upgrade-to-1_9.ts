@@ -18,7 +18,7 @@ import fs from 'fs/promises'
 import path from 'path'
 
 const defineLegacyField = (field: SerializedFormField) => {
-  // @TODO: Prompt the user to input the field id, and use a good default? Or just always default without prompt?
+  // @TODO: Create a good defaults for `field.id` as currently it converts with the old field name which is just a short string.
 
   if (field.type === 'TEXT') {
     return defineTextField(field)
@@ -57,7 +57,6 @@ const defineLegacyFormPage = (section: ISerializedFormSection) => {
 
 /** Data that may not be available in the old form and needs to be added. */
 
-/** @TODO: Look into if we can figure out which event type is in question */
 interface NewParameters {
   /** The identifier of the new form */
   id: string
