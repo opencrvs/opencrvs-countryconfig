@@ -834,10 +834,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@1.8.0-rc.b885357":
-  version "1.8.0-rc.b885357"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.b885357.tgz#7ec6b1fb7671d27e4027efb208421aef39eef324"
-  integrity sha512-6VrjQ/9eXQ3cikAxa+hjoUg07HAmcY5y20aRHxB+K2vus5j2+MQnmO8hkmgdQXPy+PBQUH4RfVsCa6v/Zz6oAA==
+"@opencrvs/toolkit@1.8.0-rc.2776441":
+  version "1.8.0-rc.2776441"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.2776441.tgz#593c6d3e0f1d3194ac643a9dcdb84d6a01eef60b"
+  integrity sha512-qvCpjZe8AI5g80V/YwJWKA5C967e2McBXTwW7MBc/UMwvDs5dYlnmsuVuITTho981h7YAw0De+iUip40F5Tztw==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
@@ -1018,14 +1018,14 @@
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
 "@trpc/client@^11.0.0-rc.648":
-  version "11.0.0-rc.711"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.0.0-rc.711.tgz#6d07b6fa8221fe0aa886495a507ca34575a32a25"
-  integrity sha512-m3uFfgEW+hbxA2IS4q238fTfT4hJFwz6Y4FQUfrgj3395W1afaOoUbF3S970jG9Gf/VTlIfTG8pQ1sTrZ7Uwug==
+  version "11.1.2"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.1.2.tgz#4119238d569281692e7aea843fdad128e0fe3cec"
+  integrity sha512-RpifJOAv+ql9gF3oafa3dLCF01AzWu2DzejvehAPG2IlwHxopKoYXaImJ8zPwRkZokuWiKz5v65HjElmi8TlrQ==
 
 "@trpc/server@^11.0.0-rc.532":
-  version "11.0.0-rc.711"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.0.0-rc.711.tgz#a9a0db9eea2bdc0fa705b1459f03325e54202add"
-  integrity sha512-dGaMXLFJaLg1XWGRQ3ZQp2dkq7Od6u+9DOrp+fn0s88sZW57eEhX2MOxWpFp5z9xLZNN0Hq5G6/4QtR0iMUVcw==
+  version "11.1.2"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.1.2.tgz#2e506f767f6e6189121733dad3daea0a5423b98b"
+  integrity sha512-Oi9zWHG0ZDkbDo4sYkduoV7q4sIe6UwjrRLC91vNMYQK+PVgpbTCmK1laRwewAGu0zaayqcGDosANjceOIC3GA==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.9"
@@ -2669,9 +2669,9 @@ fast-safe-stringify@^2.1.1:
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
 fast-uri@^3.0.1:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.5.tgz#19f5f9691d0dab9b85861a7bb5d98fca961da9cd"
-  integrity sha512-5JnBCWpFlMo0a3ciDy/JckMzzv1U9coZrIhedq+HXxxUfDTAiS0LA8OKVao4G9BxmCVck/jtA5r3KAtRWEyD8Q==
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.6.tgz#88f130b77cfaea2378d56bf970dea21257a68748"
+  integrity sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw==
 
 fastq@^1.6.0:
   version "1.13.0"
