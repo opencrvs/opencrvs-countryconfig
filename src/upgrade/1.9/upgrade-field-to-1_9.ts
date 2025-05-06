@@ -49,6 +49,7 @@ export const defineTextField = (field: ITextFormField) => {
     hideLabel: field.hideHeader!,
     validation,
     conditionals,
+    // @TODO: We probably don't need to convert this at all, as the default forms only used this for 'ADDRESS'. We can convert that separately.
     parent: field.dependency ? { _fieldId: field.dependency } : undefined!,
     configuration: {
       maxLength: field.maxLength,
