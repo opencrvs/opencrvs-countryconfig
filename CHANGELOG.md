@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.2.2 Release Candidate
+
 ## 0.2.1 Release Candidate
 
 ## 0.2.0 Release Candidate
