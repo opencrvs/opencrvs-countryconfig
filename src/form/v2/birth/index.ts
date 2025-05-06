@@ -10,6 +10,7 @@
  */
 import {
   ActionType,
+  and,
   ConditionalType,
   defineConfig,
   field
@@ -23,6 +24,7 @@ import {
 import { advancedSearchBirth } from './advancedSearch'
 import { Event } from '@countryconfig/form/types/types'
 import { BIRTH_CERTIFICATE_COLLECTOR_FORM } from './forms/printForm'
+import { PlaceOfBirth } from './forms/pages/child'
 
 export const birthEvent = defineConfig({
   id: Event.V2_BIRTH,
@@ -50,6 +52,22 @@ export const birthEvent = defineConfig({
           id: 'v2.event.birth.summary.child.dob.empty'
         }
       },
+      // Render the 'fallback value' when selection has not been made.
+      // This hides the default values of the field when no selection has been made. (e.g. when address is prefilled with user's details, we don't want to show the address before selecting the option)
+      {
+        fieldId: 'child.placeOfBirth',
+        emptyValueMessage: {
+          defaultMessage: 'No place of birth',
+          description: 'This is shown when there is no child information',
+          id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('child.placeOfBirth').isFalsy()
+          }
+        ]
+      },
       {
         fieldId: 'child.birthLocation',
         emptyValueMessage: {
@@ -60,7 +78,12 @@ export const birthEvent = defineConfig({
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: not(field('child.birthLocation').isFalsy())
+            conditional: and(
+              field('child.placeOfBirth').isEqualTo(
+                PlaceOfBirth.HEALTH_FACILITY
+              ),
+              not(field('child.birthLocation').isFalsy())
+            )
           }
         ]
       },
@@ -74,7 +97,10 @@ export const birthEvent = defineConfig({
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: not(field('child.address.privateHome').isFalsy())
+            conditional: and(
+              field('child.placeOfBirth').isEqualTo(PlaceOfBirth.PRIVATE_HOME),
+              not(field('child.address.privateHome').isFalsy())
+            )
           }
         ]
       },
@@ -88,7 +114,10 @@ export const birthEvent = defineConfig({
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: not(field('child.address.other').isFalsy())
+            conditional: and(
+              field('child.placeOfBirth').isEqualTo(PlaceOfBirth.OTHER),
+              not(field('child.address.other').isFalsy())
+            )
           }
         ]
       },

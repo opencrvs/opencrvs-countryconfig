@@ -54,7 +54,7 @@ const AttendantAtBirth = {
   NONE: 'NONE'
 } as const
 
-const PlaceOfBirth = {
+export const PlaceOfBirth = {
   HEALTH_FACILITY: 'HEALTH_FACILITY',
   PRIVATE_HOME: 'PRIVATE_HOME',
   OTHER: 'OTHER'
