@@ -70,6 +70,7 @@ import { readFileSync } from 'fs'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
+import { workqueueconfigHandler } from './api/workqueue/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -490,6 +491,17 @@ export async function createServer() {
       auth: false,
       tags: ['api', 'application-config'],
       description: 'Returns default application configuration'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/workqueue',
+    handler: workqueueconfigHandler,
+    options: {
+      auth: false,
+      tags: ['api', 'workqueue'],
+      description: 'Returns workqueue configurations'
     }
   })
 
