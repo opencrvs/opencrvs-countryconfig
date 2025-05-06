@@ -25,6 +25,11 @@ test.describe('3. Validate the mothers and fathers details pages', () => {
     ).toBeVisible()
   })
 
+  test.afterEach(async ({ page }) => {
+    await page.getByRole('button', { name: 'Exit', exact: true }).click()
+    await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+  })
+
   test.describe.serial('3.1 Validate "First Name(s)" text field', async () => {
     test.describe('3.1.1 Enter Non-English characters', async () => {
       test('Using name: Richard the 3rd', async ({ page }) => {

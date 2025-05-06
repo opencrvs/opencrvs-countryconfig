@@ -21,6 +21,11 @@ test.describe.serial("2. Validate the child's details page", () => {
     await expect(page.getByText("Child's details")).toBeVisible()
   })
 
+  test.afterEach(async ({ page }) => {
+    await page.getByRole('button', { name: 'Exit', exact: true }).click()
+    await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+  })
+
   test.describe('2.1 Validate "First Name(s)" text field', async () => {
     test.describe('2.1.1 Enter Non-English characters', async () => {
       test('Using name: Richard the 3rd', async ({ page }) => {
