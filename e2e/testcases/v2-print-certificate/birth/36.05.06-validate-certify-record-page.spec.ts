@@ -117,7 +117,7 @@ test.describe.serial('Validate collect payment page', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
       await expectInUrl(
         page,
-        `/print-certificate/${eventId}/pages/collector.identity.verify`
+        `/print-certificate/${eventId}/pages/collector.collect.payment`
       )
     })
   })
