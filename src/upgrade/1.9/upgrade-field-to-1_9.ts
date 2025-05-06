@@ -26,7 +26,6 @@ export const defineTextField = (field: ITextFormField) => {
   // previously:
   //   hidden: field.hidden,
   //   disabled: field.disabled,
-  //   dependsOn: field.dependency ? [field.dependency] : undefined
   const conditionals = upgradeConditionals(id, field.conditionals ?? [])
 
   return {
@@ -50,6 +49,7 @@ export const defineTextField = (field: ITextFormField) => {
     hideLabel: field.hideHeader!,
     validation,
     conditionals,
+    parent: field.dependency ? { _fieldId: field.dependency } : undefined!,
     configuration: {
       maxLength: field.maxLength,
       type: 'text'
