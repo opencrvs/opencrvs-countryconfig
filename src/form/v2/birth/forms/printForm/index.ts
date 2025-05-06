@@ -22,6 +22,7 @@ import { applicationConfig } from '@countryconfig/api/application/application-co
 import { printCertificateCollectors } from './collectors'
 import { printCertificateCollectorOther } from './collector-other'
 import { printCertificateCollectorIdentityVerify } from './collector-identity-verify'
+import { InformantType } from '../pages/informant'
 
 export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
@@ -48,6 +49,9 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
         defaultMessage: 'Verify their identity',
         description: 'This is the title of the section'
       },
+      conditional: not(
+        field('collector.requesterId').isEqualTo(InformantType.OTHER)
+      ),
       fields: printCertificateCollectorIdentityVerify,
       actions: {
         verify: {
