@@ -3,16 +3,16 @@ import { getToken } from '../../helpers'
 import { CREDENTIALS, GATEWAY_HOST } from '../../constants'
 import { createClient } from '@opencrvs/toolkit/api'
 
-async function deleteDeclaration(token: string, eventId: string) {
+async function deleteEvent(token: string, eventId: string) {
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
 
   await client.event.delete.mutate({ eventId })
 }
 
-export async function deleteDeclarations(token: string, eventIds: string[]) {
+export async function deleteEvents(token: string, eventIds: string[]) {
   await Promise.allSettled(
     eventIds.map((eventId) => {
-      return deleteDeclaration(token, eventId)
+      return deleteEvent(token, eventId)
     })
   )
 }
@@ -40,7 +40,7 @@ export function trackAndDeleteCreatedEvents() {
 
   test.afterEach(async ({ page }) => {
     await page.waitForLoadState('networkidle')
-    await deleteDeclarations(token, createdEventIds)
+    await deleteEvents(token, createdEventIds)
     createdEventIds = []
   })
 }
