@@ -484,8 +484,8 @@ const getChildBirthLocation = (eventLocationId, type, id) =>
 
           return {
             name: healthFacility?.name,
-            stateName: healthFacilityCommune?.name,
-            districtName: healthFacilityDistrict.name
+            districtName: healthFacilityCommune?.name,
+            stateName: healthFacilityDistrict?.name,
           }
         case 'OTHER':
           const other = await fetchLocationById(eventLocationId)
@@ -497,8 +497,8 @@ const getChildBirthLocation = (eventLocationId, type, id) =>
           )
           return {
             country: other?.address?.country,
-            stateName: otherCommune?.name,
-            districtName: otherDistrict.name
+            districtName: otherCommune?.name,
+            stateName: otherDistrict?.name,
           }
         default:
           const home = await fetchOtherBirthLocation(id)
@@ -1042,8 +1042,8 @@ window.openPrintModal = async function openPrintModal(id) {
                 'birth.child.child-view-group.otherPlaceOfBirthAddress'
             )?.value
           : undefined,
-      placeOfBirthDistrict: childBirthLocation?.stateName,
-      placeOfBirthState: childBirthLocation?.districtName,
+      placeOfBirthDistrict: childBirthLocation?.districtName, // in helper.js, it is already used like "District"="Commune" "state"="District" : should not permute it here
+      placeOfBirthState: childBirthLocation?.stateName,
       childFamilyName: event.child.name[0].familyName,
       childFirstName: [
         event.child.name[0].middleName,

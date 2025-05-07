@@ -283,7 +283,6 @@ function fatherDetails(
   this: Record<string, string>,
   fatherPrimaryDistrict: string
 ) {
-  console.log('===>', canShowFatherDetails(this))
   if (!canShowFatherDetails(this)) {
     return ''
   }
