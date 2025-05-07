@@ -11,7 +11,37 @@ const child = {
   firstNames: faker.person.firstName('female')
 }
 
+function trackAndDeleteCreatedEvents() {
+  let createdEventIds: string[] = []
+  let token: string
+
+  test.beforeEach(async ({ page }) => {
+    token = await getToken(
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
+
+    page.on('response', async (response) => {
+      if (
+        response.status() === 200 &&
+        response.url().includes('/api/events/event.create')
+      ) {
+        const resBody = await response.json()
+        createdEventIds.push(resBody.result.data.json.id)
+      }
+    })
+  })
+
+  test.afterEach(async ({ page }) => {
+    await page.waitForLoadState('networkidle')
+    await deleteDeclarations(token, createdEventIds)
+    createdEventIds = []
+  })
+}
+
 test.describe.serial('1. Birth event declaration', () => {
+  trackAndDeleteCreatedEvents()
+
   test.describe.serial('Fill all form sections. Save & Exit', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
@@ -20,33 +50,6 @@ test.describe.serial('1. Birth event declaration', () => {
 
     test.afterAll(async () => {
       await page.close()
-    })
-
-    let createdEventIds: string[] = []
-    let token: string
-
-    test.beforeEach(async ({ page }) => {
-      token = await getToken(
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-      )
-
-      page.on('response', async (response) => {
-        if (
-          response.status() === 200 &&
-          response.url().includes('/api/events/event.create')
-        ) {
-          const resBody = await response.json()
-          createdEventIds.push(resBody.result.data.json.id)
-        }
-      })
-    })
-
-    test.afterEach(async ({ page }) => {
-      await page.waitForLoadState('networkidle')
-      console.log('createdEventIds', createdEventIds)
-      await deleteDeclarations(token, createdEventIds)
-      createdEventIds = []
     })
 
     test('1.1. Navigate to the birth event declaration page', async () => {
