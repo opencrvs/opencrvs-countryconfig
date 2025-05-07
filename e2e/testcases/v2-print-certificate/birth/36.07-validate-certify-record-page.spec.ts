@@ -24,7 +24,10 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
-    const res = await createDeclaration(token, await getDeclaration('BROTHER'))
+    const res = await createDeclaration(
+      token,
+      await getDeclaration({ informantRelation: 'BROTHER' })
+    )
     eventId = res.eventId
     declaration = res.declaration
     page = await browser.newPage()
