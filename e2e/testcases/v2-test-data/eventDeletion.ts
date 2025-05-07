@@ -9,14 +9,6 @@ async function deleteEvent(token: string, eventId: string) {
   await client.event.delete.mutate({ eventId })
 }
 
-export async function deleteEvents(token: string, eventIds: string[]) {
-  await Promise.allSettled(
-    eventIds.map((eventId) => {
-      return deleteEvent(token, eventId)
-    })
-  )
-}
-
 export function trackAndDeleteCreatedEvents() {
   let createdEventIds: string[] = []
   let token: string
@@ -40,7 +32,11 @@ export function trackAndDeleteCreatedEvents() {
 
   test.afterEach(async ({ page }) => {
     await page.waitForLoadState('networkidle')
-    await deleteEvents(token, createdEventIds)
+
+    await Promise.allSettled(
+      createdEventIds.map((eventId) => deleteEvent(token, eventId))
+    )
+
     createdEventIds = []
   })
 }
