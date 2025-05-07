@@ -1175,7 +1175,7 @@ form.field.label.deliveryInstitution,,Type or select institution,Tapez ou sélec
 form.field.label.deny,,No,Non,Tsia
 form.field.label.district,Label for District,Commune,Commune,Firaisana
 form.field.label.docTypeAdoption,,Adoption letter,Lettre de reconnaissance,Taratasy fanjanahana
-form.field.label.docTypeBirthCert,,Birth certificate,Certificat de la naissance,Kopia fahaterahana
+form.field.label.docTypeBirthCert,,Birth certificate,Acte de naissance,Kopia fahaterahana
 form.field.label.docTypeChildAgeProof,,Proof of child's age,Preuve de l'âge de l'enfant,Porofo manamarina ny taonan'ilay zaza
 form.field.label.docTypeChildBirthProof,,Notification of birth (Front),Notification de la naissance (Recto),Filazana fahaterahana
 form.field.label.docTypeChildBirthVersoProof,,Notification of birth (Back),Notification de la naissance (Verso),Filazana fahaterahana (Ambadika)

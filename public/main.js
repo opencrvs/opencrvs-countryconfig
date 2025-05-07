@@ -1065,6 +1065,14 @@ window.openPrintModal = async function openPrintModal(id) {
       (a) => a.type === 'PRIMARY_ADDRESS'
     )
 
+    const birthFatherFokontanyCustomAddress = (
+      event?.questionnaire?.find(
+        (q) =>
+          q.fieldId ===
+          'birth.father.father-view-group.fokontanyCustomAddress'
+      ) || { value: '' }
+    ).value
+
     const fatherDetailsContext = {
       motherMaritalStatus: event.mother.maritalStatus,
       fatherReasonNotApplying: event.father.reasonNotApplying,
@@ -1089,9 +1097,7 @@ window.openPrintModal = async function openPrintModal(id) {
               q.fieldId ===
               'birth.father.father-view-group.customizedExactDateOfBirthUnknown'
           ) || { value: false }
-        ).value == 'true'
-          ? true
-          : false,
+        ).value == 'true',
       birthFatherYearOfBirth: (
         event?.questionnaire?.find(
           (q) => q.fieldId === 'birth.father.father-view-group.yearOfBirth'
@@ -1117,13 +1123,7 @@ window.openPrintModal = async function openPrintModal(id) {
       countryPrimaryFather: fatherPrimaryAddress?.country
         ? countryData[fatherPrimaryAddress?.country][defaultLang]
         : '',
-      birthFatherFokontanyCustomAddress: (
-        event?.questionnaire?.find(
-          (q) =>
-            q.fieldId ===
-            'birth.mother.mother-view-group.fokontanyCustomAddress'
-        ) || { value: '' }
-      ).value,
+      birthFatherFokontanyCustomAddress,
       birthMotherFokontanyCustomAddress: (
         event?.questionnaire?.find(
           (q) =>
@@ -1173,9 +1173,7 @@ window.openPrintModal = async function openPrintModal(id) {
             q.fieldId ===
             'birth.mother.mother-view-group.customizedExactDateOfBirthUnknown'
         ) || { value: false }
-      ).value == 'true'
-        ? true
-        : false,
+      ).value == 'true',
       birthMotherYearOfBirth: (
         event?.questionnaire?.find(
           (q) => q.fieldId === 'birth.mother.mother-view-group.yearOfBirth'
@@ -1262,7 +1260,13 @@ window.openPrintModal = async function openPrintModal(id) {
         .join(' ')
         .trim(),
       birthInformantCustomizedExactDateOfBirthUnknown:
-        event.informant.exactDateOfBirthUnknown,
+      (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.informant.informant-view-group.customizedExactDateOfBirthUnknown'
+        ) || { value: false }
+      ).value == 'true',
       birthInformantYearOfBirth: (
         event?.questionnaire?.find(
           (q) =>
@@ -1283,6 +1287,7 @@ window.openPrintModal = async function openPrintModal(id) {
               ?.country
           ][defaultLang]
         : '',
+      birthFatherFokontanyCustomAddress,
       birthInformantFokontanyCustomAddress: (
         event?.questionnaire?.find(
           (q) =>

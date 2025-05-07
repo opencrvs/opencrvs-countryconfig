@@ -223,22 +223,32 @@ export function eventStatement(): Handlebars.HelperDelegate {
       ...(this.countryPlaceofbirth == 'Madagascar' || this.placeOfBirthFacility
         ? [
             'no teraka tao amin’ny',
-            this.placeOfBirthFacility
-              ? replaceAbbreviations(this.placeOfBirthFacility) + ','
-              : '',
-            this.birthChildOtherPlaceOfBirthAddress
-              ? this.birthChildOtherPlaceOfBirthAddress + ','
-              : '',
-            this.birthChildFokontanyCustomAddress
-              ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
-              : '',
+            [
+              this.placeOfBirthFacility
+                ? replaceAbbreviations(this.placeOfBirthFacility)
+                : '',
+              this.birthChildOtherPlaceOfBirthAddress
+                ? this.birthChildOtherPlaceOfBirthAddress
+                : '',
+              this.birthChildFokontanyCustomAddress
+                ? 'fokontany ' + this.birthChildFokontanyCustomAddress
+                : '',
 
-            'kaominina',
-            (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
-              '-') +
-              ', ' +
-              'district ' +
-              (definitionDistrict(placeOfBirthState) || '-')
+              this.birthChildFokontanyCustomAddress
+                ?.toLowerCase()
+                .includes('toamasina') ||
+              this.placeOfBirthFacility?.toLowerCase().includes('toamasina')
+                ? ''
+                : 'kaominina ' +
+                    (definitionOffice(
+                      replaceByUppercase(placeOfBirthDistrict)
+                    ) || '-') +
+                    ', ' +
+                    'district ' +
+                    definitionDistrict(placeOfBirthState) || '-'
+            ]
+              .filter(Boolean)
+              .join(', ')
           ]
         : [
             'no teraka tao',
@@ -307,10 +317,13 @@ function fatherDetails(
               (this.birthFatherFokontanyCustomAddress ||
                 this.birthMotherFokontanyCustomAddress ||
                 '-') + ',',
-              'kaominina ' +
-                (definitionOffice(replaceByUppercase(fatherPrimaryDistrict)) ||
-                  '- ') +
-                ','
+              fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+                ? ''
+                : 'kaominina ' +
+                  (definitionOffice(
+                    replaceByUppercase(fatherPrimaryDistrict)
+                  ) || '- ') +
+                  ','
             ]
           : [
               ([
@@ -360,10 +373,12 @@ function motherDetails(
           'amin’ny fokontany',
           (this.birthMotherFokontanyCustomAddress || '-') + ',',
 
-          'kaominina ' +
-            (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
-              '-') +
-            ','
+          motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+            ? ''
+            : 'kaominina ' +
+              (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
+                '-') +
+              ','
         ]
       : [
           ([
@@ -449,6 +464,10 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     )
     const informantTypeMapped =
       relationMap[this.informantType?.toLowerCase() as keyof typeof relationMap]
+
+    const isInformantNotLegalFather =
+      this.informantType === 'FATHER' && !isInformantLegalFather(this)
+
     return joinValuesWith([
       '---Nosoratana androany',
       customizeDateInCertificateContent(registrarDateUTC.split('T')[0]) + ',',
@@ -461,7 +480,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             this.informantFamilyName,
             this.informantFirstName
           ]) + ',',
-      this.informantType === 'FATHER' && !isInformantLegalFather(this)
+      isInformantNotLegalFather
         ? ''
         : informantTypeMapped
         ? informantTypeMapped + ','
@@ -483,15 +502,24 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             ...(this.countryPrimaryInformant == 'Madagascar'
               ? [
                   `amin’ny`,
-                  this.birthInformantFokontanyCustomAddress
+                  (isInformantNotLegalFather
+                    ? this.birthFatherFokontanyCustomAddress
+                    : '') || this.birthInformantFokontanyCustomAddress
                     ? `fokontany ${
-                        this.birthInformantFokontanyCustomAddress || '-'
+                        this.birthInformantFokontanyCustomAddress ||
+                        this.birthFatherFokontanyCustomAddress
                       },`
                     : '',
-                  'kaominina',
-                  (definitionOffice(
-                    replaceByUppercase(informantPrimaryDistrict)
-                  ) || '-') + ','
+
+                  informantPrimaryDistrict
+                    ?.toLowerCase()
+                    .includes('cu toamasina')
+                    ? ''
+                    : 'kaominina ' +
+                      (definitionOffice(
+                        replaceByUppercase(informantPrimaryDistrict)
+                      ) || '-') +
+                      ','
                 ]
               : [
                   ([
