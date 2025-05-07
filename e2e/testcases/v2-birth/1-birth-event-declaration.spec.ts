@@ -1,42 +1,14 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, loginToV2 } from '../../helpers'
+import { loginToV2 } from '../../helpers'
 import path from 'path'
 import { faker } from '@faker-js/faker'
 import { selectAction } from '../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
-import { CLIENT_V2_URL, CREDENTIALS } from '../../constants'
-import { deleteDeclarations } from '../v2-test-data/birth-declaration'
+import { CLIENT_V2_URL } from '../../constants'
+import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 
 const child = {
   firstNames: faker.person.firstName('female')
-}
-
-function trackAndDeleteCreatedEvents() {
-  let createdEventIds: string[] = []
-  let token: string
-
-  test.beforeEach(async ({ page }) => {
-    token = await getToken(
-      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-    )
-
-    page.on('response', async (response) => {
-      if (
-        response.status() === 200 &&
-        response.url().includes('/api/events/event.create')
-      ) {
-        const resBody = await response.json()
-        createdEventIds.push(resBody.result.data.json.id)
-      }
-    })
-  })
-
-  test.afterEach(async ({ page }) => {
-    await page.waitForLoadState('networkidle')
-    await deleteDeclarations(token, createdEventIds)
-    createdEventIds = []
-  })
 }
 
 test.describe.serial('1. Birth event declaration', () => {
@@ -508,23 +480,6 @@ test.describe.serial('1. Birth event declaration', () => {
         await expect(
           page.getByRole('img', { name: 'Supporting Document' })
         ).toBeVisible()
-      })
-
-      test('1.9.5 Delete draft', async () => {
-        await page.goto(CLIENT_V2_URL)
-        await page
-          .getByRole('button', {
-            name: child.firstNames
-          })
-          .click()
-
-        await selectAction(page, 'Delete')
-        await expect(page.getByText('All events')).toBeVisible()
-        await expect(
-          await page.getByRole('button', {
-            name: child.firstNames
-          })
-        ).not.toBeVisible()
       })
     })
   })
