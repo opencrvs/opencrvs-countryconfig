@@ -150,17 +150,3 @@ export async function createDeclaration(
 
   return { eventId, declaration: data }
 }
-
-async function deleteDeclaration(token: string, eventId: string) {
-  const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
-
-  await client.event.delete.mutate({ eventId })
-}
-
-export async function deleteDeclarations(token: string, eventIds: string[]) {
-  await Promise.allSettled(
-    eventIds.map((eventId) => {
-      return deleteDeclaration(token, eventId)
-    })
-  )
-}
