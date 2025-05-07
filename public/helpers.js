@@ -240,7 +240,7 @@ function eventStatement() {
       __spreadArray(
         __spreadArray(
           [
-            "--Tamin'ny",
+            "--Tamin’ny",
             customizeDateInCertificateContent(this.eventDate) + ',',
             'tamin’ny',
             convertTimeToMdgCustomWords(this.birthChildBirthTime)
@@ -329,7 +329,7 @@ function eventStatementSimplified(
     __spreadArray(
       __spreadArray(
         [
-          "--Tamin'ny",
+          "--Tamin’ny",
           customizeDateInCertificateContent(eventDate) + ',',
           'tamin’ny',
           convertTimeToMdgCustomWords(birthChildBirthTime)
@@ -865,7 +865,7 @@ function registrationStatementSimplified(registrationStatementContext) {
                 ],
                 countryPrimaryInformant == 'Madagascar'
                   ? [
-                      "amin'ny",
+                      "amin’ny",
                       birthInformantFokontanyCustomAddress
                         ? 'fokontany '.concat(
                             birthInformantFokontanyCustomAddress,
@@ -970,7 +970,7 @@ function registrationStatement() {
                   ],
                   this.countryPrimaryInformant == 'Madagascar'
                     ? [
-                        "amin'ny",
+                        "amin’ny",
                         this.birthInformantFokontanyCustomAddress
                           ? 'fokontany '.concat(
                               this.birthInformantFokontanyCustomAddress,
@@ -1681,7 +1681,7 @@ function getRecognitionMentionValues(i) {
   return [
     "Nozanahan'i "
       .concat(this['birthMentionChildFamilyName__' + i] || '-', ' ')
-      .concat(this['birthMentionChildFirstName__' + i] || '-', " tamin'ny ")
+      .concat(this['birthMentionChildFirstName__' + i] || '-', " tamin’ny ")
       .concat(
         ((_f =
           (_e =
@@ -1693,7 +1693,7 @@ function getRecognitionMentionValues(i) {
             : _e.reverse()) === null || _f === void 0
           ? void 0
           : _f.join('/')) || '-',
-        " tao amin'ny kaominina "
+        " tao amin’ny kaominina "
       )
       .concat(
         this['birthMentionRecognitionPlace__' + i] || '-',

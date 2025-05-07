@@ -224,10 +224,10 @@ export function eventStatement(): Handlebars.HelperDelegate {
         ? [
             'no teraka tao amin’ny',
             this.placeOfBirthFacility
-              ? replaceAbbreviations(this.placeOfBirthFacility)
+              ? replaceAbbreviations(this.placeOfBirthFacility) + ','
               : '',
             this.birthChildOtherPlaceOfBirthAddress
-              ? this.birthChildOtherPlaceOfBirthAddress + ''
+              ? this.birthChildOtherPlaceOfBirthAddress + ','
               : '',
             this.birthChildFokontanyCustomAddress
               ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
@@ -283,7 +283,6 @@ function fatherDetails(
   this: Record<string, string>,
   fatherPrimaryDistrict: string
 ) {
-  console.log('===>', canShowFatherDetails(this))
   if (!canShowFatherDetails(this)) {
     return ''
   }

@@ -484,12 +484,22 @@ const getChildBirthLocation = (eventLocationId, type, id) =>
 
           return {
             name: healthFacility?.name,
-            stateName: healthFacilityCommune?.name,
-            districtName: healthFacilityDistrict.name
+            districtName: healthFacilityCommune?.name,
+            stateName: healthFacilityDistrict?.name,
           }
         case 'OTHER':
           const other = await fetchLocationById(eventLocationId)
-          return other.address
+          const otherCommune = await fetchLocationById(
+            other?.partOf?.reference?.split?.('/')[1]
+          )
+          const otherDistrict = await fetchLocationById(
+            otherCommune?.partOf?.reference?.split?.('/')[1]
+          )
+          return {
+            country: other?.address?.country,
+            districtName: otherCommune?.name,
+            stateName: otherDistrict?.name,
+          }
         default:
           const home = await fetchOtherBirthLocation(id)
           return home.data.fetchBirthRegistration.eventLocation.address
@@ -970,7 +980,7 @@ window.openPrintModal = async function openPrintModal(id) {
           q.fieldId ===
           'birth.father.father-view-group.fatherHasFormallyRecognisedChild'
       ) || { value: '' }
-    ).value
+    ).value === 'true' // because the value is string 'false' or 'true'
 
     const title = window.getIsWithAdpotion(
       event.mother.maritalStatus,
@@ -1032,8 +1042,8 @@ window.openPrintModal = async function openPrintModal(id) {
                 'birth.child.child-view-group.otherPlaceOfBirthAddress'
             )?.value
           : undefined,
-      placeOfBirthDistrict: childBirthLocation?.stateName,
-      placeOfBirthState: childBirthLocation?.districtName,
+      placeOfBirthDistrict: childBirthLocation?.districtName, // in helper.js, it is already used like "District"="Commune" "state"="District" : should not permute it here
+      placeOfBirthState: childBirthLocation?.stateName,
       childFamilyName: event.child.name[0].familyName,
       childFirstName: [
         event.child.name[0].middleName,
@@ -1050,6 +1060,10 @@ window.openPrintModal = async function openPrintModal(id) {
       internationalAddressLine3Placeofbirth: childBirthLocation?.line?.[8],
       internationalPostalCodePlaceofbirth: childBirthLocation?.postalCode
     }
+
+    const fatherPrimaryAddress = event.father.address?.find(
+      (a) => a.type === 'PRIMARY_ADDRESS'
+    )
 
     const fatherDetailsContext = {
       motherMaritalStatus: event.mother.maritalStatus,
@@ -1100,13 +1114,8 @@ window.openPrintModal = async function openPrintModal(id) {
         ).value == 'true'
           ? true
           : false,
-      countryPrimaryFather: event.father.address?.find(
-        (a) => a.type === 'PRIMARY_ADDRESS'
-      )?.country
-        ? countryData[
-            event.father.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-              ?.country
-          ][defaultLang]
+      countryPrimaryFather: fatherPrimaryAddress?.country
+        ? countryData[fatherPrimaryAddress?.country][defaultLang]
         : '',
       birthFatherFokontanyCustomAddress: (
         event?.questionnaire?.find(
@@ -1122,26 +1131,26 @@ window.openPrintModal = async function openPrintModal(id) {
             'birth.mother.mother-view-group.fokontanyCustomAddress'
         ) || { value: '' }
       ).value,
-      fatherPrimaryDistrict: event.father.address?.find(
-        (a) => a.type === 'PRIMARY_ADDRESS'
-      )?.districtName,
+      fatherPrimaryDistrict: fatherPrimaryAddress?.districtName,
       fatherOccupation: event.father.occupation,
       birthFatherFatherHasFormallyRecognisedChild:
         isFatherHasFormallyRecognisedChild,
       motherReasonNotApplying: event.mother.reasonNotApplying,
-      internationalStatePrimaryFather: event.father.address?.state,
-      internationalDistrictPrimaryFather: event.father.address?.district,
-      internationalCityPrimaryFather: event.father.address?.city,
-      internationalAddressLine1PrimaryFather: event.father.address?.line?.[6],
-      internationalAddressLine2PrimaryFather: event.father.address?.line?.[7],
-      internationalAddressLine3PrimaryFather: event.father.address?.line?.[8],
-      internationalPostalCodePrimaryFather: event.father.address?.postalCode
+      internationalStatePrimaryFather:fatherPrimaryAddress?.state,
+      internationalDistrictPrimaryFather:fatherPrimaryAddress?.district,
+      internationalCityPrimaryFather:fatherPrimaryAddress?.city,
+      internationalAddressLine1PrimaryFather:fatherPrimaryAddress?.line?.[6],
+      internationalAddressLine2PrimaryFather:fatherPrimaryAddress?.line?.[7],
+      internationalAddressLine3PrimaryFather:fatherPrimaryAddress?.line?.[8],
+      internationalPostalCodePrimaryFather:fatherPrimaryAddress?.postalCode
     }
 
+    const motherPrimaryAddress = event.mother.address?.find(
+      (a) => a.type === 'PRIMARY_ADDRESS'
+    )
+
     const motherDetailsContext = {
-      motherPrimaryDistrict: event.mother.address?.find(
-        (a) => a.type === 'PRIMARY_ADDRESS'
-      )?.districtName,
+      motherPrimaryDistrict: motherPrimaryAddress?.districtName,
       motherReasonNotApplying: event.mother.reasonNotApplying,
       motherFamilyName:
         event.mother.name && event.mother.name[0]
@@ -1158,7 +1167,15 @@ window.openPrintModal = async function openPrintModal(id) {
         .join(' ')
         .trim(),
       birthMotherCustomizedExactDateOfBirthUnknown:
-        event.mother.exactDateOfBirthUnknown,
+      (
+        event?.questionnaire?.find(
+          (q) =>
+            q.fieldId ===
+            'birth.mother.mother-view-group.customizedExactDateOfBirthUnknown'
+        ) || { value: false }
+      ).value == 'true'
+        ? true
+        : false,
       birthMotherYearOfBirth: (
         event?.questionnaire?.find(
           (q) => q.fieldId === 'birth.mother.mother-view-group.yearOfBirth'
@@ -1179,13 +1196,8 @@ window.openPrintModal = async function openPrintModal(id) {
         ).value == 'true'
           ? true
           : false,
-      countryPrimaryMother: event.mother.address?.find(
-        (a) => a.type === 'PRIMARY_ADDRESS'
-      )?.country
-        ? countryData[
-            event.mother.address?.find((a) => a.type === 'PRIMARY_ADDRESS')
-              ?.country
-          ][defaultLang]
+      countryPrimaryMother: motherPrimaryAddress?.country
+        ? countryData[motherPrimaryAddress?.country][defaultLang]
         : '',
       birthMotherFokontanyCustomAddress: (
         event?.questionnaire?.find(
@@ -1195,14 +1207,23 @@ window.openPrintModal = async function openPrintModal(id) {
         ) || { value: '' }
       ).value,
       motherOccupation: event.mother.occupation,
-      internationalStatePrimaryMother: event.mother.address?.state,
-      internationalDistrictPrimaryMother: event.mother.address?.district,
-      internationalCityPrimaryMother: event.mother.address?.city,
-      internationalAddressLine1PrimaryMother: event.mother.address?.line?.[6],
-      internationalAddressLine2PrimaryMother: event.mother.address?.line?.[7],
-      internationalAddressLine3PrimaryMother: event.mother.address?.line?.[8],
-      internationalPostalCodePrimaryMother: event.mother.address?.postalCode
+      internationalStatePrimaryMother: motherPrimaryAddress?.state,
+      internationalDistrictPrimaryMother: motherPrimaryAddress?.district,
+      internationalCityPrimaryMother: motherPrimaryAddress?.city,
+      internationalAddressLine1PrimaryMother: motherPrimaryAddress?.line?.[6],
+      internationalAddressLine2PrimaryMother: motherPrimaryAddress?.line?.[7],
+      internationalAddressLine3PrimaryMother: motherPrimaryAddress?.line?.[8],
+      internationalPostalCodePrimaryMother: motherPrimaryAddress?.postalCode
     }
+
+    /** @TODO CHANGE This if conditions of registration is changed */
+    const registrationItemInHistory = event.history?.find(
+      (i) =>
+        i.action === null && i.regStatus === "REGISTERED"
+    )
+
+    const registrarRawFirstName = event.registration?.assignment?.firstName
+    const registrarFirstName = registrarRawFirstName?.trim().toLowerCase() === 'xyz261' ? '' : ` ${registrarRawFirstName}`
 
     const registrationStatementContext = {
       motherMaritalStatus: event.mother.maritalStatus,
@@ -1222,7 +1243,7 @@ window.openPrintModal = async function openPrintModal(id) {
             'birth.child.child-view-group.legacyBirthRegistrationTime'
         ) || { value: '' }
       ).value,
-      registrarDate: event.createdAt,
+      registrarDate: registrationItemInHistory?.date,
       timezone: 'Africa/Nairobi',
       informantType: event.informant.relationship,
 
@@ -1274,8 +1295,8 @@ window.openPrintModal = async function openPrintModal(id) {
       )?.districtName,
       informantOccupation: event.informant.occupation,
       registrarName: [
-        event.registration.assignment.firstName,
-        event.registration.assignment.lastName
+        event.registration.assignment.lastName,
+        registrarFirstName
       ]
         .join(' ')
         .trim(),
