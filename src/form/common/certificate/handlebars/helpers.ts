@@ -216,36 +216,39 @@ export function eventStatement(): Handlebars.HelperDelegate {
     motherPrimaryDistrict: string
   ) {
     return joinValuesWith([
-      "--Tamin'ny",
+      '--Tamin’ny',
       customizeDateInCertificateContent(this.eventDate) + ',',
       'tamin’ny',
       convertTimeToMdgCustomWords(this.birthChildBirthTime),
       ...(this.countryPlaceofbirth == 'Madagascar' || this.placeOfBirthFacility
         ? [
             'no teraka tao amin’ny',
-            this.placeOfBirthFacility
-              ? replaceAbbreviations(this.placeOfBirthFacility) + ','
-              : '',
-            this.birthChildOtherPlaceOfBirthAddress
-              ? this.birthChildOtherPlaceOfBirthAddress + ','
-              : '',
-            this.birthChildFokontanyCustomAddress
-              ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
-              : '',
+            [
+              this.placeOfBirthFacility
+                ? replaceAbbreviations(this.placeOfBirthFacility)
+                : '',
+              this.birthChildOtherPlaceOfBirthAddress
+                ? this.birthChildOtherPlaceOfBirthAddress
+                : '',
+              this.birthChildFokontanyCustomAddress
+                ? 'fokontany ' + this.birthChildFokontanyCustomAddress
+                : '',
 
-            this.birthChildFokontanyCustomAddress
-              ?.toLowerCase()
-              .includes('toamasina') ||
-            this.placeOfBirthFacility?.toLowerCase().includes('toamasina')
-              ? ''
-              : 'kaominina' +
-                  ' ' +
-                  (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
-                    '-') +
-                  ', ' +
-                  'district' +
-                  ' ' +
-                  definitionDistrict(placeOfBirthState) || '-'
+              this.birthChildFokontanyCustomAddress
+                ?.toLowerCase()
+                .includes('toamasina') ||
+              this.placeOfBirthFacility?.toLowerCase().includes('toamasina')
+                ? ''
+                : 'kaominina ' +
+                    (definitionOffice(
+                      replaceByUppercase(placeOfBirthDistrict)
+                    ) || '-') +
+                    ', ' +
+                    'district ' +
+                    definitionDistrict(placeOfBirthState) || '-'
+            ]
+              .filter(Boolean)
+              .join(', ')
           ]
         : [
             'no teraka tao',
@@ -315,10 +318,8 @@ function fatherDetails(
                 this.birthMotherFokontanyCustomAddress ||
                 '-') + ',',
               fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
-                ? // && (this.birthFatherFokontanyCustomAddress?.toLowerCase().includes('toamasina') || this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina'))
-                  ''
-                : 'kaominina' +
-                  ' ' +
+                ? ''
+                : 'kaominina ' +
                   (definitionOffice(
                     replaceByUppercase(fatherPrimaryDistrict)
                   ) || '- ') +
@@ -373,10 +374,8 @@ function motherDetails(
           (this.birthMotherFokontanyCustomAddress || '-') + ',',
 
           motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
-            ? // && this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina')
-              ''
-            : 'kaominina' +
-              ' ' +
+            ? ''
+            : 'kaominina ' +
               (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
                 '-') +
               ','
@@ -465,6 +464,10 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     )
     const informantTypeMapped =
       relationMap[this.informantType?.toLowerCase() as keyof typeof relationMap]
+
+    const isInformantNotLegalFather =
+      this.informantType === 'FATHER' && !isInformantLegalFather(this)
+
     return joinValuesWith([
       '---Nosoratana androany',
       customizeDateInCertificateContent(registrarDateUTC.split('T')[0]) + ',',
@@ -477,7 +480,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             this.informantFamilyName,
             this.informantFirstName
           ]) + ',',
-      this.informantType === 'FATHER' && !isInformantLegalFather(this)
+      isInformantNotLegalFather
         ? ''
         : informantTypeMapped
         ? informantTypeMapped + ','
@@ -498,14 +501,25 @@ export function registrationStatement(): Handlebars.HelperDelegate {
             'monina ao',
             ...(this.countryPrimaryInformant == 'Madagascar'
               ? [
-                  `amin'ny`,
-                  this.birthInformantFokontanyCustomAddress
-                    ? `fokontany ${this.birthInformantFokontanyCustomAddress},`
+                  `amin’ny`,
+                  (isInformantNotLegalFather
+                    ? this.birthFatherFokontanyCustomAddress
+                    : '') || this.birthInformantFokontanyCustomAddress
+                    ? `fokontany ${
+                        this.birthInformantFokontanyCustomAddress ||
+                        this.birthFatherFokontanyCustomAddress
+                      },`
                     : '',
-                  'kaominina',
-                  (definitionOffice(
-                    replaceByUppercase(informantPrimaryDistrict)
-                  ) || '-') + ','
+
+                  informantPrimaryDistrict
+                    ?.toLowerCase()
+                    .includes('cu toamasina')
+                    ? ''
+                    : 'kaominina ' +
+                      (definitionOffice(
+                        replaceByUppercase(informantPrimaryDistrict)
+                      ) || '-') +
+                      ','
                 ]
               : [
                   ([
@@ -1162,12 +1176,12 @@ function getRecognitionMentionValues(this: Record<string, string>, i: number) {
   return [
     `Nozanahan'i ${this['birthMentionChildFamilyName__' + i] || '-'} ${
       this['birthMentionChildFirstName__' + i] || '-'
-    } tamin'ny ${
+    } tamin’ny ${
       this['birthMentionRecognitionDate__' + i]
         ?.split('-')
         ?.reverse()
         ?.join('/') || '-'
-    } tao amin'ny kaominina ${
+    } tao amin’ny kaominina ${
       this['birthMentionRecognitionPlace__' + i] || '-'
     } soratra faha ${this['birthMentionRecognitionActNumber__' + i] || '-'}.`
   ]

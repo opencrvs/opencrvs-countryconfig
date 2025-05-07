@@ -343,18 +343,26 @@ function eventStatementSimplified(
         countryPlaceofbirth == 'Madagascar' || placeOfBirthFacility
           ? [
               'no teraka tao amin’ny',
-              placeOfBirthFacility
-                ? replaceAbbreviations(placeOfBirthFacility) + ','
-                : '',
-              otherPlaceOfBirthAddress ? otherPlaceOfBirthAddress + ',' : '',
-              birthChildFokontanyCustomAddress
-                ? 'fokontany ' + birthChildFokontanyCustomAddress + ','
-                : '',
-              'kaominina',
-              (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
-                '-') + ',',
-              'district',
-              definitionDistrict(placeOfBirthState) || '-'
+              [
+                placeOfBirthFacility
+                  ? replaceAbbreviations(placeOfBirthFacility)
+                  : '',
+                otherPlaceOfBirthAddress ? otherPlaceOfBirthAddress : '',
+                birthChildFokontanyCustomAddress
+                  ? 'fokontany ' + birthChildFokontanyCustomAddress
+                  : '',
+
+                birthChildFokontanyCustomAddress?.toLowerCase().includes('toamasina') ||
+                placeOfBirthFacility?.toLowerCase().includes('toamasina')
+                ? ''
+                : 'kaominina ' +
+                  (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) || '-') +
+                  ', ' +
+                  'district ' +
+                  definitionDistrict(placeOfBirthState) || '-'
+              ]
+                .filter(Boolean)
+                .join(', ')
             ]
           : [
               'no teraka tao',
@@ -533,10 +541,12 @@ function fatherDetailsSimplified(fatherDetailsContext) {
                   (birthFatherFokontanyCustomAddress ||
                     birthMotherFokontanyCustomAddress ||
                     '-') + ',',
-                  'kaominina',
-                  (definitionOffice(
-                    replaceByUppercase(fatherPrimaryDistrict)
-                  ) || '- ') + ','
+                  fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+                  ? ''
+                  : 'kaominina ' +
+                    (definitionOffice(
+                      replaceByUppercase(fatherPrimaryDistrict)
+                    ) || '- ') + ','
                 ]
               : [
                   ([
@@ -619,9 +629,11 @@ function motherDetailsSimplified(motherDetailsContext) {
           ? [
               'amin’ny fokontany',
               (birthMotherFokontanyCustomAddress || '-') + ',',
-              'kaominina',
-              (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
-                '-') + ','
+              motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+              ? ''
+              : 'kaominina ' +
+                (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
+                  '-') + ','
             ]
           : [
               ([
@@ -798,6 +810,7 @@ function registrationStatementSimplified(registrationStatementContext) {
     birthInformantBirthPlace,
     countryPrimaryInformant,
     birthInformantFokontanyCustomAddress,
+    birthFatherFokontanyCustomAddress,
     informantPrimaryDistrict,
     informantOccupation,
     registrarName,
@@ -826,7 +839,7 @@ function registrationStatementSimplified(registrationStatementContext) {
     relationMap[
       (_a = informantType) === null || _a === void 0 ? void 0 : _a.toLowerCase()
     ]
-  const isNotInformantLegalFather = !isInformantLegalFather(
+  const isInformantNotLegalFather = informantType === 'FATHER' && !isInformantLegalFather(
     informantType,
     motherMaritalStatus,
     birthFatherFatherHasFormallyRecognisedChild
@@ -851,8 +864,7 @@ function registrationStatementSimplified(registrationStatementContext) {
                 informantFamilyName,
                 informantFirstName
               ]) + ',',
-          (informantType === 'FATHER' &&
-            isNotInformantLegalFather ? ''
+          (isInformantNotLegalFather ? ''
             : (informantTypeMapped ? informantTypeMapped + ',' : ''))
         ],
         isInformantMotherOrFather(
@@ -879,16 +891,19 @@ function registrationStatementSimplified(registrationStatementContext) {
                 countryPrimaryInformant == 'Madagascar'
                   ? [
                       "amin’ny",
-                      birthInformantFokontanyCustomAddress
+                      ((isInformantNotLegalFather ? birthFatherFokontanyCustomAddress : '') || birthInformantFokontanyCustomAddress)
                         ? 'fokontany '.concat(
-                            birthInformantFokontanyCustomAddress,
+                            birthInformantFokontanyCustomAddress || birthFatherFokontanyCustomAddress,
                             ','
                           )
                         : '',
-                      'kaominina',
-                      (definitionOffice(
-                        replaceByUppercase(informantPrimaryDistrict)
-                      ) || '-') + ','
+
+                      informantPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+                        ? ''
+                        : 'kaominina ' +
+                        (definitionOffice(
+                          replaceByUppercase(informantPrimaryDistrict)
+                        ) || '-') + ','
                     ]
                   : [
                       ([
