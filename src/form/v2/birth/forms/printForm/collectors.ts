@@ -129,7 +129,7 @@ const otherOption = {
     defaultMessage: 'Print and issue to someone else',
     description: 'This is the label for the field'
   },
-  value: InformantType.OTHER
+  value: 'OTHER_REQUESTER'
 }
 
 const requesterLabel = {
@@ -174,6 +174,7 @@ export const printCertificateCollectors: FieldConfig[] = [
       otherOption
     ]
   },
+  ...getFieldConfigForInformant(InformantType.OTHER),
   ...getFieldConfigForInformant(InformantType.BROTHER),
   ...getFieldConfigForInformant(InformantType.GRANDFATHER),
   ...getFieldConfigForInformant(InformantType.GRANDMOTHER),
