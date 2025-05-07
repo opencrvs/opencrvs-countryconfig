@@ -255,6 +255,12 @@ function eventStatement() {
                   ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
                   : '',
 
+                // // this.birthChildFokontanyCustomAddress
+                // //   .toLowerCase()
+                // //   .includes('toamasina')
+                // //   ? ''
+                // //   : 
+                  // // (this.birthChildFokontanyCustomAddress ? ', ' : '') +
                       'kaominina',
                       (definitionOffice(
                         replaceByUppercase(placeOfBirthDistrict)
@@ -410,6 +416,9 @@ function fatherDetails(fatherPrimaryDistrict) {
                   (this.birthFatherFokontanyCustomAddress ||
                     this.birthMotherFokontanyCustomAddress ||
                     '-') + ',',
+                  // // fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+                  // //   ? ''
+                  // //   :
                     'kaominina' +
                       ' ' +
                       (definitionOffice(
@@ -662,12 +671,16 @@ function motherDetails(motherPrimaryDistrict) {
           ? [
               'amin’ny fokontany',
               (this.birthMotherFokontanyCustomAddress || '-') + ',',
-              'kaominina' +
-                ' ' +
-                (definitionOffice(
-                  replaceByUppercase(motherPrimaryDistrict)
-                ) || '-') +
-                ','
+
+              // // motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+              // //   ? ''
+              // //   :
+                'kaominina' +
+                  ' ' +
+                  (definitionOffice(
+                    replaceByUppercase(motherPrimaryDistrict)
+                  ) || '-') +
+                  ','
             ]
           : [
               ([

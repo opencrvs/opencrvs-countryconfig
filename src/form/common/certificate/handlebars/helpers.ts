@@ -233,6 +233,13 @@ export function eventStatement(): Handlebars.HelperDelegate {
               ? 'fokontany ' + this.birthChildFokontanyCustomAddress + ','
               : '',
 
+            // // this.birthChildFokontanyCustomAddress
+            // //   ?.toLowerCase()
+            // //   .includes('toamasina') ||
+            // // this.placeOfBirthFacility?.toLowerCase().includes('toamasina')
+            // //   ? ''
+            // //   :
+            //   // (this.birthChildFokontanyCustomAddress ? ', ' : '') +
             'kaominina',
             (definitionOffice(replaceByUppercase(placeOfBirthDistrict)) ||
               '-') +
@@ -307,6 +314,10 @@ function fatherDetails(
               (this.birthFatherFokontanyCustomAddress ||
                 this.birthMotherFokontanyCustomAddress ||
                 '-') + ',',
+              // // fatherPrimaryDistrict?.toLowerCase().includes('cu toamasina') &&
+              // //   this.birthFatherFokontanyCustomAddress?.toLowerCase().includes('toamasina')
+              // //   ? ''
+              // //   :
               'kaominina ' +
                 (definitionOffice(replaceByUppercase(fatherPrimaryDistrict)) ||
                   '- ') +
@@ -360,6 +371,10 @@ function motherDetails(
           'amin’ny fokontany',
           (this.birthMotherFokontanyCustomAddress || '-') + ',',
 
+          // // motherPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+          // //   ? // && this.birthMotherFokontanyCustomAddress?.toLowerCase().includes('toamasina')
+          // //     ''
+          // //   :
           'kaominina ' +
             (definitionOffice(replaceByUppercase(motherPrimaryDistrict)) ||
               '-') +
@@ -488,6 +503,9 @@ export function registrationStatement(): Handlebars.HelperDelegate {
                         this.birthInformantFokontanyCustomAddress || '-'
                       },`
                     : '',
+                  // // informantPrimaryDistrict?.toLowerCase().includes('cu toamasina')
+                  // //   ? ''
+                  // //   :
                   'kaominina',
                   (definitionOffice(
                     replaceByUppercase(informantPrimaryDistrict)
