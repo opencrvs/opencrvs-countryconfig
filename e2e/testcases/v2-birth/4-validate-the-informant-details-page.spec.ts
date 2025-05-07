@@ -1,9 +1,11 @@
 import { test, expect, Page } from '@playwright/test'
 import { goToSection, loginToV2 } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
+import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 
 test.describe('4. Validate the informants details pages', () => {
   let page: Page
+  trackAndDeleteCreatedEvents()
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
@@ -16,8 +18,6 @@ test.describe('4. Validate the informants details pages', () => {
   })
 
   test.afterAll(async () => {
-    await page.getByRole('button', { name: 'Exit', exact: true }).click()
-    await page.getByRole('button', { name: 'Confirm', exact: true }).click()
     await page.close()
   })
 

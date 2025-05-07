@@ -1,8 +1,11 @@
 import { test, expect } from '@playwright/test'
 import { goToSection, loginToV2 } from '../../helpers'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
+import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 
 test.describe('3. Validate the mothers and fathers details pages', () => {
+  trackAndDeleteCreatedEvents()
+
   test.beforeEach(async ({ page }) => {
     await loginToV2(page)
 
@@ -23,11 +26,6 @@ test.describe('3. Validate the mothers and fathers details pages', () => {
     await expect(
       page.getByText("Mother's details", { exact: true })
     ).toBeVisible()
-  })
-
-  test.afterEach(async ({ page }) => {
-    await page.getByRole('button', { name: 'Exit', exact: true }).click()
-    await page.getByRole('button', { name: 'Confirm', exact: true }).click()
   })
 
   test.describe.serial('3.1 Validate "First Name(s)" text field', async () => {

@@ -4,7 +4,6 @@ import path from 'path'
 import { faker } from '@faker-js/faker'
 import { selectAction } from '../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
-import { CLIENT_V2_URL } from '../../constants'
 import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 
 const child = {
