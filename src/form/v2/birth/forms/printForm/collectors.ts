@@ -95,10 +95,15 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
 }
 
 const getInformantOption = (informantType: InformantTypeKey) => {
+  const defaultMessage =
+    informantType === InformantType.OTHER
+      ? `Print and issue to Informant`
+      : `Print and issue to Informant (${informantMessageDescriptors[informantType].defaultMessage})`
+
   return {
     label: {
       id: `v2.event.birth.action.certificate.form.section.requester.informant.${informantType.toLowerCase()}.label`,
-      defaultMessage: `Print and issue to Informant (${informantMessageDescriptors[informantType].defaultMessage})`,
+      defaultMessage,
       description: 'This is the label for the field'
     },
     value: informantType
