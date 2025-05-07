@@ -980,7 +980,7 @@ window.openPrintModal = async function openPrintModal(id) {
           q.fieldId ===
           'birth.father.father-view-group.fatherHasFormallyRecognisedChild'
       ) || { value: '' }
-    ).value
+    ).value === 'true' // because the value is string 'false' or 'true'
 
     const title = window.getIsWithAdpotion(
       event.mother.maritalStatus,
