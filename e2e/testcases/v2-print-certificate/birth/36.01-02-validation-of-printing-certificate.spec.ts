@@ -6,10 +6,8 @@ import {
   createDeclaration,
   Declaration
 } from '../../v2-test-data/birth-declaration'
-import {
-  navigateToCertificatePrintAction,
-  selectCertificationType
-} from './helpers'
+import { navigateToCertificatePrintAction } from './helpers'
+import { expectInUrl } from '../../../v2-utils'
 
 test.describe.serial('Print certificate', () => {
   let page: Page
@@ -35,27 +33,23 @@ test.describe.serial('Print certificate', () => {
   })
 
   test.describe('2.0 Validate "Certify record" page', async () => {
-    test('2.1 Continue button is disabled when no template or requester type is selected', async () => {
-      await expect(page.getByText('Certify record')).toBeVisible()
-
+    test('2.1 Template type should be selected by default', async () => {
       await expect(
-        page.getByRole('button', { name: 'Continue' })
-      ).toBeDisabled()
+        page.locator('#certificateTemplateId').getByText('Birth Certificate')
+      ).toBeVisible()
     })
 
-    test('2.2 Continue button is disabled when no requester type is selected', async () => {
-      await page.reload({ waitUntil: 'networkidle' })
-
-      await selectCertificationType(page, 'Birth Certificate Certified Copy')
-
-      await expect(page.getByText('Certify record')).toBeVisible()
+    test('2.2 Click continue without selecting requester type', async () => {
+      await page.getByRole('button', { name: 'Continue' }).click()
 
       await expect(
-        page.getByRole('button', { name: 'Continue' })
-      ).toBeDisabled()
+        page
+          .locator('#collector____requesterId_error')
+          .getByText('Required for registration')
+      ).toBeVisible()
     })
 
-    test('2.3 Continue button is enabled when both template and requester type are selected', async () => {
+    test('2.3 Click continue after selecting requester type and template type', async () => {
       await page.reload({ waitUntil: 'networkidle' })
       await page.locator('#collector____requesterId').click()
       const selectOptionsLabels = [
@@ -70,7 +64,8 @@ test.describe.serial('Print certificate', () => {
 
       await expect(page.getByText('Certify record')).toBeVisible()
 
-      await expect(page.getByRole('button', { name: 'Continue' })).toBeEnabled()
+      await page.getByRole('button', { name: 'Continue' }).click()
+      await expectInUrl(page, '/pages/collector.identity.verify')
     })
   })
 })

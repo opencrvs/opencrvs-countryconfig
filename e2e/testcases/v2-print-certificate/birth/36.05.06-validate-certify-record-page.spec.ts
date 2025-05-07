@@ -91,7 +91,12 @@ test.describe.serial('Validate collect payment page', () => {
   })
 
   test('5.5 keep relationship null and continue', async () => {
-    await expect(page.getByRole('button', { name: 'Continue' })).toBeDisabled()
+    await page.getByRole('button', { name: 'Continue' }).click()
+    await expect(
+      page
+        .locator('#collector____OTHER____relationshipToChild_error')
+        .getByText('Required for registration')
+    ).toBeVisible()
   })
 
   test('5.6 should be able to enter relationship', async () => {
