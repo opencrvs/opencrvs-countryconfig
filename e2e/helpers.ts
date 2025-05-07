@@ -18,6 +18,7 @@ export async function login(page: Page, username: string, password: string) {
   await expect(
     page.locator('#appSpinner').or(page.locator('#pin-input'))
   ).toBeVisible()
+  return token
 }
 
 export async function createPIN(page: Page) {
@@ -37,11 +38,13 @@ export async function loginToV2(
   page: Page,
   credentials = CREDENTIALS.LOCAL_REGISTRAR
 ) {
-  await login(page, credentials.USERNAME, credentials.PASSWORD)
+  const token = await login(page, credentials.USERNAME, credentials.PASSWORD)
   await createPIN(page)
 
   // Navigate to the v2 client
   await page.goto(CLIENT_V2_URL)
+
+  return token
 }
 
 export async function getToken(username: string, password: string) {
