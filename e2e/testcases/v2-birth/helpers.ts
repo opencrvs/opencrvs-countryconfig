@@ -1,4 +1,5 @@
 import { expect, type Page } from '@playwright/test'
+import { omit } from 'lodash'
 
 export const REQUIRED_VALIDATION_ERROR = 'Required for registration'
 
@@ -7,8 +8,11 @@ export async function validateAddress(
   address: Record<string, any>,
   elementTestId: string
 ) {
+  // selection is not rendered as part of the address.
+  const addressWithoutGeographicalArea = omit(address, 'urbanOrRural')
+
   await Promise.all(
-    Object.values(address).map(
+    Object.values(addressWithoutGeographicalArea).map(
       (val) =>
         typeof val === 'string' &&
         expect(page.getByTestId(elementTestId).getByText(val)).toBeVisible()
