@@ -10,12 +10,10 @@
  */
 
 import {
-  and,
   ConditionalType,
   field,
   FieldConfig,
-  FieldType,
-  not
+  FieldType
 } from '@opencrvs/toolkit/events'
 import { InformantType } from '../pages/informant'
 
@@ -86,16 +84,11 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: and(
-          not(
-            field('collector.requesterId').inArray([
-              InformantType.MOTHER,
-              InformantType.FATHER,
-              InformantType.OTHER
-            ])
-          ),
-          not(field('collector.requesterId').isFalsy())
-        )
+        conditional: field('collector.requesterId').inArray([
+          InformantType.MOTHER,
+          InformantType.FATHER,
+          InformantType.OTHER
+        ])
       }
     ],
     label: {
@@ -105,6 +98,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     },
     configuration: {
       data: [
+        { fieldId: 'informant.relation' },
         { fieldId: 'informant.idType' },
         { fieldId: 'informant.nid' },
         { fieldId: 'informant.passport' },
