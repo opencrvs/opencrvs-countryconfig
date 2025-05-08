@@ -5,7 +5,6 @@ import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 
 test.describe('4. Validate the informants details pages', () => {
   let page: Page
-  trackAndDeleteCreatedEvents()
 
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
@@ -17,9 +16,7 @@ test.describe('4. Validate the informants details pages', () => {
     await page.getByRole('button', { name: 'Continue' }).click()
   })
 
-  test.afterAll(async () => {
-    await page.close()
-  })
+  trackAndDeleteCreatedEvents()
 
   test.describe.serial('4.1 Validate "Phone number" text field', async () => {
     test('4.1.1 Enter Non-valid phone number', async () => {
