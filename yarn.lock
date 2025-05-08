@@ -1738,10 +1738,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/toolkit@1.8.0-rc.c64ed09":
-  version "1.8.0-rc.c64ed09"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.c64ed09.tgz#b3cb5a7ee7119cf381a0db6a4bc8c4eab0dff4ef"
-  integrity sha512-zEjRs2/i1ElMKFA7sEeU6iEzrzDkO83NEwYP6l6fLEFsrfr9Xgm6A5wuCZ67XLxZJ3mXZL1kQ7Us0E5WM/zhoA==
+"@opencrvs/toolkit@1.8.0-rc.4b79fea":
+  version "1.8.0-rc.4b79fea"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.4b79fea.tgz#8764cc71fe15732160a313c673505166947796a8"
+  integrity sha512-pTZdZTAot4i2/mr+kgjOwCev90tWgL0ArMtcHP/oDKSNVDg2sd9xdA3wJYbmvtVX8v3gzXO9DLttWmlVcud3iA==
   dependencies:
     "@trpc/client" "^11.0.0-rc.648"
     "@trpc/server" "^11.0.0-rc.532"
