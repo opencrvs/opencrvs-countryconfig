@@ -9,6 +9,7 @@ export async function selectAction(
     | 'Register'
     | 'Assign'
     | 'Unassign'
+    | 'Delete'
 ) {
   await page.getByRole('button', { name: 'Action' }).click()
   await page

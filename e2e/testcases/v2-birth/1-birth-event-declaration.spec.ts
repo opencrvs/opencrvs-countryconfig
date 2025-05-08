@@ -4,12 +4,15 @@ import path from 'path'
 import { faker } from '@faker-js/faker'
 import { selectAction } from '../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
+import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 
 const child = {
   firstNames: faker.person.firstName('female')
 }
 
 test.describe.serial('1. Birth event declaration', () => {
+  trackAndDeleteCreatedEvents()
+
   test.describe.serial('Fill all form sections. Save & Exit', () => {
     let page: Page
     test.beforeAll(async ({ browser }) => {
