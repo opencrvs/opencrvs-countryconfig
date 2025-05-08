@@ -725,6 +725,12 @@ export const tennisClubMembershipEvent = defineConfig({
     description: 'This is the title of the summary',
     id: 'v2.event.tennis-club-membership.title'
   },
+  fallbackTitle: {
+    id: 'v2.event.tennis-club-membership.fallbackTitle',
+    defaultMessage: 'No name provided',
+    description:
+      'This is a fallback title if actual title resolves to empty string'
+  },
   summary: {
     fields: [
       {
