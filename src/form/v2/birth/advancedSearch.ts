@@ -9,9 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { EventConfig, field } from '@opencrvs/toolkit/events'
-
-type AdvancedSearch = EventConfig['advancedSearch']
+import { AdvancedSearchConfig, field } from '@opencrvs/toolkit/events'
 
 export const advancedSearchBirth = [
   {
@@ -30,4 +28,4 @@ export const advancedSearchBirth = [
     },
     fields: [field('child.gender').exact()]
   }
-] satisfies AdvancedSearch
+] satisfies AdvancedSearchConfig[]
