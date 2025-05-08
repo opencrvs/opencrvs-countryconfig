@@ -10,7 +10,7 @@ async function deleteEvent(token: string, eventId: string) {
 }
 
 export function trackAndDeleteCreatedEvents() {
-  let createdEventIds: string[] = []
+  const createdEventIds: string[] = []
   let token: string
 
   test.beforeEach(async ({ page }) => {
@@ -30,13 +30,9 @@ export function trackAndDeleteCreatedEvents() {
     })
   })
 
-  test.afterEach(async ({ page }) => {
-    await page.waitForLoadState('networkidle')
-
+  test.afterAll(async () => {
     await Promise.allSettled(
       createdEventIds.map((eventId) => deleteEvent(token, eventId))
     )
-
-    createdEventIds = []
   })
 }
