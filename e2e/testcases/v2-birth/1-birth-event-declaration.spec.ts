@@ -464,12 +464,6 @@ test.describe.serial('1. Birth event declaration', () => {
 
         await selectAction(page, 'Declare')
 
-        await page.getByRole('button', { name: 'Continue' }).click()
-        await page.getByRole('button', { name: 'Continue' }).click()
-        await page.getByRole('button', { name: 'Continue' }).click()
-        await page.getByRole('button', { name: 'Continue' }).click()
-        await page.getByRole('button', { name: 'Continue' }).click()
-        await page.getByRole('button', { name: 'Continue' }).click()
         await expect(page.locator('#select_document')).toContainText(
           "Proof of mother's ID (Birth Certificate)"
         )
