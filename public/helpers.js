@@ -476,7 +476,7 @@ function canShowFatherDetails(
   if (birthFatherFatherIsDeceased) {
     return true
   }
-  return birthFatherFatherHasFormallyRecognisedChild == 'true'
+  return birthFatherFatherHasFormallyRecognisedChild
 }
 
 function fatherDetailsSimplified(fatherDetailsContext) {
@@ -514,6 +514,7 @@ function fatherDetailsSimplified(fatherDetailsContext) {
       birthFatherFatherHasFormallyRecognisedChild
     )
   ) {
+
     return ''
   }
   return joinValuesWith(
@@ -1568,7 +1569,7 @@ function getIsWithAdpotion(
   ) {
     return false
   } else {
-    return birthFatherFatherHasFormallyRecognisedChild == 'true'
+    return birthFatherFatherHasFormallyRecognisedChild
   }
 }
 window.getIsWithAdpotion = getIsWithAdpotion
