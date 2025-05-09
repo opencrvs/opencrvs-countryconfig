@@ -10,10 +10,13 @@
  */
 
 import {
+  and,
   ConditionalType,
   field,
   FieldConfig,
-  FieldType
+  FieldType,
+  not,
+  or
 } from '@opencrvs/toolkit/events'
 import { InformantType } from '../pages/informant'
 
@@ -24,8 +27,12 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(
-          InformantType.MOTHER
+        conditional: or(
+          field('collector.requesterId').isEqualTo(InformantType.MOTHER),
+          and(
+            field('collector.requesterId').isEqualTo('INFORMANT'),
+            field('informant.relation').isEqualTo(InformantType.MOTHER)
+          )
         )
       }
     ],
@@ -54,8 +61,12 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(
-          InformantType.FATHER
+        conditional: or(
+          field('collector.requesterId').isEqualTo(InformantType.FATHER),
+          and(
+            field('collector.requesterId').isEqualTo('INFORMANT'),
+            field('informant.relation').isEqualTo(InformantType.FATHER)
+          )
         )
       }
     ],
@@ -84,11 +95,11 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').inArray([
-          InformantType.MOTHER,
-          InformantType.FATHER,
-          InformantType.OTHER
-        ])
+        conditional: and(
+          field('collector.requesterId').isEqualTo('INFORMANT'),
+          not(field('informant.relation').isEqualTo(InformantType.FATHER)),
+          not(field('informant.relation').isEqualTo(InformantType.MOTHER))
+        )
       }
     ],
     label: {
