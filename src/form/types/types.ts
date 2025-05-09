@@ -43,7 +43,11 @@ export type Validation = (
 export enum Event {
   Birth = 'birth',
   Death = 'death',
-  Marriage = 'marriage'
+  Marriage = 'marriage',
+
+  // events v2 enums
+  V2_BIRTH = 'v2.birth',
+  TENNIS_CLUB_MEMBERSHIP = 'tennis-club-membership'
 }
 
 export type ValidationInitializer = (...value: any[]) => Validation
@@ -142,6 +146,12 @@ export const NID_VERIFICATION_BUTTON = 'NID_VERIFICATION_BUTTON'
 export const DIVIDER = 'DIVIDER'
 export const HEADING3 = 'HEADING3'
 export const SIGNATURE = 'SIGNATURE'
+export const HTTP = 'HTTP'
+export const BUTTON = 'BUTTON'
+export const LINK_BUTTON = 'LINK_BUTTON'
+export const ID_READER = 'ID_READER'
+export const ID_VERIFICATION_BANNER = 'ID_VERIFICATION_BANNER'
+export const LOADER = 'LOADER'
 
 export enum RadioSize {
   LARGE = 'large',
@@ -464,6 +474,7 @@ export interface ILoaderButton extends IFormFieldBase {
 export interface ITimeFormFIeld extends IFormFieldBase {
   type: typeof TIME
   ignorePlaceHolder?: boolean
+  use12HourFormat?: boolean
 }
 
 export interface INidVerificationButton extends IFormFieldBase {
@@ -490,6 +501,77 @@ export interface ISignatureFormField extends IFormFieldBase {
     | 'image/jpeg'
     | 'image/svg'
   )[]
+}
+
+export interface IHttpFormField extends IFormFieldBase {
+  type: typeof HTTP
+  options: {
+    headers: Record<string, string>
+    body?: Record<string, unknown>
+    params?: Record<string, string>
+  } & Omit<Request, 'body' | 'headers'>
+}
+export interface IButtonFormField extends IFormFieldBase {
+  type: typeof BUTTON
+  icon?: string // Valid icon names from the Icon component
+  buttonLabel: MessageDescriptor
+  loadingLabel?: MessageDescriptor
+  options: {
+    trigger: string
+    shouldHandleLoadingState?: boolean
+  }
+}
+
+export interface ILinkButtonFormField extends IFormFieldBase {
+  type: typeof LINK_BUTTON
+  icon?: {
+    desktop: string // Valid icon names from the Icon component
+    mobile: string // Valid icon names from the Icon component
+  }
+  options: {
+    url: string
+    callback: {
+      trigger: string
+      /**
+       * If the redirection url has the exact same param keys
+       * with exact same values sepecified in the below `params`
+       * field, only then the callback will be triggered
+       */
+      params: Record<string, string>
+    }
+  }
+}
+
+export interface QRReaderType {
+  type: 'QR'
+  validation: {
+    rule: unknown
+    errorMessage: MessageDescriptor
+  }
+}
+
+export type ReaderType = QRReaderType | ILinkButtonFormField
+export interface IDReaderFormField extends IFormFieldBase {
+  type: typeof ID_READER
+  dividerLabel: MessageDescriptor
+  manualInputInstructionLabel: MessageDescriptor
+  readers: [ReaderType, ...ReaderType[]]
+}
+
+export type BannerType =
+  | 'authenticated'
+  | 'verified'
+  | 'failed'
+  | 'failedFetchIdDetails'
+interface IIDVerificationBannerFormField extends IFormFieldBase {
+  type: typeof ID_VERIFICATION_BANNER
+  bannerType: BannerType
+  idFieldName: string
+}
+
+export interface ILoaderFormField extends IFormFieldBase {
+  type: typeof LOADER
+  loadingText: MessageDescriptor
 }
 
 export type IFormField =
@@ -525,6 +607,12 @@ export type IFormField =
   | IDividerField
   | IHeading3Field
   | ISignatureFormField
+  | IHttpFormField
+  | IButtonFormField
+  | ILinkButtonFormField
+  | IDReaderFormField
+  | IIDVerificationBannerFormField
+  | ILoaderFormField
 
 export interface SelectComponentOption {
   value: string
@@ -947,3 +1035,5 @@ export type AllowedAddressConfigurations = {
 }
 
 export type AdministrativeLevel = 1 | 2 | 3 | 4 | 5
+
+export const moi = 'asd'
