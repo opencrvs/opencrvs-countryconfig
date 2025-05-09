@@ -254,8 +254,8 @@ services:
   # Configure redis
   redis:
     environment:
-      - VALKEY_PASSWORD=false
-      - VALKEY_ACLFILE=/run/secrets/redis-acl.{{ts}}
+      - REDIS_PASSWORD=false
+      - REDIS_ACLFILE=/run/secrets/redis-acl.{{ts}}
     secrets:
       - redis-acl.{{ts}}
     networks:
