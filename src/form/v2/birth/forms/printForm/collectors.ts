@@ -106,7 +106,7 @@ const getInformantOption = (informantType: InformantTypeKey) => {
       defaultMessage,
       description: 'This is the label for the field'
     },
-    value: informantType
+    value: 'INFORMANT'
   }
 }
 
@@ -134,7 +134,7 @@ const otherOption = {
     defaultMessage: 'Print and issue to someone else',
     description: 'This is the label for the field'
   },
-  value: 'OTHER_REQUESTER'
+  value: 'SOMEONE_ELSE'
 }
 
 const requesterLabel = {
