@@ -49,7 +49,7 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
         description: 'This is the title of the section'
       },
       conditional: not(
-        field('collector.requesterId').isEqualTo('OTHER_REQUESTER')
+        field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
       ),
       fields: printCertificateCollectorIdentityVerify,
       actions: {
