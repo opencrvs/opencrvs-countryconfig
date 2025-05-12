@@ -101,7 +101,7 @@ export async function sendSMS(
       throw error
     }
     if (
-      response.$metadata.httpStatusCode !== 200 ||
+      response.$metadata.httpStatusCode !== 200 &&
       response.$metadata.httpStatusCode !== 201
     ) {
       logger.error(`Failed to send sms to ${recipient}`)
