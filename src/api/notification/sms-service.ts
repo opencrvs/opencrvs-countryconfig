@@ -100,8 +100,10 @@ export async function sendSMS(
       logger.error(error)
       throw error
     }
-    console.log(response)
-    if (response.$metadata.httpStatusCode !== 200) {
+    if (
+      response.$metadata.httpStatusCode !== 200 ||
+      response.$metadata.httpStatusCode !== 201
+    ) {
       logger.error(`Failed to send sms to ${recipient}`)
       throw internal(`Failed to send notification to ${recipient}.`)
     }
