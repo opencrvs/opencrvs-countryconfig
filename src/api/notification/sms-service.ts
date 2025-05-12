@@ -76,7 +76,6 @@ export async function sendSMS(
   if (SMS_PROVIDER === 'aws-sns') {
     const client = getOrCreateAwsSnsClient()
     const message = await compileMessages(type, variables, locale)
-
     const publishParams = {
       PhoneNumber: recipient,
       Message: message,
@@ -101,7 +100,7 @@ export async function sendSMS(
       logger.error(error)
       throw error
     }
-
+    console.log(response)
     if (response.$metadata.httpStatusCode !== 200) {
       logger.error(`Failed to send sms to ${recipient}`)
       throw internal(`Failed to send notification to ${recipient}.`)
@@ -123,7 +122,6 @@ const compileMessages = async (
 ) => {
   const languages = await getLanguages('notification')
   const language = languages.find(({ lang }) => lang === locale)
-
   if (!language) {
     throw new Error(
       `Locale "${locale}" not found while compiling notification messages.`
