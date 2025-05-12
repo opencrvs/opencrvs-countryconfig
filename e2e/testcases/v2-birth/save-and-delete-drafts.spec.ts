@@ -1,9 +1,10 @@
 import { expect, test, type Page } from '@playwright/test'
-import { formatName, goToSection, loginToV2 } from '../../helpers'
+import { formatName, goToSection, loginToV2, logout } from '../../helpers'
 import { faker } from '@faker-js/faker'
+import { CREDENTIALS } from '../../constants'
 
 async function openBirthDeclarationAndFillChildDetails(page: Page) {
-  await loginToV2(page)
+  await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
   await page.click('#header-new-event')
   await page.getByLabel('Birth').click()
   await page.getByRole('button', { name: 'Continue' }).click()
@@ -21,12 +22,12 @@ async function fillChildDetails(page: Page) {
   return formatName({ firstNames: firstName, familyName: lastName })
 }
 
-test.describe('9. Save and delete drafts', () => {
+test.describe('Save and delete drafts', () => {
   test.beforeEach(async ({ page }) => {
     await openBirthDeclarationAndFillChildDetails(page)
   })
 
-  test('9.1 Save draft via Save & Exit', async ({ page }) => {
+  test('Save draft via Save & Exit', async ({ page }) => {
     const childName = await fillChildDetails(page)
     await page.getByRole('button', { name: 'Save & Exit' }).click()
     await expect(
@@ -42,7 +43,7 @@ test.describe('9. Save and delete drafts', () => {
     ).toBeVisible()
   })
 
-  test('9.2 Delete saved draft', async ({ page }) => {
+  test('Delete saved draft', async ({ page }) => {
     const childName = await fillChildDetails(page)
     await page.getByRole('button', { name: 'Save & Exit' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
@@ -63,7 +64,7 @@ test.describe('9. Save and delete drafts', () => {
     ).not.toBeVisible()
   })
 
-  test('9.3 Exit without saving', async ({ page }) => {
+  test('Exit without saving', async ({ page }) => {
     const childName = await fillChildDetails(page)
     await goToSection(page, 'review')
     await page.getByRole('button', { name: 'Exit', exact: true }).click()
@@ -75,6 +76,31 @@ test.describe('9. Save and delete drafts', () => {
     ).toBeVisible()
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+
+    await expect(
+      page.getByRole('button', { name: childName, exact: true })
+    ).not.toBeVisible()
+  })
+
+  test('Saved draft is not visible to other users', async ({ page }) => {
+    const childName = await fillChildDetails(page)
+    await page.getByRole('button', { name: 'Save & Exit' }).click()
+    await expect(
+      page.getByText(
+        'All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?'
+      )
+    ).toBeVisible()
+
+    await page.getByRole('button', { name: 'Confirm' }).click()
+
+    await expect(
+      page.getByRole('button', { name: childName, exact: true })
+    ).toBeVisible()
+
+    await logout(page)
+    await loginToV2(page, CREDENTIALS.NATIONAL_REGISTRAR)
+
+    await expect(page.getByText('All events')).toBeVisible()
 
     await expect(
       page.getByRole('button', { name: childName, exact: true })
