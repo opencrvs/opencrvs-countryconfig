@@ -19,7 +19,9 @@ export const Workqueues = defineWorkqueue([
       defaultMessage: 'In progress',
       description: 'Title of in progress workqueue'
     },
-    query: 'todo',
+    query: {
+      status: { type: 'exact', term: 'IN_PROGRESS' }
+    },
     actions: [
       {
         type: 'VALIDATE',
@@ -34,7 +36,9 @@ export const Workqueues = defineWorkqueue([
       defaultMessage: 'Correction requested',
       description: 'Title of correction requested workqueue'
     },
-    query: 'todo',
+    query: {
+      status: { type: 'exact', term: 'DECLARED' }
+    },
     actions: [
       {
         type: 'REVIEW_CORRECTION',
