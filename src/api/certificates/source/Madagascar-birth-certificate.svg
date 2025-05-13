@@ -22,9 +22,12 @@
     <foreignObject x="24" y="142.488"  width="150" height="100">
         <div xmlns="http://www.w3.org/1999/xhtml">
         
-        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Kaominina : </span> 
-        
-        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionCommuneInTheAct (location registrar.districtId "name")}}</span> 
+        <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px;">Kaominina: </span> 
+        {{#if (isToamasina (location registrar.districtId "name"))}}
+        <span style="font-family: 'Plus Jakarta Sans'; font-size: 11px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionCommuneInTheAct (location registrar.districtId "name")}}</span> 
+        {{ else }}
+         <span style="font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: bold; color: black; white-space: pre-wrap; overflow-wrap: break-word">{{definitionCommuneInTheAct (location registrar.districtId "name")}}</span> 
+        {{/if}}
         </div>
     </foreignObject>
 
