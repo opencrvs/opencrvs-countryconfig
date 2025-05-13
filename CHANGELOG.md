@@ -10,6 +10,7 @@
 partial write: max-values-per-tag limit exceeded (100000/100000)
 ```
 https://github.com/opencrvs/opencrvs-countryconfig/pull/393
+- Added `user.update:my-jurisdiction` scope to Local System Admin to allow editing of users in jurisdiction [#732](https://github.com/opencrvs/opencrvs-countryconfig/pull/732)
 ### New features
 
 - **Time field 12-hour format**: To enable the 12-hour (AM/PM) format of the `TimeField`, set the `use12HourFormat` property to `true`. [#8336](https://github.com/opencrvs/opencrvs-core/issues/8336)
