@@ -1,6 +1,7 @@
 import { countryLogo } from '@countryconfig/api/application/country-logo'
 import * as fs from 'fs'
 import { join } from 'path'
+import { IScriptTag, IScriptTagOptions, IStyleTag } from '../custom-files/types'
 
 export const applicationConfig = {
   APPLICATION_NAME: 'SIECM',
@@ -34,6 +35,45 @@ export const applicationConfig = {
       .readFileSync(join(__dirname, 'login-bg-mdg.jpg'))
       .toString('base64')}`,
     imageFit: 'FILL'
+  },
+  ADVANCED_FRONTEND_CUSTOMIZATIONS: {
+    customFiles: true,
+    /**
+     * external scripts and styles should be allowed in CSP on env CONTENT_SECURITY_POLICY_WILDCARD to work
+     **/
+    externalScripts: [
+      {
+        url: 'https://w.appzi.io/w.js?token=' + (process.env.APPZI_TOKEN || ''),
+        activateOn: ['client', 'login'],
+        options: {
+          // async: true
+          defer: true
+          // nomodule: true,
+          // onload: function (a: any, b: any) {
+          //   console.info('🚀 Appzi loaded')
+          // },
+          // onerror: function () {
+          //   console.info('🔴 Appzi failed to load')
+          // }
+          // crossorigin: 'anonymous',
+          // integrity: 'sha384-...'
+        } as Partial<IScriptTagOptions>
+      }
+    ] as Partial<IScriptTag>[]
+    // externalStyles: [
+    //   {
+    //     url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css',
+    //     activateOn: ['client', 'login']
+    //     // options: {
+    //     //   media: 'all',
+    //     //   crossorigin: 'anonymous',
+    //     //   integrity: 'sha384-...',
+    //     //   title: 'Example Stylesheet',
+    //     //   disabled: false,
+    //     //   type: 'text/css',
+    //     // }
+    //   }
+    // ] as Partial<IStyleTag>[]
   },
   MARRIAGE: {
     REGISTRATION_TARGET: 45,
@@ -76,7 +116,7 @@ type NotificationFlags = {
   MARRIAGE?: EventNotificationFlags
 }
 
-const isNotificationEnabled = process.env.QA_ENV !== 'true' //process.env.QA_ENV !== 'true'
+const isNotificationEnabled = process.env.QA_ENV !== 'true'
 
 export const notificationForRecord: NotificationFlags = {
   BIRTH: {

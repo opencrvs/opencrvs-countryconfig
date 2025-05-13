@@ -299,6 +299,35 @@ docker_stack_deploy() {
 
   echo "Updating docker swarm stack with new compose files"
 
+  # # Convert the space-separated string to a format suitable for iteration
+  COMPOSE_FILES_STRING=$(to_remote_paths $COMPOSE_FILES_USED)
+
+  # Split the string back into an array for iteration
+  IFS=' ' read -r -a COMPOSE_FILES_ARRAY <<< "$COMPOSE_FILES_STRING"
+
+  echo "----- COMPOSE_FILES_USED: $COMPOSE_FILES_USED"
+  echo "----- COMPOSE_FILES_STRING: $COMPOSE_FILES_STRING"
+  echo "----- COMPOSE_FILES_ARRAY: $COMPOSE_FILES_ARRAY"
+  echo "----- -----"
+  echo "----- checking compose files -----"
+
+  # Check if compose files exist and are valid
+  for compose_file in "${COMPOSE_FILES_ARRAY[@]}"; do
+    echo "----- '$compose_file' -----"
+    # Use configured_ssh to check if the file exists on the remote server
+    if ! configured_ssh "[ -f '$compose_file' ]"; then
+      echo "Error: Docker compose file $compose_file not found on the remote server"
+      continue
+    fi
+
+    # Validate docker compose file syntax on the remote server
+    if ! configured_ssh "docker compose -f '$compose_file' config"; then
+      echo "Error: Invalid docker compose file $compose_file on the remote server"
+    fi    
+  done
+
+  echo "----- DOCKER STACK DEPLOY -----"
+
   configured_ssh 'cd /opt/opencrvs && \
     docker stack deploy --prune -c '$(split_and_join " " " -c " "$(to_remote_paths $COMPOSE_FILES_USED)")' --with-registry-auth opencrvs'
 }
@@ -339,8 +368,8 @@ export ROTATING_APM_ELASTIC_PASSWORD=`generate_password`
 # Download core compose files to /tmp/
 for compose_file in ${COMPOSE_FILES_DOWNLOADED_FROM_CORE[@]}; do
   if [ ! -f $compose_file ]; then
-    echo "Downloading $compose_file from https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/$(basename $compose_file)"
-    curl -o $compose_file https://raw.githubusercontent.com/opencrvs/opencrvs-core/$VERSION/$(basename $compose_file)
+    echo "Downloading $compose_file from https://raw.githubusercontent.com/digital-gov-mg/opencrvs-core/$VERSION/$(basename $compose_file)"
+    curl -o $compose_file https://raw.githubusercontent.com/digital-gov-mg/opencrvs-core/$VERSION/$(basename $compose_file)
   fi
 done
 

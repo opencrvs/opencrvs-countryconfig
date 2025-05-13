@@ -1,0 +1,1 @@
+console.warn('🟢🟢🟢 🚀🚀🚀 This is a an example of custom js file!');
