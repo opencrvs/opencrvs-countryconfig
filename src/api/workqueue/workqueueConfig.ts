@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineWorkqueue } from '@opencrvs/toolkit/events'
+import { defineWorkqueue, eventMetadata } from '@opencrvs/toolkit/events'
 
 export const Workqueues = defineWorkqueue([
   {
@@ -45,5 +45,36 @@ export const Workqueues = defineWorkqueue([
         conditionals: []
       }
     ]
+  },
+  {
+    slug: 'waiting-for-attestation',
+    name: {
+      id: 'workqueues.waitingForAttestation.title',
+      defaultMessage: 'Waiting for attestation',
+      description: 'Title of waiting for attestation'
+    },
+    columns: [
+      {
+        label: {
+          id: 'workqueues.waitingForAttestation.dateOfEvent',
+          defaultMessage: 'Sent for your attestation',
+          description:
+            'Label for workqueue column: waitingForAttestation.dateOfEvent'
+        },
+        value: eventMetadata('createdAt')
+      },
+      {
+        label: {
+          id: 'workqueues.eventStatus',
+          defaultMessage: 'Status of the event',
+          description: 'Label for workqueue column: eventStatus'
+        },
+        value: eventMetadata('status')
+      }
+    ],
+    actions: [],
+    query: {
+      status: { type: 'exact', term: 'WAITING_FOR_ATTESTATION' }
+    }
   }
 ])
