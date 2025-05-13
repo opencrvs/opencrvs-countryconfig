@@ -16,7 +16,6 @@ import {
   FieldType
 } from '@opencrvs/toolkit/events'
 import { nationalIdValidator } from '../../validators'
-import { InformantType } from '../pages/informant'
 
 const otherIdType = {
   PASSPORT: 'PASSPORT',
@@ -42,9 +41,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(
-          InformantType.OTHER
-        )
+        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
       }
     ],
     options: [
@@ -128,7 +125,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           field('collector.OTHER.idType').isEqualTo(otherIdType.PASSPORT)
         )
       }
@@ -147,7 +144,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           field('collector.OTHER.idType').isEqualTo(otherIdType.NATIONAL_ID)
         )
       }
@@ -167,7 +164,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           field('collector.OTHER.idType').isEqualTo(otherIdType.DRIVING_LICENSE)
         )
       }
@@ -186,7 +183,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           field('collector.OTHER.idType').isEqualTo(
             otherIdType.BIRTH_REGISTRATION_NUMBER
           )
@@ -207,7 +204,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           field('collector.OTHER.idType').isEqualTo(otherIdType.REFUGEE_NUMBER)
         )
       }
@@ -226,7 +223,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           field('collector.OTHER.idType').isEqualTo(otherIdType.ALIEN_NUMBER)
         )
       }
@@ -245,7 +242,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           field('collector.OTHER.idType').isEqualTo(otherIdType.OTHER)
         )
       }
@@ -264,7 +261,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo(otherIdType.OTHER),
+          field('collector.requesterId').isEqualTo('SOMEONE_ELSE'),
           field('collector.OTHER.idType').isEqualTo(otherIdType.OTHER)
         )
       }
@@ -282,7 +279,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(otherIdType.OTHER)
+        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
       }
     ]
   },
@@ -298,7 +295,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(otherIdType.OTHER)
+        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
       }
     ]
   },
@@ -314,7 +311,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(otherIdType.OTHER)
+        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
       }
     ]
   },
@@ -339,7 +336,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     conditionals: [
       {
         type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(otherIdType.OTHER)
+        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
       }
     ]
   }
