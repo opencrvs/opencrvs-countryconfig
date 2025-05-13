@@ -38,9 +38,8 @@ test.describe('Save and delete drafts', () => {
 
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    await expect(
-      page.getByRole('button', { name: childName, exact: true })
-    ).toBeVisible()
+    await page.getByRole('button', { name: childName, exact: true }).click()
+    await expect(page.locator('#content-name')).toHaveText(childName)
   })
 
   test('Delete saved draft', async ({ page }) => {
