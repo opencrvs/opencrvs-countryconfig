@@ -18,7 +18,7 @@ export const advancedSearchBirth = [
       description: 'The title of Registration details accordion',
       id: 'v2.advancedSearch.form.registrationDetails'
     },
-    fields: [field('child.dob').exact()]
+    fields: [field('child.dob').range()]
   },
   {
     title: {
