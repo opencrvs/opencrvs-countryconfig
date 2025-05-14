@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineWorkqueue } from '@opencrvs/toolkit/events'
+import { defineWorkqueue, event } from '@opencrvs/toolkit/events'
 
 export const Workqueues = defineWorkqueue([
   {
@@ -19,7 +19,9 @@ export const Workqueues = defineWorkqueue([
       defaultMessage: 'In progress',
       description: 'Title of in progress workqueue'
     },
-    query: 'todo',
+    query: {
+      status: { type: 'exact', term: 'IN_PROGRESS' }
+    },
     actions: [
       {
         type: 'VALIDATE',
@@ -34,12 +36,45 @@ export const Workqueues = defineWorkqueue([
       defaultMessage: 'Correction requested',
       description: 'Title of correction requested workqueue'
     },
-    query: 'todo',
+    query: {
+      status: { type: 'exact', term: 'DECLARED' }
+    },
     actions: [
       {
         type: 'REVIEW_CORRECTION',
         conditionals: []
       }
     ]
+  },
+  {
+    slug: 'waiting-for-attestation',
+    name: {
+      id: 'workqueues.waitingForAttestation.title',
+      defaultMessage: 'Waiting for attestation',
+      description: 'Title of waiting for attestation'
+    },
+    columns: [
+      {
+        label: {
+          id: 'workqueues.waitingForAttestation.dateOfEvent',
+          defaultMessage: 'Sent for your attestation',
+          description:
+            'Label for workqueue column: waitingForAttestation.dateOfEvent'
+        },
+        value: event.field('createdAt')
+      },
+      {
+        label: {
+          id: 'workqueues.eventStatus',
+          defaultMessage: 'Status of the event',
+          description: 'Label for workqueue column: eventStatus'
+        },
+        value: event.field('status')
+      }
+    ],
+    actions: [],
+    query: {
+      status: { type: 'exact', term: 'WAITING_FOR_ATTESTATION' }
+    }
   }
 ])
