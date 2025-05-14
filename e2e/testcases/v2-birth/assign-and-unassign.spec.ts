@@ -29,7 +29,7 @@ test.describe.serial('Assign & Unassign', () => {
 
   test('Click on "Assign" from action menu', async () => {
     const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
-    await page.getByRole('button', { name: childName, exact: true }).click()
+    await page.getByRole('button', { name: childName }).click()
     await selectAction(page, 'Assign')
     expect(page.getByTestId('assignedTo-value')).toHaveText('Kennedy Mweene')
   })
