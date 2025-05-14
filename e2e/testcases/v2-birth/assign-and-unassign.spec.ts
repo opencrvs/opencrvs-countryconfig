@@ -31,11 +31,15 @@ test.describe.serial('Assign & Unassign', () => {
     const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
     await selectAction(page, 'Assign')
-    expect(page.getByTestId('assignedTo-value')).toHaveText('Kennedy Mweene')
+    await expect(page.getByTestId('assignedTo-value')).toHaveText(
+      'Kennedy Mweene'
+    )
   })
 
   test('Click on "Unassign" from action menu', async () => {
     await selectAction(page, 'Unassign')
-    expect(page.getByTestId('assignedTo-value')).toHaveText('Not assigned')
+    await expect(page.getByTestId('assignedTo-value')).toHaveText(
+      'Not assigned'
+    )
   })
 })
