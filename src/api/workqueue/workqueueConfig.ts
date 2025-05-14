@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineWorkqueue, eventMetadata } from '@opencrvs/toolkit/events'
+import { defineWorkqueue, event } from '@opencrvs/toolkit/events'
 
 export const Workqueues = defineWorkqueue([
   {
@@ -61,7 +61,7 @@ export const Workqueues = defineWorkqueue([
           description:
             'Label for workqueue column: waitingForAttestation.dateOfEvent'
         },
-        value: eventMetadata('createdAt')
+        value: event.field('createdAt')
       },
       {
         label: {
@@ -69,7 +69,7 @@ export const Workqueues = defineWorkqueue([
           defaultMessage: 'Status of the event',
           description: 'Label for workqueue column: eventStatus'
         },
-        value: eventMetadata('status')
+        value: event.field('status')
       }
     ],
     actions: [],
