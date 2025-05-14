@@ -95,7 +95,7 @@ test.describe('Form state', () => {
     await expect(page.getByTestId('row-value-child.surname')).not.toHaveText(
       'Required for registration'
     )
-    await expect(page.getByTestId('row-value-informant.email')).not.toHaveText(
+    await expect(page.getByTestId('row-value-informant.email')).toHaveText(
       'Required for registration'
     )
     // Comment should be empty and sign button should be visible
