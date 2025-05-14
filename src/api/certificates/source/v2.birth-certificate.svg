@@ -194,17 +194,17 @@
     <g clip-path="url(#clip7_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-      {{#ifCond ($lookup "child.birthLocation") '!==' undefined }}
-        <tspan x="289.95" y="347.054">{{$location ($lookup "child.birthLocation") 'location'}}&#10;</tspan>
-        <tspan x="289.95" y="362.054">{{$location ($lookup "child.birthLocation") 'district'}}, {{$location ($lookup "child.birthLocation") 'province'}}, {{$location ($lookup "child.birthLocation") 'country'}}</tspan>
+      {{#ifCond ($lookupResolved "child.birthLocation") '!==' undefined }}
+        <tspan x="289.95" y="347.054">{{$location (lookup $declaration "child.birthLocation") 'location'}}&#10;</tspan>
+        <tspan x="289.95" y="362.054">{{$location (lookup $declaration "child.birthLocation") 'district'}}, {{$location (lookup $declaration "child.birthLocation") 'province'}}, {{$location (lookup $declaration "child.birthLocation") 'country'}}</tspan>
       {{else}}
-        {{#ifCond ($lookup 'child.address.other') '!==' undefined }}
-          <tspan x="289.95" y="347.054">{{$OR (lookup ($lookup 'child.address.other') 'district') (lookup ($lookup 'child.address.other') 'district2')}}&#10;</tspan>
-          <tspan x="289.95" y="362.054">{{$OR (lookup ($lookup 'child.address.other') 'state') (lookup ($lookup 'child.address.other') 'province')}}, {{lookup ($lookup 'child.address.other') 'country'}}</tspan>
+        {{#ifCond ($lookupResolved 'child.address.other') '!==' undefined }}
+          <tspan x="289.95" y="347.054">{{$OR ($lookupResolved 'child.address.other.district') ($lookupResolved 'child.address.other.district2')}}&#10;</tspan>
+          <tspan x="289.95" y="362.054">{{$OR ($lookupResolved 'child.address.other.state') ($lookupResolved 'child.address.other.province')}}, {{$lookupResolved 'child.address.other.country'}}</tspan>
         {{else}}
-          {{#ifCond ($lookup 'child.address.privateHome') '!==' undefined }}
-            <tspan x="289.95" y="347.054">{{$OR (lookup ($lookup 'child.address.privateHome') 'district') (lookup ($lookup 'child.address.privateHome') 'district2')}}&#10;</tspan>
-            <tspan x="289.95" y="362.054">{{$OR (lookup ($lookup 'child.address.privateHome') 'state') (lookup ($lookup 'child.address.privateHome') 'province')}}, {{lookup ($lookup 'child.address.privateHome') 'country'}}</tspan>
+          {{#ifCond ($lookupResolved 'child.address.privateHome') '!==' undefined }}
+            <tspan x="289.95" y="347.054">{{$OR ($lookupResolved 'child.address.privateHome.district') ($lookupResolved 'child.address.privateHome.district2')}}&#10;</tspan>
+            <tspan x="289.95" y="362.054">{{$OR ($lookupResolved 'child.address.privateHome.state') ($lookupResolved 'child.address.privateHome.province')}}, {{$lookupResolved 'child.address.privateHome.country'}}</tspan>
           {{/ifCond}}
         {{/ifCond}}
       {{/ifCond}}
@@ -317,7 +317,7 @@
     <g clip-path="url(#clip12_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="562.754">{{$findUserById ($lookup 'legalStatuses.REGISTERED.createdBy') 'name'}}</tspan>
+        <tspan x="289.95" y="562.754">{{$findUserById ($lookupResolved 'legalStatuses.REGISTERED.createdBy') 'name'}}</tspan>
       </text>
     </g>
   </g>
@@ -325,7 +325,7 @@
   <path d="M62.9698 159.22H532.45" stroke="#038E86" stroke-width="1.94" stroke-linecap="round" />
   <text fill="#038E86" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville"
     font-size="15.52" font-weight="bold" letter-spacing="3.88px">
-    <tspan x="200.256" y="184.002">No. {{$lookup 'legalStatuses.REGISTERED.registrationNumber'}}</tspan>
+    <tspan x="200.256" y="184.002">No. {{$lookupResolved 'legalStatuses.REGISTERED.registrationNumber'}}</tspan>
   </text>
   <path d="M62.9698 196.74H532.45" stroke="#038E86" stroke-width="1.94" stroke-linecap="round" />
   <path d="M62.97 37H533.42" stroke="#DDDDDD" stroke-width="0.97" stroke-linecap="round" />
@@ -406,7 +406,7 @@
   <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
   <!-- #ifCond printInAdvance '!==' true}} -->
   <image width="140" height="70"
-    xlink:href="{{$findUserById ($lookup 'legalStatuses.REGISTERED.createdBy') 'signatureFilename'}}"
+    xlink:href="{{$findUserById ($lookupResolved 'legalStatuses.REGISTERED.createdBy') 'signatureFilename'}}"
     x="
   347" y=" 644"></image>
   <!-- /ifCond}} -->
