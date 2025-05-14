@@ -1,24 +1,21 @@
 import { expect, test } from '@playwright/test'
-import {
-  drawSignature,
-  formatName,
-  getToken,
-  goToSection,
-  loginToV2
-} from '../../helpers'
+import { drawSignature, getToken, goToSection, loginToV2 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { fillChildDetails, openBirthDeclaration } from '../v2-birth/helpers'
 import { CREDENTIALS } from '../../constants'
 import { createDeclaration } from '../v2-test-data/birth-declaration'
-import { ActionType } from '@opencrvs/toolkit/events'
 import { selectAction } from '../../v2-utils'
+import {
+  navigateToCertificatePrintAction,
+  selectRequesterType
+} from '../v2-print-certificate/birth/helpers'
 
 test.describe('Form state', () => {
   test.beforeEach(async ({ page }) => {
     await loginToV2(page)
   })
 
-  test('Filled declaration form state or annotation is not persisted to a new event', async ({
+  test('Declaration form state or annotation is not persisted to a new event', async ({
     page
   }) => {
     await openBirthDeclaration(page)
@@ -56,7 +53,7 @@ test.describe('Form state', () => {
     await expect(page.getByRole('button', { name: 'Sign' })).toBeVisible()
   })
 
-  test('Filled declaration form state or annotation is not persisted to another events action', async ({
+  test('Declaration form state or annotation is not persisted to another events action', async ({
     page
   }) => {
     // First create a draft event, which we will come back to later
@@ -92,11 +89,48 @@ test.describe('Form state', () => {
 
     await selectAction(page, 'Declare')
 
-    await expect(page.getByTestId('row-value-informant.email')).toHaveText(
+    await expect(page.getByTestId('row-value-child.firstname')).not.toHaveText(
+      'Required for registration'
+    )
+    await expect(page.getByTestId('row-value-child.surname')).not.toHaveText(
+      'Required for registration'
+    )
+    await expect(page.getByTestId('row-value-informant.email')).not.toHaveText(
       'Required for registration'
     )
     // Comment should be empty and sign button should be visible
     await expect(page.locator('#review____comment')).toHaveValue('')
     await expect(page.getByRole('button', { name: 'Sign' })).toBeVisible()
+  })
+
+  test('Action annotation state is not persisted to another action instance', async ({
+    page
+  }) => {
+    const token = await getToken(
+      CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+      CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    )
+
+    const res = await createDeclaration(token)
+
+    await page.reload()
+    await navigateToCertificatePrintAction(page, res.declaration)
+    await selectRequesterType(page, 'Print and issue to someone else')
+
+    await page
+      .getByTestId('text__collector____OTHER____firstName')
+      .fill(faker.person.firstName())
+
+    await page.getByTestId('exit-button').click()
+
+    await navigateToCertificatePrintAction(page, res.declaration)
+
+    await expect(
+      page.getByTestId('select__collector____requesterId')
+    ).not.toHaveText('Print and issue to someone else')
+
+    await expect(
+      page.getByTestId('text__collector____OTHER____firstName')
+    ).not.toBeVisible()
   })
 })
