@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test'
 import { Declaration } from '../../v2-test-data/birth-declaration'
-import { ensureAssigned, selectAction } from '../../../v2-utils'
+import { selectAction } from '../../../v2-utils'
 
 export async function selectCertificationType(page: Page, type: string) {
   await page.locator('#certificateTemplateId svg').click()
@@ -21,6 +21,5 @@ export async function navigateToCertificatePrintAction(
 ) {
   const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
   await page.getByRole('button', { name: childName }).click()
-  await ensureAssigned(page)
-  await selectAction(page, 'Print Certificate')
+  await selectAction(page, 'Print certificate')
 }
