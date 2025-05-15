@@ -47,6 +47,9 @@ export async function ensureAssigned(page: Page) {
 
   if (await unAssignAction.isVisible()) {
     await unAssignAction.click()
+    await expect(page.getByTestId('assignedTo-value')).toHaveText(
+      'Not assigned'
+    )
     await page.getByRole('button', { name: 'Action' }).click()
   }
 
