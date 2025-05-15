@@ -1,0 +1,156 @@
+name: Create Hetzner Server
+run-name: Create server for ${{ inputs.env_name }} environment
+on:
+    workflow_dispatch:
+      inputs:
+        env_name:
+          description: "Short server name (3–5 letters)"
+          required: true
+        env_type:
+          description: "Environment type (single or multi node)"
+          required: true
+          type: choice
+          options:
+            - single-node
+            - multi-node
+    workflow_call:
+      inputs:
+        env_name:
+          type: string
+          description: Environment to deploy to
+          required: true
+        env_type:
+          type: string
+          description: Select group tag you want to execute
+          required: true
+env:
+  TF_PATH: infrastructure/provision-server/hetzner-cloud-empty-server
+  TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
+  TF_VAR_country_name: ${{ vars.COUNTRY_NAME }}
+  TF_VAR_env_name: ${{ github.event.inputs.env_name }}
+  TF_VAR_env_type: ${{ github.event.inputs.env_type }}
+  TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+
+jobs:
+  create-environment:
+    name: Create New HCloud Environment
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    outputs:
+      ssh_host: ${{ steps.output.outputs.ssh_host }}
+      hostname: ${{ steps.output.outputs.hostname }}
+    environment: ${{ github.event.inputs.env_name }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Pull SSH key pair files from github
+        run: |
+          ssh_key_path=$TF_PATH/.ssh
+          mkdir -p $ssh_key_path
+
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $ssh_key_path/id_rsa
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > $ssh_key_path/id_rsa.pub
+          chmod 600 $ssh_key_path/id_rsa
+          chmod 644 $ssh_key_path/id_rsa.pub
+      - name: Checkout terraform state repo
+        uses: actions/checkout@v4
+        with:
+          repository: opencrvs/terraform-state
+          ref: main
+          path: terraform-state
+        
+      - name: Restore terraform state
+        run: |
+          mkdir -p terraform-state/${{ vars.COUNTRY_NAME }}
+          [ -f terraform-state/${{ vars.COUNTRY_NAME }}/${{ inputs.env_name }}-${{ inputs.env_type }}.tfstate ] && \
+          cp terraform-state/${{ vars.COUNTRY_NAME }}/${{ inputs.env_name }}-${{ inputs.env_type }}.tfstate ${{ env.TF_PATH }}/terraform.tfstate || \
+          echo "Terraform state file not found. Creating a new one."
+  
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.7
+  
+      - name: Terraform Init
+        working-directory: ${{ env.TF_PATH }}
+        run: terraform init
+
+      - name: Terraform Apply
+        id: apply
+        working-directory: ${{ env.TF_PATH }}
+        run: |
+          terraform apply -auto-approve -input=false
+
+      - run: |
+          cp ${{ env.TF_PATH }}/terraform.tfstate terraform-state/${{ vars.COUNTRY_NAME }}/${{ inputs.env_name }}-${{ inputs.env_type }}.tfstate
+          cd terraform-state/
+          git add ${{ vars.COUNTRY_NAME }}/${{ inputs.env_name }}-${{ inputs.env_type }}.tfstate
+          git commit -m "Add environment file for ${{ github.event.inputs.env_name }} env with type ${{ inputs.env_type }}"
+          git push
+
+      # - name: Store variables
+      #   id: output
+      #   working-directory: ${{ env.TF_PATH }}
+      #   run: |
+      #     echo "ssh_host=$(terraform output -raw public_ip)" >> $GITHUB_OUTPUT
+      #     echo "hostname=$TF_VAR_country_name-$TF_VAR_env_name" >> $GITHUB_OUTPUT
+      # # FIXME: We can upload artifact, but it useless for us
+      # - name: Upload Terraform state
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: terraform-state
+      #     path: ${{ env.TF_PATH }}/terraform.tfstate
+      # - name: Setup Git
+      #   run: |
+      #     git config --local user.name "OpenCRVS Bot"
+      #     git config --local user.email "bot@opencrvs.org"
+      # - name: Create environment file
+      #   env:
+      #     SSH_HOST: ${{ steps.output.outputs.ssh_host }}
+      #     HOSTNAME: ${{ steps.output.outputs.hostname }}
+      #     # TODO: Fix hardcoded domain
+      #     DOMAIN: ${{ github.event.inputs.env_name }}.opencrvs.dev
+      #   run: |
+      #     mkdir -p infrastructure/server-setup/inventory
+      #     cat infrastructure/provision-server/templates/staging-env.yml | \
+      #     sed -e "s#HOSTNAME#$HOSTNAME#" \
+      #         -e "s#SSH_HOST#$SSH_HOST#" \
+      #         > infrastructure/server-setup/inventory/${{ github.event.inputs.env_name }}.yml
+      #     echo "Environment file created: infrastructure/server-setup/inventory/${{ github.event.inputs.env_name }}.yml"
+      # # - name: Update known_hosts
+      # #     ssh-keyscan -H "$SSH_HOST" >> infrastructure/known-hosts || echo "Failed to add $SSH_HOST to known_hosts"
+
+      # - env:
+      #     SSH_HOST: ${{ steps.output.outputs.ssh_host }}
+      #     HOSTNAME: ${{ steps.output.outputs.hostname }}
+      #     # TODO: Fix hardcoded domain
+      #     DOMAIN: ${{ github.event.inputs.env_name }}.opencrvs.dev
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      #   run: |
+      #     cat infrastructure/provision-server/templates/environment.variables.tpl | \
+      #     sed -e "s/#SSH_HOST#/$SSH_HOST/" \
+      #         -e "s/#DOMAIN#/$DOMAIN/" \
+      #         > infrastructure/environment.variables
+      #     echo "Environment variables file created: infrastructure/environment.variables"
+      #     while read line; do
+      #       if [[ $line == *"="* ]]; then
+      #         key=$(echo "$line" | cut -d '=' -f 1)
+      #         value=$(echo "$line" | cut -d '=' -f 2-)
+      #         echo "Adding variable: $key"
+      #         gh variable set --env ${{ github.event.inputs.env_name }} $key --body "$value"
+      #       fi
+      #     done < infrastructure/environment.variables
+      #     while read key; do
+      #       password=`openssl rand -base64 25 | tr -cd '[:alnum:]._-' ; echo ''`
+      #       echo "Adding secret: $key"
+      #       gh secret set $key --env ${{ github.event.inputs.env_name }} --body "$password"
+      #     done < infrastructure/provision-server/templates/environment.secrets.tpl
+      # - name: Commit and push changes
+      #   run: |
+      #     mkdir -p infrastructure/server-setup/tfstate
+      #     cp ${{ env.TF_PATH }}/terraform.tfstate infrastructure/server-setup/tfstate/${{ github.event.inputs.env_name }}.tfstate
+      #     git add infrastructure/server-setup/inventory/${{ github.event.inputs.env_name }}.yml \
+      #             infrastructure/known-hosts
+      #     git commit -m "Add environment file for ${{ github.event.inputs.env_name }}"
+      #     git push

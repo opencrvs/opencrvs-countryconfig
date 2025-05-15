@@ -1,0 +1,12 @@
+#cloud-config
+packages:
+  - curl
+users:
+  - name: provision
+    ssh-authorized-keys:
+    - ${ssh_key}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    shell: /bin/bash
+    package_update: true
+    package_upgrade: true
