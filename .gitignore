@@ -38,3 +38,7 @@ graphql.schema.json
 notebooks
 
 ctrf/
+
+infrastructure/provision-server/hetzner-cloud-empty-server/.terraform*
+infrastructure/provision-server/hetzner-cloud-empty-server/terraform*
+infrastructure/provision-server/hetzner-cloud-empty-server/.ssh
