@@ -2647,6 +2647,9 @@ v2.event.summary.event.value,Value for the event field,{eventLabel},{eventLabel}
 v2.event.summary.registrationNumber.empty,No registration number message,No registration number,Aucun numéro d'inscription
 v2.event.summary.registrationNumber.label,Label for the registration number field,Registration Number,Numéro d'inscription
 v2.event.summary.registrationNumber.value,Value for the registration number field,{event.registrationNumber},{event.registrationNumber}
+v2.event.summary.assignedTo.label,Assigned to label,Assigned to,Assigné à
+v2.event.summary.assignedTo.value,Assigned to value,"{event.assignedTo}","{event.assignedTo}"
+v2.event.summary.assignedTo.empty,Not assigned message,Not assigned,Non assigné
 v2.event.summary.status.label,Label for the status field,Status,Statut
 v2.event.summary.status.value,Value for the status field,"{event.status, select, CREATED {Draft} NOTIFIED {Incomplete} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{event.status, select, CREATED {Brouillon} NOTIFIED {Incomplet} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Requiert une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
 v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
