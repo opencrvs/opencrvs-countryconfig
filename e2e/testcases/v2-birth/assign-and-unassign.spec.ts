@@ -6,7 +6,7 @@ import {
   createDeclaration,
   Declaration
 } from '../v2-test-data/birth-declaration'
-import { selectAction } from '../../v2-utils'
+import { ensureAssigned, selectAction } from '../../v2-utils'
 
 test.describe.serial('Assign & Unassign', () => {
   let page: Page
@@ -30,7 +30,7 @@ test.describe.serial('Assign & Unassign', () => {
   test('Click on "Assign" from action menu', async () => {
     const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
-    await selectAction(page, 'Assign')
+    await ensureAssigned(page)
     await expect(page.getByTestId('assignedTo-value')).toHaveText(
       'Kennedy Mweene'
     )
