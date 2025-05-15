@@ -20,35 +20,42 @@ export const getBirthDate = (
   fieldName: string,
   conditionals: Conditional[],
   validator: any[],
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  initialValue: string | { dependsOn: string[]; expression: string } = ''
 ): SerializedFormField => ({
   name: fieldName, // A field with this name MUST exist
   type: 'DATE',
   label: formMessageDescriptors.dateOfBirth,
   required: true,
   conditionals,
-  initialValue: '',
+  initialValue,
   validator,
   mapping: getFieldMapping('birthDate', certificateHandlebar)
 })
 
-export const getGender = (certificateHandlebar: string) =>
+export const getGender = (
+  certificateHandlebar: string,
+  initialValue: string | { dependsOn: string[]; expression: string } = '',
+  conditionals: Conditional[] = []
+) =>
   ({
     name: 'gender', // A field with this name MUST exist
     type: 'SELECT_WITH_OPTIONS',
     label: formMessageDescriptors.sex,
     required: true,
-    initialValue: '',
+    initialValue,
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     mapping: getFieldMapping('gender', certificateHandlebar),
-    options: genderOptions
-  } satisfies SerializedFormField)
+    options: genderOptions,
+    conditionals
+  }) satisfies SerializedFormField
 
 export const getFamilyNameField = (
   previewGroup: string,
   conditionals: Conditional[],
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  initialValue: string | { dependsOn: string[]; expression: string } = ''
 ) =>
   ({
     name: 'familyNameEng', // A field with this name MUST exist
@@ -58,19 +65,20 @@ export const getFamilyNameField = (
     label: formMessageDescriptors.familyName,
     maxLength: 32,
     required: true,
-    initialValue: '',
+    initialValue,
     validator: [
       {
         operation: 'englishOnlyNameFormat'
       }
     ],
     mapping: getFieldMapping('familyName', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getFirstNameField = (
   previewGroup: string,
   conditionals: Conditional[],
-  certificateHandlebar: string
+  certificateHandlebar: string,
+  initialValue: string | { dependsOn: string[]; expression: string } = ''
 ) =>
   ({
     name: 'firstNamesEng', // A field with this name MUST exist
@@ -84,14 +92,14 @@ export const getFirstNameField = (
     conditionals,
     maxLength: 32,
     required: true,
-    initialValue: '',
+    initialValue,
     validator: [
       {
         operation: 'englishOnlyNameFormat'
       }
     ],
     mapping: getFieldMapping('firstNames', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getNationality = (
   certificateHandlebar: string,
@@ -110,7 +118,7 @@ export const getNationality = (
     },
     conditionals,
     mapping: getFieldMapping('nationality', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const otherInformantType = (event: Event) =>
   ({
@@ -120,8 +128,8 @@ export const otherInformantType = (event: Event) =>
       event == Event.Birth
         ? formMessageDescriptors.informantsRelationWithChild
         : event == Event.Death
-        ? formMessageDescriptors.relationshipToDeceased
-        : formMessageDescriptors.relationshipToSpouses,
+          ? formMessageDescriptors.relationshipToDeceased
+          : formMessageDescriptors.relationshipToSpouses,
     placeholder: formMessageDescriptors.relationshipPlaceHolder,
     required: true,
     initialValue: '',
@@ -137,7 +145,7 @@ export const otherInformantType = (event: Event) =>
       }
     ],
     mapping: getFieldMapping('otherInformantType')
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getNationalID = (
   fieldName: string,
@@ -154,7 +162,7 @@ export const getNationalID = (
     validator,
     conditionals,
     mapping: getFieldMapping('nationalId', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getDetailsExist = (
   label: MessageDescriptor,
@@ -173,7 +181,7 @@ export const getDetailsExist = (
     conditionals,
     mapping: getFieldMapping('detailsExist'),
     ignoreBottomMargin: true
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
 
 export const getReasonNotExisting = (certificateHandlebar: string) =>
   ({
@@ -190,4 +198,4 @@ export const getReasonNotExisting = (certificateHandlebar: string) =>
     initialValue: '',
     required: true,
     mapping: getFieldMapping('reasonNotApplying', certificateHandlebar)
-  } satisfies SerializedFormField)
+  }) satisfies SerializedFormField
