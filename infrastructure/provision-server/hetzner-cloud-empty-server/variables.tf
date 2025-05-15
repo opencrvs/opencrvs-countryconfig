@@ -25,7 +25,7 @@ variable "users" {
 
 variable "env_type" {
   description = "The environment type for the Hetzner Cloud server."
-  default = "staging"
+  default = "single-node"
   type        = string
 }
 
