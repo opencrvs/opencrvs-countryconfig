@@ -581,6 +581,11 @@ services:
       - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
       - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
+      # Identity mock
+      - ESIGNET_REDIRECT_URL=${ESIGNET_REDIRECT_URL}
+      - MOSIP_API_USERINFO_URL=${MOSIP_API_USERINFO_URL}
+      - OPENID_PROVIDER_CLAIMS=name,family_name,given_name,middle_name,birthdate,address
+      - OPENID_PROVIDER_CLIENT_ID=mock-client_id
     networks:
       - overlay_net
     logging:
@@ -1022,6 +1027,130 @@ services:
       placement:
         constraints:
           - node.labels.data1 == true
+
+  mosip-api:
+    volumes:
+      - '/data/sqlite:/data/sqlite'
+      - /certs:/certs:ro 
+    image: ghcr.io/opencrvs/mosip-api:${MOSIP_API_VERSION}
+    environment:
+      - NODE_ENV=production
+      - MOSIP_BIRTH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/birth
+      - MOSIP_DEATH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/death
+      - OPENCRVS_GRAPHQL_GATEWAY_URL=http://gateway:7070/graphql
+      - OPENCRVS_PUBLIC_KEY_URL=http://auth:4040/.well-known
+      - LOCALE=en
+      - ESIGNET_USERINFO_URL=${ESIGNET_USERINFO_URL}
+      - ESIGNET_TOKEN_URL=${ESIGNET_TOKEN_URL}
+      - ESIGNET_REDIRECT_URL=${ESIGNET_REDIRECT_URL}
+      - OIDP_CLIENT_PRIVATE_KEY_PATH=${OIDP_CLIENT_PRIVATE_KEY_PATH}
+      - OPENID_PROVIDER_CLAIMS=${OPENID_PROVIDER_CLAIMS}
+      - DECRYPT_P12_FILE_PATH=${DECRYPT_P12_FILE_PATH}
+      - DECRYPT_P12_FILE_PASSWORD=${DECRYPT_P12_FILE_PASSWORD}
+      - ENCRYPT_CERT_PATH=${ENCRYPT_CERT_PATH}
+      - IDA_AUTH_DOMAIN_URI=${IDA_AUTH_DOMAIN_URI}
+      - IDA_AUTH_URL=${IDA_AUTH_URL}
+      - PARTNER_APIKEY=${PARTNER_APIKEY}
+      - PARTNER_ID=${PARTNER_ID}
+      - PARTNER_MISP_LK=${PARTNER_MISP_LK}
+      - SIGN_P12_FILE_PATH=${SIGN_P12_FILE_PATH}
+      - SIGN_P12_FILE_PASSWORD=${SIGN_P12_FILE_PASSWORD}
+      - CLIENT_APP_URL=https://register.{{hostname}}
+      - SQLITE_DATABASE_PATH=/data/sqlite/mosip-api.db
+      - MOSIP_AUTH_URL=${MOSIP_AUTH_URL}
+      - MOSIP_AUTH_CLIENT_APP_ID=${MOSIP_AUTH_CLIENT_APP_ID}
+      - MOSIP_PACKET_AUTH_CLIENT_ID=${MOSIP_PACKET_AUTH_CLIENT_ID}
+      - MOSIP_PACKET_AUTH_CLIENT_SECRET=${MOSIP_PACKET_AUTH_CLIENT_SECRET}
+      - MOSIP_WEBSUB_AUTH_CLIENT_ID=${MOSIP_WEBSUB_AUTH_CLIENT_ID}
+      - MOSIP_WEBSUB_AUTH_CLIENT_SECRET=${MOSIP_WEBSUB_AUTH_CLIENT_SECRET}
+      - MOSIP_WEBSUB_CALLBACK_URL=http://mosip-api:2024/websub/callback
+      - MOSIP_WEBSUB_HUB_URL=${MOSIP_WEBSUB_HUB_URL}
+      - MOSIP_WEBSUB_SECRET=${MOSIP_WEBSUB_SECRET}
+      - MOSIP_WEBSUB_TOPIC=${MOSIP_WEBSUB_TOPIC}
+      - MOSIP_CREATE_PACKET_URL=${MOSIP_CREATE_PACKET_URL}
+      - MOSIP_PROCESS_PACKET_URL=${MOSIP_PROCESS_PACKET_URL}
+      - MOSIP_VERIFIABLE_CREDENTIAL_ALLOWLIST=${MOSIP_VERIFIABLE_CREDENTIAL_ALLOWLIST}
+    deploy:
+      replicas: 1
+      labels:
+        - 'traefik.enable=true'
+        - 'traefik.http.routers.mosip-api.rule=Host(`mosip-api.{{hostname}}`)'
+        - 'traefik.http.services.mosip-api.loadbalancer.server.port=2024'
+        - 'traefik.http.routers.mosip-api.tls=true'
+        - 'traefik.http.routers.mosip-api.tls.certresolver=certResolver'
+        - 'traefik.http.routers.mosip-api.entrypoints=web,websecure'
+        - 'traefik.http.routers.mosip-api.middlewares=gzip-compression'
+        - 'traefik.docker.network=opencrvs_overlay_net'
+        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.Pragma=no-cache'
+        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.Cache-control=no-store'
+        - 'traefik.http.middlewares.mosip-api.headers.customresponseheaders.X-Robots-Tag=none'
+        - 'traefik.http.middlewares.mosip-api.headers.stsseconds=31536000'
+        - 'traefik.http.middlewares.mosip-api.headers.stsincludesubdomains=true'
+        - 'traefik.http.middlewares.mosip-api.headers.stspreload=true'
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'mosip-api'
+
+  mosip-mock:
+    image: ghcr.io/opencrvs/mosip-mock:${MOSIP_API_VERSION}
+    depends_on:
+      - mosip-api
+    environment:
+      - NODE_ENV=production
+      - SENDER_EMAIL_ADDRESS=${SENDER_EMAIL_ADDRESS:-}
+      - ALERT_EMAIL=${ALERT_EMAIL:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-}
+      - SMTP_USERNAME=${SMTP_USERNAME:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_SECURE=${SMTP_SECURE:-}
+      - MOSIP_WEBSUB_CALLBACK_URL=http://mosip-api:2024/websub/callback
+      - ISSUER_URL=http://mosip-mock:20240
+      - MOSIP_WEBSUB_TOPIC=${MOSIP_WEBSUB_TOPIC}
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'mosip-mock'
+
+  esignet-mock:
+    image: ghcr.io/opencrvs/esignet-mock:${MOSIP_API_VERSION}
+    volumes:
+      - /certs:/certs:ro 
+    environment:
+      - NODE_ENV=production
+      - CLIENT_APP_URL=https://register.{{hostname}}
+      - OIDP_CLIENT_PRIVATE_KEY_PATH=${OIDP_CLIENT_PRIVATE_KEY_PATH}
+    deploy:
+      replicas: 1
+      labels:
+        - 'traefik.enable=true'
+        - 'traefik.http.routers.esignet-mock.rule=Host(`esignet-mock.{{hostname}}`)'
+        - 'traefik.http.services.esignet-mock.loadbalancer.server.port=20260'
+        - 'traefik.http.routers.esignet-mock.tls=true'
+        - 'traefik.http.routers.esignet-mock.tls.certresolver=certResolver'
+        - 'traefik.http.routers.esignet-mock.entrypoints=web,websecure'
+        - 'traefik.http.routers.esignet-mock.middlewares=gzip-compression'
+        - 'traefik.docker.network=opencrvs_overlay_net'
+        - 'traefik.http.middlewares.esignet-mock.headers.customresponseheaders.Pragma=no-cache'
+        - 'traefik.http.middlewares.esignet-mock.headers.customresponseheaders.Cache-control=no-store'
+        - 'traefik.http.middlewares.esignet-mock.headers.customresponseheaders.X-Robots-Tag=none'
+        - 'traefik.http.middlewares.esignet-mock.headers.stsseconds=31536000'
+        - 'traefik.http.middlewares.esignet-mock.headers.stsincludesubdomains=true'
+        - 'traefik.http.middlewares.esignet-mock.headers.stspreload=true'
+    networks:
+      - overlay_net
+    logging:
+      driver: gelf
+      options:
+        gelf-address: 'udp://127.0.0.1:12201'
+        tag: 'esignet-mock'
 secrets:
   jwt-public-key.{{ts}}:
     external: true
