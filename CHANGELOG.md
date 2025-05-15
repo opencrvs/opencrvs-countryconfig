@@ -1,5 +1,27 @@
 # Changelog
 
+
+## 1.7.2 Release candidate
+
+### Bugfixes
+
+- InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
+```
+partial write: max-values-per-tag limit exceeded (100000/100000)
+```
+https://github.com/opencrvs/opencrvs-countryconfig/pull/393
+### New features
+
+- **Time field 12-hour format**: To enable the 12-hour (AM/PM) format of the `TimeField`, set the `use12HourFormat` property to `true`. [#8336](https://github.com/opencrvs/opencrvs-core/issues/8336)
+  ```
+  {
+    name: 'time',
+    custom: true,
+    type: 'TIME',
+    use12HourFormat: true,
+    ...otherProp
+  }
+  ```
 ## 1.7.1
 
 ### Bug fixes
@@ -149,6 +171,12 @@ userRole.socialWorker,Name for user role Social Worker,Social Worker
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
+
+## 1.6.4
+
+### Bug fixes
+
+- Query the location tree directly from the config service to improve performance for large datasets
 
 ## 1.6.3
 
