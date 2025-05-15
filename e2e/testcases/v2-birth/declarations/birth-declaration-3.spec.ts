@@ -735,7 +735,6 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         })
         .click()
 
-      await selectAction(page, 'Assign')
       await selectAction(page, 'Register')
     })
 

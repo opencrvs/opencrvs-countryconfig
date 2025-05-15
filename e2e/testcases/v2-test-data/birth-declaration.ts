@@ -7,6 +7,7 @@ import { getAllLocations, getLocationIdByName } from '../birth/helpers'
 import { createClient } from '@opencrvs/toolkit/api'
 import {
   ActionDocument,
+  ActionType,
   ActionUpdate,
   AddressType
 } from '@opencrvs/toolkit/events'
@@ -110,7 +111,8 @@ export interface CreateDeclarationResponse {
 
 export async function createDeclaration(
   token: string,
-  dec?: Partial<ActionUpdate>
+  dec?: Partial<ActionUpdate>,
+  action: ActionType = ActionType.REGISTER
 ): Promise<CreateDeclarationResponse> {
   const declaration = await getDeclaration({ partialDeclaration: dec })
 
@@ -132,7 +134,7 @@ export async function createDeclaration(
     'review.signature': `data:image/png;base64,${signatureBase64}`
   }
 
-  await client.event.actions.declare.request.mutate({
+  const declareRes = await client.event.actions.declare.request.mutate({
     eventId: eventId,
     transactionId: uuidv4(),
     declaration,
@@ -140,7 +142,15 @@ export async function createDeclaration(
     keepAssignment: true
   })
 
-  await client.event.actions.validate.request.mutate({
+  if (action === ActionType.DECLARE) {
+    const declareAction = declareRes.actions.find(
+      (action: ActionDocument) => action.type === 'DECLARE'
+    )
+
+    return { eventId, declaration: declareAction?.declaration as Declaration }
+  }
+
+  const validateRes = await client.event.actions.validate.request.mutate({
     eventId: eventId,
     transactionId: uuidv4(),
     declaration,
@@ -149,18 +159,27 @@ export async function createDeclaration(
     keepAssignment: true
   })
 
-  const response = await client.event.actions.register.request.mutate({
+  if (action === ActionType.VALIDATE) {
+    const validateAction = validateRes.actions.find(
+      (action: ActionDocument) => action.type === 'VALIDATE'
+    )
+
+    return {
+      eventId,
+      declaration: validateAction?.declaration as Declaration
+    }
+  }
+
+  const registerRes = await client.event.actions.register.request.mutate({
     eventId: eventId,
     transactionId: uuidv4(),
     declaration,
     annotation
   })
 
-  const declareAction = response.actions.find(
-    (action: ActionDocument) => action.type === 'DECLARE'
+  const registerAction = registerRes.actions.find(
+    (action: ActionDocument) => action.type === 'REGISTER'
   )
 
-  const data = declareAction?.declaration as Declaration
-
-  return { eventId, declaration: data }
+  return { eventId, declaration: registerAction?.declaration as Declaration }
 }
