@@ -157,7 +157,11 @@ export function getIDType(
       description: 'A form field that asks for the type of ID.',
       defaultMessage: 'Type of ID'
     },
-    initialValue: '',
+    initialValue: {
+      dependsOn: ['idReader', 'verified'],
+      expression:
+        '!!$form?.idReader?.nid || $form?.verified === "verified" || $form?.verified === "authenticated" ? "NATIONAL_ID" : ""'
+    },
     validator: [],
     mapping: getCustomFieldMapping(fieldId),
     placeholder: formMessageDescriptors.formSelectPlaceholder,
