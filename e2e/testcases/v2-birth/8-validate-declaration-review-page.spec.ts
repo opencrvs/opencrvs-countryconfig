@@ -893,7 +893,6 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
         .click()
 
-      await selectAction(page, 'Assign')
       await selectAction(page, 'Validate')
     })
     test('8.2.1.1 Verify information added on previous pages', async () => {
@@ -1187,7 +1186,6 @@ test.describe.serial('8. Validate declaration review page', () => {
         })
         .click()
 
-      await selectAction(page, 'Assign')
       await selectAction(page, 'Register')
     })
     test('8.3.1.1 Verify information added on previous pages', async () => {

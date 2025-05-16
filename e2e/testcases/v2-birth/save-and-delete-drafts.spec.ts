@@ -1,30 +1,12 @@
 import { expect, test, type Page } from '@playwright/test'
-import { formatName, goToSection, loginToV2, logout } from '../../helpers'
-import { faker } from '@faker-js/faker'
+import { goToSection, loginToV2, logout } from '../../helpers'
 import { CREDENTIALS } from '../../constants'
-
-async function openBirthDeclarationAndFillChildDetails(page: Page) {
-  await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
-  await page.click('#header-new-event')
-  await page.getByLabel('Birth').click()
-  await page.getByRole('button', { name: 'Continue' }).click()
-  await page.getByRole('button', { name: 'Continue' }).click()
-
-  return page
-}
-
-async function fillChildDetails(page: Page) {
-  const firstName = faker.person.firstName('female')
-  const lastName = faker.person.lastName('female')
-  await page.locator('#child____firstname').fill(firstName)
-  await page.locator('#child____surname').fill(lastName)
-
-  return formatName({ firstNames: firstName, familyName: lastName })
-}
+import { fillChildDetails, openBirthDeclaration } from './helpers'
 
 test.describe('Save and delete drafts', () => {
   test.beforeEach(async ({ page }) => {
-    await openBirthDeclarationAndFillChildDetails(page)
+    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await openBirthDeclaration(page)
   })
 
   test('Save draft via Save & Exit', async ({ page }) => {
@@ -38,9 +20,8 @@ test.describe('Save and delete drafts', () => {
 
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    await expect(
-      page.getByRole('button', { name: childName, exact: true })
-    ).toBeVisible()
+    await page.getByRole('button', { name: childName, exact: true }).click()
+    await expect(page.locator('#content-name')).toHaveText(childName)
   })
 
   test('Delete saved draft', async ({ page }) => {
