@@ -2337,8 +2337,13 @@ v2.advancedSearch.form.recordStatusInprogress,Option for form field: status of r
 v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
 v2.advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
 v2.advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé
+v2.advancedSearch.registeredAt,Label for date of registration field,Date of registration,Date d'enregistrement
+v2.advancedSearch.registeredAtLocation,Label for place of registration field,Place of registration,Lieu d'enregistrement
+v2.advancedSearch.registeredAtLocation.helperText,Helper text for place of registration field,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
 v2.advancedSearch.status,Label for status field,Status of record,Statut de l'enregistrement
 v2.advancedSearch.trackingId,Label for tracking ID field,Tracking ID,ID de suivi
+v2.advancedSearch.updatedAt,Label for date of update field,Time period,Période
+v2.advancedSearch.updatedAt.helperText,Helper text for date of update field,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement
 v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de recherche
 v2.buttons.back,Back button text,Back,Retour
 v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
