@@ -2336,8 +2336,13 @@ v2.advancedSearch.form.recordStatusInprogress,Option for form field: status of r
 v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
 v2.advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
 v2.advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé
+v2.advancedSearch.registeredAt,Label for date of registration field,Date of registration,Date d'enregistrement
+v2.advancedSearch.registeredAtLocation,Label for place of registration field,Place of registration,Lieu d'enregistrement
+v2.advancedSearch.registeredAtLocation.helperText,Helper text for place of registration field,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
 v2.advancedSearch.status,Label for status field,Status of record,Statut de l'enregistrement
 v2.advancedSearch.trackingId,Label for tracking ID field,Tracking ID,ID de suivi
+v2.advancedSearch.updatedAt,Label for date of update field,Time period,Période
+v2.advancedSearch.updatedAt.helperText,Helper text for date of update field,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement
 v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de recherche
 v2.buttons.back,Back button text,Back,Retour
 v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
@@ -2647,6 +2652,9 @@ v2.event.summary.event.value,Value for the event field,{eventLabel},{eventLabel}
 v2.event.summary.registrationNumber.empty,No registration number message,No registration number,Aucun numéro d'inscription
 v2.event.summary.registrationNumber.label,Label for the registration number field,Registration Number,Numéro d'inscription
 v2.event.summary.registrationNumber.value,Value for the registration number field,{event.registrationNumber},{event.registrationNumber}
+v2.event.summary.assignedTo.label,Assigned to label,Assigned to,Assigné à
+v2.event.summary.assignedTo.value,Assigned to value,"{event.assignedTo}","{event.assignedTo}"
+v2.event.summary.assignedTo.empty,Not assigned message,Not assigned,Non assigné
 v2.event.summary.status.label,Label for the status field,Status,Statut
 v2.event.summary.status.value,Value for the status field,"{event.status, select, CREATED {Draft} NOTIFIED {Incomplete} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{event.status, select, CREATED {Brouillon} NOTIFIED {Incomplet} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Requiert une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
 v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
