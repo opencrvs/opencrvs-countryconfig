@@ -253,7 +253,7 @@ export const father = defineFormPage({
     },
     {
       id: 'father.nid',
-      type: FieldType.TEXT,
+      type: FieldType.ID,
       required: true,
       label: {
         defaultMessage: 'ID Number',

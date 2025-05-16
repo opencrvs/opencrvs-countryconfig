@@ -297,7 +297,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.nid',
-      type: FieldType.TEXT,
+      type: FieldType.ID,
       required: true,
       label: {
         defaultMessage: 'ID Number',
@@ -438,7 +438,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.phoneNo',
-      type: FieldType.TEXT,
+      type: FieldType.PHONE,
       required: false,
       label: {
         defaultMessage: 'Phone number',
