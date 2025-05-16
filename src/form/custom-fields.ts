@@ -15,6 +15,7 @@ import { MessageDescriptor } from 'react-intl'
 import { getNationalIDValidators } from './common/default-validation-conditionals'
 import { formMessageDescriptors } from './common/messages'
 import { Conditional, SerializedFormField } from './types/types'
+import { getInitialValueFromIDReader } from '@opencrvs/mosip'
 
 // ======================= CUSTOM FIELD CONFIGURATION =======================
 
@@ -177,6 +178,14 @@ function getValidators(configCase: string, idValue: IDType) {
   return []
 }
 
+function initialValuesForIDType(idType: IDType) {
+  if (idType === 'NATIONAL_ID') {
+    return getInitialValueFromIDReader('nid')
+  } else {
+    return ''
+  }
+}
+
 export function getIDNumber(
   sectionId: string,
   idValue: IDType,
@@ -198,7 +207,7 @@ export function getIDNumber(
       description: 'A form field that asks for the id number.',
       defaultMessage: 'ID number'
     },
-    initialValue: '',
+    initialValue: initialValuesForIDType(idValue),
     validator: validators,
     mapping: {
       template: {
