@@ -587,8 +587,8 @@ services:
       - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
       # Identity mock
-      - ESIGNET_REDIRECT_URL=${ESIGNET_REDIRECT_URL}
-      - MOSIP_API_USERINFO_URL=${MOSIP_API_USERINFO_URL}
+      - ESIGNET_REDIRECT_URL=https://esignet-mock.{{hostname}}/authorize
+      - MOSIP_API_USERINFO_URL=https://mosip-api.{{hostname}}/esignet/get-oidp-user-info
       - OPENID_PROVIDER_CLAIMS=name,family_name,given_name,middle_name,birthdate,address
       - OPENID_PROVIDER_CLIENT_ID=mock-client_id
     networks:
@@ -1139,7 +1139,7 @@ services:
     environment:
       - NODE_ENV=production
       - CLIENT_APP_URL=https://register.{{hostname}}
-      - OIDP_CLIENT_PRIVATE_KEY_PATH=${OIDP_CLIENT_PRIVATE_KEY_PATH}
+      - OIDP_CLIENT_PRIVATE_KEY_PATH=/certs/esignet-jwk.txt
     deploy:
       replicas: 1
       labels:
