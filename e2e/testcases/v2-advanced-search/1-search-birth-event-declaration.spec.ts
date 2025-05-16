@@ -81,8 +81,37 @@ test.describe.serial('Advanced Search - Birth Event Declaration', () => {
     test('1.5.2 - Validate search and show results', async () => {
       await page.click('#search')
       await expect(page).toHaveURL(/.*\/search-result/)
+      await expect(page.url()).toContain(
+        `child.dob=${yyyy}-${mm}-${dd}&child.gender=female`
+      )
       await expect(page.getByText('Search Results')).toBeVisible()
+
+      const searchResult = await page.locator('#content-name').textContent()
+      const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
+      await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
+      await expect(page.getByText('Event : V2 birth')).toBeVisible()
+      await expect(
+        page.getByText(`Child dob : ${yyyy}-${mm}-${dd}`)
+      ).toBeVisible()
+      await expect(page.getByText('Child gender : female')).toBeVisible()
+      await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
       await expect(page.getByText(fullNameOfChild)).toBeVisible()
+    })
+
+    test('1.5.3 - Validate clicking on the search edit button', async () => {
+      await page.getByRole('button', { name: 'Edit' }).click()
+      await expect(page).toHaveURL(/.*\/advanced-search/)
+      await expect(page.url()).toContain(
+        `child.dob=${yyyy}-${mm}-${dd}&child.gender=female&eventType=v2.birth`
+      )
+      await expect(page.locator('#tab_v2.birth')).toHaveText('Birth')
+
+      await expect(page.getByPlaceholder('dd')).toHaveValue(dd)
+      await expect(page.getByPlaceholder('mm')).toHaveValue(mm)
+      await expect(page.getByPlaceholder('yyyy')).toHaveValue(yyyy)
+      await expect(page.locator('#child____gender-form-input')).toHaveText(
+        'Female'
+      )
     })
   })
 })
