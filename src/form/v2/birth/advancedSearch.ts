@@ -163,12 +163,7 @@ export const advancedSearchBirth = [
       description: 'The title of Event details accordion',
       id: 'v2.advancedSearch.form.eventDetails'
     },
-    fields: [
-      field('child.placeOfBirth').exact(),
-      field('child.birthLocation').exact(),
-      field('child.address.privateHome').exact(),
-      field('child.address.other').exact()
-    ]
+    fields: [field('child.birthLocation', { conditionals: [] }).exact()]
   },
   {
     title: {
