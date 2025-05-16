@@ -55,7 +55,7 @@ export const BIRTH_DECLARATION_REVIEW = {
 
 export const BIRTH_DECLARATION_FORM = defineDeclarationForm({
   label: {
-    defaultMessage: 'Birth decalration form',
+    defaultMessage: 'Birth declaration form',
     id: 'v2.event.birth.action.declare.form.label',
     description: 'This is what this form is referred as in the system'
   },
