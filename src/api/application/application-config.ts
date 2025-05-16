@@ -43,7 +43,7 @@ export const applicationConfig = {
   FEATURES: {
     DEATH_REGISTRATION: true,
     MARRIAGE_REGISTRATION: true,
-    EXTERNAL_VALIDATION_WORKQUEUE: false,
+    EXTERNAL_VALIDATION_WORKQUEUE: true,
     PRINT_DECLARATION: true,
     DATE_OF_BIRTH_UNKNOWN: true
   },
