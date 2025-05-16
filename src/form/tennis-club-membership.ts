@@ -76,26 +76,14 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
       },
       fields: [
         {
-          id: 'applicant.firstname',
-          type: 'TEXT',
-          configuration: { maxLength: MAX_NAME_LENGTH },
-          required: true,
+          id: 'applicant.name',
+          type: 'NAME',
           label: {
-            defaultMessage: "Applicant's first name",
-            description: 'This is the label for the field',
-            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.firstname.label'
-          }
-        },
-        {
-          id: 'applicant.surname',
-          type: 'TEXT',
-          configuration: { maxLength: MAX_NAME_LENGTH },
-          required: true,
-          label: {
-            defaultMessage: "Applicant's surname",
-            description: 'This is the label for the field',
-            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.surname.label'
-          }
+            defaultMessage: 'Name of applicant',
+            description: 'This is the title for the name field',
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.name.label'
+          },
+          required: true
         },
         {
           id: 'applicant.dob',
@@ -715,6 +703,7 @@ const statusOptions = [
 export const tennisClubMembershipEvent = defineConfig({
   id: Event.TENNIS_CLUB_MEMBERSHIP,
   declaration: TENNIS_CLUB_DECLARATION_FORM,
+  dateOfEvent: field('applicant.dob').getId(),
   label: {
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this event is referred as in the system',
@@ -1096,8 +1085,7 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'v2.event.tennis-club-membership.search'
       },
       fields: [
-        field('applicant.firstname').exact(),
-        field('applicant.surname').fuzzy(),
+        field('applicant.name').exact(),
         event('trackingId'),
         event('status', statusOptions)
       ]
