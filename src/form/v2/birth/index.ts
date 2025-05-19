@@ -16,7 +16,6 @@ import {
   field
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
-
 import {
   BIRTH_DECLARATION_FORM,
   BIRTH_DECLARATION_REVIEW
