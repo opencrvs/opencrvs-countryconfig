@@ -552,7 +552,7 @@ test.describe.serial(' Correct record - 15', () => {
     ).toBeVisible()
   })
   test('15.9 Validate record corrected modal', async () => {
-    const correctedRow = page.locator('#listTable-task-history #row_6')
+    const correctedRow = page.locator('#listTable-task-history #row_7')
     await correctedRow.getByText('Record corrected').click()
 
     const time = await correctedRow.locator('span').nth(1).innerText()
