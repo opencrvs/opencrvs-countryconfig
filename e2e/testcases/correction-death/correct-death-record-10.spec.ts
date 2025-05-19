@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
   assignRecord,
+  auditRecord,
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
@@ -75,10 +76,12 @@ test.describe('10. Correct record - 10', () => {
       )
       await createPIN(page)
 
-      await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
-      await page.getByPlaceholder('Search for a tracking ID').press('Enter')
-      await page.locator('#ListItemAction-0-icon').click()
-      await page.locator('#name_0').click()
+      await auditRecord({
+        page,
+        name: formatName(declaration.deceased.name[0]),
+        trackingId
+      })
+      await assignRecord(page)
     })
 
     test('10.1.1 Validate record audit page', async ({ page }) => {
@@ -207,10 +210,12 @@ test.describe('10. Correct record - 10', () => {
       )
       await createPIN(page)
 
-      await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
-      await page.getByPlaceholder('Search for a tracking ID').press('Enter')
-      await page.locator('#ListItemAction-0-icon').click()
-      await page.locator('#name_0').click()
+      await auditRecord({
+        page,
+        name: formatName(declaration.deceased.name[0]),
+        trackingId
+      })
+      await assignRecord(page)
 
       await page.getByRole('button', { name: 'Action' }).first().click()
       await getAction(page, 'Correct record').click()
@@ -927,12 +932,12 @@ test.describe('10. Correct record - 10', () => {
       })
 
       test('10.2.6.1 Record audit by local registrar', async () => {
-        await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
-        await page.getByPlaceholder('Search for a tracking ID').press('Enter')
-        await page.locator('#ListItemAction-0-icon').click()
-        await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
-        await page.locator('#name_0').click()
+        await auditRecord({
+          page,
+          name: formatName(declaration.deceased.name[0]),
+          trackingId
+        })
+        await assignRecord(page)
       })
 
       test('10.2.6.2 Correction review', async () => {
@@ -1065,7 +1070,18 @@ test.describe('10. Correct record - 10', () => {
         ).toBeVisible()
       })
       test('10.2.6.4 Validate history in record audit', async () => {
-        await page.getByText(formatName(updatedDeceasedDetails)).click()
+        await auditRecord({
+          page,
+          name: formatName(updatedDeceasedDetails),
+          trackingId
+        })
+        /*
+         * Verify we're on the right record page
+         */
+        await expect(
+          page.getByText(formatName(updatedDeceasedDetails))
+        ).toBeVisible()
+
         await assignRecord(page)
         /*
          * Expected result: should show in task history

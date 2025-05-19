@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
   assignRecord,
+  auditRecord,
   createPIN,
   expectAddress,
   expectOutboxToBeEmpty,
@@ -113,10 +114,12 @@ test.describe.serial(' Correct record - 5', () => {
     )
     await createPIN(page)
 
-    await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
-    await page.getByPlaceholder('Search for a tracking ID').press('Enter')
-    await page.locator('#ListItemAction-0-icon').click()
-    await page.locator('#name_0').click()
+    await auditRecord({
+      page,
+      name: formatName(declaration.child.name[0]),
+      trackingId
+    })
+    await assignRecord(page)
 
     await page.getByRole('button', { name: 'Action' }).first().click()
     await getAction(page, 'Print certified copy').click()
@@ -663,8 +666,11 @@ test.describe.serial(' Correct record - 5', () => {
     await expect(page.getByText(formatName(updatedChildDetails))).toBeVisible()
   })
   test('5.8 Validate history in record audit', async () => {
-    await page.getByText(formatName(updatedChildDetails)).click()
-
+    await auditRecord({
+      page,
+      name: formatName(updatedChildDetails),
+      trackingId
+    })
     await assignRecord(page)
 
     /*

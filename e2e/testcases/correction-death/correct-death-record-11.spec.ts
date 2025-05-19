@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
   assignRecord,
+  auditRecord,
   createPIN,
   expectOutboxToBeEmpty,
   formatDateTo_ddMMMMyyyy,
@@ -75,10 +76,12 @@ test.describe.serial(' Correct record - 11', () => {
     )
     await createPIN(page)
 
-    await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
-    await page.getByPlaceholder('Search for a tracking ID').press('Enter')
-    await page.locator('#ListItemAction-0-icon').click()
-    await page.locator('#name_0').click()
+    await auditRecord({
+      page,
+      name: formatName(declaration.deceased.name[0]),
+      trackingId
+    })
+    await assignRecord(page)
 
     await page.getByRole('button', { name: 'Action' }).first().click()
     await getAction(page, 'Print certified copy').click()
@@ -465,12 +468,12 @@ test.describe.serial(' Correct record - 11', () => {
     })
 
     test('11.8.1 Record audit by local registrar', async () => {
-      await page.getByPlaceholder('Search for a tracking ID').fill(trackingId)
-      await page.getByPlaceholder('Search for a tracking ID').press('Enter')
-      await page.locator('#ListItemAction-0-icon').click()
-      await page.getByRole('button', { name: 'Assign', exact: true }).click()
-
-      await page.locator('#name_0').click()
+      await auditRecord({
+        page,
+        name: formatName(declaration.deceased.name[0]),
+        trackingId
+      })
+      await assignRecord(page)
     })
 
     test('11.8.2 Correction review', async () => {
@@ -568,13 +571,20 @@ test.describe.serial(' Correct record - 11', () => {
     })
 
     test('11.8.4 Validate history in record audit', async () => {
-      await page
-        .getByText(formatName(declaration.deceased.name[0]))
-        .first()
-        .click()
+      await auditRecord({
+        page,
+        name: formatName(declaration.deceased.name[0]),
+        trackingId
+      })
+
+      /*
+       * Verify we're on the right record page
+       */
+      await expect(
+        page.getByText(formatName(declaration.deceased.name[0]))
+      ).toBeVisible()
 
       await assignRecord(page)
-
       /*
        * Expected result: should show in task history
        * - Correction requested
