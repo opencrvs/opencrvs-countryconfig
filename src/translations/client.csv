@@ -1879,7 +1879,7 @@ recordAudit.noDateOfBirth,Label for date of birth not available,No date of birth
 recordAudit.noDateOfDeath,Label for date of death not available,No date of death,Pas de date de décès
 recordAudit.noDateOfMarriage,Label for date of marriage not available,No date of marriage,Pas de date de mariage
 recordAudit.noName,Label for name not available,No name provided,Aucun nom n'a été fourni
-recordAudit.noPlaceOfBirth,Label for place of birth not available,No place of birth,Pas de lieu de naissance
+recordAudit.noPlaceOfBirth,Label for place of birth not available,No location of birth,Pas de lieu de naissance
 recordAudit.noPlaceOfDeath,Label for place of death not availale,No place of death,Pas de lieu de décès
 recordAudit.noPlaceOfMarriage,Label for place of marriage not availale,No place of marriage,Pas de lieu de mariage
 recordAudit.noStatus,Label for status not available,No status,Pas de statut
