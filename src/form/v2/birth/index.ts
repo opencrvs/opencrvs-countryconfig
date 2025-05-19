@@ -65,9 +65,9 @@ export const birthEvent = defineConfig({
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
         label: {
-          defaultMessage: 'Location of birth',
-          description: 'Label for location of birth',
-          id: 'v2.event.birth.action.declare.form.section.child.field.birthLocation.label'
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -82,6 +82,11 @@ export const birthEvent = defineConfig({
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+        },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
@@ -102,6 +107,11 @@ export const birthEvent = defineConfig({
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+        },
         conditionals: [
           {
             type: ConditionalType.SHOW,
@@ -118,6 +128,11 @@ export const birthEvent = defineConfig({
           defaultMessage: 'No place of birth',
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
+        },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
         },
         conditionals: [
           {
