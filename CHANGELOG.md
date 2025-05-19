@@ -23,7 +23,16 @@
 
 - Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
 
-## 1.7.1 Release candidate
+
+## 1.7.2 Release candidate
+
+### Bugfixes
+
+- InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
+```
+partial write: max-values-per-tag limit exceeded (100000/100000)
+```
+https://github.com/opencrvs/opencrvs-countryconfig/pull/393
 
 ### New features
 
@@ -37,8 +46,18 @@
     ...otherProp
   }
   ```
+- **Control over allowed user creation/update**: user.create\[role=role_a|role_b\] & user.update\[role=role_a|role_b\] can be used to control users of which role can be created/updated by users of a certain role.
 
-## 1.7.0 Release candidate
+### Breaking changes
+- Roles with the following scopes: `USER_CREATE, USER_CREATE_MY_JURISDICTION` & `USER_UPDATE, USER_UPDATE_MY_JURISDICTION` need to have the `user.create[role=role_a|role_b]` & `user.update[role=role_a|role_b]` scopes added to them (replace role_a|role_b with the role IDs of your selection) in order to work as expected. If you are using custom roles, please make sure to update them accordingly.
+
+## 1.7.1
+
+### Bug fixes
+- "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
+- Use yarn cache in test workflow & read the version to use from .nvmrc
+
+## 1.7.0
 
 ### Migration notes
 
@@ -185,6 +204,20 @@ validations.isAgeInYearsBetween,The error message that appears when age for the 
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
 
+## 1.6.4
+
+### Bug fixes
+
+- Query the location tree directly from the config service to improve performance for large datasets
+
+## 1.6.3
+
+### Breaking changes
+
+- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
+## 1.6.2
+
 ## 1.6.1
 
 ### Bug fixes
@@ -278,13 +311,13 @@ INSERT CSV ROWS IN ENGLISH ONLY
 - Update template transformer for fields `informantType` and `otherInformantType` that fixes the bug of unavailability of these template fields [#5952](https://github.com/opencrvs/opencrvs-countryconfig/pull/5952)
 - Fixed missing InitialValue property to set initial values based on an expression
 
-## 1.5.2 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.5.1...v1.5.2)
+## [1.5.2](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.5.1...v1.5.2)
 
 ## Bug fixes
 
 - Broken email alerts from low disk space are now fixed [293](https://github.com/opencrvs/opencrvs-countryconfig/pull/293)
 
-## 1.5.0 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.1...v1.5.0)
+## [1.5.0](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.1...v1.5.0)
 
 ### Breaking changes
 
@@ -431,37 +464,6 @@ verifyCertificate.certifiedAt,Label for date of certification,Date of certificat
 
 ## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
-### Other changes
-
-- Upgrade Node.js to 18
-- Remove dependency OpenHIM. The OpenHIM database is kept for backwards compatibility reasons and will be removed in v1.6
-- Change auth URLs to access them via gateway
-- Add hearth URL to search service
-- Include an endpoint for serving individual certificates in development mode
-- Include compositionId in confirm registration payload
-- Remove logrocket refrences
-- Enable gzip compression in client & login
-- Make SENTRY_DSN variable optional
-- Use docker compose v2 in github workflows
-- Mass email from national system admin
-- Add SMTP environment variables in qa compose file
-- Use image tag instead of patterns in certificate SVGs
-- Generate default address according to logged-in user's location
-- Remove authentication from dashboard queries route
-- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
-- In the certificate, the 'Place of Certification' now accurately reflects the correct location.
-- Added french translation of informant for print certificate flow, issue certificate flow & correction flow
-- Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
-- Add query mapper for International Postal Code field
-- Add support for image compression configuration
-- Provide env variables for metabase admin credentials
-- Improved formatting of informant name for inProgress declaration emails
-- Rename `farajaland-map.geojson` to `map.geojson` to not tie implementations into example country naming
-- Remove `splitView` option from DOCUMENT_UPLOADER_WITH_OPTION field [#114](https://github.com/opencrvs/opencrvs-countryconfig/pull/114)
-- Enable authentication for certificates endpoint [#188](https://github.com/opencrvs/opencrvs-countryconfig/pull/188)
-
-## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
-
 - Improved logging for emails being sent
 - Updated default Metabase init file so that it's compatible with the current Metabase version
 - Deployment: Verifies Kibana is ready before setting up alert configuration
@@ -523,12 +525,9 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 
 ## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
 
-### Breaking changes
-
 ### New features
 
 - #### Greater customizability of location data in certificates
-
   The various admin level handlebars e.g. **statePlaceofbirth**,
   **districtPrimaryMother** only contained the name of that location which was
   not able to take advantage of all the information OpenCRVS had available
