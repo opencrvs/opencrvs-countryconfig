@@ -26,7 +26,7 @@ https://github.com/opencrvs/opencrvs-countryconfig/pull/393
 - **Control over allowed user creation/update**: user.create\[role=role_a|role_b\] & user.update\[role=role_a|role_b\] can be used to control users of which role can be created/updated by users of a certain role.
 
 ### Breaking changes
-- Roles with the following scopes: `USER_CREATE, USER_CREATE_MY_JURISDICTION` & `USER_UPDATE, USER_UPDATE_MY_JURISDICTION` need to have the `user.create\[role=role_a|role_b\]` & `user.update\[role=role_a|role_b\]` scopes added to them (replace role_a|role_b with the role IDs of your selection) in order to work as expected. If you are using custom roles, please make sure to update them accordingly.
+- Roles with the following scopes: `USER_CREATE, USER_CREATE_MY_JURISDICTION` & `USER_UPDATE, USER_UPDATE_MY_JURISDICTION` need to have the `user.create[role=role_a|role_b]` & `user.update[role=role_a|role_b]` scopes added to them (replace role_a|role_b with the role IDs of your selection) in order to work as expected. If you are using custom roles, please make sure to update them accordingly.
 
 ## 1.7.1
 
