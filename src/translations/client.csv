@@ -2892,6 +2892,7 @@ v2.view.record,Label for view record,View record,Afficher l'enregistrement
 v2.wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 v2.wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 v2.wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé
+v2.errors.notAssigned,User not assigned error toast message,"You've been unassigned from the event","Vous avez été désassigné de l'événement"
 validate.complete.declaration.action.description,,The informant will receive an with a registration number that they can use to collect the certificate.,"En envoyant pour approbation, vous confirmez que la déclaration est prête à être approuvée."
 validate.complete.declaration.action.title,,Declaration complete,Envoyer pour approbation ou rejeter ?
 validate.declaration.action.modal.description,,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
