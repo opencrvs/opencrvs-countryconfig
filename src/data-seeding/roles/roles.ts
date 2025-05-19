@@ -24,10 +24,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
-      SCOPES.WORKQUEUE_ASSIGNED_TO_YOU,
-      SCOPES.WORKQUEUE_RECENT,
-      SCOPES.WORKQUEUE_REQUIRES_UPDATES,
-      SCOPES.WORKQUEUE_SENT_FOR_REVIEW
+      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
   {
@@ -129,15 +126,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
-      SCOPES.WORKQUEUE_ASSIGNED_TO_YOU,
-      SCOPES.WORKQUEUE_RECENT,
-      SCOPES.WORKQUEUE_REQUIRES_COMPLETION,
-      SCOPES.WORKQUEUE_REQUIRES_UPDATES,
-      SCOPES.WORKQUEUE_IN_REVIEW,
-      SCOPES.WORKQUEUE_SENT_FOR_APPROVAL,
-      SCOPES.WORKQUEUE_IN_EXTERNAL_VALIDATION,
-      SCOPES.WORKQUEUE_READY_TO_PRINT,
-      SCOPES.WORKQUEUE_READY_TO_ISSUE
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
   {
@@ -172,14 +161,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
-      SCOPES.WORKQUEUE_ASSIGNED_TO_YOU,
-      SCOPES.WORKQUEUE_RECENT,
-      SCOPES.WORKQUEUE_REQUIRES_COMPLETION,
-      SCOPES.WORKQUEUE_REQUIRES_UPDATES,
-      SCOPES.WORKQUEUE_IN_REVIEW_ALL,
-      SCOPES.WORKQUEUE_IN_EXTERNAL_VALIDATION,
-      SCOPES.WORKQUEUE_READY_TO_PRINT,
-      SCOPES.WORKQUEUE_READY_TO_ISSUE
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
   {
@@ -267,14 +249,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
-      SCOPES.WORKQUEUE_ASSIGNED_TO_YOU,
-      SCOPES.WORKQUEUE_RECENT,
-      SCOPES.WORKQUEUE_REQUIRES_COMPLETION,
-      SCOPES.WORKQUEUE_REQUIRES_UPDATES,
-      SCOPES.WORKQUEUE_IN_REVIEW_ALL,
-      SCOPES.WORKQUEUE_IN_EXTERNAL_VALIDATION,
-      SCOPES.WORKQUEUE_READY_TO_PRINT,
-      SCOPES.WORKQUEUE_READY_TO_ISSUE
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   }
 ]
