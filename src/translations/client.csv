@@ -288,7 +288,7 @@ constants.gender,Gender label,Gender,Sexe
 constants.healthDivision,The description for HEALTH_DIVISION type,Health Division,Division de la santé
 constants.healthcareWorker,The description for Healthcare Worker type,Healthcare Worker,Travailleur de la santé
 constants.history,History heading,History,Histoire
-constants.humanName,Formatted full name, {lastName} {middleName} {firstName},{lastName} {middleName} {firstName}
+constants.humanName,Formatted full name,{lastName} {middleName} {firstName},{lastName} {middleName} {firstName}
 constants.id,ID Label,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?
 constants.inReview.status,A label for In Review,In review,En cours de révision
@@ -793,7 +793,7 @@ error.page.load.failed,Error message when page failed to load,"Sorry, we couldn'
 error.passwordSubmissionError,Error message when password verification fails,Sorry that password did not work,Désolé que le mot de passe n'ait pas fonctionné
 error.required.password,New password required,New password is not valid,Le nouveau mot de passe n'est pas valide
 error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
-error.searchParamCountError,Error message when the search parameters are less than two,You must select a minimum of 2 search criteria,Vous devez sélectionner au moins 2 critères de recherche
+error.searchParamCountError,Error message when the search parameters are less than two,You must select a minimum of 2 search criteria,Vous devez sélectionner un minimum de 2 critères de recherche
 error.somethingWentWrong,Error description,Something went wrong.,Quelque chose s'est mal passé.
 error.title,Error title,Oops!,Oups !
 error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !
@@ -1094,6 +1094,7 @@ form.field.label.maritalStatusWidowed,,Widowed,Veuf(ve)
 form.field.label.marriedLastName,,Married last name (if different),Marié Nom de famille (si différent)
 form.field.label.medicallyCertified,,Medically Certified Cause of Death,Cause officielle du décès
 form.field.label.methodOfCauseOfDeath,,Method of Cause of Death,Méthode de détermination de la cause du décès
+form.field.label.middleName,,Middle name,Deuxième prénom
 form.field.label.monogamy,,Monogamous,Monogame
 form.field.label.mother.nationality,,Nationality,Nationalité
 form.field.label.mother.nationalityBangladesh,,Bangladesh,Bangladesh
