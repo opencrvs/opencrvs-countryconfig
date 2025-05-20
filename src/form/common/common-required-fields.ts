@@ -73,7 +73,7 @@ export const getMiddleNameField = (
   certificateHandlebar: string
 ) =>
   ({
-    name: 'middleNameEng', // A field with this name MUST exist
+    name: 'middleNameEng',
     previewGroup,
     type: 'TEXT',
     label: formMessageDescriptors.middleName,
