@@ -14,6 +14,7 @@ import { defineWorkqueue, event, serialize } from '@opencrvs/toolkit/events'
 export const Workqueues = defineWorkqueue([
   {
     slug: 'in-progress',
+    icon: 'Draft',
     name: {
       id: 'workqueues.inProgress.title',
       defaultMessage: 'In progress',
@@ -31,6 +32,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'correction-requested',
+    icon: 'FileSearch',
     name: {
       id: 'workqueues.correctionRequested.title',
       defaultMessage: 'Correction requested',
@@ -48,6 +50,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'waiting-for-attestation',
+    icon: 'FileSearch',
     name: {
       id: 'workqueues.waitingForAttestation.title',
       defaultMessage: 'Waiting for attestation',
@@ -80,6 +83,7 @@ export const Workqueues = defineWorkqueue([
 
   {
     slug: 'assigned-to-you',
+    icon: 'PushPin',
     name: {
       id: 'workqueues.assignedToYou.title',
       defaultMessage: 'Assigned to you',
@@ -98,6 +102,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'recent',
+    icon: 'Timer',
     name: {
       id: 'workqueues.recent.title',
       defaultMessage: 'Recent',
@@ -115,6 +120,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'notifications',
+    icon: 'File',
     name: {
       id: 'workqueues.notifications.title',
       defaultMessage: 'Notifications',
@@ -132,6 +138,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'sent-for-review',
+    icon: 'FileSearch',
     name: {
       id: 'workqueues.sentForReview.title',
       defaultMessage: 'Sent for review',
@@ -149,6 +156,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'in-review',
+    icon: 'FileSearch',
     name: {
       id: 'workqueues.inReview.title',
       defaultMessage: 'Ready for review',
@@ -166,6 +174,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'in-review-all',
+    icon: 'FileSearch',
     name: {
       id: 'workqueues.inReviewAll.title',
       defaultMessage: 'Ready for review',
@@ -183,6 +192,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'requires-updates',
+    icon: 'FileMinus',
     name: {
       id: 'workqueues.requiresUpdates.title',
       defaultMessage: 'Requires updates',
@@ -200,6 +210,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'sent-for-approval',
+    icon: 'FileText',
     name: {
       id: 'workqueues.sentForApproval.title',
       defaultMessage: 'Sent for approval',
@@ -217,6 +228,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'in-external-validation',
+    icon: 'FileText',
     name: {
       id: 'workqueues.inExternalValidation.title',
       defaultMessage: 'In external validation',
@@ -234,6 +246,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'ready-to-print',
+    icon: 'Printer',
     name: {
       id: 'workqueues.readyToPrint.title',
       defaultMessage: 'Ready to print',
@@ -251,6 +264,7 @@ export const Workqueues = defineWorkqueue([
   },
   {
     slug: 'ready-to-issue',
+    icon: 'Handshake',
     name: {
       id: 'workqueues.readyToIssue.title',
       defaultMessage: 'Ready to issue',
