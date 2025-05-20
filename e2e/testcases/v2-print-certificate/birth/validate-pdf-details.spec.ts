@@ -21,7 +21,7 @@ test.describe
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
 
-    // Create a declaration
+    // Create a declaration with a health facility place of birth
     const res = await createDeclaration(
       token,
       undefined,
