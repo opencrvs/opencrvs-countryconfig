@@ -9,7 +9,7 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineWorkqueue, event } from '@opencrvs/toolkit/events'
+import { defineWorkqueue, event, serialize } from '@opencrvs/toolkit/events'
 
 export const Workqueues = defineWorkqueue([
   {
@@ -20,7 +20,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of in progress workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'IN_PROGRESS' }
+      type: 'and'
     },
     actions: [
       {
@@ -37,7 +37,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of correction requested workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'DECLARED' }
+      type: 'and'
     },
     actions: [
       {
@@ -74,7 +74,7 @@ export const Workqueues = defineWorkqueue([
     ],
     actions: [],
     query: {
-      status: { type: 'exact', term: 'WAITING_FOR_ATTESTATION' }
+      type: 'and'
     }
   },
 
@@ -86,7 +86,8 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of assigned to you workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'ASSIGNED_TO_YOU' }
+      type: 'and',
+      assignedTo: { type: 'exact', term: serialize.user('id') }
     },
     actions: [
       {
@@ -103,7 +104,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of recent workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'RECENT' }
+      type: 'and'
     },
     actions: [
       {
@@ -120,7 +121,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of notifications workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'REQUIRES_COMPLETION' }
+      type: 'and'
     },
     actions: [
       {
@@ -137,7 +138,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of sent for review workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'SENT_FOR_REVIEW' }
+      type: 'and'
     },
     actions: [
       {
@@ -154,7 +155,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of ready for review workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'IN_REVIEW' }
+      type: 'and'
     },
     actions: [
       {
@@ -171,7 +172,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of ready for review (all) workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'IN_REVIEW_ALL' }
+      type: 'and'
     },
     actions: [
       {
@@ -188,7 +189,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of requires updates workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'REQUIRES_UPDATES' }
+      type: 'and'
     },
     actions: [
       {
@@ -205,7 +206,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of sent for approval workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'SENT_FOR_APPROVAL' }
+      type: 'and'
     },
     actions: [
       {
@@ -222,7 +223,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of in external validation workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'IN_EXTERNAL_VALIDATION' }
+      type: 'and'
     },
     actions: [
       {
@@ -239,7 +240,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of ready to print workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'READY_TO_PRINT' }
+      type: 'and'
     },
     actions: [
       {
@@ -256,7 +257,7 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of ready to issue workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'READY_TO_ISSUE' }
+      type: 'and'
     },
     actions: [
       {
