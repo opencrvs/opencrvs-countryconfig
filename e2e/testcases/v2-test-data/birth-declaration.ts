@@ -85,6 +85,10 @@ export async function getDeclaration({
   const province = getLocationIdByName(locations, 'Central')
   const district = getLocationIdByName(locations, 'Ibombo')
 
+  if (!province || !district) {
+    throw new Error('Province or district not found')
+  }
+
   const mockDeclaration = {
     'father.detailsNotAvailable': true,
     'father.reason': 'Father is missing.',
