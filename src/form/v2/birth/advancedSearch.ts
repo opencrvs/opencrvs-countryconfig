@@ -103,7 +103,7 @@ const timePeriodOptions = [
       description: 'Label for option of time period select: last 7 days',
       id: 'form.section.label.timePeriodLast7Days'
     },
-    value: `${format(new Date(), 'yyyy-MM-dd')},${format(subDays(new Date(), 7), 'yyyy-MM-dd')}`
+    value: `${format(subDays(new Date(), 7), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
   },
   {
     label: {
@@ -111,7 +111,7 @@ const timePeriodOptions = [
       description: 'Label for option of time period select: last 30 days',
       id: 'form.section.label.timePeriodLast30Days'
     },
-    value: `${format(new Date(), 'yyyy-MM-dd')},${format(subDays(new Date(), 30), 'yyyy-MM-dd')}`
+    value: `${format(subDays(new Date(), 30), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
   },
   {
     label: {
@@ -119,7 +119,7 @@ const timePeriodOptions = [
       description: 'Label for option of time period select: last 90 days',
       id: 'form.section.label.timePeriodLast90Days'
     },
-    value: `${format(new Date(), 'yyyy-MM-dd')},${format(subDays(new Date(), 90), 'yyyy-MM-dd')}`
+    value: `${format(subDays(new Date(), 90), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
   },
   {
     label: {
@@ -127,7 +127,7 @@ const timePeriodOptions = [
       description: 'Label for option of time period select: last year',
       id: 'form.section.label.timePeriodLastYear'
     },
-    value: `${format(new Date(), 'yyyy-MM-dd')},${format(subDays(new Date(), 365), 'yyyy-MM-dd')}`
+    value: `${format(subDays(new Date(), 365), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
   }
 ]
 export const advancedSearchBirth = [
