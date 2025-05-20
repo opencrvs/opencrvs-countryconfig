@@ -1094,6 +1094,7 @@ form.field.label.maritalStatusWidowed,,Widowed,Veuf(ve)
 form.field.label.marriedLastName,,Married last name (if different),Marié Nom de famille (si différent)
 form.field.label.medicallyCertified,,Medically Certified Cause of Death,Cause officielle du décès
 form.field.label.methodOfCauseOfDeath,,Method of Cause of Death,Méthode de détermination de la cause du décès
+form.field.label.middleName,,Middle name,Deuxième prénom
 form.field.label.monogamy,,Monogamous,Monogame
 form.field.label.mother.nationality,,Nationality,Nationalité
 form.field.label.mother.nationalityBangladesh,,Bangladesh,Bangladesh
