@@ -195,11 +195,8 @@
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
       {{#ifCond ($lookup $declaration "child.birthLocation") '!==' undefined }}
-        {{#each ($splitFirstFromString ($lookup $declaration "child.birthLocation") ',')}}
-          {{#if @first}}<tspan x="289.95" y="347.054">{{this}}</tspan>
-          {{else}}<tspan x="289.95" y="362.054">{{this}}</tspan>
-          {{/if}}
-        {{/each}}
+        <tspan x="289.95" y="347.054">{{$lookup $declaration 'asObjects.child.birthLocation.FACILITY'}}&#10;</tspan>
+        <tspan x="289.95" y="362.054">{{$lookup $declaration 'asObjects.child.birthLocation.DISTRICT'}}, {{$lookup $declaration 'asObjects.child.birthLocation.STATE'}}, {{$lookup $declaration 'asObjects.child.birthLocation.COUNTRY'}}</tspan>
       {{else}}
         {{#ifCond ($lookup $declaration 'child.address.other') '!==' undefined }}
           <tspan x="289.95" y="347.054">{{$or ($lookup $declaration 'child.address.other.district') ($lookup $declaration 'child.address.other.district2')}}&#10;</tspan>
