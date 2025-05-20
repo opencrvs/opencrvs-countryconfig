@@ -80,7 +80,7 @@
     "@hapi/h2o2": "^9.1.0",
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
-    "@opencrvs/toolkit": "1.8.0-rc.f9fb039",
+    "@opencrvs/toolkit": "1.8.0-rc.d0a30c5",
     "@opencrvs/mosip": "^1.8.0-beta.8.dev",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
@@ -129,9 +129,9 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^3.8.0",
     "typescript": "^5.1.6",
+    "uuid": "^11.1.0",
     "whatwg-fetch": "^3.0.0",
     "yargs": "^17.7.2",
-    "uuid": "^11.1.0",
     "zod": "^3.24.1"
   },
   "lint-staged": {
