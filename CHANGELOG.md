@@ -1,18 +1,21 @@
 # Changelog
 
-## 1.8.0 Release candidate
+## 1.9.0
+
+### Improvements
+
+- **Upgrade node version to 22**
+
+  This version enforces environment to have Node 22 installed (supported until 30 April 2027) and removes support for Node 18 for better performance and using [new features](https://github.com/nodejs/node/releases/tag/v22.0.0) offered by NodeJS
+
+  - Use nvm to upgrade your local development environment to use node version `22.x.x.`
+
+## 1.8.0
 
 ### Improvements
 
 - **Upgrade ELK stack** to a AGPLv3 licensed version 8.16.4 [#8749](https://github.com/opencrvs/opencrvs-core/issues/8749)
 - **Github runners upgraded** to latest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045) and apply sticky node version from .nvmrc [#423](https://github.com/opencrvs/opencrvs-countryconfig/pull/423)
-
-### Bug fixes
-
-- Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
-
-### Improvements
-
 - **Introduced `single_node` variable in inventory files** to define whether single-node clusters are allowed, set to false in production to enforce use of at least a two-node cluster. [#6918](https://github.com/opencrvs/opencrvs-core/issues/6918)
 
 ### New features
@@ -22,16 +25,18 @@
 ### Bug Fixes
 
 - Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
-
+- Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
 ## 1.7.2 Release candidate
 
 ### Bugfixes
 
 - InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
+
 ```
 partial write: max-values-per-tag limit exceeded (100000/100000)
 ```
+
 https://github.com/opencrvs/opencrvs-countryconfig/pull/393
 
 ### New features
@@ -49,11 +54,13 @@ https://github.com/opencrvs/opencrvs-countryconfig/pull/393
 - **Control over allowed user creation/update**: user.create\[role=role_a|role_b\] & user.update\[role=role_a|role_b\] can be used to control users of which role can be created/updated by users of a certain role.
 
 ### Breaking changes
+
 - Roles with the following scopes: `USER_CREATE, USER_CREATE_MY_JURISDICTION` & `USER_UPDATE, USER_UPDATE_MY_JURISDICTION` need to have the `user.create[role=role_a|role_b]` & `user.update[role=role_a|role_b]` scopes added to them (replace role_a|role_b with the role IDs of your selection) in order to work as expected. If you are using custom roles, please make sure to update them accordingly.
 
 ## 1.7.1
 
 ### Bug fixes
+
 - "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
 - Use yarn cache in test workflow & read the version to use from .nvmrc
 
