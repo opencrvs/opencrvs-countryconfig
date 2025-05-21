@@ -32,14 +32,14 @@ on:
         type: choice
         description: Environment to deploy to
         required: true
-        default: 'staging'
+        default: 'development'
         options:
-          - staging
-          - qa
           - development
+          - qa
           - e2e
+          - staging
       core-image-tag:
-        description: Core DockerHub image tag
+        description: Core image tag
         required: true
         default: 'v1.7.0'
       countryconfig-image-tag:

@@ -12,7 +12,7 @@ on:
           - production
           - staging
       core-image-tag:
-        description: Core DockerHub image tag
+        description: Core image tag
         required: true
         default: 'v1.7.0'
       countryconfig-image-tag:
