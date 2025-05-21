@@ -23,4 +23,4 @@
     (single_node | default(false)) == false and (
       'docker-workers' not in groups or
       groups['docker-workers'] | length == 0
-    ) 
+    )
