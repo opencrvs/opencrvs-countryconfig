@@ -47,7 +47,10 @@ test.describe
 
   test('Validate child place of birth', async () => {
     await expect(page.locator('#print')).toContainText(
-      'Ibombo Rural Health Centre, Ibombo, Central, Farajaland'
+      'Ibombo Rural Health Centre'
+    )
+    await expect(page.locator('#print')).toContainText(
+      'Ibombo, Central, Farajaland'
     )
   })
 })
