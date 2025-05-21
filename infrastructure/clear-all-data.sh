@@ -114,7 +114,6 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc:RELEASE.2023-09
 #-----------------------------
 docker service scale opencrvs_dashboards=0
 docker service scale opencrvs_dashboards=1
-
 # Restart events service
 #-----------------------------
 docker service scale opencrvs_events=0
