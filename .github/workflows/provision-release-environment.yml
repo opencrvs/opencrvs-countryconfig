@@ -1,0 +1,61 @@
+name: Provision Release Environment
+run-name: Provision ${{ inputs.env_name }} release environment
+on:
+    workflow_dispatch:
+        inputs:
+            release_version:
+                description: "Release version to deploy in format vX.Y.Z"
+                required: true
+            core_image_tag:
+                description: Core image tag (if empty it will be set to release_version)
+                required: false
+                type: string
+            countryconfig_image_tag:
+                description: Country config image tag (if empty it will be set to release_version)
+                required: false
+                type: string
+    workflow_call:
+        inputs:
+            env_name:
+                type: string
+                description: Environment to deploy to
+                required: true
+            core_image_tag:
+                description: Core image tag (if empty it will be set to release_version)
+                required: false
+                type: string
+            country_config_version:
+                description: Country config image tag (if empty it will be set to release_version)
+                required: false
+                type: string
+
+jobs:
+  create-server:
+    uses: ./.github/workflows/dummy-create-server.yml
+    with:
+      env_name: ${{ inputs.env_name }}
+    secrets: inherit
+
+  provision-server:
+    needs: create-server
+    uses: ./.github/workflows/dummy-provision.yml
+    with:
+      environment: ${{ inputs.env_name }}
+    secrets: inherit
+
+  deploy:
+    needs: provision-server
+    uses: ./.github/workflows/dummy-deploy.yml
+    with:
+      environment: ${{ inputs.env_name }}
+      core-image-tag: ${{ inputs.core_image_tag }}
+      countryconfig-image-tag: ${{ inputs.countryconfig_image_tag }}
+    secrets: inherit
+
+  seed-data:
+    needs: deploy
+    uses: ./.github/workflows/dummy-seed.yml
+    with:
+      environment: ${{ inputs.env_name }}
+      core-image-tag: ${{ inputs.core_image_tag }}
+    secrets: inherit

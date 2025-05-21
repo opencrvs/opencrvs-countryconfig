@@ -1,0 +1,22 @@
+name: Create Hetzner Server
+run-name: Create server for ${{ inputs.env_name }} environment
+on:
+    workflow_dispatch:
+      inputs:
+        env_name:
+          description: "Short server name (3–5 letters)"
+          required: true
+    workflow_call:
+      inputs:
+        env_name:
+          type: string
+          description: Environment to deploy to
+          required: true
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+        - name: Test variables
+          run: |
+            echo "env_name: ${{ github.event.inputs.env_name }}"
+            echo "env_type: ${{ github.event.inputs.env_type }}"
