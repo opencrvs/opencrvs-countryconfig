@@ -8,33 +8,18 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import * as Hapi from '@hapi/hapi'
 import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
-import { EventDocument } from '@opencrvs/toolkit/events'
 import { birthEvent } from '@countryconfig/form/v2/birth'
+import * as Hapi from '@hapi/hapi'
 
 export function getCustomEventsHandler(
-  request: Hapi.Request,
+  _: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) {
   return h.response([tennisClubMembershipEvent, birthEvent]).code(200)
 }
 
-export function onRegisterHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
-  const event = EventDocument.parse(request.payload)
-  console.log(event)
-  return h.response().code(200)
-}
-
-export function onAnyActionHandler(
-  request: Hapi.Request,
-  h: Hapi.ResponseToolkit
-) {
-  console.log(request.params.event, request.params.action)
-  const event = EventDocument.parse(request.payload)
-  console.log(event)
+export function onAnyActionHandler(_: Hapi.Request, h: Hapi.ResponseToolkit) {
+  // This catch-all event route can receive either legacy FHIR events with `Content-Type: application/fhir+json` or new events with `Content-Type: application/json`
   return h.response().code(200)
 }

@@ -13,6 +13,7 @@ require('dotenv').config()
 
 import fetch from 'node-fetch'
 import path from 'path'
+import Handlebars from 'handlebars'
 import * as Hapi from '@hapi/hapi'
 import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
@@ -66,9 +67,12 @@ import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   getCustomEventsHandler,
-  onAnyActionHandler,
-  onRegisterHandler
+  onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
+import { readFileSync } from 'fs'
+import { ActionType } from '@opencrvs/toolkit/events'
+import { Event } from './form/types/types'
+import { onRegisterHandler } from './api/registration'
 
 export interface ITokenPayload {
   sub: string
@@ -302,6 +306,14 @@ export async function createServer() {
         process.env.NODE_ENV === 'production'
           ? '/client-config.prod.js'
           : '/client-config.js'
+
+      if (process.env.NODE_ENV !== 'production') {
+        const template = Handlebars.compile(
+          readFileSync(join(__dirname, file), 'utf8')
+        )
+        const result = template({ V2_EVENTS: process.env.V2_EVENTS || false })
+        return h.response(result).type('application/javascript')
+      }
 
       return h.file(join(__dirname, file))
     },
@@ -600,18 +612,8 @@ export async function createServer() {
     path: '/events',
     handler: getCustomEventsHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
       description: 'Serves custom events'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/register',
-    handler: onRegisterHandler,
-    options: {
-      tags: ['api', 'custom-event'],
-      description: 'Receives notifications on event actions'
     }
   })
 
@@ -620,7 +622,27 @@ export async function createServer() {
     path: '/events/{event}/actions/{action}',
     handler: onAnyActionHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: `/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
+    handler: onRegisterHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: `/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
+    handler: onRegisterHandler,
+    options: {
+      tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
     }
   })
