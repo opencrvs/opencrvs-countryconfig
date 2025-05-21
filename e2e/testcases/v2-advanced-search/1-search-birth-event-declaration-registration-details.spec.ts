@@ -122,7 +122,9 @@ test.describe
       // Check for each pill
       await expect(page.getByText('Event: V2 birth')).toBeVisible()
       await expect(
-        page.getByText('Date of registration: 2025-05-19')
+        page.getByText(
+          `Date of registration: ${thisYear}-${thisMonth}-${todayDate}`
+        )
       ).toBeVisible()
       await expect(
         page.getByText('Place of registration: Ibombo District Office')
