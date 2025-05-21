@@ -78,8 +78,10 @@ jobs:
     outputs:
       test_matrix: ${{ steps.list-tests.outputs.test_matrix }}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
 
       - name: List Test Directories
         id: list-tests
