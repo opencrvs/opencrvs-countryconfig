@@ -9,9 +9,9 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { defineWorkqueue, event, user } from '@opencrvs/toolkit/events'
+import { defineWorkqueues, event, user } from '@opencrvs/toolkit/events'
 
-export const Workqueues = defineWorkqueue([
+export const Workqueues = defineWorkqueues([
   {
     slug: 'in-progress',
     icon: 'Draft',
@@ -21,7 +21,8 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of in progress workqueue'
     },
     query: {
-      type: 'and'
+      type: 'and',
+      clauses: []
     },
     actions: [
       {
@@ -39,7 +40,8 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of correction requested workqueue'
     },
     query: {
-      type: 'and'
+      type: 'and',
+      clauses: []
     },
     actions: [
       {
@@ -77,7 +79,8 @@ export const Workqueues = defineWorkqueue([
     ],
     actions: [],
     query: {
-      type: 'and'
+      type: 'and',
+      clauses: []
     }
   },
 
@@ -91,7 +94,11 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      assignedTo: { type: 'exact', term: user('id') }
+      clauses: [
+        {
+          assignedTo: { type: 'exact', term: user('id') }
+        }
+      ]
     },
     actions: [
       {
@@ -110,12 +117,16 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      updatedBy: { type: 'exact', term: user('id') },
-      updatedAt: {
-        type: 'range',
-        gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
-        lte: new Date(Date.now()).toISOString()
-      }
+      clauses: [
+        {
+          updatedBy: { type: 'exact', term: user('id') },
+          updatedAt: {
+            type: 'range',
+            gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
+            lte: new Date(Date.now()).toISOString()
+          }
+        }
+      ]
     },
     actions: [
       {
@@ -134,7 +145,11 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      status: { type: 'exact', term: 'NOTIFIED' }
+      clauses: [
+        {
+          status: { type: 'exact', term: 'NOTIFIED' }
+        }
+      ]
     },
     actions: [
       {
@@ -153,8 +168,12 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      status: { type: 'anyOf', terms: ['DECLARED'] },
-      createdBy: { type: 'exact', term: user('id') }
+      clauses: [
+        {
+          status: { type: 'anyOf', terms: ['DECLARED'] },
+          createdBy: { type: 'exact', term: user('id') }
+        }
+      ]
     },
     actions: [
       {
@@ -173,8 +192,12 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      status: { type: 'anyOf', terms: ['DECLARED'] },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      clauses: [
+        {
+          status: { type: 'anyOf', terms: ['DECLARED'] },
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        }
+      ]
     },
     actions: [
       {
@@ -193,8 +216,12 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      status: { type: 'anyOf', terms: ['DECLARED'] },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      clauses: [
+        {
+          status: { type: 'anyOf', terms: ['DECLARED'] },
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        }
+      ]
     },
     actions: [
       {
@@ -213,7 +240,11 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      clauses: [
+        {
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        }
+      ]
     },
     actions: [
       {
@@ -232,7 +263,11 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      createdBy: { type: 'exact', term: user('id') }
+      clauses: [
+        {
+          createdBy: { type: 'exact', term: user('id') }
+        }
+      ]
     },
     actions: [
       {
@@ -251,7 +286,11 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      clauses: [
+        {
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        }
+      ]
     },
     actions: [
       {
@@ -270,7 +309,11 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      clauses: [
+        {
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        }
+      ]
     },
     actions: [
       {
@@ -289,7 +332,11 @@ export const Workqueues = defineWorkqueue([
     },
     query: {
       type: 'and',
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      clauses: [
+        {
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        }
+      ]
     },
     actions: [
       {
