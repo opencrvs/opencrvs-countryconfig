@@ -27,20 +27,16 @@
     mode: '0775'
     recurse: yes
 
-- name: Get the current logged in user
-  set_fact:
-    current_user: "{{ lookup('env', 'USER') }}"
-
-- name: Add current user to 'application' group
+- name: Add ansible user to 'application' group
   user:
-    name: '{{ current_user }}'
+    name: '{{ ansible_user }}'
     groups: application
     append: yes
 
 - name: Create secret logfile
   ansible.builtin.file:
     path: /var/log/rotate-secrets.log
-    owner: '{{ current_user }}'
+    owner: '{{ ansible_user }}'
     group: 'application'
     state: touch
     mode: 'u+rwX,g+rwX,o-rwx'
@@ -48,7 +44,7 @@
 - name: Create backup logfile
   ansible.builtin.file:
     path: /var/log/opencrvs-backup.log
-    owner: '{{ current_user }}'
+    owner: '{{ ansible_user }}'
     group: 'application'
     state: touch
     mode: 'u+rwX,g+rwX,o-rwx'
@@ -56,7 +52,7 @@
 - name: Create backup logfile for error
   ansible.builtin.file:
     path: /var/log/opencrvs-backup.error.log
-    owner: '{{ current_user }}'
+    owner: '{{ ansible_user }}'
     group: 'application'
     state: touch
     mode: 'u+rwX,g+rwX,o-rwx'
@@ -64,7 +60,7 @@
 - name: Create restore logfile
   ansible.builtin.file:
     path: /var/log/opencrvs-restore.log
-    owner: '{{ current_user }}'
+    owner: '{{ ansible_user }}'
     group: 'application'
     state: touch
     mode: 'u+rwX,g+rwX,o-rwx'
@@ -72,7 +68,7 @@
 - name: Create reboot logfile
   ansible.builtin.file:
     path: /var/log/cryptfs-reboot.log
-    owner: '{{ current_user }}'
+    owner: '{{ ansible_user }}'
     group: 'application'
     state: touch
     mode: 'u+rwX,g+rwX,o-rwx'
@@ -80,7 +76,7 @@
 - name: Create papertrail logfile
   ansible.builtin.file:
     path: /var/log/papertrail.log
-    owner: '{{ current_user }}'
+    owner: '{{ ansible_user }}'
     group: 'application'
     state: touch
     mode: 'u+rwX,g+rwX,o-rwx'

@@ -239,7 +239,7 @@
     - ansible_facts['distribution_version'] == '24.04'
 
 - name: Check SSH config syntax
-  command: sshd -T
+  command: sudo sshd -T
   register: check_result
 
 - name: Enable logging in to the provisioning user with specified SSH keys
