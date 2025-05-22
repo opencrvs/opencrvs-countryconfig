@@ -786,7 +786,7 @@ test.describe.serial(' Correct record - 4', () => {
   })
   test('4.9 Validate record corrected modal', async () => {
     const correctionRequestedRow = page.locator(
-      '#listTable-task-history #row_4'
+      '#listTable-task-history #row_5'
     )
     await correctionRequestedRow.getByText('Record corrected').click()
 
