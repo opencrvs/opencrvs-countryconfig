@@ -34,12 +34,52 @@ function getInformantDetails(informantRelation: InformantRelation) {
   }
 }
 
+async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
+  if (type === 'HEALTH_FACILITY') {
+    const locations = await getAllLocations('HEALTH_FACILITY')
+    const locationId = getLocationIdByName(
+      locations,
+      'Ibombo Rural Health Centre'
+    )
+
+    return {
+      'child.placeOfBirth': 'HEALTH_FACILITY',
+      'child.birthLocation': locationId
+    }
+  }
+
+  if (type === 'PRIVATE_HOME') {
+    const locations = await getAllLocations('ADMIN_STRUCTURE')
+    const province = getLocationIdByName(locations, 'Central')
+    const district = getLocationIdByName(locations, 'Ibombo')
+
+    if (!province || !district) {
+      throw new Error('Province or district not found')
+    }
+
+    return {
+      'child.placeOfBirth': 'PRIVATE_HOME',
+      'child.address.privateHome': {
+        country: 'FAR',
+        addressType: AddressType.DOMESTIC,
+        province,
+        district,
+        urbanOrRural: 'URBAN' as const
+      }
+    }
+  }
+
+  throw new Error('Invalid place of birth type')
+}
+
 export async function getDeclaration({
   informantRelation = 'MOTHER',
-  partialDeclaration = {}
+  partialDeclaration = {},
+  placeOfBirthType = 'PRIVATE_HOME'
 }: {
   informantRelation?: InformantRelation
   partialDeclaration?: Record<string, any>
+  placeOfBirthType?: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
 }) {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
   const province = getLocationIdByName(locations, 'Central')
@@ -84,14 +124,7 @@ export async function getDeclaration({
     'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
       .toISOString()
       .split('T')[0], // yesterday
-    'child.placeOfBirth': 'PRIVATE_HOME',
-    'child.address.privateHome': {
-      country: 'FAR',
-      addressType: AddressType.DOMESTIC,
-      province,
-      district,
-      urbanOrRural: 'URBAN' as const
-    },
+    ...(await getPlaceOfBirth(placeOfBirthType)),
     ...getInformantDetails(informantRelation)
   }
 
@@ -112,9 +145,13 @@ export interface CreateDeclarationResponse {
 export async function createDeclaration(
   token: string,
   dec?: Partial<ActionUpdate>,
-  action: ActionType = ActionType.REGISTER
+  action: ActionType = ActionType.REGISTER,
+  placeOfBirthType?: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
 ): Promise<CreateDeclarationResponse> {
-  const declaration = await getDeclaration({ partialDeclaration: dec })
+  const declaration = await getDeclaration({
+    partialDeclaration: dec,
+    placeOfBirthType
+  })
 
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
 
