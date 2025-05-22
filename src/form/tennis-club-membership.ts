@@ -703,7 +703,6 @@ const statusOptions = [
 export const tennisClubMembershipEvent = defineConfig({
   id: Event.TENNIS_CLUB_MEMBERSHIP,
   declaration: TENNIS_CLUB_DECLARATION_FORM,
-  dateOfEvent: field('applicant.dob').getId(),
   label: {
     defaultMessage: 'Tennis club membership application',
     description: 'This is what this event is referred as in the system',
@@ -1085,7 +1084,8 @@ export const tennisClubMembershipEvent = defineConfig({
         id: 'v2.event.tennis-club-membership.search'
       },
       fields: [
-        field('applicant.name').exact(),
+        field('applicant.firstname').exact(),
+        field('applicant.surname').fuzzy(),
         event('trackingId'),
         event('status', statusOptions)
       ]

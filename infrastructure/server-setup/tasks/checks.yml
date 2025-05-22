@@ -20,7 +20,25 @@
   fail:
     msg: 'The production environment should always use more than one node. Please check the inventory file for production.'
   when: >
+    (single_node | default(false)) == false and (
+      'docker-workers' not in groups or
+      groups['docker-workers'] | length == 0
+    )
+
+- name: 'Prevent single-node configuration in production'
+  fail:
+    msg: 'The production environment should always use more than one node. Please check the inventory file for production.'
+  when: >
+    (single_node | default(false)) == false and (
+      'docker-workers' not in groups or
+      groups['docker-workers'] | length == 0
+    )
+
+- name: 'Prevent single-node configuration in production'
+  fail:
+    msg: 'The production environment should always use more than one node. Please check the inventory file for production.'
+  when: >
     single_node == false and (
       'docker-workers' not in groups or
       groups['docker-workers'] | length == 0
-    ) 
+    )

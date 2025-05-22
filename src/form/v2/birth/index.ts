@@ -10,13 +10,10 @@
  */
 import {
   ActionType,
-  and,
   ConditionalType,
   defineConfig,
   field
 } from '@opencrvs/toolkit/events'
-import { not } from '@opencrvs/toolkit/conditionals'
-
 import {
   BIRTH_DECLARATION_FORM,
   BIRTH_DECLARATION_REVIEW
@@ -65,6 +62,11 @@ export const birthEvent = defineConfig({
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+        },
         conditionals: [
           {
             type: ConditionalType.SHOW,
@@ -79,14 +81,16 @@ export const birthEvent = defineConfig({
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+        },
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: and(
-              field('child.placeOfBirth').isEqualTo(
-                PlaceOfBirth.HEALTH_FACILITY
-              ),
-              not(field('child.birthLocation').isFalsy())
+            conditional: field('child.placeOfBirth').isEqualTo(
+              PlaceOfBirth.HEALTH_FACILITY
             )
           }
         ]
@@ -98,12 +102,16 @@ export const birthEvent = defineConfig({
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+        },
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: and(
-              field('child.placeOfBirth').isEqualTo(PlaceOfBirth.PRIVATE_HOME),
-              not(field('child.address.privateHome').isFalsy())
+            conditional: field('child.placeOfBirth').isEqualTo(
+              PlaceOfBirth.PRIVATE_HOME
             )
           }
         ]
@@ -115,12 +123,16 @@ export const birthEvent = defineConfig({
           description: 'This is shown when there is no child information',
           id: 'v2.event.birth.summary.child.placeOfBirth.empty'
         },
+        label: {
+          defaultMessage: 'Place of birth',
+          description: 'Label for place of birth',
+          id: 'v2.event.birth.summary.child.placeOfBirth.label'
+        },
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: and(
-              field('child.placeOfBirth').isEqualTo(PlaceOfBirth.OTHER),
-              not(field('child.address.other').isFalsy())
+            conditional: field('child.placeOfBirth').isEqualTo(
+              PlaceOfBirth.OTHER
             )
           }
         ]

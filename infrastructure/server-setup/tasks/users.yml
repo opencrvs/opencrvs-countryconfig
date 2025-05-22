@@ -135,12 +135,12 @@
 - name: Ensure HostKey for ED25519 is present in sshd_config
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
-    line: "HostKey /etc/ssh/ssh_host_ed25519_key"
+    line: 'HostKey /etc/ssh/ssh_host_ed25519_key'
 
 - name: Ensure HostKey for RSA is present in sshd_config
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
-    line: "HostKey /etc/ssh/ssh_host_rsa_key"
+    line: 'HostKey /etc/ssh/ssh_host_rsa_key'
 
 - name: Set AuthenticationMethods to publickey,keyboard-interactive
   lineinfile:
@@ -208,9 +208,8 @@
         PasswordAuthentication no
         AuthenticationMethods publickey
       Match all
-    marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER {{ current_user }}'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER {{ ansible_user }}'
   become: yes
-
 
 # Add restriction configuration to sshd_config
 # For Ubuntu 22.04
@@ -239,7 +238,7 @@
     - ansible_facts['distribution_version'] == '24.04'
 
 - name: Check SSH config syntax
-  command: sshd -T
+  command: sudo sshd -T
   register: check_result
 
 - name: Enable logging in to the provisioning user with specified SSH keys
