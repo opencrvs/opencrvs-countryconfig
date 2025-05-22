@@ -7,6 +7,17 @@
 
 ## 1.7.2 Release candidate
 
+### Bug fixes
+
+- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369((https://github.com/opencrvs/opencrvs-core/issues/9369))
+- InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
+```
+partial write: max-values-per-tag limit exceeded (100000/100000)
+```
+https://github.com/opencrvs/opencrvs-countryconfig/pull/393
+
+- Added `user.update:my-jurisdiction` scope to Local System Admin to allow editing of users in jurisdiction [#732](https://github.com/opencrvs/opencrvs-countryconfig/pull/732)
+
 ### New features
 
 - **Time field 12-hour format**: To enable the 12-hour (AM/PM) format of the `TimeField`, set the `use12HourFormat` property to `true`. [#8336](https://github.com/opencrvs/opencrvs-core/issues/8336)
@@ -19,6 +30,10 @@
     ...otherProp
   }
   ```
+- **Control over allowed user creation/update**: user.create\[role=role_a|role_b\] & user.update\[role=role_a|role_b\] can be used to control users of which role can be created/updated by users of a certain role.
+
+### Breaking changes
+- Roles with the following scopes: `USER_CREATE, USER_CREATE_MY_JURISDICTION` & `USER_UPDATE, USER_UPDATE_MY_JURISDICTION` need to have the `user.create[role=role_a|role_b]` & `user.update[role=role_a|role_b]` scopes added to them (replace role_a|role_b with the role IDs of your selection) in order to work as expected. If you are using custom roles, please make sure to update them accordingly.
 
 ## 1.7.1
 
@@ -172,6 +187,12 @@ userRole.socialWorker,Name for user role Social Worker,Social Worker
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
+
+## 1.6.4
+
+### Bug fixes
+
+- Query the location tree directly from the config service to improve performance for large datasets
 
 ## 1.6.3
 
