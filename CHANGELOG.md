@@ -19,7 +19,18 @@
 ### New features
 - Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
-## 1.7.1 Release candidate
+## 1.7.2 Release candidate
+
+### Bug fixes
+
+- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369((https://github.com/opencrvs/opencrvs-core/issues/9369))
+- InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
+```
+partial write: max-values-per-tag limit exceeded (100000/100000)
+```
+https://github.com/opencrvs/opencrvs-countryconfig/pull/393
+
+- Added `user.update:my-jurisdiction` scope to Local System Admin to allow editing of users in jurisdiction [#732](https://github.com/opencrvs/opencrvs-countryconfig/pull/732)
 
 ### New features
 
@@ -33,8 +44,18 @@
     ...otherProp
   }
   ```
+- **Control over allowed user creation/update**: user.create\[role=role_a|role_b\] & user.update\[role=role_a|role_b\] can be used to control users of which role can be created/updated by users of a certain role.
 
-## 1.7.0 Release candidate
+### Breaking changes
+- Roles with the following scopes: `USER_CREATE, USER_CREATE_MY_JURISDICTION` & `USER_UPDATE, USER_UPDATE_MY_JURISDICTION` need to have the `user.create[role=role_a|role_b]` & `user.update[role=role_a|role_b]` scopes added to them (replace role_a|role_b with the role IDs of your selection) in order to work as expected. If you are using custom roles, please make sure to update them accordingly.
+
+## 1.7.1
+
+### Bug fixes
+- "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
+- Use yarn cache in test workflow & read the version to use from .nvmrc
+
+## 1.7.0
 
 ### Migration notes
 
@@ -180,6 +201,20 @@ userRole.socialWorker,Name for user role Social Worker,Social Worker
 validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years.
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
+
+## 1.6.4
+
+### Bug fixes
+
+- Query the location tree directly from the config service to improve performance for large datasets
+
+## 1.6.3
+
+### Breaking changes
+
+- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+
+## 1.6.2
 
 ## 1.6.1
 
