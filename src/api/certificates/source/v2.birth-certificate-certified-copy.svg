@@ -169,8 +169,8 @@
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
       {{#ifCond ($lookup $declaration "child.birthLocation") '!==' undefined }}
-        <tspan x="307" y="208.104">{{$lookup $declaration "child.birthLocation.location"}}&#10;</tspan>
-        <tspan x="307" y="220.104">{{$lookup $declaration "child.birthLocation.district"}}, {{$lookup $declaration "child.birthLocation.province"}}, {{$lookup $declaration "child.birthLocation.country"}}</tspan>
+        <tspan x="307" y="208.104">{{$lookup $declaration 'child.birthLocation.location'}}&#10;</tspan>
+        <tspan x="307" y="220.104">{{$lookup $declaration 'child.birthLocation.district'}}, {{$lookup $declaration 'child.birthLocation.province'}}, {{$lookup $declaration 'child.birthLocation.country'}}</tspan>
       {{else}}
         {{#ifCond ($lookup $declaration 'child.address.other') '!==' undefined }}
         <tspan x="307" y="208.104">{{$or ($lookup $declaration 'child.address.other.district') ($lookup $declaration 'child.address.other.district2')}}&#10;</tspan>
