@@ -24,11 +24,11 @@ variable "os_image" {
   
 }
 
-variable "private_network_id" {
-  description = "Private network ID"
-  type        = string
+# variable "private_network_id" {
+#   description = "Private network ID"
+#   type        = string
   
-}
+# }
 
 variable "ip" {
   type = string

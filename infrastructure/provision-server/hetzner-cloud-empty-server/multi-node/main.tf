@@ -7,12 +7,13 @@ resource "hcloud_server" "master" {
     ipv4_enabled = true
     ipv6_enabled = true
   }
-  network {
-    network_id = var.private_network_id
-    # IP Used by the master node, needs to be static
-    # Here the worker nodes will use 10.0.1.1 to communicate with the master node
-    ip         = var.ip
-  }
+  # TODO: Multinode setup will need this attribute to interact within the network
+  # network {
+  #   network_id = var.private_network_id
+  #   # IP Used by the master node, needs to be static
+  #   # Here the worker nodes will use 10.0.1.1 to communicate with the master node
+  #   ip         = var.ip
+  # }
   user_data = var.user_data
 }
 
@@ -25,12 +26,12 @@ resource "hcloud_server" "worker" {
     ipv4_enabled = true
     ipv6_enabled = true
   }
-  network {
-    network_id = var.private_network_id
-    # IP Used by the master node, needs to be static
-    # Here the worker nodes will use 10.0.1.1 to communicate with the master node
-    ip         = var.ip
-  }
+  # network {
+  #   network_id = var.private_network_id
+  #   # IP Used by the master node, needs to be static
+  #   # Here the worker nodes will use 10.0.1.1 to communicate with the master node
+  #   ip         = var.ip
+  # }
   user_data = var.user_data
 }
 
@@ -43,12 +44,12 @@ resource "hcloud_server" "staging" {
     ipv4_enabled = true
     ipv6_enabled = true
   }
-  network {
-    network_id = var.private_network_id
-    # IP Used by the master node, needs to be static
-    # Here the worker nodes will use 10.0.1.1 to communicate with the master node
-    ip         = var.ip
-  }
+  # network {
+  #   network_id = var.private_network_id
+  #   # IP Used by the master node, needs to be static
+  #   # Here the worker nodes will use 10.0.1.1 to communicate with the master node
+  #   ip         = var.ip
+  # }
   user_data = var.user_data
 }
 
@@ -61,11 +62,11 @@ resource "hcloud_server" "node" {
     ipv4_enabled = true
     ipv6_enabled = true
   }
-  network {
-    network_id = var.private_network_id
-    # IP Used by the master node, needs to be static
-    # Here the worker nodes will use 10.0.1.1 to communicate with the master node
-    ip         = var.ip
-  }
+  # network {
+  #   network_id = var.private_network_id
+  #   # IP Used by the master node, needs to be static
+  #   # Here the worker nodes will use 10.0.1.1 to communicate with the master node
+  #   ip         = var.ip
+  # }
   user_data = var.user_data
 }
