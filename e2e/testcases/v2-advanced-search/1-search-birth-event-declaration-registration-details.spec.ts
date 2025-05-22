@@ -4,17 +4,6 @@ import { createDeclaration } from '../v2-test-data/birth-declaration'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 
-/**
- * Converts a numeric month value (1–12) to its corresponding short English month name (e.g., "Jan", "Feb").
- *
- * @param {number} month - The month number (1 for January, 12 for December).
- * @returns {string} The short name of the month in English.
- *
- * @example
- * getMonthShortName(1); // returns "Jan"
- * getMonthShortName(12); // returns "Dec"
- */
-
 const todayDate = `${new Date().getDate() < 10 ? '0' : ''}${new Date().getDate().toString()}`
 const thisMonth = `${new Date().getMonth() < 9 ? '0' : ''}${(new Date().getMonth() + 1).toString()}`
 const thisYear = new Date().getFullYear().toString()
@@ -40,15 +29,11 @@ test.describe
           .between({ from: '2010-01-01', to: '2020-12-31' })
           .toISOString()
           .split('T')[0],
-        //@ts-ignore
         'child.reason': 'Other', // needed for late dob value
         'child.gender': 'female'
       })
     ;[yyyy, mm, dd] = record.declaration['child.dob'].split('-')
-    fullNameOfChild =
-      record.declaration['child.firstname'] +
-      ' ' +
-      record.declaration['child.surname']
+    fullNameOfChild = `${record.declaration['child.firstname']} ${record.declaration['child.surname']}`
   })
 
   test.afterAll(async () => {
