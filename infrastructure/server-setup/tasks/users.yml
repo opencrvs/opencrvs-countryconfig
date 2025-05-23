@@ -1,7 +1,3 @@
-- name: Get the current logged in user
-  set_fact:
-    current_user: "{{ lookup('env', 'USER') }}"
-
 - name: Ensure users are present
   user:
     name: '{{ item.name }}'
@@ -169,13 +165,13 @@
     regexp: '^#?PermitRootLogin'
     line: 'PermitRootLogin no'
     state: present
-  when: current_user != "root"
+  when: ansible_user != "root"
 
 - name: Disable root account login completely
   ansible.builtin.command:
     cmd: passwd -l root
   become: yes
-  when: current_user != "root"
+  when: ansible_user != "root"
 
 - name: Enable KbdInteractiveAuthentication in SSHD Config
   lineinfile:
@@ -198,17 +194,17 @@
     line: 'PermitEmptyPasswords no'
     state: present
 
-- name: Only require public key from the user "{{ current_user }}"
+- name: Only require public key from the user "{{ ansible_user }}"
   blockinfile:
     path: /etc/ssh/sshd_config
     # Match block must have ending Match all
     # https://linux.die.net/man/5/sshd_config
     block: |
-      Match User {{ current_user }}
+      Match User {{ ansible_user }}
         PasswordAuthentication no
         AuthenticationMethods publickey
       Match all
-    marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER {{ current_user }}'
+    marker: '# {mark} ANSIBLE MANAGED BLOCK FOR USER {{ ansible_user }}'
   become: yes
 
 
@@ -239,12 +235,12 @@
     - ansible_facts['distribution_version'] == '24.04'
 
 - name: Check SSH config syntax
-  command: sshd -T
+  command: sudo sshd -T
   register: check_result
 
 - name: Enable logging in to the provisioning user with specified SSH keys
   authorized_key:
-    user: '{{ current_user }}'
+    user: '{{ ansible_user }}'
     key: '{{ item }}'
   with_items: '{{ additional_keys_for_provisioning_user | default([]) }}'
 
