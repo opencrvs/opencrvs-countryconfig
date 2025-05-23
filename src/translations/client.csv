@@ -2330,13 +2330,13 @@ v2.advancedSearch.accordion.hide,Label for hide button when accordion is closed,
 v2.advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 v2.advancedSearch.form.recordStatusAchived,Option for form field: status of record,Archived,Archivé
 v2.advancedSearch.form.recordStatusAny,Option for form field: status of record,Any status,Tout statut
-v2.advancedSearch.form.recordStatusCertified,Option for form field: status of record,Certified,Agréé
-v2.advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested,Correction demandée
-v2.advancedSearch.form.recordStatusCreated, Option for form field: status of record,Draft,Brouillon
-v2.advancedSearch.form.recordStatusInReview,Option for form field: status of record,In review,En cours d'examen
-v2.advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress,En cours
-v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
-v2.advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
+v2.advancedSearch.form.recordStatusArchived,Option for form field: status of record,Archived,Archivé
+v2.advancedSearch.form.recordStatusCertified,Option for form field: status of record,Certified,Certifié
+v2.advancedSearch.form.recordStatusCreated,Option for form field: status of record,Draft,Brouillon
+v2.advancedSearch.form.recordStatusDeclared,Option for form field: status of record,Declared,Déclaré
+v2.advancedSearch.form.recordStatusNotified,Option for form field: status of record,Notified,Notifié
+v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Enregistré
+v2.advancedSearch.form.recordStatusRejected,Option for form field: status of record,Rejected,Rejeté
 v2.advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé
 v2.advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'enregistrement
 v2.advancedSearch.registeredAt,Label for date of registration field,Date of registration,Date d'enregistrement
