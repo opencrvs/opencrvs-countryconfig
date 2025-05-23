@@ -76,26 +76,14 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
       },
       fields: [
         {
-          id: 'applicant.firstname',
-          type: 'TEXT',
-          configuration: { maxLength: MAX_NAME_LENGTH },
-          required: true,
+          id: 'applicant.name',
+          type: 'NAME',
           label: {
-            defaultMessage: "Applicant's first name",
-            description: 'This is the label for the field',
-            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.firstname.label'
-          }
-        },
-        {
-          id: 'applicant.surname',
-          type: 'TEXT',
-          configuration: { maxLength: MAX_NAME_LENGTH },
-          required: true,
-          label: {
-            defaultMessage: "Applicant's surname",
-            description: 'This is the label for the field',
-            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.surname.label'
-          }
+            defaultMessage: 'Name of applicant',
+            description: 'This is the title for the name field',
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.name.label'
+          },
+          required: true
         },
         {
           id: 'applicant.dob',

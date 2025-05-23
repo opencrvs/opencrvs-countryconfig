@@ -2548,6 +2548,7 @@ v2.error.invalidInput,Error message when generic field is invalid,Invalid input,
 v2.error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-), des apostrophes (') et des traits de soulignement (_)"
 v2.error.required,Error message when required field is missing,Required for registration,Requis pour l'enregistrement
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
+v2.errors.notAssigned,User not assigned error toast message,You've been unassigned from the event,Vous avez été désassigné de l'événement
 v2.event.action.declare.form.section.person.field.address.country.label,This is the label for the field,Country,Pays
 v2.event.action.declare.form.section.person.field.address.number.label,This is the label for the field,Number,Numéro
 v2.event.action.declare.form.section.person.field.address.other.addressLine1.label,This is the label for the field,Address Line 1,Adresse 1
@@ -2810,6 +2811,7 @@ v2.form.section.information.birth.bullet3,Form information for birth,Once the de
 v2.form.section.information.birth.bullet4,Form information for birth,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.",Attendez un SMS vous indiquant quand vous devez vous rendre au bureau pour retirer le certificat - Prenez votre carte d'identité avec vous.
 v2.form.section.information.birth.bulletList.label,Label for the birth information bullet list,Birth Information,Birth Information
 v2.form.section.mother.title,Form section title for mothers details,Mother's details,Information de la mère
+v2.home.header.searchTool.placeholder,Search tool placeholder,"Search for a tracking ID, name, registration number, national ID, phone number or email","Rechercher un identifiant de suivi, un nom, un numéro d'enregistrement, un numéro d'identité nationale, un numéro de téléphone ou une adresse e-mail"
 v2.messages.emptyString,Empty string, ,
 v2.navigation.CREATED,In progress label in navigation,In progress,En cours
 v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Prêt pour l'examen
@@ -2893,7 +2895,6 @@ v2.view.record,Label for view record,View record,Afficher l'enregistrement
 v2.wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 v2.wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 v2.wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé
-v2.errors.notAssigned,User not assigned error toast message,"You've been unassigned from the event","Vous avez été désassigné de l'événement"
 validate.complete.declaration.action.description,,The informant will receive an with a registration number that they can use to collect the certificate.,"En envoyant pour approbation, vous confirmez que la déclaration est prête à être approuvée."
 validate.complete.declaration.action.title,,Declaration complete,Envoyer pour approbation ou rejeter ?
 validate.declaration.action.modal.description,,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
