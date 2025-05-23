@@ -23,8 +23,7 @@ import {
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
-import format from 'date-fns/format'
-import subDays from 'date-fns/subDays'
+import { statusOptions, timePeriodOptions } from './EventMetadataSearchOptions'
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
@@ -629,123 +628,6 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     }
   ]
 })
-
-const statusOptions = [
-  {
-    value: 'ALL',
-    label: {
-      defaultMessage: 'Any status',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusAny'
-    }
-  },
-  {
-    value: 'IN_PROGRESS',
-    label: {
-      defaultMessage: 'In progress',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusInprogress'
-    }
-  },
-  {
-    value: 'IN_REVIEW',
-    label: {
-      defaultMessage: 'In review',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusInReview'
-    }
-  },
-  {
-    value: 'REJECTED',
-    label: {
-      defaultMessage: 'Requires updates',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusRequireUpdate'
-    }
-  },
-  {
-    value: 'REGISTERED',
-    label: {
-      defaultMessage: 'Registered',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusRegistered'
-    }
-  },
-  {
-    value: 'CERTIFIED',
-    label: {
-      defaultMessage: 'Certified',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusCertified'
-    }
-  },
-  {
-    value: 'ARCHIVED',
-    label: {
-      defaultMessage: 'Archived',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusAchived'
-    }
-  },
-  {
-    value: 'CORRECTION_REQUESTED',
-    label: {
-      defaultMessage: 'Correction requested',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusCorrectionRequested'
-    }
-  },
-  {
-    value: 'VALIDATED',
-    label: {
-      defaultMessage: 'Validated',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusValidated'
-    }
-  },
-  {
-    value: 'CREATED',
-    label: {
-      defaultMessage: 'Draft',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusCreated'
-    }
-  }
-]
-const timePeriodOptions = [
-  {
-    label: {
-      defaultMessage: 'Last 7 days',
-      description: 'Label for option of time period select: last 7 days',
-      id: 'form.section.label.timePeriodLast7Days'
-    },
-    value: `${format(subDays(new Date(), 7), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
-  },
-  {
-    label: {
-      defaultMessage: 'Last 30 days',
-      description: 'Label for option of time period select: last 30 days',
-      id: 'form.section.label.timePeriodLast30Days'
-    },
-    value: `${format(subDays(new Date(), 30), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
-  },
-  {
-    label: {
-      defaultMessage: 'Last 90 days',
-      description: 'Label for option of time period select: last 90 days',
-      id: 'form.section.label.timePeriodLast90Days'
-    },
-    value: `${format(subDays(new Date(), 90), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
-  },
-  {
-    label: {
-      defaultMessage: 'Last year',
-      description: 'Label for option of time period select: last year',
-      id: 'form.section.label.timePeriodLastYear'
-    },
-    value: `${format(subDays(new Date(), 365), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
-  }
-]
 
 export const tennisClubMembershipEvent = defineConfig({
   id: Event.TENNIS_CLUB_MEMBERSHIP,
