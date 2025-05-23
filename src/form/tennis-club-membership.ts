@@ -21,9 +21,10 @@ import {
   field,
   event
 } from '@opencrvs/toolkit/events'
-
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
+import format from 'date-fns/format'
+import subDays from 'date-fns/subDays'
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
@@ -711,6 +712,40 @@ const statusOptions = [
     }
   }
 ]
+const timePeriodOptions = [
+  {
+    label: {
+      defaultMessage: 'Last 7 days',
+      description: 'Label for option of time period select: last 7 days',
+      id: 'form.section.label.timePeriodLast7Days'
+    },
+    value: `${format(subDays(new Date(), 7), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
+  },
+  {
+    label: {
+      defaultMessage: 'Last 30 days',
+      description: 'Label for option of time period select: last 30 days',
+      id: 'form.section.label.timePeriodLast30Days'
+    },
+    value: `${format(subDays(new Date(), 30), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
+  },
+  {
+    label: {
+      defaultMessage: 'Last 90 days',
+      description: 'Label for option of time period select: last 90 days',
+      id: 'form.section.label.timePeriodLast90Days'
+    },
+    value: `${format(subDays(new Date(), 90), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
+  },
+  {
+    label: {
+      defaultMessage: 'Last year',
+      description: 'Label for option of time period select: last year',
+      id: 'form.section.label.timePeriodLastYear'
+    },
+    value: `${format(subDays(new Date(), 365), 'yyyy-MM-dd')},${format(new Date(), 'yyyy-MM-dd')}`
+  }
+]
 
 export const tennisClubMembershipEvent = defineConfig({
   id: Event.TENNIS_CLUB_MEMBERSHIP,
@@ -1091,15 +1126,39 @@ export const tennisClubMembershipEvent = defineConfig({
   advancedSearch: [
     {
       title: {
-        defaultMessage: 'Tennis club registration search',
-        description: 'This is what this event is referred as in the system',
-        id: 'v2.event.tennis-club-membership.search'
+        defaultMessage: 'Registration details',
+        description: 'The title of Registration details accordion',
+        id: 'v2.advancedSearch.form.registrationDetails'
       },
       fields: [
-        field('applicant.firstname').exact(),
+        event('legalStatus.REGISTERED.createdAtLocation').exact(),
+        event('legalStatus.REGISTERED.createdAt').range(),
+        event('status', statusOptions).exact(),
+        event('updatedAt', timePeriodOptions).range()
+      ]
+    },
+    {
+      title: {
+        defaultMessage: "Applicant's details",
+        description: 'Applicant details search field section title',
+        id: 'v2.event.tennis-club-membership.search.applicants'
+      },
+      fields: [
+        field('applicant.firstname').fuzzy(),
         field('applicant.surname').fuzzy(),
-        event('trackingId').exact(),
-        event('status', statusOptions).exact()
+        field('applicant.dob').range()
+        // field('applicant.email').exact()
+      ]
+    },
+    {
+      title: {
+        defaultMessage: "Recommender's details",
+        description: 'Recommender details search field section title',
+        id: 'v2.event.tennis-club-membership.search.recommender'
+      },
+      fields: [
+        field('recommender.firstname').fuzzy(),
+        field('recommender.surname').fuzzy()
       ]
     }
   ]

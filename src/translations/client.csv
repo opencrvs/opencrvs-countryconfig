@@ -2338,6 +2338,7 @@ v2.advancedSearch.form.recordStatusInprogress,Option for form field: status of r
 v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
 v2.advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
 v2.advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé
+v2.advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'enregistrement
 v2.advancedSearch.registeredAt,Label for date of registration field,Date of registration,Date d'enregistrement
 v2.advancedSearch.registeredAtLocation,Label for place of registration field,Place of registration,Lieu d'enregistrement
 v2.advancedSearch.registeredAtLocation.helperText,Helper text for place of registration field,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
@@ -2713,6 +2714,8 @@ v2.event.tennis-club-membership.action.sdf.label,This is shown as the action nam
 v2.event.tennis-club-membership.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Validate
 v2.event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Tennis club membership application
 v2.event.tennis-club-membership.search,This is what this event is referred as in the system,Tennis club registration search,Recherche d’inscription au club de tennis
+v2.event.tennis-club-membership.search.applicants,Applicant details search field section title,Applicant's details,Détails du demandeur
+v2.event.tennis-club-membership.search.recommender,Recommender details search field section title,Recommender's details,Détails du référent
 v2.event.tennis-club-membership.summary.field.applicant.firstname.empty,Shown when the applicant's first name is missing in summary,Applicant's first name missing,Applicant's first name missing
 v2.event.tennis-club-membership.summary.field.applicant.firstname.label,Label for the applicant's first name field,Applicant's First Name,Applicant's First Name
 v2.event.tennis-club-membership.summary.field.applicant.firstname.value,Value for the applicant's first name field,{applicant.firstname},{applicant.firstname}
