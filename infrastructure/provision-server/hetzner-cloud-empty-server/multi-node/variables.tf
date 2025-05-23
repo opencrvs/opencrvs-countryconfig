@@ -27,12 +27,12 @@ variable "os_image" {
   default     = "ubuntu-24.04"
   
 }
-
-variable "private_network_id" {
-  description = "Private network ID"
-  type        = string
+# TODO: Multinode setup will need this attribute to interact within the network
+# variable "private_network_id" {
+#   description = "Private network ID"
+#   type        = string
   
-}
+# }
 
 variable "ip" {
   type = string

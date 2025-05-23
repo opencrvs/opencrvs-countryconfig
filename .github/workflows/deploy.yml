@@ -38,6 +38,7 @@ on:
           - qa
           - e2e
           - staging
+          - v19
       core-image-tag:
         description: Core image tag
         required: true
@@ -68,15 +69,12 @@ jobs:
         with:
           fetch-depth: 0
           path: './${{ github.event.repository.name }}'
-
       - name: Checkout country branch
         working-directory: ${{ github.event.repository.name }}
         run: git checkout ${{ github.event.inputs.countryconfig-image-tag }}
-
       - name: Checkout core branch
         working-directory: opencrvs-core
         run: git checkout ${{ github.event.inputs.core-image-tag }}
-
       - name: Read known hosts
         working-directory: ${{ github.event.repository.name }}
         run: |
@@ -84,23 +82,19 @@ jobs:
           sed -i -e '$a\' ./infrastructure/known-hosts
           cat ./infrastructure/known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ env.KNOWN_HOSTS }}
-
       - name: Unset KNOWN_HOSTS variable
         run: |
           echo "KNOWN_HOSTS=" >> $GITHUB_ENV
-
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-
       - name: Wait for images to be available
         run: |
           while true; do
@@ -115,7 +109,6 @@ jobs:
             fi
             sleep 10
           done
-
       - name: Export all secrets and environment variables
         working-directory: ${{ github.event.repository.name }}
         run: |
@@ -154,12 +147,10 @@ jobs:
               ) |
               .[]' <<< "$VARS_JSON_WITH_NEWLINES"
           )
-
       - name: Use Node.js from .nvmrc
         uses: actions/setup-node@v4
         with:
           node-version-file: ${{ github.event.repository.name }}/.nvmrc
-
       - name: Deploy to ${{ inputs.environment }}
         id: deploy
         working-directory: ${{ github.event.repository.name }}
@@ -174,7 +165,6 @@ jobs:
           --version=${{ inputs.core-image-tag }} \
           --country_config_version=${{ inputs.countryconfig-image-tag }} \
           --replicas=${{ vars.REPLICAS }}
-
   reset:
     needs: deploy
     if: ${{ inputs.reset == 'true' && needs.deploy.outputs.outcome == 'success' }}
@@ -182,7 +172,6 @@ jobs:
     with:
       environment: ${{ inputs.environment }}
     secrets: inherit
-
   seed-data:
     needs: reset
     if: ${{ inputs.reset == 'true' && needs.reset.outputs.outcome == 'success' }}
