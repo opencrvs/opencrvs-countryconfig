@@ -20,7 +20,8 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of in progress workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'IN_PROGRESS' }
+      type: 'or',
+      clauses: []
     },
     actions: [
       {
@@ -37,7 +38,8 @@ export const Workqueues = defineWorkqueue([
       description: 'Title of correction requested workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'DECLARED' }
+      type: 'or',
+      clauses: []
     },
     actions: [
       {
@@ -74,7 +76,8 @@ export const Workqueues = defineWorkqueue([
     ],
     actions: [],
     query: {
-      status: { type: 'exact', term: 'WAITING_FOR_ATTESTATION' }
+      type: 'or',
+      clauses: []
     }
   }
 ])
