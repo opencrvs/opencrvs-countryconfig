@@ -15,6 +15,26 @@ import {
 } from '@countryconfig/form/EventMetadataSearchOptions'
 import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
 
+const childPrefix = {
+  id: 'v2.birth.search.criteria.label.prefix.child',
+  defaultMessage: "Child's",
+  description: 'Child prefix'
+}
+const motherPrefix = {
+  id: 'v2.birth.search.criteria.label.prefix.mother',
+  defaultMessage: "Mother's",
+  description: 'Mother prefix'
+}
+const fatherPrefix = {
+  id: 'v2.birth.search.criteria.label.prefix.father',
+  defaultMessage: "Father's",
+  description: 'Father prefix'
+}
+const informantPrefix = {
+  id: 'v2.birth.search.criteria.label.prefix.informant',
+  defaultMessage: "Informat's",
+  description: 'Informat prefix'
+}
 export const advancedSearchBirth = [
   {
     title: {
@@ -36,10 +56,18 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.childDetails'
     },
     fields: [
-      field('child.dob').range(),
-      field('child.firstname').fuzzy(),
-      field('child.surname').fuzzy(),
-      field('child.gender').exact()
+      field('child.dob', {
+        searchCriteriaLabelPrefix: childPrefix
+      }).range(),
+      field('child.firstname', {
+        searchCriteriaLabelPrefix: childPrefix
+      }).fuzzy(),
+      field('child.surname', {
+        searchCriteriaLabelPrefix: childPrefix
+      }).fuzzy(),
+      field('child.gender', {
+        searchCriteriaLabelPrefix: childPrefix
+      }).exact()
     ]
   },
   {
@@ -48,7 +76,12 @@ export const advancedSearchBirth = [
       description: 'The title of Event details accordion',
       id: 'v2.advancedSearch.form.eventDetails'
     },
-    fields: [field('child.birthLocation', { conditionals: [] }).exact()]
+    fields: [
+      field('child.birthLocation', {
+        conditionals: [],
+        searchCriteriaLabelPrefix: childPrefix
+      }).exact()
+    ]
   },
   {
     title: {
@@ -57,9 +90,15 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.motherDetails'
     },
     fields: [
-      field('mother.dob').range(),
-      field('mother.firstname').fuzzy(),
-      field('mother.surname').fuzzy()
+      field('mother.dob', {
+        searchCriteriaLabelPrefix: motherPrefix
+      }).range(),
+      field('mother.firstname', {
+        searchCriteriaLabelPrefix: motherPrefix
+      }).fuzzy(),
+      field('mother.surname', {
+        searchCriteriaLabelPrefix: motherPrefix
+      }).fuzzy()
     ]
   },
   {
@@ -69,9 +108,15 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.fatherDetails'
     },
     fields: [
-      field('father.dob').range(),
-      field('father.firstname').fuzzy(),
-      field('father.surname').fuzzy()
+      field('father.dob', {
+        searchCriteriaLabelPrefix: fatherPrefix
+      }).range(),
+      field('father.firstname', {
+        searchCriteriaLabelPrefix: fatherPrefix
+      }).fuzzy(),
+      field('father.surname', {
+        searchCriteriaLabelPrefix: fatherPrefix
+      }).fuzzy()
     ]
   },
   {
@@ -81,9 +126,18 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.informantDetails'
     },
     fields: [
-      field('informant.dob', { conditionals: [] }).range(),
-      field('informant.firstname', { conditionals: [] }).fuzzy(),
-      field('informant.surname', { conditionals: [] }).fuzzy()
+      field('informant.dob', {
+        conditionals: [],
+        searchCriteriaLabelPrefix: informantPrefix
+      }).range(),
+      field('informant.firstname', {
+        conditionals: [],
+        searchCriteriaLabelPrefix: informantPrefix
+      }).fuzzy(),
+      field('informant.surname', {
+        conditionals: [],
+        searchCriteriaLabelPrefix: informantPrefix
+      }).fuzzy()
     ]
   }
 ] satisfies AdvancedSearchConfig[]

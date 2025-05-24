@@ -2,10 +2,9 @@ import { expect, test, type Page } from '@playwright/test'
 import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration'
 import { CREDENTIALS } from '../../constants'
-import { faker } from '@faker-js/faker'
 
 test.describe
-  .serial('Advanced Search - Birth Event Declaration - Child details', () => {
+  .serial("Advanced Search - Birth Event Declaration - Child's details", () => {
   let page: Page
   let [yyyy, mm, dd] = ['', '', '']
   let fullNameOfChild = ''
@@ -51,7 +50,7 @@ test.describe
     await page.getByText('Birth').click()
   })
 
-  test.describe.serial('2.5 - Validate search by Child DOB & Gender', () => {
+  test.describe.serial("2.5 - Validate search by Child's DOB & Gender", () => {
     test('2.5.1 - Validate filling DOB and gender filters', async () => {
       await page.getByText('Child details').click()
 
@@ -81,12 +80,12 @@ test.describe
       await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
       await expect(page.getByText('Event: V2 birth')).toBeVisible()
       await expect(
-        page.getByText(`Child Date of birth: 9 April 2017`)
+        page.getByText(`Child's Date of birth: 9 April 2017`)
       ).toBeVisible()
-      await expect(page.getByText('Child Sex: Female')).toBeVisible()
+      await expect(page.getByText("Child's Sex: Female")).toBeVisible()
       await expect(
         page.getByText(
-          'Child Location of birth: Ibombo Rural Health Centre, Ibombo, Central, Farajaland'
+          "Child's Location of birth: Ibombo Rural Health Centre, Ibombo, Central, Farajaland"
         )
       ).toBeVisible()
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()

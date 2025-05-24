@@ -20,7 +20,7 @@ const getShortMonthName = (month: number) => {
 }
 
 test.describe
-  .serial('Advanced Search - Birth Event Declaration - Child details', () => {
+  .serial("Advanced Search - Birth Event Declaration - Child's details", () => {
   let page: Page
   let [yyyy, mm, dd] = ['', '', '']
   let fullNameOfChild = ''
@@ -34,12 +34,7 @@ test.describe
 
     const record: Awaited<ReturnType<typeof createDeclaration>> =
       await createDeclaration(token, {
-        'child.dob': faker.date
-          // Randomly chosen DOB between 2010-01-01 and 2020-12-31
-          // Ensures the created record appears on the first page of search results
-          .between({ from: '2010-01-01', to: '2020-12-31' })
-          .toISOString()
-          .split('T')[0],
+        'child.dob': '2017-04-09',
         'child.reason': 'Other', // needed for late dob value
         'child.gender': 'female'
       })
@@ -60,7 +55,7 @@ test.describe
     await page.getByText('Birth').click()
   })
 
-  test.describe.serial('2.5 - Validate search by Child DOB & Gender', () => {
+  test.describe.serial("2.5 - Validate search by Child's DOB & Gender", () => {
     test('2.5.1 - Validate filling DOB and gender filters', async () => {
       await page.getByText('Child details').click()
 
@@ -85,9 +80,9 @@ test.describe
       await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
       await expect(page.getByText('Event: V2 birth')).toBeVisible()
       await expect(
-        page.getByText(`Child Date of birth: ${yyyy}-${mm}-${dd}`)
+        page.getByText(`Child's Date of birth: 9 April 2017`)
       ).toBeVisible()
-      await expect(page.getByText('Child Sex: Female')).toBeVisible()
+      await expect(page.getByText("Child's Sex: Female")).toBeVisible()
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
       await expect(page.getByText(fullNameOfChild)).toBeVisible()
     })
