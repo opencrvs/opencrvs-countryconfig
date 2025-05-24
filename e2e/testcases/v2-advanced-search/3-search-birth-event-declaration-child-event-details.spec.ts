@@ -3,7 +3,6 @@ import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
-import { getAllLocations, getLocationIdByName } from '../birth/helpers'
 
 test.describe
   .serial('Advanced Search - Birth Event Declaration - Child details', () => {
@@ -19,24 +18,24 @@ test.describe
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
 
-    const locations = await getAllLocations('HEALTH_FACILITY')
-    facilityId = getLocationIdByName(locations, 'Shifwankula Health Post') ?? ''
-
     const record: Awaited<ReturnType<typeof createDeclaration>> =
-      await createDeclaration(token, {
-        'child.dob': faker.date
-          // Randomly chosen DOB between 2010-01-01 and 2020-12-31
-          // Ensures the created record appears on the first page of search results
-          .between({ from: '2010-01-01', to: '2020-12-31' })
-          .toISOString()
-          .split('T')[0],
-        'child.reason': 'Other', // needed for late dob value
-        'child.gender': 'female',
-        'child.placeOfBirth': 'FACILITY',
-        'child.birthLocation': facilityId
-      })
+      await createDeclaration(
+        token,
+        {
+          'child.dob': '2017-04-09',
+          //@ts-ignore
+          'child.reason': 'Other', // needed for late dob value
+          'child.gender': 'female'
+        },
+        'REGISTER',
+        'HEALTH_FACILITY'
+      )
     ;[yyyy, mm, dd] = record.declaration['child.dob'].split('-')
-    fullNameOfChild = `${record.declaration['child.firstname']} ${record.declaration['child.surname']}`
+    fullNameOfChild =
+      record.declaration['child.firstname'] +
+      ' ' +
+      record.declaration['child.surname']
+    facilityId = record.declaration['child.birthLocation'] ?? ''
   })
 
   test.afterAll(async () => {
@@ -64,17 +63,17 @@ test.describe
       await page.getByText('Female', { exact: true }).click()
 
       await page.getByText('Event details').click()
-      await page.locator('#child____birthLocation').fill('Shifwankula')
-      await expect(page.getByText('Shifwankula Health Post')).toBeVisible()
-      await page.getByText('Shifwankula Health Post').click()
+      await page.locator('#child____birthLocation').fill('Ibombo Rural')
+      await expect(page.getByText('Ibombo Rural Health Centre')).toBeVisible()
+      await page.getByText('Ibombo Rural Health Centre').click()
     })
 
     test('2.5.2 - Validate search and show results', async () => {
       await page.click('#search')
       await expect(page).toHaveURL(/.*\/search-result/)
-      await expect(page.url()).toContain(
-        `child.dob=${yyyy}-${mm}-${dd}&child.gender=female&child.birthLocation=${facilityId}`
-      )
+      await expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
+      await expect(page.url()).toContain(`child.gender=female`)
+      await expect(page.url()).toContain(`child.birthLocation=${facilityId}`)
       await expect(page.getByText('Search Results')).toBeVisible()
 
       const searchResult = await page.locator('#content-name').textContent()
@@ -82,11 +81,13 @@ test.describe
       await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
       await expect(page.getByText('Event: V2 birth')).toBeVisible()
       await expect(
-        page.getByText(`Child Date of birth: ${yyyy}-${mm}-${dd}`)
+        page.getByText(`Child Date of birth: 9 April 2017`)
       ).toBeVisible()
       await expect(page.getByText('Child Sex: Female')).toBeVisible()
       await expect(
-        page.getByText('Child Location of birth: Shifwankula Health Post')
+        page.getByText(
+          'Child Location of birth: Ibombo Rural Health Centre, Ibombo, Central, Farajaland'
+        )
       ).toBeVisible()
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
       await expect(page.getByText(fullNameOfChild)).toBeVisible()
@@ -95,9 +96,10 @@ test.describe
     test('2.5.3 - Validate clicking on the search edit button', async () => {
       await page.getByRole('button', { name: 'Edit' }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
-      await expect(page.url()).toContain(
-        `child.birthLocation=${facilityId}&child.dob=${yyyy}-${mm}-${dd}&child.gender=female&eventType=v2.birth`
-      )
+      await expect(page.url()).toContain(`child.birthLocation=${facilityId}`)
+      await expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
+      await expect(page.url()).toContain(`child.gender=female`)
+      await expect(page.url()).toContain(`eventType=v2.birth`)
       await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
 
       await expect(page.getByTestId('child____dob-dd')).toHaveValue(dd)
@@ -108,7 +110,7 @@ test.describe
         'Female'
       )
       await expect(page.locator('#child____birthLocation')).toHaveValue(
-        'Shifwankula Health Post'
+        'Ibombo Rural Health Centre'
       )
     })
   })

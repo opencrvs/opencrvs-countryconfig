@@ -54,18 +54,26 @@ test.describe
     test('1.5.1 - Validate Place of registration filters, Date of registration Status of Record and Time Period', async () => {
       await page.getByText('Registration details').click()
 
-      await page.locator('#event____registeredAtLocation').fill('Ibombo')
+      await page
+        .locator('#event____legalStatus____REGISTERED____createdAtLocation')
+        .fill('Ibombo')
       await expect(page.getByText('Ibombo District Office')).toBeVisible()
       await page.getByText('Ibombo District Office').click()
 
       await page
-        .locator('[data-testid="event____registeredAt-dd"]')
+        .locator(
+          '[data-testid="event____legalStatus____REGISTERED____createdAt-dd"]'
+        )
         .fill(todayDate)
       await page
-        .locator('[data-testid="event____registeredAt-mm"]')
+        .locator(
+          '[data-testid="event____legalStatus____REGISTERED____createdAt-mm"]'
+        )
         .fill(thisMonth)
       await page
-        .locator('[data-testid="event____registeredAt-yyyy"]')
+        .locator(
+          '[data-testid="event____legalStatus____REGISTERED____createdAt-yyyy"]'
+        )
         .fill(thisYear)
 
       await expect(
@@ -88,12 +96,14 @@ test.describe
     test('1.5.2 - Validate search and show results', async () => {
       await page.click('#search')
       await expect(page).toHaveURL(/.*\/search-result/)
-      // event.registeredAt=2025-05-19&
+      // event____legalStatus____REGISTERED____createdAt=2025-05-19&
       await expect(page.url()).toContain(
-        `event.registeredAt=${thisYear}-${thisMonth}-${todayDate}`
+        `event.legalStatus.REGISTERED.createdAt=${thisYear}-${thisMonth}-${todayDate}`
       )
-      // event.registeredAtLocation=ad207d45-3418-4771-af03-e0759572fcaa&
-      await expect(page.url()).toContain(`event.registeredAtLocation=`)
+      // event.legalStatus.REGISTERED.createdAtLocation=ad207d45-3418-4771-af03-e0759572fcaa&
+      await expect(page.url()).toContain(
+        `event.legalStatus.REGISTERED.createdAtLocation=`
+      )
       // event.status=REGISTERED&
       await expect(page.url()).toContain(`event.status=REGISTERED&`)
       // event.updatedAt=2025-05-12%2C2025-05-19
@@ -124,30 +134,32 @@ test.describe
     test('1.5.3 - Validate clicking on the search edit button', async () => {
       await page.getByRole('button', { name: 'Edit' }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
-      // event.registeredAt=2025-05-19&
+      // event____legalStatus____REGISTERED____createdAt=2025-05-19&
       await expect(page.url()).toContain(
-        `event.registeredAt=${thisYear}-${thisMonth}-${todayDate}`
+        `event.legalStatus.REGISTERED.createdAt=${thisYear}-${thisMonth}-${todayDate}`
       )
-      // event.registeredAtLocation=ad207d45-3418-4771-af03-e0759572fcaa&
-      await expect(page.url()).toContain(`event.registeredAtLocation=`)
+      // event.legalStatus.REGISTERED.createdAtLocation=ad207d45-3418-4771-af03-e0759572fcaa&
+      await expect(page.url()).toContain(
+        `event.legalStatus.REGISTERED.createdAtLocation=`
+      )
       // event.status=REGISTERED&
       await expect(page.url()).toContain(`event.status=REGISTERED&`)
       // event.updatedAt=2025-05-12%2C2025-05-19
       await expect(page.url()).toContain(`event.updatedAt=`)
       await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
 
-      await expect(page.locator('#event____registeredAtLocation')).toHaveValue(
-        'Ibombo District Office'
-      )
-      await expect(page.locator('#event____registeredAt-dd')).toHaveValue(
-        todayDate
-      )
-      await expect(page.locator('#event____registeredAt-mm')).toHaveValue(
-        thisMonth
-      )
-      await expect(page.locator('#event____registeredAt-yyyy')).toHaveValue(
-        thisYear
-      )
+      await expect(
+        page.locator('#event____legalStatus____REGISTERED____createdAtLocation')
+      ).toHaveValue('Ibombo District Office')
+      await expect(
+        page.locator('#event____legalStatus____REGISTERED____createdAt-dd')
+      ).toHaveValue(todayDate)
+      await expect(
+        page.locator('#event____legalStatus____REGISTERED____createdAt-mm')
+      ).toHaveValue(thisMonth)
+      await expect(
+        page.locator('#event____legalStatus____REGISTERED____createdAt-yyyy')
+      ).toHaveValue(thisYear)
     })
   })
 })
