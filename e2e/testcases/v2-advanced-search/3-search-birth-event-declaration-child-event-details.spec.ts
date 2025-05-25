@@ -1,7 +1,9 @@
 import { expect, test, type Page } from '@playwright/test'
 import { getToken, loginToV2 } from '../../helpers'
-import { createDeclaration } from '../v2-test-data/birth-declaration'
+import { createDeclaration } from '../v2-test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
+import { faker } from '@faker-js/faker'
+import { formatDateToLongString } from './utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Child's details", () => {
@@ -9,7 +11,7 @@ test.describe
   let [yyyy, mm, dd] = ['', '', '']
   let fullNameOfChild = ''
   let facilityId = ''
-
+  let record: Awaited<ReturnType<typeof createDeclaration>>
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage()
     const token = await getToken(
@@ -17,18 +19,21 @@ test.describe
       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
     )
 
-    const record: Awaited<ReturnType<typeof createDeclaration>> =
-      await createDeclaration(
-        token,
-        {
-          'child.dob': '2017-04-09',
-          //@ts-ignore
-          'child.reason': 'Other', // needed for late dob value
-          'child.gender': 'female'
-        },
-        'REGISTER',
-        'HEALTH_FACILITY'
-      )
+    record = await createDeclaration(
+      token,
+      {
+        'child.dob': faker.date
+          // Randomly chosen DOB between 2010-01-01 and 2020-12-31
+          // Ensures the created record appears on the first page of search results
+          .between({ from: '2010-01-01', to: '2020-12-31' })
+          .toISOString()
+          .split('T')[0],
+        'child.reason': 'Other', // needed for late dob value
+        'child.gender': 'female'
+      },
+      'REGISTER',
+      'HEALTH_FACILITY'
+    )
     ;[yyyy, mm, dd] = record.declaration['child.dob'].split('-')
     fullNameOfChild =
       record.declaration['child.firstname'] +
@@ -80,7 +85,9 @@ test.describe
       await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
       await expect(page.getByText('Event: V2 birth')).toBeVisible()
       await expect(
-        page.getByText(`Child's Date of birth: 9 April 2017`)
+        page.getByText(
+          `Child's Date of birth: ${formatDateToLongString(record.declaration['child.dob'])}`
+        )
       ).toBeVisible()
       await expect(page.getByText("Child's Sex: Female")).toBeVisible()
       await expect(
