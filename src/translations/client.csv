@@ -2347,6 +2347,10 @@ v2.advancedSearch.trackingId,Label for tracking ID field,Tracking ID,ID de suivi
 v2.advancedSearch.updatedAt,Label for date of update field,Time period,Période
 v2.advancedSearch.updatedAt.helperText,Helper text for date of update field,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement
 v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de recherche
+v2.birth.search.criteria.label.prefix.child,Child prefix,Child's,De l'enfant
+v2.birth.search.criteria.label.prefix.father,Father prefix,Father's,Du père
+v2.birth.search.criteria.label.prefix.informant,Informant prefix,Informant's,Du déclarant
+v2.birth.search.criteria.label.prefix.mother,Mother prefix,Mother's,De la mère
 v2.buttons.back,Back button text,Back,Retour
 v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler

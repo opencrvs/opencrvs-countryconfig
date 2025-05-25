@@ -32,8 +32,8 @@ const fatherPrefix = {
 }
 const informantPrefix = {
   id: 'v2.birth.search.criteria.label.prefix.informant',
-  defaultMessage: "Informat's",
-  description: 'Informat prefix'
+  defaultMessage: "Informant's",
+  description: 'Informant prefix'
 }
 export const advancedSearchBirth = [
   {
