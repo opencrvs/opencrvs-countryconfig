@@ -29,6 +29,12 @@ const EVENT_TYPE = 'v2.birth'
 // TODO CIHAN: use system user
 
 test.describe('POST /api/events/events/create', () => {
+  test.skip('returns HTTP 403 when user is missing scope', async () => {
+    const response = await fetchClientAPI('/api/events/events/create', 'POST')
+
+    expect(response.status).toBe(403)
+  })
+
   test('returns HTTP 400 with missing payload', async () => {
     const response = await fetchClientAPI('/api/events/events/create', 'POST')
     expect(response.status).toBe(400)
@@ -46,15 +52,14 @@ test.describe('POST /api/events/events/create', () => {
     expect(body.type).toBe(EVENT_TYPE)
     expect(body.actions.length).toBe(2)
   })
-
-  test.skip('returns HTTP 403 when user is missing scope', async () => {
-    const response = await fetchClientAPI('/api/events/events/create', 'POST')
-
-    expect(response.status).toBe(403)
-  })
 })
 
 test.describe('POST /api/events/events/notify', () => {
+  test('returns HTTP 403 when user is missing scope', async () => {
+    const response = await fetchClientAPI('/api/events/events/notify', 'POST')
+    expect(response.status).toBe(403)
+  })
+
   test('returns HTTP 400 with missing payload', async () => {
     const response = await fetchClientAPI('/api/events/events/notify', 'POST')
 
@@ -74,10 +79,5 @@ test.describe('POST /api/events/events/notify', () => {
     expect(body.actions.length).toBe(2)
 
     // TODO CIHAN: check from UI that event is created
-  })
-
-  test('returns HTTP 403 when user is missing scope', async () => {
-    const response = await fetchClientAPI('/api/events/events/notify', 'POST')
-    expect(response.status).toBe(403)
   })
 })
