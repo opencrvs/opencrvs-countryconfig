@@ -2649,7 +2649,7 @@ v2.event.birth.summary.child.placeOfBirth.value,This is the place of birth value
 v2.event.birth.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
 v2.event.birth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
 v2.event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
-v2.event.birth.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
+v2.event.birth.title,This is the title of the summary,{child.name.firstname} {child.name.surname},{child.name.firstname} {child.name.surname}
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Type,Type
 v2.event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
@@ -2681,6 +2681,7 @@ v2.event.tennis-club-membership.action.declare.form.label,This is what this form
 v2.event.tennis-club-membership.action.declare.form.review.title,Title of the form to show in review page,"{applicant.firstname, select, __EMPTY__ {Member declaration} other {{applicant.surname, select, __EMPTY__ {Member declaration} other {Member declaration for {applicant.firstname} {applicant.surname}}}}}","{applicant.firstname, select, __EMPTY__ {Déclaration de naissance} other {{applicant.surname, select, __EMPTY__ {Déclaration des membres} other {Déclaration des membres pour {applicant.firstname} {informant.surname}}}}}"
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Recommender's first name
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,Recommender's membership ID
+v2.event.tennis-club-membership.action.declare.form.section.recommender.field.name.label,This is the label for the field,Recommender's name,Recommender's name
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.none.label,This is the label for the field,No recommender,No recommender
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Recommender's surname
 v2.event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Who is recommending the applicant?

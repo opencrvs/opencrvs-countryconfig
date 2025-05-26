@@ -29,7 +29,7 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
     id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
     defaultMessage:
-      '{applicant.firstname, select, __EMPTY__ {Member declaration} other {{applicant.surname, select, __EMPTY__ {Member declaration} other {Member declaration for {applicant.firstname} {applicant.surname}}}}}',
+      '{applicant.name.firstname, select, __EMPTY__ {Member declaration} other {{applicant.name.surname, select, __EMPTY__ {Member declaration} other {Member declaration for {applicant.name.firstname} {applicant.name.surname}}}}}',
     description: 'Title of the review page'
   },
   fields: [
@@ -626,7 +626,7 @@ export const tennisClubMembershipEvent = defineConfig({
     id: 'v2.event.tennis-club-membership.label'
   },
   title: {
-    defaultMessage: '{applicant.firstname} {applicant.surname}',
+    defaultMessage: '{applicant.name.firstname} {applicant.name.surname}',
     description: 'This is the title of the summary',
     id: 'v2.event.tennis-club-membership.title'
   },
@@ -639,7 +639,7 @@ export const tennisClubMembershipEvent = defineConfig({
   summary: {
     fields: [
       {
-        id: 'applicant.firstname',
+        id: 'applicant.name',
         emptyValueMessage: {
           defaultMessage: "Applicant's first name missing",
           description:
