@@ -2331,17 +2331,27 @@ v2.advancedSearch.accordion.hide,Label for hide button when accordion is closed,
 v2.advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Voir
 v2.advancedSearch.form.recordStatusAchived,Option for form field: status of record,Archived,Archivé
 v2.advancedSearch.form.recordStatusAny,Option for form field: status of record,Any status,Tout statut
-v2.advancedSearch.form.recordStatusCertified,Option for form field: status of record,Certified,Agréé
-v2.advancedSearch.form.recordStatusCorrectionRequested,Option for form field: status of record,Correction requested,Correction demandée
-v2.advancedSearch.form.recordStatusCreated, Option for form field: status of record,Draft,Brouillon
-v2.advancedSearch.form.recordStatusInReview,Option for form field: status of record,In review,En cours d'examen
-v2.advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress,En cours
-v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit
-v2.advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour
+v2.advancedSearch.form.recordStatusArchived,Option for form field: status of record,Archived,Archivé
+v2.advancedSearch.form.recordStatusCertified,Option for form field: status of record,Certified,Certifié
+v2.advancedSearch.form.recordStatusCreated,Option for form field: status of record,Draft,Brouillon
+v2.advancedSearch.form.recordStatusDeclared,Option for form field: status of record,Declared,Déclaré
+v2.advancedSearch.form.recordStatusNotified,Option for form field: status of record,Notified,Notifié
+v2.advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Enregistré
+v2.advancedSearch.form.recordStatusRejected,Option for form field: status of record,Rejected,Rejeté
 v2.advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé
+v2.advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'enregistrement
+v2.advancedSearch.registeredAt,Label for date of registration field,Date of registration,Date d'enregistrement
+v2.advancedSearch.registeredAtLocation,Label for place of registration field,Place of registration,Lieu d'enregistrement
+v2.advancedSearch.registeredAtLocation.helperText,Helper text for place of registration field,"Search for a province, district or registration office","Rechercher une province, un district ou un bureau d'enregistrement"
 v2.advancedSearch.status,Label for status field,Status of record,Statut de l'enregistrement
 v2.advancedSearch.trackingId,Label for tracking ID field,Tracking ID,ID de suivi
+v2.advancedSearch.updatedAt,Label for date of update field,Time period,Période
+v2.advancedSearch.updatedAt.helperText,Helper text for date of update field,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement
 v2.advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultats de recherche
+v2.birth.search.criteria.label.prefix.child,Child prefix,Child's,De l'enfant
+v2.birth.search.criteria.label.prefix.father,Father prefix,Father's,Du père
+v2.birth.search.criteria.label.prefix.informant,Informant prefix,Informant's,Du déclarant
+v2.birth.search.criteria.label.prefix.mother,Mother prefix,Mother's,De la mère
 v2.buttons.back,Back button text,Back,Retour
 v2.buttons.backToReview,Back to review button text,Back to review,Retour à la revue
 v2.buttons.cancel,Cancel button text in the modal,Cancel,Annuler
@@ -2549,6 +2559,7 @@ v2.error.invalidInput,Error message when generic field is invalid,Invalid input,
 v2.error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-), des apostrophes (') et des traits de soulignement (_)"
 v2.error.required,Error message when required field is missing,Required for registration,Requis pour l'enregistrement
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
+v2.errors.notAssigned,User not assigned error toast message,You've been unassigned from the event,Vous avez été désassigné de l'événement
 v2.event.action.declare.form.section.person.field.address.country.label,This is the label for the field,Country,Pays
 v2.event.action.declare.form.section.person.field.address.number.label,This is the label for the field,Number,Numéro
 v2.event.action.declare.form.section.person.field.address.other.addressLine1.label,This is the label for the field,Address Line 1,Adresse 1
@@ -2709,6 +2720,8 @@ v2.event.tennis-club-membership.action.sdf.label,This is shown as the action nam
 v2.event.tennis-club-membership.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Validate
 v2.event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Tennis club membership application
 v2.event.tennis-club-membership.search,This is what this event is referred as in the system,Tennis club registration search,Recherche d’inscription au club de tennis
+v2.event.tennis-club-membership.search.applicants,Applicant details search field section title,Applicant's details,Détails du demandeur
+v2.event.tennis-club-membership.search.recommender,Recommender details search field section title,Recommender's details,Détails du référent
 v2.event.tennis-club-membership.summary.field.applicant.firstname.empty,Shown when the applicant's first name is missing in summary,Applicant's first name missing,Applicant's first name missing
 v2.event.tennis-club-membership.summary.field.applicant.firstname.label,Label for the applicant's first name field,Applicant's First Name,Applicant's First Name
 v2.event.tennis-club-membership.summary.field.applicant.firstname.value,Value for the applicant's first name field,{applicant.firstname},{applicant.firstname}
@@ -2895,7 +2908,6 @@ v2.view.record,Label for view record,View record,Afficher l'enregistrement
 v2.wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 v2.wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 v2.wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé
-v2.errors.notAssigned,User not assigned error toast message,"You've been unassigned from the event","Vous avez été désassigné de l'événement"
 validate.complete.declaration.action.description,,The informant will receive an with a registration number that they can use to collect the certificate.,"En envoyant pour approbation, vous confirmez que la déclaration est prête à être approuvée."
 validate.complete.declaration.action.title,,Declaration complete,Envoyer pour approbation ou rejeter ?
 validate.declaration.action.modal.description,,This declaration will be sent for approval prior to registration.,Cette déclaration sera envoyée pour approbation avant l'enregistrement.
