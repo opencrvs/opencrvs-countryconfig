@@ -1,7 +1,27 @@
 import { expect, test } from '@playwright/test'
-import { fetchClientAPI } from './api'
-import { CREDENTIALS } from '../../constants'
 import { v4 as uuidv4 } from 'uuid'
+import { CLIENT_URL } from '../../constants'
+import { CREDENTIALS } from '../../constants'
+import { getToken } from '../../helpers'
+
+async function fetchClientAPI(
+  path: string,
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  body: object = {},
+  credentials = CREDENTIALS.LOCAL_REGISTRAR
+) {
+  const token = await getToken(credentials.USERNAME, credentials.PASSWORD)
+  const url = new URL(`${CLIENT_URL}${path}`)
+
+  return fetch(url, {
+    method,
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
 
 const EVENT_TYPE = 'v2.birth'
 
@@ -27,10 +47,10 @@ test.describe('POST /api/events/events/create', () => {
     expect(body.actions.length).toBe(2)
   })
 
-  test.skip('returns HTTP 401 when user is missing scope', async () => {
+  test.skip('returns HTTP 403 when user is missing scope', async () => {
     const response = await fetchClientAPI('/api/events/events/create', 'POST')
 
-    expect(response.status).toBe(401)
+    expect(response.status).toBe(403)
   })
 })
 
@@ -56,13 +76,8 @@ test.describe('POST /api/events/events/notify', () => {
     // TODO CIHAN: check from UI that event is created
   })
 
-  test.skip('returns HTTP 401 when user is missing scope', async () => {
-    const response = await fetchClientAPI(
-      '/api/events/events/create',
-      'POST',
-      CREDENTIALS.REGISTRATION_AGENT
-    )
-
-    expect(response.status).toBe(401)
+  test('returns HTTP 403 when user is missing scope', async () => {
+    const response = await fetchClientAPI('/api/events/events/notify', 'POST')
+    expect(response.status).toBe(403)
   })
 })
