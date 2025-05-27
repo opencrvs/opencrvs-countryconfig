@@ -1390,6 +1390,7 @@ integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.supportingDescription,,Supporting description to help user make a decision and navigate the content,Description complémentaire pour aider l'utilisateur à prendre une décision et à naviguer dans le contenu.
 integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement
 integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé
+integrations.type.import,Label for import type system,Import,Import
 integrations.type.nationalId,Label for national id,National id,Identité nationale
 integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements
 integrations.type.webhook,Label for web hook,Webhook,Webhook
@@ -2359,7 +2360,7 @@ v2.buttons.change,The label for the change button,Change,Changer
 v2.buttons.changeAll,The label for the change all button,Change all,Changer tous
 v2.buttons.confirm,Confirm button,Confirm,Confirmer
 v2.buttons.continue,Continue Button Text,Continue,Continuer
-v2.buttons.edit,Edit button text,Edit,Éditer  
+v2.buttons.edit,Edit button text,Edit,Éditer
 v2.buttons.exit,Label for Exit button on EventTopBar,Exit,Quitter
 v2.buttons.print,Print button text,Print,Imprimer
 v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
@@ -2897,7 +2898,7 @@ v2.reviewAction.reject,The label for reject button of review action,Reject,Rejet
 v2.reviewAction.title,The title for review action,Declare member,Declare member
 v2.saveAndExit.desc.saveDeclarationConfirm,Description for save declaration confirmation modal,All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?,Toutes les données saisies seront conservées en toute sécurité pour de futures modifications. Êtes-vous prêt à enregistrer les modifications apportées à ce formulaire de déclaration?
 v2.saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
-v2.search.noResult,The no result text,No results,Pas de résultats  
+v2.search.noResult,The no result text,No results,Pas de résultats
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
 v2.validateAction.Declare,The label for declare button of validate action,Send for approval,Envoyer pour approbation
 v2.validateAction.Reject,The label for reject button of validate action,Reject,Rejeter
