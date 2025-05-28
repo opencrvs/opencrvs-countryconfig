@@ -25,6 +25,7 @@ async function fetchClientAPI(
 }
 
 async function createSystemUser(token: string) {
+  const name = `Test-int. ${format(new Date(), 'dd.MM. HH:mm:ss')}`
   const res = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
@@ -45,7 +46,7 @@ async function createSystemUser(token: string) {
     `,
       variables: {
         system: {
-          name: `Test-int. ${format(new Date(), 'dd.MM. HH:mm:ss')}`,
+          name,
           type: 'HEALTH'
         }
       }
@@ -55,6 +56,7 @@ async function createSystemUser(token: string) {
   const body = await res.json()
 
   return {
+    name,
     clientSecret: body.data.registerSystem.clientSecret as string,
     system: body.data.registerSystem.system as {
       clientId: string
@@ -95,13 +97,16 @@ test.describe('Events REST API', () => {
   let clientToken: string
   let clientId: string
   let systemAdminToken: string
+  let clientName: string
 
   test.beforeAll(async () => {
     systemAdminToken = await getToken(
       CREDENTIALS.NATIONAL_SYSTEM_ADMIN.USERNAME,
       CREDENTIALS.NATIONAL_SYSTEM_ADMIN.PASSWORD
     )
-    const { system, clientSecret } = await createSystemUser(systemAdminToken)
+    const { system, clientSecret, name } =
+      await createSystemUser(systemAdminToken)
+    clientName = name
     clientId = system.clientId
     clientToken = await getClientToken(clientId, clientSecret)
   })
@@ -287,8 +292,14 @@ test.describe('Events REST API', () => {
       await loginToV2(page)
       await page.getByText(await formatName(childName)).click()
       await expect(page.locator('#row_0')).toContainText('Assigned')
+      await expect(page.locator('#row_0')).toContainText(clientName)
+      await expect(page.locator('#row_0')).toContainText('Health integration')
       await expect(page.locator('#row_1')).toContainText('Notified')
+      await expect(page.locator('#row_1')).toContainText(clientName)
+      await expect(page.locator('#row_1')).toContainText('Health integration')
       await expect(page.locator('#row_2')).toContainText('Unassigned')
+      await expect(page.locator('#row_2')).toContainText(clientName)
+      await expect(page.locator('#row_2')).toContainText('Health integration')
     })
   })
 })
