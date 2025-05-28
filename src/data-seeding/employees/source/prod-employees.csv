@@ -1,2 +1,2 @@
-primaryOfficeId,givenNames,familyName,systemRole,role,mobile,username,email,password
-CRVS_OFFICE_CRVS_MGT1010080116,Ernest,Razafindrakoto,NATIONAL_SYSTEM_ADMIN,National System Admin,344789534,ernest.razafindrakoto,solo@digital.gov.mg,siecm
+primaryOfficeId,givenNames,familyName,role,mobile,username,email,password
+CRVS_OFFICE_CRVS_MGT1010080116,Ernest,Razafindrakoto,NATIONAL_SYSTEM_ADMIN,344789534,ernest.razafindrakoto,solo@digital.gov.mg,siecm

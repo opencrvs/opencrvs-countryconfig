@@ -2310,6 +2310,17 @@ user.profile.roleType,Title for roleType field,Role,Rôle/Type,Andraikitra/Karaz
 user.profile.sectionTitle.audit,Title for audit section,History,Histoire,Fanadihadiana
 user.profile.startDate,Title for startDate field,Start date,Date de début,Daty nanombohana
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur,Anaran'ilay mpiasa
+userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain,
+userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé,
+userRole.localLeader,Name for user role Local Leader,Local Leader,Leader local,
+userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Registraire local,
+userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local,
+userRole.nationalRegistrar,Name for user role National Registrar,National Registrar,Registraire national,
+userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national,
+userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances,
+userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police,
+userRole.registrationAgent,Name for user role Registration Agent,Registration Agent,Agent d'enregistrement,
+userRole.socialWorker,Name for user role Social Worker,Social Worker,Travailleur social,
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
 userSetup.complete.title,Title for the setup complete page,Account setup complete,Configuration du compte terminée,Configuration du compte terminée
 userSetup.instruction,User setup review page instruction,Check the details below to confirm your account details are correct,Vérifiez les détails ci-dessous pour confirmer que les détails de votre compte sont corrects. et faites les changements nécessaires pour confirmer que les détails de votre compte sont corrects.,Vérifiez les détails ci-dessous pour confirmer que les détails de votre compte sont corrects. et faites les changements nécessaires pour confirmer que les détails de votre compte sont corrects.
