@@ -29,13 +29,13 @@ export const conditionals = {
     },
     whenNUIUnavailable: {
       action: 'hide',
-      expression: '!$form.createNUI?.data || !window.navigator.onLine'
+      expression: '!$form?.createNUI?.data || !window.navigator.onLine'
     }
   },
   disable: {
     whenNUIDataMissing: {
       action: 'disable',
-      expression: '$form.createNUI?.data'
+      expression: '$form?.createNUI?.data'
     }
   }
 }

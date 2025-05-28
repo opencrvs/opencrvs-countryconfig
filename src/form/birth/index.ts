@@ -198,7 +198,7 @@ export const birthForm: ISerializedForm = {
       viewType: 'form',
       name: formMessageDescriptors.childTab,
       title: formMessageDescriptors.childTitle,
-      canContinue: '!$form.createNUI?.loading',
+      canContinue: '!$form?.createNUI?.loading',
       mapping: getSectionMapping('child'), // These mappings support configurable identifiers in the event-registration API
       groups: [
         {
@@ -325,17 +325,17 @@ export const birthForm: ISerializedForm = {
                 conditionals.hide.whenRegistrationAgent,
                 {
                   action: 'hide',
-                  expression: '!!$form.createNUI?.data || !!$form.iD'
+                  expression: '!!$form?.createNUI?.data || !!$form.iD'
                 },
                 {
                   action: 'disable',
                   expression:
-                    '!window.navigator.onLine || $form.createNUI?.error'
+                    '!window.navigator.onLine || $form?.createNUI?.error'
                 },
                 {
                   action: 'hide',
                   expression:
-                    '!$form.createNUI?.error && window.navigator.onLine'
+                    '!$form?.createNUI?.error && window.navigator.onLine'
                 }
               ],
               label: formMessageDescriptors.nui,
@@ -358,16 +358,16 @@ export const birthForm: ISerializedForm = {
                 conditionals.hide.whenRegistrationAgent,
                 {
                   action: 'hide',
-                  expression: '!!$form.createNUI?.data || !!$form.iD'
+                  expression: '!!$form?.createNUI?.data || !!$form.iD'
                 },
                 {
                   action: 'disable',
-                  expression: '$form.createNUI?.loading'
+                  expression: '$form?.createNUI?.loading'
                 },
                 {
                   action: 'hide',
                   expression:
-                    '$form.createNUI?.error || !window.navigator.onLine'
+                    '$form?.createNUI?.error || !window.navigator.onLine'
                 }
               ],
               label: formMessageDescriptors.nui,
@@ -382,7 +382,7 @@ export const birthForm: ISerializedForm = {
               required: true,
               custom: true,
               initialValue: {
-                expression: '$form.createNUI?.data',
+                expression: '$form?.createNUI?.data',
                 dependsOn: ['createNUI']
               },
               maxLength: 10,
@@ -392,11 +392,11 @@ export const birthForm: ISerializedForm = {
                 {
                   action: 'hide',
                   expression:
-                    '!$form.createNUI?.data && !$form.iD || !!$form.iDManual'
+                    '!$form?.createNUI?.data && !$form.iD || !!$form.iDManual'
                 },
                 {
                   action: 'disable',
-                  expression: '$form.createNUI?.data'
+                  expression: '$form?.createNUI?.data'
                 }
               ],
               validator: [
@@ -447,7 +447,7 @@ export const birthForm: ISerializedForm = {
                 {
                   action: 'hide',
                   expression:
-                    '!$form.iDManual && ((window.navigator.onLine && !$form.createNUI?.error) || (!!$form.createNUI?.data || !!$form.iD))'
+                    '!$form.iDManual && ((window.navigator.onLine && !$form?.createNUI?.error) || (!!$form?.createNUI?.data || !!$form.iD))'
                 }
               ],
               validator: [
