@@ -77,7 +77,6 @@ services:
     environment:
       - LANGUAGES=en,fr,mg
       - SENTRY_DSN=${SENTRY_DSN:-}
-      - COUNTRY=FAR
       - QA_ENV=true
       - NODE_ENV=production
 

@@ -14,12 +14,12 @@ import { birthForm } from './birth'
 import { deathForm } from './death'
 import { marriageForm } from './marriage'
 import { IForms, Event } from './types/types'
-import { fetchUserLocationHierarchy } from '@countryconfig/utils/users'
+import { fetchUserLocationHierarchy } from '@countryconfig/utils/gateway-api'
 
 export async function formHandler(req: Request): Promise<IForms> {
   const addressHierarchy = await fetchUserLocationHierarchy(
-    req.headers.authorization,
-    req.auth.credentials.sub as string
+    req.auth.credentials.sub as string,
+    { headers: req.headers }
   )
   // ====================== NOTE REGARDING MIGRATING FROM OPNCRVS v1.2 OR EARLIER ======================
 

@@ -68,6 +68,28 @@ export const getFamilyNameField = (
     mapping: getFieldMapping('familyName', certificateHandlebar)
   } satisfies SerializedFormField)
 
+export const getMiddleNameField = (
+  previewGroup: string,
+  conditionals: Conditional[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: 'middleNameEng',
+    previewGroup,
+    type: 'TEXT',
+    label: formMessageDescriptors.middleName,
+    conditionals,
+    maxLength: 32,
+    required: false,
+    initialValue: '',
+    validator: [
+      {
+        operation: 'englishOnlyNameFormat'
+      }
+    ],
+    mapping: getFieldMapping('middleName', certificateHandlebar)
+  } satisfies SerializedFormField)
+
 export const getFirstNameField = (
   previewGroup: string,
   conditionals: Conditional[],

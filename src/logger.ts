@@ -11,7 +11,13 @@
 import pino from 'pino'
 export const logger =
   process.env.NODE_ENV === 'production'
-    ? pino()
+    ? pino({
+        redact: [
+          'req.headers.authorization',
+          'req.remoteAddress',
+          "req.headers['x-real-ip']"
+        ]
+      })
     : pino({
         transport: {
           target: 'pino-pretty',
@@ -24,4 +30,22 @@ export const logger =
 
 if (process.env.NODE_ENV === 'test') {
   logger.level = 'silent'
+}
+
+export function maskEmail(email: string) {
+  if (email.length <= 10)
+    return `${email.at(0)}${'*'.repeat(email.length - 2)}${email.at(-1)}`
+
+  // The regex matches everything EXCEPT the first 3 and last 4 characters.
+  return email.replace(/(?<=.{3}).*(?=.{4})/, (match) =>
+    '*'.repeat(match.length)
+  )
+}
+
+export function maskSms(sms: string) {
+  if (sms.length <= 8)
+    return `${sms.at(0)}${'*'.repeat(sms.length - 2)}${sms.at(-1)}`
+
+  // The regex matches everything EXCEPT the first 3 and last 2 characters.
+  return sms.replace(/(?<=.{3}).*(?=.{2})/, (match) => '*'.repeat(match.length))
 }

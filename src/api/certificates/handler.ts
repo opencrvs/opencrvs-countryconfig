@@ -9,63 +9,210 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
+import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { readFileSync } from 'fs'
-import { join } from 'path'
+
+type FontFamilyTypes = {
+  normal: string
+  bold: string
+  italics: string
+  bolditalics: string
+}
+export interface ICertificateConfigData {
+  id: string
+  event: Event
+  label: {
+    id: string
+    defaultMessage: string
+    description: string
+  }
+  isDefault: boolean
+  fee: {
+    onTime: number
+    late: number
+    delayed: number
+  }
+  svgUrl: string
+  fonts?: Record<string, FontFamilyTypes>
+}
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
-  if (request.params.event) {
-    const res = readFileSync(
-      `./src/api/certificates/source/Madagascar-${request.params.event}-certificate.svg`
-    )
-      .toString()
-      .replace(
-        '{{certificateLogo}}',
-        `data:image/png;base64,${readFileSync(
-          join(__dirname, './source/Madagascar-logo.png'),
-          {
-            encoding: 'base64'
-          }
-        )}`
-      )
-
-    return h.response(res).code(200)
+  if (request.params.id) {
+    const filePath = `${__dirname}/source/${request.params.id}`
+    return h.file(filePath)
   }
-
-  const Certificates = [
+  const certificateConfigs: ICertificateConfigData[] = [
     {
-      event: 'birth',
-      fileName: 'Madagascar-birth-certificate.svg',
-      svgCode: readFileSync(
-        './src/api/certificates/source/Madagascar-birth-certificate.svg'
-      )
-        .toString()
-        .replace(
-          '{{certificateLogo}}',
-          `data:image/png;base64,${readFileSync(
-            join(__dirname, './source/Madagascar-logo.png'),
-            {
-              encoding: 'base64'
-            }
-          )}`
-        )
+      id: 'birth-certificate',
+      event: Event.Birth,
+      label: {
+        id: 'certificates.birth.certificate',
+        defaultMessage: 'Birth Certificate',
+        description: 'The label for a birth certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 5,
+        late: 7,
+        delayed: 15
+      },
+      svgUrl: '/api/countryconfig/certificates/birth-certificate.svg',
+      fonts: {
+        'Libre Baskerville': {
+          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
+          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
+          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
+          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+        }
+      }
     },
     {
-      event: 'death',
-      fileName: 'Madagascar-death-certificate.svg',
-      svgCode: readFileSync(
-        './src/api/certificates/source/Madagascar-death-certificate.svg'
-      ).toString()
+      id: 'birth-certificate-certified-copy',
+      event: Event.Birth,
+      label: {
+        id: 'certificates.birth.certificate.copy',
+        defaultMessage: 'Birth Certificate certified copy',
+        description: 'The label for a birth certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 8,
+        late: 11.5,
+        delayed: 17
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/birth-certificate-certified-copy.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
     },
     {
-      event: 'marriage',
-      fileName: 'Madagascar-marriage-certificate.svg',
-      svgCode: readFileSync(
-        './src/api/certificates/source/Madagascar-marriage-certificate.svg'
-      ).toString()
+      id: 'birth-registration-receipt',
+      event: Event.Birth,
+      label: {
+        id: 'certificates.birth.registration.receipt',
+        defaultMessage: 'Birth Registration Receipt',
+        description: 'The label for a birth registration receipt'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 0,
+        late: 12,
+        delayed: 18
+      },
+      svgUrl: '/api/countryconfig/certificates/birth-registration-receipt.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'death-certificate',
+      event: Event.Death,
+      label: {
+        id: 'certificates.death.certificate',
+        defaultMessage: 'Death Certificate',
+        description: 'The label for a death certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 3,
+        late: 5.7,
+        delayed: 12
+      },
+      svgUrl: '/api/countryconfig/certificates/death-certificate.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'death-certificate-certified-copy',
+      event: Event.Death,
+      label: {
+        id: 'certificates.death.certificate.copy',
+        defaultMessage: 'Death Certificate certified copy',
+        description: 'The label for a death certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 6,
+        late: 9,
+        delayed: 14.5
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/death-certificate-certified-copy.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'marriage-certificate',
+      event: Event.Marriage,
+      label: {
+        id: 'certificates.marriage.certificate',
+        defaultMessage: 'Marriage Certificate',
+        description: 'The label for a marriage certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 4.4,
+        late: 6,
+        delayed: 13.5
+      },
+      svgUrl: '/api/countryconfig/certificates/marriage-certificate.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'marriage-certificate-certified-copy',
+      event: Event.Marriage,
+      label: {
+        id: 'certificates.marriage.certificate.copy',
+        defaultMessage: 'Marriage Certificate certified copy',
+        description: 'The label for a marriage certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/marriage-certificate-certified-copy.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
     }
   ]
-
-  const res = JSON.stringify(Certificates)
-  return h.response(res)
+  return certificateConfigs
 }

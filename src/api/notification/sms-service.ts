@@ -60,12 +60,9 @@ const getOrCreateAwsSnsClient = () => {
     credentials: {
       accessKeyId: AWS_SNS_ACCESS_KEY_ID,
       secretAccessKey: AWS_SNS_SECRET_ACCESS_KEY
-
     },
 
     endpoint: process.env.AWS_ENDPOINT
-
-
   })
 
   return awsSnsClient

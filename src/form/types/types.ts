@@ -166,10 +166,6 @@ export enum IntegratingSystemType {
   Other = 'OTHER'
 }
 
-export declare enum THEME_MODE {
-  DARK = 'dark'
-}
-
 export interface IPreviewGroup {
   id: string
   label: MessageDescriptor
@@ -474,6 +470,7 @@ export interface ILoaderButton extends IFormFieldBase {
 export interface ITimeFormFIeld extends IFormFieldBase {
   type: typeof TIME
   ignorePlaceHolder?: boolean
+  use12HourFormat?: boolean
 }
 
 export interface INidVerificationButton extends IFormFieldBase {
@@ -608,7 +605,6 @@ export interface IFormFieldBase {
   mapping?: IFormFieldMapping
   hideAsterisk?: boolean
   hideHeader?: boolean
-  mode?: THEME_MODE
   hidden?: boolean
   previewGroup?: string
   nestedFields?: { [key: string]: IFormField[] }
@@ -632,7 +628,6 @@ export interface IFormFieldBase {
   ignoreFieldLabelOnErrorMessage?: boolean
   ignoreBottomMargin?: boolean
   customQuestionMappingId?: string
-  ignoreMediaQuery?: boolean
 }
 
 export interface Conditional {
@@ -829,7 +824,7 @@ export type IDeclarationCertificate = {
   corrector?: Partial<{ type: RelationForCertificateCorrection }>
   hasShowedVerifiedDocument?: boolean
   payments?: Payment
-  data?: string
+  certificateTemplateId?: string
 }
 
 export interface IFileValue {

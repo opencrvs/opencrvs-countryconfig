@@ -23,6 +23,7 @@ import {
   getNationality,
   otherInformantType,
   getDetailsExist,
+  // getMiddleNameField,
   getReasonNotExisting
 } from '../common/common-required-fields'
 import {
