@@ -1,4 +1,9 @@
 import * as Handlebars from 'handlebars'
+import { type IntlShape } from 'react-intl'
+
+type FactoryProps = {
+  intl: IntlShape
+}
 
 const LINE_HEIGHT = 15
 const DEFAULT_FONTSIZE = 11
@@ -483,8 +488,8 @@ export function registrationStatement(): Handlebars.HelperDelegate {
       isInformantNotLegalFather
         ? ''
         : informantTypeMapped
-        ? informantTypeMapped + ','
-        : '',
+          ? informantTypeMapped + ','
+          : '',
       ...(isInformantMotherOrFather(this)
         ? []
         : [
@@ -690,8 +695,8 @@ const convertNumberToLetterForMalagasySpecificLanguage = (num: number) => {
           : '') +
         numberToLetter
       : numberToLetter != ''
-      ? numberToLetter
-      : ' aotra'
+        ? numberToLetter
+        : ' aotra'
   return numberToLetter.trim()
 }
 
@@ -870,9 +875,9 @@ export function birthCertificateRelatedPerson(): Handlebars.HelperDelegate {
         this.motherFirstName === this.informantFirstName
           ? 'ny reniny'
           : this.fatherFamilyName === informantFamilyName &&
-            this.fatherFirstName === this.informantFirstName
-          ? 'ny rainy'
-          : `i ${informantFamilyName} ${this.informantFirstName}`
+              this.fatherFirstName === this.informantFirstName
+            ? 'ny rainy'
+            : `i ${informantFamilyName} ${this.informantFirstName}`
     }
     return informantInfo
   }
