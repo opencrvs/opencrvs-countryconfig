@@ -89,10 +89,8 @@ export const applicationConfig = {
     DEATH_REGISTRATION: false,
     MARRIAGE_REGISTRATION: false,
     EXTERNAL_VALIDATION_WORKQUEUE: false,
-    INFORMANT_SIGNATURE: false,
     PRINT_DECLARATION: true,
-    DATE_OF_BIRTH_UNKNOWN: false,
-    INFORMANT_SIGNATURE_REQUIRED: false
+    DATE_OF_BIRTH_UNKNOWN: false
   },
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'sms', // or 'sms', or '' ... You can use 'sms' for WhatsApp
