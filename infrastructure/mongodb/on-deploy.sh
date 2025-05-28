@@ -67,21 +67,19 @@ ATTEMPT=1
 
 # Initiate the replica set
 while [[ $ATTEMPT -le $MAX_RETRIES ]]; do
-    echo "🔄 Attempt $ATTEMPT to initiate replica set..."
-    
-    if mongo $(mongo_credentials) --host mongo1 --eval "rs.initiate({_id:\"rs0\",members:${MEMBERS}})"; then
-        echo "✅ Replica set initiated successfully."
-        break
-    fi
+  echo "🔄 Attempt $ATTEMPT to initiate replica set..."
+  if mongo $(mongo_credentials) --host mongo1 --eval "rs.initiate({_id:\"rs0\",members:${MEMBERS}})"; then
+    echo "✅ Replica set initiated successfully."
+    break
+  elif [[ $ATTEMPT -eq $MAX_RETRIES ]]; then
+    echo "❌ Failed to initiate replica set after $MAX_RETRIES attempts."
+    exit 1
+  fi
 
-    echo "⏳ Failed to initiate replica set. Retrying in $DELAY seconds..."
-    sleep $DELAY
-    ((ATTEMPT++))
+  echo "⏳ Failed to initiate replica set. Retrying in $DELAY seconds..."
+  sleep $DELAY
+  ((ATTEMPT++))
 done
-
-echo "🚫 Failed to initiate replica set after $MAX_RETRIES attempts."
-exit 1
-
 
 # Construct the HOST string rs0/mongo1,mongo2... based on the number of replicas
 HOST="rs0/"
