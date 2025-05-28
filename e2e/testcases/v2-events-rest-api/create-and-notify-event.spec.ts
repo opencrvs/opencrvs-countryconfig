@@ -2,8 +2,9 @@ import { expect, test } from '@playwright/test'
 import { v4 as uuidv4 } from 'uuid'
 import { CLIENT_URL, GATEWAY_HOST } from '../../constants'
 import { CREDENTIALS } from '../../constants'
-import { getClientToken, getToken } from '../../helpers'
+import { getClientToken, getRandomDate, getToken } from '../../helpers'
 import { format } from 'date-fns'
+import { faker } from '@faker-js/faker'
 
 async function fetchClientAPI(
   path: string,
@@ -23,12 +24,7 @@ async function fetchClientAPI(
   })
 }
 
-async function createSystemUser() {
-  const token = await getToken(
-    CREDENTIALS.NATIONAL_SYSTEM_ADMIN.USERNAME,
-    CREDENTIALS.NATIONAL_SYSTEM_ADMIN.PASSWORD
-  )
-
+async function createSystemUser(token: string) {
   const res = await fetch(`${GATEWAY_HOST}/graphql`, {
     method: 'POST',
     headers: {
@@ -67,22 +63,69 @@ async function createSystemUser() {
   }
 }
 
+async function deleteSystemUser(token: string, clientId: string) {
+  await fetch(`${GATEWAY_HOST}/graphql`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      operationName: 'deleteSystem',
+      variables: {
+        clientId
+      },
+      query: `mutation deleteSystem($clientId: ID!) {  deleteSystem(clientId: $clientId) {
+          _id
+          clientId
+          name
+          shaSecret
+          status
+          type
+          __typename
+        }
+      }`
+    })
+  })
+}
+
 const EVENT_TYPE = 'v2.birth'
 
 test.describe('Events REST API', () => {
   let clientToken: string
+  let clientId: string
+  let systemAdminToken: string
 
   test.beforeAll(async () => {
-    const { system, clientSecret } = await createSystemUser()
-    clientToken = await getClientToken(system.clientId, clientSecret)
+    systemAdminToken = await getToken(
+      CREDENTIALS.NATIONAL_SYSTEM_ADMIN.USERNAME,
+      CREDENTIALS.NATIONAL_SYSTEM_ADMIN.PASSWORD
+    )
+    const { system, clientSecret } = await createSystemUser(systemAdminToken)
+    clientId = system.clientId
+    clientToken = await getClientToken(clientId, clientSecret)
+  })
+
+  test.afterAll(async () => {
+    await deleteSystemUser(systemAdminToken, clientId)
   })
 
   test.describe('POST /api/events/events', () => {
-    test.skip('returns HTTP 403 when user is missing scope', async () => {
+    test('returns HTTP 401 when invalid token is used', async () => {
       const response = await fetchClientAPI(
         '/api/events/events',
         'POST',
-        clientToken
+        'foobar'
+      )
+      expect(response.status).toBe(401)
+    })
+
+    test('returns HTTP 403 when user is missing scope', async () => {
+      const response = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        // use system admin token which doesnt have required scope to create event
+        systemAdminToken
       )
 
       expect(response.status).toBe(403)
@@ -94,6 +137,20 @@ test.describe('Events REST API', () => {
         'POST',
         clientToken
       )
+
+      expect(response.status).toBe(400)
+    })
+
+    test('returns HTTP 400 with invalid payload', async () => {
+      const response = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: 'foobar'
+        }
+      )
+
       expect(response.status).toBe(400)
     })
 
@@ -117,11 +174,21 @@ test.describe('Events REST API', () => {
   })
 
   test.describe('POST /api/events/events/notifications', () => {
+    test('returns HTTP 401 when invalid token is used', async () => {
+      const response = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        'foobar'
+      )
+      expect(response.status).toBe(401)
+    })
+
     test('returns HTTP 403 when user is missing scope', async () => {
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
-        clientToken
+        // use system admin token which doesnt have required scope to create event
+        systemAdminToken
       )
       expect(response.status).toBe(403)
     })
@@ -136,9 +203,43 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(400)
     })
 
-    test('returns HTTP 200 with valid payload', async () => {
+    test('returns HTTP 400 with invalid payload', async () => {
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          type: 'foobar'
+        }
+      )
+
+      expect(response.status).toBe(400)
+    })
+
+    test('returns HTTP 404 when trying to notify a non-existing event', async () => {
+      const response = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId: uuidv4(),
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration: {
+            'child.firstname': faker.person.firstName(),
+            'child.surname': faker.person.lastName(),
+            'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
+          },
+          annotation: {}
+        }
+      )
+
+      expect(response.status).toBe(404)
+    })
+
+    test('returns HTTP 200 with valid payload', async () => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
         'POST',
         clientToken,
         {
@@ -147,7 +248,31 @@ test.describe('Events REST API', () => {
         }
       )
 
+      const createEventResponseBody = await createEventResponse.json()
+      const eventId = createEventResponseBody.id
+
+      console.log(eventId)
+
+      const response = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId,
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration: {
+            'child.firstname': faker.person.firstName(),
+            'child.surname': faker.person.lastName(),
+            'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
+          },
+          annotation: {}
+        }
+      )
+
       const body = await response.json()
+
+      console.log(JSON.stringify(body, null, 2))
 
       expect(response.status).toBe(200)
       expect(body.type).toBe(EVENT_TYPE)
