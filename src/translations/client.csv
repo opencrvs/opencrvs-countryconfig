@@ -1,4 +1,15 @@
 id,description,en,fr,mg
+action.action,Label for action button,Action,Action,
+action.archive,Label for archive record button in dropdown menu,Archive declaration,Déclaration d'archive,
+action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué à {name} chez {officeName},
+action.correct,Label for correct record button in dropdown menu,Correct record,Enregistrement correct,
+action.issue,Label for reinstate issue button in dropdown menu,Issue certificate,Délivrer un certificat,
+action.print,Label for reinstate print button in dropdown menu,Print certified copy,Imprimer une copie certifiée,
+action.reinstate,Label for reinstate record button in dropdown menu,Reisntate declaration,Déclaration de rétablissement,
+action.review.correction,Label for review correction in dropdown menu,Review correction request,Vérifier la demande de correction,
+action.review.declaration,Label for review declaration button in dropdown menu,"Review {isDuplicate, select, true{potential duplicate} other{declaration}}","Review {isDuplicate, select, true{doublon potentiel} other{déclaration}}",
+action.update,Label for reinstate update button in dropdown menu,Update declaration,Mettre à jour la déclaration,
+action.view,Label for view button in dropdown menu,View {recordOrDeclaration},"voir {recordOrDeclaration, select, record{enregistrer} other{déclaration}}",
 advancedSearch.accordion.hide,Label for hide button when accordion is closed,Hide,Cacher,Afenina
 advancedSearch.accordion.show,Label for show button when accordion is closed,Show,Afficher,Aseho
 advancedSearch.form.childDetails,The title of Child details accordion,Child details,Détails de l'enfant,Mahakasika ilay zaza
@@ -18,8 +29,11 @@ advancedSearch.form.recordStatusInReview,Option for form field: status of record
 advancedSearch.form.recordStatusInprogress,Option for form field: status of record,In progress,En cours,Andalam-pikarakarana
 advancedSearch.form.recordStatusRegistered,Option for form field: status of record,Registered,Inscrit,Voatahiry
 advancedSearch.form.recordStatusRequireUpdate,Option for form field: status of record,Requires updates,Nécessite des mises à jour,Ireo mila fanovana
+advancedSearch.form.recordStatusValidated,Option for form field: status of record,Validated,Validé,
 advancedSearch.form.registrationDetails,The title of Registration details accordion,Registration details,Détails d'inscription,Mahakasika ilay fanambarana
 advancedSearch.form.statusOfRecordLabel,Label for input Status of record,Status of record,Etat du dossier,Ny fivoaran'ilay fanambarana
+advancedSearch.form.timePeriodHelperText,Helper text for input Time period,Period of time since the record status changed,Période écoulée depuis le changement de statut de l'enregistrement,
+advancedSearch.form.timePeriodLabel,Label for input Time period,Time period,Période de temps,
 advancedSearchResult.pill.childDoB,The label for child d.o.b in active advancedSearchParams,Child d.o.b,Enfant d.o.b,Daty nahaterahan'ilay zaza
 advancedSearchResult.pill.childFirstName,The label for child firstname in active advancedSearchParams,Child firstname,Prénom de l'enfant,Fanampin'anaran'ilay zaza
 advancedSearchResult.pill.childLastName,The label for child lastname in active advancedSearchParams,Child lastname,Nom de l'enfant,Anaran'ilay zaza
@@ -43,6 +57,7 @@ advancedSearchResult.pill.regDate,The label for  registration date in active adv
 advancedSearchResult.pill.regLocation,The label for event location in active advancedSearchParams,Location,Emplacement,Toerana
 advancedSearchResult.pill.regNumber,The label for registration number in active advancedSearchParams,Registration number,Numéro d'enregistrement,Laharana azo tamin'ny nanaovana fanambarana
 advancedSearchResult.pill.registationStatus,The label for registration Status param in active advancedSearchParams,Registration status,Statut d'enregistrement,Fivoaran'ilay tranga
+advancedSearchResult.pill.timePeriod,The label for time period in active advancedSearchParams,Time period,Période de temps,
 advancedSearchResult.pill.trackingId,The label for tracking id in active advancedSearchParams,Tracking ID,Identifiant de suivi,Laharana firaketana
 advancedSearchResult.table.noResult,The label for no result in advancedSearchResult page,No result,Pas de résultat,Tsy misy valiny
 advancedSearchResult.table.searchResult,The label for search result header in advancedSearchResult page,Search results,Résultat de la recherche,Hitady ireo valiny
@@ -154,7 +169,20 @@ certificate.receipt.service.5year,,{event} registration after 5 years of event,{
 certificate.receipt.service.targetDay,,{event} registration after 45 days of event,{event}  après 45 jours de l'événement.,{event}  45 andro taty aorian'ilay tranga.
 certificate.receipt.service.targetDay.amount,,‡ß≥ 25.00,‡ß≥ 25.00,‡ß≥ 25.00
 certificate.receipt.subheader,Subheader for receipt on payment on certificate,{event} Registration after {DOBDiff} of {DOE},{event} Enregistrement après {DOBDiff} de {DOE},{event} Enregistrement après {DOBDiff} de {DOE}
+certificate.selectTemplate,Select certificate template,Type,Taper,
+certificate.selectedTemplate,Selected certificate template,Selected certificate template,Modèle de certificat sélectionné,
+certificates.birth.certificate,Birth Certificate,Birth Certificate,Acte de naissance,
+certificates.birth.certificate.copy,Birth Certificate Certified Copy,Birth Certificate Certified Copy,Copie certifiée conforme de l'acte de naissance,
+certificates.birth.registration.receipt,Birth Registration Receipt,Birth Registration Receipt,Reçu d'enregistrement de naissance,
+certificates.death.certificate,Death Certificate,Death Certificate,Certificat de décès,
+certificates.death.certificate.copy,Death Certificate Certified Copy,Death Certificate Certified Copy,Copie certifiée conforme du certificat de décès,
+certificates.marriage.certificate,Marriage Certificate,Marriage Certificate,Acte de mariage,
+certificates.marriage.certificate.copy,Marriage Certificate Certified Copy,Marriage Certificate Certified Copy,Copie certifiée conforme de l'acte de mariage,
 changeEmail.validation.msg,Phone number validation message,Must be a valid email address,Doit être une adresse e-mail valide,
+changeModal.cancel,The label for cancel button of change modal,Cancel,Annuler,
+changeModal.continue,The label for continue button of change modal,Continue,Continuer,
+changeModal.description,The description for change modal,A record will be created of any changes you make,Un enregistrement sera créé pour chaque modification que vous apporterez.,
+changeModal.title,The title for change modal,Edit declaration?,Modifier la déclaration?,
 changePhone.validation.msg,Phone number validation message,Must be a valid 10 digit number that starts with 03,Doit être un numéro valide à 10 chiffres qui commence par 03.,Doit être un numéro valide à 10 chiffres qui commence par 03.
 config.advanced.search,This is used for the advanced search,Advanced Search,Recherche avancée,Fikarohana lalindalina kokoa
 config.advanced.search.instruction,This is used for the advanced search,Select the options to build an advanced search. A minimum of two search parameters is required.,Sélectionnez les options pour construire une recherche avancée. Un minimum de deux paramètres de recherche est requis.,Mba afahana manao fikarohana lalina dia mila mameno ny mahakasika ilay zaza na ilay reniny na ilay rainy na ny fanambarana ianao
@@ -261,6 +289,10 @@ config.deathDefaultTempDesc,Label for default death certificate template,Default
 config.deathTemplate,Label for death certificate template,Death certificate,Acte de mariage,Kopian'ny fahafatesana
 config.deathUpdatedTempDesc,,Updated {deathLongDate},Mise à jour de {deathLongDate},Novana ny {deathLongDate}
 config.downloadTemplate,Download action in certificate config action menu,Download,Télécharger,Hitahiry anaty solosaina
+config.emailAllUsers.modal.supportingCopy,Label for send email all users confirmation supporting copy,User will receive emails over the next 24 hours,L'utilisateur recevra des courriels au cours des prochaines 24 heures,
+config.emailAllUsers.modal.title,Label for send email all users confirmation title,Send email to all users?,Envoyer un e-mail à tous les utilisateurs ?,
+config.emailAllUsers.subtitle,Subtitle for email all users,This email will be sent to all users who are active. Emails will be sent over the next 24 hours. Only one email can be sent per day,Cet e-mail sera envoyé à tous les utilisateurs qui sont actifs. Les courriels seront envoyés au cours des prochaines 24 heures. Un seul courriel peut être envoyé par jour,
+config.emailAllUsers.title,Title for email all users,Email all users,Envoyer un e-mail à tous les utilisateurs,
 config.eventUpdatedTempDesc,Label for updated birth certificate template,"Updated {lastModified, date, ::dd MMMM yyyy}","Mis à jour {lastModified, date, ::dd MMMM yyyy}","Novana ny {lastModified, date, ::dd MMMM yyyy}"
 config.form.addressesSettings,,,,Isan'ireo adiresy
 config.form.delete.confirmation.description,,,,Cela supprimera toutes les versions provisoires et reviendra à la configuration par défaut.
@@ -1023,6 +1055,22 @@ error.title,Error title,Oops!,Oups !,"Oadray, loza !"
 error.title.unauthorized,Error title unauthorized,Unauthorized!,Non autorisé !,Non autorisé !
 error.userListError,Error message when user list loads fails,Failed to load users,Impossible de charger les utilisateurs,Impossible de charger les utilisateurs
 error.weAreTryingToFixThisError,Error description,This page could not be found,"Ce n'est pas vous, c'est nous. C'est notre faute.","Tsy avy aminao ka, avy aminay. Fahadisoanay ka!."
+event.history.timeFormat,"MMMM dd, yyyy · hh.mm a","MMMM dd, yyyy · hh.mm a",,
+event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis,
+event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Prénom du recommandeur,
+event.tennis-club-membership.action.declare.form.section.recommender.field.id.label,This is the label for the field,Recommender's membership ID,ID d'adhésion du recommandeur,
+event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label,This is the label for the field,Recommender's surname,Nom de famille du recommandeur,
+event.tennis-club-membership.action.declare.form.section.recommender.title,This is the title of the section,Who is recommending the applicant?,Qui recommande le demandeur?,
+event.tennis-club-membership.action.declare.form.section.who.field.dob.label,This is the label for the field,Applicant's date of birth,Date de naissance du demandeur,
+event.tennis-club-membership.action.declare.form.section.who.field.firstname.label,This is the label for the field,Applicant's first name,Prénom du demandeur,
+event.tennis-club-membership.action.declare.form.section.who.field.surname.label,This is the label for the field,Applicant's surname,Nom de famille du demandeur,
+event.tennis-club-membership.action.declare.form.section.who.title,This is the title of the section,Who is applying for the membership?,Qui postule pour l'adhésion?,
+event.tennis-club-membership.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1,
+event.tennis-club-membership.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Send an application,Envoyer une demande,
+event.tennis-club-membership.label,This is what this event is referred as in the system,Tennis club membership application,Demande d'adhésion au club de tennis,
+exitModal.cancel,The label for cancel button in exit modal,Cancel,Annuler,
+exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?,Quitter sans enregistrer les modifications?,
+exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Êtes-vous sûr de vouloir quitter sans enregistrer?,
 fieldAgentHome.allUpdatesText,,Great job! You have updated all declarations,Bon travail ! Vous avez mis à jour toutes les déclarations,Tena tsara ! Efa nataonao daholo ny fanovana ireo fanambarana rehetra
 fieldAgentHome.inProgressCount,,In progress ({total}),En cours ({total}),En cours ({total})
 fieldAgentHome.queryError,The text when error ocurred loading rejected declarations,An error occurred while loading declarations,Une erreur s'est produite lors du chargement des déclarations,Une erreur s'est produite lors du chargement des déclarations
@@ -1490,9 +1538,11 @@ form.field.label.uploadFile,,Upload,Téléverser,Hikaroka
 form.field.label.urban,,Urban,Urbain,Antanan-dehibe
 form.field.label.userAttachmentSection,,Signature,Signature,Sonia
 form.field.label.userDevice,,Device,Dispositif,Dispositif
+form.field.label.userFirstName,,User's first name,Prénom de l'utilisateur,
 form.field.label.userSignatureAttachment,,User's signature,Signature de l'utilisateur,Sonian'ilay mpikirakira
 form.field.label.userSignatureAttachmentDesc,,Ask the user to sign a piece of paper and then scan or take a photo,"Demandez à l'utilisateur de signer une feuille de papier, puis scannez ou prenez une photo.","Demandez à l'utilisateur de signer une feuille de papier, puis scannez ou prenez une photo."
 form.field.label.userSignatureAttachmentTitle,,Upload signature,Joindre la signature,Ampiaraho ilay sonia
+form.field.label.userSurname,,User's surname,Nom de famille de l'utilisateur,
 form.field.label.verbalAutopsy,,Verbal autopsy,Autopsie verbale,Otopsia ambava
 form.field.label.verbalAutopsyReport,,Verbal autopsy report,Rapport d'autopsie verbal,Rapport d'autopsie verbal
 form.field.label.weightAtBirth,,Weight at birth,Poids à la naissance,Lanja teo ampahaterahana
@@ -1575,6 +1625,10 @@ form.section.information.death.bullet2,,As the legal Declarant it is important t
 form.section.information.death.bullet3,,Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,"Une fois la déclaration traitée, vous recevrez un SMS vous indiquant quand vous rendre au bureau pour retirer le certificat - Munissez-vous d'une pièce d'identité.","Raha vantany vao vita ny fanambarana, dia alefa any amin'ny firaisana ilay izy mba ho hamarinina, hahavoaray sms ianao mahakasika izany rehetra izany"
 form.section.information.death.bullet4,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and setting loans.,"Veillez à récupérer le certificat. Le certificat de décès est essentiel pour les demandes d'héritage et pour régler les affaires de la personne décédée, par exemple la fermeture des comptes bancaires et la mise en place des prêts.",Raha vantany mahavoaray sms ianao milaza fa efa azo alaina ilay kopia dia manantona ny biraon'ny firaisana. Ny kopia fahafatesana dia tena ilaina raha misy afera mikasika ilay olona maty.
 form.section.information.name,,Information,Informations,
+form.section.label.timePeriodLast30Days,Label for option of time period select: last 30 days,Last 30 days,les 30 derniers jours,
+form.section.label.timePeriodLast7Days,Label for option of time period select: last 7 days,Last 7 days,les 7 derniers jours,
+form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,Last 90 days,les 90 derniers jours,
+form.section.label.timePeriodLastYear,Label for option of time period select: last year,Last year,l'année dernière,
 form.section.marriageEvent.date,,Date of marriage,Date du mariage,
 form.section.marriageEvent.name,,Marriage event details,Détails de l'événement de mariage,
 form.section.marriageEvent.title,,Marriage details,Détails du mariage,
@@ -1676,6 +1730,7 @@ integrations.supportingDescription,,Supporting description to help user make a d
 integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement,
 integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé,
 integrations.type.nationalID,Label for national ID system client,National ID,NUI,
+integrations.type.nationalId,Label for national id,National id,Identité nationale,
 integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements,
 integrations.type.webhook,Label for web hook,Webhook,Webhook,
 integrations.uniqueKeyDescription,Label for the unique key description,These unique keys will be required by the client integrating...,Ces clés uniques seront requises par le client intégrant...,
@@ -1734,6 +1789,7 @@ navigation.declarationForms,Declaration forms label in navigation,Declaration fo
 navigation.informantNotification,Informant notifications label in navigation,Informant notifications,Notifications des déclarants,
 navigation.integration,Integration forms label in navigation,Integrations,Intégrations,
 navigation.leaderboards,Leaderboards Dashboard Section,Leaderboards,Classements,
+navigation.my-drafts,My drafts label in navigation,My drafts,,
 navigation.organisation,Organisations label in navigation,Organisation,Organisation,Sampan-draharaha
 navigation.outbox,Label for navigation item outbox,Outbox,Boîte d'envoi,Andalam-panovana
 navigation.performance,Performance label in navigation,Performance,Performance,Taha-pahavitrihana
@@ -1858,6 +1914,7 @@ print.certificate.certificatePreview,The title for certificate preview form,Cert
 print.certificate.collectPayment,The label for collect payment paragraph,"Please collect the payment, print the receipt and hand it over to the payee.","Veuillez encaisser le paiement, imprimer le reçu et le remettre au bénéficiaire.","Veuillez encaisser le paiement, imprimer le reçu et le remettre au bénéficiaire."
 print.certificate.collector.father,The label for select value when father is the collector of certificate,Father is collecting,Père,Ray
 print.certificate.collector.form.error,Form level error for collector form,Please select who is collecting the certificate,Veuillez sélectionner la personne qui collecte le certificat,"Azafady, misafidiana olona iray afaka maka an'io kopia io"
+print.certificate.collector.form.error.template,Form level error for collector form template type,Please select certificate type,Veuillez sélectionner le type de certificat,
 print.certificate.collector.idCheck.title,The title for id check component,Verify their identity,Vérifier leur identité,Hamarino azafady ilay porofo famantarana. Mitovy amin'ireto manaraka ireto ve ?
 print.certificate.collector.idCheckDialog.title,The title for the dialog when details of the collector not verified,Print without proof of ID?,Continuer sans preuve d'identité ?,Hotohizana ve na dia tsisy porofo famantarana ?
 print.certificate.collector.informant,The label for select value when informant is the collector of certificate,Informant is collecting,déclarant,Mpanambara
@@ -2095,6 +2152,19 @@ register.selectVitalEvent.registerNewEventHeading,The section heading on the pag
 register.selectVitalEvent.registerNewEventTitle,The title that appears on the select vital event page,New declaration,Nouvelle déclaration,Fanambarana vaovao
 register.selectinformant.legalGuardian,,Legal guardian,Tuteur légal,Mpiantoka Voatondro
 register.workQueue.declarations.banner,,Declarations to register in your area,Déclarations à enregistrer dans votre région,Fanambarana hotahirizina any amin'ny faritra misy anao
+registerModal.cancel,The label for cancel button of register modal,Cancel,Annuler,
+registerModal.description,The description for register modal,The declarant will be notified of this correction and a record of this decision will be recorded,Le déclarant sera informé de cette correction et un enregistrement de cette décision sera créé.,
+registerModal.register,The label for register button of register modal,Register,Enregistrer,
+registerModal.title,The title for register modal,Register the member?,Enregistrer le membre?,
+rejectModal.archive,The label for archive button of reject modal,Archive,Archiver,
+rejectModal.cancel,The label for cancel button of reject modal,Cancel,Annuler,
+rejectModal.description,The description for reject modal,Please describe the updates required to this record for follow up action.,Veuillez décrire les mises à jour nécessaires à ce dossier pour un suivi.,
+rejectModal.markAsDuplicate,The label for mark as duplicate checkbox of reject modal,Mark as a duplicate,Marquer comme doublon,
+rejectModal.sendForUpdate,The label for send For Update button of reject modal,Send For Update,Envoyer pour mise à jour,
+rejectModal.title,The title for reject modal,Reason for rejection?,Raison du rejet?,
+reloadmodal.body,Body of reload modal,There’s a new version of {app_name} available. Please update to continue.,Une nouvelle version de {app_name} est disponible. Veuillez effectuer la mise à jour pour continuer.,
+reloadmodal.button.update,Label of update button,Update,Mise à jour,
+reloadmodal.title,Title when update is available,Update available,Mise à jour disponible,
 review.actions.desc.regConfComp,,"By clicking register, you confirm that the information entered is correct and the vital event can be registered.","En cliquant sur Enregistrer, vous confirmez que les informations sont correctes et ont été vérifiées par le déclarant. le déclarant comprend qu'elles seront utilisées pour enregistrer la naissance et à des fins de planification. En enregistrant cette naissance, un certificat de naissance sera généré avec votre signature pour être délivré.",Ny fitahirizanao an'io dia midika hoe manaiky ianao fa ireo voalaza ambony ireo dia marina daholo sady efa nohamarinin'ilay mpanambara. Ilay mpanambara dia mahafantatra fa ireo voalaza ireo dia hampiasaina amin'ny firaketana fahafatesana sy amin'ny fandrindrana hafa koa. Rehefa raketinao io fahafatesana io dia midika fa hisy kopia fahafatesana hivoaka aoriana an'io miaraka amin'ny sonia anao mba ahafahany mivoaka sy manankery.
 review.actions.desc.regConfInComp,,Please add mandatory information before registering.,Des informations obligatoires sont manquantes. Veuillez ajouter ces informations afin de pouvoir terminer le processus d'enregistrement.,"Misy tsy nofenoinao ireo tsara ho fantatra izay tena tsy maintsy ilaina. Azafady, fenoy ireo tsara ho fantatra izay nobangainao ireo alohan'ny hitahirizanao io fanambarana io."
 review.actions.description,,"By clicking register, you confirm that the information entered is correct and the vital event can be registered. ","En vous enregistrant, vous confirmez que vous avez examiné cette déclaration et que vous êtes convaincu qu'elle remplit les conditions requises pour l'enregistrement.",Ny firaketana io fanambarana io dia midika hoe ianao dia manaiky fa efa nojerevanao tsara ilay fanambarana ary ianao dia resy lahatra fa mahafeno ny fepetra ilaina amin'ny firaketana azy anaty boky.
@@ -2148,6 +2218,10 @@ review.signature.delete,Label for button that deletes signature,Delete,Supprimer
 review.signature.description,Label awknowledging the correctness of the declaration,"I, the undersigned, hereby declare that the particulars in this form are true and correct to the best of my knowledge.","Je soussigné(e) déclare par la présente que les informations contenues dans ce formulaire sont, à ma connaissance, vraies et correctes.","Izaho izay manao sonia etsy ambany, dia manambara fa ireo zavatra ambarako rehetra ireo dia marina avokoa ary tsy misy diso araka izay fari-pahalalana ananako."
 review.signature.input.description,Description awknowledging the correctness of the declaration,"By signing this document with an electronic signature, I agree that such signature will be valid as handwritten signatures to the extent allowed by the laws of Farajaland.","En signant ce document avec une signature électronique, j'accepte que cette signature soit valable comme les signatures manuscrites dans la mesure oÂπ les lois du Farajaland le permettent.",Amin'ny alalan'ny fanaovako an'ity sonia elektronika ity dia manaiky aho fa ity soniako ity dia manankery eto amin'ny tany sy fanjakana Malagasy.
 review.signature.open,Label for button that opens the signature input,Sign,Signer,Soniavina
+reviewAction.description,The description for review action,"By clicking register, you confirm that the information entered is correct and the member can be registered.","En cliquant sur enregistrer, vous confirmez que les informations saisies sont correctes et que le membre peut être enregistré.",
+reviewAction.register,The label for register button of review action,Register,Enregistrer,
+reviewAction.reject,The label for reject button of review action,Reject,Rejeter,
+reviewAction.title,The title for review action,Register member,Enregistrer un membre,
 search.bookmark.error.notification,Error Notification messages for bookmark advanced search result,"Sorry, something went wrong. Please try again","Désolé, quelque chose s'est mal passé. Veuillez réessayer",
 search.bookmark.loading.notification,Loading Notification messages for bookmark advanced search result,Bookmarking your advanced search results...,Mettre en signet les résultats de votre recherche avancée...,
 search.bookmark.remove.loading.notification,Loading Notification messages for remove advanced search bookmark,Removing your advanced search bookmark...,Suppression de votre signet de recherche avancée...,
@@ -2357,6 +2431,8 @@ validations.englishOnlyNameFormat,"The error message that appears when a non Eng
 validations.facilityMustBeSelected,The error message appears when no valid facility is selected,No facility selected,Aucun établissement sélectionné,Tsy mbola nisafidy toerana ianao
 validations.greaterThanZero,The error message appears when input is less than or equal to 0,Must be a greater than zero,Doit être supérieur à zéro,Tokony ho ambonin'ny Aotra
 validations.illegalMarriageAge,The error message appears when the birth date is not old enough to register for marriage,Illegal age of marriage,Âge illégal du mariage,
+validations.invalidDate,The error message that appears when a date field is invalid,Invalid date field,Champ de date invalide,
+validations.isAgeInYearsBetween,The error message that appears when age for the given date is outside the legal age range,Age must be between {min} and {max} years,L'âge doit être compris entre {min} et {max} ans.,
 validations.isDateNotAfterDeath,The error message appears when the given date of death is not valid,Date of birth must be before date of death,La date doit être antérieure à la date de décès,Ilay daty dia tokony alohan'ilay daty nahafatesana
 validations.isDateNotBeforeBirth,The error message appears when the given date of death is not valid,Date of death must be after deceased date of birth,La date doit être postérieure à la date de naissance du défunt,Ilay daty dia tokony ho afaran'ilay daty nahafatesan'ilay olona maty
 validations.isDateNotBeforeChildBirthDate,The error message appears when the given date is before child birth date,Date must be after child birth date,La date doit être postérieure à la date de naissance de l'enfant,Ilay daty dia tokony ho afaran'ilay daty nahaterahan'ilay zaza
