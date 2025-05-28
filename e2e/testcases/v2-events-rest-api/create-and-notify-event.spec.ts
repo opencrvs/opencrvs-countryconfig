@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { CLIENT_URL, GATEWAY_HOST } from '../../constants'
 import { CREDENTIALS } from '../../constants'
 import { getClientToken, getToken } from '../../helpers'
+import { format } from 'date-fns'
 
 async function fetchClientAPI(
   path: string,
@@ -47,7 +48,10 @@ async function createSystemUser() {
       }
     `,
       variables: {
-        system: { name: `e2e-test-${uuidv4()}`, type: 'HEALTH' }
+        system: {
+          name: `E2E test integration ${format(new Date(), 'dd.MM.yyyy HH:mm:ss.SSS')}`,
+          type: 'HEALTH'
+        }
       }
     })
   })
