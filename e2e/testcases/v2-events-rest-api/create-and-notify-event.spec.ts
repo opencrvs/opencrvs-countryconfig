@@ -116,7 +116,7 @@ test.describe('Events REST API', () => {
   })
 
   test.describe('POST /api/events/events', () => {
-    test('returns HTTP 401 when invalid token is used', async () => {
+    test('HTTP 401 when invalid token is used', async () => {
       const response = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -125,7 +125,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(401)
     })
 
-    test('returns HTTP 403 when user is missing scope', async () => {
+    test('HTTP 403 when user is missing scope', async () => {
       const response = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -136,7 +136,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(403)
     })
 
-    test('returns HTTP 400 with missing payload', async () => {
+    test('HTTP 400 with missing payload', async () => {
       const response = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -146,7 +146,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(400)
     })
 
-    test('returns HTTP 400 with invalid payload', async () => {
+    test('HTTP 400 with invalid payload', async () => {
       const response = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -159,7 +159,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(400)
     })
 
-    test('returns HTTP 200 with valid payload', async () => {
+    test('HTTP 200 with valid payload', async () => {
       const response = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -176,10 +176,40 @@ test.describe('Events REST API', () => {
       expect(body.type).toBe(EVENT_TYPE)
       expect(body.actions.length).toBe(2)
     })
+
+    test('API is idempotent', async () => {
+      const transactionId = uuidv4()
+      const response1 = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId
+        }
+      )
+
+      const response2 = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId
+        }
+      )
+
+      const body1 = await response1.json()
+      const body2 = await response2.json()
+
+      expect(response1.status).toBe(200)
+      expect(response2.status).toBe(200)
+      expect(body1).toEqual(body2)
+    })
   })
 
   test.describe('POST /api/events/events/notifications', () => {
-    test('returns HTTP 401 when invalid token is used', async () => {
+    test('HTTP 401 when invalid token is used', async () => {
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
@@ -188,7 +218,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(401)
     })
 
-    test('returns HTTP 403 when user is missing scope', async () => {
+    test('HTTP 403 when user is missing scope', async () => {
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
@@ -198,7 +228,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(403)
     })
 
-    test('returns HTTP 400 with missing payload', async () => {
+    test('HTTP 400 with missing payload', async () => {
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
@@ -208,7 +238,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(400)
     })
 
-    test('returns HTTP 400 with invalid payload', async () => {
+    test('HTTP 400 with invalid payload', async () => {
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
@@ -221,7 +251,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(400)
     })
 
-    test('returns HTTP 404 when trying to notify a non-existing event', async () => {
+    test('HTTP 404 when trying to notify a non-existing event', async () => {
       const response = await fetchClientAPI(
         '/api/events/events/notifications',
         'POST',
@@ -242,7 +272,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(404)
     })
 
-    test('returns HTTP 200 with valid payload', async ({ page }) => {
+    test('HTTP 200 with valid payload', async ({ page }) => {
       const createEventResponse = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -300,6 +330,65 @@ test.describe('Events REST API', () => {
       await expect(page.locator('#row_2')).toContainText('Unassigned')
       await expect(page.locator('#row_2')).toContainText(clientName)
       await expect(page.locator('#row_2')).toContainText('Health integration')
+
+      // Open modal by clicking 'Notified' actio row
+      await page.getByText('Notified').click()
+      const modal = await page.getByTestId('event-history-modal')
+      expect(modal).toContainText('Notified')
+      expect(modal).toContainText(clientName)
+    })
+
+    test('API is idempotent', async () => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4()
+        }
+      )
+
+      const createEventResponseBody = await createEventResponse.json()
+      const eventId = createEventResponseBody.id
+
+      const childName = {
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.lastName()
+      }
+
+      const requestBody = {
+        eventId,
+        transactionId: uuidv4(),
+        type: 'NOTIFY',
+        declaration: {
+          'child.firstname': childName.firstNames,
+          'child.surname': childName.familyName,
+          'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
+        },
+        annotation: {}
+      }
+
+      const response1 = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        requestBody
+      )
+
+      const response2 = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        requestBody
+      )
+
+      const body1 = await response1.json()
+      const body2 = await response2.json()
+
+      expect(response1.status).toBe(200)
+      expect(response2.status).toBe(200)
+      expect(body1).toEqual(body2)
     })
   })
 })
