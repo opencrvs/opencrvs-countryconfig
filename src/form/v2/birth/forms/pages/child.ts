@@ -199,63 +199,15 @@ export const child = defineFormPage({
       },
       validation: [
         {
-          validator: {
-            type: 'object',
-            properties: {
-              $form: {
-                type: 'object',
-                properties: {
-                  'child.name': {
-                    type: 'object',
-                    properties: {
-                      firstname: {
-                        type: 'string',
-                        pattern: '^[0-9]+$',
-                        description: 'Only numbers are allowed.'
-                      }
-                    },
-                    required: ['firstname']
-                  }
-                },
-                required: ['child.name']
-              }
-            },
-            required: ['$form']
-          } as any,
+          validator: field('child.name').object({
+            firstname: field('firstname').isValidEnglishName(),
+            surname: field('surname').isValidEnglishName()
+          }),
           message: {
-            id: 'some.id.here',
-            defaultMessage: 'FIRSTNAME INVALID',
-            description: 'This is the error message for invalid name'
-          }
-        },
-        {
-          validator: {
-            type: 'object',
-            properties: {
-              $form: {
-                type: 'object',
-                properties: {
-                  'child.name': {
-                    type: 'object',
-                    properties: {
-                      surname: {
-                        type: 'string',
-                        pattern: '^[a-z]+$',
-                        description: 'Only lowercase a-z letters are allowed.'
-                      }
-                    },
-                    required: ['surname']
-                  }
-                },
-                required: ['child.name']
-              }
-            },
-            required: ['$form']
-          } as any,
-          message: {
-            id: 'some.other.id.here.foo',
-            defaultMessage: 'SURNAME INVALID',
-            description: 'This is the error message for invalid name'
+            defaultMessage:
+              "Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)",
+            description: 'This is the error message for invalid name',
+            id: 'v2.error.invalidName'
           }
         }
       ]
