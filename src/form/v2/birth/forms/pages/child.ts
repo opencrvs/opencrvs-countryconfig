@@ -189,6 +189,78 @@ export const child = defineFormPage({
   },
   fields: [
     {
+      id: 'child.name',
+      type: FieldType.NAME,
+      required: true,
+      label: {
+        defaultMessage: "Child's name",
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.child.field.name.label'
+      },
+      validation: [
+        {
+          validator: {
+            type: 'object',
+            properties: {
+              $form: {
+                type: 'object',
+                properties: {
+                  'child.name': {
+                    type: 'object',
+                    properties: {
+                      firstname: {
+                        type: 'string',
+                        pattern: '^[0-9]+$',
+                        description: 'Only numbers are allowed.'
+                      }
+                    },
+                    required: ['firstname']
+                  }
+                },
+                required: ['child.name']
+              }
+            },
+            required: ['$form']
+          } as any,
+          message: {
+            id: 'some.id.here',
+            defaultMessage: 'FIRSTNAME INVALID',
+            description: 'This is the error message for invalid name'
+          }
+        },
+        {
+          validator: {
+            type: 'object',
+            properties: {
+              $form: {
+                type: 'object',
+                properties: {
+                  'child.name': {
+                    type: 'object',
+                    properties: {
+                      surname: {
+                        type: 'string',
+                        pattern: '^[a-z]+$',
+                        description: 'Only lowercase a-z letters are allowed.'
+                      }
+                    },
+                    required: ['surname']
+                  }
+                },
+                required: ['child.name']
+              }
+            },
+            required: ['$form']
+          } as any,
+          message: {
+            id: 'some.other.id.here.foo',
+            defaultMessage: 'SURNAME INVALID',
+            description: 'This is the error message for invalid name'
+          }
+        }
+      ]
+    },
+    {
       id: 'child.firstname',
       type: FieldType.TEXT,
       configuration: { maxLength: MAX_NAME_LENGTH },
