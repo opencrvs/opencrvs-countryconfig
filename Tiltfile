@@ -31,14 +31,13 @@ if not os.path.exists('../infrastructure'):
 
 local_resource('README.md', cmd='awk "/For OpenCRVS Country Config Developers/{flag=1; next} /Seed data/{flag=0} flag" ../infrastructure/README.md', labels=['0.Readme'])
 
-############################################################
-# What common Tiltfile does?
-# - Group resources by label on UI: http://localhost:10350/
-include('../infrastructure/tilt/Tiltfile.common')
 
 # Load extensions for namespace and helm operations
-load('ext://namespace', 'namespace_create', 'namespace_inject')
 load('ext://helm_resource', 'helm_resource', 'helm_repo')
+load('ext://namespace', 'namespace_create', 'namespace_inject')
+load("../infrastructure/tilt/lib.tilt", "copy_secrets", "reset_environment", "seed_data")
+
+include('../infrastructure/tilt/common.tilt')
 
 # If your machine is powerful feel free to change parallel updates from default 3
 # update_settings(max_parallel_updates=3)
@@ -49,19 +48,17 @@ docker_build(countryconfig_image_name, ".",
               network="host")
 
 # Create namespaces:
-# - traefik, ingress controller (https://opencrvs.localhost)
 # - opencrvs-deps-dev, dependencies namespace
 # - opencrvs-dev, main namespace
-namespace_create('traefik')
 namespace_create(dependencies_namespace)
 namespace_create(opencrvs_namespace)
 
 
 # Install Traefik GW
-helm_repo('traefik-repo', 'https://traefik.github.io/charts', labels=['Dependencies'])
-helm_resource(
-  'traefik', 'traefik-repo/traefik', namespace='traefik', resource_deps=['traefik-repo'],
-  flags=['--values=../infrastructure/infrastructure/localhost/traefik/values.yaml'])
+# helm_repo('traefik-repo', 'https://traefik.github.io/charts', labels=['Dependencies'])
+# helm_resource(
+#   'traefik', 'traefik-repo/traefik', namespace='traefik', resource_deps=['traefik-repo'],
+#   flags=['--values=../infrastructure/infrastructure/localhost/traefik/values.yaml'])
 
 ######################################################
 # OpenCRVS Dependencies Deployment
