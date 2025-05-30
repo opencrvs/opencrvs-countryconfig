@@ -81,18 +81,13 @@ k8s_yaml(
       )
 )
 
-######################################################
-# Data management tasks:
-# - Reset database: This task is not part of helm deployment to avoid accidental data loss
-# - Seed data: is part of helm install post-deploy hook, but it is a manual task as well
-# - Run migration job, is part of helm install/upgrade post-deploy hook
-cleanup_command = "../infrastructure/infrastructure/clear-all-data.k8s.sh --dependencies-namespace {1} -o {0}".format(
-  opencrvs_namespace, dependencies_namespace
-)
-local_resource(
-    'Reset database',
-    labels=['2.Data-tasks'],
-    auto_init=False,
-    cmd=cleanup_command,
-    trigger_mode=TRIGGER_MODE_MANUAL,
-)
+#######################################################
+# Add Data Tasks to Tilt Dashboard
+reset_environment(opencrvs_namespace, opencrvs_configuration_file)
+
+seed_data(opencrvs_namespace, opencrvs_configuration_file)
+
+if security_enabled:
+    copy_secrets(dependencies_namespace, opencrvs_namespace)
+
+print("✅ Tiltfile configuration loaded successfully.")
