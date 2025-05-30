@@ -174,7 +174,7 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(200)
       expect(body.type).toBe(EVENT_TYPE)
-      expect(body.actions.length).toBe(2)
+      expect(body.actions.length).toBe(1)
     })
 
     test('API is idempotent', async () => {
@@ -312,24 +312,16 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(200)
       expect(body.type).toBe(EVENT_TYPE)
-      expect(body.actions.length).toBe(4)
+      expect(body.actions.length).toBe(2)
       expect(body.actions[0].type).toBe('CREATE')
-      expect(body.actions[1].type).toBe('ASSIGN')
-      expect(body.actions[2].type).toBe('NOTIFY')
-      expect(body.actions[3].type).toBe('UNASSIGN')
+      expect(body.actions[1].type).toBe('NOTIFY')
 
       // check that event is created in UI
       await loginToV2(page)
       await page.getByText(await formatName(childName)).click()
-      await expect(page.locator('#row_0')).toContainText('Assigned')
+      await expect(page.locator('#row_0')).toContainText('Notified')
       await expect(page.locator('#row_0')).toContainText(clientName)
       await expect(page.locator('#row_0')).toContainText('Health integration')
-      await expect(page.locator('#row_1')).toContainText('Notified')
-      await expect(page.locator('#row_1')).toContainText(clientName)
-      await expect(page.locator('#row_1')).toContainText('Health integration')
-      await expect(page.locator('#row_2')).toContainText('Unassigned')
-      await expect(page.locator('#row_2')).toContainText(clientName)
-      await expect(page.locator('#row_2')).toContainText('Health integration')
 
       // Open modal by clicking 'Notified' actio row
       await page.getByText('Notified').click()
