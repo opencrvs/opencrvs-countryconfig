@@ -1,14 +1,4 @@
-/*
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at https://mozilla.org/MPL/2.0/.
- *
- * OpenCRVS is also distributed under the terms of the Civil Registration
- * & Healthcare Disclaimer located at http://opencrvs.org/license.
- *
- * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
- */
-
+import { SEVEN_DAYS_IN_MILISECOND } from '@countryconfig/constants'
 import { defineWorkqueues, event, user } from '@opencrvs/toolkit/events'
 
 export const Workqueues = defineWorkqueues([
@@ -20,10 +10,7 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'In progress',
       description: 'Title of in progress workqueue'
     },
-    query: {
-      type: 'and',
-      clauses: []
-    },
+    query: {},
     actions: [
       {
         type: 'VALIDATE',
@@ -39,10 +26,7 @@ export const Workqueues = defineWorkqueues([
       defaultMessage: 'Correction requested',
       description: 'Title of correction requested workqueue'
     },
-    query: {
-      type: 'and',
-      clauses: []
-    },
+    query: {},
     actions: [
       {
         type: 'REVIEW_CORRECTION',
@@ -78,10 +62,7 @@ export const Workqueues = defineWorkqueues([
       }
     ],
     actions: [],
-    query: {
-      type: 'and',
-      clauses: []
-    }
+    query: {}
   },
 
   {
@@ -93,12 +74,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of assigned to you workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          assignedTo: { type: 'exact', term: user('id') }
-        }
-      ]
+      assignedTo: { type: 'exact', term: user('id') }
     },
     actions: [
       {
@@ -116,17 +92,12 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of recent workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          updatedBy: { type: 'exact', term: user('id') },
-          updatedAt: {
-            type: 'range',
-            gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
-            lte: new Date(Date.now()).toISOString()
-          }
-        }
-      ]
+      updatedBy: { type: 'exact', term: user('id') },
+      updatedAt: {
+        type: 'range',
+        gte: new Date(Date.now() - SEVEN_DAYS_IN_MILISECOND).toISOString(),
+        lte: new Date(Date.now()).toISOString()
+      }
     },
     actions: [
       {
@@ -144,12 +115,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of notifications workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          status: { type: 'exact', term: 'NOTIFIED' }
-        }
-      ]
+      status: { type: 'exact', term: 'NOTIFIED' }
     },
     actions: [
       {
@@ -167,13 +133,8 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for review workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          status: { type: 'anyOf', terms: ['DECLARED'] },
-          createdBy: { type: 'exact', term: user('id') }
-        }
-      ]
+      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
+      createdBy: { type: 'exact', term: user('id') }
     },
     actions: [
       {
@@ -191,13 +152,8 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready for review workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          status: { type: 'anyOf', terms: ['DECLARED'] },
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
-        }
-      ]
+      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
+      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -215,13 +171,8 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready for review (all) workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          status: { type: 'anyOf', terms: ['DECLARED'] },
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
-        }
-      ]
+      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED', 'VALIDATED'] },
+      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -239,12 +190,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of requires updates workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
-        }
-      ]
+      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -262,12 +208,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for approval workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          createdBy: { type: 'exact', term: user('id') }
-        }
-      ]
+      updatedBy: { type: 'exact', term: user('id') }
     },
     actions: [
       {
@@ -285,12 +226,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of in external validation workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
-        }
-      ]
+      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -308,12 +244,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready to print workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
-        }
-      ]
+      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -331,12 +262,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready to issue workqueue'
     },
     query: {
-      type: 'and',
-      clauses: [
-        {
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
-        }
-      ]
+      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {

@@ -223,7 +223,6 @@ user $AUTH_REDIS_USERNAME on >$AUTH_REDIS_PASSWORD ~* +@all
 user $WEBHOOKS_REDIS_USERNAME on >$WEBHOOKS_REDIS_PASSWORD ~* +@all
 """ > $INFRASTRUCTURE_DIRECTORY/redis-acl.conf
   echo "Redis acl saved to $INFRASTRUCTURE_DIRECTORY/redis-acl.conf"
-  cat $INFRASTRUCTURE_DIRECTORY/redis-acl.conf
 }
 
 # Takes in a space separated string of docker-compose.yml files
