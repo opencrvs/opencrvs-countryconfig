@@ -1,6 +1,16 @@
 name: Provision environment
-run-name: Provision ${{ github.event.inputs.environment }}
+run-name: Provision ${{ inputs.environment }}
 on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: Environment to deploy to
+        required: true
+      tag:
+        type: string
+        description: Environment to deploy to
+        default: all
   workflow_dispatch:
     inputs:
       environment:
@@ -65,7 +75,7 @@ jobs:
       SSH_KEY: ${{ secrets.SSH_KEY }}
   get-production-encryption-key:
     name: Get production backup encryption key
-    if: github.event.inputs.environment == 'staging'
+    if: inputs.environment == 'staging'
     uses: ./.github/workflows/get-secret-from-environment.yml
     with:
       secret_name: 'BACKUP_ENCRYPTION_PASSPHRASE'
@@ -75,8 +85,8 @@ jobs:
       encryption_key: ${{ secrets.GH_ENCRYPTION_PASSWORD }}
       BACKUP_ENCRYPTION_PASSPHRASE: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
   provision:
-    name: Provision ${{ github.event.inputs.environment }}
-    environment: ${{ github.event.inputs.environment }}
+    name: Provision ${{ inputs.environment }}
+    environment: ${{ inputs.environment }}
     needs: [get-backup-ssh-key, get-production-encryption-key, get-jump-ssh-key]
     if: always()
     runs-on: ubuntu-24.04
@@ -88,9 +98,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
           path: './${{ github.event.repository.name }}'
       - name: Insert production encryption key to environment variables
-        if: github.event.inputs.environment == 'staging' && needs.get-production-encryption-key.outputs.environment_exists == 'true'
+        if: inputs.environment == 'staging' && needs.get-production-encryption-key.outputs.environment_exists == 'true'
         run: |
           echo "${{ needs.get-production-encryption-key.outputs.secret_value }}" | base64 --decode | \
           openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}" -out /tmp/backup_encryption_key
@@ -145,7 +156,7 @@ jobs:
       - name: Check if backup environment if configured in inventory file
         if: needs.get-backup-ssh-key.outputs.environment_exists != 'true'
         run: |
-          FILE=./${{ github.event.repository.name }}/infrastructure/server-setup/inventory/${{ github.event.inputs.environment }}.yml
+          FILE=./${{ github.event.repository.name }}/infrastructure/server-setup/inventory/${{ inputs.environment }}.yml
           if grep -q '^[[:blank:]]*backups:[[:blank:]]*$' "$FILE"; then
             echo "Your inventory contains configuration for either a backup target or backup source."
             echo "If you are upgrading OpenCRVS, please start by running environment creator script for the backup server"
@@ -167,6 +178,6 @@ jobs:
           directory: ${{ github.event.repository.name }}/infrastructure/server-setup
           options: |
             --verbose
-            --inventory inventory/${{ github.event.inputs.environment }}.yml
+            --inventory inventory/${{ inputs.environment }}.yml
             ${{ inputs.tag != 'all' && format('--tags={0}', inputs.tag) || ''}}
             --extra-vars ""${{ steps.ansible-variables.outputs.EXTRA_VARS }}""

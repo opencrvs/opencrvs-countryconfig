@@ -32,7 +32,8 @@ jobs:
       - name: Clone country config resource package
         uses: actions/checkout@v3
         with:
-          fetch-depth: 1
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
           path: './${{ github.event.repository.name }}'
 
       - name: Read known hosts
