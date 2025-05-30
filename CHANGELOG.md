@@ -1,7 +1,7 @@
 # Changelog
 
 
-## 1.7.2 Release candidate
+## 1.7.2
 
 ### Bugfixes
 
