@@ -55,6 +55,7 @@ export const certificateHandlebars = {
   weightAtBirth: 'weightAtBirth',
   birthType: 'birthType',
   childFirstName: 'childFirstName',
+  childMiddleName: 'childMiddleName',
   childFamilyName: 'childFamilyName',
   childGender: 'childGender',
   eventDate: 'eventDate',
