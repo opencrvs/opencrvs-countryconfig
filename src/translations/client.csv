@@ -1007,6 +1007,7 @@ form.field.label.fileSizeError,,File size must be less than 2MB,La taille du fic
 form.field.label.fileUploadError,,{type} supported image only,{type} format d'images accepté
 form.field.label.firstName,,First name(s),Prénom(s)
 form.field.label.firstNames,,First name(s),Prénom(s)
+form.field.label.fullHonorificName,,Full Honorific Name,Nom complet avec titre
 form.field.label.healthInstitution,,Health Institution,Institution de santé
 form.field.label.hospital,,Hospital,Hôpital
 form.field.label.iD,,ID Number,Numéro d'identification
