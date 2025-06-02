@@ -1391,6 +1391,7 @@ integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.supportingDescription,,Supporting description to help user make a decision and navigate the content,Description complémentaire pour aider l'utilisateur à prendre une décision et à naviguer dans le contenu.
 integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement
 integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé
+integrations.type.import,Label for import type system,Import,Importer
 integrations.type.nationalId,Label for national id,National id,Identité nationale
 integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements
 integrations.type.webhook,Label for web hook,Webhook,Webhook
@@ -2626,7 +2627,7 @@ v2.event.birth.action.declare.form.section.person.field.brn.label,This is the la
 v2.event.birth.action.declare.form.section.person.field.dob.error,This is the error message for invalid date,Must be a valid birth date,Doit être une date de naissance valide
 v2.event.birth.action.declare.form.section.person.field.dob.label,This is the label for the field,Date of birth,Date de naissance
 v2.event.birth.action.declare.form.section.person.field.educationalAttainment.label,This is the label for the field,Level of education,Niveau d'éducation
-v2.event.birth.action.declare.form.section.person.field.firstname.label,This is the label for the field,First name(s),Prénom(s) dans un jeu de caractères par défaut autre que l'anglais
+v2.event.birth.action.declare.form.section.person.field.firstname.label,This is the label for the field,First name(s),Prénom(s)
 v2.event.birth.action.declare.form.section.person.field.idType.label,This is the label for the field,Type of ID,Type d'identification
 v2.event.birth.action.declare.form.section.person.field.maritalStatus.label,This is the label for the field,Marital Status,Marital Status
 v2.event.birth.action.declare.form.section.person.field.nationality.label,This is the label for the field,Nationality,Nationalité
@@ -2649,12 +2650,13 @@ v2.event.birth.summary.child.placeOfBirth.value,This is the place of birth value
 v2.event.birth.summary.informant.contact.empty,This is shown when there is no informant information,No contact details provided,Pas de coordonnées fournies
 v2.event.birth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
 v2.event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
-v2.event.birth.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
+v2.event.birth.title,This is the title of the summary,{child.name.firstname} {child.name.surname},{child.name.firstname} {child.name.surname}
 v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Type,Type
 v2.event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
 v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
 v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} SOCIAL_WORKER {Field Agent} REGISTRATION_AGENT {Registration Agent} other {Unknown}}"," {role, select, LOCAL_REGISTRAR {Registraire local} SOCIAL_WORKER {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} other{Inconnu}}"
+v2.event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration du système
 v2.event.summary.assignedTo.empty,Not assigned message,Not assigned,Non assigné
 v2.event.summary.assignedTo.label,Assigned to label,Assigned to,Assigné à
 v2.event.summary.assignedTo.value,Assigned to value,{event.assignedTo},{event.assignedTo}
@@ -2765,6 +2767,8 @@ v2.field.address.town.label,Label for town in address,Town,Ville
 v2.field.address.urbanOrRural.label,Label for selecting between urban or rural,Urban or Rural,Urbain ou rural
 v2.field.address.village.label,Label for village in address,Village,Village
 v2.field.address.zipCode.label,Label for ZIP code in address,ZIP Code,Code postal
+v2.field.name.firstname.label,This is the label for the firstname field,First name(s),Prénom(s)
+v2.field.name.surname.label,This is the label for the surname field,Last name,Nom(s)
 v2.file.upload.fileSize.error,Error message when the selected file is too large,File size must be less than {maxSize}mb,La taille du fichier doit être inférieure à {maxSize}M
 v2.file.upload.fileType.error,Error message when the selected file type is not supported,File format not supported. Please attach {types} (max {maxSize}mb),Format de fichier non pris en charge. Veuillez joindre un {types} (max {maxSize}mb)
 v2.form.birth.child.title,Form section title for Child,Child's details,information de l'enfant

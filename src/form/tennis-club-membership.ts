@@ -83,7 +83,22 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             description: 'This is the title for the name field',
             id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.name.label'
           },
-          required: true
+          hideLabel: true,
+          required: true,
+          validation: [
+            {
+              validator: field('applicant.name').object({
+                firstname: field('firstname').isValidEnglishName(),
+                surname: field('surname').isValidEnglishName()
+              }),
+              message: {
+                defaultMessage:
+                  "Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)",
+                description: 'This is the error message for invalid name',
+                id: 'v2.error.invalidName'
+              }
+            }
+          ]
         },
         {
           id: 'applicant.dob',
