@@ -5,11 +5,11 @@
 ### New features
 - Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
-## 1.7.2 Release candidate
+## 1.7.2
 
 ### Bug fixes
 
-- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369((https://github.com/opencrvs/opencrvs-core/issues/9369))
+- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369](https://github.com/opencrvs/opencrvs-core/issues/9369)
 - InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
 ```
 partial write: max-values-per-tag limit exceeded (100000/100000)
@@ -198,7 +198,7 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 
 ### Breaking changes
 
-- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
+- Add constant.humanName to allow countries to customise the format of the full name in the system for `sytem users` and `citizens` e.g. `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g. no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
 ## 1.6.2
 
