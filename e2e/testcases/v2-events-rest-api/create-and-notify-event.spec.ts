@@ -3,8 +3,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { CLIENT_URL, GATEWAY_HOST } from '../../constants'
 import { CREDENTIALS } from '../../constants'
 import { formatName, getClientToken, getToken, loginToV2 } from '../../helpers'
-import { format } from 'date-fns'
+import { format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
+import { selectAction } from '../../v2-utils'
 
 async function fetchClientAPI(
   path: string,
@@ -174,7 +175,7 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(200)
       expect(body.type).toBe(EVENT_TYPE)
-      expect(body.actions.length).toBe(2)
+      expect(body.actions.length).toBe(1)
     })
 
     test('API is idempotent', async () => {
@@ -263,7 +264,7 @@ test.describe('Events REST API', () => {
           declaration: {
             'child.firstname': faker.person.firstName(),
             'child.surname': faker.person.lastName(),
-            'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
+            'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
           },
           annotation: {}
         }
@@ -302,7 +303,7 @@ test.describe('Events REST API', () => {
           declaration: {
             'child.firstname': childName.firstNames,
             'child.surname': childName.familyName,
-            'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
+            'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
           },
           annotation: {}
         }
@@ -312,24 +313,16 @@ test.describe('Events REST API', () => {
 
       expect(response.status).toBe(200)
       expect(body.type).toBe(EVENT_TYPE)
-      expect(body.actions.length).toBe(4)
+      expect(body.actions.length).toBe(2)
       expect(body.actions[0].type).toBe('CREATE')
-      expect(body.actions[1].type).toBe('ASSIGN')
-      expect(body.actions[2].type).toBe('NOTIFY')
-      expect(body.actions[3].type).toBe('UNASSIGN')
+      expect(body.actions[1].type).toBe('NOTIFY')
 
       // check that event is created in UI
       await loginToV2(page)
       await page.getByText(await formatName(childName)).click()
-      await expect(page.locator('#row_0')).toContainText('Assigned')
+      await expect(page.locator('#row_0')).toContainText('Notified')
       await expect(page.locator('#row_0')).toContainText(clientName)
       await expect(page.locator('#row_0')).toContainText('Health integration')
-      await expect(page.locator('#row_1')).toContainText('Notified')
-      await expect(page.locator('#row_1')).toContainText(clientName)
-      await expect(page.locator('#row_1')).toContainText('Health integration')
-      await expect(page.locator('#row_2')).toContainText('Unassigned')
-      await expect(page.locator('#row_2')).toContainText(clientName)
-      await expect(page.locator('#row_2')).toContainText('Health integration')
 
       // Open modal by clicking 'Notified' actio row
       await page.getByText('Notified').click()
@@ -364,7 +357,7 @@ test.describe('Events REST API', () => {
         declaration: {
           'child.firstname': childName.firstNames,
           'child.surname': childName.familyName,
-          'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
+          'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
         },
         annotation: {}
       }
@@ -389,6 +382,62 @@ test.describe('Events REST API', () => {
       expect(response1.status).toBe(200)
       expect(response2.status).toBe(200)
       expect(body1).toEqual(body2)
+    })
+
+    test('user can register event notified by integration', async ({
+      page
+    }) => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4()
+        }
+      )
+
+      const createEventResponseBody = await createEventResponse.json()
+      const eventId = createEventResponseBody.id
+
+      const childName = {
+        firstNames: faker.person.firstName(),
+        familyName: faker.person.lastName()
+      }
+
+      await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId,
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration: {
+            'child.firstname': childName.firstNames,
+            'child.surname': childName.familyName,
+            'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
+          },
+          annotation: {}
+        }
+      )
+
+      await loginToV2(page)
+      await page.getByText(await formatName(childName)).click()
+      await selectAction(page, 'Validate')
+      await page
+        .locator('#Accordion_child-accordion-header')
+        .getByRole('button', { name: 'Change all', exact: true })
+        .click()
+
+      await page.getByRole('button', { name: 'Continue', exact: true }).click()
+
+      await expect(page.locator('#child____firstname')).toHaveValue(
+        childName.firstNames
+      )
+      await expect(page.locator('#child____surname')).toHaveValue(
+        childName.familyName
+      )
     })
   })
 })
