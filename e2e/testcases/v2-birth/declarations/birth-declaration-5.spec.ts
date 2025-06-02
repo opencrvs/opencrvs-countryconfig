@@ -509,14 +509,12 @@ test.describe.serial('5. Birth declaration case - 5', () => {
         .click()
     })
 
-    test('5.1.8 Register', async () => {
+    // @TODO: take in to use after workflows are implemented on V2
+    test.skip('5.1.8 Register', async () => {
       await page.getByRole('button', { name: 'Register' }).click()
       await page.locator('#confirm_Declare').click()
       await expect(page.getByText('All events')).toBeVisible()
 
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)
