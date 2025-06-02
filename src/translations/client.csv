@@ -832,7 +832,7 @@ form.field.SearchField.modalTitle,,"{fieldName, select, registrationOffice {Assi
 form.field.SearchField.officeLocationId,,Id: {locationId},Id : {locationId}
 form.field.SearchField.placeHolderText,,Search,Recherche
 form.field.dateRangepicker.checkbox.dateLabel,,{rangeStart} to {rangeEnd},{rangeStart} à {rangeEnd}
-form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,Le numéro d'identification national doit être uniquement numérique et comporter 10 chiffres
+form.field.helpertext.nid,Helper text for nid input field,The National ID can only be numeric and must be 10 digits long,The National ID can only be numeric and must be 10 digits long
 form.field.hideLabel,Button to hide section,Hide,Cacher
 form.field.label.NID,,NID,NID
 form.field.label.NIDNetErr,,The request to the NID system was unsuccessful. Please try again with a better connection.,La demande au système NID n'a pas abouti. Veuillez réessayer avec une meilleure connexion.
@@ -1192,7 +1192,6 @@ form.field.label.someoneElse,Other Label,Someone else,Quelqu'un d'autre
 form.field.label.someoneElseCollector,,Print and issue to someone else,Imprimer et remettre à quelqu'un d'autre
 form.field.label.spouseDetailsExist,,Spouse's details are not available,Pas d'information sur le conjoint
 form.field.label.state,Label for State,Province,Province
-form.field.label.totalFees,Label for input Reason for Change,,
 form.field.label.typeOfDocument,,Choose type of supporting document,Choisissez le type de document
 form.field.label.typeOfId,,Type of ID,Type d'identification
 form.field.label.typeOfMarriage,,Type of marriage,Type de mariage
@@ -1218,7 +1217,7 @@ form.field.label.whatDocToUpload,,Which document type are you uploading?,Quel ty
 form.field.nidNotVerified,,Authenticate,Authentifier
 form.field.nidNotVerifiedReviewSection,,Unauthenticated,Non authentifié
 form.field.nidOffline,,National ID authentication is currently not available offline.,L'authentification de la carte d'identité nationale n'est actuellement pas disponible hors ligne.
-form.field.nidVerificationOngoing,Label for indicating offline status for the user. NID verification is not currently available offline.,National ID authentication is currently not available offline.,L'authentification de l'identifiant national n'est actuellement pas disponible hors ligne
+form.field.nidVerificationOngoing,Label for indicating offline status for the user. NID verification is not currently available offline.,National ID authentication is currently not available offline.,National ID authentication is currently not available offline.
 form.field.nidVerified,,Authenticated,Authentifié
 form.field.previewGroups.primaryAddress,,Usual place of residence,Adresse résidentielle
 form.field.previewGroups.secondaryAddress,,Secondary address,Adresse secondaire
@@ -1799,7 +1798,7 @@ phone.label.changeEmail,Change email address label,What is your new email?,Quell
 phone.label.changeNumber,Change phone number label,Enter new number,Quel est votre nouveau numéro ?
 phone.label.confirmation,Confirmation phone number message,A verification code has been sent to {num},Un SMS de confirmation a été envoyé à {num}.
 phone.label.verify,Verify phone number label,Enter 6 digit verification code,Entrez le code de vérification à 6 chiffres
-phone.start,Should starts with,0(4|5),0(4|5)
+phone.start,,0(4|5),0(4|5)
 print.cert.coll.id.actions.cancel,The for the dialog when details of the collector not verified,Cancel,Annuler
 print.cert.coll.id.actions.send,The for the dialog when details of the collector not verified,Confirm,Confirmer
 print.cert.coll.id.description,The description for the dialog when details of the collector not verified,"Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector","Sachez que si vous continuez, vous serez responsable de l'émission d'un certificat sans la preuve d'identité nécessaire du collecteur."
@@ -1898,12 +1897,12 @@ recordAudit.regAction.corrected,,Record corrected,Enregistrement corrigé
 recordAudit.regAction.downloaded,,Retrieved,Récupéré par
 recordAudit.regAction.flaggedAsPotentialDuplicate,,Flagged as potential duplicate,Marqué comme doublon potentiel
 recordAudit.regAction.markedAsDuplicate,,Marked as a duplicate,Marqué comme un doublon
-recordAudit.regAction.markedAsNotDuplicate,Marked not a duplicate status message for record audit,Marked not a duplicate,Marqué comme non dupliqué
+recordAudit.regAction.markedAsNotDuplicate,Marked not a duplicate status message for record audit,Marked not a duplicate,Marked not a duplicate
 recordAudit.regAction.reinstated,,"Reinstated to {regStatus, select, validated{ready for review} in_progress{in progress} declared{ready for review} rejected{requires updates} other{}}","Réintégré à {regStatus, select, validated{prêt pour la révision} in_progress{en cours} declared{prêt pour la révision} rejected{nécessite des mises à jour} other{}}"
 recordAudit.regAction.rejectedCorrection,,Correction rejected,Correction rejetée
 recordAudit.regAction.requestedCorrection,,Correction requested,Correction demandée
 recordAudit.regAction.unassigned,,Unassigned,Non assigné
-recordAudit.regAction.verified,Verified action,Certificate verified,Certificat vérifié
+recordAudit.regAction.verified,Verified action,Certificate verified,Certificate verified
 recordAudit.regAction.viewed,,Viewed,Vu
 recordAudit.regStatus.archived,,Archived,Archivé
 recordAudit.regStatus.certified,,Certified,Certifié
@@ -2292,16 +2291,18 @@ user.profile.roleType,Title for roleType field,Role,Rôle/Type
 user.profile.sectionTitle.audit,Title for audit section,History,Historique
 user.profile.startDate,Title for startDate field,Start date,Date de début
 user.profile.userName,Title for userName field,Username,Nom d'utilisateur
+userRole.administrator,Name for user role Administrator,Administrator,Administrateur
+userRole.communityLeader, Name for user role Community Leader,Community Leader,Leader communautaire
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,Agent de terrain
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,Personnel de santé
+userRole.hospitalClerk, Name for user role Hospital Clerk, Hospital Clerk,Clerk d'hôpital
 userRole.localLeader,Name for user role Local Leader,Local Leader,Leader local
 userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,Registraire local
-userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,Administrateur système local
-userRole.nationalRegistrar,Name for user role National Registrar,National Registrar,Registraire national
-userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,Administrateur système national
-userRole.performanceManager,Name for user role Performance Manager,Performance Manager,Gestion des performances
+userRole.nationalAdministrator,Name for user role National Administrator,National Administrator,Administrateur national
+userRole.operationsManager,Name for user role Operations Manager,Operations Manager,Responsable des opérations
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,Officier de police
-userRole.registrationAgent,Name for user role Registration Agent,Registration Agent,Agent d'enregistrement
+userRole.registrarGeneral, Name for user role Registrar General,Registrar General,Registraire général
+userRole.registrationOfficer,Name for user role Registration Officer,Registration Officer,Agent d'enregistrement
 userRole.socialWorker,Name for user role Social Worker,Social Worker,Travailleur social
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,Connectez-vous maintenant à votre compte avec votre nom d'utilisateur et votre mot de passe nouvellement créé.
 userSetup.complete.title,Title for the setup complete page,Account setup complete,Configuration du compte terminée
@@ -2712,6 +2713,7 @@ v2.event.tennis-club-membership.action.form.section.idTypeOther.label,Field for 
 v2.event.tennis-club-membership.action.form.section.lastName.label,This is the label for the last name field,Last Name,Last Name
 v2.event.tennis-club-membership.action.form.section.passportDetails.label,Field for entering Passport details,Passport Details,Passport Details
 v2.event.tennis-club-membership.action.form.section.refugeeNumberDetails.label,Field for entering Refugee Number details,Refugee Number Details,Refugee Number Details
+v2.event.tennis-club-membership.action.form.section.relationshipToChild.label,This is the label for the relationship to member field,Relationship to Child,Relationship to Child
 v2.event.tennis-club-membership.action.form.section.relationshipToMember.label,This is the label for the relationship to member field,Relationship to Member,Relationship to Member
 v2.event.tennis-club-membership.action.form.section.signedAffidavit.label,This is the label for uploading a signed affidavit,Signed Affidavit (Optional),Signed Affidavit (Optional)
 v2.event.tennis-club-membership.action.register.label,This is shown as the action name anywhere the user can trigger the action from,Register,Enregistrer
@@ -2975,6 +2977,9 @@ verifyCertificate.successTitle,title for success alert,Valid QR code,Code QR val
 verifyCertificate.successUrl,title for success alert for url validation,URL Verification,Vérification des URL
 verifyCertificate.timeOut,message when time out after few minute,You been timed out,Délais expirée
 verifyCertificate.toastMessage,Message for the toast when time spend 1 minute,"After verifying the certificate, please close the browser window","Après avoir vérifié le certificat, veuillez fermer la fenêtre du navigateur."
+views.idReader.label.eSignet,E-signet button label,Authenticate with e-Signet,S'authentifier avec e-Signet
+views.idReader.label.manualInput,Label that shows below the divider on the id reader component,Complete fields below,Complétez les champs ci-dessous
+views.idReader.label.or,Label that shows on the divider,Or,Ou
 views.idVerification.banner.actions.reset,,Reset,Réinitialiser
 views.idVerification.banner.actions.revoke,,Revoke,Révoquer
 views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.",Cette identité a été authentifiée avec succès avec le système national d'identité de Farajaland.
