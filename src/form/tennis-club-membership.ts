@@ -21,9 +21,9 @@ import {
   field,
   event
 } from '@opencrvs/toolkit/events'
-
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
+import { statusOptions, timePeriodOptions } from './EventMetadataSearchOptions'
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
@@ -629,89 +629,6 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   ]
 })
 
-const statusOptions = [
-  {
-    value: 'ALL',
-    label: {
-      defaultMessage: 'Any status',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusAny'
-    }
-  },
-  {
-    value: 'IN_PROGRESS',
-    label: {
-      defaultMessage: 'In progress',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusInprogress'
-    }
-  },
-  {
-    value: 'IN_REVIEW',
-    label: {
-      defaultMessage: 'In review',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusInReview'
-    }
-  },
-  {
-    value: 'REJECTED',
-    label: {
-      defaultMessage: 'Requires updates',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusRequireUpdate'
-    }
-  },
-  {
-    value: 'REGISTERED',
-    label: {
-      defaultMessage: 'Registered',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusRegistered'
-    }
-  },
-  {
-    value: 'CERTIFIED',
-    label: {
-      defaultMessage: 'Certified',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusCertified'
-    }
-  },
-  {
-    value: 'ARCHIVED',
-    label: {
-      defaultMessage: 'Archived',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusAchived'
-    }
-  },
-  {
-    value: 'CORRECTION_REQUESTED',
-    label: {
-      defaultMessage: 'Correction requested',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusCorrectionRequested'
-    }
-  },
-  {
-    value: 'VALIDATED',
-    label: {
-      defaultMessage: 'Validated',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusValidated'
-    }
-  },
-  {
-    value: 'CREATED',
-    label: {
-      defaultMessage: 'Draft',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusCreated'
-    }
-  }
-]
-
 export const tennisClubMembershipEvent = defineConfig({
   id: Event.TENNIS_CLUB_MEMBERSHIP,
   declaration: TENNIS_CLUB_DECLARATION_FORM,
@@ -1091,15 +1008,38 @@ export const tennisClubMembershipEvent = defineConfig({
   advancedSearch: [
     {
       title: {
-        defaultMessage: 'Tennis club registration search',
-        description: 'This is what this event is referred as in the system',
-        id: 'v2.event.tennis-club-membership.search'
+        defaultMessage: 'Registration details',
+        description: 'The title of Registration details accordion',
+        id: 'v2.advancedSearch.form.registrationDetails'
       },
       fields: [
-        field('applicant.firstname').exact(),
+        event('legalStatus.REGISTERED.createdAtLocation').exact(),
+        event('legalStatus.REGISTERED.createdAt').range(),
+        event('status', statusOptions).exact(),
+        event('updatedAt', timePeriodOptions).range()
+      ]
+    },
+    {
+      title: {
+        defaultMessage: "Applicant's details",
+        description: 'Applicant details search field section title',
+        id: 'v2.event.tennis-club-membership.search.applicants'
+      },
+      fields: [
+        field('applicant.firstname').fuzzy(),
         field('applicant.surname').fuzzy(),
-        event('trackingId'),
-        event('status', statusOptions)
+        field('applicant.dob').range()
+      ]
+    },
+    {
+      title: {
+        defaultMessage: "Recommender's details",
+        description: 'Recommender details search field section title',
+        id: 'v2.event.tennis-club-membership.search.recommender'
+      },
+      fields: [
+        field('recommender.firstname').fuzzy(),
+        field('recommender.surname').fuzzy()
       ]
     }
   ]

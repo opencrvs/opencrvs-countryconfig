@@ -31,14 +31,13 @@ if not os.path.exists('../infrastructure'):
 
 local_resource('README.md', cmd='awk "/For OpenCRVS Country Config Developers/{flag=1; next} /Seed data/{flag=0} flag" ../infrastructure/README.md', labels=['0.Readme'])
 
-############################################################
-# What common Tiltfile does?
-# - Group resources by label on UI: http://localhost:10350/
-include('../infrastructure/tilt/Tiltfile.common')
 
 # Load extensions for namespace and helm operations
-load('ext://namespace', 'namespace_create', 'namespace_inject')
 load('ext://helm_resource', 'helm_resource', 'helm_repo')
+load('ext://namespace', 'namespace_create', 'namespace_inject')
+load("../infrastructure/tilt/lib.tilt", "copy_secrets", "reset_environment", "seed_data")
+
+include('../infrastructure/tilt/common.tilt')
 
 # If your machine is powerful feel free to change parallel updates from default 3
 # update_settings(max_parallel_updates=3)
@@ -49,19 +48,17 @@ docker_build(countryconfig_image_name, ".",
               network="host")
 
 # Create namespaces:
-# - traefik, ingress controller (https://opencrvs.localhost)
 # - opencrvs-deps-dev, dependencies namespace
 # - opencrvs-dev, main namespace
-namespace_create('traefik')
 namespace_create(dependencies_namespace)
 namespace_create(opencrvs_namespace)
 
 
 # Install Traefik GW
-helm_repo('traefik-repo', 'https://traefik.github.io/charts', labels=['Dependencies'])
-helm_resource(
-  'traefik', 'traefik-repo/traefik', namespace='traefik', resource_deps=['traefik-repo'],
-  flags=['--values=../infrastructure/infrastructure/localhost/traefik/values.yaml'])
+# helm_repo('traefik-repo', 'https://traefik.github.io/charts', labels=['Dependencies'])
+# helm_resource(
+#   'traefik', 'traefik-repo/traefik', namespace='traefik', resource_deps=['traefik-repo'],
+#   flags=['--values=../infrastructure/infrastructure/localhost/traefik/values.yaml'])
 
 ######################################################
 # OpenCRVS Dependencies Deployment
@@ -84,18 +81,13 @@ k8s_yaml(
       )
 )
 
-######################################################
-# Data management tasks:
-# - Reset database: This task is not part of helm deployment to avoid accidental data loss
-# - Seed data: is part of helm install post-deploy hook, but it is a manual task as well
-# - Run migration job, is part of helm install/upgrade post-deploy hook
-cleanup_command = "../infrastructure/infrastructure/clear-all-data.k8s.sh --dependencies-namespace {1} -o {0}".format(
-  opencrvs_namespace, dependencies_namespace
-)
-local_resource(
-    'Reset database',
-    labels=['2.Data-tasks'],
-    auto_init=False,
-    cmd=cleanup_command,
-    trigger_mode=TRIGGER_MODE_MANUAL,
-)
+#######################################################
+# Add Data Tasks to Tilt Dashboard
+reset_environment(opencrvs_namespace, opencrvs_configuration_file)
+
+seed_data(opencrvs_namespace, opencrvs_configuration_file)
+
+if security_enabled:
+    copy_secrets(dependencies_namespace, opencrvs_namespace)
+
+print("✅ Tiltfile configuration loaded successfully.")
