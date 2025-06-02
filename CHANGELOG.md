@@ -27,10 +27,11 @@
 - Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
 - Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
-## 1.7.2 Release candidate
+## 1.7.2
 
 ### Bugfixes
 
+- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369((https://github.com/opencrvs/opencrvs-core/issues/9369))
 - InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
 
 ```
@@ -38,6 +39,8 @@ partial write: max-values-per-tag limit exceeded (100000/100000)
 ```
 
 https://github.com/opencrvs/opencrvs-countryconfig/pull/393
+
+- Added `user.update:my-jurisdiction` scope to Local System Admin to allow editing of users in jurisdiction [#732](https://github.com/opencrvs/opencrvs-countryconfig/pull/732)
 
 ### New features
 
