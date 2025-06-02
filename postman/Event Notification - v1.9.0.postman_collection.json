@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "5857a3b9-58f9-4ea3-851d-9588d9c2e350",
+		"name": "Event Notification - v1.9.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45309915",
+		"_collection_link": "https://cihan-9849515.postman.co/workspace/Cihan's-Workspace~db6108ac-6e74-457b-8888-2b0eef6473f3/collection/45309915-5857a3b9-58f9-4ea3-851d-9588d9c2e350?action=share&source=collection_link&creator=45309915"
+	},
+	"item": [
+		{
+			"name": "Create Event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Set event id environment variable\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.environment.set(\"event-id\", response.id);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{integration-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"v2.birth\",\n    \"transactionId\": \"tmp-{{$guid}}\",\n    \"dateOfEvent\": {\n        \"fieldId\": \"child.dob\"\n    },\n    \"declaration\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{client}}/api/events/events",
+					"host": [
+						"{{client}}"
+					],
+					"path": [
+						"api",
+						"events",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Notify Event",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{integration-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventId\": \"{{event-id}}\",\n    \"transactionId\": \"tmp-{{$guid}}\",\n    \"declaration\": {\n        \"child.firstname\": \"{{$randomFirstName}}\",\n        \"child.surname\": \"{{$randomLastName}}\"\n    },\n    \"annotation\": {}\n}"
+				},
+				"url": {
+					"raw": "{{client}}/api/events/events/notifications",
+					"host": [
+						"{{client}}"
+					],
+					"path": [
+						"api",
+						"events",
+						"events",
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
