@@ -1,6 +1,15 @@
 import { SEVEN_DAYS_IN_MILISECOND } from '@countryconfig/constants'
 import { defineWorkqueues, event, user } from '@opencrvs/toolkit/events'
 
+const DATE_OF_EVENT_COLUMN = {
+  label: {
+    id: 'workqueues.dateOfEvent',
+    defaultMessage: 'Date of Event',
+    description: 'Label for workqueue column: dateOfEvent'
+  },
+  value: event.field('dateOfEvent')
+}
+
 export const Workqueues = defineWorkqueues([
   {
     slug: 'in-progress',
@@ -64,7 +73,6 @@ export const Workqueues = defineWorkqueues([
     actions: [],
     query: {}
   },
-
   {
     slug: 'assigned-to-you',
     icon: 'PushPin',
@@ -141,6 +149,17 @@ export const Workqueues = defineWorkqueues([
         type: 'REVIEW',
         conditionals: []
       }
+    ],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Sent for review',
+          description: 'This is the label for the workqueue column',
+          id: 'workqueue.sent-for-review.column.sent-for-review'
+        },
+        value: event.field('updatedAt')
+      }
     ]
   },
   {
@@ -159,6 +178,17 @@ export const Workqueues = defineWorkqueues([
       {
         type: 'REVIEW',
         conditionals: []
+      }
+    ],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Sent for review',
+          description: 'This is the label for the workqueue column',
+          id: 'workqueue.in-review.column.sent-for-update'
+        },
+        value: event.field('updatedAt')
       }
     ]
   },
@@ -179,6 +209,17 @@ export const Workqueues = defineWorkqueues([
         type: 'REVIEW',
         conditionals: []
       }
+    ],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Sent for review',
+          description: 'This is the label for the workqueue column',
+          id: 'workqueue.in-review-all.column.sent-for-review'
+        },
+        value: event.field('updatedAt')
+      }
     ]
   },
   {
@@ -190,12 +231,24 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of requires updates workqueue'
     },
     query: {
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') },
+      status: { type: 'exact', term: 'REJECTED' }
     },
     actions: [
       {
         type: 'REVIEW',
         conditionals: []
+      }
+    ],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Sent for update',
+          description: 'This is the label for the workqueue column',
+          id: 'workqueue.sent-for-update.column.sent-for-update'
+        },
+        value: event.field('updatedAt')
       }
     ]
   },
@@ -208,12 +261,24 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for approval workqueue'
     },
     query: {
-      updatedBy: { type: 'exact', term: user('id') }
+      updatedBy: { type: 'exact', term: user('id') },
+      status: { type: 'exact', term: 'VALIDATED' }
     },
     actions: [
       {
         type: 'REVIEW',
         conditionals: []
+      }
+    ],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Sent for approval',
+          description: 'This is the label for the workqueue column',
+          id: 'workqueue.sent-for-approval.column.sent-for-approval'
+        },
+        value: event.field('updatedAt')
       }
     ]
   },
@@ -250,6 +315,17 @@ export const Workqueues = defineWorkqueues([
       {
         type: 'PRINT',
         conditionals: []
+      }
+    ],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Registered',
+          description: 'This is the label for the workqueue column',
+          id: 'workqueue.ready-to-print.column.registered'
+        },
+        value: event.field('updatedAt')
       }
     ]
   },
