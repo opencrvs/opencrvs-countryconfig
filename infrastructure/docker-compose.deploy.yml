@@ -60,7 +60,7 @@ services:
       - overlay_net
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:8.14.3
+    image: docker.elastic.co/beats/filebeat:8.16.4
     user: root
     networks:
       - overlay_net
@@ -85,7 +85,7 @@ services:
         - 'traefik.enable=false'
 
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:8.14.3
+    image: docker.elastic.co/beats/metricbeat:8.16.4
     user: root
     cap_add:
       - SYS_PTRACE
@@ -156,7 +156,7 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'setup-kibana-config'
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.14.3
+    image: docker.elastic.co/kibana/kibana:8.16.4
     restart: always
     deploy:
       labels:
@@ -253,6 +253,11 @@ services:
         tag: 'mongo-on-update'
   # Configure redis
   redis:
+    environment:
+      - VALKEY_PASSWORD=false
+      - VALKEY_ACLFILE=/run/secrets/redis-acl.{{ts}}
+    secrets:
+      - redis-acl.{{ts}}
     networks:
       - overlay_net
     deploy:
@@ -335,7 +340,7 @@ services:
       - overlay_net
 
   minio-mc:
-    image: minio/mc
+    image: minio/mc:RELEASE.2023-09-13T23-08-58Z
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc admin trace --path ocrvs/* minio
@@ -412,7 +417,7 @@ services:
         tag: 'elastalert'
 
   logstash:
-    image: logstash:8.14.3
+    image: logstash:8.16.4
     command: logstash -f /etc/logstash/logstash.conf --verbose
     ports:
       - '12201:12201'
@@ -631,6 +636,8 @@ services:
       - COUNTRY_CONFIG_URL=https://countryconfig.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
+      - REDIS_USERNAME=${AUTH_REDIS_USERNAME}
+      - REDIS_PASSWORD=${AUTH_REDIS_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -728,6 +735,8 @@ services:
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
       - COUNTRY=${COUNTRY:-FAR}
+      - REDIS_USERNAME=${GATEWAY_REDIS_USERNAME}
+      - REDIS_PASSWORD=${GATEWAY_REDIS_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -761,6 +770,8 @@ services:
       - SENTRY_DSN=${SENTRY_DSN:-}
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - REDIS_USERNAME=${WORKFLOW_REDIS_USERNAME}
+      - REDIS_PASSWORD=${WORKFLOW_REDIS_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=false'
@@ -901,6 +912,7 @@ services:
       - DASHBOARD_MONGO_URL=mongodb://performance:${PERFORMANCE_MONGODB_PASSWORD}@mongo1/performance?replicaSet=rs0
       - APPLICATION_CONFIG_MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
+      - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
       - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
       - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
@@ -955,6 +967,8 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - MONGO_URL=mongodb://webhooks:${WEBHOOKS_MONGODB_PASSWORD}@mongo1/webhooks?replicaSet=rs0
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
+      - REDIS_USERNAME=${WEBHOOKS_REDIS_USERNAME}
+      - REDIS_PASSWORD=${WEBHOOKS_REDIS_PASSWORD}
     deploy:
       labels:
         - 'traefik.enable=true'
@@ -1021,6 +1035,8 @@ services:
         constraints:
           - node.labels.data1 == true
 secrets:
+  redis-acl.{{ts}}:
+    external: true
   jwt-public-key.{{ts}}:
     external: true
   jwt-private-key.{{ts}}:

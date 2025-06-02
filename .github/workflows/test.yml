@@ -4,7 +4,7 @@ on: [pull_request]
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checking out git repo
@@ -24,3 +24,13 @@ jobs:
 
       - name: Test
         run: yarn test
+
+      - name: Bash script linting
+        uses: ludeeus/action-shellcheck@master
+        continue-on-error: true
+        with:
+          severity: error
+          ignore_paths: |
+            node_modules/**/*
+        env:
+          SHELLCHECK_OPTS: -e SC2086 -e SC2068
