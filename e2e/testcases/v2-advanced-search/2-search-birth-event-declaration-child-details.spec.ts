@@ -4,21 +4,7 @@ import { createDeclaration } from '../v2-test-data/birth-declaration-with-father
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { formatDateToLongString } from './utils'
-
-/**
- * Converts a numeric month value (1–12) to its corresponding short English month name (e.g., "Jan", "Feb").
- *
- * @param {number} month - The month number (1 for January, 12 for December).
- * @returns {string} The short name of the month in English.
- *
- * @example
- * getMonthShortName(1); // returns "Jan"
- * getMonthShortName(12); // returns "Dec"
- */
-const getShortMonthName = (month: number) => {
-  const arbitraryDate = new Date(2000, month - 1)
-  return arbitraryDate.toLocaleString('en-US', { month: 'short' })
-}
+import { getMonthFormatted } from './helper'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Child's details", () => {
@@ -153,9 +139,12 @@ test.describe
         await page.locator('#child____dob-date_range_button').click()
         await expect(page.locator('#picker-modal')).toBeVisible()
 
-        const fullMonth = new Date().getMonth() + 1
-        const month = getShortMonthName(fullMonth)
-        await expect(page.getByRole('button', { name: month })).toHaveCount(2)
+        const currentMonth = new Date().getMonth() + 1
+        const shortMonth = getMonthFormatted(currentMonth)
+        const month = getMonthFormatted(currentMonth, { month: 'long' })
+        await expect(
+          page.getByRole('button', { name: shortMonth })
+        ).toHaveCount(2)
         await expect(page.locator('#date-range-confirm-action')).toBeVisible()
 
         await page.locator('#date-range-confirm-action').click()
@@ -171,9 +160,7 @@ test.describe
         const lastYear = currentYear - 1
         // ex: 'May 2024 to May 2025' is visible after date range selection
         await expect(
-          page.getByText(
-            `${fullMonth} ${lastYear} to ${fullMonth} ${currentYear}`
-          )
+          page.getByText(`${month} ${lastYear} to ${month} ${currentYear}`)
         ).toBeVisible()
       }
     })
