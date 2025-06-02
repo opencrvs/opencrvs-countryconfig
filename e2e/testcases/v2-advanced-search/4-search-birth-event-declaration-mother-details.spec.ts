@@ -129,7 +129,8 @@ test.describe
         await page.locator('#mother____dob-date_range_button').click()
         await expect(page.locator('#picker-modal')).toBeVisible()
 
-        const month = getShortMonthName(new Date().getMonth() + 1)
+        const fullMonth = new Date().getMonth() + 1
+        const month = getShortMonthName(fullMonth)
         await expect(page.getByRole('button', { name: month })).toHaveCount(2)
         await expect(page.locator('#date-range-confirm-action')).toBeVisible()
 
@@ -146,7 +147,9 @@ test.describe
         const lastYear = currentYear - 1
         // ex: 'May 2024 to May 2025' is visible after date range selection
         await expect(
-          page.getByText(`${month} ${lastYear} to ${month} ${currentYear}`)
+          page.getByText(
+            `${fullMonth} ${lastYear} to ${fullMonth} ${currentYear}`
+          )
         ).toBeVisible()
       }
     })
