@@ -33,7 +33,10 @@ for (( i=1; i<=REPLICAS; i++ )); do
   fi
   WAIT_HOSTS="${WAIT_HOSTS}mongo${i}:27017"
 done
-
+export WAIT_HOSTS
+export WAIT_AFTER=30
+echo "Waiting for MongoDB replicas: $WAIT_HOSTS"
+/wait
 
 mongo_credentials() {
   if [ ! -z ${MONGODB_ADMIN_USER+x} ] || [ ! -z ${MONGODB_ADMIN_PASSWORD+x} ]; then
@@ -57,7 +60,26 @@ done
 MEMBERS="${MEMBERS}]"
 
 # Initiate the replica set
-mongo $(mongo_credentials) --host mongo1 --eval "rs.initiate({_id:\"rs0\",members:${MEMBERS}})"
+
+MAX_RETRIES=12
+DELAY=10  # seconds
+ATTEMPT=1
+
+# Initiate the replica set
+while [[ $ATTEMPT -le $MAX_RETRIES ]]; do
+  echo "🔄 Attempt $ATTEMPT to initiate replica set..."
+  if mongo $(mongo_credentials) --host mongo1 --eval "rs.initiate({_id:\"rs0\",members:${MEMBERS}})"; then
+    echo "✅ Replica set initiated successfully."
+    break
+  elif [[ $ATTEMPT -eq $MAX_RETRIES ]]; then
+    echo "❌ Failed to initiate replica set after $MAX_RETRIES attempts."
+    exit 1
+  fi
+
+  echo "⏳ Failed to initiate replica set. Retrying in $DELAY seconds..."
+  sleep $DELAY
+  ((ATTEMPT++))
+done
 
 # Construct the HOST string rs0/mongo1,mongo2... based on the number of replicas
 HOST="rs0/"
