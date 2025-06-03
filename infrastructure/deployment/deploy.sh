@@ -322,7 +322,9 @@ docker_stack_deploy() {
   wait
   echo "Images are successfully downloaded"
   echo "Updating docker swarm stack with new compose files"
-
+  echo "to_remote_paths: $(to_remote_paths $COMPOSE_FILES_USED)"
+  echo "split and join"
+  echo $(split_and_join " " " -c " "$(to_remote_paths $COMPOSE_FILES_USED)")
   configured_ssh 'cd /opt/opencrvs && \
     docker stack deploy --prune -c '$(split_and_join " " " -c " "$(to_remote_paths $COMPOSE_FILES_USED)")' --with-registry-auth opencrvs'
 }
