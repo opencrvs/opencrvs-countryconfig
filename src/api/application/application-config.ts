@@ -1,4 +1,5 @@
 import { countryLogo } from '@countryconfig/api/application/country-logo'
+import { IScriptTag, IScriptTagOptions, IStyleTag } from '../custom-files/types'
 
 export const applicationConfig = {
   APPLICATION_NAME: 'Farajaland CRS',
@@ -46,6 +47,27 @@ export const applicationConfig = {
     EXTERNAL_VALIDATION_WORKQUEUE: false,
     PRINT_DECLARATION: false,
     DATE_OF_BIRTH_UNKNOWN: true
+  },
+  ADVANCED_FRONTEND_CUSTOMIZATIONS: {
+    // this is to indicate that there are custom files to load
+    customFiles: true,
+    externalScripts: [
+      {
+        url: 'https://opcrvs-external-script-url-example',
+        activateOn: ['client', 'login'],
+        options: {
+          crossorigin: 'anonymous',
+          integrity:
+            'sha384-1trZnTo2NWT8MMlaYsZYUvOi6jG0DY1+8I14HAHjIVqKA3lw4cdzaEoXtD1GbQhk'
+        } as Partial<IScriptTagOptions>
+      }
+    ] as Partial<IScriptTag>[],
+    externalStyles: [
+      {
+        url: 'https://opcrvs-external-css-url-example',
+        activateOn: ['client', 'login']
+      }
+    ] as Partial<IStyleTag>[]
   },
   USER_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
   INFORMANT_NOTIFICATION_DELIVERY_METHOD: 'email', // or 'sms', or '' ... You can use 'sms' for WhatsApp
