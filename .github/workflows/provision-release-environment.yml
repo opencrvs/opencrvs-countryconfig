@@ -26,7 +26,7 @@ jobs:
         # e.g. release-v1.2.3 -> v1-2-3,
         #      1.2.3 -> v1-2-3
         run: |
-          environment=$(echo ${{ github.ref_name }} | sed -e 's/\./-/g' -e 's/release\-v//g')
+          environment=$(echo ${{ github.ref_name }} | sed -e 's/\./-/g' -e 's/release\-v//g' -e 's/release\///g')
           echo "environment=v${environment}" >> $GITHUB_OUTPUT
     verify-branch:
       needs: get-environment
