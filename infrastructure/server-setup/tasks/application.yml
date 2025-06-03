@@ -27,7 +27,7 @@
     mode: '0775'
     recurse: yes
 
-- name: Add current user to 'application' group
+- name: Add ansible user to 'application' group
   user:
     name: '{{ ansible_user }}'
     groups: application
