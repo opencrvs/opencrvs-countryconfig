@@ -1007,6 +1007,7 @@ form.field.label.fileSizeError,,File size must be less than 2MB,La taille du fic
 form.field.label.fileUploadError,,{type} supported image only,{type} format d'images accepté
 form.field.label.firstName,,First name(s),Prénom(s)
 form.field.label.firstNames,,First name(s),Prénom(s)
+form.field.label.fullHonorificName,,Full Honorific Name,Nom complet avec titre
 form.field.label.healthInstitution,,Health Institution,Institution de santé
 form.field.label.hospital,,Hospital,Hôpital
 form.field.label.iD,,ID Number,Numéro d'identification
@@ -1097,6 +1098,7 @@ form.field.label.maritalStatusWidowed,,Widowed,Veuf(ve)
 form.field.label.marriedLastName,,Married last name (if different),Marié Nom de famille (si différent)
 form.field.label.medicallyCertified,,Medically Certified Cause of Death,Cause officielle du décès
 form.field.label.methodOfCauseOfDeath,,Method of Cause of Death,Méthode de détermination de la cause du décès
+form.field.label.middleName,,Middle name,Deuxième prénom
 form.field.label.monogamy,,Monogamous,Monogame
 form.field.label.mother.nationality,,Nationality,Nationalité
 form.field.label.mother.nationalityBangladesh,,Bangladesh,Bangladesh
@@ -1391,7 +1393,7 @@ integrations.shaSecret,Label for SHA secret,SHA secret,SHA Secret
 integrations.supportingDescription,,Supporting description to help user make a decision and navigate the content,Description complémentaire pour aider l'utilisateur à prendre une décision et à naviguer dans le contenu.
 integrations.type.eventNotification,Label for event notification,Event notification,Notification d'événement
 integrations.type.healthSystem,Label for health system type,Health integration,Intégration de la santé
-integrations.type.import,Label for import type system,Import,Importer
+integrations.type.import,Label for import type system,Import,Import
 integrations.type.nationalId,Label for national id,National id,Identité nationale
 integrations.type.recordSearch,Label for record search,Record search,Recherche d'enregistrements
 integrations.type.webhook,Label for web hook,Webhook,Webhook
@@ -2359,7 +2361,7 @@ v2.buttons.change,The label for the change button,Change,Changer
 v2.buttons.changeAll,The label for the change all button,Change all,Changer tous
 v2.buttons.confirm,Confirm button,Confirm,Confirmer
 v2.buttons.continue,Continue Button Text,Continue,Continuer
-v2.buttons.edit,Edit button text,Edit,Éditer  
+v2.buttons.edit,Edit button text,Edit,Éditer
 v2.buttons.exit,Label for Exit button on EventTopBar,Exit,Quitter
 v2.buttons.print,Print button text,Print,Imprimer
 v2.buttons.saveExit,The label for the save and exit button,Save & Exit,Enregistrer et quitter
@@ -2655,8 +2657,8 @@ v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.s
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Type,Type
 v2.event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
 v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
-v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} SOCIAL_WORKER {Field Agent} REGISTRATION_AGENT {Registration Agent} other {Unknown}}"," {role, select, LOCAL_REGISTRAR {Registraire local} SOCIAL_WORKER {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} other{Inconnu}}"
-v2.event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration du système
+v2.event.history.role,Label for the role in event history,"{role, select, LOCAL_REGISTRAR {Local Registrar} SOCIAL_WORKER {Field Agent} REGISTRATION_AGENT {Registration Agent} HEALTH {Health integration} IMPORT {Import integration} NATIONAL_ID {National ID integration} RECORD_SEARCH {Record search integration} WEBHOOK {Webhook} other {Unknown}}","{role, select, LOCAL_REGISTRAR {Officier d'état civil local} SOCIAL_WORKER {Agent de terrain} REGISTRATION_AGENT {Agent d'enregistrement} HEALTH {Intégration santé} IMPORT {Intégration d'importation} NATIONAL_ID {Intégration ID nationale} RECORD_SEARCH {Intégration de recherche d'enregistrements} WEBHOOK {Webhook} other {Inconnu}}"
+v2.event.history.systemDefaultName,Fallback for system integration name in the event history,System integration,Intégration système
 v2.event.summary.assignedTo.empty,Not assigned message,Not assigned,Non assigné
 v2.event.summary.assignedTo.label,Assigned to label,Assigned to,Assigné à
 v2.event.summary.assignedTo.value,Assigned to value,{event.assignedTo},{event.assignedTo}
@@ -2743,7 +2745,7 @@ v2.event.tennis-club-membership.title.label,Label for the summary title of the t
 v2.event.tennis-club-membership.workqueue.all.name.label,Label for the 'All' work queue filter for tennis club membership,{applicant.firstname} {applicant.surname},{applicant.firstname} {applicant.surname}
 v2.event.tennis-club-membership.workqueue.readyForReview.name.label,Label for 'Ready for Review' work queue for tennis club membership,Ready for Review,Prêt pour révision
 v2.event.tennis-club-membership.workqueue.registered.name.label,Label for 'Registered' work queue for tennis club membership,Registered,Enregistré
-v2.events.history.status,Events status history,"{status, select, CREATE {Draft} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} REJECT {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} other {Unknown}}","{status, select, CREATE {Brouillon} VALIDATE {Déclaration envoyée pour approbation} DRAFT {Brouillon} DECLARE {Déclaration initiée} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVED {archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} READ {Vue} ASSIGN {Attribué} UNASSIGN {Non attribué} other {Inconnu}}"
+v2.events.history.status,Events status history,"{status, select, CREATE {Draft} NOTIFY {Notified} VALIDATE {Validated} DRAFT {Draft} DECLARE {Declared} REGISTER {Registered} PRINT_CERTIFICATE {Print certificate} REJECT {Rejected} ARCHIVE {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} other {Unknown}}","{status, select, CREATE {Brouillon} NOTIFY {Notifié} VALIDATE {Déclaration envoyée pour approbation} DRAFT {Brouillon} DECLARE {Déclaration initiée} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVE {archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} READ {Vue} ASSIGN {Attribué} UNASSIGN {Non attribué} other {Inconnu}}"
 v2.events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} NOTIFIED {In progress} other {Unknown}}","{status, select, OUTBOX {Synchronisation..} CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Nécessite une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} NOTIFIED {En cours} other {Inconnu}}"
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
@@ -2900,7 +2902,7 @@ v2.reviewAction.reject,The label for reject button of review action,Reject,Rejet
 v2.reviewAction.title,The title for review action,Declare member,Declare member
 v2.saveAndExit.desc.saveDeclarationConfirm,Description for save declaration confirmation modal,All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?,Toutes les données saisies seront conservées en toute sécurité pour de futures modifications. Êtes-vous prêt à enregistrer les modifications apportées à ce formulaire de déclaration?
 v2.saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
-v2.search.noResult,The no result text,No results,Pas de résultats  
+v2.search.noResult,The no result text,No results,Pas de résultats
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
 v2.validateAction.Declare,The label for declare button of validate action,Send for approval,Envoyer pour approbation
 v2.validateAction.Reject,The label for reject button of validate action,Reject,Rejeter

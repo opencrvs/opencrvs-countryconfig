@@ -159,6 +159,16 @@ export const birthEvent = defineConfig({
   },
   actions: [
     {
+      type: ActionType.READ,
+      label: {
+        defaultMessage: 'Read',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.birth.action.Read.label'
+      },
+      review: BIRTH_DECLARATION_REVIEW
+    },
+    {
       type: ActionType.DECLARE,
       label: {
         defaultMessage: 'Declare',

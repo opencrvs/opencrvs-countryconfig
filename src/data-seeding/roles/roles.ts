@@ -23,7 +23,8 @@ export const roles: Role[] = [
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE
+      SCOPES.SEARCH_MARRIAGE,
+      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
   {
@@ -59,7 +60,8 @@ export const roles: Role[] = [
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE
+      SCOPES.SEARCH_MARRIAGE,
+      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
   {
@@ -124,7 +126,8 @@ export const roles: Role[] = [
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE
+      SCOPES.SEARCH_MARRIAGE,
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
   {
@@ -158,7 +161,8 @@ export const roles: Role[] = [
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE
+      SCOPES.SEARCH_MARRIAGE,
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
   {
@@ -171,6 +175,7 @@ export const roles: Role[] = [
     scopes: [
       SCOPES.USER_READ_MY_OFFICE,
       SCOPES.USER_CREATE_MY_JURISDICTION,
+      SCOPES.USER_UPDATE_MY_JURISDICTION,
       'user.create[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
       'user.edit[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
@@ -188,8 +193,8 @@ export const roles: Role[] = [
     },
     scopes: [
       SCOPES.USER_CREATE,
-      'user.create[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
-      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
+      'user.create[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
+      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
       SCOPES.USER_READ,
       SCOPES.USER_UPDATE,
       SCOPES.ORGANISATION_READ_LOCATIONS,
@@ -245,7 +250,8 @@ export const roles: Role[] = [
       SCOPES.USER_READ_MY_OFFICE,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE
+      SCOPES.SEARCH_MARRIAGE,
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   }
 ]
