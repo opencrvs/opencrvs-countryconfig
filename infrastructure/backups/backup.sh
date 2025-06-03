@@ -193,6 +193,7 @@ REMOTE_DIR="$REMOTE_DIR/${LABEL:-$BACKUP_DATE}"
 # ---------------------------------------------------------------------------------------------
 dbs=(
   'hearth-dev'
+  'events',
   'user-mgnt'
   'application-config'
   'metrics'
@@ -294,6 +295,7 @@ cp -r $ROOT_PATH/backups/influxdb/${LABEL:-$BACKUP_DATE} $BACKUP_RAW_FILES_DIR/i
 mkdir -p $BACKUP_RAW_FILES_DIR/minio/ && cp $ROOT_PATH/backups/minio/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/minio/
 mkdir -p $BACKUP_RAW_FILES_DIR/vsexport/ && cp $ROOT_PATH/backups/vsexport/ocrvs-${LABEL:-$BACKUP_DATE}.tar.gz $BACKUP_RAW_FILES_DIR/vsexport/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
+mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/events-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/application-config-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
