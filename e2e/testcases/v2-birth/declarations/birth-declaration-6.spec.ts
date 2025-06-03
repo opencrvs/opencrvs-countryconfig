@@ -9,7 +9,7 @@ import {
   loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS } from '../../../constants'
+import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { validateAddress } from '../helpers'
 
 test.describe.serial('6. Birth declaration case - 6', () => {
@@ -513,11 +513,10 @@ test.describe.serial('6. Birth declaration case - 6', () => {
     test.skip('6.1.8 Register', async () => {
       await page.getByRole('button', { name: 'Register' }).click()
       await page.locator('#confirm_Declare').click()
-      await expect(page.getByText('All events')).toBeVisible()
 
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
+      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await page.getByText('Ready to print').click()
+
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)

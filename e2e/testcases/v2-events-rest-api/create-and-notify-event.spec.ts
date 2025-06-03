@@ -319,6 +319,9 @@ test.describe('Events REST API', () => {
 
       // check that event is created in UI
       await loginToV2(page)
+
+      await page.getByRole('button', { name: 'Notifications' }).click()
+
       await page.getByText(await formatName(childName)).click()
       await expect(page.locator('#row_0')).toContainText('Notified')
       await expect(page.locator('#row_0')).toContainText(clientName)
@@ -423,6 +426,8 @@ test.describe('Events REST API', () => {
       )
 
       await loginToV2(page)
+
+      await page.getByRole('button', { name: 'Notifications' }).click()
       await page.getByText(await formatName(childName)).click()
       await selectAction(page, 'Validate')
       await page

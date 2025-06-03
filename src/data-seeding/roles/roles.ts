@@ -24,7 +24,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
-      SCOPES.USER_READ_ONLY_MY_AUDIT
+      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
   {
@@ -60,7 +60,8 @@ export const roles: Role[] = [
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE
+      SCOPES.SEARCH_MARRIAGE,
+      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
   {
@@ -102,29 +103,31 @@ export const roles: Role[] = [
   {
     id: 'REGISTRATION_AGENT',
     label: {
-      defaultMessage: 'Registration Officer',
-      description: 'Name for user role Registration Officer',
-      id: 'userRole.registrationOfficer'
+      defaultMessage: 'Registration Agent',
+      description: 'Name for user role Registration Agent',
+      id: 'userRole.registrationAgent'
     },
     scopes: [
       SCOPES.RECORD_READ,
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
       SCOPES.RECORD_DECLARE_MARRIAGE,
+      SCOPES.RECORD_DECLARATION_EDIT,
       SCOPES.RECORD_SUBMIT_FOR_APPROVAL,
       SCOPES.RECORD_SUBMIT_FOR_UPDATES,
-      SCOPES.RECORD_DECLARATION_EDIT,
       SCOPES.RECORD_DECLARATION_ARCHIVE,
       SCOPES.RECORD_DECLARATION_REINSTATE,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       SCOPES.RECORD_REGISTRATION_REQUEST_CORRECTION,
+      SCOPES.RECORD_PRINT_RECORDS_SUPPORTING_DOCUMENTS,
+      SCOPES.RECORD_EXPORT_RECORDS,
+      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
+      SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.USER_READ_ONLY_MY_AUDIT
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
   {
@@ -139,34 +142,35 @@ export const roles: Role[] = [
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
       SCOPES.RECORD_DECLARE_MARRIAGE,
-      SCOPES.RECORD_SUBMIT_FOR_UPDATES,
-      SCOPES.RECORD_UNASSIGN_OTHERS,
       SCOPES.RECORD_DECLARATION_EDIT,
+      SCOPES.RECORD_SUBMIT_FOR_UPDATES,
+      SCOPES.RECORD_REVIEW_DUPLICATES,
       SCOPES.RECORD_DECLARATION_ARCHIVE,
       SCOPES.RECORD_DECLARATION_REINSTATE,
-      SCOPES.RECORD_REVIEW_DUPLICATES,
       SCOPES.RECORD_REGISTER,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
-      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
       SCOPES.RECORD_REGISTRATION_CORRECT,
+      SCOPES.RECORD_PRINT_RECORDS_SUPPORTING_DOCUMENTS,
+      SCOPES.RECORD_EXPORT_RECORDS,
+      SCOPES.RECORD_UNASSIGN_OTHERS,
+      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       SCOPES.RECORD_CONFIRM_REGISTRATION,
       SCOPES.RECORD_REJECT_REGISTRATION,
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
+      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
+      SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.USER_READ_MY_OFFICE
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
   {
     id: 'LOCAL_SYSTEM_ADMIN',
     label: {
-      defaultMessage: 'Administrator',
-      description: 'Name for user role Administrator',
-      id: 'userRole.administrator'
+      defaultMessage: 'Local System Admin',
+      description: 'Name for user role Local System Admin',
+      id: 'userRole.localSystemAdmin'
     },
     scopes: [
       SCOPES.USER_READ_MY_OFFICE,
@@ -185,9 +189,9 @@ export const roles: Role[] = [
   {
     id: 'NATIONAL_SYSTEM_ADMIN',
     label: {
-      defaultMessage: 'National Administrator',
-      description: 'Name for user role National Administrator',
-      id: 'userRole.nationalAdministrator'
+      defaultMessage: 'National System Admin',
+      description: 'Name for user role National System Admin',
+      id: 'userRole.nationalSystemAdmin'
     },
     scopes: [
       SCOPES.USER_CREATE,
@@ -205,86 +209,51 @@ export const roles: Role[] = [
   {
     id: 'PERFORMANCE_MANAGER',
     label: {
-      defaultMessage: 'Operations Manager',
-      description: 'Name for user role Operations Manager',
-      id: 'userRole.operationsManager'
+      defaultMessage: 'Performance Manager',
+      description: 'Name for user role Performance Manager',
+      id: 'userRole.performanceManager'
     },
     scopes: [
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
-      SCOPES.ORGANISATION_READ_LOCATIONS
+      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS
     ]
   },
   {
     id: 'NATIONAL_REGISTRAR',
     label: {
-      defaultMessage: 'Registrar General',
-      description: 'Name for user role Registrar General',
-      id: 'userRole.registrarGeneral'
+      defaultMessage: 'National Registrar',
+      description: 'Name for user role National Registrar',
+      id: 'userRole.nationalRegistrar'
     },
     scopes: [
       SCOPES.RECORD_READ,
       SCOPES.RECORD_DECLARE_BIRTH,
       SCOPES.RECORD_DECLARE_DEATH,
       SCOPES.RECORD_DECLARE_MARRIAGE,
-      SCOPES.RECORD_SUBMIT_FOR_UPDATES,
-      SCOPES.RECORD_UNASSIGN_OTHERS,
       SCOPES.RECORD_DECLARATION_EDIT,
+      SCOPES.RECORD_SUBMIT_FOR_UPDATES,
+      SCOPES.RECORD_REVIEW_DUPLICATES,
       SCOPES.RECORD_DECLARATION_ARCHIVE,
       SCOPES.RECORD_DECLARATION_REINSTATE,
-      SCOPES.RECORD_REVIEW_DUPLICATES,
       SCOPES.RECORD_REGISTER,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
-      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
       SCOPES.RECORD_REGISTRATION_CORRECT,
+      SCOPES.RECORD_PRINT_RECORDS_SUPPORTING_DOCUMENTS,
+      SCOPES.RECORD_EXPORT_RECORDS,
+      SCOPES.RECORD_UNASSIGN_OTHERS,
+      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
       SCOPES.RECORD_CONFIRM_REGISTRATION,
       SCOPES.RECORD_REJECT_REGISTRATION,
       SCOPES.PERFORMANCE_READ,
       SCOPES.PERFORMANCE_READ_DASHBOARDS,
       SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
+      SCOPES.PROFILE_ELECTRONIC_SIGNATURE,
+      SCOPES.ORGANISATION_READ_LOCATIONS_MY_OFFICE,
+      SCOPES.USER_READ_MY_OFFICE,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
-      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.USER_READ_MY_OFFICE
-    ]
-  },
-  {
-    id: 'HOSPITAL_CLERK',
-    label: {
-      defaultMessage: 'Hospital Clerk',
-      description: 'Name for user role Hospital Clerk',
-      id: 'userRole.hospitalClerk'
-    },
-    scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_SUBMIT_INCOMPLETE,
-      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
-      SCOPES.SEARCH_BIRTH,
-      SCOPES.SEARCH_DEATH,
-      SCOPES.USER_READ_ONLY_MY_AUDIT
-    ]
-  },
-  {
-    id: 'COMMUNITY_LEADER',
-    label: {
-      defaultMessage: 'Community Leader',
-      description: 'Name for user role Community Leader',
-      id: 'userRole.communityLeader'
-    },
-    scopes: [
-      SCOPES.RECORD_DECLARE_BIRTH,
-      SCOPES.RECORD_DECLARE_DEATH,
-      SCOPES.RECORD_DECLARE_MARRIAGE,
-      SCOPES.RECORD_SUBMIT_INCOMPLETE,
-      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
-      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
-      SCOPES.SEARCH_BIRTH,
-      SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE,
-      SCOPES.USER_READ_ONLY_MY_AUDIT
+      'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   }
 ]

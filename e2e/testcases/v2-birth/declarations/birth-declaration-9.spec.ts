@@ -7,7 +7,7 @@ import {
   loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS } from '../../../constants'
+import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
 
 test.describe.serial('9. Birth declaration case - 9', () => {
@@ -185,11 +185,10 @@ test.describe.serial('9. Birth declaration case - 9', () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await expect(page.getByText('All events')).toBeVisible()
 
-      /*
-       * Expected result: The declaration should be in sent for review
-       */
+      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await page.getByText('Sent for review').click()
+
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)
@@ -201,6 +200,10 @@ test.describe.serial('9. Birth declaration case - 9', () => {
   test.describe('9.2 Declaration Review by RA', async () => {
     test('9.2.1 Navigate to the declaration review page', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+
+      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await page.getByText('Ready for review').click()
+
       await page
         .getByRole('button', {
           name: formatName(declaration.child.name)

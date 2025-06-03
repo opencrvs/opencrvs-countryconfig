@@ -159,6 +159,7 @@ export async function createDeclaration(
     type: 'v2.birth',
     transactionId: uuidv4()
   })
+
   const eventId = createResponse.id as string
 
   const signatureBase64 = await fs.readFileSync(
@@ -176,7 +177,7 @@ export async function createDeclaration(
     transactionId: uuidv4(),
     declaration,
     annotation,
-    keepAssignment: true
+    keepAssignment: action !== ActionType.DECLARE
   })
 
   if (action === ActionType.DECLARE) {
@@ -219,4 +220,20 @@ export async function createDeclaration(
   )
 
   return { eventId, declaration: registerAction?.declaration as Declaration }
+}
+
+export async function rejectDeclaration(
+  token: string,
+  eventId: string
+): Promise<any> {
+  const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
+
+  const rejectResponse = await client.event.actions.reject.request.mutate({
+    eventId,
+    declaration: {},
+    transactionId: uuidv4(),
+    reason: { message: 'For test' }
+  })
+
+  return rejectResponse
 }

@@ -1,6 +1,6 @@
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 import { goToSection, loginToV2, logout } from '../../helpers'
-import { CREDENTIALS } from '../../constants'
+import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import { fillChildDetails, openBirthDeclaration } from './helpers'
 
 test.describe('Save and delete drafts', () => {
@@ -20,6 +20,10 @@ test.describe('Save and delete drafts', () => {
 
     await page.getByRole('button', { name: 'Confirm' }).click()
 
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
+
     await page.getByRole('button', { name: childName, exact: true }).click()
     await expect(page.locator('#content-name')).toHaveText(childName)
   })
@@ -34,11 +38,15 @@ test.describe('Save and delete drafts', () => {
     await page.getByText('Declare').click()
     await page.locator('#event-menu-dropdownMenu').click()
     await page.getByText('Delete declaration').click()
-
     await expect(
       page.getByText('Are you sure you want to delete this declaration?')
     ).toBeVisible()
     await page.getByRole('button', { name: 'Confirm' }).click()
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+    await page.waitForTimeout(2000)
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
 
     await expect(
       page.getByRole('button', { name: childName, exact: true })
@@ -57,6 +65,10 @@ test.describe('Save and delete drafts', () => {
     ).toBeVisible()
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
 
     await expect(
       page.getByRole('button', { name: childName, exact: true })
@@ -81,7 +93,9 @@ test.describe('Save and delete drafts', () => {
     await logout(page)
     await loginToV2(page, CREDENTIALS.NATIONAL_REGISTRAR)
 
-    await expect(page.getByText('All events')).toBeVisible()
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
 
     await expect(
       page.getByRole('button', { name: childName, exact: true })

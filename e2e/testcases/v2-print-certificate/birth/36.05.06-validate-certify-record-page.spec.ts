@@ -34,6 +34,7 @@ test.describe.serial('Validate collect payment page', () => {
     page = await browser.newPage()
     await loginToV2(page)
 
+    await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, declaration)
   })
 

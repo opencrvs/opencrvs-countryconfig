@@ -5,6 +5,7 @@ import { faker } from '@faker-js/faker'
 import { selectAction } from '../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
+import { SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 
 const child = {
   firstNames: faker.person.firstName('female')
@@ -454,7 +455,12 @@ test.describe.serial('1. Birth event declaration', () => {
          * - be navigated to "my-drafts" tab
          * - find the declared birth event record on this page list with saved data
          */
-        await expect(page.locator('#content-name')).toHaveText('All events')
+        await expect(page.locator('#content-name')).toHaveText(
+          'Assigned to you'
+        )
+
+        await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+
         await expect(page.getByText(child.firstNames)).toBeVisible()
       })
 
@@ -530,7 +536,9 @@ test.describe.serial('1. Birth event declaration', () => {
       // ).toBeVisible()
       // await expect(page.getByText(/seconds ago/)).toBeHidden()
 
-      await expect(page.getByText('All events')).toBeVisible()
+      await expect(
+        page.getByTestId('search-result').getByText('Assigned to you')
+      ).toBeVisible()
     })
   })
 
@@ -593,7 +601,9 @@ test.describe.serial('1. Birth event declaration', () => {
       // ).toBeVisible()
       // await expect(page.getByText(/seconds ago/)).toBeHidden()
 
-      await expect(page.getByText('All events')).toBeVisible()
+      await expect(
+        page.getByTestId('search-result').getByText('Assigned to you')
+      ).toBeVisible()
     })
   })
 

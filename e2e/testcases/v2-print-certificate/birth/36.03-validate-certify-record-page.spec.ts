@@ -28,6 +28,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
     page = await browser.newPage()
     await loginToV2(page)
 
+    await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, declaration)
   })
 

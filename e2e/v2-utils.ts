@@ -1,4 +1,5 @@
 import { Page, expect } from '@playwright/test'
+import { SAFE_INPUT_CHANGE_TIMEOUT_MS } from './constants'
 
 export async function selectAction(
   page: Page,
@@ -11,7 +12,9 @@ export async function selectAction(
     | 'Unassign'
     | 'Delete'
 ) {
-  await ensureAssigned(page)
+  if ((await page.getByTestId('status-value').innerText()) !== 'Draft') {
+    await ensureAssigned(page)
+  }
 
   // Keep retrying the click until the dropdown is visible
   let isVisible = false
@@ -39,11 +42,25 @@ export async function selectAction(
 }
 
 export async function ensureAssigned(page: Page) {
+  await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
+
   await page.getByRole('button', { name: 'Action' }).click()
+
   const unAssignAction = page
     .locator('#action-Dropdown-Content li')
     .filter({ hasText: new RegExp(`^Unassign$`, 'i') })
     .first()
+
+  let assignAction = page
+    .locator('#action-Dropdown-Content li')
+    .filter({ hasText: new RegExp(`^Assign$`, 'i') })
+    .first()
+
+  // Wait until either "Unassign" or "Assign" is visible
+  await Promise.race([
+    unAssignAction.waitFor({ state: 'visible' }),
+    assignAction.waitFor({ state: 'visible' })
+  ])
 
   if (await unAssignAction.isVisible()) {
     await unAssignAction.click()
@@ -51,12 +68,12 @@ export async function ensureAssigned(page: Page) {
       'Not assigned'
     )
     await page.getByRole('button', { name: 'Action' }).click()
-  }
 
-  const assignAction = page
-    .locator('#action-Dropdown-Content li')
-    .filter({ hasText: new RegExp(`^Assign$`, 'i') })
-    .first()
+    assignAction = page
+      .locator('#action-Dropdown-Content li')
+      .filter({ hasText: new RegExp(`^Assign$`, 'i') })
+      .first()
+  }
 
   if (await assignAction.isVisible()) {
     await assignAction.click()

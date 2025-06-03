@@ -29,6 +29,7 @@ test.describe.serial('Print certificate', () => {
   })
 
   test('1.0 Click on "Print certificate" from action menu', async () => {
+    await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, declaration)
   })
 

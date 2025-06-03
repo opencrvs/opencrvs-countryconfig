@@ -29,8 +29,7 @@ export async function createPIN(page: Page) {
 }
 
 export async function logout(page: Page) {
-  await page.locator('#ProfileMenu-dropdownMenu').getByRole('button').click()
-  await page.getByText('Logout').click()
+  await page.getByRole('button', { name: 'Logout' }).click()
   await page.context().clearCookies()
 }
 

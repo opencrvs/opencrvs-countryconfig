@@ -81,7 +81,7 @@
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
     "@opencrvs/mosip": "^1.8.0-beta.8.dev",
-    "@opencrvs/toolkit": "1.8.0-rc.a8f480e",
+    "@opencrvs/toolkit": "1.8.0-rc.2744176",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
     "@types/csv2json": "^1.4.0",
@@ -148,5 +148,6 @@
   "resolutions": {
     "minimist": "^1.2.2",
     "acorn": "^6.4.1"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

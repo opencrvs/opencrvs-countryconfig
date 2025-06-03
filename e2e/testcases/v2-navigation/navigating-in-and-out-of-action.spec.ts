@@ -28,6 +28,7 @@ test.describe.serial('Navigating in and out of action', () => {
     eventId = res.eventId
     page = await browser.newPage()
     await loginToV2(page)
+    await page.getByRole('button', { name: 'Ready to print' }).click()
   })
 
   test.afterAll(async () => {
@@ -76,7 +77,7 @@ test.describe.serial('Navigating in and out of action', () => {
 
   test('Browser back button should take user to the front page instead of action flow', async () => {
     await page.goBack()
-    await expect(page.locator('#content-name')).toContainText('All events')
+    await expect(page.locator('#content-name')).toContainText('Ready to print')
   })
 
   test('Browser forward button should take user back to the event overview page', async () => {

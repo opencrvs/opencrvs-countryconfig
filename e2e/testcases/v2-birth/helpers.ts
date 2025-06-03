@@ -1,6 +1,6 @@
 import { expect, type Page } from '@playwright/test'
 import { omit } from 'lodash'
-import { formatName } from '../../helpers'
+import { formatName, joinValuesWith } from '../../helpers'
 import { faker } from '@faker-js/faker'
 
 export const REQUIRED_VALIDATION_ERROR = 'Required for registration'
@@ -47,4 +47,24 @@ export async function openBirthDeclaration(page: Page) {
   await page.getByRole('button', { name: 'Continue' }).click()
 
   return page
+}
+
+export async function expectRowValueWithChangeButton(
+  page: Page,
+  fieldName: string,
+  assertionText: string
+) {
+  await expect(page.getByTestId(`row-value-${fieldName}`)).toContainText(
+    assertionText
+  )
+
+  await expect(page.getByTestId(`change-button-${fieldName}`)).toBeVisible()
+}
+
+export const formatV2ChildName = (obj: {
+  ['child.firstname']: string
+  ['child.surname']: string
+  [key: string]: any
+}) => {
+  return joinValuesWith([obj['child.firstname'], obj['child.surname']])
 }

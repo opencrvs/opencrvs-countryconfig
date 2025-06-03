@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 
 import { loginToV2, getToken } from '../../helpers'
-import { CREDENTIALS } from '../../constants'
+import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import {
   createDeclaration,
   Declaration
@@ -28,6 +28,9 @@ test.describe.serial('Assign & Unassign', () => {
   })
 
   test('Click on "Assign" from action menu', async () => {
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready to print').click()
+
     const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
     await page.getByRole('button', { name: childName }).click()
     await ensureAssigned(page)

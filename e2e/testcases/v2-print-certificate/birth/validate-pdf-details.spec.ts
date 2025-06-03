@@ -33,6 +33,7 @@ test.describe
     page = await browser.newPage()
     await loginToV2(page)
 
+    await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Birth Certificate Certified Copy')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')
@@ -77,6 +78,7 @@ test.describe.serial("Validate 'Birth Certificate' PDF details", () => {
     page = await browser.newPage()
     await loginToV2(page)
 
+    await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Birth Certificate')
     await selectRequesterType(page, 'Print and issue to Informant (Mother)')
