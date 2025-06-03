@@ -29,7 +29,7 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
     id: 'v2.event.tennis-club-membership.action.declare.form.review.title',
     defaultMessage:
-      '{applicant.firstname, select, __EMPTY__ {Member declaration} other {{applicant.surname, select, __EMPTY__ {Member declaration} other {Member declaration for {applicant.firstname} {applicant.surname}}}}}',
+      '{applicant.name.firstname, select, __EMPTY__ {Member declaration} other {{applicant.name.surname, select, __EMPTY__ {Member declaration} other {Member declaration for {applicant.name.firstname} {applicant.name.surname}}}}}',
     description: 'Title of the review page'
   },
   fields: [
@@ -76,26 +76,29 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
       },
       fields: [
         {
-          id: 'applicant.firstname',
-          type: 'TEXT',
-          configuration: { maxLength: MAX_NAME_LENGTH },
-          required: true,
+          id: 'applicant.name',
+          type: 'NAME',
           label: {
-            defaultMessage: "Applicant's first name",
-            description: 'This is the label for the field',
-            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.firstname.label'
-          }
-        },
-        {
-          id: 'applicant.surname',
-          type: 'TEXT',
-          configuration: { maxLength: MAX_NAME_LENGTH },
+            defaultMessage: 'Name of applicant',
+            description: 'This is the title for the name field',
+            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.name.label'
+          },
+          hideLabel: true,
           required: true,
-          label: {
-            defaultMessage: "Applicant's surname",
-            description: 'This is the label for the field',
-            id: 'v2.event.tennis-club-membership.action.declare.form.section.who.field.surname.label'
-          }
+          validation: [
+            {
+              validator: field('applicant.name').object({
+                firstname: field('firstname').isValidEnglishName(),
+                surname: field('surname').isValidEnglishName()
+              }),
+              message: {
+                defaultMessage:
+                  "Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)",
+                description: 'This is the error message for invalid name',
+                id: 'v2.error.invalidName'
+              }
+            }
+          ]
         },
         {
           id: 'applicant.dob',
@@ -638,7 +641,7 @@ export const tennisClubMembershipEvent = defineConfig({
     id: 'v2.event.tennis-club-membership.label'
   },
   title: {
-    defaultMessage: '{applicant.firstname} {applicant.surname}',
+    defaultMessage: '{applicant.name.firstname} {applicant.name.surname}',
     description: 'This is the title of the summary',
     id: 'v2.event.tennis-club-membership.title'
   },
@@ -651,7 +654,7 @@ export const tennisClubMembershipEvent = defineConfig({
   summary: {
     fields: [
       {
-        id: 'applicant.firstname',
+        id: 'applicant.name',
         emptyValueMessage: {
           defaultMessage: "Applicant's first name missing",
           description:
@@ -1034,11 +1037,7 @@ export const tennisClubMembershipEvent = defineConfig({
         description: 'Applicant details search field section title',
         id: 'v2.event.tennis-club-membership.search.applicants'
       },
-      fields: [
-        field('applicant.firstname').fuzzy(),
-        field('applicant.surname').fuzzy(),
-        field('applicant.dob').range()
-      ]
+      fields: [field('applicant.name').fuzzy(), field('applicant.dob').range()]
     },
     {
       title: {

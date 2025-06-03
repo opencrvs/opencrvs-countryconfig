@@ -59,10 +59,7 @@ export const advancedSearchBirth = [
       field('child.dob', {
         searchCriteriaLabelPrefix: childPrefix
       }).range(),
-      field('child.firstname', {
-        searchCriteriaLabelPrefix: childPrefix
-      }).fuzzy(),
-      field('child.surname', {
+      field('child.name', {
         searchCriteriaLabelPrefix: childPrefix
       }).fuzzy(),
       field('child.gender', {
