@@ -207,6 +207,24 @@ export const birthEvent = defineConfig({
         id: 'v2.event.birth.action.collect-certificate.label'
       },
       printForm: BIRTH_CERTIFICATE_COLLECTOR_FORM
+    },
+    {
+      type: ActionType.REQUEST_CORRECTION,
+      label: {
+        defaultMessage: 'Request correction',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.birth.action.request-correction.label'
+      },
+      correctionForm: {
+        label: {
+          defaultMessage: 'Request correction',
+          description:
+            'This is shown as the action name anywhere the user can trigger the action from',
+          id: 'v2.event.birth.action.request-correction.label'
+        },
+        pages: []
+      }
     }
   ],
   advancedSearch: advancedSearchBirth
