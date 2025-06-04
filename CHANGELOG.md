@@ -181,6 +181,8 @@ validations.isAgeInYearsBetween,The error message that appears when age for the 
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts
 ```
 
+- Ensure that place of birth/death only shows active facilities/offices on the form [#9311](https://github.com/opencrvs/opencrvs-core/issues/9311)
+
 ## 1.6.4
 
 ### Bug fixes
