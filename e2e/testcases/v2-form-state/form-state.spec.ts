@@ -114,6 +114,7 @@ test.describe('Form state', () => {
     const res = await createDeclaration(token)
 
     await page.reload()
+    await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, res.declaration)
     await selectRequesterType(page, 'Print and issue to someone else')
 
