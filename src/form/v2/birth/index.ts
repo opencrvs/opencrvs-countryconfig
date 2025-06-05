@@ -31,7 +31,7 @@ export const birthEvent = defineConfig({
     description: 'This is what this event is referred as in the system',
     id: 'v2.event.birth.label'
   },
-  dateOfEvent: field('child.dob').getId(),
+  dateOfEvent: field('child.dob'),
   title: {
     defaultMessage: '{child.firstname} {child.surname}',
     description: 'This is the title of the summary',
