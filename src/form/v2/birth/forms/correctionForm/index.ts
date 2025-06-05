@@ -48,7 +48,7 @@ export const CORRECTION_FORM = defineActionForm({
       // TODO FIX conditonals
       conditional: and(
         not(field('requester.type').isEqualTo('ANOTHER_AGENT')),
-        not(field('requester.type').isEqualTo('ME')),
+        not(field('requester.type').isEqualTo('ME'))
       ),
       fields: [],
       actions: {

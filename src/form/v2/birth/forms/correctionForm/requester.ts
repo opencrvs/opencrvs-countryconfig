@@ -21,7 +21,7 @@ import { InformantType, InformantTypeKey } from '../pages/informant'
 import { informantMessageDescriptors } from '@countryconfig/form/common/messages'
 
 const commonConfigs = {
-  id: 'collector.type',
+  id: 'requester.type',
   type: FieldType.RADIO_GROUP,
   required: true,
   label: {
