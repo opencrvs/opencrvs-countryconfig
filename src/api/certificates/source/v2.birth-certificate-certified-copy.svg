@@ -529,5 +529,5 @@
   </defs>
   <image x="506.287" y="784" width="34.7131" height="35" xlink:href="{{qrCode}}" />
   <image id="image0_946_2501" x="331.453" y="670" width="194.513" height="68"
-    xlink:href="{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.signature'}}" />
+    xlink:href="{{$lookup $metadata 'assignedToSignature'}}" />
 </svg>
