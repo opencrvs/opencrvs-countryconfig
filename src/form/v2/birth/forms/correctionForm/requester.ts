@@ -20,12 +20,23 @@ import {
 import { InformantType, InformantTypeKey } from '../pages/informant'
 import { informantMessageDescriptors } from '@countryconfig/form/common/messages'
 
+const commonConfigs = {
+  id: 'collector.type',
+  type: FieldType.RADIO_GROUP,
+  required: true,
+  label: {
+    defaultMessage: '',
+    description: 'This is the label for the field',
+    id: 'v2.event.birth.action.correction.form.section.requester.label'
+  }
+}
+
 const commonOptions = [
   {
     value: 'CHILD',
     label: {
       id: 'v2.event.birth.action.correction.form.requester.type.child',
-      defaultMessage: 'Child CIHAN',
+      defaultMessage: 'Child',
       description: 'This is the label for the correction requester field'
     }
   },
@@ -156,8 +167,8 @@ const getFieldConfigForInformant = (informantType: InformantTypeKey) => {
 const getInformantOption = (informantType: InformantTypeKey) => {
   const defaultMessage =
     informantType === InformantType.OTHER
-      ? `Informant foo`
-      : `Informant foo (${informantMessageDescriptors[informantType].defaultMessage})`
+      ? `Informant`
+      : `Informant (${informantMessageDescriptors[informantType].defaultMessage})`
 
   return {
     label: {
@@ -185,17 +196,6 @@ const motherOption = {
     description: 'This is the label for the field'
   },
   value: InformantType.MOTHER
-}
-
-const commonConfigs = {
-  id: 'collector.type',
-  type: FieldType.RADIO_GROUP,
-  required: true,
-  label: {
-    defaultMessage: '',
-    description: 'This is the label for the field',
-    id: 'v2.event.birth.action.correction.form.section.requester.label'
-  }
 }
 
 export const correctionFormRequesters: FieldConfig[] = [
