@@ -2,7 +2,7 @@
   "cluster": ["manage"],
   "indices": [
     {
-      "names": ["ocrvs", "ocrvs-*", "events_*"],
+      "names": ["ocrvs", "ocrvs-*", "events", "events_*"],
       "privileges": [
         "write",
         "create",
