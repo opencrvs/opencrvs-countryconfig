@@ -32,7 +32,8 @@ test.describe('Save and delete drafts', () => {
     const childName = await fillChildDetails(page)
     await page.getByRole('button', { name: 'Save & Exit' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
-    await page.waitForTimeout(2000)
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
     await page.getByRole('button', { name: childName, exact: true }).click()
     await page.getByRole('button', { name: 'Action', exact: true }).click()
     await page.getByText('Declare').click()
@@ -43,9 +44,10 @@ test.describe('Save and delete drafts', () => {
     ).toBeVisible()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS * 2) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
     await page.getByText('Ready for review').click()
-    await page.waitForTimeout(2000)
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
     await page.getByRole('button', { name: 'Assigned to you' }).click()
 
     // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
