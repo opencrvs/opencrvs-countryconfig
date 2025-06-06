@@ -34,8 +34,17 @@ test.describe('Save and delete drafts', () => {
     await page.getByRole('button', { name: 'Confirm' }).click()
 
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    /**
+     * @TODO: This pattern looks like that we knew that the workqueue does not update in real time, and we toggle pages until it 'syncs'.
+     */
+    await page.getByText('Ready for review').click()
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+
     await page.getByRole('button', { name: childName, exact: true }).click()
     await page.getByRole('button', { name: 'Action', exact: true }).click()
+
     await page.getByText('Declare').click()
     await page.locator('#event-menu-dropdownMenu').click()
     await page.getByText('Delete declaration').click()
@@ -74,6 +83,7 @@ test.describe('Save and delete drafts', () => {
 
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
     await page.getByText('Ready for review').click()
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
     await page.getByRole('button', { name: 'Assigned to you' }).click()
 
     // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
@@ -94,6 +104,13 @@ test.describe('Save and delete drafts', () => {
 
     await page.getByRole('button', { name: 'Confirm' }).click()
 
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
+
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
     await expect(
       page.getByRole('button', { name: childName, exact: true })
     ).toBeVisible()
@@ -103,7 +120,6 @@ test.describe('Save and delete drafts', () => {
 
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
     await page.getByText('Ready for review').click()
-    await page.getByRole('button', { name: 'Assigned to you' }).click()
 
     // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
