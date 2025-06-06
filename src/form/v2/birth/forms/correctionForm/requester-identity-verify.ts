@@ -20,17 +20,39 @@ import {
 } from '@opencrvs/toolkit/events'
 import { InformantType } from '../pages/informant'
 
-export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
+export const correctionRequesterIdentityVerify: FieldConfig[] = [
   {
-    id: 'collector.identity.verify.data.mother',
+    id: 'requester.identity.verify',
+    type: FieldType.DATA,
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: field('requester.type').isEqualTo('CHILD')
+      }
+    ],
+    label: {
+      defaultMessage: '',
+      description: 'Title for the data section',
+      id: 'v2.event.birth.action.correction.form.section.verifyIdentity.data.label'
+    },
+    configuration: {
+      data: [
+        { fieldId: 'child.firstname' },
+        { fieldId: 'child.surname' },
+        { fieldId: 'child.dob' }
+      ]
+    }
+  },
+  {
+    id: 'requester.identity.verify',
     type: FieldType.DATA,
     conditionals: [
       {
         type: ConditionalType.SHOW,
         conditional: or(
-          field('collector.requesterId').isEqualTo(InformantType.MOTHER),
+          field('requester.type').isEqualTo('MOTHER'),
           and(
-            field('collector.requesterId').isEqualTo('INFORMANT'),
+            field('requester.type').isEqualTo('INFORMANT'),
             field('informant.relation').isEqualTo(InformantType.MOTHER)
           )
         )
@@ -39,7 +61,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
+      id: 'v2.event.birth.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
@@ -50,21 +72,20 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'mother.firstname' },
         { fieldId: 'mother.surname' },
         { fieldId: 'mother.dob' },
-        { fieldId: 'mother.age' },
         { fieldId: 'mother.nationality' }
       ]
     }
   },
   {
-    id: 'collector.identity.verify.data.father',
+    id: 'requester.identity.verify',
     type: FieldType.DATA,
     conditionals: [
       {
         type: ConditionalType.SHOW,
         conditional: or(
-          field('collector.requesterId').isEqualTo(InformantType.FATHER),
+          field('requester.type').isEqualTo('FATHER'),
           and(
-            field('collector.requesterId').isEqualTo('INFORMANT'),
+            field('requester.type').isEqualTo('INFORMANT'),
             field('informant.relation').isEqualTo(InformantType.FATHER)
           )
         )
@@ -73,7 +94,7 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
+      id: 'v2.event.birth.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
@@ -84,19 +105,18 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'father.firstname' },
         { fieldId: 'father.surname' },
         { fieldId: 'father.dob' },
-        { fieldId: 'father.age' },
         { fieldId: 'father.nationality' }
       ]
     }
   },
   {
-    id: 'collector.identity.verify.data.other',
+    id: 'requester.identity.verify',
     type: FieldType.DATA,
     conditionals: [
       {
         type: ConditionalType.SHOW,
         conditional: and(
-          field('collector.requesterId').isEqualTo('INFORMANT'),
+          field('requester.type').isEqualTo('INFORMANT'),
           not(field('informant.relation').isEqualTo(InformantType.FATHER)),
           not(field('informant.relation').isEqualTo(InformantType.MOTHER))
         )
@@ -105,11 +125,10 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
     label: {
       defaultMessage: '',
       description: 'Title for the data section',
-      id: 'v2.event.birth.action.certificate.form.section.verifyIdentity.data.label'
+      id: 'v2.event.birth.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
       data: [
-        { fieldId: 'informant.relation' },
         { fieldId: 'informant.idType' },
         { fieldId: 'informant.nid' },
         { fieldId: 'informant.passport' },
@@ -117,7 +136,6 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'informant.firstname' },
         { fieldId: 'informant.surname' },
         { fieldId: 'informant.dob' },
-        { fieldId: 'informant.age' },
         { fieldId: 'informant.nationality' }
       ]
     }

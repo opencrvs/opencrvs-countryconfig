@@ -7,6 +7,7 @@ import {
   PageTypes
 } from '@opencrvs/toolkit/events'
 import { correctionFormRequesters } from './requester'
+import { correctionRequesterIdentityVerify } from './requester-identity-verify'
 
 export const CORRECTION_FORM = defineActionForm({
   label: {
@@ -45,18 +46,17 @@ export const CORRECTION_FORM = defineActionForm({
         defaultMessage: 'Verify their identity',
         description: 'This is the title of the section'
       },
-      // TODO FIX conditonals
       conditional: and(
         not(field('requester.type').isEqualTo('ANOTHER_AGENT')),
         not(field('requester.type').isEqualTo('ME'))
       ),
-      fields: [],
+      fields: correctionRequesterIdentityVerify,
       actions: {
         verify: {
           label: {
             defaultMessage: 'Verified',
             description: 'This is the label for the verification button',
-            id: 'v2.event.birth.action.certificate.form.verify'
+            id: 'v2.event.birth.action.correction.form.verify'
           }
         },
         cancel: {
@@ -64,25 +64,49 @@ export const CORRECTION_FORM = defineActionForm({
             defaultMessage: 'Identity does not match',
             description:
               'This is the label for the verification cancellation button',
-            id: 'v2.event.birth.action.certificate.form.cancel'
+            id: 'v2.event.birth.action.correction.form.cancel'
           },
           confirmation: {
             title: {
-              defaultMessage: 'Print without proof of ID?',
+              defaultMessage: 'Correct without proof of ID?',
               description:
                 'This is the title for the verification cancellation modal',
-              id: 'v2.event.birth.action.certificate.form.cancel.confirmation.title'
+              id: 'v2.event.birth.action.correction.form.cancel.confirmation.title'
             },
             body: {
               defaultMessage:
-                'Please be aware that if you proceed, you will be responsible for issuing a certificate without the necessary proof of ID from the collector',
+                'Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification',
               description:
                 'This is the body for the verification cancellation modal',
-              id: 'v2.event.birth.action.certificate.form.cancel.confirmation.body'
+              id: 'v2.event.birth.action.correction.form.cancel.confirmation.body'
             }
           }
         }
       }
+    },
+    {
+      id: 'payment',
+      type: PageTypes.enum.FORM,
+      title: {
+        id: 'v2.event.birth.action.correction.',
+        defaultMessage: 'Collect Payment',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'payment.data',
+          type: FieldType.DATA,
+          label: {
+            defaultMessage: 'Payment details',
+            description: 'Title for the data section',
+            id: 'v2.event.birth.action.correction.payment.data.label'
+          },
+          conditionals: [],
+          configuration: {
+            data: []
+          }
+        }
+      ]
     }
   ]
 })

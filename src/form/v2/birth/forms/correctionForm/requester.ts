@@ -232,5 +232,21 @@ export const correctionFormRequesters: FieldConfig[] = [
   ...getFieldConfigForInformant(InformantType.GRANDFATHER),
   ...getFieldConfigForInformant(InformantType.GRANDMOTHER),
   ...getFieldConfigForInformant(InformantType.SISTER),
-  ...getFieldConfigForInformant(InformantType.LEGAL_GUARDIAN)
+  ...getFieldConfigForInformant(InformantType.LEGAL_GUARDIAN),
+  {
+    id: 'requester.relationship',
+    type: 'TEXT',
+    required: true,
+    label: {
+      id: 'v2.event.birth.action.correction.form.section.requester.relationship.label',
+      defaultMessage: 'Relationship to child',
+      description: 'This is the label for the field'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: field('requester.type').isEqualTo('SOMEONE_ELSE')
+      }
+    ]
+  }
 ]
