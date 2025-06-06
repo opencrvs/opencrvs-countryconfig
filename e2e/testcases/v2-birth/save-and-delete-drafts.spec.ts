@@ -48,6 +48,8 @@ test.describe('Save and delete drafts', () => {
     await page.waitForTimeout(2000)
     await page.getByRole('button', { name: 'Assigned to you' }).click()
 
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
     await expect(
       page.getByRole('button', { name: childName, exact: true })
     ).not.toBeVisible()
@@ -58,6 +60,8 @@ test.describe('Save and delete drafts', () => {
     await goToSection(page, 'review')
     await page.getByRole('button', { name: 'Exit', exact: true }).click()
 
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
     await expect(
       page.getByText(
         'You have unsaved changes on your declaration form. Are you sure you want to exit without saving?'
@@ -70,6 +74,8 @@ test.describe('Save and delete drafts', () => {
     await page.getByText('Ready for review').click()
     await page.getByRole('button', { name: 'Assigned to you' }).click()
 
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
     await expect(
       page.getByRole('button', { name: childName, exact: true })
     ).not.toBeVisible()
@@ -96,6 +102,9 @@ test.describe('Save and delete drafts', () => {
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
     await page.getByText('Ready for review').click()
     await page.getByRole('button', { name: 'Assigned to you' }).click()
+
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
 
     await expect(
       page.getByRole('button', { name: childName, exact: true })
