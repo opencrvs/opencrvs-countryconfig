@@ -31,9 +31,16 @@ export const CORRECTION_FORM = defineActionForm({
           id: 'requester.paragraph',
           label: {
             id: 'v2.event.birth.action.correction.form.section.requester.paragraph.label',
-            defaultMessage: 'TODO CIHAN add note here',
+            defaultMessage:
+              'Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.',
             description:
               'This is the label for the correction requester paragraph'
+          },
+          configuration: {
+            styles: {
+              fontVariant: 'reg16',
+              hint: true
+            }
           }
         },
         ...correctionFormRequesters
