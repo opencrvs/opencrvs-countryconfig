@@ -14,7 +14,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <br>
-
+<br>
 **This is the fictional country "Farajaland" OpenCRVS country configuration repository for [OpenCRVS](https://github.com/opencrvs/opencrvs-core) You must fork this for your own country.**
 
 <a href="https://documentation.opencrvs.org/setup/3.-installation/3.2-set-up-your-own-country-configuration">Read our documentation</a> to learn how to set up your own country configuration using this repo as an example.
@@ -123,3 +123,6 @@ When the OpenCRVS Core servers start up with un-seeded databases they call the f
 
 **<a href="https://documentation.opencrvs.org">Read our documentation</a> in order to learn how to make your own country configuration!**
 
+## Action Confirmation
+
+The Action Confirmation is a feature of OpenCRVS that allows for asynchronous confirmation of event actions. See documentation here: [Action Confirmation](./src/api/action-confirmation.md)
