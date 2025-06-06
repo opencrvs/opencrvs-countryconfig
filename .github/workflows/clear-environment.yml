@@ -20,7 +20,6 @@ on:
           - staging
           - qa
           - development
-          - zero-trust
 jobs:
   reset-data:
     name: 'Reset data'
