@@ -958,6 +958,51 @@ services:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'hearth'
 
+  postgres:
+    image: postgres:17
+    networks:
+      - overlay_net
+    restart: unless-stopped
+    volumes:
+      - /data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    deploy:
+      replicas: 1
+      labels:
+        - 'traefik.enable=false'
+      placement:
+        constraints:
+          - node.labels.data1 == true
+
+  postgres-on-update:
+    image: postgres:17
+    command: bash /on-deploy.sh
+    configs:
+      - source: postgres-on-deploy.{{ts}}
+        target: /on-deploy.sh
+    deploy:
+      labels:
+        - traefik.enable=false
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - EVENTS_APP_POSTGRES_PASSWORD=${EVENTS_APP_POSTGRES_PASSWORD}
+      - EVENTS_MIGRATOR_POSTGRES_PASSWORD=${EVENTS_MIGRATOR_POSTGRES_PASSWORD}
+      - STACK=${STACK}
+    networks:
+      app_net:
+      dependencies_monitoring_net_3:
+        aliases: []
+      dependencies_postgres_net:
+        aliases: []
+
   webhooks:
     secrets:
       - jwt-public-key.{{ts}}
@@ -1052,6 +1097,8 @@ configs:
     file: /opt/opencrvs/infrastructure/monitoring/filebeat/filebeat.yml
   mongo-on-deploy.{{ts}}:
     file: /opt/opencrvs/infrastructure/mongodb/on-deploy.sh
+  postgres-on-deploy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/postgres/on-deploy.sh
   beat-rollover-policy.{{ts}}:
     file: /opt/opencrvs/infrastructure/monitoring/beats/rollover-policy.json
   kibana.{{ts}}:
