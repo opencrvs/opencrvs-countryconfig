@@ -25,6 +25,8 @@ on:
           - production
           - backup
           - jump
+          - e2e
+          - v19
       tag:
         type: choice
         description: Select group tag you want to execute
@@ -61,7 +63,6 @@ jobs:
       gh_token: ${{ secrets.GH_TOKEN }}
       encryption_key: ${{ secrets.GH_ENCRYPTION_PASSWORD }}
       SSH_KEY: ${{ secrets.SSH_KEY }}
-
   get-jump-ssh-key:
     name: Get jump SSH key
     uses: ./.github/workflows/get-secret-from-environment.yml
@@ -72,7 +73,6 @@ jobs:
       gh_token: ${{ secrets.GH_TOKEN }}
       encryption_key: ${{ secrets.GH_ENCRYPTION_PASSWORD }}
       SSH_KEY: ${{ secrets.SSH_KEY }}
-
   get-production-encryption-key:
     name: Get production backup encryption key
     if: inputs.environment == 'staging'
@@ -84,7 +84,6 @@ jobs:
       gh_token: ${{ secrets.GH_TOKEN }}
       encryption_key: ${{ secrets.GH_ENCRYPTION_PASSWORD }}
       BACKUP_ENCRYPTION_PASSPHRASE: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
-
   provision:
     name: Provision ${{ inputs.environment }}
     environment: ${{ inputs.environment }}
@@ -101,7 +100,6 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
           path: './${{ github.event.repository.name }}'
-
       - name: Insert production encryption key to environment variables
         if: inputs.environment == 'staging' && needs.get-production-encryption-key.outputs.environment_exists == 'true'
         run: |
@@ -110,7 +108,6 @@ jobs:
           BACKUP_RESTORE_ENCRYPTION_PASSPHRASE=$(cat /tmp/backup_encryption_key)
           echo "backup_restore_encryption_passphrase=$BACKUP_RESTORE_ENCRYPTION_PASSPHRASE" >> $GITHUB_ENV
           echo "::add-mask::$BACKUP_RESTORE_ENCRYPTION_PASSPHRASE"
-
       - name: Set variables for ansible
         id: ansible-variables
         run: |
@@ -132,7 +129,6 @@ jobs:
           # @todo @deprecated remove the fallback to secrets.SSH_HOST in OpenCRVS 1.7.0
           manager_production_server_ip: ${{ vars.SSH_HOST || secrets.SSH_HOST }}
           ansible_user: ${{ secrets.SSH_USER }}
-
       - name: Read known hosts
         run: |
           cd ${{ github.event.repository.name }}
@@ -140,27 +136,23 @@ jobs:
           sed -i -e '$a\' ./infrastructure/known-hosts
           cat ./infrastructure/known-hosts >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ env.KNOWN_HOSTS }}
-
       - name: Write backup SSH key to file
         if: needs.get-backup-ssh-key.outputs.environment_exists == 'true'
         run: |
           echo "${{ needs.get-backup-ssh-key.outputs.secret_value }}" | base64 --decode | \
           openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}" -out /tmp/backup_ssh_private_key
           chmod 600 /tmp/backup_ssh_private_key
-
       - name: Write jump server SSH key to file
         if: needs.get-jump-ssh-key.outputs.environment_exists == 'true'
         run: |
           echo "${{ needs.get-jump-ssh-key.outputs.secret_value }}" | base64 --decode | \
           openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}" -out /tmp/jump_ssh_private_key
           chmod 600 /tmp/jump_ssh_private_key
-
       - name: Check if backup environment if configured in inventory file
         if: needs.get-backup-ssh-key.outputs.environment_exists != 'true'
         run: |
@@ -175,7 +167,6 @@ jobs:
             echo "After that you can proceed with (re)provisioning your staging and production servers."
             exit 1
           fi
-
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2.8.0
         env:
