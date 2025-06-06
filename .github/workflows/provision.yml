@@ -27,6 +27,7 @@ on:
           - jump
           - e2e
           - v19
+          - zero-trust
       tag:
         type: choice
         description: Select group tag you want to execute

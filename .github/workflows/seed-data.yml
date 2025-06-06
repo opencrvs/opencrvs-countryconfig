@@ -23,6 +23,7 @@ on:
           - production
           - e2e
           - v19
+          - zero-trust
       core-image-tag:
         description: Core DockerHub image tag
         required: true
