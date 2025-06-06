@@ -353,6 +353,10 @@ export AUTH_REDIS_USERNAME=`generate_password`
 export AUTH_REDIS_PASSWORD=`generate_password`
 export WEBHOOKS_REDIS_USERNAME=`generate_password`
 export WEBHOOKS_REDIS_PASSWORD=`generate_password`
+
+export EVENTS_APP_POSTGRES_PASSWORD=`generate_password`
+export EVENTS_MIGRATOR_POSTGRES_PASSWORD=`generate_password`
+
 #
 # Elasticsearch credentials
 #
