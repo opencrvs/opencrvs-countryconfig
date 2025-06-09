@@ -134,7 +134,7 @@
     <g clip-path="url(#clip4_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="229.634">{{$lookup $declaration "child.firstname"}} {{$lookup $declaration "child.surname"}}</tspan>
+        <tspan x="289.95" y="229.634">{{$lookup $declaration "child.name.firstname"}} {{$lookup $declaration "child.name.surname"}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="246.205" x2="512.08" y2="246.205" stroke="#ECECEC" stroke-width="0.97" />
@@ -405,7 +405,7 @@
   <image width="36" height="36" xlink:href="{{qrCode}}" x="500" y="770"></image>
   <!-- #ifCond printInAdvance '!==' true}} -->
   <image width="140" height="70"
-    xlink:href="{{$lookup $metadata 'legalStatuses.REGISTERED.createdBy.signature'}}"
+    xlink:href="{{$lookup $metadata 'legalStatuses.REGISTERED.createdBySignature'}}"
     x="
   347" y=" 644"></image>
   <!-- /ifCond}} -->

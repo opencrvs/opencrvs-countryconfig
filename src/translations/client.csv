@@ -811,8 +811,8 @@ event.birth.action.declare.form.section.documents.field.proofOther.label,This is
 event.birth.action.declare.form.version.1,This is the first version of the form,Version 1,Version 1
 event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,Déclarer
 event.birth.label,This is what this event is referred as in the system,Birth declaration,Déclaration de naissance
-event.birth.summary.title,This is the title of the summary,{child.firstname} {child.surname},{child.firstname} {child.surname}
-event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
+event.birth.summary.title,This is the title of the summary,{child.name.firstname} {child.name.surname},{child.name.firstname} {child.name.surname}
+event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.name.surname} {child.name.firstname},{child.name.surname} {child.name.firstname}
 exitModal.cancel,The label for cancel button in exit modal,Cancel,Annuler
 exitModal.exitWithoutSaving,The title for exit without saving modal,Exit without saving changes?,Quitter sans enregistrer les modifications?
 exitModal.exitWithoutSavingDescription,The description for exit without saving modal,You have unsaved changes on your declaration form. Are you sure you want to exit without saving?,Vous avez des modifications non enregistrées sur votre formulaire de déclaration. Êtes-vous sûr de vouloir quitter sans enregistrer?
@@ -2585,7 +2585,7 @@ v2.event.birth.action.collect-certificate.label,This is shown as the action name
 v2.event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 v2.event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
-v2.event.birth.action.declare.form.review.title,Title of the form to show in review page,"{child.firstname, select, __EMPTY__ {Birth declaration} other {{child.surname, select, __EMPTY__ {Birth declaration} other {Birth declaration for {child.firstname} {child.surname}}}}}","{child.firstname, select, __EMPTY__ {Déclaration des membres} other {{child.surname, select, __EMPTY__ {Déclaration de naissance} other {Déclaration de naissance pour {child.firstname} {child.surname}}}}}"
+v2.event.birth.action.declare.form.review.title,Title of the form to show in review page,"{child.name.firstname, select, __EMPTY__ {Birth declaration} other {{child.name.surname, select, __EMPTY__ {Birth declaration} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}","{child.name.firstname, select, __EMPTY__ {Déclaration des membres} other {{child.name.surname, select, __EMPTY__ {Déclaration de naissance} other {Déclaration de naissance pour {child.name.firstname} {child.name.surname}}}}}"
 v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label,This is the label for the field,Attendant at birth,Accoucheur(se)
 v2.event.birth.action.declare.form.section.child.field.birthLocation.label,This is the label for the field,Location of birth,Lieu de naissance
 v2.event.birth.action.declare.form.section.child.field.birthType.label,This is the label for the field,Type of birth,Type d'accouchement
@@ -2653,7 +2653,7 @@ v2.event.birth.summary.informant.contact.empty,This is shown when there is no in
 v2.event.birth.summary.informant.contact.label,This is the label for the informant information,Contact,Contact
 v2.event.birth.summary.informant.contact.value,This is the contact value of the informant,{informant.phoneNo} {informant.email},{informant.phoneNo} {informant.email}
 v2.event.birth.title,This is the title of the summary,{child.name.firstname} {child.name.surname},{child.name.firstname} {child.name.surname}
-v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.surname} {child.firstname},{child.surname} {child.firstname}
+v2.event.birth.workqueue.all.name.label,Label for name in all workqueue,{child.name.surname} {child.name.firstname},{child.name.surname} {child.name.firstname}
 v2.event.default.action.certificate.form.section.who.field.surname.label,This is the label for the field,Type,Type
 v2.event.default.action.certificate.template.type.label,Select certificate template,Type,Taper
 v2.event.history.markAsDuplicate,,Marked as a duplicate,Marqué comme doublon
