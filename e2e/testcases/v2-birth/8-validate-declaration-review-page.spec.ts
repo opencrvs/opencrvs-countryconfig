@@ -858,7 +858,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
     })
@@ -1144,14 +1144,14 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.locator('#review____comment').fill(comment)
 
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByText('Delete')
         .click()
 
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
     })
@@ -1454,14 +1454,14 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.locator('#review____comment').fill(comment)
 
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByText('Delete')
         .click()
 
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
     })

@@ -491,7 +491,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
     })

@@ -353,7 +353,7 @@ export const formatName = (name: PersonOrName) => {
 
 export const drawSignature = async (page: Page, v2Events = false) => {
   const canvasLocator = v2Events
-    ? '#review____signature-form-input canvas'
+    ? '#review____signature_canvas_element'
     : '#informantSignature_modal canvas'
 
   const canvas = page.locator(canvasLocator)
