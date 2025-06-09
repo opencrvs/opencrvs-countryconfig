@@ -1144,7 +1144,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.locator('#review____comment').fill(comment)
 
       await page
-        .locator('#review____signature_modal')
+        .locator('#review____signature-form-input')
         .getByText('Delete')
         .click()
 
@@ -1454,7 +1454,7 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.locator('#review____comment').fill(comment)
 
       await page
-        .locator('#review____signature_modal')
+        .locator('#review____signature-form-input')
         .getByText('Delete')
         .click()
 
