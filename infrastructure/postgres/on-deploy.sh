@@ -19,6 +19,9 @@ until PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -p "$POSTGRES_POR
   sleep 2
 done
 
+# Prevent Swarm from marking this task as failed due to early exit
+sleep 4
+
 echo "Checking if database '$TARGET_DB' exists..."
 DB_EXISTS=$(PGPASSWORD="$POSTGRES_PASSWORD" psql -qtAX -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
   -U "$POSTGRES_USER" -d postgres \
@@ -67,7 +70,4 @@ ALTER ROLE "$EVENTS_APP_ROLE" SET search_path = app;
 EOF
 
 echo "✅ Database '$TARGET_DB' initialized successfully."
-
-# Prevent Swarm from marking this task as failed due to early exit
-sleep 4
 exit 0
