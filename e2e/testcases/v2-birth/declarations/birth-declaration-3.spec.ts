@@ -707,6 +707,8 @@ test.describe.serial('3. Birth declaration case - 3', () => {
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
     test('3.1.9 Send for approval', async () => {

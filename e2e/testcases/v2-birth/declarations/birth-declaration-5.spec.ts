@@ -507,6 +507,8 @@ test.describe.serial('5. Birth declaration case - 5', () => {
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
     // @TODO: take in to use after workflows are implemented on V2
