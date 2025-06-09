@@ -127,13 +127,13 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc:RELEASE.2023-09
 # Delete all data from PostgreSQL
 #-------------------------------
 
-POSTGRES_DB="${STACK}__events"
-EVENTS_MIGRATOR_ROLE="${STACK}__events_migrator"
-EVENTS_APP_ROLE="${STACK}__events_app"
+POSTGRES_DB="events"
+EVENTS_MIGRATOR_ROLE="events_migrator"
+EVENTS_APP_ROLE="events_app"
 
 echo "🔁 Dropping database '${POSTGRES_DB}' and roles..."
 
-docker run --rm --network=dependencies_postgres_net \
+docker run --rm --network=$NETWORK  \
   -e PGPASSWORD="${POSTGRES_PASSWORD}" \
   -e POSTGRES_USER="${POSTGRES_USER}" \
   -e POSTGRES_DB="${POSTGRES_DB}" \
@@ -166,4 +166,5 @@ docker service scale opencrvs_dashboards=1
 #-----------------------------
 docker service scale opencrvs_events=0
 docker service scale opencrvs_events=1
+
 
