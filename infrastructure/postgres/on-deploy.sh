@@ -67,3 +67,4 @@ ALTER ROLE "$EVENTS_APP_ROLE" SET search_path = app;
 EOF
 
 echo "✅ Database '$TARGET_DB' initialized successfully."
+exit 0

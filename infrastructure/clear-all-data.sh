@@ -154,8 +154,7 @@ EOF
 echo "✅ Database and roles dropped."
 echo "🚀 Reinitializing Postgres with on-deploy.sh..."
 
-docker service scale opencrvs_postgres-on-update=0
-docker service scale opencrvs_postgres-on-update=1
+docker service update --force opencrvs_postgres-on-update
 
 # Restart the metabase service
 #-----------------------------

@@ -1009,6 +1009,12 @@ services:
       - EVENTS_MIGRATOR_POSTGRES_PASSWORD=${EVENTS_MIGRATOR_POSTGRES_PASSWORD}
     networks:
       - overlay_net
+    healthcheck:
+      test: ["CMD-SHELL", "echo 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 1
+      start_period: 2s
 
   webhooks:
     secrets:
