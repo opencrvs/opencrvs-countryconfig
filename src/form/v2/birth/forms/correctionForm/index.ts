@@ -180,6 +180,7 @@ export const CORRECTION_FORM = defineActionForm({
         {
           id: 'reason.option',
           type: FieldType.RADIO_GROUP,
+          required: true,
           label: {
             defaultMessage: '',
             description: 'Label for the reason for correction field',
