@@ -317,6 +317,9 @@ export const CORRECTION_FORM = defineActionForm({
             description: 'Label for the amount field',
             id: 'v2.event.birth.action.correction.fees.amount.label'
           },
+          configuration: {
+            min: 0
+          },
           conditionals: [
             {
               type: ConditionalType.SHOW,
