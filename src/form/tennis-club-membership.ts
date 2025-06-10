@@ -77,7 +77,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
       fields: [
         {
           id: 'applicant.name',
-          type: 'NAME',
+          type: FieldType.NAME,
           label: {
             defaultMessage: 'Name of applicant',
             description: 'This is the title for the name field',
@@ -102,7 +102,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
         },
         {
           id: 'applicant.dob',
-          type: 'DATE',
+          type: FieldType.DATE,
           required: true,
           validation: [
             {
@@ -188,9 +188,9 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
           }
         },
         {
-          id: 'recommender.firstname',
+          id: 'recommender.name',
           configuration: { maxLength: MAX_NAME_LENGTH },
-          type: 'TEXT',
+          type: FieldType.NAME,
           required: true,
           conditionals: [
             {
@@ -198,27 +198,11 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
               conditional: field('recommender.none').isFalsy()
             }
           ],
+          hideLabel: true,
           label: {
-            defaultMessage: "Recommender's first name",
+            defaultMessage: "Recommender's name",
             description: 'This is the label for the field',
             id: 'v2.event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label'
-          }
-        },
-        {
-          id: 'recommender.surname',
-          configuration: { maxLength: MAX_NAME_LENGTH },
-          type: 'TEXT',
-          required: true,
-          conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: field('recommender.none').isFalsy()
-            }
-          ],
-          label: {
-            defaultMessage: "Recommender's surname",
-            description: 'This is the label for the field',
-            id: 'v2.event.tennis-club-membership.action.declare.form.section.recommender.field.surname.label'
           }
         },
         {
@@ -691,7 +675,7 @@ export const tennisClubMembershipEvent = defineConfig({
         }
       },
       {
-        id: 'recommender.firstname',
+        id: 'recommender.name.firstname',
         emptyValueMessage: {
           defaultMessage: "Recommender's first name missing",
           description:
@@ -704,13 +688,13 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.label'
         },
         value: {
-          defaultMessage: '{recommender.firstname}',
+          defaultMessage: '{recommender.name.firstname}',
           description: 'Value for the recommender’s first name field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.value'
         }
       },
       {
-        id: 'recommender.surname',
+        id: 'recommender.name.surname',
         emptyValueMessage: {
           defaultMessage: "Recommender's surname missing",
           description:
@@ -723,7 +707,7 @@ export const tennisClubMembershipEvent = defineConfig({
           id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.label'
         },
         value: {
-          defaultMessage: '{recommender.surname}',
+          defaultMessage: '{recommender.name.surname}',
           description: 'Value for the recommender’s surname field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.value'
         }
@@ -1045,10 +1029,7 @@ export const tennisClubMembershipEvent = defineConfig({
         description: 'Recommender details search field section title',
         id: 'v2.event.tennis-club-membership.search.recommender'
       },
-      fields: [
-        field('recommender.firstname').fuzzy(),
-        field('recommender.surname').fuzzy()
-      ]
+      fields: [field('recommender.name').fuzzy()]
     }
   ]
 })
