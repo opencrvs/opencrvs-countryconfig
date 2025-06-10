@@ -242,6 +242,11 @@ export const correctionFormRequesters: FieldConfig[] = [
       defaultMessage: 'Relationship to child',
       description: 'This is the label for the field'
     },
+    placeholder: {
+      defaultMessage: 'eg. Grandmother',
+      description: 'This is the placeholder for the field',
+      id: 'v2.event.birth.action.correction.form.section.requester.relationship.placeholder'
+    },
     conditionals: [
       {
         type: ConditionalType.SHOW,

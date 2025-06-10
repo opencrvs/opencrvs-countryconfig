@@ -97,10 +97,27 @@ export const CORRECTION_FORM = defineActionForm({
       type: PageTypes.enum.FORM,
       title: {
         id: 'v2.event.birth.action.correction.form.section.supporting-documents.title',
-        defaultMessage: 'Supporting documents',
+        defaultMessage: 'Upload supporting documents',
         description: 'This is the title of the section'
       },
       fields: [
+        {
+          type: FieldType.PARAGRAPH,
+          id: 'documents.paragraph',
+          label: {
+            id: 'v2.event.birth.action.correction.form.section.supporting-documents.paragraph.label',
+            defaultMessage:
+              'For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.',
+            description:
+              'This is the label for the supporting documents paragraph'
+          },
+          configuration: {
+            styles: {
+              fontVariant: 'reg16',
+              hint: true
+            }
+          }
+        },
         {
           id: 'documents.supportingDocs',
           type: FieldType.FILE_WITH_OPTIONS,
@@ -139,8 +156,6 @@ export const CORRECTION_FORM = defineActionForm({
         {
           id: 'documents.confirmation',
           type: FieldType.RADIO_GROUP,
-          required: true,
-          defaultValue: 'ATTEST',
           label: {
             defaultMessage: '',
             description: 'Label for the confirmation field',
@@ -232,6 +247,16 @@ export const CORRECTION_FORM = defineActionForm({
               }
             }
           ]
+        },
+        {
+          id: 'reason.other',
+          type: FieldType.TEXT,
+          required: true,
+          label: {
+            defaultMessage: 'Reason for correction',
+            description: 'Label for the reason for correction field',
+            id: 'v2.event.birth.action.correction.reason.other.label'
+          }
         },
         {
           id: 'reason.comment',
