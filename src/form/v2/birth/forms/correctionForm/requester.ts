@@ -22,7 +22,7 @@ import { informantMessageDescriptors } from '@countryconfig/form/common/messages
 
 const commonConfigs = {
   id: 'requester.type',
-  type: FieldType.RADIO_GROUP,
+  type: FieldType.SELECT,
   required: true,
   label: {
     defaultMessage: '',

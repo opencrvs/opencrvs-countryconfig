@@ -256,7 +256,13 @@ export const CORRECTION_FORM = defineActionForm({
             defaultMessage: 'Reason for correction',
             description: 'Label for the reason for correction field',
             id: 'v2.event.birth.action.correction.reason.other.label'
-          }
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('reason.option').isEqualTo('OTHER')
+            }
+          ]
         },
         {
           id: 'reason.comment',
@@ -280,31 +286,27 @@ export const CORRECTION_FORM = defineActionForm({
       fields: [
         {
           id: 'fees.required',
-          required: true,
-          type: FieldType.RADIO_GROUP,
+          type: FieldType.CHECKBOX,
           label: {
-            defaultMessage: 'Fees required',
-            description: 'Title for the data section',
+            defaultMessage: 'Fee required',
+            description: 'Label for the no fee required field',
             id: 'v2.event.birth.action.correction.fees.required.label'
-          },
-          options: [
+          }
+        },
+        {
+          id: 'fees.divider',
+          type: FieldType.DIVIDER,
+          conditionals: [
             {
-              value: 'YES',
-              label: {
-                defaultMessage: 'Yes',
-                description: 'Label for the yes option',
-                id: 'v2.event.birth.action.correction.fees.required.yes.label'
-              }
-            },
-            {
-              value: 'NO',
-              label: {
-                defaultMessage: 'No',
-                description: 'Label for the no option',
-                id: 'v2.event.birth.action.correction.fees.required.no.label'
-              }
+              type: ConditionalType.SHOW,
+              conditional: not(field('fees.required').isFalsy())
             }
-          ]
+          ],
+          label: {
+            defaultMessage: '',
+            description: 'Label for the divider field',
+            id: 'v2.event.birth.action.correction.fees.divider.label'
+          }
         },
         {
           id: 'fees.amount',
@@ -318,7 +320,7 @@ export const CORRECTION_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('fees.required').isEqualTo('YES')
+              conditional: not(field('fees.required').isFalsy())
             }
           ]
         },
@@ -334,7 +336,7 @@ export const CORRECTION_FORM = defineActionForm({
           conditionals: [
             {
               type: ConditionalType.SHOW,
-              conditional: field('fees.required').isEqualTo('YES')
+              conditional: not(field('fees.required').isFalsy())
             }
           ]
         }
