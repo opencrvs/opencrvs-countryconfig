@@ -505,9 +505,11 @@ test.describe.serial('6. Birth declaration case - 6', () => {
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
     test.skip('6.1.8 Register', async () => {

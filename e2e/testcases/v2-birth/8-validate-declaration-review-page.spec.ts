@@ -858,9 +858,11 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
     test('8.1.7 Click send button', async () => {
@@ -1151,9 +1153,11 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
     test('8.2.7 Click send button', async () => {
@@ -1461,9 +1465,11 @@ test.describe.serial('8. Validate declaration review page', () => {
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
     test('8.3.7 Click send button', async () => {

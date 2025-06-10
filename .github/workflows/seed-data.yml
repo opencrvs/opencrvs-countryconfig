@@ -22,7 +22,6 @@ on:
           - staging
           - production
           - e2e
-          - v19
       core-image-tag:
         description: Core DockerHub image tag
         required: true
