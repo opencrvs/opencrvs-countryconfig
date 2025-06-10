@@ -9,6 +9,7 @@
   This version enforces environment to have Node 22 installed (supported until 30 April 2027) and removes support for Node 18 for better performance and using [new features](https://github.com/nodejs/node/releases/tag/v22.0.0) offered by NodeJS
 
   - Use nvm to upgrade your local development environment to use node version `22.x.x.`
+  - Add conditions for the certified copy certificate to ensure it's only available to children who are 1 year or older. [#9684](https://github.com/opencrvs/opencrvs-core/issues/9684)
 
 ## 1.8.0
 

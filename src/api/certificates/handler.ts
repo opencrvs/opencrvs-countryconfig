@@ -11,6 +11,7 @@
 
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
+import { field } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {
   normal: string
@@ -18,6 +19,9 @@ type FontFamilyTypes = {
   italics: string
   bolditalics: string
 }
+
+type JSONSchema = Record<string, any>
+
 export interface ICertificateConfigData {
   id: string
   event: Event
@@ -34,6 +38,12 @@ export interface ICertificateConfigData {
   }
   svgUrl: string
   fonts?: Record<string, FontFamilyTypes>
+  conditionals?:
+    | {
+        type: 'SHOW'
+        conditional: JSONSchema
+      }[]
+    | undefined
 }
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
@@ -260,7 +270,13 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
           bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: field('child.dob').isBefore().days(365).inPast()
+        }
+      ]
     },
     {
       id: 'v2.tennis-club-membership-certificate',
