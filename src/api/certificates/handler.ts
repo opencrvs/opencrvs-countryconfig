@@ -11,7 +11,7 @@
 
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { field, JSONSchema } from '@opencrvs/toolkit/events'
+import { field } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {
   normal: string
@@ -19,6 +19,9 @@ type FontFamilyTypes = {
   italics: string
   bolditalics: string
 }
+
+type JSONSchema = Record<string, any>
+
 export interface ICertificateConfigData {
   id: string
   event: Event
@@ -36,20 +39,10 @@ export interface ICertificateConfigData {
   svgUrl: string
   fonts?: Record<string, FontFamilyTypes>
   conditionals?:
-    | (
-        | {
-            type: 'SHOW'
-            conditional: JSONSchema
-          }
-        | {
-            type: 'ENABLE'
-            conditional: JSONSchema
-          }
-        | {
-            type: 'DISPLAY_ON_REVIEW'
-            conditional: JSONSchema
-          }
-      )[]
+    | {
+        type: 'SHOW'
+        conditional: JSONSchema
+      }[]
     | undefined
 }
 
