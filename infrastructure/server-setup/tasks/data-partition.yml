@@ -144,6 +144,31 @@
     mode: g+rwx
   when: not influxdb_data_backup.stat.exists
 
+- name: Check Postgres data directory
+  stat:
+    path: /data/postgres
+  register: postgres_data
+
+- name: Create Postgres data directory
+  file:
+    path: /data/postgres
+    state: directory
+  when: not postgres_data.stat.exists
+
+- name: Check Postgres data backup directory
+  stat:
+    path: /data/backups/postgres
+  register: postgres_data_backup
+
+- name: 'Create Postgres backup directory'
+  file:
+    path: /data/backups/postgres
+    state: directory
+    group: 1000
+    owner: 1000
+    mode: g+rwx
+  when: not postgres_data_backup.stat.exists
+
 - name: Check minio data directory
   stat:
     path: /data/minio
