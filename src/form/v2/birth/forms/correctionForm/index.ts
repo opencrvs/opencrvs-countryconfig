@@ -119,13 +119,78 @@ export const CORRECTION_FORM = defineActionForm({
           }
         },
         {
+          id: 'documents.confirmation',
+          type: FieldType.RADIO_GROUP,
+          required: true,
+          label: {
+            defaultMessage: '',
+            description: 'Label for the confirmation field',
+            id: 'v2.event.birth.action.correction.documents.confirmation.label'
+          },
+          defaultValue: 'PROVIDE_DOCUMENTS',
+          options: [
+            {
+              value: 'PROVIDE_DOCUMENTS',
+              label: {
+                defaultMessage: 'Provide documents',
+                description: 'Label for the provide documents option',
+                id: 'v2.event.birth.action.correction.documents.confirmation.provideDocuments.label'
+              }
+            },
+            {
+              value: 'ATTEST',
+              label: {
+                defaultMessage:
+                  'I attest to seeing supporting documentation and have a copy filed at my office',
+                description: 'Label for the attest option',
+                id: 'v2.event.birth.action.correction.documents.confirmation.attest.label'
+              }
+            },
+            {
+              value: 'NOT_REQUIRED',
+              label: {
+                defaultMessage: 'No supporting documents required',
+                description: 'Label for the not required option',
+                id: 'v2.event.birth.action.correction.documents.confirmation.notRequired.label'
+              }
+            }
+          ]
+        },
+        {
+          id: 'documents.divider',
+          type: FieldType.DIVIDER,
+          label: {
+            defaultMessage: '',
+            description: 'Label for the divider field',
+            id: 'v2.event.birth.action.correction.documents.divider.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('documents.confirmation').isEqualTo(
+                'PROVIDE_DOCUMENTS'
+              )
+            }
+          ]
+        },
+        {
           id: 'documents.supportingDocs',
           type: FieldType.FILE_WITH_OPTIONS,
+          // @TODO: this should be required, but currently the required functionality is not working correctly for these types of fields
+          // required: true,
           label: {
             defaultMessage: 'Supporting documents',
             description: 'Label for the supporting documents field',
             id: 'v2.event.birth.action.correction.documents.supportingDocs.label'
           },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('documents.confirmation').isEqualTo(
+                'PROVIDE_DOCUMENTS'
+              )
+            }
+          ],
           options: [
             {
               value: 'AFFIDAVIT',
@@ -149,34 +214,6 @@ export const CORRECTION_FORM = defineActionForm({
                 defaultMessage: 'Other',
                 description: 'Label for the other option',
                 id: 'v2.event.birth.action.correction.documents.supportingDocs.other.label'
-              }
-            }
-          ]
-        },
-        {
-          id: 'documents.confirmation',
-          type: FieldType.RADIO_GROUP,
-          label: {
-            defaultMessage: '',
-            description: 'Label for the confirmation field',
-            id: 'v2.event.birth.action.correction.documents.confirmation.label'
-          },
-          options: [
-            {
-              value: 'ATTEST',
-              label: {
-                defaultMessage:
-                  'I attest to seeing supporting documentation and have a copy filed at my office',
-                description: 'Label for the attest option',
-                id: 'v2.event.birth.action.correction.documents.confirmation.attest.label'
-              }
-            },
-            {
-              value: 'NOT_REQUIRED',
-              label: {
-                defaultMessage: 'No supporting documents required',
-                description: 'Label for the not required option',
-                id: 'v2.event.birth.action.correction.documents.confirmation.notRequired.label'
               }
             }
           ]
