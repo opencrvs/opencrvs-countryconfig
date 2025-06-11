@@ -54,8 +54,7 @@
       <tspan x="215.483" y="199.76">No. {{ lookup $metadata "registrationNumber" }}</tspan>
     </text>
     <path d="M50 206H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
-    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
-      font-size="10" font-weight="bold" letter-spacing="0em">
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0em">
       <tspan x="70" y="229.76">Membership details</tspan>
     </text>
     <path d="M70 233.5H514" stroke="#ECECEC" />
