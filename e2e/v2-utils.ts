@@ -11,6 +11,7 @@ export async function selectAction(
     | 'Assign'
     | 'Unassign'
     | 'Delete'
+    | 'Request correction'
 ) {
   if ((await page.getByTestId('status-value').innerText()) !== 'Draft') {
     await ensureAssigned(page)
