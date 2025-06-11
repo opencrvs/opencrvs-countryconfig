@@ -97,10 +97,11 @@
     state: present
 
 - name: Ensure SSH server is installed
-  ansible.builtin.package:
+  ansible.builtin.apt:
     name: openssh-server
     state: present
   become: yes
+  dpkg_options: 'force-confold,force-confdef'
 
 - name: Check short Diffie-Hellman keys
   ansible.builtin.shell: |
