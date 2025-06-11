@@ -121,6 +121,7 @@ export const CORRECTION_FORM = defineActionForm({
         {
           id: 'documents.confirmation',
           type: FieldType.RADIO_GROUP,
+          required: true,
           label: {
             defaultMessage: '',
             description: 'Label for the confirmation field',
