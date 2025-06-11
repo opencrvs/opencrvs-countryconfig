@@ -128,7 +128,7 @@ export const educationalAttainmentOptions = createSelectOptions(
   educationalAttainmentMessageDescriptors
 )
 
-// @TODO: Consider whether these can become boolean fields
+// @TODO: Consider whether these could become boolean fields
 export const YesNoTypes = {
   YES: 'YES',
   NO: 'NO'
