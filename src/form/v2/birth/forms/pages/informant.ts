@@ -17,8 +17,8 @@ import {
   FieldType,
   never,
   or,
-  TranslationConfig,
-  field
+  field,
+  TranslationConfig
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
 import { createSelectOptions, emptyMessage } from '../../../utils'
