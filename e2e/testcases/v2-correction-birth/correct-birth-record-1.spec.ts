@@ -293,7 +293,6 @@ test.describe('1. Correct record - 1', () => {
     test.describe('1.2.5 Correction made on child details', async () => {
       test('1.2.5.1 Change name', async () => {
         await page.getByTestId('change-button-child.firstname').click()
-        await page.locator('#confirm_edit').click()
 
         /*
          * Expected result: should
@@ -349,7 +348,6 @@ test.describe('1. Correct record - 1', () => {
 
       test('1.2.5.2 Change gender', async () => {
         await page.getByTestId('change-button-child.gender').click()
-        await page.locator('#confirm_edit').click()
 
         /*
          * Expected result: should
@@ -389,7 +387,6 @@ test.describe('1. Correct record - 1', () => {
 
       test('1.2.5.3 Change date of birth', async () => {
         await page.getByTestId('change-button-child.dob').click()
-        await page.locator('#confirm_edit').click()
 
         /*
          * Expected result: should
@@ -431,7 +428,6 @@ test.describe('1. Correct record - 1', () => {
 
       test('1.2.5.4 Change place of delivery', async () => {
         await page.getByTestId('change-button-child.placeOfBirth').click()
-        await page.locator('#confirm_edit').click()
 
         /*
          * Expected result: should
@@ -480,7 +476,6 @@ test.describe('1. Correct record - 1', () => {
 
       test('1.2.5.5 Change attendant at birth', async () => {
         await page.getByTestId('change-button-child.attendantAtBirth').click()
-        await page.locator('#confirm_edit').click()
 
         /*
          * Expected result: should
@@ -522,7 +517,6 @@ test.describe('1. Correct record - 1', () => {
 
       test('1.2.5.6 Change type of birth', async () => {
         await page.getByTestId('change-button-child.birthType').click()
-        await page.locator('#confirm_edit').click()
 
         /*
          * Expected result: should
