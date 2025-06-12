@@ -21,9 +21,7 @@ import {
   PageTypes,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
-import { requireMotherDetails } from './mother'
-import { requireFatherDetails } from './father'
-import { InformantType } from './informant'
+import { InformantType } from './infomantDetails'
 
 const IdType = {
   NATIONAL_ID: 'NATIONAL_ID',
@@ -66,26 +64,6 @@ const DEFAULT_FILE_CONFIGURATION = {
 
 const idTypeOptions = createSelectOptions(IdType, idTypeMessageDescriptors)
 
-const Other = {
-  PROOF_OF_LEGAL_GUARDIANSHIP: 'PROOF_OF_LEGAL_GUARDIANSHIP',
-  PROOF_OF_ASSIGNED_RESPONSIBILITY: 'PROOF_OF_ASSIGNED_RESPONSIBILITY'
-} as const
-
-const otherMessageDescriptors = {
-  PROOF_OF_LEGAL_GUARDIANSHIP: {
-    defaultMessage: 'Proof of legal guardianship',
-    description: 'Label for document option Proof of legal guardianship',
-    id: 'v2.form.field.label.legalGuardianProof'
-  },
-  PROOF_OF_ASSIGNED_RESPONSIBILITY: {
-    defaultMessage: 'Proof of assigned responsibility',
-    description: 'Label for document option Proof of assigned responsibility',
-    id: 'v2.form.field.label.assignedResponsibilityProof'
-  }
-} satisfies Record<keyof typeof Other, TranslationConfig>
-
-const otherOptions = createSelectOptions(Other, otherMessageDescriptors)
-
 export const documents = defineFormPage({
   id: 'documents',
   type: PageTypes.enum.FORM,
@@ -96,71 +74,25 @@ export const documents = defineFormPage({
   },
   fields: [
     {
-      id: 'documents.proofOfBirth',
-      type: FieldType.FILE,
-      required: false,
-      configuration: {
-        ...DEFAULT_FILE_CONFIGURATION,
-        style: {
-          width: 'full'
-        },
-        fileName: {
-          defaultMessage: 'Notification of birth',
-          description: 'This is the label for the file name',
-          id: 'v2.form.field.label.proofOfBirth.fileName'
-        }
-      },
-      label: {
-        defaultMessage: 'Proof of birth',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfBirth.label'
-      }
-    },
-    {
-      id: 'documents.proofOfMother',
+      id: 'documents.proofOfDeceasedId',
       type: FieldType.FILE_WITH_OPTIONS,
       required: false,
       label: {
-        defaultMessage: "Proof of mother's ID",
+        defaultMessage: "Proof of deceased's ID",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfMother.label'
+        id: 'v2.event.death.action.declare.form.section.documents.field.proofOfDeceasedId.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
-      options: idTypeOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireMotherDetails
-        }
-      ]
-    },
-
-    {
-      id: 'documents.proofOfFather',
-      type: FieldType.FILE_WITH_OPTIONS,
-      required: false,
-      label: {
-        defaultMessage: "Proof of father's ID",
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfFather.label'
-      },
-      configuration: DEFAULT_FILE_CONFIGURATION,
-      options: idTypeOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireFatherDetails
-        }
-      ]
+      options: idTypeOptions
     },
     {
-      id: 'documents.proofOfInformant',
+      id: 'documents.proofOfInformantId',
       type: FieldType.FILE_WITH_OPTIONS,
       required: false,
       label: {
         defaultMessage: "Proof of informant's ID",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfInformant.label'
+        id: 'v2.event.death.action.declare.form.section.documents.field.proofOfInformantId.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
       options: idTypeOptions,
@@ -176,29 +108,17 @@ export const documents = defineFormPage({
         }
       ]
     },
-
     {
-      id: 'documents.proofOther',
+      id: 'documents.proofOfDeath',
       type: FieldType.FILE_WITH_OPTIONS,
       required: false,
       label: {
-        defaultMessage: 'Other',
+        defaultMessage: 'Proof of death of deceased',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.documents.field.proofOther.label'
+        id: 'v2.event.death.action.declare.form.section.documents.field.proofOfDeath.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
-      options: otherOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: not(
-            or(
-              field('informant.relation').isEqualTo(InformantType.MOTHER),
-              field('informant.relation').isEqualTo(InformantType.FATHER)
-            )
-          )
-        }
-      ]
+      options: idTypeOptions
     }
   ]
 })

@@ -115,7 +115,7 @@ export const deceased = defineFormPage({
   type: PageTypes.enum.FORM,
   title: {
     defaultMessage: "Deceased's details",
-    description: 'Form section title for Child',
+    description: 'Form section title for Deceased',
     id: 'v2.form.death.deceased.title'
   },
   fields: [
@@ -356,6 +356,29 @@ export const deceased = defineFormPage({
           conditional: requireDeceasedDetails
         }
       ]
+    },
+    {
+      id: 'deceased.address',
+      type: FieldType.ADDRESS,
+      hideLabel: true,
+      label: {
+        defaultMessage: 'Usual place of residence',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.person.field.address.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireDeceasedDetails
+        }
+      ],
+      defaultValue: {
+        country: 'FAR',
+        addressType: AddressType.DOMESTIC,
+        province: '$user.province',
+        district: '$user.district',
+        urbanOrRural: 'URBAN'
+      }
     }
   ]
 })
