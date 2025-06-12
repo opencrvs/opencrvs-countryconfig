@@ -22,14 +22,6 @@ export const statusOptions = [
     }
   },
   {
-    value: EventStatus.CREATED,
-    label: {
-      defaultMessage: 'Draft',
-      description: 'Option for form field: status of record',
-      id: 'v2.advancedSearch.form.recordStatusCreated'
-    }
-  },
-  {
     value: EventStatus.NOTIFIED,
     label: {
       defaultMessage: 'Notified',
