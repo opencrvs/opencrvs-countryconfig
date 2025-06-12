@@ -97,34 +97,34 @@ export const requireDeceasedDetails = or(
   field('informant.relation').isEqualTo(PersonType.deceased)
 )
 
-export const informantDetails = defineFormPage({
-  id: 'informantDetails',
+export const informant = defineFormPage({
+  id: 'informant',
   type: PageTypes.enum.FORM,
   title: {
     defaultMessage: `Informant's details`,
     description: 'Form section title for the informant details',
-    id: 'v2.form.death.informantDetails.title'
+    id: 'v2.form.death.informant.title'
   },
   fields: [
     {
-      id: 'informantDetails.informantType',
+      id: 'informant.informantType',
       type: FieldType.SELECT,
       required: true,
       label: {
         defaultMessage: 'Informant Type',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.informantDetails.field.informantType.label'
+        id: 'v2.event.death.action.declare.form.section.informant.field.informantType.label'
       },
       options: informantTypeOptions
     },
     {
-      id: 'informantDetails.phoneNo',
+      id: 'informant.phoneNo',
       type: FieldType.TEXT,
       required: false,
       label: {
         defaultMessage: 'Phone number',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.informantDetails.field.phoneNo.label'
+        id: 'v2.event.death.action.declare.form.section.informant.field.phoneNo.label'
       },
       validation: [
         {
@@ -136,20 +136,20 @@ export const informantDetails = defineFormPage({
             id: 'v2.event.death.action.declare.form.section.informant.field.phoneNo.error'
           },
           validator: or(
-            field('informantDetails.phoneNo').matches(PHONE_NUMBER_REGEX),
-            field('informantDetails.phoneNo').isFalsy()
+            field('informant.phoneNo').matches(PHONE_NUMBER_REGEX),
+            field('informant.phoneNo').isFalsy()
           )
         }
       ]
     },
     {
-      id: 'informantDetails.email',
+      id: 'informant.email',
       type: FieldType.EMAIL,
       required: true,
       label: {
         defaultMessage: 'Email',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.informantDetails.field.email.label'
+        id: 'v2.event.death.action.declare.form.section.informant.field.email.label'
       },
       configuration: {
         maxLength: 255

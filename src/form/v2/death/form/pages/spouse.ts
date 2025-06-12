@@ -32,7 +32,7 @@ import {
   yesNoRadioOptions,
   YesNoTypes
 } from '../../../person'
-import { InformantType } from './infomantDetails'
+import { InformantType } from './infomant'
 
 export const requireSpouseDetails = or(
   field('spouse.detailsNotAvailable').isFalsy(),

@@ -21,7 +21,7 @@ import {
   PageTypes,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
-import { InformantType } from './infomantDetails'
+import { InformantType } from './infomant'
 
 const IdType = {
   NATIONAL_ID: 'NATIONAL_ID',

@@ -71,8 +71,7 @@ const genderMessageDescriptors = {
 const genderOptions = createSelectOptions(GenderTypes, genderMessageDescriptors)
 
 export const requireDeceasedDetails = or(
-  field(`${PersonType.deceased}.detailsNotAvailable`).isFalsy(),
-  field('informant.relation').isEqualTo(PersonType.deceased) // FIXME: to be fixed
+  field('informant.relation').isEqualTo(PersonType.deceased)
 )
 
 export const IdType = {
@@ -318,16 +317,14 @@ export const deceased = defineFormPage({
       ]
     },
     {
-      id: 'deceased.firstname',
+      id: 'deceased.nodependants',
       type: FieldType.TEXT,
-      configuration: { maxLength: MAX_NAME_LENGTH },
       required: true,
       label: {
         defaultMessage: 'No. of dependants',
         description: 'This is the label for the field',
         id: 'v2.event.death.action.declare.form.section.deceased.field.nodependants.label'
-      },
-      validation: [invalidNameValidator('deceased.nodependants')]
+      }
     },
 
     {

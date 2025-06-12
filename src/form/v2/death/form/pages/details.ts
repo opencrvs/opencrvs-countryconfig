@@ -99,13 +99,13 @@ const placeOfDeathOptions = createSelectOptions(
   placeOfDeathMessageDescriptors
 )
 
-export const deceasedDetails = defineFormPage({
-  id: 'deceasedDetails',
+export const details = defineFormPage({
+  id: 'details',
   type: PageTypes.enum.FORM,
   title: {
     defaultMessage: 'Event details',
     description: 'Form section title for event details',
-    id: 'v2.form.death.deceasedDetails.title'
+    id: 'v2.form.death.details.title'
   },
   fields: [
     {
@@ -117,7 +117,7 @@ export const deceasedDetails = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid Birthdate',
             description: 'This is the error message for invalid date',
-            id: 'v2.event.death.action.declare.form.section.deceasedDetails.field.dob.error'
+            id: 'v2.event.death.action.declare.form.section.details.field.dob.error'
           },
           validator: field('deceased.dob').isBefore().now()
         }
@@ -125,7 +125,7 @@ export const deceasedDetails = defineFormPage({
       label: {
         defaultMessage: 'Date of birth',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceasedDetails.field.dob.label'
+        id: 'v2.event.death.action.declare.form.section.details.field.dob.label'
       }
     },
     {
@@ -135,7 +135,7 @@ export const deceasedDetails = defineFormPage({
       label: {
         defaultMessage: 'Manner of Death',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceasedDetails.field.mannerofdeath.label'
+        id: 'v2.event.death.action.declare.form.section.details.field.mannerofdeath.label'
       },
       options: mannerOfDeathOptions
     },
@@ -145,7 +145,7 @@ export const deceasedDetails = defineFormPage({
       label: {
         defaultMessage: 'Cause of death has been established',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.deceasedDetails.field.causeestablished.checkbox.label`
+        id: `v2.event.death.action.declare.form.section.details.field.causeestablished.checkbox.label`
       },
       conditionals: [
         {
@@ -165,7 +165,7 @@ export const deceasedDetails = defineFormPage({
       label: {
         defaultMessage: 'Place of death',
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceasedDetails.field.placeOfDelivery.label'
+        id: 'v2.event.death.action.declare.form.section.details.field.placeOfDelivery.label'
       },
       options: placeOfDeathOptions
     }
