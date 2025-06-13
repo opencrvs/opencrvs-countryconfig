@@ -16,4 +16,10 @@ sed -i "s/{{hostname}}/$DOMAIN/g" src/login-config.prod.js
 sed -i "s={{sentry}}=$SENTRY_DSN=g" src/client-config.prod.js
 sed -i "s={{sentry}}=$SENTRY_DSN=g" src/login-config.prod.js
 
+DEFAULT_MINIO_BUCKET="ocrvs"
+MINIO_BUCKET="${E2E_MINIO_BUCKET:-$DEFAULT_MINIO_BUCKET}"
+
+# Replace the MinIO bucket placeholder. Only e2e should override this without migration.
+sed -i "s/{{minio_bucket}}/$MINIO_BUCKET/g" src/client-config.prod.js
+
 yarn start:prod
