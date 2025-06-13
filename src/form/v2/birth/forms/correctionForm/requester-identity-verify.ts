@@ -22,7 +22,7 @@ import { InformantType } from '../pages/informant'
 
 export const correctionRequesterIdentityVerify: FieldConfig[] = [
   {
-    id: 'requester.identity.verify',
+    id: 'requester.identity.verify.data',
     type: FieldType.DATA,
     conditionals: [
       {
@@ -44,7 +44,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
     }
   },
   {
-    id: 'requester.identity.verify',
+    id: 'requester.identity.verify.data',
     type: FieldType.DATA,
     conditionals: [
       {
@@ -77,7 +77,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
     }
   },
   {
-    id: 'requester.identity.verify',
+    id: 'requester.identity.verify.data',
     type: FieldType.DATA,
     conditionals: [
       {
@@ -110,7 +110,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
     }
   },
   {
-    id: 'requester.identity.verify',
+    id: 'requester.identity.verify.data',
     type: FieldType.DATA,
     conditionals: [
       {
