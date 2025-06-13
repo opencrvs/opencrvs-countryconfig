@@ -47,12 +47,12 @@ export const spouse = defineFormPage({
   },
   fields: [
     {
-      id: `spouse.detailsNotAvailable`,
+      id: 'spouse.detailsNotAvailable',
       type: FieldType.CHECKBOX,
       label: {
         defaultMessage: "Spouse's details are not available",
         description: 'This is the label for the field',
-        id: `event.death.action.declare.form.section.spouse.field.detailsNotAvailable.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.detailsNotAvailable.label'
       },
       conditionals: [
         {
@@ -64,7 +64,7 @@ export const spouse = defineFormPage({
       ]
     },
     {
-      id: `spouse.details.divider`,
+      id: 'spouse.details.divider',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
@@ -77,7 +77,7 @@ export const spouse = defineFormPage({
       ]
     },
     {
-      id: `spouse.reason`,
+      id: 'spouse.reason',
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -96,14 +96,14 @@ export const spouse = defineFormPage({
       ]
     },
     {
-      id: `spouse.firstname`,
+      id: 'spouse.firstname',
       configuration: { maxLength: MAX_NAME_LENGTH },
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'First name(s)',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.firstname.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.firstname.label'
       },
       conditionals: [
         {
@@ -113,14 +113,14 @@ export const spouse = defineFormPage({
       ]
     },
     {
-      id: `spouse.surname`,
+      id: 'spouse.surname',
       configuration: { maxLength: MAX_NAME_LENGTH },
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'Last name',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.surname.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.surname.label'
       },
       conditionals: [
         {
@@ -138,7 +138,7 @@ export const spouse = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid Birthdate',
             description: 'This is the error message for invalid date',
-            id: `v2.event.death.action.declare.form.section.spouse.field.dob.error`
+            id: 'v2.event.death.action.declare.form.section.spouse.field.dob.error'
           },
           validator: field('spouse.dob').isBefore().now()
         }
@@ -146,25 +146,25 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: 'Date of birth',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.dob.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.dob.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            not(field(`spouse.dobUnknown`).isEqualTo(true)),
+            field('spouse.dobUnknown').isEqualTo(false),
             requireSpouseDetails
           )
         }
       ]
     },
     {
-      id: `spouse.dobUnknown`,
+      id: 'spouse.dobUnknown',
       type: FieldType.CHECKBOX,
       label: {
         defaultMessage: 'Exact date of birth unknown',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.age.checkbox.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.age.checkbox.label'
       },
       conditionals: [
         {
@@ -178,7 +178,7 @@ export const spouse = defineFormPage({
       ]
     },
     {
-      id: `spouse.age`,
+      id: 'spouse.age',
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -190,27 +190,27 @@ export const spouse = defineFormPage({
         postfix: {
           defaultMessage: 'years',
           description: 'This is the postfix for age field',
-          id: `v2.event.death.action.declare.form.section.spouse.field.age.postfix`
+          id: 'v2.event.death.action.declare.form.section.spouse.field.age.postfix'
         }
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`spouse.dobUnknown`).isEqualTo(true),
+            field('spouse.dobUnknown').isEqualTo(true),
             requireSpouseDetails
           )
         }
       ]
     },
     {
-      id: `spouse.nationality`,
+      id: 'spouse.nationality',
       type: FieldType.COUNTRY,
       required: true,
       label: {
         defaultMessage: 'Nationality',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.nationality.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.nationality.label'
       },
       conditionals: [
         {
@@ -221,13 +221,13 @@ export const spouse = defineFormPage({
       defaultValue: 'FAR'
     },
     {
-      id: `spouse.idType`,
+      id: 'spouse.idType',
       type: FieldType.SELECT,
       required: true,
       label: {
         defaultMessage: 'Type of ID',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.idType.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.idType.label'
       },
       options: idTypeOptions,
       conditionals: [
@@ -264,78 +264,78 @@ export const spouse = defineFormPage({
             id: 'v2.event.death.action.declare.form.nid.unique'
           },
           validator: and(
-            not(field('spouse.nid').isEqualTo(field('mother.nid'))),
-            not(field('spouse.nid').isEqualTo(field('father.nid')))
+            not(field('spouse.nid').isEqualTo(field('informant.nid'))),
+            not(field('spouse.nid').isEqualTo(field('deceased.nid')))
           )
         }
       ]
     },
     {
-      id: `spouse.passport`,
+      id: 'spouse.passport',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.passport.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.passport.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`spouse.idType`).isEqualTo(IdType.PASSPORT),
+            field('spouse.idType').isEqualTo(IdType.PASSPORT),
             requireSpouseDetails
           )
         }
       ]
     },
     {
-      id: `spouse.brn`,
+      id: 'spouse.brn',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.brn.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.brn.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`spouse.idType`).isEqualTo(IdType.BIRTH_REGISTRATION_NUMBER),
+            field('spouse.idType').isEqualTo(IdType.BIRTH_REGISTRATION_NUMBER),
             requireSpouseDetails
           )
         }
       ]
     },
     {
-      id: `spouse.addressDivider_1`,
+      id: 'spouse.addressDivider_1',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`spouse.idType`).isEqualTo(IdType.BIRTH_REGISTRATION_NUMBER),
+            field('spouse.idType').isEqualTo(IdType.BIRTH_REGISTRATION_NUMBER),
             requireSpouseDetails
           )
         }
       ]
     },
     {
-      id: `spouse.addressHelper`,
+      id: 'spouse.addressHelper',
       type: FieldType.PARAGRAPH,
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.addressHelper.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.addressHelper.label'
       },
       configuration: { styles: { fontVariant: 'h3' } },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field(`spouse.idType`).isEqualTo(IdType.BIRTH_REGISTRATION_NUMBER),
+            field('spouse.idType').isEqualTo(IdType.BIRTH_REGISTRATION_NUMBER),
             requireSpouseDetails
           )
         }
@@ -349,7 +349,7 @@ export const spouse = defineFormPage({
       label: {
         defaultMessage: "Same as deceased's usual place of residence?",
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.spouse.field.address.addressSameAs.label`
+        id: 'v2.event.death.action.declare.form.section.spouse.field.address.addressSameAs.label'
       },
       defaultValue: YesNoTypes.YES,
       conditionals: [

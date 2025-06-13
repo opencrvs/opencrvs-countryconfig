@@ -148,7 +148,7 @@ export const eventDetails = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid date',
             description: 'This is the error message for invalid date',
-            id: `v2.event.death.action.declare.form.section.event.field.date.error`
+            id: 'v2.event.death.action.declare.form.section.event.field.date.error'
           },
           validator: field('event.date').isBefore().now()
         }
@@ -156,12 +156,11 @@ export const eventDetails = defineFormPage({
       label: {
         defaultMessage: 'Date of death',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.event.field.date.label`
+        id: 'v2.event.death.action.declare.form.section.event.field.date.label'
       }
     },
-    //Manner of death
     {
-      id: `event.manner`,
+      id: 'event.manner',
       type: FieldType.SELECT,
       required: false,
       label: {
@@ -171,14 +170,13 @@ export const eventDetails = defineFormPage({
       },
       options: mannerDeathTypeOptions
     },
-    //Cause of death
     {
       id: 'event.causeOfDeath',
       type: FieldType.CHECKBOX,
       label: {
         defaultMessage: 'Cause of death has been established',
         description: 'This is the label for the field',
-        id: `event.death.action.declare.form.section.event.field.causeOfDeath.label`
+        id: 'v2.event.death.action.declare.form.section.event.field.causeOfDeath.label'
       }
     },
     {
@@ -225,30 +223,26 @@ export const eventDetails = defineFormPage({
         }
       ]
     },
-    //divider1
     {
-      id: `event.detailsDivider_1`,
+      id: 'event.detailsDivider_1',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
-    //Place of death paragraph
     {
-      id: `event.detailsAddressHelper`,
+      id: 'event.detailsAddressHelper',
       type: FieldType.PARAGRAPH,
       label: {
         defaultMessage: 'Place of death',
         description: 'This is the label for the field',
-        id: `v2.event.death.action.declare.form.section.event.field.addressHelper.label`
+        id: 'v2.event.death.action.declare.form.section.event.field.addressHelper.label'
       },
       configuration: { styles: { fontVariant: 'h3' } }
     },
-    //divider2
     {
-      id: `event.detailsDivider_2`,
+      id: 'event.detailsDivider_2',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
-    //Place of death
     {
       id: 'event.placeOfDeath',
       type: FieldType.SELECT,
