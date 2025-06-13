@@ -22,7 +22,7 @@ export const statusOptions = [
     }
   },
   {
-    value: EventStatus.CREATED,
+    value: EventStatus.enum.CREATED,
     label: {
       defaultMessage: 'Draft',
       description: 'Option for form field: status of record',
@@ -30,7 +30,7 @@ export const statusOptions = [
     }
   },
   {
-    value: EventStatus.NOTIFIED,
+    value: EventStatus.enum.NOTIFIED,
     label: {
       defaultMessage: 'Notified',
       description: 'Option for form field: status of record',
@@ -38,7 +38,7 @@ export const statusOptions = [
     }
   },
   {
-    value: EventStatus.DECLARED,
+    value: EventStatus.enum.DECLARED,
     label: {
       defaultMessage: 'Declared',
       description: 'Option for form field: status of record',
@@ -46,7 +46,7 @@ export const statusOptions = [
     }
   },
   {
-    value: EventStatus.VALIDATED,
+    value: EventStatus.enum.VALIDATED,
     label: {
       defaultMessage: 'Validated',
       description: 'Option for form field: status of record',
@@ -54,7 +54,7 @@ export const statusOptions = [
     }
   },
   {
-    value: EventStatus.REGISTERED,
+    value: EventStatus.enum.REGISTERED,
     label: {
       defaultMessage: 'Registered',
       description: 'Option for form field: status of record',
@@ -62,7 +62,7 @@ export const statusOptions = [
     }
   },
   {
-    value: EventStatus.CERTIFIED,
+    value: EventStatus.enum.CERTIFIED,
     label: {
       defaultMessage: 'Certified',
       description: 'Option for form field: status of record',
@@ -70,7 +70,7 @@ export const statusOptions = [
     }
   },
   {
-    value: EventStatus.REJECTED,
+    value: EventStatus.enum.REJECTED,
     label: {
       defaultMessage: 'Rejected',
       description: 'Option for form field: status of record',
@@ -78,7 +78,7 @@ export const statusOptions = [
     }
   },
   {
-    value: EventStatus.ARCHIVED,
+    value: EventStatus.enum.ARCHIVED,
     label: {
       defaultMessage: 'Archived',
       description: 'Option for form field: status of record',

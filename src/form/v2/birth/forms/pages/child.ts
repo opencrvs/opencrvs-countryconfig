@@ -25,10 +25,7 @@ import { not } from '@opencrvs/toolkit/conditionals'
 import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
-import {
-  invalidNameValidator,
-  MAX_NAME_LENGTH
-} from '@countryconfig/form/v2/birth/validators'
+import { MAX_NAME_LENGTH } from '@countryconfig/form/v2/birth/validators'
 
 const GenderTypes = {
   MALE: 'male',
@@ -189,28 +186,30 @@ export const child = defineFormPage({
   },
   fields: [
     {
-      id: 'child.firstname',
-      type: FieldType.TEXT,
-      configuration: { maxLength: MAX_NAME_LENGTH },
+      id: 'child.name',
+      type: FieldType.NAME,
       required: true,
-      label: {
-        defaultMessage: 'First name(s)',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.firstname.label'
-      },
-      validation: [invalidNameValidator('child.firstname')]
-    },
-    {
-      id: 'child.surname',
-      type: FieldType.TEXT,
       configuration: { maxLength: MAX_NAME_LENGTH },
-      required: true,
+      hideLabel: true,
       label: {
-        defaultMessage: 'Last name',
+        defaultMessage: "Child's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.surname.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.name.label'
       },
-      validation: [invalidNameValidator('child.surname')]
+      validation: [
+        {
+          validator: field('child.name').object({
+            firstname: field('firstname').isValidEnglishName(),
+            surname: field('surname').isValidEnglishName()
+          }),
+          message: {
+            defaultMessage:
+              "Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)",
+            description: 'This is the error message for invalid name',
+            id: 'v2.error.invalidName'
+          }
+        }
+      ]
     },
     {
       id: 'child.gender',
