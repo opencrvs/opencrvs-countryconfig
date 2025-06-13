@@ -43,7 +43,7 @@ export const deathIntroduction = defineFormPage({
         },
         {
           defaultMessage:
-            'Once the declaration is processed you will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.',
+            'Once the declaration is processed you will receive an email to tell you when to visit the office to collect the certificate - Take your ID with you.',
           description: 'Form information for death',
           id: 'v2.form.section.information.death.bullet3'
         },

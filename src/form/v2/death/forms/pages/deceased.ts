@@ -16,7 +16,6 @@ import {
   and,
   FieldType,
   AddressType,
-  or,
   PageTypes,
   field
 } from '@opencrvs/toolkit/events'
