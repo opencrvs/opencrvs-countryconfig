@@ -12,7 +12,6 @@ import {
   getLocationNameFromFhirId,
   getToken,
   goBackToReview,
-  goToSection,
   login,
   loginToV2,
   uploadImage
@@ -38,7 +37,7 @@ test.describe('1. Correct record - 1', () => {
     familyName: faker.person.firstName('male'),
     gender: 'Male',
     birthDate: format(
-      subDays(new Date(), Math.ceil(10 * Math.random())),
+      subDays(new Date(), Math.ceil(15 * Math.random()) + 5),
       'yyyy-MM-dd'
     ),
     birthLocation: 'Tembwe Rural Health Centre',
@@ -555,14 +554,16 @@ test.describe('1. Correct record - 1', () => {
       })
     })
 
-    // @TODO: use this after its implemented
-    test.describe.skip('1.2.6 Correction summary', async () => {
+    test.describe('1.2.6 Correction summary', async () => {
       test('1.2.6.1 Go back to review', async () => {
+        await page
+          .getByRole('button', { name: 'Continue', exact: true })
+          .click()
+
         /* Expected result: should
          * - navigate to correction summary
          */
-        expect(page.url().includes('correction')).toBeTruthy()
-        expect(page.url().includes('summary')).toBeTruthy()
+        await expectInUrl(page, `/events/request-correction/${eventId}/summary`)
 
         await page
           .getByRole('button', { name: 'Back to review', exact: true })
@@ -571,15 +572,11 @@ test.describe('1. Correct record - 1', () => {
         /* Expected result: should
          * - navigate to correction review
          */
-        expect(page.url().includes('correction')).toBeTruthy()
-        expect(page.url().includes('review')).toBeTruthy()
+        await expectInUrl(page, `/events/request-correction/${eventId}/review`)
       })
 
       test('1.2.6.2 Change weight at birth', async () => {
-        await page
-          .locator('#child-content #Weight')
-          .getByRole('button', { name: 'Change', exact: true })
-          .click()
+        await page.getByTestId('change-button-child.weightAtBirth').click()
 
         /*
          * Expected result: should
@@ -587,12 +584,13 @@ test.describe('1. Correct record - 1', () => {
          * - focus on child's weight at birth
          */
 
-        expect(page.url().includes('correction')).toBeTruthy()
-        expect(page.url().includes('child-view-group')).toBeTruthy()
-        expect(page.url().includes('#weightAtBirth')).toBeTruthy()
+        await expectInUrl(
+          page,
+          `/events/request-correction/${eventId}/pages/child?from=review#child____weightAtBirth`
+        )
 
         await page
-          .locator('#weightAtBirth')
+          .locator('#child____weightAtBirth')
           .fill(updatedChildDetails.weightAtBirth)
 
         await page.getByRole('button', { name: 'Back to review' }).click()
@@ -604,35 +602,34 @@ test.describe('1. Correct record - 1', () => {
          * - show updated weight at birth
          */
 
-        expect(page.url().includes('correction')).toBeTruthy()
-        expect(page.url().includes('review')).toBeTruthy()
-
-        expect(declaration.weightAtBirth).toBeDefined
+        await expectInUrl(page, `/events/request-correction/${eventId}/review`)
 
         await expect(
-          page.locator('#child-content #Weight').getByRole('deletion')
-        ).toHaveText(declaration.weightAtBirth! + ' kilograms (kg)')
+          page.getByTestId('row-value-child.birthType').getByRole('deletion')
+        ).toHaveText('')
 
         await expect(
           page
-            .locator('#child-content #Weight')
-            .getByText(updatedChildDetails.weightAtBirth + ' kilograms (kg)')
+            .getByTestId('row-value-child.weightAtBirth')
+            .getByText(updatedChildDetails.weightAtBirth)
         ).toBeVisible()
       })
 
       test('1.2.6.3 Validate information in correction summary page', async () => {
-        await goToSection(page, 'summary')
+        await page
+          .getByRole('button', { name: 'Continue', exact: true })
+          .click()
+
         /*
          * Expected result: should
          * - navigate to correction summary
-         * - Send for approval button is disabled
+         * - Send for approval button is visible and enabled
          */
-        expect(page.url().includes('summary')).toBeTruthy()
-        expect(page.url().includes('correction')).toBeTruthy()
+        await expectInUrl(page, `/events/request-correction/${eventId}/summary`)
 
         await expect(
           page.getByRole('button', { name: 'Send for approval' })
-        ).toBeDisabled()
+        ).not.toBeDisabled()
 
         /*
          * Expected result: should show
@@ -644,62 +641,53 @@ test.describe('1. Correct record - 1', () => {
          */
 
         await expect(
-          page.getByText(
-            'Full name (Child)' +
-              formatName(declaration.child.name[0]) +
-              formatName(updatedChildDetails)
-          )
-        ).toBeVisible()
+          page.locator('#listTable-corrections-table-child')
+        ).toContainText(
+          `First name(s)${declaration['child.firstname']}${updatedChildDetails.firstNames}`
+        )
 
         await expect(
-          page.getByText(
-            'Sex (Child)' +
-              declaration.child.gender +
-              updatedChildDetails.gender
-          )
-        ).toBeVisible()
+          page.locator('#listTable-corrections-table-child')
+        ).toContainText(
+          `Last name${declaration['child.surname']}${updatedChildDetails.familyName}`
+        )
 
         await expect(
-          page.getByText(
-            'Date of birth (Child)' +
-              formatDateTo_ddMMMMyyyy(declaration.child.birthDate) +
-              formatDateTo_ddMMMMyyyy(updatedChildDetails.birthDate)
-          )
-        ).toBeVisible()
+          page.locator('#listTable-corrections-table-child')
+        ).toContainText(
+          `Sex${declaration['child.gender']}${updatedChildDetails.gender}`,
+          { ignoreCase: true }
+        )
 
         await expect(
-          page.getByText(
-            'Place of delivery (Child)' +
-              'Health Institution' +
-              childBirthLocationName +
-              'Health Institution' +
-              updatedChildDetails.birthLocation
-          )
-        ).toBeVisible()
+          page.locator('#listTable-corrections-table-child')
+        ).toContainText(
+          `Date of birth${formatDateTo_dMMMMyyyy(declaration['child.dob'])}${formatDateTo_dMMMMyyyy(updatedChildDetails.birthDate)}`
+        )
 
         await expect(
-          page.getByText(
-            'Attendant at birth (Child)' +
-              declaration.attendantAtBirth +
-              updatedChildDetails.attendantAtBirth
-          )
-        ).toBeVisible()
+          page.locator('#listTable-corrections-table-child')
+        ).toContainText(
+          `Location of birth${await getLocationNameFromFhirId(declaration['child.birthLocation']!)}`
+        )
 
         await expect(
-          page.getByText(
-            'Type of birth (Child)' +
-              declaration.birthType +
-              updatedChildDetails.typeOfBirth
-          )
-        ).toBeVisible()
+          page.locator('#listTable-corrections-table-child')
+        ).toContainText(`${updatedChildDetails.birthLocation}`)
 
         await expect(
-          page.getByText(
-            'Weight at birth (Child)' +
-              declaration.weightAtBirth +
-              updatedChildDetails.weightAtBirth
-          )
-        ).toBeVisible()
+          page.locator('#listTable-corrections-table-child')
+        ).toContainText(
+          `Attendant at birth${updatedChildDetails.attendantAtBirth}`
+        )
+
+        await expect(
+          page.locator('#listTable-corrections-table-child')
+        ).toContainText(`Type of birth${updatedChildDetails.typeOfBirth}`)
+
+        await expect(
+          page.locator('#listTable-corrections-table-child')
+        ).toContainText(`Weight at birth${updatedChildDetails.weightAtBirth}`)
 
         await expect(
           page.getByText(formatName(declaration.mother.name[0]))
