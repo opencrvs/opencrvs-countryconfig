@@ -127,7 +127,6 @@ export const CORRECTION_FORM = defineActionForm({
             description: 'Label for the confirmation field',
             id: 'v2.event.birth.action.correction.documents.confirmation.label'
           },
-          defaultValue: 'PROVIDE_DOCUMENTS',
           options: [
             {
               value: 'PROVIDE_DOCUMENTS',
