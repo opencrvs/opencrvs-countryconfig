@@ -1,0 +1,385 @@
+import {
+  and,
+  ConditionalType,
+  defineActionForm,
+  field,
+  FieldType,
+  not,
+  PageTypes
+} from '@opencrvs/toolkit/events'
+import { correctionFormRequesters } from './requester'
+import { correctionRequesterIdentityVerify } from './requester-identity-verify'
+
+export const CORRECTION_FORM = defineActionForm({
+  label: {
+    id: 'v2.event.birth.action.correction.form.label',
+    defaultMessage: 'Correct record',
+    description: 'This is the label for the birth correction form'
+  },
+  pages: [
+    {
+      id: 'requester',
+      type: PageTypes.enum.FORM,
+      title: {
+        id: 'v2.event.birth.action.correction.form.section.requester.title',
+        defaultMessage: 'Correction requester',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          type: FieldType.PARAGRAPH,
+          id: 'requester.paragraph',
+          label: {
+            id: 'v2.event.birth.action.correction.form.section.requester.paragraph.label',
+            defaultMessage:
+              'Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.',
+            description:
+              'This is the label for the correction requester paragraph'
+          },
+          configuration: {
+            styles: {
+              fontVariant: 'reg16',
+              hint: true
+            }
+          }
+        },
+        ...correctionFormRequesters
+      ]
+    },
+    {
+      id: 'requester.identity.verify',
+      type: PageTypes.enum.VERIFICATION,
+      title: {
+        id: 'v2.event.birth.action.correction.form.section.requester.identity.verify.title',
+        defaultMessage: 'Verify their identity',
+        description: 'This is the title of the section'
+      },
+      conditional: and(
+        not(field('requester.type').isEqualTo('ANOTHER_AGENT')),
+        not(field('requester.type').isEqualTo('ME'))
+      ),
+      fields: correctionRequesterIdentityVerify,
+      actions: {
+        verify: {
+          label: {
+            defaultMessage: 'Verified',
+            description: 'This is the label for the verification button',
+            id: 'v2.event.birth.action.correction.form.verify'
+          }
+        },
+        cancel: {
+          label: {
+            defaultMessage: 'Identity does not match',
+            description:
+              'This is the label for the verification cancellation button',
+            id: 'v2.event.birth.action.correction.form.cancel'
+          },
+          confirmation: {
+            title: {
+              defaultMessage: 'Correct without proof of ID?',
+              description:
+                'This is the title for the verification cancellation modal',
+              id: 'v2.event.birth.action.correction.form.cancel.confirmation.title'
+            },
+            body: {
+              defaultMessage:
+                'Please be aware that if you proceed, you will be responsible for making a change to this record without the necessary proof of identification',
+              description:
+                'This is the body for the verification cancellation modal',
+              id: 'v2.event.birth.action.correction.form.cancel.confirmation.body'
+            }
+          }
+        }
+      }
+    },
+    {
+      id: 'documents',
+      type: PageTypes.enum.FORM,
+      title: {
+        id: 'v2.event.birth.action.correction.form.section.supporting-documents.title',
+        defaultMessage: 'Upload supporting documents',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          type: FieldType.PARAGRAPH,
+          id: 'documents.paragraph',
+          label: {
+            id: 'v2.event.birth.action.correction.form.section.supporting-documents.paragraph.label',
+            defaultMessage:
+              'For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.',
+            description:
+              'This is the label for the supporting documents paragraph'
+          },
+          configuration: {
+            styles: {
+              fontVariant: 'reg16',
+              hint: true
+            }
+          }
+        },
+        {
+          id: 'documents.confirmation',
+          type: FieldType.RADIO_GROUP,
+          required: true,
+          label: {
+            defaultMessage: '',
+            description: 'Label for the confirmation field',
+            id: 'v2.event.birth.action.correction.documents.confirmation.label'
+          },
+          options: [
+            {
+              value: 'PROVIDE_DOCUMENTS',
+              label: {
+                defaultMessage: 'Provide documents',
+                description: 'Label for the provide documents option',
+                id: 'v2.event.birth.action.correction.documents.confirmation.provideDocuments.label'
+              }
+            },
+            {
+              value: 'ATTEST',
+              label: {
+                defaultMessage:
+                  'I attest to seeing supporting documentation and have a copy filed at my office',
+                description: 'Label for the attest option',
+                id: 'v2.event.birth.action.correction.documents.confirmation.attest.label'
+              }
+            },
+            {
+              value: 'NOT_REQUIRED',
+              label: {
+                defaultMessage: 'No supporting documents required',
+                description: 'Label for the not required option',
+                id: 'v2.event.birth.action.correction.documents.confirmation.notRequired.label'
+              }
+            }
+          ]
+        },
+        {
+          id: 'documents.divider',
+          type: FieldType.DIVIDER,
+          label: {
+            defaultMessage: '',
+            description: 'Label for the divider field',
+            id: 'v2.event.birth.action.correction.documents.divider.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('documents.confirmation').isEqualTo(
+                'PROVIDE_DOCUMENTS'
+              )
+            }
+          ]
+        },
+        {
+          id: 'documents.supportingDocs',
+          type: FieldType.FILE_WITH_OPTIONS,
+          // @TODO: this should be required, but currently the required functionality is not working correctly for these types of fields
+          // required: true,
+          label: {
+            defaultMessage: 'Supporting documents',
+            description: 'Label for the supporting documents field',
+            id: 'v2.event.birth.action.correction.documents.supportingDocs.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('documents.confirmation').isEqualTo(
+                'PROVIDE_DOCUMENTS'
+              )
+            }
+          ],
+          options: [
+            {
+              value: 'AFFIDAVIT',
+              label: {
+                defaultMessage: 'Affidavit',
+                description: 'Label for the affidavit option',
+                id: 'v2.event.birth.action.correction.documents.supportingDocs.affidavit.label'
+              }
+            },
+            {
+              value: 'COURT_DOCUMENT',
+              label: {
+                defaultMessage: 'Court Document',
+                description: 'Label for the court document option',
+                id: 'v2.event.birth.action.correction.documents.supportingDocs.courtDocument.label'
+              }
+            },
+            {
+              value: 'OTHER',
+              label: {
+                defaultMessage: 'Other',
+                description: 'Label for the other option',
+                id: 'v2.event.birth.action.correction.documents.supportingDocs.other.label'
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'reason',
+      type: PageTypes.enum.FORM,
+      title: {
+        id: 'v2.event.birth.action.correction.form.section.reason.title',
+        defaultMessage: 'Reason for correction',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'reason.option',
+          type: FieldType.RADIO_GROUP,
+          required: true,
+          label: {
+            defaultMessage: '',
+            description: 'Label for the reason for correction field',
+            id: 'v2.event.birth.action.correction.reason.option.label'
+          },
+          options: [
+            {
+              value: 'CLERICAL_ERROR',
+              label: {
+                defaultMessage:
+                  'Myself or an agent made a mistake (Clerical error)',
+                description: 'Label for the clerical error option',
+                id: 'v2.event.birth.action.correction.reason.option.clericalError.label'
+              }
+            },
+            {
+              value: 'MATERIAL_ERROR',
+              label: {
+                defaultMessage:
+                  'Informant provided incorrect information (Material error)',
+                description: 'Label for the material error option',
+                id: 'v2.event.birth.action.correction.reason.option.materialError.label'
+              }
+            },
+            {
+              value: 'MATERIAL_OMISSION',
+              label: {
+                defaultMessage:
+                  'Informant did not provide this information (Material omission)',
+                description: 'Label for the material omission option',
+                id: 'v2.event.birth.action.correction.reason.option.materialOmission.label'
+              }
+            },
+            {
+              value: 'JUDICIAL_ORDER',
+              label: {
+                defaultMessage:
+                  'Requested to do so by the court (Judicial order)',
+                description: 'Label for the judicial order option',
+                id: 'v2.event.birth.action.correction.reason.option.judicialOrder.label'
+              }
+            },
+            {
+              value: 'OTHER',
+              label: {
+                defaultMessage: 'Other',
+                description: 'Label for the other option',
+                id: 'v2.event.birth.action.correction.reason.option.other.label'
+              }
+            }
+          ]
+        },
+        {
+          id: 'reason.other',
+          type: FieldType.TEXT,
+          required: true,
+          label: {
+            defaultMessage: 'Reason for correction',
+            description: 'Label for the reason for correction field',
+            id: 'v2.event.birth.action.correction.reason.other.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: field('reason.option').isEqualTo('OTHER')
+            }
+          ]
+        },
+        {
+          id: 'reason.comment',
+          type: FieldType.TEXTAREA,
+          label: {
+            defaultMessage: 'Comments',
+            description: 'Label for the comments field',
+            id: 'v2.event.birth.action.correction.reason.comment.label'
+          }
+        }
+      ]
+    },
+    {
+      id: 'fees',
+      type: PageTypes.enum.FORM,
+      title: {
+        id: 'v2.event.birth.action.correction.form.section.fees.title',
+        defaultMessage: 'Fees',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'fees.required',
+          type: FieldType.CHECKBOX,
+          label: {
+            defaultMessage: 'Fee required',
+            description: 'Label for the no fee required field',
+            id: 'v2.event.birth.action.correction.fees.required.label'
+          }
+        },
+        {
+          id: 'fees.divider',
+          type: FieldType.DIVIDER,
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: not(field('fees.required').isFalsy())
+            }
+          ],
+          label: {
+            defaultMessage: '',
+            description: 'Label for the divider field',
+            id: 'v2.event.birth.action.correction.fees.divider.label'
+          }
+        },
+        {
+          id: 'fees.amount',
+          type: FieldType.NUMBER,
+          required: true,
+          label: {
+            defaultMessage: 'Total $',
+            description: 'Label for the amount field',
+            id: 'v2.event.birth.action.correction.fees.amount.label'
+          },
+          configuration: {
+            min: 0
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: not(field('fees.required').isFalsy())
+            }
+          ]
+        },
+        {
+          id: 'fees.proofOfPayment',
+          type: FieldType.FILE,
+          required: true,
+          label: {
+            defaultMessage: 'Proof of payment',
+            description: 'Label for the proof of payment field',
+            id: 'v2.event.birth.action.correction.fees.proofOfPayment.label'
+          },
+          conditionals: [
+            {
+              type: ConditionalType.SHOW,
+              conditional: not(field('fees.required').isFalsy())
+            }
+          ]
+        }
+      ]
+    }
+  ]
+})
