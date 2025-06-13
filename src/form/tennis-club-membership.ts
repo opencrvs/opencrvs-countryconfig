@@ -533,8 +533,8 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               id: 'v2.event.tennis-club-membership.action.certificate.form.section.verifyIdentity.data.subtitle'
             },
             data: [
-              { fieldId: 'applicant.firstname' },
-              { fieldId: 'applicant.surname' },
+              { fieldId: 'applicant.name.firstname' },
+              { fieldId: 'applicant.name.surname' },
               { fieldId: 'applicant.dob' }
             ]
           }
@@ -638,7 +638,7 @@ export const tennisClubMembershipEvent = defineConfig({
   summary: {
     fields: [
       {
-        id: 'applicant.name',
+        fieldId: 'applicant.name',
         emptyValueMessage: {
           defaultMessage: "Applicant's first name missing",
           description:
@@ -649,33 +649,10 @@ export const tennisClubMembershipEvent = defineConfig({
           defaultMessage: "Applicant's First Name",
           description: "Label for the applicant's first name field",
           id: 'v2.event.tennis-club-membership.summary.field.applicant.firstname.label'
-        },
-        value: {
-          defaultMessage: '{applicant.firstname}',
-          description: "Value for the applicant's first name field",
-          id: 'v2.event.tennis-club-membership.summary.field.applicant.firstname.value'
         }
       },
       {
-        id: 'applicant.surname',
-        emptyValueMessage: {
-          defaultMessage: "Applicant's surname missing",
-          description: 'Shown when the surname is missing in summary',
-          id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.empty'
-        },
-        label: {
-          defaultMessage: "Applicant's Surname",
-          description: 'Label for the applicant’s surname field',
-          id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.label'
-        },
-        value: {
-          defaultMessage: '{applicant.surname}',
-          description: 'Value for the applicant’s surname field',
-          id: 'v2.event.tennis-club-membership.summary.field.applicant.surname.value'
-        }
-      },
-      {
-        id: 'recommender.name.firstname',
+        fieldId: 'recommender.name',
         emptyValueMessage: {
           defaultMessage: "Recommender's first name missing",
           description:
@@ -686,34 +663,10 @@ export const tennisClubMembershipEvent = defineConfig({
           defaultMessage: "Recommender's First Name",
           description: 'Label for the recommender’s first name field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.label'
-        },
-        value: {
-          defaultMessage: '{recommender.name.firstname}',
-          description: 'Value for the recommender’s first name field',
-          id: 'v2.event.tennis-club-membership.summary.field.recommender.firstname.value'
         }
       },
       {
-        id: 'recommender.name.surname',
-        emptyValueMessage: {
-          defaultMessage: "Recommender's surname missing",
-          description:
-            'Shown when the recommender surname is missing in summary',
-          id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.empty'
-        },
-        label: {
-          defaultMessage: "Recommender's Surname",
-          description: 'Label for the recommender’s surname field',
-          id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.label'
-        },
-        value: {
-          defaultMessage: '{recommender.name.surname}',
-          description: 'Value for the recommender’s surname field',
-          id: 'v2.event.tennis-club-membership.summary.field.recommender.surname.value'
-        }
-      },
-      {
-        id: 'recommender.id',
+        fieldId: 'recommender.id',
         emptyValueMessage: {
           defaultMessage: "Recommender's id missing",
           description: 'Shown when the recommender id is missing in summary',
@@ -723,11 +676,6 @@ export const tennisClubMembershipEvent = defineConfig({
           defaultMessage: "Recommender's ID",
           description: 'Label for the recommender’s ID field',
           id: 'v2.event.tennis-club-membership.summary.field.recommender.id.label'
-        },
-        value: {
-          defaultMessage: '{recommender.id}',
-          description: 'Value for the recommender’s ID field',
-          id: 'v2.event.tennis-club-membership.summary.field.recommender.id.value'
         }
       }
     ]
