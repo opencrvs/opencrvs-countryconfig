@@ -8,7 +8,12 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { ActionType, defineConfig, field } from '@opencrvs/toolkit/events'
+import {
+  ActionType,
+  ConditionalType,
+  defineConfig,
+  field
+} from '@opencrvs/toolkit/events'
 import {
   DEATH_DECLARATION_REVIEW,
   DEATH_DECLARATION_FORM
@@ -16,6 +21,7 @@ import {
 import { Event } from '@countryconfig/form/types/types'
 import { DEATH_CERTIFICATE_COLLECTOR_FORM } from '../death/forms/printForm'
 import { advancedSearchDeath } from './advancedSearch'
+import { PlaceOfDeath } from './forms/pages/eventDetails'
 
 export const deathEvent = defineConfig({
   id: Event.V2_DEATH,
@@ -55,7 +61,84 @@ export const deathEvent = defineConfig({
           description:
             'This is shown when there is no place of death information',
           id: 'v2.event.death.summary.event.placeOfDeath.empty'
-        }
+        },
+        label: {
+          defaultMessage: 'Place of death',
+          description: 'Label for place of death',
+          id: 'v2.event.death.summary.event.placeOfDeath.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('event.placeOfDeath').isFalsy()
+          }
+        ]
+      },
+      {
+        fieldId: 'event.deathLocation',
+        emptyValueMessage: {
+          defaultMessage: 'No place of death',
+          description:
+            'This is shown when there is no death location information',
+          id: 'v2.event.death.summary.event.deathLocation.empty'
+        },
+        label: {
+          defaultMessage: 'Place of death',
+          description: 'Label for place of death',
+          id: 'v2.event.death.summary.event.deathLocation.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('event.placeOfDeath').isEqualTo(
+              PlaceOfDeath.HEALTH_FACILITY
+            )
+          }
+        ]
+      },
+      {
+        fieldId: 'deceased.address',
+        emptyValueMessage: {
+          defaultMessage: 'No place of death',
+          description:
+            'This is shown when there is no death location information',
+          id: 'v2.event.death.summary.event.placeOfDeath.empty'
+        },
+        label: {
+          defaultMessage: 'Place of death',
+          description: 'Label for place of death',
+          id: 'v2.event.death.summary.event.placeOfDeath.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('event.placeOfDeath').isEqualTo(
+              PlaceOfDeath.DECEASED_USUAL_RESIDENCE
+            )
+          }
+        ]
+      },
+      {
+        fieldId: 'deceased.address',
+        emptyValueMessage: {
+          defaultMessage: 'No place of death',
+          description:
+            'This is shown when there is no death location information',
+          id: 'v2.event.death.summary.event.placeOfDeath.empty'
+        },
+        label: {
+          defaultMessage: 'Place of death',
+          description: 'Label for place of death',
+          id: 'v2.event.death.summary.event.placeOfDeath.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: field('event.placeOfDeath').isEqualTo(
+              PlaceOfDeath.OTHER
+            )
+          }
+        ]
       },
       {
         id: 'informant.contact',
