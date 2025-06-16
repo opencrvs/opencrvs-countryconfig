@@ -390,7 +390,7 @@ export const spouse = defineFormPage({
       }
     },
     {
-      id: 'v2.spouse.address.divider.end',
+      id: 'spouse.addressDivider_2',
       type: FieldType.DIVIDER,
       label: emptyMessage,
       conditionals: [
