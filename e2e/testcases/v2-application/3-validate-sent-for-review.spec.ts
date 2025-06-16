@@ -23,11 +23,14 @@ test.describe.serial('3 Validate sent for review tab', () => {
     declaration = res.declaration
     eventId = res.eventId
     page = await browser.newPage()
-    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
   })
 
   test.afterAll(async () => {
     await page.close()
+  })
+
+  test('3.0 Login', async () => {
+    await loginToV2(page, CREDENTIALS.FIELD_AGENT)
   })
 
   test('3.1 Go to sent for review tab', async () => {
@@ -52,7 +55,8 @@ test.describe.serial('3 Validate sent for review tab', () => {
       'Title',
       'Event',
       'Date of Event',
-      'Sent for review'
+      'Sent for review',
+      ''
     ])
 
     const row = button.locator('xpath=ancestor::*[starts-with(@id, "row_")]')

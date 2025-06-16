@@ -27,12 +27,18 @@ test.describe.serial('Navigating in and out of action', () => {
     declaration = res.declaration
     eventId = res.eventId
     page = await browser.newPage()
-    await loginToV2(page)
-    await page.getByRole('button', { name: 'Ready to print' }).click()
   })
 
   test.afterAll(async () => {
     await page.close()
+  })
+
+  test('Login', async () => {
+    await loginToV2(page)
+  })
+
+  test('Navigate to ready to print', async () => {
+    await page.getByRole('button', { name: 'Ready to print' }).click()
   })
 
   test('Navigate successfully through the print certificate action flow', async () => {
