@@ -125,7 +125,7 @@ export const deceased = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: field(`deceased.dobUnknown`).isEqualTo(false)
+          conditional: not(field(`deceased.dobUnknown`).isEqualTo(true))
         }
       ]
     },

@@ -152,7 +152,7 @@ export const spouse = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field('spouse.dobUnknown').isEqualTo(false),
+            not(field('spouse.dobUnknown').isEqualTo(true)),
             requireSpouseDetails
           )
         }
