@@ -5,6 +5,9 @@
 ### New features
 - Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
+### Bug Fixes
+- Fixed `trigger-e2e-environment` workflow failing to run due to a missing env variable & accessing a deprecated property
+
 ## 1.7.2
 
 ### Bug fixes
