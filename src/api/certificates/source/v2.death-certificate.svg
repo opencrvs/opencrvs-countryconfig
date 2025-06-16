@@ -116,9 +116,16 @@
         {{#ifCond ($lookup $declaration "event.deathLocation") '!==' undefined }}
           <tspan x="289.95" y="388.643">{{$lookup $declaration "event.deathLocation.location"}}&#10;</tspan>
           <tspan x="289.95" y="403.643">{{$lookup $declaration 'event.deathLocation.district'}}, {{$lookup $declaration 'event.deathLocation.province'}}, {{$lookup $declaration 'event.deathLocation.country'}}</tspan>
+        {{else}}
+          {{#ifCond ($lookup $declaration 'event.deathLocationOther') '!==' undefined }}
+          <tspan x="289.95" y="388.643">{{$or ($lookup $declaration 'event.deathLocationOther.district') ($lookup $declaration 'event.deathLocationOther.district2')}}&#10;</tspan>
+          <tspan x="289.95" y="403.643">{{$or ($lookup $declaration 'event.deathLocationOther.state') ($lookup $declaration 'event.deathLocationOther.province')}}, {{$lookup $declaration 'event.deathLocationOther.country'}}</tspan>
           {{else}}
-            <tspan x="289.95" y="388.643">{{$lookup $declaration "event.deathLocation.location"}}&#10;</tspan>
-          <tspan x="289.95" y="403.643">{{$lookup $declaration 'event.deathLocation.district'}}, {{$lookup $declaration 'event.deathLocation.province'}}, {{$lookup $declaration 'event.deathLocation.country'}}</tspan>
+            {{#ifCond ($lookup $declaration 'deceased.address') '!==' undefined }}
+            <tspan x="289.95" y="388.643">{{$or ($lookup $declaration 'deceased.address.district') ($lookup $declaration 'deceased.address.district2')}}&#10;</tspan>
+            <tspan x="289.95" y="403.643">{{$or ($lookup $declaration 'deceased.address.state') ($lookup $declaration 'deceased.address.province')}}, {{$lookup $declaration 'deceased.address.country'}}</tspan>
+            {{/ifCond}}
+          {{/ifCond}}
         {{/ifCond}}
       </text>
     </g>
@@ -140,8 +147,8 @@
     </text>
     <g clip-path="url(#clip8_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="471.974">{{$lookup $metadata "createdAtLocation.location"}}&#x2028;</tspan>
-        <tspan x="289.95" y="486.974">{{$lookup $metadata "createdAtLocation.district"}}, {{$lookup $metadata "createdAtLocation.province"}}, {{$lookup $metadata "createdAtLocation.country"}}</tspan>
+        <tspan x="289.95" y="430.284">{{$lookup $metadata 'createdAtLocation.location'}}</tspan>
+        <tspan x="289.95" y="445.284">{{$lookup $metadata 'createdAtLocation.district'}}, {{$lookup $metadata 'createdAtLocation.province'}}, {{$lookup $metadata 'createdAtLocation.country'}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="454.355" x2="512.08" y2="454.355" stroke="#ECECEC" stroke-width="0.97" />
