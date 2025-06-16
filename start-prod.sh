@@ -19,8 +19,8 @@ sed -i "s={{sentry}}=$SENTRY_DSN=g" src/login-config.prod.js
 DEFAULT_MINIO_BUCKET="ocrvs"
 MINIO_BUCKET="${E2E_MINIO_BUCKET:-$DEFAULT_MINIO_BUCKET}"
 
-# // is used to indicate a protocol-relative URL. It shouldn't differ from "const scheme = window.location.protocol; MINIO_URL: ${scheme}//minio.${hostname}/ocrvs/`"
-DEFAULT_MINIO_BASE_URL="//minio.$DOMAIN",
+# '//' is used to indicate a protocol-relative URL. It shouldn't differ from "const scheme = window.location.protocol; MINIO_URL: ${scheme}//minio.${hostname}/ocrvs/`"
+DEFAULT_MINIO_BASE_URL="//minio.$DOMAIN"
 MINIO_BASE_URL="${E2E_MINIO_BASE_URL:-$DEFAULT_MINIO_BASE_URL}"
 # Replace the MinIO bucket placeholder. Only e2e should override this without migration.
 sed -i "s/{{minio_bucket}}/$MINIO_BUCKET/g" src/client-config.prod.js
