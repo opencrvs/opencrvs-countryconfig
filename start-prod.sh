@@ -24,6 +24,6 @@ DEFAULT_MINIO_BASE_URL="//minio.$DOMAIN"
 MINIO_BASE_URL="${E2E_MINIO_BASE_URL:-$DEFAULT_MINIO_BASE_URL}"
 # Replace the MinIO bucket placeholder. Only e2e should override this without migration.
 sed -i "s/{{minio_bucket}}/$MINIO_BUCKET/g" src/client-config.prod.js
-sed -i "s/{{minio_base_url}}/$MINIO_BASE_URL/g" src/client-config.prod.js
+sed -i "s|{{minio_base_url}}|$MINIO_BASE_URL|g" src/client-config.prod.js
 
 yarn start:prod
