@@ -38,7 +38,7 @@ export const Workqueues = defineWorkqueues([
     query: {},
     actions: [
       {
-        type: 'REVIEW_CORRECTION',
+        type: 'READ',
         conditionals: []
       }
     ]
@@ -86,7 +86,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'REVIEW',
+        type: 'DEFAULT',
         conditionals: []
       }
     ]
@@ -109,7 +109,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'REVIEW',
+        type: 'DEFAULT',
         conditionals: []
       }
     ]
@@ -127,7 +127,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'REVIEW',
+        type: 'DEFAULT',
         conditionals: []
       }
     ]
@@ -146,7 +146,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'REVIEW',
+        type: 'DEFAULT',
         conditionals: []
       }
     ],
@@ -176,7 +176,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'REVIEW',
+        type: 'DEFAULT',
         conditionals: []
       }
     ],
@@ -206,7 +206,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'REVIEW',
+        type: 'DEFAULT',
         conditionals: []
       }
     ],
@@ -236,7 +236,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'REVIEW',
+        type: 'DEFAULT',
         conditionals: []
       }
     ],
@@ -266,7 +266,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'REVIEW',
+        type: 'DEFAULT',
         conditionals: []
       }
     ],
@@ -295,7 +295,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'REVIEW',
+        type: 'DEFAULT',
         conditionals: []
       }
     ]
@@ -313,7 +313,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'PRINT',
+        type: 'PRINT_CERTIFICATE',
         conditionals: []
       }
     ],
@@ -342,7 +342,7 @@ export const Workqueues = defineWorkqueues([
     },
     actions: [
       {
-        type: 'ISSUE',
+        type: 'DEFAULT',
         conditionals: []
       }
     ]
