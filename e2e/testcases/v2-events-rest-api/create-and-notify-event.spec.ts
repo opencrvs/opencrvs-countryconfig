@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { CLIENT_URL, GATEWAY_HOST } from '../../constants'
 import { CREDENTIALS } from '../../constants'
 import { formatName, getClientToken, getToken, loginToV2 } from '../../helpers'
-import { format, subDays } from 'date-fns'
+import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
 import { selectAction } from '../../v2-utils'
 
@@ -246,6 +246,106 @@ test.describe('Events REST API', () => {
         clientToken,
         {
           type: 'foobar'
+        }
+      )
+
+      expect(response.status).toBe(400)
+    })
+
+    test('HTTP 400 with payload containing declaration with unexpected fields', async () => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4()
+        }
+      )
+
+      const createEventResponseBody = await createEventResponse.json()
+      const eventId = createEventResponseBody.id
+
+      const response = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId,
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration: {
+            'foo.bar': 'this should cause an error',
+            'child.surname': faker.person.lastName(),
+            'child.dob': format(subDays(new Date(), 1), 'yyyy-MM-dd')
+          },
+          annotation: {}
+        }
+      )
+
+      expect(response.status).toBe(400)
+    })
+
+    test('HTTP 400 with payload containing declaration with invalid values', async () => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4()
+        }
+      )
+
+      const createEventResponseBody = await createEventResponse.json()
+      const eventId = createEventResponseBody.id
+
+      const response = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId,
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration: {
+            'child.surname': faker.person.lastName(),
+            // this should cause an error because the date is in the future
+            'child.dob': format(addDays(new Date(), 10), 'yyyy-MM-dd')
+          },
+          annotation: {}
+        }
+      )
+
+      expect(response.status).toBe(400)
+    })
+
+    test('HTTP 400 with payload containing declaration with values of wrong type', async () => {
+      const createEventResponse = await fetchClientAPI(
+        '/api/events/events',
+        'POST',
+        clientToken,
+        {
+          type: EVENT_TYPE,
+          transactionId: uuidv4()
+        }
+      )
+
+      const createEventResponseBody = await createEventResponse.json()
+      const eventId = createEventResponseBody.id
+
+      const response = await fetchClientAPI(
+        '/api/events/events/notifications',
+        'POST',
+        clientToken,
+        {
+          eventId,
+          transactionId: uuidv4(),
+          type: 'NOTIFY',
+          declaration: {
+            'child.surname': 12345
+          },
+          annotation: {}
         }
       )
 
