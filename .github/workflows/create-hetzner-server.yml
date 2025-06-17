@@ -204,5 +204,5 @@ jobs:
                   .github \
                   infrastructure/docker-compose.${{ inputs.environment }}-deploy.yml
           git status
-          git commit -m "Add environment file for ${{ inputs.environment }}"
+          git commit -m "Add environment files for ${{ inputs.environment }}"
           git push
