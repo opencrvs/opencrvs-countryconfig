@@ -47,8 +47,7 @@ export const getGender = (
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     mapping: getFieldMapping('gender', certificateHandlebar),
-    options: genderOptions,
-    conditionals
+    options: genderOptions
   }) satisfies SerializedFormField
 
 export const getFamilyNameField = (
@@ -72,6 +71,28 @@ export const getFamilyNameField = (
       }
     ],
     mapping: getFieldMapping('familyName', certificateHandlebar)
+  }) satisfies SerializedFormField
+
+export const getMiddleNameField = (
+  previewGroup: string,
+  conditionals: Conditional[],
+  certificateHandlebar: string
+) =>
+  ({
+    name: 'middleNameEng',
+    previewGroup,
+    type: 'TEXT',
+    label: formMessageDescriptors.middleName,
+    conditionals,
+    maxLength: 32,
+    required: false,
+    initialValue: '',
+    validator: [
+      {
+        operation: 'englishOnlyNameFormat'
+      }
+    ],
+    mapping: getFieldMapping('middleName', certificateHandlebar)
   }) satisfies SerializedFormField
 
 export const getFirstNameField = (

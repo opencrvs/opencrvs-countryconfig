@@ -15,6 +15,8 @@ import fetch from 'node-fetch'
 export async function login(page: Page, username: string, password: string) {
   const token = await getToken(username, password)
   await page.goto(`${CLIENT_URL}?token=${token}`)
+  console.log('Going to: ', `${CLIENT_URL}?token=${token}`)
+
   await expect(
     page.locator('#appSpinner').or(page.locator('#pin-input'))
   ).toBeVisible()
@@ -29,8 +31,7 @@ export async function createPIN(page: Page) {
 }
 
 export async function logout(page: Page) {
-  await page.locator('#ProfileMenu-dropdownMenu').getByRole('button').click()
-  await page.getByText('Logout').click()
+  await page.getByRole('button', { name: 'Logout' }).click()
   await page.context().clearCookies()
 }
 
@@ -354,7 +355,7 @@ export const formatName = (name: PersonOrName) => {
 
 export const drawSignature = async (page: Page, v2Events = false) => {
   const canvasLocator = v2Events
-    ? '#review____signature-form-input canvas'
+    ? '#review____signature_canvas_element'
     : '#informantSignature_modal canvas'
 
   const canvas = page.locator(canvasLocator)

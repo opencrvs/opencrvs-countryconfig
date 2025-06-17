@@ -9,7 +9,7 @@ import {
   loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS } from '../../../constants'
+import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { validateAddress } from '../helpers'
 
 test.describe.serial('5. Birth declaration case - 5', () => {
@@ -504,19 +504,21 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
-    test('5.1.8 Register', async () => {
+    // @TODO: take in to use after workflows are implemented on V2
+    test.skip('5.1.8 Register', async () => {
       await page.getByRole('button', { name: 'Register' }).click()
       await page.locator('#confirm_Declare').click()
-      await expect(page.getByText('All events')).toBeVisible()
 
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
+      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await page.getByText('Ready to print').click()
+
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)

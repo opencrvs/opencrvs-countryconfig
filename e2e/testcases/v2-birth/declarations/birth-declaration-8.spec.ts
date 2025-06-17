@@ -7,7 +7,7 @@ import {
   loginToV2,
   logout
 } from '../../../helpers'
-import { CREDENTIALS } from '../../../constants'
+import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { faker } from '@faker-js/faker'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
 
@@ -263,20 +263,21 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
 
     test('8.1.8 Send for review', async () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await expect(page.getByText('All events')).toBeVisible()
 
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
+      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await page.getByText('Sent for review').click()
+
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)
@@ -290,9 +291,9 @@ test.describe.serial('8. Birth declaration case - 8', () => {
       await logout(page)
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
+      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await page.getByText('Ready for review').click()
+
       await page
         .getByRole('button', {
           name: formatName(declaration.child.name)

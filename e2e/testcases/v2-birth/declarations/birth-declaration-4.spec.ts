@@ -10,7 +10,7 @@ import {
   logout
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS } from '../../../constants'
+import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { fillDate, validateAddress } from '../helpers'
 import { selectAction } from '../../../v2-utils'
 
@@ -620,19 +620,20 @@ test.describe.serial('4. Birth declaration case - 4', () => {
       await page.getByRole('button', { name: 'Sign' }).click()
       await drawSignature(page, true)
       await page
-        .locator('#review____signature-form-input')
+        .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
         .click()
+
+      await expect(page.getByRole('dialog')).not.toBeVisible()
     })
     test('4.1.8 Send for approval', async () => {
       await page.getByRole('button', { name: 'Send for approval' }).click()
       await expect(page.getByText('Send for approval?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await expect(page.getByText('All events')).toBeVisible()
 
-      /*
-       * @TODO: When workflows are implemented on V2, this should navigate to correct workflow first.
-       */
+      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await page.getByText('Sent for approval').click()
+
       await expect(
         page.getByRole('button', {
           name: formatName(declaration.child.name)
@@ -645,6 +646,10 @@ test.describe.serial('4. Birth declaration case - 4', () => {
     test('4.2.1 Navigate to the declaration review page', async () => {
       await logout(page)
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+
+      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS / 10) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await page.getByText('Ready for review').click()
+
       await page
         .getByRole('button', {
           name: formatName(declaration.child.name)

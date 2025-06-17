@@ -125,7 +125,7 @@ export default function getPlugins() {
   return plugins
 }
 
-const getTokenPayload = (token: string): ITokenPayload => {
+export const getTokenPayload = (token: string): ITokenPayload => {
   let decoded: ITokenPayload
   try {
     decoded = decode(token)

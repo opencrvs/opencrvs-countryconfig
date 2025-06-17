@@ -142,6 +142,39 @@ export interface CreateDeclarationResponse {
   declaration: Declaration
 }
 
+function getSignatureFile() {
+  const buffer = fs.readFileSync(path.join(__dirname, 'signature.png'))
+  return new File([buffer], `signature-${Date.now()}.png`, {
+    type: 'image/png'
+  })
+}
+
+async function uploadFile(file: File, token: string) {
+  const formData = new FormData()
+  const transactionId = uuidv4()
+  formData.append('file', file)
+  formData.append('transactionId', transactionId)
+
+  const url = new URL('/upload', GATEWAY_HOST)
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: formData
+  })
+
+  if (!res.ok) {
+    throw new Error(`Failed to upload file: ${res.statusText}`)
+  }
+
+  return {
+    filename: `${transactionId}.png`,
+    originalFilename: file.name,
+    type: file.type
+  }
+}
+
 export async function createDeclaration(
   token: string,
   dec?: Partial<ActionUpdate>,
@@ -159,16 +192,14 @@ export async function createDeclaration(
     type: 'v2.birth',
     transactionId: uuidv4()
   })
+
   const eventId = createResponse.id as string
 
-  const signatureBase64 = await fs.readFileSync(
-    path.join(__dirname, 'signature.png'),
-    'base64'
-  )
+  const filename = await uploadFile(getSignatureFile(), token)
 
   const annotation = {
     'review.comment': 'My comment',
-    'review.signature': `data:image/png;base64,${signatureBase64}`
+    'review.signature': filename
   }
 
   const declareRes = await client.event.actions.declare.request.mutate({
@@ -176,7 +207,7 @@ export async function createDeclaration(
     transactionId: uuidv4(),
     declaration,
     annotation,
-    keepAssignment: true
+    keepAssignment: action !== ActionType.DECLARE
   })
 
   if (action === ActionType.DECLARE) {
@@ -219,4 +250,20 @@ export async function createDeclaration(
   )
 
   return { eventId, declaration: registerAction?.declaration as Declaration }
+}
+
+export async function rejectDeclaration(
+  token: string,
+  eventId: string
+): Promise<any> {
+  const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
+
+  const rejectResponse = await client.event.actions.reject.request.mutate({
+    eventId,
+    declaration: {},
+    transactionId: uuidv4(),
+    reason: { message: 'For test' }
+  })
+
+  return rejectResponse
 }

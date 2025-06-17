@@ -38,11 +38,10 @@ on:
           - qa
           - e2e
           - staging
-          - v19
       core-image-tag:
         description: Core image tag
         required: true
-        default: 'v1.7.0'
+        default: 'v1.7.2'
       countryconfig-image-tag:
         description: Your Country Config DockerHub image tag
         required: true
@@ -68,6 +67,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
           path: './${{ github.event.repository.name }}'
       - name: Checkout country branch
         working-directory: ${{ github.event.repository.name }}

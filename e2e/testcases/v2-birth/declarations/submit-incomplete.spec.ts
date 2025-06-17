@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test'
 import { formatName, goToSection, loginToV2 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS } from '../../../constants'
+import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 
 test.describe.serial('Submit and verify incomplete birth declaration', () => {
   let page: Page
@@ -57,6 +57,9 @@ test.describe.serial('Submit and verify incomplete birth declaration', () => {
     })
 
     test('Verify summary page', async () => {
+      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await page.getByText('Sent for review').click()
+
       await page
         .getByRole('button', {
           name: formatName(declaration.child.name),
