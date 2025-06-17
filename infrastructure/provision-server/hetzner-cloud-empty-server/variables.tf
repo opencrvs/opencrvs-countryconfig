@@ -13,7 +13,7 @@ variable "cloudflare_zone_id" {
 }
 variable "country_name" {
   description = "The country name for the Hetzner Cloud data center."
-  default = "farajaland"
+  default     = "farajaland"
   type        = string
 }
 
@@ -25,7 +25,7 @@ variable "users" {
 
 variable "env_type" {
   description = "The environment type for the Hetzner Cloud server."
-  default = "single-node"
+  default     = "single-node"
   type        = string
 }
 
