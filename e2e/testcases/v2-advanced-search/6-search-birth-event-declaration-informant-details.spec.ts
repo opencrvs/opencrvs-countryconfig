@@ -58,7 +58,7 @@ test.describe
       await expect(page.url()).toContain(
         `informant.surname=${record.declaration['informant.surname']}`
       )
-      await expect(page.getByText('Search Results')).toBeVisible()
+      await expect(page.getByText('Search results')).toBeVisible()
 
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/

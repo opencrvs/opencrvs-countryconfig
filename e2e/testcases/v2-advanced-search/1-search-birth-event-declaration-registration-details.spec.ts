@@ -107,7 +107,7 @@ test.describe
       // event.updatedAt=2025-05-12%2C2025-05-19
       await expect(page.url()).toContain(`event.updatedAt=`)
 
-      await expect(page.getByText('Search Results')).toBeVisible()
+      await expect(page.getByText('Search result')).toBeVisible()
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
       await expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)

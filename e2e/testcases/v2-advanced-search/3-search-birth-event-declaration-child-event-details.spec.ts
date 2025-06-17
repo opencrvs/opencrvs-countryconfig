@@ -76,7 +76,7 @@ test.describe
       await expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
       await expect(page.url()).toContain(`child.gender=female`)
       await expect(page.url()).toContain(`child.birthLocation=${facilityId}`)
-      await expect(page.getByText('Search Results')).toBeVisible()
+      await expect(page.getByText('Search results')).toBeVisible()
 
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
