@@ -2553,7 +2553,7 @@ v2.correction.requester.relationshop.intro.label,The title for the corrector for
 v2.correction.supportingDocuments.attest.label,Label for attestation of supporting documents,Attest,Attestation
 v2.correction.supportingDocuments.notNeeded.label,Label for indicating supporting documents are not needed,Not Needed,Non nécessaire
 v2.correction.summary.section.title,Corrections section title,Corrections,
-v2.correction.summary.information.section.title,Corrections information section title,Corrections information,
+v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
 v2.custom.field.form.requiredField,,Required for registration,Requis pour l'enregistrement
 v2.error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6,Doit être compris entre 0 et 6
 v2.error.hidden,"Error message when field is hidden or disabled, but a value was received",Hidden or disabled field should not receive a value,Le champ masqué ou désactivé ne doit pas recevoir de valeur
