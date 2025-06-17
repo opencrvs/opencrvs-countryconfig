@@ -15,12 +15,14 @@ import {
   defineFormPage,
   field,
   FieldType,
+  not,
   or,
   PageTypes,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
+import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 export const MannerDeathType = {
   MANNER_NATURAL: 'MANNER_NATURAL',
@@ -158,6 +160,30 @@ export const eventDetails = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.death.action.declare.form.section.event.field.date.label'
       }
+    },
+    {
+      id: 'event.reasonForLateRegistration',
+      type: FieldType.TEXT,
+      required: true,
+      label: {
+        defaultMessage: 'Reason',
+        description: 'This is the label for the field',
+        id: 'v2.event.death.action.declare.form.section.event.field.reason.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            not(
+              field('event.date')
+                .isAfter()
+                .days(applicationConfig.DEATH.REGISTRATION_TARGET)
+                .inPast()
+            ),
+            field('event.date').isBefore().now()
+          )
+        }
+      ]
     },
     {
       id: 'event.manner',
