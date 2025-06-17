@@ -28,8 +28,6 @@ test.describe
   test('2.1 - Validate log in and load search page', async () => {
     await loginToV2(page)
     await page.click('#searchType')
-    await expect(page.getByText('Advanced Search')).toBeVisible()
-    await page.click('#advanced-search')
     await expect(page).toHaveURL(/.*\/advanced-search/)
     await page.getByText('Birth').click()
   })
@@ -60,7 +58,7 @@ test.describe
       await expect(page.url()).toContain(
         `informant.surname=${record.declaration['informant.surname']}`
       )
-      await expect(page.getByText('Search Results')).toBeVisible()
+      await expect(page.getByText('Search results')).toBeVisible()
 
       const searchResult = await page.locator('#content-name').textContent()
       const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/

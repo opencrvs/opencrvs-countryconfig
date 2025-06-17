@@ -41,8 +41,6 @@ test.describe
   test('2.1 - Validate log in and load search page', async () => {
     await loginToV2(page)
     await page.click('#searchType')
-    await expect(page.getByText('Advanced Search')).toBeVisible()
-    await page.click('#advanced-search')
     await expect(page).toHaveURL(/.*\/advanced-search/)
     await page.getByText('Birth').click()
   })
