@@ -8,7 +8,8 @@ import {
 } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { selectAction } from '../../v2-utils'
+import { ensureAssigned, selectAction } from '../../v2-utils'
+import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
   .serial('5(a) Validate Ready for review tab for registration agent', () => {
@@ -26,11 +27,14 @@ test.describe
     eventId = res.eventId
 
     page = await browser.newPage()
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test.afterAll(async () => {
     await page.close()
+  })
+
+  test('5.0 Login', async () => {
+    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test('5.1 Go to Ready for review tab', async () => {
@@ -45,20 +49,17 @@ test.describe
   })
 
   test('5.2 validate the list', async () => {
-    const button = page.getByRole('button', {
-      name: formatV2ChildName(declaration)
-    })
-
     const header = page.locator('div[class^="TableHeader"]')
     const columns = await header.locator(':scope > div').allInnerTexts()
     expect(columns).toStrictEqual([
       'Title',
       'Event',
       'Date of Event',
-      'Sent for review'
+      'Sent for review',
+      ''
     ])
 
-    const row = button.locator('xpath=ancestor::*[starts-with(@id, "row_")]')
+    const row = getRowByTitle(page, formatV2ChildName(declaration))
     const cells = row.locator(':scope > div')
 
     expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
@@ -66,7 +67,7 @@ test.describe
     expect(cells.nth(2)).toHaveText(declaration['child.dob'].split('T')[0])
   })
 
-  test('5.4 Click a name', async () => {
+  test('5.3 Click a name', async () => {
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
@@ -75,8 +76,13 @@ test.describe
     expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
   })
 
-  test('5.5 Click validate action', async () => {
-    await selectAction(page, 'Validate')
+  test('5.4 Click validate action', async () => {
+    await ensureAssigned(page)
+    await page.goBack()
+
+    const row = getRowByTitle(page, formatV2ChildName(declaration))
+    await row.getByRole('button', { name: 'Validate' }).click()
+
     expect(
       page.url().includes(`events/validate/${eventId}/review`)
     ).toBeTruthy()
@@ -86,7 +92,12 @@ test.describe
     await expect(page.getByText('Send for approval?')).toBeVisible()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
+    // Should redirect back to Ready for review workqueue
+    await expect(page.locator('#content-name')).toHaveText('Ready for review')
+
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Recent').click()
+    await page.waitForTimeout(500)
     await page.getByText('Ready for review').click()
 
     await expect(

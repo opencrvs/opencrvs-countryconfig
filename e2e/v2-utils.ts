@@ -64,6 +64,7 @@ export async function ensureAssigned(page: Page) {
 
   if (await unAssignAction.isVisible()) {
     await unAssignAction.click()
+    await page.waitForTimeout(500) // Give some time to unassign
     await expect(page.getByTestId('assignedTo-value')).toHaveText(
       'Not assigned'
     )
@@ -77,6 +78,7 @@ export async function ensureAssigned(page: Page) {
 
   if (await assignAction.isVisible()) {
     await assignAction.click()
+    await page.waitForTimeout(500) // Give some time to assign
   }
 
   await expect(page.getByTestId('assignedTo-value')).not.toHaveText(

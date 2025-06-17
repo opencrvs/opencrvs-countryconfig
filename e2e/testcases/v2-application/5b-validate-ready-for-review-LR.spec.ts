@@ -9,6 +9,7 @@ import {
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
 import { selectAction } from '../../v2-utils'
+import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
   .serial('5(b) Validate Ready for review tab for local registrar', () => {
@@ -26,11 +27,14 @@ test.describe
     eventId = res.eventId
 
     page = await browser.newPage()
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 
   test.afterAll(async () => {
     await page.close()
+  })
+
+  test('5.0 Login', async () => {
+    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 
   test('5.1 Go to Ready for review tab', async () => {
@@ -45,20 +49,17 @@ test.describe
   })
 
   test('5.2 validate the list', async () => {
-    const button = page.getByRole('button', {
-      name: formatV2ChildName(declaration)
-    })
-
     const header = page.locator('div[class^="TableHeader"]')
     const columns = await header.locator(':scope > div').allInnerTexts()
     expect(columns).toStrictEqual([
       'Title',
       'Event',
       'Date of Event',
-      'Sent for review'
+      'Sent for review',
+      ''
     ])
 
-    const row = button.locator('xpath=ancestor::*[starts-with(@id, "row_")]')
+    const row = getRowByTitle(page, formatV2ChildName(declaration))
     const cells = row.locator(':scope > div')
 
     expect(cells.nth(0)).toHaveText(formatV2ChildName(declaration))
@@ -85,6 +86,9 @@ test.describe
     await page.getByRole('button', { name: 'Register' }).click()
     await expect(page.getByText('Register the birth?')).toBeVisible()
     await page.locator('#confirm_Validate').click()
+
+    // Should not redirect back to Ready for review workqueue, rather go to the first one
+    await expect(page.locator('#content-name')).toHaveText('Assigned to you')
 
     await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
     await page.getByText('Ready for review').click()

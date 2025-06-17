@@ -10,6 +10,7 @@ import {
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
 import { ensureAssigned } from '../../v2-utils'
+import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
   .serial('4(a) Validate Requires update tab for field agent', () => {
@@ -33,13 +34,19 @@ test.describe
     await page.close()
   })
 
-  test('4.0 Reject a declaration', async () => {
+  test('4.0.1 Login', async () => {
     await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+  })
+
+  test('4.0.2 Navigate to record audit', async () => {
     await page.getByText('Ready for review').click()
 
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
       .click()
+  })
+
+  test('4.0.3 Reject a declaration', async () => {
     await ensureAssigned(page)
 
     await rejectDeclaration(
@@ -64,20 +71,17 @@ test.describe
   })
 
   test('4.2 validate the list', async () => {
-    const button = page.getByRole('button', {
-      name: formatV2ChildName(declaration)
-    })
-
     const header = page.locator('div[class^="TableHeader"]')
     const columns = await header.locator(':scope > div').allInnerTexts()
     expect(columns).toStrictEqual([
       'Title',
       'Event',
       'Date of Event',
-      'Sent for update'
+      'Sent for update',
+      ''
     ])
 
-    const row = button.locator('xpath=ancestor::*[starts-with(@id, "row_")]')
+    const row = getRowByTitle(page, formatV2ChildName(declaration))
 
     const cells = row.locator(':scope > div')
 
@@ -93,5 +97,21 @@ test.describe
 
     // User should navigate to record audit page
     expect(page.url().includes(`events/overview/${eventId}`)).toBeTruthy()
+  })
+
+  test('4.5 Acting directly from workqueue should redirect to the same workqueue', async () => {
+    await ensureAssigned(page)
+    await page.goBack()
+
+    const row = getRowByTitle(page, formatV2ChildName(declaration))
+
+    await row.getByRole('button', { name: 'Declare' }).click()
+
+    await page.getByRole('button', { name: 'Send for review' }).click()
+    await expect(page.getByText('Send for review?')).toBeVisible()
+    await page.getByRole('button', { name: 'Confirm' }).click()
+
+    // Should redirect back to requires update workqueue
+    await expect(page.locator('#content-name')).toHaveText('Requires updates')
   })
 })
