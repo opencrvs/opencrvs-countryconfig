@@ -32,14 +32,19 @@ test.describe.serial('Validate collect payment page', () => {
     eventId = res.eventId
     declaration = res.declaration
     page = await browser.newPage()
-    await loginToV2(page)
-
-    await page.getByRole('button', { name: 'Ready to print' }).click()
-    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test.afterAll(async () => {
     await page.close()
+  })
+
+  test('5.0.1 Log in', async () => {
+    await loginToV2(page)
+  })
+
+  test('5.0.2 Navigate to certificate print action', async () => {
+    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test('5.1 check collect payment page header', async () => {

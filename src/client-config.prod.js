@@ -11,6 +11,8 @@
 const scheme = window.location.protocol // "http:" or "https:"
 const hostname = '{{hostname}}' // Replace dynamically if needed
 const sentry = '{{sentry}}' // Replace dynamically if needed
+const minioBucket = '{{minio_bucket}}'
+const minioBaseUrl = '{{minio_base_url}}'
 
 window.config = {
   API_GATEWAY_URL: `${scheme}//gateway.${hostname}/`,
@@ -18,8 +20,12 @@ window.config = {
   LOGIN_URL: `${scheme}//login.${hostname}`,
   AUTH_URL: `${scheme}//gateway.${hostname}/auth/`,
   MINIO_URL: `${scheme}//minio.${hostname}/ocrvs/`,
-  MINIO_BASE_URL: `${scheme}//minio.${hostname}`, // URL without path/bucket information, used for file uploads, v2
-  MINIO_BUCKET: 'ocrvs',
+  /** E2E uses single minio for all the different services. @see start-prod.sh */
+  MINIO_BASE_URL: minioBaseUrl, // URL without path/bucket information, used for file uploads, v2
+  /** Bucket name is hardcoded as 'ocrvs'. In live system, it cannot be changed without data migration.
+   * In E2E environment, buckets are separated from different PR environments to avoid conflicts. @see start-prod.sh
+   */
+  MINIO_BUCKET: minioBucket,
   COUNTRY_CONFIG_URL: `${scheme}//countryconfig.${hostname}`,
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',

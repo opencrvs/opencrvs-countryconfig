@@ -15,6 +15,8 @@ import fetch from 'node-fetch'
 export async function login(page: Page, username: string, password: string) {
   const token = await getToken(username, password)
   await page.goto(`${CLIENT_URL}?token=${token}`)
+  console.log('Going to: ', `${CLIENT_URL}?token=${token}`)
+
   await expect(
     page.locator('#appSpinner').or(page.locator('#pin-input'))
   ).toBeVisible()
