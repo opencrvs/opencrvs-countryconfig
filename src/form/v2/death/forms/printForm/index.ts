@@ -85,8 +85,8 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           }
         }
       }
-    }
-    /* {
+    },
+    {
       id: 'collector.collect.payment',
       type: PageTypes.enum.FORM,
       title: {
@@ -96,7 +96,7 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
       },
       fields: [
         {
-          id: 'collector.collect.payment.data.afterLateRegistrationTarget',
+          id: 'collector.collect.payment.data.afterRegistrationTarget',
           type: FieldType.DATA,
           label: {
             defaultMessage: 'Payment details',
@@ -108,12 +108,12 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               type: ConditionalType.SHOW,
               conditional: and(
                 not(
-                  field('child.dob')
+                  field('event.date')
                     .isAfter()
-                    .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
+                    .days(applicationConfig.DEATH.REGISTRATION_TARGET)
                     .inPast()
                 ),
-                field('child.dob').isBefore().now()
+                field('event.date').isBefore().now()
               )
             }
           ],
@@ -127,10 +127,10 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 },
                 value: {
                   defaultMessage:
-                    'Birth registration after 365 days of date of birth',
+                    'Death registration after 45 days of date of death',
                   description:
-                    'Birth registration after 365 days of date of birth message',
-                  id: 'v2.event.death.action.certificate.form.section.collectPayment.service.label.afterLateRegistrationTarget'
+                    'Death registration after 45 days of date of death message',
+                  id: 'v2.event.death.action.certificate.form.section.collectPayment.service.label.afterRegistrationTarget'
                 }
               },
               {
@@ -140,60 +140,6 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                   id: 'v2.event.death.action.certificate.form.section.collectPayment.fee.label'
                 },
                 value: '$15.00'
-              }
-            ]
-          }
-        },
-        {
-          id: 'collector.collect.payment.data.inBetweenRegistrationTargets',
-          type: FieldType.DATA,
-          label: {
-            defaultMessage: 'Payment details',
-            description: 'Title for the data section',
-            id: 'v2.event.death.action.certificate.form.section.collectPayment.data.label'
-          },
-          conditionals: [
-            {
-              type: ConditionalType.SHOW,
-              conditional: and(
-                not(
-                  field('child.dob')
-                    .isAfter()
-                    .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
-                    .inPast()
-                ),
-
-                field('child.dob')
-                  .isAfter()
-                  .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
-                  .inPast(),
-                field('child.dob').isBefore().now()
-              )
-            }
-          ],
-          configuration: {
-            data: [
-              {
-                label: {
-                  defaultMessage: 'Service',
-                  description: 'Title for the data entry',
-                  id: 'v2.event.death.action.certificate.form.section.collectPayment.service.label'
-                },
-                value: {
-                  defaultMessage:
-                    'Birth registration after 30 days but before 365 days of date of birth',
-                  description:
-                    'Birth registration after 30 days but before 365 days of date of birth message',
-                  id: 'v2.event.death.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets'
-                }
-              },
-              {
-                label: {
-                  defaultMessage: 'Fee',
-                  description: 'Title for the data entry',
-                  id: 'v2.event.death.action.certificate.form.section.collectPayment.fee.label'
-                },
-                value: '$7.00'
               }
             ]
           }
@@ -210,11 +156,11 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             {
               type: ConditionalType.SHOW,
               conditional: and(
-                field('child.dob')
+                field('event.date')
                   .isAfter()
-                  .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
+                  .days(applicationConfig.DEATH.REGISTRATION_TARGET)
                   .inPast(),
-                field('child.dob').isBefore().now()
+                field('event.date').isBefore().now()
               )
             }
           ],
@@ -228,9 +174,9 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
                 },
                 value: {
                   defaultMessage:
-                    'Birth registration before 30 days of date of birth',
+                    'Death registration before 45 days of date of death',
                   description:
-                    'Birth registration before 30 days of date of birth message',
+                    'Death registration before 45 days of date of death message',
                   id: 'v2.event.death.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget'
                 }
               },
@@ -246,6 +192,6 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           }
         }
       ]
-    } */
+    }
   ]
 })
