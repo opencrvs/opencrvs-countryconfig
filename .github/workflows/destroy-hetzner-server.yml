@@ -27,7 +27,7 @@ env:
   # FIXME: Temporary hardcoded value
   type: single-node
 jobs:
-  create-environment:
+  destroy-environment:
     name: Destroy HCloud Environment
     runs-on: ubuntu-24.04
     outputs:
