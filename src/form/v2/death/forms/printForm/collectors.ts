@@ -100,7 +100,7 @@ const otherOption = {
 
 const printInAdvanceOption = {
   label: {
-    id: 'v2.event.tennis-club-membership.action.certificate.form.section.requester.printInAdvance.label',
+    id: 'v2.event.death.action.certificate.form.section.requester.printInAdvance.label',
     defaultMessage: 'Print in advance',
     description: 'This is the label for the field'
   },
@@ -121,6 +121,15 @@ const commonConfigs = {
 }
 
 export const printCertificateCollectors: FieldConfig[] = [
+  {
+    ...commonConfigs,
+    conditionals: [spouseExists(InformantType.SPOUSE)],
+    options: [
+      getInformantOption(InformantType.SPOUSE),
+      otherOption,
+      printInAdvanceOption
+    ]
+  },
   ...getFieldConfigForInformant(InformantType.SON),
   ...getFieldConfigForInformant(InformantType.DAUGHTER),
   ...getFieldConfigForInformant(InformantType.SON_IN_LAW),

@@ -39,8 +39,8 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
         description: 'This is the title of the section'
       },
       fields: [...printCertificateCollectors, ...printCertificateCollectorOther]
-    }
-    /* {
+    },
+    {
       id: 'collector.identity.verify',
       type: PageTypes.enum.VERIFICATION,
       title: {
@@ -48,8 +48,9 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
         defaultMessage: 'Verify their identity',
         description: 'This is the title of the section'
       },
-      conditional: not(
-        field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
+      conditional: and(
+        not(field('collector.requesterId').isEqualTo('SOMEONE_ELSE')),
+        not(field('collector.requesterId').isEqualTo('PRINT_IN_ADVANCE'))
       ),
       fields: printCertificateCollectorIdentityVerify,
       actions: {
@@ -84,8 +85,8 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
           }
         }
       }
-    },
-    {
+    }
+    /* {
       id: 'collector.collect.payment',
       type: PageTypes.enum.FORM,
       title: {
