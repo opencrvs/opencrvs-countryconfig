@@ -36,7 +36,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Type of ID',
       description: 'This is the label for selecting the type of ID',
-      id: 'v2.event.birth.action.form.section.idType.label'
+      id: 'v2.event.death.action.form.section.idType.label'
     },
     conditionals: [
       {
@@ -47,7 +47,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     options: [
       {
         label: {
-          id: 'v2.event.birth.action.form.section.idType.passport.label',
+          id: 'v2.event.death.action.form.section.idType.passport.label',
           defaultMessage: 'Passport',
           description: 'Option for selecting Passport as the ID type'
         },
@@ -55,7 +55,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       },
       {
         label: {
-          id: 'v2.event.birth.action.form.section.idType.nid.label',
+          id: 'v2.event.death.action.form.section.idType.nid.label',
           defaultMessage: 'National ID',
           description: 'Option for selecting National ID as the ID type'
         },
@@ -63,7 +63,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       },
       {
         label: {
-          id: 'v2.event.birth.action.form.section.idType.drivingLicense.label',
+          id: 'v2.event.death.action.form.section.idType.drivingLicense.label',
           defaultMessage: 'Drivers License',
           description: 'Option for selecting Driving License as the ID type'
         },
@@ -71,7 +71,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       },
       {
         label: {
-          id: 'v2.event.birth.action.form.section.idType.brn.label',
+          id: 'v2.event.death.action.form.section.idType.brn.label',
           defaultMessage: 'Birth Registration Number',
           description:
             'Option for selecting Birth Registration Number as the ID type'
@@ -80,7 +80,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       },
       {
         label: {
-          id: 'v2.event.birth.action.form.section.idType.refugeeNumber.label',
+          id: 'v2.event.death.action.form.section.idType.refugeeNumber.label',
           defaultMessage: 'Refugee Number',
           description: 'Option for selecting Refugee Number as the ID type'
         },
@@ -88,7 +88,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       },
       {
         label: {
-          id: 'v2.event.birth.action.form.section.idType.alienNumber.label',
+          id: 'v2.event.death.action.form.section.idType.alienNumber.label',
           defaultMessage: 'Alien Number',
           description: 'Option for selecting Alien Number as the ID type'
         },
@@ -96,7 +96,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       },
       {
         label: {
-          id: 'v2.event.birth.action.form.section.idType.other.label',
+          id: 'v2.event.death.action.form.section.idType.other.label',
           defaultMessage: 'Other',
           description: 'Option for selecting Other as the ID type'
         },
@@ -104,7 +104,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       },
       {
         label: {
-          id: 'v2.event.birth.action.form.section.idType.noId.label',
+          id: 'v2.event.death.action.form.section.idType.noId.label',
           defaultMessage: 'No ID available',
           description: 'Option for selecting No ID as the ID type'
         },
@@ -119,7 +119,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Passport',
       description: 'Field for entering Passport details',
-      id: 'v2.event.birth.action.form.section.passportDetails.label'
+      id: 'v2.event.death.action.form.section.passportDetails.label'
     },
     conditionals: [
       {
@@ -138,7 +138,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'National ID',
       description: 'Field for entering ID Number',
-      id: 'v2.event.birth.action.form.section.nid.label'
+      id: 'v2.event.death.action.form.section.nid.label'
     },
     conditionals: [
       {
@@ -158,7 +158,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Drivers License',
       description: 'Field for entering Driving License details',
-      id: 'v2.event.birth.action.form.section.drivingLicenseDetails.label'
+      id: 'v2.event.death.action.form.section.drivingLicenseDetails.label'
     },
     conditionals: [
       {
@@ -177,7 +177,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Birth Registration Number',
       description: 'Field for entering Birth Registration Number',
-      id: 'v2.event.birth.action.form.section.brn.label'
+      id: 'v2.event.death.action.form.section.brn.label'
     },
     conditionals: [
       {
@@ -198,7 +198,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Refugee Number',
       description: 'Field for entering Refugee Number details',
-      id: 'v2.event.birth.action.form.section.refugeeNumberDetails.label'
+      id: 'v2.event.death.action.form.section.refugeeNumberDetails.label'
     },
     conditionals: [
       {
@@ -217,7 +217,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Alien Number',
       description: 'Field for entering Alien Number details',
-      id: 'v2.event.birth.action.form.section.alienNumberDetails.label'
+      id: 'v2.event.death.action.form.section.alienNumberDetails.label'
     },
     conditionals: [
       {
@@ -236,7 +236,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Other type of ID',
       description: 'Field for entering ID type if "Other" is selected',
-      id: 'v2.event.birth.action.form.section.idTypeOther.label'
+      id: 'v2.event.death.action.form.section.idTypeOther.label'
     },
     conditionals: [
       {
@@ -255,7 +255,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'ID Number',
       description: 'Field for entering ID Number if "Other" is selected',
-      id: 'v2.event.birth.action.form.section.idNumberOther.label'
+      id: 'v2.event.death.action.form.section.idNumberOther.label'
     },
     conditionals: [
       {
@@ -274,7 +274,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'First Name',
       description: 'This is the label for the first name field',
-      id: 'v2.event.birth.action.form.section.firstName.label'
+      id: 'v2.event.death.action.form.section.firstName.label'
     },
     conditionals: [
       {
@@ -290,7 +290,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Last Name',
       description: 'This is the label for the last name field',
-      id: 'v2.event.birth.action.form.section.lastName.label'
+      id: 'v2.event.death.action.form.section.lastName.label'
     },
     conditionals: [
       {
@@ -306,7 +306,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Relationship to child',
       description: 'This is the label for the relationship to child field',
-      id: 'v2.event.birth.action.form.section.relationshipToChild.label'
+      id: 'v2.event.death.action.form.section.relationshipToChild.label'
     },
     conditionals: [
       {
@@ -322,7 +322,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     label: {
       defaultMessage: 'Signed Affidavit (Optional)',
       description: 'This is the label for uploading a signed affidavit',
-      id: 'v2.event.birth.action.form.section.signedAffidavit.label'
+      id: 'v2.event.death.action.form.section.signedAffidavit.label'
     },
     configuration: {
       maxFileSize: 5 * 1024 * 1024, // 5 MB
@@ -330,7 +330,7 @@ export const printCertificateCollectorOther: FieldConfig[] = [
       fileName: {
         defaultMessage: 'Signed Affidavit',
         description: 'This is the label for the file name',
-        id: 'v2.event.birth.action.form.section.signedAffidavit.fileName'
+        id: 'v2.event.death.action.form.section.signedAffidavit.fileName'
       }
     },
     conditionals: [
