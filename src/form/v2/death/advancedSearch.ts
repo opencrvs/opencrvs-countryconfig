@@ -13,8 +13,17 @@ import {
   statusOptions,
   timePeriodOptions
 } from '@countryconfig/form/EventMetadataSearchOptions'
-import { AdvancedSearchConfig, event } from '@opencrvs/toolkit/events'
-
+import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
+const deceasedPrefix = {
+  id: 'v2.death.search.criteria.label.prefix.deceased',
+  defaultMessage: "Deceased's",
+  description: 'Deceased prefix'
+}
+const informantPrefix = {
+  id: 'v2.death.search.criteria.label.prefix.informant',
+  defaultMessage: "Informant's",
+  description: 'Informant prefix'
+}
 export const advancedSearchDeath = [
   {
     title: {
@@ -27,6 +36,61 @@ export const advancedSearchDeath = [
       event('legalStatus.REGISTERED.createdAt').range(),
       event('status', statusOptions).exact(),
       event('updatedAt', timePeriodOptions).range()
+    ]
+  },
+  {
+    title: {
+      defaultMessage: 'Deceased details',
+      description: 'The title of Deceased details accordion',
+      id: 'v2.advancedSearch.form.deceasedDetails'
+    },
+    fields: [
+      field('deceased.dob', {
+        searchCriteriaLabelPrefix: deceasedPrefix
+      }).range(),
+      field('deceased.firstname', {
+        searchCriteriaLabelPrefix: deceasedPrefix
+      }).fuzzy(),
+      field('deceased.surname', {
+        searchCriteriaLabelPrefix: deceasedPrefix
+      }).fuzzy(),
+      field('deceased.gender', {
+        searchCriteriaLabelPrefix: deceasedPrefix
+      }).exact()
+    ]
+  },
+  {
+    title: {
+      defaultMessage: 'Event details',
+      description: 'The title of Event details accordion',
+      id: 'v2.advancedSearch.form.eventDetails'
+    },
+    fields: [
+      field('event.deathLocation', {
+        conditionals: [],
+        searchCriteriaLabelPrefix: deceasedPrefix
+      }).exact()
+    ]
+  },
+  {
+    title: {
+      defaultMessage: 'Informant details',
+      description: 'The title of Informant details accordion',
+      id: 'v2.advancedSearch.form.informantDetails'
+    },
+    fields: [
+      field('informant.dob', {
+        conditionals: [],
+        searchCriteriaLabelPrefix: informantPrefix
+      }).range(),
+      field('informant.firstname', {
+        conditionals: [],
+        searchCriteriaLabelPrefix: informantPrefix
+      }).fuzzy(),
+      field('informant.surname', {
+        conditionals: [],
+        searchCriteriaLabelPrefix: informantPrefix
+      }).fuzzy()
     ]
   }
 ] satisfies AdvancedSearchConfig[]
