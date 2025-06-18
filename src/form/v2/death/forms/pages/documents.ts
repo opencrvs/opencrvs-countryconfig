@@ -69,7 +69,7 @@ export const documents = defineFormPage({
   },
   fields: [
     {
-      id: 'documents.addressHelper',
+      id: 'documents.helper',
       type: FieldType.PARAGRAPH,
       label: {
         defaultMessage: 'The following documents are required',
