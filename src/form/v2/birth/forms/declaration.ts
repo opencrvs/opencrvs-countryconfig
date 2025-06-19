@@ -21,7 +21,7 @@ export const BIRTH_DECLARATION_REVIEW = {
   title: {
     id: 'v2.event.birth.action.declare.form.review.title',
     defaultMessage:
-      '{child.firstname, select, __EMPTY__ {Birth declaration} other {{child.surname, select, __EMPTY__ {Birth declaration} other {Birth declaration for {child.firstname} {child.surname}}}}}',
+      '{child.name.firstname, select, __EMPTY__ {Birth declaration} other {{child.name.surname, select, __EMPTY__ {Birth declaration} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}',
     description: 'Title of the form to show in review page'
   },
   fields: [
