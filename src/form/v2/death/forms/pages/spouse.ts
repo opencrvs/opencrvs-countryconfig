@@ -131,7 +131,7 @@ export const spouse = defineFormPage({
     },
     {
       id: 'spouse.dob',
-      type: 'DATE',
+      type: FieldType.DATE,
       required: true,
       validation: [
         {

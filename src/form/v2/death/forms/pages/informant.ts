@@ -187,7 +187,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.dob',
-      type: 'DATE',
+      type: FieldType.DATE,
       required: true,
       validation: [
         {

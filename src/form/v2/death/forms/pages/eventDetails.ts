@@ -143,7 +143,7 @@ export const eventDetails = defineFormPage({
   fields: [
     {
       id: 'event.date',
-      type: 'DATE',
+      type: FieldType.DATE,
       required: true,
       validation: [
         {

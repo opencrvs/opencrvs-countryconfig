@@ -105,7 +105,7 @@ export const deceased = defineFormPage({
     },
     {
       id: 'deceased.dob',
-      type: 'DATE',
+      type: FieldType.DATE,
       required: true,
       validation: [
         {
