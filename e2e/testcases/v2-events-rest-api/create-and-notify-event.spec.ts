@@ -430,6 +430,7 @@ test.describe('Events REST API', () => {
 
       await page.getByText(await formatName(childName)).click()
 
+      await page.getByRole('button', { name: 'Action' }).click()
       await getAction(page, 'Assign').click()
 
       await expect(page.locator('#row_0')).toContainText('Notified')
