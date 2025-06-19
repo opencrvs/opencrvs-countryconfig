@@ -8,7 +8,7 @@ import {
 } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned } from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
@@ -81,6 +81,8 @@ test.describe
     await page.goBack()
 
     const row = getRowByTitle(page, formatV2ChildName(declaration))
+
+    await row.getByRole('button', { name: 'Assign record' }).click()
     await row.getByRole('button', { name: 'Validate' }).click()
 
     expect(

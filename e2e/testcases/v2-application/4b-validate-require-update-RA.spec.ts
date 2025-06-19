@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { loginToV2, getToken } from '../../helpers'
+import { loginToV2, getToken, getAction } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import {
   createDeclaration,
@@ -104,6 +104,8 @@ test.describe
     await page.goBack()
 
     const row = getRowByTitle(page, formatV2ChildName(declaration))
+
+    await row.getByRole('button', { name: 'Assign record' }).click()
     await row.getByRole('button', { name: 'Validate' }).click()
 
     expect(
