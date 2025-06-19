@@ -16,7 +16,10 @@ import {
   FieldType
 } from '@opencrvs/toolkit/events'
 import { nationalIdValidator } from '../../../birth/validators'
-import { CollectorType } from './index'
+
+export const CollectorType = {
+  SOMEONE_ELSE: 'SOMEONE_ELSE'
+} as const
 
 const otherIdType = {
   PASSPORT: 'PASSPORT',

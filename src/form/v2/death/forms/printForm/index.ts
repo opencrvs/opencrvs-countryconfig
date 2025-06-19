@@ -23,10 +23,7 @@ import { printCertificateCollectors } from './collectors'
 import { printCertificateCollectorOther } from './collector-other'
 import { printCertificateCollectorIdentityVerify } from './collector-identity-verify'
 
-export const CollectorType = {
-  SOMEONE_ELSE: 'SOMEONE_ELSE'
-}
-
+import { CollectorType } from './collector-other'
 export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
     id: 'v2.event.death.action.certificate.form.label',

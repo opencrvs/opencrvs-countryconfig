@@ -19,7 +19,7 @@ import {
 } from '@opencrvs/toolkit/events'
 import { InformantType, InformantTypeKey } from '../pages/informant'
 import { informantMessageDescriptors } from '@countryconfig/form/common/messages'
-import { CollectorType } from './index'
+import { CollectorType } from './collector-other'
 
 const spouseDoesNotExist = (informantType: InformantTypeKey) => {
   return {
