@@ -47,6 +47,7 @@ export enum Event {
 
   // events v2 enums
   V2_BIRTH = 'v2.birth',
+  V2_DEATH = 'v2.death',
   TENNIS_CLUB_MEMBERSHIP = 'tennis-club-membership'
 }
 
