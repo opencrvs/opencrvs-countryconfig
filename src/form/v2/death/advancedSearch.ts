@@ -66,7 +66,7 @@ export const advancedSearchDeath = [
       id: 'v2.advancedSearch.form.eventDetails'
     },
     fields: [
-      field('event.deathLocation', {
+      field('eventDetails.deathLocation', {
         conditionals: [],
         searchCriteriaLabelPrefix: deceasedPrefix
       }).exact()

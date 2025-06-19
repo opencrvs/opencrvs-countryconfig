@@ -31,7 +31,7 @@ export const deathEvent = defineConfig({
     description: 'This is what this event is referred as in the system',
     id: 'v2.event.death.label'
   },
-  dateOfEvent: field('event.date'),
+  dateOfEvent: field('eventDetails.date'),
   title: {
     defaultMessage: '{deceased.firstname} {deceased.surname}',
     description: 'This is the title of the summary',
@@ -46,51 +46,51 @@ export const deathEvent = defineConfig({
   summary: {
     fields: [
       {
-        fieldId: 'event.date',
+        fieldId: 'eventDetails.date',
         emptyValueMessage: {
           defaultMessage: 'No date of death',
           description:
             'This is shown when there is no date of death information',
-          id: 'v2.event.death.summary.event.date.empty'
+          id: 'v2.event.death.summary.eventDetails.date.empty'
         }
       },
       {
-        fieldId: 'event.placeOfDeath',
+        fieldId: 'eventDetails.placeOfDeath',
         emptyValueMessage: {
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no place of death information',
-          id: 'v2.event.death.summary.event.placeOfDeath.empty'
+          id: 'v2.event.death.summary.eventDetails.placeOfDeath.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.event.placeOfDeath.label'
+          id: 'v2.event.death.summary.eventDetails.placeOfDeath.label'
         },
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: field('event.placeOfDeath').isFalsy()
+            conditional: field('eventDetails.placeOfDeath').isFalsy()
           }
         ]
       },
       {
-        fieldId: 'event.deathLocation',
+        fieldId: 'eventDetails.deathLocation',
         emptyValueMessage: {
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no death location information',
-          id: 'v2.event.death.summary.event.deathLocation.empty'
+          id: 'v2.event.death.summary.eventDetails.deathLocation.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.event.deathLocation.label'
+          id: 'v2.event.death.summary.eventDetails.deathLocation.label'
         },
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: field('event.placeOfDeath').isEqualTo(
+            conditional: field('eventDetails.placeOfDeath').isEqualTo(
               PlaceOfDeath.HEALTH_FACILITY
             )
           }
@@ -102,17 +102,17 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no death location information',
-          id: 'v2.event.death.summary.event.placeOfDeath.empty'
+          id: 'v2.event.death.summary.eventDetails.placeOfDeath.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.event.placeOfDeath.label'
+          id: 'v2.event.death.summary.eventDetails.placeOfDeath.label'
         },
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: field('event.placeOfDeath').isEqualTo(
+            conditional: field('eventDetails.placeOfDeath').isEqualTo(
               PlaceOfDeath.DECEASED_USUAL_RESIDENCE
             )
           }
@@ -124,17 +124,17 @@ export const deathEvent = defineConfig({
           defaultMessage: 'No place of death',
           description:
             'This is shown when there is no death location information',
-          id: 'v2.event.death.summary.event.placeOfDeath.empty'
+          id: 'v2.event.death.summary.eventDetails.placeOfDeath.empty'
         },
         label: {
           defaultMessage: 'Place of death',
           description: 'Label for place of death',
-          id: 'v2.event.death.summary.event.placeOfDeath.label'
+          id: 'v2.event.death.summary.eventDetails.placeOfDeath.label'
         },
         conditionals: [
           {
             type: ConditionalType.SHOW,
-            conditional: field('event.placeOfDeath').isEqualTo(
+            conditional: field('eventDetails.placeOfDeath').isEqualTo(
               PlaceOfDeath.OTHER
             )
           }

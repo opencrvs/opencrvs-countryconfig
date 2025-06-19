@@ -142,7 +142,7 @@ export const eventDetails = defineFormPage({
   },
   fields: [
     {
-      id: 'event.date',
+      id: 'eventDetails.date',
       type: FieldType.DATE,
       required: true,
       validation: [
@@ -152,7 +152,7 @@ export const eventDetails = defineFormPage({
             description: 'This is the error message for invalid date',
             id: 'v2.event.death.action.declare.form.section.event.field.date.error'
           },
-          validator: field('event.date').isBefore().now()
+          validator: field('eventDetails.date').isBefore().now()
         }
       ],
       label: {
@@ -162,7 +162,7 @@ export const eventDetails = defineFormPage({
       }
     },
     {
-      id: 'event.reasonForLateRegistration',
+      id: 'eventDetails.reasonForLateRegistration',
       type: FieldType.TEXT,
       required: true,
       label: {
@@ -175,18 +175,18 @@ export const eventDetails = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             not(
-              field('event.date')
+              field('eventDetails.date')
                 .isAfter()
                 .days(applicationConfig.DEATH.REGISTRATION_TARGET)
                 .inPast()
             ),
-            field('event.date').isBefore().now()
+            field('eventDetails.date').isBefore().now()
           )
         }
       ]
     },
     {
-      id: 'event.manner',
+      id: 'eventDetails.manner',
       type: FieldType.SELECT,
       required: false,
       label: {
@@ -197,7 +197,7 @@ export const eventDetails = defineFormPage({
       options: mannerDeathTypeOptions
     },
     {
-      id: 'event.causeOfDeath',
+      id: 'eventDetails.causeOfDeath',
       type: FieldType.CHECKBOX,
       label: {
         defaultMessage: 'Cause of death has been established',
@@ -206,7 +206,7 @@ export const eventDetails = defineFormPage({
       }
     },
     {
-      id: 'event.sourceCauseDeath',
+      id: 'eventDetails.sourceCauseDeath',
       type: FieldType.SELECT,
       required: true,
       label: {
@@ -218,12 +218,12 @@ export const eventDetails = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: field('event.causeOfDeath').isEqualTo(true)
+          conditional: field('eventDetails.causeOfDeath').isEqualTo(true)
         }
       ]
     },
     {
-      id: 'event.description',
+      id: 'eventDetails.description',
       type: FieldType.TEXTAREA,
       required: true,
       label: {
@@ -237,25 +237,25 @@ export const eventDetails = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             or(
-              field('event.sourceCauseDeath').isEqualTo(
+              field('eventDetails.sourceCauseDeath').isEqualTo(
                 SourceCauseDeathType.LAY_REPORTED
               ),
-              field('event.sourceCauseDeath').isEqualTo(
+              field('eventDetails.sourceCauseDeath').isEqualTo(
                 SourceCauseDeathType.VERBAL_AUTOPSY
               )
             ),
-            field('event.causeOfDeath').isEqualTo(true)
+            field('eventDetails.causeOfDeath').isEqualTo(true)
           )
         }
       ]
     },
     {
-      id: 'event.detailsDivider_1',
+      id: 'eventDetails.divider_1',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
     {
-      id: 'event.detailsAddressHelper',
+      id: 'eventDetails.addressHelper',
       type: FieldType.PARAGRAPH,
       label: {
         defaultMessage: 'Place of death',
@@ -265,12 +265,12 @@ export const eventDetails = defineFormPage({
       configuration: { styles: { fontVariant: 'h3' } }
     },
     {
-      id: 'event.detailsDivider_2',
+      id: 'eventDetails.divider_2',
       type: FieldType.DIVIDER,
       label: emptyMessage
     },
     {
-      id: 'event.placeOfDeath',
+      id: 'eventDetails.placeOfDeath',
       type: FieldType.SELECT,
       required: true,
       label: {
@@ -281,7 +281,7 @@ export const eventDetails = defineFormPage({
       options: placeOfDeathOptions
     },
     {
-      id: 'event.deathLocation',
+      id: 'eventDetails.deathLocation',
       type: FieldType.FACILITY,
       required: true,
       label: {
@@ -292,14 +292,14 @@ export const eventDetails = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: field('event.placeOfDeath').isEqualTo(
+          conditional: field('eventDetails.placeOfDeath').isEqualTo(
             PlaceOfDeath.HEALTH_FACILITY
           )
         }
       ]
     },
     {
-      id: 'event.deathLocationOther',
+      id: 'eventDetails.deathLocationOther',
       type: FieldType.ADDRESS,
       hideLabel: true,
       label: {
@@ -310,7 +310,9 @@ export const eventDetails = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: field('event.placeOfDeath').isEqualTo(PlaceOfDeath.OTHER)
+          conditional: field('eventDetails.placeOfDeath').isEqualTo(
+            PlaceOfDeath.OTHER
+          )
         }
       ],
       defaultValue: {
