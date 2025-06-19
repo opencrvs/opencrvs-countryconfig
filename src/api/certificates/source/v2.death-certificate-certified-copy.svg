@@ -151,7 +151,7 @@
   </text>
   <g clip-path="url(#clip7_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="326.104">{{$lookup $declaration "eventDetails.manner"}}</tspan>
+      <tspan x="312" y="326.104">{{$lookup $declaration "eventDetails.mannerOfDeath"}}</tspan>
     </text>
   </g>
   <line x1="70" y1="338.5" x2="514" y2="338.5" stroke="#222222" />

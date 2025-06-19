@@ -186,7 +186,7 @@ export const eventDetails = defineFormPage({
       ]
     },
     {
-      id: 'eventDetails.manner',
+      id: 'eventDetails.mannerOfDeath',
       type: FieldType.SELECT,
       required: false,
       label: {
@@ -197,7 +197,7 @@ export const eventDetails = defineFormPage({
       options: mannerDeathTypeOptions
     },
     {
-      id: 'eventDetails.causeOfDeath',
+      id: 'eventDetails.causeOfDeathEstablished',
       type: FieldType.CHECKBOX,
       label: {
         defaultMessage: 'Cause of death has been established',
@@ -218,7 +218,9 @@ export const eventDetails = defineFormPage({
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: field('eventDetails.causeOfDeath').isEqualTo(true)
+          conditional: field('eventDetails.causeOfDeathEstablished').isEqualTo(
+            true
+          )
         }
       ]
     },
@@ -244,7 +246,7 @@ export const eventDetails = defineFormPage({
                 SourceCauseDeathType.VERBAL_AUTOPSY
               )
             ),
-            field('eventDetails.causeOfDeath').isEqualTo(true)
+            field('eventDetails.causeOfDeathEstablished').isEqualTo(true)
           )
         }
       ]
