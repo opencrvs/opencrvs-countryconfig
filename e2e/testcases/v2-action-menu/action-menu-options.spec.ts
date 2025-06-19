@@ -19,14 +19,14 @@ async function getActionMenuOptions(page: Page, declaration: Declaration) {
   return textContents
 }
 
-test.describe.serial('Action menu options', () => {
+test.describe('Action menu options', () => {
   let page: Page
 
-  test.beforeAll(async ({ browser }) => {
+  test.beforeEach(async ({ browser }) => {
     page = await browser.newPage()
   })
 
-  test.afterAll(async () => {
+  test.afterEach(async () => {
     await page.close()
   })
 
