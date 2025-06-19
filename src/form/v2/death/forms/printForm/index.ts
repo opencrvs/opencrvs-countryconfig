@@ -23,6 +23,10 @@ import { printCertificateCollectors } from './collectors'
 import { printCertificateCollectorOther } from './collector-other'
 import { printCertificateCollectorIdentityVerify } from './collector-identity-verify'
 
+export const CollectorType = {
+  SOMEONE_ELSE: 'SOMEONE_ELSE'
+}
+
 export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   label: {
     id: 'v2.event.death.action.certificate.form.label',
@@ -49,7 +53,9 @@ export const DEATH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
         description: 'This is the title of the section'
       },
       conditional: and(
-        not(field('collector.requesterId').isEqualTo('SOMEONE_ELSE')),
+        not(
+          field('collector.requesterId').isEqualTo(CollectorType.SOMEONE_ELSE)
+        ),
         not(field('collector.requesterId').isEqualTo('PRINT_IN_ADVANCE'))
       ),
       fields: printCertificateCollectorIdentityVerify,

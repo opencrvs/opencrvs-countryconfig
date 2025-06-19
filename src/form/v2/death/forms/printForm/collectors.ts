@@ -19,6 +19,7 @@ import {
 } from '@opencrvs/toolkit/events'
 import { InformantType, InformantTypeKey } from '../pages/informant'
 import { informantMessageDescriptors } from '@countryconfig/form/common/messages'
+import { CollectorType } from './index'
 
 const spouseDoesNotExist = (informantType: InformantTypeKey) => {
   return {
@@ -95,7 +96,7 @@ const otherOption = {
     defaultMessage: 'Print and issue to someone else',
     description: 'This is the label for the field'
   },
-  value: 'SOMEONE_ELSE'
+  value: CollectorType.SOMEONE_ELSE
 }
 
 const printInAdvanceOption = {
