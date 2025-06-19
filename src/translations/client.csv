@@ -2771,6 +2771,8 @@ v2.field.address.town.label,Label for town in address,Town,Ville
 v2.field.address.urbanOrRural.label,Label for selecting between urban or rural,Urban or Rural,Urbain ou rural
 v2.field.address.village.label,Label for village in address,Village,Village
 v2.field.address.zipCode.label,Label for ZIP code in address,ZIP Code,Code postal
+v2.field.name.firstname.label,This is the label for the firstname field,First name(s),Prénom(s)
+v2.field.name.surname.label,This is the label for the surname field,Last name,Nom(s)
 v2.file.upload.fileSize.error,Error message when the selected file is too large,File size must be less than {maxSize}mb,La taille du fichier doit être inférieure à {maxSize}M
 v2.file.upload.fileType.error,Error message when the selected file type is not supported,File format not supported. Please attach {types} (max {maxSize}mb),Format de fichier non pris en charge. Veuillez joindre un {types} (max {maxSize}mb)
 v2.form.birth.child.title,Form section title for Child,Child's details,information de l'enfant
@@ -2829,6 +2831,7 @@ v2.form.section.information.birth.bullet3,Form information for birth,Once the de
 v2.form.section.information.birth.bullet4,Form information for birth,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.",Attendez un SMS vous indiquant quand vous devez vous rendre au bureau pour retirer le certificat - Prenez votre carte d'identité avec vous.
 v2.form.section.information.birth.bulletList.label,Label for the birth information bullet list,Birth Information,Birth Information
 v2.form.section.mother.title,Form section title for mothers details,Mother's details,Information de la mère
+v2.home.header.searchTool.placeholder,Search tool placeholder,"Search for a tracking ID, name, registration number, national ID, phone number or email","Rechercher un identifiant de suivi, un nom, un numéro d'enregistrement, un numéro d'identité nationale, un numéro de téléphone ou une adresse e-mail"
 v2.messages.emptyString,Empty string, ,
 v2.navigation.CREATED,In progress label in navigation,In progress,En cours
 v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Prêt pour l'examen
@@ -2901,7 +2904,9 @@ v2.reviewAction.reject,The label for reject button of review action,Reject,Rejet
 v2.reviewAction.title,The title for review action,Declare member,Declare member
 v2.saveAndExit.desc.saveDeclarationConfirm,Description for save declaration confirmation modal,All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?,Toutes les données saisies seront conservées en toute sécurité pour de futures modifications. Êtes-vous prêt à enregistrer les modifications apportées à ce formulaire de déclaration?
 v2.saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
+v2.search.advancedSearch.result.title,Advanced search result title,Search results ({count}),résultat de la recherche pour ({count})
 v2.search.noResult,The no result text,No results,Pas de résultats
+v2.search.quickSearch.result.title,Quick search result title,Search result for “{searchTerm}”,résultat de la recherche pour “{searchTerm}”
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
 v2.validateAction.Declare,The label for declare button of validate action,Send for approval,Envoyer pour approbation
 v2.validateAction.Reject,The label for reject button of validate action,Reject,Rejeter
