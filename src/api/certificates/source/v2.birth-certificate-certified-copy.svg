@@ -123,7 +123,7 @@
   <g clip-path="url(#clip2_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="148.104">{{$lookup $declaration "child.firstname"}} {{$lookup $declaration "child.surname"}}</tspan>
+      <tspan x="307" y="148.104">{{$lookup $declaration "child.name.firstname"}} {{$lookup $declaration "child.name.surname"}}</tspan>
     </text>
   </g>
   <line x1="65" y1="154.5" x2="533" y2="154.5" stroke="#ECECEC" />

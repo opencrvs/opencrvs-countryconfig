@@ -25,8 +25,8 @@ const onlyMotherExist = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      not(field('mother.firstname').isFalsy()),
-      field('father.firstname').isFalsy()
+      not(field('mother.name').isFalsy()),
+      field('father.name').isFalsy()
     )
   }
 }
@@ -36,8 +36,8 @@ const onlyFatherExist = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      not(field('father.firstname').isFalsy()),
-      field('mother.firstname').isFalsy()
+      not(field('father.name').isFalsy()),
+      field('mother.name').isFalsy()
     )
   }
 }
@@ -47,8 +47,8 @@ const fatherMotherBothExist = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      not(field('father.firstname').isFalsy()),
-      not(field('mother.firstname').isFalsy())
+      not(field('father.name').isFalsy()),
+      not(field('mother.name').isFalsy())
     )
   }
 }
@@ -58,8 +58,8 @@ const fatherMotherBothDoesNotExist = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      field('father.firstname').isFalsy(),
-      field('mother.firstname').isFalsy()
+      field('father.name').isFalsy(),
+      field('mother.name').isFalsy()
     )
   }
 }

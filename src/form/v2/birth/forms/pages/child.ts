@@ -189,28 +189,17 @@ export const child = defineFormPage({
   },
   fields: [
     {
-      id: 'child.firstname',
-      type: FieldType.TEXT,
-      configuration: { maxLength: MAX_NAME_LENGTH },
+      id: 'child.name',
+      type: FieldType.NAME,
       required: true,
-      label: {
-        defaultMessage: 'First name(s)',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.firstname.label'
-      },
-      validation: [invalidNameValidator('child.firstname')]
-    },
-    {
-      id: 'child.surname',
-      type: FieldType.TEXT,
       configuration: { maxLength: MAX_NAME_LENGTH },
-      required: true,
+      hideLabel: true,
       label: {
-        defaultMessage: 'Last name',
+        defaultMessage: "Child's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.surname.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.name.label'
       },
-      validation: [invalidNameValidator('child.surname')]
+      validation: [invalidNameValidator('child.name')]
     },
     {
       id: 'child.gender',
