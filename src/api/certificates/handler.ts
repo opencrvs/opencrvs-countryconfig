@@ -311,6 +311,55 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
       }
+    },
+    {
+      id: 'v2.death-certificate',
+      event: Event.V2_DEATH,
+      label: {
+        id: 'certificates.death.certificate',
+        defaultMessage: 'Death Certificate copy',
+        description: 'The label for a death certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl: '/api/countryconfig/certificates/v2.death-certificate.svg',
+      fonts: {
+        'Libre Baskerville': {
+          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
+          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
+          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
+          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'v2.death-certified-certificate',
+      event: Event.V2_DEATH,
+      label: {
+        id: 'certificates.death.certificate.copy',
+        defaultMessage: 'Death Certificate certified copy',
+        description: 'The label for a death certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.death-certificate-certified-copy.svg',
+      fonts: {
+        'Libre Baskerville': {
+          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
+          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
+          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
+          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+        }
+      }
     }
   ]
   return certificateConfigs

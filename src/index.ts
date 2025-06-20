@@ -735,6 +735,16 @@ export async function createServer() {
     }
   })
 
+  server.route({
+    method: 'POST',
+    path: `/events/${Event.V2_DEATH}/actions/${ActionType.REGISTER}`,
+    handler: onRegisterHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
   server.ext({
     type: 'onRequest',
     method(request: Hapi.Request & { sentryScope?: any }, h) {
