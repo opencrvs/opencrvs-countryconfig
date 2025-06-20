@@ -25,7 +25,10 @@ import { not } from '@opencrvs/toolkit/conditionals'
 import { applicationConfig } from '@countryconfig/api/application/application-config'
 
 import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
-import { MAX_NAME_LENGTH } from '@countryconfig/form/v2/birth/validators'
+import {
+  invalidNameValidator,
+  MAX_NAME_LENGTH
+} from '@countryconfig/form/v2/birth/validators'
 
 const GenderTypes = {
   MALE: 'male',
@@ -196,20 +199,7 @@ export const child = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.child.field.name.label'
       },
-      validation: [
-        {
-          validator: field('child.name').object({
-            firstname: field('firstname').isValidEnglishName(),
-            surname: field('surname').isValidEnglishName()
-          }),
-          message: {
-            defaultMessage:
-              "Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)",
-            description: 'This is the error message for invalid name',
-            id: 'v2.error.invalidName'
-          }
-        }
-      ]
+      validation: [invalidNameValidator('child.name')]
     },
     {
       id: 'child.gender',

@@ -969,7 +969,13 @@ export const tennisClubMembershipEvent = defineConfig({
         description: 'Applicant details search field section title',
         id: 'v2.event.tennis-club-membership.search.applicants'
       },
-      fields: [field('applicant.name').fuzzy(), field('applicant.dob').range()]
+      fields: [
+        field('applicant.name', {
+          validations: [],
+          conditionals: []
+        }).fuzzy(),
+        field('applicant.dob').range()
+      ]
     },
     {
       title: {
