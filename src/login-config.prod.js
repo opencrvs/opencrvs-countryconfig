@@ -8,13 +8,18 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
+
+const scheme = window.location.protocol // "http:" or "https:"
+const hostname = '{{hostname}}' // Replace dynamically if needed
+const sentry = '{{sentry}}' // Replace dynamically if needed
+console.log(scheme)
 window.config = {
-  AUTH_API_URL: 'https://gateway.{{hostname}}/auth/',
-  CONFIG_API_URL: 'https://config.{{hostname}}',
+  AUTH_API_URL: `${scheme}//gateway.${hostname}/auth/`,
+  CONFIG_API_URL: `${scheme}//config.${hostname}`,
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'MDG',
   LANGUAGES: 'fr,en,mg',
-  CLIENT_APP_URL: 'https://register.{{hostname}}/',
-  COUNTRY_CONFIG_URL: 'https://countryconfig.{{hostname}}',
-  SENTRY: '{{sentry}}'
+  CLIENT_APP_URL: `${scheme}//register.${hostname}/`,
+  COUNTRY_CONFIG_URL: `${scheme}//countryconfig.${hostname}`,
+  SENTRY: sentry
 }

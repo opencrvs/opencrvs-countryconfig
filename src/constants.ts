@@ -15,6 +15,7 @@ export const CONFIRM_REGISTRATION_URL = env.CONFIRM_REGISTRATION_URL
 
 export const REGULAR_TEXT_MAX_LENGTH = 255
 export const DEFAULT_TIMEOUT = 600000
+export const SEVEN_DAYS_IN_MILISECOND = 1000 * 60 * 60 * 24 * 7
 
 export const DOMAIN = env.DOMAIN
 export const GATEWAY_URL = env.GATEWAY_URL

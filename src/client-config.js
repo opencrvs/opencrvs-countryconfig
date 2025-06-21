@@ -15,6 +15,7 @@ window.config = {
   AUTH_URL: 'http://localhost:7070/auth/',
   MINIO_BUCKET: 'ocrvs',
   MINIO_URL: 'http://localhost:3535/ocrvs/',
+  MINIO_BASE_URL: 'http://localhost:3535', // URL without path/bucket information, used for file uploads, v2
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'MDG',
@@ -28,5 +29,8 @@ window.config = {
   REGISTRATIONS_DASHBOARD_URL: '',
   // http://localhost:4444/public/dashboard/a17e9bc0-15a2-4bd1-92fa-ab0f346227ca#bordered=false&titled=false&refresh=300
   STATISTICS_DASHBOARD_URL: '',
-  FEATURES: {}
+  FEATURES: {
+    // The V2_EVENTS variable is passed down from src/index.ts:309
+    V2_EVENTS: {{ V2_EVENTS }}
+  }
 }

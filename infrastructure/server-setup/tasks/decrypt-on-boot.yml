@@ -1,4 +1,5 @@
 - name: Save disk encryption key into a file as an example (in production use a hardware security module)
+  when: disk_encryption_key is defined
   ansible.builtin.copy:
     dest: /root/disk-encryption-key.txt
     group: 1000
@@ -22,8 +23,13 @@
 
       [Install]
       WantedBy=multi-user.target
-  when: encryptedFileSystemPostCheck.stat.exists
+  when:
+   - disk_encryption_key is defined
+   - encryptedFileSystemPostCheck.stat.exists
 
 - name: 'Setup systemd to mount encrypted folder'
+  when: disk_encryption_key is defined
   shell: systemctl daemon-reload && systemctl enable reboot.service
-  when: encryptedFileSystemPostCheck.stat.exists
+  when:
+    - disk_encryption_key is defined
+    - encryptedFileSystemPostCheck.stat.exists

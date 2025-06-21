@@ -40,15 +40,15 @@ export type Validation = (
   offlineCountryConfig?: any
 ) => ValidationResult | undefined
 
-export const Event = {
-  Birth: 'birth',
-  Death: 'death',
-  Marriage: 'marriage'
-} as const
+export enum Event {
+  Birth = 'birth',
+  Death = 'death',
+  Marriage = 'marriage',
 
-const events = Object.values(Event)
-
-export type Event = (typeof events)[number]
+  // events v2 enums
+  V2_BIRTH = 'v2.birth',
+  TENNIS_CLUB_MEMBERSHIP = 'tennis-club-membership'
+}
 
 export type ValidationInitializer = (...value: any[]) => Validation
 
@@ -148,7 +148,10 @@ export const HEADING3 = 'HEADING3'
 export const SIGNATURE = 'SIGNATURE'
 export const HTTP = 'HTTP'
 export const BUTTON = 'BUTTON'
-export const REDIRECT = 'REDIRECT'
+export const LINK_BUTTON = 'LINK_BUTTON'
+export const ID_READER = 'ID_READER'
+export const ID_VERIFICATION_BANNER = 'ID_VERIFICATION_BANNER'
+export const LOADER = 'LOADER'
 
 export enum RadioSize {
   LARGE = 'large',
@@ -501,11 +504,17 @@ export interface ISignatureFormField extends IFormFieldBase {
 
 export interface IHttpFormField extends IFormFieldBase {
   type: typeof HTTP
-  options: any
+  options: {
+    headers: Record<string, string>
+    body?: Record<string, unknown>
+    params?: Record<string, string>
+    url: string
+    method: string
+  }
 }
 export interface IButtonFormField extends IFormFieldBase {
   type: typeof BUTTON
-  icon?: string
+  icon?: string // Valid icon names from the Icon component
   buttonLabel: MessageDescriptor
   loadingLabel?: MessageDescriptor
   options: {
@@ -514,11 +523,56 @@ export interface IButtonFormField extends IFormFieldBase {
   }
 }
 
-export interface IRedirectButtonFormField extends IFormFieldBase {
-  type: typeof REDIRECT
+export interface ILinkButtonFormField extends IFormFieldBase {
+  type: typeof LINK_BUTTON
+  icon?: {
+    desktop: string // Valid icon names from the Icon component
+    mobile: string // Valid icon names from the Icon component
+  }
   options: {
     url: string
+    callback: {
+      trigger: string
+      /**
+       * If the redirection url has the exact same param keys
+       * with exact same values sepecified in the below `params`
+       * field, only then the callback will be triggered
+       */
+      params: Record<string, string>
+    }
   }
+}
+
+export interface QRReaderType {
+  type: 'QR'
+  validation: {
+    rule: unknown
+    errorMessage: MessageDescriptor
+  }
+}
+
+export type ReaderType = QRReaderType | ILinkButtonFormField
+export interface IDReaderFormField extends IFormFieldBase {
+  type: typeof ID_READER
+  dividerLabel: MessageDescriptor
+  manualInputInstructionLabel: MessageDescriptor
+  readers: [ReaderType, ...ReaderType[]]
+}
+
+export type BannerType =
+  | 'authenticated'
+  | 'verified'
+  | 'failed'
+  | 'failedFetchIdDetails'
+interface IIDVerificationBannerFormField extends IFormFieldBase {
+  type: typeof ID_VERIFICATION_BANNER
+  bannerType: BannerType
+  idFieldName: string
+}
+
+export interface ILoaderFormField extends IFormFieldBase {
+  type: typeof LOADER
+  loadingText: MessageDescriptor
 }
 
 export type IFormField =
@@ -556,7 +610,10 @@ export type IFormField =
   | ISignatureFormField
   | IHttpFormField
   | IButtonFormField
-  | IRedirectButtonFormField
+  | ILinkButtonFormField
+  | IDReaderFormField
+  | IIDVerificationBannerFormField
+  | ILoaderFormField
 
 export interface SelectComponentOption {
   value: string
@@ -677,8 +734,8 @@ type FunctionParamsToDescriptor<T, Descriptor> =
   T extends Array<any>
     ? { [K in keyof T]: FunctionParamsToDescriptor<T[K], Descriptor> }
     : T extends IFormFieldQueryMapFunction | IFormFieldMutationMapFunction // It's a query transformation function - return a query transformation descriptor
-    ? Descriptor
-    : T // It's a none of the above - return self
+      ? Descriptor
+      : T // It's a none of the above - return self
 
 export interface IStaticFieldType {
   kind: 'static'
@@ -982,3 +1039,5 @@ export type AllowedAddressConfigurations = {
 }
 
 export type AdministrativeLevel = 1 | 2 | 3 | 4 | 5
+
+export const moi = 'asd'

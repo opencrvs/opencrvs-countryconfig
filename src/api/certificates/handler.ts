@@ -254,6 +254,105 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           bolditalics: `/api/countryconfig/fonts/Kapakana.ttf`
         }
       }
+    },
+    {
+      id: 'v2.birth-certificate',
+      event: Event.V2_BIRTH,
+      label: {
+        id: 'certificates.birth.certificate',
+        defaultMessage: 'Birth Certificate copy',
+        description: 'The label for a birth certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl: '/api/countryconfig/certificates/v2.birth-certificate.svg',
+      fonts: {
+        'Libre Baskerville': {
+          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
+          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
+          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
+          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'v2.birth-certified-certificate',
+      event: Event.V2_BIRTH,
+      label: {
+        id: 'certificates.birth.certificate.copy',
+        defaultMessage: 'Birth Certificate certified copy',
+        description: 'The label for a birth certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.birth-certificate-certified-copy.svg',
+      fonts: {
+        'Libre Baskerville': {
+          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
+          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
+          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
+          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'v2.tennis-club-membership-certificate',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.copy',
+        defaultMessage: 'Tennis Club Membership Certificate copy',
+        description: 'The label for a tennis-club-membership certificate'
+      },
+      isDefault: true,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.tennis-club-membership-certificate.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
+    },
+    {
+      id: 'v2.tennis-club-membership-certified-certificate',
+      event: Event.TENNIS_CLUB_MEMBERSHIP,
+      label: {
+        id: 'certificates.tennis-club-membership.certificate.certified-copy',
+        defaultMessage: 'Tennis Club Membership Certificate certified copy',
+        description: 'The label for a tennis-club-membership certificate'
+      },
+      isDefault: false,
+      fee: {
+        onTime: 7,
+        late: 10.6,
+        delayed: 18
+      },
+      svgUrl:
+        '/api/countryconfig/certificates/v2.tennis-club-membership-certified-certificate.svg',
+      fonts: {
+        'Noto Sans': {
+          normal: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bold: '/api/countryconfig/fonts/NotoSans-Bold.ttf',
+          italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
+          bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
+        }
+      }
     }
   ]
   return certificateConfigs
