@@ -24,6 +24,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      'search[id=v2.birth:all|tennis-club-membership:all|v2.death:all]',
       'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
@@ -42,7 +43,8 @@ export const roles: Role[] = [
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE
+      SCOPES.SEARCH_MARRIAGE,
+      'search[id=v2.birth:all|tennis-club-membership:all|v2.death:all]'
     ]
   },
   {
@@ -61,6 +63,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      'search[id=v2.birth:all|tennis-club-membership:all|v2.death:all]',
       'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
@@ -79,7 +82,8 @@ export const roles: Role[] = [
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE
+      SCOPES.SEARCH_MARRIAGE,
+      'search[id=v2.birth:all|tennis-club-membership:all|v2.death:all]'
     ]
   },
   {
@@ -97,7 +101,8 @@ export const roles: Role[] = [
       SCOPES.RECORD_SUBMIT_FOR_REVIEW,
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
-      SCOPES.SEARCH_MARRIAGE
+      SCOPES.SEARCH_MARRIAGE,
+      'search[id=v2.birth:all|tennis-club-membership:all|v2.death:all]'
     ]
   },
   {
@@ -127,6 +132,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      'search[id=v2.birth:all|tennis-club-membership:all|v2.death:all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review|sent-for-approval|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
@@ -162,6 +168,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      'search[id=v2.birth:all|tennis-club-membership:all|v2.death:all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   },
@@ -251,6 +258,7 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      'search[id=v2.birth:all|tennis-club-membership:all|v2.death:all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
     ]
   }
