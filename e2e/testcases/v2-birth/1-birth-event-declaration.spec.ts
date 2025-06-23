@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 import { loginToV2 } from '../../helpers'
 import path from 'path'
 import { faker } from '@faker-js/faker'
-import { selectAction } from '../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 import { SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
@@ -459,7 +459,7 @@ test.describe.serial('1. Birth event declaration', () => {
           'Assigned to you'
         )
 
-        await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+        await ensureOutboxIsEmpty(page)
 
         await expect(page.getByText(child.firstNames)).toBeVisible()
       })

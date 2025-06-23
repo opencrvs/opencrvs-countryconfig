@@ -35,7 +35,7 @@ test.describe.serial('6 Validate Ready to print tab', () => {
   })
 
   test('6.1 Go to Ready to print tab', async () => {
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Ready to print').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })

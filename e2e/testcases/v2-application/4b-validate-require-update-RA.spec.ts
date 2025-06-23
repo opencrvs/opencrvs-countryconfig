@@ -60,7 +60,7 @@ test.describe
 
   test('4.1 Go to Requires update tab', async () => {
     await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Requires update').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
@@ -118,7 +118,7 @@ test.describe
     // Should redirect back to requires update workqueue
     await expect(page.locator('#content-name')).toHaveText('Requires updates')
 
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Recent').click()
     await page.waitForTimeout(500)
     await page.getByText('Requires updates').click()

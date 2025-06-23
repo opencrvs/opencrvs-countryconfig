@@ -34,7 +34,7 @@ test.describe.serial('3 Validate sent for review tab', () => {
   })
 
   test('3.1 Go to sent for review tab', async () => {
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Sent for review').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
