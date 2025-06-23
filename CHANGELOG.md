@@ -2,6 +2,8 @@
 
 ## 1.8.0
 
+- Added Build summary and refactored deployment workflow to be more clear [#6984](https://github.com/opencrvs/opencrvs-core/issues/6984)
+
 ## 1.6.4
 
 ### Bug fixes
