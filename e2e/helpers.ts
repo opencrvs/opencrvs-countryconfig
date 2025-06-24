@@ -118,7 +118,7 @@ export const goToSection = async (
   page: Page,
   section: DeclarationSection | CorrectionSection | V2ReviewSection
 ) => {
-  while (!page.url().includes(section)) {
+  while (!page.url().includes(`/${section}`)) {
     await page.getByRole('button', { name: 'Continue' }).click()
   }
 }
