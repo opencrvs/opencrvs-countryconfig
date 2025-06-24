@@ -1,5 +1,8 @@
 import { Page, expect } from '@playwright/test'
-import { SAFE_INPUT_CHANGE_TIMEOUT_MS } from './constants'
+import {
+  SAFE_INPUT_CHANGE_TIMEOUT_MS,
+  SAFE_OUTBOX_TIMEOUT_MS
+} from './constants'
 
 export async function selectAction(
   page: Page,
@@ -88,4 +91,15 @@ export async function ensureAssigned(page: Page) {
 
 export async function expectInUrl(page: Page, assertionString: string) {
   await expect(page.url().includes(assertionString)).toBeTruthy()
+}
+
+export async function ensureOutboxIsEmpty(page: Page) {
+  await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
+
+  await expect(page.locator('#navigation_workqueue_outbox')).not.toContainText(
+    '1',
+    {
+      timeout: SAFE_OUTBOX_TIMEOUT_MS
+    }
+  )
 }
