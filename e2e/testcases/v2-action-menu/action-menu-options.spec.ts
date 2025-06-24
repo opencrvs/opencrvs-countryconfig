@@ -96,7 +96,8 @@ test.describe('Action menu options', () => {
       expect(options).toStrictEqual([
         'Assign',
         'View record',
-        'Print certificate'
+        'Print certificate',
+        'Request correction'
       ])
     })
   })
