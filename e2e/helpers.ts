@@ -417,6 +417,7 @@ export const generateRandomSuffix = () => {
 }
 
 type ActionMenuOptions =
+  | 'Assign'
   | 'Correct record'
   | 'Print certified copy'
   | 'Review declaration'
