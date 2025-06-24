@@ -60,7 +60,7 @@ test.describe
 
   test('4.1 Go to Requires update tab', async () => {
     await loginToV2(page, CREDENTIALS.FIELD_AGENT)
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Requires update').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })

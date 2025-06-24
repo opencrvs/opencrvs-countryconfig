@@ -2,7 +2,13 @@ import { expect, test } from '@playwright/test'
 import { v4 as uuidv4 } from 'uuid'
 import { CLIENT_URL, GATEWAY_HOST } from '../../constants'
 import { CREDENTIALS } from '../../constants'
-import { formatName, getClientToken, getToken, loginToV2 } from '../../helpers'
+import {
+  formatName,
+  getAction,
+  getClientToken,
+  getToken,
+  loginToV2
+} from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
 import { selectAction } from '../../v2-utils'
@@ -427,6 +433,10 @@ test.describe('Events REST API', () => {
       await page.getByRole('button', { name: 'Notifications' }).click()
 
       await page.getByText(await formatName(childName)).click()
+
+      await page.getByRole('button', { name: 'Action' }).click()
+      await getAction(page, 'Assign').click()
+
       await expect(page.locator('#row_0')).toContainText('Notified')
       await expect(page.locator('#row_0')).toContainText(clientName)
       await expect(page.locator('#row_0')).toContainText('Health integration')

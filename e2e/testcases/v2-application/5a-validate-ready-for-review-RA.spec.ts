@@ -8,7 +8,7 @@ import {
 } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned } from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
@@ -38,7 +38,7 @@ test.describe
   })
 
   test('5.1 Go to Ready for review tab', async () => {
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Ready for review').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
@@ -81,6 +81,8 @@ test.describe
     await page.goBack()
 
     const row = getRowByTitle(page, formatV2ChildName(declaration))
+
+    await row.getByRole('button', { name: 'Assign record' }).click()
     await row.getByRole('button', { name: 'Validate' }).click()
 
     expect(
@@ -95,7 +97,7 @@ test.describe
     // Should redirect back to Ready for review workqueue
     await expect(page.locator('#content-name')).toHaveText('Ready for review')
 
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Recent').click()
     await page.waitForTimeout(500)
     await page.getByText('Ready for review').click()

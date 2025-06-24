@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { loginToV2, getToken } from '../../helpers'
+import { loginToV2, getToken, getAction } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import {
   createDeclaration,
@@ -60,7 +60,7 @@ test.describe
 
   test('4.1 Go to Requires update tab', async () => {
     await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Requires update').click()
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
@@ -104,6 +104,8 @@ test.describe
     await page.goBack()
 
     const row = getRowByTitle(page, formatV2ChildName(declaration))
+
+    await row.getByRole('button', { name: 'Assign record' }).click()
     await row.getByRole('button', { name: 'Validate' }).click()
 
     expect(
@@ -118,7 +120,7 @@ test.describe
     // Should redirect back to requires update workqueue
     await expect(page.locator('#content-name')).toHaveText('Requires updates')
 
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Recent').click()
     await page.waitForTimeout(500)
     await page.getByText('Requires updates').click()
