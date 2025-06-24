@@ -25,14 +25,19 @@ test.describe.serial('10.0 Validate "Review" page', () => {
     declaration = res.declaration
     eventId = res.eventId
     page = await browser.newPage()
-    await loginToV2(page)
-
-    await page.getByRole('button', { name: 'Ready to print' }).click()
-    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test.afterAll(async () => {
     await page.close()
+  })
+
+  test('10.0.1 Log in', async () => {
+    await loginToV2(page)
+  })
+
+  test('10.0.2 Navigate to certificate print action', async () => {
+    await page.getByRole('button', { name: 'Ready to print' }).click()
+    await navigateToCertificatePrintAction(page, declaration)
   })
 
   test('10.1 Review page validations', async () => {

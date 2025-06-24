@@ -70,8 +70,8 @@ all:
     enable_backups: false
 docker-manager-first:
   hosts:
-    HOSTNAME:
-      ansible_host: 'SSH_HOST'
+    HOSTNAME_MASTER:
+      ansible_host: 'SSH_HOST_MASTER'
       data_label: data1
 
 docker-workers: {}

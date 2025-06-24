@@ -14,7 +14,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { fillDate, validateAddress } from '../helpers'
-import { selectAction } from '../../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 
 test.describe.serial('3. Birth declaration case - 3', () => {
   let page: Page
@@ -716,7 +716,8 @@ test.describe.serial('3. Birth declaration case - 3', () => {
       await expect(page.getByText('Send for approval?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
+
       await page.getByText('Sent for approval').click()
 
       await expect(
@@ -731,8 +732,6 @@ test.describe.serial('3. Birth declaration case - 3', () => {
     test('3.2.1 Navigate to the declaration review page', async () => {
       await logout(page)
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
-
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
       await page.getByText('Ready for review').click()
 
       await page
