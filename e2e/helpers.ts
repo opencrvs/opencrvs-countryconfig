@@ -37,10 +37,14 @@ export async function logout(page: Page) {
 
 export async function loginToV2(
   page: Page,
-  credentials = CREDENTIALS.LOCAL_REGISTRAR
+  credentials = CREDENTIALS.LOCAL_REGISTRAR,
+  skipPin?: boolean
 ) {
   const token = await login(page, credentials.USERNAME, credentials.PASSWORD)
-  await createPIN(page)
+
+  if (!skipPin) {
+    await createPIN(page)
+  }
 
   // Navigate to the v2 client
   await page.goto(CLIENT_V2_URL)
