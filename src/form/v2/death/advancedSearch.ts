@@ -32,10 +32,10 @@ export const advancedSearchDeath = [
       id: 'v2.advancedSearch.form.registrationDetails'
     },
     fields: [
-      event('legalStatus.REGISTERED.createdAtLocation').exact(),
-      event('legalStatus.REGISTERED.createdAt').range(),
-      event('status', statusOptions).exact(),
-      event('updatedAt', timePeriodOptions).range()
+      event('legalStatuses.REGISTERED.createdAtLocation').exact(),
+      event('legalStatuses.REGISTERED.acceptedAt').range(),
+      event('status').exact(statusOptions),
+      event('updatedAt').range(timePeriodOptions)
     ]
   },
   {

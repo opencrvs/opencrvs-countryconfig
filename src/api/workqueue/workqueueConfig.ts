@@ -1,4 +1,6 @@
-import { SEVEN_DAYS_IN_MILISECOND } from '@countryconfig/constants'
+import format from 'date-fns/format'
+import subDays from 'date-fns/subDays'
+
 import { defineWorkqueues, event, user } from '@opencrvs/toolkit/events'
 
 const DATE_OF_EVENT_COLUMN = {
@@ -9,6 +11,8 @@ const DATE_OF_EVENT_COLUMN = {
   },
   value: event.field('dateOfEvent')
 }
+
+const isoDateFormat = 'yyyy-MM-dd'
 
 export const Workqueues = defineWorkqueues([
   {
@@ -103,8 +107,8 @@ export const Workqueues = defineWorkqueues([
       updatedBy: { type: 'exact', term: user('id') },
       updatedAt: {
         type: 'range',
-        gte: new Date(Date.now() - SEVEN_DAYS_IN_MILISECOND).toISOString(),
-        lte: new Date(Date.now()).toISOString()
+        gt: format(subDays(new Date(), 7), isoDateFormat),
+        lte: format(new Date(), isoDateFormat)
       }
     },
     actions: [
