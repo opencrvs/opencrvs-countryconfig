@@ -93,12 +93,8 @@ test.describe.serial('8. Validate declaration review page', () => {
   test.describe('8.1 Field agent actions', async () => {
     test.describe('8.1.0 Fill up birth registration form', async () => {
       test('8.1.0.1 Fill child details', async () => {
-        await page
-          .locator('#child____firstname')
-          .fill(declaration.child.name.firstNames)
-        await page
-          .locator('#child____surname')
-          .fill(declaration.child.name.familyName)
+        await page.locator('#firstname').fill(declaration.child.name.firstNames)
+        await page.locator('#surname').fill(declaration.child.name.familyName)
         await page.locator('#child____gender').click()
         await page.getByText(declaration.child.gender, { exact: true }).click()
 
@@ -157,11 +153,9 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.1.0.3 Fill mother's details", async () => {
         await page
-          .locator('#mother____firstname')
+          .locator('#firstname')
           .fill(declaration.mother.name.firstNames)
-        await page
-          .locator('#mother____surname')
-          .fill(declaration.mother.name.familyName)
+        await page.locator('#surname').fill(declaration.mother.name.familyName)
 
         await page.getByPlaceholder('dd').fill(declaration.mother.birthDate.dd)
         await page.getByPlaceholder('mm').fill(declaration.mother.birthDate.mm)
@@ -192,11 +186,9 @@ test.describe.serial('8. Validate declaration review page', () => {
 
       test("8.1.0.4 Fill father's details", async () => {
         await page
-          .locator('#father____firstname')
+          .locator('#firstname')
           .fill(declaration.father.name.firstNames)
-        await page
-          .locator('#father____surname')
-          .fill(declaration.father.name.familyName)
+        await page.locator('#surname').fill(declaration.father.name.familyName)
 
         await fillDate(page, declaration.father.birthDate)
 
@@ -225,13 +217,10 @@ test.describe.serial('8. Validate declaration review page', () => {
          */
 
         await expectRowValueWithChangeButton(
-          'child.firstname',
-          declaration.child.name.firstNames
-        )
-
-        await expectRowValueWithChangeButton(
-          'child.surname',
-          declaration.child.name.familyName
+          'child.name',
+          declaration.child.name.firstNames +
+            ' ' +
+            declaration.child.name.familyName
         )
 
         /*
@@ -325,12 +314,10 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
-          'mother.firstname',
-          declaration.mother.name.firstNames
-        )
-        await expectRowValueWithChangeButton(
-          'mother.surname',
-          declaration.mother.name.familyName
+          'mother.name',
+          declaration.mother.name.firstNames +
+            ' ' +
+            declaration.mother.name.familyName
         )
 
         /*
@@ -392,12 +379,10 @@ test.describe.serial('8. Validate declaration review page', () => {
          * - Change button
          */
         await expectRowValueWithChangeButton(
-          'father.firstname',
-          declaration.father.name.firstNames
-        )
-        await expectRowValueWithChangeButton(
-          'father.surname',
-          declaration.father.name.familyName
+          'father.name',
+          declaration.father.name.firstNames +
+            ' ' +
+            declaration.father.name.familyName
         )
 
         /*
@@ -445,30 +430,25 @@ test.describe.serial('8. Validate declaration review page', () => {
 
     test.describe('8.1.2 Click any "Change" link', async () => {
       test("8.1.2.1 Change child's name", async () => {
-        await page.getByTestId('change-button-child.firstname').click()
+        await page.getByTestId('change-button-child.name').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.child.name = {
           firstNames: faker.person.firstName('male'),
           familyName: faker.person.lastName('male')
         }
-        await page
-          .locator('#child____firstname')
-          .fill(declaration.child.name.firstNames)
-        await page
-          .locator('#child____surname')
-          .fill(declaration.child.name.familyName)
+        await page.locator('#firstname').fill(declaration.child.name.firstNames)
+        await page.locator('#surname').fill(declaration.child.name.familyName)
 
         await page.getByRole('button', { name: 'Back to review' }).click()
 
         /*
          * Expected result: should change child's name
          */
-        await expect(
-          page.getByTestId('row-value-child.firstname')
-        ).toContainText(declaration.child.name.firstNames)
-        await expect(page.getByTestId('row-value-child.surname')).toContainText(
-          declaration.child.name.familyName
+        await expect(page.getByTestId('row-value-child.name')).toContainText(
+          declaration.child.name.firstNames +
+            ' ' +
+            declaration.child.name.familyName
         )
       })
 
@@ -634,25 +614,23 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.10 Change mother's name", async () => {
-        await page.getByTestId('change-button-mother.firstname').click()
+        await page.getByTestId('change-button-mother.name').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.mother.name.firstNames = faker.person.firstName('female')
         declaration.mother.name.familyName = faker.person.lastName('female')
         await page
-          .locator('#mother____firstname')
+          .locator('#firstname')
           .fill(declaration.mother.name.firstNames)
-        await page
-          .locator('#mother____surname')
-          .fill(declaration.mother.name.familyName)
+        await page.locator('#surname').fill(declaration.mother.name.familyName)
         await page.getByRole('button', { name: 'Back to review' }).click()
 
         /*
          * Expected result: should change mother's name
          */
-        await expect(
-          page.getByTestId('row-value-mother.firstname')
-        ).toContainText(declaration.mother.name.firstNames)
+        await expect(page.getByTestId('row-value-mother.name')).toContainText(
+          declaration.mother.name.firstNames
+        )
       })
 
       test("8.1.2.11 Change mother's birthday", async () => {
@@ -754,25 +732,23 @@ test.describe.serial('8. Validate declaration review page', () => {
       })
 
       test("8.1.2.16 Change father's name", async () => {
-        await page.getByTestId('change-button-father.firstname').click()
+        await page.getByTestId('change-button-father.name').click()
         await page.getByRole('button', { name: 'Continue' }).click()
 
         declaration.father.name.firstNames = faker.person.firstName('male')
         declaration.father.name.familyName = faker.person.lastName('male')
         await page
-          .locator('#father____firstname')
+          .locator('#firstname')
           .fill(declaration.father.name.firstNames)
-        await page
-          .locator('#father____surname')
-          .fill(declaration.father.name.familyName)
+        await page.locator('#surname').fill(declaration.father.name.familyName)
         await page.getByRole('button', { name: 'Back to review' }).click()
 
         /*
          * Expected result: should change father's name
          */
-        await expect(
-          page.getByTestId('row-value-father.firstname')
-        ).toContainText(declaration.father.name.firstNames)
+        await expect(page.getByTestId('row-value-father.name')).toContainText(
+          declaration.father.name.firstNames
+        )
       })
 
       test("8.1.2.17 Change father's birthday", async () => {
@@ -905,12 +881,10 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
-        'child.firstname',
-        declaration.child.name.firstNames
-      )
-      await expectRowValueWithChangeButton(
-        'child.surname',
-        declaration.child.name.familyName
+        'child.name',
+        declaration.child.name.firstNames +
+          ' ' +
+          declaration.child.name.familyName
       )
 
       /*
@@ -1004,12 +978,8 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
-        'mother.firstname',
+        'mother.name',
         declaration.mother.name.firstNames
-      )
-      await expectRowValueWithChangeButton(
-        'mother.surname',
-        declaration.mother.name.familyName
       )
 
       /*
@@ -1072,12 +1042,10 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
-        'father.firstname',
-        declaration.father.name.firstNames
-      )
-      await expectRowValueWithChangeButton(
-        'father.surname',
-        declaration.father.name.familyName
+        'father.name',
+        declaration.father.name.firstNames +
+          ' ' +
+          declaration.father.name.familyName
       )
 
       /*
@@ -1203,12 +1171,10 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
-        'child.firstname',
-        declaration.child.name.firstNames
-      )
-      await expectRowValueWithChangeButton(
-        'child.surname',
-        declaration.child.name.familyName
+        'child.name',
+        declaration.child.name.firstNames +
+          ' ' +
+          declaration.child.name.familyName
       )
 
       /*
@@ -1302,12 +1268,8 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
-        'mother.firstname',
+        'mother.name',
         declaration.mother.name.firstNames
-      )
-      await expectRowValueWithChangeButton(
-        'mother.surname',
-        declaration.mother.name.familyName
       )
 
       /*
@@ -1370,12 +1332,10 @@ test.describe.serial('8. Validate declaration review page', () => {
        * - Change button
        */
       await expectRowValueWithChangeButton(
-        'father.firstname',
-        declaration.father.name.firstNames
-      )
-      await expectRowValueWithChangeButton(
-        'father.surname',
-        declaration.father.name.familyName
+        'father.name',
+        declaration.father.name.firstNames +
+          ' ' +
+          declaration.father.name.familyName
       )
 
       /*
@@ -1424,16 +1384,16 @@ test.describe.serial('8. Validate declaration review page', () => {
     const newFamilyNameForChild = faker.person.lastName('male')
 
     test("8.3.2.1 Update child's family name", async () => {
-      await page.getByTestId('change-button-child.surname').click()
+      await page.getByTestId('change-button-child.name').click()
       await page.getByRole('button', { name: 'Continue' }).click()
 
-      await page.locator('#child____surname').fill(newFamilyNameForChild)
+      await page.locator('#surname').fill(newFamilyNameForChild)
 
       await page.getByRole('button', { name: 'Back to review' }).click()
     })
 
     test("8.3.2.2 Review child's changed family name", async () => {
-      await expect(page.getByTestId('row-value-child.surname')).toContainText(
+      await expect(page.getByTestId('row-value-child.name')).toContainText(
         newFamilyNameForChild
       )
     })

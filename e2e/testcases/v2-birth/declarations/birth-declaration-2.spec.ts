@@ -109,12 +109,8 @@ test.describe.serial('2. Birth declaration case - 2', () => {
     })
 
     test('2.1.1 Fill child details', async () => {
-      await page
-        .locator('#child____firstname')
-        .fill(declaration.child.name.firstNames)
-      await page
-        .locator('#child____surname')
-        .fill(declaration.child.name.familyName)
+      await page.locator('#firstname').fill(declaration.child.name.firstNames)
+      await page.locator('#surname').fill(declaration.child.name.familyName)
       await page.locator('#child____gender').click()
       await page.getByText(declaration.child.gender, { exact: true }).click()
 
@@ -200,12 +196,8 @@ test.describe.serial('2. Birth declaration case - 2', () => {
     })
 
     test("2.1.3 Fill mother's details", async () => {
-      await page
-        .locator('#mother____firstname')
-        .fill(declaration.mother.name.firstNames)
-      await page
-        .locator('#mother____surname')
-        .fill(declaration.mother.name.familyName)
+      await page.locator('#firstname').fill(declaration.mother.name.firstNames)
+      await page.locator('#surname').fill(declaration.mother.name.familyName)
 
       await page.getByLabel('Exact date of birth unknown').check()
       await page
@@ -261,12 +253,8 @@ test.describe.serial('2. Birth declaration case - 2', () => {
     })
 
     test("2.1.4 Fill father's details", async () => {
-      await page
-        .locator('#father____firstname')
-        .fill(declaration.father.name.firstNames)
-      await page
-        .locator('#father____surname')
-        .fill(declaration.father.name.familyName)
+      await page.locator('#firstname').fill(declaration.father.name.firstNames)
+      await page.locator('#surname').fill(declaration.father.name.familyName)
 
       await page.getByLabel('Exact date of birth unknown').check()
       await page
@@ -335,12 +323,10 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * - Child's First Name
        * - Child's Family Name
        */
-      await expect(page.getByTestId('row-value-child.firstname')).toHaveText(
-        declaration.child.name.firstNames
-      )
-
-      await expect(page.getByTestId('row-value-child.surname')).toHaveText(
-        declaration.child.name.familyName
+      await expect(page.getByTestId('row-value-child.name')).toHaveText(
+        declaration.child.name.firstNames +
+          ' ' +
+          declaration.child.name.familyName
       )
 
       /*
@@ -410,12 +396,10 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * - Mother's First Name
        * - Mother's Family Name
        */
-      await expect(page.getByTestId('row-value-mother.firstname')).toHaveText(
-        declaration.mother.name.firstNames
-      )
-
-      await expect(page.getByTestId('row-value-mother.surname')).toHaveText(
-        declaration.mother.name.familyName
+      await expect(page.getByTestId('row-value-mother.name')).toHaveText(
+        declaration.mother.name.firstNames +
+          ' ' +
+          declaration.mother.name.familyName
       )
 
       /*
@@ -481,12 +465,10 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        * - Father's First Name
        * - Father's Family Name
        */
-      await expect(page.getByTestId('row-value-father.firstname')).toHaveText(
-        declaration.father.name.firstNames
-      )
-
-      await expect(page.getByTestId('row-value-father.surname')).toHaveText(
-        declaration.father.name.familyName
+      await expect(page.getByTestId('row-value-father.name')).toHaveText(
+        declaration.father.name.firstNames +
+          ' ' +
+          declaration.father.name.familyName
       )
 
       /*
@@ -597,13 +579,10 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        */
       await expectRowValueWithChangeButton(
         page,
-        'child.firstname',
-        declaration.child.name.firstNames
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'child.surname',
-        declaration.child.name.familyName
+        'child.name',
+        declaration.child.name.firstNames +
+          ' ' +
+          declaration.child.name.familyName
       )
 
       /*
@@ -694,13 +673,8 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        */
       await expectRowValueWithChangeButton(
         page,
-        'mother.firstname',
+        'mother.name',
         declaration.mother.name.firstNames
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'mother.surname',
-        declaration.mother.name.familyName
       )
 
       // @TODO: this should pass, but 'years' postfix is not yet implemented on V2
@@ -790,13 +764,10 @@ test.describe.serial('2. Birth declaration case - 2', () => {
        */
       await expectRowValueWithChangeButton(
         page,
-        'father.firstname',
-        declaration.father.name.firstNames
-      )
-      await expectRowValueWithChangeButton(
-        page,
-        'father.surname',
-        declaration.father.name.familyName
+        'father.name',
+        declaration.father.name.firstNames +
+          ' ' +
+          declaration.father.name.familyName
       )
 
       // @TODO: this should pass, but 'years' postfix is not yet implemented on V2

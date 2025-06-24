@@ -34,8 +34,8 @@ export async function fillDate(
 export async function fillChildDetails(page: Page) {
   const firstName = faker.person.firstName('female')
   const lastName = faker.person.lastName('female')
-  await page.locator('#child____firstname').fill(firstName)
-  await page.locator('#child____surname').fill(lastName)
+  await page.locator('#firstname').fill(firstName)
+  await page.locator('#surname').fill(lastName)
 
   return formatName({ firstNames: firstName, familyName: lastName })
 }
@@ -62,9 +62,11 @@ export async function expectRowValueWithChangeButton(
 }
 
 export const formatV2ChildName = (obj: {
-  ['child.firstname']: string
-  ['child.surname']: string
+  'child.name': { firstname: string; surname: string }
   [key: string]: any
 }) => {
-  return joinValuesWith([obj['child.firstname'], obj['child.surname']])
+  return joinValuesWith([
+    obj['child.name'].firstname,
+    obj['child.name'].surname
+  ])
 }

@@ -8,7 +8,10 @@ import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 import { SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 
 const child = {
-  firstNames: faker.person.firstName('female')
+  name: {
+    firstNames: faker.person.firstName('female'),
+    surname: faker.person.lastName()
+  }
 }
 
 test.describe.serial('1. Birth event declaration', () => {
@@ -177,7 +180,9 @@ test.describe.serial('1. Birth event declaration', () => {
       })
 
       test('1.4.2 Validate Child details block', async () => {
-        await page.locator('#child____firstname').fill(child.firstNames)
+        await page.locator('#firstname').fill(child.name.firstNames)
+        await page.waitForTimeout(5000) // wait for the input to be filled
+        await page.locator('#surname').fill(child.name.surname)
       })
 
       test('1.4.3 Click "continue"', async () => {
@@ -461,13 +466,13 @@ test.describe.serial('1. Birth event declaration', () => {
 
         await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
 
-        await expect(page.getByText(child.firstNames)).toBeVisible()
+        await expect(page.getByText(child.name.firstNames)).toBeVisible()
       })
 
       test('1.9.4 Reopen draft and navigate to review page', async () => {
         await page
           .getByRole('button', {
-            name: child.firstNames
+            name: child.name.firstNames + ' ' + child.name.surname
           })
           .click()
 
