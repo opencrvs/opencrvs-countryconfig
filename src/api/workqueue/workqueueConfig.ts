@@ -1,5 +1,10 @@
 import { SEVEN_DAYS_IN_MILISECOND } from '@countryconfig/constants'
-import { defineWorkqueues, event, user } from '@opencrvs/toolkit/events'
+import {
+  CustomFlags,
+  defineWorkqueues,
+  event,
+  user
+} from '@opencrvs/toolkit/events'
 
 const DATE_OF_EVENT_COLUMN = {
   label: {
@@ -123,7 +128,8 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of notifications workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'NOTIFIED' }
+      flags: { type: 'anyOf', terms: [CustomFlags.DECLARATION_INCOMPLETE] },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -201,8 +207,23 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready for review (all) workqueue'
     },
     query: {
-      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED', 'VALIDATED'] },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      type: 'or',
+      clauses: [
+        {
+          status: {
+            type: 'anyOf',
+            terms: ['DECLARED', 'NOTIFIED', 'VALIDATED']
+          },
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        },
+        {
+          flags: {
+            type: 'anyOf',
+            terms: [CustomFlags.REGISTRATION_CORRECTION_REQUESTED]
+          },
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        }
+      ]
     },
     actions: [
       {
@@ -231,7 +252,10 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of requires updates workqueue'
     },
     query: {
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') },
+      flags: {
+        type: 'anyOf',
+        terms: [CustomFlags.DECLARATION_REQUIRES_UPDATES]
+      },
       status: { type: 'exact', term: 'REJECTED' }
     },
     actions: [
@@ -261,8 +285,20 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for approval workqueue'
     },
     query: {
-      updatedBy: { type: 'exact', term: user('id') },
-      status: { type: 'exact', term: 'VALIDATED' }
+      type: 'or',
+      clauses: [
+        {
+          updatedBy: { type: 'exact', term: user('id') },
+          status: { type: 'exact', term: 'VALIDATED' }
+        },
+        {
+          flags: {
+            type: 'anyOf',
+            terms: [CustomFlags.REGISTRATION_CORRECTION_REQUESTED]
+          },
+          updatedBy: { type: 'exact', term: user('id') }
+        }
+      ]
     },
     actions: [
       {
@@ -291,6 +327,10 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of in external validation workqueue'
     },
     query: {
+      flags: {
+        type: 'anyOf',
+        terms: [CustomFlags.DECLARATION_PENDING_EXTERNAL_VALIDATION]
+      },
       createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
@@ -309,6 +349,13 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready to print workqueue'
     },
     query: {
+      flags: {
+        type: 'anyOf',
+        terms: [
+          CustomFlags.REGISTRATION_CERTIFY_NEW_REGISTRATION,
+          CustomFlags.REGISTRATION_RE_CERTIFY_AFTER_CORRECTION
+        ]
+      },
       createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
@@ -326,24 +373,6 @@ export const Workqueues = defineWorkqueues([
           id: 'workqueue.ready-to-print.column.registered'
         },
         value: event.field('updatedAt')
-      }
-    ]
-  },
-  {
-    slug: 'ready-to-issue',
-    icon: 'Handshake',
-    name: {
-      id: 'workqueues.readyToIssue.title',
-      defaultMessage: 'Ready to issue',
-      description: 'Title of ready to issue workqueue'
-    },
-    query: {
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
-    },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
       }
     ]
   }
