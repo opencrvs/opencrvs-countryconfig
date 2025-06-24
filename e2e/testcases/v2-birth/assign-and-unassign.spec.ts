@@ -28,7 +28,7 @@ test.describe.serial('Assign & Unassign', () => {
   })
 
   test('Click on "Assign" from action menu', async () => {
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
     await page.getByText('Ready to print').click()
 
     const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`

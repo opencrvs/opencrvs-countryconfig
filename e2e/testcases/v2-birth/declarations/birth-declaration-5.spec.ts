@@ -11,6 +11,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { validateAddress } from '../helpers'
+import { ensureOutboxIsEmpty } from '../../../v2-utils'
 
 test.describe.serial('5. Birth declaration case - 5', () => {
   let page: Page
@@ -516,7 +517,8 @@ test.describe.serial('5. Birth declaration case - 5', () => {
       await page.getByRole('button', { name: 'Register' }).click()
       await page.locator('#confirm_Declare').click()
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
+
       await page.getByText('Ready to print').click()
 
       await expect(
