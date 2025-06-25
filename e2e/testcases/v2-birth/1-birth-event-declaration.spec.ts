@@ -181,7 +181,6 @@ test.describe.serial('1. Birth event declaration', () => {
 
       test('1.4.2 Validate Child details block', async () => {
         await page.locator('#firstname').fill(child.name.firstNames)
-        await page.waitForTimeout(5000) // wait for the input to be filled
         await page.locator('#surname').fill(child.name.surname)
       })
 

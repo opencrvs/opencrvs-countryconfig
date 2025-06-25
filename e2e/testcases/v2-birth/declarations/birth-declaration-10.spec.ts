@@ -79,7 +79,6 @@ test.describe.serial('10. Birth declaration case - 10', () => {
       /*
        * Expected result: should include
        * - Child's First Name
-       * * should require
        * - Child's Family Name
        */
       await expect(page.getByTestId('row-value-child.name')).toContainText(
