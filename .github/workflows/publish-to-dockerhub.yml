@@ -12,8 +12,15 @@ on:
         default: develop
         required: true
 jobs:
-  push:
-    runs-on: ubuntu-24.04
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
+    outputs:
+      version: ${{ steps.country_config.outputs.version }}
+      version_common: ${{ steps.country_config.outputs.version_common }}
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
         if: github.event_name == 'workflow_dispatch'
@@ -32,13 +39,52 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Push image
+      - name: Country config image tag
+        id: country_config
         env:
           DOCKERHUB_ACCOUNT: ${{ secrets.DOCKERHUB_ACCOUNT }}
           DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
           # Check if the current commit has a tag and use it; otherwise, use the short SHA of the HEAD commit
-          export COUNTRY_CONFIG_VERSION=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short=7 HEAD)
-          echo "Publishing a Docker image with a tag $COUNTRY_CONFIG_VERSION"
-          bash build-and-push.sh && unset COUNTRY_CONFIG_VERSION
+          GIT_HASH=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short=7 HEAD)
+          echo "version_common=${GIT_HASH}" >> $GITHUB_OUTPUT
+          if [[ "${{ matrix.runner }}" == "ubuntu-24.04-arm" ]]; then
+            echo "version=${GIT_HASH}-arm64" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GIT_HASH}" >> $GITHUB_OUTPUT
+          fi
+      - run: echo "${{ secrets.DOCKERHUB_ACCOUNT}}/${{ secrets.DOCKERHUB_REPO }}:${{ steps.country_config.outputs.version }}"
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: .
+          tags: |
+            ${{ secrets.DOCKERHUB_ACCOUNT}}/${{ secrets.DOCKERHUB_REPO }}:${{ steps.country_config.outputs.version }}
+
+  merge-manifest:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Create and push multi-arch manifest
+        run: |
+            TAG="${{ needs.build.outputs.version_common }}"
+            REPO="${{ secrets.DOCKERHUB_ACCOUNT}}/${{ secrets.DOCKERHUB_REPO }}"
+            MANIFEST_LIST="--amend $REPO:$TAG --amend $REPO:$TAG-arm64"
+            if [[ "$BRANCH_NAME" == "develop" ]]; then
+              echo "[🔁 pushing ] $REPO:$TAG"
+              docker manifest create $REPO:develop \
+                $MANIFEST_LIST
+              docker manifest push $REPO:develop
+            fi
+            echo "[🔁 pushing ] $REPO:$TAG"
+            docker manifest create $REPO:$TAG \
+               $MANIFEST_LIST
+            docker manifest push $REPO:$TAG
