@@ -23,6 +23,7 @@ import {
 import { not } from '@opencrvs/toolkit/conditionals'
 import { createSelectOptions, emptyMessage } from '../../../utils'
 import {
+  invalidNameValidator,
   MAX_NAME_LENGTH,
   nationalIdValidator
 } from '@countryconfig/form/v2/birth/validators'
@@ -138,14 +139,15 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
-      id: 'informant.firstname',
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      type: FieldType.TEXT,
+      id: 'informant.name',
+      type: FieldType.NAME,
       required: true,
+      configuration: { maxLength: MAX_NAME_LENGTH },
+      hideLabel: true,
       label: {
-        defaultMessage: 'First name(s)',
+        defaultMessage: "Informant's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.firstname.label'
+        id: 'v2.event.birth.action.declare.form.section.informant.field.name.label'
       },
       conditionals: [
         {
@@ -153,25 +155,8 @@ export const informant = defineFormPage({
           conditional: informantOtherThanParent
         }
       ],
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.surname',
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'Last name',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.surname.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
-        }
-      ],
-      parent: field('informant.relation')
+      parent: field('informant.relation'),
+      validation: [invalidNameValidator('informant.name')]
     },
     {
       id: 'informant.dob',
@@ -297,7 +282,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.nid',
-      type: FieldType.TEXT,
+      type: FieldType.ID,
       required: true,
       label: {
         defaultMessage: 'ID Number',
@@ -438,7 +423,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.phoneNo',
-      type: FieldType.TEXT,
+      type: FieldType.PHONE,
       required: false,
       label: {
         defaultMessage: 'Phone number',
