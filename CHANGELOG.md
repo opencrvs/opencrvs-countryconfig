@@ -2,6 +2,10 @@
 
 ## 1.9.0
 
+### New features
+
+- Render number of copies printed count on a certificate template. [#7586](https://github.com/opencrvs/opencrvs-core/issues/7586)
+
 ### Improvements
 
 - **Upgrade node version to 22**
