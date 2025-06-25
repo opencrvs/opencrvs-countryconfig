@@ -7,7 +7,10 @@ import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 
 const child = {
-  firstNames: faker.person.firstName('female')
+  name: {
+    firstNames: faker.person.firstName('female'),
+    surname: faker.person.lastName()
+  }
 }
 
 test.describe.serial('1. Birth event declaration', () => {
@@ -176,7 +179,8 @@ test.describe.serial('1. Birth event declaration', () => {
       })
 
       test('1.4.2 Validate Child details block', async () => {
-        await page.locator('#child____firstname').fill(child.firstNames)
+        await page.locator('#firstname').fill(child.name.firstNames)
+        await page.locator('#surname').fill(child.name.surname)
       })
 
       test('1.4.3 Click "continue"', async () => {
@@ -460,13 +464,13 @@ test.describe.serial('1. Birth event declaration', () => {
 
         await ensureOutboxIsEmpty(page)
 
-        await expect(page.getByText(child.firstNames)).toBeVisible()
+        await expect(page.getByText(child.name.firstNames)).toBeVisible()
       })
 
       test('1.9.4 Reopen draft and navigate to review page', async () => {
         await page
           .getByRole('button', {
-            name: child.firstNames
+            name: child.name.firstNames + ' ' + child.name.surname
           })
           .click()
 

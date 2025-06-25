@@ -31,7 +31,7 @@ test.describe
       'child.gender': 'female'
     })
     ;[yyyy, mm, dd] = record.declaration['child.dob'].split('-')
-    fullNameOfChild = `${record.declaration['child.firstname']} ${record.declaration['child.surname']}`
+    fullNameOfChild = `${record.declaration['child.name'].firstname} ${record.declaration['child.name'].surname}`
   })
 
   test.afterAll(async () => {
@@ -50,11 +50,11 @@ test.describe
       await page.getByText('Child details').click()
 
       await page
-        .locator('#child____firstname')
-        .fill(record.declaration['child.firstname'])
+        .locator('#firstname')
+        .fill(record.declaration['child.name'].firstname)
       await page
-        .locator('#child____surname')
-        .fill(record.declaration['child.surname'])
+        .locator('#surname')
+        .fill(record.declaration['child.name'].surname)
 
       await page.locator('#child____gender').click()
       await page.getByText('Female', { exact: true }).click()
@@ -70,10 +70,7 @@ test.describe
       await expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
       await expect(page.url()).toContain(`child.gender=female`)
       await expect(page.url()).toContain(
-        `child.firstname=${record.declaration['child.firstname']}`
-      )
-      await expect(page.url()).toContain(
-        `child.surname=${record.declaration['child.surname']}`
+        `child.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['child.name'].firstname, middlename: '', surname: record.declaration['child.name'].surname }))}`
       )
       await expect(page.getByText('Search Results')).toBeVisible()
 
@@ -89,16 +86,11 @@ test.describe
       await expect(page.getByText("Child's Sex: Female")).toBeVisible()
       await expect(
         page.getByText(
-          `Child's First name(s): ${record.declaration['child.firstname']}`
-        )
-      ).toBeVisible()
-      await expect(
-        page.getByText(
-          `Child's Last name: ${record.declaration['child.surname']}`
+          `Child's Name: ${record.declaration['child.name'].firstname} ${record.declaration['child.name'].surname}`
         )
       ).toBeVisible()
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
-      await expect(page.getByText(fullNameOfChild)).toBeVisible()
+      await expect(page.getByText(fullNameOfChild).last()).toBeVisible()
     })
 
     test('2.5.3 - Validate clicking on the search edit button', async () => {
@@ -107,10 +99,7 @@ test.describe
       await expect(page.url()).toContain(`child.dob=${yyyy}-${mm}-${dd}`)
       await expect(page.url()).toContain(`child.gender=female`)
       await expect(page.url()).toContain(
-        `child.firstname=${record.declaration['child.firstname']}`
-      )
-      await expect(page.url()).toContain(
-        `child.surname=${record.declaration['child.surname']}`
+        `child.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['child.name'].firstname, surname: record.declaration['child.name'].surname, middlename: '' }))}`
       )
       await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
 
@@ -121,11 +110,11 @@ test.describe
       await expect(page.getByTestId('select__child____gender')).toContainText(
         'Female'
       )
-      await expect(page.locator('#child____firstname')).toHaveValue(
-        record.declaration['child.firstname']
+      await expect(page.locator('#firstname')).toHaveValue(
+        record.declaration['child.name'].firstname
       )
-      await expect(page.locator('#child____surname')).toHaveValue(
-        record.declaration['child.surname']
+      await expect(page.locator('#surname')).toHaveValue(
+        record.declaration['child.name'].surname
       )
     })
 
