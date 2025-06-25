@@ -20,7 +20,7 @@ for NODE in "${NODES[@]}"; do
     orb delete "$NODE" --force
   fi
 done
-
+sleep 10  # Wait few seconds for complete cleanup
 # Create VMs
 for NODE in "${NODES[@]}"; do
   orb create --arch arm64 "$IMG" "$NODE"
@@ -36,7 +36,10 @@ echo 'provision ALL=(ALL) NOPASSWD:ALL' | sudo tee -a /etc/sudoers
 EOF
 )
 
-
+for NODE in "${NODES[@]}"; do
+  echo "apt-get -y install openssh-server" | orb exec -u root -m "$NODE" bash
+  ssh-keygen -R $NODE.orb.local
+done
 # Run user creation on both VMs
 for NODE in "${NODES[@]}"; do
   echo "Provisioning user on $NODE..."
@@ -67,4 +70,8 @@ chown -R provision:provision /home/provision/.ssh
 "
 
 # Clean up private keys on manager
+mkdir -p .ssh
+orb exec -u root -m manager chmod 444 /tmp/ssh-key
+orb pull -m manager /tmp/ssh-key ./.ssh/ssh-key
+chmod 400 ./.ssh/ssh-key
 orb exec -u root -m manager rm -f /tmp/ssh-key /tmp/ssh-key.pub

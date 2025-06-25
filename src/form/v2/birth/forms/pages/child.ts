@@ -17,9 +17,10 @@ import {
   FieldType,
   AddressType,
   or,
-  PageTypes
+  PageTypes,
+  field
 } from '@opencrvs/toolkit/events'
-import { field, not } from '@opencrvs/toolkit/conditionals'
+import { not } from '@opencrvs/toolkit/conditionals'
 
 import { applicationConfig } from '@countryconfig/api/application/application-config'
 
@@ -53,7 +54,7 @@ const AttendantAtBirth = {
   NONE: 'NONE'
 } as const
 
-const PlaceOfBirth = {
+export const PlaceOfBirth = {
   HEALTH_FACILITY: 'HEALTH_FACILITY',
   PRIVATE_HOME: 'PRIVATE_HOME',
   OTHER: 'OTHER'

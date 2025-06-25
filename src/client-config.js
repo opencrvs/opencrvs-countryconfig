@@ -15,6 +15,7 @@ window.config = {
   AUTH_URL: 'http://localhost:7070/auth/',
   MINIO_BUCKET: 'ocrvs',
   MINIO_URL: 'http://localhost:3535/ocrvs/',
+  MINIO_BASE_URL: 'http://localhost:3535', // URL without path/bucket information, used for file uploads, v2
   COUNTRY_CONFIG_URL: 'http://localhost:3040',
   // Country code in uppercase ALPHA-3 format
   COUNTRY: 'FAR',

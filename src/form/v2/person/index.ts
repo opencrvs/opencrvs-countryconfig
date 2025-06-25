@@ -12,15 +12,6 @@
 import { TranslationConfig } from '@opencrvs/toolkit/events'
 import { createSelectOptions } from '../utils'
 
-export const PersonType = {
-  father: 'father',
-  mother: 'mother',
-  informant: 'informant',
-  applicant: 'applicant'
-} as const
-
-export type PersonType = keyof typeof PersonType
-
 export const IdType = {
   NATIONAL_ID: 'NATIONAL_ID',
   PASSPORT: 'PASSPORT',
