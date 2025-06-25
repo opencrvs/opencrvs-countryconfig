@@ -242,7 +242,7 @@ export const correctionFormRequesters: FieldConfig[] = [
     label: {
       defaultMessage: 'Type of ID',
       description: 'This is the label for the field',
-      id: 'v2.event.death.action.declare.form.section.informant.idType.label'
+      id: 'v2.event.birth.action.correction.form.section.requester.idType.label'
     },
     options: idTypeOptions,
     conditionals: [
