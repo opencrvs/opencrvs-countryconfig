@@ -183,12 +183,8 @@ test.describe
     })
 
     test("30.1.3 Fill mother's details", async () => {
-      await page
-        .locator('#mother____firstname')
-        .fill(declaration.mother.name.firstNames)
-      await page
-        .locator('#mother____surname')
-        .fill(declaration.mother.name.familyName)
+      await page.locator('#firstname').fill(declaration.mother.name.firstNames)
+      await page.locator('#surname').fill(declaration.mother.name.familyName)
 
       await page.getByPlaceholder('dd').fill(declaration.mother.birthDate.dd)
       await page.getByPlaceholder('mm').fill(declaration.mother.birthDate.mm)
@@ -247,12 +243,8 @@ test.describe
     })
 
     test("30.1.4 Fill father's details", async () => {
-      await page
-        .locator('#father____firstname')
-        .fill(declaration.father.name.firstNames)
-      await page
-        .locator('#father____surname')
-        .fill(declaration.father.name.familyName)
+      await page.locator('#firstname').fill(declaration.father.name.firstNames)
+      await page.locator('#surname').fill(declaration.father.name.familyName)
 
       await fillDate(page, declaration.father.birthDate)
 
