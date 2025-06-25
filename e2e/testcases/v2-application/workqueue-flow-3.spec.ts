@@ -155,7 +155,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
           { title: 'Assigned to you', exists: false },
           //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
           { title: 'Notifications', exists: true },
-          { title: 'Ready for review', exists: true },
+          { title: 'Ready for review', exists: false },
           { title: 'Requires updates', exists: false },
           { title: 'In external validation', exists: false },
           { title: 'Ready to print', exists: false }
@@ -164,7 +164,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
     })
 
     test('3.2.2 Review', async () => {
-      await page.getByText('Ready for review').click()
+      await page.getByText('Notifications').click()
       await page
         .getByRole('button', {
           name: formatName(declaration.child.name)
