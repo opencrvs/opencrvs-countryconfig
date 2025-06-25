@@ -2,7 +2,10 @@
 
 ## 1.8.0
 
+### Improvements
 - Added Build summary and refactored deployment workflow to be more clear [#6984](https://github.com/opencrvs/opencrvs-core/issues/6984)
+- Build OpenCRVS release images for arm devices [#9455](https://github.com/opencrvs/opencrvs-core/issues/9455)
+
 
 ## 1.6.4
 
