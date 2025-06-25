@@ -106,12 +106,8 @@ test.describe.serial('6. Birth declaration case - 6', () => {
     })
 
     test('6.1.1 Fill child details', async () => {
-      await page
-        .locator('#child____firstname')
-        .fill(declaration.child.name.firstNames)
-      await page
-        .locator('#child____surname')
-        .fill(declaration.child.name.familyName)
+      await page.locator('#firstname').fill(declaration.child.name.firstNames)
+      await page.locator('#surname').fill(declaration.child.name.familyName)
       await page.locator('#child____gender').click()
       await page.getByText(declaration.child.gender, { exact: true }).click()
 
@@ -187,11 +183,9 @@ test.describe.serial('6. Birth declaration case - 6', () => {
        * - Usual place of residence
        */
       await page
-        .locator('#informant____firstname')
+        .locator('#firstname')
         .fill(declaration.informant.name.firstNames)
-      await page
-        .locator('#informant____surname')
-        .fill(declaration.informant.name.familyName)
+      await page.locator('#surname').fill(declaration.informant.name.familyName)
 
       await page.getByLabel('Exact date of birth unknown').check()
 
@@ -247,12 +241,8 @@ test.describe.serial('6. Birth declaration case - 6', () => {
     })
 
     test("6.1.4 Fill father's details", async () => {
-      await page
-        .locator('#father____firstname')
-        .fill(declaration.father.name.firstNames)
-      await page
-        .locator('#father____surname')
-        .fill(declaration.father.name.familyName)
+      await page.locator('#firstname').fill(declaration.father.name.firstNames)
+      await page.locator('#surname').fill(declaration.father.name.familyName)
 
       await page.getByLabel('Exact date of birth unknown').check()
 
@@ -313,11 +303,10 @@ test.describe.serial('6. Birth declaration case - 6', () => {
        * - Child's First Name
        * - Child's Family Name
        */
-      await expect(page.getByTestId('row-value-child.firstname')).toHaveText(
-        declaration.child.name.firstNames
-      )
-      await expect(page.getByTestId('row-value-child.surname')).toHaveText(
-        declaration.child.name.familyName
+      await expect(page.getByTestId('row-value-child.name')).toHaveText(
+        declaration.child.name.firstNames +
+          ' ' +
+          declaration.child.name.familyName
       )
 
       /*
@@ -383,11 +372,10 @@ test.describe.serial('6. Birth declaration case - 6', () => {
        * - Informant's First Name
        * - Informant's Family Name
        */
-      await expect(
-        page.getByTestId('row-value-informant.firstname')
-      ).toHaveText(declaration.informant.name.firstNames)
-      await expect(page.getByTestId('row-value-informant.surname')).toHaveText(
-        declaration.informant.name.familyName
+      await expect(page.getByTestId('row-value-informant.name')).toHaveText(
+        declaration.informant.name.firstNames +
+          ' ' +
+          declaration.informant.name.familyName
       )
 
       /*
@@ -442,11 +430,10 @@ test.describe.serial('6. Birth declaration case - 6', () => {
        * - Father's First Name
        * - Father's Family Name
        */
-      await expect(page.getByTestId('row-value-father.firstname')).toHaveText(
-        declaration.father.name.firstNames
-      )
-      await expect(page.getByTestId('row-value-father.surname')).toHaveText(
-        declaration.father.name.familyName
+      await expect(page.getByTestId('row-value-father.name')).toHaveText(
+        declaration.father.name.firstNames +
+          ' ' +
+          declaration.father.name.familyName
       )
 
       /*

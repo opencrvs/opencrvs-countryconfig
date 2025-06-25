@@ -33,7 +33,7 @@ test.describe
         'child.gender': 'female'
       })
     ;[yyyy, mm, dd] = record.declaration['child.dob'].split('-')
-    fullNameOfChild = `${record.declaration['child.firstname']} ${record.declaration['child.surname']}`
+    fullNameOfChild = `${record.declaration['child.name'].firstname} ${record.declaration['child.name'].surname}`
   })
 
   test.afterAll(async () => {

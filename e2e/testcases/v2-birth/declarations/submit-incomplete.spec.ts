@@ -34,12 +34,8 @@ test.describe.serial('Submit and verify incomplete birth declaration', () => {
     })
 
     test('Fill child details', async () => {
-      await page
-        .locator('#child____firstname')
-        .fill(declaration.child.name.firstNames)
-      await page
-        .locator('#child____surname')
-        .fill(declaration.child.name.familyName)
+      await page.locator('#firstname').fill(declaration.child.name.firstNames)
+      await page.locator('#surname').fill(declaration.child.name.familyName)
 
       await page.locator('#child____placeOfBirth').click()
       await page
