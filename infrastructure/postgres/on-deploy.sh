@@ -59,12 +59,6 @@ REVOKE CREATE ON SCHEMA public FROM events_migrator;
 
 CREATE SCHEMA app AUTHORIZATION events_migrator;
 GRANT USAGE ON SCHEMA app TO events_app;
-
-ALTER DEFAULT PRIVILEGES FOR ROLE events_migrator IN SCHEMA app
-  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO events_app;
-
-ALTER ROLE events_migrator SET search_path = app;
-ALTER ROLE events_app SET search_path = app;
 EOF
 
 echo "✅ Database '$TARGET_DB' initialized successfully."
