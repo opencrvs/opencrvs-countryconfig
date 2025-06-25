@@ -177,7 +177,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready for review workqueue'
     },
     query: {
-      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
+      status: { type: 'exact', term: 'DECLARED' },
       createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
@@ -212,7 +212,7 @@ export const Workqueues = defineWorkqueues([
         {
           status: {
             type: 'anyOf',
-            terms: ['DECLARED', 'NOTIFIED', 'VALIDATED']
+            terms: ['DECLARED', 'VALIDATED']
           },
           createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         },
