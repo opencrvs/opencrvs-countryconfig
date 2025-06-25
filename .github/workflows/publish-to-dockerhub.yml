@@ -48,6 +48,7 @@ jobs:
         run: |
           # Check if the current commit has a tag and use it; otherwise, use the short SHA of the HEAD commit
           GIT_HASH=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short=7 HEAD)
+          echo "version_common=${GIT_HASH}" >> $GITHUB_OUTPUT
           if [[ "${{ matrix.runner }}" == "ubuntu-24.04-arm" ]]; then
             echo "version=${GIT_HASH}-arm64" >> $GITHUB_OUTPUT
           else
@@ -74,7 +75,7 @@ jobs:
 
       - name: Create and push multi-arch manifest
         run: |
-            TAG="${{ needs.build.outputs.version }}"
+            TAG="${{ needs.build.outputs.version_common }}"
             REPO="${{ secrets.DOCKERHUB_ACCOUNT}}/${{ secrets.DOCKERHUB_REPO }}"
             MANIFEST_LIST="--amend $REPO:$TAG --amend $REPO:$TAG-arm64"
             if [[ "$BRANCH_NAME" == "develop" ]]; then
