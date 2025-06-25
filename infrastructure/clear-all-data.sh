@@ -165,5 +165,3 @@ docker service scale opencrvs_dashboards=1
 #-----------------------------
 docker service scale opencrvs_events=0
 docker service scale opencrvs_events=1
-
-

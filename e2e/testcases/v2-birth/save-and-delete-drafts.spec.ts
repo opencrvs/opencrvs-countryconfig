@@ -1,0 +1,135 @@
+import { expect, test } from '@playwright/test'
+import { goToSection, loginToV2, logout } from '../../helpers'
+import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
+import { fillChildDetails, openBirthDeclaration } from './helpers'
+
+/**
+ * Skipping tests until the outbox workqueue is implemented.
+ * Develop is already in broken state. We'll revisit this when we have ungloc the pipeline and can dedicate time on which change caused the error.
+ */
+test.describe('Save and delete drafts', () => {
+  test.beforeEach(async ({ page }) => {
+    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+    await openBirthDeclaration(page)
+  })
+
+  test.skip('Save draft via Save & Exit', async ({ page }) => {
+    const childName = await fillChildDetails(page)
+    await page.getByRole('button', { name: 'Save & Exit' }).click()
+    await expect(
+      page.getByText(
+        'All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?'
+      )
+    ).toBeVisible()
+
+    await page.getByRole('button', { name: 'Confirm' }).click()
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
+
+    await page.getByRole('button', { name: childName, exact: true }).click()
+    await expect(page.locator('#content-name')).toHaveText(childName)
+  })
+
+  test.skip('Delete saved draft', async ({ page }) => {
+    const childName = await fillChildDetails(page)
+    await page.getByRole('button', { name: 'Save & Exit' }).click()
+    await page.getByRole('button', { name: 'Confirm' }).click()
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    /**
+     * @TODO: This pattern looks like that we knew that the workqueue does not update in real time, and we toggle pages until it 'syncs'.
+     */
+    await page.getByText('Ready for review').click()
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+
+    await page.getByRole('button', { name: childName, exact: true }).click()
+    await page.getByRole('button', { name: 'Action', exact: true }).click()
+
+    await page.getByText('Declare').click()
+    await page.locator('#event-menu-dropdownMenu').click()
+    await page.getByText('Delete declaration').click()
+    await expect(
+      page.getByText('Are you sure you want to delete this declaration?')
+    ).toBeVisible()
+    await page.getByRole('button', { name: 'Confirm' }).click()
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS * 2) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
+
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await expect(
+      page.getByRole('button', { name: childName, exact: true })
+    ).not.toBeVisible()
+  })
+
+  test.skip('Exit without saving', async ({ page }) => {
+    const childName = await fillChildDetails(page)
+    await goToSection(page, 'review')
+    await page.getByRole('button', { name: 'Exit', exact: true }).click()
+
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await expect(
+      page.getByText(
+        'You have unsaved changes on your declaration form. Are you sure you want to exit without saving?'
+      )
+    ).toBeVisible()
+
+    await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
+
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await expect(
+      page.getByRole('button', { name: childName, exact: true })
+    ).not.toBeVisible()
+  })
+
+  test.skip('Saved draft is not visible to other users', async ({ page }) => {
+    const childName = await fillChildDetails(page)
+    await page.getByRole('button', { name: 'Save & Exit' }).click()
+    await expect(
+      page.getByText(
+        'All inputted data will be kept secure for future editing. Are you ready to save any changes to this declaration form?'
+      )
+    ).toBeVisible()
+
+    await page.getByRole('button', { name: 'Confirm' }).click()
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await page.getByRole('button', { name: 'Assigned to you' }).click()
+
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+    await expect(
+      page.getByRole('button', { name: childName, exact: true })
+    ).toBeVisible()
+
+    await logout(page)
+    await loginToV2(page, CREDENTIALS.NATIONAL_REGISTRAR)
+
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+    await page.getByText('Ready for review').click()
+
+    // Single timeout is not enough. Extended assuming the outbox workqueue will be implemented nest.
+    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS)
+
+    await expect(
+      page.getByRole('button', { name: childName, exact: true })
+    ).not.toBeVisible()
+  })
+})
