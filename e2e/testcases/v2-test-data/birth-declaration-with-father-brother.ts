@@ -66,8 +66,10 @@ export async function getDeclaration({
   }
 
   const mockDeclaration = {
-    'mother.firstname': faker.person.firstName(),
-    'mother.surname': faker.person.lastName(),
+    'mother.name': {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    },
     'mother.dob': '1995-09-12',
     'mother.nationality': 'FAR',
     'mother.idType': 'NATIONAL_ID',
@@ -79,8 +81,10 @@ export async function getDeclaration({
       urbanOrRural: 'URBAN' as const,
       addressType: AddressType.DOMESTIC
     },
-    'father.firstname': faker.person.firstName(),
-    'father.surname': faker.person.lastName(),
+    'father.name': {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    },
     'father.dob': '1995-09-12',
     'father.nationality': 'FAR',
     'father.idType': 'NATIONAL_ID',
@@ -93,8 +97,10 @@ export async function getDeclaration({
       urbanOrRural: 'URBAN' as const,
       addressType: AddressType.DOMESTIC
     },
-    'child.firstname': faker.person.firstName(),
-    'child.surname': faker.person.lastName(),
+    'child.name': {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    },
     'child.gender': 'female',
     'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
       .toISOString()
@@ -102,8 +108,10 @@ export async function getDeclaration({
     ...(await getPlaceOfBirth(placeOfBirthType)),
     'informant.relation': 'BROTHER',
     'informant.email': 'brothers@email.com',
-    'informant.firstname': faker.person.firstName(),
-    'informant.surname': faker.person.lastName(),
+    'informant.name': {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    },
     'informant.dob': '2008-09-12',
     'informant.nationality': 'FAR',
     'informant.idType': 'NATIONAL_ID',

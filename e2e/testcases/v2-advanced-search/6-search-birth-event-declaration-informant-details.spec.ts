@@ -37,11 +37,11 @@ test.describe
       await page.getByText('Informant details').click()
 
       await page
-        .locator('#informant____firstname')
-        .fill(record.declaration['informant.firstname'])
+        .locator('#firstname')
+        .fill(record.declaration['informant.name'].firstname)
       await page
-        .locator('#informant____surname')
-        .fill(record.declaration['informant.surname'])
+        .locator('#surname')
+        .fill(record.declaration['informant.name'].surname)
 
       await page.locator('[data-testid="informant____dob-dd"]').fill(dd)
       await page.locator('[data-testid="informant____dob-mm"]').fill(mm)
@@ -53,10 +53,7 @@ test.describe
       await expect(page).toHaveURL(/.*\/search-result/)
       await expect(page.url()).toContain(`informant.dob=${yyyy}-${mm}-${dd}`)
       await expect(page.url()).toContain(
-        `informant.firstname=${record.declaration['informant.firstname']}`
-      )
-      await expect(page.url()).toContain(
-        `informant.surname=${record.declaration['informant.surname']}`
+        `informant.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['informant.name'].firstname, middlename: '', surname: record.declaration['informant.name'].surname }))}`
       )
       await expect(page.getByText('Search results')).toBeVisible()
 
@@ -71,12 +68,7 @@ test.describe
       ).toBeVisible()
       await expect(
         page.getByText(
-          `Informant's First name(s): ${record.declaration['informant.firstname']}`
-        )
-      ).toBeVisible()
-      await expect(
-        page.getByText(
-          `Informant's Last name: ${record.declaration['informant.surname']}`
+          `Informant's Name: ${record.declaration['informant.name'].firstname} ${record.declaration['informant.name'].surname}`
         )
       ).toBeVisible()
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
@@ -87,20 +79,17 @@ test.describe
       await expect(page).toHaveURL(/.*\/advanced-search/)
       await expect(page.url()).toContain(`informant.dob=${yyyy}-${mm}-${dd}`)
       await expect(page.url()).toContain(
-        `informant.firstname=${record.declaration['informant.firstname']}`
-      )
-      await expect(page.url()).toContain(
-        `informant.surname=${record.declaration['informant.surname']}`
+        `informant.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['informant.name'].firstname, surname: record.declaration['informant.name'].surname, middlename: '' }))}`
       )
       await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
       await expect(page.getByTestId('informant____dob-dd')).toHaveValue(dd)
       await expect(page.getByTestId('informant____dob-mm')).toHaveValue(mm)
       await expect(page.getByTestId('informant____dob-yyyy')).toHaveValue(yyyy)
-      await expect(page.locator('#informant____firstname')).toHaveValue(
-        record.declaration['informant.firstname']
+      await expect(page.locator('#firstname')).toHaveValue(
+        record.declaration['informant.name'].firstname
       )
-      await expect(page.locator('#informant____surname')).toHaveValue(
-        record.declaration['informant.surname']
+      await expect(page.locator('#surname')).toHaveValue(
+        record.declaration['informant.name'].surname
       )
     })
 

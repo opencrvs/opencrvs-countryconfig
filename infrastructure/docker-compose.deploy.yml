@@ -509,7 +509,7 @@ services:
         - 'traefik.http.routers.client.rule=Host(`register.{{hostname}}`,`{{hostname}}`)'
         - 'traefik.http.routers.client.middlewares=test-replacepathregex,gzip-compression'
         - 'traefik.http.routers.client.service=client'
-        - 'traefik.http.services.client.loadbalancer.server.port=80'
+        - 'traefik.http.services.client.loadbalancer.server.port=3000'
         - 'traefik.http.routers.client.tls=true'
         - 'traefik.http.routers.client.tls.certresolver=certResolver'
         - 'traefik.http.routers.client.entrypoints=web,websecure'
@@ -607,7 +607,7 @@ services:
       labels:
         - 'traefik.enable=true'
         - 'traefik.http.routers.login.rule=Host(`login.{{hostname}}`)'
-        - 'traefik.http.services.login.loadbalancer.server.port=80'
+        - 'traefik.http.services.login.loadbalancer.server.port=3020'
         - 'traefik.http.routers.login.tls=true'
         - 'traefik.http.routers.login.tls.certresolver=certResolver'
         - 'traefik.http.routers.login.entrypoints=web,websecure'
