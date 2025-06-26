@@ -134,7 +134,7 @@
     <g clip-path="url(#clip4_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="229.634">{{$lookup $declaration "child.firstname"}} {{$lookup $declaration "child.surname"}}</tspan>
+        <tspan x="289.95" y="229.634">{{$lookup $declaration "child.name.firstname"}} {{$lookup $declaration "child.name.surname"}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="246.205" x2="512.08" y2="246.205" stroke="#ECECEC" stroke-width="0.97" />
@@ -227,7 +227,7 @@
     <g clip-path="url(#clip8_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="396.194">{{$lookup $declaration 'mother.firstname'}} {{$lookup $declaration 'mother.surname'}}</tspan>
+        <tspan x="289.95" y="396.194">{{$lookup $declaration 'mother.name'}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="412.765" x2="512.08" y2="412.766" stroke="#ECECEC" stroke-width="0.97" />
@@ -248,7 +248,7 @@
     <g clip-path="url(#clip9_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="437.834">{{$lookup $declaration 'father.firstname'}} {{$lookup $declaration 'father.surname'}}</tspan>
+        <tspan x="289.95" y="437.834">{{$lookup $declaration 'father.name'}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="454.405" x2="512.08" y2="454.405" stroke="#ECECEC" stroke-width="0.97" />
