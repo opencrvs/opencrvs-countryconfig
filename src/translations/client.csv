@@ -2648,7 +2648,7 @@ v2.event.birth.action.declare.label,This is shown as the action name anywhere th
 v2.event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
 v2.event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 v2.event.birth.action.register.label,Label for review record button in dropdown menu,Register,Enregistrer
-v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Request correction,Demander une correction
+v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
 v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Validate,Valider
 v2.event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 v2.event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance

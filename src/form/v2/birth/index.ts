@@ -212,7 +212,7 @@ export const birthEvent = defineConfig({
     {
       type: ActionType.REQUEST_CORRECTION,
       label: {
-        defaultMessage: 'Request correction',
+        defaultMessage: 'Correct record',
         description:
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.birth.action.request-correction.label'
