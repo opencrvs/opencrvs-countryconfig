@@ -19,7 +19,7 @@ export async function navigateToCertificatePrintAction(
   page: Page,
   declaration: Declaration
 ) {
-  const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
+  const childName = `${declaration['child.name'].firstname} ${declaration['child.name'].surname}`
   await page.getByRole('button', { name: childName }).click()
   await selectAction(page, 'Print certificate')
 }

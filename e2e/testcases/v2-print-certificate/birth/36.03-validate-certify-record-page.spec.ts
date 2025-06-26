@@ -70,10 +70,9 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
       declaration['mother.nid']
     )
     await expect(page.locator('#maincontent')).toContainText(
-      declaration['mother.firstname']
-    )
-    await expect(page.locator('#maincontent')).toContainText(
-      declaration['mother.surname']
+      declaration['mother.name'].firstname +
+        ' ' +
+        declaration['mother.name'].surname
     )
 
     await expect(

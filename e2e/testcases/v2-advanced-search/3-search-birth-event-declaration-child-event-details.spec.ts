@@ -36,9 +36,9 @@ test.describe
     )
     ;[yyyy, mm, dd] = record.declaration['child.dob'].split('-')
     fullNameOfChild =
-      record.declaration['child.firstname'] +
+      record.declaration['child.name'].firstname +
       ' ' +
-      record.declaration['child.surname']
+      record.declaration['child.name'].surname
     facilityId = record.declaration['child.birthLocation'] ?? ''
   })
 
@@ -56,6 +56,13 @@ test.describe
   test.describe.serial("2.5 - Validate search by Child's DOB & Gender", () => {
     test('2.5.1 - Validate filling DOB and gender filters', async () => {
       await page.getByText('Child details').click()
+
+      await page
+        .getByTestId('text__firstname')
+        .fill(record.declaration['child.name'].firstname)
+      await page
+        .getByTestId('text__surname')
+        .fill(record.declaration['child.name'].surname)
 
       await page.locator('[data-testid="child____dob-dd"]').fill(dd)
       await page.locator('[data-testid="child____dob-mm"]').fill(mm)
@@ -94,7 +101,7 @@ test.describe
         )
       ).toBeVisible()
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
-      await expect(page.getByText(fullNameOfChild)).toBeVisible()
+      await expect(page.getByText(fullNameOfChild).last()).toBeVisible()
     })
 
     test('2.5.3 - Validate clicking on the search edit button', async () => {
