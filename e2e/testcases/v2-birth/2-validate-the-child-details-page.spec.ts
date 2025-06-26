@@ -28,77 +28,77 @@ test.describe.serial("2. Validate the child's details page", () => {
   test.describe('2.1 Validate "First Name(s)" text field', async () => {
     test.describe('2.1.1 Enter Non-English characters', async () => {
       test('Using name: Richard the 3rd', async ({ page }) => {
-        await page.locator('#child____firstname').fill('Richard the 3rd')
+        await page.locator('#firstname').fill('Richard the 3rd')
         await page.getByRole('heading', { name: 'Birth' })
 
         /*
          * Expected result: should accept the input and not throw any error
          */
-        await expect(page.locator('#child____firstname_error')).toBeHidden()
+        await expect(page.locator('#firstname_error')).toBeHidden()
       })
 
       test('Using name: John_Peter', async ({ page }) => {
-        await page.locator('#child____firstname').fill('John_Peter')
+        await page.locator('#firstname').fill('John_Peter')
         await page.getByRole('heading', { name: 'Birth' })
 
         /*
          * Expected result: should accept the input and not throw any error
          */
-        await expect(page.locator('#child____firstname_error')).toBeHidden()
+        await expect(page.locator('#firstname_error')).toBeHidden()
       })
 
       test('Using name: John-Peter', async ({ page }) => {
-        await page.locator('#child____firstname').fill('John-Peter')
+        await page.locator('#firstname').fill('John-Peter')
         await page.getByRole('heading', { name: 'Birth' })
 
         /*
          * Expected result: should accept the input and not throw any error
          */
-        await expect(page.locator('#child____firstname_error')).toBeHidden()
+        await expect(page.locator('#firstname_error')).toBeHidden()
       })
 
       test("Using name: O'Neill", async ({ page }) => {
-        await page.locator('#child____firstname').fill("O'Neill")
+        await page.locator('#firstname').fill("O'Neill")
         await page.getByRole('heading', { name: 'Birth' })
 
         /*
          * Expected result: should accept the input and not throw any error
          */
-        await expect(page.locator('#child____firstname_error')).toBeHidden()
+        await expect(page.locator('#firstname_error')).toBeHidden()
       })
 
       // @TODO: This validation is not implemented in Events V2 yet
       test.skip('Using name: &er$on', async ({ page }) => {
-        await page.locator('#child____firstname').fill('&er$on')
+        await page.locator('#firstname').fill('&er$on')
         await page.getByRole('heading', { name: 'Birth' })
 
         /*
          * Expected result: should accept the input and not throw any error
          */
-        await expect(page.locator('#child____firstname_error')).toBeVisible()
+        await expect(page.locator('#firstname_error')).toBeVisible()
       })
 
       // @TODO: This validation is not implemented in Events V2 yet
       test.skip('Using name: X Æ A-Xii', async ({ page }) => {
-        await page.locator('#child____firstname').fill('X Æ A-Xii')
+        await page.locator('#firstname').fill('X Æ A-Xii')
         await page.getByRole('heading', { name: 'Birth' })
 
         /*
          * Expected result: should throw error:
          * - Input contains invalid characters. Please use only letters (a-z), numbers (0-9), hyphens (-), and underscores (_)
          */
-        await expect(page.locator('#child____firstname_error')).toBeVisible()
+        await expect(page.locator('#firstname_error')).toBeVisible()
       })
     })
 
     test('2.1.2 Enter less than 33 English characters', async ({ page }) => {
-      await page.locator('#child____firstname').fill('Rakibul Islam')
+      await page.locator('#firstname').fill('Rakibul Islam')
       await page.getByRole('heading', { name: 'Birth' })
 
       /*
        * Expected result: should accept the input and not throw any error
        */
-      await expect(page.locator('#child____firstname_error')).toBeHidden()
+      await expect(page.locator('#firstname_error')).toBeHidden()
     })
 
     test('2.1.3 Enter Field as NULL', async ({ page }) => {
@@ -110,20 +110,20 @@ test.describe.serial("2. Validate the child's details page", () => {
        */
       await expect(
         page
-          .locator('[data-test-id="row-value-child.firstname"]')
+          .locator('[data-test-id="row-value-child.name"]')
           .getByText(REQUIRED_VALIDATION_ERROR)
       ).toBeVisible()
     })
 
     test('2.1.4 Enter more than 32 English characters', async ({ page }) => {
       const LONG_NAME = 'Ovuvuevuevue Enyetuenwuevue Ugbemugbem Osas'
-      await page.locator('#child____firstname').fill(LONG_NAME)
+      await page.locator('#firstname').fill(LONG_NAME)
       await page.getByRole('heading', { name: 'Birth' })
 
       /*
        * Expected result: should clip the name to first 32 character
        */
-      await expect(page.locator('#child____firstname')).toHaveValue(
+      await expect(page.locator('#firstname')).toHaveValue(
         LONG_NAME.slice(0, 32)
       )
     })

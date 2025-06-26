@@ -25,8 +25,10 @@ function getInformantDetails(informantRelation: InformantRelation) {
   return {
     'informant.relation': informantRelation,
     'informant.email': 'brothers@email.com',
-    'informant.firstname': faker.person.firstName(),
-    'informant.surname': faker.person.lastName(),
+    'informant.name': {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    },
     'informant.dob': '2008-09-12',
     'informant.nationality': 'FAR',
     'informant.idType': 'NATIONAL_ID',
@@ -92,8 +94,10 @@ export async function getDeclaration({
   const mockDeclaration = {
     'father.detailsNotAvailable': true,
     'father.reason': 'Father is missing.',
-    'mother.firstname': faker.person.firstName(),
-    'mother.surname': faker.person.lastName(),
+    'mother.name': {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    },
     'mother.dob': '1995-09-12',
     'mother.nationality': 'FAR',
     'mother.idType': 'NATIONAL_ID',
@@ -118,8 +122,10 @@ export async function getDeclaration({
       postcodeOrZip: null,
       addressType: AddressType.DOMESTIC
     },
-    'child.firstname': faker.person.firstName(),
-    'child.surname': faker.person.lastName(),
+    'child.name': {
+      firstname: faker.person.firstName(),
+      surname: faker.person.lastName()
+    },
     'child.gender': 'female',
     'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
       .toISOString()

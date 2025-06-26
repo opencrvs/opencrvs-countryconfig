@@ -58,10 +58,7 @@ test.describe('Form state', () => {
       await goToSection(page, 'review')
 
       // Child name fields should be empty
-      await expect(page.getByTestId('row-value-child.firstname')).toHaveText(
-        'Required for registration'
-      )
-      await expect(page.getByTestId('row-value-child.surname')).toHaveText(
+      await expect(page.getByTestId('row-value-child.name')).toHaveText(
         'Required for registration'
       )
       // Comment should be empty and sign button should be visible
@@ -122,12 +119,10 @@ test.describe('Form state', () => {
 
       await selectAction(page, 'Declare')
 
-      await expect(
-        page.getByTestId('row-value-child.firstname')
-      ).not.toHaveText('Required for registration')
-      await expect(page.getByTestId('row-value-child.surname')).not.toHaveText(
+      await expect(page.getByTestId('row-value-child.name')).not.toHaveText(
         'Required for registration'
       )
+
       await expect(page.getByTestId('row-value-informant.email')).toHaveText(
         'Required for registration'
       )
@@ -169,9 +164,7 @@ test.describe('Form state', () => {
       await navigateToCertificatePrintAction(page, declaration!)
       await selectRequesterType(page, 'Print and issue to someone else')
 
-      await page
-        .getByTestId('text__collector____OTHER____firstName')
-        .fill(faker.person.firstName())
+      await page.getByTestId('text__firstname').fill(faker.person.firstName())
 
       await page.getByTestId('exit-button').click()
 
@@ -181,9 +174,7 @@ test.describe('Form state', () => {
         page.getByTestId('select__collector____requesterId')
       ).not.toHaveText('Print and issue to someone else')
 
-      await expect(
-        page.getByTestId('text__collector____OTHER____firstName')
-      ).not.toBeVisible()
+      await expect(page.getByTestId('text__firstname')).not.toBeVisible()
     })
   })
 })

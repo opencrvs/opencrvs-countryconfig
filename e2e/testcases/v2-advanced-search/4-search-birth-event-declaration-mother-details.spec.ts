@@ -36,14 +36,12 @@ test.describe
   test.describe.serial("2.5 - Validate search by Mother's details", () => {
     test('2.5.1 - Validate filling name and dob filters', async () => {
       await page.getByText('Mother details').click()
-
       await page
-        .locator('#mother____firstname')
-        .fill(record.declaration['mother.firstname'])
+        .getByTestId('text__firstname')
+        .fill(record.declaration['mother.name'].firstname)
       await page
-        .locator('#mother____surname')
-        .fill(record.declaration['mother.surname'])
-
+        .getByTestId('text__surname')
+        .fill(record.declaration['mother.name'].surname)
       await page.locator('[data-testid="mother____dob-dd"]').fill(dd)
       await page.locator('[data-testid="mother____dob-mm"]').fill(mm)
       await page.locator('[data-testid="mother____dob-yyyy"]').fill(yyyy)
@@ -54,10 +52,13 @@ test.describe
       await expect(page).toHaveURL(/.*\/search-result/)
       await expect(page.url()).toContain(`mother.dob=${yyyy}-${mm}-${dd}`)
       await expect(page.url()).toContain(
-        `mother.firstname=${record.declaration['mother.firstname']}`
-      )
-      await expect(page.url()).toContain(
-        `mother.surname=${record.declaration['mother.surname']}`
+        `mother.name=${encodeURIComponent(
+          JSON.stringify({
+            firstname: record.declaration['mother.name'].firstname,
+            middlename: '',
+            surname: record.declaration['mother.name'].surname
+          })
+        )}`
       )
       await expect(page.getByText('Search results')).toBeVisible()
 
@@ -72,14 +73,10 @@ test.describe
       ).toBeVisible()
       await expect(
         page.getByText(
-          `Mother's First name(s): ${record.declaration['mother.firstname']}`
+          `Mother's Name: ${record.declaration['mother.name'].firstname} ${record.declaration['mother.name'].surname}`
         )
       ).toBeVisible()
-      await expect(
-        page.getByText(
-          `Mother's Last name: ${record.declaration['mother.surname']}`
-        )
-      ).toBeVisible()
+
       await expect(page.getByRole('button', { name: 'Edit' })).toBeVisible()
     })
 
@@ -88,20 +85,17 @@ test.describe
       await expect(page).toHaveURL(/.*\/advanced-search/)
       await expect(page.url()).toContain(`mother.dob=${yyyy}-${mm}-${dd}`)
       await expect(page.url()).toContain(
-        `mother.firstname=${record.declaration['mother.firstname']}`
-      )
-      await expect(page.url()).toContain(
-        `mother.surname=${record.declaration['mother.surname']}`
+        `mother.name=${encodeURIComponent(JSON.stringify({ firstname: record.declaration['mother.name'].firstname, surname: record.declaration['mother.name'].surname, middlename: '' }))}`
       )
       await expect(page.locator('#tab_v2\\.birth')).toHaveText('Birth')
       await expect(page.getByTestId('mother____dob-dd')).toHaveValue(dd)
       await expect(page.getByTestId('mother____dob-mm')).toHaveValue(mm)
       await expect(page.getByTestId('mother____dob-yyyy')).toHaveValue(yyyy)
-      await expect(page.locator('#mother____firstname')).toHaveValue(
-        record.declaration['mother.firstname']
+      await expect(page.locator('#firstname')).toHaveValue(
+        record.declaration['mother.name'].firstname
       )
-      await expect(page.locator('#mother____surname')).toHaveValue(
-        record.declaration['mother.surname']
+      await expect(page.locator('#surname')).toHaveValue(
+        record.declaration['mother.name'].surname
       )
     })
 
