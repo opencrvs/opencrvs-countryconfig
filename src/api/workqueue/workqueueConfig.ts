@@ -1,6 +1,8 @@
 import { SEVEN_DAYS_IN_MILISECOND } from '@countryconfig/constants'
 import {
-  CustomFlags,
+  ActionStatus,
+  ActionType,
+  InherentFlags,
   defineWorkqueues,
   event,
   user
@@ -128,7 +130,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of notifications workqueue'
     },
     query: {
-      flags: { type: 'anyOf', terms: [CustomFlags.DECLARATION_INCOMPLETE] },
+      flags: { anyOf: [InherentFlags.INCOMPLETE] },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
@@ -218,8 +220,7 @@ export const Workqueues = defineWorkqueues([
         },
         {
           flags: {
-            type: 'anyOf',
-            terms: [CustomFlags.REGISTRATION_CORRECTION_REQUESTED]
+            anyOf: [InherentFlags.CORRECTION_REQUESTED]
           },
           createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         }
@@ -253,10 +254,8 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       flags: {
-        type: 'anyOf',
-        terms: [CustomFlags.DECLARATION_REQUIRES_UPDATES]
-      },
-      status: { type: 'exact', term: 'REJECTED' }
+        anyOf: [InherentFlags.REJECTED]
+      }
     },
     actions: [
       {
@@ -293,8 +292,7 @@ export const Workqueues = defineWorkqueues([
         },
         {
           flags: {
-            type: 'anyOf',
-            terms: [CustomFlags.REGISTRATION_CORRECTION_REQUESTED]
+            anyOf: [InherentFlags.CORRECTION_REQUESTED]
           },
           updatedBy: { type: 'exact', term: user('id') }
         }
@@ -328,8 +326,9 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       flags: {
-        type: 'anyOf',
-        terms: [CustomFlags.DECLARATION_PENDING_EXTERNAL_VALIDATION]
+        anyOf: [
+          `${ActionType.REGISTER}:${ActionStatus.Requested}`.toLowerCase()
+        ]
       },
       createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
@@ -350,12 +349,9 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       flags: {
-        type: 'anyOf',
-        terms: [
-          CustomFlags.REGISTRATION_CERTIFY_NEW_REGISTRATION,
-          CustomFlags.REGISTRATION_RE_CERTIFY_AFTER_CORRECTION
-        ]
+        noneOf: [InherentFlags.PRINTED, InherentFlags.CORRECTION_REQUESTED]
       },
+      status: { type: 'exact', term: 'REGISTERED' },
       createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
