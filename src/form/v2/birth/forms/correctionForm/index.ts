@@ -103,8 +103,8 @@ export const CORRECTION_FORM = defineActionForm({
           type: FieldType.TEXT,
           required: true,
           label: {
-            defaultMessage: 'Reason for correction',
-            description: 'Label for the reason for correction field',
+            defaultMessage: 'Reason',
+            description: 'Label for the reason',
             id: 'v2.event.birth.action.correction.reason.other.label'
           },
           conditionals: [
