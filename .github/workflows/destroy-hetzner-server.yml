@@ -70,7 +70,7 @@ jobs:
           mkdir -p terraform-state/${{ vars.COUNTRY_NAME }}
           [ -f terraform-state/${{ vars.COUNTRY_NAME }}/${{ github.event.inputs.environment }}-${{ env.type }}.tfstate ] && \
           cp terraform-state/${{ vars.COUNTRY_NAME }}/${{ github.event.inputs.environment }}-${{ env.type }}.tfstate ${{ env.TF_PATH }}/terraform.tfstate || \
-          echo "Terraform state file not found. Creating a new one."
+          (echo "Terraform state file not found. Please destroy ${{ github.event.inputs.environment }} environment manually" && exit 1)
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -80,8 +80,18 @@ jobs:
       - name: Terraform Init
         working-directory: ${{ env.TF_PATH }}
         run: terraform init
-
-      - name: Terraform Apply
+      - name: Store variables from terraform state file
+        id: output
+        working-directory: ${{ env.TF_PATH }}
+        run: |
+          # TODO: Add configuration for multi-node
+          echo "type=${{ env.type }}"
+          if [ ${{ env.type }} == 'single-node' ]
+          then
+            echo "ssh_host=$(terraform output -raw public_ip)" >> $GITHUB_OUTPUT
+            echo "hostname=$TF_VAR_country_name-$TF_VAR_env_name" >> $GITHUB_OUTPUT
+          fi
+      - name: Terraform Destroy
         working-directory: ${{ env.TF_PATH }}
         run: |
           terraform destroy -auto-approve -input=false
@@ -93,7 +103,7 @@ jobs:
             git rm ${{ vars.COUNTRY_NAME }}/${{ github.event.inputs.environment }}-${{ env.type }}.tfstate
           fi
           if [[ -n "$(git status --porcelain)" ]]; then
-            git commit -m "Add environment file for ${{ github.event.inputs.environment }} env with type ${{ env.type }}"
+            git commit -m "Remove environment state file for ${{ github.event.inputs.environment }} env with type ${{ env.type }}"
             git push
           else
             echo "No changes to commit"
@@ -103,7 +113,7 @@ jobs:
         run: |
           [ -f infrastructure/server-setup/inventory/${{ github.event.inputs.environment }}.yml ] && \
           git rm infrastructure/server-setup/inventory/${{ github.event.inputs.environment }}.yml && \
-          echo "Environment file removed: infrastructure/server-setup/inventory/${{ github.event.inputs.environment }}.yml") || \
+          echo "Environment file removed: infrastructure/server-setup/inventory/${{ github.event.inputs.environment }}.yml" || \
           echo "infrastructure/server-setup/inventory/${{ github.event.inputs.environment }}.yml doesn't exist"
       - name: Remove docker compose
         run: |
@@ -123,65 +133,34 @@ jobs:
           path=".on.workflow_dispatch.inputs.environment.options"
 
           # Check if option already exists in first workflows file
-          if ! yq e "$path" "$workflows" | grep -qc "${{ github.event.inputs.environment }}"; then
-            echo "Adding new option '${{ github.event.inputs.environment }}' to workflows: ${workflows[@]}"
-            for workflow in ${workflows[@]}
-            do
-              yq e "$path += [\"${{ github.event.inputs.environment }}\"]" -i "$workflow"
-              echo "Updated workflow $workflow"
-            done
-          else
-            echo "Option '${{ github.event.inputs.environment }}' already exists in workflows ${workflows[@]}"
-          fi
+          for workflow in "${workflows[@]}"
+          do
+            yq e "$path |= map(select(. != \"${{ github.event.inputs.environment }}\"))" -i "$workflow"
+            echo "Removed option '${{ github.event.inputs.environment }}' from $workflow"
+          done
 
       - env:
-          SSH_HOST: ${{ steps.output.outputs.ssh_host }}
-          HOSTNAME: ${{ steps.output.outputs.hostname }}
-          DOMAIN: ${{ github.event.inputs.environment }}.opencrvs.dev
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         name: Create environment variables and secrets on GitHub
         run: |
-          cat infrastructure/provision-server/templates/environment.variables.tpl | \
-          sed -e "s/#SSH_HOST#/$SSH_HOST/" \
-              -e "s/#DOMAIN#/$DOMAIN/" \
-              > infrastructure/environment.variables
-          echo "Environment variables file created: infrastructure/environment.variables"
-          while read line; do
-            if [[ $line == *"="* ]]; then
-              key=$(echo "$line" | cut -d '=' -f 1)
-              value=$(echo "$line" | cut -d '=' -f 2-)
-              echo "Adding variable: $key"
-              gh variable set --env ${{ github.event.inputs.environment }} $key --body "$value"
-            fi
-          done < infrastructure/environment.variables
-          while read line; do
-            if [[ $line == *"="* ]]; then
-              key=$(echo "$line" | cut -d '=' -f 1)
-              value=$(echo "$line" | cut -d '=' -f 2-)
-              echo "Adding secret with value: $key"
-              gh secret set $key --env ${{ github.event.inputs.environment }} --body "$value"
-            else
-              key=$line
-              password=`openssl rand -base64 25 | tr -cd '[:alnum:]._-' ; echo ''`
-              echo "Adding secret: $key"
-              gh secret set $key --env ${{ github.event.inputs.environment }} --body "$password"
-            fi
-          done < infrastructure/provision-server/templates/environment.secrets.tpl
-          gh secret set SSH_KEY --env ${{ github.event.inputs.environment }} < $TF_PATH/.ssh/id_rsa || echo "Failed"
+          curl  -X DELETE \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/repos/$OWNER/$REPO/environments/$ENVIRONMENT"
       - name: Update known-hosts
         env:
-          SSH_HOST: ${{ steps.output.outputs.ssh_host }}
-          SSH_PORT: 22
+          HOST_IP: ${{ steps.output.outputs.ssh_host }}
+          HOSTNAME: ${{ steps.output.outputs.hostname }}
         run: |
-          echo "Wait few seconds for server to be available" && sleep 10
-          bash ./infrastructure/environments/update-known-hosts.sh ${{ env.SSH_HOST }} ${{ env.SSH_PORT }}
+          grep -vE '${{ env.HOST_IP }}|${{ env.HOSTNAME }}' infrastructure/known-hosts > infrastructure/known-hosts.tmp
+          mv infrastructure/known-hosts.tmp infrastructure/known-hosts
   
       - name: Commit and push changes to ${{ github.repository }}
         run: |
-          git add infrastructure/server-setup/inventory/${{ github.event.inputs.environment }}.yml \
+          git add infrastructure/server-setup/inventory/* \
                   infrastructure/known-hosts \
                   .github \
-                  infrastructure/docker-compose.${{ github.event.inputs.environment }}-deploy.yml
+                  infrastructure/*
           git status
-          git commit -m "Add environment file for ${{ github.event.inputs.environment }}"
+          git commit -m "Remove environment files for ${{ github.event.inputs.environment }}"
           git push

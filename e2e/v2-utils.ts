@@ -1,5 +1,8 @@
 import { Page, expect } from '@playwright/test'
-import { SAFE_INPUT_CHANGE_TIMEOUT_MS } from './constants'
+import {
+  SAFE_INPUT_CHANGE_TIMEOUT_MS,
+  SAFE_OUTBOX_TIMEOUT_MS
+} from './constants'
 
 export async function selectAction(
   page: Page,
@@ -65,6 +68,7 @@ export async function ensureAssigned(page: Page) {
 
   if (await unAssignAction.isVisible()) {
     await unAssignAction.click()
+    await page.waitForTimeout(500) // Give some time to unassign
     await expect(page.getByTestId('assignedTo-value')).toHaveText(
       'Not assigned'
     )
@@ -78,6 +82,7 @@ export async function ensureAssigned(page: Page) {
 
   if (await assignAction.isVisible()) {
     await assignAction.click()
+    await page.waitForTimeout(500) // Give some time to assign
   }
 
   await expect(page.getByTestId('assignedTo-value')).not.toHaveText(
@@ -87,4 +92,15 @@ export async function ensureAssigned(page: Page) {
 
 export async function expectInUrl(page: Page, assertionString: string) {
   await expect(page.url().includes(assertionString)).toBeTruthy()
+}
+
+export async function ensureOutboxIsEmpty(page: Page) {
+  await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
+
+  await expect(page.locator('#navigation_workqueue_outbox')).not.toContainText(
+    '1',
+    {
+      timeout: SAFE_OUTBOX_TIMEOUT_MS
+    }
+  )
 }

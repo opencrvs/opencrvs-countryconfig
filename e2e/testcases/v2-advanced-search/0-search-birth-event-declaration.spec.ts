@@ -12,15 +12,10 @@ test.describe.serial('Advanced Search - Birth Event Declaration', () => {
     await page.close()
   })
 
-  test('0.1 - Validate log in and load search page', async () => {
+  test('0.1 - Validate navigating to advanced search', async () => {
     await loginToV2(page)
 
     await page.click('#searchType')
-    await expect(page.getByText('Advanced Search')).toBeVisible()
-  })
-
-  test('0.2 - Validate navigating to advanced search', async () => {
-    await page.click('#advanced-search')
     await expect(page).toHaveURL(/.*\/advanced-search/)
     await expect(
       page.getByText('Select the options to build an advanced search.')

@@ -9,6 +9,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { REQUIRED_VALIDATION_ERROR } from '../helpers'
+import { ensureOutboxIsEmpty } from '../../../v2-utils'
 
 test.describe.serial('9. Birth declaration case - 9', () => {
   let page: Page
@@ -188,7 +189,7 @@ test.describe.serial('9. Birth declaration case - 9', () => {
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await page.getByText('Sent for review').click()
 
       await expect(
@@ -203,7 +204,6 @@ test.describe.serial('9. Birth declaration case - 9', () => {
     test('9.2.1 Navigate to the declaration review page', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
       await page.getByText('Ready for review').click()
 
       await page

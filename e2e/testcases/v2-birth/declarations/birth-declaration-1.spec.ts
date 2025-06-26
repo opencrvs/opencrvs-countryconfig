@@ -18,7 +18,7 @@ import {
   fillDate,
   validateAddress
 } from '../helpers'
-import { selectAction } from '../../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 
 test.describe.serial('1. Birth declaration case - 1', () => {
   let page: Page
@@ -503,7 +503,8 @@ test.describe.serial('1. Birth declaration case - 1', () => {
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
+
       await page.getByText('Sent for review').click()
       await expect(
         page.getByRole('button', {
@@ -516,7 +517,6 @@ test.describe.serial('1. Birth declaration case - 1', () => {
   test.describe('1.2 Declaration Review by RA', async () => {
     test('1.2.1 Navigate to the declaration review page', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
       await page.getByText('Ready for review').click()
       await page
         .getByRole('button', {

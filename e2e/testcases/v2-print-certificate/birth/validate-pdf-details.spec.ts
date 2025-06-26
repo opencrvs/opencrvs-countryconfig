@@ -31,8 +31,17 @@ test.describe
 
     declaration = res.declaration
     page = await browser.newPage()
-    await loginToV2(page)
+  })
 
+  test.afterAll(async () => {
+    await page.close()
+  })
+
+  test('Log in', async () => {
+    await loginToV2(page)
+  })
+
+  test('Go to review', async () => {
     await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Birth Certificate Certified Copy')
@@ -40,10 +49,6 @@ test.describe
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Verified' }).click()
     await page.getByRole('button', { name: 'Continue' }).click()
-  })
-
-  test.afterAll(async () => {
-    await page.close()
   })
 
   test('Validate child place of birth', async () => {
@@ -76,8 +81,17 @@ test.describe.serial("Validate 'Birth Certificate' PDF details", () => {
 
     declaration = res.declaration
     page = await browser.newPage()
-    await loginToV2(page)
+  })
 
+  test.afterAll(async () => {
+    await page.close()
+  })
+
+  test('Log in', async () => {
+    await loginToV2(page)
+  })
+
+  test('Go to review', async () => {
     await page.getByRole('button', { name: 'Ready to print' }).click()
     await navigateToCertificatePrintAction(page, declaration)
     await selectCertificationType(page, 'Birth Certificate')
@@ -85,10 +99,6 @@ test.describe.serial("Validate 'Birth Certificate' PDF details", () => {
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Verified' }).click()
     await page.getByRole('button', { name: 'Continue' }).click()
-  })
-
-  test.afterAll(async () => {
-    await page.close()
   })
 
   test('Validate child place of birth', async () => {

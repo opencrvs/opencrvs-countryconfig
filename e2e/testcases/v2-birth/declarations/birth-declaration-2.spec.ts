@@ -15,7 +15,7 @@ import {
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
 import { expectRowValueWithChangeButton, validateAddress } from '../helpers'
-import { selectAction } from '../../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 
 test.describe.serial('2. Birth declaration case - 2', () => {
   let page: Page
@@ -565,7 +565,8 @@ test.describe.serial('2. Birth declaration case - 2', () => {
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
+
       await page.getByText('Sent for review').click()
 
       await expect(
