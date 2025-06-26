@@ -15,7 +15,11 @@ import {
   FieldConfig,
   FieldType
 } from '@opencrvs/toolkit/events'
-import { nationalIdValidator } from '../../validators'
+import {
+  invalidNameValidator,
+  MAX_NAME_LENGTH,
+  nationalIdValidator
+} from '../../validators'
 
 const otherIdType = {
   PASSPORT: 'PASSPORT',
@@ -268,36 +272,23 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.OTHER.firstName',
-    type: FieldType.TEXT,
+    id: 'collector.OTHER.name',
+    type: FieldType.NAME,
     required: true,
+    configuration: { maxLength: MAX_NAME_LENGTH },
+    hideLabel: true,
     label: {
-      defaultMessage: 'First Name',
-      description: 'This is the label for the first name field',
-      id: 'v2.event.birth.action.form.section.firstName.label'
+      defaultMessage: "Collector's name",
+      description: 'This is the label for the name field of OTHER collector',
+      id: 'v2.event.birth.action.form.section.collector.other.field.name.label'
     },
     conditionals: [
       {
         type: ConditionalType.SHOW,
         conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
       }
-    ]
-  },
-  {
-    id: 'collector.OTHER.lastName',
-    type: FieldType.TEXT,
-    required: true,
-    label: {
-      defaultMessage: 'Last Name',
-      description: 'This is the label for the last name field',
-      id: 'v2.event.birth.action.form.section.lastName.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo('SOMEONE_ELSE')
-      }
-    ]
+    ],
+    validation: [invalidNameValidator('collector.OTHER.name')]
   },
   {
     id: 'collector.OTHER.relationshipToChild',

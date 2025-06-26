@@ -20,7 +20,10 @@ export const invalidNameValidator = (fieldName: string) => ({
     description: 'This is the error message for invalid name',
     id: 'v2.error.invalidName'
   },
-  validator: field(fieldName).isValidEnglishName()
+  validator: field(fieldName).object({
+    firstname: field('firstname').isValidEnglishName(),
+    surname: field('surname').isValidEnglishName()
+  })
 })
 
 export const nationalIdValidator = (fieldId: string) => ({
