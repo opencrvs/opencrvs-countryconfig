@@ -97,7 +97,7 @@ test.describe('Action menu options', () => {
         'Assign',
         'View record',
         'Print certificate',
-        'Request correction'
+        'Correct record'
       ])
     })
   })
