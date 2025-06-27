@@ -9,10 +9,6 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import {
-  statusOptions,
-  timePeriodOptions
-} from '@countryconfig/form/EventMetadataSearchOptions'
 import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
 
 const childPrefix = {
@@ -44,9 +40,11 @@ export const advancedSearchBirth = [
     },
     fields: [
       event('legalStatuses.REGISTERED.createdAtLocation').exact(),
-      event('legalStatuses.REGISTERED.acceptedAt').range(),
-      event('status').exact(statusOptions),
-      event('updatedAt').range(timePeriodOptions)
+      // translates to DATE_RANGE, however we can pick a single date on that component too.
+      event('legalStatuses.REGISTERED.acceptedAt').exact(),
+      event('status').exact(),
+      // range translates to SELECT_DATE_RANGE which uses datetime.
+      event('updatedAt').range()
     ]
   },
   {
