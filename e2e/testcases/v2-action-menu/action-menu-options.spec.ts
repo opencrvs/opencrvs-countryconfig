@@ -9,7 +9,7 @@ import {
 import { ActionType } from '@opencrvs/toolkit/events'
 
 async function getActionMenuOptions(page: Page, declaration: Declaration) {
-  const childName = `${declaration['child.firstname']} ${declaration['child.surname']}`
+  const childName = `${declaration['child.name'].firstname} ${declaration['child.name'].surname}`
   await page.getByRole('button', { name: childName }).click()
   await page.getByRole('button', { name: 'Action', exact: true }).click()
   const options = await page.locator('#action-Dropdown-Content li').all()
