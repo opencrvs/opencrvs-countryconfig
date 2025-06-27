@@ -248,7 +248,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
       await logout(page)
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      await page.getByText('Ready for review').click()
+      await page.getByText('Notifications').click()
 
       await page
         .getByRole('button', {
