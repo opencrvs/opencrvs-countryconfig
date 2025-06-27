@@ -1,18 +1,9 @@
 import { expect, test, type Page } from '@playwright/test'
 import {
-  assignRecord,
-  auditRecord,
-  createPIN,
-  expectOutboxToBeEmpty,
-  formatDateTo_ddMMMMyyyy,
   formatDateTo_dMMMMyyyy,
-  formatDateTo_yyyyMMdd,
-  formatName,
-  getAction,
   getLocationNameFromFhirId,
   getToken,
   goBackToReview,
-  login,
   loginToV2,
   uploadImage
 } from '../../helpers'
