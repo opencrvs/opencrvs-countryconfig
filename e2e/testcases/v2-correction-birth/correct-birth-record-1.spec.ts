@@ -116,43 +116,40 @@ test.describe('1. Correct record - 1', () => {
         page.getByText(`Contact${declaration['informant.email']}`)
       ).toBeVisible()
 
-      // TODO CIHAN: this should be 'Correct record'?
-      await selectAction(page, 'Request correction')
+      await selectAction(page, 'Correct record')
     })
 
     test('1.1.2 Validate correction requester page', async ({ page }) => {
-      // TODO CIHAN: this should be 'Correct record'?
-      await selectAction(page, 'Request correction')
+      await selectAction(page, 'Correct record')
 
       /*
        * Expected result: should
        * - Navigate to Correction Requester Page
        */
-      await expect(page.getByText('Correction requester')).toBeVisible()
+      await expect(page.getByText('Correction details')).toBeVisible()
       await expectInUrl(
         page,
-        `/events/request-correction/${eventId}/onboarding/requester`
+        `/events/request-correction/${eventId}/onboarding/details`
       )
 
-      /*
-       * Expected result: should say
-       * - Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.
-       */
-      await expect(
-        page.getByText(
-          'Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.'
-        )
-      ).toBeVisible()
+      await expect(page.getByText('Requester *')).toBeVisible()
+      await expect(page.getByText('Reason for correction *')).toBeVisible()
     })
 
     test('1.1.3 Validate identity verification page for Mother', async ({
       page
     }) => {
-      // TODO CIHAN: this should be 'Correct record'?
-      await selectAction(page, 'Request correction')
+      await selectAction(page, 'Correct record')
 
       await page.locator('#requester____type').click()
       await page.getByText('Informant (Mother)', { exact: true }).click()
+
+      await page.locator('#reason____option').click()
+      await page
+        .getByText('Myself or an agent made a mistake (Clerical error)', {
+          exact: true
+        })
+        .click()
 
       await page.getByRole('button', { name: 'Continue' }).click()
 
@@ -180,9 +177,10 @@ test.describe('1. Correct record - 1', () => {
       await expect(page.getByText('National ID')).toBeVisible()
       await expect(page.getByText(declaration['mother.nid'])).toBeVisible()
       await expect(
-        page.getByText(declaration['mother.firstname'])
+        page.getByText(
+          `${declaration['mother.name'].firstname} ${declaration['mother.name'].surname}`
+        )
       ).toBeVisible()
-      await expect(page.getByText(declaration['mother.surname'])).toBeVisible()
     })
   })
 
@@ -201,10 +199,18 @@ test.describe('1. Correct record - 1', () => {
         .getByRole('button', { name: formatV2ChildName(declaration) })
         .click()
       await ensureAssigned(page)
-      await selectAction(page, 'Request correction')
+      await selectAction(page, 'Correct record')
 
       await page.locator('#requester____type').click()
       await page.getByText('Informant (Mother)', { exact: true }).click()
+
+      await page.locator('#reason____option').click()
+      await page
+        .getByText('Myself or an agent made a mistake (Clerical error)', {
+          exact: true
+        })
+        .click()
+
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
@@ -236,61 +242,27 @@ test.describe('1. Correct record - 1', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
-    test('1.2.3 Reason for correction', async () => {
-      /*
-       * Expected result: should navigate to 'Reason for correction' -page
-       */
-      await expectInUrl(
-        page,
-        `/events/request-correction/${eventId}/onboarding/reason`
-      )
-
-      // Clicking continue without filling required fields should cause validation errors
-      await page.getByRole('button', { name: 'Continue' }).click()
-      await expect(page.locator('#reason____option_error')).toHaveText(
-        'Required for registration'
-      )
-
-      await page
-        .getByLabel('Myself or an agent made a mistake (Clerical error)')
-        .check()
-
-      await page.locator('#reason____comment').fill(faker.lorem.words(10))
-      await page.getByRole('button', { name: 'Continue' }).click()
-    })
-
-    test('1.2.4 Fees', async () => {
+    test('1.2.3 Fees', async () => {
       await expectInUrl(
         page,
         `/events/request-correction/${eventId}/onboarding/fees`
       )
 
-      await page.getByLabel('Fee required').check()
-
       // Clicking continue without filling required fields should cause validation errors
       await page.getByRole('button', { name: 'Continue' }).click()
-      await expect(page.locator('#fees____amount_error')).toHaveText(
-        'Required for registration'
-      )
-      await expect(page.locator('#fees____proofOfPayment_error')).toHaveText(
-        'Required for registration'
-      )
+      await expect(page.locator('#fees____amount_error')).toBeVisible()
 
       await page
         .locator('#fees____amount')
         .fill(faker.number.int({ min: 1, max: 1000 }).toString())
-
-      await page
-        .locator('input[name="fees____proofOfPayment"][type="file"]')
-        .setInputFiles('./e2e/assets/528KB-random.png')
 
       await page.getByRole('button', { name: 'Continue' }).click()
 
       await expectInUrl(page, `/events/request-correction/${eventId}/review`)
     })
 
-    test.describe('1.2.5 Correction made on child details', async () => {
-      test('1.2.5.1 Change name', async () => {
+    test.describe('1.2.4 Correction made on child details', async () => {
+      test('1.2.4.1 Change name', async () => {
         await page.getByTestId('change-button-child.firstname').click()
 
         /*
@@ -345,7 +317,7 @@ test.describe('1. Correct record - 1', () => {
         ).toBeVisible()
       })
 
-      test('1.2.5.2 Change gender', async () => {
+      test('1.2.4.2 Change gender', async () => {
         await page.getByTestId('change-button-child.gender').click()
 
         /*
@@ -384,7 +356,7 @@ test.describe('1. Correct record - 1', () => {
         ).toBeVisible()
       })
 
-      test('1.2.5.3 Change date of birth', async () => {
+      test('1.2.4.3 Change date of birth', async () => {
         await page.getByTestId('change-button-child.dob').click()
 
         /*
@@ -425,7 +397,7 @@ test.describe('1. Correct record - 1', () => {
         ).toBeVisible()
       })
 
-      test('1.2.5.4 Change place of delivery', async () => {
+      test('1.2.4.4 Change place of delivery', async () => {
         await page.getByTestId('change-button-child.placeOfBirth').click()
 
         /*
@@ -473,7 +445,7 @@ test.describe('1. Correct record - 1', () => {
         ).toBeVisible()
       })
 
-      test('1.2.5.5 Change attendant at birth', async () => {
+      test('1.2.4.5 Change attendant at birth', async () => {
         await page.getByTestId('change-button-child.attendantAtBirth').click()
 
         /*
@@ -514,7 +486,7 @@ test.describe('1. Correct record - 1', () => {
         ).toBeVisible()
       })
 
-      test('1.2.5.6 Change type of birth', async () => {
+      test('1.2.4.6 Change type of birth', async () => {
         await page.getByTestId('change-button-child.birthType').click()
 
         /*
