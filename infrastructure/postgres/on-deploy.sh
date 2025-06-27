@@ -18,7 +18,7 @@ until PGPASSWORD="$POSTGRES_PASSWORD" psql -h "$POSTGRES_HOST" -p "$POSTGRES_POR
 done
 
 # Prevent Swarm from marking this task as failed due to early exit
-sleep 4
+sleep 10
 
 echo "Checking if database '$TARGET_DB' exists..."
 DB_EXISTS=$(PGPASSWORD="$POSTGRES_PASSWORD" psql -qtAX -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" \
