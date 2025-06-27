@@ -36,11 +36,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
       id: 'v2.event.birth.action.correction.form.section.verifyIdentity.data.label'
     },
     configuration: {
-      data: [
-        { fieldId: 'child.firstname' },
-        { fieldId: 'child.surname' },
-        { fieldId: 'child.dob' }
-      ]
+      data: [{ fieldId: 'child.name' }, { fieldId: 'child.dob' }]
     }
   },
   {
@@ -69,8 +65,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
         { fieldId: 'mother.nid' },
         { fieldId: 'mother.passport' },
         { fieldId: 'mother.brn' },
-        { fieldId: 'mother.firstname' },
-        { fieldId: 'mother.surname' },
+        { fieldId: 'mother.name' },
         { fieldId: 'mother.dob' },
         { fieldId: 'mother.nationality' }
       ]
@@ -102,8 +97,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
         { fieldId: 'father.nid' },
         { fieldId: 'father.passport' },
         { fieldId: 'father.brn' },
-        { fieldId: 'father.firstname' },
-        { fieldId: 'father.surname' },
+        { fieldId: 'father.name' },
         { fieldId: 'father.dob' },
         { fieldId: 'father.nationality' }
       ]
@@ -133,8 +127,7 @@ export const correctionRequesterIdentityVerify: FieldConfig[] = [
         { fieldId: 'informant.nid' },
         { fieldId: 'informant.passport' },
         { fieldId: 'informant.brn' },
-        { fieldId: 'informant.firstname' },
-        { fieldId: 'informant.surname' },
+        { fieldId: 'informant.name' },
         { fieldId: 'informant.dob' },
         { fieldId: 'informant.nationality' }
       ]

@@ -19,13 +19,15 @@ import {
 } from '@opencrvs/toolkit/events'
 import { InformantType, InformantTypeKey } from '../pages/informant'
 import { informantMessageDescriptors } from '@countryconfig/form/common/messages'
+import { IdType, idTypeOptions } from '@countryconfig/form/v2/person'
+import { nationalIdValidator } from '../../validators'
 
 const commonConfigs = {
   id: 'requester.type',
   type: FieldType.SELECT,
   required: true,
   label: {
-    defaultMessage: '',
+    defaultMessage: 'Requester',
     description: 'This is the label for the field',
     id: 'v2.event.birth.action.correction.form.section.requester.label'
   }
@@ -87,8 +89,8 @@ const onlyMotherExist = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      not(field('mother.firstname').isFalsy()),
-      field('father.firstname').isFalsy()
+      not(field('mother.name').isFalsy()),
+      field('father.name').isFalsy()
     )
   }
 }
@@ -98,8 +100,8 @@ const onlyFatherExist = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      not(field('father.firstname').isFalsy()),
-      field('mother.firstname').isFalsy()
+      not(field('father.name').isFalsy()),
+      field('mother.name').isFalsy()
     )
   }
 }
@@ -109,8 +111,8 @@ const fatherMotherBothExist = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      not(field('father.firstname').isFalsy()),
-      not(field('mother.firstname').isFalsy())
+      not(field('father.name').isFalsy()),
+      not(field('mother.name').isFalsy())
     )
   }
 }
@@ -120,8 +122,8 @@ const fatherMotherBothDoesNotExist = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      field('father.firstname').isFalsy(),
-      field('mother.firstname').isFalsy()
+      field('father.name').isFalsy(),
+      field('mother.name').isFalsy()
     )
   }
 }
@@ -233,6 +235,99 @@ export const correctionFormRequesters: FieldConfig[] = [
   ...getFieldConfigForInformant(InformantType.GRANDMOTHER),
   ...getFieldConfigForInformant(InformantType.SISTER),
   ...getFieldConfigForInformant(InformantType.LEGAL_GUARDIAN),
+  {
+    id: 'requester.idType',
+    type: FieldType.SELECT,
+    required: true,
+    label: {
+      defaultMessage: 'Type of ID',
+      description: 'This is the label for the field',
+      id: 'v2.event.birth.action.correction.form.section.requester.idType.label'
+    },
+    options: idTypeOptions,
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: field('requester.type').isEqualTo('SOMEONE_ELSE')
+      }
+    ]
+  },
+  {
+    id: 'requester.nid',
+    type: FieldType.TEXT,
+    required: true,
+    label: {
+      defaultMessage: 'ID Number',
+      description: 'This is the label for the field',
+      id: 'v2.event.birth.action.correction.form.section.requester.nid.label'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: and(
+          field('requester.type').isEqualTo('SOMEONE_ELSE'),
+          field('requester.idType').isEqualTo(IdType.NATIONAL_ID)
+        )
+      }
+    ],
+    validation: [nationalIdValidator('requester.nid')]
+  },
+  {
+    id: 'requester.passport',
+    type: FieldType.TEXT,
+    required: true,
+    label: {
+      defaultMessage: 'ID Number',
+      description: 'This is the label for the field',
+      id: 'v2.event.birth.action.correction.form.section.requester.passport.label'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: and(
+          field('requester.type').isEqualTo('SOMEONE_ELSE'),
+          field('requester.idType').isEqualTo(IdType.PASSPORT)
+        )
+      }
+    ],
+    parent: field('informant.relation')
+  },
+  {
+    id: 'requester.brn',
+    type: FieldType.TEXT,
+    required: true,
+    label: {
+      defaultMessage: 'ID Number',
+      description: 'This is the label for the field',
+      id: 'v2.event.birth.action.correction.form.section.requester.brn.label'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: and(
+          field('requester.type').isEqualTo('SOMEONE_ELSE'),
+          field('requester.idType').isEqualTo(IdType.BIRTH_REGISTRATION_NUMBER)
+        )
+      }
+    ]
+  },
+  {
+    id: 'requester.name',
+    type: FieldType.NAME,
+    required: true,
+    hideLabel: true,
+    label: {
+      id: 'v2.event.birth.action.correction.form.section.requester.name.label',
+      defaultMessage: 'Name',
+      description: 'This is the label for the field'
+    },
+    conditionals: [
+      {
+        type: ConditionalType.SHOW,
+        conditional: field('requester.type').isEqualTo('SOMEONE_ELSE')
+      }
+    ]
+  },
   {
     id: 'requester.relationship',
     type: 'TEXT',
