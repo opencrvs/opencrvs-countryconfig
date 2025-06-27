@@ -19,8 +19,21 @@ print_usage_and_exit () {
     echo ""
     echo "If your Elasticsearch is password protected, an admin user's credentials can be given as environment variables:"
     echo "ELASTICSEARCH_ADMIN_USER=your_user ELASTICSEARCH_ADMIN_PASSWORD=your_pass"
+    echo ""
+    echo "Postgres admin user credentials must be given as environment variables:"
+    echo "POSTGRES_USER=your_user POSTGRES_PASSWORD=your_pass"
     exit 1
 }
+
+if [ -z "${POSTGRES_USER:-}" ]; then
+    echo 'Error: POSTGRES_USER environment variable must be set.'
+    print_usage_and_exit
+fi
+
+if [ -z "${POSTGRES_PASSWORD:-}" ]; then
+    echo 'Error: POSTGRES_PASSWORD environment variable must be set.'
+    print_usage_and_exit
+fi
 
 if [ -z "$1" ] ; then
     echo 'Error: Argument REPLICAS is required in position 1.'
@@ -110,6 +123,39 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc:RELEASE.2023-09
   mc rb myminio/ocrvs && \
   mc mb myminio/ocrvs"
 
+
+# Delete all data from PostgreSQL
+#-------------------------------
+
+POSTGRES_DB="events"
+EVENTS_MIGRATOR_ROLE="events_migrator"
+EVENTS_APP_ROLE="events_app"
+
+echo "🔁 Dropping database '${POSTGRES_DB}' and roles..."
+
+docker run --rm --network=$NETWORK  \
+  -e PGPASSWORD="${POSTGRES_PASSWORD}" \
+  -e POSTGRES_USER="${POSTGRES_USER}" \
+  -e POSTGRES_DB="${POSTGRES_DB}" \
+  -e EVENTS_MIGRATOR_ROLE="${EVENTS_MIGRATOR_ROLE}" \
+  -e EVENTS_APP_ROLE="${EVENTS_APP_ROLE}" \
+  postgres:17 bash -c '
+psql -h postgres -U "$POSTGRES_USER" -d postgres -v ON_ERROR_STOP=1 <<EOF
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = '\''"$POSTGRES_DB"'\'' AND pid <> pg_backend_pid();
+
+DROP DATABASE IF EXISTS "$POSTGRES_DB";
+
+DROP ROLE IF EXISTS "$EVENTS_MIGRATOR_ROLE";
+DROP ROLE IF EXISTS "$EVENTS_APP_ROLE";
+EOF
+'
+echo "✅ Database and roles dropped."
+echo "🚀 Reinitializing Postgres with on-deploy.sh..."
+
+docker service update --force opencrvs_postgres-on-update
+
 # Restart the metabase service
 #-----------------------------
 docker service scale opencrvs_dashboards=0
@@ -119,3 +165,5 @@ docker service scale opencrvs_dashboards=1
 #-----------------------------
 docker service scale opencrvs_events=0
 docker service scale opencrvs_events=1
+
+
