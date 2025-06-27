@@ -242,6 +242,8 @@ test.describe('1. Correct record - 1', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
     })
 
+    const fee = faker.number.int({ min: 1, max: 1000 })
+
     test('1.2.3 Fees', async () => {
       await expectInUrl(
         page,
@@ -252,9 +254,7 @@ test.describe('1. Correct record - 1', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
       await expect(page.locator('#fees____amount_error')).toBeVisible()
 
-      await page
-        .locator('#fees____amount')
-        .fill(faker.number.int({ min: 1, max: 1000 }).toString())
+      await page.locator('#fees____amount').fill(fee.toString())
 
       await page.getByRole('button', { name: 'Continue' }).click()
 
@@ -263,7 +263,7 @@ test.describe('1. Correct record - 1', () => {
 
     test.describe('1.2.4 Correction made on child details', async () => {
       test('1.2.4.1 Change name', async () => {
-        await page.getByTestId('change-button-child.firstname').click()
+        await page.getByTestId('change-button-child.name').click()
 
         /*
          * Expected result: should
@@ -272,15 +272,15 @@ test.describe('1. Correct record - 1', () => {
          */
         await expectInUrl(
           page,
-          `/events/request-correction/${eventId}/pages/child?from=review#child____firstname`
+          `/events/request-correction/${eventId}/pages/child?from=review#child____name`
         )
 
         await page
-          .locator('#child____firstname')
+          .getByTestId('text__firstname')
           .fill(updatedChildDetails.firstNames)
 
         await page
-          .locator('#child____surname')
+          .getByTestId('text__surname')
           .fill(updatedChildDetails.familyName)
 
         await goBackToReview(page)
@@ -294,26 +294,17 @@ test.describe('1. Correct record - 1', () => {
         await expectInUrl(page, `/events/request-correction/${eventId}/review`)
 
         await expect(
-          await page
-            .getByTestId('row-value-child.firstname')
-            .getByRole('deletion')
-        ).toHaveText(declaration['child.firstname'])
-
-        await expect(
-          await page
-            .getByTestId('row-value-child.surname')
-            .getByRole('deletion')
-        ).toHaveText(declaration['child.surname'])
+          await page.getByTestId('row-value-child.name').getByRole('deletion')
+        ).toHaveText(
+          `${declaration['child.name'].firstname} ${declaration['child.name'].surname}`
+        )
 
         await expect(
           page
-            .getByTestId('row-value-child.firstname')
-            .getByText(updatedChildDetails.firstNames)
-        ).toBeVisible()
-        await expect(
-          page
-            .getByTestId('row-value-child.surname')
-            .getByText(updatedChildDetails.familyName)
+            .getByTestId('row-value-child.name')
+            .getByText(
+              `${updatedChildDetails.firstNames} ${updatedChildDetails.familyName}`
+            )
         ).toBeVisible()
       })
 
@@ -526,8 +517,8 @@ test.describe('1. Correct record - 1', () => {
       })
     })
 
-    test.describe('1.2.6 Correction summary', async () => {
-      test('1.2.6.1 Go back to review', async () => {
+    test.describe('1.2.5 Correction summary', async () => {
+      test('1.2.5.1 Go back to review', async () => {
         await page
           .getByRole('button', { name: 'Continue', exact: true })
           .click()
@@ -547,7 +538,7 @@ test.describe('1. Correct record - 1', () => {
         await expectInUrl(page, `/events/request-correction/${eventId}/review`)
       })
 
-      test('1.2.6.2 Change weight at birth', async () => {
+      test('1.2.5.2 Change weight at birth', async () => {
         await page.getByTestId('change-button-child.weightAtBirth').click()
 
         /*
@@ -587,7 +578,7 @@ test.describe('1. Correct record - 1', () => {
         ).toBeVisible()
       })
 
-      test('1.2.6.3 Validate information in correction summary page', async () => {
+      test('1.2.5.3 Validate information in correction summary page', async () => {
         await page
           .getByRole('button', { name: 'Continue', exact: true })
           .click()
@@ -595,35 +586,27 @@ test.describe('1. Correct record - 1', () => {
         /*
          * Expected result: should
          * - navigate to correction summary
-         * - Send for approval button is visible and enabled
          */
         await expectInUrl(page, `/events/request-correction/${eventId}/summary`)
 
-        await expect(
-          page.getByRole('button', { name: 'Send for approval' })
-        ).not.toBeDisabled()
-
         /*
          * Expected result: should show
-         * - Original vs correction
          * - Requested by
-         * - ID check
          * - Reason for request
-         * - Comments
+         * - Original vs correction
          */
 
+        await expect(page.getByText('Informant (Mother)')).toBeVisible()
         await expect(
-          page.locator('#listTable-corrections-table-child')
-        ).toContainText(
-          `First name(s)${declaration['child.firstname']}${updatedChildDetails.firstNames}`
-        )
+          page.getByText('Myself or an agent made a mistake (Clerical error)')
+        ).toBeVisible()
+        await expect(page.getByText(`$${fee}`)).toBeVisible()
 
         await expect(
           page.locator('#listTable-corrections-table-child')
         ).toContainText(
-          `Last name${declaration['child.surname']}${updatedChildDetails.familyName}`
+          `Child's name${declaration['child.name'].firstname} ${declaration['child.name'].surname}${updatedChildDetails.firstNames} ${updatedChildDetails.familyName}`
         )
-
         await expect(
           page.locator('#listTable-corrections-table-child')
         ).toContainText(
@@ -661,28 +644,12 @@ test.describe('1. Correct record - 1', () => {
           page.locator('#listTable-corrections-table-child')
         ).toContainText(`Weight at birth${updatedChildDetails.weightAtBirth}`)
 
-        await expect(
-          page.getByText(formatName(declaration.mother.name[0]))
-        ).toBeVisible()
-        await expect(page.getByText('Verified')).toBeVisible()
-        await expect(
-          page.getByText('Myself or an agent made a mistake (Clerical error)')
-        ).toBeVisible()
-        await expect(
-          page.getByText(declaration.registration.registrationNumber)
-        ).toBeVisible()
-
-        await page.getByLabel('Yes').check()
-        await page
-          .locator('#correctionFees\\.nestedFields\\.totalFees')
-          .fill('15')
-
-        await uploadImage(page, page.locator('#upload_document'))
-
         /*
          * Expected result: should enable the Send for approval button
          */
-        await page.getByRole('button', { name: 'Send for approval' }).click()
+        await page
+          .getByRole('button', { name: 'Submit correction request' })
+          .click()
         await page.getByRole('button', { name: 'Confirm' }).click()
 
         /*
@@ -690,330 +657,334 @@ test.describe('1. Correct record - 1', () => {
          * - be navigated to sent for approval tab
          * - include the declaration in this tab
          */
-        expect(page.url().includes('registration-home/approvals')).toBeTruthy()
-        await page.getByRole('button', { name: 'Outbox' }).click()
-        await expectOutboxToBeEmpty(page)
+        expect(page.url().includes('/workqueue/assigned-to-you')).toBeTruthy()
         await page.getByRole('button', { name: 'Sent for approval' }).click()
 
-        await expect(
-          page.getByText(formatName(declaration.child.name[0])).first()
-        ).toBeVisible()
+        // @TODO: check this after the correction requests are displayed in correct workqueues:
+        // https://github.com/opencrvs/opencrvs-core/issues/9776
+        // await expect(
+        //   page
+        //     .getByText(
+        //       `${declaration['child.name'].firstname} ${declaration['child.name'].surname}`
+        //     )
+        //     .first()
+        // ).toBeVisible()
       })
     })
 
     // @TODO: use this after its implemented
-    test.describe.skip('1.2.7 Correction Approval', async () => {
-      test.beforeAll(async ({ browser }) => {
-        await page.close()
-        page = await browser.newPage()
+    // test.describe.skip('1.2.6 Correction Approval', async () => {
+    //   test.beforeAll(async ({ browser }) => {
+    //     await page.close()
+    //     page = await browser.newPage()
 
-        await login(
-          page,
-          CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-          CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-        )
-        await createPIN(page)
-      })
+    //     await login(
+    //       page,
+    //       CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
+    //       CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
+    //     )
+    //     await createPIN(page)
+    //   })
 
-      test('1.2.7.1 Record audit by local registrar', async () => {
-        await auditRecord({
-          page,
-          name: formatName(declaration.child.name[0]),
-          trackingId
-        })
-        await assignRecord(page)
-      })
+    //   test('1.2.6.1 Record audit by local registrar', async () => {
+    //     await auditRecord({
+    //       page,
+    //       name: formatName(declaration.child.name[0]),
+    //       trackingId
+    //     })
+    //     await assignRecord(page)
+    //   })
 
-      test('1.2.7.2 Correction review', async () => {
-        await page.getByRole('button', { name: 'Action' }).first().click()
-        await getAction(page, 'Review correction request').click()
-        /*
-         * Expected result: should show
-         * - Submitter
-         * - Requested by
-         * - Reason for request
-         * - Comments
-         * - Original vs correction
-         */
+    //   test('1.2.6.2 Correction review', async () => {
+    //     await page.getByRole('button', { name: 'Action' }).first().click()
+    //     await getAction(page, 'Review correction request').click()
+    //     /*
+    //      * Expected result: should show
+    //      * - Submitter
+    //      * - Requested by
+    //      * - Reason for request
+    //      * - Comments
+    //      * - Original vs correction
+    //      */
 
-        await expect(
-          page.getByText('Submitter' + 'Felix Katongo')
-        ).toBeVisible()
+    //     await expect(
+    //       page.getByText('Submitter' + 'Felix Katongo')
+    //     ).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Requested by' + formatName(declaration.mother.name[0])
-          )
-        ).toBeVisible()
+    //     await expect(
+    //       page.getByText(
+    //         'Requested by' + formatName(declaration.mother.name[0])
+    //       )
+    //     ).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Reason for request' +
-              'Myself or an agent made a mistake (Clerical error)'
-          )
-        ).toBeVisible()
-        await expect(
-          page.getByText(
-            'Comments' + declaration.registration.registrationNumber
-          )
-        ).toBeVisible()
+    //     await expect(
+    //       page.getByText(
+    //         'Reason for request' +
+    //           'Myself or an agent made a mistake (Clerical error)'
+    //       )
+    //     ).toBeVisible()
+    //     await expect(
+    //       page.getByText(
+    //         'Comments' + declaration.registration.registrationNumber
+    //       )
+    //     ).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Full name (Child)' +
-              formatName(declaration.child.name[0]) +
-              formatName(updatedChildDetails)
-          )
-        ).toBeVisible()
+    //     await expect(
+    //       page.getByText(
+    //         'Full name (Child)' +
+    //           formatName(declaration.child.name[0]) +
+    //           formatName(updatedChildDetails)
+    //       )
+    //     ).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Sex (Child)' +
-              declaration.child.gender +
-              updatedChildDetails.gender
-          )
-        ).toBeVisible()
+    //     await expect(
+    //       page.getByText(
+    //         'Sex (Child)' +
+    //           declaration.child.gender +
+    //           updatedChildDetails.gender
+    //       )
+    //     ).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Date of birth (Child)' +
-              formatDateTo_ddMMMMyyyy(declaration.child.birthDate) +
-              formatDateTo_ddMMMMyyyy(updatedChildDetails.birthDate)
-          )
-        ).toBeVisible()
+    //     await expect(
+    //       page.getByText(
+    //         'Date of birth (Child)' +
+    //           formatDateTo_ddMMMMyyyy(declaration.child.birthDate) +
+    //           formatDateTo_ddMMMMyyyy(updatedChildDetails.birthDate)
+    //       )
+    //     ).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Place of delivery (Child)' +
-              'Health Institution' +
-              childBirthLocationName +
-              'Health Institution' +
-              updatedChildDetails.birthLocation
-          )
-        ).toBeVisible()
+    //     await expect(
+    //       page.getByText(
+    //         'Place of delivery (Child)' +
+    //           'Health Institution' +
+    //           childBirthLocationName +
+    //           'Health Institution' +
+    //           updatedChildDetails.birthLocation
+    //       )
+    //     ).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Attendant at birth (Child)' +
-              declaration.attendantAtBirth +
-              updatedChildDetails.attendantAtBirth
-          )
-        ).toBeVisible()
+    //     await expect(
+    //       page.getByText(
+    //         'Attendant at birth (Child)' +
+    //           declaration.attendantAtBirth +
+    //           updatedChildDetails.attendantAtBirth
+    //       )
+    //     ).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Type of birth (Child)' +
-              declaration.birthType +
-              updatedChildDetails.typeOfBirth
-          )
-        ).toBeVisible()
+    //     await expect(
+    //       page.getByText(
+    //         'Type of birth (Child)' +
+    //           declaration.birthType +
+    //           updatedChildDetails.typeOfBirth
+    //       )
+    //     ).toBeVisible()
 
-        await expect(
-          page.getByText(
-            'Weight at birth (Child)' +
-              declaration.weightAtBirth +
-              updatedChildDetails.weightAtBirth
-          )
-        ).toBeVisible()
-      })
+    //     await expect(
+    //       page.getByText(
+    //         'Weight at birth (Child)' +
+    //           declaration.weightAtBirth +
+    //           updatedChildDetails.weightAtBirth
+    //       )
+    //     ).toBeVisible()
+    //   })
 
-      test('1.2.7.3 Approve correction', async () => {
-        await page.getByRole('button', { name: 'Approve', exact: true }).click()
-        await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+    //   test('1.2.6.3 Approve correction', async () => {
+    //     await page.getByRole('button', { name: 'Approve', exact: true }).click()
+    //     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
-        /*
-         * Expected result: should
-         * - be navigated to ready to print tab
-         * - include the updated declaration in this tab
-         */
-        expect(page.url().includes('registration-home/print')).toBeTruthy()
-        await page.getByRole('button', { name: 'Outbox' }).click()
-        await expectOutboxToBeEmpty(page)
-        await page.getByRole('button', { name: 'Ready to print' }).click()
-        await expect(
-          page.getByText(formatName(updatedChildDetails))
-        ).toBeVisible()
-      })
-      test.describe('1.2.7.4 Validate history in record audit', async () => {
-        test('1.2.7.4.1 Validate entries in record audit', async () => {
-          await auditRecord({
-            page,
-            name: formatName(updatedChildDetails),
-            trackingId
-          })
+    //     /*
+    //      * Expected result: should
+    //      * - be navigated to ready to print tab
+    //      * - include the updated declaration in this tab
+    //      */
+    //     expect(page.url().includes('registration-home/print')).toBeTruthy()
+    //     await page.getByRole('button', { name: 'Outbox' }).click()
+    //     await expectOutboxToBeEmpty(page)
+    //     await page.getByRole('button', { name: 'Ready to print' }).click()
+    //     await expect(
+    //       page.getByText(formatName(updatedChildDetails))
+    //     ).toBeVisible()
+    //   })
+    //   test.describe('1.2.6.4 Validate history in record audit', async () => {
+    //     test('1.2.6.4.1 Validate entries in record audit', async () => {
+    //       await auditRecord({
+    //         page,
+    //         name: formatName(updatedChildDetails),
+    //         trackingId
+    //       })
 
-          await assignRecord(page)
+    //       await assignRecord(page)
 
-          /*
-           * Expected result: should show in task history
-           * - Correction requested
-           * - Correction approved
-           */
+    //       /*
+    //        * Expected result: should show in task history
+    //        * - Correction requested
+    //        * - Correction approved
+    //        */
 
-          await expect(
-            page
-              .locator('#listTable-task-history')
-              .getByRole('button', { name: 'Correction requested' })
-          ).toBeVisible()
+    //       await expect(
+    //         page
+    //           .locator('#listTable-task-history')
+    //           .getByRole('button', { name: 'Correction requested' })
+    //       ).toBeVisible()
 
-          await expect(
-            page
-              .locator('#listTable-task-history')
-              .getByRole('button', { name: 'Correction approved' })
-          ).toBeVisible()
-        })
+    //       await expect(
+    //         page
+    //           .locator('#listTable-task-history')
+    //           .getByRole('button', { name: 'Correction approved' })
+    //       ).toBeVisible()
+    //     })
 
-        test('1.2.7.4.2 Validate correction requested modal', async () => {
-          const correctionRequestedRow = page.locator(
-            '#listTable-task-history div[id^="row_"]:has-text("Correction requested")'
-          )
-          await correctionRequestedRow.getByText('Correction requested').click()
+    //     test('1.2.6.4.2 Validate correction requested modal', async () => {
+    //       const correctionRequestedRow = page.locator(
+    //         '#listTable-task-history div[id^="row_"]:has-text("Correction requested")'
+    //       )
+    //       await correctionRequestedRow.getByText('Correction requested').click()
 
-          const time = await correctionRequestedRow
-            .locator('span')
-            .nth(1)
-            .innerText()
+    //       const time = await correctionRequestedRow
+    //         .locator('span')
+    //         .nth(1)
+    //         .innerText()
 
-          const requester = await correctionRequestedRow
-            .locator('span')
-            .nth(2)
-            .innerText()
+    //       const requester = await correctionRequestedRow
+    //         .locator('span')
+    //         .nth(2)
+    //         .innerText()
 
-          /*
-           * Expected result: Should show
-           * - Correction requested header
-           * - Requester & time
-           * - Requested by
-           * - Id check
-           * - Reason
-           * - Comment
-           * - Original vs Correction
-           */
+    //       /*
+    //        * Expected result: Should show
+    //        * - Correction requested header
+    //        * - Requester & time
+    //        * - Requested by
+    //        * - Id check
+    //        * - Reason
+    //        * - Comment
+    //        * - Original vs Correction
+    //        */
 
-          await expect(
-            page.getByRole('heading', { name: 'Correction requested' })
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByRole('heading', { name: 'Correction requested' })
+    //       ).toBeVisible()
 
-          await expect(page.getByText(requester + ' — ' + time)).toBeVisible()
+    //       await expect(page.getByText(requester + ' — ' + time)).toBeVisible()
 
-          await expect(page.getByText('Requested by' + 'Mother')).toBeVisible()
-          await expect(page.getByText('ID check' + 'Verified')).toBeVisible()
-          await expect(
-            page.getByText(
-              'Reason for request' +
-                'Myself or an agent made a mistake (Clerical error)'
-            )
-          ).toBeVisible()
+    //       await expect(page.getByText('Requested by' + 'Mother')).toBeVisible()
+    //       await expect(page.getByText('ID check' + 'Verified')).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'Reason for request' +
+    //             'Myself or an agent made a mistake (Clerical error)'
+    //         )
+    //       ).toBeVisible()
 
-          await expect(
-            page.getByText(
-              'Comment' + declaration.registration.registrationNumber
-            )
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'Comment' + declaration.registration.registrationNumber
+    //         )
+    //       ).toBeVisible()
 
-          await expect(
-            page.getByText(
-              'First name(s) (Child)' +
-                declaration.child.name[0].firstNames +
-                updatedChildDetails.firstNames
-            )
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'First name(s) (Child)' +
+    //             declaration.child.name[0].firstNames +
+    //             updatedChildDetails.firstNames
+    //         )
+    //       ).toBeVisible()
 
-          await expect(
-            page.getByText(
-              'Last name (Child)' +
-                declaration.child.name[0].familyName +
-                updatedChildDetails.familyName
-            )
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'Last name (Child)' +
+    //             declaration.child.name[0].familyName +
+    //             updatedChildDetails.familyName
+    //         )
+    //       ).toBeVisible()
 
-          await expect(
-            page.getByText(
-              'Sex (Child)' +
-                declaration.child.gender +
-                updatedChildDetails.gender
-            )
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'Sex (Child)' +
+    //             declaration.child.gender +
+    //             updatedChildDetails.gender
+    //         )
+    //       ).toBeVisible()
 
-          await expect(
-            page.getByText(
-              'Date of birth (Child)' +
-                formatDateTo_yyyyMMdd(declaration.child.birthDate) +
-                formatDateTo_yyyyMMdd(updatedChildDetails.birthDate)
-            )
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'Date of birth (Child)' +
+    //             formatDateTo_yyyyMMdd(declaration.child.birthDate) +
+    //             formatDateTo_yyyyMMdd(updatedChildDetails.birthDate)
+    //         )
+    //       ).toBeVisible()
 
-          await expect(
-            page.getByText(
-              'Health Institution (Child)' +
-                childBirthLocationName +
-                updatedChildDetails.birthLocation
-            )
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'Health Institution (Child)' +
+    //             childBirthLocationName +
+    //             updatedChildDetails.birthLocation
+    //         )
+    //       ).toBeVisible()
 
-          await expect(
-            page.getByText(
-              'Attendant at birth (Child)' +
-                declaration.attendantAtBirth +
-                updatedChildDetails.attendantAtBirth
-            )
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'Attendant at birth (Child)' +
+    //             declaration.attendantAtBirth +
+    //             updatedChildDetails.attendantAtBirth
+    //         )
+    //       ).toBeVisible()
 
-          await expect(
-            page.getByText(
-              'Type of birth (Child)' +
-                declaration.birthType +
-                updatedChildDetails.typeOfBirth
-            )
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'Type of birth (Child)' +
+    //             declaration.birthType +
+    //             updatedChildDetails.typeOfBirth
+    //         )
+    //       ).toBeVisible()
 
-          await expect(
-            page.getByText(
-              'Weight at birth (Child)' +
-                declaration.weightAtBirth +
-                updatedChildDetails.weightAtBirth
-            )
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByText(
+    //           'Weight at birth (Child)' +
+    //             declaration.weightAtBirth +
+    //             updatedChildDetails.weightAtBirth
+    //         )
+    //       ).toBeVisible()
 
-          await page
-            .getByRole('heading', { name: 'Correction requested' })
-            .locator('xpath=following-sibling::*[1]')
-            .click()
-        })
+    //       await page
+    //         .getByRole('heading', { name: 'Correction requested' })
+    //         .locator('xpath=following-sibling::*[1]')
+    //         .click()
+    //     })
 
-        test('1.2.7.4.3 Validate correction approved modal', async () => {
-          const correctionApprovedRow = page.locator(
-            '#listTable-task-history div[id^="row_"]:has-text("Correction approved")'
-          )
-          await correctionApprovedRow.getByText('Correction approved').click()
+    //     test('1.2.6.4.3 Validate correction approved modal', async () => {
+    //       const correctionApprovedRow = page.locator(
+    //         '#listTable-task-history div[id^="row_"]:has-text("Correction approved")'
+    //       )
+    //       await correctionApprovedRow.getByText('Correction approved').click()
 
-          const time = await correctionApprovedRow
-            .locator('span')
-            .nth(1)
-            .innerText()
+    //       const time = await correctionApprovedRow
+    //         .locator('span')
+    //         .nth(1)
+    //         .innerText()
 
-          const reviewer = await correctionApprovedRow
-            .locator('span')
-            .nth(2)
-            .innerText()
+    //       const reviewer = await correctionApprovedRow
+    //         .locator('span')
+    //         .nth(2)
+    //         .innerText()
 
-          /*
-           * Expected result: Should show
-           * - Correction approved header
-           * - Reviewer & time
-           */
+    //       /*
+    //        * Expected result: Should show
+    //        * - Correction approved header
+    //        * - Reviewer & time
+    //        */
 
-          await expect(
-            page.getByRole('heading', { name: 'Correction approved' })
-          ).toBeVisible()
+    //       await expect(
+    //         page.getByRole('heading', { name: 'Correction approved' })
+    //       ).toBeVisible()
 
-          await expect(page.getByText(reviewer + ' — ' + time)).toBeVisible()
-          await page
-            .getByRole('heading', { name: 'Correction approved' })
-            .locator('xpath=following-sibling::*[1]')
-            .click()
-        })
-      })
-    })
+    //       await expect(page.getByText(reviewer + ' — ' + time)).toBeVisible()
+    //       await page
+    //         .getByRole('heading', { name: 'Correction approved' })
+    //         .locator('xpath=following-sibling::*[1]')
+    //         .click()
+    //     })
+    //   })
+    // })
   })
 })
