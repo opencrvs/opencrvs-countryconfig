@@ -22,6 +22,7 @@ import {
 import { not } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '../../../utils'
 import {
+  invalidNameValidator,
   MAX_NAME_LENGTH,
   nationalIdValidator
 } from '@countryconfig/form/v2/birth/validators'
@@ -96,38 +97,23 @@ export const spouse = defineFormPage({
       ]
     },
     {
-      id: 'spouse.firstname',
+      id: 'spouse.name',
       configuration: { maxLength: MAX_NAME_LENGTH },
-      type: FieldType.TEXT,
+      type: FieldType.NAME,
       required: true,
+      hideLabel: true,
       label: {
-        defaultMessage: 'First name(s)',
+        defaultMessage: "Spouse's name",
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.firstname.label'
+        id: 'v2.event.death.action.declare.form.section.spouse.field.name.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: requireSpouseDetails
         }
-      ]
-    },
-    {
-      id: 'spouse.surname',
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'Last name',
-        description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.spouse.field.surname.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireSpouseDetails
-        }
-      ]
+      ],
+      validation: [invalidNameValidator('spouse.name')]
     },
     {
       id: 'spouse.dob',
@@ -239,7 +225,7 @@ export const spouse = defineFormPage({
     },
     {
       id: 'spouse.nid',
-      type: FieldType.TEXT,
+      type: FieldType.ID,
       required: true,
       label: {
         defaultMessage: 'ID Number',
