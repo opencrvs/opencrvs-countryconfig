@@ -146,6 +146,8 @@ export type Declaration = Awaited<ReturnType<typeof getDeclaration>>
 export interface CreateDeclarationResponse {
   eventId: string
   declaration: Declaration
+  trackingId?: string
+  registrationNumber?: string
 }
 
 function getSignatureFile() {
@@ -221,7 +223,10 @@ export async function createDeclaration(
       (action: ActionDocument) => action.type === 'DECLARE'
     )
 
-    return { eventId, declaration: declareAction?.declaration as Declaration }
+    return {
+      eventId,
+      declaration: declareAction?.declaration as Declaration
+    }
   }
 
   const validateRes = await client.event.actions.validate.request.mutate({
@@ -255,7 +260,15 @@ export async function createDeclaration(
     (action: ActionDocument) => action.type === 'REGISTER'
   )
 
-  return { eventId, declaration: registerAction?.declaration as Declaration }
+  const trackingId = registerRes?.trackingId as string
+  const registrationNumber = registerAction?.registrationNumber as string
+
+  return {
+    eventId,
+    declaration: registerAction?.declaration as Declaration,
+    trackingId,
+    registrationNumber
+  }
 }
 
 export async function rejectDeclaration(
