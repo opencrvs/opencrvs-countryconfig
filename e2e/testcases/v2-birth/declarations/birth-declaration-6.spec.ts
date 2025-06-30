@@ -187,7 +187,9 @@ test.describe.serial('6. Birth declaration case - 6', () => {
       await page
         .locator('#firstname')
         .fill(declaration.informant.name.firstNames)
+      await page.locator('#firstname').blur()
       await page.locator('#surname').fill(declaration.informant.name.familyName)
+      await page.locator('#surname').blur()
 
       await page.getByLabel('Exact date of birth unknown').check()
 
