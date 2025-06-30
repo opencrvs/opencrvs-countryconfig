@@ -2924,6 +2924,8 @@ v2.validateAction.incompleteForm,The description for warning of incomplete form,
 v2.validateAction.title,The title for validate action,Send for approval,Envoyer pour approbation
 v2.view.record,Label for view record,View record,Afficher l'enregistrement
 v2.workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,
+v2.workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
+v2.workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
 v2.wq.noRecords.CREATED,No records messages for empty draft tab,No records in progress,Aucun enregistrement en cours
 v2.wq.noRecords.DECLARED,No records messages for ready for review tab,No records ready for review,Aucun document prêt à être examiné
 v2.wq.noRecords.REGISTERED,No records messages for ready to print tab,No records ready to print,Aucun document prêt à être imprimé
@@ -3016,7 +3018,6 @@ views.qrReader.scannerDialogSupportingCopy,Supporting copy for the scanner dialo
 views.qrReader.tutorial.cameraCleanliness,Camera cleanliness tutorial,Ensure your camera is clean and functional.,Assurez-vous que votre appareil photo est propre et fonctionnel.
 views.qrReader.tutorial.distance,Distance tutorial,Hold the device steadily 6-12 inches away from the QR code.,Tenez l'appareil régulièrement à 6 à 12 pouces du code QR.
 views.qrReader.tutorial.lightBalance,Light balance tutorial,Ensure the QR code is well-lit and not damaged or blurry.,Assurez-vous que le code QR est bien éclairé et non endommagé ou flou.
-workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
 wq.noRecords.draft,No records messages for empty draft tab,No records in my drafts,Aucun enregistrement dans mes brouillons
 wq.noRecords.externalValidation,No records messages for empty external validation tab,No records in external validation,Aucun enregistrement dans la validation externe
 wq.noRecords.fieldAgents,No records messages for empty field agents tab,No records from field agents,Aucun enregistrement des agents de terrain
