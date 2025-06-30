@@ -37,7 +37,7 @@ export const introduction = defineFormPage({
         },
         {
           defaultMessage:
-            'As the legal Informant it is important that all the information provided by you is accurate.',
+            'As the legal Declarant it is important that all the information provided by you is accurate.',
           description: 'Form information for birth',
           id: 'v2.form.section.information.birth.bullet2'
         },

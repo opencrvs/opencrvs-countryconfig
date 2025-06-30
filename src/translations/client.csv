@@ -5,7 +5,7 @@ action.assignee,Label for asignee,Assigned to {name } at {officeName},Attribué 
 action.correct,Label for correct record button in dropdown menu,Correct record,Enregistrement correct,
 action.issue,Label for reinstate issue button in dropdown menu,Issue certificate,Délivrer un certificat,
 action.print,Label for reinstate print button in dropdown menu,Print certified copy,Imprimer une copie certifiée,
-action.reinstate,Label for reinstate record button in dropdown menu,Reisntate declaration,Déclaration de rétablissement,
+action.reinstate,Label for reinstate record button in dropdown menu,Reinstate declaration,Déclaration de rétablissement,
 action.review.correction,Label for review correction in dropdown menu,Review correction request,Vérifier la demande de correction,
 action.review.declaration,Label for review declaration button in dropdown menu,"Review {isDuplicate, select, true{potential duplicate} other{declaration}}","Review {isDuplicate, select, true{doublon potentiel} other{déclaration}}",
 action.update,Label for reinstate update button in dropdown menu,Update declaration,Mettre à jour la déclaration,

@@ -24,7 +24,7 @@ import { not } from '@opencrvs/toolkit/conditionals'
 
 import { applicationConfig } from '@countryconfig/api/application/application-config'
 
-import { createSelectOptions, emptyMessage } from '@countryconfig/form/v2/utils'
+import { createSelectOptions } from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,
   MAX_NAME_LENGTH
@@ -34,24 +34,6 @@ const GenderTypes = {
   MALE: 'male',
   FEMALE: 'female',
   UNKNOWN: 'unknown'
-} as const
-
-const TypeOfBirth = {
-  SINGLE: 'SINGLE',
-  TWIN: 'TWIN',
-  TRIPLET: 'TRIPLET',
-  QUADRUPLET: 'QUADRUPLET',
-  HIGHER_MULTIPLE_DELIVERY: 'HIGHER_MULTIPLE_DELIVERY'
-} as const
-
-const AttendantAtBirth = {
-  PHYSICIAN: 'PHYSICIAN',
-  NURSE: 'NURSE',
-  MIDWIFE: 'MIDWIFE',
-  OTHER_PARAMEDICAL_PERSONNEL: 'OTHER_PARAMEDICAL_PERSONNEL',
-  LAYPERSON: 'LAYPERSON',
-  TRADITIONAL_BIRTH_ATTENDANT: 'TRADITIONAL_BIRTH_ATTENDANT',
-  NONE: 'NONE'
 } as const
 
 export const PlaceOfBirth = {
@@ -78,72 +60,6 @@ const genderMessageDescriptors = {
   }
 } satisfies Record<keyof typeof GenderTypes, TranslationConfig>
 
-const typeOfBirthMessageDescriptors = {
-  SINGLE: {
-    defaultMessage: 'Single',
-    description: 'Label for single birth',
-    id: 'v2.form.field.label.birthTypeSingle'
-  },
-  TWIN: {
-    defaultMessage: 'Twin',
-    description: 'Label for twin birth',
-    id: 'v2.form.field.label.birthTypeTwin'
-  },
-  TRIPLET: {
-    defaultMessage: 'Triplet',
-    description: 'Label for triplet birth',
-    id: 'v2.form.field.label.birthTypeTriplet'
-  },
-  QUADRUPLET: {
-    defaultMessage: 'Quadruplet',
-    description: 'Label for quadruplet birth',
-    id: 'v2.form.field.label.birthTypeQuadruplet'
-  },
-  HIGHER_MULTIPLE_DELIVERY: {
-    defaultMessage: 'Higher multiple delivery',
-    description: 'Label for higher multiple delivery birth',
-    id: 'v2.form.field.label.birthTypeHigherMultipleDelivery'
-  }
-} satisfies Record<keyof typeof TypeOfBirth, TranslationConfig>
-
-const attendantAtBirthMessageDescriptors = {
-  PHYSICIAN: {
-    defaultMessage: 'Physician',
-    description: 'Label for physician attendant',
-    id: 'v2.form.field.label.attendantAtBirthPhysician'
-  },
-  NURSE: {
-    defaultMessage: 'Nurse',
-    description: 'Label for nurse attendant',
-    id: 'v2.form.field.label.attendantAtBirthNurse'
-  },
-  MIDWIFE: {
-    defaultMessage: 'Midwife',
-    description: 'Label for midwife attendant',
-    id: 'v2.form.field.label.attendantAtBirthMidwife'
-  },
-  OTHER_PARAMEDICAL_PERSONNEL: {
-    defaultMessage: 'Other paramedical personnel',
-    description: 'Label for other paramedical personnel',
-    id: 'v2.form.field.label.attendantAtBirthOtherParamedicalPersonnel'
-  },
-  LAYPERSON: {
-    defaultMessage: 'Layperson',
-    description: 'Label for layperson attendant',
-    id: 'v2.form.field.label.attendantAtBirthLayperson'
-  },
-  TRADITIONAL_BIRTH_ATTENDANT: {
-    defaultMessage: 'Traditional birth attendant',
-    description: 'Label for traditional birth attendant',
-    id: 'v2.form.field.label.attendantAtBirthTraditionalBirthAttendant'
-  },
-  NONE: {
-    defaultMessage: 'None',
-    description: 'Label for no attendant',
-    id: 'v2.form.field.label.attendantAtBirthNone'
-  }
-} satisfies Record<keyof typeof AttendantAtBirth, TranslationConfig>
-
 const placeOfBirthMessageDescriptors = {
   HEALTH_FACILITY: {
     defaultMessage: 'Health Institution',
@@ -169,16 +85,6 @@ const placeOfBirthOptions = createSelectOptions(
   placeOfBirthMessageDescriptors
 )
 
-const typeOfBirthOptions = createSelectOptions(
-  TypeOfBirth,
-  typeOfBirthMessageDescriptors
-)
-
-const attendantAtBirthOptions = createSelectOptions(
-  AttendantAtBirth,
-  attendantAtBirthMessageDescriptors
-)
-
 export const child = defineFormPage({
   id: 'child',
   type: PageTypes.enum.FORM,
@@ -188,18 +94,6 @@ export const child = defineFormPage({
     id: 'v2.form.birth.child.title'
   },
   fields: [
-    {
-      id: 'child.firstname',
-      type: FieldType.TEXT,
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      required: true,
-      label: {
-        defaultMessage: 'First name(s)',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.firstname.label'
-      },
-      validation: [invalidNameValidator('child.firstname')]
-    },
     {
       id: 'child.surname',
       type: FieldType.TEXT,
@@ -211,6 +105,18 @@ export const child = defineFormPage({
         id: 'v2.event.birth.action.declare.form.section.child.field.surname.label'
       },
       validation: [invalidNameValidator('child.surname')]
+    },
+    {
+      id: 'child.firstname',
+      type: FieldType.TEXT,
+      configuration: { maxLength: MAX_NAME_LENGTH },
+      required: true,
+      label: {
+        defaultMessage: 'First name(s)',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.child.field.firstname.label'
+      },
+      validation: [invalidNameValidator('child.firstname')]
     },
     {
       id: 'child.gender',
@@ -268,9 +174,55 @@ export const child = defineFormPage({
       ]
     },
     {
-      id: 'child.divider_1',
-      type: FieldType.DIVIDER,
-      label: emptyMessage
+      id: 'child.birthTime',
+      type: 'TIME',
+      required: true,
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Must be a valid Time',
+            description: 'This is the error message for invalid time',
+            id: 'v2.event.birth.action.declare.form.section.child.field.birthTime.error'
+          },
+          validator: field('child.birthTime').isBefore().now()
+        }
+      ],
+      label: {
+        defaultMessage: 'Birth Time',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.child.field.birthTime.label'
+      }
+    },
+    {
+      id: 'child.weightAtBirth',
+      type: FieldType.NUMBER,
+      required: false,
+      label: {
+        defaultMessage: 'Weight at birth',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.label'
+      },
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Must be within 0 and 6000',
+            description: 'This is the error message for invalid number range',
+            id: 'v2.error.child.weightAtBirth.invalidNumberRange'
+          },
+          validator: or(
+            field('child.weightAtBirth').isBetween(0, 6000),
+            field('child.weightAtBirth').isUndefined()
+          )
+        }
+      ],
+      configuration: {
+        min: 0,
+        postfix: {
+          defaultMessage: 'Grammes',
+          description: 'This is the postfix for the weight field',
+          id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.postfix'
+        }
+      }
     },
     {
       id: 'child.placeOfBirth',
@@ -349,62 +301,76 @@ export const child = defineFormPage({
         urbanOrRural: 'URBAN'
       }
     },
+    // NUI — should be a http button to generate a UI number and becomes a disabled field
     {
-      id: 'child.divider_2',
-      type: FieldType.DIVIDER,
-      label: emptyMessage
-    },
-    {
-      id: 'child.attendantAtBirth',
-      type: FieldType.SELECT,
-      required: false,
-      label: {
-        defaultMessage: 'Attendant at birth',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.attendantAtBirth.label'
-      },
-      options: attendantAtBirthOptions
-    },
-    {
-      id: 'child.birthType',
-      type: FieldType.SELECT,
-      required: false,
-      label: {
-        defaultMessage: 'Type of birth',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.birthType.label'
-      },
-      options: typeOfBirthOptions
-    },
-    {
-      id: 'child.weightAtBirth',
+      id: 'child.legacyRegistrationNumber',
       type: FieldType.NUMBER,
       required: false,
       label: {
-        defaultMessage: 'Weight at birth',
+        defaultMessage: 'Legacy birth registration number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationNumber.label'
       },
       validation: [
         {
           message: {
-            defaultMessage: 'Must be within 0 and 6',
+            defaultMessage: 'Must be within 0 and 999999',
             description: 'This is the error message for invalid number range',
-            id: 'v2.error.child.weightAtBirth.invalidNumberRange'
+            id: 'v2.error.child.legacyRegistrationNumber'
           },
           validator: or(
-            field('child.weightAtBirth').isBetween(0, 6),
-            field('child.weightAtBirth').isUndefined()
+            field('child.legacyRegistrationNumber').isBetween(0, 999999),
+            field('child.legacyRegistrationNumber').isUndefined()
           )
         }
       ],
       configuration: {
         min: 0,
         postfix: {
-          defaultMessage: 'Kilograms (kg)',
+          defaultMessage: 'Grammes',
           description: 'This is the postfix for the weight field',
-          id: 'v2.event.birth.action.declare.form.section.child.field.weightAtBirth.postfix'
+          id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationNumber.postfix'
         }
+      }
+    },
+    {
+      id: 'child.legacyRegistrationBirthDate',
+      type: 'DATE',
+      required: false,
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Must be a valid Birthdate',
+            description: 'This is the error message for invalid date',
+            id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationBirthDate.error'
+          },
+          validator: field('child.legacyRegistrationBirthDate').isBefore().now()
+        }
+      ],
+      label: {
+        defaultMessage: 'Legacy Registration Date',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationBirthDate.label'
+      }
+    },
+    {
+      id: 'child.legacyRegistrationBirthTime',
+      type: 'TIME',
+      required: true,
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Must be a valid Time',
+            description: 'This is the error message for invalid time',
+            id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationBirthTime.error'
+          },
+          validator: field('child.legacyRegistrationBirthTime').isBefore().now()
+        }
+      ],
+      label: {
+        defaultMessage: 'Legacy birth registration time',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationBirthTime.label'
       }
     }
   ]

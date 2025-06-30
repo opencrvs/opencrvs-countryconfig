@@ -98,22 +98,34 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: 'father.firstname',
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      type: FieldType.TEXT,
-      required: true,
+      id: 'father.fatherDeceased',
+      type: FieldType.CHECKBOX,
       label: {
-        defaultMessage: 'First name(s)',
+        defaultMessage: 'Father is deceased',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.firstname.label'
+        id: 'event.birth.action.declare.form.section.father.field.fatherDeceased.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
         }
-      ],
-      validation: [invalidNameValidator('father.firstname')]
+      ]
+    },
+    {
+      id: 'father.fatherHasRecognizedChild',
+      type: FieldType.CHECKBOX,
+      label: {
+        defaultMessage: 'Father has formally recognized child',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.father.field.fatherHasRecognizedChild.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireFatherDetails
+        }
+      ]
     },
     {
       id: 'father.surname',
@@ -132,6 +144,24 @@ export const father = defineFormPage({
         }
       ],
       validation: [invalidNameValidator('father.surname')]
+    },
+    {
+      id: 'father.firstname',
+      configuration: { maxLength: MAX_NAME_LENGTH },
+      type: FieldType.TEXT,
+      required: true,
+      label: {
+        defaultMessage: 'First name(s)',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.person.field.firstname.label'
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireFatherDetails
+        }
+      ],
+      validation: [invalidNameValidator('father.firstname')]
     },
     {
       id: 'father.dob',
@@ -231,93 +261,40 @@ export const father = defineFormPage({
           conditional: requireFatherDetails
         }
       ],
-      defaultValue: 'FAR'
+      defaultValue: 'Madagascar'
     },
     {
-      id: 'father.idType',
-      type: FieldType.SELECT,
-      required: true,
+      id: 'father.nui',
+      type: FieldType.NUMBER,
+      required: false,
       label: {
-        defaultMessage: 'Type of ID',
+        defaultMessage: 'NUI',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.idType.label'
+        id: 'v2.event.birth.action.declare.form.section.father.field.nui.label'
       },
-      options: idTypeOptions,
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: requireFatherDetails
         }
-      ]
-    },
-    {
-      id: 'father.nid',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.nid.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('father.idType').isEqualTo(IdType.NATIONAL_ID),
-            requireFatherDetails
-          )
-        }
       ],
-      validation: [
-        nationalIdValidator('father.nid'),
-        {
-          message: {
-            defaultMessage: 'National id must be unique',
-            description: 'This is the error message for non-unique ID Number',
-            id: 'v2.event.birth.action.declare.form.nid.unique'
-          },
-          validator: and(
-            not(field('father.nid').isEqualTo(field('mother.nid'))),
-            not(field('father.nid').isEqualTo(field('informant.nid')))
-          )
-        }
-      ]
+      configuration: {
+        min: 0
+      }
     },
     {
-      id: 'father.passport',
+      id: 'father.placeOfBirth',
       type: FieldType.TEXT,
       required: true,
       label: {
-        defaultMessage: 'ID Number',
+        defaultMessage: 'Place of birth',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.passport.label'
+        id: 'v2.event.birth.action.declare.form.section.father.field.placeOfBirth.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(
-            field('father.idType').isEqualTo(IdType.PASSPORT),
-            requireFatherDetails
-          )
-        }
-      ]
-    },
-    {
-      id: 'father.brn',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.brn.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('father.idType').isEqualTo(IdType.BIRTH_REGISTRATION_NUMBER),
-            requireFatherDetails
-          )
+          conditional: requireFatherDetails
         }
       ]
     },
@@ -395,7 +372,7 @@ export const father = defineFormPage({
         }
       ],
       defaultValue: {
-        country: 'FAR',
+        country: 'Madagascar',
         addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',
@@ -416,7 +393,7 @@ export const father = defineFormPage({
     {
       id: 'father.maritalStatus',
       type: FieldType.SELECT,
-      required: false,
+      required: true,
       label: {
         defaultMessage: 'Marital Status',
         description: 'This is the label for the field',
@@ -431,26 +408,9 @@ export const father = defineFormPage({
       ]
     },
     {
-      id: 'father.educationalAttainment',
-      type: FieldType.SELECT,
-      required: false,
-      label: {
-        defaultMessage: 'Level of education',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.educationalAttainment.label'
-      },
-      options: educationalAttainmentOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireFatherDetails
-        }
-      ]
-    },
-    {
       id: 'father.occupation',
       type: FieldType.TEXT,
-      required: false,
+      required: true,
       label: {
         defaultMessage: 'Occupation',
         description: 'This is the label for the field',

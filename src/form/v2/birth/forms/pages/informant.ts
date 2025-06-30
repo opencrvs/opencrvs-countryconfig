@@ -40,7 +40,7 @@ export const InformantType = {
 } as const
 export type InformantTypeKey = keyof typeof InformantType
 
-const PHONE_NUMBER_REGEX = '^0(7|9)[0-9]{8}$'
+const PHONE_NUMBER_REGEX = '^(\\+261|0)?3[0-9]{8}$'
 const informantMessageDescriptors = {
   MOTHER: {
     defaultMessage: 'Mother',
@@ -449,7 +449,7 @@ export const informant = defineFormPage({
         {
           message: {
             defaultMessage:
-              'Must be a valid 10 digit number that starts with 0(7|9)',
+              'Must be a valid 10 digit number that starts with 03',
             description:
               'The error message that appears on phone numbers where the first two characters must be 07 or 09, and length must be 10',
             id: 'v2.event.birth.action.declare.form.section.informant.field.phoneNo.error'
@@ -460,20 +460,6 @@ export const informant = defineFormPage({
           )
         }
       ],
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.email',
-      type: FieldType.EMAIL,
-      required: true,
-      label: {
-        defaultMessage: 'Email',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.informant.field.email.label'
-      },
-      configuration: {
-        maxLength: 255
-      },
       parent: field('informant.relation')
     }
   ]
