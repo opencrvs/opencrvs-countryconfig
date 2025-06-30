@@ -123,7 +123,7 @@
   <g clip-path="url(#clip2_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="148.104">{{$lookup $declaration "child.firstname"}} {{$lookup $declaration "child.surname"}}</tspan>
+      <tspan x="307" y="148.104">{{$lookup $declaration "child.name"}}</tspan>
     </text>
   </g>
   <line x1="65" y1="154.5" x2="533" y2="154.5" stroke="#ECECEC" />
@@ -200,7 +200,7 @@
   <g clip-path="url(#clip6_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="266.104">{{$lookup $declaration 'mother.firstname'}} {{$lookup $declaration 'mother.surname'}}</tspan>
+      <tspan x="307" y="266.104">{{$lookup $declaration 'mother.name'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="272.5" x2="533" y2="272.5" stroke="#ECECEC" />
@@ -234,7 +234,7 @@
   <g clip-path="url(#clip8_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      {{#ifCond (lookup $declaration 'mother.firstname') '!==' undefined }}
+      {{#ifCond ($lookup $declaration 'mother.name') '!==' undefined }}
       <tspan x="307" y="306.104">{{ $lookup $declaration 'mother.address.district' }}{{ $lookup $declaration 'mother.address.district2' }}, {{ $lookup $declaration 'mother.address.province' }}{{ $lookup $declaration 'mother.address.state' }}, {{ $lookup $declaration 'mother.address.country' }}</tspan>
       {{/ifCond}}
     </text>
@@ -285,7 +285,7 @@
   <g clip-path="url(#clip11_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="392.104">{{$lookup $declaration 'father.firstname'}} {{$lookup $declaration 'father.surname'}}</tspan>
+      <tspan x="307" y="392.104">{{$lookup $declaration 'father.name'}}</tspan>
     </text>
   </g>
   <line x1="65" y1="398.5" x2="533" y2="398.5" stroke="#ECECEC" />
@@ -319,7 +319,7 @@
   <g clip-path="url(#clip13_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      {{#ifCond (lookup $declaration 'father.firstname') '!==' undefined }}
+      {{#ifCond ($lookup $declaration 'father.name') '!==' undefined }}
         {{#ifCond (lookup $declaration 'father.addressSameAs') '===' 'YES'}}
           <tspan x="307" y="432.104">{{ $lookup $declaration 'mother.address.district' }}{{ $lookup $declaration 'mother.address.district2' }}, {{ $lookup $declaration 'mother.address.province' }}{{ $lookup $declaration 'mother.address.state' }}, {{ $lookup $declaration 'mother.address.country' }}</tspan>
         {{else}}
@@ -376,12 +376,12 @@
       font-size="8" letter-spacing="0px">
 
       {{#ifCond (lookup $declaration 'informant.relation') '===' 'MOTHER' }}
-        <tspan x="307" y="518.104">{{$lookup $declaration 'mother.firstname'}} {{$lookup $declaration 'mother.surname'}}</tspan>
+        <tspan x="307" y="518.104">{{$lookup $declaration 'mother.name'}}</tspan>
       {{ else }}
         {{#ifCond (lookup $declaration 'informant.relation') '===' 'FATHER'}}
-          <tspan x="307" y="518.104">{{$lookup $declaration 'father.firstname'}} {{$lookup $declaration 'father.surname'}}</tspan>  
+          <tspan x="307" y="518.104">{{$lookup $declaration 'father.name'}}</tspan>  
         {{ else }}
-          <tspan x="307" y="518.104">{{$lookup $declaration 'informant.firstname'}} {{$lookup $declaration 'informant.surname'}}</tspan>
+          <tspan x="307" y="518.104">{{$lookup $declaration 'informant.name'}}</tspan>
         {{/ifCond}}
       {{/ifCond}}
       <tspan x="307" y="528.104">{{$intl 'v2.constants.informant' ($lookup $declaration 'informant.relation')}}{{#ifCond (lookup $declaration 'informant.relation') '===' 'OTHER'}} ({{$lookup $declaration 'informant.other.relation'}}) {{/ifCond}}</tspan>

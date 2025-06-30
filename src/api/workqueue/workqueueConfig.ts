@@ -1,5 +1,12 @@
 import { SEVEN_DAYS_IN_MILISECOND } from '@countryconfig/constants'
-import { defineWorkqueues, event, user } from '@opencrvs/toolkit/events'
+import {
+  ActionStatus,
+  ActionType,
+  InherentFlags,
+  defineWorkqueues,
+  event,
+  user
+} from '@opencrvs/toolkit/events'
 
 const DATE_OF_EVENT_COLUMN = {
   label: {
@@ -123,7 +130,8 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of notifications workqueue'
     },
     query: {
-      status: { type: 'exact', term: 'NOTIFIED' }
+      flags: { anyOf: [InherentFlags.INCOMPLETE] },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -171,7 +179,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready for review workqueue'
     },
     query: {
-      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
+      status: { type: 'exact', term: 'DECLARED' },
       createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
@@ -201,8 +209,22 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready for review (all) workqueue'
     },
     query: {
-      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED', 'VALIDATED'] },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      type: 'or',
+      clauses: [
+        {
+          status: {
+            type: 'anyOf',
+            terms: ['DECLARED', 'VALIDATED']
+          },
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        },
+        {
+          flags: {
+            anyOf: [InherentFlags.CORRECTION_REQUESTED]
+          },
+          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+        }
+      ]
     },
     actions: [
       {
@@ -231,8 +253,9 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of requires updates workqueue'
     },
     query: {
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') },
-      status: { type: 'exact', term: 'REJECTED' }
+      flags: {
+        anyOf: [InherentFlags.REJECTED]
+      }
     },
     actions: [
       {
@@ -261,8 +284,19 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of sent for approval workqueue'
     },
     query: {
-      updatedBy: { type: 'exact', term: user('id') },
-      status: { type: 'exact', term: 'VALIDATED' }
+      type: 'or',
+      clauses: [
+        {
+          updatedBy: { type: 'exact', term: user('id') },
+          status: { type: 'exact', term: 'VALIDATED' }
+        },
+        {
+          flags: {
+            anyOf: [InherentFlags.CORRECTION_REQUESTED]
+          },
+          updatedBy: { type: 'exact', term: user('id') }
+        }
+      ]
     },
     actions: [
       {
@@ -291,6 +325,11 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of in external validation workqueue'
     },
     query: {
+      flags: {
+        anyOf: [
+          `${ActionType.REGISTER}:${ActionStatus.Requested}`.toLowerCase()
+        ]
+      },
       createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
@@ -309,6 +348,10 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of ready to print workqueue'
     },
     query: {
+      flags: {
+        noneOf: [InherentFlags.PRINTED, InherentFlags.CORRECTION_REQUESTED]
+      },
+      status: { type: 'exact', term: 'REGISTERED' },
       createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
@@ -326,24 +369,6 @@ export const Workqueues = defineWorkqueues([
           id: 'workqueue.ready-to-print.column.registered'
         },
         value: event.field('updatedAt')
-      }
-    ]
-  },
-  {
-    slug: 'ready-to-issue',
-    icon: 'Handshake',
-    name: {
-      id: 'workqueues.readyToIssue.title',
-      defaultMessage: 'Ready to issue',
-      description: 'Title of ready to issue workqueue'
-    },
-    query: {
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
-    },
-    actions: [
-      {
-        type: 'DEFAULT',
-        conditionals: []
       }
     ]
   }
