@@ -509,7 +509,7 @@ services:
         - 'traefik.http.routers.client.rule=Host(`register.{{hostname}}`,`{{hostname}}`)'
         - 'traefik.http.routers.client.middlewares=test-replacepathregex,gzip-compression'
         - 'traefik.http.routers.client.service=client'
-        - 'traefik.http.services.client.loadbalancer.server.port=80'
+        - 'traefik.http.services.client.loadbalancer.server.port=3000'
         - 'traefik.http.routers.client.tls=true'
         - 'traefik.http.routers.client.tls.certresolver=certResolver'
         - 'traefik.http.routers.client.entrypoints=web,websecure'
@@ -607,7 +607,7 @@ services:
       labels:
         - 'traefik.enable=true'
         - 'traefik.http.routers.login.rule=Host(`login.{{hostname}}`)'
-        - 'traefik.http.services.login.loadbalancer.server.port=80'
+        - 'traefik.http.services.login.loadbalancer.server.port=3020'
         - 'traefik.http.routers.login.tls=true'
         - 'traefik.http.routers.login.tls.certresolver=certResolver'
         - 'traefik.http.routers.login.entrypoints=web,websecure'
@@ -697,6 +697,7 @@ services:
       - USER_MGNT_MONGO_URL=mongodb://user-mgnt:${USER_MGNT_MONGODB_PASSWORD}@mongo1/user-mgnt?replicaSet=rs0
       - ES_URL=http://search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
       - APN_SERVICE_URL=http://apm-server:8200
+      - EVENTS_POSTGRES_URL=postgres://events_app:${EVENTS_APP_POSTGRES_PASSWORD}@postgres/events
     deploy:
       labels:
         - 'traefik.enable=false'
@@ -924,6 +925,7 @@ services:
       - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - EVENTS_MONGO_URL=mongodb://events:${EVENTS_MONGODB_PASSWORD}@mongo1/events?replicaSet=rs0
       - OPENHIM_MONGO_URL=mongodb://openhim:${OPENHIM_MONGODB_PASSWORD}@mongo1/openhim-dev?replicaSet=rs0
+      - EVENTS_POSTGRES_URL=postgres://events_migrator:${EVENTS_MIGRATOR_POSTGRES_PASSWORD}@postgres/events
       - ES_HOST=search-user:${ROTATING_SEARCH_ELASTIC_PASSWORD}@elasticsearch:9200
       - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
       - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD}
@@ -967,6 +969,46 @@ services:
       options:
         gelf-address: 'udp://127.0.0.1:12201'
         tag: 'hearth'
+
+  postgres:
+    image: postgres:17
+    networks:
+      - overlay_net
+    restart: unless-stopped
+    volumes:
+      - /data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    deploy:
+      replicas: 1
+      labels:
+        - 'traefik.enable=false'
+      placement:
+        constraints:
+          - node.labels.data1 == true
+
+  postgres-on-update:
+    image: postgres:17
+    command: bash /on-deploy.sh
+    configs:
+      - source: postgres-on-deploy.{{ts}}
+        target: /on-deploy.sh
+    deploy:
+      labels:
+        - traefik.enable=false
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - EVENTS_APP_POSTGRES_PASSWORD=${EVENTS_APP_POSTGRES_PASSWORD}
+      - EVENTS_MIGRATOR_POSTGRES_PASSWORD=${EVENTS_MIGRATOR_POSTGRES_PASSWORD}
+    networks:
+      - overlay_net
 
   webhooks:
     secrets:
@@ -1047,7 +1089,7 @@ services:
   mosip-api:
     volumes:
       - /data/sqlite:/data/sqlite
-      - /certs:/certs:ro 
+      - /certs:/certs:ro
     image: ghcr.io/opencrvs/mosip-api:1.8.0-beta.10
     environment:
       - NODE_ENV=production
@@ -1137,7 +1179,7 @@ services:
   esignet-mock:
     image: ghcr.io/opencrvs/esignet-mock:1.8.0-beta.10
     volumes:
-      - /certs:/certs:ro 
+      - /certs:/certs:ro
     environment:
       - NODE_ENV=production
       - CLIENT_APP_URL=https://register.{{hostname}}
@@ -1184,6 +1226,8 @@ configs:
     file: /opt/opencrvs/infrastructure/monitoring/filebeat/filebeat.yml
   mongo-on-deploy.{{ts}}:
     file: /opt/opencrvs/infrastructure/mongodb/on-deploy.sh
+  postgres-on-deploy.{{ts}}:
+    file: /opt/opencrvs/infrastructure/postgres/on-deploy.sh
   beat-rollover-policy.{{ts}}:
     file: /opt/opencrvs/infrastructure/monitoring/beats/rollover-policy.json
   kibana.{{ts}}:

@@ -5,7 +5,6 @@ import { faker } from '@faker-js/faker'
 import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
-import { SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 
 const child = {
   name: {
