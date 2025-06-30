@@ -10,18 +10,18 @@
  */
 
 import { defineDeclarationForm, FieldType } from '@opencrvs/toolkit/events'
-import { child } from './pages/child'
+import { deceased } from './pages/deceased'
 import { informant } from './pages/informant'
-import { introduction } from './pages/introduction'
-import { mother } from './pages/mother'
-import { father } from './pages/father'
+import { deathIntroduction } from './pages/introduction'
 import { documents } from './pages/documents'
+import { spouse } from './pages/spouse'
+import { eventDetails } from './pages/eventDetails'
 
-export const BIRTH_DECLARATION_REVIEW = {
+export const DEATH_DECLARATION_REVIEW = {
   title: {
-    id: 'v2.event.birth.action.declare.form.review.title',
+    id: 'v2.event.death.action.declare.form.review.title',
     defaultMessage:
-      '{child.name.firstname, select, __EMPTY__ {Birth declaration} other {{child.name.surname, select, __EMPTY__ {Birth declaration for {child.name.firstname}} other {Birth declaration for {child.name.firstname} {child.name.surname}}}}}',
+      '{deceased.firstname, select, __EMPTY__ {Death declaration} other {{deceased.surname, select, __EMPTY__ {Death declaration} other {Death declaration for {deceased.firstname} {deceased.surname}}}}}',
     description: 'Title of the form to show in review page'
   },
   fields: [
@@ -30,7 +30,7 @@ export const BIRTH_DECLARATION_REVIEW = {
       type: FieldType.TEXTAREA,
       label: {
         defaultMessage: 'Comment',
-        id: 'v2.event.birth.action.declare.form.review.comment.label',
+        id: 'v2.event.death.action.declare.form.review.comment.label',
         description: 'Label for the comment field in the review section'
       },
       required: true
@@ -41,7 +41,7 @@ export const BIRTH_DECLARATION_REVIEW = {
       required: true,
       label: {
         defaultMessage: 'Signature of informant',
-        id: 'v2.event.birth.action.declare.form.review.signature.label',
+        id: 'v2.event.death.action.declare.form.review.signature.label',
         description: 'Label for the signature field in the review section'
       },
       signaturePromptLabel: {
@@ -53,12 +53,19 @@ export const BIRTH_DECLARATION_REVIEW = {
   ]
 }
 
-export const BIRTH_DECLARATION_FORM = defineDeclarationForm({
+export const DEATH_DECLARATION_FORM = defineDeclarationForm({
   label: {
-    defaultMessage: 'Birth decalration form',
-    id: 'v2.event.birth.action.declare.form.label',
+    defaultMessage: 'Death declaration form',
+    id: 'v2.event.death.action.declare.form.label',
     description: 'This is what this form is referred as in the system'
   },
 
-  pages: [introduction, child, informant, mother, father, documents]
+  pages: [
+    deathIntroduction,
+    deceased,
+    eventDetails,
+    informant,
+    spouse,
+    documents
+  ]
 })
