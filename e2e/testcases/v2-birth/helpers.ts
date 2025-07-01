@@ -3,6 +3,7 @@ import { omit } from 'lodash'
 import { formatName, joinValuesWith } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { ensureOutboxIsEmpty } from '../../v2-utils'
+import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 export const REQUIRED_VALIDATION_ERROR = 'Required for registration'
 
@@ -99,4 +100,11 @@ export const assertRecordInWorkqueue = async ({
       await expect(page.getByRole('button', { name })).toBeHidden()
     }
   }
+}
+
+export const assignFromWorkqueue = async (page: Page, name: string) => {
+  await getRowByTitle(page, name)
+    .getByRole('button', { name: 'Assign record' })
+    .click()
+  await page.getByRole('button', { name: 'Assign', exact: true }).click()
 }
