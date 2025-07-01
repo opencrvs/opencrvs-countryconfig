@@ -180,7 +180,9 @@ test.describe.serial('1. Birth event declaration', () => {
 
       test('1.4.2 Validate Child details block', async () => {
         await page.locator('#firstname').fill(child.name.firstNames)
+        await page.locator('#firstname').blur()
         await page.locator('#surname').fill(child.name.surname)
+        await page.locator('#surname').blur()
       })
 
       test('1.4.3 Click "continue"', async () => {

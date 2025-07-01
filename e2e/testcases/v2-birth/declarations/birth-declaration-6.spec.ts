@@ -107,7 +107,9 @@ test.describe.serial('6. Birth declaration case - 6', () => {
 
     test('6.1.1 Fill child details', async () => {
       await page.locator('#firstname').fill(declaration.child.name.firstNames)
+      await page.locator('#firstname').blur()
       await page.locator('#surname').fill(declaration.child.name.familyName)
+      await page.locator('#surname').blur()
       await page.locator('#child____gender').click()
       await page.getByText(declaration.child.gender, { exact: true }).click()
 
@@ -185,7 +187,9 @@ test.describe.serial('6. Birth declaration case - 6', () => {
       await page
         .locator('#firstname')
         .fill(declaration.informant.name.firstNames)
+      await page.locator('#firstname').blur()
       await page.locator('#surname').fill(declaration.informant.name.familyName)
+      await page.locator('#surname').blur()
 
       await page.getByLabel('Exact date of birth unknown').check()
 
@@ -242,7 +246,9 @@ test.describe.serial('6. Birth declaration case - 6', () => {
 
     test("6.1.4 Fill father's details", async () => {
       await page.locator('#firstname').fill(declaration.father.name.firstNames)
+      await page.locator('#firstname').blur()
       await page.locator('#surname').fill(declaration.father.name.familyName)
+      await page.locator('#surname').blur()
 
       await page.getByLabel('Exact date of birth unknown').check()
 
