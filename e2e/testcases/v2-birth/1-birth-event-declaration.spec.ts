@@ -5,7 +5,6 @@ import { faker } from '@faker-js/faker'
 import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
-import { SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 
 const child = {
   name: {
@@ -181,7 +180,9 @@ test.describe.serial('1. Birth event declaration', () => {
 
       test('1.4.2 Validate Child details block', async () => {
         await page.locator('#firstname').fill(child.name.firstNames)
+        await page.locator('#firstname').blur()
         await page.locator('#surname').fill(child.name.surname)
+        await page.locator('#surname').blur()
       })
 
       test('1.4.3 Click "continue"', async () => {

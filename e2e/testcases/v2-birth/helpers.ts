@@ -2,6 +2,8 @@ import { expect, type Page } from '@playwright/test'
 import { omit } from 'lodash'
 import { formatName, joinValuesWith } from '../../helpers'
 import { faker } from '@faker-js/faker'
+import { ensureOutboxIsEmpty } from '../../v2-utils'
+import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 export const REQUIRED_VALIDATION_ERROR = 'Required for registration'
 
@@ -69,4 +71,40 @@ export const formatV2ChildName = (obj: {
     obj['child.name'].firstname,
     obj['child.name'].surname
   ])
+}
+
+export const assertRecordInWorkqueue = async ({
+  page,
+  name,
+  workqueues
+}: {
+  page: Page
+  name: string
+  workqueues: { title: string; exists: boolean }[]
+}) => {
+  await page.getByRole('button', { name: 'Outbox' }).click()
+  await ensureOutboxIsEmpty(page)
+
+  for (const { title, exists } of workqueues) {
+    await page
+      .getByRole('button', {
+        name: title
+      })
+      .click()
+
+    await expect(page.getByTestId('search-result')).toContainText(title)
+
+    if (exists) {
+      await expect(page.getByRole('button', { name })).toBeVisible()
+    } else {
+      await expect(page.getByRole('button', { name })).toBeHidden()
+    }
+  }
+}
+
+export const assignFromWorkqueue = async (page: Page, name: string) => {
+  await getRowByTitle(page, name)
+    .getByRole('button', { name: 'Assign record' })
+    .click()
+  await page.getByRole('button', { name: 'Assign', exact: true }).click()
 }
