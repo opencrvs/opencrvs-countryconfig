@@ -168,5 +168,5 @@ test.describe.serial('Birth correction flow', () => {
   })
 
   // @TODO: check that correction request appears correctly in workqueues and can be accepted/declined
-  test.skip('Submit correction request', async () => {})
+  test.skip('Check that correction request appears correctly in workqueues', async () => {})
 })
