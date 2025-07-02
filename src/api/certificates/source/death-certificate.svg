@@ -53,11 +53,10 @@
       <tspan x="88.6029" y="263.724">2.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="121.172" y="263.724"> /&#x2028;</tspan>
       <tspan x="104.68" y="278.724">Sexe</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="263.724">Sex</tspan>
+      <tspan x="104.68" y="263.724">Sex /&#x2028;</tspan>
     </text>
     <g clip-path="url(#clip4_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
@@ -69,10 +68,7 @@
       <tspan x="88.6029" y="305.363">3.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="166.527" y="305.363"> /&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="305.363">Date of birth</tspan>
+      <tspan x="104.68" y="305.363">Date of birth /&#x2028;</tspan>
       <tspan x="104.68" y="320.363">Date de naissance</tspan>
     </text>
     <g clip-path="url(#clip5_1157_5058)">
@@ -89,10 +85,7 @@
       <tspan x="88.6029" y="347.003">5.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="170.752" y="347.003"> /&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="347.003">Date of death</tspan>
+      <tspan x="104.68" y="347.003">Date of death /&#x2028;</tspan>
       <tspan x="104.68" y="362.003">Date de deces</tspan>
     </text>
     <g clip-path="url(#clip6_1157_5058)">
@@ -105,10 +98,7 @@
       <tspan x="88.6029" y="388.643">4.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="173.395" y="388.643"> /&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="388.643">Place of death</tspan>
+      <tspan x="104.68" y="388.643">Place of death /&#x2028;</tspan>
       <tspan x="104.68" y="403.643">Lieu de naissance</tspan>
     </text>
     <g clip-path="url(#clip7_1157_5058)">
@@ -167,10 +157,7 @@
       <tspan x="88.6029" y="513.563">7.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="173.262" y="513.563">/&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="513.563">Registered by </tspan>
+      <tspan x="104.68" y="513.563">Registered by /&#x2028;</tspan>
       <tspan x="104.68" y="528.563">Enregistr&#xe9; par</tspan>
     </text>
     <g clip-path="url(#clip10_1157_5058)">
