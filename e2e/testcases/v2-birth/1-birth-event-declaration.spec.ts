@@ -234,7 +234,7 @@ test.describe.serial('1. Birth event declaration', () => {
 
         /*
          * Expected result: should throw error:
-         * - Required for registration
+         * - Required
          */
         await expect(page.getByText("Informant's details")).toBeVisible()
         await expect(page.getByText(REQUIRED_VALIDATION_ERROR)).toBeVisible()
