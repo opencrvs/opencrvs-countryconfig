@@ -8,6 +8,7 @@ import {
 } from '../../v2-test-data/birth-declaration'
 import { navigateToCertificatePrintAction } from './helpers'
 import { expectInUrl } from '../../../v2-utils'
+import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
 
 test.describe.serial('Print certificate', () => {
   let page: Page
@@ -49,7 +50,7 @@ test.describe.serial('Print certificate', () => {
       await expect(
         page
           .locator('#collector____requesterId_error')
-          .getByText('Required for registration')
+          .getByText(REQUIRED_VALIDATION_ERROR)
       ).toBeVisible()
     })
 
