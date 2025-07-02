@@ -99,7 +99,7 @@ export const documents = defineFormPage({
       id: 'documents.proofOfBirth',
       type: FieldType.FILE,
       required: false,
-      isCorrectable: false,
+      uncorrectable: true,
       configuration: {
         ...DEFAULT_FILE_CONFIGURATION,
         style: {
@@ -121,7 +121,7 @@ export const documents = defineFormPage({
       id: 'documents.proofOfMother',
       type: FieldType.FILE_WITH_OPTIONS,
       required: false,
-      isCorrectable: false,
+      uncorrectable: true,
       label: {
         defaultMessage: "Proof of mother's ID",
         description: 'This is the label for the field',
@@ -141,7 +141,7 @@ export const documents = defineFormPage({
       id: 'documents.proofOfFather',
       type: FieldType.FILE_WITH_OPTIONS,
       required: false,
-      isCorrectable: false,
+      uncorrectable: true,
       label: {
         defaultMessage: "Proof of father's ID",
         description: 'This is the label for the field',
@@ -160,7 +160,7 @@ export const documents = defineFormPage({
       id: 'documents.proofOfInformant',
       type: FieldType.FILE_WITH_OPTIONS,
       required: false,
-      isCorrectable: false,
+      uncorrectable: true,
       label: {
         defaultMessage: "Proof of informant's ID",
         description: 'This is the label for the field',
@@ -184,7 +184,7 @@ export const documents = defineFormPage({
       id: 'documents.proofOther',
       type: FieldType.FILE_WITH_OPTIONS,
       required: false,
-      isCorrectable: false,
+      uncorrectable: true,
       label: {
         defaultMessage: 'Other',
         description: 'This is the label for the field',
