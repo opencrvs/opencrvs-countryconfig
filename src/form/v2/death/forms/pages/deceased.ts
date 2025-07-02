@@ -69,28 +69,17 @@ export const deceased = defineFormPage({
   },
   fields: [
     {
-      id: 'deceased.firstname',
-      type: FieldType.TEXT,
+      id: 'deceased.name',
+      type: FieldType.NAME,
       configuration: { maxLength: MAX_NAME_LENGTH },
       required: true,
+      hideLabel: true,
       label: {
-        defaultMessage: 'First name(s)',
+        defaultMessage: "Deceased's name",
         description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.firstname.label'
+        id: 'v2.event.death.action.declare.form.section.deceased.field.name.label'
       },
-      validation: [invalidNameValidator('deceased.firstname')]
-    },
-    {
-      id: 'deceased.surname',
-      type: FieldType.TEXT,
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      required: true,
-      label: {
-        defaultMessage: 'Last name',
-        description: 'This is the label for the field',
-        id: 'v2.event.death.action.declare.form.section.deceased.field.surname.label'
-      },
-      validation: [invalidNameValidator('deceased.surname')]
+      validation: [invalidNameValidator('deceased.name')]
     },
     {
       id: 'deceased.gender',
@@ -191,7 +180,7 @@ export const deceased = defineFormPage({
     },
     {
       id: 'deceased.nid',
-      type: FieldType.TEXT,
+      type: FieldType.ID,
       required: true,
       label: {
         defaultMessage: 'ID Number',

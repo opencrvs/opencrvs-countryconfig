@@ -11,6 +11,7 @@ import {
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { fillDate } from '../v2-birth/helpers'
+import { ensureOutboxIsEmpty } from '../../v2-utils'
 
 test.describe
   .serial('30: Validate user can send multiple complete and incomplete records offline', () => {
@@ -365,20 +366,31 @@ test.describe
 
     await expect(
       page.getByTestId('search-result').locator('#row_2')
-    ).toContainText('Waiting to retry')
+    ).toContainText('Waiting to send')
     await expect(
       page.getByTestId('search-result').locator('#row_1')
-    ).toContainText('Waiting to retry')
+    ).toContainText('Waiting to send')
     await expect(
       page.getByTestId('search-result').locator('#row_0')
-    ).toContainText('Waiting to retry')
+    ).toContainText('Waiting to send')
 
     await page.context().setOffline(false)
 
+    await ensureOutboxIsEmpty(page)
+
     await expect(page.getByTestId('search-result')).not.toContainText(
-      'Waiting to retry',
-      { timeout: 20000 }
+      'Waiting to send'
     )
+
+    await expect(
+      page.getByTestId('search-result').locator('#row_2')
+    ).toContainText('Sending')
+    await expect(
+      page.getByTestId('search-result').locator('#row_1')
+    ).toContainText('Sending')
+    await expect(
+      page.getByTestId('search-result').locator('#row_0')
+    ).toContainText('Sending')
     await expect(page.getByTestId('search-result')).not.toContainText(
       formatName(declaration.child.name),
       { timeout: 20000 }

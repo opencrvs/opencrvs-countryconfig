@@ -118,6 +118,7 @@ export const mother = defineFormPage({
       id: 'mother.dob',
       type: 'DATE',
       required: true,
+      secured: true,
       validation: [
         {
           message: {
@@ -332,6 +333,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.address',
       type: FieldType.ADDRESS,
+      secured: true,
       hideLabel: true,
       label: {
         defaultMessage: 'Usual place of residence',
