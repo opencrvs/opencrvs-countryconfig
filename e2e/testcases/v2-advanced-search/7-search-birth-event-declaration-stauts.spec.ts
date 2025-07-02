@@ -22,7 +22,7 @@ test.describe
     await page.close()
   })
 
-  test('7.1 Fill child details and create a draft birth declaration', async () => {
+  test('7.1 Create a draft birth declaration by filling in child details', async () => {
     await loginToV2(page)
     await page.click('#header-new-event')
     await page.getByLabel('Birth').click()
@@ -42,14 +42,13 @@ test.describe
     await expect(page.getByText(/seconds ago/)).toBeVisible()
   })
 
-  test('7.2 - Validate loading search page', async () => {
-    // await loginToV2(page)
+  test('7.2 - Navigate to the advanced search page and select Birth event type', async () => {
     await page.click('#searchType')
     await expect(page).toHaveURL(/.*\/advanced-search/)
     await page.getByText('Birth').click()
   })
 
-  test('7.3 - Validate filling name and dob filters', async () => {
+  test('7.3 - Search for birth declaration using child name and status filter', async () => {
     await page.getByText('Registration details').click()
 
     await page.locator('#event____status').click()
@@ -62,5 +61,17 @@ test.describe
     await page.locator('#surname').fill(surname)
     await page.click('#search')
     await expect(page).toHaveURL(/.*\/search-result/)
+  })
+
+  test('7.4 - Confirm that draft records do not appear in search results', async () => {
+    await expect(page.getByText('Search results')).toBeVisible()
+    const searchResult = await page.locator('#content-name').textContent()
+    const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
+    expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
+    await expect(page.getByText('Search results (0)')).toBeVisible()
+    expect(page.url()).toContain(`event.status=ALL`)
+    expect(page.url()).toContain(
+      `child.name=${encodeURIComponent(JSON.stringify({ firstname, middlename: '', surname }))}`
+    )
   })
 })
