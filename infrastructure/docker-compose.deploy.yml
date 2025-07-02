@@ -1070,6 +1070,8 @@ services:
       - MOSIP_CREATE_PACKET_URL=http://mosip-mock:20240/commons/v1/packetmanager/createPacket
       - MOSIP_PROCESS_PACKET_URL=http://mosip-mock:20240/registrationprocessor/v1/workflowmanager/workflowinstance
       - MOSIP_VERIFIABLE_CREDENTIAL_ALLOWLIST=http://mosip-mock:20240/.well-known/public-key.json
+      - MOSIP_CENTER_ID=10123
+      - MOSIP_MACHINE_ID=10234
     deploy:
       replicas: 1
       labels:
