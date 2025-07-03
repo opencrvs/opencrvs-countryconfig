@@ -2,10 +2,19 @@
 
 ## 1.8.0
 
+### New features
+
+- Implement QR code scanner form configuration from `@opencrvs/mosip` that lets user scan QR codes in the form and prefill the form fields with the scanned data. [#7939](https://github.com/opencrvs/opencrvs-core/issues/7939)
+- Implement E-signet authentication flow from `@opencrvs/mosip` with mock identities. [#8062](https://github.com/opencrvs/opencrvs-core/issues/8062)
+- Implement online verification flow from `@opencrvs/mosip` with mock identities. [#7944](https://github.com/opencrvs/opencrvs-core/issues/7944)
+- Support for adding custom business logic to determine whether MOSIP processing should be triggered on registration. [#7942](https://github.com/opencrvs/opencrvs-core/issues/7942)
+- Registering a death event deactivates the deceased person identity in MOSIP. [#7943](https://github.com/opencrvs/opencrvs-core/issues/7943)
+- Reject registration if the MOSIP processing fails. [#8174](https://github.com/opencrvs/opencrvs-core/issues/8174)
+
 ### Improvements
+
 - Added Build summary and refactored deployment workflow to be more clear [#6984](https://github.com/opencrvs/opencrvs-core/issues/6984)
 - Build OpenCRVS release images for arm devices [#9455](https://github.com/opencrvs/opencrvs-core/issues/9455)
-
 
 ## 1.6.4
 
@@ -22,6 +31,7 @@
 ## 1.6.2
 
 ### New features
+
 - Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
 ## 1.7.2
@@ -30,9 +40,11 @@
 
 - A configuration example of how to use middle names in a supported way has been added, inspired by [#9369((https://github.com/opencrvs/opencrvs-core/issues/9369))
 - InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
+
 ```
 partial write: max-values-per-tag limit exceeded (100000/100000)
 ```
+
 https://github.com/opencrvs/opencrvs-countryconfig/pull/393
 
 - Added `user.update:my-jurisdiction` scope to Local System Admin to allow editing of users in jurisdiction [#732](https://github.com/opencrvs/opencrvs-countryconfig/pull/732)
@@ -52,11 +64,13 @@ https://github.com/opencrvs/opencrvs-countryconfig/pull/393
 - **Control over allowed user creation/update**: user.create\[role=role_a|role_b\] & user.update\[role=role_a|role_b\] can be used to control users of which role can be created/updated by users of a certain role.
 
 ### Breaking changes
+
 - Roles with the following scopes: `USER_CREATE, USER_CREATE_MY_JURISDICTION` & `USER_UPDATE, USER_UPDATE_MY_JURISDICTION` need to have the `user.create[role=role_a|role_b]` & `user.update[role=role_a|role_b]` scopes added to them (replace role_a|role_b with the role IDs of your selection) in order to work as expected. If you are using custom roles, please make sure to update them accordingly.
 
 ## 1.7.1
 
 ### Bug fixes
+
 - "Match all" section should be present after "Match User..." in sshd_config [#653](https://github.com/opencrvs/opencrvs-countryconfig/pull/653)
 - Use yarn cache in test workflow & read the version to use from .nvmrc
 
@@ -65,7 +79,8 @@ https://github.com/opencrvs/opencrvs-countryconfig/pull/393
 ### Migration notes
 
 In order to make the upgrade easier, there are a couple of steps that need to be performed which will make the codebase ready for the upgrade:
-- Run this command from the root of the countryconfig repository ```curl https://raw.githubusercontent.com/opencrvs/opencrvs-countryconfig/release-v1.7.0/src/upgrade-to-1_7.ts | npx ts-node -T --cwd ./src```
+
+- Run this command from the root of the countryconfig repository `curl https://raw.githubusercontent.com/opencrvs/opencrvs-countryconfig/release-v1.7.0/src/upgrade-to-1_7.ts | npx ts-node -T --cwd ./src`
 
   It will remove `roles.csv` and generate a `roles.ts` file. It will also update the corresponding role column in `default-employees.csv` & `prod-employees.csv` while adding the corresponding translations in `client.csv`. The employee files are only used when seeding new environments, if you already have a v1.6.x of OpenCRVS deployed, the data in the environment will automatically get migrated after deploying the upgrade. The changes in these two files are made to keep the roles in sync with your previously deployed environments, if any.
 
