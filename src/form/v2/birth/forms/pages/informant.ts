@@ -425,6 +425,7 @@ export const informant = defineFormPage({
       id: 'informant.phoneNo',
       type: FieldType.PHONE,
       required: false,
+      secured: true,
       label: {
         defaultMessage: 'Phone number',
         description: 'This is the label for the field',
@@ -451,6 +452,7 @@ export const informant = defineFormPage({
       id: 'informant.email',
       type: FieldType.EMAIL,
       required: true,
+      secured: true,
       label: {
         defaultMessage: 'Email',
         description: 'This is the label for the field',
