@@ -2,6 +2,11 @@
 
 ## 1.8.0
 
+### Improvements
+- Added Build summary and refactored deployment workflow to be more clear [#6984](https://github.com/opencrvs/opencrvs-core/issues/6984)
+- Build OpenCRVS release images for arm devices [#9455](https://github.com/opencrvs/opencrvs-core/issues/9455)
+
+
 ## 1.6.4
 
 ### Bug fixes
@@ -19,7 +24,7 @@
 ### New features
 - Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
 
-## 1.7.2 Release candidate
+## 1.7.2
 
 ### Bug fixes
 

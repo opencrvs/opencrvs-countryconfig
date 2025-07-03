@@ -22,7 +22,7 @@
     - swap.file.mkswap
 
 - name: 'Check swap file type'
-  command: file {{ swap_file_path }}
+  command: sudo file {{ swap_file_path }}
   register: swapfile
   tags:
     - swap.file.mkswap
