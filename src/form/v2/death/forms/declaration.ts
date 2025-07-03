@@ -21,7 +21,7 @@ export const DEATH_DECLARATION_REVIEW = {
   title: {
     id: 'v2.event.death.action.declare.form.review.title',
     defaultMessage:
-      '{deceased.firstname, select, __EMPTY__ {Death declaration} other {{deceased.surname, select, __EMPTY__ {Death declaration} other {Death declaration for {deceased.firstname} {deceased.surname}}}}}',
+      '{deceased.name.firstname, select, __EMPTY__ {Death declaration} other {{deceased.name.surname, select, __EMPTY__ {Death declaration} other {Death declaration for {deceased.name.firstname} {deceased.name.surname}}}}}',
     description: 'Title of the form to show in review page'
   },
   fields: [
