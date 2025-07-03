@@ -12,6 +12,7 @@ import {
   navigateToCertificatePrintAction,
   selectRequesterType
 } from '../v2-print-certificate/birth/helpers'
+import { REQUIRED_VALIDATION_ERROR } from '../v2-birth/helpers'
 
 test.describe('Form state', () => {
   test.describe
@@ -59,7 +60,7 @@ test.describe('Form state', () => {
 
       // Child name fields should be empty
       await expect(page.getByTestId('row-value-child.name')).toHaveText(
-        'Required for registration'
+        REQUIRED_VALIDATION_ERROR
       )
       // Comment should be empty and sign button should be visible
       await expect(page.locator('#review____comment')).toHaveValue('')
@@ -120,11 +121,11 @@ test.describe('Form state', () => {
       await selectAction(page, 'Declare')
 
       await expect(page.getByTestId('row-value-child.name')).not.toHaveText(
-        'Required for registration'
+        REQUIRED_VALIDATION_ERROR
       )
 
       await expect(page.getByTestId('row-value-informant.email')).toHaveText(
-        'Required for registration'
+        REQUIRED_VALIDATION_ERROR
       )
       // Comment should be empty and sign button should be visible
       await expect(page.locator('#review____comment')).toHaveValue('')

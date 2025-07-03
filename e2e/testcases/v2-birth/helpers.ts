@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker'
 import { ensureOutboxIsEmpty } from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
-export const REQUIRED_VALIDATION_ERROR = 'Required for registration'
+export const REQUIRED_VALIDATION_ERROR = 'Required'
 
 export async function validateAddress(
   page: Page,
