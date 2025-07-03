@@ -341,7 +341,10 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Date of death
        * - Change button
        */
-      await expectRowValueWithChangeButton('eventDetails.date', REQUIRED)
+      await expectRowValueWithChangeButton(
+        'eventDetails.date',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
@@ -350,7 +353,7 @@ test.describe.serial('10. Death declaration case - 10', () => {
        */
       await expectRowValueWithChangeButton(
         'eventDetails.placeOfDeath',
-        REQUIRED
+        REQUIRED_VALIDATION_ERROR
       )
 
       /*
@@ -368,7 +371,10 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Informant's Email
        * - Change button
        */
-      await expectRowValueWithChangeButton('informant.email', REQUIRED)
+      await expectRowValueWithChangeButton(
+        'informant.email',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
@@ -377,14 +383,20 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Change button
        */
 
-      await expectRowValueWithChangeButton('spouse.name', REQUIRED)
+      await expectRowValueWithChangeButton(
+        'spouse.name',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
        * - Spouse's date of birth
        * - Change button
        */
-      await expectRowValueWithChangeButton('spouse.dob', REQUIRED)
+      await expectRowValueWithChangeButton(
+        'spouse.dob',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should include
@@ -398,7 +410,10 @@ test.describe.serial('10. Death declaration case - 10', () => {
        * - Spouse's Type of Id
        * - Change button
        */
-      await expectRowValueWithChangeButton('spouse.idType', REQUIRED)
+      await expectRowValueWithChangeButton(
+        'spouse.idType',
+        REQUIRED_VALIDATION_ERROR
+      )
 
       /*
        * Expected result: should require
