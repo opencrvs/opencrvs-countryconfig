@@ -106,7 +106,7 @@ test.describe.serial("2. Validate the child's details page", () => {
 
       /*
        * Expected result: should throw error in application review page:
-       * - Required for registration
+       * - Required
        */
       await expect(
         page
@@ -147,7 +147,7 @@ test.describe.serial("2. Validate the child's details page", () => {
 
       /*
        * Expected result: should throw error in application review page:
-       * - Required for registration
+       * - Required
        */
       await expect(
         page
@@ -216,7 +216,7 @@ test.describe.serial("2. Validate the child's details page", () => {
 
       /*
        * Expected result: should throw error in application review page:
-       * - Required for registration
+       * - Required
        */
       await expect(
         page
@@ -285,7 +285,7 @@ test.describe.serial("2. Validate the child's details page", () => {
 
       /*
        * Expected result: should throw error in application review page:
-       * - Required for registration
+       * - Required
        */
       await expect(
         page
@@ -301,11 +301,11 @@ test.describe.serial("2. Validate the child's details page", () => {
 
       /*
        * Expected result: should throw error in application review page:
-       * - Required for registration
+       * - Required
        */
       await expect(
         page.locator('[data-test-id="row-value-child.placeOfBirth"]')
-      ).toHaveText('Required for registration')
+      ).toHaveText(REQUIRED_VALIDATION_ERROR)
     })
 
     test('2.6.2.a Validate Health Institution', async ({ page }) => {

@@ -12,6 +12,7 @@ import {
   navigateToCertificatePrintAction
 } from './helpers'
 import { expectInUrl } from '../../../v2-utils'
+import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
 
 async function selectIdType(page: Page, idType: string) {
   await page.locator('#collector____OTHER____idType').click()
@@ -97,7 +98,7 @@ test.describe.serial('Validate collect payment page', () => {
     await expect(
       page
         .locator('#collector____OTHER____relationshipToChild_error')
-        .getByText('Required for registration')
+        .getByText(REQUIRED_VALIDATION_ERROR)
     ).toBeVisible()
   })
 
