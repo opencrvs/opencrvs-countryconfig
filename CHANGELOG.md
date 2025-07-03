@@ -4,12 +4,13 @@
 
 ### New features
 
-- Implement QR code scanner form configuration from `@opencrvs/mosip` that lets user scan QR codes in the form and prefill the form fields with the scanned data. [#7939](https://github.com/opencrvs/opencrvs-core/issues/7939)
-- Implement E-signet authentication flow from `@opencrvs/mosip` with mock identities. [#8062](https://github.com/opencrvs/opencrvs-core/issues/8062)
-- Implement online verification flow from `@opencrvs/mosip` with mock identities. [#7944](https://github.com/opencrvs/opencrvs-core/issues/7944)
-- Support for adding custom business logic to determine whether MOSIP processing should be triggered on registration. [#7942](https://github.com/opencrvs/opencrvs-core/issues/7942)
-- Registering a death event deactivates the deceased person identity in MOSIP. [#7943](https://github.com/opencrvs/opencrvs-core/issues/7943)
-- Reject registration if the MOSIP processing fails. [#8174](https://github.com/opencrvs/opencrvs-core/issues/8174)
+- Upgraded to `@opencrvs/mosip` v1.8.0 to support the following enhancements:
+  - Added QR code scanner form configuration, allowing users to scan QR codes and automatically prefill form fields with the extracted data. [#7939](https://github.com/opencrvs/opencrvs-core/issues/7939)
+  - Integrated E-signet authentication flow using mock identities. [#8062](https://github.com/opencrvs/opencrvs-core/issues/8062)
+  - Enabled online verification flow with mock identities. [#7944](https://github.com/opencrvs/opencrvs-core/issues/7944)
+  - Provided support for custom business logic to determine whether MOSIP processing should be triggered during registration. [#7942](https://github.com/opencrvs/opencrvs-core/issues/7942)
+  - Ensured that registering a death event deactivates the corresponding identity in MOSIP. [#7943](https://github.com/opencrvs/opencrvs-core/issues/7943)
+  - Enforced rejection of registrations if MOSIP processing fails. [#8174](https://github.com/opencrvs/opencrvs-core/issues/8174)
 
 ### Improvements
 
