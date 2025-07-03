@@ -216,6 +216,7 @@ export const child = defineFormPage({
       id: 'child.dob',
       type: 'DATE',
       required: true,
+      secured: true,
       validation: [
         {
           message: {
@@ -265,6 +266,7 @@ export const child = defineFormPage({
       id: 'child.placeOfBirth',
       type: FieldType.SELECT,
       required: true,
+      secured: true,
       label: {
         defaultMessage: 'Place of delivery',
         description: 'This is the label for the field',
@@ -276,6 +278,7 @@ export const child = defineFormPage({
       id: 'child.birthLocation',
       type: 'FACILITY',
       required: true,
+      secured: true,
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
@@ -293,6 +296,7 @@ export const child = defineFormPage({
     {
       id: 'child.address.privateHome',
       type: FieldType.ADDRESS,
+      secured: true,
       hideLabel: true,
       label: {
         defaultMessage: 'Child`s address',
@@ -318,6 +322,7 @@ export const child = defineFormPage({
     {
       id: 'child.address.other',
       type: FieldType.ADDRESS,
+      secured: true,
       hideLabel: true,
       label: {
         defaultMessage: 'Child`s address',
