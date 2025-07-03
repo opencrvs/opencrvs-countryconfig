@@ -7,7 +7,10 @@ import {
   Declaration
 } from '../v2-test-data/birth-declaration'
 import { ensureAssigned, expectInUrl, selectAction } from '../../v2-utils'
-import { formatV2ChildName } from '../v2-birth/helpers'
+import {
+  formatV2ChildName,
+  REQUIRED_VALIDATION_ERROR
+} from '../v2-birth/helpers'
 
 test.describe.serial('Birth correction flow', () => {
   let declaration: Declaration
@@ -43,8 +46,12 @@ test.describe.serial('Birth correction flow', () => {
 
   test('Try to continue without filling in required fields', async () => {
     await page.getByRole('button', { name: 'Continue' }).click()
-    await expect(page.locator('#requester____type_error')).toBeVisible()
-    await expect(page.locator('#reason____option_error')).toBeVisible()
+    await expect(page.locator('#requester____type_error')).toHaveText(
+      REQUIRED_VALIDATION_ERROR
+    )
+    await expect(page.locator('#reason____option_error')).toHaveText(
+      REQUIRED_VALIDATION_ERROR
+    )
   })
 
   test('Fill in the correction details form', async () => {
