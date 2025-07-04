@@ -1033,7 +1033,7 @@ services:
     volumes:
       - /data/sqlite:/data/sqlite
       - /certs:/certs:ro 
-    image: ghcr.io/opencrvs/mosip-api:1.8.0-beta.18
+    image: ghcr.io/opencrvs/mosip-api:1.8.0
     environment:
       - NODE_ENV=production
       - MOSIP_BIRTH_WEBHOOK_URL=http://mosip-mock:20240/webhooks/opencrvs/birth
