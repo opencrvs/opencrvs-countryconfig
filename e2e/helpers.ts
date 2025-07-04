@@ -355,12 +355,15 @@ export const joinValuesWith = (
 }
 
 type PersonOrName = {
-  firstNames: string
-  familyName: string
+  firstNames?: string
+  familyName?: string
   [key: string]: any
 }
 export const formatName = (name: PersonOrName) => {
-  return joinValuesWith([name.firstNames, name.familyName])
+  const nameArray = []
+  if (name.firstNames) nameArray.push(name.firstNames)
+  if (name.familyName) nameArray.push(name.familyName)
+  return joinValuesWith(nameArray)
 }
 
 export const drawSignature = async (page: Page, v2Events = false) => {
