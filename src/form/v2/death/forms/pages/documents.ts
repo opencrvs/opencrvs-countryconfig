@@ -11,7 +11,9 @@
 
 import { createSelectOptions } from '@countryconfig/form/v2/utils'
 import {
+  ConditionalType,
   defineFormPage,
+  field,
   FieldType,
   ImageMimeType,
   PageTypes,
@@ -48,6 +50,72 @@ const idTypeMessageDescriptors = {
   }
 } satisfies Record<keyof typeof IdType, TranslationConfig>
 
+const ProofOfDeathType = {
+  ATTESTED_LETTER_OF_DEATH: 'ATTESTED_LETTER_OF_DEATH',
+  POLICE_CERTIFICATE_OF_DEATH: 'POLICE_CERTIFICATE_OF_DEATH',
+  HOSPITAL_CERTIFICATE_OF_DEATH: 'HOSPITAL_CERTIFICATE_OF_DEATH',
+  CORONERS_REPORT: 'CORONERS_REPORT',
+  BURIAL_RECEIPT: 'BURIAL_RECEIPT',
+  OTHER: 'OTHER'
+} as const
+
+const proofOfDeathMessageDescriptors = {
+  ATTESTED_LETTER_OF_DEATH: {
+    defaultMessage: 'Attested letter of death',
+    description: 'Label for select option Attested Letter of Death',
+    id: 'v2.form.field.label.docTypeLetterOfDeath'
+  },
+  POLICE_CERTIFICATE_OF_DEATH: {
+    defaultMessage: 'Police certificate of death',
+    description: 'Label for select option Police death certificate',
+    id: 'v2.form.field.label.docTypePoliceCertificate'
+  },
+  HOSPITAL_CERTIFICATE_OF_DEATH: {
+    defaultMessage: 'Hospital certificate of death',
+    description: 'Label for select option Hospital certificate of death',
+    id: 'v2.form.field.label.docTypeHospitalDeathCertificate'
+  },
+  CORONERS_REPORT: {
+    defaultMessage: "Coroner's report",
+    description: "Label for select option Coroner's report",
+    id: 'v2.form.field.label.docTypeCoronersReport'
+  },
+  BURIAL_RECEIPT: {
+    defaultMessage: 'Certified copy of burial receipt',
+    description: 'Label for select option Certified Copy of Burial Receipt',
+    id: 'v2.form.field.label.docTypeCopyOfBurialReceipt'
+  },
+  OTHER: {
+    defaultMessage: 'Other',
+    description: 'Option for form field: Type of ID',
+    id: 'v2.form.field.label.docTypeOther'
+  }
+} satisfies Record<keyof typeof ProofOfDeathType, TranslationConfig>
+
+const ProofOfCauseOfDeathType = {
+  VERBAL_AUTOPSY: 'VERBAL_AUTOPSY',
+  MEDICALLY_CERTIFIED: 'MEDICALLY_CERTIFIED',
+  OTHER: 'OTHER'
+} as const
+
+const proofOfCauseOfDeathMessageDescriptors = {
+  VERBAL_AUTOPSY: {
+    defaultMessage: 'Verbal autopsy report',
+    description: 'Option for form field: verbalAutopsy',
+    id: 'v2.form.field.label.verbalAutopsy'
+  },
+  MEDICALLY_CERTIFIED: {
+    defaultMessage: 'Medically Certified Cause of Death',
+    description: 'Option for form field: medicallyCertified',
+    id: 'v2.form.field.label.medicallyCertified'
+  },
+  OTHER: {
+    defaultMessage: 'Other',
+    description: 'Option for form field: Other',
+    id: 'v2.form.field.label.docTypeOther'
+  }
+} satisfies Record<keyof typeof ProofOfCauseOfDeathType, TranslationConfig>
+
 const DEFAULT_FILE_CONFIGURATION = {
   maxFileSize: 5 * 1024 * 1024,
   acceptedFileTypes: [
@@ -59,6 +127,15 @@ const DEFAULT_FILE_CONFIGURATION = {
 
 const idTypeOptions = createSelectOptions(IdType, idTypeMessageDescriptors)
 
+const proofOfDeathTypeOptions = createSelectOptions(
+  ProofOfDeathType,
+  proofOfDeathMessageDescriptors
+)
+
+const proofOfCauseOfDeathTypeOptions = createSelectOptions(
+  ProofOfCauseOfDeathType,
+  proofOfCauseOfDeathMessageDescriptors
+)
 export const documents = defineFormPage({
   id: 'documents',
   type: PageTypes.enum.FORM,
@@ -112,7 +189,7 @@ export const documents = defineFormPage({
         id: 'v2.event.death.action.declare.form.section.documents.field.proofOfDeath.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
-      options: idTypeOptions
+      options: proofOfDeathTypeOptions
     },
     {
       id: 'documents.proofOfCauseOfDeath',
@@ -124,7 +201,15 @@ export const documents = defineFormPage({
         id: 'v2.event.death.action.declare.form.section.documents.field.proofOfCauseOfDeath.label'
       },
       configuration: DEFAULT_FILE_CONFIGURATION,
-      options: idTypeOptions
+      options: proofOfCauseOfDeathTypeOptions,
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: field('eventDetails.causeOfDeathEstablished').isEqualTo(
+            true
+          )
+        }
+      ]
     }
   ]
 })

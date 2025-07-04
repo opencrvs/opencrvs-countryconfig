@@ -44,11 +44,9 @@ export const advancedSearchDeath = [
       field('deceased.dob', {
         searchCriteriaLabelPrefix: deceasedPrefix
       }).range(),
-      field('deceased.firstname', {
-        searchCriteriaLabelPrefix: deceasedPrefix
-      }).fuzzy(),
-      field('deceased.surname', {
-        searchCriteriaLabelPrefix: deceasedPrefix
+      field('deceased.name', {
+        validations: [],
+        conditionals: []
       }).fuzzy(),
       field('deceased.gender', {
         searchCriteriaLabelPrefix: deceasedPrefix
@@ -79,13 +77,9 @@ export const advancedSearchDeath = [
         conditionals: [],
         searchCriteriaLabelPrefix: informantPrefix
       }).range(),
-      field('informant.firstname', {
+      field('informant.name', {
         conditionals: [],
-        searchCriteriaLabelPrefix: informantPrefix
-      }).fuzzy(),
-      field('informant.surname', {
-        conditionals: [],
-        searchCriteriaLabelPrefix: informantPrefix
+        validations: []
       }).fuzzy()
     ]
   }

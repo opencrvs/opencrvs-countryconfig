@@ -120,6 +120,7 @@ export const father = defineFormPage({
       id: 'father.dob',
       type: 'DATE',
       required: true,
+      secured: true,
       validation: [
         {
           message: {
@@ -360,6 +361,7 @@ export const father = defineFormPage({
       id: 'father.address',
       type: FieldType.ADDRESS,
       hideLabel: true,
+      secured: true,
       label: {
         defaultMessage: 'Usual place of residence',
         description: 'This is the label for the field',
