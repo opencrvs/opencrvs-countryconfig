@@ -873,6 +873,7 @@ services:
       - APN_SERVICE_URL=http://apm-server:8200
       - CERT_PUBLIC_KEY_PATH=/run/secrets/jwt-public-key.{{ts}}
       - MONGO_URL=mongodb://config:${CONFIG_MONGODB_PASSWORD}@mongo1/application-config?replicaSet=rs0
+      - HEARTH_MONGO_URL=mongodb://hearth:${HEARTH_MONGODB_PASSWORD}@mongo1/hearth-dev?replicaSet=rs0
       - LOGIN_URL=https://login.{{hostname}}
       - CLIENT_APP_URL=https://register.{{hostname}}
       - DOMAIN={{hostname}}
@@ -1066,6 +1067,8 @@ services:
       - MOSIP_CREATE_PACKET_URL=${MOSIP_CREATE_PACKET_URL}
       - MOSIP_PROCESS_PACKET_URL=${MOSIP_PROCESS_PACKET_URL}
       - MOSIP_VERIFIABLE_CREDENTIAL_ALLOWLIST=${MOSIP_VERIFIABLE_CREDENTIAL_ALLOWLIST}
+      - MOSIP_CENTER_ID=${MOSIP_CENTER_ID}
+      - MOSIP_MACHINE_ID=${MOSIP_MACHINE_ID}
     deploy:
       replicas: 1
       labels:
