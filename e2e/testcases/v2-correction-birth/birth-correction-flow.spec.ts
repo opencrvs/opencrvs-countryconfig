@@ -183,8 +183,29 @@ test.describe.serial('Birth correction flow', () => {
     ).toBeVisible()
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+    await expectInUrl(page, `/events/overview/${eventId}`)
   })
 
-  // @TODO: check that correction request appears correctly in workqueues and can be accepted/declined
-  test.skip('Check that correction request appears correctly in workqueues', async () => {})
+  test('Correction request action appears in audit history', async () => {
+    await page.getByRole('button', { name: '2', exact: true }).click()
+    await expect(
+      page.getByRole('button', { name: 'Correction requested', exact: true })
+    ).toBeVisible()
+  })
+
+  test('Correction request audit history modal opens when action is clicked', async () => {
+    await page
+      .getByRole('button', { name: 'Correction requested', exact: true })
+      .click()
+
+    await page.locator('#close-btn').click()
+  })
+
+  test("Event appears in 'Sent for approval' workqueue", async () => {
+    await page.getByRole('button', { name: 'Sent for approval' }).click()
+
+    await expect(
+      page.getByRole('button', { name: formatV2ChildName(declaration) })
+    ).toBeVisible()
+  })
 })

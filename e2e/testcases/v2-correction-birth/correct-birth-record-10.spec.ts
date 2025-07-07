@@ -558,31 +558,26 @@ test.describe('10. Correct record', () => {
           page.locator('#listTable-corrections-table-child')
         ).toContainText(`Weight at birth${updatedChildDetails.weightAtBirth}`)
 
-        /*
-         * Expected result: should enable the Send for approval button
-         */
         await page
           .getByRole('button', { name: 'Submit correction request' })
           .click()
         await page.getByRole('button', { name: 'Confirm' }).click()
 
         /*
+         * Expected result: should be navigated to event overview
+         */
+        await expectInUrl(page, `/events/overview/${eventId}`)
+
+        /*
          * Expected result: should
-         * - be navigated to sent for approval tab
+         * - be navigated to Sent for approval workqueue
          * - include the declaration in this tab
          */
-        expect(page.url().includes('/workqueue/assigned-to-you')).toBeTruthy()
         await page.getByRole('button', { name: 'Sent for approval' }).click()
 
-        // @TODO: check this after the correction requests are displayed in correct workqueues:
-        // https://github.com/opencrvs/opencrvs-core/issues/9776
-        // await expect(
-        //   page
-        //     .getByText(
-        //       `${declaration['child.name'].firstname} ${declaration['child.name'].surname}`
-        //     )
-        //     .first()
-        // ).toBeVisible()
+        await expect(
+          page.getByRole('button', { name: formatV2ChildName(declaration) })
+        ).toBeVisible()
       })
     })
 
