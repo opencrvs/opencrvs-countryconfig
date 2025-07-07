@@ -304,6 +304,7 @@ services:
 
   # Configure elasticsearch
   minio:
+    image: quay.io/minio/minio:RELEASE.2025-06-13T11-33-47Z-cpuv1
     environment:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER}
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
@@ -340,7 +341,7 @@ services:
       - overlay_net
 
   minio-mc:
-    image: minio/mc:RELEASE.2023-09-13T23-08-58Z
+    image: minio/mc:RELEASE.2025-05-21T01-59-54Z-cpuv1
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc admin trace --path ocrvs/* minio
@@ -586,6 +587,10 @@ services:
       - INFOBIP_API_KEY=${INFOBIP_API_KEY:-}
       - INFOBIP_SENDER_ID=${INFOBIP_SENDER_ID:-}
       - DOMAIN={{hostname}}
+      - ESIGNET_REDIRECT_URL=${ESIGNET_REDIRECT_URL:-}
+      - MOSIP_API_USERINFO_URL=${MOSIP_API_USERINFO_URL:-}
+      - OPENID_PROVIDER_CLAIMS=${OPENID_PROVIDER_CLAIMS:-}
+      - OPENID_PROVIDER_CLIENT_ID=${OPENID_PROVIDER_CLIENT_ID:-}
     networks:
       - overlay_net
     logging:
@@ -1036,46 +1041,8 @@ services:
         tag: 'webhooks'
 
   dashboards:
-    volumes:
-      - /data/metabase:/data/metabase
-      # Exceed Docker config file 500 kb file limit, thus a volume mount
-      - /opt/opencrvs/infrastructure/metabase/metabase.init.db.sql:/metabase.init.db.sql
-    networks:
-      - overlay_net
-    environment:
-      # Note that only mongo1 is used here on purpose for all environments
-      # https://discourse.metabase.com/t/solved-add-mongodb-replicaset-database/7404/2
-      - OPENCRVS_METABASE_DB_HOST=mongo1
-      - OPENCRVS_METABASE_DB_USER=performance
-      - OPENCRVS_METABASE_DB_PASS=${PERFORMANCE_MONGODB_PASSWORD}
-      - OPENCRVS_METABASE_DB_AUTH_DB=performance
-      - OPENCRVS_METABASE_SITE_NAME=OpenCRVS Dashboards
-      - OPENCRVS_METABASE_SITE_URL=http://metabase.{{hostname}}
-      - OPENCRVS_METABASE_MAP_NAME=Farajaland
-      - OPENCRVS_METABASE_MAP_URL=http://countryconfig:3040/content/map.geojson
-      - OPENCRVS_METABASE_MAP_REGION_KEY=State
-      - OPENCRVS_METABASE_MAP_REGION_NAME=State
-      - OPENCRVS_METABASE_ADMIN_EMAIL=${OPENCRVS_METABASE_ADMIN_EMAIL}
-      - OPENCRVS_METABASE_ADMIN_PASSWORD=${OPENCRVS_METABASE_ADMIN_PASSWORD}
     deploy:
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.metabase.rule=Host(`metabase.{{hostname}}`)'
-        - 'traefik.http.services.metabase.loadbalancer.server.port=4444'
-        - 'traefik.http.routers.metabase.tls=true'
-        - 'traefik.http.routers.metabase.tls.certresolver=certResolver'
-        - 'traefik.http.routers.metabase.entrypoints=web,websecure'
-        - 'traefik.docker.network=opencrvs_overlay_net'
-        - 'traefik.http.middlewares.metabase.headers.customresponseheaders.Pragma=no-cache'
-        - 'traefik.http.middlewares.metabase.headers.customresponseheaders.Cache-control=no-store'
-        - 'traefik.http.middlewares.metabase.headers.customresponseheaders.X-Robots-Tag=none'
-        - 'traefik.http.middlewares.metabase.headers.stsseconds=31536000'
-        - 'traefik.http.middlewares.metabase.headers.stsincludesubdomains=true'
-        - 'traefik.http.middlewares.metabase.headers.stspreload=true'
-      replicas: 1
-      placement:
-        constraints:
-          - node.labels.data1 == true
+      replicas: 0
 secrets:
   redis-acl.{{ts}}:
     external: true

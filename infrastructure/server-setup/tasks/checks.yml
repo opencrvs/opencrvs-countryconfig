@@ -14,6 +14,8 @@
       - mongodb_admin_username is defined
       - mongodb_admin_password is defined
       - elasticsearch_superuser_password is defined
+      - postgres_admin_username is defined
+      - postgres_admin_password is defined
       - encrypted_disk_size is defined
 
 - name: 'Prevent single-node configuration in production'

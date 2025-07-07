@@ -1,3 +1,13 @@
+- name: Ensure rsync is installed
+  package:
+    name: rsync
+    state: present
+
+- name: Ensure uuidgen is installed
+  package:
+    name: uuid-runtime
+    state: present
+
 - name: 'Install pip3'
   apt:
     name: python3-pip

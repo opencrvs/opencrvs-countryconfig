@@ -258,3 +258,5 @@
       MONGODB_ADMIN_USER={{ mongodb_admin_username }}
       ELASTICSEARCH_ADMIN_PASSWORD={{elasticsearch_superuser_password}}
       ELASTICSEARCH_ADMIN_USER=elastic
+      POSTGRES_USER={{ postgres_admin_username | default('postgres') }}
+      POSTGRES_PASSWORD={{ postgres_admin_password }}

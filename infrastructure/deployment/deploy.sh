@@ -76,12 +76,12 @@ echo $COMPOSE_FILES_USED
 # .env.qa
 # .env.development
 # .env.production
-if [ -f $PROJECT_ROOT/.env.$ENV ]
-then
-  while IFS='' read -r line || [[ -n "$line" ]]; do
-    eval "export $line"
-  done < $PROJECT_ROOT/.env.$ENV
-fi
+# if [ -f $PROJECT_ROOT/.env.$ENV ]
+# then
+#   while IFS='' read -r line || [[ -n "$line" ]]; do
+#     eval "export $line"
+#   done < $PROJECT_ROOT/.env.$ENV
+# fi
 
 trap trapint SIGINT SIGTERM
 function trapint {
@@ -303,6 +303,10 @@ docker_stack_deploy() {
     fi
 
     echo "Downloading $tag"
+    if [[ $tag == *"dashboard"* ]]; then
+      echo "Skipping $tag as it contains 'dashboard'"
+      continue
+    fi
 
     until configured_ssh "cd /opt/opencrvs && docker pull $tag"
     do
@@ -356,6 +360,8 @@ export WEBHOOKS_REDIS_PASSWORD=`generate_password`
 
 export EVENTS_APP_POSTGRES_PASSWORD=`generate_password`
 export EVENTS_MIGRATOR_POSTGRES_PASSWORD=`generate_password`
+export POSTGRES_USER=postgres
+export POSTGRES_PASSWORD=`generate_password`
 
 #
 # Elasticsearch credentials
