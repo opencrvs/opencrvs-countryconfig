@@ -1,6 +1,21 @@
 name: Provision environment
 run-name: Provision ${{ github.event.inputs.environment }}
 on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: Environment to deploy to
+        required: true
+      tag:
+        type: string
+        description: Environment to deploy to
+        default: all
+      is_env_staging:
+        type: boolean
+        description: Is custom environment a staging like server
+        default: false
+        
   workflow_dispatch:
     inputs:
       environment:
