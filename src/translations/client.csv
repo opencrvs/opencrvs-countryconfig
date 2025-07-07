@@ -2852,6 +2852,7 @@ v2.print.certificate.review.modal.body.print,Print certificate modal body text,A
 v2.print.certificate.review.modal.body.printAndIssue,Print certificate modal body text,A Pdf of the certificate will open in a new tab for printing and issuing.,A Pdf of the certificate will open in a new tab for printing and issuing.
 v2.print.certificate.review.printAndIssueModalTitle,Print and issue certificate modal title text,Print and issue certificate?,Imprimer et émettre le certificat ?
 v2.print.certificate.review.printModalTitle,Print certificate modal title text,Print certificate?,Imprimer le certificat ?
+v2.print.certificate.toast.message,Floating Toast message upon certificate ready to print,Certificate is ready to print,Le certificat est prêt à être imprimé
 v2.printAction.description,The description for print action,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.,Veuillez confirmer que l'informateur a vérifié que les informations figurant sur le certificat sont correctes et que celui-ci est prêt à être imprimé.
 v2.printAction.title,The title for print action,Print certificate,Imprimer le certificat
 v2.regHome.issued,Label for workqueue tooltip,Empty message,Empty message
