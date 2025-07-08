@@ -1,5 +1,5 @@
 name: Seed data
-run-name: Seed data to ${{ github.event.inputs.environment }} core=${{ github.event.inputs.core-image-tag }}
+run-name: Seed data to ${{ inputs.environment }} core=${{ inputs.core-image-tag }}
 on:
   workflow_call:
     inputs:
@@ -21,12 +21,16 @@ on:
           - qa
           - staging
           - production
+          - e2e
+          - v17
       core-image-tag:
         description: Core DockerHub image tag
 jobs:
   seed-data:
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-22.04
+    outputs:
+      outcome: ${{ steps.seed.outcome }}
     timeout-minutes: 60
     steps:
       - name: Clone core
