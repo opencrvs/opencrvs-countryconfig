@@ -420,7 +420,9 @@ test.describe('1. Death event declaration', () => {
 
         await ensureOutboxIsEmpty(page)
 
-        await expect(page.getByText(deceased.name.firstname)).toBeVisible()
+        await expect(
+          page.getByText(deceased.name.firstname, { exact: true })
+        ).toBeVisible()
       })
     })
   })
@@ -476,7 +478,9 @@ test.describe('1. Death event declaration', () => {
 
       await ensureOutboxIsEmpty(page)
 
-      await expect(page.getByText(deceased.name.firstname)).toBeHidden()
+      await expect(
+        page.getByText(deceased.name.firstname, { exact: true })
+      ).toBeHidden()
     })
   })
 
@@ -537,7 +541,9 @@ test.describe('1. Death event declaration', () => {
 
       await ensureOutboxIsEmpty(page)
 
-      await expect(page.getByText(deceased.name.firstname)).toBeHidden()
+      await expect(
+        page.getByText(deceased.name.firstname, { exact: true })
+      ).toBeHidden()
     })
 
     // @TODO: This test is not implemented in V2 events yet

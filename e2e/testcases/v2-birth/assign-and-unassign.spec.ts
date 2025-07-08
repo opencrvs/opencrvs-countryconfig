@@ -20,11 +20,14 @@ test.describe.serial('Assign & Unassign', () => {
     const res = await createDeclaration(token)
     declaration = res.declaration
     page = await browser.newPage()
-    await loginToV2(page)
   })
 
   test.afterAll(async () => {
     await page.close()
+  })
+
+  test('Login', async () => {
+    await loginToV2(page)
   })
 
   test('Click on "Assign" from action menu', async () => {
