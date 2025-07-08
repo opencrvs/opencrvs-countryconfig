@@ -8,7 +8,8 @@ import {
   loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
+import { CREDENTIALS } from '../../../constants'
+import { ensureOutboxIsEmpty } from '../../../v2-utils'
 
 test.describe.serial('6. Death declaration case - 6', () => {
   let page: Page
@@ -499,7 +500,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
       await page.getByRole('button', { name: 'Register' }).click()
       await expect(page.getByText('Register the death?')).toBeVisible()
       await page.locator('#confirm_Declare').click()
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
       /*
@@ -526,7 +527,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
     test('6.2.1 Navigate to the declaration review page', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await page.getByText('Ready to print').click()
 
       await page

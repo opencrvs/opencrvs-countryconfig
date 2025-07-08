@@ -8,7 +8,8 @@ import {
   loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
+import { CREDENTIALS } from '../../../constants'
+import { ensureOutboxIsEmpty } from '../../../v2-utils'
 
 test.describe.serial('7. Death declaration case - 7', () => {
   let page: Page
@@ -521,7 +522,7 @@ test.describe.serial('7. Death declaration case - 7', () => {
       await page.getByRole('button', { name: 'Register' }).click()
       await expect(page.getByText('Register the death?')).toBeVisible()
       await page.locator('#confirm_Declare').click()
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
       /*

@@ -9,8 +9,8 @@ import {
   formatDateObjectTo_dMMMMyyyy
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
-import { selectAction } from '../../v2-utils'
+import { CREDENTIALS } from '../../constants'
+import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 
 test.describe.serial('8. Validate declaration review page', () => {
   let page: Page
@@ -697,7 +697,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
     test('8.1.8 Confirm the declaration to send for review', async () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
       /*
@@ -724,7 +724,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     test('8.2.1 Navigate to the declaration preview page', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await page.getByText('Notifications').click()
 
       await page
@@ -1154,7 +1154,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
     test('8.2.7 Confirm the declaration to send for approval', async () => {
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
 
       await page.getByText('Sent for approval').click()
       /*
@@ -1175,7 +1175,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     test('8.3.1 Navigate to the declaration preview page', async () => {
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await page.getByText('Ready for review').click()
 
       await page
@@ -1645,7 +1645,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
     test('8.3.7 Confirm the declaration to ready for print', async () => {
       await page.locator('#confirm_Register').click()
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await page.getByText('Ready to print').click()
 
       /*

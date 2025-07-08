@@ -8,8 +8,8 @@ import {
   loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
-import { selectAction } from '../../../v2-utils'
+import { CREDENTIALS } from '../../../constants'
+import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 
 test.describe.serial('5. Death declaration case - 5', () => {
   let page: Page
@@ -514,7 +514,7 @@ test.describe.serial('5. Death declaration case - 5', () => {
       await page.getByRole('button', { name: 'Send for approval' }).click()
       await expect(page.getByText('Send for approval?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
       /*
@@ -541,7 +541,7 @@ test.describe.serial('5. Death declaration case - 5', () => {
     test('5.2.1 Navigate to the declaration review page', async () => {
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await page.getByText('Ready for review').click()
 
       await page

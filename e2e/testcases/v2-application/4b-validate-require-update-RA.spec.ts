@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-import { loginToV2, getToken, getAction } from '../../helpers'
+import { loginToV2, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import {
   createDeclaration,
@@ -9,7 +9,7 @@ import {
 } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { ensureAssigned, selectAction } from '../../v2-utils'
+import { ensureAssigned, ensureOutboxIsEmpty } from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
@@ -120,10 +120,7 @@ test.describe
     // Should redirect back to requires update workqueue
     await expect(page.locator('#content-name')).toHaveText('Requires updates')
 
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
-    await page.getByText('Recent').click()
-    await page.waitForTimeout(500)
-    await page.getByText('Requires updates').click()
+    await ensureOutboxIsEmpty(page)
 
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
