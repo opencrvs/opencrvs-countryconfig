@@ -45,7 +45,7 @@
     </text>
     <g clip-path="url(#clip3_1157_5058)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="229.583">{{$lookup $declaration "deceased.firstname"}} {{$lookup $declaration "deceased.surname"}}</tspan>
+        <tspan x="289.95" y="229.583">{{$lookup $declaration "deceased.name"}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="246.155" x2="512.08" y2="246.155" stroke="#ECECEC" stroke-width="0.97" />

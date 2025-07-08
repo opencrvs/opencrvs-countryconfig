@@ -26,7 +26,7 @@ const spouseDoesNotExist = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      field('spouse.firstname').isFalsy()
+      field('spouse.name').isFalsy()
     )
   }
 }
@@ -36,7 +36,7 @@ const spouseExists = (informantType: InformantTypeKey) => {
     type: ConditionalType.SHOW,
     conditional: and(
       field('informant.relation').isEqualTo(informantType),
-      not(field('spouse.firstname').isFalsy())
+      not(field('spouse.name').isFalsy())
     )
   }
 }
