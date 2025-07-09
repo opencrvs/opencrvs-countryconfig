@@ -1,16 +1,15 @@
 import { expect, test, type Page } from '@playwright/test'
+import { getToken, loginToV2 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
-import { loginToV2 } from '../../../helpers'
-import { getToken } from '../../../helpers'
 import {
   createDeclaration,
   Declaration
-} from '../../v2-test-data/birth-declaration'
+} from '../../v2-test-data/death-declaration'
 import {
-  selectRequesterType,
+  navigateToCertificatePrintAction,
   selectCertificationType,
-  navigateToCertificatePrintAction
-} from './helpers'
+  selectRequesterType
+} from '../death/helpers'
 import { expectInUrl } from '../../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
 
@@ -21,8 +20,8 @@ async function selectIdType(page: Page, idType: string) {
 
 test.describe.serial('Validate collect payment page', () => {
   let eventId: string
-  let declaration: Declaration
   let page: Page
+  let declaration: Declaration
 
   test.beforeAll(async ({ browser }) => {
     const token = await getToken(
@@ -49,7 +48,7 @@ test.describe.serial('Validate collect payment page', () => {
   })
 
   test('5.1 check collect payment page header', async () => {
-    await selectCertificationType(page, 'Birth Certificate')
+    await selectCertificationType(page, 'Death Certificate')
     await selectRequesterType(page, 'Print and issue to someone else')
   })
 
@@ -58,7 +57,7 @@ test.describe.serial('Validate collect payment page', () => {
     await expect(page.locator('#collector____PASSPORT____details')).toBeHidden()
   })
 
-  test('5.2 should be able to select any type of id and correspondent id input will be visible', async () => {
+  test('5.2 should be able to select any type of id and corresponding id input will be visible', async () => {
     await selectIdType(page, 'Passport')
     await expect(
       page.locator('#collector____PASSPORT____details')
@@ -70,47 +69,49 @@ test.describe.serial('Validate collect payment page', () => {
     ).toBeVisible()
   })
 
-  test('5.2 should be able to select National ID and correspondent id input will be visible with validation rules', async () => {
+  test('5.2 should be able to select National ID and corresponding id input will be visible with validation rules', async () => {
     await selectIdType(page, 'National ID')
     await page.fill('#collector____nid', '1234567')
-    await page.getByRole('heading', { name: 'Birth', exact: true }).click()
+    await page.getByRole('heading', { name: 'Death', exact: true }).click()
 
     await expect(page.locator('#collector____nid_error')).toContainText(
       'The national ID can only be numeric and must be 10 digits long'
     )
     await page.fill('#collector____nid', '1235678922')
-    await page.getByRole('heading', { name: 'Birth', exact: true }).click()
+    await page.getByRole('heading', { name: 'Death', exact: true }).click()
     await expect(page.locator('#collector____nid_error')).toBeHidden()
   })
 
   test('5.3 should be able to enter first name', async () => {
-    await page.fill('#firstname', 'Muhammed Tareq')
-    await expect(page.locator('#firstname')).toHaveValue('Muhammed Tareq')
+    await page.fill('#firstname', 'James Henry')
+    await expect(page.locator('#firstname')).toHaveValue('James Henry')
   })
 
   test('5.4 should be able to enter last name', async () => {
-    await page.fill('#surname', 'Aziz')
-    await expect(page.locator('#surname')).toHaveValue('Aziz')
+    await page.fill('#surname', 'Smith')
+    await expect(page.locator('#surname')).toHaveValue('Smith')
   })
 
   test('5.5 keep relationship null and continue', async () => {
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(
       page
-        .locator('#collector____OTHER____relationshipToChild_error')
+        .locator('#collector____OTHER____relationshipToDeceased_error')
         .getByText(REQUIRED_VALIDATION_ERROR)
     ).toBeVisible()
   })
 
   test('5.6 should be able to enter relationship', async () => {
-    await page.fill('#collector____OTHER____relationshipToChild', 'Uncle')
+    await page.fill('#collector____OTHER____relationshipToDeceased', 'Uncle')
     await expect(
-      page.locator('#collector____OTHER____relationshipToChild')
+      page.locator('#collector____OTHER____relationshipToDeceased')
     ).toHaveValue('Uncle')
-    await page.getByRole('heading', { name: 'Birth', exact: true }).click()
+    await page.getByRole('heading', { name: 'Death', exact: true }).click()
   })
 
-  test.describe('6.0 Validate "Upload signed affidavit":', async () => {
+  test("5.7 Fill all mandatory field and click 'Continue' should navigate to affidavit page", async () => {})
+
+  test.describe('6.0 Validate "Upload signed affidavit" page:', async () => {
     test('6.1 Should be able to add file and navigate to the "Ready to certify?" page.', async () => {
       const path = require('path')
       const attachmentPath = path.resolve(__dirname, './528KB-random.png')

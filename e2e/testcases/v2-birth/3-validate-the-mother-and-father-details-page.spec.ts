@@ -86,7 +86,7 @@ test.describe('3. Validate the mothers and fathers details pages', () => {
 
       /*
        * Expected result: should throw error in application review page:
-       * - Required for registration
+       * - Required
        */
       await expect(
         page

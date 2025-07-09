@@ -1,16 +1,15 @@
 import { expect, test, type Page } from '@playwright/test'
-
-import { loginToV2, getToken } from '../../../helpers'
+import { getToken, loginToV2 } from '../../../helpers'
 import { CREDENTIALS } from '../../../constants'
 import {
   createDeclaration,
   Declaration
-} from '../../v2-test-data/birth-declaration'
-import { navigateToCertificatePrintAction } from './helpers'
-import { expectInUrl } from '../../../v2-utils'
+} from '../../v2-test-data/death-declaration'
+import { navigateToCertificatePrintAction } from '../death/helpers'
 import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
+import { expectInUrl } from '../../../v2-utils'
 
-test.describe.serial('Print certificate', () => {
+test.describe.serial('Certified copies', () => {
   let page: Page
   let declaration: Declaration
 
@@ -38,13 +37,13 @@ test.describe.serial('Print certificate', () => {
   })
 
   test.describe('2.0 Validate "Certify record" page', async () => {
-    test('2.1 Template type should be selected by default', async () => {
+    test('2.1 Click continue without selecting collector type and template type', async () => {
       await expect(
-        page.locator('#certificateTemplateId').getByText('Birth Certificate')
+        page.locator('#certificateTemplateId').getByText('Death Certificate')
       ).toBeVisible()
     })
 
-    test('2.2 Click continue without selecting requester type', async () => {
+    test('2.2 Click continue without selecting collector type', async () => {
       await page.getByRole('button', { name: 'Continue' }).click()
 
       await expect(
@@ -58,7 +57,7 @@ test.describe.serial('Print certificate', () => {
       await page.reload({ waitUntil: 'networkidle' })
       await page.locator('#collector____requesterId').click()
       const selectOptionsLabels = [
-        'Print and issue to Informant (Mother)',
+        'Print and issue to Informant (Spouse)',
         'Print and issue to someone else'
       ]
       for (const label of selectOptionsLabels) {

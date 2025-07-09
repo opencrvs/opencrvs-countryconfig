@@ -8,7 +8,7 @@ import {
 } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { selectAction } from '../../v2-utils'
+import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
@@ -90,7 +90,7 @@ test.describe
     // Should not redirect back to Ready for review workqueue, rather go to the first one
     await expect(page.locator('#content-name')).toHaveText('Assigned to you')
 
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
+    await ensureOutboxIsEmpty(page)
     await page.getByText('Ready for review').click()
 
     await expect(

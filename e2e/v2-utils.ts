@@ -67,7 +67,7 @@ export async function ensureAssigned(page: Page) {
 
   if (await unAssignAction.isVisible()) {
     await unAssignAction.click()
-    await page.waitForTimeout(500) // Give some time to unassign
+    await ensureOutboxIsEmpty(page)
     await expect(page.getByTestId('assignedTo-value')).toHaveText(
       'Not assigned'
     )
@@ -81,7 +81,18 @@ export async function ensureAssigned(page: Page) {
 
   if (await assignAction.isVisible()) {
     await assignAction.click()
-    await page.waitForTimeout(500) // Give some time to assign
+    /**
+     * We need to wait a while before assign mutation goes to outbox.
+     * Reason: We have `await refetchEvent()` before assign mutation is fired
+     */
+
+    await expect(page.locator('#navigation_workqueue_outbox')).toContainText(
+      '1',
+      {
+        timeout: SAFE_OUTBOX_TIMEOUT_MS
+      }
+    )
+    await ensureOutboxIsEmpty(page)
   }
 
   await expect(page.getByTestId('assignedTo-value')).not.toHaveText(
