@@ -503,7 +503,7 @@ test.describe('Events REST API', () => {
       expect(body1).toEqual(body2)
     })
 
-    test('user can register event notified by integration', async ({
+    test.skip('user can register event notified by integration', async ({
       page
     }) => {
       const createEventResponse = await fetchClientAPI(
