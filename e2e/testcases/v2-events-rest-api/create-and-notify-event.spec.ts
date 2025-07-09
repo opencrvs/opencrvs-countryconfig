@@ -381,7 +381,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(404)
     })
 
-    test.skip('HTTP 200 with valid payload', async ({ page }) => {
+    test('HTTP 200 with valid payload', async ({ page }) => {
       const createEventResponse = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -503,7 +503,7 @@ test.describe('Events REST API', () => {
       expect(body1).toEqual(body2)
     })
 
-    test.skip('user can register event notified by integration', async ({
+    test('user can register event notified by integration', async ({
       page
     }) => {
       const createEventResponse = await fetchClientAPI(
