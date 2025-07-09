@@ -4,13 +4,17 @@ import { loginToV2, getToken } from '../../helpers'
 import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
 import {
   createDeclaration,
-  Declaration,
-  rejectDeclaration
+  Declaration
 } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { ensureAssigned, ensureOutboxIsEmpty } from '../../v2-utils'
+import {
+  ensureAssigned,
+  ensureOutboxIsEmpty,
+  selectAction
+} from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
+import { faker } from '@faker-js/faker'
 
 test.describe
   .serial('4(b) Validate Requires update tab for registration agent', () => {
@@ -47,15 +51,13 @@ test.describe
   })
 
   test('4.0.3 Reject a declaration', async () => {
-    await ensureAssigned(page)
+    await selectAction(page, 'Register')
 
-    await rejectDeclaration(
-      await getToken(
-        CREDENTIALS.LOCAL_REGISTRAR.USERNAME,
-        CREDENTIALS.LOCAL_REGISTRAR.PASSWORD
-      ),
-      eventId
-    )
+    await page.getByRole('button', { name: 'Reject' }).click()
+
+    await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
+
+    await page.getByRole('button', { name: 'Send For Update' }).click()
   })
 
   test('4.1 Go to Requires update tab', async () => {
