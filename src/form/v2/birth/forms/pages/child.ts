@@ -177,16 +177,6 @@ export const child = defineFormPage({
       id: 'child.birthTime',
       type: 'TIME',
       required: true,
-      validation: [
-        {
-          message: {
-            defaultMessage: 'Must be a valid Time',
-            description: 'This is the error message for invalid time',
-            id: 'v2.event.birth.action.declare.form.section.child.field.birthTime.error'
-          },
-          validator: field('child.birthTime').isBefore().now()
-        }
-      ],
       label: {
         defaultMessage: 'Birth Time',
         description: 'This is the label for the field',
@@ -301,7 +291,38 @@ export const child = defineFormPage({
         urbanOrRural: 'URBAN'
       }
     },
-    // NUI — should be a http button to generate a UI number and becomes a disabled field
+    // FIXME: to be replaced with the full component — NUI
+    {
+      id: 'child.NUI',
+      type: FieldType.NUMBER,
+      required: true,
+      label: {
+        defaultMessage: 'NUI',
+        description: 'This is the label for the field',
+        id: 'v2.event.birth.action.declare.form.section.child.field.NUI.label'
+      },
+      validation: [
+        {
+          message: {
+            defaultMessage: 'Must be within 0 and 999999999',
+            description: 'This is the error message for invalid number range',
+            id: 'v2.error.child.NUI'
+          },
+          validator: or(
+            field('child.NUI').isBetween(0, 999999999),
+            field('child.NUI').isUndefined()
+          )
+        }
+      ],
+      configuration: {
+        min: 0,
+        postfix: {
+          defaultMessage: 'NUI',
+          description: 'This is the postfix for the weight field',
+          id: 'v2.event.birth.action.declare.form.section.child.field.NUI.postfix'
+        }
+      }
+    },
     {
       id: 'child.legacyRegistrationNumber',
       type: FieldType.NUMBER,
@@ -357,16 +378,6 @@ export const child = defineFormPage({
       id: 'child.legacyRegistrationBirthTime',
       type: 'TIME',
       required: true,
-      validation: [
-        {
-          message: {
-            defaultMessage: 'Must be a valid Time',
-            description: 'This is the error message for invalid time',
-            id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationBirthTime.error'
-          },
-          validator: field('child.legacyRegistrationBirthTime').isBefore().now()
-        }
-      ],
       label: {
         defaultMessage: 'Legacy birth registration time',
         description: 'This is the label for the field',
