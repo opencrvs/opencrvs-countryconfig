@@ -381,7 +381,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(404)
     })
 
-    test.skip('HTTP 200 with valid payload', async ({ page }) => {
+    test('HTTP 200 with valid payload', async ({ page }) => {
       const createEventResponse = await fetchClientAPI(
         '/api/events/events',
         'POST',
