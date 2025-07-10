@@ -19,9 +19,11 @@ import * as Pino from 'hapi-pino'
 import * as JWT from 'hapi-auth-jwt2'
 import * as inert from '@hapi/inert'
 import * as Sentry from 'hapi-sentry'
+import * as H2o2 from '@hapi/h2o2'
 import {
   CLIENT_APP_URL,
   DOMAIN,
+  GATEWAY_URL,
   LOGIN_URL,
   SENTRY_DSN
 } from '@countryconfig/constants'
@@ -32,6 +34,7 @@ import {
   AUTH_URL,
   DEFAULT_TIMEOUT
 } from '@countryconfig/constants'
+import { statisticsHandler } from '@countryconfig/api/data-generator/handler'
 import {
   contentHandler,
   countryLogoHandler
@@ -71,6 +74,19 @@ import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
+import { env } from './environment'
+import {
+  mosipRegistrationForApprovalHandler,
+  mosipRegistrationForReviewHandler,
+  mosipRegistrationHandler,
+  verify
+} from '@opencrvs/mosip'
+import {
+  fhirBirthToMosip,
+  fhirDeathToMosip,
+  shouldForwardToIDSystem
+} from './utils/mosip'
+import { getEventType } from './utils/fhir'
 
 export interface ITokenPayload {
   sub: string
@@ -80,7 +96,7 @@ export interface ITokenPayload {
 }
 
 export default function getPlugins() {
-  const plugins: any[] = [inert, JWT]
+  const plugins: any[] = [inert, JWT, H2o2]
 
   if (process.env.NODE_ENV === 'production') {
     plugins.push({
@@ -109,7 +125,7 @@ export default function getPlugins() {
   return plugins
 }
 
-const getTokenPayload = (token: string): ITokenPayload => {
+export const getTokenPayload = (token: string): ITokenPayload => {
   let decoded: ITokenPayload
   try {
     decoded = decode(token)
@@ -430,7 +446,33 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/event-registration',
-    handler: eventRegistrationHandler,
+    handler: async (request, h) => {
+      const url = env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+      const result = await verify({ url, request })
+      const bundle = request.payload as fhir.Bundle
+
+      if (shouldForwardToIDSystem(request.payload as fhir.Bundle, result)) {
+        const payload =
+          getEventType(bundle) === 'BIRTH'
+            ? fhirBirthToMosip(bundle)
+            : fhirDeathToMosip(bundle)
+
+        logger.info(
+          'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
+        )
+
+        return mosipRegistrationHandler({
+          url,
+          headers: request.headers,
+          payload
+        })(request, h)
+      } else {
+        logger.info(
+          'Failed country specified custom logic check for id creation. Bypassing id system...'
+        )
+        return eventRegistrationHandler(request, h)
+      }
+    },
     options: {
       tags: ['api'],
       description:
@@ -447,6 +489,17 @@ export async function createServer() {
     options: {
       tags: ['api'],
       description: 'Serves country wise crude death rate'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/statistics',
+    handler: statisticsHandler,
+    options: {
+      tags: ['api'],
+      description:
+        'Returns population and crude birth rate statistics for each location'
     }
   })
 
@@ -548,6 +601,37 @@ export async function createServer() {
   })
 
   server.route({
+    method: '*',
+    path: '/graphql',
+    handler: (_, h) =>
+      h.proxy({
+        uri: `${GATEWAY_URL}/graphql`,
+        passThrough: true
+      }),
+    options: {
+      auth: false,
+      payload: {
+        output: 'data',
+        parse: false
+      }
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/{param*}',
+    options: {
+      auth: false
+    },
+    handler: {
+      directory: {
+        path: 'public',
+        index: ['index.html', 'default.html']
+      }
+    }
+  })
+
+  server.route({
     method: 'GET',
     path: '/static/{param*}',
     handler: {
@@ -591,6 +675,43 @@ export async function createServer() {
     options: {
       tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/sent-notification',
+    handler: mosipRegistrationForReviewHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on sent-notification action'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/sent-notification-for-review',
+    handler: mosipRegistrationForReviewHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api', 'custom-event'],
+      description:
+        'Receives notifications on sent-notification-for-review action'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/sent-for-approval',
+    handler: mosipRegistrationForApprovalHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on sent-for-approval action'
     }
   })
 

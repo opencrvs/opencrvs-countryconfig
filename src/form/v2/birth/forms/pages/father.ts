@@ -15,8 +15,8 @@ import {
   ConditionalType,
   defineFormPage,
   FieldType,
-  never,
-  field
+  field,
+  never
 } from '@opencrvs/toolkit/events'
 import { or, not } from '@opencrvs/toolkit/conditionals'
 import { emptyMessage } from '@countryconfig/form/v2/utils'

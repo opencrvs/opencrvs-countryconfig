@@ -17,6 +17,8 @@
 - Build OpenCRVS release images for arm devices [#9455](https://github.com/opencrvs/opencrvs-core/issues/9455)
 
 
+- **Upgrade ELK stack** to a AGPLv3 licensed version 8.16.4 [#8749](https://github.com/opencrvs/opencrvs-core/issues/8749)
+- **Github runners upgraded** to latest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045) and apply sticky node version from .nvmrc [#423](https://github.com/opencrvs/opencrvs-countryconfig/pull/423)
 - **Introduced `single_node` variable in inventory files** to define whether single-node clusters are allowed, set to false in production to enforce use of at least a two-node cluster. [#6918](https://github.com/opencrvs/opencrvs-core/issues/6918)
 
 ### New features
@@ -26,6 +28,7 @@
 ### Bug Fixes
 
 - Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
+- Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
 ## 1.7.2
 
@@ -86,7 +89,7 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 ### Breaking changes
 
 - `INFORMANT_SIGNATURE` & `INFORMANT_SIGNATURE_REQUIRED` are now deprecated
-- Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. Default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
+- Existing implementations relying on database-stored SVGs need to be updated to use the new configuration-based approach. A migration needs to be run (defined in [migration](https://github.com/opencrvs/opencrvs-core/pull/7813/files#diff-e5472dec87399bb9f73f75ec379ceb6a32ca135bc01dd8d0eb8f7d7aaa0bc0b1)), and default certificate templates must be created for each event type, following the convention `${event}-certificate` as the certificate template ID.
 - **Roles** The previous `roles.csv` file has been deprecated. It will get removed once you run the upgrade command before pulling in the v1.7 changes. The command automatically generates a `roles.ts` file which can be used as a baseline to configure the roles as per your requirements.
 - **Github runners upgraded** to latest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045) and apply sticky node version from .nvmrc [#423](https://github.com/opencrvs/opencrvs-countryconfig/pull/423)
 
@@ -113,7 +116,6 @@ In order to make the upgrade easier, there are a couple of steps that need to be
 - We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
 - Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
 - On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
-- Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
 ### Infrastructure breaking changes
 
@@ -233,6 +235,7 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 
 ### Bug fixes
 
+- Fix a typo in the birth certificate svg code that was causing the birth certificate to fail to render in the `print certified copy` flow. [7886](https://github.com/opencrvs/opencrvs-core/issues/7886)
 - We make sure that the automatic cleanup job only runs before deployment (instead of cron schedule cleanup).
 - Previously it was possible MongoDB replica set and users were left randomly uninitialised after a deployment. MongoDB initialisation container now retries on failure.
 - On some machines 'file' utility was not preinstalled causing provision to fail. We now install the utility if it doesn't exist.
@@ -321,13 +324,13 @@ INSERT CSV ROWS IN ENGLISH ONLY
 - Update template transformer for fields `informantType` and `otherInformantType` that fixes the bug of unavailability of these template fields [#5952](https://github.com/opencrvs/opencrvs-countryconfig/pull/5952)
 - Fixed missing InitialValue property to set initial values based on an expression
 
-## 1.5.2 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.5.1...v1.5.2)
+## [1.5.2](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.5.1...v1.5.2)
 
 ## Bug fixes
 
 - Broken email alerts from low disk space are now fixed [293](https://github.com/opencrvs/opencrvs-countryconfig/pull/293)
 
-## 1.5.0 (https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.1...v1.5.0)
+## [1.5.0](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.1...v1.5.0)
 
 ### Breaking changes
 
@@ -399,8 +402,11 @@ Follow the descriptions in the migration notes to re-provision all servers safel
 - Added SMTP environment variables into the qa compose file to enable QA of SMTP servers.
 - In the certificate, the 'Place of Certification' now accurately reflects the correct location.
 - Groom's and Bride's name, printIssue translation variables updated [#124](https://github.com/opencrvs/opencrvs-countryconfig/pull/124)
+- Change condition of Number of previous births
 - Add query mapper for International Postal Code field
 - Provide env variables for metabase admin credentials
+- Remove 'Other' dropdown when informant is mother or father [#7011](https://github.com/opencrvs/opencrvs-core/issues/7011)
+- Hide same as other primary address field if the other person's details not available [#7000](https://github.com/opencrvs/opencrvs-core/issues/7000)
 - Improved formatting of informant name for inProgress declaration emails
 - There is now an option to print the review page of an event declaration form. The PRINT_DECLARATION feature flag in application config settings can enable this on or off.
 
@@ -469,7 +475,7 @@ validations.invalidDate,The error message that appears when a date field is inva
 verifyCertificate.certifiedAt,Label for date of certification,Date of certification
 ```
 
-## [1.4.1](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.4.0...v1.4.1)
+## [1.4.1](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.4.0...v1.4.1)
 
 - Improved logging for emails being sent
 - Updated default Metabase init file so that it's compatible with the current Metabase version
@@ -481,7 +487,7 @@ verifyCertificate.certifiedAt,Label for date of certification,Date of certificat
 
 - Copy: All application copy is now located in src/translations as CSV files. This is so that copy would be easily editable in software like Excel and Google Sheets. After this change, `AVAILABLE_LANGUAGES_SELECT` doesn't need to be defined anymore by country config.
 
-## [1.4.0](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.3.3...v1.4.0)
+## [1.4.0](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.4.0)
 
 - Added examples for configuring HTTP-01, DNS-01, and manual HTTPS certificates. By default, development and QA environments use HTTP-01, while others use DNS-01.
 - All secrets & variables defined in Github Secrets are now passed automatically to the deployment script.
@@ -490,6 +496,7 @@ verifyCertificate.certifiedAt,Label for date of certification,Date of certificat
 - Each environment now has a dedicated docker-compose-<environment>-deploy.yml. Use `environment:init` to create a new environment and generate a corresponding file for customizable configurations.
 - 🔒 OpenHIM console is no longer exposed via HTTP.
 - Ansible playbooks are refactored into smaller task files.
+- Resolved the issue of National ID validation to prevent the informant, father, and mother from having the same ID.
 
 ### New features
 
@@ -523,18 +530,17 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 - The `infrastructure` directory and related pipelines will be moved to a new repository.
 - Both the new infrastructure repository and the OpenCRVS country resource package repositories will start following their own release cycles, mostly independent from the core's release cycle. From this release forward, both packages are released as "OpenCRVS minor compatible" releases, meaning that the OpenCRVS countryconfig 1.3.0-<incrementing release number> is compatible with OpenCRVS 1.3.0, 1.3.1, 1.3.2, etc. This allows for the release of new hotfix versions of the core without having to publish a new version of the infrastructure or countryconfig.
 
-## [1.3.4](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.3.3...v1.3.4)
+## [1.3.4](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.3...v1.3.4)
 
 ### Bug fixes
 
 - Fix typo in certificate handlebar names
 
-## [1.3.3](https://github.com/opencrvs/opencrvs-countryconfig/compare/v1.3.2...v1.3.3)
+## [1.3.3](https://github.com/opencrvs/opencrvs-farajaland/compare/v1.3.2...v1.3.3)
 
 ### New features
 
 - #### Greater customizability of location data in certificates
-
   The various admin level handlebars e.g. **statePlaceofbirth**,
   **districtPrimaryMother** only contained the name of that location which was
   not able to take advantage of all the information OpenCRVS had available
@@ -603,3 +609,5 @@ In the next OpenCRVS release v1.5.0, there will be two significant changes:
 
 - Updated translations for form introduction page and sending for approval to reflect the default notification method being email.
 - Remove hard-coded conditionals from "occupation" field to make it usable in the deceased form
+
+See [Releases](https://github.com/opencrvs/opencrvs-farajaland/releases) for release notes of older releases.
