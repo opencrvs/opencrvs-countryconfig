@@ -5,8 +5,8 @@ import {
   goToSection,
   loginToV2
 } from '../../../helpers'
-import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
-import { selectAction } from '../../../v2-utils'
+import { CREDENTIALS } from '../../../constants'
+import { ensureOutboxIsEmpty, selectAction } from '../../../v2-utils'
 import { REQUIRED_VALIDATION_ERROR } from '../../v2-birth/helpers'
 
 test.describe.serial('10. Death declaration case - 10', () => {
@@ -237,7 +237,7 @@ test.describe.serial('10. Death declaration case - 10', () => {
       await page.getByRole('button', { name: 'Send for review' }).click()
       await expect(page.getByText('Send for review?')).toBeVisible()
       await page.getByRole('button', { name: 'Confirm' }).click()
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await expect(page.getByText('Farajaland CRS')).toBeVisible()
 
       /*
@@ -264,7 +264,7 @@ test.describe.serial('10. Death declaration case - 10', () => {
     test('10.2.1 Navigate to the declaration review page', async () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
       await page.getByText('Notifications').click()
 
       await page

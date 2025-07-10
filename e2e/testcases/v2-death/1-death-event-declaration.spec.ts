@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { loginToV2 } from '../../helpers'
 import { faker } from '@faker-js/faker'
-import { SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
+import { ensureOutboxIsEmpty } from '../../v2-utils'
 const deceased = {
   name: {
     firstname: faker.person.firstName('male')
@@ -418,9 +418,11 @@ test.describe('1. Death event declaration', () => {
           'Assigned to you'
         )
 
-        await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+        await ensureOutboxIsEmpty(page)
 
-        await expect(page.getByText(deceased.name.firstname)).toBeVisible()
+        await expect(
+          page.getByText(deceased.name.firstname, { exact: true })
+        ).toBeVisible()
       })
     })
   })
@@ -474,9 +476,11 @@ test.describe('1. Death event declaration', () => {
 
       await expect(page.locator('#content-name')).toHaveText('Assigned to you')
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
 
-      await expect(page.getByText(deceased.name.firstname)).toBeHidden()
+      await expect(
+        page.getByText(deceased.name.firstname, { exact: true })
+      ).toBeHidden()
     })
   })
 
@@ -535,9 +539,11 @@ test.describe('1. Death event declaration', () => {
 
       await expect(page.locator('#content-name')).toHaveText('Assigned to you')
 
-      await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue. Handle better after outbox workqueue is implemented
+      await ensureOutboxIsEmpty(page)
 
-      await expect(page.getByText(deceased.name.firstname)).toBeHidden()
+      await expect(
+        page.getByText(deceased.name.firstname, { exact: true })
+      ).toBeHidden()
     })
 
     // @TODO: This test is not implemented in V2 events yet

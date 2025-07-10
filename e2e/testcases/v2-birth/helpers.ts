@@ -4,6 +4,7 @@ import { formatName, joinValuesWith } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { ensureOutboxIsEmpty } from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
+import { SAFE_OUTBOX_TIMEOUT_MS } from '../../constants'
 
 export const REQUIRED_VALIDATION_ERROR = 'Required'
 
@@ -107,4 +108,17 @@ export const assignFromWorkqueue = async (page: Page, name: string) => {
     .getByRole('button', { name: 'Assign record' })
     .click()
   await page.getByRole('button', { name: 'Assign', exact: true }).click()
+
+  /**
+   * We need to wait a while before assign mutation goes to outbox.
+   * Reason: We have `await refetchEvent()` before assign mutation is fired
+   */
+
+  await expect(page.locator('#navigation_workqueue_outbox')).toContainText(
+    '1',
+    {
+      timeout: SAFE_OUTBOX_TIMEOUT_MS
+    }
+  )
+  await ensureOutboxIsEmpty(page)
 }

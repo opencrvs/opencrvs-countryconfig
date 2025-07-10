@@ -208,9 +208,8 @@ test.describe.serial('3. Workqueue flow - 3', () => {
   })
 
   test.describe('3.3 Re-notify by FA', async () => {
-    test('3.3.1 Go to review', async () => {
+    test('3.3.1 Login', async () => {
       await loginToV2(page, CREDENTIALS.FIELD_AGENT, true)
-
       await assertRecordInWorkqueue({
         page,
         name: childName,
@@ -221,17 +220,16 @@ test.describe.serial('3. Workqueue flow - 3', () => {
           { title: 'Requires updates', exists: true }
         ]
       })
-
+    })
+    test('3.3.2 Go to review', async () => {
       await assignFromWorkqueue(page, childName)
-      await page.waitForTimeout(SAFE_INPUT_CHANGE_TIMEOUT_MS)
-      await ensureOutboxIsEmpty(page)
 
       await getRowByTitle(page, childName)
         .getByRole('button', { name: 'Declare' })
         .click()
     })
 
-    test('3.3.2 Fill informant details', async () => {
+    test('3.3.3 Fill informant details', async () => {
       await page
         .getByTestId('accordion-Accordion_informant')
         .getByRole('button', { name: 'Change all' })
@@ -251,7 +249,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await continueForm(page)
     })
 
-    test("3.3.3 Fill mother's details", async () => {
+    test("3.3.4 Fill mother's details", async () => {
       await page.locator('#firstname').fill(declaration.mother.name.firstNames)
       await page.locator('#surname').fill(declaration.mother.name.familyName)
 
@@ -291,7 +289,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await continueForm(page)
     })
 
-    test("3.3.4 Fill father's details", async () => {
+    test("3.3.5 Fill father's details", async () => {
       await page.locator('#firstname').fill(declaration.father.name.firstNames)
       await page.locator('#surname').fill(declaration.father.name.familyName)
 
@@ -314,7 +312,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await page.locator('#father____addressSameAs_YES').click()
     })
 
-    test('3.3.5 Send for review', async () => {
+    test('3.3.6 Send for review', async () => {
       await continueForm(page, 'Back to review')
 
       await page.locator('#review____comment').fill(faker.lorem.sentence())
@@ -334,7 +332,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
       await ensureOutboxIsEmpty(page)
     })
 
-    test('3.3.6 Verify workqueue', async () => {
+    test('3.3.7 Verify workqueue', async () => {
       await assertRecordInWorkqueue({
         page,
         name: childName,
@@ -397,137 +395,142 @@ test.describe.serial('3. Workqueue flow - 3', () => {
     })
   })
 
-  test('3.5 Reject by LR', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
+  test.describe('3.5 Reject by LR', async () => {
+    test('3.5.1 Login with LR', async () => {
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
 
-    await assertRecordInWorkqueue({
-      page,
-      name: childName,
-      workqueues: [
-        { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
-        { title: 'Notifications', exists: false },
-        { title: 'Ready for review', exists: true },
-        { title: 'Requires updates', exists: false },
-        { title: 'In external validation', exists: false },
-        { title: 'Ready to print', exists: false }
-      ]
-    })
-
-    await page.getByText('Ready for review').click()
-    await page
-      .getByRole('button', {
-        name: childName
+      await assertRecordInWorkqueue({
+        page,
+        name: childName,
+        workqueues: [
+          { title: 'Assigned to you', exists: false },
+          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Notifications', exists: false },
+          { title: 'Ready for review', exists: true },
+          { title: 'Requires updates', exists: false },
+          { title: 'In external validation', exists: false },
+          { title: 'Ready to print', exists: false }
+        ]
       })
-      .click()
+    })
+    test('3.5.2 Reject', async () => {
+      await page.getByText('Ready for review').click()
 
-    await selectAction(page, 'Register')
+      await assignFromWorkqueue(page, childName)
+      await getRowByTitle(page, childName)
+        .getByRole('button', { name: 'Register' })
+        .click()
 
-    await page.getByRole('button', { name: 'Reject' }).click()
+      await page.getByRole('button', { name: 'Reject' }).click()
 
-    await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
+      await page.getByTestId('reject-reason').fill(faker.lorem.sentence())
 
-    await page.getByRole('button', { name: 'Send For Update' }).click()
+      await page.getByRole('button', { name: 'Send For Update' }).click()
 
-    await assertRecordInWorkqueue({
-      page,
-      name: childName,
-      workqueues: [
-        { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
-        { title: 'Notifications', exists: false },
-        { title: 'Ready for review', exists: false },
-        { title: 'Requires updates', exists: true },
-        { title: 'In external validation', exists: false },
-        { title: 'Ready to print', exists: false }
-      ]
+      await assertRecordInWorkqueue({
+        page,
+        name: childName,
+        workqueues: [
+          { title: 'Assigned to you', exists: false },
+          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Notifications', exists: false },
+          { title: 'Ready for review', exists: false },
+          { title: 'Requires updates', exists: true },
+          { title: 'In external validation', exists: false },
+          { title: 'Ready to print', exists: false }
+        ]
+      })
     })
   })
-  test('3.6 Re-validate by RA', async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT, true)
+  test.describe('3.6 Re-validate by RA', async () => {
+    test('3.6.1 Login with RA', async () => {
+      await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT, true)
 
-    await assertRecordInWorkqueue({
-      page,
-      name: childName,
-      workqueues: [
-        { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
-        { title: 'Notifications', exists: false },
-        { title: 'Ready for review', exists: false },
-        { title: 'Requires updates', exists: true },
-        { title: 'Sent for approval', exists: false },
-        { title: 'In external validation', exists: false },
-        { title: 'Ready to print', exists: false }
-      ]
+      await assertRecordInWorkqueue({
+        page,
+        name: childName,
+        workqueues: [
+          { title: 'Assigned to you', exists: false },
+          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Notifications', exists: false },
+          { title: 'Ready for review', exists: false },
+          { title: 'Requires updates', exists: true },
+          { title: 'Sent for approval', exists: false },
+          { title: 'In external validation', exists: false },
+          { title: 'Ready to print', exists: false }
+        ]
+      })
     })
 
-    await page.getByText('Requires updates').click()
-    await page
-      .getByRole('button', {
-        name: childName
+    test('3.6.2 Re-Validate', async () => {
+      await page.getByText('Requires updates').click()
+
+      await assignFromWorkqueue(page, childName)
+      await getRowByTitle(page, childName)
+        .getByRole('button', { name: 'Validate' })
+        .click()
+
+      await page.getByRole('button', { name: 'Send for approval' }).click()
+      await page.getByRole('button', { name: 'Confirm' }).click()
+
+      await assertRecordInWorkqueue({
+        page,
+        name: childName,
+        workqueues: [
+          { title: 'Assigned to you', exists: false },
+          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Notifications', exists: false },
+          { title: 'Ready for review', exists: false },
+          { title: 'Requires updates', exists: false },
+          { title: 'Sent for approval', exists: true },
+          { title: 'In external validation', exists: false },
+          { title: 'Ready to print', exists: false }
+        ]
       })
-      .click()
-
-    await selectAction(page, 'Validate')
-    await page.getByRole('button', { name: 'Send for approval' }).click()
-    await page.getByRole('button', { name: 'Confirm' }).click()
-
-    await assertRecordInWorkqueue({
-      page,
-      name: childName,
-      workqueues: [
-        { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
-        { title: 'Notifications', exists: false },
-        { title: 'Ready for review', exists: false },
-        { title: 'Requires updates', exists: false },
-        { title: 'Sent for approval', exists: true },
-        { title: 'In external validation', exists: false },
-        { title: 'Ready to print', exists: false }
-      ]
     })
   })
-  test('3.7 Register by LR', async () => {
-    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR, true)
+  test.describe('3.7 Register by LR', async () => {
+    test('3.7.1 Login with LR', async () => {
+      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR, true)
 
-    await assertRecordInWorkqueue({
-      page,
-      name: childName,
-      workqueues: [
-        { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
-        { title: 'Notifications', exists: false },
-        { title: 'Ready for review', exists: true },
-        { title: 'Requires updates', exists: false },
-        { title: 'In external validation', exists: false },
-        { title: 'Ready to print', exists: false }
-      ]
-    })
-
-    await page.getByText('Ready for review').click()
-    await page
-      .getByRole('button', {
-        name: childName
+      await assertRecordInWorkqueue({
+        page,
+        name: childName,
+        workqueues: [
+          { title: 'Assigned to you', exists: false },
+          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Notifications', exists: false },
+          { title: 'Ready for review', exists: true },
+          { title: 'Requires updates', exists: false },
+          { title: 'In external validation', exists: false },
+          { title: 'Ready to print', exists: false }
+        ]
       })
-      .click()
+    })
+    test('3.7.2 Register', async () => {
+      await page.getByText('Ready for review').click()
 
-    await selectAction(page, 'Register')
+      await assignFromWorkqueue(page, childName)
+      await getRowByTitle(page, childName)
+        .getByRole('button', { name: 'Register' })
+        .click()
 
-    await page.getByRole('button', { name: 'Register' }).click()
-    await page.locator('#confirm_Register').click()
+      await page.getByRole('button', { name: 'Register' }).click()
+      await page.locator('#confirm_Register').click()
 
-    await assertRecordInWorkqueue({
-      page,
-      name: childName,
-      workqueues: [
-        { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
-        { title: 'Notifications', exists: false },
-        { title: 'Ready for review', exists: false },
-        { title: 'Requires updates', exists: false },
-        { title: 'In external validation', exists: false },
-        { title: 'Ready to print', exists: true }
-      ]
+      await assertRecordInWorkqueue({
+        page,
+        name: childName,
+        workqueues: [
+          { title: 'Assigned to you', exists: false },
+          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Notifications', exists: false },
+          { title: 'Ready for review', exists: false },
+          { title: 'Requires updates', exists: false },
+          { title: 'In external validation', exists: false },
+          { title: 'Ready to print', exists: true }
+        ]
+      })
     })
   })
 })
