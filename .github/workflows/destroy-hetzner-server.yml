@@ -6,6 +6,14 @@ on:
         environment:
           description: "Short server name (3–5 letters)"
           required: true
+        type:
+          description: "Environment type (single or multi node)"
+          required: false
+          type: choice
+          default: 'single-node'
+          options:
+            - single-node
+            - multi-node
     workflow_call:
       inputs:
         environment:
@@ -19,15 +27,13 @@ env:
   TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
   TF_VAR_country_name: ${{ vars.COUNTRY_NAME }}
   TF_VAR_env_name: ${{ github.event.inputs.environment }}
-  # FIXME: Add multi-node support
-  TF_VAR_env_type: "single-node"
+  TF_VAR_env_type: ${{ inputs.type }}
   TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
   TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
   TERRAFORM_REPO: opencrvs/terraform-state
-  # FIXME: Temporary hardcoded value
-  type: single-node
+  type: ${{ inputs.type }}
 jobs:
-  create-environment:
+  destroy-environment:
     name: Destroy HCloud Environment
     runs-on: ubuntu-24.04
     outputs:
@@ -84,13 +90,8 @@ jobs:
         id: output
         working-directory: ${{ env.TF_PATH }}
         run: |
-          # TODO: Add configuration for multi-node
-          echo "type=${{ env.type }}"
-          if [ ${{ env.type }} == 'single-node' ]
-          then
-            echo "ssh_host=$(terraform output -raw public_ip)" >> $GITHUB_OUTPUT
-            echo "hostname=$TF_VAR_country_name-$TF_VAR_env_name" >> $GITHUB_OUTPUT
-          fi
+          echo "ssh_host=$(terraform output -raw public_ip)" >> $GITHUB_OUTPUT
+          echo "hostname=$TF_VAR_country_name-$TF_VAR_env_name" >> $GITHUB_OUTPUT
       - name: Terraform Destroy
         working-directory: ${{ env.TF_PATH }}
         run: |
@@ -141,7 +142,7 @@ jobs:
 
       - env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        name: Create environment variables and secrets on GitHub
+        name: Remove environment variables and secrets on GitHub
         run: |
           curl  -X DELETE \
                 -H "Authorization: Bearer $GH_TOKEN" \
