@@ -186,6 +186,16 @@ db.getSiblingDB('metrics').dropDatabase();\
 db.getSiblingDB('performance').dropDatabase();\
 db.getSiblingDB('webhooks').dropDatabase();"
 
+##
+# ------ POSTGRESQL -------
+##
+
+docker run --rm \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
+  --network=$NETWORK \
+  postgres:17 \
+  bash -c "psql -h postgres -U $POSTGRES_USER -c 'DROP DATABASE IF EXISTS events;'"
+
 #####
 #
 #
@@ -207,6 +217,17 @@ docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWO
       do mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/\${db}-$LABEL.gz; \
     done"
 
+##
+# ------ POSTGRESQL -------
+##
+
+echo "Restoring PostgreSQL 'events' database"
+docker run --rm \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
+  -v $ROOT_PATH/backups/postgres:/backups \
+  --network=$NETWORK \
+  postgres:17 \
+  bash -c "createdb -h postgres -U $POSTGRES_USER events && pg_restore -h postgres -U $POSTGRES_USER -d events /backups/events-${LABEL}.dump"
 
 ##
 # ------ ELASTICSEARCH -----
