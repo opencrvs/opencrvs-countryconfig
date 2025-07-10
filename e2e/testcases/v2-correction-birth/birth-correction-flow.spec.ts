@@ -168,6 +168,18 @@ test.describe.serial('Birth correction flow', () => {
     ).toBeEnabled()
   })
 
+  test('Press Fees change link and change the fee amount', async () => {
+    await page.getByTestId('change-fees.amount').click()
+    await page
+      .locator('#fees____amount')
+      .fill(faker.number.int({ min: 1, max: 1000 }).toString())
+  })
+
+  test('Return to summary page', async () => {
+    await page.getByRole('button', { name: 'Continue' }).click()
+    await page.getByRole('button', { name: 'Continue' }).click()
+  })
+
   test('Submit correction request', async () => {
     await page
       .getByRole('button', { name: 'Submit correction request' })
