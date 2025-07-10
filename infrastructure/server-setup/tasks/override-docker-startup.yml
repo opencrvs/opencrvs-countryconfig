@@ -1,0 +1,125 @@
+- name: Ensure mount script exists and its executable
+  file:
+    path: "{{ mount_script_path }}"
+    mode: '0755'
+    state: file
+  register: mount_script_check
+  failed_when: false
+  vars:
+    mount_script_path: "/opt/opencrvs/infrastructure/cryptfs/mount.sh"
+
+- name: Fail if mount script is not exists or executable
+  fail: 
+    msg: "Mount script does not exist or is not executable at {{ mount_script_path }}"
+  when: mount_script_check.failed
+  vars:
+    mount_script_path: "/opt/opencrvs/infrastructure/cryptfs/mount.sh"
+
+- name: Ensure key file exists
+  file:
+    path: "{{ key_file_path }}"
+    state: file
+  register: key_file_check
+  failed_when: false
+  vars:
+    key_file_path: "/root/disk-encryption-key.txt"
+
+- name: Fail if key file does not exist
+  fail: 
+    msg: "Key file does not exist at {{ key_file_path }}"
+  when: key_file_check.failed
+  vars:
+    key_file_path: "/root/disk-encryption-key.txt"
+
+- name: Create systemd service file for mount script
+  copy:
+    dest: "/etc/systemd/system/{{ mount_service_name }}.service"
+    content: |
+      [Unit]
+      Description=OpenCRVS Mount CryptFS service
+      Before=docker.service
+      After=local-fs.target
+      Wants=local-fs.target
+
+      [Service]
+      Type=oneshot
+      ExecStart={{ mount_script_path }} -p {{ key_file_path }}
+      RemainAfterExit=yes
+      StandardOutput=journal
+      StandardError=journal
+
+      [Install]
+      WantedBy=multi-user.target
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  notify:
+    - reload systemd
+    - enable mount service
+  vars:
+    mount_service_name: "opencrvs-mount-cryptfs"  
+    mount_script_path: "/opt/opencrvs/infrastructure/cryptfs/mount.sh"
+    key_file_path: "/root/disk-encryption-key.txt"
+  
+- name: Create docker service override directory
+  file:
+    path: "/etc/systemd/system/docker.service.d"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Create docker service override configuration
+  copy:
+    dest: "/etc/systemd/system/docker.service.d/override.conf"
+    content: | 
+      [Unit]
+      After=opencrvs-mount-cryptfs.service
+      Requires=opencrvs-mount-cryptfs.service
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  notify:
+    - reload systemd  
+    - restart docker service
+  
+- name: Enable mount service
+  systemd:
+    name: "{{ mount_service_name }}.service"
+    enabled: yes
+    daemon_reload: yes
+  vars:
+    mount_service_name: "opencrvs-mount-cryptfs"
+
+- name: Ensure Docker service is enabled 
+  systemd:
+    name: docker.service
+    enabled: yes
+
+- name: Start mount service if not already running
+  systemd:
+    name: "{{ mount_service_name }}.service"
+    state: started
+  vars:
+    mount_service_name: "opencrvs-mount-cryptfs"
+
+- name: Verify mount service is active
+  command: systemctl is-active {{ mount_service_name }}.service
+  register: mount_service_status
+  failed_when: mount_service_status.stdout != "active"
+  vars:
+    mount_service_name: "opencrvs-mount-cryptfs"
+  
+- name: Verify Docker service is active
+  command: systemctl is-active docker.service
+  register: docker_service_status
+  failed_when: docker_service_status.stdout != "active"
+  
+- name: Verify Docker service dependency on mount service
+  command: systemctl show -p After docker.service
+  register: docker_after_status
+  failed_when: "'opencrvs-mount-cryptfs.service' not in docker_after_status.stdout"
+  vars:
+    mount_service_name: "opencrvs-mount-cryptfs"
