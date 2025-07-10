@@ -39,7 +39,7 @@
 
 ### Bug fixes
 
-- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369((https://github.com/opencrvs/opencrvs-core/issues/9369))
+- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369]((https://github.com/opencrvs/opencrvs-core/issues/9369))
 - InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
 
 ```
