@@ -112,6 +112,7 @@ mv $BACKUP_RAW_FILES_DIR/extract/influxdb /data/backups/influxdb/${LABEL}
 mv $BACKUP_RAW_FILES_DIR/extract/minio/ocrvs-${LABEL}.tar.gz /data/backups/minio/
 mv $BACKUP_RAW_FILES_DIR/extract/vsexport/ocrvs-${LABEL}.tar.gz /data/backups/vsexport/
 mv $BACKUP_RAW_FILES_DIR/extract/mongo/* /data/backups/mongo/
+mv $BACKUP_RAW_FILES_DIR/extract/postgres/* /data/backups/postgres/
 
 # Clean up
 rm $BACKUP_RAW_FILES_DIR/${LABEL}.tar.gz.enc

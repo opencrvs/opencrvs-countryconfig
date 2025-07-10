@@ -284,5 +284,7 @@
     content: |
       MONGODB_ADMIN_PASSWORD={{ mongodb_admin_password }}
       MONGODB_ADMIN_USER={{ mongodb_admin_username }}
+      POSTGRES_USER={{ postgres_user }}
+      POSTGRES_PASSWORD={{ postgres_password }}
       ELASTICSEARCH_ADMIN_PASSWORD={{elasticsearch_superuser_password}}
       ELASTICSEARCH_ADMIN_USER=elastic
