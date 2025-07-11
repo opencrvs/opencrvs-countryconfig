@@ -75,8 +75,8 @@
         apply:
           tags: 
             - docker
-        tags: 
-          - docker
+      tags: 
+        - docker
 
     - include_tasks:
         file: tasks/deployment-user.yml
