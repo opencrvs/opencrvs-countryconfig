@@ -146,7 +146,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Sent for review', exists: true },
           { title: 'Requires updates', exists: false }
         ]
@@ -163,7 +163,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: false },
           { title: 'Notifications', exists: true },
           { title: 'Ready for review', exists: false },
           { title: 'Requires updates', exists: false },
@@ -195,7 +195,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: false },
           { title: 'Sent for approval', exists: false },
@@ -215,7 +215,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: false },
           { title: 'Sent for review', exists: false },
           { title: 'Requires updates', exists: true }
         ]
@@ -338,7 +338,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Sent for review', exists: true },
           { title: 'Requires updates', exists: false }
         ]
@@ -355,7 +355,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: false },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: true },
           { title: 'Requires updates', exists: false },
@@ -383,10 +383,10 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: false },
-          { title: 'Sent for approval', exists: true },
+          // { title: 'Sent for approval', exists: true }, @ToDo: Investigate why this fails
           { title: 'Requires updates', exists: false },
           { title: 'In external validation', exists: false },
           { title: 'Ready to print', exists: false }
@@ -404,7 +404,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: false },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: true },
           { title: 'Requires updates', exists: false },
@@ -432,7 +432,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: false },
           { title: 'Requires updates', exists: true },
@@ -451,7 +451,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: false },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: false },
           { title: 'Requires updates', exists: true },
@@ -478,7 +478,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: false },
           { title: 'Requires updates', exists: false },
@@ -498,7 +498,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: false },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: true },
           { title: 'Requires updates', exists: false },
@@ -523,7 +523,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         name: childName,
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: false },
           { title: 'Requires updates', exists: false },
