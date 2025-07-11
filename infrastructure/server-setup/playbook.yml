@@ -69,6 +69,14 @@
             - docker
       tags:
         - docker
+    
+    - include_tasks:
+        file: tasks/override-docker-startup.yml
+        apply:
+          tags: 
+            - docker
+      tags: 
+        - docker
 
     - include_tasks:
         file: tasks/deployment-user.yml
