@@ -109,9 +109,8 @@ export const Workqueues = defineWorkqueues([
     query: {
       updatedBy: { type: 'exact', term: user('id') },
       updatedAt: {
-        type: 'range',
-        gte: new Date(Date.now() - SEVEN_DAYS_IN_MILISECOND).toISOString(),
-        lte: new Date(Date.now()).toISOString()
+        type: 'timePeriod',
+        term: 'last7Days'
       }
     },
     actions: [
