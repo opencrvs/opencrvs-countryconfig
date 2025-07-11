@@ -182,7 +182,7 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       status: { type: 'exact', term: 'DECLARED' },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -218,13 +218,13 @@ export const Workqueues = defineWorkqueues([
             type: 'anyOf',
             terms: ['DECLARED', 'VALIDATED']
           },
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+          updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         },
         {
           flags: {
             anyOf: [InherentFlags.CORRECTION_REQUESTED]
           },
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+          updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         }
       ]
     },
@@ -332,7 +332,7 @@ export const Workqueues = defineWorkqueues([
           `${ActionType.REGISTER}:${ActionStatus.Requested}`.toLowerCase()
         ]
       },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -354,7 +354,7 @@ export const Workqueues = defineWorkqueues([
         noneOf: [InherentFlags.PRINTED, InherentFlags.CORRECTION_REQUESTED]
       },
       status: { type: 'exact', term: 'REGISTERED' },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
