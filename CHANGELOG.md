@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.3
+
+No changes
 
 ## 1.7.2
 
