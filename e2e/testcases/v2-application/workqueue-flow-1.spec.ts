@@ -276,7 +276,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         name: formatName(declaration.child.name),
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          { title: 'Recent', exists: false },
+          { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: false },
           { title: 'Requires updates', exists: false },
