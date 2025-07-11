@@ -18,6 +18,9 @@ type FontFamilyTypes = {
   italics: string
   bolditalics: string
 }
+
+type JSONSchema = Record<string, any>
+
 export interface ICertificateConfigData {
   id: string
   event: Event
@@ -34,6 +37,12 @@ export interface ICertificateConfigData {
   }
   svgUrl: string
   fonts?: Record<string, FontFamilyTypes>
+  conditionals?:
+    | {
+        type: 'SHOW'
+        conditional: JSONSchema
+      }[]
+    | undefined
 }
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
@@ -260,7 +269,24 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
           bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show this certificate only for children born before 365 days ago
+          conditional: {
+            type: 'object',
+            properties: {
+              'child.dob': {
+                type: 'string',
+                format: 'date',
+                formatMaximum: '2023-07-10' // Example: born before this date
+              }
+            },
+            required: ['child.dob']
+          }
+        }
+      ]
     },
     {
       id: 'v2.tennis-club-membership-certificate',
@@ -285,7 +311,42 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show for events that have been validated
+          conditional: {
+            type: 'object',
+            properties: {
+              event: {
+                type: 'object',
+                properties: {
+                  actions: {
+                    type: 'array',
+                    contains: {
+                      type: 'object',
+                      properties: {
+                        type: {
+                          type: 'string',
+                          const: 'VALIDATE'
+                        },
+                        status: {
+                          type: 'string',
+                          const: 'ACCEPTED'
+                        }
+                      },
+                      required: ['type', 'status']
+                    }
+                  }
+                },
+                required: ['actions']
+              }
+            },
+            required: ['event']
+          }
+        }
+      ]
     },
     {
       id: 'v2.tennis-club-membership-certified-certificate',
