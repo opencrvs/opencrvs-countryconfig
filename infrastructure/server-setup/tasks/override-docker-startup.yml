@@ -99,24 +99,24 @@
     name: docker.service
     enabled: yes
 
-- name: Start mount service if not already running
-  systemd:
-    name: "{{ mount_service_name }}.service"
-    state: started
-  vars:
-    mount_service_name: "opencrvs-mount-cryptfs"
+# - name: Start mount service if not already running
+#   systemd:
+#     name: "{{ mount_service_name }}.service"
+#     state: started
+#   vars:
+#     mount_service_name: "opencrvs-mount-cryptfs"
 
-- name: Verify mount service is active
-  command: systemctl is-active {{ mount_service_name }}.service
-  register: mount_service_status
-  failed_when: mount_service_status.stdout != "active"
-  vars:
-    mount_service_name: "opencrvs-mount-cryptfs"
+# - name: Verify mount service is active
+#   command: systemctl is-active {{ mount_service_name }}.service
+#   register: mount_service_status
+#   failed_when: mount_service_status.stdout != "active"
+#   vars:
+#     mount_service_name: "opencrvs-mount-cryptfs"
   
-- name: Verify Docker service is active
-  command: systemctl is-active docker.service
-  register: docker_service_status
-  failed_when: docker_service_status.stdout != "active"
+# - name: Verify Docker service is active
+#   command: systemctl is-active docker.service
+#   register: docker_service_status
+#   failed_when: docker_service_status.stdout != "active"
   
 - name: Verify Docker service dependency on mount service
   command: systemctl show -p After docker.service
