@@ -13,6 +13,7 @@
 - Build OpenCRVS release images for arm devices [#9455](https://github.com/opencrvs/opencrvs-core/issues/9455)
 - **Introduced `single_node` variable in inventory files** to define whether single-node clusters are allowed, set to false in production to enforce use of at least a two-node cluster. [#6918](https://github.com/opencrvs/opencrvs-core/issues/6918)
 - **Github runners upgraded** to latest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045) and apply sticky node version from .nvmrc [#423](https://github.com/opencrvs/opencrvs-countryconfig/pull/423)
+- Updated `seed-data.yml` GitHub Actions workflow to use the new `data-seeder` Docker image instead of cloning the entire `opencrvs-core` repository. This improves CI performance and simplifies the data seeding process. [#8976](https://github.com/opencrvs/opencrvs-core/issues/8976)
 
 ### Bug Fixes
 
