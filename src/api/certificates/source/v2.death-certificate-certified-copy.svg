@@ -48,7 +48,7 @@
   </text>
   <g clip-path="url(#clip0_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="148.104">{{$lookup $declaration "deceased.firstname"}} {{$lookup $declaration "deceased.surname"}}</tspan>
+      <tspan x="312" y="148.104">{{$lookup $declaration "deceased.name"}}</tspan>
     </text>
   </g>
   <line x1="70" y1="154.5" x2="514" y2="154.5" stroke="#ECECEC" />
@@ -166,7 +166,7 @@
   </text>
   <g clip-path="url(#clip8_948_2918)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0px">
-      <tspan x="312" y="372.104">{{$lookup $declaration "informant.firstname"}} {{$lookup $declaration "informant.surname"}}</tspan>
+      <tspan x="312" y="372.104">{{$lookup $declaration "informant.name"}}</tspan>
       <tspan x="312" y="384.104">{{$lookup $declaration "informant.relation"}}</tspan>
     </text>
   </g>
@@ -302,6 +302,6 @@
   </defs>
   <image id="image2_948_2918" x="498.287" y="784" width="34.7131" height="35" xlink:href="{{qrCode}}" />
   {{#ifCond printInAdvance '!==' true}}
-  <image id="image0_948_2918" x="323.826" y="669" width="182.139" height="68" xlink:href="{{$lookup $metadata 'assignedToSignature'}}" />
+  <image id="image0_948_2918" x="323.826" y="669" width="182.139" height="68" xlink:href="{{$lookup $metadata 'assignedTo.signature'}}" />
   {{/ifCond}}
 </svg>

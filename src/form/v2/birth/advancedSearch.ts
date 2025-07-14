@@ -9,10 +9,6 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import {
-  statusOptions,
-  timePeriodOptions
-} from '@countryconfig/form/EventMetadataSearchOptions'
 import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
 
 const childPrefix = {
@@ -43,10 +39,12 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.registrationDetails'
     },
     fields: [
-      event('legalStatus.REGISTERED.createdAtLocation').exact(),
-      event('legalStatus.REGISTERED.createdAt').range(),
-      event('status', statusOptions).exact(),
-      event('updatedAt', timePeriodOptions).range()
+      event('legalStatuses.REGISTERED.createdAtLocation').exact(),
+      // translates to DATE_RANGE, however we can pick a single date on that component too.
+      event('legalStatuses.REGISTERED.acceptedAt').exact(),
+      event('status').exact(),
+      // range translates to SELECT_DATE_RANGE which uses datetime.
+      event('updatedAt').range()
     ]
   },
   {
@@ -60,7 +58,6 @@ export const advancedSearchBirth = [
         searchCriteriaLabelPrefix: childPrefix
       }).range(),
       field('child.name', {
-        searchCriteriaLabelPrefix: childPrefix,
         validations: [],
         conditionals: []
       }).fuzzy(),
@@ -93,7 +90,6 @@ export const advancedSearchBirth = [
         searchCriteriaLabelPrefix: motherPrefix
       }).range(),
       field('mother.name', {
-        searchCriteriaLabelPrefix: motherPrefix,
         validations: [],
         conditionals: []
       }).fuzzy()
@@ -110,7 +106,6 @@ export const advancedSearchBirth = [
         searchCriteriaLabelPrefix: fatherPrefix
       }).range(),
       field('father.name', {
-        searchCriteriaLabelPrefix: fatherPrefix,
         validations: [],
         conditionals: []
       }).fuzzy()
@@ -128,7 +123,6 @@ export const advancedSearchBirth = [
         searchCriteriaLabelPrefix: informantPrefix
       }).range(),
       field('informant.name', {
-        searchCriteriaLabelPrefix: informantPrefix,
         conditionals: [],
         validations: []
       }).fuzzy()

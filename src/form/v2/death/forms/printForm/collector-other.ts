@@ -15,7 +15,11 @@ import {
   FieldConfig,
   FieldType
 } from '@opencrvs/toolkit/events'
-import { nationalIdValidator } from '../../../birth/validators'
+import {
+  invalidNameValidator,
+  MAX_NAME_LENGTH,
+  nationalIdValidator
+} from '@countryconfig/form/v2/birth/validators'
 
 export const CollectorType = {
   SOMEONE_ELSE: 'SOMEONE_ELSE'
@@ -274,13 +278,15 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     ]
   },
   {
-    id: 'collector.OTHER.firstName',
-    type: FieldType.TEXT,
+    id: 'collector.OTHER.name',
+    type: FieldType.NAME,
     required: true,
+    configuration: { maxLength: MAX_NAME_LENGTH },
+    hideLabel: true,
     label: {
-      defaultMessage: 'First Name',
-      description: 'This is the label for the first name field',
-      id: 'v2.event.death.action.form.section.firstName.label'
+      defaultMessage: "Collector's name",
+      description: 'This is the label for the name field of OTHER collector',
+      id: 'v2.event.death.action.form.section.collector.other.field.name.label'
     },
     conditionals: [
       {
@@ -289,34 +295,17 @@ export const printCertificateCollectorOther: FieldConfig[] = [
           CollectorType.SOMEONE_ELSE
         )
       }
-    ]
+    ],
+    validation: [invalidNameValidator('collector.OTHER.name')]
   },
   {
-    id: 'collector.OTHER.lastName',
+    id: 'collector.OTHER.relationshipToDeceased',
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Last Name',
-      description: 'This is the label for the last name field',
-      id: 'v2.event.death.action.form.section.lastName.label'
-    },
-    conditionals: [
-      {
-        type: ConditionalType.SHOW,
-        conditional: field('collector.requesterId').isEqualTo(
-          CollectorType.SOMEONE_ELSE
-        )
-      }
-    ]
-  },
-  {
-    id: 'collector.OTHER.relationshipToChild',
-    type: FieldType.TEXT,
-    required: true,
-    label: {
-      defaultMessage: 'Relationship to child',
-      description: 'This is the label for the relationship to child field',
-      id: 'v2.event.death.action.form.section.relationshipToChild.label'
+      defaultMessage: 'Relationship to deceased',
+      description: 'This is the label for the relationship to deceased field',
+      id: 'v2.event.death.action.form.section.relationshipToDeceased.label'
     },
     conditionals: [
       {
