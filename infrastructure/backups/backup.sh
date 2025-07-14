@@ -196,6 +196,17 @@ for db in "${dbs[@]}"; do
   output="$(eval "$command" 2>&1)" || echo "Failed to backup MongoDB: $output"
 done
 
+# Backup PostgreSQL
+# -----------------
+
+echo "Backing up PostgreSQL 'events' database"
+docker run --rm \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
+  -v $ROOT_PATH/backups/postgres:/backups \
+  --network=$NETWORK \
+  postgres:17 \
+  bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
+
 #-------------------------------------------------------------------------------------
 
 echo ""
