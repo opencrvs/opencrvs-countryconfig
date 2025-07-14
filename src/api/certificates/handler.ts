@@ -11,7 +11,6 @@
 
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { field } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {
   normal: string
@@ -274,7 +273,32 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       conditionals: [
         {
           type: 'SHOW',
-          conditional: field('child.dob').isBefore().days(365).inPast()
+          // Show this certificate only if it has been printed at least once before
+          conditional: {
+            type: 'object',
+            properties: {
+              event: {
+                type: 'object',
+                properties: {
+                  actions: {
+                    type: 'array',
+                    contains: {
+                      type: 'object',
+                      properties: {
+                        type: {
+                          type: 'string',
+                          const: 'PRINT_CERTIFICATE'
+                        }
+                      },
+                      required: ['type']
+                    }
+                  }
+                },
+                required: ['actions']
+              }
+            },
+            required: ['event']
+          }
         }
       ]
     },
@@ -301,7 +325,42 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show for events that have been validated
+          conditional: {
+            type: 'object',
+            properties: {
+              event: {
+                type: 'object',
+                properties: {
+                  actions: {
+                    type: 'array',
+                    contains: {
+                      type: 'object',
+                      properties: {
+                        type: {
+                          type: 'string',
+                          const: 'VALIDATE'
+                        },
+                        status: {
+                          type: 'string',
+                          const: 'ACCEPTED'
+                        }
+                      },
+                      required: ['type', 'status']
+                    }
+                  }
+                },
+                required: ['actions']
+              }
+            },
+            required: ['event']
+          }
+        }
+      ]
     },
     {
       id: 'v2.tennis-club-membership-certified-certificate',
