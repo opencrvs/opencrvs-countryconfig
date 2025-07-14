@@ -117,7 +117,7 @@ docker run --rm --network=$NETWORK appropriate/curl curl -X POST 'http://influxd
 
 # Delete all data from minio
 #-----------------------------
-docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc:RELEASE.2023-09-13T23-08-58Z -c "\
+docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc:RELEASE.2025-05-21T01-59-54Z -c "\
   mc alias set myminio http://minio:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD && \
   mc rm --recursive --force myminio/ocrvs && \
   mc rb myminio/ocrvs && \
