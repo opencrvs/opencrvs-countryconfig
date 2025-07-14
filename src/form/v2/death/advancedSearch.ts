@@ -9,11 +9,11 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
+import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
 import {
   statusOptions,
   timePeriodOptions
-} from '@countryconfig/form/EventMetadataSearchOptions'
-import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
+} from '../birth/eventMetadataSearchOptions'
 const deceasedPrefix = {
   id: 'v2.death.search.criteria.label.prefix.deceased',
   defaultMessage: "Deceased's",
@@ -32,8 +32,8 @@ export const advancedSearchDeath = [
       id: 'v2.advancedSearch.form.registrationDetails'
     },
     fields: [
-      event('legalStatus.REGISTERED.createdAtLocation').exact(),
-      event('legalStatus.REGISTERED.createdAt').range(),
+      event('legalStatuses.REGISTERED.createdAtLocation').exact(),
+      event('legalStatuses.REGISTERED.acceptedAt').range(),
       event('status', statusOptions).exact(),
       event('updatedAt', timePeriodOptions).range()
     ]
