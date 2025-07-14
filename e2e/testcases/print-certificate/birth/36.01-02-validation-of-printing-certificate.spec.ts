@@ -29,39 +29,20 @@ test.describe.serial('Certified copies', () => {
   })
 
   test.describe('2.0 Validate "Certify record" page', async () => {
-    test('2.1 Click continue without selecting collector type and template type', async () => {
+    test('2.1 Click continue without selecting collector type', async () => {
       await page.getByRole('button', { name: 'Continue' }).click()
-      await expect(
-        page.getByText('Please select certificate type')
-      ).toBeVisible()
       await expect(
         page.getByText('Please select who is collecting the certificate')
       ).toBeVisible()
     })
 
-    test('2.2 Click continue without selecting collector type', async () => {
+    test('2.2 Click continue after selecting collector type', async () => {
       await page.reload({ waitUntil: 'networkidle' })
       await page.getByLabel('Print in advance').check()
       await page.getByRole('button', { name: 'Continue' }).click()
       await expect(
-        page.getByText('Please select certificate type')
-      ).toBeVisible()
-    })
-
-    test('2.3 Click continue without selecting template type', async () => {
-      await page.reload({ waitUntil: 'networkidle' })
-
-      await page
-        .locator('#certificateTemplateId-form-input > span')
-        .first()
-        .click()
-
-      await page.getByText('Birth Certificate', { exact: true }).click()
-
-      await page.getByRole('button', { name: 'Continue' }).click()
-      await expect(
         page.getByText('Please select who is collecting the certificate')
-      ).toBeVisible()
+      ).not.toBeVisible()
     })
   })
 })

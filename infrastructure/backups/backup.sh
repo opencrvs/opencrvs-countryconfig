@@ -133,7 +133,7 @@ mkdir -p $ROOT_PATH/backups/influxdb
 mkdir -p $ROOT_PATH/backups/mongo
 mkdir -p $ROOT_PATH/backups/minio
 mkdir -p $ROOT_PATH/backups/vsexport
-mkdir -p $ROOT_PATH/backups/sqlite
+mkdir -p $ROOT_PATH/backups/postgres
 
 # This enables root-created directory to be writable by the docker user
 chown -R 1000:1000 $ROOT_PATH/backups
@@ -176,25 +176,16 @@ elasticsearch_host() {
   fi
 }
 
-# Do not include OpenHIM transactions for local snapshots
-excluded_collections() {
-  if [ "$IS_LOCAL" = true ]; then
-    echo "--excludeCollection=transactions"
-  else
-    echo ""
-  fi
-}
-
 # Today's date is used for filenames if LABEL is not provided
 #-----------------------------------
 BACKUP_DATE=$(date +%Y-%m-%d)
 REMOTE_DIR="$REMOTE_DIR/${LABEL:-$BACKUP_DATE}"
 
-# Backup Hearth, OpenHIM, User, Application-config and any other service related Mongo databases into a mongo sub folder
+# Backup Hearth, User, Application-config and any other service related Mongo databases into a mongo sub folder
 # ---------------------------------------------------------------------------------------------
 dbs=(
   'hearth-dev'
-  'events',
+  'events'
   'user-mgnt'
   'application-config'
   'metrics'
@@ -206,18 +197,27 @@ for db in "${dbs[@]}"; do
   output="$(eval "$command" 2>&1)" || echo "Failed to backup MongoDB: $output"
 done
 
-openhim_command='docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev $(excluded_collections) --gzip --archive=/data/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz"'
-output="$(eval "$openhim_command" 2>&1)" || echo "Failed to backup MongoDB: $output"
+# Backup PostgreSQL
+# -----------------
 
-# Backup SQLite
-# ---------------------------------------------------------------------------------------------
-echo "Creating a backup for SQLite"
-
+echo "Backing up PostgreSQL 'events' database"
 docker run --rm \
-  -v $ROOT_PATH/sqlite:/data/sqlite \
-  -v $ROOT_PATH/backups/sqlite:/data/backup \
-  alpine sh -c "apk add --no-cache sqlite && \
-  sqlite3 /data/sqlite/mosip-api.db \".backup '/data/backup/mosip-api-${LABEL:-$BACKUP_DATE}.sqlite'\""
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
+  -v $ROOT_PATH/backups/postgres:/backups \
+  --network=$NETWORK \
+  postgres:17 \
+  bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
+
+# Backup PostgreSQL
+# -----------------
+
+echo "Backing up PostgreSQL 'events' database"
+docker run --rm \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
+  -v $ROOT_PATH/backups/postgres:/backups \
+  --network=$NETWORK \
+  postgres:17 \
+  bash -c "pg_dump -h postgres -U $POSTGRES_USER -d events -F c -f /backups/events-${LABEL:-$BACKUP_DATE}.dump"
 
 #-------------------------------------------------------------------------------------
 
@@ -308,12 +308,11 @@ mkdir -p $BACKUP_RAW_FILES_DIR/vsexport/ && cp $ROOT_PATH/backups/vsexport/ocrvs
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/hearth-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/events-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/user-mgnt-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/application-config-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/metrics-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
-mkdir -p $BACKUP_RAW_FILES_DIR/sqlite/ && cp $ROOT_PATH/backups/sqlite/mosip-api-${LABEL:-$BACKUP_DATE}.sqlite $BACKUP_RAW_FILES_DIR/sqlite/
+mkdir -p $BACKUP_RAW_FILES_DIR/postgres/ && cp $ROOT_PATH/backups/postgres/events-${LABEL:-$BACKUP_DATE}.dump $BACKUP_RAW_FILES_DIR/postgres/
 
 tar -czf /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -C "$BACKUP_RAW_FILES_DIR" .
 

@@ -1,8 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { BirthDeclaration } from '../../birth/types'
 import { getDeclarationForPrintCertificate } from './certificate-helper'
-import { format } from 'date-fns'
-import { CLIENT_URL } from '../../../constants'
 
 test.describe.serial('8.0 Validate "Payment" page', () => {
   let declaration: BirthDeclaration
@@ -23,7 +21,7 @@ test.describe.serial('8.0 Validate "Payment" page', () => {
       .locator('#certificateTemplateId-form-input > span')
       .first()
       .click()
-    await page.getByText('Birth Certificate', { exact: true }).click()
+
     await page.getByLabel('Print and issue to informant (Brother)').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(

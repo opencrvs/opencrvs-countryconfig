@@ -11,7 +11,7 @@ import {
 } from '../../helpers'
 import { addDays, format, subDays } from 'date-fns'
 import { faker } from '@faker-js/faker'
-import { selectAction } from '../../v2-utils'
+import { ensureAssigned, selectAction } from '../../v2-utils'
 
 async function fetchClientAPI(
   path: string,
@@ -381,7 +381,7 @@ test.describe('Events REST API', () => {
       expect(response.status).toBe(404)
     })
 
-    test.skip('HTTP 200 with valid payload', async ({ page }) => {
+    test('HTTP 200 with valid payload', async ({ page }) => {
       const createEventResponse = await fetchClientAPI(
         '/api/events/events',
         'POST',
@@ -434,17 +434,25 @@ test.describe('Events REST API', () => {
 
       await page.getByText(await formatName(childName)).click()
 
-      await page.getByRole('button', { name: 'Action' }).click()
-      await getAction(page, 'Assign').click()
+      await page
+        .getByRole('button', { name: 'Assign record', exact: true })
+        .click()
+      await page.getByRole('button', { name: 'Assign', exact: true }).click()
+      await expect(
+        page.getByRole('button', { name: 'Assign record', exact: true })
+      ).not.toBeVisible()
+      await expect(page.locator('#action-loading-undefined')).not.toBeVisible({
+        timeout: 30000
+      })
 
-      await expect(page.locator('#row_0')).toContainText('Notified')
+      await expect(page.locator('#row_0')).toContainText('Sent incomplete')
       await expect(page.locator('#row_0')).toContainText(clientName)
       await expect(page.locator('#row_0')).toContainText('Health integration')
 
-      // Open modal by clicking 'Notified' actio row
-      await page.getByText('Notified').click()
+      // Open modal by clicking 'Sent incomplete' action row
+      await page.getByText('Sent incomplete').click()
       const modal = await page.getByTestId('event-history-modal')
-      expect(modal).toContainText('Notified')
+      expect(modal).toContainText('Sent incomplete')
       expect(modal).toContainText(clientName)
     })
 
@@ -503,7 +511,7 @@ test.describe('Events REST API', () => {
       expect(body1).toEqual(body2)
     })
 
-    test.skip('user can register event notified by integration', async ({
+    test('user can register event notified by integration', async ({
       page
     }) => {
       const createEventResponse = await fetchClientAPI(
@@ -547,7 +555,21 @@ test.describe('Events REST API', () => {
 
       await page.getByRole('button', { name: 'Notifications' }).click()
       await page.getByText(await formatName(childName)).click()
-      await selectAction(page, 'Validate')
+
+      await page
+        .getByRole('button', { name: 'Assign record', exact: true })
+        .click()
+      await page.getByRole('button', { name: 'Assign', exact: true }).click()
+      await expect(
+        page.getByRole('button', { name: 'Assign record', exact: true })
+      ).not.toBeVisible()
+      await expect(page.locator('#action-loading-undefined')).not.toBeVisible({
+        timeout: 30000
+      })
+
+      await page.getByRole('button', { name: 'Action' }).click()
+      await getAction(page, 'Validate').click()
+
       await page
         .locator('#Accordion_child-accordion-header')
         .getByRole('button', { name: 'Change all', exact: true })

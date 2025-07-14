@@ -11,7 +11,9 @@ import {
 } from '@opencrvs/toolkit/events'
 import { getSignatureFile, uploadFile } from './utils'
 
-async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
+async function getPlaceOfDeath(
+  type: 'DECEASED_USUAL_RESIDENCE' | 'HEALTH_FACILITY'
+) {
   if (type === 'HEALTH_FACILITY') {
     const locations = await getAllLocations('HEALTH_FACILITY')
     const locationId = getLocationIdByName(
@@ -20,12 +22,11 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
     )
 
     return {
-      'child.placeOfBirth': 'HEALTH_FACILITY',
-      'child.birthLocation': locationId
+      'deceased.deathLocation': locationId
     }
   }
 
-  if (type === 'PRIVATE_HOME') {
+  if (type === 'DECEASED_USUAL_RESIDENCE') {
     const locations = await getAllLocations('ADMIN_STRUCTURE')
     const province = getLocationIdByName(locations, 'Central')
     const district = getLocationIdByName(locations, 'Ibombo')
@@ -35,8 +36,7 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
     }
 
     return {
-      'child.placeOfBirth': 'PRIVATE_HOME',
-      'child.address.privateHome': {
+      'deceased.address': {
         country: 'FAR',
         addressType: AddressType.DOMESTIC,
         province,
@@ -49,24 +49,12 @@ async function getPlaceOfBirth(type: 'PRIVATE_HOME' | 'HEALTH_FACILITY') {
   throw new Error('Invalid place of birth type')
 }
 
-function generateCustomPhoneNumber() {
-  // Starts with 0
-  // Second digit is 7 or 9
-  // Followed by 8 digits (0-9)
-  const secondDigit = Math.random() < 0.5 ? '7' : '9'
-  let rest = ''
-  for (let i = 0; i < 8; i++) {
-    rest += Math.floor(Math.random() * 10)
-  }
-  return `0${secondDigit}${rest}`
-}
-
 export async function getDeclaration({
   partialDeclaration = {},
-  placeOfBirthType = 'PRIVATE_HOME'
+  placeOfDeathType: placeOfDeathType = 'DECEASED_USUAL_RESIDENCE'
 }: {
   partialDeclaration?: Record<string, any>
-  placeOfBirthType?: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
+  placeOfDeathType?: 'DECEASED_USUAL_RESIDENCE' | 'HEALTH_FACILITY'
 }) {
   const locations = await getAllLocations('ADMIN_STRUCTURE')
   const province = getLocationIdByName(locations, 'Central')
@@ -77,58 +65,38 @@ export async function getDeclaration({
   }
 
   const mockDeclaration = {
-    'mother.name': {
-      firstname: faker.person.firstName(),
-      surname: faker.person.lastName()
+    'spouse.dob': '1975-02-18',
+    'spouse.nid': faker.string.numeric(10),
+    'spouse.name': {
+      firstname: faker.person.firstName('female'),
+      surname: faker.person.lastName('female')
     },
-    'mother.dob': '1995-09-12',
-    'mother.nationality': 'FAR',
-    'mother.idType': 'NATIONAL_ID',
-    'mother.nid': faker.string.numeric(10),
-    'mother.address': {
-      country: 'FAR',
-      province,
-      district,
-      urbanOrRural: 'URBAN' as const,
-      addressType: AddressType.DOMESTIC
+    'deceased.dob': '1950-04-21',
+    'deceased.nid': faker.string.numeric(10),
+    'deceased.name': {
+      firstname: faker.person.firstName('male'),
+      surname: faker.person.lastName('male')
     },
-    'father.name': {
-      firstname: faker.person.firstName(),
-      surname: faker.person.lastName()
-    },
-    'father.dob': '1995-09-12',
-    'father.nationality': 'FAR',
-    'father.idType': 'NATIONAL_ID',
-    'father.nid': faker.string.numeric(10),
-    'father.addressSameAs': 'NO',
-    'father.address': {
-      country: 'FAR',
-      province,
-      district,
-      urbanOrRural: 'URBAN' as const,
-      addressType: AddressType.DOMESTIC
-    },
-    'child.name': {
-      firstname: faker.person.firstName(),
-      surname: faker.person.lastName()
-    },
-    'child.gender': 'female',
-    'child.dob': new Date(Date.now() - 60 * 60 * 24 * 1000)
+    'spouse.idType': 'NATIONAL_ID',
+    'deceased.gender': 'male',
+    'deceased.idType': 'NATIONAL_ID',
+    'informant.email': faker.internet.email(),
+    'eventDetails.date': new Date(Date.now() - 60 * 60 * 24 * 1000)
       .toISOString()
       .split('T')[0], // yesterday
-    ...(await getPlaceOfBirth(placeOfBirthType)),
-    'informant.relation': 'BROTHER',
-    'informant.email': 'brothers@email.com',
-    'informant.name': {
-      firstname: faker.person.firstName(),
-      surname: faker.person.lastName()
-    },
-    'informant.dob': '2008-09-12',
-    'informant.nationality': 'FAR',
-    'informant.idType': 'NATIONAL_ID',
-    'informant.phoneNo': generateCustomPhoneNumber(),
-    'informant.nid': faker.string.numeric(10)
+    'informant.relation': 'SPOUSE',
+    'spouse.nationality': 'FAR',
+    'deceased.nationality': 'FAR',
+    'spouse.addressSameAs': 'YES',
+    'deceased.maritalStatus': 'MARRIED',
+    'eventDetails.placeOfDeath': placeOfDeathType,
+    'eventDetails.mannerOfDeath': 'MANNER_NATURAL',
+    'deceased.numberOfDependants': 3,
+    'eventDetails.sourceCauseDeath': 'PHYSICIAN',
+    'eventDetails.causeOfDeathEstablished': true,
+    ...(await getPlaceOfDeath(placeOfDeathType))
   }
+
   // 💡 Merge overriden fields
   return {
     ...mockDeclaration,
@@ -140,7 +108,6 @@ export type Declaration = Awaited<ReturnType<typeof getDeclaration>>
 
 export interface CreateDeclarationResponse {
   eventId: string
-  trackingId: string
   declaration: Declaration
 }
 
@@ -148,27 +115,27 @@ export async function createDeclaration(
   token: string,
   dec?: Partial<ActionUpdate>,
   action: ActionType = ActionType.REGISTER,
-  placeOfBirthType?: 'PRIVATE_HOME' | 'HEALTH_FACILITY'
+  placeOfDeathType?: 'DECEASED_USUAL_RESIDENCE' | 'HEALTH_FACILITY'
 ): Promise<CreateDeclarationResponse> {
   const declaration = await getDeclaration({
     partialDeclaration: dec,
-    placeOfBirthType
+    placeOfDeathType: placeOfDeathType
   })
 
   const client = createClient(GATEWAY_HOST + '/events', `Bearer ${token}`)
 
   const createResponse = await client.event.create.mutate({
-    type: 'v2.birth',
+    type: 'v2.death',
     transactionId: uuidv4()
   })
-  const eventId = createResponse.id as string
-  const trackingId = createResponse.trackingId
 
-  const file = await uploadFile(getSignatureFile(), token)
+  const eventId = createResponse.id as string
+
+  const filename = await uploadFile(getSignatureFile(), token)
 
   const annotation = {
     'review.comment': 'My comment',
-    'review.signature': file
+    'review.signature': filename
   }
 
   const declareRes = await client.event.actions.declare.request.mutate({
@@ -176,7 +143,7 @@ export async function createDeclaration(
     transactionId: uuidv4(),
     declaration,
     annotation,
-    keepAssignment: true
+    keepAssignment: action !== ActionType.DECLARE
   })
 
   if (action === ActionType.DECLARE) {
@@ -184,11 +151,7 @@ export async function createDeclaration(
       (action: ActionDocument) => action.type === 'DECLARE'
     )
 
-    return {
-      eventId,
-      trackingId,
-      declaration: declareAction?.declaration as Declaration
-    }
+    return { eventId, declaration: declareAction?.declaration as Declaration }
   }
 
   const validateRes = await client.event.actions.validate.request.mutate({
@@ -207,7 +170,6 @@ export async function createDeclaration(
 
     return {
       eventId,
-      trackingId,
       declaration: validateAction?.declaration as Declaration
     }
   }
@@ -223,13 +185,5 @@ export async function createDeclaration(
     (action: ActionDocument) => action.type === 'REGISTER'
   )
 
-  return {
-    eventId,
-    trackingId,
-    declaration: registerAction?.declaration as Declaration
-  }
-}
-
-export const getChildNameFromRecord = (record: CreateDeclarationResponse) => {
-  return `${record.declaration['child.name'].firstname} ${record.declaration['child.name'].surname}`
+  return { eventId, declaration: registerAction?.declaration as Declaration }
 }

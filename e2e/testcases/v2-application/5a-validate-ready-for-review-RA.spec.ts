@@ -8,7 +8,7 @@ import {
 } from '../v2-test-data/birth-declaration'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { formatV2ChildName } from '../v2-birth/helpers'
-import { ensureAssigned } from '../../v2-utils'
+import { ensureAssigned, ensureOutboxIsEmpty } from '../../v2-utils'
 import { getRowByTitle } from '../v2-print-certificate/birth/helpers'
 
 test.describe
@@ -97,10 +97,7 @@ test.describe
     // Should redirect back to Ready for review workqueue
     await expect(page.locator('#content-name')).toHaveText('Ready for review')
 
-    await page.waitForTimeout(SAFE_WORKQUEUE_TIMEOUT_MS) // wait for the event to be in the workqueue.
-    await page.getByText('Recent').click()
-    await page.waitForTimeout(500)
-    await page.getByText('Ready for review').click()
+    await ensureOutboxIsEmpty(page)
 
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })

@@ -21,7 +21,6 @@ test.describe.serial('7.0 Validate collect payment page', () => {
       .locator('#certificateTemplateId-form-input > span')
       .first()
       .click()
-    await page.getByText('Death Certificate', { exact: true }).click()
     await page.getByLabel('Print and issue to someone else').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(
