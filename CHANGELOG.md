@@ -5,6 +5,7 @@
 ### New features
 
 - Render number of copies printed count on a certificate template. [#7586](https://github.com/opencrvs/opencrvs-core/issues/7586)
+- **Certificate Template Conditionals**: Added support for conditional filtering of certificate templates based on declaration form data and event metadata using JSON Schema validation. Templates can now be dynamically shown or hidden based on specific criteria such as demographics, registration status, action history, and regional variations. See [Certificate Template Conditionals documentation](docs/CERTIFICATE_TEMPLATE_CONDITIONALS.md) for implementation details. [#7585](https://github.com/opencrvs/opencrvs-core/issues/7585)
 
 ### Improvements
 
