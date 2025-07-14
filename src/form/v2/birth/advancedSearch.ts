@@ -11,6 +11,7 @@
 
 import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
 import { placeOfBirthOptions } from './forms/pages/child'
+import { statusOptions, timePeriodOptions } from './eventMetadataSearchOptions'
 
 const childPrefix = {
   id: 'v2.birth.search.criteria.label.prefix.child',
@@ -41,11 +42,9 @@ export const advancedSearchBirth = [
     },
     fields: [
       event('legalStatuses.REGISTERED.createdAtLocation').exact(),
-      // translates to DATE_RANGE, however we can pick a single date on that component too.
-      event('legalStatuses.REGISTERED.acceptedAt').exact(),
-      event('status').exact(),
-      // range translates to SELECT_DATE_RANGE which uses datetime.
-      event('updatedAt').range()
+      event('legalStatuses.REGISTERED.acceptedAt').range(),
+      event('status', statusOptions).exact(),
+      event('updatedAt', timePeriodOptions).range()
     ]
   },
   {
