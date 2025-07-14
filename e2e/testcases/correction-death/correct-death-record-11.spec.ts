@@ -90,7 +90,6 @@ test.describe.serial(' Correct record - 11', () => {
       .first()
       .click()
 
-    await page.getByText('Death Certificate', { exact: true }).click()
     await page.getByLabel('Print in advance').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'No, make correction' }).click()
