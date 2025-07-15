@@ -38,6 +38,8 @@ on:
           - qa
           - e2e
           - staging
+          - v19-alpha-staging
+          - v19-alpha-prod
       core-image-tag:
         description: Core image tag
         required: true

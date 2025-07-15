@@ -30,6 +30,8 @@ on:
           - backup
           - jump
           - e2e
+          - v19-alpha-staging
+          - v19-alpha-prod
       tag:
         type: choice
         description: Select group tag you want to execute
