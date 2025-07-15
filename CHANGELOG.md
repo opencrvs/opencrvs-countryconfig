@@ -20,6 +20,10 @@
 - Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
 - Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
+## 1.7.3
+
+No changes
+
 ## 1.7.2
 
 ### Bug fixes
