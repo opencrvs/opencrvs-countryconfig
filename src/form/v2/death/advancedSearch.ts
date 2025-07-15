@@ -10,6 +10,10 @@
  */
 
 import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
+import {
+  statusOptions,
+  timePeriodOptions
+} from '../birth/eventMetadataSearchOptions'
 const deceasedPrefix = {
   id: 'v2.death.search.criteria.label.prefix.deceased',
   defaultMessage: "Deceased's",
@@ -30,8 +34,8 @@ export const advancedSearchDeath = [
     fields: [
       event('legalStatuses.REGISTERED.createdAtLocation').exact(),
       event('legalStatuses.REGISTERED.acceptedAt').range(),
-      event('status').exact(),
-      event('updatedAt').range()
+      event('status', statusOptions).exact(),
+      event('updatedAt', timePeriodOptions).range()
     ]
   },
   {
