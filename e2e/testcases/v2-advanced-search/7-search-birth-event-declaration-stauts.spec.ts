@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { loginToV2 } from '../../helpers'
+import { joinValuesWith, loginToV2 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 
 test.describe
@@ -35,7 +35,9 @@ test.describe
     await page.getByRole('button', { name: 'Save & Exit' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
-    await expect(page.getByText(/seconds ago/)).toBeVisible()
+    await expect(
+      page.getByText(joinValuesWith([firstname, surname]))
+    ).toBeVisible()
   })
 
   test('7.2 - Navigate to the advanced search page and select Birth event type', async () => {
@@ -55,6 +57,7 @@ test.describe
 
     await page.locator('#firstname').fill(firstname)
     await page.locator('#surname').fill(surname)
+    await page.locator('#maincontent').click() // @ToDo: Figure out why we need to defocus text input
     await page.click('#search')
     await expect(page).toHaveURL(/.*\/search-result/)
   })
