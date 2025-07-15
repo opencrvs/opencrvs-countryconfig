@@ -376,8 +376,6 @@ test.describe
 
     await page.context().setOffline(false)
 
-    await ensureOutboxIsEmpty(page)
-
     await expect(page.getByTestId('search-result')).not.toContainText(
       'Waiting to send'
     )
@@ -403,5 +401,6 @@ test.describe
       formatName(partialDeclaration2.child.name),
       { timeout: 20000 }
     )
+    await ensureOutboxIsEmpty(page)
   })
 })
