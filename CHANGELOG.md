@@ -20,20 +20,6 @@
 - Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
 - Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
-## 1.6.4
-
-### Bug fixes
-
-- Query the location tree directly from the config service to improve performance for large datasets
-
-## 1.6.3
-
-### Breaking changes
-
-- Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
-
-## 1.6.2
-
 ## 1.7.2
 
 ### Bug fixes
