@@ -11,6 +11,14 @@
 
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
+import {
+  all,
+  any,
+  formField,
+  hasMinimumPrintCountForTemplate,
+  hasPrintHistory,
+  isRegistered
+} from './conditional-helpers'
 
 type FontFamilyTypes = {
   normal: string
@@ -98,7 +106,17 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only for registered births and if male children
+          conditional: all(
+            isRegistered(),
+            formField('child.gender').equals('male')
+          )
+        }
+      ]
     },
     {
       id: 'birth-registration-receipt',
@@ -171,7 +189,17 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only if original certificate was printed OR if informant is spouse
+          conditional: any(
+            hasPrintHistory(),
+            formField('informant.relationship').equals('SPOUSE')
+          )
+        }
+      ]
     },
     {
       id: 'marriage-certificate',
@@ -273,32 +301,11 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       conditionals: [
         {
           type: 'SHOW',
-          // Show this certificate only if it has been printed at least once before
-          conditional: {
-            type: 'object',
-            properties: {
-              event: {
-                type: 'object',
-                properties: {
-                  actions: {
-                    type: 'array',
-                    contains: {
-                      type: 'object',
-                      properties: {
-                        type: {
-                          type: 'string',
-                          const: 'PRINT_CERTIFICATE'
-                        }
-                      },
-                      required: ['type']
-                    }
-                  }
-                },
-                required: ['actions']
-              }
-            },
-            required: ['event']
-          }
+          // Show only after the standard birth certificate has been printed at least twice
+          conditional: hasMinimumPrintCountForTemplate(
+            2,
+            'v2.birth-certificate'
+          )
         }
       ]
     },
@@ -329,36 +336,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       conditionals: [
         {
           type: 'SHOW',
-          // Show for events that have been validated
-          conditional: {
-            type: 'object',
-            properties: {
-              event: {
-                type: 'object',
-                properties: {
-                  actions: {
-                    type: 'array',
-                    contains: {
-                      type: 'object',
-                      properties: {
-                        type: {
-                          type: 'string',
-                          const: 'VALIDATE'
-                        },
-                        status: {
-                          type: 'string',
-                          const: 'ACCEPTED'
-                        }
-                      },
-                      required: ['type', 'status']
-                    }
-                  }
-                },
-                required: ['actions']
-              }
-            },
-            required: ['event']
-          }
+          // Show only for registered events
+          conditional: isRegistered()
         }
       ]
     },

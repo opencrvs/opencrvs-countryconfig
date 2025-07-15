@@ -565,6 +565,240 @@ conditionals: [
 ]
 ```
 
+## Helper Functions
+
+To make conditionals more readable and maintainable, OpenCRVS provides helper functions that generate the verbose JSON Schema structures for common patterns. These are available in `src/api/certificates/conditional-helpers.ts`.
+
+### Using Helper Functions
+
+Instead of writing verbose JSON Schema objects, you can use helper functions:
+
+```typescript
+import {
+  formField,
+  hasPrintHistory,
+  isValidated,
+  isRegistered,
+  all,
+  any,
+  not
+} from './conditional-helpers'
+
+// Instead of verbose JSON Schema...
+conditionals: [
+  {
+    type: 'SHOW',
+    conditional: hasPrintHistory() // Simple and readable!
+  }
+]
+```
+
+### Available Helper Functions
+
+#### Form Data Helpers
+
+```typescript
+// Check if form field equals specific value
+formField('child.gender').equals('male')
+formField('informant.relationship').isOneOf(['MOTHER', 'FATHER'])
+formField('child.name').exists()
+
+// Date comparisons
+formField('child.dob').dateBefore('2023-01-01')
+formField('child.dob').dateAfter('2022-01-01')
+```
+
+#### Event Metadata Helpers
+
+```typescript
+// Registration status
+isRegistered()
+hasRegistrationStatus(['REGISTERED', 'VALIDATED'])
+
+// Action history
+hasPrintHistory() // Has any print action
+hasAction('VALIDATE') // Has specific action type
+hasActionWithStatus('VALIDATE', 'ACCEPTED') // Action with status
+hasActionByRole('PRINT_CERTIFICATE', 'REGISTRAR') // Action by role
+
+// Action counting (JSON Schema Draft 2019-09)
+hasMinimumActions('PRINT_CERTIFICATE', 2) // At least 2 prints
+hasMaximumActions('PRINT_CERTIFICATE', 1) // Maximum 1 print
+
+// Location-based
+isFromLocation('Location/123e4567-e89b-12d3-a456-426614174000')
+```
+
+#### Combining Conditions
+
+```typescript
+// Combine conditions
+all(isRegistered(), formField('child.gender').equals('male'))
+
+any(hasPrintHistory(), formField('informant.relationship').equals('SPOUSE'))
+
+not(hasAction('REJECT'))
+```
+
+### Real-World Examples
+
+#### Replacement Certificate Logic
+
+```typescript
+{
+  id: 'birth-certificate-replacement',
+  // ... other properties
+  conditionals: [
+    {
+      type: 'SHOW',
+      // Show only if original was printed and this is for registered records
+      conditional: all(
+        isRegistered(),
+        hasPrintHistory()
+      )
+    }
+  ]
+}
+```
+
+#### Gender and Status Based Template
+
+```typescript
+{
+  id: 'male-birth-certificate',
+  // ... other properties
+  conditionals: [
+    {
+      type: 'SHOW',
+      // Show only for registered male children
+      conditional: all(
+        isRegistered(),
+        formField('child.gender').equals('male')
+      )
+    }
+  ]
+}
+```
+
+#### Flexible Access Template
+
+```typescript
+{
+  id: 'flexible-death-certificate',
+  // ... other properties
+  conditionals: [
+    {
+      type: 'SHOW',
+      // Show if printed before OR if informant is spouse
+      conditional: any(
+        hasPrintHistory(),
+        formField('informant.relationship').equals('SPOUSE')
+      )
+    }
+  ]
+}
+```
+
+#### Advanced Action Counting
+
+```typescript
+{
+  id: 'multi-print-certificate',
+  // ... other properties
+  conditionals: [
+    {
+      type: 'SHOW',
+      // Show only after certificate has been printed at least twice
+      conditional: hasMinimumActions('PRINT_CERTIFICATE', 2)
+    }
+  ]
+}
+```
+
+### Benefits of Helper Functions
+
+1. **Readability**: `hasPrintHistory()` vs. 20+ lines of JSON Schema
+2. **Maintainability**: Changes to logic happen in one place
+3. **Type Safety**: TypeScript ensures correct usage
+4. **Consistency**: Standardized patterns across all certificates
+5. **Testing**: Easier to unit test individual helper functions
+
+### Creating Custom Helper Functions
+
+Countries can create their own helper functions for business logic specific to their implementation. This is particularly useful for:
+
+- Country-specific eligibility criteria
+- Regional variations
+- Complex fee structures
+- Multi-step validation logic
+
+#### Example: Custom Country Helper
+
+```typescript
+// In your conditional-helpers.ts or separate file
+export function isEligibleForFreeRegistration() {
+  return all(
+    formField('child.dob').dateAfter('2023-01-01'), // Born after policy change
+    any(
+      formField('mother.nationality').equals('FAR'),
+      formField('father.nationality').equals('FAR')
+    ),
+    formField('informant.relationship').isOneOf(['MOTHER', 'FATHER'])
+  )
+}
+
+// Usage in certificate template
+{
+  id: 'free-birth-certificate',
+  // ... other properties
+  conditionals: [
+    {
+      type: 'SHOW',
+      conditional: isEligibleForFreeRegistration()
+    }
+  ]
+}
+```
+
+#### Example: Regional Template Helper
+
+```typescript
+export function isFromRuralArea() {
+  return any(
+    formField('child.placeOfBirth').equals('RURAL_DISTRICT_1'),
+    formField('child.placeOfBirth').equals('RURAL_DISTRICT_2'),
+    formField('mother.permanentAddress').equals('RURAL_AREA')
+  )
+}
+
+// Combined with existing helpers
+export function ruralRegisteredBirth() {
+  return all(isRegistered(), isFromRuralArea())
+}
+```
+
+#### Best Practices for Custom Helpers
+
+1. **Descriptive Names**: Use clear, business-focused function names
+2. **Modular Design**: Break complex logic into smaller, reusable functions
+3. **Documentation**: Add JSDoc comments explaining the business rules
+4. **Testing**: Write unit tests for your custom logic
+5. **Consistency**: Follow the same patterns as built-in helpers
+
+```typescript
+/**
+ * Checks if a birth registration qualifies for expedited processing
+ * Based on: urgency reason, hospital birth, and complete documentation
+ */
+export function qualifiesForExpeditedProcessing() {
+  return all(
+    formField('registration.urgencyReason').exists(),
+    formField('child.placeOfBirth').equals('HOSPITAL'),
+    formField('documents.allRequired').equals('true')
+  )
+}
+```
+
 ## Data Access Patterns
 
 ### Form Data Structure
