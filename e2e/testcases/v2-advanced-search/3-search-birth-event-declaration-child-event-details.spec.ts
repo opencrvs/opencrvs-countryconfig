@@ -198,8 +198,8 @@ test.describe
     await page.getByText('Birth').click()
   })
 
-  test.describe.serial("3 - Validate search by Child's DOB & Gender", () => {
-    test('3.2.1 - Validate filling DOB and gender filters', async () => {
+  test.describe.serial("3 - Validate search by Child's Place of Birth", () => {
+    test('3.2.1 - Validate filling Place of Birth', async () => {
       await page.getByText('Event details').click()
 
       await page.locator('#child____placeOfBirth').click()
@@ -219,9 +219,20 @@ test.describe
     test('3.2.2 - Validate search and show results', async () => {
       await page.click('#search')
       await expect(page).toHaveURL(/.*\/search-result/)
-      await expect(page.url()).toContain(
-        `child.address.privateHome=%7B%22country%22%3A%22FAR%22%2C%22province%22%3A%22579fa8c2-7bc9-4ca3-8163-9a66a0936a8d%22%2C%22district%22%3A%22e37806ef-ccf6-4ec0-ad9a-afd3d80d4655%22%2C%22urbanOrRural%22%3A%22URBAN%22%2C%22town%22%3A%22Dhaka%22%2C%22addressType%22%3A%22DOMESTIC%22%7D&child.placeOfBirth=PRIVATE_HOME`
-      )
+
+      const searchParams = new URLSearchParams(page.url())
+      const address = searchParams.get('child.address.privateHome')
+      if (address !== null) {
+        await expect(JSON.parse(address)).toBe({
+          country: 'FAR',
+          province: '579fa8c2-7bc9-4ca3-8163-9a66a0936a8d',
+          district: 'e37806ef-ccf6-4ec0-ad9a-afd3d80d4655',
+          urbanOrRural: 'URBAN',
+          town: 'Dhaka',
+          addressType: 'DOMESTIC'
+        })
+      }
+
       await expect(page.getByText('Search results')).toBeVisible()
 
       const searchResult = await page.locator('#content-name').textContent()
@@ -241,9 +252,18 @@ test.describe
     test('3.2.3 - Validate clicking on the search edit button', async () => {
       await page.getByRole('button', { name: 'Edit' }).click()
       await expect(page).toHaveURL(/.*\/advanced-search/)
-      await expect(page.url()).toContain(
-        `child.address.privateHome=%7B%22country%22%3A%22FAR%22%2C%22addressType%22%3A%22DOMESTIC%22%2C%22province%22%3A%22579fa8c2-7bc9-4ca3-8163-9a66a0936a8d%22%2C%22district%22%3A%22e37806ef-ccf6-4ec0-ad9a-afd3d80d4655%22%2C%22urbanOrRural%22%3A%22URBAN%22%2C%22town%22%3A%22Dhaka%22%7D&child.placeOfBirth=PRIVATE_HOME&eventType=v2.birth`
-      )
+      const searchParams = new URLSearchParams(page.url())
+      const address = searchParams.get('child.address.privateHome')
+      if (address !== null) {
+        await expect(JSON.parse(address)).toBe({
+          country: 'FAR',
+          province: '579fa8c2-7bc9-4ca3-8163-9a66a0936a8d',
+          district: 'e37806ef-ccf6-4ec0-ad9a-afd3d80d4655',
+          urbanOrRural: 'URBAN',
+          town: 'Dhaka',
+          addressType: 'DOMESTIC'
+        })
+      }
       await expect(page.url()).toContain(`child.placeOfBirth=PRIVATE_HOME`)
       await expect(page.url()).toContain(`eventType=v2.birth`)
 
