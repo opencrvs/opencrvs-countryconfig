@@ -113,5 +113,7 @@ export const assignFromWorkqueue = async (page: Page, name: string) => {
     getRowByTitle(page, name)
       .getByRole('button', { name: 'Assign record' })
       .locator('img')
-  ).toBeVisible()
+  ).toBeVisible({
+    timeout: SAFE_OUTBOX_TIMEOUT_MS
+  })
 }
