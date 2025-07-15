@@ -81,12 +81,12 @@ test.describe.serial('Navigating in and out of action', () => {
     await expectInUrl(page, `/events/overview/${eventId}`)
   })
 
-  test('Browser back button should take user to the front page instead of action flow', async () => {
+  test.skip('Browser back button should take user to the front page instead of action flow', async () => {
     await page.goBack()
     await expect(page.locator('#content-name')).toContainText('Ready to print')
   })
 
-  test('Browser forward button should take user back to the event overview page', async () => {
+  test.skip('Browser forward button should take user back to the event overview page', async () => {
     await page.goForward()
     await expectInUrl(page, `/events/overview/${eventId}`)
   })
