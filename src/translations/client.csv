@@ -2920,6 +2920,7 @@ v2.validateAction.Reject,The label for reject button of validate action,Reject,R
 v2.validateAction.description,The description for validate action,The informant will receive an email with a registration number that they can use to collect the certificate,L'informateur recevra un e-mail avec un numéro d'enregistrement qu'il pourra utiliser pour récupérer le certificat.
 v2.validateAction.incompleteForm,The description for warning of incomplete form,Please add mandatory information before sending for approval,Veuillez ajouter les informations obligatoires avant d'envoyer pour approbation.
 v2.validateAction.title,The title for validate action,Send for approval,Envoyer pour approbation
+v2.verified,This is the label for the verification field,Verified,Vérifié
 v2.view.record,Label for view record,View record,Afficher l'enregistrement
 v2.workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,
 v2.workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
