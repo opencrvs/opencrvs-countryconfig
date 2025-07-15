@@ -10,6 +10,8 @@
 
   - Use nvm to upgrade your local development environment to use node version `22.x.x.`
 
+- Remove the remnants of OpenHIM from the backup & restore scripts. [#9732](https://github.com/opencrvs/opencrvs-core/issues/9732) 
+
 ## 1.8.0
 
 ### Improvements

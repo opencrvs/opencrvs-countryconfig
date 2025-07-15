@@ -299,13 +299,13 @@ export const printCertificateCollectorOther: FieldConfig[] = [
     validation: [invalidNameValidator('collector.OTHER.name')]
   },
   {
-    id: 'collector.OTHER.relationshipToChild',
+    id: 'collector.OTHER.relationshipToDeceased',
     type: FieldType.TEXT,
     required: true,
     label: {
-      defaultMessage: 'Relationship to child',
-      description: 'This is the label for the relationship to child field',
-      id: 'v2.event.death.action.form.section.relationshipToChild.label'
+      defaultMessage: 'Relationship to deceased',
+      description: 'This is the label for the relationship to deceased field',
+      id: 'v2.event.death.action.form.section.relationshipToDeceased.label'
     },
     conditionals: [
       {
