@@ -23,6 +23,7 @@ on:
           - production
           - e2e
           - v17
+          - v18
       core-image-tag:
         description: Core DockerHub image tag
         required: true
