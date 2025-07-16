@@ -53,11 +53,9 @@ test.describe
     test('1.5.1 - Validate Place of registration filters, Date of registration Status of Record and Time Period', async () => {
       await page.getByText('Registration details').click()
 
-      await type(
-        page,
-        '#event____legalStatuses____REGISTERED____createdAtLocation',
-        'Ibombo'
-      )
+      await page
+        .locator('#event____legalStatuses____REGISTERED____createdAtLocation')
+        .fill('Ibombo')
       await expect(page.getByText('Ibombo District Office')).toBeVisible()
       await page.getByText('Ibombo District Office').click()
 

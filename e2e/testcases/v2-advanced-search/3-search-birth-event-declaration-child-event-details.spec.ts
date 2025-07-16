@@ -84,7 +84,7 @@ test.describe
       ).toBeVisible()
       await page.getByText('Health Institution', { exact: true }).click()
 
-      await type(page, '#child____birthLocation', 'Ibombo Rural')
+      await page.locator('#child____birthLocation').fill('Ibombo Rural')
       await expect(page.getByText('Ibombo Rural Health Centre')).toBeVisible()
       await page.getByText('Ibombo Rural Health Centre').click()
     })
