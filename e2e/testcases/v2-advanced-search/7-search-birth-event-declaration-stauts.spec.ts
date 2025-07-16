@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { joinValuesWith, loginToV2 } from '../../helpers'
 import { faker } from '@faker-js/faker'
+import { ensureOutboxIsEmpty, type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Informant's details", () => {
@@ -35,6 +36,8 @@ test.describe
     await page.getByRole('button', { name: 'Save & Exit' }).click()
     await page.getByRole('button', { name: 'Confirm' }).click()
 
+    await ensureOutboxIsEmpty(page)
+
     await expect(
       page.getByText(joinValuesWith([firstname, surname]))
     ).toBeVisible()
@@ -55,9 +58,9 @@ test.describe
 
     await page.getByText('Child details').click()
 
-    await page.locator('#firstname').fill(firstname)
-    await page.locator('#surname').fill(surname)
-    await page.locator('#maincontent').click() // @ToDo: Figure out why we need to defocus text input
+    await type(page, '#firstname', firstname)
+    await type(page, '#surname', surname)
+
     await page.click('#search')
     await expect(page).toHaveURL(/.*\/search-result/)
   })

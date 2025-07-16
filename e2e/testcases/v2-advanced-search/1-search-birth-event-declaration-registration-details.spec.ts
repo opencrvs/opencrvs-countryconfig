@@ -3,6 +3,7 @@ import { getToken, loginToV2 } from '../../helpers'
 import { createDeclaration } from '../v2-test-data/birth-declaration-with-father-brother'
 import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
+import { type } from '../../v2-utils'
 
 const todayDate = `${new Date().getDate() < 10 ? '0' : ''}${new Date().getDate().toString()}`
 const thisMonth = `${new Date().getMonth() < 9 ? '0' : ''}${(new Date().getMonth() + 1).toString()}`
@@ -52,27 +53,29 @@ test.describe
     test('1.5.1 - Validate Place of registration filters, Date of registration Status of Record and Time Period', async () => {
       await page.getByText('Registration details').click()
 
-      await page
-        .locator('#event____legalStatuses____REGISTERED____createdAtLocation')
-        .fill('Ibombo')
+      await type(
+        page,
+        '#event____legalStatuses____REGISTERED____createdAtLocation',
+        'Ibombo'
+      )
       await expect(page.getByText('Ibombo District Office')).toBeVisible()
       await page.getByText('Ibombo District Office').click()
 
-      await page
-        .locator(
-          '[data-testid="event____legalStatuses____REGISTERED____acceptedAt-dd"]'
-        )
-        .fill(todayDate)
-      await page
-        .locator(
-          '[data-testid="event____legalStatuses____REGISTERED____acceptedAt-mm"]'
-        )
-        .fill(thisMonth)
-      await page
-        .locator(
-          '[data-testid="event____legalStatuses____REGISTERED____acceptedAt-yyyy"]'
-        )
-        .fill(thisYear)
+      await type(
+        page,
+        '[data-testid="event____legalStatuses____REGISTERED____acceptedAt-dd"]',
+        todayDate
+      )
+      await type(
+        page,
+        '[data-testid="event____legalStatuses____REGISTERED____acceptedAt-mm"]',
+        thisMonth
+      )
+      await type(
+        page,
+        '[data-testid="event____legalStatuses____REGISTERED____acceptedAt-yyyy"]',
+        thisYear
+      )
 
       await expect(
         page.getByRole('button', { name: 'Exact date unknown' })

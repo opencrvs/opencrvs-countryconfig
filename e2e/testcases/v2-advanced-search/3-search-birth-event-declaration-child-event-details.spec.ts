@@ -5,6 +5,7 @@ import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { formatDateToLongString } from './utils'
 import { getAllLocations, getLocationIdByName } from '../birth/helpers'
+import { type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Child's details", () => {
@@ -65,9 +66,9 @@ test.describe
         .getByTestId('text__surname')
         .fill(record.declaration['child.name'].surname)
 
-      await page.locator('[data-testid="child____dob-dd"]').fill(dd)
-      await page.locator('[data-testid="child____dob-mm"]').fill(mm)
-      await page.locator('[data-testid="child____dob-yyyy"]').fill(yyyy)
+      await type(page, '[data-testid="child____dob-dd"]', dd)
+      await type(page, '[data-testid="child____dob-mm"]', mm)
+      await type(page, '[data-testid="child____dob-yyyy"]', yyyy)
 
       await page.locator('#child____gender').click()
       await page.getByText('Female', { exact: true }).click()
@@ -79,7 +80,7 @@ test.describe
       ).toBeVisible()
       await page.getByText('Health Institution', { exact: true }).click()
 
-      await page.locator('#child____birthLocation').fill('Ibombo Rural')
+      await type(page, '#child____birthLocation', 'Ibombo Rural')
       await expect(page.getByText('Ibombo Rural Health Centre')).toBeVisible()
       await page.getByText('Ibombo Rural Health Centre').click()
     })
