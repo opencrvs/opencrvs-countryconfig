@@ -4,6 +4,7 @@ import { createDeclaration } from '../v2-test-data/birth-declaration-with-father
 import { CREDENTIALS } from '../../constants'
 import { formatDateToLongString } from './utils'
 import { getMonthFormatted } from './helper'
+import { type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Informant's details", () => {
@@ -36,16 +37,16 @@ test.describe
     test('2.5.1 - Validate filling name and dob filters', async () => {
       await page.getByText('Informant details').click()
 
-      await page
-        .locator('#firstname')
-        .fill(record.declaration['informant.name'].firstname)
-      await page
-        .locator('#surname')
-        .fill(record.declaration['informant.name'].surname)
+      await type(
+        page,
+        '#firstname',
+        record.declaration['informant.name'].firstname
+      )
+      await type(page, '#surname', record.declaration['informant.name'].surname)
 
-      await page.locator('[data-testid="informant____dob-dd"]').fill(dd)
-      await page.locator('[data-testid="informant____dob-mm"]').fill(mm)
-      await page.locator('[data-testid="informant____dob-yyyy"]').fill(yyyy)
+      await type(page, '[data-testid="informant____dob-dd"]', dd)
+      await type(page, '[data-testid="informant____dob-mm"]', mm)
+      await type(page, '[data-testid="informant____dob-yyyy"]', yyyy)
     })
 
     test('2.5.2 - Validate search and show results', async () => {

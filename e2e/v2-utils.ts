@@ -107,3 +107,8 @@ export async function ensureOutboxIsEmpty(page: Page) {
     }
   )
 }
+
+export async function type(page: Page, locator: string, text: string) {
+  await page.locator(locator).fill(text)
+  await page.locator(locator).blur()
+}

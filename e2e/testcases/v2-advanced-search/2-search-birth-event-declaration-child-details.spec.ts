@@ -5,6 +5,7 @@ import { CREDENTIALS } from '../../constants'
 import { faker } from '@faker-js/faker'
 import { formatDateToLongString } from './utils'
 import { getMonthFormatted } from './helper'
+import { type } from '../../v2-utils'
 
 test.describe
   .serial("Advanced Search - Birth Event Declaration - Child's details", () => {
@@ -49,19 +50,15 @@ test.describe
     test('2.5.1 - Validate filling DOB and gender filters', async () => {
       await page.getByText('Child details').click()
 
-      await page
-        .locator('#firstname')
-        .fill(record.declaration['child.name'].firstname)
-      await page
-        .locator('#surname')
-        .fill(record.declaration['child.name'].surname)
+      await type(page, '#firstname', record.declaration['child.name'].firstname)
+      await type(page, '#surname', record.declaration['child.name'].surname)
 
       await page.locator('#child____gender').click()
       await page.getByText('Female', { exact: true }).click()
 
-      await page.locator('[data-testid="child____dob-dd"]').fill(dd)
-      await page.locator('[data-testid="child____dob-mm"]').fill(mm)
-      await page.locator('[data-testid="child____dob-yyyy"]').fill(yyyy)
+      await type(page, '[data-testid="child____dob-dd"]', dd)
+      await type(page, '[data-testid="child____dob-mm"]', mm)
+      await type(page, '[data-testid="child____dob-yyyy"]', yyyy)
     })
 
     test('2.5.2 - Validate search and show results', async () => {
