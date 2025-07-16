@@ -23,10 +23,6 @@ import {
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
-import {
-  statusOptions,
-  timePeriodOptions
-} from './v2/birth/eventMetadataSearchOptions'
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
@@ -962,8 +958,8 @@ export const tennisClubMembershipEvent = defineConfig({
       fields: [
         event('legalStatuses.REGISTERED.createdAtLocation').exact(),
         event('legalStatuses.REGISTERED.acceptedAt').range(),
-        event('status', statusOptions).exact(),
-        event('updatedAt', timePeriodOptions).range()
+        event('status').exact(),
+        event('updatedAt').range()
       ]
     },
     {
