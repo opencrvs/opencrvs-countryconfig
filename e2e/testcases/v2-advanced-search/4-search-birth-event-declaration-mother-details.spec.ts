@@ -37,12 +37,16 @@ test.describe
   test.describe.serial("2.5 - Validate search by Mother's details", () => {
     test('2.5.1 - Validate filling name and dob filters', async () => {
       await page.getByText('Mother details').click()
-      await page
-        .getByTestId('text__firstname')
-        .fill(record.declaration['mother.name'].firstname)
-      await page
-        .getByTestId('text__surname')
-        .fill(record.declaration['mother.name'].surname)
+      await type(
+        page,
+        '[data-testid="text__firstname"]',
+        record.declaration['mother.name'].firstname
+      )
+      await type(
+        page,
+        '[data-testid="text__surname"]',
+        record.declaration['mother.name'].surname
+      )
       await type(page, '[data-testid="mother____dob-dd"]', dd)
       await type(page, '[data-testid="mother____dob-mm"]', mm)
       await type(page, '[data-testid="mother____dob-yyyy"]', yyyy)

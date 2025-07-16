@@ -25,8 +25,8 @@ test.describe
     await page.getByLabel('Birth').click()
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Continue' }).click()
-    await page.locator('#firstname').fill(firstname)
-    await page.locator('#surname').fill(surname)
+    await type(page, '#firstname', firstname)
+    await type(page, '#surname', surname)
     await page.locator('#child____gender').click()
     await page.getByText('Female', { exact: true }).click()
 
