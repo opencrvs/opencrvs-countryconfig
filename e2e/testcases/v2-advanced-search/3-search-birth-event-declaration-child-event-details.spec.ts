@@ -59,12 +59,16 @@ test.describe
     test('3.1.1 - Validate filling DOB and gender filters', async () => {
       await page.getByText('Child details').click()
 
-      await page
-        .getByTestId('text__firstname')
-        .fill(record.declaration['child.name'].firstname)
-      await page
-        .getByTestId('text__surname')
-        .fill(record.declaration['child.name'].surname)
+      await type(
+        page,
+        '[data-testid="text__firstname"]',
+        record.declaration['child.name'].firstname
+      )
+      await type(
+        page,
+        '[data-testid="text__surname"]',
+        record.declaration['child.name'].surname
+      )
 
       await type(page, '[data-testid="child____dob-dd"]', dd)
       await type(page, '[data-testid="child____dob-mm"]', mm)
@@ -80,7 +84,7 @@ test.describe
       ).toBeVisible()
       await page.getByText('Health Institution', { exact: true }).click()
 
-      await type(page, '#child____birthLocation', 'Ibombo Rural')
+      await page.locator('#child____birthLocation').fill('Ibombo Rural')
       await expect(page.getByText('Ibombo Rural Health Centre')).toBeVisible()
       await page.getByText('Ibombo Rural Health Centre').click()
     })

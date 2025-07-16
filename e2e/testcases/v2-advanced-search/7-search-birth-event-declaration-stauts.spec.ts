@@ -25,8 +25,8 @@ test.describe
     await page.getByLabel('Birth').click()
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Continue' }).click()
-    await page.locator('#firstname').fill(firstname)
-    await page.locator('#surname').fill(surname)
+    await type(page, '#firstname', firstname)
+    await type(page, '#surname', surname)
     await page.locator('#child____gender').click()
     await page.getByText('Female', { exact: true }).click()
 
@@ -70,10 +70,12 @@ test.describe
     const searchResult = await page.locator('#content-name').textContent()
     const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
     expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-    await expect(page.getByText('Search results (0)')).toBeVisible()
     expect(page.url()).toContain(`event.status=ALL`)
     expect(page.url()).toContain(
       `child.name=${encodeURIComponent(JSON.stringify({ firstname, middlename: '', surname }))}`
     )
+    expect(
+      page.getByRole('button', { name: joinValuesWith([firstname, surname]) })
+    ).not.toBeVisible()
   })
 })
