@@ -70,10 +70,12 @@ test.describe
     const searchResult = await page.locator('#content-name').textContent()
     const searchResultCountNumberInBracketsRegex = /\((\d+)\)$/
     expect(searchResult).toMatch(searchResultCountNumberInBracketsRegex)
-    await expect(page.getByText('Search results (0)')).toBeVisible()
     expect(page.url()).toContain(`event.status=ALL`)
     expect(page.url()).toContain(
       `child.name=${encodeURIComponent(JSON.stringify({ firstname, middlename: '', surname }))}`
     )
+    expect(
+      page.getByRole('button', { name: joinValuesWith([firstname, surname]) })
+    ).not.toBeVisible()
   })
 })
