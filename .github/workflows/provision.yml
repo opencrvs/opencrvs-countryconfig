@@ -17,6 +17,7 @@ on:
           - jump
           - e2e
           - v17
+          - v18
       tag:
         type: choice
         description: Select group tag you want to execute
