@@ -69,7 +69,7 @@ jobs:
         id: dispatch_e2e
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.E2E_WORKFLOWS_TOKEN }}
           script: |
             function slugify(str) {
               return str
@@ -115,7 +115,7 @@ jobs:
       - name: Wait for Environment Deployment (Deploy Job)
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.E2E_WORKFLOWS_TOKEN }}
           script: |
             const owner = 'opencrvs';
             const repo = 'e2e';
@@ -184,7 +184,7 @@ jobs:
       - name: Wait for E2E Workflow Completion
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.E2E_WORKFLOWS_TOKEN }}
           script: |
             const owner = 'opencrvs';
             const repo = 'e2e';
