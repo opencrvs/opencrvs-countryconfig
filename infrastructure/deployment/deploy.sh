@@ -270,9 +270,18 @@ get_docker_tags_from_compose_files() {
    | sed -E "s/:-[A-Za-z_0-9]+//g" \
    | sed -E "s/[{}]//g")
 
+   # FIXME: | grep -v 'docker.elastic.co/elasticsearch/elasticsearch' expression added to bypass
+   # duplicates in the docker-compose files.
+   # e/g if top level docker-compose file has elasticsearch image is docker.elastic.co/elasticsearch/elasticsearch
+   # and then redefined to ghcr.io/***/elasticsearch:8.16.4, script pull logic will try to pull
+   # both images and fail with error:
+   # Error response from daemon: Get "https://docker.elastic.co/v2/": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+   # Next steps:
+   # Use yq to parse the docker-compose files and remove duplicates.
    echo $IMAGE_TAG_LIST_WITHOUT_VARIABLE_SUBSTITUTION_DEFAULT_VALUES \
    | envsubst \
-   | sed 's/ /\n/g'
+   | sed 's/ /\n/g' \
+   | grep -v 'docker.elastic.co/elasticsearch/elasticsearch'
 }
 
 split_and_join() {

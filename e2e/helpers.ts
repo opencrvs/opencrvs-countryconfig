@@ -2,6 +2,8 @@ import { Locator, Page, expect } from '@playwright/test'
 import {
   AUTH_URL,
   CLIENT_URL,
+  CLIENT_V2_URL,
+  CREDENTIALS,
   GATEWAY_HOST,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
   SAFE_OUTBOX_TIMEOUT_MS
@@ -13,9 +15,11 @@ import fetch from 'node-fetch'
 export async function login(page: Page, username: string, password: string) {
   const token = await getToken(username, password)
   await page.goto(`${CLIENT_URL}?token=${token}`)
+
   await expect(
     page.locator('#appSpinner').or(page.locator('#pin-input'))
   ).toBeVisible()
+  return token
 }
 
 export async function createPIN(page: Page) {
@@ -23,6 +27,35 @@ export async function createPIN(page: Page) {
   for (let i = 1; i <= 8; i++) {
     await page.type('#pin-input', `${i % 2}`)
   }
+}
+
+export async function logout(page: Page) {
+  await page.locator('#ProfileMenu-dropdownMenu').click()
+  await page
+    .locator('#ProfileMenu-dropdownMenu')
+    .getByRole('listitem')
+    .filter({
+      hasText: new RegExp('Logout')
+    })
+    .click()
+  await page.context().clearCookies()
+}
+
+export async function loginToV2(
+  page: Page,
+  credentials = CREDENTIALS.LOCAL_REGISTRAR,
+  skipPin?: boolean
+) {
+  const token = await login(page, credentials.USERNAME, credentials.PASSWORD)
+
+  if (!skipPin) {
+    await createPIN(page)
+  }
+
+  // Navigate to the v2 client
+  await page.goto(CLIENT_V2_URL)
+
+  return token
 }
 
 export async function getToken(username: string, password: string) {
@@ -53,6 +86,7 @@ export async function getToken(username: string, password: string) {
   })
 
   const verifyBody = await verifyResponse.json()
+
   return verifyBody.token
 }
 
@@ -84,12 +118,13 @@ type DeclarationSection =
   | 'witnessOne'
   | 'witnessTwo'
 type CorrectionSection = 'summary'
+type V2ReviewSection = 'review'
 
 export const goToSection = async (
   page: Page,
-  section: DeclarationSection | CorrectionSection
+  section: DeclarationSection | CorrectionSection | V2ReviewSection
 ) => {
-  while (!page.url().includes(section)) {
+  while (!page.url().includes(`/${section}`)) {
     await page.getByRole('button', { name: 'Continue' }).click()
   }
 }
@@ -288,6 +323,20 @@ export const formatDateObjectTo_ddMMMMyyyy = ({
   Date() object takes 0-indexed month,
   but month coming to the method is 1-indexed
 */
+export const formatDateObjectTo_dMMMMyyyy = ({
+  yyyy,
+  mm,
+  dd
+}: {
+  yyyy: string
+  mm: string
+  dd: string
+}) => format(new Date(Number(yyyy), Number(mm) - 1, Number(dd)), 'd MMMM yyyy')
+
+/*
+  Date() object takes 0-indexed month,
+  but month coming to the method is 1-indexed
+*/
 export const formatDateObjectTo_yyyyMMdd = ({
   yyyy,
   mm,
@@ -306,17 +355,21 @@ export const joinValuesWith = (
 }
 
 type PersonOrName = {
-  firstNames: string
-  familyName: string
+  firstNames?: string
+  familyName?: string
   [key: string]: any
 }
 export const formatName = (name: PersonOrName) => {
-  return joinValuesWith([name.firstNames, name.familyName])
+  const nameArray = []
+  if (name.firstNames) nameArray.push(name.firstNames)
+  if (name.familyName) nameArray.push(name.familyName)
+  return joinValuesWith(nameArray)
 }
 
 export const drawSignature = async (
   page: Page,
   modalLocator:
+    | '#review____signature_canvas_element'
     | 'brideSignature_modal'
     | 'groomSignature_modal'
     | 'witnessOneSignature_modal'
@@ -380,12 +433,14 @@ export const generateRandomSuffix = () => {
 }
 
 type ActionMenuOptions =
+  | 'Assign'
   | 'Correct record'
   | 'Print certified copy'
   | 'Review declaration'
   | 'Update declaration'
   | 'Review correction request'
   | 'View record'
+  | 'Validate'
 
 export const getAction = (page: Page, option: ActionMenuOptions) => {
   return page
@@ -402,4 +457,32 @@ export const assignRecord = async (page: Page) => {
     await page.getByRole('button', { name: 'Assign', exact: true }).isVisible()
   )
     await page.getByRole('button', { name: 'Assign', exact: true }).click()
+}
+
+/**
+  Opens the record audit view of a record with given trackingId or name
+ */
+export const auditRecord = async ({
+  page,
+  trackingId,
+  name
+}: {
+  page: Page
+  trackingId?: string
+  name: string
+}) => {
+  if (trackingId) {
+    await page
+      .getByRole('textbox', { name: 'Search for a tracking ID' })
+      .fill(trackingId)
+
+    await page.getByRole('button', { name: 'Search' }).click()
+    await page.getByRole('button', { name, exact: true }).click()
+  } else {
+    await page.locator('#searchType').getByText('Tracking ID').click()
+    await page.locator('li:has(svg) >> text=Name').click()
+    await page.getByRole('textbox', { name: 'Search for a name' }).fill(name)
+    await page.getByRole('button', { name: 'Search' }).click()
+    await page.getByRole('button', { name, exact: true }).click()
+  }
 }

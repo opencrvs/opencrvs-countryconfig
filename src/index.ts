@@ -87,6 +87,19 @@ import {
 } from './utils/mosip'
 import { getEventType } from './utils/fhir'
 import { workqueueconfigHandler } from './api/workqueue/handler'
+import { env } from './environment'
+import {
+  mosipRegistrationForApprovalHandler,
+  mosipRegistrationForReviewHandler,
+  mosipRegistrationHandler,
+  verify
+} from '@opencrvs/mosip'
+import {
+  fhirBirthToMosip,
+  fhirDeathToMosip,
+  shouldForwardToIDSystem
+} from './utils/mosip'
+import { getEventType } from './utils/fhir'
 
 export interface ITokenPayload {
   sub: string
@@ -125,7 +138,7 @@ export default function getPlugins() {
   return plugins
 }
 
-const getTokenPayload = (token: string): ITokenPayload => {
+export const getTokenPayload = (token: string): ITokenPayload => {
   let decoded: ITokenPayload
   try {
     decoded = decode(token)

@@ -22,7 +22,7 @@
     "e2e:generate-types": "graphql-codegen --config e2e/codegen.yml && yarn prettier --write e2e/gateway.ts",
     "precommit": "lint-staged",
     "test": "vitest 'src/**/*.test.ts' --passWithNoTests",
-    "test:compilation": "tsc --noEmit",
+    "test:compilation": "tsc --noEmit --resolveJsonModule",
     "lint": "eslint -c .eslintrc.js",
     "start": "cross-env NODE_ENV=development NODE_OPTIONS=--dns-result-order=ipv4first nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
     "start:prod": "ts-node --transpile-only -r tsconfig-paths/register src/index.ts",
@@ -68,6 +68,7 @@
     "node-ssh": "^13.2.0",
     "nodemon": "^2.0.22",
     "pino-pretty": "^11.0.0",
+    "playwright-ctrf-json-reporter": "^0.0.18",
     "prettier": "^3.4.2",
     "react-intl": "^6.4.3",
     "vite-tsconfig-paths": "^3.5.0",
@@ -80,7 +81,7 @@
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
     "@opencrvs/mosip": "^1.8.0",
-    "@opencrvs/toolkit": "1.8.0-rc.5169255",
+    "@opencrvs/toolkit": "1.8.0-rc.8eb22ef",
     "@types/chalk": "^2.2.0",
     "@types/code": "^4.0.3",
     "@types/csv2json": "^1.4.0",
@@ -129,6 +130,8 @@
     "tsconfig-paths": "^3.8.0",
     "typescript": "^5.1.6",
     "uuid": "^11.1.0",
+    "whatwg-fetch": "^3.0.0",
+    "yargs": "^17.7.2",
     "zod": "^3.24.1"
   },
   "lint-staged": {
@@ -145,5 +148,6 @@
   "resolutions": {
     "minimist": "^1.2.2",
     "acorn": "^6.4.1"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

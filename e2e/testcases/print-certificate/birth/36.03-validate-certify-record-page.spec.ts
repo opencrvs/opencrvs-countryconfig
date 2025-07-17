@@ -26,7 +26,6 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
       .first()
       .click()
 
-    await page.getByText('Birth Certificate', { exact: true }).click()
     await page.getByLabel('Print and issue to informant (Brother)').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(
@@ -93,7 +92,7 @@ test.describe.serial('3.0 Validate "Certify record" page', () => {
   test('3.6 click warning modal cancel button should close the modal', async () => {
     await page.getByRole('button', { name: 'Identity does not match' }).click()
     await page.getByRole('button', { name: 'Cancel' }).click()
-    console.log(page.locator('#withoutVerificationPrompt'))
+
     await expect(page.locator('#withoutVerificationPrompt')).toBeHidden()
     await page.goBack()
   })
