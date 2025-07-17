@@ -47,7 +47,8 @@ export const getGender = (
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     mapping: getFieldMapping('gender', certificateHandlebar),
-    options: genderOptions
+    options: genderOptions,
+    conditionals
   }) satisfies SerializedFormField
 
 export const getFamilyNameField = (

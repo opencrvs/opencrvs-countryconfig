@@ -285,7 +285,7 @@ test.describe
     test('30.1.7 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, true)
+      await drawSignature(page, '#review____signature_canvas_element')
       await page
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })

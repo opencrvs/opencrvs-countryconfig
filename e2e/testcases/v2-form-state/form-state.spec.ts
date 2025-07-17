@@ -42,7 +42,7 @@ test.describe('Form state', () => {
       const sentence = faker.lorem.sentence(5)
       await page.locator('#review____comment').fill(sentence)
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, true)
+      await drawSignature(page, '#review____signature_canvas_element')
       await page.getByRole('button', { name: 'Apply' }).click()
 
       // Save & Exit draft
@@ -105,7 +105,7 @@ test.describe('Form state', () => {
       const sentence = faker.lorem.sentence(5)
       await page.locator('#review____comment').fill(sentence)
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, true)
+      await drawSignature(page, '#review____signature_canvas_element')
       await page.getByRole('button', { name: 'Apply' }).click()
 
       // Save & Exit draft

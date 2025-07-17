@@ -24,8 +24,9 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
       'search[event=v2.birth,access=all]',
-      'search[event=v2.death,access=my-jurisdiction]',
+      'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
@@ -48,7 +49,8 @@ export const roles: Role[] = [
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]'
+      'search[event=tennis-club-membership,access=all]',
+      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
   {
@@ -91,7 +93,8 @@ export const roles: Role[] = [
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]'
+      'search[event=tennis-club-membership,access=all]',
+      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
   {
@@ -112,7 +115,8 @@ export const roles: Role[] = [
       SCOPES.SEARCH_MARRIAGE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
-      'search[event=tennis-club-membership,access=all]'
+      'search[event=tennis-club-membership,access=all]',
+      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
     ]
   },
   {
@@ -142,6 +146,8 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
@@ -180,6 +186,8 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
+      SCOPES.USER_READ_MY_OFFICE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
@@ -194,17 +202,12 @@ export const roles: Role[] = [
       id: 'userRole.localSystemAdmin'
     },
     scopes: [
-      SCOPES.USER_READ_MY_OFFICE,
-      SCOPES.USER_CREATE_MY_JURISDICTION,
-      SCOPES.USER_UPDATE_MY_JURISDICTION,
-      'user.create[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
-      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
       SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
-      SCOPES.USER_READ_MY_JURISDICTION,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS
+      SCOPES.USER_CREATE_MY_JURISDICTION,
+      'user.create[role=FIELD_AGENT|HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
+      SCOPES.USER_UPDATE_MY_JURISDICTION,
+      'user.edit[role=FIELD_AGENT|HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR]',
+      SCOPES.USER_READ_MY_JURISDICTION
     ]
   },
   {
@@ -216,15 +219,10 @@ export const roles: Role[] = [
     },
     scopes: [
       SCOPES.USER_CREATE,
-      'user.create[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
-      'user.edit[role=FIELD_AGENT|POLICE_OFFICER|SOCIAL_WORKER|HEALTHCARE_WORKER|LOCAL_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
-      SCOPES.USER_READ,
+      'user.create[role=FIELD_AGENT|HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
       SCOPES.USER_UPDATE,
-      SCOPES.ORGANISATION_READ_LOCATIONS,
-      SCOPES.PERFORMANCE_READ,
-      SCOPES.PERFORMANCE_READ_DASHBOARDS,
-      SCOPES.PERFORMANCE_EXPORT_VITAL_STATISTICS,
-      SCOPES.CONFIG_UPDATE_ALL
+      'user.edit[role=FIELD_AGENT|HOSPITAL_CLERK|COMMUNITY_LEADER|REGISTRATION_AGENT|LOCAL_REGISTRAR|NATIONAL_REGISTRAR|LOCAL_SYSTEM_ADMIN|NATIONAL_SYSTEM_ADMIN|PERFORMANCE_MANAGER]',
+      SCOPES.USER_READ
     ]
   },
   {
@@ -274,10 +272,57 @@ export const roles: Role[] = [
       SCOPES.SEARCH_BIRTH,
       SCOPES.SEARCH_DEATH,
       SCOPES.SEARCH_MARRIAGE,
+      SCOPES.ORGANISATION_READ_LOCATIONS_MY_JURISDICTION,
+      SCOPES.USER_READ_MY_OFFICE,
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
       'workqueue[id=assigned-to-you|recent|requires-completion|requires-updates|in-review-all|in-external-validation|ready-to-print|ready-to-issue]'
+    ]
+  },
+  {
+    id: 'HOSPITAL_CLERK',
+    label: {
+      defaultMessage: 'Hospital Clerk',
+      description: 'Name for user role Hospital Clerk',
+      id: 'userRole.hospitalClerk'
+    },
+    scopes: [
+      SCOPES.RECORD_DECLARE_BIRTH,
+      SCOPES.RECORD_DECLARE_DEATH,
+      SCOPES.RECORD_SUBMIT_INCOMPLETE,
+      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
+      SCOPES.SEARCH_BIRTH,
+      SCOPES.SEARCH_DEATH,
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
+      'search[event=v2.birth,access=all]',
+      'search[event=v2.death,access=all]',
+      'search[event=tennis-club-membership,access=all]',
+      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
+    ]
+  },
+  {
+    id: 'COMMUNITY_LEADER',
+    label: {
+      defaultMessage: 'Community Leader',
+      description: 'Name for user role Community Leader',
+      id: 'userRole.communityLeader'
+    },
+    scopes: [
+      SCOPES.RECORD_DECLARE_BIRTH,
+      SCOPES.RECORD_DECLARE_DEATH,
+      SCOPES.RECORD_DECLARE_MARRIAGE,
+      SCOPES.RECORD_SUBMIT_INCOMPLETE,
+      SCOPES.RECORD_SUBMIT_FOR_REVIEW,
+      SCOPES.RECORD_PRINT_ISSUE_CERTIFIED_COPIES,
+      SCOPES.SEARCH_BIRTH,
+      SCOPES.SEARCH_DEATH,
+      SCOPES.SEARCH_MARRIAGE,
+      SCOPES.USER_READ_ONLY_MY_AUDIT,
+      'search[event=v2.birth,access=all]',
+      'search[event=v2.death,access=all]',
+      'search[event=tennis-club-membership,access=all]',
+      'workqueue[id=assigned-to-you|recent|sent-for-review|ready-to-print]'
     ]
   }
 ]
