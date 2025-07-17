@@ -103,6 +103,11 @@ export const documents = defineFormPage({
         ...DEFAULT_FILE_CONFIGURATION,
         style: {
           width: 'full'
+        },
+        fileName: {
+          defaultMessage: 'Notification of birth',
+          description: 'This is the label for the file name',
+          id: 'v2.form.field.label.proofOfBirth.fileName'
         }
       },
       label: {
