@@ -138,14 +138,14 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
-      id: 'informant.firstname',
+      id: 'informant.name',
       configuration: { maxLength: MAX_NAME_LENGTH },
-      type: FieldType.TEXT,
+      type: FieldType.NAME,
       required: true,
       label: {
-        defaultMessage: 'First name(s)',
+        defaultMessage: "Informant's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.firstname.label'
+        id: 'v2.event.birth.action.declare.form.section.person.field.name.label'
       },
       conditionals: [
         {
@@ -156,25 +156,7 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
-      id: 'informant.surname',
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'Last name',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.surname.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: informantOtherThanParent
-        }
-      ],
-      parent: field('informant.relation')
-    },
-    {
-      id: 'informant.dob',
+      id: 'informant.informantBirthDate',
       type: 'DATE',
       required: true,
       validation: [
@@ -182,30 +164,36 @@ export const informant = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid Birthdate',
             description: 'This is the error message for invalid date',
-            id: 'v2.event.birth.action.declare.form.section.person.field.dob.error'
+            id: 'v2.event.birth.action.declare.form.section.person.field.informantBirthDate.error'
           },
-          validator: field('informant.dob').isBefore().now()
+          validator: field('informant.informantBirthDate').isBefore().now()
         },
         {
           message: {
             defaultMessage: "Birth date must be before child's birth date",
             description:
               "This is the error message for a birth date after child's birth date",
-            id: 'v2.event.birth.action.declare.form.section.person.dob.afterChild'
+            id: 'v2.event.birth.action.declare.form.section.person.informantBirthDate.afterChild'
           },
-          validator: field('informant.dob').isBefore().date(field('child.dob'))
+          validator: field('informant.informantBirthDate')
+            .isBefore()
+            .date(field('child.informantBirthDate'))
         }
       ],
       label: {
         defaultMessage: 'Date of birth',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.dob.label'
+        id: 'v2.event.birth.action.declare.form.section.person.field.informantBirthDate.label'
       },
       conditionals: [
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            not(field('informant.dobUnknown').isEqualTo(true)),
+            not(
+              field('informant.customizedExactDateOfBirthUnknown').isEqualTo(
+                true
+              )
+            ),
             informantOtherThanParent
           )
         }
@@ -213,7 +201,7 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
-      id: 'informant.dobUnknown',
+      id: 'informant.customizedExactDateOfBirthUnknown',
       type: FieldType.CHECKBOX,
       label: {
         defaultMessage: 'Exact date of birth unknown',
@@ -252,7 +240,9 @@ export const informant = defineFormPage({
         {
           type: ConditionalType.SHOW,
           conditional: and(
-            field('informant.dobUnknown').isEqualTo(true),
+            field('informant.customizedExactDateOfBirthUnknown').isEqualTo(
+              true
+            ),
             informantOtherThanParent
           )
         }
@@ -296,13 +286,13 @@ export const informant = defineFormPage({
       parent: field('informant.relation')
     },
     {
-      id: 'informant.nid',
+      id: 'informant.iD',
       type: FieldType.TEXT,
       required: true,
       label: {
         defaultMessage: 'ID Number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.nid.label'
+        id: 'v2.event.birth.action.declare.form.section.person.field.iD.label'
       },
       conditionals: [
         {
@@ -314,16 +304,16 @@ export const informant = defineFormPage({
         }
       ],
       validation: [
-        nationalIdValidator('informant.nid'),
+        nationalIdValidator('informant.iD'),
         {
           message: {
             defaultMessage: 'National id must be unique',
             description: 'This is the error message for non-unique ID Number',
-            id: 'v2.event.birth.action.declare.form.nid.unique'
+            id: 'v2.event.birth.action.declare.form.iD.unique'
           },
           validator: and(
-            not(field('informant.nid').isEqualTo(field('mother.nid'))),
-            not(field('informant.nid').isEqualTo(field('father.nid')))
+            not(field('informant.iD').isEqualTo(field('mother.iD'))),
+            not(field('informant.iD').isEqualTo(field('father.iD')))
           )
         }
       ],

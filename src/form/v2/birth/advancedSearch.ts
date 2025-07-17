@@ -56,14 +56,12 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.childDetails'
     },
     fields: [
-      field('child.dob', {
+      field('child.childBirthDate', {
         searchCriteriaLabelPrefix: childPrefix
       }).range(),
-      field('child.firstname', {
-        searchCriteriaLabelPrefix: childPrefix
-      }).fuzzy(),
-      field('child.surname', {
-        searchCriteriaLabelPrefix: childPrefix
+      field('child.name', {
+        validations: [],
+        conditionals: []
       }).fuzzy(),
       field('child.gender', {
         searchCriteriaLabelPrefix: childPrefix
@@ -90,14 +88,12 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.motherDetails'
     },
     fields: [
-      field('mother.dob', {
+      field('mother.motherBirthDate', {
         searchCriteriaLabelPrefix: motherPrefix
       }).range(),
-      field('mother.firstname', {
-        searchCriteriaLabelPrefix: motherPrefix
-      }).fuzzy(),
-      field('mother.surname', {
-        searchCriteriaLabelPrefix: motherPrefix
+      field('mother.name', {
+        validations: [],
+        conditionals: []
       }).fuzzy()
     ]
   },
@@ -108,14 +104,12 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.fatherDetails'
     },
     fields: [
-      field('father.dob', {
+      field('father.fatherBirthDate', {
         searchCriteriaLabelPrefix: fatherPrefix
       }).range(),
-      field('father.firstname', {
-        searchCriteriaLabelPrefix: fatherPrefix
-      }).fuzzy(),
-      field('father.surname', {
-        searchCriteriaLabelPrefix: fatherPrefix
+      field('father.name', {
+        validations: [],
+        conditionals: []
       }).fuzzy()
     ]
   },
@@ -126,15 +120,11 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.informantDetails'
     },
     fields: [
-      field('informant.dob', {
+      field('informant.informantBirthDate', {
         conditionals: [],
         searchCriteriaLabelPrefix: informantPrefix
       }).range(),
-      field('informant.firstname', {
-        conditionals: [],
-        searchCriteriaLabelPrefix: informantPrefix
-      }).fuzzy(),
-      field('informant.surname', {
+      field('informant.name', {
         conditionals: [],
         searchCriteriaLabelPrefix: informantPrefix
       }).fuzzy()

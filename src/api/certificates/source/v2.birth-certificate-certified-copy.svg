@@ -153,7 +153,7 @@
   <g clip-path="url(#clip4_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      <tspan x="307" y="188.104">{{$lookup $declaration "child.dob"}}</tspan>
+      <tspan x="307" y="188.104">{{$lookup $declaration "child.childBirthDate"}}</tspan>
     </text>
   </g>
   <line x1="65" y1="194.5" x2="533" y2="194.5" stroke="#ECECEC" />
@@ -215,8 +215,8 @@
   <g clip-path="url(#clip7_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      {{#ifCond (lookup $declaration 'mother.dob') '!==' undefined }}
-      <tspan x="307" y="286.104">{{$lookup $declaration 'mother.dob'}}</tspan>
+      {{#ifCond (lookup $declaration 'mother.motherBirthDate') '!==' undefined }}
+      <tspan x="307" y="286.104">{{$lookup $declaration 'mother.motherBirthDate'}}</tspan>
       {{else}}
       <tspan x="307" y="286.104">{{$lookup $declaration 'mother.age'}} {{#ifCond (lookup $declaration 'mother.age') '!==' undefined }}years old{{/ifCond}}</tspan>
       {{/ifCond}}
@@ -300,8 +300,8 @@
   <g clip-path="url(#clip12_946_2501)">
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans"
       font-size="8" letter-spacing="0px">
-      {{#ifCond (lookup $declaration 'father.dob') '!==' undefined }}
-      <tspan x="307" y="412.104">{{$lookup $declaration 'father.dob'}}</tspan>
+      {{#ifCond (lookup $declaration 'father.fatherBirthDate') '!==' undefined }}
+      <tspan x="307" y="412.104">{{$lookup $declaration 'father.fatherBirthDate'}}</tspan>
       {{else}}
       <tspan x="307" y="412.104">{{$lookup $declaration 'father.age'}} {{#ifCond (lookup $declaration 'father.age') '!==' undefined }}years old{{/ifCond}}</tspan>
       {{/ifCond}}

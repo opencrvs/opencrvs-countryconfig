@@ -107,12 +107,12 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               type: ConditionalType.SHOW,
               conditional: and(
                 not(
-                  field('child.dob')
+                  field('child.childBirthDate')
                     .isAfter()
                     .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
                     .inPast()
                 ),
-                field('child.dob').isBefore().now()
+                field('child.childBirthDate').isBefore().now()
               )
             }
           ],
@@ -156,17 +156,17 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
               type: ConditionalType.SHOW,
               conditional: and(
                 not(
-                  field('child.dob')
+                  field('child.childBirthDate')
                     .isAfter()
                     .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
                     .inPast()
                 ),
 
-                field('child.dob')
+                field('child.childBirthDate')
                   .isAfter()
                   .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
                   .inPast(),
-                field('child.dob').isBefore().now()
+                field('child.childBirthDate').isBefore().now()
               )
             }
           ],
@@ -209,11 +209,11 @@ export const BIRTH_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
             {
               type: ConditionalType.SHOW,
               conditional: and(
-                field('child.dob')
+                field('child.childBirthDate')
                   .isAfter()
                   .days(applicationConfig.BIRTH.REGISTRATION_TARGET)
                   .inPast(),
-                field('child.dob').isBefore().now()
+                field('child.childBirthDate').isBefore().now()
               )
             }
           ],

@@ -31,9 +31,9 @@ export const birthEvent = defineConfig({
     description: 'This is what this event is referred as in the system',
     id: 'v2.event.birth.label'
   },
-  dateOfEvent: field('child.dob'),
+  dateOfEvent: field('child.childBirthDate'),
   title: {
-    defaultMessage: '{child.firstname} {child.surname}',
+    defaultMessage: '{child.name.firstname} {child.name.surname}',
     description: 'This is the title of the summary',
     id: 'v2.event.birth.title'
   },
@@ -46,11 +46,11 @@ export const birthEvent = defineConfig({
   summary: {
     fields: [
       {
-        fieldId: 'child.dob',
+        fieldId: 'child.childBirthDate',
         emptyValueMessage: {
           defaultMessage: 'No date of birth',
           description: 'This is shown when there is no child information',
-          id: 'v2.event.birth.summary.child.dob.empty'
+          id: 'v2.event.birth.summary.child.childBirthDate.empty'
         }
       },
       // Render the 'fallback value' when selection has not been made.

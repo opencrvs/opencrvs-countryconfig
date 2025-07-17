@@ -95,28 +95,17 @@ export const child = defineFormPage({
   },
   fields: [
     {
-      id: 'child.surname',
-      type: FieldType.TEXT,
+      id: 'child.name',
+      type: FieldType.NAME,
       configuration: { maxLength: MAX_NAME_LENGTH },
       required: true,
+      hideLabel: true,
       label: {
-        defaultMessage: 'Last name',
+        defaultMessage: "Child's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.surname.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.name.label'
       },
-      validation: [invalidNameValidator('child.surname')]
-    },
-    {
-      id: 'child.firstname',
-      type: FieldType.TEXT,
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      required: true,
-      label: {
-        defaultMessage: 'First name(s)',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.firstname.label'
-      },
-      validation: [invalidNameValidator('child.firstname')]
+      validation: [invalidNameValidator('child.name')]
     },
     {
       id: 'child.gender',
@@ -130,7 +119,7 @@ export const child = defineFormPage({
       options: genderOptions
     },
     {
-      id: 'child.dob',
+      id: 'child.childBirthDate',
       type: 'DATE',
       required: true,
       validation: [
@@ -138,15 +127,15 @@ export const child = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid Birthdate',
             description: 'This is the error message for invalid date',
-            id: 'v2.event.birth.action.declare.form.section.child.field.dob.error'
+            id: 'v2.event.birth.action.declare.form.section.child.field.childBirthDate.error'
           },
-          validator: field('child.dob').isBefore().now()
+          validator: field('child.childBirthDate').isBefore().now()
         }
       ],
       label: {
         defaultMessage: 'Date of birth',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.dob.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.childBirthDate.label'
       }
     },
     {
@@ -163,12 +152,12 @@ export const child = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             not(
-              field('child.dob')
+              field('child.childBirthDate')
                 .isAfter()
                 .days(applicationConfig.BIRTH.LATE_REGISTRATION_TARGET)
                 .inPast()
             ),
-            field('child.dob').isBefore().now()
+            field('child.childBirthDate').isBefore().now()
           )
         }
       ]
@@ -293,55 +282,55 @@ export const child = defineFormPage({
     },
     // FIXME: to be replaced with the full component — NUI
     {
-      id: 'child.NUI',
+      id: 'child.iD',
       type: FieldType.NUMBER,
       required: true,
       label: {
-        defaultMessage: 'NUI',
+        defaultMessage: 'iD',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.NUI.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.iD.label'
       },
       validation: [
         {
           message: {
             defaultMessage: 'Must be within 0 and 999999999',
             description: 'This is the error message for invalid number range',
-            id: 'v2.error.child.NUI'
+            id: 'v2.error.child.iD'
           },
           validator: or(
-            field('child.NUI').isBetween(0, 999999999),
-            field('child.NUI').isUndefined()
+            field('child.iD').isBetween(0, 999999999),
+            field('child.iD').isUndefined()
           )
         }
       ],
       configuration: {
         min: 0,
         postfix: {
-          defaultMessage: 'NUI',
+          defaultMessage: 'iD',
           description: 'This is the postfix for the weight field',
-          id: 'v2.event.birth.action.declare.form.section.child.field.NUI.postfix'
+          id: 'v2.event.birth.action.declare.form.section.child.field.iD.postfix'
         }
       }
     },
     {
-      id: 'child.legacyRegistrationNumber',
+      id: 'child.legacyBirthRegistrationNumber',
       type: FieldType.NUMBER,
       required: false,
       label: {
         defaultMessage: 'Legacy birth registration number',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationNumber.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.legacyBirthRegistrationNumber.label'
       },
       validation: [
         {
           message: {
             defaultMessage: 'Must be within 0 and 999999',
             description: 'This is the error message for invalid number range',
-            id: 'v2.error.child.legacyRegistrationNumber'
+            id: 'v2.error.child.legacyBirthRegistrationNumber'
           },
           validator: or(
-            field('child.legacyRegistrationNumber').isBetween(0, 999999),
-            field('child.legacyRegistrationNumber').isUndefined()
+            field('child.legacyBirthRegistrationNumber').isBetween(0, 999999),
+            field('child.legacyBirthRegistrationNumber').isUndefined()
           )
         }
       ],
@@ -350,12 +339,12 @@ export const child = defineFormPage({
         postfix: {
           defaultMessage: 'Grammes',
           description: 'This is the postfix for the weight field',
-          id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationNumber.postfix'
+          id: 'v2.event.birth.action.declare.form.section.child.field.legacyBirthRegistrationNumber.postfix'
         }
       }
     },
     {
-      id: 'child.legacyRegistrationBirthDate',
+      id: 'child.legacyBirthRegistrationDate',
       type: 'DATE',
       required: false,
       validation: [
@@ -363,25 +352,25 @@ export const child = defineFormPage({
           message: {
             defaultMessage: 'Must be a valid Birthdate',
             description: 'This is the error message for invalid date',
-            id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationBirthDate.error'
+            id: 'v2.event.birth.action.declare.form.section.child.field.legacyBirthRegistrationDate.error'
           },
-          validator: field('child.legacyRegistrationBirthDate').isBefore().now()
+          validator: field('child.legacyBirthRegistrationDate').isBefore().now()
         }
       ],
       label: {
         defaultMessage: 'Legacy Registration Date',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationBirthDate.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.legacyBirthRegistrationDate.label'
       }
     },
     {
-      id: 'child.legacyRegistrationBirthTime',
+      id: 'child.legacyBirthRegistrationTime',
       type: 'TIME',
       required: true,
       label: {
         defaultMessage: 'Legacy birth registration time',
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.legacyRegistrationBirthTime.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.legacyBirthRegistrationTime.label'
       }
     }
   ]

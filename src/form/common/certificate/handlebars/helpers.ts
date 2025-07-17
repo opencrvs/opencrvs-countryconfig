@@ -204,7 +204,10 @@ export function introduction(): Handlebars.HelperDelegate {
         "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
         definitionOffice(replaceByUppercase(placeOfBirthCommune)),
         'Foibe misahana ny fiankohonana, taona',
-        customizeDateYearInCertificateContent(this.registrar.date) + ',',
+        customizeDateYearInCertificateContent(
+          this?.registrar?.date ||
+            this.$metadata.legalStatuses.REGISTERED.createdAt
+        ) + ',',
         'izao sora-pahaterahana manaraka izao :'
       ]
       // ' '
@@ -455,7 +458,9 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
-    const nameParts = this.registrar.name.trim().split(' ')
+    console.log('registrar', this.registrar)
+    console.log('this', this)
+    const nameParts = this?.registrar?.name?.trim()?.split(' ')
     const registrarFamilyName = nameParts.pop() || ''
     const rawFirstName = nameParts.join(' ')
     const registrarFirstName =
@@ -766,7 +771,7 @@ export function translateDate(): Handlebars.HelperDelegate {
 }
 
 function customizeDateYearInCertificateContent(dateString: string) {
-  const year = Number(dateString.split('-')[0])
+  const year = Number(dateString?.split('-')[0])
   return Number.isNaN(year)
     ? ''
     : convertNumberToLetterForMalagasySpecificLanguage(year)

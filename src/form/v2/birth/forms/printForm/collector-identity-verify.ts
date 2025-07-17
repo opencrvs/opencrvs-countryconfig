@@ -47,8 +47,8 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'mother.nid' },
         { fieldId: 'mother.passport' },
         { fieldId: 'mother.brn' },
-        { fieldId: 'mother.firstname' },
-        { fieldId: 'mother.surname' },
+        { fieldId: 'mother.name.firstname' },
+        { fieldId: 'mother.name.surname' },
         { fieldId: 'mother.dob' },
         { fieldId: 'mother.age' },
         { fieldId: 'mother.nationality' }
@@ -81,8 +81,8 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'father.nid' },
         { fieldId: 'father.passport' },
         { fieldId: 'father.brn' },
-        { fieldId: 'father.firstname' },
-        { fieldId: 'father.surname' },
+        { fieldId: 'father.name.firstname' },
+        { fieldId: 'father.name.surname' },
         { fieldId: 'father.dob' },
         { fieldId: 'father.age' },
         { fieldId: 'father.nationality' }
@@ -114,8 +114,8 @@ export const printCertificateCollectorIdentityVerify: FieldConfig[] = [
         { fieldId: 'informant.nid' },
         { fieldId: 'informant.passport' },
         { fieldId: 'informant.brn' },
-        { fieldId: 'informant.firstname' },
-        { fieldId: 'informant.surname' },
+        { fieldId: 'informant.name.firstname' },
+        { fieldId: 'informant.name.surname' },
         { fieldId: 'informant.dob' },
         { fieldId: 'informant.age' },
         { fieldId: 'informant.nationality' }
