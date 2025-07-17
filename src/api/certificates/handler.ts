@@ -11,6 +11,14 @@
 
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
+import {
+  all,
+  any,
+  formField,
+  hasMinimumPrintCountForTemplate,
+  hasPrintHistory,
+  isRegistered
+} from './conditional-helpers'
 
 type FontFamilyTypes = {
   normal: string
@@ -18,6 +26,9 @@ type FontFamilyTypes = {
   italics: string
   bolditalics: string
 }
+
+type JSONSchema = Record<string, any>
+
 export interface ICertificateConfigData {
   id: string
   event: Event
@@ -34,6 +45,12 @@ export interface ICertificateConfigData {
   }
   svgUrl: string
   fonts?: Record<string, FontFamilyTypes>
+  conditionals?:
+    | {
+        type: 'SHOW'
+        conditional: JSONSchema
+      }[]
+    | undefined
 }
 
 export async function certificateHandler(request: Request, h: ResponseToolkit) {
@@ -89,7 +106,17 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only for registered births and if male children
+          conditional: all(
+            isRegistered(),
+            formField('child.gender').equals('male')
+          )
+        }
+      ]
     },
     {
       id: 'birth-registration-receipt',
@@ -162,7 +189,17 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only if original certificate was printed OR if informant is spouse
+          conditional: any(
+            hasPrintHistory(),
+            formField('informant.relationship').equals('SPOUSE')
+          )
+        }
+      ]
     },
     {
       id: 'marriage-certificate',
@@ -260,7 +297,17 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
           bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only after the standard birth certificate has been printed at least twice
+          conditional: hasMinimumPrintCountForTemplate(
+            2,
+            'v2.birth-certificate'
+          )
+        }
+      ]
     },
     {
       id: 'v2.tennis-club-membership-certificate',
@@ -285,7 +332,14 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/NotoSans-Regular.ttf',
           bolditalics: '/api/countryconfig/fonts/NotoSans-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          // Show only for registered events
+          conditional: isRegistered()
+        }
+      ]
     },
     {
       id: 'v2.tennis-club-membership-certified-certificate',
