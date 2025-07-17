@@ -9,11 +9,8 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import {
-  statusOptions,
-  timePeriodOptions
-} from '@countryconfig/form/EventMetadataSearchOptions'
 import { AdvancedSearchConfig, event, field } from '@opencrvs/toolkit/events'
+import { placeOfBirthOptions } from './forms/pages/child'
 
 const childPrefix = {
   id: 'v2.birth.search.criteria.label.prefix.child',
@@ -43,10 +40,10 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.registrationDetails'
     },
     fields: [
-      event('legalStatus.REGISTERED.createdAtLocation').exact(),
-      event('legalStatus.REGISTERED.createdAt').range(),
-      event('status', statusOptions).exact(),
-      event('updatedAt', timePeriodOptions).range()
+      event('legalStatuses.REGISTERED.createdAtLocation').exact(),
+      event('legalStatuses.REGISTERED.acceptedAt').range(),
+      event('status').exact(),
+      event('updatedAt').range()
     ]
   },
   {
@@ -75,9 +72,15 @@ export const advancedSearchBirth = [
       id: 'v2.advancedSearch.form.eventDetails'
     },
     fields: [
+      field('child.placeOfBirth', {
+        excludeInSearchQuery: true,
+        options: placeOfBirthOptions.slice(0, 2)
+      }).exact(),
       field('child.birthLocation', {
-        conditionals: [],
         searchCriteriaLabelPrefix: childPrefix
+      }).exact(),
+      field('child.address.privateHome', {
+        alternateFieldIds: ['child.address.other']
       }).exact()
     ]
   },

@@ -164,7 +164,7 @@ const placeOfBirthMessageDescriptors = {
 
 const genderOptions = createSelectOptions(GenderTypes, genderMessageDescriptors)
 
-const placeOfBirthOptions = createSelectOptions(
+export const placeOfBirthOptions = createSelectOptions(
   PlaceOfBirth,
   placeOfBirthMessageDescriptors
 )

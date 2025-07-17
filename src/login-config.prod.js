@@ -12,7 +12,6 @@
 const scheme = window.location.protocol; // "http:" or "https:"
 const hostname = "{{hostname}}"; // Replace dynamically if needed
 const sentry = "{{sentry}}"; // Replace dynamically if needed
-console.log(scheme)
 window.config = {
   AUTH_API_URL: `${scheme}//gateway.${hostname}/auth/`,
   CONFIG_API_URL: `${scheme}//config.${hostname}`,

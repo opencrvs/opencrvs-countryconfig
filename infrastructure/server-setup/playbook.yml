@@ -40,6 +40,14 @@
       tags:
         - users
 
+    - include_tasks:
+        file: tasks/security-hardening.yml
+        apply:
+          tags:
+            - security-hardening
+      tags:
+        - security-hardening
+
 - import_playbook: jump.yml
 
 - hosts: docker-manager-first:docker-workers
@@ -68,6 +76,14 @@
           tags:
             - docker
       tags:
+        - docker
+    
+    - include_tasks:
+        file: tasks/override-docker-startup.yml
+        apply:
+          tags: 
+            - docker
+      tags: 
         - docker
 
     - include_tasks:

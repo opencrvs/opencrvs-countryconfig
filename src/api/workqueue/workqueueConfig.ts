@@ -109,9 +109,8 @@ export const Workqueues = defineWorkqueues([
     query: {
       updatedBy: { type: 'exact', term: user('id') },
       updatedAt: {
-        type: 'range',
-        gte: new Date(Date.now() - SEVEN_DAYS_IN_MILISECOND).toISOString(),
-        lte: new Date(Date.now()).toISOString()
+        type: 'timePeriod',
+        term: 'last7Days'
       }
     },
     actions: [
@@ -182,7 +181,7 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       status: { type: 'exact', term: 'DECLARED' },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -218,13 +217,13 @@ export const Workqueues = defineWorkqueues([
             type: 'anyOf',
             terms: ['DECLARED', 'VALIDATED']
           },
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+          updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         },
         {
           flags: {
             anyOf: [InherentFlags.CORRECTION_REQUESTED]
           },
-          createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+          updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         }
       ]
     },
@@ -332,7 +331,7 @@ export const Workqueues = defineWorkqueues([
           `${ActionType.REGISTER}:${ActionStatus.Requested}`.toLowerCase()
         ]
       },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
@@ -354,7 +353,7 @@ export const Workqueues = defineWorkqueues([
         noneOf: [InherentFlags.PRINTED, InherentFlags.CORRECTION_REQUESTED]
       },
       status: { type: 'exact', term: 'REGISTERED' },
-      createdAtLocation: { type: 'exact', term: user('primaryOfficeId') }
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {

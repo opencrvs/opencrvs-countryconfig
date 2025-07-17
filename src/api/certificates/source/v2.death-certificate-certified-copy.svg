@@ -302,6 +302,6 @@
   </defs>
   <image id="image2_948_2918" x="498.287" y="784" width="34.7131" height="35" xlink:href="{{qrCode}}" />
   {{#ifCond printInAdvance '!==' true}}
-  <image id="image0_948_2918" x="323.826" y="669" width="182.139" height="68" xlink:href="{{$lookup $metadata 'assignedToSignature'}}" />
+  <image id="image0_948_2918" x="323.826" y="669" width="182.139" height="68" xlink:href="{{$lookup $metadata 'assignedTo.signature'}}" />
   {{/ifCond}}
 </svg>
