@@ -379,7 +379,7 @@
         <tspan x="307" y="518.104">{{$lookup $declaration 'mother.name'}}</tspan>
       {{ else }}
         {{#ifCond (lookup $declaration 'informant.relation') '===' 'FATHER'}}
-          <tspan x="307" y="518.104">{{$lookup $declaration 'father.name'}}</tspan>  
+          <tspan x="307" y="518.104">{{$lookup $declaration 'father.name'}}</tspan>
         {{ else }}
           <tspan x="307" y="518.104">{{$lookup $declaration 'informant.name'}}</tspan>
         {{/ifCond}}
@@ -529,5 +529,5 @@
   </defs>
   <image x="506.287" y="784" width="34.7131" height="35" xlink:href="{{qrCode}}" />
   <image id="image0_946_2501" x="331.453" y="670" width="194.513" height="68"
-    xlink:href="{{$lookup $metadata 'assignedToSignature'}}" />
+    xlink:href="{{$lookup $metadata 'assignedTo.signature'}}" />
 </svg>

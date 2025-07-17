@@ -123,7 +123,6 @@ docker run --rm --network=$NETWORK --entrypoint=/bin/sh minio/mc:RELEASE.2023-09
   mc rb myminio/ocrvs && \
   mc mb myminio/ocrvs"
 
-
 # Delete all data from PostgreSQL
 #-------------------------------
 
@@ -165,5 +164,3 @@ docker service scale opencrvs_dashboards=1
 #-----------------------------
 docker service scale opencrvs_events=0
 docker service scale opencrvs_events=1
-
-
