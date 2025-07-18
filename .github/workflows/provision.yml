@@ -30,6 +30,7 @@ on:
           - backup
           - jump
           - e2e
+          - v17
           - v19-alpha-staging
           - v19-alpha-prod
       tag:

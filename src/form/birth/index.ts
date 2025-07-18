@@ -248,25 +248,25 @@ export const birthForm: ISerializedForm = {
             ),
             getFirstNameField(
               'informantNameInEnglish',
-              informantFirstNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
+              informantFirstNameConditionals
+                .concat(hideIfInformantMotherOrFather)
+                .concat(disableIfVerifiedOrAuthenticated),
               certificateHandlebars.informantFirstName,
               getInitialValueFromIDReader('firstName')
             ), // Required field. In Farajaland, we have built the option to integrate with MOSIP. So we have different conditionals for each name to check MOSIP responses.  You could always refactor firstNamesEng for a basic setup
             getFamilyNameField(
               'informantNameInEnglish',
-              informantFamilyNameConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
+              informantFamilyNameConditionals
+                .concat(hideIfInformantMotherOrFather)
+                .concat(disableIfVerifiedOrAuthenticated),
               certificateHandlebars.informantFamilyName,
               getInitialValueFromIDReader('familyName')
             ), // Required field.
             getBirthDate(
               'informantBirthDate',
-              informantBirthDateConditionals.concat(
-                hideIfInformantMotherOrFather
-              ),
+              informantBirthDateConditionals
+                .concat(hideIfInformantMotherOrFather)
+                .concat(disableIfVerifiedOrAuthenticated),
               [
                 {
                   operation: 'dateFormatIsCorrect',
