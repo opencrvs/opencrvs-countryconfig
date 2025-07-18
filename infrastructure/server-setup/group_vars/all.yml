@@ -14,4 +14,3 @@ backup_server_user: 'backup'
 backup_server_user_home: '/home/backup'
 crontab_user: root
 provisioning_user: provision
-single_node: false
