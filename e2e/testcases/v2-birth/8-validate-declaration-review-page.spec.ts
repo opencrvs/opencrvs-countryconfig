@@ -832,7 +832,7 @@ test.describe.serial('8. Validate declaration review page', () => {
     test('8.1.6 Fill up informant signature', async () => {
       await page.locator('#review____comment').fill(comment)
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, '#review____signature_canvas_element')
+      await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
@@ -1421,7 +1421,7 @@ test.describe.serial('8. Validate declaration review page', () => {
         .click()
 
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, '#review____signature_canvas_element')
+      await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })

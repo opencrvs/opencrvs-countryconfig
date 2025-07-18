@@ -369,14 +369,17 @@ export const formatName = (name: PersonOrName) => {
 export const drawSignature = async (
   page: Page,
   modalLocator:
-    | '#review____signature_canvas_element'
+    | 'review____signature_canvas_element'
     | 'brideSignature_modal'
     | 'groomSignature_modal'
     | 'witnessOneSignature_modal'
     | 'witnessTwoSignature_modal'
-    | 'informantSignature_modal' = 'informantSignature_modal'
+    | 'informantSignature_modal' = 'informantSignature_modal',
+  includeCanvas: boolean = true
 ) => {
-  const canvasLocator = `#${modalLocator} canvas`
+  const canvasLocator = includeCanvas
+    ? `#${modalLocator} canvas`
+    : `#${modalLocator}`
 
   const canvas = page.locator(canvasLocator)
   const rect = await canvas.boundingBox()
