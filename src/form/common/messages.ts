@@ -131,6 +131,11 @@ export const formMessageDescriptors = {
     description: 'Title of the primary adress',
     id: 'form.field.label.primaryAddress'
   },
+  middleName: {
+    defaultMessage: 'Middle name',
+    description: 'Label for middle name text input',
+    id: 'form.field.label.middleName'
+  },
   spouseSectionName: {
     defaultMessage: 'Spouse details',
     description: 'Title of the spouse section',

@@ -97,11 +97,10 @@
       <tspan x="88.6029" y="263.774">2.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="121.172" y="263.774"> /&#x2028;</tspan>
       <tspan x="104.68" y="278.774">Sexe</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="263.774">Sex</tspan>
+      <tspan x="104.68" y="263.774">Sex /&#x2028;</tspan>
     </text>
     <g clip-path="url(#clip5_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
@@ -113,10 +112,7 @@
       <tspan x="88.6029" y="305.414">3.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="166.527" y="305.414"> /&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="305.414">Date of birth</tspan>
+      <tspan x="104.68" y="305.414">Date of birth /&#x2028;</tspan>
       <tspan x="104.68" y="320.414">Date de naissance</tspan>
     </text>
     <g clip-path="url(#clip6_1157_5003)">
@@ -129,10 +125,7 @@
       <tspan x="88.6029" y="347.054">4.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="169.17" y="347.054"> /&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="347.054">Place of birth</tspan>
+      <tspan x="104.68" y="347.054">Place of birth /&#x2028;</tspan>
       <tspan x="104.68" y="362.054">Lieu de naissance</tspan>
     </text>
     <g clip-path="url(#clip7_1157_5003)">
@@ -151,10 +144,7 @@
       <tspan x="88.6029" y="388.694">5.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="196.138" y="388.694"> /&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="388.694">Mother&#x2019;s full name</tspan>
+      <tspan x="104.68" y="388.694">Mother&#x2019;s full name /&#x2028;</tspan>
       <tspan x="104.68" y="403.694">Nom complet de la m&#xe8;re</tspan>
     </text>
     <g clip-path="url(#clip8_1157_5003)">
@@ -167,12 +157,8 @@
       <tspan x="88.6029" y="430.334">6.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="194.68" y="430.334">/&#x2028;</tspan>
-      <tspan x="104.68" y="445.334">N</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="430.334">Father&#x2019;s full name </tspan>
-      <tspan x="112.571" y="445.334">om complet du p&#xe8;re</tspan>
+      <tspan x="104.68" y="430.334">Father&#x2019;s full name /&#x2028;</tspan>
+      <tspan x="104.68" y="445.334">Nom complet du p&#xe8;re</tspan>
     </text>
     <g clip-path="url(#clip9_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
@@ -222,10 +208,7 @@
       <tspan x="83.0519" y="555.254">10.</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="173.262" y="555.254">/&#x2028;</tspan>
-    </text>
-    <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px">
-      <tspan x="104.68" y="555.254">Registered by </tspan>
+      <tspan x="104.68" y="555.254">Registered by /&#x2028;</tspan>
       <tspan x="104.68" y="570.254">Enregistr&#xe9; par</tspan>
     </text>
     <g clip-path="url(#clip12_1157_5003)">

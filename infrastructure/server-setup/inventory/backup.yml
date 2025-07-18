@@ -17,6 +17,7 @@ all:
   vars:
     amount_of_backups_to_keep: 3
     backup_server_remote_target_directory: /home/backup/backups
+    single_node: true
     users:
       - name: riku
         ssh_keys:

@@ -35,3 +35,4 @@ graphql.schema.json
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+notebooks

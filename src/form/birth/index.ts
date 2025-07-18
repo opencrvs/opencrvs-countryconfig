@@ -20,6 +20,7 @@ import {
   getNationality,
   otherInformantType,
   getDetailsExist,
+  // getMiddleNameField,
   getReasonNotExisting
 } from '../common/common-required-fields'
 import {
@@ -182,6 +183,11 @@ export const birthForm: ISerializedForm = {
               [],
               certificateHandlebars.childFirstName
             ), // Required field.  Names in Latin characters must be provided for international passport
+            /*getMiddleNameField(
+              'childNameInEnglish',
+              [],
+              certificateHandlebars.childMiddleName
+            ),*/
             getFamilyNameField(
               'childNameInEnglish',
               [],

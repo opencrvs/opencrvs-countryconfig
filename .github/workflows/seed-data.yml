@@ -24,43 +24,25 @@ on:
           - e2e
       core-image-tag:
         description: Core DockerHub image tag
+        required: true
 jobs:
   seed-data:
     environment: ${{ inputs.environment }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       outcome: ${{ steps.seed.outcome }}
     timeout-minutes: 60
+
     steps:
-      - name: Clone core
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          repository: 'opencrvs/opencrvs-core'
-          path: './opencrvs-core'
+      - name: Pull the seed-data image
+        run: docker pull ghcr.io/opencrvs/ocrvs-data-seeder:${{ inputs.core-image-tag }}
 
-      - name: Set CORE_VERSION from inputs
-        if: ${{ inputs.core-image-tag }}
+      - name: Run docker container
         run: |
-          cd opencrvs-core
-          git checkout ${{ inputs.core-image-tag }}
-
-      - name: Install dependencies
-        working-directory: ./opencrvs-core
-        run: yarn install
-
-      - name: Seed data on given environment
-        uses: nick-fields/retry@v2
-        id: seed
-        with:
-          timeout_minutes: 10
-          max_attempts: 5
-          command: |
-            cd ./opencrvs-core
-            yarn seed:prod
-        env:
-          ACTIVATE_USERS: ${{ vars.ACTIVATE_USERS }}
-          GATEWAY_HOST: ${{ vars.GATEWAY_HOST }}
-          AUTH_HOST: ${{ vars.AUTH_HOST }}
-          COUNTRY_CONFIG_HOST: ${{ vars.COUNTRY_CONFIG_HOST }}
-          SUPER_USER_PASSWORD: ${{ secrets.SUPER_USER_PASSWORD }}
+          docker run \
+            -e "ACTIVATE_USERS=${{ vars.ACTIVATE_USERS }}" \
+            -e "GATEWAY_HOST=${{ vars.GATEWAY_HOST }}" \
+            -e "AUTH_HOST=${{ vars.AUTH_HOST }}" \
+            -e "COUNTRY_CONFIG_HOST=${{ vars.COUNTRY_CONFIG_HOST }}" \
+            -e "SUPER_USER_PASSWORD=${{ secrets.SUPER_USER_PASSWORD }}" \
+            ghcr.io/opencrvs/ocrvs-data-seeder:${{ inputs.core-image-tag }}
