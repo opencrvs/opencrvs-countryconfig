@@ -32,7 +32,11 @@ export default defineConfig({
     /* Capture screenshot on failure */
     screenshot: 'on',
     /* Collect trace when the test failed. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on'
+    trace: 'on',
+    // Ignore HTTPS errors (like untrusted or self-signed certificates) during Playwright tests
+    // when the IGNORE_CA environment variable is set to '1'.
+    // This is useful in CI environments using staging or test certificates that aren't publicly trusted.
+    ignoreHTTPSErrors: process.env.IGNORE_CA === '1',
   },
 
   /* Configure projects for major browsers */
