@@ -199,6 +199,8 @@ test.describe.serial('Birth correction flow', () => {
   })
 
   test('Correction request action appears in audit history', async () => {
+    await page.getByRole('button', { name: 'Assign record' }).click()
+    await page.getByRole('button', { name: 'Assign', exact: true }).click()
     // Go to second page of audit history list
     await page.getByRole('button', { name: 'Next page' }).click()
     await expect(

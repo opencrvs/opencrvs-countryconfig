@@ -573,7 +573,7 @@ test.describe('10. Correct record', () => {
          * - be navigated to Sent for approval workqueue
          * - include the declaration in this tab
          */
-        await page.getByRole('button', { name: 'Sent for approval' }).click()
+        await page.getByTestId('navigation_workqueue_sent-for-approval').click()
 
         await expect(
           page.getByRole('button', { name: formatV2ChildName(declaration) })
