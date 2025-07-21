@@ -595,7 +595,7 @@ test.describe.serial(' Correct record - 11', () => {
     })
     test('11.8.5 Validate correction requested modal', async () => {
       const correctionRequestedRow = page.locator(
-        '#listTable-task-history #row_4'
+        '#listTable-task-history #row_5'
       )
       await correctionRequestedRow.getByText('Correction requested').click()
 
@@ -704,7 +704,7 @@ test.describe.serial(' Correct record - 11', () => {
     })
     test('11.8.6 Validate correction rejected modal', async () => {
       const correctionRejectedRow = page.locator(
-        '#listTable-task-history #row_6'
+        '#listTable-task-history #row_7'
       )
       await correctionRejectedRow.getByText('Correction rejected').click()
 

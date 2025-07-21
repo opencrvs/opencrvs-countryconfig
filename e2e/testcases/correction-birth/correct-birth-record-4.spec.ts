@@ -786,11 +786,11 @@ test.describe.serial(' Correct record - 4', () => {
   })
   test('4.9 Validate record corrected modal', async () => {
     const correctionRequestedRow = page.locator(
-      '#listTable-task-history #row_4'
+      '#listTable-task-history #row_5'
     )
     await correctionRequestedRow.getByText('Record corrected').click()
 
-    const time = await correctionRequestedRow.locator('span').nth(1).innerText()
+    const date = await correctionRequestedRow.locator('span').nth(1).innerText()
 
     const requester = await correctionRequestedRow
       .locator('span')
@@ -811,7 +811,7 @@ test.describe.serial(' Correct record - 4', () => {
       page.getByRole('heading', { name: 'Record corrected' })
     ).toBeVisible()
 
-    await expect(page.getByText(requester + ' — ' + time)).toBeVisible()
+    await expect(page.getByText(requester + ' — ' + date)).toBeVisible()
 
     await expect(
       page.getByText('Requested by' + 'Legal guardian')

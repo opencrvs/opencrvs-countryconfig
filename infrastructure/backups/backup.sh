@@ -133,6 +133,7 @@ mkdir -p $ROOT_PATH/backups/influxdb
 mkdir -p $ROOT_PATH/backups/mongo
 mkdir -p $ROOT_PATH/backups/minio
 mkdir -p $ROOT_PATH/backups/vsexport
+mkdir -p $ROOT_PATH/backups/sqlite
 
 # This enables root-created directory to be writable by the docker user
 chown -R 1000:1000 $ROOT_PATH/backups
@@ -207,6 +208,16 @@ done
 
 openhim_command='docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash -c "mongodump $(mongo_credentials) --host $HOST -d openhim-dev $(excluded_collections) --gzip --archive=/data/backups/mongo/openhim-dev-${LABEL:-$BACKUP_DATE}.gz"'
 output="$(eval "$openhim_command" 2>&1)" || echo "Failed to backup MongoDB: $output"
+
+# Backup SQLite
+# ---------------------------------------------------------------------------------------------
+echo "Creating a backup for SQLite"
+
+docker run --rm \
+  -v $ROOT_PATH/sqlite:/data/sqlite \
+  -v $ROOT_PATH/backups/sqlite:/data/backup \
+  alpine sh -c "apk add --no-cache sqlite && \
+  sqlite3 /data/sqlite/mosip-api.db \".backup '/data/backup/mosip-api-${LABEL:-$BACKUP_DATE}.sqlite'\""
 
 #-------------------------------------------------------------------------------------
 
@@ -302,6 +313,7 @@ mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/application
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/metrics-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/webhooks-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
 mkdir -p $BACKUP_RAW_FILES_DIR/mongo/ && cp $ROOT_PATH/backups/mongo/performance-${LABEL:-$BACKUP_DATE}.gz $BACKUP_RAW_FILES_DIR/mongo/
+mkdir -p $BACKUP_RAW_FILES_DIR/sqlite/ && cp $ROOT_PATH/backups/sqlite/mosip-api-${LABEL:-$BACKUP_DATE}.sqlite $BACKUP_RAW_FILES_DIR/sqlite/
 
 tar -czf /tmp/${LABEL:-$BACKUP_DATE}.tar.gz -C "$BACKUP_RAW_FILES_DIR" .
 

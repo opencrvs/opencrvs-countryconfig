@@ -1101,7 +1101,7 @@ test.describe.serial('Correct record - 2', () => {
       // TODO: remove skip when there is a fix related correction audit history
       test.skip('2.8.4.2 Validate correction requested modal', async () => {
         const correctionRequestedRow = page.locator(
-          '#listTable-task-history #row_4'
+          '#listTable-task-history #row_5'
         )
         await correctionRequestedRow.getByText('Correction requested').click()
 
@@ -1323,7 +1323,7 @@ test.describe.serial('Correct record - 2', () => {
 
       test('2.8.4.3 Validate correction rejected modal', async () => {
         const correctionRejectedRow = page.locator(
-          '#listTable-task-history #row_6'
+          '#listTable-task-history #row_7'
         )
         await correctionRejectedRow.getByText('Correction rejected').click()
 

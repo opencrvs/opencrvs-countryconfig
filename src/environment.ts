@@ -30,5 +30,13 @@ export const env = cleanEnv(process.env, {
   CONFIRM_REGISTRATION_URL: url({
     devDefault: 'http://localhost:5050/confirm/registration'
   }),
-  QA_ENV: bool({ default: false })
+  QA_ENV: bool({ default: false }),
+  ESIGNET_REDIRECT_URL: url({ devDefault: 'http://localhost:20260/authorize' }),
+  OPENID_PROVIDER_CLIENT_ID: str({ devDefault: 'mock-client_id' }),
+  OPENID_PROVIDER_CLAIMS: str({
+    devDefault: 'name,family_name,given_name,middle_name,birthdate,address'
+  }),
+  MOSIP_API_USERINFO_URL: url({
+    devDefault: 'http://localhost:2024/esignet/get-oidp-user-info'
+  })
 })
