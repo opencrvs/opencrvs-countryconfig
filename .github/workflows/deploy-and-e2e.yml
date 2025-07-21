@@ -165,8 +165,6 @@ jobs:
 
   get-previous-run:
     runs-on: ubuntu-latest
-    outputs:
-      previous_run_result: ${{ steps.set-output.outputs.result }}
 
     steps:
       - name: Checkout code
@@ -208,7 +206,6 @@ jobs:
     if: success()
     steps:
       - name: Send Slack notification
-        if: needs.get-previous-run.outputs.previous_run_result == 'failure'
         uses: slackapi/slack-github-action@v1.26.0
         with:
           channel-id: 'C02LU432JGK'
