@@ -226,7 +226,7 @@ test.describe.serial('10. Death declaration case - 10', () => {
 
     test('10.1.6 Fill up informant signature', async () => {
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, '#review____signature_canvas_element')
+      await drawSignature(page, 'review____signature_canvas_element')
       await page
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })

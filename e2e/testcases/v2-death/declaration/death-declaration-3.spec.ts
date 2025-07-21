@@ -586,7 +586,7 @@ test.describe.serial('3. Death declaration case - 3', () => {
     test('3.1.7 Fill up informant signature', async () => {
       await page.locator('#review____comment').fill(annotation.review.comment)
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, '#review____signature_canvas_element')
+      await drawSignature(page, 'review____signature_canvas_element')
       await page
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
