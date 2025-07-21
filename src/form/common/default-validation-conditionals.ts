@@ -66,7 +66,8 @@ export const mothersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
   },
   {
     action: 'disable',
@@ -171,7 +172,8 @@ export const fathersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
   },
   {
     action: 'disable',
@@ -396,7 +398,8 @@ export function getNationalIDValidators(configCase: string): Validator[] {
 export const informantBirthDateConditionals = [
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
   },
   {
     action: 'disable',
@@ -411,7 +414,8 @@ export const spouseBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
   },
   {
     action: 'disable',

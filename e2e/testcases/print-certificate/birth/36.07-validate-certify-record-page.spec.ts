@@ -23,7 +23,7 @@ test.describe.serial('7.0 Validate "Certify record" page', () => {
       .locator('#certificateTemplateId-form-input > span')
       .first()
       .click()
-    await page.getByText('Birth Certificate', { exact: true }).click()
+
     await page.getByLabel('Print and issue to informant (Brother)').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(

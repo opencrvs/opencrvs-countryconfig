@@ -192,7 +192,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
     test('4.1.6 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, true)
+      await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
@@ -215,7 +215,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
         name: formatName(declaration.child.name),
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Sent for review', exists: true },
           { title: 'Requires updates', exists: false }
         ]
@@ -231,7 +231,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
       name: formatName(declaration.child.name),
       workqueues: [
         { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+        { title: 'Recent', exists: false },
         { title: 'Notifications', exists: false },
         { title: 'Ready for review', exists: true },
         { title: 'Requires updates', exists: false },
@@ -250,7 +250,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
         name: formatName(declaration.child.name),
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: false },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: true },
           { title: 'Requires updates', exists: false },
@@ -281,7 +281,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
         name: formatName(declaration.child.name),
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: false },
           { title: 'Requires updates', exists: false },
@@ -301,7 +301,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
       name: formatName(declaration.child.name),
       workqueues: [
         { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+        { title: 'Recent', exists: false },
         { title: 'Sent for review', exists: false },
         { title: 'Requires updates', exists: false }
       ]
@@ -317,7 +317,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
         name: formatName(declaration.child.name),
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: false },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: true },
           { title: 'Requires updates', exists: false },
@@ -350,7 +350,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
         name: formatName(declaration.child.name),
         workqueues: [
           { title: 'Assigned to you', exists: false },
-          //   { title: 'Recent', exists: true }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+          { title: 'Recent', exists: true },
           { title: 'Notifications', exists: false },
           { title: 'Ready for review', exists: false },
           { title: 'Requires updates', exists: false },
@@ -369,7 +369,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
       name: formatName(declaration.child.name),
       workqueues: [
         { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+        { title: 'Recent', exists: false },
         { title: 'Sent for review', exists: false },
         { title: 'Requires updates', exists: false }
       ]
@@ -384,7 +384,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
       name: formatName(declaration.child.name),
       workqueues: [
         { title: 'Assigned to you', exists: false },
-        //   { title: 'Recent', exists: false }, // https://github.com/opencrvs/opencrvs-core/issues/9785
+        { title: 'Recent', exists: false },
         { title: 'Notifications', exists: false },
         { title: 'Ready for review', exists: false },
         { title: 'Sent for approval', exists: false },

@@ -10,31 +10,39 @@
 
   - Use nvm to upgrade your local development environment to use node version `22.x.x.`
 
+- **Upgraded MinIO** to RELEASE.2025-06-13T11-33-47Z and MinIO Client (mc) to RELEASE.2025-05-21T01-59-54Z and ensured compatibility across both amd64 and arm64 architectures.
+
+- Remove the remnants of OpenHIM from the backup & restore scripts. [#9732](https://github.com/opencrvs/opencrvs-core/issues/9732) 
+
 ## 1.8.0
-
-### Improvements
-- Added Build summary and refactored deployment workflow to be more clear [#6984](https://github.com/opencrvs/opencrvs-core/issues/6984)
-- Build OpenCRVS release images for arm devices [#9455](https://github.com/opencrvs/opencrvs-core/issues/9455)
-
-
-- **Upgrade ELK stack** to a AGPLv3 licensed version 8.16.4 [#8749](https://github.com/opencrvs/opencrvs-core/issues/8749)
-- **Github runners upgraded** to latest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045) and apply sticky node version from .nvmrc [#423](https://github.com/opencrvs/opencrvs-countryconfig/pull/423)
-- **Introduced `single_node` variable in inventory files** to define whether single-node clusters are allowed, set to false in production to enforce use of at least a two-node cluster. [#6918](https://github.com/opencrvs/opencrvs-core/issues/6918)
 
 ### New features
 
 - Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
+
+### Improvements
+
+- **Upgrade ELK stack** to a AGPLv3 licensed version 8.16.4 [#8749](https://github.com/opencrvs/opencrvs-core/issues/8749)
+- Added Build summary and refactored deployment workflow to be more clear [#6984](https://github.com/opencrvs/opencrvs-core/issues/6984)
+- Build OpenCRVS release images for arm devices [#9455](https://github.com/opencrvs/opencrvs-core/issues/9455)
+- **Introduced `single_node` variable in inventory files** to define whether single-node clusters are allowed, set to false in production to enforce use of at least a two-node cluster. [#6918](https://github.com/opencrvs/opencrvs-core/issues/6918)
+- **Github runners upgraded** to latest Ubuntu LTS release 24.04 [#7045](https://github.com/opencrvs/opencrvs-core/issues/7045) and apply sticky node version from .nvmrc [#423](https://github.com/opencrvs/opencrvs-countryconfig/pull/423)
+- Updated `seed-data.yml` GitHub Actions workflow to use the new `data-seeder` Docker image instead of cloning the entire `opencrvs-core` repository. This improves CI performance and simplifies the data seeding process. [#8976](https://github.com/opencrvs/opencrvs-core/issues/8976)
 
 ### Bug Fixes
 
 - Added `swarm` tag to all tasks within the `swarm.yaml` playbook, previously it was missing. [#9252](https://github.com/opencrvs/opencrvs-core/issues/9252)
 - Restrict supported key exchange, cipher and MAC algorithms for SSH configuration [#7542](https://github.com/opencrvs/opencrvs-core/issues/7542)
 
+## 1.7.3
+
+No changes
+
 ## 1.7.2
 
-### Bugfixes
+### Bug fixes
 
-- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369((https://github.com/opencrvs/opencrvs-core/issues/9369))
+- A configuration example of how to use middle names in a supported way has been added, inspired by [#9369](https://github.com/opencrvs/opencrvs-core/issues/9369)
 - InfluxDB `max-values-per-tag` is now set to unlimited to temporarily fix the following error when clearing data from a deployed environment
 
 ```
@@ -230,6 +238,12 @@ wq.noRecords.draft,No records messages for empty draft tab,No records in my draf
 - Add constant.humanName to allow countries to customise the format of the full name in the sytem for `sytem users` and `citizens` e.g `{LastName} {MiddleName} {Firstname}`, in any case where one of the name is not provided e.g no `MiddleName`, we'll simply render e.g `{LastName} {FirstName}` without any extra spaces if that's the order set in `country-config`. [#6830](https://github.com/opencrvs/opencrvs-core/issues/6830)
 
 ## 1.6.2
+
+### New features
+- Added a local virtual machine setup for testing Ansible playbooks locally (on MacOS and Ubuntu ). Check [provision.ipynb](infrastructure/local-development/provision.ipynb) for more details.
+
+### Bug Fixes
+- Fixed `trigger-e2e-environment` workflow failing to run due to a missing env variable & accessing a deprecated property
 
 ## 1.6.1
 

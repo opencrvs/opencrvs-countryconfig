@@ -73,6 +73,19 @@ import { readFileSync } from 'fs'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
+import { env } from './environment'
+import {
+  mosipRegistrationForApprovalHandler,
+  mosipRegistrationForReviewHandler,
+  mosipRegistrationHandler,
+  verify
+} from '@opencrvs/mosip'
+import {
+  fhirBirthToMosip,
+  fhirDeathToMosip,
+  shouldForwardToIDSystem
+} from './utils/mosip'
+import { getEventType } from './utils/fhir'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import { env } from './environment'
 import {

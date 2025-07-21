@@ -64,7 +64,7 @@ test.describe.serial('Submit and verify incomplete birth declaration', () => {
         })
         .click()
 
-      await expect(page.getByText('Incomplete')).toBeVisible()
+      await expect(page.getByText('Incomplete', { exact: true })).toBeVisible()
       await expect(page.locator('#content-name')).toContainText(
         formatName(declaration.child.name)
       )
@@ -76,20 +76,20 @@ test.describe.serial('Submit and verify incomplete birth declaration', () => {
       ).toContainText('Birth')
       await expect(
         page.getByTestId('child.dob-value').locator('span')
-      ).toContainText('No date of birth')
+      ).toBeHidden()
       await expect(
         page.getByTestId('registrationNumber-value').locator('span')
       ).toContainText('No registration number')
       await expect(
         page.getByTestId('informant.contact-value').locator('span')
-      ).toContainText('No contact details provided')
+      ).toBeHidden()
       await expect(
         page.getByTestId('assignedTo-value').locator('span')
       ).toContainText('Not assigned')
 
       await expect(
         page.getByTestId('child.birthLocation-value').locator('span')
-      ).toContainText('No place of birth')
+      ).toBeHidden()
     })
   })
 })

@@ -285,7 +285,7 @@ test.describe
     test('30.1.7 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, true)
+      await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
@@ -376,8 +376,6 @@ test.describe
 
     await page.context().setOffline(false)
 
-    await ensureOutboxIsEmpty(page)
-
     await expect(page.getByTestId('search-result')).not.toContainText(
       'Waiting to send'
     )
@@ -403,5 +401,6 @@ test.describe
       formatName(partialDeclaration2.child.name),
       { timeout: 20000 }
     )
+    await ensureOutboxIsEmpty(page)
   })
 })

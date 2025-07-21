@@ -193,6 +193,7 @@ jobs:
           MASTER_IP: ${{ steps.output.outputs.master_ip }}
           DOMAIN: ${{ inputs.environment }}.opencrvs.dev
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          ENVIRONMENT: ${{ inputs.environment }}
         run: |
           cat infrastructure/provision-server/templates/environment.variables.${{ env.type }}.tpl | \
           sed -e "s/#SSH_HOST#/$MASTER_IP/" \
@@ -204,21 +205,25 @@ jobs:
               key=$(echo "$line" | cut -d '=' -f 1)
               value=$(echo "$line" | cut -d '=' -f 2-)
               echo "Adding variable: $key"
-              gh variable set --env ${{ inputs.environment }} $key --body "$value"
+              gh variable set --env "$ENVIRONMENT" $key --body "$value"
             fi
           done < infrastructure/environment.variables
+          existing_secrets=$(gh secret list --env "$ENVIRONMENT" --json name -q '.[].name')
           while read line; do
-            if [[ $line == *"="* ]]; then
-              key=$(echo "$line" | cut -d '=' -f 1)
-              value=$(echo "$line" | cut -d '=' -f 2-)
-              echo "Adding secret with value: $key"
-              gh secret set $key --env ${{ inputs.environment }} --body "$value"
-            else
-              key=$line
-              password=`openssl rand -base64 25 | tr -cd '[:alnum:]._-' ; echo ''`
-              echo "Adding secret: $key"
-              gh secret set $key --env ${{ inputs.environment }} --body "$password"
+            key=$(echo "$line" | cut -d '=' -f 1)
+            if echo "$existing_secrets" | grep -qw "$key"; then
+              echo "Secret $key already exists, skipping."
+              continue;
             fi
+
+            if [[ $line == *"="* ]]; then
+              value=$(echo "$line" | cut -d '=' -f 2-)
+              echo "Adding secret with predefined value: $key"
+            else
+              value=`openssl rand -base64 25 | tr -cd '[:alnum:]._-' ; echo ''`
+              echo "Adding secret with random value: $key"
+            fi
+            gh secret set "$key" --env "$ENVIRONMENT" --body "$value"
           done < infrastructure/provision-server/templates/environment.secrets.tpl
           gh secret set SSH_KEY --env ${{ inputs.environment }} < $TF_PATH/.ssh/id_rsa || echo "Failed"
       - name: Update known-hosts

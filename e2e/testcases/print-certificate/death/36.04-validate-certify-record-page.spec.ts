@@ -25,7 +25,6 @@ test.describe.serial('4.0 Validate "Certify record" page', () => {
       .first()
       .click()
 
-    await page.getByText('Death Certificate', { exact: true }).click()
     await page.getByLabel('Print in advance').check()
     await page.getByRole('button', { name: 'Continue' }).click()
     await expect(
