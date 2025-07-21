@@ -204,10 +204,7 @@ export function introduction(): Handlebars.HelperDelegate {
         "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
         definitionOffice(replaceByUppercase(placeOfBirthCommune)),
         'Foibe misahana ny fiankohonana, taona',
-        customizeDateYearInCertificateContent(
-          this?.registrar?.date ||
-            this.$metadata.legalStatuses.REGISTERED.createdAt
-        ) + ',',
+        customizeDateYearInCertificateContent(this?.registrar?.date) + ',',
         'izao sora-pahaterahana manaraka izao :'
       ]
       // ' '
