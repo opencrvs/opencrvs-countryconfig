@@ -11,14 +11,7 @@
 
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import {
-  all,
-  any,
-  formField,
-  hasMinimumPrintCountForTemplate,
-  hasPrintHistory,
-  isRegistered
-} from './conditional-helpers'
+import { event } from '@opencrvs/toolkit/conditionals'
 
 type FontFamilyTypes = {
   normal: string
@@ -110,11 +103,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       conditionals: [
         {
           type: 'SHOW',
-          // Show only for registered births and if male children
-          conditional: all(
-            isRegistered(),
-            formField('child.gender').equals('male')
-          )
+          // Show only if original certificate was printed
+          conditional: event.printActions().minCount(1)
         }
       ]
     },
@@ -193,11 +183,8 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       conditionals: [
         {
           type: 'SHOW',
-          // Show only if original certificate was printed OR if informant is spouse
-          conditional: any(
-            hasPrintHistory(),
-            formField('informant.relationship').equals('SPOUSE')
-          )
+          // Show only if original certificate was printed
+          conditional: event.printActions().minCount(1)
         }
       ]
     },
@@ -302,10 +289,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         {
           type: 'SHOW',
           // Show only after the standard birth certificate has been printed at least twice
-          conditional: hasMinimumPrintCountForTemplate(
-            2,
-            'v2.birth-certificate'
-          )
+          conditional: event.printActions('v2.birth-certificate').minCount(2)
         }
       ]
     },
@@ -337,7 +321,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         {
           type: 'SHOW',
           // Show only for registered events
-          conditional: isRegistered()
+          conditional: event.printActions().minCount(0)
         }
       ]
     },
