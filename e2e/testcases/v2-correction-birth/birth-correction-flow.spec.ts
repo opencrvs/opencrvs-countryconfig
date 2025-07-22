@@ -67,8 +67,28 @@ test.describe.serial('Birth correction flow', () => {
 
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Verified' }).click()
-    await page.getByRole('button', { name: 'Continue' }).click()
+  })
 
+  test('Fill in the supporting documents form', async () => {
+    const path = require('path')
+    const attachmentPath = path.resolve(__dirname, './image.png')
+    const inputFile = await page.locator(
+      'input[name="documents____supportingDocs"][type="file"]'
+    )
+
+    await page.getByTestId('select__documents____supportingDocs').click()
+    await page.getByText('Affidavit', { exact: true }).click()
+
+    await inputFile.setInputFiles(attachmentPath)
+
+    await page.getByTestId('select__documents____supportingDocs').click()
+    await page.getByText('Court Document', { exact: true }).click()
+    await inputFile.setInputFiles(attachmentPath)
+
+    await page.getByRole('button', { name: 'Continue' }).click()
+  })
+
+  test('Fill in the fees form', async () => {
     await page
       .locator('#fees____amount')
       .fill(faker.number.int({ min: 1, max: 1000 }).toString())
@@ -180,6 +200,20 @@ test.describe.serial('Birth correction flow', () => {
   test('Return to summary page', async () => {
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Continue' }).click()
+  })
+
+  test('Preview a file on summary page', async () => {
+    await expect(
+      page.getByRole('button', { name: 'Court Document' })
+    ).toBeVisible()
+
+    await page.getByRole('button', { name: 'Affidavit' }).click()
+
+    await expect(
+      page.getByRole('img', { name: 'Supporting Document' })
+    ).toBeVisible()
+
+    await page.locator('#preview_close').click()
   })
 
   test('Submit correction request', async () => {
