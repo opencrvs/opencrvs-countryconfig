@@ -123,7 +123,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
     test('3.1.3 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, 'review____signature_canvas_element')
+      await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })
@@ -317,7 +317,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
 
       await page.locator('#review____comment').fill(faker.lorem.sentence())
       await page.getByRole('button', { name: 'Sign' }).click()
-      await drawSignature(page, 'review____signature_canvas_element')
+      await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
         .getByRole('button', { name: 'Apply' })

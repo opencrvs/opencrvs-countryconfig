@@ -374,9 +374,12 @@ export const drawSignature = async (
     | 'groomSignature_modal'
     | 'witnessOneSignature_modal'
     | 'witnessTwoSignature_modal'
-    | 'informantSignature_modal' = 'informantSignature_modal'
+    | 'informantSignature_modal' = 'informantSignature_modal',
+  includeCanvas: boolean = true
 ) => {
-  const canvasLocator = `#${modalLocator} canvas`
+  const canvasLocator = includeCanvas
+    ? `#${modalLocator} canvas`
+    : `#${modalLocator}`
 
   const canvas = page.locator(canvasLocator)
   const rect = await canvas.boundingBox()
