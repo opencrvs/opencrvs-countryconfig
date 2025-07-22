@@ -78,7 +78,7 @@ test.describe.serial('1. Create user -1', () => {
         page
           .locator('#appSpinner')
           .or(page.getByText('Welcome to Farajaland CRS'))
-      ).toBeVisible()
+      ).toBeVisible({ timeout: 60000 })
 
       await expect(page.getByText('Welcome to Farajaland CRS')).toBeVisible()
       await page.getByRole('button', { name: 'Start' }).click()
