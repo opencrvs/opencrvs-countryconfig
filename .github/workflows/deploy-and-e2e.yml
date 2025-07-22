@@ -187,6 +187,6 @@ jobs:
         uses: slackapi/slack-github-action@v1.26.0
         with:
           channel-id: 'C02LU432JGK'
-          slack-message: '✅ Successfully ran E2E pipeline, triggered by ${{ github.event.client_payload.actor || github.actor }}. Check the logs at https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}.'
+          slack-message: '✅ E2E pipeline finished successfully, triggered by ${{ github.event.client_payload.actor || github.actor }}. Check the logs at https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}.'
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
