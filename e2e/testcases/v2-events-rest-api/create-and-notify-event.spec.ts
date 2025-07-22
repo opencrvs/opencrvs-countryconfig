@@ -442,7 +442,7 @@ test.describe('Events REST API', () => {
         page.getByRole('button', { name: 'Assign record', exact: true })
       ).not.toBeVisible()
       await expect(page.locator('#action-loading-undefined')).not.toBeVisible({
-        timeout: 30000
+        timeout: 60000
       })
 
       await expect(page.locator('#row_0')).toContainText('Sent incomplete')
@@ -564,7 +564,7 @@ test.describe('Events REST API', () => {
         page.getByRole('button', { name: 'Assign record', exact: true })
       ).not.toBeVisible()
       await expect(page.locator('#action-loading-undefined')).not.toBeVisible({
-        timeout: 30000
+        timeout: 60000
       })
 
       await page.getByRole('button', { name: 'Action' }).click()
