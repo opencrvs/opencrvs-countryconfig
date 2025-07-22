@@ -502,7 +502,7 @@ test.describe.serial('5. Death declaration case - 5', () => {
 
     test('5.1.7 Fill up informant signature', async () => {
       await page.locator('#review____comment').fill(annotation.review.comment)
-      await page.getByRole('button', { name: 'Sign' }).click()
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
       await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
