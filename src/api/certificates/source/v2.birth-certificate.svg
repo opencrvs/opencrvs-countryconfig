@@ -2,7 +2,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <rect width="595" height="842" fill="white" />
     <rect width="595" height="842" fill="white" />
-    {{#if (isTanaIV ($lookup $metadata 'updatedAtLocation.district')) }}
+    {{#if (v2IsTanaIV ($lookup $metadata 'updatedAtLocation.district')) }}
      <!-- ne fait rien-->
     {{ else }}
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
@@ -11,7 +11,7 @@
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         font-weight="bold" letter-spacing="0em">
-        <tspan x="88" y="104.58">{{getRegionName ($lookup $metadata 'updatedAtLocation.province')}}</tspan>
+        <tspan x="88" y="104.58">{{v2GetRegionName ($lookup $metadata 'updatedAtLocation.province')}}</tspan>
     </text>
     <foreignObject x="24" y="110.488"  width="150" height="100">
         <div xmlns="http://www.w3.org/1999/xhtml">
@@ -33,6 +33,89 @@
     </foreignObject>
 
     {{/if}}
+
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        letter-spacing="0em">
+        {{#if (isToamasina ($lookup $metadata 'updatedAtLocation.district'))}}
+                <tspan x="24" y="208.58">Soratra n&#xb0; :</tspan>
+        {{ else }}
+                <tspan x="24" y="187.58">Soratra n&#xb0; :</tspan>
+        {{/if}}
+    </text>
+     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        font-weight="bold" letter-spacing="0em">
+        {{#if (isToamasina ($lookup $metadata 'updatedAtLocation.district'))}}
+        <tspan x="86" y="208.58">{{$lookup $declaration 'child.legacyBirthRegistrationNumber'}}</tspan>
+        {{ else }}
+        <tspan x="86" y="187.58">{{$lookup $declaration 'child.legacyBirthRegistrationNumber'}}</tspan>
+        {{/if}}
+    </text>
+    <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        letter-spacing="0em">
+        {{#if (isToamasina ($lookup $metadata 'updatedAtLocation.district'))}}
+                <tspan x="24" y="220.58">Natao ny :</tspan>
+        {{ else }}
+                <tspan x="24" y="202.58">Natao ny :</tspan>
+        {{/if}}
+    </text>
+     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
+        font-weight="bold" letter-spacing="0em">
+        {{#if (isToamasina ($lookup $metadata 'updatedAtLocation.district'))}}
+        <tspan x="86" y="220.58">{{v2GetBirthRegistrationDateMDGFormat ($lookup $metadata 'dateOfEvent')}}</tspan>  
+        {{ else }}
+        <tspan x="86" y="202.58">{{v2GetBirthRegistrationDateMDGFormat ($lookup $metadata 'dateOfEvent')}}</tspan>        
+        {{/if}}
+    </text>
+
+    {{#wrapGroup 30 24 239.712}}
+        {{#text fontSize=14 fontWeight="bold"}}
+            {{#if (isWithAdpotion)}}
+            FAHATERAHANA SY FANJANAHANA
+            {{ else }}
+            FAHATERAHANA
+            {{/if}}
+        {{/text}}
+        {{#text fontSize=10 }} {{v2GetFirstname ($lookup $declaration 'child.name')}}{{/text}}
+        {{#text fontSize=10 }} {{v2GetSurname ($lookup $declaration 'child.name')}}{{/text}}
+        {{#text fontSize=10 }}NUI: {{$lookup $declaration 'child.iD'}}{{/text}}
+        {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat ($lookup $metadata 'dateOfEvent')}}{{/text}}
+        {{linebreak}}
+        <!-- FIXME: fix the certified which doesn't exist -->
+        {{#text fontSize=10 fontWeight="bold"}}{{v2NumberOfTimesCertificatePrinted ($lookup $metadata 'certified')}}{{/text}}
+        {{#text fontSize=10 fontWeight="bold"}}
+            {{#with (mentions) as |mentionsValue|}}{{#if mentionsValue.hasMention}}SORATRA AN-TSISINY :{{else}}{{/if}} {{/with}}
+        {{/text}}
+        {{#foreignObject 154 500}}<pre class="mentions" style="font-family: 'Plus Jakarta Sans'; width: 100%; white-space: pre-wrap; overflow-wrap: break-word; max-width: 100%;
+                text-align: left;
+                font-size: 13px;
+                line-height: 1.1;
+                letter-spacing: 0em;
+                margin-top: 0;">{{#with (mentions) as |mentionsValue|}}{{#if mentionsValue.hasMention}}{{mentionsValue.text}}{{else}}{{/if}}
+                {{/with}}
+            </pre>
+        {{/foreignObject}}
+    {{/wrapGroup}}
+
+    {{#if (v2IsTanaIV ($lookup $metadata 'updatedAtLocation.district'))}}
+       <!-- ne fait rien-->
+    {{ else }}
+     <text fill="black" xml:space="default" font-family="Kapakana" font-size="36" letter-spacing="0em">
+        <tspan x="217.896" y="122.48">Kopian&#x2019;ny Sora-piankohonana</tspan>
+     </text>
+    {{/if}}
+
+    <!-- y="165"-->
+    <foreignObject x="190" y="165" width="384" height="560">
+        <p style="font-family: 'Plus Jakarta Sans';
+           text-align: justify;
+            word-break: break-all;
+            font-size: 14px;
+            line-height: 1.1;
+            letter-spacing: 0em;
+            margin-top: 0;">{{{v2Introduction ($lookup $metadata 'updatedAtLocation.district') ($lookup $metadata 'dateOfEvent')}}}
+        </p>
+        
+    </foreignObject>
     
     <!-- Afficher uniquement le logo si different de tana 4 -->
     {{#if (isTanaIV ($lookup $metadata 'updatedAtLocation.district'))}}

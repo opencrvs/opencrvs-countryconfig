@@ -186,19 +186,40 @@ function isValidDate(value?: string) {
   return !isNaN(date.getTime())
 }
 
+export function v2NumberOfTimesCertificatePrinted(): Handlebars.HelperDelegate {
+  return function (this: any, certified: boolean) {
+    return !certified ? 'KOPIA VOALOHANY' + generateDoubleLineBreak() : ''
+  }
+}
+
 export function numberOfTimesCertificatePrinted(): Handlebars.HelperDelegate {
   return function (this: Record<string, any>) {
-    // if (!this.certifier) {
-    //   return 'KOPIA VOALOHANY'
-    // } else {
-    //   return 'SORATRA AN-TSISINY :'
-    // }
     return !this.certifier ? 'KOPIA VOALOHANY' + generateDoubleLineBreak() : ''
+  }
+}
+
+export function v2Introduction(): Handlebars.HelperDelegate {
+  return function (
+    this: any,
+    placeOfBirthCommune: string,
+    dateOfEvent: string
+  ) {
+    return joinValuesWith(
+      [
+        "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
+        definitionOffice(replaceByUppercase(placeOfBirthCommune)),
+        'Foibe misahana ny fiankohonana, taona',
+        customizeDateYearInCertificateContent(dateOfEvent) + ',',
+        'izao sora-pahaterahana manaraka izao :'
+      ]
+      // ' '
+    )
   }
 }
 
 export function introduction(): Handlebars.HelperDelegate {
   return function (this: any, placeOfBirthCommune: string) {
+    console.log('placeOfBirthCommune', placeOfBirthCommune)
     return joinValuesWith(
       [
         "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
@@ -768,7 +789,9 @@ export function translateDate(): Handlebars.HelperDelegate {
 }
 
 function customizeDateYearInCertificateContent(dateString: string) {
-  const year = Number(dateString?.split('-')[0])
+  console.log('dateString', dateString)
+  const year =
+    Number(dateString?.split('-')[0]) || Number(dateString.split(' ')[2])
   return Number.isNaN(year)
     ? ''
     : convertNumberToLetterForMalagasySpecificLanguage(year)
@@ -840,6 +863,15 @@ function getBirthRegistrationDate(data: any): string | undefined {
     : undefined
 }
 
+export function v2GetBirthRegistrationDateMDGFormat(): Handlebars.HelperDelegate {
+  return function (this: any, registrationDate: string) {
+    if (isValidDate(registrationDate)) {
+      return handleTranslateDateToMDGFormat(registrationDate)
+    }
+    return handleTranslateDateToMDGFormat(registrationDate)
+  }
+}
+
 export function getBirthRegistrationDateMDGFormat(): Handlebars.HelperDelegate {
   return function (this: any) {
     const birthRegistrationDate = getBirthRegistrationDate(this)
@@ -850,6 +882,24 @@ export function getBirthRegistrationDateMDGFormat(): Handlebars.HelperDelegate {
       )
     }
     return handleTranslateDateToMDGFormat(this.registrar.date)
+  }
+}
+
+export function v2GetFirstname(): Handlebars.HelperDelegate {
+  return function (this: any, fullname: string) {
+    if (!fullname) {
+      return '—'
+    }
+    return fullname.split(' ')[0]
+  }
+}
+
+export function v2GetSurname(): Handlebars.HelperDelegate {
+  return function (this: any, fullname: string) {
+    if (!fullname) {
+      return '—'
+    }
+    return fullname.split(' ')[1]
   }
 }
 
@@ -983,6 +1033,14 @@ export function definitionCommuneInTheAct(): Handlebars.HelperDelegate {
     return defineCommune(name)
   }
 }
+
+export function v2IsTanaIV(): Handlebars.HelperDelegate {
+  return function (this: any, name: string) {
+    return name.toLowerCase() === 'cu tana iv'
+  }
+}
+
+// FIXME: this helper function doesn't work for v1 certificates
 export function isTanaIV(): Handlebars.HelperDelegate {
   return function (this: any, name: string) {
     return name.toLowerCase() === 'cu tana iv'
@@ -1392,6 +1450,724 @@ export function getChildNID(): Handlebars.HelperDelegate {
     return getChildGeneratedOrManualNID.call(this)
   }
 }
+
+const v2Districts = [
+  {
+    id: 5101,
+    name: 'AMBATONDRAZAKA',
+    region_id: 51,
+    region_name: 'ALAOTRA-MANGORO'
+  },
+  {
+    id: 5102,
+    name: 'AMPARAFARAVOLA',
+    region_id: 51,
+    region_name: 'ALAOTRA-MANGORO'
+  },
+  {
+    id: 5103,
+    name: 'ANDILAMENA',
+    region_id: 51,
+    region_name: 'ALAOTRA-MANGORO'
+  },
+  {
+    id: 5104,
+    name: 'ANOSIBE AN ALA',
+    region_id: 51,
+    region_name: 'ALAOTRA-MANGORO'
+  },
+  {
+    id: 5105,
+    name: 'MORAMANGA',
+    region_id: 51,
+    region_name: 'ALAOTRA-MANGORO'
+  },
+  {
+    id: 3101,
+    name: 'AMBATOFINANDRAHANA',
+    region_id: 31,
+    region_name: "AMORON'I MANIA"
+  },
+  {
+    id: 3102,
+    name: 'AMBOSITRA',
+    region_id: 31,
+    region_name: "AMORON'I MANIA"
+  },
+  {
+    id: 3103,
+    name: 'FANDRIANA',
+    region_id: 31,
+    region_name: "AMORON'I MANIA"
+  },
+  {
+    id: 3104,
+    name: 'MANANDRIANA',
+    region_id: 31,
+    region_name: "AMORON'I MANIA"
+  },
+  {
+    id: 1101,
+    name: 'AMBOHIDRATRIMO',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1102,
+    name: 'ANDRAMASINA',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1103,
+    name: 'ANJOZOROBE',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1104,
+    name: 'ANKAZOBE',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1105,
+    name: 'ANTANANARIVO ATSIMONDRANO',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1106,
+    name: 'ANTANANARIVO AVARADRANO',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1107,
+    name: 'MANJAKANDRIANA',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1108,
+    name: 'CU TANA I',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+
+  {
+    id: 1109,
+    name: 'CU TANA II',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1110,
+    name: 'CU TANA III',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1111,
+    name: 'CU TANA IV',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1112,
+    name: 'CU TANA V',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 1113,
+    name: 'CU TANA VI',
+    region_id: 11,
+    region_name: 'ANALAMANGA'
+  },
+  {
+    id: 5201,
+    name: 'FENERIVE EST',
+    region_id: 52,
+    region_name: 'ANALANJIROFO'
+  },
+  {
+    id: 5202,
+    name: 'MANANARA-NORD',
+    region_id: 52,
+    region_name: 'ANALANJIROFO'
+  },
+  {
+    id: 5203,
+    name: 'MAROANTSETRA',
+    region_id: 52,
+    region_name: 'ANALANJIROFO'
+  },
+  {
+    id: 5204,
+    name: 'SAINTE MARIE',
+    region_id: 52,
+    region_name: 'ANALANJIROFO'
+  },
+  {
+    id: 5205,
+    name: 'SOANIERANA IVONGO',
+    region_id: 52,
+    region_name: 'ANALANJIROFO'
+  },
+  {
+    id: 5206,
+    name: 'VAVATENINA',
+    region_id: 52,
+    region_name: 'ANALANJIROFO'
+  },
+  {
+    id: 6101,
+    name: 'AMBOVOMBE ANDROY',
+    region_id: 61,
+    region_name: 'ANDROY'
+  },
+  {
+    id: 6102,
+    name: 'BEKILY',
+    region_id: 61,
+    region_name: 'ANDROY'
+  },
+  {
+    id: 6103,
+    name: 'BELOHA ANDROY',
+    region_id: 61,
+    region_name: 'ANDROY'
+  },
+  {
+    id: 6104,
+    name: 'TSIHOMBE',
+    region_id: 61,
+    region_name: 'ANDROY'
+  },
+  {
+    id: 6201,
+    name: 'AMBOASARY SUD',
+    region_id: 62,
+    region_name: 'ANOSY'
+  },
+  {
+    id: 6202,
+    name: 'BETROKA',
+    region_id: 62,
+    region_name: 'ANOSY'
+  },
+  {
+    id: 6203,
+    name: 'TAOLANARO',
+    region_id: 62,
+    region_name: 'ANOSY'
+  },
+  {
+    id: 6301,
+    name: 'AMPANIHY OUEST',
+    region_id: 63,
+    region_name: 'ATSIMO-ANDREFANA'
+  },
+  {
+    id: 6302,
+    name: 'ANKAZOABO SUD',
+    region_id: 63,
+    region_name: 'ATSIMO-ANDREFANA'
+  },
+  {
+    id: 6303,
+    name: 'BENENITRA',
+    region_id: 63,
+    region_name: 'ATSIMO-ANDREFANA'
+  },
+  {
+    id: 6304,
+    name: 'BEROROHA',
+    region_id: 63,
+    region_name: 'ATSIMO-ANDREFANA'
+  },
+  {
+    id: 6305,
+    name: 'BETIOKY SUD',
+    region_id: 63,
+    region_name: 'ATSIMO-ANDREFANA'
+  },
+  {
+    id: 6306,
+    name: 'MOROMBE',
+    region_id: 63,
+    region_name: 'ATSIMO-ANDREFANA'
+  },
+  {
+    id: 6307,
+    name: 'SAKARAHA',
+    region_id: 63,
+    region_name: 'ATSIMO-ANDREFANA'
+  },
+  {
+    id: 6308,
+    name: 'TOLIARA I',
+    region_id: 63,
+    region_name: 'ATSIMO-ANDREFANA'
+  },
+  {
+    id: 6309,
+    name: 'TOLIARA II',
+    region_id: 63,
+    region_name: 'ATSIMO-ANDREFANA'
+  },
+  {
+    id: 3201,
+    name: 'BEFOTAKA ATSIMO',
+    region_id: 32,
+    region_name: 'ATSIMO-ATSINANANA'
+  },
+  {
+    id: 3202,
+    name: 'FARAFANGANA',
+    region_id: 32,
+    region_name: 'ATSIMO-ATSINANANA'
+  },
+  {
+    id: 3203,
+    name: 'MIDONGY SUD',
+    region_id: 32,
+    region_name: 'ATSIMO-ATSINANANA'
+  },
+  {
+    id: 3204,
+    name: 'VANGAINDRANO',
+    region_id: 32,
+    region_name: 'ATSIMO-ATSINANANA'
+  },
+  {
+    id: 3205,
+    name: 'VONDROZO',
+    region_id: 32,
+    region_name: 'ATSIMO-ATSINANANA'
+  },
+  {
+    id: 5301,
+    name: 'ANTANAMBAO MANAMPONTSY',
+    region_id: 53,
+    region_name: 'ATSINANANA'
+  },
+  {
+    id: 5302,
+    name: 'BRICKAVILLE',
+    region_id: 53,
+    region_name: 'ATSINANANA'
+  },
+  {
+    id: 5303,
+    name: 'MAHANORO',
+    region_id: 53,
+    region_name: 'ATSINANANA'
+  },
+  {
+    id: 5304,
+    name: 'MAROLAMBO',
+    region_id: 53,
+    region_name: 'ATSINANANA'
+  },
+  {
+    id: 5305,
+    name: 'TOAMASINA I',
+    region_id: 53,
+    region_name: 'ATSINANANA'
+  },
+  {
+    id: 5306,
+    name: 'TOAMASINA II',
+    region_id: 53,
+    region_name: 'ATSINANANA'
+  },
+  {
+    id: 5307,
+    name: 'VATOMANDRY',
+    region_id: 53,
+    region_name: 'ATSINANANA'
+  },
+  {
+    id: 4101,
+    name: 'KANDREHO',
+    region_id: 41,
+    region_name: 'BETSIBOKA'
+  },
+  {
+    id: 4102,
+    name: 'MAEVATANANA',
+    region_id: 41,
+    region_name: 'BETSIBOKA'
+  },
+  {
+    id: 4103,
+    name: 'TSARATANANA',
+    region_id: 41,
+    region_name: 'BETSIBOKA'
+  },
+  {
+    id: 4201,
+    name: 'AMBATO BOENI',
+    region_id: 42,
+    region_name: 'BOENY'
+  },
+  {
+    id: 4202,
+    name: 'MAHAJANGA I',
+    region_id: 42,
+    region_name: 'BOENY'
+  },
+  {
+    id: 4203,
+    name: 'MAHAJANGA II',
+    region_id: 42,
+    region_name: 'BOENY'
+  },
+  {
+    id: 4204,
+    name: 'MAROVOAY',
+    region_id: 42,
+    region_name: 'BOENY'
+  },
+  {
+    id: 4205,
+    name: 'MITSINJO',
+    region_id: 42,
+    region_name: 'BOENY'
+  },
+  {
+    id: 4206,
+    name: 'SOALALA',
+    region_id: 42,
+    region_name: 'BOENY'
+  },
+  {
+    id: 1201,
+    name: 'FENOARIVOBE',
+    region_id: 12,
+    region_name: 'BONGOLAVA'
+  },
+  {
+    id: 1202,
+    name: 'TSIROANOMANDIDY',
+    region_id: 12,
+    region_name: 'BONGOLAVA'
+  },
+  {
+    id: 2101,
+    name: 'AMBANJA',
+    region_id: 21,
+    region_name: 'DIANA'
+  },
+  {
+    id: 2102,
+    name: 'AMBILOBE',
+    region_id: 21,
+    region_name: 'DIANA'
+  },
+  {
+    id: 2103,
+    name: 'ANTSIRANANA I',
+    region_id: 21,
+    region_name: 'DIANA'
+  },
+  {
+    id: 2104,
+    name: 'ANTSIRANANA II',
+    region_id: 21,
+    region_name: 'DIANA'
+  },
+  {
+    id: 2105,
+    name: 'NOSY-BE',
+    region_id: 21,
+    region_name: 'DIANA'
+  },
+  {
+    id: 3301,
+    name: 'IKONGO',
+    region_id: 33,
+    region_name: 'FITOVINANY'
+  },
+  {
+    id: 3302,
+    name: 'MANAKARA',
+    region_id: 33,
+    region_name: 'FITOVINANY'
+  },
+  {
+    id: 3303,
+    name: 'VOHIPENO',
+    region_id: 33,
+    region_name: 'FITOVINANY'
+  },
+  {
+    id: 3401,
+    name: 'AMBALAVAO',
+    region_id: 34,
+    region_name: 'HAUTE MATSIATRA'
+  },
+  {
+    id: 3402,
+    name: 'AMBOHIMAHASOA',
+    region_id: 34,
+    region_name: 'HAUTE MATSIATRA'
+  },
+  {
+    id: 3403,
+    name: 'FIANARANTSOA',
+    region_id: 34,
+    region_name: 'HAUTE MATSIATRA'
+  },
+  {
+    id: 3404,
+    name: 'IKALAMAVONY',
+    region_id: 34,
+    region_name: 'HAUTE MATSIATRA'
+  },
+  {
+    id: 3405,
+    name: 'ISANDRA',
+    region_id: 34,
+    region_name: 'HAUTE MATSIATRA'
+  },
+  {
+    id: 3406,
+    name: 'LALANGINA',
+    region_id: 34,
+    region_name: 'HAUTE MATSIATRA'
+  },
+  {
+    id: 3407,
+    name: 'VOHIBATO',
+    region_id: 34,
+    region_name: 'HAUTE MATSIATRA'
+  },
+  {
+    id: 3501,
+    name: 'IAKORA',
+    region_id: 35,
+    region_name: 'IHOROMBE'
+  },
+  {
+    id: 3502,
+    name: 'IHOSY',
+    region_id: 35,
+    region_name: 'IHOROMBE'
+  },
+  {
+    id: 3503,
+    name: 'IVOHIBE',
+    region_id: 35,
+    region_name: 'IHOROMBE'
+  },
+  {
+    id: 1301,
+    name: 'ARIVONIMAMO',
+    region_id: 13,
+    region_name: 'ITASY'
+  },
+  {
+    id: 1302,
+    name: 'MIARINARIVO',
+    region_id: 13,
+    region_name: 'ITASY'
+  },
+  {
+    id: 1303,
+    name: 'SOAVINANDRIANA',
+    region_id: 13,
+    region_name: 'ITASY'
+  },
+  {
+    id: 4301,
+    name: 'AMBATOMAINTY',
+    region_id: 43,
+    region_name: 'MELAKY'
+  },
+  {
+    id: 4302,
+    name: 'ANTSALOVA',
+    region_id: 43,
+    region_name: 'MELAKY'
+  },
+  {
+    id: 4303,
+    name: 'BESALAMPY',
+    region_id: 43,
+    region_name: 'MELAKY'
+  },
+  {
+    id: 4304,
+    name: 'MAINTIRANO',
+    region_id: 43,
+    region_name: 'MELAKY'
+  },
+  {
+    id: 4305,
+    name: 'MORAFENOBE',
+    region_id: 43,
+    region_name: 'MELAKY'
+  },
+  {
+    id: 6401,
+    name: 'BELO SUR TSIRIBIHINA',
+    region_id: 64,
+    region_name: 'MENABE'
+  },
+  {
+    id: 6402,
+    name: 'MAHABO',
+    region_id: 64,
+    region_name: 'MENABE'
+  },
+  {
+    id: 6403,
+    name: 'MANJA',
+    region_id: 64,
+    region_name: 'MENABE'
+  },
+  {
+    id: 6404,
+    name: 'MIANDRIVAZO',
+    region_id: 64,
+    region_name: 'MENABE'
+  },
+  {
+    id: 6405,
+    name: 'MORONDAVA',
+    region_id: 64,
+    region_name: 'MENABE'
+  },
+  {
+    id: 2201,
+    name: 'ANDAPA',
+    region_id: 22,
+    region_name: 'SAVA'
+  },
+  {
+    id: 2202,
+    name: 'ANTALAHA',
+    region_id: 22,
+    region_name: 'SAVA'
+  },
+  {
+    id: 2203,
+    name: 'SAMBAVA',
+    region_id: 22,
+    region_name: 'SAVA'
+  },
+  {
+    id: 2204,
+    name: 'VOHEMAR',
+    region_id: 22,
+    region_name: 'SAVA'
+  },
+  {
+    id: 4401,
+    name: 'ANALALAVA',
+    region_id: 44,
+    region_name: 'SOFIA'
+  },
+  {
+    id: 4402,
+    name: 'ANTSOHIHY',
+    region_id: 44,
+    region_name: 'SOFIA'
+  },
+  {
+    id: 4403,
+    name: 'BEALANANA',
+    region_id: 44,
+    region_name: 'SOFIA'
+  },
+  {
+    id: 4404,
+    name: 'BEFANDRIANA NORD',
+    region_id: 44,
+    region_name: 'SOFIA'
+  },
+  {
+    id: 4405,
+    name: 'MAMPIKONY',
+    region_id: 44,
+    region_name: 'SOFIA'
+  },
+  {
+    id: 4406,
+    name: 'MANDRITSARA',
+    region_id: 44,
+    region_name: 'SOFIA'
+  },
+  {
+    id: 4407,
+    name: 'PORT-BERGE',
+    region_id: 44,
+    region_name: 'SOFIA'
+  },
+  {
+    id: 1401,
+    name: 'AMBATOLAMPY',
+    region_id: 14,
+    region_name: 'VAKINANKARATRA'
+  },
+  {
+    id: 1402,
+    name: 'ANTANIFOTSY',
+    region_id: 14,
+    region_name: 'VAKINANKARATRA'
+  },
+  {
+    id: 1403,
+    name: 'ANTSIRABE I',
+    region_id: 14,
+    region_name: 'VAKINANKARATRA'
+  },
+  {
+    id: 1404,
+    name: 'ANTSIRABE II',
+    region_id: 14,
+    region_name: 'VAKINANKARATRA'
+  },
+  {
+    id: 1405,
+    name: 'BETAFO',
+    region_id: 14,
+    region_name: 'VAKINANKARATRA'
+  },
+  {
+    id: 1406,
+    name: 'FARATSIHO',
+    region_id: 14,
+    region_name: 'VAKINANKARATRA'
+  },
+  {
+    id: 1407,
+    name: 'MANDOTO',
+    region_id: 14,
+    region_name: 'VAKINANKARATRA'
+  },
+  {
+    id: 3601,
+    name: 'IFANADIANA',
+    region_id: 36,
+    region_name: 'VATOVAVY'
+  },
+  {
+    id: 3602,
+    name: 'MANANJARY',
+    region_id: 36,
+    region_name: 'VATOVAVY'
+  },
+  {
+    id: 3603,
+    name: 'NOSY VARIKA',
+    region_id: 36,
+    region_name: 'VATOVAVY'
+  }
+]
 
 const districts = [
   {
@@ -2110,6 +2886,13 @@ const districts = [
     region_name: 'VATOVAVY'
   }
 ]
+
+export function v2GetRegionName(): Handlebars.HelperDelegate {
+  return function (this: any, districtName: string) {
+    return v2Districts.find((d) => d.name === districtName.toUpperCase())
+      ?.region_name
+  }
+}
 
 export function getRegionName(): Handlebars.HelperDelegate {
   return function (this: any, districtName: string) {
