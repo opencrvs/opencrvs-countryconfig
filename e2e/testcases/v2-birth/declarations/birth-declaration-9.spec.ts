@@ -166,7 +166,7 @@ test.describe.serial('9. Birth declaration case - 9', () => {
 
     test('9.1.7 Fill up informant signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
-      await page.getByRole('button', { name: 'Sign' }).click()
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
       await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')

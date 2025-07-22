@@ -1,18 +1,15 @@
 import { test, expect, type Page } from '@playwright/test'
 import {
-  assignRecord,
   continueForm,
   drawSignature,
-  expectAddress,
   formatDateObjectTo_dMMMMyyyy,
   formatName,
-  getAction,
   getRandomDate,
   goToSection,
   loginToV2
 } from '../../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../../constants'
+import { CREDENTIALS } from '../../../constants'
 import {
   expectRowValueWithChangeButton,
   fillDate,
@@ -470,7 +467,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
     })
     test('1.1.7 Fill up informant comment & signature', async () => {
       await page.locator('#review____comment').fill(faker.lorem.sentence())
-      await page.getByRole('button', { name: 'Sign' }).click()
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
       await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
