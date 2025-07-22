@@ -110,10 +110,11 @@ export const mother = defineFormPage({
       configuration: { maxLength: MAX_NAME_LENGTH },
       type: FieldType.NAME,
       required: true,
+      hideLabel: true,
       label: {
         defaultMessage: "Mother's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.name.label'
+        id: 'v2.event.birth.action.declare.form.section.mother.field.name.label'
       },
       conditionals: [
         {
@@ -127,6 +128,7 @@ export const mother = defineFormPage({
       id: 'mother.motherBirthDate',
       type: 'DATE',
       required: true,
+      secured: true,
       validation: [
         {
           message: {
@@ -292,6 +294,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.address',
       type: FieldType.ADDRESS,
+      secured: true,
       hideLabel: true,
       label: {
         defaultMessage: 'Usual place of residence',

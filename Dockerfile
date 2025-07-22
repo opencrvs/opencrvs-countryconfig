@@ -2,7 +2,7 @@ FROM node:22-alpine
 WORKDIR /usr/src/app
 
 # Override the base log level (info).
-ENV NPM_CONFIG_LOGLEVEL warn
+ENV NPM_CONFIG_LOGLEVEL=warn
 
 # # Install npm dependencies first (so they may be cached if dependencies don't change)
 COPY package.json package.json

@@ -23,6 +23,7 @@ import {
 import { not } from '@opencrvs/toolkit/conditionals'
 import { createSelectOptions, emptyMessage } from '../../../utils'
 import {
+  invalidNameValidator,
   MAX_NAME_LENGTH,
   nationalIdValidator
 } from '@countryconfig/form/v2/birth/validators'
@@ -139,13 +140,14 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.name',
-      configuration: { maxLength: MAX_NAME_LENGTH },
       type: FieldType.NAME,
       required: true,
+      configuration: { maxLength: MAX_NAME_LENGTH },
+      hideLabel: true,
       label: {
         defaultMessage: "Informant's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.person.field.name.label'
+        id: 'v2.event.birth.action.declare.form.section.informant.field.name.label'
       },
       conditionals: [
         {
@@ -153,7 +155,8 @@ export const informant = defineFormPage({
           conditional: informantOtherThanParent
         }
       ],
-      parent: field('informant.relation')
+      parent: field('informant.relation'),
+      validation: [invalidNameValidator('informant.name')]
     },
     {
       id: 'informant.informantBirthDate',
@@ -287,7 +290,7 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.iD',
-      type: FieldType.TEXT,
+      type: FieldType.ID,
       required: true,
       label: {
         defaultMessage: 'ID Number',
@@ -428,8 +431,9 @@ export const informant = defineFormPage({
     },
     {
       id: 'informant.phoneNo',
-      type: FieldType.TEXT,
+      type: FieldType.PHONE,
       required: false,
+      secured: true,
       label: {
         defaultMessage: 'Phone number',
         description: 'This is the label for the field',

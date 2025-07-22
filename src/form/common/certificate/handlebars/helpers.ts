@@ -455,8 +455,8 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
-    console.log('registrar', this.registrar)
     console.log('this', this)
+
     const nameParts = this?.registrar?.name?.trim()?.split(' ')
     const registrarFamilyName = nameParts.pop() || ''
     const rawFirstName = nameParts.join(' ')
