@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.7.4](https://github.com/opencrvs/opencrvs-core/compare/v1.7.3...v1.7.4)
+
+### Bug fixes
+
+- Remove special characters from role ids on generation [#10049](https://github.com/opencrvs/opencrvs-core/issues/10049)
+
 ## 1.7.3
 
 No changes
