@@ -218,6 +218,16 @@ export const birthEvent = defineConfig({
         id: 'v2.event.birth.action.request-correction.label'
       },
       correctionForm: CORRECTION_FORM
+    },
+    {
+      type: ActionType.CORRECT,
+      label: {
+        defaultMessage: 'Make Correction',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.birth.action.correct.label'
+      },
+      correctionForm: CORRECTION_FORM
     }
   ],
   advancedSearch: advancedSearchBirth
