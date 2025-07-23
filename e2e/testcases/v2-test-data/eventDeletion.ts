@@ -24,8 +24,12 @@ export function trackAndDeleteCreatedEvents() {
         response.status() === 200 &&
         response.url().includes('/api/events/event.create')
       ) {
-        const resBody = await response.json()
-        createdEventIds.push(resBody.result.data.json.id)
+        try {
+          const resBody = await response.json()
+          createdEventIds.push(resBody.result.data.json.id)
+        } catch (e) {
+          // Do nothing
+        }
       }
     })
   })
