@@ -217,7 +217,8 @@
             line-height: 1.1;
             letter-spacing: 0em;
             hyphens:auto;
-            margin-top: 0">{{{signatureDescription}}}
+            margin-top: 0">{{{v2SignatureDescription ($lookup $declaration 'informant.relation') ($lookup $declaration 'father.name') ($lookup $declaration 'mother.name')
+            }}}
         </p><br />
         
         

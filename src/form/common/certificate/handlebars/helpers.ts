@@ -841,6 +841,29 @@ export function registrationStatement(): Handlebars.HelperDelegate {
   }
 }
 
+export function v2SignatureDescription(): Handlebars.HelperDelegate {
+  return function (
+    this: Record<string, any>,
+    informantType: string,
+    fatherName: string,
+    motherName: string
+  ) {
+    return joinValuesWith(
+      [
+        'Kopia manontolo nadika mitovy amin’ny bokim-piankohonana, androany',
+        customizeDateInCertificateContent(
+          new Date().toISOString().split('T')[0]
+        ) + ", ary nomena an'i ",
+        joinValuesWith(
+          [informantType.toLowerCase() === 'mother' ? motherName : fatherName],
+          ' '
+        ) + '--'
+      ],
+      ' '
+    )
+  }
+}
+
 export function signatureDescription(): Handlebars.HelperDelegate {
   return function (this: Record<string, any>) {
     return joinValuesWith(
