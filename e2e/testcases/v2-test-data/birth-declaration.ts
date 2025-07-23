@@ -92,7 +92,10 @@ export async function getDeclaration({
 
   const mockDeclaration = {
     'father.detailsNotAvailable': true,
-    'father.reason': 'Father is missing.',
+    // Only include 'father.reason' if partialDeclaration doesn't have 'father.detailsNotAvailable'
+    ...(!('father.detailsNotAvailable' in partialDeclaration)
+      ? { 'father.reason': 'Father is missing.' }
+      : {}),
     'mother.name': {
       firstname: faker.person.firstName(),
       surname: faker.person.lastName()

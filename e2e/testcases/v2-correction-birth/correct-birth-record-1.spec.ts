@@ -183,8 +183,14 @@ test.describe('1. Correct record - 1', () => {
 
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+    })
+
+    test.afterAll(async () => {
+      await page.close()
+    })
+
+    test('1.2.0 Navigate to record correction', async () => {
       await page.getByRole('button', { name: 'Ready to print' }).click()
       await page
         .getByRole('button', { name: formatV2ChildName(declaration) })
@@ -203,10 +209,6 @@ test.describe('1. Correct record - 1', () => {
         .click()
 
       await page.getByRole('button', { name: 'Continue' }).click()
-    })
-
-    test.afterAll(async () => {
-      await page.close()
     })
 
     test('1.2.1 Verify identity', async () => {

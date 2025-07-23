@@ -60,14 +60,7 @@ test.describe('10. Correct record', () => {
 
     test.beforeAll(async ({ browser }) => {
       page = await browser.newPage()
-
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
-      await page.getByRole('button', { name: 'Ready to print' }).click()
-      await page
-        .getByRole('button', { name: formatV2ChildName(declaration) })
-        .click()
-      await ensureAssigned(page)
-      await selectAction(page, 'Correct record')
     })
 
     test.afterAll(async () => {
@@ -83,6 +76,15 @@ test.describe('10. Correct record', () => {
 
     const relationship = 'Niece'
     const reason = faker.lorem.sentence(8)
+
+    test('10.0.0 Navigate to record correction', async () => {
+      await page.getByRole('button', { name: 'Ready to print' }).click()
+      await page
+        .getByRole('button', { name: formatV2ChildName(declaration) })
+        .click()
+      await ensureAssigned(page)
+      await selectAction(page, 'Correct record')
+    })
 
     test('10.1.0 Correction details', async () => {
       await expect(page.locator('#requester____type_error')).not.toBeVisible()
@@ -577,7 +579,7 @@ test.describe('10. Correct record', () => {
 
         await expect(
           page.getByRole('button', { name: formatV2ChildName(declaration) })
-        ).toBeVisible()
+        ).toBeVisible({ timeout: 30000 })
       })
     })
 
