@@ -67,8 +67,28 @@ test.describe.serial('Birth correction flow', () => {
 
     await page.getByRole('button', { name: 'Continue' }).click()
     await page.getByRole('button', { name: 'Verified' }).click()
-    await page.getByRole('button', { name: 'Continue' }).click()
+  })
 
+  test('Fill in the supporting documents form', async () => {
+    const path = require('path')
+    const attachmentPath = path.resolve(__dirname, './image.png')
+    const inputFile = await page.locator(
+      'input[name="documents____supportingDocs"][type="file"]'
+    )
+
+    await page.getByTestId('select__documents____supportingDocs').click()
+    await page.getByText('Affidavit', { exact: true }).click()
+
+    await inputFile.setInputFiles(attachmentPath)
+
+    await page.getByTestId('select__documents____supportingDocs').click()
+    await page.getByText('Court Document', { exact: true }).click()
+    await inputFile.setInputFiles(attachmentPath)
+
+    await page.getByRole('button', { name: 'Continue' }).click()
+  })
+
+  test('Fill in the fees form', async () => {
     await page
       .locator('#fees____amount')
       .fill(faker.number.int({ min: 1, max: 1000 }).toString())
@@ -145,6 +165,8 @@ test.describe.serial('Birth correction flow', () => {
     await expect(page.getByText('Must be a valid birth date')).toBeVisible()
   })
 
+  const reasonForDelayedRegistration = faker.lorem.sentence(4)
+
   test('After changing the value to a valid value, continue button should be enabled', async () => {
     await page.getByTestId('change-button-child.dob').click()
     await page.getByTestId('child____dob-yyyy').fill('2024')
@@ -152,7 +174,7 @@ test.describe.serial('Birth correction flow', () => {
     await page.getByTestId('child____dob-dd').fill('24')
     await page
       .getByTestId('text__child____reason')
-      .fill(faker.lorem.sentence(4))
+      .fill(reasonForDelayedRegistration)
     await page.getByRole('button', { name: 'Back to review' }).click()
     await expect(page.getByRole('button', { name: 'Continue' })).toBeEnabled()
   })
@@ -180,8 +202,21 @@ test.describe.serial('Birth correction flow', () => {
     await page.getByRole('button', { name: 'Continue' }).click()
   })
 
-  // @TODO: these were failing, need to be fixed
-  test.skip('Submit correction request', async () => {
+  test('Preview a file on summary page', async () => {
+    await expect(
+      page.getByRole('button', { name: 'Court Document' })
+    ).toBeVisible()
+
+    await page.getByRole('button', { name: 'Affidavit' }).click()
+
+    await expect(
+      page.getByRole('img', { name: 'Supporting Document' })
+    ).toBeVisible()
+
+    await page.locator('#preview_close').click()
+  })
+
+  test('Submit correction request', async () => {
     await page
       .getByRole('button', { name: 'Submit correction request' })
       .click()
@@ -200,8 +235,10 @@ test.describe.serial('Birth correction flow', () => {
   })
 
   test.skip('Correction request action appears in audit history', async () => {
-    await page.getByRole('button', { name: 'Assign record' }).click()
-    await page.getByRole('button', { name: 'Assign', exact: true }).click()
+    await selectAction(page, 'View record')
+    await page.waitForLoadState('networkidle')
+    await page.goBack()
+    await page.waitForLoadState('networkidle')
     // Go to second page of audit history list
     await page.getByRole('button', { name: 'Next page' }).click()
     await expect(
@@ -213,6 +250,20 @@ test.describe.serial('Birth correction flow', () => {
     await page
       .getByRole('button', { name: 'Correction requested', exact: true })
       .click()
+
+    await expect(page.getByText('RequesterInformant (Mother)')).toBeVisible()
+    await expect(
+      page.getByText(
+        'Reason for correctionMyself or an agent made a mistake (Clerical error)'
+      )
+    ).toBeVisible()
+
+    await expect(page.getByText("Child's details")).toBeVisible()
+    await expect(
+      page.getByText(
+        `Reason for delayed registration${reasonForDelayedRegistration}`
+      )
+    ).toBeVisible()
 
     await page.locator('#close-btn').click()
   })
