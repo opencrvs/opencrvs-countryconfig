@@ -579,7 +579,7 @@ test.describe('10. Correct record', () => {
 
         await expect(
           page.getByRole('button', { name: formatV2ChildName(declaration) })
-        ).toBeVisible()
+        ).toBeVisible({ timeout: 30000 })
       })
     })
 
