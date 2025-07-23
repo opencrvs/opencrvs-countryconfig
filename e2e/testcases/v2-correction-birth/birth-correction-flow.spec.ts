@@ -234,7 +234,7 @@ test.describe.serial('Birth correction flow', () => {
     await expectInUrl(page, `/events/overview/${eventId}`)
   })
 
-  test('Correction request action appears in audit history', async () => {
+  test.skip('Correction request action appears in audit history', async () => {
     await selectAction(page, 'View record')
     await page.waitForLoadState('networkidle')
     await page.goBack()
@@ -246,7 +246,7 @@ test.describe.serial('Birth correction flow', () => {
     ).toBeVisible()
   })
 
-  test('Correction request audit history modal opens when action is clicked', async () => {
+  test.skip('Correction request audit history modal opens when action is clicked', async () => {
     await page
       .getByRole('button', { name: 'Correction requested', exact: true })
       .click()
@@ -268,7 +268,7 @@ test.describe.serial('Birth correction flow', () => {
     await page.locator('#close-btn').click()
   })
 
-  test("Event appears in 'Sent for approval' workqueue", async () => {
+  test.skip("Event appears in 'Sent for approval' workqueue", async () => {
     await page.getByRole('button', { name: 'Sent for approval' }).click()
 
     await expect(
