@@ -75,7 +75,7 @@ test.describe.serial('1. Create user -1', () => {
       await page.click('#login-mobile-submit')
 
       await expect(page.getByText('Welcome to Farajaland CRS')).toBeVisible({
-        timeout: 60000
+        timeout: 30000
       })
 
       await page.getByRole('button', { name: 'Start' }).click()
