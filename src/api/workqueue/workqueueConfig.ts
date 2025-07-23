@@ -1,4 +1,3 @@
-import { SEVEN_DAYS_IN_MILISECOND } from '@countryconfig/constants'
 import {
   ActionStatus,
   ActionType,
@@ -129,7 +128,10 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of notifications workqueue'
     },
     query: {
-      flags: { anyOf: [InherentFlags.INCOMPLETE] }
+      flags: {
+        anyOf: [InherentFlags.INCOMPLETE],
+        noneOf: [InherentFlags.REJECTED]
+      }
       // @TODO: add this line back after notifications API has support for locations
       // https://github.com/opencrvs/opencrvs-core/issues/9829
       // updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
@@ -151,6 +153,9 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
+      flags: {
+        noneOf: [InherentFlags.REJECTED]
+      },
       createdBy: { type: 'exact', term: user('id') }
     },
     actions: [
@@ -181,6 +186,9 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       status: { type: 'exact', term: 'DECLARED' },
+      flags: {
+        noneOf: [InherentFlags.REJECTED]
+      },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
@@ -216,6 +224,9 @@ export const Workqueues = defineWorkqueues([
           status: {
             type: 'anyOf',
             terms: ['DECLARED', 'VALIDATED']
+          },
+          flags: {
+            noneOf: [InherentFlags.REJECTED]
           },
           updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
         },
@@ -254,6 +265,7 @@ export const Workqueues = defineWorkqueues([
       description: 'Title of requires updates workqueue'
     },
     query: {
+      status: { type: 'anyOf', terms: ['DECLARED', 'NOTIFIED'] },
       flags: {
         anyOf: [InherentFlags.REJECTED]
       },
@@ -322,7 +334,10 @@ export const Workqueues = defineWorkqueues([
       clauses: [
         {
           updatedBy: { type: 'exact', term: user('id') },
-          status: { type: 'exact', term: 'VALIDATED' }
+          status: { type: 'exact', term: 'VALIDATED' },
+          flags: {
+            noneOf: [InherentFlags.REJECTED]
+          }
         },
         {
           flags: {
