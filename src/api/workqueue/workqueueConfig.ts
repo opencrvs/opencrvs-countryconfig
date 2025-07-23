@@ -246,7 +246,7 @@ export const Workqueues = defineWorkqueues([
     ]
   },
   {
-    slug: 'requires-updates',
+    slug: 'requires-updates-self',
     icon: 'FileMinus',
     name: {
       id: 'workqueues.requiresUpdates.title',
@@ -256,7 +256,40 @@ export const Workqueues = defineWorkqueues([
     query: {
       flags: {
         anyOf: [InherentFlags.REJECTED]
+      },
+      createdBy: { type: 'exact', term: user('id') }
+    },
+    actions: [
+      {
+        type: 'DEFAULT',
+        conditionals: []
       }
+    ],
+    columns: [
+      DATE_OF_EVENT_COLUMN,
+      {
+        label: {
+          defaultMessage: 'Sent for update',
+          description: 'This is the label for the workqueue column',
+          id: 'workqueue.sent-for-update.column.sent-for-update'
+        },
+        value: event.field('updatedAt')
+      }
+    ]
+  },
+  {
+    slug: 'requires-updates-office',
+    icon: 'FileMinus',
+    name: {
+      id: 'workqueues.requiresUpdates.title',
+      defaultMessage: 'Requires updates',
+      description: 'Title of requires updates workqueue'
+    },
+    query: {
+      flags: {
+        anyOf: [InherentFlags.REJECTED]
+      },
+      updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
     },
     actions: [
       {
