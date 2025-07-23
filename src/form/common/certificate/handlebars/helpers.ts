@@ -219,7 +219,6 @@ export function v2Introduction(): Handlebars.HelperDelegate {
 
 export function introduction(): Handlebars.HelperDelegate {
   return function (this: any, placeOfBirthCommune: string) {
-    console.log('placeOfBirthCommune', placeOfBirthCommune)
     return joinValuesWith(
       [
         "Nalaina tamin’ny bokim-piankohonan'ny Kaominina",
@@ -230,6 +229,124 @@ export function introduction(): Handlebars.HelperDelegate {
       ]
       // ' '
     )
+  }
+}
+
+export function v2EventStatement(): Handlebars.HelperDelegate {
+  return function (
+    this: any,
+    childName: string,
+    childGender: string,
+    childCountry: string,
+    placeOfBirthState: string,
+    placeOfBirthDistrict: string,
+    fatherPrimaryDistrict: string,
+    motherPrimaryDistrict: string,
+    dateOfEvent: string,
+    birthTime: string,
+    placeOfBirthFacility: string,
+
+    fatherName: string,
+    fatherBirthDate: string,
+    fatherBirthPlace: string,
+    fatherCustomizedExactDateOfBirthUnknown: boolean,
+    fatherCountry: string,
+    fatherOccupation: string,
+    fatherFokontanyCustomAddress: string,
+    fatherIsDeceased: boolean,
+
+    motherName: string,
+    motherBirthDate: string,
+    motherBirthPlace: string,
+    motherCustomizedExactDateOfBirthUnknown: boolean,
+    motherCountry: string,
+    motherOccupation: string,
+    motherFokontanyCustomAddress: string,
+    motherIsDeceased: boolean
+  ) {
+    console.log('motherCountry', motherCountry)
+    return joinValuesWith([
+      '--Tamin’ny',
+      customizeDateInCertificateContent(dateOfEvent) + ',',
+      'tamin’ny',
+      convertTimeToMdgCustomWords(birthTime),
+      ...(childCountry == 'Madagascar' ||
+      childCountry == 'MDG' ||
+      placeOfBirthFacility
+        ? [
+            'no teraka tao amin’ny',
+            [
+              placeOfBirthFacility
+                ? replaceAbbreviations(placeOfBirthFacility)
+                : '',
+              // this.birthChildOtherPlaceOfBirthAddress
+              //   ? this.birthChildOtherPlaceOfBirthAddress
+              //   : '',
+              fatherFokontanyCustomAddress
+                ? 'fokontany ' + fatherFokontanyCustomAddress
+                : '',
+
+              fatherFokontanyCustomAddress
+                ?.toLowerCase()
+                .includes('toamasina') ||
+              placeOfBirthFacility?.toLowerCase().includes('toamasina')
+                ? ''
+                : 'kaominina ' +
+                    (definitionOffice(
+                      replaceByUppercase(placeOfBirthDistrict)
+                    ) || '-') +
+                    ', ' +
+                    'district ' +
+                    definitionDistrict(placeOfBirthState) || '-'
+            ]
+              .filter(Boolean)
+              .join(', ')
+          ]
+        : [
+            'no teraka tao',
+            [
+              childCountry,
+              this.internationalStatePlaceofbirth,
+              this.internationalDistrictPlaceofbirth,
+              this.internationalCityPlaceofbirth,
+              this.internationalAddressLine1Placeofbirth,
+              this.internationalAddressLine2Placeofbirth,
+              this.internationalAddressLine3Placeofbirth,
+              this.internationalPostalCodePlaceofbirth
+            ]
+              .filter(Boolean)
+              .join(' ') || ' - '
+          ]),
+      joinValuesWith([':', childName], ' ') + ',',
+
+      translateChildGenderToMDGWord(childGender) + ',',
+      'zanak’i',
+      v2FatherDetails.call(
+        this,
+        fatherName,
+        fatherBirthDate,
+        fatherBirthPlace,
+        fatherCustomizedExactDateOfBirthUnknown,
+        fatherCountry,
+        fatherPrimaryDistrict,
+        fatherOccupation,
+        fatherFokontanyCustomAddress,
+        fatherIsDeceased
+      ),
+      v2MotherDetails.call(
+        this,
+        motherName,
+        motherBirthDate,
+        motherBirthPlace,
+        motherCustomizedExactDateOfBirthUnknown,
+        motherCountry,
+        motherPrimaryDistrict,
+        motherOccupation,
+        motherFokontanyCustomAddress,
+        motherIsDeceased
+      ),
+      ' --'
+    ])
   }
 }
 
@@ -313,6 +430,137 @@ function canShowFatherDetails(_this: Record<string, string>) {
     return true
   }
   return !!_this.birthFatherFatherHasFormallyRecognisedChild
+}
+
+function v2FatherDetails(
+  this: any,
+  fatherName: string,
+  fatherBirthDate: string,
+  fatherBirthPlace: string,
+  fatherCustomizedExactDateOfBirthUnknown: boolean,
+  fatherCountry: string,
+  fatherDistrict: string,
+  fatherOccupation: string,
+  fatherFokontanyCustomAddress: string,
+  fatherIsDeceased: boolean
+) {
+  console.log(
+    'fatherFokontanyCustomAddress >>>>>>> ',
+    fatherFokontanyCustomAddress
+  )
+  console.log('fatherIsDeceased >>>>>>> ', fatherIsDeceased)
+
+  const fatherYearOfBirth = fatherBirthDate?.split('-')[0]
+
+  return joinValuesWith(
+    [
+      joinValuesWith([
+        joinValuesWith([fatherName]) + ',',
+        // 'rainy,',
+        'teraka tamin’ny',
+        fatherCustomizedExactDateOfBirthUnknown
+          ? 'taona ' +
+            convertNumberToLetterForMalagasySpecificLanguage(
+              parseInt(fatherYearOfBirth)
+            )
+          : customizeDateInCertificateContent(fatherBirthDate),
+        'tao',
+        (fatherBirthPlace || '-') + ',',
+        fatherIsDeceased ? 'nonina tao' : 'monina ao',
+        ...(fatherCountry == 'Madagascar' || fatherCountry == 'MDG'
+          ? [
+              'amin’ny fokontany',
+              (fatherFokontanyCustomAddress || '-') + ',',
+              fatherDistrict?.toLowerCase().includes('cu toamasina')
+                ? ''
+                : 'kaominina ' +
+                  (definitionOffice(replaceByUppercase(fatherDistrict)) ||
+                    '- ') +
+                  ','
+            ]
+          : [
+              ([
+                fatherDistrict
+                // this.internationalStatePrimaryFather,
+                // this.internationalDistrictPrimaryFather,
+                // this.internationalCityPrimaryFather,
+                // this.internationalAddressLine1PrimaryFather,
+                // this.internationalAddressLine2PrimaryFather,
+                // this.internationalAddressLine3PrimaryFather,
+                // this.internationalPostalCodePrimaryFather
+              ]
+                .filter(Boolean)
+                .join(' ') || ' - ') + ','
+            ]),
+        fatherOccupation
+      ]),
+      getIsWithAdpotion(this) ? 'izay manambara fa manjanaka azy' : '',
+      'motherReasonNotApplying' in this ? '' : 'sy'
+    ].filter(Boolean),
+    ', '
+  )
+}
+
+function v2MotherDetails(
+  this: any,
+  motherName: string,
+  motherBirthDate: string,
+  motherBirthPlace: string,
+  motherCustomizedExactDateOfBirthUnknown: boolean,
+  motherCountry: string,
+  motherDistrict: string,
+  motherOccupation: string,
+  motherFokontanyCustomAddress: string,
+  motherIsDeceased: boolean
+) {
+  console.log(
+    'motherFokontanyCustomAddress >>>>>>> ',
+    motherFokontanyCustomAddress
+  )
+  console.log('motherIsDeceased >>>>>>> ', motherIsDeceased)
+
+  const motherYearOfBirth = motherBirthDate?.split('-')[0]
+
+  return joinValuesWith([
+    joinValuesWith([motherName]) + ',',
+    // 'reniny,',
+    'teraka tamin’ny',
+    motherCustomizedExactDateOfBirthUnknown
+      ? 'taona ' +
+        convertNumberToLetterForMalagasySpecificLanguage(
+          parseInt(motherYearOfBirth)
+        )
+      : customizeDateInCertificateContent(motherBirthDate),
+    'tao',
+    (motherBirthPlace || '-') + ',',
+    motherIsDeceased ? 'nonina tao' : 'monina ao',
+    ...(motherCountry == 'Madagascar' || motherCountry == 'MDG'
+      ? [
+          'amin’ny fokontany',
+          (motherFokontanyCustomAddress || '-') + ',',
+
+          motherDistrict?.toLowerCase().includes('cu toamasina')
+            ? ''
+            : 'kaominina ' +
+              (definitionOffice(replaceByUppercase(motherDistrict)) || '-') +
+              ','
+        ]
+      : [
+          ([
+            motherCountry
+            // this.internationalStatePrimaryMother,
+            // this.internationalDistrictPrimaryMother,
+            // this.internationalCityPrimaryMother,
+            // this.internationalAddressLine1PrimaryMother,
+            // this.internationalAddressLine2PrimaryMother,
+            // this.internationalAddressLine3PrimaryMother,
+            // this.internationalPostalCodePrimaryMother
+          ]
+            .filter(Boolean)
+            .join(' ') || ' - ') + ','
+        ]),
+    motherOccupation
+  ])
 }
 
 function fatherDetails(
@@ -423,6 +671,7 @@ function motherDetails(
     this.motherOccupation
   ])
 }
+
 const relationMap = {
   mother: 'reniny',
   father: 'rainy',
@@ -470,13 +719,31 @@ function convertToTimeZoneIso(dateUtc: string, timeZone: string): string {
   }:${minute}:${second}.${milliseconds}+03:00`
 }
 
+export function v2Logger(): Handlebars.HelperDelegate {
+  return function (this: any, loggedData: any) {
+    console.log('loggedData >>> ', loggedData)
+    return ''
+  }
+}
+
+export function v2FatherHasSameAddressAsMother(): Handlebars.HelperDelegate {
+  return function (this: any, sameAddress: string) {
+    console.log('sameAddress >>> ', sameAddress)
+    console.log(
+      'sameAddress === "yes" >>> ',
+      sameAddress.toLowerCase() === 'yes'
+    )
+    return sameAddress.toLowerCase() === 'yes' ? true : false
+  }
+}
+
 export function registrationStatement(): Handlebars.HelperDelegate {
   return function (
     this: Record<string, any>,
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
-    console.log('this', this)
+    // console.log('this', this)
 
     const nameParts = this?.registrar?.name?.trim()?.split(' ')
     const registrarFamilyName = nameParts.pop() || ''
@@ -789,7 +1056,6 @@ export function translateDate(): Handlebars.HelperDelegate {
 }
 
 function customizeDateYearInCertificateContent(dateString: string) {
-  console.log('dateString', dateString)
   const year =
     Number(dateString?.split('-')[0]) || Number(dateString.split(' ')[2])
   return Number.isNaN(year)
@@ -910,9 +1176,10 @@ export function translateDateToMDGFormat(): Handlebars.HelperDelegate {
 }
 
 function translateChildGenderToMDGWord(childGender: string) {
+  console.log('childGender >>> ', childGender)
   return childGender &&
     ['male', 'homme', 'lehilahy', 'zazalahy'].includes(
-      childGender.toLowerCase()
+      childGender?.toLowerCase()
     )
     ? 'zazalahy'
     : 'zazavavy'

@@ -114,8 +114,158 @@
             letter-spacing: 0em;
             margin-top: 0;">{{{v2Introduction ($lookup $metadata 'updatedAtLocation.district') ($lookup $metadata 'dateOfEvent')}}}
         </p>
+        <!-- FIXME: paragraph after -->
+        {{#if (v2FatherHasSameAddressAsMother ($lookup $declaration 'father.addressSameAs'))}}
+            <p style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                font-size: 14px;
+                line-height: 1.1;
+                letter-spacing: 0em;
+                hyphens:auto;
+                margin-top: 0;">{{{v2EventStatement 
+                    ($lookup $declaration 'child.name')
+                    ($lookup $declaration 'child.gender')
+                    (lookup ($lookup $declaration 'child.birthLocation') 'country') 
+                    (lookup ($lookup $declaration 'child.birthLocation') 'district') 
+                    (lookup ($lookup $declaration 'child.birthLocation') 'province') 
+                    (lookup ($lookup $declaration 'mother.address') 'district') 
+                    (lookup ($lookup $declaration 'mother.address') 'district') 
+                    ($lookup $metadata 'dateOfEvent') 
+                    ($lookup $declaration 'child.birthTime')
+                    (lookup ($lookup $declaration 'child.birthLocation') 'location') 
+                    ($lookup $declaration 'father.name')
+                    ($lookup $declaration 'father.fatherBirthDate') 
+                    ($lookup $declaration 'father.birthPlace') 
+                    ($lookup $declaration 'father.customizedExactDateOfBirthUnknown')
+                    (lookup ($lookup $declaration 'father.address') 'country')   
+                    ($lookup $declaration 'father.occupation')
+                    (lookup ($lookup $declaration 'mother.address') 'village') 
+                    ($lookup $declaration 'father.isDeceased')
+                    ($lookup $declaration 'mother.name')
+                    ($lookup $declaration 'mother.motherBirthDate')
+                    ($lookup $declaration 'mother.birthPlace')
+                    ($lookup $declaration 'mother.customizedExactDateOfBirthUnknown')
+                    (lookup ($lookup $declaration 'mother.address') 'country')
+                    ($lookup $declaration 'mother.occupation') 
+                    (lookup ($lookup $declaration 'mother.address') 'village') 
+                    ($lookup $declaration 'mother.isDeceased')
+                }}}
+            </p>
+        {{else}}
+            <p style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                font-size: 14px;
+                line-height: 1.1;
+                letter-spacing: 0em;
+                hyphens:auto;
+                margin-top: 0;">{{{v2EventStatement 
+                    ($lookup $declaration 'child.name')
+                    ($lookup $declaration 'child.gender')
+                    (lookup ($lookup $declaration 'child.birthLocation') 'country') 
+                    (lookup ($lookup $declaration 'child.birthLocation') 'district') 
+                    (lookup ($lookup $declaration 'child.birthLocation') 'province') 
+                    (lookup ($lookup $declaration 'father.address') 'district') 
+                    (lookup ($lookup $declaration 'mother.address') 'district') 
+                    ($lookup $metadata 'dateOfEvent') 
+                    ($lookup $declaration 'child.birthTime')
+                    (lookup ($lookup $declaration 'child.birthLocation') 'location') 
+                    ($lookup $declaration 'father.name')
+                    ($lookup $declaration 'father.fatherBirthDate') 
+                    ($lookup $declaration 'mother.birthPlace') 
+                    ($lookup $declaration 'father.customizedExactDateOfBirthUnknown') 
+                    (lookup ($lookup $declaration 'mother.address') 'country')  
+                    ($lookup $declaration 'father.occupation')
+                    ($lookup $declaration 'mother.fokontanyCustomAddress')
+                    ($lookup $declaration 'father.isDeceased')
+                    ($lookup $declaration 'mother.name')
+                    ($lookup $declaration 'mother.motherBirthDate')
+                    ($lookup $declaration 'mother.birthPlace')
+                    ($lookup $declaration 'mother.customizedExactDateOfBirthUnknown')
+                    (lookup ($lookup $declaration 'mother.address   ') 'country') 
+                    ($lookup $declaration 'mother.occupation')
+                    ($lookup $declaration 'mother.fokontanyCustomAddress')
+                    ($lookup $declaration 'mother.isDeceased')
+                }}}
+            </p>
+        {{/if}}
+
+        <!-- FIXME: paragraph after-->
+        <!-- TODO: test -->
+
+        <p style="font-family: 'Plus Jakarta Sans';
+        text-align: justify;
+         word-break: break-all;
+         font-size: 14px;
+         line-height: 1.1;
+         letter-spacing: 0em;
+         margin-top: 0;">{{v2Logger (lookup ($lookup $declaration 'mother.address') 'country')}}
+     </p>
+
+        
+        <br />
+        <p style="font-family: 'Plus Jakarta Sans';
+            text-align: justify;
+            font-size: 14px;
+            line-height: 1.1;
+            margin-top: 0;
+            text-align: center;
+            letter-spacing: 0em;
+            font-weight: bold">---MANARAKA NY SONIA---
+        </p><p style="font-family: 'Plus Jakarta Sans';
+            text-align: justify;
+            font-size: 14px;
+            line-height: 1.1;
+            letter-spacing: 0em;
+            hyphens:auto;
+            margin-top: 0">{{{signatureDescription}}}
+        </p><br />
+        
         
     </foreignObject>
+
+    {{#if (isToamasinaSubUrbaine ($lookup $metadata 'updatedAtLocation.district'))}}
+        <foreignObject x="190" y="640" width="384" height="560">
+            <p class="large" style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                line-height: 1.1;
+                margin-top: 0;
+                text-align: center;
+                font-weight: bold;
+                letter-spacing: 0em;
+                font-size: 16px;">Ny Mpiandraikitra ny sora-piankohonana
+            </p>
+        </foreignObject>
+    {{ else }}
+        <foreignObject x="190" y="700" width="384" height="560">
+        <p class="large" style="font-family: 'Plus Jakarta Sans';
+                text-align: justify;
+                line-height: 1.1;
+                margin-top: 0;
+                text-align: center;
+                font-weight: bold;
+                letter-spacing: 0em;
+                font-size: 16px;">Ny Mpiandraikitra ny sora-piankohonana
+            </p>
+        </foreignObject>
+    {{/if}}
+
+    <style>
+        p {
+            font-size: 11px !important;
+            letter-spacing: 0em;
+            line-height: 1.4 !important;
+        }
+
+        .large {
+            font-size: 12px !important;
+        }
+
+        .mentions {
+            font-size: 10px !important;
+            letter-spacing: 0em;
+            line-height: 1.45 !important;
+        }
+    </style>
     
     <!-- Afficher uniquement le logo si different de tana 4 -->
     {{#if (isTanaIV ($lookup $metadata 'updatedAtLocation.district'))}}
