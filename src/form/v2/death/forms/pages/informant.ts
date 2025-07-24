@@ -21,7 +21,12 @@ import {
   field
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
-import { createSelectOptions, emptyMessage } from '../../../utils'
+import {
+  createSelectOptions,
+  emptyMessage,
+  getDialingCodeFromAlpha3,
+  intlPhoneOptions
+} from '../../../utils'
 import {
   invalidNameValidator,
   MAX_NAME_LENGTH,
@@ -461,6 +466,8 @@ export const informant = defineFormPage({
       id: 'informant.phoneNo',
       type: FieldType.PHONE,
       required: false,
+      options: intlPhoneOptions,
+      country: getDialingCodeFromAlpha3('ZMB'),
       label: {
         defaultMessage: 'Phone number',
         description: 'This is the label for the field',

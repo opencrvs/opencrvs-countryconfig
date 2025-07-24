@@ -21,7 +21,12 @@ import {
   field
 } from '@opencrvs/toolkit/events'
 import { not } from '@opencrvs/toolkit/conditionals'
-import { createSelectOptions, emptyMessage } from '../../../utils'
+import {
+  createSelectOptions,
+  emptyMessage,
+  getDialingCodeFromAlpha3,
+  intlPhoneOptions
+} from '../../../utils'
 import {
   invalidNameValidator,
   MAX_NAME_LENGTH,
@@ -41,7 +46,7 @@ export const InformantType = {
 } as const
 export type InformantTypeKey = keyof typeof InformantType
 
-const PHONE_NUMBER_REGEX = '^0(7|9)[0-9]{8}$'
+const PHONE_NUMBER_REGEX = '^(7|9)[0-9]{8}$'
 const informantMessageDescriptors = {
   MOTHER: {
     defaultMessage: 'Mother',
@@ -425,6 +430,8 @@ export const informant = defineFormPage({
       id: 'informant.phoneNo',
       type: FieldType.PHONE,
       required: false,
+      options: intlPhoneOptions,
+      country: getDialingCodeFromAlpha3('ZMB'),
       secured: true,
       label: {
         defaultMessage: 'Phone number',
