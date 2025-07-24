@@ -615,6 +615,213 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
   ]
 })
 
+const TENNIS_CLUB_MEMBERSHIP_REQUEST_CORRECTION_FORM = defineActionForm({
+  label: {
+    id: 'v2.event.tennis-club-membership.action.request-correction.label',
+    defaultMessage: 'Request correction',
+    description:
+      'This is shown as the action name anywhere the user can trigger the action from'
+  },
+  pages: [
+    {
+      id: 'correction-requester',
+      type: PageTypes.enum.FORM,
+      title: {
+        id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.corrector',
+        defaultMessage: 'Correction requester',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'correction.requester.relationshop.intro',
+          type: 'PAGE_HEADER',
+          label: {
+            id: 'v2.correction.requester.relationshop.intro.label',
+            defaultMessage:
+              'Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.',
+            description: 'The title for the corrector form'
+          }
+        },
+        {
+          id: 'correction.requester.relationship',
+          type: 'RADIO_GROUP',
+          label: {
+            id: 'v2.correction.corrector.title',
+            defaultMessage: 'Who is requesting a change to this record?',
+            description: 'The title for the corrector form'
+          },
+          defaultValue: '',
+          options: [
+            {
+              value: 'INFORMANT',
+              label: {
+                id: 'v2.correction.corrector.informant',
+                defaultMessage: 'Informant',
+                description:
+                  'Label for informant option in certificate correction form'
+              }
+            },
+            {
+              value: 'ANOTHER_AGENT',
+              label: {
+                id: 'v2.correction.corrector.anotherAgent',
+                defaultMessage: 'Another registration agent or field agent',
+                description:
+                  'Label for another registration or field agent option in certificate correction form'
+              }
+            },
+            {
+              value: 'REGISTRAR',
+              label: {
+                id: 'v2.correction.corrector.me',
+                defaultMessage: 'Me (Registrar)',
+                description:
+                  'Label for registrar option in certificate correction form'
+              }
+            },
+            {
+              value: 'OTHER',
+              label: {
+                id: 'v2.correction.corrector.others',
+                defaultMessage: 'Someone else',
+                description:
+                  'Label for someone else option in certificate correction form'
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'identity-check',
+      type: PageTypes.enum.FORM,
+      title: {
+        id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
+        defaultMessage: 'Verify their identity',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'correction.identity-check.instructions',
+          type: 'PAGE_HEADER',
+          label: {
+            id: 'v2.correction.corrector.identity.instruction',
+            defaultMessage:
+              'Please verify the identity of the person making this request',
+            description: 'The title for the corrector form'
+          }
+        },
+        {
+          id: 'correction.identity-check.verified',
+          type: 'RADIO_GROUP',
+          label: {
+            id: 'v2.correction.corrector.identity.verified.label',
+            defaultMessage: 'Identity verified',
+            description: 'The title for the corrector form'
+          },
+          defaultValue: '',
+          required: true,
+          options: [
+            {
+              value: 'VERIFIED',
+              label: {
+                id: 'v2.correction.corrector.identity.verified',
+                defaultMessage: 'I have verified their identity',
+                description:
+                  'Label for verified option in corrector identity check page'
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'correction-request.supporting-documents',
+      type: PageTypes.enum.FORM,
+      title: {
+        id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
+        defaultMessage: 'Upload supporting documents',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'correction.supportingDocs.introduction',
+          type: 'PAGE_HEADER',
+          label: {
+            id: 'v2.correction.corrector.paragraph.title',
+            defaultMessage:
+              'For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.',
+            description: 'The title for the corrector form'
+          }
+        },
+        {
+          id: 'correction.supportingDocs',
+          type: 'FILE',
+          label: {
+            id: 'v2.correction.corrector.title',
+            defaultMessage: 'Upload supporting documents',
+            description: 'The title for the corrector form'
+          }
+        },
+        {
+          id: 'correction.request.supportingDocuments',
+          type: 'RADIO_GROUP',
+          label: {
+            id: 'v2.correction.corrector.title',
+            defaultMessage: 'Who is requesting a change to this record?',
+            description: 'The title for the corrector form'
+          },
+          defaultValue: '',
+          configuration: {
+            styles: {
+              size: 'NORMAL'
+            }
+          },
+          options: [
+            {
+              value: 'ATTEST',
+              label: {
+                id: 'v2.correction.supportingDocuments.attest.label',
+                defaultMessage:
+                  'I attest to seeing supporting documentation and have a copy filed at my office',
+                description: ''
+              }
+            },
+            {
+              value: 'NOT_NEEDED',
+              label: {
+                id: 'v2.correction.supportingDocuments.notNeeded.label',
+                defaultMessage: 'No supporting documents required',
+                description: ''
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'correction-request.additional-details',
+      type: PageTypes.enum.FORM,
+      title: {
+        id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.corrector',
+        defaultMessage: 'Reason for correction',
+        description: 'This is the title of the section'
+      },
+      fields: [
+        {
+          id: 'correction.request.reason',
+          type: 'TEXT',
+          label: {
+            id: 'v2.correction.reason.title',
+            defaultMessage: 'Reason for correction?',
+            description: 'The title for the corrector form'
+          }
+        }
+      ]
+    }
+  ]
+})
+
 export const tennisClubMembershipEvent = defineConfig({
   id: Event.TENNIS_CLUB_MEMBERSHIP,
   declaration: TENNIS_CLUB_DECLARATION_FORM,
@@ -746,213 +953,17 @@ export const tennisClubMembershipEvent = defineConfig({
           'This is shown as the action name anywhere the user can trigger the action from',
         id: 'v2.event.tennis-club-membership.action.requestCorrection.label'
       },
-      correctionForm: {
-        label: {
-          id: 'v2.event.tennis-club-membership.action.request-correction.label',
-          defaultMessage: 'Request correction',
-          description:
-            'This is shown as the action name anywhere the user can trigger the action from'
-        },
-        pages: [
-          {
-            id: 'correction-requester',
-            type: PageTypes.enum.FORM,
-            title: {
-              id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.corrector',
-              defaultMessage: 'Correction requester',
-              description: 'This is the title of the section'
-            },
-            fields: [
-              {
-                id: 'correction.requester.relationshop.intro',
-                type: 'PAGE_HEADER',
-                label: {
-                  id: 'v2.correction.requester.relationshop.intro.label',
-                  defaultMessage:
-                    'Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.',
-                  description: 'The title for the corrector form'
-                }
-              },
-              {
-                id: 'correction.requester.relationship',
-                type: 'RADIO_GROUP',
-                label: {
-                  id: 'v2.correction.corrector.title',
-                  defaultMessage: 'Who is requesting a change to this record?',
-                  description: 'The title for the corrector form'
-                },
-                defaultValue: '',
-                options: [
-                  {
-                    value: 'INFORMANT',
-                    label: {
-                      id: 'v2.correction.corrector.informant',
-                      defaultMessage: 'Informant',
-                      description:
-                        'Label for informant option in certificate correction form'
-                    }
-                  },
-                  {
-                    value: 'ANOTHER_AGENT',
-                    label: {
-                      id: 'v2.correction.corrector.anotherAgent',
-                      defaultMessage:
-                        'Another registration agent or field agent',
-                      description:
-                        'Label for another registration or field agent option in certificate correction form'
-                    }
-                  },
-                  {
-                    value: 'REGISTRAR',
-                    label: {
-                      id: 'v2.correction.corrector.me',
-                      defaultMessage: 'Me (Registrar)',
-                      description:
-                        'Label for registrar option in certificate correction form'
-                    }
-                  },
-                  {
-                    value: 'OTHER',
-                    label: {
-                      id: 'v2.correction.corrector.others',
-                      defaultMessage: 'Someone else',
-                      description:
-                        'Label for someone else option in certificate correction form'
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: 'identity-check',
-            type: PageTypes.enum.FORM,
-            title: {
-              id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
-              defaultMessage: 'Verify their identity',
-              description: 'This is the title of the section'
-            },
-            fields: [
-              {
-                id: 'correction.identity-check.instructions',
-                type: 'PAGE_HEADER',
-                label: {
-                  id: 'v2.correction.corrector.identity.instruction',
-                  defaultMessage:
-                    'Please verify the identity of the person making this request',
-                  description: 'The title for the corrector form'
-                }
-              },
-              {
-                id: 'correction.identity-check.verified',
-                type: 'RADIO_GROUP',
-                label: {
-                  id: 'v2.correction.corrector.identity.verified.label',
-                  defaultMessage: 'Identity verified',
-                  description: 'The title for the corrector form'
-                },
-                defaultValue: '',
-                required: true,
-                options: [
-                  {
-                    value: 'VERIFIED',
-                    label: {
-                      id: 'v2.correction.corrector.identity.verified',
-                      defaultMessage: 'I have verified their identity',
-                      description:
-                        'Label for verified option in corrector identity check page'
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: 'correction-request.supporting-documents',
-            type: PageTypes.enum.FORM,
-            title: {
-              id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.verify',
-              defaultMessage: 'Upload supporting documents',
-              description: 'This is the title of the section'
-            },
-            fields: [
-              {
-                id: 'correction.supportingDocs.introduction',
-                type: 'PAGE_HEADER',
-                label: {
-                  id: 'v2.correction.corrector.paragraph.title',
-                  defaultMessage:
-                    'For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.',
-                  description: 'The title for the corrector form'
-                }
-              },
-              {
-                id: 'correction.supportingDocs',
-                type: 'FILE',
-                label: {
-                  id: 'v2.correction.corrector.title',
-                  defaultMessage: 'Upload supporting documents',
-                  description: 'The title for the corrector form'
-                }
-              },
-              {
-                id: 'correction.request.supportingDocuments',
-                type: 'RADIO_GROUP',
-                label: {
-                  id: 'v2.correction.corrector.title',
-                  defaultMessage: 'Who is requesting a change to this record?',
-                  description: 'The title for the corrector form'
-                },
-                defaultValue: '',
-                configuration: {
-                  styles: {
-                    size: 'NORMAL'
-                  }
-                },
-                options: [
-                  {
-                    value: 'ATTEST',
-                    label: {
-                      id: 'v2.correction.supportingDocuments.attest.label',
-                      defaultMessage:
-                        'I attest to seeing supporting documentation and have a copy filed at my office',
-                      description: ''
-                    }
-                  },
-                  {
-                    value: 'NOT_NEEDED',
-                    label: {
-                      id: 'v2.correction.supportingDocuments.notNeeded.label',
-                      defaultMessage: 'No supporting documents required',
-                      description: ''
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: 'correction-request.additional-details',
-            type: PageTypes.enum.FORM,
-            title: {
-              id: 'v2.event.tennis-club-membership.action.requestCorrection.form.section.corrector',
-              defaultMessage: 'Reason for correction',
-              description: 'This is the title of the section'
-            },
-            fields: [
-              {
-                id: 'correction.request.reason',
-                type: 'TEXT',
-                label: {
-                  id: 'v2.correction.reason.title',
-                  defaultMessage: 'Reason for correction?',
-                  description: 'The title for the corrector form'
-                }
-              }
-            ]
-          }
-        ]
-      }
+      correctionForm: TENNIS_CLUB_MEMBERSHIP_REQUEST_CORRECTION_FORM
+    },
+    {
+      type: ActionType.CORRECT,
+      label: {
+        defaultMessage: 'Correct',
+        description:
+          'This is shown as the action name anywhere the user can trigger the action from',
+        id: 'v2.event.tennis-club-membership.action.correct.label'
+      },
+      correctionForm: TENNIS_CLUB_MEMBERSHIP_REQUEST_CORRECTION_FORM
     }
   ],
   advancedSearch: [
