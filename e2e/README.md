@@ -1,4 +1,14 @@
-# How to debug E2E tests on CI
+# e2e testing
+
+### Run against localhost
+
+`yarn e2e-dev`
+
+### Run against a deployed environment
+
+`NODE_TLS_REJECT_UNAUTHORIZED=0 DOMAIN=<your-env>.opencrvs.dev yarn e2e`
+
+## How to debug E2E tests on CI
 
 1. Go to E2E repository https://github.com/opencrvs/e2e
 2. Find the `Deploy & run E2E` action run that failed
