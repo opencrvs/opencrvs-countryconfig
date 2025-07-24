@@ -32,10 +32,10 @@ test.describe.serial('Birth correction flow', () => {
     eventId = res.eventId
 
     page = await browser.newPage()
+    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
   })
 
   test('Navigate to the correction form', async () => {
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
     await page.getByRole('button', { name: 'Ready to print' }).click()
     await page
       .getByRole('button', { name: formatV2ChildName(declaration) })
