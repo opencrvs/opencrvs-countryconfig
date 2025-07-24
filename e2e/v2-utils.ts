@@ -64,20 +64,30 @@ export async function ensureAssigned(page: Page) {
     .filter({ hasText: new RegExp(`^Assign$`, 'i') })
     .first()
 
+  await page.waitForLoadState('networkidle')
+
   // Wait until either "Unassign" or "Assign" is visible
   await Promise.race([
     unAssignAction.waitFor({ state: 'visible' }),
     assignAction.waitFor({ state: 'visible' })
   ])
 
+  await page.waitForLoadState('networkidle')
+
   if (await unAssignAction.isVisible()) {
+    await page.waitForLoadState('networkidle')
+
     await unAssignAction.click()
+
+    await page.waitForLoadState('networkidle')
+
     await expect(page.getByTestId('assignedTo-value')).toHaveText(
       'Not assigned',
       {
         timeout: SAFE_OUTBOX_TIMEOUT_MS
       }
     )
+    await page.waitForLoadState('networkidle')
     await page.getByRole('button', { name: 'Action' }).click()
 
     assignAction = page
