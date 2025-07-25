@@ -78,7 +78,7 @@ test.describe.serial('6 Validate Ready to print tab', () => {
   })
 
   test('6.5 Click Print action', async () => {
-    await selectAction(page, 'Print certificate')
+    await selectAction(page, 'Print')
     expect(
       page
         .url()

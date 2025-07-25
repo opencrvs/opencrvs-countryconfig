@@ -48,7 +48,7 @@ test.describe
   })
 
   test('4.0.3 Reject a declaration', async () => {
-    await selectAction(page, 'Validate')
+    await selectAction(page, 'Review')
 
     await page.getByRole('button', { name: 'Reject' }).click()
 

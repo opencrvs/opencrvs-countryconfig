@@ -269,7 +269,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
         })
         .click()
 
-      await selectAction(page, 'Validate')
+      await selectAction(page, 'Review')
 
       await page.getByRole('button', { name: 'Send for approval' }).click()
       await page.getByRole('button', { name: 'Confirm' }).click()
@@ -335,7 +335,7 @@ test.describe.serial('4. Workqueue flow - 4', () => {
         })
         .click()
 
-      await selectAction(page, 'Register')
+      await selectAction(page, 'Review')
 
       await page
         .getByRole('button', {

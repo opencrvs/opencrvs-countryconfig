@@ -444,6 +444,7 @@ type ActionMenuOptions =
   | 'Review correction request'
   | 'View record'
   | 'Validate'
+  | 'Review'
 
 export const getAction = (page: Page, option: ActionMenuOptions) => {
   return page

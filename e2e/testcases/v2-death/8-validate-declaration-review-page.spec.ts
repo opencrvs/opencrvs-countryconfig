@@ -737,7 +737,7 @@ test.describe.serial('8. Validate declaration review page', () => {
         .click()
     })
     test('8.2.1.1 Verify information added on previous pages', async () => {
-      await selectAction(page, 'Validate')
+      await selectAction(page, 'Review')
       /*
        * Expected result: should include
        * - Deceased's First Name
@@ -1188,7 +1188,7 @@ test.describe.serial('8. Validate declaration review page', () => {
         .click()
     })
     test('8.3.1.1 Verify information added on previous pages', async () => {
-      await selectAction(page, 'Register')
+      await selectAction(page, 'Review')
       /*
        * Expected result: should include
        * - Deceased's First Name
