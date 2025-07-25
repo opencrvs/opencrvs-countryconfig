@@ -181,7 +181,7 @@
                     ($lookup $declaration 'mother.motherBirthDate')
                     ($lookup $declaration 'mother.birthPlace')
                     ($lookup $declaration 'mother.customizedExactDateOfBirthUnknown')
-                    (lookup ($lookup $declaration 'mother.address   ') 'country') 
+                    (lookup ($lookup $declaration 'mother.address') 'country') 
                     ($lookup $declaration 'mother.occupation')
                     ($lookup $declaration 'mother.fokontanyCustomAddress')
                     ($lookup $declaration 'mother.isDeceased')
@@ -190,6 +190,31 @@
         {{/if}}
 
         <!-- FIXME: paragraph after-->
+        <p style="font-family: 'Plus Jakarta Sans';
+            text-align: justify;
+            font-size: 14px;
+            line-height: 1.1;
+            letter-spacing: 0em;
+            hyphens:auto;
+            margin-top: 0;">{{{v2RegistrationStatement 
+                ($lookup $metadata 'updatedAtLocation.district')
+                ($lookup $declaration 'informant.relation') 
+                ($lookup $declaration 'father.name') 
+                ($lookup $declaration 'mother.name')
+                (lookup ($lookup $declaration 'father.address') 'district') 
+                (lookup ($lookup $declaration 'mother.address') 'district')
+                ($lookup $declaration 'father.customizedExactDateOfBirthUnknown')
+                ($lookup $declaration 'mother.customizedExactDateOfBirthUnknown')
+                ($lookup $declaration 'father.occupation')
+                ($lookup $declaration 'mother.occupation')
+                (lookup ($lookup $metadata 'updatedBy') 'name')
+                ($lookup $declaration 'child.legacyBirthRegistrationDate')
+                ($lookup $declaration 'child.legacyBirthRegistrationTime')
+                ($lookup $metadata 'dateOfEvent')
+                ($lookup $declaration 'child.birthTime')
+            }}}
+        </p>
+
         <!-- TODO: test -->
 
         <p style="font-family: 'Plus Jakarta Sans';
@@ -200,6 +225,7 @@
          letter-spacing: 0em;
          margin-top: 0;">{{v2Logger (lookup ($lookup $declaration 'mother.address') 'country')}}
      </p>
+     <!-- TODO: test -->
 
         
         <br />

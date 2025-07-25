@@ -737,6 +737,121 @@ export function v2FatherHasSameAddressAsMother(): Handlebars.HelperDelegate {
   }
 }
 
+export function v2RegistrationStatement(): Handlebars.HelperDelegate {
+  return function (
+    this: Record<string, any>,
+    registrationDistrict: string,
+    informantType: string,
+    fatherName: string,
+    motherName: string,
+    fatherDistrict: string,
+    motherDistrict: string,
+    fatherCustomizedExactDateOfBirthUnknown: string,
+    motherCustomizedExactDateOfBirthUnknown: string,
+    fatherOccupation: string,
+    motherOccupation: string,
+    registrarName: string,
+    registrationDate: string,
+    registrationTime: string,
+    dateOfEvent: string,
+    timeOfEvent: string
+  ) {
+    console.log('v2RegistrationStatement >>> this >>>>>>> ', this)
+    console.log('registrationDistrict', registrationDistrict)
+    console.log('informantType', informantType)
+    console.log('fatherDistrict', fatherDistrict)
+    console.log('motherDistrict', motherDistrict)
+    console.log('registrarName', registrarName)
+
+    const birthRegistrationDate = v2GetBirthRegistrationDate(
+      registrationDate ? registrationDate : dateOfEvent,
+      registrationTime ? registrationTime : timeOfEvent
+    )
+
+    console.log('birthRegistrationDate :>> ', birthRegistrationDate)
+    const registrarDateUTC = convertToTimeZoneIso(
+      isValidDate(birthRegistrationDate) ? birthRegistrationDate : dateOfEvent,
+      'Africa/Nairobi'
+    )
+
+    console.log('registrarDateUTC', registrarDateUTC)
+
+    const informantName =
+      informantType.toLowerCase() === 'father' ? fatherName : motherName
+
+    const birthInformantCustomizedExactDateOfBirthUnknown =
+      informantType.toLowerCase() === 'father'
+        ? fatherCustomizedExactDateOfBirthUnknown
+        : motherCustomizedExactDateOfBirthUnknown
+
+    const informantDistrict =
+      informantType.toLowerCase() === 'father' ? fatherDistrict : motherDistrict
+
+    const informantOccupation =
+      informantType.toLowerCase() === 'father'
+        ? fatherOccupation
+        : motherOccupation
+
+    return joinValuesWith([
+      '---Nosoratana androany',
+      customizeDateInCertificateContent(registrarDateUTC.split('T')[0]) + ',',
+      'tamin’ny',
+      convertTimeToMdgCustomWords(registrarDateUTC.split('T')[1]),
+      informantName
+        ? 'araka ny fanambarana nataon’ny'
+        : joinValuesWith(["araka ny fanambarana nataon'i", informantName]) +
+          ',',
+      ...(informantName
+        ? []
+        : [
+            'teraka tamin’ny',
+            birthInformantCustomizedExactDateOfBirthUnknown
+              ? 'taona ' +
+                convertNumberToLetterForMalagasySpecificLanguage(
+                  parseInt(this.birthInformantYearOfBirth)
+                )
+              : customizeDateInCertificateContent(this.informantBirthDate),
+            this.birthInformantBirthPlace
+              ? `tao ${this.birthInformantBirthPlace},`
+              : '',
+            'monina ao',
+            ...(this.countryPrimaryInformant == 'Madagascar'
+              ? [
+                  `amin’ny`,
+                  informantDistrict?.toLowerCase().includes('cu toamasina')
+                    ? ''
+                    : 'kaominina ' +
+                      (definitionOffice(
+                        replaceByUppercase(informantDistrict)
+                      ) || '-') +
+                      ','
+                ]
+              : [
+                  ([
+                    // fix these variables
+                    this.countryPrimaryInformant,
+                    this.internationalStatePrimaryInformant,
+                    this.internationalDistrictPrimaryInformant,
+                    this.internationalCityPrimaryInformant,
+                    this.internationalAddressLine1PrimaryInformant,
+                    this.internationalAddressLine2PrimaryInformant,
+                    this.internationalAddressLine3PrimaryInformant,
+                    this.internationalPostalCodePrimaryInformant
+                  ]
+                    .filter(Boolean)
+                    .join(' ') || '- ') + ','
+                ]),
+            informantOccupation ? informantOccupation + ',' : ''
+          ]),
+      'izay miara-manao sonia aminay,',
+      registrarName + ',',
+      'Mpiandraikitra ny fiankohonana eto amin’ny Kaominina',
+      definitionOffice(registrationDistrict) + ',',
+      'rehefa novakiana taminy ity soratra ity.---'
+    ])
+  }
+}
+
 export function registrationStatement(): Handlebars.HelperDelegate {
   return function (
     this: Record<string, any>,
@@ -751,6 +866,7 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     const registrarFirstName =
       rawFirstName.trim().toLowerCase() === 'xyz261' ? '' : ` ${rawFirstName}`
     const birthRegistrationDate = getBirthRegistrationDate(this)
+    console.log('birthRegistrationDate :>> ', birthRegistrationDate)
     const registrarDateUTC = convertToTimeZoneIso(
       isValidDate(birthRegistrationDate)
         ? birthRegistrationDate
@@ -1150,6 +1266,13 @@ function getBirthRegistrationDate(data: any): string | undefined {
         data.birthChildLegacyBirthRegistrationTime +
         ':00.000+03:00'
     : undefined
+}
+
+function v2GetBirthRegistrationDate(
+  registrationDate: string,
+  registrationTime: string
+): string {
+  return registrationDate + 'T' + registrationTime + ':00.000+03:00'
 }
 
 export function v2GetBirthRegistrationDateMDGFormat(): Handlebars.HelperDelegate {
