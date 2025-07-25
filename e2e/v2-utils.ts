@@ -10,6 +10,7 @@ export async function selectAction(
     | 'Print certificate'
     | 'Declare'
     | 'Validate'
+    | 'Review'
     | 'Register'
     | 'Assign'
     | 'Unassign'

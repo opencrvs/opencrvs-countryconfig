@@ -182,7 +182,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         })
         .click()
 
-      await selectAction(page, 'Validate')
+      await selectAction(page, 'Review')
 
       await page.getByRole('button', { name: 'Reject' }).click()
 
@@ -373,7 +373,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
         })
         .click()
 
-      await selectAction(page, 'Validate')
+      await selectAction(page, 'Review')
 
       await page.getByRole('button', { name: 'Send for approval' }).click()
       await page.getByRole('button', { name: 'Confirm' }).click()
@@ -418,7 +418,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
 
       await assignFromWorkqueue(page, childName)
       await getRowByTitle(page, childName)
-        .getByRole('button', { name: 'Register' })
+        .getByRole('button', { name: 'Review' })
         .click()
 
       await page.getByRole('button', { name: 'Reject' }).click()

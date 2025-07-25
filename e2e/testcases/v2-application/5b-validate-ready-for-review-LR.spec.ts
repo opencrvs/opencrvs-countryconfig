@@ -77,7 +77,7 @@ test.describe
   })
 
   test('5.5 Click validate action', async () => {
-    await selectAction(page, 'Validate')
+    await selectAction(page, 'Review')
     expect(
       page.url().includes(`events/validate/${eventId}/review`)
     ).toBeTruthy()

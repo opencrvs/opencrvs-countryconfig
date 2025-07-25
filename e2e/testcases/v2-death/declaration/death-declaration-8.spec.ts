@@ -294,7 +294,7 @@ test.describe.serial('8. Death declaration case - 8', () => {
     })
 
     test('8.2.2 Verify information on review page', async () => {
-      await selectAction(page, 'Validate')
+      await selectAction(page, 'Review')
       /*
        * Expected result: should include
        * - Deceased's First Name

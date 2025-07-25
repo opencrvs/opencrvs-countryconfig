@@ -506,7 +506,7 @@ test.describe.serial('1. Birth declaration case - 1', () => {
         })
         .click()
 
-      await selectAction(page, 'Validate')
+      await selectAction(page, 'Review')
     })
 
     test('1.2.2 Verify information on review page', async () => {

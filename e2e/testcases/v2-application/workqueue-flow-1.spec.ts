@@ -178,7 +178,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         })
         .click()
 
-      await selectAction(page, 'Validate')
+      await selectAction(page, 'Review')
 
       await page
         .getByTestId('accordion-Accordion_informant')
@@ -330,7 +330,7 @@ test.describe.serial('1. Workqueue flow - 1', () => {
         })
         .click()
 
-      await selectAction(page, 'Register')
+      await selectAction(page, 'Review')
 
       await page
         .getByRole('button', {
