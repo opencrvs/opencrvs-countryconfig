@@ -542,7 +542,7 @@ test.describe.serial('6. Death declaration case - 6', () => {
 
     test('6.2.2 Verify information on review page', async () => {
       await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View').click()
+      await page.getByText('View', { exact: true }).click()
       /*
        * Expected result: should include
        * - Deceased's First Name

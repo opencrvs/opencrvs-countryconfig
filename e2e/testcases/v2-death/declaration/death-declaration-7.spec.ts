@@ -555,7 +555,7 @@ test.describe.serial('7. Death declaration case - 7', () => {
         .click()
 
       await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View').click()
+      await page.getByText('View', { exact: true }).click()
 
       /*
        * Expected result: should include

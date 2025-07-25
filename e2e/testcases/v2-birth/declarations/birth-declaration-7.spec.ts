@@ -256,7 +256,7 @@ test.describe.serial('7. Birth declaration case - 7', () => {
         })
         .click()
       await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View').click()
+      await page.getByText('View', { exact: true }).click()
     })
 
     test('7.2.2 Verify information on review page', async () => {
