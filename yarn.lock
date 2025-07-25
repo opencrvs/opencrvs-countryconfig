@@ -1743,10 +1743,10 @@
   resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.8.0.tgz#ed0b20d85d69c4a774a7d8e7011d15f94551aba8"
   integrity sha512-5MWQZEAdL0P6OFCYyzI87H73QS3DJsxJnWgZ3eGEtUVXDLOiTA6KupoRxJwjvRVbWScH39P0QVKo1lC+yZTL0A==
 
-"@opencrvs/toolkit@1.8.0-rc.1310fc1":
-  version "1.8.0-rc.1310fc1"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.1310fc1.tgz#770d7ec2444b879bdd0b4e05d8599e6ac738501c"
-  integrity sha512-RFbxj/aYYE8AmeZAUalA/aq0FXa2ghnsN7EUfcXrhwfJG1QufKGPHmztpRfgOVnD3R4ZsEhFJFqFq9c+knfsmg==
+"@opencrvs/toolkit@1.8.0-rc.58e63ad":
+  version "1.8.0-rc.58e63ad"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.58e63ad.tgz#6d903ed683ade8326c51744f30fb49992b51d867"
+  integrity sha512-/sdDFFnTWYYJwI3P9J3y137sQKnB9o59f2x9T3qiOLy5ibQChEbDhF9NyKYC6TB5pidQchaWLwgLPR7HiJNCJw==
   dependencies:
     "@trpc/client" "11.4.3"
     "@trpc/server" "11.4.3"
@@ -2059,12 +2059,12 @@
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
-"@trpc/client@^11.0.0-rc.648":
+"@trpc/client@11.4.3":
   version "11.4.3"
   resolved "https://registry.yarnpkg.com/@trpc/client/-/client-11.4.3.tgz#0768180ede079f679408f316bbfbcb2bb88f8ba0"
   integrity sha512-i2suttUCfColktXT8bqex5kHW5jpT15nwUh0hGSDiW1keN621kSUQKcLJ095blqQAUgB+lsmgSqSMmB4L9shQQ==
 
-"@trpc/server@^11.0.0-rc.532":
+"@trpc/server@11.4.3":
   version "11.4.3"
   resolved "https://registry.yarnpkg.com/@trpc/server/-/server-11.4.3.tgz#669a964c85a0feab45da51e3ad03f63668dba525"
   integrity sha512-wnWq3wiLlMOlYkaIZz+qbuYA5udPTLS4GVVRyFkr6aT83xpdCHyVtURT+u4hSoIrOXQM9OPCNXSXsAujWZDdaw==

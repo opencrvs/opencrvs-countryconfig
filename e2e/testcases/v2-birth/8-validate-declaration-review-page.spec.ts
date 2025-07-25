@@ -9,7 +9,7 @@ import {
   formatDateObjectTo_dMMMMyyyy
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
-import { CREDENTIALS, SAFE_WORKQUEUE_TIMEOUT_MS } from '../../constants'
+import { CREDENTIALS } from '../../constants'
 import { fillDate } from './helpers'
 import { ensureOutboxIsEmpty, selectAction } from '../../v2-utils'
 
@@ -831,7 +831,7 @@ test.describe.serial('8. Validate declaration review page', () => {
 
     test('8.1.6 Fill up informant signature', async () => {
       await page.locator('#review____comment').fill(comment)
-      await page.getByRole('button', { name: 'Sign' }).click()
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
       await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
@@ -1117,7 +1117,7 @@ test.describe.serial('8. Validate declaration review page', () => {
         .getByText('Delete')
         .click()
 
-      await page.getByRole('button', { name: 'Sign' }).click()
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
       await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')
@@ -1420,7 +1420,7 @@ test.describe.serial('8. Validate declaration review page', () => {
         .getByText('Delete')
         .click()
 
-      await page.getByRole('button', { name: 'Sign' }).click()
+      await page.getByRole('button', { name: 'Sign', exact: true }).click()
       await drawSignature(page, 'review____signature_canvas_element', false)
       await page
         .locator('#review____signature_modal')

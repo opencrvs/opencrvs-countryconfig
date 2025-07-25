@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const TEST_TIMEOUT = 90000
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -10,6 +12,7 @@ import { defineConfig, devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  timeout: TEST_TIMEOUT,
   testDir: './e2e/testcases',
   testMatch: /.*\/v2-[^/]+\/.*\.spec.ts$/, // Run only v2 tests
   /* Run tests in files in parallel */
@@ -33,10 +36,9 @@ export default defineConfig({
     screenshot: 'on',
     /* Collect trace when the test failed. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
-    // Ignore HTTPS errors (like untrusted or self-signed certificates) during Playwright tests
-    // when the IGNORE_CA environment variable is set to '1'.
-    // This is useful in CI environments using staging or test certificates that aren't publicly trusted.
-    ignoreHTTPSErrors: process.env.IGNORE_CA === '1',
+    // Ignore HTTPS errors (like untrusted or self-signed certificates) during Playwright tests on CI
+    // This is useful for Let's Encrypt staging certificates that aren't publicly trusted.
+    ignoreHTTPSErrors: process.env.CI ? true : false,
   },
 
   /* Configure projects for major browsers */

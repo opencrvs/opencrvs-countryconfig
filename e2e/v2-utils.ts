@@ -15,8 +15,13 @@ export async function selectAction(
     | 'Assign'
     | 'Unassign'
     | 'Delete'
+    | 'Correct record'
+    | 'View record'
 ) {
-  if ((await page.getByTestId('status-value').innerText()) !== 'Draft') {
+  if (
+    (await page.getByTestId('status-value').innerText()) !== 'Draft' &&
+    action !== 'View record'
+  ) {
     await ensureAssigned(page)
   }
 

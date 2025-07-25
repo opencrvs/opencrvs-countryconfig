@@ -92,7 +92,10 @@ export async function getDeclaration({
 
   const mockDeclaration = {
     'father.detailsNotAvailable': true,
-    'father.reason': 'Father is missing.',
+    // Only include 'father.reason' if partialDeclaration doesn't have 'father.detailsNotAvailable'
+    ...(!('father.detailsNotAvailable' in partialDeclaration)
+      ? { 'father.reason': 'Father is missing.' }
+      : {}),
     'mother.name': {
       firstname: faker.person.firstName(),
       surname: faker.person.lastName()
@@ -145,6 +148,8 @@ export type Declaration = Awaited<ReturnType<typeof getDeclaration>>
 export interface CreateDeclarationResponse {
   eventId: string
   declaration: Declaration
+  trackingId?: string
+  registrationNumber?: string
 }
 
 export async function createDeclaration(
@@ -187,7 +192,10 @@ export async function createDeclaration(
       (action: ActionDocument) => action.type === 'DECLARE'
     )
 
-    return { eventId, declaration: declareAction?.declaration as Declaration }
+    return {
+      eventId,
+      declaration: declareAction?.declaration as Declaration
+    }
   }
 
   const validateRes = await client.event.actions.validate.request.mutate({
@@ -221,7 +229,15 @@ export async function createDeclaration(
     (action: ActionDocument) => action.type === 'REGISTER'
   )
 
-  return { eventId, declaration: registerAction?.declaration as Declaration }
+  const trackingId = registerRes?.trackingId as string
+  const registrationNumber = registerAction?.registrationNumber as string
+
+  return {
+    eventId,
+    declaration: registerAction?.declaration as Declaration,
+    trackingId,
+    registrationNumber
+  }
 }
 
 export async function rejectDeclaration(
