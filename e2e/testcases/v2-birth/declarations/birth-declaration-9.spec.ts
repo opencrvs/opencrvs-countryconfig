@@ -204,7 +204,7 @@ test.describe.serial('9. Birth declaration case - 9', () => {
         })
         .click()
       await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View record').click()
+      await page.getByText('View').click()
     })
 
     test('9.2.2 Verify information on preview page', async () => {
