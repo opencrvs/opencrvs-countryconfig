@@ -467,7 +467,7 @@ test.describe.serial('3. Workqueue flow - 3', () => {
 
       await assignFromWorkqueue(page, childName)
       await getRowByTitle(page, childName)
-        .getByRole('button', { name: 'Validate' })
+        .getByRole('button', { name: 'Review' })
         .click()
 
       await page.getByRole('button', { name: 'Send for approval' }).click()
