@@ -53,7 +53,7 @@ export async function loginToV2(
   }
 
   // Navigate to the v2 client
-  await page.goto(CLIENT_V2_URL)
+  // await page.goto(CLIENT_V2_URL)
 
   return token
 }

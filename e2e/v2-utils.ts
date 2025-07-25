@@ -7,7 +7,7 @@ import {
 export async function selectAction(
   page: Page,
   action:
-    | 'Print certificate'
+    | 'Print'
     | 'Declare'
     | 'Validate'
     | 'Review'
