@@ -271,11 +271,17 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       },
       svgUrl: '/api/countryconfig/certificates/v2.birth-certificate.svg',
       fonts: {
-        'Libre Baskerville': {
-          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
-          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
-          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
-          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+        ['Plus Jakarta Sans']: {
+          normal: `/api/countryconfig/fonts/PlusJakartaSans-Regular.ttf`,
+          bold: `/api/countryconfig/fonts/PlusJakartaSans-Bold.ttf`,
+          italics: `/api/countryconfig/fonts/PlusJakartaSans-Regular.ttf`,
+          bolditalics: `/api/countryconfig/fonts/PlusJakartaSans-Regular.ttf`
+        },
+        ['Kapakana']: {
+          normal: `/api/countryconfig/fonts/Kapakana.ttf`,
+          bold: `/api/countryconfig/fonts/Kapakana.ttf`,
+          italics: `/api/countryconfig/fonts/Kapakana.ttf`,
+          bolditalics: `/api/countryconfig/fonts/Kapakana.ttf`
         }
       }
     },
@@ -296,11 +302,17 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
       svgUrl:
         '/api/countryconfig/certificates/v2.birth-certificate-certified-copy.svg',
       fonts: {
-        'Libre Baskerville': {
-          normal: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf',
-          bold: '/api/countryconfig/fonts/LibreBaskerville-Bold.ttf',
-          italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
-          bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
+        ['Plus Jakarta Sans']: {
+          normal: `/api/countryconfig/fonts/PlusJakartaSans-Regular.ttf`,
+          bold: `/api/countryconfig/fonts/PlusJakartaSans-Bold.ttf`,
+          italics: `/api/countryconfig/fonts/PlusJakartaSans-Regular.ttf`,
+          bolditalics: `/api/countryconfig/fonts/PlusJakartaSans-Regular.ttf`
+        },
+        ['Kapakana']: {
+          normal: `/api/countryconfig/fonts/Kapakana.ttf`,
+          bold: `/api/countryconfig/fonts/Kapakana.ttf`,
+          italics: `/api/countryconfig/fonts/Kapakana.ttf`,
+          bolditalics: `/api/countryconfig/fonts/Kapakana.ttf`
         }
       }
     },

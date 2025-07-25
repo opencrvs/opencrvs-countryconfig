@@ -80,7 +80,6 @@
         {{#text fontSize=10 }}NUI: {{$lookup $declaration 'child.iD'}}{{/text}}
         {{#text fontSize=10 }}Teraka ny : {{translateDateToMDGFormat ($lookup $metadata 'dateOfEvent')}}{{/text}}
         {{linebreak}}
-        <!-- FIXME: fix the certified which doesn't exist -->
         {{#text fontSize=10 fontWeight="bold"}}{{v2NumberOfTimesCertificatePrinted ($lookup $metadata 'certified')}}{{/text}}
         {{#text fontSize=10 fontWeight="bold"}}
             {{#with (mentions) as |mentionsValue|}}{{#if mentionsValue.hasMention}}SORATRA AN-TSISINY :{{else}}{{/if}} {{/with}}
@@ -114,7 +113,6 @@
             letter-spacing: 0em;
             margin-top: 0;">{{{v2Introduction ($lookup $metadata 'updatedAtLocation.district') ($lookup $metadata 'dateOfEvent')}}}
         </p>
-        <!-- FIXME: paragraph after -->
         {{#if (v2FatherHasSameAddressAsMother ($lookup $declaration 'father.addressSameAs'))}}
             <p style="font-family: 'Plus Jakarta Sans';
                 text-align: justify;
@@ -188,8 +186,6 @@
                 }}}
             </p>
         {{/if}}
-
-        <!-- FIXME: paragraph after-->
         <p style="font-family: 'Plus Jakarta Sans';
             text-align: justify;
             font-size: 14px;
@@ -214,20 +210,6 @@
                 ($lookup $declaration 'child.birthTime')
             }}}
         </p>
-
-        <!-- TODO: test -->
-
-        <p style="font-family: 'Plus Jakarta Sans';
-        text-align: justify;
-         word-break: break-all;
-         font-size: 14px;
-         line-height: 1.1;
-         letter-spacing: 0em;
-         margin-top: 0;">{{v2Logger (lookup ($lookup $declaration 'mother.address') 'country')}}
-     </p>
-     <!-- TODO: test -->
-
-        
         <br />
         <p style="font-family: 'Plus Jakarta Sans';
             text-align: justify;

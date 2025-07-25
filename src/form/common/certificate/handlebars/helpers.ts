@@ -264,7 +264,6 @@ export function v2EventStatement(): Handlebars.HelperDelegate {
     motherFokontanyCustomAddress: string,
     motherIsDeceased: boolean
   ) {
-    console.log('motherCountry', motherCountry)
     return joinValuesWith([
       '--Tamin’ny',
       customizeDateInCertificateContent(dateOfEvent) + ',',
@@ -721,18 +720,12 @@ function convertToTimeZoneIso(dateUtc: string, timeZone: string): string {
 
 export function v2Logger(): Handlebars.HelperDelegate {
   return function (this: any, loggedData: any) {
-    console.log('loggedData >>> ', loggedData)
     return ''
   }
 }
 
 export function v2FatherHasSameAddressAsMother(): Handlebars.HelperDelegate {
   return function (this: any, sameAddress: string) {
-    console.log('sameAddress >>> ', sameAddress)
-    console.log(
-      'sameAddress === "yes" >>> ',
-      sameAddress.toLowerCase() === 'yes'
-    )
     return sameAddress.toLowerCase() === 'yes' ? true : false
   }
 }
@@ -756,25 +749,15 @@ export function v2RegistrationStatement(): Handlebars.HelperDelegate {
     dateOfEvent: string,
     timeOfEvent: string
   ) {
-    console.log('v2RegistrationStatement >>> this >>>>>>> ', this)
-    console.log('registrationDistrict', registrationDistrict)
-    console.log('informantType', informantType)
-    console.log('fatherDistrict', fatherDistrict)
-    console.log('motherDistrict', motherDistrict)
-    console.log('registrarName', registrarName)
-
     const birthRegistrationDate = v2GetBirthRegistrationDate(
       registrationDate ? registrationDate : dateOfEvent,
       registrationTime ? registrationTime : timeOfEvent
     )
 
-    console.log('birthRegistrationDate :>> ', birthRegistrationDate)
     const registrarDateUTC = convertToTimeZoneIso(
       isValidDate(birthRegistrationDate) ? birthRegistrationDate : dateOfEvent,
       'Africa/Nairobi'
     )
-
-    console.log('registrarDateUTC', registrarDateUTC)
 
     const informantName =
       informantType.toLowerCase() === 'father' ? fatherName : motherName
@@ -829,14 +812,14 @@ export function v2RegistrationStatement(): Handlebars.HelperDelegate {
               : [
                   ([
                     // fix these variables
-                    this.countryPrimaryInformant,
-                    this.internationalStatePrimaryInformant,
-                    this.internationalDistrictPrimaryInformant,
-                    this.internationalCityPrimaryInformant,
-                    this.internationalAddressLine1PrimaryInformant,
-                    this.internationalAddressLine2PrimaryInformant,
-                    this.internationalAddressLine3PrimaryInformant,
-                    this.internationalPostalCodePrimaryInformant
+                    // this.countryPrimaryInformant,
+                    // this.internationalStatePrimaryInformant,
+                    // this.internationalDistrictPrimaryInformant,
+                    // this.internationalCityPrimaryInformant,
+                    // this.internationalAddressLine1PrimaryInformant,
+                    // this.internationalAddressLine2PrimaryInformant,
+                    // this.internationalAddressLine3PrimaryInformant,
+                    // this.internationalPostalCodePrimaryInformant
                   ]
                     .filter(Boolean)
                     .join(' ') || '- ') + ','
@@ -858,15 +841,13 @@ export function registrationStatement(): Handlebars.HelperDelegate {
     informantPrimaryDistrict: string,
     registrationDistrict: string
   ) {
-    // console.log('this', this)
-
     const nameParts = this?.registrar?.name?.trim()?.split(' ')
     const registrarFamilyName = nameParts.pop() || ''
     const rawFirstName = nameParts.join(' ')
     const registrarFirstName =
       rawFirstName.trim().toLowerCase() === 'xyz261' ? '' : ` ${rawFirstName}`
     const birthRegistrationDate = getBirthRegistrationDate(this)
-    console.log('birthRegistrationDate :>> ', birthRegistrationDate)
+
     const registrarDateUTC = convertToTimeZoneIso(
       isValidDate(birthRegistrationDate)
         ? birthRegistrationDate
@@ -1322,7 +1303,6 @@ export function translateDateToMDGFormat(): Handlebars.HelperDelegate {
 }
 
 function translateChildGenderToMDGWord(childGender: string) {
-  console.log('childGender >>> ', childGender)
   return childGender &&
     ['male', 'homme', 'lehilahy', 'zazalahy'].includes(
       childGender?.toLowerCase()
