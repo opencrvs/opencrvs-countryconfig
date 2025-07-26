@@ -61,9 +61,9 @@
      <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Plus Jakarta Sans" font-size="10"
         font-weight="bold" letter-spacing="0em">
         {{#if (isToamasina ($lookup $metadata 'updatedAtLocation.district'))}}
-        <tspan x="86" y="220.58">{{v2GetBirthRegistrationDateMDGFormat ($lookup $metadata 'dateOfEvent')}}</tspan>  
+        <tspan x="86" y="220.58">{{v2GetBirthRegistrationDateMDGFormat ($lookup $declaration 'child.legacyBirthRegistrationDate')}}</tspan>  
         {{ else }}
-        <tspan x="86" y="202.58">{{v2GetBirthRegistrationDateMDGFormat ($lookup $metadata 'dateOfEvent')}}</tspan>        
+        <tspan x="86" y="202.58">{{v2GetBirthRegistrationDateMDGFormat ($lookup $declaration 'child.legacyBirthRegistrationDate')}}</tspan>        
         {{/if}}
     </text>
 
@@ -197,12 +197,16 @@
                 ($lookup $declaration 'informant.relation') 
                 ($lookup $declaration 'father.name') 
                 ($lookup $declaration 'mother.name')
+                ($lookup $declaration 'informant.name')
                 (lookup ($lookup $declaration 'father.address') 'district') 
                 (lookup ($lookup $declaration 'mother.address') 'district')
+                (lookup ($lookup $declaration 'informant.address') 'district')
                 ($lookup $declaration 'father.customizedExactDateOfBirthUnknown')
                 ($lookup $declaration 'mother.customizedExactDateOfBirthUnknown')
+                ($lookup $declaration 'informant.customizedExactDateOfBirthUnknown')
                 ($lookup $declaration 'father.occupation')
                 ($lookup $declaration 'mother.occupation')
+                ($lookup $declaration 'informant.occupation')
                 (lookup ($lookup $metadata 'updatedBy') 'name')
                 ($lookup $declaration 'child.legacyBirthRegistrationDate')
                 ($lookup $declaration 'child.legacyBirthRegistrationTime')

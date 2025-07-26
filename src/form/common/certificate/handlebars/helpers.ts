@@ -737,12 +737,16 @@ export function v2RegistrationStatement(): Handlebars.HelperDelegate {
     informantType: string,
     fatherName: string,
     motherName: string,
+    otherInformantName: string,
     fatherDistrict: string,
     motherDistrict: string,
+    otherInformantDistrict: string,
     fatherCustomizedExactDateOfBirthUnknown: string,
     motherCustomizedExactDateOfBirthUnknown: string,
+    otherInformantCustomizedExactDateOfBirthUnknown: string,
     fatherOccupation: string,
     motherOccupation: string,
+    otherInformantOccupation: string,
     registrarName: string,
     registrationDate: string,
     registrationTime: string,
@@ -759,21 +763,81 @@ export function v2RegistrationStatement(): Handlebars.HelperDelegate {
       'Africa/Nairobi'
     )
 
-    const informantName =
-      informantType.toLowerCase() === 'father' ? fatherName : motherName
+    const informantDataMap: Record<
+      string,
+      {
+        name: string
+        district: string
+        occupation: string
+        customizedExactDateOfBirthUnknown: string
+      }
+    > = {
+      father: {
+        name: fatherName,
+        district: fatherDistrict,
+        occupation: fatherOccupation,
+        customizedExactDateOfBirthUnknown:
+          fatherCustomizedExactDateOfBirthUnknown
+      },
+      mother: {
+        name: motherName,
+        district: motherDistrict,
+        occupation: motherOccupation,
+        customizedExactDateOfBirthUnknown:
+          motherCustomizedExactDateOfBirthUnknown
+      },
+      brother: {
+        name: otherInformantName,
+        district: otherInformantDistrict,
+        occupation: otherInformantOccupation,
+        customizedExactDateOfBirthUnknown:
+          otherInformantCustomizedExactDateOfBirthUnknown
+      },
+      sister: {
+        name: otherInformantName,
+        district: otherInformantDistrict,
+        occupation: otherInformantOccupation,
+        customizedExactDateOfBirthUnknown:
+          otherInformantCustomizedExactDateOfBirthUnknown
+      },
+      uncle: {
+        name: otherInformantName,
+        district: otherInformantDistrict,
+        occupation: otherInformantOccupation,
+        customizedExactDateOfBirthUnknown:
+          otherInformantCustomizedExactDateOfBirthUnknown
+      },
+      aunt: {
+        name: otherInformantName,
+        district: otherInformantDistrict,
+        occupation: otherInformantOccupation,
+        customizedExactDateOfBirthUnknown:
+          otherInformantCustomizedExactDateOfBirthUnknown
+      },
+      grandfather: {
+        name: otherInformantName,
+        district: otherInformantDistrict,
+        occupation: otherInformantOccupation,
+        customizedExactDateOfBirthUnknown:
+          otherInformantCustomizedExactDateOfBirthUnknown
+      },
+      grandmother: {
+        name: otherInformantName,
+        district: otherInformantDistrict,
+        occupation: otherInformantOccupation,
+        customizedExactDateOfBirthUnknown:
+          otherInformantCustomizedExactDateOfBirthUnknown
+      }
+    }
 
+    const informantTypeKey = informantType.toLowerCase()
+    const informant = informantDataMap[informantTypeKey] || {}
+
+    const informantName = informant.name
     const birthInformantCustomizedExactDateOfBirthUnknown =
-      informantType.toLowerCase() === 'father'
-        ? fatherCustomizedExactDateOfBirthUnknown
-        : motherCustomizedExactDateOfBirthUnknown
-
-    const informantDistrict =
-      informantType.toLowerCase() === 'father' ? fatherDistrict : motherDistrict
-
-    const informantOccupation =
-      informantType.toLowerCase() === 'father'
-        ? fatherOccupation
-        : motherOccupation
+      informant.customizedExactDateOfBirthUnknown
+    const informantDistrict = informant.district
+    const informantOccupation = informant.occupation
 
     return joinValuesWith([
       '---Nosoratana androany',
