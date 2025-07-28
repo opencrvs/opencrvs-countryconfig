@@ -289,7 +289,7 @@ test.describe.serial('8. Birth declaration case - 8', () => {
         .click()
 
       await page.getByRole('button', { name: 'Action', exact: true }).click()
-      await page.getByText('View record').click()
+      await page.getByText('View', { exact: true }).click()
     })
 
     test('8.2.2 Verify information on preview page', async () => {
