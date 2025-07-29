@@ -254,7 +254,7 @@ export const child = defineFormPage({
         }
       ],
       defaultValue: {
-        country: 'FAR',
+        country: 'MDG',
         addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',
@@ -278,7 +278,7 @@ export const child = defineFormPage({
         }
       ],
       defaultValue: {
-        country: 'FAR',
+        country: 'MDG',
         addressType: AddressType.DOMESTIC,
         province: '$user.province',
         district: '$user.district',

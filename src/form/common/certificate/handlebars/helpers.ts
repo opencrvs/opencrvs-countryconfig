@@ -751,7 +751,8 @@ export function v2RegistrationStatement(): Handlebars.HelperDelegate {
     registrationDate: string,
     registrationTime: string,
     dateOfEvent: string,
-    timeOfEvent: string
+    timeOfEvent: string,
+    informantCountry: string
   ) {
     const birthRegistrationDate = v2GetBirthRegistrationDate(
       registrationDate ? registrationDate : dateOfEvent,
@@ -875,8 +876,8 @@ export function v2RegistrationStatement(): Handlebars.HelperDelegate {
                 ]
               : [
                   ([
-                    // fix these variables
-                    // this.countryPrimaryInformant,
+                    // FIXME: fix these variables after address component
+                    informantCountry
                     // this.internationalStatePrimaryInformant,
                     // this.internationalDistrictPrimaryInformant,
                     // this.internationalCityPrimaryInformant,
