@@ -165,6 +165,7 @@ test.describe.serial('Birth correction flow', () => {
     await expect(page.getByText('Must be a valid birth date')).toBeVisible()
   })
 
+  const newFirstName = faker.person.firstName()
   const reasonForDelayedRegistration = faker.lorem.sentence(4)
 
   test('After changing the value to a valid value, continue button should be enabled', async () => {
@@ -175,6 +176,8 @@ test.describe.serial('Birth correction flow', () => {
     await page
       .getByTestId('text__child____reason')
       .fill(reasonForDelayedRegistration)
+
+    await page.getByTestId('text__firstname').fill(newFirstName)
     await page.getByRole('button', { name: 'Back to review' }).click()
     await expect(page.getByRole('button', { name: 'Continue' })).toBeEnabled()
   })
@@ -235,7 +238,7 @@ test.describe.serial('Birth correction flow', () => {
   })
 
   test("Event appears in 'Sent for approval' workqueue", async () => {
-    await page.getByRole('button', { name: 'Sent for approval' }).click()
+    await page.getByTestId('navigation_workqueue_sent-for-approval').click()
 
     await expect(
       page.getByRole('button', { name: formatV2ChildName(declaration) })
@@ -243,7 +246,7 @@ test.describe.serial('Birth correction flow', () => {
   })
 
   test.describe('Approve correction request', () => {
-    test('Login in as Local Registrar', async () => {
+    test('Login as Local Registrar', async () => {
       await logout(page)
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
     })
@@ -320,13 +323,12 @@ test.describe.serial('Birth correction flow', () => {
       ).toBeVisible()
     })
 
-    test('Enter the direct correction form', async () => {
+    test('Enter the direct correction form to ensure form is reset', async () => {
       await selectAction(page, 'Correct record')
 
       await expect(page.locator('#requester____type')).toHaveText('Select...')
       await expect(page.locator('#reason____option')).toHaveText('Select...')
-
-      // await expect()
+      await page.locator('#crcl-btn').click()
     })
   })
 })
