@@ -154,7 +154,7 @@
     <g clip-path="url(#clip5_1157_5003)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre"
         font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px">
-        <tspan x="289.95" y="271.274">{{$intl 'constants' ($lookup $declaration "child.gender")}}</tspan>
+        <tspan x="289.95" y="271.274">{{$intl 'constants' (lookup $declaration "child.gender")}}</tspan>
       </text>
     </g>
     <line x1="81.3999" y1="287.845" x2="512.08" y2="287.845" stroke="#ECECEC" stroke-width="0.97" />
