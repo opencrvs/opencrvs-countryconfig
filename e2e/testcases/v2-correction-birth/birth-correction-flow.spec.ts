@@ -311,6 +311,17 @@ test.describe.serial('Birth correction flow', () => {
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
       await expectInUrl(page, `/events/overview/${eventId}`)
+
+      await expect(
+        page.getByText(
+          formatV2ChildName({
+            'child.name': {
+              firstname: newFirstName,
+              surname: declaration['child.name'].surname
+            }
+          })
+        )
+      ).toBeVisible()
     })
 
     test('Correction approved action appears in audit history', async () => {
