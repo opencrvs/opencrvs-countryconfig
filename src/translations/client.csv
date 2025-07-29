@@ -2667,6 +2667,8 @@ v2.event.summary.assignedTo.label,Assigned to label,Assigned to,Assigné à
 v2.event.summary.assignedTo.value,Assigned to value,{event.assignedTo},{event.assignedTo}
 v2.event.summary.event.label,Label for the event field,Event,Événement
 v2.event.summary.event.value,Value for the event field,{eventLabel},{eventLabel}
+v2.event.summary.flags.label,Flags of the event,Flags,Drapeaux
+v2.event.summary.flags.placeholder,Message when no flags are present,No flags,Pas de drapeaux
 v2.event.summary.registrationNumber.empty,No registration number message,No registration number,Aucun numéro d'inscription
 v2.event.summary.registrationNumber.label,Label for the registration number field,Registration Number,Numéro d'inscription
 v2.event.summary.registrationNumber.value,Value for the registration number field,{event.registrationNumber},{event.registrationNumber}
