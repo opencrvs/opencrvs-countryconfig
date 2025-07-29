@@ -12,7 +12,7 @@ import {
   REQUIRED_VALIDATION_ERROR
 } from '../v2-birth/helpers'
 
-test.describe.serial('Birth make correction flow', () => {
+test.describe.serial('Birth Record correction flow', () => {
   let declaration: Declaration
   let eventId: string
   let page: Page
@@ -186,7 +186,7 @@ test.describe.serial('Birth make correction flow', () => {
       page.getByRole('button', { name: 'Back to review' })
     ).toBeEnabled()
     await expect(
-      page.getByRole('button', { name: 'Make correction' })
+      page.getByRole('button', { name: 'Correct record' })
     ).toBeEnabled()
   })
 
@@ -216,8 +216,8 @@ test.describe.serial('Birth make correction flow', () => {
     await page.locator('#preview_close').click()
   })
 
-  test('Make correction', async () => {
-    await page.getByRole('button', { name: 'Make correction' }).click()
+  test('Record correction', async () => {
+    await page.getByRole('button', { name: 'Correct record' }).click()
 
     await expect(page.getByText('Correct record?')).toBeVisible()
     await expect(
@@ -230,7 +230,7 @@ test.describe.serial('Birth make correction flow', () => {
     await expectInUrl(page, `/events/overview/${eventId}`)
   })
 
-  test('Make correction action appears in audit history', async () => {
+  test('Record correction action appears in audit history', async () => {
     await selectAction(page, 'View')
     await page.waitForLoadState('networkidle')
     await page.goBack()
@@ -238,26 +238,24 @@ test.describe.serial('Birth make correction flow', () => {
     // Go to second page of audit history list
     await page.getByRole('button', { name: 'Next page' }).click()
     await expect(
-      page.getByRole('button', { name: 'Make correction', exact: true })
+      page.getByRole('button', { name: 'Record corrected', exact: true })
     ).toBeVisible()
   })
 
-  test('Make Correction audit history modal opens when action is clicked', async () => {
+  test('Record Correction audit history modal opens when action is clicked', async () => {
     await page
-      .getByRole('button', { name: 'Make correction', exact: true })
+      .getByRole('button', { name: 'Record corrected', exact: true })
       .click()
 
     await expect(
-      page.getByRole('heading', { name: 'Make correction', exact: true })
+      page.getByRole('heading', { name: 'Record corrected', exact: true })
     ).toBeVisible()
     await expect(page.getByText('Informant (Mother)')).toBeVisible()
     await expect(
       page.getByText('Myself or an agent made a mistake (Clerical error)')
     ).toBeVisible()
 
-    await expect(
-      page.getByText('Make correction(s)', { exact: true })
-    ).toBeVisible()
+    await expect(page.getByText('Correction(s)', { exact: true })).toBeVisible()
     await expect(page.getByText("Child's details")).toBeVisible()
     await expect(page.getByText(reasonForDelayedRegistration)).toBeVisible()
 
