@@ -291,7 +291,16 @@ test.describe.serial('Birth correction flow', () => {
     test('Navigate to correction review', async () => {
       await selectAction(page, 'Review correction request')
 
-      // @TODO: write some assertions here after the review page is finished
+      await expect(page.getByText('RequesterInformant (Mother)')).toBeVisible()
+      await expect(
+        page.getByText(
+          'Reason for correctionMyself or an agent made a mistake (Clerical error)'
+        )
+      ).toBeVisible()
+
+      await expect(
+        page.getByRole('cell', { name: "Child's details" })
+      ).toBeVisible()
     })
 
     test('Approve correction request', async () => {
