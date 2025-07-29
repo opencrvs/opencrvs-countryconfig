@@ -2324,10 +2324,12 @@ userSetup.type.hospital,The description for HOSPITAL type,Hospital,Hôpital
 userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
 v2-events.buttons.submitCorrectionRequest,Submit correction request button text,Submit correction request,
+v2-events.correction.correctionRequest,Correction request text,Correction request,Demande de correction
 v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
 v2.action.view.record,Label for view record,View,Afficher
 v2.actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, declare{Declare} other{{action}}}"
 v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
+v2.actionModal.confirm,The label for confirm button of action modal,Confirm,Confirmer
 v2.actionModal.description,The description for action modal,The declarant will be notified of this action and a record of this decision will be recorded,Le déclarant sera informé de cette action et un enregistrement de cette décision sera conservé
 v2.actionModal.description.incomplete,Description shown in the action modal when a declaration is incomplete,This incomplete declaration will be submitted for review.,Cette déclaration incomplète sera soumise à l'examen.
 v2.actionModal.title,The title for action modal,"{action, select, declare{Declare} other{{action}}} the member?","{action, select, declare{Declare} other{{action}}} the member?"
@@ -2678,6 +2680,7 @@ v2.event.summary.event.value,Value for the event field,{eventLabel},{eventLabel}
 v2.event.summary.registrationNumber.empty,No registration number message,No registration number,Aucun numéro d'inscription
 v2.event.summary.registrationNumber.label,Label for the registration number field,Registration Number,Numéro d'inscription
 v2.event.summary.registrationNumber.value,Value for the registration number field,{event.registrationNumber},{event.registrationNumber}
+v2.event.summary.review-correction-request.label,This is shown as the action name anywhere the user can trigger the action from,Review correction request,Revoir la demande de correction
 v2.event.summary.status.label,Label for the status field,Status,Statut
 v2.event.summary.status.value,Value for the status field,"{event.status, select, CREATED {Draft} NOTIFIED {Incomplete} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{event.status, select, CREATED {Brouillon} NOTIFIED {Incomplet} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Requiert une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
 v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
@@ -2848,6 +2851,8 @@ v2.form.section.information.birth.bulletList.label,Label for the birth informati
 v2.form.section.mother.title,Form section title for mothers details,Mother's details,Information de la mère
 v2.home.header.searchTool.placeholder,Search tool placeholder,"Search for a tracking ID, name, registration number, national ID, phone number or email","Rechercher un identifiant de suivi, un nom, un numéro d'enregistrement, un numéro d'identité nationale, un numéro de téléphone ou une adresse e-mail"
 v2.messages.emptyString,Empty string, ,
+v2.modal.approveCorrection,The title for approve correction modal,Approve correction?,Approuver la correction ?
+v2.modal.rejectCorrection,The title for reject correction modal,Reject correction?,Rejeter la correction ?
 v2.navigation.CREATED,In progress label in navigation,In progress,En cours
 v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Prêt pour l'examen
 v2.navigation.REGISTERED,Ready to print label in navigation,Ready to print,Prêt à imprimer
