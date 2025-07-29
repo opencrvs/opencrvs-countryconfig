@@ -51,7 +51,7 @@ test.describe
   })
 
   test('4.0.3 Reject a declaration', async () => {
-    await selectAction(page, 'Register')
+    await selectAction(page, 'Review')
 
     await page.getByRole('button', { name: 'Reject' }).click()
 
@@ -108,7 +108,7 @@ test.describe
     const row = getRowByTitle(page, formatV2ChildName(declaration))
 
     await row.getByRole('button', { name: 'Assign record' }).click()
-    await row.getByRole('button', { name: 'Validate' }).click()
+    await row.getByRole('button', { name: 'Review' }).click()
 
     expect(
       page.url().includes(`events/validate/${eventId}/review`)

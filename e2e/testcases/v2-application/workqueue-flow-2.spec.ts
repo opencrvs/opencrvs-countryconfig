@@ -172,7 +172,7 @@ test.describe.serial('2. Workqueue flow - 2', () => {
         })
         .click()
 
-      await selectAction(page, 'Validate')
+      await selectAction(page, 'Review')
 
       await page
         .getByTestId('accordion-Accordion_informant')

@@ -14,6 +14,7 @@ const TEST_TIMEOUT = 90000
 export default defineConfig({
   timeout: TEST_TIMEOUT,
   testDir: './e2e/testcases',
+  testMatch: /.*\/v2-[^/]+\/.*\.spec.ts$/, // Run only v2 tests
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

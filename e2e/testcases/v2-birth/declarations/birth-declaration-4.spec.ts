@@ -642,7 +642,7 @@ test.describe.serial('4. Birth declaration case - 4', () => {
         })
         .click()
 
-      await selectAction(page, 'Register')
+      await selectAction(page, 'Review')
     })
 
     test('4.2.2 Verify information on review page', async () => {

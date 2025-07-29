@@ -46,14 +46,14 @@ test.describe('Action menu options', () => {
       await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
-      expect(options).toStrictEqual(['Assign', 'View record', 'Validate'])
+      expect(options).toStrictEqual(['Assign', 'View', 'Review'])
     })
 
     test('Local Registrar', async () => {
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
-      expect(options).toStrictEqual(['Assign', 'View record', 'Validate'])
+      expect(options).toStrictEqual(['Assign', 'View', 'Review'])
     })
   })
 
@@ -73,7 +73,7 @@ test.describe('Action menu options', () => {
       await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
       await page.getByRole('button', { name: 'Ready for review' }).click()
       const options = await getActionMenuOptions(page, declaration)
-      expect(options).toStrictEqual(['Unassign', 'View record', 'Register'])
+      expect(options).toStrictEqual(['Unassign', 'View', 'Review'])
     })
   })
 
@@ -95,8 +95,8 @@ test.describe('Action menu options', () => {
       const options = await getActionMenuOptions(page, declaration)
       expect(options).toStrictEqual([
         'Assign',
-        'View record',
-        'Print certificate',
+        'View',
+        'Print',
         'Correct record'
       ])
     })
