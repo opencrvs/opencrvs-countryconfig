@@ -60,7 +60,7 @@ services:
       - overlay_net
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:8.16.4
+    image: docker.elastic.co/beats/filebeat:8.19.0
     user: root
     networks:
       - overlay_net
