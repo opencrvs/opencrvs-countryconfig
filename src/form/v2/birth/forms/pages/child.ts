@@ -17,9 +17,10 @@ import {
   FieldType,
   AddressType,
   or,
-  PageTypes
+  PageTypes,
+  field
 } from '@opencrvs/toolkit/events'
-import { field, not } from '@opencrvs/toolkit/conditionals'
+import { not } from '@opencrvs/toolkit/conditionals'
 
 import { applicationConfig } from '@countryconfig/api/application/application-config'
 
@@ -53,7 +54,7 @@ const AttendantAtBirth = {
   NONE: 'NONE'
 } as const
 
-const PlaceOfBirth = {
+export const PlaceOfBirth = {
   HEALTH_FACILITY: 'HEALTH_FACILITY',
   PRIVATE_HOME: 'PRIVATE_HOME',
   OTHER: 'OTHER'
@@ -163,7 +164,7 @@ const placeOfBirthMessageDescriptors = {
 
 const genderOptions = createSelectOptions(GenderTypes, genderMessageDescriptors)
 
-const placeOfBirthOptions = createSelectOptions(
+export const placeOfBirthOptions = createSelectOptions(
   PlaceOfBirth,
   placeOfBirthMessageDescriptors
 )
@@ -188,28 +189,17 @@ export const child = defineFormPage({
   },
   fields: [
     {
-      id: 'child.firstname',
-      type: FieldType.TEXT,
-      configuration: { maxLength: MAX_NAME_LENGTH },
+      id: 'child.name',
+      type: FieldType.NAME,
       required: true,
-      label: {
-        defaultMessage: 'First name(s)',
-        description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.firstname.label'
-      },
-      validation: [invalidNameValidator('child.firstname')]
-    },
-    {
-      id: 'child.surname',
-      type: FieldType.TEXT,
       configuration: { maxLength: MAX_NAME_LENGTH },
-      required: true,
+      hideLabel: true,
       label: {
-        defaultMessage: 'Last name',
+        defaultMessage: "Child's name",
         description: 'This is the label for the field',
-        id: 'v2.event.birth.action.declare.form.section.child.field.surname.label'
+        id: 'v2.event.birth.action.declare.form.section.child.field.name.label'
       },
-      validation: [invalidNameValidator('child.surname')]
+      validation: [invalidNameValidator('child.name')]
     },
     {
       id: 'child.gender',
@@ -226,6 +216,7 @@ export const child = defineFormPage({
       id: 'child.dob',
       type: 'DATE',
       required: true,
+      secured: true,
       validation: [
         {
           message: {
@@ -275,6 +266,7 @@ export const child = defineFormPage({
       id: 'child.placeOfBirth',
       type: FieldType.SELECT,
       required: true,
+      secured: true,
       label: {
         defaultMessage: 'Place of delivery',
         description: 'This is the label for the field',
@@ -286,6 +278,7 @@ export const child = defineFormPage({
       id: 'child.birthLocation',
       type: 'FACILITY',
       required: true,
+      secured: true,
       label: {
         defaultMessage: 'Health Institution',
         description: 'This is the label for the field',
@@ -303,6 +296,7 @@ export const child = defineFormPage({
     {
       id: 'child.address.privateHome',
       type: FieldType.ADDRESS,
+      secured: true,
       hideLabel: true,
       label: {
         defaultMessage: 'Child`s address',
@@ -328,6 +322,7 @@ export const child = defineFormPage({
     {
       id: 'child.address.other',
       type: FieldType.ADDRESS,
+      secured: true,
       hideLabel: true,
       label: {
         defaultMessage: 'Child`s address',

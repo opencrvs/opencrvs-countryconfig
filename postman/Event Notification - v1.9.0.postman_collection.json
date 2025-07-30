@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "5857a3b9-58f9-4ea3-851d-9588d9c2e350",
+		"name": "Event Notification - v1.9.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45309915",
+		"_collection_link": "https://cihan-9849515.postman.co/workspace/Cihan's-Workspace~db6108ac-6e74-457b-8888-2b0eef6473f3/collection/45309915-5857a3b9-58f9-4ea3-851d-9588d9c2e350?action=share&source=collection_link&creator=45309915"
+	},
+	"item": [
+		{
+			"name": "Create Event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Set event id environment variable\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.environment.set(\"event-id\", response.id);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{integration-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"v2.birth\",\n    \"transactionId\": \"{{$guid}}\",\n    \"dateOfEvent\": {\n        \"fieldId\": \"child.dob\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{gateway}}/events/events",
+					"host": [
+						"{{gateway}}"
+					],
+					"path": [
+						"events",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Notify Event (Min)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{integration-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventId\": \"{{event-id}}\",\n    \"transactionId\": \"{{$guid}}\",\n    \"declaration\": {\n        \"mother.name\": { \"firstname\": \"{{$randomFirstName}}\", \"surname\": \"{{$randomLastName}}\" },\n        \"child.dob\": \"2025-06-02\",\n        \"child.placeOfBirth\": \"HEALTH_FACILITY\",\n        \"child.birthLocation\": \"aec39df4-6157-4ebf-bd5c-13c15bc52033\"\n    },\n    \"annotation\": {}\n}"
+				},
+				"url": {
+					"raw": "{{gateway}}/events/events/notifications",
+					"host": [
+						"{{gateway}}"
+					],
+					"path": [
+						"events",
+						"events",
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Notify Event (Max)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{integration-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"eventId\": \"{{event-id}}\",\n  \"transactionId\": \"{{$guid}}\",\n  \"declaration\": {\n    \"father.detailsNotAvailable\": true,\n    \"father.reason\": \"Father is missing!\",\n    \"mother.name\": { \"firstname\": \"{{$randomFirstName}}\", \"surname\": \"{{$randomLastName}}\" },\n    \"mother.dob\": \"1989-07-22\",\n    \"mother.nationality\": \"FAR\",\n    \"mother.idType\": \"NONE\",\n    \"mother.address\": {\n      \"country\": \"FAR\",\n      \"province\": \"5b607555-e83d-49f5-a681-d9a4776f70c5\",\n      \"district\": \"d71605e6-b20e-4b2e-a6ff-4cd2641fb0cb\",\n      \"urbanOrRural\": \"URBAN\",\n      \"town\": null,\n      \"residentialArea\": null,\n      \"street\": null,\n      \"number\": null,\n      \"zipCode\": null,\n      \"village\": null,\n      \"state\": null,\n      \"district2\": null,\n      \"cityOrTown\": null,\n      \"addressLine1\": null,\n      \"addressLine2\": null,\n      \"addressLine3\": null,\n      \"postcodeOrZip\": null,\n      \"addressType\": \"DOMESTIC\"\n    },\n    \"informant.relation\": \"GRANDMOTHER\",\n    \"informant.name\": { \"firstname\": \"{{$randomFirstName}}\", \"surname\": \"{{$randomLastName}}\" },\n    \"informant.dob\": \"1964-05-04\",\n    \"informant.nationality\": \"FAR\",\n    \"informant.idType\": \"NONE\",\n    \"informant.address\": {\n      \"country\": \"FAR\",\n      \"province\": \"5b607555-e83d-49f5-a681-d9a4776f70c5\",\n      \"district\": \"d71605e6-b20e-4b2e-a6ff-4cd2641fb0cb\",\n      \"urbanOrRural\": \"URBAN\",\n      \"town\": null,\n      \"residentialArea\": null,\n      \"street\": null,\n      \"number\": null,\n      \"zipCode\": null,\n      \"village\": null,\n      \"state\": null,\n      \"district2\": null,\n      \"cityOrTown\": null,\n      \"addressLine1\": null,\n      \"addressLine2\": null,\n      \"addressLine3\": null,\n      \"postcodeOrZip\": null,\n      \"addressType\": \"DOMESTIC\"\n    },\n    \"informant.email\": \"olivia.johnson@opencrvs.org\",\n    \"child.name\": { \"firstname\": \"{{$randomFirstName}}\", \"surname\": \"{{$randomLastName}}\" },\n    \"child.gender\": \"male\",\n    \"child.dob\": \"2024-02-02\",\n    \"child.reason\": \"Late registration reason here!\",\n    \"child.placeOfBirth\": \"PRIVATE_HOME\",\n    \"child.address.privateHome\": {\n      \"country\": \"FAR\",\n      \"province\": \"5b607555-e83d-49f5-a681-d9a4776f70c5\",\n      \"district\": \"d71605e6-b20e-4b2e-a6ff-4cd2641fb0cb\",\n      \"urbanOrRural\": \"URBAN\",\n      \"town\": \"My town\",\n      \"residentialArea\": \"My area\",\n      \"street\": \"My street\",\n      \"number\": \"11\",\n      \"zipCode\": \"10000\",\n      \"village\": null,\n      \"state\": null,\n      \"district2\": null,\n      \"cityOrTown\": null,\n      \"addressLine1\": null,\n      \"addressLine2\": null,\n      \"addressLine3\": null,\n      \"postcodeOrZip\": null,\n      \"addressType\": \"DOMESTIC\"\n    },\n    \"child.attendantAtBirth\": \"MIDWIFE\",\n    \"child.birthType\": \"SINGLE\",\n    \"child.weightAtBirth\": 4.5\n  },\n  \"annotation\": {\n    \"review.comment\": \"Comment about birth\"\n  }\n}\n"
+				},
+				"url": {
+					"raw": "{{gateway}}/events/events/notifications",
+					"host": [
+						"{{gateway}}"
+					],
+					"path": [
+						"events",
+						"events",
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
