@@ -29,6 +29,7 @@ all:
     # For this you need to first setup a backup environment
     periodic_restore_from_backup: true
     backup_server_remote_source_directory: /home/backup/backups
+    single_node: true
     users:
       # @todo this is where you define which development team members have access to the server.
       # If you need to remove access from someone, do not remove them from this list, but instead set their state: absent
