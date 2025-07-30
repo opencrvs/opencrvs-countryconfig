@@ -50,7 +50,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
     ]
   },
   {
@@ -94,7 +94,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
     ]
   },
   {
@@ -116,7 +116,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
     ]
   },
   {
@@ -292,7 +292,7 @@ export const roles: Role[] = [
       'search[event=v2.birth,access=all]',
       'search[event=v2.death,access=all]',
       'search[event=tennis-club-membership,access=all]',
-      'workqueue[id=assigned-to-you|recent|requires-updates|sent-for-review]'
+      'workqueue[id=assigned-to-you|recent|requires-updates-self|sent-for-review]'
     ]
   },
   {
