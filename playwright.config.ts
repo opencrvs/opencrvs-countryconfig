@@ -37,7 +37,7 @@ export default defineConfig({
     trace: 'on',
     // Ignore HTTPS errors (like untrusted or self-signed certificates) during Playwright tests on CI
     // This is useful for Let's Encrypt staging certificates that aren't publicly trusted.
-    ignoreHTTPSErrors: process.env.CI ? true : false,
+    ignoreHTTPSErrors: process.env.CI ? true : false
   },
 
   /* Configure projects for major browsers */

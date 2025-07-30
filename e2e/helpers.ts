@@ -445,7 +445,7 @@ type ActionMenuOptions =
   | 'Review declaration'
   | 'Update declaration'
   | 'Review correction request'
-  | 'View record'
+  | 'View'
   | 'Validate'
   | 'Review'
 

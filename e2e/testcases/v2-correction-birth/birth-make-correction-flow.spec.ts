@@ -1,18 +1,18 @@
 import { expect, test, type Page } from '@playwright/test'
-import { getToken, loginToV2, logout } from '../../helpers'
+import { getToken, loginToV2 } from '../../helpers'
 import { faker } from '@faker-js/faker'
 import { CREDENTIALS } from '../../constants'
 import {
   createDeclaration,
   Declaration
 } from '../v2-test-data/birth-declaration'
-import { ensureAssigned, expectInUrl, selectAction, type } from '../../v2-utils'
+import { ensureAssigned, expectInUrl, selectAction } from '../../v2-utils'
 import {
   formatV2ChildName,
   REQUIRED_VALIDATION_ERROR
 } from '../v2-birth/helpers'
 
-test.describe.serial('Birth correction flow', () => {
+test.describe.serial('Birth Record correction flow', () => {
   let declaration: Declaration
   let eventId: string
   let page: Page
@@ -32,7 +32,7 @@ test.describe.serial('Birth correction flow', () => {
     eventId = res.eventId
 
     page = await browser.newPage()
-    await loginToV2(page, CREDENTIALS.REGISTRATION_AGENT)
+    await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
   })
 
   test('Navigate to the correction form', async () => {
@@ -165,7 +165,6 @@ test.describe.serial('Birth correction flow', () => {
     await expect(page.getByText('Must be a valid birth date')).toBeVisible()
   })
 
-  const newFirstName = faker.person.firstName()
   const reasonForDelayedRegistration = faker.lorem.sentence(4)
 
   test('After changing the value to a valid value, continue button should be enabled', async () => {
@@ -176,8 +175,6 @@ test.describe.serial('Birth correction flow', () => {
     await page
       .getByTestId('text__child____reason')
       .fill(reasonForDelayedRegistration)
-
-    await type(page, '#firstname', newFirstName)
     await page.getByRole('button', { name: 'Back to review' }).click()
     await expect(page.getByRole('button', { name: 'Continue' })).toBeEnabled()
   })
@@ -189,7 +186,7 @@ test.describe.serial('Birth correction flow', () => {
       page.getByRole('button', { name: 'Back to review' })
     ).toBeEnabled()
     await expect(
-      page.getByRole('button', { name: 'Submit correction request' })
+      page.getByRole('button', { name: 'Correct record' })
     ).toBeEnabled()
   })
 
@@ -219,17 +216,13 @@ test.describe.serial('Birth correction flow', () => {
     await page.locator('#preview_close').click()
   })
 
-  test('Submit correction request', async () => {
-    await page
-      .getByRole('button', { name: 'Submit correction request' })
-      .click()
+  test('Record correction', async () => {
+    await page.getByRole('button', { name: 'Correct record' }).click()
 
-    await expect(
-      page.getByText('Send record correction for approval?')
-    ).toBeVisible()
+    await expect(page.getByText('Correct record?')).toBeVisible()
     await expect(
       page.getByText(
-        'The Registrar will be notified of this correction request and a record of this request will be recorded'
+        'The informant will be notified of this correction and a record of this decision will be recorded'
       )
     ).toBeVisible()
 
@@ -237,109 +230,32 @@ test.describe.serial('Birth correction flow', () => {
     await expectInUrl(page, `/events/overview/${eventId}`)
   })
 
-  test("Event appears in 'Sent for approval' workqueue", async () => {
-    await page.getByTestId('navigation_workqueue_sent-for-approval').click()
-
+  test('Record correction action appears in audit history', async () => {
+    await ensureAssigned(page)
+    // Go to second page of audit history list
+    await page.getByRole('button', { name: 'Next page' }).click()
     await expect(
-      page.getByRole('button', { name: formatV2ChildName(declaration) })
+      page.getByRole('button', { name: 'Record corrected', exact: true })
     ).toBeVisible()
   })
 
-  test.describe('Approve correction request', () => {
-    test('Login as Local Registrar', async () => {
-      await logout(page)
-      await loginToV2(page, CREDENTIALS.LOCAL_REGISTRAR)
-    })
+  test('Record Correction audit history modal opens when action is clicked', async () => {
+    await page
+      .getByRole('button', { name: 'Record corrected', exact: true })
+      .click()
 
-    test("Find the event in the 'Ready for review' workflow", async () => {
-      await page.getByRole('button', { name: 'Ready for review' }).click()
+    await expect(
+      page.getByRole('heading', { name: 'Record corrected', exact: true })
+    ).toBeVisible()
+    await expect(page.getByText('Informant (Mother)')).toBeVisible()
+    await expect(
+      page.getByText('Myself or an agent made a mistake (Clerical error)')
+    ).toBeVisible()
 
-      await page
-        .getByRole('button', { name: formatV2ChildName(declaration) })
-        .click()
-    })
+    await expect(page.getByText('Correction(s)', { exact: true })).toBeVisible()
+    await expect(page.getByText("Child's details")).toBeVisible()
+    await expect(page.getByText(reasonForDelayedRegistration)).toBeVisible()
 
-    test('Correction request action appears in audit history', async () => {
-      await ensureAssigned(page)
-
-      // Go to second page of audit history list
-      await page.getByRole('button', { name: 'Next page' }).click()
-      await expect(
-        page.getByRole('button', { name: 'Correction requested', exact: true })
-      ).toBeVisible()
-    })
-
-    test('Correction request audit history modal opens when action is clicked', async () => {
-      await page
-        .getByRole('button', { name: 'Correction requested', exact: true })
-        .click()
-
-      await expect(page.getByText('RequesterInformant (Mother)')).toBeVisible()
-      await expect(
-        page.getByText(
-          'Reason for correctionMyself or an agent made a mistake (Clerical error)'
-        )
-      ).toBeVisible()
-
-      await expect(page.getByText("Child's details")).toBeVisible()
-      await expect(
-        page.getByText(
-          `Reason for delayed registration${reasonForDelayedRegistration}`
-        )
-      ).toBeVisible()
-
-      await page.locator('#close-btn').click()
-    })
-
-    test('Navigate to correction review', async () => {
-      await selectAction(page, 'Review correction request')
-
-      await expect(page.getByText('RequesterInformant (Mother)')).toBeVisible()
-      await expect(
-        page.getByText(
-          'Reason for correctionMyself or an agent made a mistake (Clerical error)'
-        )
-      ).toBeVisible()
-
-      await expect(
-        page.getByRole('cell', { name: "Child's details" })
-      ).toBeVisible()
-    })
-
-    test('Approve correction request', async () => {
-      await page.getByRole('button', { name: 'Approve', exact: true }).click()
-      await page.getByRole('button', { name: 'Confirm', exact: true }).click()
-
-      await expectInUrl(page, `/events/overview/${eventId}`)
-
-      await expect(
-        page.getByText(
-          formatV2ChildName({
-            'child.name': {
-              firstname: newFirstName,
-              surname: declaration['child.name'].surname
-            }
-          })
-        )
-      ).toBeVisible()
-    })
-
-    test('Correction approved action appears in audit history', async () => {
-      await ensureAssigned(page)
-
-      // Go to second page of audit history list
-      await page.getByRole('button', { name: 'Next page' }).click()
-      await expect(
-        page.getByRole('button', { name: 'Correction approved', exact: true })
-      ).toBeVisible()
-    })
-
-    test('Enter the direct correction form to ensure form is reset', async () => {
-      await selectAction(page, 'Correct record')
-
-      await expect(page.locator('#requester____type')).toHaveText('Select...')
-      await expect(page.locator('#reason____option')).toHaveText('Select...')
-      await page.locator('#crcl-btn').click()
-    })
+    await page.locator('#close-btn').click()
   })
 })

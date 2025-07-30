@@ -140,7 +140,7 @@ test.describe.serial('Correct record - 2', () => {
 
       await expectInUrl(
         page,
-        `/events/request-correction/${eventId}/pages/informant?from=review#informant____relation`
+        `/events/correction/${eventId}/pages/informant?from=review#informant____relation`
       )
 
       await page.locator('#informant____relation').click()
@@ -162,7 +162,7 @@ test.describe.serial('Correct record - 2', () => {
 
       await page.getByRole('button', { name: 'Back to review' }).click()
 
-      await expectInUrl(page, `/events/request-correction/${eventId}/review`)
+      await expectInUrl(page, `/events/correction/${eventId}/review`)
 
       await expect(
         page.getByTestId('row-value-informant.relation').getByRole('deletion')
@@ -178,7 +178,7 @@ test.describe.serial('Correct record - 2', () => {
 
       await expectInUrl(
         page,
-        `/events/request-correction/${eventId}/pages/child?from=review#child____placeOfBirth`
+        `/events/correction/${eventId}/pages/child?from=review#child____placeOfBirth`
       )
 
       await page.locator('#child____placeOfBirth').click()
