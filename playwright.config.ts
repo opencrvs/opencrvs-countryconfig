@@ -14,7 +14,6 @@ const TEST_TIMEOUT = 90000
 export default defineConfig({
   timeout: TEST_TIMEOUT,
   testDir: './e2e/testcases',
-  testMatch: /.*\/v2-[^/]+\/.*\.spec.ts$/, // Run only v2 tests
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -38,7 +37,7 @@ export default defineConfig({
     trace: 'on',
     // Ignore HTTPS errors (like untrusted or self-signed certificates) during Playwright tests on CI
     // This is useful for Let's Encrypt staging certificates that aren't publicly trusted.
-    ignoreHTTPSErrors: process.env.CI ? true : false,
+    ignoreHTTPSErrors: process.env.CI ? true : false
   },
 
   /* Configure projects for major browsers */

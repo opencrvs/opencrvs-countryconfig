@@ -2324,7 +2324,7 @@ userSetup.type.healthSystem,The description for health system type,Health System
 userSetup.type.hospital,The description for HOSPITAL type,Hospital,Hôpital
 userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
-v2-events.buttons.makeCorrection,Submit correction request button text,Record corrected,Record corrected
+v2-events.buttons.makeCorrection,Rectord correction button text,Correct record,Correct record
 v2-events.buttons.submitCorrectionRequest,Submit correction request button text,Submit correction request,
 v2-events.correction.correctionRequest,Correction request text,Correction request,Demande de correction
 v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
@@ -2560,10 +2560,10 @@ v2.correction.corrector.title,The title for the corrector form,Who is requesting
 v2.correction.reason.title,The title for the corrector form,Reason for correction?,Reason for correction?
 v2.correction.requester.relationshop.intro.label,The title for the corrector form,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.,"Note : Si l'enfant a atteint l'âge légal (18 ans), il est le seul à pouvoir demander une modification de son acte de naissance."
 v2.correction.summary.change,Change link label,Change,
-v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
-v2.correction.summary.section.title,Corrections section title,Request correction(s),Corrections
 v2.correction.summary.change,Change link label,Change,
 v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
+v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
+v2.correction.summary.section.title,Corrections section title,Request correction(s),Corrections
 v2.correction.summary.section.title,Corrections section title,Request correction(s),Corrections
 v2.correction.supportingDocuments.attest.label,Label for attestation of supporting documents,Attest,Attestation
 v2.correction.supportingDocuments.notNeeded.label,Label for indicating supporting documents are not needed,Not Needed,Non nécessaire
@@ -2663,10 +2663,10 @@ v2.event.birth.action.declare.label,This is shown as the action name anywhere th
 v2.event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
 v2.event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 v2.event.birth.action.register.label,Label for review record button in dropdown menu,Review,Revoir
-v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
-v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Review,Revoir
 v2.event.birth.action.register.label,Label for review record button in dropdown menu,Review,Revoir
 v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
+v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
+v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Review,Revoir
 v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Review,Revoir
 v2.event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 v2.event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
@@ -2868,8 +2868,8 @@ v2.form.section.mother.title,Form section title for mothers details,Mother's det
 v2.home.header.searchTool.placeholder,Search tool placeholder,"Search for a tracking ID, name, registration number, national ID, phone number or email","Rechercher un identifiant de suivi, un nom, un numéro d'enregistrement, un numéro d'identité nationale, un numéro de téléphone ou une adresse e-mail"
 v2.messages.emptyString,Empty string, ,
 v2.modal.approveCorrection,The title for approve correction modal,Approve correction?,Approuver la correction ?
-v2.modal.rejectCorrection,The title for reject correction modal,Reject correction?,Rejeter la correction ?
 v2.modal.approveCorrection,The title for approve correction modal,Approve correction?,Approuver la correction ?
+v2.modal.rejectCorrection,The title for reject correction modal,Reject correction?,Rejeter la correction ?
 v2.modal.rejectCorrection,The title for reject correction modal,Reject correction?,Rejeter la correction ?
 v2.navigation.CREATED,In progress label in navigation,In progress,En cours
 v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Prêt pour l'examen
