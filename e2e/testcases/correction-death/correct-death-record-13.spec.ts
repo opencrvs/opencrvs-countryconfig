@@ -656,7 +656,7 @@ test.describe.serial(' Correct record - 13', () => {
      * Confirm button
      */
 
-    await expect(page.getByText('Correct record ?')).toBeVisible()
+    await expect(page.getByText('Correct record?')).toBeVisible()
     await expect(
       page.getByText(
         'The informant will be notified of this correction and a record of this decision will be recorded'

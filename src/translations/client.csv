@@ -291,6 +291,7 @@ constants.healthDivision,The description for HEALTH_DIVISION type,Health Divisio
 constants.healthcareWorker,The description for Healthcare Worker type,Healthcare Worker,Travailleur de la santé
 constants.history,History heading,History,Histoire
 constants.humanName,Formatted full name,{firstName} {middleName} {lastName},{firstName} {middleName} {lastName}
+constants.humanName,Formatted full name,{firstName} {middleName} {lastName},{firstName} {middleName} {lastName}
 constants.id,ID Label,ID,ID
 constants.idCheckWithoutVerify,Issuance without the confirmation of proof,Continue without proof of ID?,Continuer sans preuve d'identité?
 constants.inReview.status,A label for In Review,In review,En cours de révision
@@ -430,7 +431,7 @@ correction.certificate.corrector.idCheckVerify,The label for id check component 
 correction.certificate.corrector.idCheckWithoutVerify,The label for id check component action when does not verify details,Identity does not match,L'identité ne correspond pas
 correction.certificate.corrector.otherIdCheck,The title for other id check component,Check proof of ID,Avez-vous vérifié leur preuve d'identification ?
 correction.correctRecordDialog.description,The description for the dialog when record correction sent by a registrar,The informant will be notified of this correction and a record of this decision will be recorded,L'informateur sera informé de cette correction et une trace de cette décision sera enregistrée.
-correction.correctRecordDialog.title,The title for the dialog when record correction sent by a registrar,Correct record ?,enregistrement correct ?
+correction.correctRecordDialog.title,The title for the dialog when record correction sent by a registrar,Correct record?,enregistrement correct ?
 correction.correctionForApprovalDialog.actions.cancel,The cancel button for the dialog when record correction sent by registration agent for approval,Cancel,Annuler
 correction.correctionForApprovalDialog.actions.send,The send button for the dialog when record correction sent by registration agent for approval,Confirm,Confirmer
 correction.correctionForApprovalDialog.description,The description for the dialog when record correction sent by registration agent for approval,The Registrar will be notified of this correction request and a record of this request will be recorded,Le greffier sera informé de cette demande de correction et un enregistrement de cette demande sera effectué
@@ -2323,12 +2324,15 @@ userSetup.type.healthSystem,The description for health system type,Health System
 userSetup.type.hospital,The description for HOSPITAL type,Hospital,Hôpital
 userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
+v2-events.buttons.makeCorrection,Rectord correction button text,Correct record,Correct record
 v2-events.buttons.submitCorrectionRequest,Submit correction request button text,Submit correction request,
 v2-events.correction.correctionRequest,Correction request text,Correction request,Demande de correction
 v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
 v2.action.view.record,Label for view record,View,Afficher
+v2.action.view.record,Label for view record,View,Afficher
 v2.actionModal.PrimaryAction,The label for primary action button of action modal,"{action, select, declare{Declare} other{{action}}}","{action, select, declare{Declare} other{{action}}}"
 v2.actionModal.cancel,The label for cancel button of action modal,Cancel,Annuler
+v2.actionModal.confirm,The label for confirm button of action modal,Confirm,Confirmer
 v2.actionModal.confirm,The label for confirm button of action modal,Confirm,Confirmer
 v2.actionModal.description,The description for action modal,The declarant will be notified of this action and a record of this decision will be recorded,Le déclarant sera informé de cette action et un enregistrement de cette décision sera conservé
 v2.actionModal.description.incomplete,Description shown in the action modal when a declaration is incomplete,This incomplete declaration will be submitted for review.,Cette déclaration incomplète sera soumise à l'examen.
@@ -2543,6 +2547,7 @@ v2.constants.within1YearTo5Years,Label for registrations within 1 year to 5 year
 v2.constants.withinTargetDays,Label for registrations within {registrationTargetDays} days,Within {registrationTargetDays} days,Dans les {registrationTargetDays} jours
 v2.constants.withinTargetDaysTo1Year,Label for registrations within {registrationTargetDays} days to 1 year,{registrationTargetDays} days - 1 year,{registrationTargetDays} jours - 1 an
 v2.correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Send record correction for approval?,Envoyer la correction de l'enregistrement pour approbation?
+v2.correction.correctionForApprovalDialog.title,The title for the dialog when record correction sent by registration agent for approval,Send record correction for approval?,Envoyer la correction de l'enregistrement pour approbation?
 v2.correction.corrector.anotherAgent,Label for another registration or field agent option in certificate correction form,Another registration agent or field agent,Un autre agent d'enregistrement ou un agent de terrain
 v2.correction.corrector.identity.instruction,The title for the corrector form,Please verify the identity of the person making this request,Please verify the identity of the person making this request
 v2.correction.corrector.identity.verified,Label for verified option in corrector identity check page,I have verified their identity,I have verified their identity
@@ -2555,10 +2560,14 @@ v2.correction.corrector.title,The title for the corrector form,Who is requesting
 v2.correction.reason.title,The title for the corrector form,Reason for correction?,Reason for correction?
 v2.correction.requester.relationshop.intro.label,The title for the corrector form,Note: In the case that the child is now of legal age (18) then only they should be able to request a change to their birth record.,"Note : Si l'enfant a atteint l'âge légal (18 ans), il est le seul à pouvoir demander une modification de son acte de naissance."
 v2.correction.summary.change,Change link label,Change,
+v2.correction.summary.change,Change link label,Change,
 v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
+v2.correction.summary.information.section.title,Correction information section title,Correction information,Informations de correction
+v2.correction.summary.section.title,Corrections section title,Request correction(s),Corrections
 v2.correction.summary.section.title,Corrections section title,Request correction(s),Corrections
 v2.correction.supportingDocuments.attest.label,Label for attestation of supporting documents,Attest,Attestation
 v2.correction.supportingDocuments.notNeeded.label,Label for indicating supporting documents are not needed,Not Needed,Non nécessaire
+v2.custom.field.form.requiredField,,Required for registration,Requis pour l'enregistrement
 v2.custom.field.form.requiredField,,Required for registration,Requis pour l'enregistrement
 v2.error.child.weightAtBirth.invalidNumberRange,This is the error message for invalid number range,Must be within 0 and 6,Doit être compris entre 0 et 6
 v2.error.hidden,"Error message when field is hidden or disabled, but a value was received",Hidden or disabled field should not receive a value,Le champ masqué ou désactivé ne doit pas recevoir de valeur
@@ -2589,6 +2598,7 @@ v2.event.birth.action.certificate.form.section.collectPayment.service.label.afte
 v2.event.birth.action.certificate.form.section.collectPayment.service.label.beforeRegistrationTarget,Birth registration before 30 days of date of birth,Birth registration before 30 days of date of birth,Enregistrement de naissance avant 30 jours de la date de naissance
 v2.event.birth.action.certificate.form.section.collectPayment.service.label.inBetweenRegistrationTargets,Birth registration after 30 days but before 365 days of date of birth,Birth registration after 30 days but before 365 days of date of birth,Enregistrement de naissance après 30 jours mais avant 365 jours de la date de naissance
 v2.event.birth.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print,Imprimer
+v2.event.birth.action.correct.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
 v2.event.birth.action.declare.form.label,This is what this form is referred as in the system,Birth decalration form,Birth decalration form
 v2.event.birth.action.declare.form.review.comment.label,Label for the comment field in the review section,Comment,Commentaire
 v2.event.birth.action.declare.form.review.signature.label,Label for the signature field in the review section,Signature of informant,Signature de l'informateur
@@ -2653,7 +2663,10 @@ v2.event.birth.action.declare.label,This is shown as the action name anywhere th
 v2.event.birth.action.delete.label,Label for delete button in dropdown menu,Delete,Supprimer
 v2.event.birth.action.form.section.collector.other.field.name.label,This is the label for the name field of OTHER collector,Collector's name,Nom du collecteur
 v2.event.birth.action.register.label,Label for review record button in dropdown menu,Review,Revoir
+v2.event.birth.action.register.label,Label for review record button in dropdown menu,Review,Revoir
 v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
+v2.event.birth.action.request-correction.label,This is shown as the action name anywhere the user can trigger the action from,Correct record,Enregistrement correct
+v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Review,Revoir
 v2.event.birth.action.validate.label,This is shown as the action name anywhere the user can trigger the action from,Review,Revoir
 v2.event.birth.label,This is what this event is referred as in the system,Birth,Naissance
 v2.event.birth.summary.child.dob.empty,Label for date of birth not available,No date of birth,Pas de date de naissance
@@ -2681,6 +2694,7 @@ v2.event.summary.registrationNumber.empty,No registration number message,No regi
 v2.event.summary.registrationNumber.label,Label for the registration number field,Registration Number,Numéro d'inscription
 v2.event.summary.registrationNumber.value,Value for the registration number field,{event.registrationNumber},{event.registrationNumber}
 v2.event.summary.review-correction-request.label,This is shown as the action name anywhere the user can trigger the action from,Review correction request,Revoir la demande de correction
+v2.event.summary.review-correction-request.label,This is shown as the action name anywhere the user can trigger the action from,Review correction request,Revoir la demande de correction
 v2.event.summary.status.label,Label for the status field,Status,Statut
 v2.event.summary.status.value,Value for the status field,"{event.status, select, CREATED {Draft} NOTIFIED {Incomplete} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{event.status, select, CREATED {Brouillon} NOTIFIED {Incomplet} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Requiert une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
 v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
@@ -2695,6 +2709,7 @@ v2.event.tennis-club-membership.action.certificate.form.section.requester.printI
 v2.event.tennis-club-membership.action.certificate.form.section.who.title,This is the title of the section,Print certified copy,Imprimer une copie certifiée
 v2.event.tennis-club-membership.action.certificate.form.version.1,This is the first version of the form,Version 1,Version 1
 v2.event.tennis-club-membership.action.collect-certificate.label,This is shown as the action name anywhere the user can trigger the action from,Print certificate,Imprimer le certificat
+v2.event.tennis-club-membership.action.correct.label,This is shown as the action name anywhere the user can trigger the action from,Correct,Correct
 v2.event.tennis-club-membership.action.declare.form.label,This is what this form is referred as in the system,Tennis club membership application,Tennis club membership application
 v2.event.tennis-club-membership.action.declare.form.review.title,Title of the form to show in review page,"{applicant.name.firstname, select, __EMPTY__ {Member declaration} other {{applicant.name.surname, select, __EMPTY__ {Member declaration for {applicant.name.firstname}} other {Member declaration for {applicant.name.firstname} {applicant.name.surname}}}}}","{applicant.name.firstname, select, __EMPTY__ {Déclaration des membres} other {{applicant.name.surname, select, __EMPTY__ {Déclaration des membres pour {applicant.name.firstname}} other {Déclaration des membres pour {applicant.name.firstname} {applicant.name.surname}}}}}"
 v2.event.tennis-club-membership.action.declare.form.section.recommender.field.firstname.label,This is the label for the field,Recommender's first name,Recommender's first name
@@ -2762,9 +2777,10 @@ v2.event.tennis-club-membership.title.label,Label for the summary title of the t
 v2.event.tennis-club-membership.workqueue.all.name.label,Label for the 'All' work queue filter for tennis club membership,{applicant.firstname} {applicant.surname},{applicant.firstname} {applicant.surname}
 v2.event.tennis-club-membership.workqueue.readyForReview.name.label,Label for 'Ready for Review' work queue for tennis club membership,Ready for Review,Prêt pour révision
 v2.event.tennis-club-membership.workqueue.registered.name.label,Label for 'Registered' work queue for tennis club membership,Registered,Enregistré
-v2.events.history.status,Events status history,"{status, select, CREATE {Declaration started} NOTIFY {Notified} VALIDATE {Sent for approval} DRAFT {Draft} DECLARE {Sent for review} REGISTER {Registered} PRINT_CERTIFICATE {Certified} REJECT {Rejected} ARCHIVE {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} REQUEST_CORRECTION {Correction requested} APPROVE_CORRECTION {Correction approved} REJECT_CORRECTION {Correction rejected} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} other {Unknown}}","{status, select, CREATE {Déclaration commencée} NOTIFY {Envoyé incomplet} VALIDATE {Envoyé pour approbation} DRAFT {Brouillon} DECLARE {Envoyé pour révision} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVE {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} REQUEST_CORRECTION {Correction demandée} APPROVE_CORRECTION {Correction approuvée} REJECT_CORRECTION {Correction rejetée} READ {Consulté} ASSIGN {Attribué} UNASSIGN {Désattribué} other {Inconnu}}"
+v2.events.history.status,Events status history,"{status, select, CREATE {Declaration started} NOTIFY {Notified} VALIDATE {Sent for approval} DRAFT {Draft} DECLARE {Sent for review} REGISTER {Registered} PRINT_CERTIFICATE {Certified} REJECT {Rejected} ARCHIVE {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} CORRECTED {Record corrected} REQUEST_CORRECTION {Correction requested} APPROVE_CORRECTION {Correction approved} REJECT_CORRECTION {Correction rejected} READ {Viewed} ASSIGN {Assigned} UNASSIGN {Unassigned} other {Unknown}}","{status, select, CREATE {Déclaration commencée} NOTIFY {Envoyé incomplet} VALIDATE {Envoyé pour approbation} DRAFT {Brouillon} DECLARE {Envoyé pour révision} REGISTER {Enregistré} PRINT_CERTIFICATE {Certifié} REJECT {Rejeté} ARCHIVE {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} CORRECTED {Record corrected} REQUEST_CORRECTION {Correction requested} APPROVE_CORRECTION {Correction approved} REJECT_CORRECTION {Correction rejected} READ {Consulté} ASSIGN {Attribué} UNASSIGN {Désattribué} other {Inconnu}}"
 v2.events.outbox.processingAction,Message in outbox when processing action,"{action, select, DECLARE {Sending} REGISTER {Registering} VALIDATE {Sending for approval} NOTIFY {Sending} REJECT {Sending for updates} ARCHIVE {Archiving} PRINT_CERTIFICATE {Certifying} REQUEST_CORRECTION {Requesting correction} APPROVE_CORRECTION {Approving correction} REJECT_CORRECTION {Rejecting correction} ASSIGN {Assigning} UNASSIGN {Unassigning} other {processing action}}","{action, select, DECLARE {Envoi} REGISTER {Enregistrement} VALIDATE {Envoi pour approbation} NOTIFY {Envoi} REJECT {Envoi pour mise à jour} ARCHIVE {Archivage} PRINT_CERTIFICATE {Certification} REQUEST_CORRECTION {Demande de correction} APPROVE_CORRECTION {Approbation de la correction} REJECT_CORRECTION {Rejet de la correction} ASSIGN {Attribution} UNASSIGN {Désattribution} other {action en cours}}"
 v2.events.outbox.waitingForAction,Message in outbox when waiting for action,"Waiting to {action, select, DECLARE {send} REGISTER {register} VALIDATE {send for approval} NOTIFY {send} REJECT {send for updates} ARCHIVE {archive} PRINT_CERTIFICATE {certify} REQUEST_CORRECTION {request correction} APPROVE_CORRECTION {approve correction} REJECT_CORRECTION {reject correction} ASSIGN {assign} UNASSIGN {unassign} other {action}}","En attente de {action, select, DECLARE {l'envoi} REGISTER {l'enregistrement} VALIDATE {l'envoi pour approbation} NOTIFY {l'envoi} REJECT {l'envoi pour mise à jour} ARCHIVE {l'archivage} PRINT_CERTIFICATE {la certification} REQUEST_CORRECTION {la demande de correction} APPROVE_CORRECTION {l'approbation de la correction} REJECT_CORRECTION {le rejet de la correction} ASSIGN {l'attribution} UNASSIGN {la désattribution} other {l'action}}"
+v2.events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} NOTIFIED {In progress} other {Unknown}}","{status, select, OUTBOX {Synchronisation..} CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Nécessite une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} NOTIFIED {En cours} other {Inconnu}}"
 v2.events.status,Dynamic event status,"{status, select, OUTBOX {Syncing..} CREATED {Draft} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Rejected} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} NOTIFIED {In progress} other {Unknown}}","{status, select, OUTBOX {Synchronisation..} CREATED {Brouillon} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Nécessite une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} NOTIFIED {En cours} other {Inconnu}}"
 v2.exitModal.cancel, Modal cancel button,Cancel,Annuler
 v2.exitModal.exitWithoutSaving,exitmodal without saving label,Exit without saving changes?,Quitter sans enregistrer les modifications?
@@ -2852,6 +2868,8 @@ v2.form.section.mother.title,Form section title for mothers details,Mother's det
 v2.home.header.searchTool.placeholder,Search tool placeholder,"Search for a tracking ID, name, registration number, national ID, phone number or email","Rechercher un identifiant de suivi, un nom, un numéro d'enregistrement, un numéro d'identité nationale, un numéro de téléphone ou une adresse e-mail"
 v2.messages.emptyString,Empty string, ,
 v2.modal.approveCorrection,The title for approve correction modal,Approve correction?,Approuver la correction ?
+v2.modal.approveCorrection,The title for approve correction modal,Approve correction?,Approuver la correction ?
+v2.modal.rejectCorrection,The title for reject correction modal,Reject correction?,Rejeter la correction ?
 v2.modal.rejectCorrection,The title for reject correction modal,Reject correction?,Rejeter la correction ?
 v2.navigation.CREATED,In progress label in navigation,In progress,En cours
 v2.navigation.DECLARED,Ready for review label in navigation,Ready for review,Prêt pour l'examen
@@ -2866,6 +2884,7 @@ v2.print.certificate.review.printModalTitle,Print certificate modal title text,P
 v2.print.certificate.toast.message,Floating Toast message upon certificate ready to print,Certificate is ready to print,Le certificat est prêt à être imprimé
 v2.printAction.description,The description for print action,Please confirm that the informant has reviewed that the information on the certificate is correct and that it is ready to print.,Veuillez confirmer que l'informateur a vérifié que les informations figurant sur le certificat sont correctes et que celui-ci est prêt à être imprimé.
 v2.printAction.title,The title for print action,Print certificate,Imprimer le certificat
+v2.record-corrected.summary.section.title,Corrections section title,Correction(s),Correction(s)
 v2.regHome.issued,Label for workqueue tooltip,Empty message,Empty message
 v2.register.eventInfo.birth.title,Event information title for the birth,Introduce the birth registration process to the informant,Présenter la procédure d'enregistrement des naissances à l'informateur
 v2.register.form.modal.desc.deleteDeclarationConfirm,Description for delete declaration confirmation modal,Are you sure you want to delete this declaration?,Êtes-vous sûr de vouloir supprimer cette déclaration ?
@@ -2935,7 +2954,6 @@ v2.validateAction.description,The description for validate action,The informant 
 v2.validateAction.incompleteForm,The description for warning of incomplete form,Please add mandatory information before sending for approval,Veuillez ajouter les informations obligatoires avant d'envoyer pour approbation.
 v2.validateAction.title,The title for validate action,Send for approval,Envoyer pour approbation
 v2.verified,This is the label for the verification field,Verified,Vérifié
-v2.view.record,Label for view record,View record,Afficher l'enregistrement
 v2.workqueues.dateOfEvent,Label for workqueue column: dateOfEvent,Date of Event,
 v2.workqueues.draft.title,Title of draft workqueue,My drafts,Mes brouillons
 v2.workqueues.outbox.title,Title of outbox workqueue,Outbox,Boîte d'envoi
@@ -3016,6 +3034,7 @@ views.idVerification.banner.authenticated.description,,"This identity has been s
 views.idVerification.banner.authenticated.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Authenticated status and unlock the fields for editing.","En cliquant sur «Continuer», vous supprimerez l'état authentifié de l'ID et déverrouillez les champs pour l'édition."
 views.idVerification.banner.authenticated.resetConfirmation.title,,Revoke authenticated ID?,Révoquer une pièce d'identité authentifiée?
 views.idVerification.banner.authenticated.title,,ID Authenticated,ID authentifié
+views.idVerification.banner.failed.description,,The identity data does not match an entry in Farajaland's National ID System,Les données d'identité ne correspondent pas à une entrée du système national d'identification du Farajaland.
 views.idVerification.banner.failed.description,,The identity data does not match an entry in Farajaland's National ID System,Les données d'identité ne correspondent pas à une entrée du système national d'identification du Farajaland.
 views.idVerification.banner.failed.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll clear all information to it’s default state.","En cliquant sur «Continuer», vous effacerez toutes les informations de son état par défaut."
 views.idVerification.banner.failed.resetConfirmation.title,,Reset information?,Réinitialiser les informations?
