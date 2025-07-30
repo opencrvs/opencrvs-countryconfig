@@ -2322,7 +2322,7 @@ userSetup.type.healthSystem,The description for health system type,Health System
 userSetup.type.hospital,The description for HOSPITAL type,Hospital,Hôpital
 userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
-v2-events.buttons.makeCorrection,Submit correction request button text,Record corrected,Record corrected
+v2-events.buttons.makeCorrection,Rectord correction button text,Correct record,Correct record
 v2-events.buttons.submitCorrectionRequest,Submit correction request button text,Submit correction request,
 v2-events.correction.correctionRequest,Correction request text,Correction request,Demande de correction
 v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
