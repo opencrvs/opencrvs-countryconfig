@@ -6,7 +6,7 @@ import {
   createDeclaration,
   Declaration
 } from '../v2-test-data/birth-declaration'
-import { ensureAssigned, expectInUrl, selectAction } from '../../v2-utils'
+import { ensureAssigned, expectInUrl, selectAction, type } from '../../v2-utils'
 import {
   formatV2ChildName,
   REQUIRED_VALIDATION_ERROR
@@ -177,7 +177,7 @@ test.describe.serial('Birth correction flow', () => {
       .getByTestId('text__child____reason')
       .fill(reasonForDelayedRegistration)
 
-    await page.getByTestId('text__firstname').fill(newFirstName)
+    await type(page, '#firstname', newFirstName)
     await page.getByRole('button', { name: 'Back to review' }).click()
     await expect(page.getByRole('button', { name: 'Continue' })).toBeEnabled()
   })
