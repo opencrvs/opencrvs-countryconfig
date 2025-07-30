@@ -408,7 +408,7 @@ export const Workqueues = defineWorkqueues([
     },
     query: {
       flags: {
-        noneOf: [InherentFlags.PRINTED, InherentFlags.CORRECTION_REQUESTED]
+        anyOf: [InherentFlags.PENDING_CERTIFICATION]
       },
       status: { type: 'exact', term: 'REGISTERED' },
       updatedAtLocation: { type: 'exact', term: user('primaryOfficeId') }
