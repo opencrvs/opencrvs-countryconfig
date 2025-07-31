@@ -227,12 +227,20 @@ test.describe.serial('Birth Record correction flow', () => {
     ).toBeVisible()
 
     await page.getByRole('button', { name: 'Confirm', exact: true }).click()
+
     await expectInUrl(page, `/events/overview/${eventId}`)
+
+    await page.waitForResponse((response) =>
+      response
+        .url()
+        .includes('/api/events/event.actions.correction.approve.request')
+    )
   })
 
-  // @TODO: after the bug is fixed, we can remove the skip
-  test.skip('Record correction action appears in audit history', async () => {
+  test('Record correction action appears in audit history', async () => {
+    await page.reload()
     await ensureAssigned(page)
+
     // Go to second page of audit history list
     await page.getByRole('button', { name: 'Next page' }).click()
     await expect(
@@ -240,7 +248,7 @@ test.describe.serial('Birth Record correction flow', () => {
     ).toBeVisible()
   })
 
-  test.skip('Record Correction audit history modal opens when action is clicked', async () => {
+  test('Record Correction audit history modal opens when action is clicked', async () => {
     await page
       .getByRole('button', { name: 'Record corrected', exact: true })
       .click()
