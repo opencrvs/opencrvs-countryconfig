@@ -20,6 +20,7 @@ import {
   formatV2ChildName,
   REQUIRED_VALIDATION_ERROR
 } from '../v2-birth/helpers'
+import { getMixedPath } from '@opencrvs/toolkit/events'
 
 test.describe('10. Correct record', () => {
   let declaration: Declaration
@@ -582,7 +583,7 @@ test.describe('10. Correct record', () => {
       })
     })
 
-    test.describe.skip('10.1.6 Correction Approval', async () => {
+    test.describe('10.1.6 Correction Approval', async () => {
       test.beforeAll(async ({ browser }) => {
         await page.close()
         page = await browser.newPage()
@@ -604,22 +605,32 @@ test.describe('10. Correct record', () => {
       test('10.1.6.2 Correction review', async () => {
         await selectAction(page, 'Review correction request')
 
+        await expect(page.getByText('Requester' + 'Someone else')).toBeVisible()
         await expect(
-          page.getByText('Requester' + 'Informant (Mother)')
+          page
+            .locator('#listTable-undefined')
+            .getByText('Type of ID' + 'National ID')
+        ).toBeVisible()
+
+        await expect(page.getByText('ID number' + nationalId)).toBeVisible()
+        await expect(
+          page.getByText('Name' + `${name.firstname} ${name.surname}`)
         ).toBeVisible()
 
         await expect(
-          page.getByText(
-            'Reason for correction' +
-              'Myself or an agent made a mistake (Clerical error)'
-          )
+          page.getByText('Relationship to child' + relationship)
         ).toBeVisible()
+
+        await expect(
+          page.getByText('Reason for correction' + 'Other')
+        ).toBeVisible()
+
+        await expect(page.getByText('Specify reason' + reason)).toBeVisible()
 
         await expect(page.getByText('Fee total' + '$' + fee)).toBeVisible()
       })
 
       test('10.1.6.3 Approve correction', async () => {
-        await page.getByRole('button', { name: 'Approve', exact: true }).click()
         await page.getByRole('button', { name: 'Approve', exact: true }).click()
         await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
@@ -655,14 +666,28 @@ test.describe('10. Correct record', () => {
             .click()
 
           await expect(
-            page.getByText('Requester' + 'Informant (Mother)')
+            page.getByText('Requester' + 'Someone else')
+          ).toBeVisible()
+          await expect(
+            page
+              .locator('#listTable-undefined')
+              .getByText('Type of ID' + 'National ID')
+          ).toBeVisible()
+
+          await expect(page.getByText('ID number' + nationalId)).toBeVisible()
+          await expect(
+            page.getByText('Name' + `${name.firstname} ${name.surname}`)
           ).toBeVisible()
 
           await expect(
-            page.getByText(
-              'Reason for correctionMyself or an agent made a mistake (Clerical error)'
-            )
+            page.getByText('Relationship to child' + relationship)
           ).toBeVisible()
+
+          await expect(
+            page.getByText('Reason for correction' + 'Other')
+          ).toBeVisible()
+
+          await expect(page.getByText('Specify reason' + reason)).toBeVisible()
 
           await expect(page.getByText('Fee total' + '$' + fee)).toBeVisible()
 
@@ -671,7 +696,7 @@ test.describe('10. Correct record', () => {
               .locator('#listTable-corrections-table-child')
               .getByText(
                 "Child's name" +
-                  `${declaration['child.name'].firstname} ${declaration['child.name'].surname}` +
+                  `${getMixedPath(declaration, 'child.name.firstname')} ${getMixedPath(declaration, 'child.name.surname')}` +
                   formatName(updatedChildDetails)
               )
           ).toBeVisible()
