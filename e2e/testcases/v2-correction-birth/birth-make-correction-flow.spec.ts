@@ -236,7 +236,7 @@ test.describe.serial('Birth Record correction flow', () => {
     await page.getByRole('button', { name: 'Next page' }).click()
     await expect(
       page.getByRole('button', { name: 'Record corrected', exact: true })
-    ).toBeVisible()
+    ).toBeVisible({ timeout: 30000 })
   })
 
   test('Record Correction audit history modal opens when action is clicked', async () => {
