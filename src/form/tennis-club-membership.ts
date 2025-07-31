@@ -97,7 +97,15 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
                 id: 'v2.error.invalidName'
               }
             }
-          ]
+          ],
+          configuration: {
+            nameConfig: {
+              firstname: 'MANDATORY',
+              middlename: 'OPTIONAL',
+              surname: 'MANDATORY'
+            },
+            maxLength: MAX_NAME_LENGTH
+          }
         },
         {
           id: 'applicant.dob',
