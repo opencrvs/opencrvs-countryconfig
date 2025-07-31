@@ -193,7 +193,7 @@ REMOTE_DIR="$REMOTE_DIR/${LABEL:-$BACKUP_DATE}"
 # ---------------------------------------------------------------------------------------------
 dbs=(
   'hearth-dev'
-  'events',
+  'events'
   'user-mgnt'
   'application-config'
   'metrics'

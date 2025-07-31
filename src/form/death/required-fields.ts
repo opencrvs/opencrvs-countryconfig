@@ -159,7 +159,7 @@ export const getPlaceOfDeathFields = () =>
       previewGroup: 'placeOfDeath',
       required: true,
       initialValue: '',
-      searchableResource: ['facilities'],
+      searchableResource: ['activeFacilities'],
       searchableType: ['HEALTH_FACILITY'],
       dynamicOptions: {
         resource: 'facilities'
