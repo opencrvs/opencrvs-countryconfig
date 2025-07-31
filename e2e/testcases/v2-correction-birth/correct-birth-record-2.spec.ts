@@ -211,19 +211,22 @@ test.describe.serial('Correct record - 2', () => {
   test('2.7 Correction summary', async () => {
     await page.getByRole('button', { name: 'Continue' }).click()
 
-    await expect(page.getByText('RequesterFather')).toBeVisible()
+    await expect(page.getByText('Requester' + 'Father')).toBeVisible()
     await expect(
       page.getByText(
-        'Reason for correctionInformant provided incorrect information (Material error)'
+        'Reason for correction' +
+          'Informant provided incorrect information (Material error)'
       )
     ).toBeVisible()
 
     await expect(
-      page.getByText('Place of deliveryHealth InstitutionResidential address')
+      page.getByText(
+        'Place of delivery' + 'Health Institution' + 'Residential address'
+      )
     ).toBeVisible()
 
     await expect(
-      page.getByText('Relationship to childMotherBrother')
+      page.getByText('Relationship to child' + 'Mother' + 'Brother')
     ).toBeVisible()
 
     await page
@@ -268,7 +271,7 @@ test.describe.serial('Correct record - 2', () => {
       await expect(
         page
           .locator('#listTable-corrections-table-informant')
-          .getByText('Relationship to childMotherBrother')
+          .getByText('Relationship to child' + 'Mother' + 'Brother')
       ).toBeVisible()
 
       await expect(
@@ -332,11 +335,12 @@ test.describe.serial('Correct record - 2', () => {
           .getByRole('button', { name: 'Correction requested', exact: true })
           .click()
 
-        await expect(page.getByText('RequesterFather')).toBeVisible()
+        await expect(page.getByText('Requester' + 'Father')).toBeVisible()
 
         await expect(
           page.getByText(
-            'Reason for correctionInformant provided incorrect information (Material error)'
+            'Reason for correction' +
+              'Informant provided incorrect information (Material error)'
           )
         ).toBeVisible()
 
@@ -349,7 +353,7 @@ test.describe.serial('Correct record - 2', () => {
         ).toBeVisible()
 
         await expect(
-          page.getByText('Relationship to childMotherBrother')
+          page.getByText('Relationship to child' + 'Mother' + 'Brother')
         ).toBeVisible()
 
         await expect(

@@ -754,7 +754,8 @@ test.describe('1. Correct record - 1', () => {
 
           await expect(
             page.getByText(
-              'Reason for correctionMyself or an agent made a mistake (Clerical error)'
+              'Reason for correction' +
+                'Myself or an agent made a mistake (Clerical error)'
             )
           ).toBeVisible()
 
