@@ -2557,7 +2557,7 @@ v2.error.hidden,"Error message when field is hidden or disabled, but a value was
 v2.error.invalidDate,Error message when date field is invalid,Invalid date field,Champ de date invalide
 v2.error.invalidEmail,Error message when email address is invalid,Invalid email address,Doit être une adresse électronique valide
 v2.error.invalidInput,Error message when generic field is invalid,Invalid input,Entrée invalide
-v2.error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-), des apostrophes (') et des traits de soulignement (_)"
+v2.error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-) and apostrophes(')","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-) et des apostrophes (')"
 v2.error.required,Error message when required field is missing,Required,Requis
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
 v2.errors.notAssigned,User not assigned error toast message,You've been unassigned from the event,Vous avez été désassigné de l'événement
