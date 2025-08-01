@@ -2324,6 +2324,7 @@ userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
 v2-events.buttons.makeCorrection,Rectord correction button text,Correct record,Correct record
 v2-events.buttons.submitCorrectionRequest,Submit correction request button text,Submit correction request,
+v2-events.correction.correctionReject.reason,Correction request rejection reason,Reason for rejection,Motif du rejet
 v2-events.correction.correctionRequest,Correction request text,Correction request,Demande de correction
 v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
 v2.action.view.record,Label for view record,View,Afficher
@@ -2582,6 +2583,7 @@ v2.event.action.declare.form.section.person.field.address.residentialArea.label,
 v2.event.action.declare.form.section.person.field.address.street.label,This is the label for the field,Street,Rue / Numéro de parcelle
 v2.event.action.declare.form.section.person.field.address.town.label,This is the label for the field,Town,Ville
 v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
+v2.event.action.review-correction.label,Label for review correction button in dropdown menu,Review,Revoir
 v2.event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 v2.event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 v2.event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
@@ -2681,7 +2683,7 @@ v2.event.summary.event.value,Value for the event field,{eventLabel},{eventLabel}
 v2.event.summary.registrationNumber.empty,No registration number message,No registration number,Aucun numéro d'inscription
 v2.event.summary.registrationNumber.label,Label for the registration number field,Registration Number,Numéro d'inscription
 v2.event.summary.registrationNumber.value,Value for the registration number field,{event.registrationNumber},{event.registrationNumber}
-v2.event.summary.review-correction-request.label,This is shown as the action name anywhere the user can trigger the action from,Review correction request,Revoir la demande de correction
+v2.event.summary.review-correction-request.label,This is shown as the action name anywhere the user can trigger the action from,Review,Examen
 v2.event.summary.status.label,Label for the status field,Status,Statut
 v2.event.summary.status.value,Value for the status field,"{event.status, select, CREATED {Draft} NOTIFIED {Incomplete} VALIDATED {Validated} DRAFT {Draft} DECLARED {Declared} REGISTERED {Registered} CERTIFIED {Certified} REJECTED {Requires update} ARCHIVED {Archived} MARKED_AS_DUPLICATE {Marked as a duplicate} other {Unknown}}","{event.status, select, CREATED {Brouillon} NOTIFIED {Incomplet} VALIDATED {Validé} DRAFT {Brouillon} DECLARED {Déclaré} REGISTERED {Enregistré} CERTIFIED {Certifié} REJECTED {Requiert une mise à jour} ARCHIVED {Archivé} MARKED_AS_DUPLICATE {Marqué comme doublon} other {Inconnu}}"
 v2.event.summary.trackingId.empty,Message when tracking ID is empty,No tracking ID,Aucun ID de suivi
