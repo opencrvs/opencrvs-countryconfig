@@ -99,10 +99,10 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             }
           ],
           configuration: {
-            nameConfig: {
-              firstname: 'MANDATORY',
-              middlename: 'OPTIONAL',
-              surname: 'MANDATORY'
+            name: {
+              firstname: { required: true },
+              middlename: { required: false },
+              surname: { required: true }
             },
             maxLength: MAX_NAME_LENGTH
           }
