@@ -2583,6 +2583,7 @@ v2.event.action.declare.form.section.person.field.address.residentialArea.label,
 v2.event.action.declare.form.section.person.field.address.street.label,This is the label for the field,Street,Rue / Numéro de parcelle
 v2.event.action.declare.form.section.person.field.address.town.label,This is the label for the field,Town,Ville
 v2.event.action.declare.form.section.person.field.address.zipCode.label,This is the label for the field,Postcode / Zip,Code postal / Zip
+v2.event.action.review-correction.label,Label for review correction button in dropdown menu,Review,Revoir
 v2.event.birth.action.certificate.form.section.collectPayment.data.label,Title for the data section,Payment details,Détails du paiement
 v2.event.birth.action.certificate.form.section.collectPayment.fee.label,Title for the data entry,Fee,Frais
 v2.event.birth.action.certificate.form.section.collectPayment.service.label,Title for the data entry,Service,Service
