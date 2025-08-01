@@ -2324,7 +2324,7 @@ userSetup.type.system,The description for system type,System,Système
 userSetup.waiting,The message that displays when the user is waiting for the account to be created,Setting up your account,Configuration de votre compte
 v2-events.buttons.makeCorrection,Rectord correction button text,Correct record,Correct record
 v2-events.buttons.submitCorrectionRequest,Submit correction request button text,Submit correction request,
-v2-events.correction.correctionReject.reason,Correction request rejection reason,Reason,Raison
+v2-events.correction.correctionReject.reason,Correction request rejection reason,Reason for rejection,Motif du rejet
 v2-events.correction.correctionRequest,Correction request text,Correction request,Demande de correction
 v2.action.correct,Label for correct record button in dropdown menu,Correct Record,Corriger l'enregistrement
 v2.action.view.record,Label for view record,View,Afficher
