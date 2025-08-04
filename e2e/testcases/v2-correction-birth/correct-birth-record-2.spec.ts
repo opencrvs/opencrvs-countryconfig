@@ -237,7 +237,7 @@ test.describe.serial('Correct record - 2', () => {
     await expectInUrl(page, `/events/overview/${eventId}`)
   })
 
-  test.describe('2.8 Correction Approval', async () => {
+  test.describe('2.8 Correction Review', async () => {
     test.beforeAll(async ({ browser }) => {
       await page.close()
       page = await browser.newPage()
@@ -256,8 +256,8 @@ test.describe.serial('Correct record - 2', () => {
         .click()
     })
 
-    test('2.8.2 Correction review', async () => {
-      await selectAction(page, 'Review correction request')
+    test('2.8.2 Correction review page', async () => {
+      await selectAction(page, 'Review')
       await expect(page.getByText('Requester' + 'Father')).toBeVisible()
       await expect(
         page.getByText(
@@ -309,7 +309,11 @@ test.describe.serial('Correct record - 2', () => {
 
     test('2.8.3 Reject correction', async () => {
       await page.getByRole('button', { name: 'Reject', exact: true }).click()
-      // @TODO: After the reason input to modal is added, we want to fill the reason and confirm the modal
+      await expect(
+        page.getByRole('button', { name: 'Confirm', exact: true })
+      ).toBeDisabled()
+
+      await page.locator('#reject-correction-reason').fill('No legal proof')
       await page.getByRole('button', { name: 'Confirm', exact: true }).click()
 
       await expectInUrl(page, `/events/overview/${eventId}`)
@@ -371,7 +375,7 @@ test.describe.serial('Correct record - 2', () => {
           .getByRole('button', { name: 'Correction rejected', exact: true })
           .click()
 
-        // @TODO: After the reason input to modal is added, we want to assert that reason is shown here
+        await expect(page.getByText('Reason' + 'No legal proof')).toBeVisible()
 
         await page.locator('#close-btn').click()
       })

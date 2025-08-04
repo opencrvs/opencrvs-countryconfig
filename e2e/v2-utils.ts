@@ -16,7 +16,6 @@ export async function selectAction(
     | 'Unassign'
     | 'Delete'
     | 'Correct record'
-    | 'Review correction request'
     | 'View'
 ) {
   if (

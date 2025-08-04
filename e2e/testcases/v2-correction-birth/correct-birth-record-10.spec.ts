@@ -603,7 +603,7 @@ test.describe('10. Correct record', () => {
       })
 
       test('10.1.6.2 Correction review', async () => {
-        await selectAction(page, 'Review correction request')
+        await selectAction(page, 'Review')
 
         await expect(page.getByText('Requester' + 'Someone else')).toBeVisible()
         await expect(
