@@ -103,6 +103,8 @@ export async function getDeclaration({
     'mother.dob': '1995-09-12',
     'mother.nationality': 'FAR',
     'mother.idType': 'NATIONAL_ID',
+    'mother.educationalAttainment': 'NO_SCHOOLING',
+    'mother.maritalStatus': 'MARRIED',
     'mother.nid': faker.string.numeric(10),
     'mother.address': {
       country: 'FAR',
