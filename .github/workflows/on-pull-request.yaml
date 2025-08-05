@@ -81,6 +81,7 @@ jobs:
 
       - if: steps.merge.outcome == 'failure'
         name: Handle merge conflicts and push opencrvs-farajaland/sync-with-${{ github.event.pull_request.base.ref }}
+        continue-on-error: true
         run: |
           git merge --abort
           git checkout upstream/${BASE_BRANCH}

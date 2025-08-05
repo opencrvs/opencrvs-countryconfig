@@ -39,7 +39,7 @@ print_usage_and_exit() {
   echo 'Usage: ./restore.sh --replicas=XXX'
   echo "This script CLEARS ALL DATA and RESTORES A SPECIFIC DAY'S or label's data. This process is irreversible, so USE WITH CAUTION."
   echo "Script must receive a label parameter to restore data from that specific day in format +%Y-%m-%d i.e. 2019-01-01 or that label"
-  echo "The Hearth, Events, OpenHIM User and Application-config db backup zips you would like to restore from: hearth-dev-{label}.gz, events-{label}.gz, openhim-dev-{label}.gz, user-mgnt-{label}.gz and  application-config-{label}.gz must exist in /data/backups/mongo/ folder"
+  echo "The Hearth, Events and Application-config db backup zips you would like to restore from: hearth-dev-{label}.gz, events-{label}.gz, user-mgnt-{label}.gz and  application-config-{label}.gz must exist in /data/backups/mongo/ folder"
   echo "The Elasticsearch backup folder /data/backups/elasticsearch must exist with all previous snapshots and indices. All files are required"
   echo "The InfluxDB backup files must exist in the /data/backups/influxdb/{label} folder"
   echo ""
@@ -173,18 +173,27 @@ mkdir -p $ROOT_PATH/vsexport
 # ------ MONGODB -------
 ##
 
-# Delete all data from Hearth, Events, OpenHIM, User and Application-config and any other service related Mongo databases
+# Delete all data from Hearth, Events, User and Application-config and any other service related Mongo databases
 #-----------------------------------------------------------------------------------
 
 docker run --rm --network=$NETWORK mongo:4.4 mongo $(mongo_credentials) --host $HOST --eval "\
 db.getSiblingDB('hearth-dev').dropDatabase();\
 db.getSiblingDB('events').dropDatabase();\
-db.getSiblingDB('openhim-dev').dropDatabase();\
 db.getSiblingDB('user-mgnt').dropDatabase();\
 db.getSiblingDB('application-config').dropDatabase();\
 db.getSiblingDB('metrics').dropDatabase();\
 db.getSiblingDB('performance').dropDatabase();\
 db.getSiblingDB('webhooks').dropDatabase();"
+
+##
+# ------ POSTGRESQL -------
+##
+
+docker run --rm \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
+  --network=$NETWORK \
+  postgres:17 \
+  bash -c "psql -h postgres -U $POSTGRES_USER -c 'DROP DATABASE IF EXISTS events;'"
 
 #####
 #
@@ -200,13 +209,24 @@ db.getSiblingDB('webhooks').dropDatabase();"
 # ------ MONGODB -------
 ##
 
-# Restore all data from a backup into Hearth, Events, OpenHIM, User, Application-config and any other service related Mongo databases
+# Restore all data from a backup into Hearth, Events, User, Application-config and any other service related Mongo databases
 #--------------------------------------------------------------------------------------------------
 docker run --rm -v $ROOT_PATH/backups/mongo:/data/backups/mongo --network=$NETWORK mongo:4.4 bash \
--c "for db in hearth-dev events openhim-dev user-mgnt application-config metrics webhooks performance; \
+-c "for db in hearth-dev events user-mgnt application-config metrics webhooks performance; \
       do mongorestore $(mongo_credentials) --host $HOST --drop --gzip --archive=/data/backups/mongo/\${db}-$LABEL.gz; \
     done"
 
+##
+# ------ POSTGRESQL -------
+##
+
+echo "Restoring PostgreSQL 'events' database"
+docker run --rm \
+  -e PGPASSWORD=$POSTGRES_PASSWORD \
+  -v $ROOT_PATH/backups/postgres:/backups \
+  --network=$NETWORK \
+  postgres:17 \
+  bash -c "createdb -h postgres -U $POSTGRES_USER events && pg_restore -h postgres -U $POSTGRES_USER -d events /backups/events-${LABEL}.dump"
 
 ##
 # ------ ELASTICSEARCH -----

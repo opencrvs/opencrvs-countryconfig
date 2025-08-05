@@ -1,13 +1,13 @@
 {
   "name": "@opencrvs/countryconfig",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "OpenCRVS country configuration for reference data",
   "os": [
     "darwin",
     "linux"
   ],
   "engines": {
-    "node": "18.x.x"
+    "node": "22.x.x"
   },
   "license": "MPL-2.0",
   "husky": {
@@ -28,6 +28,7 @@
     "snapshot": "bash infrastructure/backups/backup.sh",
     "port-forward": "bash infrastructure/port-forward.sh",
     "environment:init": "ts-node infrastructure/environments/setup-environment.ts",
+    "environment:upgrade": "yarn environment:init",
     "sort-translations": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/sort-translations.ts"
   },
   "devDependencies": {
@@ -66,7 +67,7 @@
     "@hapi/hapi": "^20.0.1",
     "@hapi/inert": "^6.0.3",
     "@opencrvs/mosip": "^1.8.0",
-    "@opencrvs/toolkit": "1.8.0-rc.5169255",
+    "@opencrvs/toolkit": "1.8.1-rc.d31fe05",
     "@types/chalk": "^2.2.0",
     "@types/csv2json": "^1.4.0",
     "@types/fhir": "^0.0.37",

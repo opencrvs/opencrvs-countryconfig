@@ -8,7 +8,8 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { field, defineFormConditional } from '@opencrvs/toolkit/conditionals'
+import { defineFormConditional } from '@opencrvs/toolkit/conditionals'
+import { field } from '@opencrvs/toolkit/events'
 
 export const MAX_NAME_LENGTH = 32
 
@@ -19,7 +20,10 @@ export const invalidNameValidator = (fieldName: string) => ({
     description: 'This is the error message for invalid name',
     id: 'v2.error.invalidName'
   },
-  validator: field(fieldName).isValidEnglishName()
+  validator: field(fieldName).object({
+    firstname: field('firstname').isValidEnglishName(),
+    surname: field('surname').isValidEnglishName()
+  })
 })
 
 export const nationalIdValidator = (fieldId: string) => ({
