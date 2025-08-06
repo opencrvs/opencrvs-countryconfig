@@ -11,7 +11,7 @@
 
 import { Event } from '@countryconfig/form/types/types'
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import { event } from '@opencrvs/toolkit/conditionals'
+import { ActionType, event, field } from '@opencrvs/toolkit/events'
 
 type FontFamilyTypes = {
   normal: string
@@ -104,7 +104,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         {
           type: 'SHOW',
           // Show only if original certificate was printed
-          conditional: event.printActions().minCount(1)
+          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
         }
       ]
     },
@@ -184,7 +184,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         {
           type: 'SHOW',
           // Show only if original certificate was printed
-          conditional: event.printActions().minCount(1)
+          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(1)
         }
       ]
     },
@@ -259,7 +259,13 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
           italics: '/api/countryconfig/fonts/LibreBaskerville-Italic.ttf',
           bolditalics: '/api/countryconfig/fonts/LibreBaskerville-Regular.ttf'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: 'SHOW',
+          conditional: field('child.dob').isAfter().days(365).inPast()
+        }
+      ]
     },
     {
       id: 'v2.birth-certified-certificate',
@@ -289,7 +295,10 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         {
           type: 'SHOW',
           // Show only after the standard birth certificate has been printed at least twice
-          conditional: event.printActions('v2.birth-certificate').minCount(2)
+          conditional: event
+            .hasAction(ActionType.PRINT_CERTIFICATE)
+            .withTemplate('v2.birth-certificate')
+            .minCount(2)
         }
       ]
     },
@@ -321,7 +330,7 @@ export async function certificateHandler(request: Request, h: ResponseToolkit) {
         {
           type: 'SHOW',
           // Show only for registered events
-          conditional: event.printActions().minCount(0)
+          conditional: event.hasAction(ActionType.PRINT_CERTIFICATE).minCount(0)
         }
       ]
     },
