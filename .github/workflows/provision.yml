@@ -171,7 +171,7 @@ jobs:
             echo "Your inventory contains configuration for either a backup target or backup source."
             echo "If you are upgrading OpenCRVS, please start by running environment creator script for the backup server"
             echo ""
-            echo "yarn environment:init"
+            echo "pnpm environment:init"
             echo ""
             echo "And after that, run this provisioning pipeline again but first to your backup server"
             echo "After that you can proceed with (re)provisioning your staging and production servers."
