@@ -53,7 +53,7 @@ export async function loginToV2(
   }
 
   // Navigate to the v2 client
-  // await page.goto(CLIENT_V2_URL)
+  await page.goto(CLIENT_V2_URL)
 
   return token
 }
@@ -305,6 +305,9 @@ export const formatDateTo_yyyyMMdd = (date: string) =>
 export const formatDateTo_ddMMMMyyyy = (date: string) =>
   format(parseISO(date), 'dd MMMM yyyy')
 
+export const formatDateTo_dMMMMyyyy = (date: string) =>
+  format(parseISO(date), 'd MMMM yyyy')
+
 /*
   Date() object takes 0-indexed month,
   but month coming to the method is 1-indexed
@@ -442,7 +445,7 @@ type ActionMenuOptions =
   | 'Review declaration'
   | 'Update declaration'
   | 'Review correction request'
-  | 'View record'
+  | 'View'
   | 'Validate'
   | 'Review'
 
