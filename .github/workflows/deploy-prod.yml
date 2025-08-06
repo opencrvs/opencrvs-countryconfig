@@ -150,7 +150,7 @@ jobs:
         id: deploy
         working-directory: ${{ github.event.repository.name }}
         run: |
-          yarn deploy \
+          pnpm run deploy \
           --clear_data=no \
           --environment=${{ inputs.environment }} \
           --host=${{ vars.DOMAIN }} \

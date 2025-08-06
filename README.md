@@ -33,7 +33,7 @@ This module also provides a logical location where you may wish to store the cod
 
 **If you successfully ran the `bash setup.sh` script in OpenCRVS Core you already have this module checked out, the dependencies are installed, the Farajaland database is populated and you can just run the following command.** 
 
-2. `yarn dev`
+2. `pnpm dev`
 
 Thats it! 🎉
 
