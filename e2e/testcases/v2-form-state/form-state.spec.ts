@@ -51,6 +51,9 @@ test.describe('Form state', () => {
     })
 
     test('Form states and annotations are not persisted', async () => {
+      //@todo: The user should be navigated to "my-drafts" tab by default
+      await page.getByText('My drafts').click()
+
       await expect(
         page.getByRole('button', { name: childName, exact: true })
       ).toBeVisible()
