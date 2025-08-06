@@ -189,7 +189,7 @@ async function upgradeRolesDefinitions() {
   })
 
   const rolesWithGeneratedIds = roles.map((role) => ({
-    id: snakeCase(role.label_en).toUpperCase(),
+    id: snakeCase(role.label_en.replace(/[^a-zA-Z0-9 ]/g, '')).toUpperCase(),
     label: {
       defaultMessage: role.label_en,
       description: `Name for user role ${role.label_en}`,
