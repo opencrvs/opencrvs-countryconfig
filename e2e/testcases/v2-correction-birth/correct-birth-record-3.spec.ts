@@ -30,7 +30,7 @@ import {
 import { format, subYears, differenceInYears, parseISO } from 'date-fns'
 import { formatV2ChildName } from '../v2-birth/helpers'
 import { IdType } from '@countryconfig/form/v2/person'
-import { ensureAssigned, type } from '../../v2-utils'
+import { ensureAssigned, expectInUrl, type } from '../../v2-utils'
 
 test.describe.serial(' Correct record - 3', () => {
   let declaration: DeclarationV2
@@ -199,6 +199,10 @@ test.describe.serial(' Correct record - 3', () => {
       await page.getByRole('button', { name: 'Continue' }).click()
       await page.getByRole('button', { name: 'Yes, print certificate' }).click()
       await page.getByRole('button', { name: 'Print', exact: true }).click()
+
+      // Wait for PDF the load and the page to be redirected to the overview page
+      await page.waitForURL(`**/events/overview/${eventId}`)
+      await expectInUrl(page, `/events/overview/${eventId}`)
     })
 
     test('3.1.2 Ready to issue', async () => {
@@ -945,10 +949,7 @@ test.describe.serial(' Correct record - 3', () => {
       await page.getByText(formatV2ChildName(declaration)).click()
       await ensureAssigned(page)
       await page.getByRole('button', { name: 'Action' }).click()
-      await page
-        .locator('#action-dropdownMenu')
-        .getByText('Review correction request')
-        .click()
+      await page.locator('#action-dropdownMenu').getByText('Review').click()
       await visible(page, 'Correction request')
     })
     test('3.8.2 Correction request summary screen', async () => {
