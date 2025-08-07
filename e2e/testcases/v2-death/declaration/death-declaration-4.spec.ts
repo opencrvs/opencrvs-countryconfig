@@ -26,7 +26,7 @@ test.describe.serial('4. Death declaration case - 4', () => {
   const declaration = {
     deceased: {
       name: {
-        firstname: faker.person.firstName('female') + '_Nolas',
+        firstname: faker.person.firstName('female'),
         surname: faker.person.lastName('female')
       },
       gender: 'Female',

@@ -1743,10 +1743,10 @@
   resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.8.0.tgz#ed0b20d85d69c4a774a7d8e7011d15f94551aba8"
   integrity sha512-5MWQZEAdL0P6OFCYyzI87H73QS3DJsxJnWgZ3eGEtUVXDLOiTA6KupoRxJwjvRVbWScH39P0QVKo1lC+yZTL0A==
 
-"@opencrvs/toolkit@1.8.0-rc.b3f7001":
-  version "1.8.0-rc.b3f7001"
-  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.b3f7001.tgz#73e0a5c21253d2d525f66495a657e540a1372437"
-  integrity sha512-G+MuvgDkRs5Tig0xdzMJQcsq5t7EYtmDfRuKg9AAZlY8KzSDpgXK5IydzfpBawWMdYMnxJCUaIGE8P/K3kqTvA==
+"@opencrvs/toolkit@1.8.0-rc.93e63d3":
+  version "1.8.0-rc.93e63d3"
+  resolved "https://registry.yarnpkg.com/@opencrvs/toolkit/-/toolkit-1.8.0-rc.93e63d3.tgz#5fa37ba039eae06e1f71941b2816812f6ac00912"
+  integrity sha512-f6fG9AWkctFnNvOTP+tzJ1L99Hx8Eeb39L5x3NPYBfYpVEr67/FWB9MlvTBX6BabrkO920WrcVotbkXKC3u5YQ==
   dependencies:
     "@trpc/client" "11.4.3"
     "@trpc/server" "11.4.3"
