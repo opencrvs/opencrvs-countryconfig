@@ -2556,7 +2556,7 @@ v2.error.hidden,"Error message when field is hidden or disabled, but a value was
 v2.error.invalidDate,Error message when date field is invalid,Invalid date field,Champ de date invalide
 v2.error.invalidEmail,Error message when email address is invalid,Invalid email address,Doit être une adresse électronique valide
 v2.error.invalidInput,Error message when generic field is invalid,Invalid input,Entrée invalide
-v2.error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-), apostrophes(') and underscores (_)","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-), des apostrophes (') et des traits de soulignement (_)"
+v2.error.invalidName,This is the error message for invalid name,"Input contains invalid characters. Please use only letters (a-z, A-Z), numbers (0-9), hyphens (-) and apostrophes(')","L'entrée contient des caractères non valides. Veuillez n'utiliser que des lettres (a-z, A-Z), des chiffres (0-9), des traits d'union (-) et des apostrophes (')"
 v2.error.required,Error message when required field is missing,Required,Requis
 v2.error.search,The error message shown when a search query fails,An error occurred while searching,Une erreur s'est produite lors de la recherche
 v2.errors.notAssigned,User not assigned error toast message,You've been unassigned from the event,Vous avez été désassigné de l'événement
@@ -2915,7 +2915,7 @@ v2.saveAndExit.desc.saveDeclarationConfirm,Description for save declaration conf
 v2.saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
 v2.search.advancedSearch.result.title,Advanced search result title,Search results ({count}),résultat de la recherche pour ({count})
 v2.search.noRecord,The no record text,"No records {slug, select, draft {in my drafts} outbox {require processing} other {{title}}}","Aucun enregistrement {slug, select, draft {dans mes brouillons} outbox {à traiter} other {{title}}}"
-v2.search.noResult,The no result text,No results,Pas de résultats
+v2.search.noResult,The no result text,No results for “{searchTerm}”,Pas de résultats pour “{searchTerm}”
 v2.search.quickSearch.result.title,Quick search result title,Search result for “{searchTerm}”,résultat de la recherche pour “{searchTerm}”
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
 v2.validateAction.Declare,The label for declare button of validate action,Send for approval,Envoyer pour approbation
