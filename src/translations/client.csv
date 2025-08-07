@@ -2917,7 +2917,7 @@ v2.saveAndExit.desc.saveDeclarationConfirm,Description for save declaration conf
 v2.saveAndExit.title.saveDeclarationConfirm,Title for save declaration confirmation modal,Save & exit?,Enregistrer et quitter?
 v2.search.advancedSearch.result.title,Advanced search result title,Search results ({count}),résultat de la recherche pour ({count})
 v2.search.noRecord,The no record text,"No records {slug, select, draft {in my drafts} outbox {require processing} other {{title}}}","Aucun enregistrement {slug, select, draft {dans mes brouillons} outbox {à traiter} other {{title}}}"
-v2.search.noResult,The no result text,No results,Pas de résultats
+v2.search.noResult,The no result text,No results for “{searchTerm}”,Pas de résultats pour “{searchTerm}”
 v2.search.quickSearch.result.title,Quick search result title,Search result for “{searchTerm}”,résultat de la recherche pour “{searchTerm}”
 v2.signature.upload.modal.title,Title for the signature upload modal,Upload Signature,Télécharger la signature
 v2.validateAction.Declare,The label for declare button of validate action,Send for approval,Envoyer pour approbation
