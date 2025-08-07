@@ -10,6 +10,7 @@ import {
   AddressType
 } from '@opencrvs/toolkit/events'
 import { getSignatureFile, uploadFile } from './utils'
+import { subYears, format } from 'date-fns'
 
 type InformantRelation = 'MOTHER' | 'BROTHER'
 
@@ -141,7 +142,30 @@ export async function getDeclaration({
   // 💡 Merge overriden fields
   return {
     ...mockDeclaration,
-    ...partialDeclaration
+    ...(!partialDeclaration['father.detailsNotAvailable'] && {
+      'father.name': {
+        firstname: faker.person.firstName('male'),
+        surname: faker.person.lastName('male')
+      },
+      'father.dob': format(subYears(new Date(), 30), 'yyyy-MM-dd'),
+      'father.idType': 'NATIONAL_ID',
+      'father.nid': faker.string.numeric(10),
+      'father.nationality': 'FAR',
+      'father.maritalStatus': 'SINGLE',
+      'father.educationalAttainment': 'NONE',
+      'father.occupation': 'Unemployed',
+      'father.addressSameAs': 'YES',
+      ...(partialDeclaration['father.address'] && {
+        'father.address': {
+          country: 'FAR',
+          addressType: 'DOMESTIC',
+          province,
+          district,
+          urbanOrRural: 'URBAN'
+        }
+      }),
+      ...partialDeclaration
+    })
   }
 }
 

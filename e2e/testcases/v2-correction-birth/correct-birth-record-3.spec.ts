@@ -1,22 +1,12 @@
 import { expect, Locator, test, type Page } from '@playwright/test'
 import {
-  assignRecord,
   auditRecord,
-  createPIN,
-  expectAddress,
-  expectOutboxToBeEmpty,
-  formatDateTo_ddMMMMyyyy,
   formatDateTo_dMMMMyyyy,
-  formatName,
-  getAction,
   getToken,
   goBackToReview,
-  joinValuesWith,
-  login,
   loginToV2
 } from '../../helpers'
 import { faker } from '@faker-js/faker'
-import { BirthDeclaration, BirthInputDetails } from '../birth/types'
 import {
   CREDENTIALS,
   SAFE_INPUT_CHANGE_TIMEOUT_MS,
@@ -27,17 +17,16 @@ import {
   createDeclaration as createDeclarationV2,
   Declaration as DeclarationV2
 } from '../v2-test-data/birth-declaration'
-import { format, subYears, differenceInYears, parseISO } from 'date-fns'
+import { format, subYears } from 'date-fns'
 import { formatV2ChildName } from '../v2-birth/helpers'
 import { IdType } from '@countryconfig/form/v2/person'
-import { ensureAssigned, expectInUrl, type } from '../../v2-utils'
+import { ensureAssigned, expectInUrl } from '../../v2-utils'
 
 test.describe.serial(' Correct record - 3', () => {
   let declaration: DeclarationV2
   let trackingId: string
-  let registrationNumber: string | undefined
   let eventId: string
-
+  let registrationNumber: string
   let page: Page
 
   const updatedMotherDetails = {
@@ -79,15 +68,13 @@ test.describe.serial(' Correct record - 3', () => {
 
   const visible = async (
     _page: Page | Locator = page,
-    title: string,
-    correction?: string,
-    original?: string
+    col1: string,
+    col2?: string,
+    col3?: string
   ) => {
-    await expect(_page.getByText(title, { exact: true })).toBeVisible()
-    original &&
-      (await expect(_page.getByText(original, { exact: true })).toBeVisible())
-    correction &&
-      (await expect(_page.getByText(correction, { exact: true })).toBeVisible())
+    await expect(_page.getByText(col1, { exact: true })).toBeVisible()
+    col2 && (await expect(_page.getByText(col2, { exact: true })).toBeVisible())
+    col3 && (await expect(_page.getByText(col3, { exact: true })).toBeVisible())
   }
 
   test.beforeAll(async ({ browser }) => {
@@ -138,8 +125,8 @@ test.describe.serial(' Correct record - 3', () => {
         'mother.address': {
           country: 'FAR',
           addressType: 'DOMESTIC',
-          province: '73242958-c819-4404-b7fe-b594984c947c',
-          district: '8ba7ff99-713d-462d-a590-7b8d4c874225',
+          province: 'Central',
+          district: 'Ibombo',
           urbanOrRural: 'URBAN'
         },
 
@@ -163,7 +150,7 @@ test.describe.serial(' Correct record - 3', () => {
 
     declaration = res.declaration
     trackingId = res.trackingId!
-    registrationNumber = res.registrationNumber
+    registrationNumber = res.registrationNumber!
     eventId = res.eventId
 
     expect(trackingId).toBeDefined()
@@ -548,30 +535,53 @@ test.describe.serial(' Correct record - 3', () => {
         expect(page.url().includes('correction')).toBeTruthy()
         expect(page.url().includes('review')).toBeTruthy()
 
-        await page
-          .getByTestId('row-value-mother.address')
-          .getByText('Farajaland')
-        await page
-          .getByTestId('row-value-mother.address')
-          .getByText(updatedMotherDetails.address.province)
-        await page
-          .getByTestId('row-value-mother.address')
-          .getByText(updatedMotherDetails.address.district)
-        await page
-          .getByTestId('row-value-mother.address')
-          .getByText(updatedMotherDetails.address.town)
-        await page
-          .getByTestId('row-value-mother.address')
-          .getByText(updatedMotherDetails.address.residentialArea)
-        await page
-          .getByTestId('row-value-mother.address')
-          .getByText(updatedMotherDetails.address.street)
-        await page
-          .getByTestId('row-value-mother.address')
-          .getByText(updatedMotherDetails.address.number)
-        await page
-          .getByTestId('row-value-mother.address')
-          .getByText(updatedMotherDetails.address.zipCode)
+        await expect(
+          await page
+            .getByTestId('row-value-mother.address')
+            .getByText('Farajaland')
+        ).toBeVisible()
+
+        await expect(
+          await page
+            .getByTestId('row-value-mother.address')
+            .getByText(updatedMotherDetails.address.province)
+        ).toBeVisible()
+
+        await expect(
+          await page
+            .getByTestId('row-value-mother.address')
+            .getByText(updatedMotherDetails.address.district)
+        ).toBeVisible()
+
+        await expect(
+          await page
+            .getByTestId('row-value-mother.address')
+            .getByText(updatedMotherDetails.address.town)
+        ).toBeVisible()
+
+        await expect(
+          await page
+            .getByTestId('row-value-mother.address')
+            .getByText(updatedMotherDetails.address.residentialArea)
+        ).toBeVisible()
+
+        await expect(
+          await page
+            .getByTestId('row-value-mother.address')
+            .getByText(updatedMotherDetails.address.street)
+        ).toBeVisible()
+
+        await expect(
+          await page
+            .getByTestId('row-value-mother.address')
+            .getByText(updatedMotherDetails.address.number)
+        ).toBeVisible()
+
+        await expect(
+          await page
+            .getByTestId('row-value-mother.address')
+            .getByText(updatedMotherDetails.address.zipCode)
+        ).toBeVisible()
       }) // <-- Add this closing brace for test('3.4.6 Change usual place of residence')
 
       test('3.4.7 Change marital status', async () => {
