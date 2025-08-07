@@ -1,6 +1,6 @@
 import { test, expect, Page } from '@playwright/test'
 import { goToSection, loginToV2 } from '../../helpers'
-import { REQUIRED_VALIDATION_ERROR } from './helpers'
+import { NAME_VALIDATION_ERROR, REQUIRED_VALIDATION_ERROR } from './helpers'
 import { trackAndDeleteCreatedEvents } from '../v2-test-data/eventDeletion'
 
 const loginAndBeginBirthDeclaration = async ({ page }: { page: Page }) => {
@@ -133,10 +133,8 @@ test.describe.serial("2. Validate the child's details page", () => {
        * - Required
        */
       await expect(
-        page
-          .locator('[data-test-id="row-value-child.name"]')
-          .getByText(REQUIRED_VALIDATION_ERROR)
-      ).toBeVisible()
+        page.locator('[data-test-id="row-value-child.name"]')
+      ).toContainText(NAME_VALIDATION_ERROR)
     })
   })
 
