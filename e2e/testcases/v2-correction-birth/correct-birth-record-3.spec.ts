@@ -16,7 +16,7 @@ import { random } from 'lodash'
 import {
   createDeclaration as createDeclarationV2,
   Declaration as DeclarationV2
-} from '../v2-test-data/birth-declaration'
+} from '../v2-test-data/birth-declaration-with-mother-father'
 import { format, subYears } from 'date-fns'
 import { formatV2ChildName } from '../v2-birth/helpers'
 import { IdType } from '@countryconfig/form/v2/person'

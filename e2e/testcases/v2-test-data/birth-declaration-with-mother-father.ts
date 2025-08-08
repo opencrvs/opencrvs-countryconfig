@@ -10,6 +10,7 @@ import {
   AddressType
 } from '@opencrvs/toolkit/events'
 import { getSignatureFile, uploadFile } from './utils'
+import { subYears, format } from 'date-fns'
 
 type InformantRelation = 'MOTHER' | 'BROTHER'
 
@@ -92,8 +93,10 @@ export async function getDeclaration({
 
   const mockDeclaration = {
     'father.detailsNotAvailable': true,
-    // Only include 'father.reason' if partialDeclaration doesn't have 'father.detailsNotAvailable'
-    ...(!('father.detailsNotAvailable' in partialDeclaration)
+    // Add default reason if: (a) user didn’t specify 'father.detailsNotAvailable', or (b) specified it but forgot the reason
+    ...(!('father.detailsNotAvailable' in partialDeclaration) ||
+    (partialDeclaration['father.detailsNotAvailable'] === true &&
+      !('father.reason' in partialDeclaration))
       ? { 'father.reason': 'Father is missing.' }
       : {}),
     'mother.name': {
@@ -103,6 +106,8 @@ export async function getDeclaration({
     'mother.dob': '1995-09-12',
     'mother.nationality': 'FAR',
     'mother.idType': 'NATIONAL_ID',
+    'mother.educationalAttainment': 'NO_SCHOOLING',
+    'mother.maritalStatus': 'MARRIED',
     'mother.nid': faker.string.numeric(10),
     'mother.address': {
       country: 'FAR',
@@ -139,7 +144,31 @@ export async function getDeclaration({
   // 💡 Merge overriden fields
   return {
     ...mockDeclaration,
-    ...partialDeclaration
+    ...('father.detailsNotAvailable' in partialDeclaration &&
+      !partialDeclaration['father.detailsNotAvailable'] && {
+        'father.detailsNotAvailable': false,
+        'father.name': {
+          firstname: faker.person.firstName('male'),
+          surname: faker.person.lastName('male')
+        },
+        'father.dob': format(subYears(new Date(), 30), 'yyyy-MM-dd'),
+        'father.idType': 'NATIONAL_ID',
+        'father.nid': faker.string.numeric(10),
+        'father.nationality': 'FAR',
+        'father.maritalStatus': 'SINGLE',
+        'father.educationalAttainment': 'NONE',
+        'father.occupation': 'Unemployed',
+        ...(partialDeclaration['father.addressSameAs'] === 'NO' && {
+          'father.address': {
+            country: 'FAR',
+            addressType: 'DOMESTIC',
+            province,
+            district,
+            urbanOrRural: 'URBAN'
+          }
+        }),
+        ...partialDeclaration
+      })
   }
 }
 
@@ -178,7 +207,7 @@ export async function createDeclaration(
     'review.comment': 'My comment',
     'review.signature': filename
   }
-
+  console.log(declaration)
   const declareRes = await client.event.actions.declare.request.mutate({
     eventId: eventId,
     transactionId: uuidv4(),

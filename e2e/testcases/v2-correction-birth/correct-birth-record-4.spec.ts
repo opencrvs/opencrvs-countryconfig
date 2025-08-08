@@ -11,7 +11,7 @@ import { faker } from '@faker-js/faker'
 import {
   createDeclaration as createDeclarationV2,
   Declaration as DeclarationV2
-} from '../v2-test-data/birth-declaration'
+} from '../v2-test-data/birth-declaration-with-mother-father'
 import { format, subYears } from 'date-fns'
 import {
   CREDENTIALS,
@@ -766,7 +766,7 @@ test.describe.serial(' Correct record - 4', () => {
     await visible(
       page.locator('#listTable-corrections-table-father'),
       "Father's name",
-      `${declaration['father.name'].firstname} ${declaration['father.name'].surname}`,
+      `${declaration['father.name']?.firstname} ${declaration['father.name']?.surname}`,
       `${updatedFatherDetails.firstNames} ${updatedFatherDetails.familyName}`
     )
 
@@ -989,7 +989,7 @@ test.describe.serial(' Correct record - 4', () => {
     await visible(
       page.locator('#listTable-corrections-table-father'),
       "Father's name",
-      `${declaration['father.name'].firstname} ${declaration['father.name'].surname}`,
+      `${declaration['father.name']?.firstname} ${declaration['father.name']?.surname}`,
       `${updatedFatherDetails.firstNames} ${updatedFatherDetails.familyName}`
     )
 

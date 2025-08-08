@@ -14,7 +14,7 @@ import { CREDENTIALS } from '../../constants'
 import {
   createDeclaration,
   Declaration
-} from '../v2-test-data/birth-declaration'
+} from '../v2-test-data/birth-declaration-with-mother-father'
 import { ensureAssigned, expectInUrl, selectAction, type } from '../../v2-utils'
 import {
   formatV2ChildName,
